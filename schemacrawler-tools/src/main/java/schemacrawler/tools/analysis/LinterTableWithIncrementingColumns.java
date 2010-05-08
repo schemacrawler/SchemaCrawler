@@ -84,7 +84,7 @@ public class LinterTableWithIncrementingColumns
     final Map<String, Integer> incrementingColumnsMap = new HashMap<String, Integer>();
     for (final Column column: columns)
     {
-      final String columnName = column.getName();
+      final String columnName = Utility.convertForComparison(column.getName());
       incrementingColumnsMap.put(columnName, 1);
       final Matcher matcher = pattern.matcher(columnName);
       if (matcher.matches())
