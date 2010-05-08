@@ -45,6 +45,63 @@ final class GraphGenerator
     diagramFile = determineDiagramFile(diagramOutputFile);
   }
 
+  private File determineDiagramFile(final File diagramOutputFile)
+  {
+    File diagramFile;
+    if (diagramOutputFile == null)
+    {
+      diagramFile = new File(".", "schemacrawler." + UUID.randomUUID() + "."
+                                  + graphOutputFormat);
+    }
+    else
+    {
+      diagramFile = diagramOutputFile;
+    }
+    return diagramFile;
+  }
+
+  private String determineGraphOutputFormat(final String outputFormat)
+  {
+    String graphOutputFormat = outputFormat;
+    final List<String> outputFormats = Arrays.asList("canon",
+                                                     "cmap",
+                                                     "cmapx",
+                                                     "cmapx_np",
+                                                     "dot",
+                                                     "eps",
+                                                     "fig",
+                                                     "gd",
+                                                     "gd2",
+                                                     "gif",
+                                                     "gv",
+                                                     "imap",
+                                                     "imap_np",
+                                                     "ismap",
+                                                     "jpe",
+                                                     "jpeg",
+                                                     "jpg",
+                                                     "pdf",
+                                                     "plain",
+                                                     "plain-ext",
+                                                     "png",
+                                                     "ps",
+                                                     "ps2",
+                                                     "svg",
+                                                     "svgz",
+                                                     "tk",
+                                                     "vml",
+                                                     "vmlz",
+                                                     "vrml",
+                                                     "wbmp",
+                                                     "xdot");
+    if (Utility.isBlank(graphOutputFormat)
+        || !outputFormats.contains(graphOutputFormat))
+    {
+      graphOutputFormat = "png";
+    }
+    return graphOutputFormat;
+  }
+
   void generateDiagram()
     throws IOException
   {
@@ -140,63 +197,6 @@ final class GraphGenerator
 
   final String getGraphOutputFormat()
   {
-    return graphOutputFormat;
-  }
-
-  private File determineDiagramFile(final File diagramOutputFile)
-  {
-    File diagramFile;
-    if (diagramOutputFile == null)
-    {
-      diagramFile = new File(".", "schemacrawler." + UUID.randomUUID() + "."
-                                  + graphOutputFormat);
-    }
-    else
-    {
-      diagramFile = diagramOutputFile;
-    }
-    return diagramFile;
-  }
-
-  private String determineGraphOutputFormat(final String outputFormat)
-  {
-    String graphOutputFormat = outputFormat;
-    final List<String> outputFormats = Arrays.asList("canon",
-                                                     "cmap",
-                                                     "cmapx",
-                                                     "cmapx_np",
-                                                     "dot",
-                                                     "eps",
-                                                     "fig",
-                                                     "gd",
-                                                     "gd2",
-                                                     "gif",
-                                                     "gv",
-                                                     "imap",
-                                                     "imap_np",
-                                                     "ismap",
-                                                     "jpe",
-                                                     "jpeg",
-                                                     "jpg",
-                                                     "pdf",
-                                                     "plain",
-                                                     "plain-ext",
-                                                     "png",
-                                                     "ps",
-                                                     "ps2",
-                                                     "svg",
-                                                     "svgz",
-                                                     "tk",
-                                                     "vml",
-                                                     "vmlz",
-                                                     "vrml",
-                                                     "wbmp",
-                                                     "xdot");
-    if (Utility.isBlank(graphOutputFormat)
-        || !outputFormats.contains(graphOutputFormat))
-    {
-      graphOutputFormat = "png";
-    }
     return graphOutputFormat;
   }
 
