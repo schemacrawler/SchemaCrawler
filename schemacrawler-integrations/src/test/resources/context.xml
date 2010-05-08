@@ -10,8 +10,7 @@
   * Boston, MA 02111-1307, USA. * */
 -->
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="
-       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 
   <bean id="datasource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
     <property name="driverClassName">
