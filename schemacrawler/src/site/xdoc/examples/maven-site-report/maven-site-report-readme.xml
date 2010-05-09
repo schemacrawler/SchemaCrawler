@@ -22,7 +22,7 @@
             and make sure that Maven is on your path.
           </li>
           <li>
-            Copy the 
+            Copy the
             <span class="code">schemacrawler.config.properties</span>
             into the
             <span class="code">maven-site-report</span>
@@ -37,9 +37,12 @@
             distribution directory.
           </li>
           <li>
-            Run mvn site.
+            Run
+            <span class="code">mvn -Dpassword= site</span>
+            . (The password for the example database isan empty string.)
           </li>
-          <li>See the output produced in the
+          <li>
+            See the output produced in the
             <span class="code">target/site</span>
             directory.
           </li>
@@ -50,10 +53,13 @@
           <li>Try modifying the schemacrawler.config.properties with regular
             expressions, logging, and so on.
           </li>
-          <li>Try using different SchemaCrawler commands in the Maven test project's
-            pom.xml file. (For a complete list of SchemaCrawler commands, run
+          <li>
+            Try using different SchemaCrawler commands in the Maven test project's
+            pom.xml file. (For a complete list of
+            SchemaCrawler commands, run
             <span class="code">java -jar
-              &lt;schemacrawler-jar&gt;</span>.)
+              &lt;schemacrawler-jar&gt;</span>
+            .)
           </li>
           <li>Try defining a new database connection, using your favorite database and
             driver.
