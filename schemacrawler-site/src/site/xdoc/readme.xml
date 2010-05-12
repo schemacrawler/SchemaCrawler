@@ -47,6 +47,12 @@
         <p>To read more about SchemaCrawler, you can read:</p>
         <ul>
           <li>
+            IT journalist Lee Schlesinger's blog on
+            <a href="http://www.schlesinger.us/?p=650">
+              SchemaCrawler
+            </a>
+          </li>        
+          <li>
             <a href="http://www.devx.com/Java/Article/32443">
               Java API Makes Database Metadata as Easily Accessible as
               POJOs
