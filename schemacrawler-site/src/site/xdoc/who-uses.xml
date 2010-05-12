@@ -22,7 +22,7 @@
         </ul>
       </subsection>
       <subsection name="Press">
-        <p>SchemaCrawler in the press, and in online articles.</p>
+        <p>SchemaCrawler in the press, and in online articles and blogs.</p>
         <ul>
           <li>
             Baseline Database Magazine, in an article on
@@ -34,6 +34,23 @@
               Make daily development easier and smarter
             </a>
           </li>
+          <li>
+           Mynitor's May 2, 2010 
+            <a href="http://www.mynitor.com/2010/05/02/tool-of-the-week-schemacrawler/">
+              Tool of the week – SchemaCrawler
+            </a>
+          </li>
+          <li>
+            <a href="http://twitter.com/willchinelato/status/12117092941">
+              Twitter message
+            </a>
+          </li>      
+          <li>
+            IT journalist Lee Schlesinger's blog on
+            <a href="http://www.schlesinger.us/?p=650">
+              SchemaCrawler
+            </a>
+          </li>               
         </ul>
       </subsection>
       <subsection name="Open Source Projects">
@@ -46,6 +63,10 @@
           <li>
             <a href="http://www.jequel.de/">JEQUEL,</a>
             Java Embedded QUEry Language.
+          </li>
+          <li>
+            <a href="http://code.google.com/p/anhquan/wiki/CodeGenerator4j">CodeGenerator4j,</a>
+              a Java tool to generate Java source codes from XML files, using Apache Velocity and JAXB 
           </li>
         </ul>
       </subsection>
