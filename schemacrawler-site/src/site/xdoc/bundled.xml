@@ -14,37 +14,37 @@
           are:
         </p>
         <ul>
-          <li>
+          <li>[<a href="http://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20-%20Apache%20Derby/">download</a>] 
             SchemaCrawler for
             <a href="http://db.apache.org/derby/">Apache Derby</a>
             (which can also be used with JavaDB)
           </li>
-          <li>
+          <li>[<a href="http://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20-%20Microsoft%20SQL%20Server/">download</a>] 
             SchemaCrawler for
             <a href="http://www.microsoft.com/sqlserver/">Microsoft SQL Server,</a>
             with the
             <a href="http://jtds.sourceforge.net/">jTDS JDBC driver</a>
           </li>
-          <li>
+          <li>[<a href="http://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20-%20MySQL/">download</a>] 
             SchemaCrawler for
             <a href="http://www.mysql.com/">MySQL,</a>
             with the
             <a href="http://dev.mysql.com/downloads/connector/j/">MySQL Connector/J JDBC driver</a>
           </li>
-          <li>
+          <li>[<a href="http://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20-%20Oracle/">download</a>] 
             SchemaCrawler for
             <a href="http://www.oracle.com/">Oracle</a>
             (but the
             <a href="http://www.oracle.com/technology/software/tech/java/sqlj_jdbc/index.html">Oracle JDBC driver</a>
             needs to be downloaded separately)
           </li>
-          <li>
+          <li>[<a href="http://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20-%20PostgreSQL/">download</a>] 
             SchemaCrawler for
             <a href="http://www.postgresql.org/">PostgreSQL,</a>
             with the
             <a href="http://jdbc.postgresql.org/">PostgreSQL JDBC driver</a>
           </li>
-          <li>
+          <li>[<a href="http://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20-%20SQLite/">download</a>] 
             SchemaCrawler for
             <a href="http://www.sqlite.org/">SQLite,</a>
             with the
