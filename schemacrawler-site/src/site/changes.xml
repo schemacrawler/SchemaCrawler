@@ -22,6 +22,9 @@
         The Maven plug-in generates a database report that uses the same stylesheet as the rest of the
         Maven generated website. 
       ]]></action>      
+      <action dev="Sualeh Fatehi" type="update"><![CDATA[
+        Generated database diagrams are less "colorful".
+      ]]></action>      
     </release>
     <release version="8.1" date="2010-02-28">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
