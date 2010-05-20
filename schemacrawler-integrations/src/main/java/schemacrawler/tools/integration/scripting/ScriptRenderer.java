@@ -28,8 +28,12 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.Writer;
 import java.sql.Connection;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.script.ScriptEngine;
+import javax.script.ScriptEngineFactory;
 import javax.script.ScriptEngineManager;
 
 import schemacrawler.schema.Database;
@@ -48,6 +52,9 @@ public final class ScriptRenderer
 {
 
   private static final long serialVersionUID = -2232328675306451328L;
+
+  private static final Logger LOGGER = Logger.getLogger(ScriptRenderer.class
+    .getName());
 
   public ScriptRenderer()
   {
@@ -90,16 +97,47 @@ public final class ScriptRenderer
 
     // Create a new instance of the engine
     final ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
-    ScriptEngine scriptEngine = scriptEngineManager
-      .getEngineByExtension(FileUtility.getFileExtension(scriptFile));
-    if (scriptEngine == null)
+    final List<ScriptEngineFactory> engineFactories = scriptEngineManager
+      .getEngineFactories();
+    ScriptEngineFactory scriptEngineFactory = null;
+    ScriptEngineFactory javaScriptEngineFactory = null;
+    for (final ScriptEngineFactory engineFactory: engineFactories)
     {
-      scriptEngine = scriptEngineManager.getEngineByName("JavaScript");
+      final List<String> extensions = engineFactory.getExtensions();
+      if (extensions.contains(FileUtility.getFileExtension(scriptFile)))
+      {
+        scriptEngineFactory = engineFactory;
+        break;
+      }
+      if (engineFactory.getLanguageName().equalsIgnoreCase("JavaScript"))
+      {
+        javaScriptEngineFactory = engineFactory;
+      }
     }
-    if (scriptEngine == null)
+    if (scriptEngineFactory == null)
+    {
+      scriptEngineFactory = javaScriptEngineFactory;
+    }
+    if (scriptEngineFactory == null)
     {
       throw new SchemaCrawlerException("Script engine not found");
     }
+
+    if (LOGGER.isLoggable(Level.CONFIG))
+    {
+      LOGGER
+        .log(Level.CONFIG,
+             String
+               .format("Using script engine\n%s %s (%s %s)\nScript engine names: %s\nSupported file extensions: %s",
+                       scriptEngineFactory.getEngineName(),
+                       scriptEngineFactory.getEngineVersion(),
+                       scriptEngineFactory.getLanguageName(),
+                       scriptEngineFactory.getLanguageVersion(),
+                       scriptEngineFactory.getNames(),
+                       scriptEngineFactory.getExtensions()));
+    }
+
+    final ScriptEngine scriptEngine = scriptEngineFactory.getScriptEngine();
 
     final Writer writer = outputOptions.openOutputWriter();
 
@@ -113,5 +151,4 @@ public final class ScriptRenderer
 
     outputOptions.closeOutputWriter(writer);
   }
-
 }
