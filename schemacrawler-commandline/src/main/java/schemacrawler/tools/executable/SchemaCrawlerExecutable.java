@@ -52,7 +52,7 @@ public class SchemaCrawlerExecutable
         LOGGER.log(Level.FINE, "Could not instantiate "
                                + commandExecutableClassName
                                + " using the default constructor", e);
-        final Constructor constructor = commandExecutableClass
+        final Constructor<? extends Executable> constructor = commandExecutableClass
           .getConstructor(new Class[] {
             String.class
           });
