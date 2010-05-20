@@ -25,8 +25,15 @@
       <item name="Readme" href="readme.html" />
       <item name="FAQS" href="faq.html" />
       <item name="How-tos" href="how-to.html" />
-      <item name="Bundled Distributions" href="bundled.html" />
+      <item name="Database-specific Distributions" href="bundled.html" />
       <item name="Who Uses" href="who-uses.html" />
+    </menu>
+    <menu name="Special Features">
+      <item name="Using INFORMATION_SCHEMA Views" href="features/INFORMATION_SCHEMA.html" />
+      <item name="SchemaCrawler Grep" href="features/schemacrawler_grep.html" />
+      <item name="Database Diagramming" href="features/diagramming.html" />
+      <item name="Database Scripting" href="features/scripting.html" />
+      <item name="Schema Lint" href="features/lint.html" />
     </menu>
     <menu name="Project Pages">
       <item name="Donations" href="http://sourceforge.net/donate/index.php?group_id=148383" />
@@ -35,13 +42,6 @@
       <item name="Javadocs" href="apidocs/index.html" />
       <item name="Source Code" href="http://schemacrawler.svn.sourceforge.net/viewvc/schemacrawler/" />
       <item name="Project Page on SourceForge" href="http://sourceforge.net/projects/schemacrawler/" />
-    </menu>
-    <menu name="Special Features">
-      <item name="Using INFORMATION_SCHEMA Views" href="features/INFORMATION_SCHEMA.html" />
-      <item name="SchemaCrawler Grep" href="features/schemacrawler_grep.html" />
-      <item name="Database Diagramming" href="features/diagramming.html" />
-      <item name="Database Scripting" href="features/scripting.html" />
-      <item name="Schema Lint" href="features/lint.html" />
     </menu>
     <menu ref="reports" />
   </body>
