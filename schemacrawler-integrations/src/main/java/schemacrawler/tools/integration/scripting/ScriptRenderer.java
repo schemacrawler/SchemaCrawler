@@ -40,6 +40,7 @@ import schemacrawler.schema.Database;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseExecutable;
 import sf.util.FileUtility;
+import sf.util.ObjectToString;
 import sf.util.Utility;
 
 /**
@@ -133,8 +134,9 @@ public final class ScriptRenderer
                        scriptEngineFactory.getEngineVersion(),
                        scriptEngineFactory.getLanguageName(),
                        scriptEngineFactory.getLanguageVersion(),
-                       scriptEngineFactory.getNames(),
-                       scriptEngineFactory.getExtensions()));
+                       ObjectToString.toString(scriptEngineFactory.getNames()),
+                       ObjectToString.toString(scriptEngineFactory
+                         .getExtensions())));
     }
 
     final ScriptEngine scriptEngine = scriptEngineFactory.getScriptEngine();
