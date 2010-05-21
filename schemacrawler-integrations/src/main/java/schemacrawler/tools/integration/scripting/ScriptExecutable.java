@@ -48,16 +48,16 @@ import sf.util.Utility;
  * 
  * @author Sualeh Fatehi
  */
-public final class ScriptRenderer
+public final class ScriptExecutable
   extends BaseExecutable
 {
 
   private static final long serialVersionUID = -2232328675306451328L;
 
-  private static final Logger LOGGER = Logger.getLogger(ScriptRenderer.class
+  private static final Logger LOGGER = Logger.getLogger(ScriptExecutable.class
     .getName());
 
-  public ScriptRenderer()
+  public ScriptExecutable()
   {
     super("script");
   }
@@ -83,7 +83,7 @@ public final class ScriptRenderer
     }
     else
     {
-      final InputStream inputStream = ScriptRenderer.class
+      final InputStream inputStream = ScriptExecutable.class
         .getResourceAsStream("/" + scriptFileName);
       if (inputStream != null)
       {
@@ -104,6 +104,10 @@ public final class ScriptRenderer
     ScriptEngineFactory javaScriptEngineFactory = null;
     for (final ScriptEngineFactory engineFactory: engineFactories)
     {
+      LOGGER.log(Level.FINER, String
+        .format("Evaluating script engine: %s %s (%s %s)", engineFactory
+          .getEngineName(), engineFactory.getEngineVersion(), engineFactory
+          .getLanguageName(), engineFactory.getLanguageVersion()));
       final List<String> extensions = engineFactory.getExtensions();
       if (extensions.contains(FileUtility.getFileExtension(scriptFile)))
       {

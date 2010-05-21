@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
-<listEntry value="/SchemaCrawler - 4 - Integrations"/>
+<listEntry value="/SchemaCrawler - 2 - Commandline/src/main/java/schemacrawler/Main.java"/>
 </listAttribute>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
-<listEntry value="4"/>
+<listEntry value="1"/>
 </listAttribute>
 <booleanAttribute key="org.eclipse.debug.core.appendEnvironmentVariables" value="true"/>
 <listAttribute key="org.eclipse.jdt.launching.CLASSPATH">
@@ -15,7 +15,7 @@
 <stringAttribute key="org.eclipse.jdt.launching.CLASSPATH_PROVIDER" value="org.maven.ide.eclipse.launchconfig.classpathProvider"/>
 <booleanAttribute key="org.eclipse.jdt.launching.DEFAULT_CLASSPATH" value="false"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="schemacrawler.Main"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-g &quot;${workspace_loc:SchemaCrawler - Website/src/site/resources/config}/schemacrawler.config.properties&quot; &#13;&#10;-c hsqldb&#13;&#10;-command=script&#13;&#10;-show_stored_procedures=false&#13;&#10;-sorttables=false&#13;&#10;-loglevel=SEVERE&#13;&#10;-outputformat &quot;${workspace_loc:/SchemaCrawler - Distribution/src/site/resources/examples/javascript/droptables.js}&quot;"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-g &quot;${workspace_loc:SchemaCrawler - Website/src/site/resources/config}/schemacrawler.config.properties&quot; &#13;&#10;-c hsqldb&#13;&#10;-command=script&#13;&#10;-show_stored_procedures=false&#13;&#10;-sorttables=false&#13;&#10;-loglevel=FINER&#13;&#10;-outputformat &quot;${workspace_loc:/SchemaCrawler - Distribution/src/site/resources/examples/javascript/droptables.js}&quot;"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="SchemaCrawler - 4 - Integrations"/>
 <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.maven.ide.eclipse.launchconfig.sourcepathProvider"/>
 <stringAttribute key="org.eclipse.jdt.launching.WORKING_DIRECTORY" value="${workspace_loc:SchemaCrawler - 4 - Integrations/target}"/>
