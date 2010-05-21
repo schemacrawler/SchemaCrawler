@@ -45,6 +45,9 @@ final class SchemaRetriever
     throws SQLException
   {
     super(retrieverConnection, database);
+
+    final DatabaseSystemParameters dbSystemParameters = retrieverConnection
+      .getDatabaseSystemParameters();
     supportsCatalogs = dbSystemParameters.isSupportsCatalogs();
     supportsSchemas = dbSystemParameters.isSupportsSchemas();
   }

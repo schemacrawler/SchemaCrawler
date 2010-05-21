@@ -109,8 +109,6 @@ abstract class AbstractRetriever
     return values;
   }
 
-  protected final DatabaseSystemParameters dbSystemParameters;
-
   private final RetrieverConnection retrieverConnection;
   final MutableDatabase database;
 
@@ -126,16 +124,6 @@ abstract class AbstractRetriever
   {
     this.retrieverConnection = retrieverConnection;
     this.database = database;
-
-    if (retrieverConnection != null)
-    {
-      dbSystemParameters = new DatabaseSystemParameters(retrieverConnection
-        .getConnection());
-    }
-    else
-    {
-      dbSystemParameters = null;
-    }
   }
 
   Connection getDatabaseConnection()
@@ -243,6 +231,8 @@ abstract class AbstractRetriever
   String quotedName(final String name)
   {
     final String quotedName;
+    final DatabaseSystemParameters dbSystemParameters = getRetrieverConnection()
+      .getDatabaseSystemParameters();
     if (dbSystemParameters != null && !Utility.isBlank(name))
     {
       final String identifierQuoteString = dbSystemParameters
@@ -266,6 +256,8 @@ abstract class AbstractRetriever
   String unquotedName(final String name)
   {
     final String unquotedName;
+    final DatabaseSystemParameters dbSystemParameters = getRetrieverConnection()
+      .getDatabaseSystemParameters();
     if (dbSystemParameters != null && !Utility.isBlank(name))
     {
       final String identifierQuoteString = dbSystemParameters

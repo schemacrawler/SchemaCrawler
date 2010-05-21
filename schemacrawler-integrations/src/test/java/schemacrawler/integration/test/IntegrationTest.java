@@ -33,7 +33,7 @@ import org.junit.Test;
 import schemacrawler.tools.commandline.SchemaCrawlerCommandLine;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.integration.freemarker.FreeMarkerRenderer;
-import schemacrawler.tools.integration.scripting.ScriptRenderer;
+import schemacrawler.tools.integration.scripting.ScriptExecutable;
 import schemacrawler.tools.integration.velocity.VelocityRenderer;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
@@ -99,7 +99,7 @@ public class IntegrationTest
   public void executableJavaScript()
     throws Exception
   {
-    executeExecutableAndCheckForOutputFile(new ScriptRenderer(),
+    executeExecutableAndCheckForOutputFile(new ScriptExecutable(),
                                            "plaintextschema.js",
                                            "executableForJavaScript");
   }
