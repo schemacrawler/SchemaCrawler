@@ -20,7 +20,7 @@
         <p>
           An example of a SchemaCrawler database diagram:
         </p>
-        <img src="images/diagram.png" width="100%" alt="SchemaCrawler database diagram" />
+        <img src="../images/diagram.png" width="100%" alt="SchemaCrawler database diagram" />
         <p>
           For more details, see the
           <a href="how-to.html#diagrams">how-to</a>

@@ -25,6 +25,9 @@
             SchemaCrawler Lint will flag such tables with a lint message.</li>
           <li>SchemaCrawler Lint will flag tables that have nullable columns in a unique index, with a lint message.
           </li>
+          <li>SchemaCrawler Lint will flag tables that have space in table or column names, or names that are reserved
+            words in the ANSI SQL standard, with a lint message.
+          </li>
         </ul>
         <p>SchemaCrawler Lint also analyzes the database for weak associations. Weak associations are inferred
           associations between tables, similar to forign keys, even if there is no
