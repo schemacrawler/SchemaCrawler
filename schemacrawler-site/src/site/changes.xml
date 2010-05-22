@@ -5,7 +5,7 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-    <release version="8.2" date="2010-05-15">
+    <release version="8.2" date="2010-05-25">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Added support for spaces or reserved words in table, procedure, and column names.
       ]]></action>

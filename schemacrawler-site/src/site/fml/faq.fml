@@ -326,7 +326,7 @@ Or, the following:
       <question> What is a SchemaCrawler database diagram? </question>
       <answer>
         <p>
-          SchemaCrawler can generate entity-relationship diagrams with
+          SchemaCrawler can generate entity-relationship database diagrams using
           <a href="http://www.graphviz.org/">Graphviz</a>
           . You can filter out tables, columns, and procedures based on regular expressions,
           using the
