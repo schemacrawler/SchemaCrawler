@@ -28,12 +28,12 @@
       <item name="Database-specific Distributions" href="bundled.html" />
       <item name="Who Uses" href="who-uses.html" />
     </menu>
-    <menu name="Special Features">
-      <item name="Using INFORMATION_SCHEMA Views" href="features/INFORMATION_SCHEMA.html" />
+    <menu name="Special Features">      
       <item name="SchemaCrawler Grep" href="features/schemacrawler_grep.html" />
       <item name="Database Diagramming" href="features/diagramming.html" />
       <item name="Database Scripting" href="features/scripting.html" />
       <item name="Schema Lint" href="features/lint.html" />
+      <item name="Using INFORMATION_SCHEMA Views" href="features/INFORMATION_SCHEMA.html" />      
     </menu>
     <menu name="Project Pages">
       <item name="Donations" href="http://sourceforge.net/donate/index.php?group_id=148383" />
