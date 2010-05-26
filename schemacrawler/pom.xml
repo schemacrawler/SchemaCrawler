@@ -104,12 +104,6 @@
           </dependency>
         </dependencies>
       </plugin>
-      <plugin>
-        <artifactId>maven-deploy-plugin</artifactId>
-        <configuration>
-          <skip>false</skip>
-        </configuration>
-      </plugin>
 			<plugin>
 				<artifactId>maven-install-plugin</artifactId>
 				<executions>
@@ -131,16 +125,35 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>	      
+			</plugin>
 			<plugin>
 				<artifactId>maven-deploy-plugin</artifactId>
 				<executions>
 					<execution>
+					  <id>schemacrawler_snaphot</id>
 						<phase>deploy</phase>
 						<configuration>
 							<file>target/schemacrawler-${project.version}.jar</file>
 							<pomFile>../schemacrawler-integrations/src/main/resources/schemacrawler-maven-plugin.pom</pomFile>
 							<repositoryId>sonatype-nexus-snapshots</repositoryId>
+							<repositoryLayout>default</repositoryLayout>
+							<url>http://oss.sonatype.org/content/repositories/snapshots</url>
+							<groupId>net.sourceforge.schemacrawler</groupId>
+							<artifactId>schemacrawler</artifactId>
+							<packaging>maven-plugin</packaging>
+							<version>${project.version}</version>
+						</configuration>
+						<goals>
+							<goal>deploy-file</goal>
+						</goals>
+					</execution>
+					<execution>
+					  <id>schemacrawler_plugin_snaphot</id>
+						<phase>deploy</phase>
+						<configuration>
+							<file>target/schemacrawler-${project.version}.jar</file>
+							<pomFile>../schemacrawler-integrations/src/main/resources/schemacrawler-maven-plugin.pom</pomFile>
+							<repositoryId>sonatype-nexus</repositoryId>
 							<repositoryLayout>default</repositoryLayout>
 							<url>http://oss.sonatype.org/content/repositories/snapshots</url>
 							<groupId>net.sourceforge.schemacrawler</groupId>
@@ -152,8 +165,44 @@
 							<goal>deploy-file</goal>
 						</goals>
 					</execution>
+					<execution>
+					  <id>schemacrawler_release</id>
+						<phase>deploy</phase>
+						<configuration>
+							<file>target/schemacrawler-${project.version}.jar</file>
+							<pomFile>../schemacrawler-integrations/src/main/resources/schemacrawler-maven-plugin.pom</pomFile>
+							<repositoryId>sonatype-nexus</repositoryId>
+							<repositoryLayout>default</repositoryLayout>
+							<url>http://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+							<groupId>net.sourceforge.schemacrawler</groupId>
+							<artifactId>schemacrawler</artifactId>
+							<packaging>maven-plugin</packaging>
+							<version>${project.version}</version>
+						</configuration>
+						<goals>
+							<goal>deploy-file</goal>
+						</goals>
+					</execution>
+					<execution>
+					  <id>schemacrawler_plugin_release</id>
+						<phase>deploy</phase>
+						<configuration>
+							<file>target/schemacrawler-${project.version}.jar</file>
+							<pomFile>../schemacrawler-integrations/src/main/resources/schemacrawler-maven-plugin.pom</pomFile>
+							<repositoryId>sonatype-nexus</repositoryId>
+							<repositoryLayout>default</repositoryLayout>
+							<url>http://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+							<groupId>net.sourceforge.schemacrawler</groupId>
+							<artifactId>schemacrawler-integrations</artifactId>
+							<packaging>maven-plugin</packaging>
+							<version>${project.version}</version>
+						</configuration>
+						<goals>
+							<goal>deploy-file</goal>
+						</goals>
+					</execution>
 				</executions>
-			</plugin>		
+			</plugin>
     </plugins>
   </build>
 </project>
