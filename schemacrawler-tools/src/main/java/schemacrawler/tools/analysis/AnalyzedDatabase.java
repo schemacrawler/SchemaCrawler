@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ColumnMap;
@@ -42,9 +41,6 @@ public final class AnalyzedDatabase
 {
 
   private static final long serialVersionUID = -3953296149824921463L;
-
-  private static final Logger LOGGER = Logger.getLogger(AnalyzedDatabase.class
-    .getName());
 
   public static final Lint[] getLint(final Table table)
   {
