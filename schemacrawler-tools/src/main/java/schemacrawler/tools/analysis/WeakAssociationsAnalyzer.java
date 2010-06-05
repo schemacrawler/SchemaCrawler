@@ -55,7 +55,7 @@ final class WeakAssociationsAnalyzer
   private final List<Table> tables;
   private final Map<String, List<ColumnMap>> weakAssociationsMap;
 
-  public WeakAssociationsAnalyzer(final List<Table> tables)
+  WeakAssociationsAnalyzer(final List<Table> tables)
   {
     this.tables = tables;
     weakAssociationsMap = new HashMap<String, List<ColumnMap>>();
