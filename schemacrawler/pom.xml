@@ -130,7 +130,7 @@
 				<artifactId>maven-deploy-plugin</artifactId>
 				<executions>
 					<execution>
-					  <id>schemacrawler_snaphot</id>
+					  <id>schemacrawler_snapshot</id>
 						<phase>deploy</phase>
 						<configuration>
 							<file>target/schemacrawler-${project.version}.jar</file>
@@ -148,12 +148,12 @@
 						</goals>
 					</execution>
 					<execution>
-					  <id>schemacrawler_plugin_snaphot</id>
+					  <id>schemacrawler_plugin_snapshot</id>
 						<phase>deploy</phase>
 						<configuration>
 							<file>target/schemacrawler-${project.version}.jar</file>
 							<pomFile>../schemacrawler-integrations/src/main/resources/schemacrawler-maven-plugin.pom</pomFile>
-							<repositoryId>sonatype-nexus</repositoryId>
+							<repositoryId>sonatype-nexus-snapshots</repositoryId>
 							<repositoryLayout>default</repositoryLayout>
 							<url>http://oss.sonatype.org/content/repositories/snapshots</url>
 							<groupId>net.sourceforge.schemacrawler</groupId>
@@ -173,7 +173,7 @@
 							<pomFile>../schemacrawler-integrations/src/main/resources/schemacrawler-maven-plugin.pom</pomFile>
 							<repositoryId>sonatype-nexus</repositoryId>
 							<repositoryLayout>default</repositoryLayout>
-							<url>http://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+							<url>http://oss.sonatype.org/service/local/staging/deploy/maven2</url>
 							<groupId>net.sourceforge.schemacrawler</groupId>
 							<artifactId>schemacrawler</artifactId>
 							<packaging>maven-plugin</packaging>
@@ -191,7 +191,7 @@
 							<pomFile>../schemacrawler-integrations/src/main/resources/schemacrawler-maven-plugin.pom</pomFile>
 							<repositoryId>sonatype-nexus</repositoryId>
 							<repositoryLayout>default</repositoryLayout>
-							<url>http://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+							<url>http://oss.sonatype.org/service/local/staging/deploy/maven2</url>
 							<groupId>net.sourceforge.schemacrawler</groupId>
 							<artifactId>schemacrawler-integrations</artifactId>
 							<packaging>maven-plugin</packaging>
