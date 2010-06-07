@@ -129,6 +129,7 @@
 			<plugin>
 				<artifactId>maven-deploy-plugin</artifactId>
 				<executions>
+				  <!--
 					<execution>
 					  <id>schemacrawler_snapshot</id>
 						<phase>deploy</phase>
@@ -140,7 +141,7 @@
 							<url>http://oss.sonatype.org/content/repositories/snapshots</url>
 							<groupId>net.sourceforge.schemacrawler</groupId>
 							<artifactId>schemacrawler</artifactId>
-							<packaging>maven-plugin</packaging>
+							<packaging>jar</packaging>
 							<version>${project.version}</version>
 						</configuration>
 						<goals>
@@ -165,6 +166,7 @@
 							<goal>deploy-file</goal>
 						</goals>
 					</execution>
+					-->
 					<execution>
 					  <id>schemacrawler_release</id>
 						<phase>deploy</phase>
@@ -176,7 +178,7 @@
 							<url>http://oss.sonatype.org/service/local/staging/deploy/maven2</url>
 							<groupId>net.sourceforge.schemacrawler</groupId>
 							<artifactId>schemacrawler</artifactId>
-							<packaging>maven-plugin</packaging>
+							<packaging>jar</packaging>
 							<version>${project.version}</version>
 						</configuration>
 						<goals>

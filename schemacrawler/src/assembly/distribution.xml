@@ -14,14 +14,14 @@
 
   <target name="make-distribution"
           depends="
-      do-downloads,
-	    make-super-jar,
-	    make-binary-distribution,
-	    make-source-distribution,
-	    make-database-distributions,
-	    make-website-distribution,
-	    cleanup-distribution
-	    "
+            do-downloads,
+            make-super-jar,
+            make-binary-distribution,
+            make-source-distribution,
+            make-database-distributions,
+            make-website-distribution,
+            cleanup-distribution
+            "
           description="Package all sub-project jars into the distributable jar" />
 
   <target name="do-downloads">
