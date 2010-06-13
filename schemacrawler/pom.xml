@@ -134,7 +134,7 @@
 						<phase>deploy</phase>
 						<configuration>
 							<file>target/schemacrawler-${project.version}.jar</file>
-							<pomFile>../schemacrawler-integrations/src/main/resources/schemacrawler-maven-plugin.pom</pomFile>
+							<pomFile>target/schemacrawler.pom</pomFile>
 							<repositoryId>sonatype-nexus</repositoryId>
 							<repositoryLayout>default</repositoryLayout>
 							<url>http://oss.sonatype.org/service/local/staging/deploy/maven2</url>
@@ -152,7 +152,7 @@
 						<phase>deploy</phase>
 						<configuration>
 							<file>target/schemacrawler-${project.version}.jar</file>
-							<pomFile>../schemacrawler-integrations/src/main/resources/schemacrawler-maven-plugin.pom</pomFile>
+							<pomFile>target/schemacrawler-integrations.pom</pomFile>
 							<repositoryId>sonatype-nexus</repositoryId>
 							<repositoryLayout>default</repositoryLayout>
 							<url>http://oss.sonatype.org/service/local/staging/deploy/maven2</url>
