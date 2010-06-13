@@ -20,6 +20,9 @@
       <url>http://www.gnu.org/copyleft/lesser.txt</url>
     </license>
   </licenses>
+  <scm>
+    <url>https://schemacrawler.svn.sourceforge.net/svnroot/schemacrawler</url>
+  </scm>
   <developers>
     <developer>
       <name>Sualeh Fatehi</name>
