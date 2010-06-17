@@ -10,7 +10,7 @@
   <property name="schemacrawler.distribution.sources.jar"
             value="${distribution.target}/schemacrawler-${SchemaCrawler.version}-sources.jar" />
   <property name="schemacrawler.pom"
-            value="${SchemaCrawler.home}/schemacrawler-integrations/src/main/resources/schemacrawler-maven-plugin.pom" />
+            value="${SchemaCrawler.home}/schemacrawler/src/assembly/schemacrawler.pom" />
 
   <taskdef resource="net/sf/antcontrib/antcontrib.properties" />
 
@@ -273,8 +273,6 @@
     <!-- Create poms for deployment -->
     <copy file="${schemacrawler.pom}"
           tofile="${distribution.target}/schemacrawler.pom" />
-    <copy file="${schemacrawler.pom}"
-          tofile="${distribution.target}/schemacrawler-integrations.pom" />
 
   </target>
 

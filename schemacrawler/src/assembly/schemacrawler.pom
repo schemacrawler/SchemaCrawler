@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>net.sourceforge.schemacrawler</groupId>
   <artifactId>schemacrawler-integrations</artifactId>
-  <packaging>maven-plugin</packaging>
+  <packaging>jar</packaging>
   <version>8.2</version>
   <name>SchemaCrawler Maven Plugin</name>
   <description>SchemaCrawler is a command-line tool to output your database schema and data in a readable form. The
