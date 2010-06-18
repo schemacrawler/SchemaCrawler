@@ -4,10 +4,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>net.sourceforge.schemacrawler</groupId>
-  <artifactId>schemacrawler-integrations</artifactId>
+  <artifactId>schemacrawler</artifactId>
   <packaging>jar</packaging>
   <version>8.2</version>
-  <name>SchemaCrawler Maven Plugin</name>
+  <name>SchemaCrawler</name>
   <description>SchemaCrawler is a command-line tool to output your database schema and data in a readable form. The
     output is designed to be diff-ed with previous versions of your database schema. SchemaCrawler is also an API that
     improves on the standard JDBC metadata.
@@ -38,41 +38,4 @@
   <organization>
     <name>Sualeh Fatehi</name>
   </organization>
-  <dependencies>
-    <dependency>
-      <groupId>org.apache.maven</groupId>
-      <artifactId>maven-plugin-api</artifactId>
-      <version>2.0</version>
-    </dependency>
-    <dependency>
-      <groupId>commons-lang</groupId>
-      <artifactId>commons-lang</artifactId>
-      <version>2.1</version>
-    </dependency>
-    <dependency>
-      <groupId>org.codehaus.plexus</groupId>
-      <artifactId>plexus-archiver</artifactId>
-      <version>1.0-alpha-3</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.maven</groupId>
-      <artifactId>maven-project</artifactId>
-      <version>2.0</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.maven.reporting</groupId>
-      <artifactId>maven-reporting-impl</artifactId>
-      <version>2.0.2</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.maven</groupId>
-      <artifactId>maven-artifact</artifactId>
-      <version>2.0</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.maven.shared</groupId>
-      <artifactId>maven-plugin-testing-harness</artifactId>
-      <version>1.0-beta-1</version>
-    </dependency>
-  </dependencies>
 </project>

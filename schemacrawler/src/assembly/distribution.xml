@@ -9,8 +9,8 @@
             value="${distribution.target}/schemacrawler-${SchemaCrawler.version}.jar" />
   <property name="schemacrawler.distribution.sources.jar"
             value="${distribution.target}/schemacrawler-${SchemaCrawler.version}-sources.jar" />
-  <property name="schemacrawler.pom"
-            value="${SchemaCrawler.home}/schemacrawler/src/assembly/schemacrawler.pom" />
+  <property name="schemacrawler.distribution.javadoc.jar"
+            value="${distribution.target}/schemacrawler-${SchemaCrawler.version}-javadoc.jar" />
 
   <taskdef resource="net/sf/antcontrib/antcontrib.properties" />
 
@@ -102,6 +102,9 @@
       <zipfileset src="${SchemaCrawler.home}/schemacrawler-tools/target/schemacrawler-tools-${SchemaCrawler.version}-sources.jar" />
       <zipfileset src="${SchemaCrawler.home}/schemacrawler-integrations/target/schemacrawler-integrations-${SchemaCrawler.version}-sources.jar" />
     </jar>
+
+    <copy file="${SchemaCrawler.home}/schemacrawler-api/target/schemacrawler-api-${SchemaCrawler.version}-javadoc.jar"
+          tofile="${schemacrawler.distribution.javadoc.jar}" />
 
   </target>
 
@@ -269,10 +272,6 @@
         <exclude name="schemacrawler*.jar" />
       </fileset>
     </delete>
-
-    <!-- Create poms for deployment -->
-    <copy file="${schemacrawler.pom}"
-          tofile="${distribution.target}/schemacrawler.pom" />
 
   </target>
 
