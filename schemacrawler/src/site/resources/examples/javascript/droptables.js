@@ -16,7 +16,8 @@ var dropTables = function()
       try
       {
         statement.executeUpdate(sql);
-      } catch (e)
+      }
+      catch (e)
       {
         println("");
         println(e.message);
