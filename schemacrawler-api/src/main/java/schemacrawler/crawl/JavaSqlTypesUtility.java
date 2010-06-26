@@ -189,7 +189,7 @@ public final class JavaSqlTypesUtility
     }
     else
     {
-      properties = Collections.EMPTY_MAP;
+      properties = new HashMap<String, String>();
     }
     return properties;
   }
