@@ -253,6 +253,7 @@
 
   <target name="make-database-distributions">
 
+  	<create-database-distrib database="db2" />
     <create-database-distrib database="derby" />
     <create-database-distrib database="mysql" />
     <create-database-distrib database="oracle" />
