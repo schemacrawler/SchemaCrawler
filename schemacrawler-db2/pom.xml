@@ -4,12 +4,12 @@
   <parent>
     <groupId>net.sourceforge.schemacrawler</groupId>
     <artifactId>schemacrawler-all</artifactId>
-    <version>8.2</version>
+    <version>8.3</version>
   </parent>
   <groupId>net.sourceforge.schemacrawler</groupId>
   <artifactId>schemacrawler-db2</artifactId>
   <packaging>jar</packaging>
-  <name>SchemaCrawler for DB2</name>
+  <name>SchemaCrawler for IBM DB2</name>
   <licenses>
     <license>
       <name>GNU General Public License</name>

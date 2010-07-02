@@ -4,7 +4,7 @@
   <parent>
     <groupId>net.sourceforge.schemacrawler</groupId>
     <artifactId>schemacrawler-all</artifactId>
-    <version>8.2</version>
+    <version>8.3</version>
   </parent>
   <groupId>net.sourceforge.schemacrawler</groupId>
   <artifactId>schemacrawler-postgresql</artifactId>
