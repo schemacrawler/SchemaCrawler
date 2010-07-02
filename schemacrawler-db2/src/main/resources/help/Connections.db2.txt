@@ -1,0 +1,16 @@
+--- Connection Options ---
+
+-host=<host>
+	Host name. Optional, defaults to localhost.
+	
+-port=<port>
+	Port number. Optional, defaults to 50000.	
+
+-database=<database>
+	Database name.
+	
+-user=<user>
+	Database user name.
+
+-password=<password>
+	Database password.

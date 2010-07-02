@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+<listEntry value="/SchemaCrawler for DB2/src/main/java/schemacrawler/tools/db2/Main.java"/>
+</listAttribute>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+<listEntry value="1"/>
+</listAttribute>
+<booleanAttribute key="org.eclipse.debug.core.appendEnvironmentVariables" value="true"/>
+<stringAttribute key="org.eclipse.jdt.launching.CLASSPATH_PROVIDER" value="org.maven.ide.eclipse.launchconfig.classpathProvider"/>
+<stringAttribute key="org.eclipse.jdt.launching.JRE_CONTAINER" value="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="schemacrawler.tools.db2.Main"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-host=192.168.0.2&#13;&#10;-port=1521&#13;&#10;-database=XE&#13;&#10;-schemas=BOOKS&#13;&#10;-user=books&#13;&#10;-password=books&#13;&#10;-tables=.*\.(?!BIN\$).*&#13;&#10;-infolevel=lint&#13;&#10;-command=verbose_schema &#13;&#10;-loglevel=WARNING"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="SchemaCrawler for DB2"/>
+<stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.maven.ide.eclipse.launchconfig.sourcepathProvider"/>
+<stringAttribute key="org.eclipse.jdt.launching.WORKING_DIRECTORY" value="${workspace_loc:SchemaCrawler - 3 - Tools/target}"/>
+</launchConfiguration>
