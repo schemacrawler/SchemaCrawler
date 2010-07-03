@@ -95,7 +95,7 @@ public class SchemaCrawlerGrepTest
     final String[][][] columnDataTypes = {
         {
           {
-              "INTEGER", "INTEGER", "INTEGER",
+              "INTEGER", "INTEGER", "CLOB",
           },
         }, {}, {}, {
           {
