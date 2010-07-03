@@ -336,8 +336,8 @@ public class SchemaCrawlerTest
   {
 
     final InformationSchemaViews informationSchemaViews = new InformationSchemaViews();
-    informationSchemaViews.setRoutinesSql(Utility
-      .readResourceFully("/procedure_definitions.sql"));
+    informationSchemaViews
+      .setRoutinesSql("SELECT * FROM INFORMATION_SCHEMA.ROUTINES");
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setShowStoredProcedures(true);
