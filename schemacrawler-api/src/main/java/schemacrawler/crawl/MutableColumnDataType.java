@@ -346,9 +346,9 @@ final class MutableColumnDataType
     this.precision = precision;
   }
 
-  void setSearchable(final int searchable)
+  void setSearchable(final SearchableType searchable)
   {
-    this.searchable = SearchableType.valueOf(searchable);
+    this.searchable = searchable;
   }
 
   void setType(final int type, final String typeClassName)

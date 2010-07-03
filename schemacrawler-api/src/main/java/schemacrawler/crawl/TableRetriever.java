@@ -26,7 +26,6 @@ import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -169,7 +168,8 @@ final class TableRetriever
         final boolean uniqueIndex = !results.getBoolean("NON_UNIQUE");
         final int type = results.getInt("TYPE", IndexType.unknown.getId());
         final int ordinalPosition = results.getInt("ORDINAL_POSITION", 0);
-        final String sortSequence = results.getString("ASC_OR_DESC");
+        final IndexColumnSortSequence sortSequence = results
+          .getEnum("ASC_OR_DESC", IndexColumnSortSequence.unknown);
         final int cardinality = results.getInt("CARDINALITY", 0);
         final int pages = results.getInt("PAGES", 0);
 
@@ -180,8 +180,7 @@ final class TableRetriever
           final MutableIndexColumn indexColumn = new MutableIndexColumn(index,
                                                                         column);
           indexColumn.setIndexOrdinalPosition(ordinalPosition);
-          indexColumn.setSortSequence(IndexColumnSortSequence
-            .valueOfFromCode(sortSequence));
+          indexColumn.setSortSequence(sortSequence);
           //
           index.addColumn(indexColumn);
           index.setUnique(uniqueIndex);
@@ -506,8 +505,8 @@ final class TableRetriever
         LOGGER.log(Level.FINER, String.format("Retrieving table: %s.%s",
                                               schemaName,
                                               tableName));
-        final TableType tableType = TableType.valueOf(results
-          .getString("TABLE_TYPE").toLowerCase(Locale.ENGLISH));
+        final TableType tableType = results.getEnum("TABLE_TYPE",
+                                                    TableType.unknown);
         final String remarks = results.getString("REMARKS");
 
         final MutableSchema schema = lookupSchema(catalogName, schemaName);

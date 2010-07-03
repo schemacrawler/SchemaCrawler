@@ -26,7 +26,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -222,13 +221,13 @@ final class TableExRetriever
     }
     finally
     {
-      if (statement != null)
-      {
-        statement.close();
-      }
       if (results != null)
       {
         results.close();
+      }
+      if (statement != null)
+      {
+        statement.close();
       }
     }
 
@@ -281,13 +280,13 @@ final class TableExRetriever
     }
     finally
     {
-      if (statement != null)
-      {
-        statement.close();
-      }
       if (results != null)
       {
         results.close();
+      }
+      if (statement != null)
+      {
+        statement.close();
       }
     }
 
@@ -405,25 +404,15 @@ final class TableExRetriever
           continue;
         }
 
-        EventManipulationType eventManipulationType;
-        try
-        {
-          eventManipulationType = EventManipulationType.valueOf(results
-            .getString("EVENT_MANIPULATION").toLowerCase(Locale.ENGLISH));
-        }
-        catch (final IllegalArgumentException e)
-        {
-          eventManipulationType = EventManipulationType.unknown;
-        }
+        final EventManipulationType eventManipulationType = results
+          .getEnum("EVENT_MANIPULATION", EventManipulationType.unknown);
         final int actionOrder = results.getInt("ACTION_ORDER", 0);
         final String actionCondition = results.getString("ACTION_CONDITION");
         final String actionStatement = results.getString("ACTION_STATEMENT");
-        final ActionOrientationType actionOrientation = ActionOrientationType
-          .valueOf(results.getString("ACTION_ORIENTATION")
-            .toLowerCase(Locale.ENGLISH));
-        final ConditionTimingType conditionTiming = ConditionTimingType
-          .valueOfFromValue(results.getString("CONDITION_TIMING")
-            .toLowerCase(Locale.ENGLISH));
+        final ActionOrientationType actionOrientation = results
+          .getEnum("ACTION_ORIENTATION", ActionOrientationType.unknown);
+        final ConditionTimingType conditionTiming = results
+          .getEnum("CONDITION_TIMING", ConditionTimingType.unknown);
 
         MutableTrigger trigger = table.lookupTrigger(triggerName);
         if (trigger == null)
@@ -449,7 +438,10 @@ final class TableExRetriever
     }
     finally
     {
-      results.close();
+      if (results != null)
+      {
+        results.close();
+      }
       statement.close();
     }
 
@@ -503,8 +495,8 @@ final class TableExRetriever
 
         LOGGER.log(Level.FINER, "Retrieving view information: " + viewName);
         final String definition = results.getString("VIEW_DEFINITION");
-        final CheckOptionType checkOption = CheckOptionType.valueOf(results
-          .getString("CHECK_OPTION").toLowerCase(Locale.ENGLISH));
+        final CheckOptionType checkOption = results
+          .getEnum("CHECK_OPTION", CheckOptionType.unknown);
         final boolean updatable = results.getBoolean("IS_UPDATABLE");
 
         view.appendDefinition(definition);
@@ -520,11 +512,11 @@ final class TableExRetriever
     }
     finally
     {
-      statement.close();
       if (results != null)
       {
         results.close();
       }
+      statement.close();
     }
 
   }
