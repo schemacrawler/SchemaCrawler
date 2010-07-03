@@ -37,7 +37,7 @@
       Define the ant tasks (macros) that come with SchemaCrawler
     -->
     <typedef resource="schemacrawler-antlib.xml"
-             classpath="../schemacrawler-8.2.jar" />
+             classpath="../schemacrawler-8.3.jar" />
 
     <!-- Step 2.
       Define the classpath to the database driver, and Apache Velocity

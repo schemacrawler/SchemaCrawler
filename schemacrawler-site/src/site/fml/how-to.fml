@@ -305,7 +305,7 @@ for (final Catalog catalog: database.getCatalogs())
   <dependency>
     <groupId>net.sourceforge.schemacrawler</groupId>
     <artifactId>schemacrawler</artifactId>
-    <version>8.2</version>
+    <version>8.3</version>
   </dependency>
 </dependencies>
         ]]></source>
@@ -439,7 +439,7 @@ for (final Catalog catalog: database.getCatalogs())
     <plugin>
       <groupId>schemacrawler</groupId>
       <artifactId>schemacrawler-maven-plugin</artifactId>
-      <version>8.2</version>
+      <version>8.3</version>
       <configuration>
         <schemacrawler.config>schemacrawler.config.properties</schemacrawler.config>
         <schemacrawler.datasource>hsqldb</schemacrawler.datasource>
