@@ -90,7 +90,7 @@ hr {
 	</tr>
 	<tr>
 		<td>database product version</td>
-		<td>1.8.0</td>
+		<td>2.0.0</td>
 	</tr>
 	<tr>
 		<td>database user name</td>
@@ -108,11 +108,11 @@ hr {
 	</tr>
 	<tr>
 		<td>driver version</td>
-		<td>1.8.0</td>
+		<td>2.0.0</td>
 	</tr>
 	<tr>
 		<td>driver class name</td>
-		<td>org.hsqldb.jdbcDriver</td>
+		<td>org.hsqldb.jdbc.JDBCDriver</td>
 	</tr>
 	<tr>
 		<td>url</td>
@@ -120,7 +120,7 @@ hr {
 	</tr>
 	<tr>
 		<td>is JDBC compliant</td>
-		<td>false</td>
+		<td>true</td>
 	</tr>
 </table>
 <p></p>
@@ -129,35 +129,35 @@ hr {
 
 <table>
 	<tr>
-		<td colspan='2' class='name'>PUBLIC.AUTHORS</td>
+		<td colspan='2' class='name'>PUBLIC.BOOKS.AUTHORS</td>
 		<td class='description'>[table]</td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>PUBLIC.AUTHORSLIST</td>
+		<td colspan='2' class='name'>PUBLIC.BOOKS.AUTHORSLIST</td>
 		<td class='description'>[view]</td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>PUBLIC.BOOKAUTHORS</td>
+		<td colspan='2' class='name'>PUBLIC.BOOKS.BOOKAUTHORS</td>
 		<td class='description'>[table]</td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>PUBLIC.BOOKS</td>
+		<td colspan='2' class='name'>PUBLIC.BOOKS.BOOKS</td>
 		<td class='description'>[table]</td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>PUBLIC.&quot;Global Counts&quot;</td>
+		<td colspan='2' class='name'>PUBLIC.BOOKS.&quot;Global Counts&quot;</td>
 		<td class='description'>[table]</td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>PUBLIC.PUBLISHERS</td>
+		<td colspan='2' class='name'>PUBLIC.BOOKS.PUBLISHERS</td>
 		<td class='description'>[table]</td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SALES.REGIONS</td>
+		<td colspan='2' class='name'>PUBLIC.SALES.REGIONS</td>
 		<td class='description'>[table]</td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SALES.SALES</td>
+		<td colspan='2' class='name'>PUBLIC.SALES.SALES</td>
 		<td class='description'>[table]</td>
 	</tr>
 </table>
@@ -167,720 +167,32 @@ hr {
 
 <table>
 	<tr>
-		<td colspan='2' class='name'>PUBLIC.ABS</td>
-		<td class='description'>[procedure, returns result]</td>
+		<td colspan='2' class='name'>PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS</td>
+		<td class='description'>[procedure, no result]</td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>PUBLIC.ACOS</td>
-		<td class='description'>[procedure, returns result]</td>
+		<td colspan='2' class='name'>PUBLIC.SYSTEM_LOBS.CONVERT_BLOCK</td>
+		<td class='description'>[procedure, no result]</td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>PUBLIC.ASCII</td>
-		<td class='description'>[procedure, returns result]</td>
+		<td colspan='2' class='name'>PUBLIC.SYSTEM_LOBS.CREATE_EMPTY_BLOCK</td>
+		<td class='description'>[procedure, no result]</td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>PUBLIC.ASIN</td>
-		<td class='description'>[procedure, returns result]</td>
+		<td colspan='2' class='name'>PUBLIC.SYSTEM_LOBS.DELETE_BLOCKS</td>
+		<td class='description'>[procedure, no result]</td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>PUBLIC.ATAN</td>
-		<td class='description'>[procedure, returns result]</td>
+		<td colspan='2' class='name'>PUBLIC.SYSTEM_LOBS.DELETE_LOB</td>
+		<td class='description'>[procedure, no result]</td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>PUBLIC.ATAN2</td>
-		<td class='description'>[procedure, returns result]</td>
+		<td colspan='2' class='name'>PUBLIC.SYSTEM_LOBS.DELETE_UNUSED</td>
+		<td class='description'>[procedure, no result]</td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>PUBLIC.BIT_LENGTH</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.BITAND</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.BITOR</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.BITXOR</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.CEILING</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.&quot;CHAR&quot;</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.CHAR_LENGTH</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.CHARACTER_LENGTH</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.CONCAT</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.COS</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.COT</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.CURDATE</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.CURTIME</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.DATABASE</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.DATEDIFF</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.&quot;DAY&quot;</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.DAYNAME</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.DAYOFMONTH</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.DAYOFWEEK</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.DAYOFYEAR</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.DEGREES</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.DIFFERENCE</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.EXP</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.FLOOR</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.HEXTORAW</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.&quot;HOUR&quot;</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.&quot;IDENTITY&quot;</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.&quot;INSERT&quot;</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.java.lang.Math.abs</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.java.lang.Math.acos</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.java.lang.Math.asin</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.java.lang.Math.atan</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.java.lang.Math.atan2</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.java.lang.Math.cbrt</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.java.lang.Math.ceil</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.java.lang.Math.copySign</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.java.lang.Math.cos</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.java.lang.Math.cosh</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.java.lang.Math.exp</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.java.lang.Math.expm1</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.java.lang.Math.floor</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.java.lang.Math.getExponent</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.java.lang.Math.hypot</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.java.lang.Math.IEEEremainder</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.java.lang.Math.log</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.java.lang.Math.log10</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.java.lang.Math.log1p</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.java.lang.Math.max</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.java.lang.Math.min</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.java.lang.Math.nextAfter</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.java.lang.Math.nextUp</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.java.lang.Math.pow</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.java.lang.Math.random</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.java.lang.Math.rint</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.java.lang.Math.round</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.java.lang.Math.scalb</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.java.lang.Math.signum</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.java.lang.Math.sin</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.java.lang.Math.sinh</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.java.lang.Math.sqrt</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.java.lang.Math.tan</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.java.lang.Math.tanh</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.java.lang.Math.toDegrees</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.java.lang.Math.toRadians</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.java.lang.Math.ulp</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.LCASE</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.&quot;LEFT&quot;</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.LENGTH</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.LOCATE</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.LOG</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.LOG10</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.LOWER</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.LTRIM</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.&quot;MINUTE&quot;</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.MOD</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.&quot;MONTH&quot;</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.MONTHNAME</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.NOW</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.OCTET_LENGTH</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.abs</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.ascii</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.bitand</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.bitLength</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.bitor</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.bitxor</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.character</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.concat</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.cot</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.curdate</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.curtime</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.database</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.datediff</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.dayname</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.dayofmonth</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.dayofweek</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.dayofyear</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.difference</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.getAutoCommit</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.getDatabaseFullProductVersion</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.getDatabaseMajorVersion</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.getDatabaseMinorVersion</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.getDatabaseProductName</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.getDatabaseProductVersion</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.hexToRaw</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.hour</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.identity</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.insert</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.isReadOnlyConnection</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.isReadOnlyDatabase</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.isReadOnlyDatabaseFiles</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.lcase</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.left</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.length</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.locate</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.log10</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.ltrim</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.minute</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.mod</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.month</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.monthname</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.now</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.octetLength</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.pi</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.position</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.quarter</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.rand</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.rawToHex</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.repeat</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.replace</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.right</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.round</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.roundMagic</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.rtrim</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.second</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.sign</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.soundex</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.space</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.substring</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.to_char</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.trim</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.truncate</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.ucase</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.user</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.week</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.org.hsqldb.Library.year</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.PI</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.POWER</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.QUARTER</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.RADIANS</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.RAND</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.RAWTOHEX</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.&quot;REPEAT&quot;</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.REPLACE</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.&quot;RIGHT&quot;</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.ROUND</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.ROUNDMAGIC</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.RTRIM</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.&quot;SECOND&quot;</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.SIGN</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.SIN</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.SOUNDEX</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.SPACE</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.SQRT</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.SUBSTR</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.SUBSTRING</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.TAN</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.TO_CHAR</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.TRUNCATE</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.UCASE</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.UPPER</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.&quot;USER&quot;</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.WEEK</td>
-		<td class='description'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.&quot;YEAR&quot;</td>
-		<td class='description'>[procedure, returns result]</td>
+		<td colspan='2' class='name'>PUBLIC.SYSTEM_LOBS.DIVIDE_BLOCK</td>
+		<td class='description'>[procedure, no result]</td>
 	</tr>
 </table>
 <p></p>

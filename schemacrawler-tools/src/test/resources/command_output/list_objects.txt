@@ -4,12 +4,12 @@ Tables
 ========================================================================
 
 
-PUBLIC.AUTHORS                                                   [table]
-PUBLIC.AUTHORSLIST                                                [view]
-PUBLIC.BOOKAUTHORS                                               [table]
-PUBLIC.BOOKS                                                     [table]
-PUBLIC."Global Counts"                                           [table]
-PUBLIC.PUBLISHERS                                                [table]
-SALES.REGIONS                                                    [table]
-SALES.SALES                                                      [table]
+PUBLIC.BOOKS.AUTHORS                                             [table]
+PUBLIC.BOOKS.AUTHORSLIST                                          [view]
+PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
+PUBLIC.BOOKS.BOOKS                                               [table]
+PUBLIC.BOOKS."Global Counts"                                     [table]
+PUBLIC.BOOKS.PUBLISHERS                                          [table]
+PUBLIC.SALES.REGIONS                                             [table]
+PUBLIC.SALES.SALES                                               [table]
 

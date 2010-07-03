@@ -17,7 +17,7 @@ Database Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
 database product name,HSQL Database Engine
-database product version,1.8.0
+database product version,2.0.0
 database user name,SA
 
 
@@ -26,56 +26,58 @@ Database Characteristics
 
 all procedures are callable,true
 all tables are selectable,true
-catalog separator,""
-catalog term,""
-catalogs,""
+auto commit failure closes all result sets,false
+catalog separator,.
+catalog term,CATALOG
+catalogs,PUBLIC
+client info properties,"files_readonly, hsqldb.applog, hsqldb.cache_free_count_scale, hsqldb.cache_rows, hsqldb.cache_size, hsqldb.default_table_type, hsqldb.defrag_limit, hsqldb.incremental_backup, hsqldb.lock_file, hsqldb.log_data, hsqldb.log_size, hsqldb.max_nio_scale, hsqldb.nio_data_file, hsqldb.result_max_memory_rows, hsqldb.script_format, hsqldb.temp_directory, hsqldb.tx, hsqldb.tx_level, hsqldb.write_delay, hsqldb.write_delay_millis, jdbc.translate_dti_types, readonly, runtime.gc_interval, sql.compare_in_locale, sql.enforce_names, sql.enforce_refs, sql.enforce_size, sql.enforce_strict_size, sql.identity_is_pk, sql.ref_integrity, textdb.all_quoted, textdb.cache_scale, textdb.cache_size_scale, textdb.encoding, textdb.fs, textdb.ignore_first, textdb.lvs, textdb.quoted, textdb.vs"
 data definition causes transaction commit,true
 data definition ignored in transactions,false
-database major version,1
-database minor version,8
-default transaction isolation,1
+database major version,2
+database minor version,0
+default transaction isolation,2
 deletes are detected for TYPE_FORWARD_ONLY result sets,false
 deletes are detected for TYPE_SCROLL_INSENSITIVE result sets,false
 deletes are detected for TYPE_SCROLL_SENSITIVE result sets,false
 does max row size include blobs,true
-driver major version,1
-driver minor version,8
+driver major version,2
+driver minor version,0
 extra name characters,""
 identifier quote string,""""
 inserts are detected for TYPE_FORWARD_ONLY result sets,false
 inserts are detected for TYPE_SCROLL_INSENSITIVE result sets,false
 inserts are detected for TYPE_SCROLL_SENSITIVE result sets,false
-is catalog at start,false
+is catalog at start,true
 is read only,false
-JDBC major version,3
+JDBC major version,4
 JDBC minor version,0
 locators update copy,false
 max binary literal length,0
-max catalog name length,0
+max catalog name length,128
 max char literal length,0
-max column name length,0
+max column name length,128
 max columns in group by,0
 max columns in index,0
 max columns in order by,0
 max columns in select,0
 max columns in table,0
 max connections,0
-max cursor name length,0
+max cursor name length,128
 max index length,0
-max procedure name length,0
+max procedure name length,128
 max row size,0
-max schema name length,0
+max schema name length,128
 max statement length,0
 max statements,0
-max table name length,0
+max table name length,128
 max tables in select,0
-max user name length,0
+max user name length,128
 null plus non null is null,true
 nulls are sorted at end,false
-nulls are sorted at start,false
+nulls are sorted at start,true
 nulls are sorted high,false
-nulls are sorted low,true
-numeric functions,"ABS, ACOS, ASIN, ATAN, ATAN2, CEILING, COS, COT, DEGREES, EXP, FLOOR, LOG, LOG10, MOD, PI, POWER, RADIANS, RAND, ROUND, SIGN, SIN, SQRT, TAN, TRUNCATE, BITAND, BITOR, BITXOR, ROUNDMAGIC"
+nulls are sorted low,false
+numeric functions,"ABS, ACOS, ASIN, ATAN, ATAN2, BITAND, BITOR, BITXOR, CEILING, COS, COT, DEGREES, EXP, FLOOR, LOG, LOG10, MOD, PI, POWER, RADIANS, RAND, ROUND, ROUNDMAGIC, SIGN, SIN, SQRT, TAN, TRUNCATE"
 others inserts are visible for TYPE_FORWARD_ONLY result sets,false
 others inserts are visible for TYPE_SCROLL_INSENSITIVE result sets,false
 others inserts are visible for TYPE_SCROLL_SENSITIVE result sets,false
@@ -91,12 +93,14 @@ own inserts are visible for TYPE_SCROLL_SENSITIVE result sets,false
 own updates are visible for TYPE_FORWARD_ONLY result sets,false
 own updates are visible for TYPE_SCROLL_INSENSITIVE result sets,false
 own updates are visible for TYPE_SCROLL_SENSITIVE result sets,false
-procedure term,""
+procedure term,PROCEDURE
 result set holdability,1
+row id lifetime,java.sql.RowIdLifetime@33e228bc[
+]
 schema term,SCHEMA
-schemas,"INFORMATION_SCHEMA, PUBLIC, SALES"
+schemas,"BOOKS, INFORMATION_SCHEMA, PUBLIC, SALES, SYSTEM_LOBS"
 search string escape,\
-SQL keywords,"BEFORE, BIGINT, BINARY, CACHED, DATETIME, LIMIT, LONGVARBINARY, LONGVARCHAR, OBJECT, OTHER, SAVEPOINT, TEMP, TEXT, TOP, TRIGGER, TINYINT, VARBINARY, VARCHAR_IGNORECASE"
+SQL keywords,""
 SQL state type,2
 stores lower case identifiers,false
 stores lower case quoted identifiers,false
@@ -104,18 +108,18 @@ stores mixed case identifiers,false
 stores mixed case quoted identifiers,false
 stores upper case identifiers,true
 stores upper case quoted identifiers,false
-string functions,"ASCII, BIT_LENGTH, CHAR, CHAR_LENGTH, CHARACTER_LENGTH, CONCAT, DIFFERENCE, HEXTORAW, INSERT, LCASE, LEFT, LENGTH, LOCATE, LTRIM, OCTET_LENGTH, RAWTOHEX, REPEAT, REPLACE, RIGHT, RTRIM, SOUNDEX, SPACE, SUBSTR, SUBSTRING, UCASE, LOWER, UPPER"
+string functions,"ASCII, CHAR, CONCAT, DIFFERENCE, HEXTORAW, INSERT, LCASE, LEFT, LENGTH, LOCATE, LTRIM, RAWTOHEX, REPEAT, REPLACE, RIGHT, RTRIM, SOUNDEX, SPACE, SUBSTR, UCASE"
 supports alter table with add column,true
 supports alter table with drop column,true
-supports ANSI92 entry level SQL,false
-supports ANSI92 full SQL,false
-supports ANSI92 intermediate SQL,false
+supports ANSI92 entry level SQL,true
+supports ANSI92 full SQL,true
+supports ANSI92 intermediate SQL,true
 supports batch updates,true
-supports catalogs in data manipulation,false
-supports catalogs in index definitions,false
-supports catalogs in privilege definitions,false
-supports catalogs in procedure calls,false
-supports catalogs in table definitions,false
+supports catalogs in data manipulation,true
+supports catalogs in index definitions,true
+supports catalogs in privilege definitions,true
+supports catalogs in procedure calls,true
+supports catalogs in table definitions,true
 supports column aliasing,true
 supports convert,true
 supports core SQL grammar,true
@@ -124,42 +128,43 @@ supports data definition and data manipulation transactions,false
 supports data manipulation transactions only,true
 supports different table correlation names,true
 supports expressions in order by,true
-supports extended SQL grammar,false
-supports full outer joins,false
-supports get generated keys,false
+supports extended SQL grammar,true
+supports full outer joins,true
+supports get generated keys,true
 supports group by,true
 supports group by beyond select,true
 supports group by unrelated,true
 supports integrity enhancement facility,true
 supports like escape clause,true
 supports limited outer joins,true
-supports minimum SQL grammar,false
+supports minimum SQL grammar,true
 supports mixed case identifiers,false
 supports mixed case quoted identifiers,true
-supports multiple open results,false
+supports multiple open results,true
 supports multiple result sets,false
 supports multiple transactions,true
 supports named parameters,true
 supports non nullable columns,true
-supports open cursors across commit,false
+supports open cursors across commit,true
 supports open cursors across rollback,false
 supports open statements across commit,true
 supports open statements across rollback,true
 supports order by unrelated,true
 supports outer joins,true
-supports positioned delete,false
-supports positioned update,false
+supports positioned delete,true
+supports positioned update,true
 supports result set type for TYPE_FORWARD_ONLY result sets,true
 supports result set type for TYPE_SCROLL_INSENSITIVE result sets,true
 supports result set type for TYPE_SCROLL_SENSITIVE result sets,false
 supports savepoints,true
-supports schemas in data manipulation,false
+supports schemas in data manipulation,true
 supports schemas in index definitions,true
 supports schemas in privilege definitions,true
-supports schemas in procedure calls,false
+supports schemas in procedure calls,true
 supports schemas in table definitions,true
-supports select for update,false
-supports statement pooling,false
+supports select for update,true
+supports statement pooling,true
+supports stored functions using call syntax,true
 supports stored procedures,true
 supports subqueries in comparisons,true
 supports subqueries in exists,true
@@ -169,10 +174,10 @@ supports table correlation names,true
 supports transactions,true
 supports union,true
 supports union all,true
-system functions,"DATABASE, USER, IDENTITY"
+system functions,"DATABASE, IFNULL, USER"
 table types,"GLOBAL TEMPORARY, SYSTEM TABLE, TABLE, VIEW"
-time date functions,"CURDATE, CURTIME, DATEDIFF, DAYNAME, DAY, DAYOFMONTH, DAYOFWEEK, DAYOFYEAR, HOUR, MINUTE, MONTH, MONTHNAME, NOW, QUARTER, SECOND, WEEK, YEAR, TO_CHAR"
-type info,"TINYINT, BIGINT, LONGVARBINARY, VARBINARY, BINARY, LONGVARCHAR, CHAR, NUMERIC, DECIMAL, INTEGER, SMALLINT, FLOAT, REAL, DOUBLE, VARCHAR, VARCHAR_IGNORECASE, BOOLEAN, DATE, TIME, TIMESTAMP, OTHER"
+time date functions,"CURDATE, CURTIME, DATEDIFF, DAYNAME, DAYOFMONTH, DAYOFWEEK, DAYOFYEAR, HOUR, MINUTE, MONTH, MONTHNAME, NOW, QUARTER, SECOND, SECONDS_SINCE_MIDNIGHT, TIMESTAMPADD, TIMESTAMPDIFF, TO_CHAR, WEEK, YEAR"
+type info,"BIT, TINYINT, BIGINT, VARBINARY, BINARY, CHARACTER, NUMERIC, DECIMAL, INTEGER, SMALLINT, DOUBLE, FLOAT, REAL, VARCHAR, VARCHAR_IGNORECASE, BOOLEAN, DATE, TIME, TIMESTAMP, OTHER, BLOB, CLOB"
 uses local file per table,false
 uses local files,false
 
@@ -181,10 +186,10 @@ JDBC Driver Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
 driver name,HSQL Database Engine Driver
-driver version,1.8.0
-driver class name,org.hsqldb.jdbcDriver
+driver version,2.0.0
+driver class name,org.hsqldb.jdbc.JDBCDriver
 url,jdbc:hsqldb:mem:schemacrawler
-is JDBC compliant,false
+is JDBC compliant,true
 
 
 JDBC Driver Properties
@@ -193,7 +198,7 @@ JDBC Driver Properties
 default_schema,[driver property]
 "",""
 "","not required; choices [true, false]"
-"",value,null
+"",value,false
 
 get_column_name,[driver property]
 "",""
@@ -203,7 +208,7 @@ get_column_name,[driver property]
 ifexists,[driver property]
 "",""
 "","not required; choices [true, false]"
-"",value,null
+"",value,false
 
 password,[driver property]
 "",""
@@ -213,7 +218,7 @@ password,[driver property]
 shutdown,[driver property]
 "",""
 "","not required; choices [true, false]"
-"",value,null
+"",value,false
 
 user,[driver property]
 "",""
@@ -232,15 +237,31 @@ BIGINT,[data type]
 "",defined with no parameters
 "",nullable
 "",auto-incrementable
-"",searchable
+"",searchable except with where .. like
 
 BINARY,[data type]
 "",based on,BINARY
 "",not user defined
-"",defined with no parameters
+"",defined with LENGTH
 "",nullable
 "",not auto-incrementable
 "",searchable
+
+BIT,[data type]
+"",based on,BIT
+"",not user defined
+"",defined with LENGTH
+"",nullable
+"",not auto-incrementable
+"",searchable except with where .. like
+
+BLOB,[data type]
+"",based on,BLOB
+"",not user defined
+"",defined with LENGTH
+"",nullable
+"",not auto-incrementable
+"",not searchable
 
 BOOLEAN,[data type]
 "",based on,BOOLEAN
@@ -248,9 +269,9 @@ BOOLEAN,[data type]
 "",defined with no parameters
 "",nullable
 "",not auto-incrementable
-"",searchable
+"",searchable except with where .. like
 
-CHAR,[data type]
+CHARACTER,[data type]
 "",based on,CHAR
 "",not user defined
 "",defined with LENGTH
@@ -258,21 +279,29 @@ CHAR,[data type]
 "",not auto-incrementable
 "",searchable
 
+CLOB,[data type]
+"",based on,CLOB
+"",not user defined
+"",defined with LENGTH
+"",nullable
+"",not auto-incrementable
+"",not searchable
+
 DATE,[data type]
 "",based on,DATE
 "",not user defined
 "",defined with no parameters
 "",nullable
 "",not auto-incrementable
-"",searchable
+"",searchable except with where .. like
 
 DECIMAL,[data type]
 "",based on,DECIMAL
 "",not user defined
 "","defined with PRECISION,SCALE"
 "",nullable
-"",not auto-incrementable
-"",searchable
+"",auto-incrementable
+"",searchable except with where .. like
 
 DOUBLE,[data type]
 "",based on,DOUBLE
@@ -280,15 +309,15 @@ DOUBLE,[data type]
 "",defined with no parameters
 "",nullable
 "",not auto-incrementable
-"",searchable
+"",searchable except with where .. like
 
 FLOAT,[data type]
-"",based on,FLOAT
+"",based on,DOUBLE
 "",not user defined
-"",defined with PRECISION
+"",defined with no parameters
 "",nullable
 "",not auto-incrementable
-"",searchable
+"",searchable except with where .. like
 
 INTEGER,[data type]
 "",based on,INTEGER
@@ -296,31 +325,15 @@ INTEGER,[data type]
 "",defined with no parameters
 "",nullable
 "",auto-incrementable
-"",searchable
-
-LONGVARBINARY,[data type]
-"",based on,LONGVARBINARY
-"",not user defined
-"",defined with no parameters
-"",nullable
-"",not auto-incrementable
-"",searchable
-
-LONGVARCHAR,[data type]
-"",based on,LONGVARCHAR
-"",not user defined
-"",defined with no parameters
-"",nullable
-"",not auto-incrementable
-"",searchable
+"",searchable except with where .. like
 
 NUMERIC,[data type]
 "",based on,NUMERIC
 "",not user defined
 "","defined with PRECISION,SCALE"
 "",nullable
-"",not auto-incrementable
-"",searchable
+"",auto-incrementable
+"",searchable except with where .. like
 
 OTHER,[data type]
 "",based on,OTHER
@@ -328,23 +341,23 @@ OTHER,[data type]
 "",defined with no parameters
 "",nullable
 "",not auto-incrementable
-"",not searchable
+"",searchable except with where .. like
 
 REAL,[data type]
-"",based on,REAL
+"",based on,DOUBLE
 "",not user defined
 "",defined with no parameters
 "",nullable
 "",not auto-incrementable
-"",searchable
+"",searchable except with where .. like
 
 SMALLINT,[data type]
 "",based on,SMALLINT
 "",not user defined
 "",defined with no parameters
 "",nullable
-"",not auto-incrementable
-"",searchable
+"",auto-incrementable
+"",searchable except with where .. like
 
 TIME,[data type]
 "",based on,TIME
@@ -352,28 +365,28 @@ TIME,[data type]
 "",defined with no parameters
 "",nullable
 "",not auto-incrementable
-"",searchable
+"",searchable except with where .. like
 
 TIMESTAMP,[data type]
 "",based on,TIMESTAMP
 "",not user defined
-"",defined with PRECISION
+"",defined with no parameters
 "",nullable
 "",not auto-incrementable
-"",searchable
+"",searchable except with where .. like
 
 TINYINT,[data type]
 "",based on,TINYINT
 "",not user defined
 "",defined with no parameters
 "",nullable
-"",not auto-incrementable
-"",searchable
+"",auto-incrementable
+"",searchable except with where .. like
 
 VARBINARY,[data type]
 "",based on,VARBINARY
 "",not user defined
-"",defined with no parameters
+"",defined with LENGTH
 "",nullable
 "",not auto-incrementable
 "",searchable
@@ -400,7 +413,7 @@ Tables
 ========================================================================
 
 
-PUBLIC.AUTHORS,[table]
+PUBLIC.BOOKS.AUTHORS,[table]
 ------------------------------------------------------------------------
 "",ID,INTEGER not null
 "",FIRSTNAME,VARCHAR(20) not null
@@ -412,219 +425,271 @@ PUBLIC.AUTHORS,[table]
 "",POSTALCODE,VARCHAR(10)
 "",COUNTRY,VARCHAR(50)
 ""
-SYS_IDX_47,[primary key]
+PK_AUTHORS,[primary key]
 "",ID,ascending
 ""
 FK_Z_AUTHOR,"[foreign key, with no action]"
-"",ID --> PUBLIC.BOOKAUTHORS.AUTHORID,""
+"",ID --> PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID,""
+""
+SYS_IDX_PK_AUTHORS_10031,[unique index]
+"",ID,unknown
 ""
 IDX_B_AUTHORS,[non-unique index]
-"",LASTNAME,ascending
-"",FIRSTNAME,ascending
+"",LASTNAME,unknown
+"",FIRSTNAME,unknown
 ""
 IDX_A_AUTHORS,[non-unique index]
-"",CITY,ascending
-"",STATE,ascending
-"",POSTALCODE,ascending
-"",COUNTRY,ascending
-""
-CHECK_UPPERCASE_STATE,[check constraint]
-"",AUTHORS.STATE=UPPER(AUTHORS.STATE)
+"",CITY,unknown
+"",STATE,unknown
+"",POSTALCODE,unknown
+"",COUNTRY,unknown
 ""
 DELETE,[privilege]
-"",DBA --> SA (grantable),""
+"",_SYSTEM --> DBA (grantable),""
 ""
 INSERT,[privilege]
-"",DBA --> SA (grantable),""
+"",_SYSTEM --> DBA (grantable),""
+""
+REFERENCES,[privilege]
+"",_SYSTEM --> DBA (grantable),""
 ""
 SELECT,[privilege]
-"",DBA --> SA (grantable),""
+"",_SYSTEM --> DBA (grantable),""
+""
+TRIGGER,[privilege]
+"",_SYSTEM --> DBA (grantable),""
 ""
 UPDATE,[privilege]
-"",DBA --> SA (grantable),""
-""
-TRG_AUTHORS,"[trigger, before delete, per row]"
-"","CREATE TRIGGER TRG_AUTHORS BEFORE DELETE ON AUTHORS FOR EACH ROW CALL ""org.hsqldb.sample.TriggerSample"""
+"",_SYSTEM --> DBA (grantable),""
 
 
-PUBLIC.AUTHORSLIST,[view]
+PUBLIC.BOOKS.AUTHORSLIST,[view]
 ------------------------------------------------------------------------
 "",ID,INTEGER
 "",FIRSTNAME,VARCHAR(20)
 "",LASTNAME,VARCHAR(20)
 ""
 DELETE,[privilege]
-"",DBA --> SA (grantable),""
+"",_SYSTEM --> DBA (grantable),""
 ""
 INSERT,[privilege]
-"",DBA --> SA (grantable),""
+"",_SYSTEM --> DBA (grantable),""
+""
+REFERENCES,[privilege]
+"",_SYSTEM --> DBA (grantable),""
 ""
 SELECT,[privilege]
-"",DBA --> SA (grantable),""
+"",_SYSTEM --> DBA (grantable),""
+""
+TRIGGER,[privilege]
+"",_SYSTEM --> DBA (grantable),""
 ""
 UPDATE,[privilege]
-"",DBA --> SA (grantable),""
-""
-"",[definition]
-"","SELECT Id, FirstName, LastName FROM Authors"
+"",_SYSTEM --> DBA (grantable),""
 
 
-PUBLIC.BOOKAUTHORS,[table]
+PUBLIC.BOOKS.BOOKAUTHORS,[table]
 ------------------------------------------------------------------------
 "",BOOKID,INTEGER not null
 "",AUTHORID,INTEGER not null
 "","""UPDATE""",INTEGER
 ""
 FK_Z_AUTHOR,"[foreign key, with no action]"
-"",PUBLIC.AUTHORS.ID --> AUTHORID,""
+"",PUBLIC.BOOKS.AUTHORS.ID --> AUTHORID,""
 ""
 FK_Y_BOOK,"[foreign key, with no action]"
-"",PUBLIC.BOOKS.ID --> BOOKID,""
+"",PUBLIC.BOOKS.BOOKS.ID --> BOOKID,""
 ""
-SYS_IDX_52,[non-unique index]
-"",AUTHORID,ascending
+SYS_IDX_10041,[non-unique index]
+"",AUTHORID,unknown
 ""
-SYS_IDX_50,[non-unique index]
-"",BOOKID,ascending
+SYS_IDX_10039,[non-unique index]
+"",BOOKID,unknown
 ""
 UIDX_BOOKAUTHORS,[unique index]
-"",BOOKID,ascending
-"",AUTHORID,ascending
+"",BOOKID,unknown
+"",AUTHORID,unknown
 ""
 DELETE,[privilege]
-"",DBA --> SA (grantable),""
+"",_SYSTEM --> DBA (grantable),""
 ""
 INSERT,[privilege]
-"",DBA --> SA (grantable),""
+"",_SYSTEM --> DBA (grantable),""
+""
+REFERENCES,[privilege]
+"",_SYSTEM --> DBA (grantable),""
 ""
 SELECT,[privilege]
-"",DBA --> SA (grantable),""
+"",_SYSTEM --> DBA (grantable),""
+""
+TRIGGER,[privilege]
+"",_SYSTEM --> DBA (grantable),""
 ""
 UPDATE,[privilege]
-"",DBA --> SA (grantable),""
+"",_SYSTEM --> DBA (grantable),""
 
 
-PUBLIC.BOOKS,[table]
+PUBLIC.BOOKS.BOOKS,[table]
 ------------------------------------------------------------------------
 "",ID,INTEGER not null
 "",TITLE,VARCHAR(255) not null
 "",DESCRIPTION,VARCHAR(255)
 "",PUBLISHERID,INTEGER not null
 "",PUBLICATIONDATE,DATE
-"",PRICE,"FLOAT(17, 0)"
+"",PRICE,"DOUBLE(64, 0)"
 ""
-SYS_IDX_48,[primary key]
+PK_BOOKS,[primary key]
 "",ID,ascending
 ""
 FK_Y_BOOK,"[foreign key, with no action]"
-"",ID --> PUBLIC.BOOKAUTHORS.BOOKID,""
+"",ID --> PUBLIC.BOOKS.BOOKAUTHORS.BOOKID,""
+""
+SYS_IDX_PK_BOOKS_10035,[unique index]
+"",ID,unknown
 ""
 DELETE,[privilege]
-"",DBA --> SA (grantable),""
+"",_SYSTEM --> DBA (grantable),""
 ""
 INSERT,[privilege]
-"",DBA --> SA (grantable),""
+"",_SYSTEM --> DBA (grantable),""
+""
+REFERENCES,[privilege]
+"",_SYSTEM --> DBA (grantable),""
 ""
 SELECT,[privilege]
-"",DBA --> SA (grantable),""
+"",_SYSTEM --> DBA (grantable),""
+""
+TRIGGER,[privilege]
+"",_SYSTEM --> DBA (grantable),""
 ""
 UPDATE,[privilege]
-"",DBA --> SA (grantable),""
+"",_SYSTEM --> DBA (grantable),""
 
 
-"PUBLIC.""Global Counts""",[table]
+"PUBLIC.BOOKS.""Global Counts""",[table]
 ------------------------------------------------------------------------
 "","""Global Count""",INTEGER
 ""
 DELETE,[privilege]
-"",DBA --> SA (grantable),""
+"",_SYSTEM --> DBA (grantable),""
 ""
 INSERT,[privilege]
-"",DBA --> SA (grantable),""
+"",_SYSTEM --> DBA (grantable),""
+""
+REFERENCES,[privilege]
+"",_SYSTEM --> DBA (grantable),""
 ""
 SELECT,[privilege]
-"",DBA --> SA (grantable),""
+"",_SYSTEM --> DBA (grantable),""
+""
+TRIGGER,[privilege]
+"",_SYSTEM --> DBA (grantable),""
 ""
 UPDATE,[privilege]
-"",DBA --> SA (grantable),""
+"",_SYSTEM --> DBA (grantable),""
 
 
-PUBLIC.PUBLISHERS,[table]
+PUBLIC.BOOKS.PUBLISHERS,[table]
 ------------------------------------------------------------------------
 "",ID,INTEGER not null
 "",PUBLISHER,VARCHAR(255)
 ""
-SYS_IDX_46,[primary key]
+PK_PUBLISHERS,[primary key]
 "",ID,ascending
 ""
+SYS_IDX_PK_PUBLISHERS_10027,[unique index]
+"",ID,unknown
+""
 DELETE,[privilege]
-"",DBA --> SA (grantable),""
+"",_SYSTEM --> DBA (grantable),""
 ""
 INSERT,[privilege]
-"",DBA --> SA (grantable),""
+"",_SYSTEM --> DBA (grantable),""
+""
+REFERENCES,[privilege]
+"",_SYSTEM --> DBA (grantable),""
 ""
 SELECT,[privilege]
-"",DBA --> SA (grantable),""
+"",_SYSTEM --> DBA (grantable),""
+""
+TRIGGER,[privilege]
+"",_SYSTEM --> DBA (grantable),""
 ""
 UPDATE,[privilege]
-"",DBA --> SA (grantable),""
+"",_SYSTEM --> DBA (grantable),""
 
 
-SALES.REGIONS,[table]
+PUBLIC.SALES.REGIONS,[table]
 ------------------------------------------------------------------------
 "",CITY,VARCHAR(50) not null
 "",STATE,VARCHAR(2) not null
 "",POSTALCODE,VARCHAR(10) not null
 "",COUNTRY,VARCHAR(50) not null
 ""
-SYS_IDX_58,[primary key]
+PK_CUSTOMERS,[primary key]
 "",POSTALCODE,ascending
 "",COUNTRY,ascending
 ""
 FK_SALES_REGIONS,"[foreign key, with no action]"
-"",POSTALCODE --> SALES.SALES.POSTALCODE,""
-"",COUNTRY --> SALES.SALES.COUNTRY,""
+"",POSTALCODE --> PUBLIC.SALES.SALES.POSTALCODE,""
+"",COUNTRY --> PUBLIC.SALES.SALES.COUNTRY,""
+""
+SYS_IDX_PK_CUSTOMERS_10052,[unique index]
+"",POSTALCODE,unknown
+"",COUNTRY,unknown
 ""
 DELETE,[privilege]
-"",DBA --> SA (grantable),""
+"",_SYSTEM --> DBA (grantable),""
 ""
 INSERT,[privilege]
-"",DBA --> SA (grantable),""
+"",_SYSTEM --> DBA (grantable),""
+""
+REFERENCES,[privilege]
+"",_SYSTEM --> DBA (grantable),""
 ""
 SELECT,[privilege]
-"",DBA --> SA (grantable),""
+"",_SYSTEM --> DBA (grantable),""
+""
+TRIGGER,[privilege]
+"",_SYSTEM --> DBA (grantable),""
 ""
 UPDATE,[privilege]
-"",DBA --> SA (grantable),""
+"",_SYSTEM --> DBA (grantable),""
 
 
-SALES.SALES,[table]
+PUBLIC.SALES.SALES,[table]
 ------------------------------------------------------------------------
 "",POSTALCODE,VARCHAR(10) not null
 "",COUNTRY,VARCHAR(50) not null
 "",BOOKID,INTEGER
 "",PERIODENDDATE,DATE
-"",TOTALAMOUNT,"FLOAT(17, 0)"
+"",TOTALAMOUNT,"DOUBLE(64, 0)"
 ""
 FK_SALES_REGIONS,"[foreign key, with no action]"
-"",SALES.REGIONS.POSTALCODE --> POSTALCODE,""
-"",SALES.REGIONS.COUNTRY --> COUNTRY,""
+"",PUBLIC.SALES.REGIONS.POSTALCODE --> POSTALCODE,""
+"",PUBLIC.SALES.REGIONS.COUNTRY --> COUNTRY,""
 ""
-SYS_IDX_60,[non-unique index]
-"",POSTALCODE,ascending
-"",COUNTRY,ascending
+SYS_IDX_10056,[non-unique index]
+"",POSTALCODE,unknown
+"",COUNTRY,unknown
 ""
 DELETE,[privilege]
-"",DBA --> SA (grantable),""
+"",_SYSTEM --> DBA (grantable),""
 ""
 INSERT,[privilege]
-"",DBA --> SA (grantable),""
+"",_SYSTEM --> DBA (grantable),""
+""
+REFERENCES,[privilege]
+"",_SYSTEM --> DBA (grantable),""
 ""
 SELECT,[privilege]
-"",DBA --> SA (grantable),""
+"",_SYSTEM --> DBA (grantable),""
+""
+TRIGGER,[privilege]
+"",_SYSTEM --> DBA (grantable),""
 ""
 UPDATE,[privilege]
-"",DBA --> SA (grantable),""
+"",_SYSTEM --> DBA (grantable),""
 
 
 
@@ -636,14 +701,14 @@ Row Count
 
 Row Count
 ------------------------------------------------------------------------
-PUBLIC.AUTHORS,20 rows
-PUBLIC.AUTHORSLIST,20 rows
-PUBLIC.BOOKAUTHORS,20 rows
-PUBLIC.BOOKS,20 rows
-"PUBLIC.""Global Counts""",empty
-PUBLIC.PUBLISHERS,20 rows
-SALES.REGIONS,20 rows
-SALES.SALES,20 rows
+PUBLIC.BOOKS.AUTHORS,20 rows
+PUBLIC.BOOKS.AUTHORSLIST,20 rows
+PUBLIC.BOOKS.BOOKAUTHORS,20 rows
+PUBLIC.BOOKS.BOOKS,20 rows
+"PUBLIC.BOOKS.""Global Counts""",empty
+PUBLIC.BOOKS.PUBLISHERS,20 rows
+PUBLIC.SALES.REGIONS,20 rows
+PUBLIC.SALES.SALES,20 rows
 
 
 
@@ -653,7 +718,7 @@ Dump
 
 
 
-PUBLIC.AUTHORS
+PUBLIC.BOOKS.AUTHORS
 ------------------------------------------------------------------------
 ID,FIRSTNAME,LASTNAME,ADDRESS1,ADDRESS2,CITY,STATE,POSTALCODE,COUNTRY
 1,Oren,Shaffer,900-2273 Integer Avenue,"",Farmer City,MD,37032,Cook Islands
@@ -679,7 +744,7 @@ ID,FIRSTNAME,LASTNAME,ADDRESS1,ADDRESS2,CITY,STATE,POSTALCODE,COUNTRY
 
 
 
-PUBLIC.AUTHORSLIST
+PUBLIC.BOOKS.AUTHORSLIST
 ------------------------------------------------------------------------
 ID,FIRSTNAME,LASTNAME
 1,Oren,Shaffer
@@ -705,7 +770,7 @@ ID,FIRSTNAME,LASTNAME
 
 
 
-PUBLIC.BOOKAUTHORS
+PUBLIC.BOOKS.BOOKAUTHORS
 ------------------------------------------------------------------------
 BOOKID,AUTHORID,UPDATE
 1,7,<null>
@@ -731,19 +796,19 @@ BOOKID,AUTHORID,UPDATE
 
 
 
-PUBLIC.BOOKS
+PUBLIC.BOOKS.BOOKS
 ------------------------------------------------------------------------
 ID,TITLE,DESCRIPTION,PUBLISHERID,PUBLICATIONDATE,PRICE
 1,Neque. In Ornare Sagittis,"Dis Parturient Montes, Nascetur Ridiculus Mus.",18,2000-10-27,69.99
 2,Duis Dignissim Tempor Arcu.,"Eu, Euismod Ac, Fermentum Vel,",20,2002-05-09,27.99
 3,"Lacinia Orci, Consectetuer Euismod Est","Sem Ut Cursus Luctus, Ipsum Leo Elementum Sem, Vitae Aliquam Eros Turpis Non Enim.",15,2006-04-14,37.99
 4,Vitae Sodales,"Rhoncus. Nullam Velit Dui, Semper Et, Lacinia Vitae, Sodales At,",1,2007-05-21,64.99
-5,Posuere Cubilia Curae; Phasellus Ornare.,"Risus A Ultricies Adipiscing, Enim Mi Tempor Lorem, Eget Mollis Lectus Pede",7,2010-05-14,83.99
+5,Posuere Cubilia Curae Phasellus Ornare.,"Risus A Ultricies Adipiscing, Enim Mi Tempor Lorem, Eget Mollis Lectus Pede",7,2010-05-14,83.99
 6,Tincidunt Aliquam Arcu.,"Tristique Pellentesque, Tellus Sem Mollis Dui,",13,2009-07-17,31.99
 7,"Auctor Quis, Tristique","Vel, Faucibus Id, Libero. Donec Consectetuer Mauris Id Sapien. Cras Dolor Dolor, Tempus Non, Lacinia",7,1999-06-09,76.99
 8,Sem. Nulla Interdum. Curabitur,Turpis. Nulla Aliquet. Proin Velit. Sed Malesuada Augue Ut,7,2009-01-24,30.99
 9,Lobortis Ultrices. Vivamus Rhoncus.,"Est, Mollis Non, Cursus Non, Egestas A, Dui. Cras Pellentesque. Sed Dictum.",1,2004-06-25,69.99
-10,"Quisque Purus Sapien, Gravida",Et Ultrices Posuere Cubilia Curae; Phasellus Ornare. Fusce Mollis. Duis Sit Amet Diam Eu Dolor Egestas Rhoncus.,19,2005-11-14,34.99
+10,"Quisque Purus Sapien, Gravida",Et Ultrices Posuere Cubilia Curae Phasellus Ornare. Fusce Mollis. Duis Sit Amet Diam Eu Dolor Egestas Rhoncus.,19,2005-11-14,34.99
 11,Phasellus,Egestas. Duis Ac Arcu. Nunc Mauris.,5,2003-10-19,89.99
 12,Non Massa Non,"Est Mauris, Rhoncus Id, Mollis",5,2002-05-04,64.99
 13,Gravida Mauris Ut Mi. Duis,"Fusce Mollis. Duis Sit Amet Diam Eu Dolor Egestas Rhoncus. Proin Nisl Sem, Consequat Nec,",8,2005-08-03,25.99
@@ -757,13 +822,13 @@ ID,TITLE,DESCRIPTION,PUBLISHERID,PUBLICATIONDATE,PRICE
 
 
 
-PUBLIC."Global Counts"
+PUBLIC.BOOKS."Global Counts"
 ------------------------------------------------------------------------
 Global Count
 
 
 
-PUBLIC.PUBLISHERS
+PUBLIC.BOOKS.PUBLISHERS
 ------------------------------------------------------------------------
 ID,PUBLISHER
 1,Dalton Lewis
@@ -789,7 +854,7 @@ ID,PUBLISHER
 
 
 
-SALES.REGIONS
+PUBLIC.SALES.REGIONS
 ------------------------------------------------------------------------
 CITY,STATE,POSTALCODE,COUNTRY
 Arvada,KY,17131,USA
@@ -815,7 +880,7 @@ Woburn,NV,27392,USA
 
 
 
-SALES.SALES
+PUBLIC.SALES.SALES
 ------------------------------------------------------------------------
 POSTALCODE,COUNTRY,BOOKID,PERIODENDDATE,TOTALAMOUNT
 13078,USA,1,2001-07-18,18257.0

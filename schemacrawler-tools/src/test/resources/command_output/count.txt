@@ -7,13 +7,13 @@ Row Count
 
 Row Count
 ------------------------------------------------------------------------
-PUBLIC.AUTHORS                                                   20 rows
-PUBLIC.AUTHORSLIST                                               20 rows
-PUBLIC.BOOKAUTHORS                                               20 rows
-PUBLIC.BOOKS                                                     20 rows
-PUBLIC."Global Counts"                                             empty
-PUBLIC.PUBLISHERS                                                20 rows
-SALES.REGIONS                                                    20 rows
-SALES.SALES                                                      20 rows
+PUBLIC.BOOKS.AUTHORS                                             20 rows
+PUBLIC.BOOKS.AUTHORSLIST                                         20 rows
+PUBLIC.BOOKS.BOOKAUTHORS                                         20 rows
+PUBLIC.BOOKS.BOOKS                                               20 rows
+PUBLIC.BOOKS."Global Counts"                                       empty
+PUBLIC.BOOKS.PUBLISHERS                                          20 rows
+PUBLIC.SALES.REGIONS                                             20 rows
+PUBLIC.SALES.SALES                                               20 rows
 
 
