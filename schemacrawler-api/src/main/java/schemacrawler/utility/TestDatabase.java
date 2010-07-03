@@ -30,8 +30,6 @@ import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.hsqldb.Server;
-
 import schemacrawler.schema.Database;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.DatabaseConnectionOptions;
@@ -68,15 +66,16 @@ public class TestDatabase
   public static void main(final String[] args)
     throws Exception
   {
-    final TestDatabase testUtility = new TestDatabase();
+    final TestDatabase testDb = new TestDatabase();
     Runtime.getRuntime().addShutdownHook(new Thread()
     {
+      @Override
       public void run()
       {
-        testUtility.shutdownDatabase();
+        testDb.shutdownDatabase();
       }
     });
-    testUtility.createDatabase();
+    testDb.createDatabase();
   }
 
   /**
@@ -126,28 +125,30 @@ public class TestDatabase
       if (dataSource != null)
       {
         connection = dataSource.createConnection();
+        connection.setAutoCommit(true);
         statement = connection.createStatement();
         for (final String schema: new String[] {
-            "Books", "Sales",
+          "Books",// "Sales",
         })
         {
-          // Create the schema
-          statement.execute(String
-            .format("CREATE SCHEMA %s AUTHORIZATION DBA;", schema));
-          connection.commit();
-          statement.execute(String.format("SET SCHEMA %s;", schema));
-          connection.commit();
-
           for (final String scriptType: new String[] {
-              "schema", "post_schema", "data",
+              "pre_schema", "schema", "post_schema", "data",
           })
           {
             final String scriptResource = String.format("/%s.%s.sql",
                                                         schema,
                                                         scriptType);
             final String sqlScript = Utility.readResourceFully(scriptResource);
-            statement.execute(sqlScript);
-            connection.commit();
+            if (!Utility.isBlank(sqlScript))
+            {
+              for (final String sql: sqlScript.split(";"))
+              {
+                if (!Utility.isBlank(sql))
+                {
+                  statement.executeUpdate(sql);
+                }
+              }
+            }
           }
         }
         connection.close();
@@ -308,7 +309,7 @@ public class TestDatabase
     final String serverFileStem = "hsqldb.schemacrawler";
     deleteServerFiles(serverFileStem);
     // Start the server
-    Server.main(new String[] {
+    org.hsqldb.server.Server.main(new String[] {
         "-database.0",
         serverFileStem,
         "-dbname.0",
