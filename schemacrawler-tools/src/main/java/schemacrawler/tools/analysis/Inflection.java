@@ -1,4 +1,4 @@
-package sf.util;
+package schemacrawler.tools.analysis;
 
 
 import java.util.ArrayList;

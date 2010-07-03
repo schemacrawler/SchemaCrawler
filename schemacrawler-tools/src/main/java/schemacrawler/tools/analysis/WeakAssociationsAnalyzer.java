@@ -40,7 +40,6 @@ import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnMap;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Table;
-import sf.util.Inflection;
 import sf.util.ObjectToString;
 import sf.util.Utility;
 
