@@ -146,9 +146,7 @@ final class TableRetriever
     {
       while (results.next())
       {
-        // final String catalogName = results.getString("TABLE_CAT");
-        // final String schemaName = results.getString("TABLE_SCHEM");
-        // final String tableName = results.getQuotedName("TABLE_NAME");
+        // "TABLE_CAT", "TABLE_SCHEM", "TABLE_NAME"
         String indexName = quotedName(results.getString("INDEX_NAME"));
         if (Utility.isBlank(indexName))
         {
@@ -279,8 +277,9 @@ final class TableRetriever
         // http://issues.apache.org/jira/browse/DDLUTILS-29?page=all
         final String defaultValue = results.getString("COLUMN_DEF");
         //
-        final String columnCatalogName = results.getString("TABLE_CAT");
-        final String schemaName = results.getString("TABLE_SCHEM");
+        final String columnCatalogName = quotedName(results
+          .getString("TABLE_CAT"));
+        final String schemaName = quotedName(results.getString("TABLE_SCHEM"));
         final String tableName = quotedName(results.getString("TABLE_NAME"));
         final String columnName = quotedName(results.getString("COLUMN_NAME"));
         LOGGER.log(Level.FINER, String.format("Retrieving column: %s.%s",
@@ -437,9 +436,7 @@ final class TableRetriever
       MutablePrimaryKey primaryKey;
       while (results.next())
       {
-        // final String catalogName = results.getString("TABLE_CAT");
-        // final String schemaName = results.getString("TABLE_SCHEM");
-        // final String tableName = results.getQuotedName("TABLE_NAME");
+        // "TABLE_CAT", "TABLE_SCHEM", "TABLE_NAME"
         final String columnName = quotedName(results.getString("COLUMN_NAME"));
         final String primaryKeyName = quotedName(results.getString("PK_NAME"));
         final int keySequence = Integer.parseInt(results.getString("KEY_SEQ"));
@@ -503,8 +500,7 @@ final class TableRetriever
 
       while (results.next())
       {
-        // final String catalogName = results.getString("TABLE_CAT");
-        // final String schemaName = results.getString("TABLE_SCHEM");
+        // "TABLE_CAT", "TABLE_SCHEM"
         final String tableName = quotedName(results.getString("TABLE_NAME"));
         LOGGER.log(Level.FINER, String.format("Retrieving table: %s.%s",
                                               schemaName,

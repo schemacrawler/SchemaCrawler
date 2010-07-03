@@ -87,8 +87,10 @@ final class ProcedureExRetriever
     {
       while (results.next())
       {
-        final String catalogName = results.getString("ROUTINE_CATALOG");
-        final String schemaName = results.getString("ROUTINE_SCHEMA");
+        final String catalogName = quotedName(results
+          .getString("ROUTINE_CATALOG"));
+        final String schemaName = quotedName(results
+          .getString("ROUTINE_SCHEMA"));
         final String procedureName = quotedName(results
           .getString("ROUTINE_NAME"));
 

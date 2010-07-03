@@ -67,8 +67,10 @@ final class ProcedureRetriever
 
       while (results.next())
       {
-        final String columnCatalogName = results.getString("PROCEDURE_CAT");
-        final String schemaName = results.getString("PROCEDURE_SCHEM");
+        final String columnCatalogName = quotedName(results
+          .getString("PROCEDURE_CAT"));
+        final String schemaName = quotedName(results
+          .getString("PROCEDURE_SCHEM"));
         final String procedureName = quotedName(results
           .getString("PROCEDURE_NAME"));
         final String columnName = quotedName(results.getString("COLUMN_NAME"));
@@ -139,10 +141,7 @@ final class ProcedureRetriever
 
       while (results.next())
       {
-        // final String catalogName =
-        // results.getString("PROCEDURE_CAT");
-        // final String schemaName =
-        // results.getString("PROCEDURE_SCHEM");
+        // "PROCEDURE_CAT", "PROCEDURE_SCHEM"
         final String procedureName = quotedName(results
           .getString("PROCEDURE_NAME"));
         LOGGER.log(Level.FINER, "Retrieving procedure: " + procedureName);
