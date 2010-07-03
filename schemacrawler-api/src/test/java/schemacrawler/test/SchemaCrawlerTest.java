@@ -75,13 +75,12 @@ public class SchemaCrawlerTest
     throws Exception
   {
     final String[] schemaNames = {
-        "INFORMATION_SCHEMA", "PUBLIC", "SALES"
+        "BOOKS", "INFORMATION_SCHEMA", "PUBLIC", "SALES", "SYSTEM_LOBS"
     };
     final int[] tableCounts = {
-        0, 6, 2
+        6, 0, 0, 2, 0,
     };
     final String[][][] columnNames = {
-        {},
         {
             {
                 "AUTHORS.ID",
@@ -119,6 +118,8 @@ public class SchemaCrawlerTest
                 "PUBLISHERS.ID", "PUBLISHERS.PUBLISHER",
             },
         },
+        {},
+        {},
         {
             {
                 "REGIONS.CITY",
@@ -134,9 +135,9 @@ public class SchemaCrawlerTest
                 "SALES.TOTALAMOUNT",
             },
         },
+        {},
     };
     final String[][][] columnDataTypes = {
-        {},
         {
 
             {
@@ -157,7 +158,7 @@ public class SchemaCrawlerTest
                 "INTEGER", "INTEGER", "INTEGER",
             },
             {
-                "INTEGER", "VARCHAR", "VARCHAR", "INTEGER", "DATE", "FLOAT"
+                "INTEGER", "VARCHAR", "VARCHAR", "INTEGER", "DATE", "DOUBLE"
             },
             {
               "INTEGER",
@@ -166,25 +167,31 @@ public class SchemaCrawlerTest
                 "INTEGER", "VARCHAR",
             },
         },
+        {},
+        {},
         {
             {
                 "VARCHAR", "VARCHAR", "VARCHAR", "VARCHAR"
             }, {
-                "VARCHAR", "VARCHAR", "INTEGER", "DATE", "FLOAT",
+                "VARCHAR", "VARCHAR", "INTEGER", "DATE", "DOUBLE",
             },
         },
+        {},
     };
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
 
     final Database database = testUtility.getDatabase(schemaCrawlerOptions);
     final Schema[] schemas = database.getSchemas();
-    assertEquals("Schema count does not match", 3, schemas.length);
+    assertEquals("Schema count does not match",
+                 schemaNames.length,
+                 schemas.length);
     for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++)
     {
       final Schema schema = schemas[schemaIdx];
-      assertEquals("Schema name does not match", schemaNames[schemaIdx], schema
-        .getName());
+      assertEquals("Schema name does not match",
+                   "PUBLIC." + schemaNames[schemaIdx],
+                   schema.getName());
       final Table[] tables = schema.getTables();
       assertEquals("Table count does not match",
                    tableCounts[schemaIdx],
@@ -199,7 +206,7 @@ public class SchemaCrawlerTest
           final Column column = columns[columnIdx];
           LOGGER.log(Level.FINE, column.toString());
           assertEquals("Column full name does not match for column " + column,
-                       schemaNames[schemaIdx] + "."
+                       "PUBLIC." + schemaNames[schemaIdx] + "."
                            + columnsNamesForTable[columnIdx],
                        column.getFullName());
           assertEquals("Column type does not match for column " + column,
@@ -219,49 +226,49 @@ public class SchemaCrawlerTest
   {
 
     final int[] tableCounts = {
-        0, 6, 2
+        6, 0, 0, 2, 0,
     };
     final int[][] tableColumnCounts = {
-        {}, {
+        {
             9, 3, 3, 6, 1, 2
-        }, {
+        }, {}, {}, {
             4, 5
-        }
+        }, {},
     };
     final int[][] checkConstraints = {
-        {}, {
+        {
             0, 0, 0, 0, 0, 0, 0
-        }, {
+        }, {}, {}, {
             0, 0
-        }
+        }, {},
     };
     final int[][] indexCounts = {
-        {}, {
-            2, 0, 3, 0, 0, 0,
-        }, {
-            0, 1
-        }
+        {
+            3, 0, 3, 1, 0, 1,
+        }, {}, {}, {
+            1, 1
+        }, {},
     };
     final int[][] fkCounts = {
-        {}, {
+        {
             1, 0, 2, 1, 0, 0,
-        }, {
+        }, {}, {}, {
             1, 1
-        }
+        }, {},
     };
     final int[][] exportedFkCounts = {
-        {}, {
+        {
             1, 0, 0, 1, 0, 0,
-        }, {
+        }, {}, {}, {
             1, 0
-        }
+        }, {},
     };
     final int[][] importedFkCounts = {
-        {}, {
+        {
             0, 0, 2, 0, 0, 0,
-        }, {
+        }, {}, {}, {
             0, 1
-        }
+        }, {},
     };
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
@@ -269,7 +276,7 @@ public class SchemaCrawlerTest
 
     final Database database = testUtility.getDatabase(schemaCrawlerOptions);
     final Schema[] schemas = database.getSchemas();
-    assertEquals("Schema count does not match", 3, schemas.length);
+    assertEquals("Schema count does not match", 5, schemas.length);
     for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++)
     {
       final Schema schema = schemas[schemaIdx];
@@ -322,9 +329,10 @@ public class SchemaCrawlerTest
     schemaCrawlerOptions.setInformationSchemaViews(informationSchemaViews);
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
 
-    final Schema schema = testUtility.getSchema(schemaCrawlerOptions, "PUBLIC");
+    final Schema schema = testUtility.getSchema(schemaCrawlerOptions,
+                                                "PUBLIC.BOOKS");
     final Procedure[] procedures = schema.getProcedures();
-    assertTrue("No procedures found", procedures.length > 0);
+    assertEquals("Procedures should not be found", 0, procedures.length);
     for (final Procedure procedure: procedures)
     {
       assertNotNull("Procedure definition is null, for "
@@ -344,14 +352,15 @@ public class SchemaCrawlerTest
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setShowStoredProcedures(true);
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.detailed());
-    final Schema schema1 = testUtility
-      .getSchema(schemaCrawlerOptions, "PUBLIC");
+    final Schema schema1 = testUtility.getSchema(schemaCrawlerOptions,
+                                                 "PUBLIC.BOOKS");
     assertTrue("Could not find any tables", schema1.getTables().length > 0);
-    assertTrue("Could not find any procedures",
-               schema1.getProcedures().length > 0);
+    assertEquals("Should not find any procedures",
+                 0,
+                 schema1.getProcedures().length);
 
-    final Schema schema2 = testUtility
-      .getSchema(schemaCrawlerOptions, "PUBLIC");
+    final Schema schema2 = testUtility.getSchema(schemaCrawlerOptions,
+                                                 "PUBLIC.BOOKS");
 
     assertEquals("Schema not not match", schema1, schema2);
     assertArrayEquals("Tables do not match", schema1.getTables(), schema2
@@ -373,12 +382,10 @@ public class SchemaCrawlerTest
   {
 
     final String[] schemaNames = {
-        "INFORMATION_SCHEMA", "PUBLIC", "SALES"
+        "BOOKS", "INFORMATION_SCHEMA", "PUBLIC", "SALES", "SYSTEM_LOBS"
     };
     final String[][] tableNames = {
-        {},
         {
-
             "AUTHORS",
             "AUTHORSLIST",
             "BOOKAUTHORS",
@@ -386,28 +393,34 @@ public class SchemaCrawlerTest
             "\"Global Counts\"",
             "PUBLISHERS",
         },
+        {},
+        {},
         {
             "REGIONS", "SALES",
-        }
+        },
+        {},
     };
     final String[][] tableTypes = {
-        {}, {
+        {
             "TABLE", "VIEW", "TABLE", "TABLE", "TABLE", "TABLE",
-        }, {
+        }, {}, {}, {
             "TABLE", "TABLE",
-        }
+        }, {},
     };
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.standard());
 
     final Database database = testUtility.getDatabase(schemaCrawlerOptions);
     final Schema[] schemas = database.getSchemas();
-    assertEquals("Schema count does not match", 3, schemas.length);
+    assertEquals("Schema count does not match",
+                 schemaNames.length,
+                 schemas.length);
     for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++)
     {
       final Schema schema = schemas[schemaIdx];
-      assertEquals("Schema name does not match", schemaNames[schemaIdx], schema
-        .getName());
+      assertEquals("Schema name does not match",
+                   "PUBLIC." + schemaNames[schemaIdx],
+                   schema.getName());
       final Table[] tables = schema.getTables();
       for (int tableIdx = 0; tableIdx < tables.length; tableIdx++)
       {
@@ -445,8 +458,8 @@ public class SchemaCrawlerTest
 
     final Database database = testUtility.getDatabase(schemaCrawlerOptions);
     final Schema[] schemas = database.getSchemas();
-    assertEquals("Schema count does not match", 3, schemas.length);
-    final Schema schema = schemas[1];
+    assertEquals("Schema count does not match", 5, schemas.length);
+    final Schema schema = schemas[0];
 
     for (int i = 0; i < tableNames.length; i++)
     {
@@ -512,7 +525,8 @@ public class SchemaCrawlerTest
     schemaCrawlerOptions.setShowStoredProcedures(true);
     schemaCrawlerOptions.setInformationSchemaViews(informationSchemaViews);
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
-    final Schema schema = testUtility.getSchema(schemaCrawlerOptions, "PUBLIC");
+    final Schema schema = testUtility.getSchema(schemaCrawlerOptions,
+                                                "PUBLIC.BOOKS");
     final Table[] tables = schema.getTables();
     boolean foundTrigger = false;
     for (final Table table: tables)
@@ -545,7 +559,8 @@ public class SchemaCrawlerTest
     schemaCrawlerOptions.setInformationSchemaViews(informationSchemaViews);
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
 
-    final Schema schema = testUtility.getSchema(schemaCrawlerOptions, "PUBLIC");
+    final Schema schema = testUtility.getSchema(schemaCrawlerOptions,
+                                                "PUBLIC.BOOKS");
     assertNotNull("Schema not found", schema);
     final View view = (View) schema.getTable("AUTHORSLIST");
     assertNotNull("View not found", view);
