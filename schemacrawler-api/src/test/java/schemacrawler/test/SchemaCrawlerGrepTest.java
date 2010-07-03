@@ -62,13 +62,12 @@ public class SchemaCrawlerGrepTest
     throws Exception
   {
     final String[] schemaNames = {
-        "INFORMATION_SCHEMA", "PUBLIC", "SALES"
+        "BOOKS", "INFORMATION_SCHEMA", "PUBLIC", "SALES", "SYSTEM_LOBS"
     };
     final int[] tableCounts = {
-        0, 1, 1
+        1, 0, 0, 1, 0
     };
     final String[][][] columnNames = {
-        {},
         {
           {
               "BOOKAUTHORS.BOOKID",
@@ -76,6 +75,8 @@ public class SchemaCrawlerGrepTest
               "BOOKAUTHORS.\"UPDATE\"",
           },
         },
+        {},
+        {},
         {
           {
               "SALES.POSTALCODE",
@@ -84,18 +85,19 @@ public class SchemaCrawlerGrepTest
               "SALES.PERIODENDDATE",
               "SALES.TOTALAMOUNT",
           },
-        }
+        },
+        {},
     };
     final String[][][] columnDataTypes = {
-        {}, {
+        {
           {
               "INTEGER", "INTEGER", "INTEGER",
           },
-        }, {
+        }, {}, {}, {
           {
-              "VARCHAR", "VARCHAR", "INTEGER", "DATE", "FLOAT",
+              "VARCHAR", "VARCHAR", "INTEGER", "DATE", "DOUBLE",
           },
-        }
+        }, {},
     };
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
@@ -105,12 +107,13 @@ public class SchemaCrawlerGrepTest
 
     final Database database = testUtility.getDatabase(schemaCrawlerOptions);
     final Schema[] schemas = database.getSchemas();
-    assertEquals("Schema count does not match", 3, schemas.length);
+    assertEquals("Schema count does not match", 5, schemas.length);
     for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++)
     {
       final Schema schema = schemas[schemaIdx];
-      assertEquals("Schema name does not match", schemaNames[schemaIdx], schema
-        .getName());
+      assertEquals("Schema name does not match",
+                   "PUBLIC." + schemaNames[schemaIdx],
+                   schema.getName());
       final Table[] tables = schema.getTables();
       assertEquals("Table count does not match",
                    tableCounts[schemaIdx],
@@ -125,7 +128,7 @@ public class SchemaCrawlerGrepTest
           final Column column = columns[columnIdx];
           LOGGER.log(Level.FINE, column.toString());
           assertEquals("Column full name does not match",
-                       schemaNames[schemaIdx] + "."
+                       "PUBLIC." + schemaNames[schemaIdx] + "."
                            + columnsNamesForTable[columnIdx],
                        column.getFullName());
           assertEquals("Column type does not match",

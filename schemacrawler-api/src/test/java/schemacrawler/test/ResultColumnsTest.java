@@ -64,23 +64,23 @@ public class ResultColumnsTest
   {
 
     final String[] columnNames = {
-        "PUBLIC.BOOKS.BOOK", "", "PUBLIC.BOOKS.PRICE",
+        "BOOKS.BOOKS.TITLE", "C2", "BOOKS.BOOKS.PRICE",
     };
     final String[] columnDataTypes = {
-        "VARCHAR", "VARCHAR", "FLOAT",
+        "VARCHAR", "VARCHAR", "DOUBLE",
     };
 
     final String sql = ""
-                       + "SELECT                                                                         "
-                       + " BOOKS.TITLE AS BOOK,                                                          "
-                       + " AUTHORS.FIRSTNAME + ' ' + AUTHORS.LASTNAME,                                   "
-                       + " BOOKS.PRICE                                                                   "
-                       + "FROM                                                                           "
-                       + " BOOKS                                                                         "
-                       + " INNER JOIN BOOKAUTHORS                                                        "
-                       + "   ON BOOKS.ID = BOOKAUTHORS.BOOKID                                            "
-                       + " INNER JOIN AUTHORS                                                            "
-                       + "   ON AUTHORS.ID = BOOKAUTHORS.AUTHORID                                        ";
+                       + "SELECT                                                                    "
+                       + " PUBLIC.BOOKS.BOOKS.TITLE AS BOOK,                                        "
+                       + " PUBLIC.BOOKS.AUTHORS.FIRSTNAME + ' ' + PUBLIC.BOOKS.AUTHORS.LASTNAME,    "
+                       + " PUBLIC.BOOKS.BOOKS.PRICE                                                 "
+                       + "FROM                                                                      "
+                       + " PUBLIC.BOOKS.BOOKS                                                       "
+                       + " INNER JOIN PUBLIC.BOOKS.BOOKAUTHORS                                      "
+                       + "   ON PUBLIC.BOOKS.BOOKS.ID = PUBLIC.BOOKS.BOOKAUTHORS.BOOKID             "
+                       + " INNER JOIN PUBLIC.BOOKS.AUTHORS                                          "
+                       + "   ON PUBLIC.BOOKS.AUTHORS.ID = PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID         ";
 
     final Connection connection = testUtility.getConnection();
     final Statement statement = connection.createStatement();

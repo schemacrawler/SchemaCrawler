@@ -18,6 +18,7 @@
 package schemacrawler.crawl;
 
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -64,11 +65,21 @@ public class SchemaCrawlerDeepTest
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setShowStoredProcedures(true);
 
-    final Schema schema = testUtility.getSchema(schemaCrawlerOptions, "PUBLIC");
+    final Schema systemSchema = testUtility.getSchema(schemaCrawlerOptions,
+                                                      "PUBLIC.SYSTEM_LOBS");
+    assertNotNull("Could not obtain schema", systemSchema);
+    assertTrue("Should not find any tables",
+               systemSchema.getTables().length == 0);
+    assertEquals("Could not find any procedures", 7, systemSchema
+      .getProcedures().length);
+
+    final Schema schema = testUtility.getSchema(schemaCrawlerOptions,
+                                                "PUBLIC.BOOKS");
     assertNotNull("Could not obtain schema", schema);
-    assertTrue("Could not find any tables", schema.getTables().length > 0);
-    assertTrue("Could not find any procedures",
-               schema.getProcedures().length > 0);
+    assertEquals("Could not find any tables", 6, schema.getTables().length);
+    assertEquals("Should not find any procedures",
+                 0,
+                 schema.getProcedures().length);
 
     // Try negative test
     final Table table0 = schema.getTables()[0];
