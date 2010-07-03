@@ -27,6 +27,7 @@ import java.sql.SQLException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
@@ -218,6 +219,38 @@ final class MetadataResultSet
   }
 
   /**
+   * Reads the value of a column from the result set as an enum.
+   * 
+   * @param columnName
+   *        Column name
+   * @param defaultValue
+   *        Default enum value to return
+   * @return Enum value of the column, or the default if not available
+   */
+  <T extends Enum<T>> T getEnum(final String columnName, final T defaultValue)
+  {
+    final String value = getString(columnName);
+    T enumValue;
+    if (value == null || defaultValue == null)
+    {
+      enumValue = defaultValue;
+    }
+    else
+    {
+      try
+      {
+        enumValue = (T) defaultValue.valueOf(defaultValue.getClass(), value
+          .toLowerCase(Locale.ENGLISH));
+      }
+      catch (final Exception e)
+      {
+        enumValue = defaultValue;
+      }
+    }
+    return enumValue;
+  }
+
+  /**
    * Reads the value of a column from the result set as an integer. If
    * the value was null, returns the default.
    * 
@@ -322,7 +355,7 @@ final class MetadataResultSet
    * 
    * @param columnName
    *        Column name
-   * @return Short value of the column, or the default if not available
+   * @return String value of the column, or null if not available
    */
   String getString(final String columnName)
   {

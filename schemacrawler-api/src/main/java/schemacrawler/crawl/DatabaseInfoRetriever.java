@@ -40,6 +40,7 @@ import java.util.logging.Logger;
 
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Schema;
+import schemacrawler.schema.SearchableType;
 
 final class DatabaseInfoRetriever
   extends AbstractRetriever
@@ -346,7 +347,8 @@ final class DatabaseInfoRetriever
         final boolean isNullable = results
           .getInt("NULLABLE", DatabaseMetaData.typeNullableUnknown) == DatabaseMetaData.typeNullable;
         final boolean isCaseSensitive = results.getBoolean("CASE_SENSITIVE");
-        final int searchable = results.getInt("SEARCHABLE", -1);
+        final SearchableType searchable = SearchableType.valueOf(results
+          .getInt("SEARCHABLE", -1));
         final boolean isUnsigned = results.getBoolean("UNSIGNED_ATTRIBUTE");
         final boolean isFixedPrecisionScale = results
           .getBoolean("FIXED_PREC_SCALE");

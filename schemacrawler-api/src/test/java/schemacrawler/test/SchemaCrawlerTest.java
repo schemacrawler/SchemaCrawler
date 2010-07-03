@@ -505,21 +505,7 @@ public class SchemaCrawlerTest
     // Set up information schema properties
     final InformationSchemaViews informationSchemaViews = new InformationSchemaViews();
     informationSchemaViews
-      .setTriggersSql("SELECT "
-                      + "TRIGGER_CAT AS TRIGGER_CATALOG, "
-                      + "TRIGGER_SCHEM AS TRIGGER_SCHEMA, "
-                      + "TRIGGER_NAME, "
-                      + "TRIGGERING_EVENT AS EVENT_MANIPULATION, "
-                      + "TABLE_CAT AS EVENT_OBJECT_CATALOG, "
-                      + "TABLE_SCHEM AS EVENT_OBJECT_SCHEMA, "
-                      + "TABLE_NAME AS EVENT_OBJECT_TABLE, "
-                      + "1 AS ACTION_ORDER, "
-                      + "WHEN_CLAUSE AS ACTION_CONDITION, "
-                      + "REFERENCING_NAMES AS ACTION_ORIENTATION, "
-                      + "DESCRIPTION AS ACTION_STATEMENT, "
-                      + "CASE WHEN TRIGGER_TYPE LIKE \'BEFORE%\' THEN \'BEFORE\' ELSE \'\' END AS CONDITION_TIMING, "
-                      + "TRIGGER_BODY AS DEFINITION "
-                      + "FROM INFORMATION_SCHEMA.SYSTEM_TRIGGERS");
+      .setTriggersSql("SELECT * FROM INFORMATION_SCHEMA.TRIGGERS");
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setShowStoredProcedures(true);
@@ -536,7 +522,7 @@ public class SchemaCrawlerTest
       {
         foundTrigger = true;
         assertEquals("Triggers full name does not match",
-                     "PUBLIC.AUTHORS.TRG_AUTHORS",
+                     "PUBLIC.BOOKS.AUTHORS.TRG_AUTHORS",
                      trigger.getFullName());
         assertEquals("Trigger EventManipulationType does not match",
                      EventManipulationType.delete,
@@ -552,7 +538,7 @@ public class SchemaCrawlerTest
   {
     final InformationSchemaViews informationSchemaViews = new InformationSchemaViews();
     informationSchemaViews
-      .setViewsSql("SELECT * FROM INFORMATION_SCHEMA.SYSTEM_VIEWS");
+      .setViewsSql("SELECT * FROM INFORMATION_SCHEMA.VIEWS");
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setTableTypesString("VIEW");

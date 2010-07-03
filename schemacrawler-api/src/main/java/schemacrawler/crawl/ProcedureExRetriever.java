@@ -24,7 +24,6 @@ package schemacrawler.crawl;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -100,9 +99,8 @@ final class ProcedureExRetriever
         {
           LOGGER.log(Level.FINER, "Retrieving procedure information: "
                                   + procedureName);
-          final RoutineBodyType routineBodyType = RoutineBodyType
-            .valueOf(results.getString("ROUTINE_BODY")
-              .toLowerCase(Locale.ENGLISH));
+          final RoutineBodyType routineBodyType = results
+            .getEnum("ROUTINE_BODY", RoutineBodyType.unknown);
           final String definition = results.getString("ROUTINE_DEFINITION");
 
           procedure.setRoutineBodyType(routineBodyType);
@@ -114,8 +112,11 @@ final class ProcedureExRetriever
     }
     finally
     {
+      if (results != null)
+      {
+        results.close();
+      }
       statement.close();
-      results.close();
     }
 
   }
