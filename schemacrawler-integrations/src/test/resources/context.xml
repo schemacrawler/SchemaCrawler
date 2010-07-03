@@ -174,7 +174,11 @@
   <bean id="executableForGraph" class="schemacrawler.tools.executable.SchemaCrawlerExecutable">
     <constructor-arg value="graph"/>
     <property name="schemaCrawlerOptions" ref="schemaCrawlerOptions"/>
-    <property name="outputOptions" ref="outputOptions"/>
+    <property name="outputOptions">
+      <bean class="schemacrawler.tools.options.OutputOptions">
+        <property name="outputFormatValue" value="dot"/>
+      </bean>
+    </property>
   </bean>
 
   <bean id="executableForVelocity" class="schemacrawler.tools.executable.SchemaCrawlerExecutable">

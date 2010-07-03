@@ -406,6 +406,14 @@ VARCHAR_IGNORECASE                                           [data type]
   not auto-incrementable
   searchable
 
+PUBLIC.BOOKS.CHARACTER VARYING                               [data type]
+  based on                          VARCHAR                     
+  not user defined
+  defined with 
+  not nullable
+  not auto-incrementable
+  unknown
+
 
 
 Tables
@@ -695,6 +703,14 @@ UPDATE                                                       [privilege]
 
 Procedures
 ========================================================================
+
+
+PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
+------------------------------------------------------------------------
+  PUBLISHER                         CHARACTER VARYING, out      
+
+                                                            [definition]
+  NEW_PUBLISHER_10047
 
 
 PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS                   [procedure, no result]

@@ -77,9 +77,7 @@ public class SchemaCrawlerDeepTest
                                                 "PUBLIC.BOOKS");
     assertNotNull("Could not obtain schema", schema);
     assertEquals("Could not find any tables", 6, schema.getTables().length);
-    assertEquals("Should not find any procedures",
-                 0,
-                 schema.getProcedures().length);
+    assertEquals("Wrong number of procedures", 1, schema.getProcedures().length);
 
     // Try negative test
     final Table table0 = schema.getTables()[0];
