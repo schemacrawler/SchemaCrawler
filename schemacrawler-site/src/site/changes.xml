@@ -5,6 +5,14 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+    <release version="8.3" date="2010-07-09">
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added new bundled distribution for IBM DB2.
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added support for spaces in schema and catalog names.
+      ]]></action>
+    </release>
     <release version="8.2" date="2010-05-25">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Added support for spaces or reserved words in table, procedure, and column names.
@@ -21,10 +29,10 @@
       <action dev="Sualeh Fatehi" type="update"><![CDATA[
         The Maven plug-in generates a database report that uses the same stylesheet as the rest of the
         Maven generated website. 
-      ]]></action>      
+      ]]></action>
       <action dev="Sualeh Fatehi" type="update"><![CDATA[
         Generated database diagrams are less "colorful".
-      ]]></action>      
+      ]]></action>
     </release>
     <release version="8.1" date="2010-02-28">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
