@@ -238,4 +238,14 @@
     </property>
   </bean>
 
+  <bean id="executableForXMLSerialization" class="schemacrawler.tools.executable.SchemaCrawlerExecutable">
+    <constructor-arg value="serialize" />
+    <property name="schemaCrawlerOptions" ref="schemaCrawlerOptions" />
+    <property name="outputOptions">
+      <bean class="schemacrawler.tools.options.OutputOptions">
+        <property name="outputFormatValue" value="xml" />
+      </bean>
+    </property>
+  </bean>
+  
 </beans>
