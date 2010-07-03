@@ -133,8 +133,8 @@ PUBLIC,BOOKS,BOOKAUTHORS,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,
 PUBLIC,BOOKS,BOOKS,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
 PUBLIC,BOOKS,Global Counts,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
 PUBLIC,BOOKS,PUBLISHERS,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
-PUBLIC,SALES,REGIONS,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
-PUBLIC,SALES,SALES,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
+PUBLIC,PUBLISHER SALES,REGIONS,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
+PUBLIC,PUBLISHER SALES,SALES,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
 PUBLIC,BOOKS,AUTHORSLIST,VIEW,<null>,<null>,<null>,<null>,<null>,<null>,<null>,false,<null>
 
 
@@ -281,7 +281,7 @@ ID,PUBLISHER
 
 
 
-PUBLIC.SALES.REGIONS
+PUBLIC."PUBLISHER SALES".REGIONS
 ------------------------------------------------------------------------
 CITY,STATE,POSTALCODE,COUNTRY
 Arvada,KY,17131,USA
@@ -307,7 +307,7 @@ Woburn,NV,27392,USA
 
 
 
-PUBLIC.SALES.SALES
+PUBLIC."PUBLISHER SALES".SALES
 ------------------------------------------------------------------------
 POSTALCODE,COUNTRY,BOOKID,PERIODENDDATE,TOTALAMOUNT
 13078,USA,1,2001-07-18,18257.0
@@ -347,8 +347,8 @@ PUBLIC.BOOKS.BOOKAUTHORS                                         20 rows
 PUBLIC.BOOKS.BOOKS                                               20 rows
 PUBLIC.BOOKS."Global Counts"                                       empty
 PUBLIC.BOOKS.PUBLISHERS                                          20 rows
-PUBLIC.SALES.REGIONS                                             20 rows
-PUBLIC.SALES.SALES                                               20 rows
+PUBLIC."PUBLISHER SALES".REGIONS                                 20 rows
+PUBLIC."PUBLISHER SALES".SALES                                   20 rows
 
 
 
@@ -363,7 +363,7 @@ PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
 PUBLIC.BOOKS.BOOKS                                               [table]
 PUBLIC.BOOKS."Global Counts"                                     [table]
 PUBLIC.BOOKS.PUBLISHERS                                          [table]
-PUBLIC.SALES.REGIONS                                             [table]
-PUBLIC.SALES.SALES                                               [table]
+PUBLIC."PUBLISHER SALES".REGIONS                                 [table]
+PUBLIC."PUBLISHER SALES".SALES                                   [table]
 
 

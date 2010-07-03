@@ -62,7 +62,11 @@ public class SchemaCrawlerGrepTest
     throws Exception
   {
     final String[] schemaNames = {
-        "BOOKS", "INFORMATION_SCHEMA", "PUBLIC", "SALES", "SYSTEM_LOBS"
+        "BOOKS",
+        "INFORMATION_SCHEMA",
+        "PUBLIC",
+        "\"PUBLISHER SALES\"",
+        "SYSTEM_LOBS"
     };
     final int[] tableCounts = {
         1, 0, 0, 1, 0
@@ -115,7 +119,7 @@ public class SchemaCrawlerGrepTest
                    "PUBLIC." + schemaNames[schemaIdx],
                    schema.getName());
       final Table[] tables = schema.getTables();
-      assertEquals("Table count does not match",
+      assertEquals("Table count does not match for schema " + schema,
                    tableCounts[schemaIdx],
                    tables.length);
       for (int tableIdx = 0; tableIdx < tables.length; tableIdx++)

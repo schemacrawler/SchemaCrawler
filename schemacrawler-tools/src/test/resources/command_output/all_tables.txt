@@ -101,8 +101,8 @@ PUBLIC,BOOKS,BOOKAUTHORS,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,
 PUBLIC,BOOKS,BOOKS,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
 PUBLIC,BOOKS,Global Counts,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
 PUBLIC,BOOKS,PUBLISHERS,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
-PUBLIC,SALES,REGIONS,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
-PUBLIC,SALES,SALES,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
+PUBLIC,PUBLISHER SALES,REGIONS,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
+PUBLIC,PUBLISHER SALES,SALES,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
 PUBLIC,BOOKS,AUTHORSLIST,VIEW,<null>,<null>,<null>,<null>,<null>,<null>,<null>,false,<null>
 
 

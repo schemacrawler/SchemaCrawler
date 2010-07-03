@@ -102,7 +102,7 @@ SYS_IDX_PK_PUBLISHERS_10027                               [unique index]
 1   ID                                ascending                   
 
 
-PUBLIC.SALES.REGIONS                                             [table]
+PUBLIC."PUBLISHER SALES".REGIONS                                 [table]
 ------------------------------------------------------------------------
 1   CITY                              VARCHAR(50) not null        
 4   COUNTRY                           VARCHAR(50) not null        
@@ -114,15 +114,15 @@ PK_CUSTOMERS                                               [primary key]
 4   COUNTRY                           ascending                   
 
 FK_SALES_REGIONS                           [foreign key, with no action]
- 1  POSTALCODE --> PUBLIC.SALES.SALES.POSTALCODE                              
- 2  COUNTRY --> PUBLIC.SALES.SALES.COUNTRY                              
+ 1  POSTALCODE --> PUBLIC."PUBLISHER SALES".SALES.POSTALCODE                              
+ 2  COUNTRY --> PUBLIC."PUBLISHER SALES".SALES.COUNTRY                              
 
 SYS_IDX_PK_CUSTOMERS_10052                                [unique index]
 3   POSTALCODE                        ascending                   
 4   COUNTRY                           ascending                   
 
 
-PUBLIC.SALES.SALES                                               [table]
+PUBLIC."PUBLISHER SALES".SALES                                   [table]
 ------------------------------------------------------------------------
 3   BOOKID                            INTEGER                     
 2   COUNTRY                           VARCHAR(50) not null        
@@ -131,8 +131,8 @@ PUBLIC.SALES.SALES                                               [table]
 5   TOTALAMOUNT                       DOUBLE(64, 0)               
 
 FK_SALES_REGIONS                           [foreign key, with no action]
- 1  PUBLIC.SALES.REGIONS.POSTALCODE --> POSTALCODE                              
- 2  PUBLIC.SALES.REGIONS.COUNTRY --> COUNTRY                              
+ 1  PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE --> POSTALCODE                              
+ 2  PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY --> COUNTRY                              
 
 SYS_IDX_10056                                         [non-unique index]
 1   POSTALCODE                        ascending                   

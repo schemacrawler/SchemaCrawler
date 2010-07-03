@@ -13,7 +13,7 @@ PUBLIC.BOOKS.BOOKAUTHORS                                         20 rows
 PUBLIC.BOOKS.BOOKS                                               20 rows
 PUBLIC.BOOKS."Global Counts"                                       empty
 PUBLIC.BOOKS.PUBLISHERS                                          20 rows
-PUBLIC.SALES.REGIONS                                             20 rows
-PUBLIC.SALES.SALES                                               20 rows
+PUBLIC."PUBLISHER SALES".REGIONS                                 20 rows
+PUBLIC."PUBLISHER SALES".SALES                                   20 rows
 
 

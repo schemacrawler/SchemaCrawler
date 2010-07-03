@@ -75,7 +75,11 @@ public class SchemaCrawlerTest
     throws Exception
   {
     final String[] schemaNames = {
-        "BOOKS", "INFORMATION_SCHEMA", "PUBLIC", "SALES", "SYSTEM_LOBS"
+        "BOOKS",
+        "INFORMATION_SCHEMA",
+        "PUBLIC",
+        "\"PUBLISHER SALES\"",
+        "SYSTEM_LOBS"
     };
     final int[] tableCounts = {
         6, 0, 0, 2, 0,
@@ -193,7 +197,7 @@ public class SchemaCrawlerTest
                    "PUBLIC." + schemaNames[schemaIdx],
                    schema.getName());
       final Table[] tables = schema.getTables();
-      assertEquals("Table count does not match",
+      assertEquals("Table count does not match, for schema " + schema,
                    tableCounts[schemaIdx],
                    tables.length);
       for (int tableIdx = 0; tableIdx < tables.length; tableIdx++)
@@ -270,6 +274,13 @@ public class SchemaCrawlerTest
             0, 1
         }, {},
     };
+    final int[][] tablePrivilegesCounts = {
+        {
+            6, 6, 6, 6, 6, 6, 6
+        }, {}, {}, {
+            6, 6,
+        }, {},
+    };
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
@@ -311,6 +322,10 @@ public class SchemaCrawlerTest
           .format("Table %s imported foreign key count does not match", table
             .getFullName()), importedFkCounts[schemaIdx][tableIdx], table
           .getImportedForeignKeys().length);
+        assertEquals(String.format("Table %s privileges count does not match",
+                                   table.getFullName()),
+                     tablePrivilegesCounts[schemaIdx][tableIdx],
+                     table.getPrivileges().length);
       }
     }
   }
@@ -382,7 +397,11 @@ public class SchemaCrawlerTest
   {
 
     final String[] schemaNames = {
-        "BOOKS", "INFORMATION_SCHEMA", "PUBLIC", "SALES", "SYSTEM_LOBS"
+        "BOOKS",
+        "INFORMATION_SCHEMA",
+        "PUBLIC",
+        "\"PUBLISHER SALES\"",
+        "SYSTEM_LOBS"
     };
     final String[][] tableNames = {
         {

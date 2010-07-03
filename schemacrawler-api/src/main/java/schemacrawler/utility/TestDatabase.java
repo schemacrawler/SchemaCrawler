@@ -27,6 +27,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -130,7 +131,7 @@ public class TestDatabase
         connection.setAutoCommit(true);
         statement = connection.createStatement();
         for (final String schema: new String[] {
-            "Books", "Sales",
+            "Books", "Book Sales",
         })
         {
           for (final String scriptType: new String[] {
@@ -139,7 +140,8 @@ public class TestDatabase
           {
             final String scriptResource = String.format("/%s.%s.sql",
                                                         schema,
-                                                        scriptType);
+                                                        scriptType)
+              .toLowerCase(Locale.ENGLISH);
             final String sqlScript = Utility.readResourceFully(scriptResource);
             if (!Utility.isBlank(sqlScript))
             {
