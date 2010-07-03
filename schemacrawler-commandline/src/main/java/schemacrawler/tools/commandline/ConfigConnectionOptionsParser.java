@@ -118,6 +118,7 @@ final class ConfigConnectionOptionsParser
 
     final Map<String, String> databaseConnectionConfig = partition(config,
                                                                    connectionName);
+    config.putAll(databaseConnectionConfig);
 
     final ConnectionOptions connectionOptions = new DatabaseConfigConnectionOptions(databaseConnectionConfig);
 
