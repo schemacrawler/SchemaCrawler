@@ -1717,6 +1717,50 @@ hr {
 		<td colspan='4'></td>
 	</tr>
 	<tr>
+		<td colspan='2' class='name'>CHECK_UPPERCASE_STATE</td>
+		<td class='description'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>BOOKS.AUTHORS.STATE=UPPER(BOOKS.AUTHORS.STATE)</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10028</td>
+		<td class='description'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>BOOKS.AUTHORS.ID IS NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10029</td>
+		<td class='description'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>BOOKS.AUTHORS.FIRSTNAME IS NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10030</td>
+		<td class='description'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>BOOKS.AUTHORS.LASTNAME IS NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
 		<td colspan='2' class='name'>DELETE</td>
 		<td class='description'>[privilege]</td>
 	</tr>
@@ -1784,6 +1828,13 @@ hr {
 		<td class='ordinal'></td>
 		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
 		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>TRG_AUTHORS</td>
+		<td class='description'>[trigger, per row]</td>
 	</tr>
 </table>
 <p></p>
@@ -1880,6 +1931,17 @@ hr {
 		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[definition]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>SELECT ID,FIRSTNAME,LASTNAME FROM BOOKS.AUTHORS</td>
+	</tr>
 </table>
 <p></p>
 
@@ -1967,6 +2029,28 @@ hr {
 		<td class='ordinal'></td>
 		<td class='subname'>AUTHORID</td>
 		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10036</td>
+		<td class='description'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>BOOKS.BOOKAUTHORS.BOOKID IS NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10037</td>
+		<td class='description'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>BOOKS.BOOKAUTHORS.AUTHORID IS NOT NULL</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
@@ -2113,6 +2197,39 @@ hr {
 		<td class='ordinal'></td>
 		<td class='subname'>ID</td>
 		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10032</td>
+		<td class='description'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>BOOKS.BOOKS.ID IS NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10033</td>
+		<td class='description'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>BOOKS.BOOKS.TITLE IS NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10034</td>
+		<td class='description'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>BOOKS.BOOKS.PUBLISHERID IS NOT NULL</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
@@ -2317,6 +2434,17 @@ hr {
 		<td colspan='4'></td>
 	</tr>
 	<tr>
+		<td colspan='2' class='name'>SYS_CT_10026</td>
+		<td class='description'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>BOOKS.PUBLISHERS.ID IS NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
 		<td colspan='2' class='name'>DELETE</td>
 		<td class='description'>[privilege]</td>
 	</tr>
@@ -2468,6 +2596,50 @@ hr {
 		<td colspan='4'></td>
 	</tr>
 	<tr>
+		<td colspan='2' class='name'>SYS_CT_10048</td>
+		<td class='description'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>&quot;PUBLISHER SALES&quot;.REGIONS.CITY IS NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10049</td>
+		<td class='description'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>&quot;PUBLISHER SALES&quot;.REGIONS.STATE IS NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10050</td>
+		<td class='description'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>&quot;PUBLISHER SALES&quot;.REGIONS.POSTALCODE IS NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10051</td>
+		<td class='description'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>&quot;PUBLISHER SALES&quot;.REGIONS.COUNTRY IS NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
 		<td colspan='2' class='name'>DELETE</td>
 		<td class='description'>[privilege]</td>
 	</tr>
@@ -2602,6 +2774,28 @@ hr {
 		<td class='ordinal'></td>
 		<td class='subname'>COUNTRY</td>
 		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10053</td>
+		<td class='description'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>&quot;PUBLISHER SALES&quot;.SALES.POSTALCODE IS NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10054</td>
+		<td class='description'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>&quot;PUBLISHER SALES&quot;.SALES.COUNTRY IS NOT NULL</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>

@@ -443,6 +443,18 @@ IDX_A_AUTHORS                                         [non-unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
 
+CHECK_UPPERCASE_STATE                                 [check constraint]
+  BOOKS.AUTHORS.STATE=UPPER(BOOKS.AUTHORS.STATE)
+
+SYS_CT_10028                                          [check constraint]
+  BOOKS.AUTHORS.ID IS NOT NULL
+
+SYS_CT_10029                                          [check constraint]
+  BOOKS.AUTHORS.FIRSTNAME IS NOT NULL
+
+SYS_CT_10030                                          [check constraint]
+  BOOKS.AUTHORS.LASTNAME IS NOT NULL
+
 DELETE                                                       [privilege]
   _SYSTEM --> DBA (grantable)                                   
 
@@ -460,6 +472,8 @@ TRIGGER                                                      [privilege]
 
 UPDATE                                                       [privilege]
   _SYSTEM --> DBA (grantable)                                   
+
+TRG_AUTHORS                                           [trigger, per row]
 
 
 PUBLIC.BOOKS.AUTHORSLIST                                          [view]
@@ -486,6 +500,9 @@ TRIGGER                                                      [privilege]
 UPDATE                                                       [privilege]
   _SYSTEM --> DBA (grantable)                                   
 
+                                                            [definition]
+  SELECT ID,FIRSTNAME,LASTNAME FROM BOOKS.AUTHORS
+
 
 PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
 ------------------------------------------------------------------------
@@ -508,6 +525,12 @@ SYS_IDX_10039                                         [non-unique index]
 UIDX_BOOKAUTHORS                                          [unique index]
   BOOKID                            ascending                   
   AUTHORID                          ascending                   
+
+SYS_CT_10036                                          [check constraint]
+  BOOKS.BOOKAUTHORS.BOOKID IS NOT NULL
+
+SYS_CT_10037                                          [check constraint]
+  BOOKS.BOOKAUTHORS.AUTHORID IS NOT NULL
 
 DELETE                                                       [privilege]
   _SYSTEM --> DBA (grantable)                                   
@@ -545,6 +568,15 @@ FK_Y_BOOK                                  [foreign key, with no action]
 
 SYS_IDX_PK_BOOKS_10035                                    [unique index]
   ID                                ascending                   
+
+SYS_CT_10032                                          [check constraint]
+  BOOKS.BOOKS.ID IS NOT NULL
+
+SYS_CT_10033                                          [check constraint]
+  BOOKS.BOOKS.TITLE IS NOT NULL
+
+SYS_CT_10034                                          [check constraint]
+  BOOKS.BOOKS.PUBLISHERID IS NOT NULL
 
 DELETE                                                       [privilege]
   _SYSTEM --> DBA (grantable)                                   
@@ -599,6 +631,9 @@ PK_PUBLISHERS                                              [primary key]
 SYS_IDX_PK_PUBLISHERS_10027                               [unique index]
   ID                                ascending                   
 
+SYS_CT_10026                                          [check constraint]
+  BOOKS.PUBLISHERS.ID IS NOT NULL
+
 DELETE                                                       [privilege]
   _SYSTEM --> DBA (grantable)                                   
 
@@ -637,6 +672,18 @@ SYS_IDX_PK_CUSTOMERS_10052                                [unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
 
+SYS_CT_10048                                          [check constraint]
+  "PUBLISHER SALES".REGIONS.CITY IS NOT NULL
+
+SYS_CT_10049                                          [check constraint]
+  "PUBLISHER SALES".REGIONS.STATE IS NOT NULL
+
+SYS_CT_10050                                          [check constraint]
+  "PUBLISHER SALES".REGIONS.POSTALCODE IS NOT NULL
+
+SYS_CT_10051                                          [check constraint]
+  "PUBLISHER SALES".REGIONS.COUNTRY IS NOT NULL
+
 DELETE                                                       [privilege]
   _SYSTEM --> DBA (grantable)                                   
 
@@ -671,6 +718,12 @@ FK_SALES_REGIONS                           [foreign key, with no action]
 SYS_IDX_10056                                         [non-unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
+
+SYS_CT_10053                                          [check constraint]
+  "PUBLISHER SALES".SALES.POSTALCODE IS NOT NULL
+
+SYS_CT_10054                                          [check constraint]
+  "PUBLISHER SALES".SALES.COUNTRY IS NOT NULL
 
 DELETE                                                       [privilege]
   _SYSTEM --> DBA (grantable)                                   
