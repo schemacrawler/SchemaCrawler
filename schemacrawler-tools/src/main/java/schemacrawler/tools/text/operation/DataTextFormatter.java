@@ -22,7 +22,6 @@ package schemacrawler.tools.text.operation;
 
 
 import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -62,7 +61,6 @@ final class DataTextFormatter
   private static final String BINARY = "<binary>";
 
   private int dataBlockCount;
-
   private final Operation operation;
 
   /**
@@ -325,7 +323,7 @@ final class DataTextFormatter
       {
         try
         {
-          in = new BufferedInputStream(blob.getBinaryStream());
+          in = blob.getBinaryStream();
         }
         catch (final SQLFeatureNotSupportedException e)
         {
@@ -368,7 +366,7 @@ final class DataTextFormatter
       {
         try
         {
-          rdr = new BufferedReader(new InputStreamReader(clob.getAsciiStream()));
+          rdr = new InputStreamReader(clob.getAsciiStream());
         }
         catch (final SQLFeatureNotSupportedException e)
         {
@@ -378,7 +376,7 @@ final class DataTextFormatter
         {
           try
           {
-            rdr = new BufferedReader(clob.getCharacterStream());
+            rdr = clob.getCharacterStream();
           }
           catch (final SQLFeatureNotSupportedException e)
           {
