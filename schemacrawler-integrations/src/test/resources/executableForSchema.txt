@@ -23,17 +23,17 @@ FK_Z_AUTHOR                                [foreign key, with no action]
  1  ID --> PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID                              
 
 IDX_A_AUTHORS                                         [non-unique index]
-6   CITY                              unknown                     
-7   STATE                             unknown                     
-8   POSTALCODE                        unknown                     
-9   COUNTRY                           unknown                     
+6   CITY                              ascending                   
+7   STATE                             ascending                   
+8   POSTALCODE                        ascending                   
+9   COUNTRY                           ascending                   
 
 IDX_B_AUTHORS                                         [non-unique index]
-3   LASTNAME                          unknown                     
-2   FIRSTNAME                         unknown                     
+3   LASTNAME                          ascending                   
+2   FIRSTNAME                         ascending                   
 
 SYS_IDX_PK_AUTHORS_10031                                  [unique index]
-1   ID                                unknown                     
+1   ID                                ascending                   
 
 
 PUBLIC.BOOKS.AUTHORSLIST                                          [view]
@@ -56,14 +56,14 @@ FK_Z_AUTHOR                                [foreign key, with no action]
  1  PUBLIC.BOOKS.AUTHORS.ID --> AUTHORID                              
 
 SYS_IDX_10039                                         [non-unique index]
-1   BOOKID                            unknown                     
+1   BOOKID                            ascending                   
 
 SYS_IDX_10041                                         [non-unique index]
-2   AUTHORID                          unknown                     
+2   AUTHORID                          ascending                   
 
 UIDX_BOOKAUTHORS                                          [unique index]
-1   BOOKID                            unknown                     
-2   AUTHORID                          unknown                     
+1   BOOKID                            ascending                   
+2   AUTHORID                          ascending                   
 
 
 PUBLIC.BOOKS.BOOKS                                               [table]
@@ -82,7 +82,7 @@ FK_Y_BOOK                                  [foreign key, with no action]
  1  ID --> PUBLIC.BOOKS.BOOKAUTHORS.BOOKID                              
 
 SYS_IDX_PK_BOOKS_10035                                    [unique index]
-1   ID                                unknown                     
+1   ID                                ascending                   
 
 
 PUBLIC.BOOKS."Global Counts"                                     [table]
@@ -99,7 +99,7 @@ PK_PUBLISHERS                                              [primary key]
 1   ID                                ascending                   
 
 SYS_IDX_PK_PUBLISHERS_10027                               [unique index]
-1   ID                                unknown                     
+1   ID                                ascending                   
 
 
 PUBLIC.SALES.REGIONS                                             [table]
@@ -118,8 +118,8 @@ FK_SALES_REGIONS                           [foreign key, with no action]
  2  COUNTRY --> PUBLIC.SALES.SALES.COUNTRY                              
 
 SYS_IDX_PK_CUSTOMERS_10052                                [unique index]
-3   POSTALCODE                        unknown                     
-4   COUNTRY                           unknown                     
+3   POSTALCODE                        ascending                   
+4   COUNTRY                           ascending                   
 
 
 PUBLIC.SALES.SALES                                               [table]
@@ -135,8 +135,8 @@ FK_SALES_REGIONS                           [foreign key, with no action]
  2  PUBLIC.SALES.REGIONS.COUNTRY --> COUNTRY                              
 
 SYS_IDX_10056                                         [non-unique index]
-1   POSTALCODE                        unknown                     
-2   COUNTRY                           unknown                     
+1   POSTALCODE                        ascending                   
+2   COUNTRY                           ascending                   
 
 
 

@@ -431,17 +431,17 @@ FK_Z_AUTHOR                                [foreign key, with no action]
   ID --> PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID                              
 
 SYS_IDX_PK_AUTHORS_10031                                  [unique index]
-  ID                                unknown                     
+  ID                                ascending                   
 
 IDX_B_AUTHORS                                         [non-unique index]
-  LASTNAME                          unknown                     
-  FIRSTNAME                         unknown                     
+  LASTNAME                          ascending                   
+  FIRSTNAME                         ascending                   
 
 IDX_A_AUTHORS                                         [non-unique index]
-  CITY                              unknown                     
-  STATE                             unknown                     
-  POSTALCODE                        unknown                     
-  COUNTRY                           unknown                     
+  CITY                              ascending                   
+  STATE                             ascending                   
+  POSTALCODE                        ascending                   
+  COUNTRY                           ascending                   
 
 DELETE                                                       [privilege]
   _SYSTEM --> DBA (grantable)                                   
@@ -505,14 +505,14 @@ FK_Y_BOOK                                  [foreign key, with no action]
   PUBLIC.BOOKS.BOOKS.ID --> BOOKID                              
 
 SYS_IDX_10041                                         [non-unique index]
-  AUTHORID                          unknown                     
+  AUTHORID                          ascending                   
 
 SYS_IDX_10039                                         [non-unique index]
-  BOOKID                            unknown                     
+  BOOKID                            ascending                   
 
 UIDX_BOOKAUTHORS                                          [unique index]
-  BOOKID                            unknown                     
-  AUTHORID                          unknown                     
+  BOOKID                            ascending                   
+  AUTHORID                          ascending                   
 
 DELETE                                                       [privilege]
   _SYSTEM --> DBA (grantable)                                   
@@ -556,7 +556,7 @@ FK_Y_BOOK                                  [foreign key, with no action]
   PUBLIC.BOOKS.PUBLISHERS.ID --> PUBLISHERID                              
 
 SYS_IDX_PK_BOOKS_10035                                    [unique index]
-  ID                                unknown                     
+  ID                                ascending                   
 
 DELETE                                                       [privilege]
   _SYSTEM --> DBA (grantable)                                   
@@ -618,7 +618,7 @@ PK_PUBLISHERS                                              [primary key]
   ID --> PUBLIC.BOOKS.BOOKS.PUBLISHERID                              
 
 SYS_IDX_PK_PUBLISHERS_10027                               [unique index]
-  ID                                unknown                     
+  ID                                ascending                   
 
 DELETE                                                       [privilege]
   _SYSTEM --> DBA (grantable)                                   
@@ -655,8 +655,8 @@ FK_SALES_REGIONS                           [foreign key, with no action]
   COUNTRY --> PUBLIC.SALES.SALES.COUNTRY                              
 
 SYS_IDX_PK_CUSTOMERS_10052                                [unique index]
-  POSTALCODE                        unknown                     
-  COUNTRY                           unknown                     
+  POSTALCODE                        ascending                   
+  COUNTRY                           ascending                   
 
 DELETE                                                       [privilege]
   _SYSTEM --> DBA (grantable)                                   
@@ -693,8 +693,8 @@ FK_SALES_REGIONS                           [foreign key, with no action]
   PUBLIC.BOOKS.BOOKS.ID --> BOOKID                              
 
 SYS_IDX_10056                                         [non-unique index]
-  POSTALCODE                        unknown                     
-  COUNTRY                           unknown                     
+  POSTALCODE                        ascending                   
+  COUNTRY                           ascending                   
 
 DELETE                                                       [privilege]
   _SYSTEM --> DBA (grantable)                                   
