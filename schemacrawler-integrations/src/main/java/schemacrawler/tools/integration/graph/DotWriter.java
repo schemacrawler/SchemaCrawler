@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnMap;
@@ -46,6 +47,25 @@ import sf.util.Utility;
 
 final class DotWriter
 {
+
+  private static final Random random = new Random((long) DotWriter.class
+    .getName().hashCode());
+
+  private static String nextRandomHTMLPastelColorValue()
+  {
+    for (int i = 0; i < random.nextInt(2000); i++)
+    {
+      random.nextFloat();
+    }
+
+    final float hue = random.nextFloat();
+    // Saturation between 0.1 and 0.3
+    final float saturation = ((float) (random.nextInt(2000) + 1000)) / 10000f;
+    final float luminance = 0.9f;
+    final Color color = Color.getHSBColor(hue, saturation, luminance);
+
+    return "#" + Integer.toHexString(color.getRGB()).substring(2).toUpperCase();
+  }
 
   private final PrintWriter out;
   private final Map<Schema, String> colorMap;
@@ -160,7 +180,7 @@ final class DotWriter
     final String tableNameBgColor;
     if (!colorMap.containsKey(schema))
     {
-      tableNameBgColor = newPastelHTMLColorValue();
+      tableNameBgColor = nextRandomHTMLPastelColorValue();
       colorMap.put(schema, tableNameBgColor);
     }
     else
@@ -297,13 +317,6 @@ final class DotWriter
               style,
               fkSymbol,
               pkSymbol);
-  }
-
-  public String newPastelHTMLColorValue()
-  {
-    final Color color = Color.getHSBColor((float) Math.random(), (float) Math
-      .max(Math.min(Math.random(), 0.1), 0.3), 0.9f);
-    return "#" + Integer.toHexString(color.getRGB()).substring(2).toUpperCase();
   }
 
 }
