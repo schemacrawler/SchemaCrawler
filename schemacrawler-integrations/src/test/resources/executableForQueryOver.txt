@@ -60,11 +60,11 @@ ID,FIRSTNAME,LASTNAME
 PUBLIC.BOOKS.BOOKAUTHORS
 ------------------------------------------------------------------------
 BOOKID,AUTHORID,UPDATE
-1,7,<null>
+1,7,This is the latest update
 2,4,<null>
-2,6,<null>
+2,6,Some update
 3,1,<null>
-3,4,<null>
+3,4,No updates since a week
 3,5,<null>
 3,6,<null>
 4,9,<null>
