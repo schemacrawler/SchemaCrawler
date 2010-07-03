@@ -108,10 +108,10 @@ public class SortingTest
   {
 
     final String[] sortedAlpha = new String[] {
-        "IDX_A_AUTHORS", "IDX_B_AUTHORS"
+        "IDX_A_AUTHORS", "IDX_B_AUTHORS", "SYS_IDX_PK_AUTHORS_10031",
     };
     final String[] sortedNatural = new String[] {
-        "IDX_B_AUTHORS", "IDX_A_AUTHORS"
+        "SYS_IDX_PK_AUTHORS_10031", "IDX_B_AUTHORS", "IDX_A_AUTHORS",
     };
     checkIndexSort("AUTHORS", sortedAlpha, true);
     checkIndexSort("AUTHORS", sortedNatural, false);
@@ -127,7 +127,8 @@ public class SortingTest
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setAlphabeticalSortForTableColumns(sortAlphabetically);
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
-    final Schema schema = testUtility.getSchema(schemaCrawlerOptions, "PUBLIC");
+    final Schema schema = testUtility.getSchema(schemaCrawlerOptions,
+                                                "PUBLIC.BOOKS");
     assertNotNull("Schema not found", schema);
 
     final Table table = schema.getTable(tableName);
@@ -157,7 +158,8 @@ public class SortingTest
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setAlphabeticalSortForForeignKeys(sortAlphabetically);
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
-    final Schema schema = testUtility.getSchema(schemaCrawlerOptions, "PUBLIC");
+    final Schema schema = testUtility.getSchema(schemaCrawlerOptions,
+                                                "PUBLIC.BOOKS");
     assertNotNull("Schema not found", schema);
 
     final Table[] tables = schema.getTables();
@@ -189,7 +191,8 @@ public class SortingTest
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setAlphabeticalSortForIndexes(sortAlphabetically);
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
-    final Schema schema = testUtility.getSchema(schemaCrawlerOptions, "PUBLIC");
+    final Schema schema = testUtility.getSchema(schemaCrawlerOptions,
+                                                "PUBLIC.BOOKS");
     assertNotNull("Schema not found", schema);
 
     final Table[] tables = schema.getTables();
@@ -199,15 +202,17 @@ public class SortingTest
       if (table.getName().equals(tableName))
       {
         final Index[] indices = table.getIndices();
-        assertEquals("Index count does not match",
+        assertEquals("Index count does not match for table " + table,
                      expectedValues.length,
                      indices.length);
         for (int i = 0; i < indices.length; i++)
         {
           final Index index = indices[i];
           assertEquals("Indexes not "
-                       + (sortAlphabetically? "alphabetically": "naturally")
-                       + " sorted", expectedValues[i], index.getName());
+                           + (sortAlphabetically? "alphabetically": "naturally")
+                           + " sorted  for table " + table,
+                       expectedValues[i],
+                       index.getName());
         }
       }
     }
