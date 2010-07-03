@@ -69,6 +69,13 @@ public class TestDatabase
     throws Exception
   {
     final TestDatabase testUtility = new TestDatabase();
+    Runtime.getRuntime().addShutdownHook(new Thread()
+    {
+      public void run()
+      {
+        testUtility.shutdownDatabase();
+      }
+    });
     testUtility.createDatabase();
   }
 
@@ -116,20 +123,32 @@ public class TestDatabase
     Statement statement = null;
     try
     {
-      final String[] scriptResources = new String[] {
-          "/schemacrawler.test.schema1.sql",
-          "/schemacrawler.test.extra.sql",
-          "/schemacrawler.test.schema2.sql"
-      };
       if (dataSource != null)
       {
         connection = dataSource.createConnection();
         statement = connection.createStatement();
-        for (final String scriptResource: scriptResources)
+        for (final String schema: new String[] {
+            "Books", "Sales",
+        })
         {
-          final String script = Utility.readResourceFully(scriptResource);
-          statement.execute(script);
+          // Create the schema
+          statement.execute(String
+            .format("CREATE SCHEMA %s AUTHORIZATION DBA;", schema));
           connection.commit();
+          statement.execute(String.format("SET SCHEMA %s;", schema));
+          connection.commit();
+
+          for (final String scriptType: new String[] {
+              "schema", "post_schema", "data",
+          })
+          {
+            final String scriptResource = String.format("/%s.%s.sql",
+                                                        schema,
+                                                        scriptType);
+            final String sqlScript = Utility.readResourceFully(scriptResource);
+            statement.execute(sqlScript);
+            connection.commit();
+          }
         }
         connection.close();
       }
@@ -312,7 +331,7 @@ public class TestDatabase
   private void makeDataSource(final String url)
     throws SchemaCrawlerException
   {
-    connectionOptions = new DatabaseConnectionOptions("org.hsqldb.jdbcDriver",
+    connectionOptions = new DatabaseConnectionOptions("org.hsqldb.jdbc.JDBCDriver",
                                                       url);
     connectionOptions.setUser("sa");
     connectionOptions.setPassword("");
