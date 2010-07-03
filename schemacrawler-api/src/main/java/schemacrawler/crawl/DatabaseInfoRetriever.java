@@ -348,7 +348,7 @@ final class DatabaseInfoRetriever
           .getInt("NULLABLE", DatabaseMetaData.typeNullableUnknown) == DatabaseMetaData.typeNullable;
         final boolean isCaseSensitive = results.getBoolean("CASE_SENSITIVE");
         final SearchableType searchable = SearchableType.valueOf(results
-          .getInt("SEARCHABLE", -1));
+          .getInt("SEARCHABLE", SearchableType.unknown.ordinal()));
         final boolean isUnsigned = results.getBoolean("UNSIGNED_ATTRIBUTE");
         final boolean isFixedPrecisionScale = results
           .getBoolean("FIXED_PREC_SCALE");
