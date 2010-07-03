@@ -50,6 +50,8 @@ public class TestDatabase
   private static final Logger LOGGER = Logger.getLogger(TestDatabase.class
     .getName());
 
+  private static final String serverFileStem = "hsqldb.schemacrawler";
+
   public static void initializeApplicationLogging()
   {
     Utility.setApplicationLogLevel(DEBUG_LOG_LEVEL);
@@ -84,15 +86,15 @@ public class TestDatabase
    * @param stem
    *        File stem
    */
-  private static void deleteServerFiles(final String stem)
+  private static void deleteServerFiles()
   {
     final FilenameFilter serverFilesFilter = new FilenameFilter()
     {
       public boolean accept(final File dir, final String name)
       {
-        return Arrays
-          .asList(stem + ".lck", stem + ".log", stem + ".properties")
-          .contains(name);
+        return Arrays.asList(serverFileStem + ".lck",
+                             serverFileStem + ".log",
+                             serverFileStem + ".properties").contains(name);
       }
     };
 
@@ -128,7 +130,7 @@ public class TestDatabase
         connection.setAutoCommit(true);
         statement = connection.createStatement();
         for (final String schema: new String[] {
-          "Books",// "Sales",
+            "Books", "Sales",
         })
         {
           for (final String scriptType: new String[] {
@@ -259,6 +261,8 @@ public class TestDatabase
         }
         connectionOptions = null;
       }
+      deleteServerFiles();
+      LOGGER.log(Level.INFO, "SHUTDOWN database");
     }
     catch (final SchemaCrawlerException e)
     {
@@ -306,8 +310,7 @@ public class TestDatabase
   {
     LOGGER.log(Level.FINE, toString() + " - Setting up database");
     // Attempt to delete the database files
-    final String serverFileStem = "hsqldb.schemacrawler";
-    deleteServerFiles(serverFileStem);
+    deleteServerFiles();
     // Start the server
     org.hsqldb.server.Server.main(new String[] {
         "-database.0",
