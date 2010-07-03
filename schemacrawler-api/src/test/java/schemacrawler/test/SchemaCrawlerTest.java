@@ -159,7 +159,7 @@ public class SchemaCrawlerTest
                 "INTEGER", "VARCHAR", "VARCHAR",
             },
             {
-                "INTEGER", "INTEGER", "INTEGER",
+                "INTEGER", "INTEGER", "CLOB",
             },
             {
                 "INTEGER", "VARCHAR", "VARCHAR", "INTEGER", "DATE", "DOUBLE"
