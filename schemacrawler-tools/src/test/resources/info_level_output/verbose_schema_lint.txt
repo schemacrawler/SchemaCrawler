@@ -481,7 +481,7 @@ TRIGGER                                                      [privilege]
 UPDATE                                                       [privilege]
   _SYSTEM --> DBA (grantable)                                   
 
-TRG_AUTHORS                                           [trigger, per row]
+TRG_AUTHORS                             [trigger, after delete, per row]
 
                                                                   [lint]
   incrementing columns
