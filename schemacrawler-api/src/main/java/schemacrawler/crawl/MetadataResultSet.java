@@ -227,10 +227,10 @@ final class MetadataResultSet
    *        Default enum value to return
    * @return Enum value of the column, or the default if not available
    */
-  <T extends Enum<T>> T getEnum(final String columnName, final T defaultValue)
+  <E extends Enum<E>> E getEnum(final String columnName, final E defaultValue)
   {
     final String value = getString(columnName);
-    T enumValue;
+    E enumValue;
     if (value == null || defaultValue == null)
     {
       enumValue = defaultValue;
@@ -239,7 +239,7 @@ final class MetadataResultSet
     {
       try
       {
-        enumValue = (T) defaultValue.valueOf(defaultValue.getClass(), value
+        enumValue = (E) defaultValue.valueOf(defaultValue.getClass(), value
           .toLowerCase(Locale.ENGLISH));
       }
       catch (final Exception e)
