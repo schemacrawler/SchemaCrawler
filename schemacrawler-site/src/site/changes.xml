@@ -12,6 +12,9 @@
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Added support for spaces in schema and catalog names.
       ]]></action>
+      <action dev="Sualeh Fatehi" type="update"><![CDATA[
+        Changed the test database to hswldb 2.0.0. Changed the test data, and added more robust unit tests.
+      ]]></action>
     </release>
     <release version="8.2" date="2010-05-25">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
