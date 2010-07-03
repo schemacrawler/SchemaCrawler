@@ -134,6 +134,10 @@ public final class Utility
 
   public static String readFully(final InputStream stream)
   {
+    if (stream == null)
+    {
+      return null;
+    }
     final Reader reader;
     try
     {

@@ -75,14 +75,18 @@ final class TableRetriever
         }
         LOGGER.log(Level.FINER, "Retrieving foreign key: " + foreignKeyName);
 
-        final String pkTableCatalogName = results.getString("PKTABLE_CAT");
-        final String pkTableSchemaName = results.getString("PKTABLE_SCHEM");
+        final String pkTableCatalogName = quotedName(results
+          .getString("PKTABLE_CAT"));
+        final String pkTableSchemaName = quotedName(results
+          .getString("PKTABLE_SCHEM"));
         final String pkTableName = quotedName(results.getString("PKTABLE_NAME"));
         final String pkColumnName = quotedName(results
           .getString("PKCOLUMN_NAME"));
 
-        final String fkTableCatalogName = results.getString("FKTABLE_CAT");
-        final String fkTableSchemaName = results.getString("FKTABLE_SCHEM");
+        final String fkTableCatalogName = quotedName(results
+          .getString("FKTABLE_CAT"));
+        final String fkTableSchemaName = quotedName(results
+          .getString("FKTABLE_SCHEM"));
         final String fkTableName = quotedName(results.getString("FKTABLE_NAME"));
         final String fkColumnName = quotedName(results
           .getString("FKCOLUMN_NAME"));
@@ -263,8 +267,8 @@ final class TableRetriever
     try
     {
       results = new MetadataResultSet(getMetaData()
-        .getColumns(table.getSchema().getCatalogName(),
-                    table.getSchema().getSchemaName(),
+        .getColumns(unquotedName(table.getSchema().getCatalogName()),
+                    unquotedName(table.getSchema().getSchemaName()),
                     unquotedName(table.getName()),
                     null));
 
@@ -351,14 +355,14 @@ final class TableRetriever
 
     final DatabaseMetaData metaData = getMetaData();
 
-    results = new MetadataResultSet(metaData.getImportedKeys(table.getSchema()
-      .getCatalogName(), table.getSchema().getSchemaName(), unquotedName(table
-      .getName())));
+    results = new MetadataResultSet(metaData.getImportedKeys(unquotedName(table
+      .getSchema().getCatalogName()), unquotedName(table.getSchema()
+      .getSchemaName()), unquotedName(table.getName())));
     createForeignKeys(results, foreignKeys);
 
-    results = new MetadataResultSet(metaData.getExportedKeys(table.getSchema()
-      .getCatalogName(), table.getSchema().getSchemaName(), unquotedName(table
-      .getName())));
+    results = new MetadataResultSet(metaData.getExportedKeys(unquotedName(table
+      .getSchema().getCatalogName()), unquotedName(table.getSchema()
+      .getSchemaName()), unquotedName(table.getName())));
     createForeignKeys(results, foreignKeys);
   }
 
@@ -388,8 +392,8 @@ final class TableRetriever
       else
       {
         results = new MetadataResultSet(getMetaData()
-          .getIndexInfo(table.getSchema().getCatalogName(),
-                        table.getSchema().getSchemaName(),
+          .getIndexInfo(unquotedName(table.getSchema().getCatalogName()),
+                        unquotedName(table.getSchema().getSchemaName()),
                         unquotedName(table.getName()),
                         unique,
                         true/* approximate */));
@@ -426,8 +430,8 @@ final class TableRetriever
     try
     {
       results = new MetadataResultSet(getMetaData()
-        .getPrimaryKeys(table.getSchema().getCatalogName(),
-                        table.getSchema().getSchemaName(),
+        .getPrimaryKeys(unquotedName(table.getSchema().getCatalogName()),
+                        unquotedName(table.getSchema().getSchemaName()),
                         unquotedName(table.getName())));
 
       MutablePrimaryKey primaryKey;
@@ -492,8 +496,8 @@ final class TableRetriever
     try
     {
       results = new MetadataResultSet(getMetaData()
-        .getTables(catalogName,
-                   schemaName,
+        .getTables(unquotedName(catalogName),
+                   unquotedName(schemaName),
                    tableNamePattern,
                    TableType.toStrings(tableTypes)));
 

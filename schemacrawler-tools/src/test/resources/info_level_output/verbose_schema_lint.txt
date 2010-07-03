@@ -97,7 +97,7 @@ procedure term                        PROCEDURE
 result set holdability                1
 row id lifetime                       ROWID_UNSUPPORTED
 schema term                           SCHEMA
-schemas                               BOOKS, INFORMATION_SCHEMA, PUBLIC, SALES, SYSTEM_LOBS
+schemas                               BOOKS, INFORMATION_SCHEMA, PUBLIC, PUBLISHER SALES, SYSTEM_LOBS
 search string escape                  \
 SQL keywords                          
 SQL state type                        2
@@ -639,7 +639,7 @@ UPDATE                                                       [privilege]
   _SYSTEM --> DBA (grantable)                                   
 
 
-PUBLIC.SALES.REGIONS                                             [table]
+PUBLIC."PUBLISHER SALES".REGIONS                                 [table]
 ------------------------------------------------------------------------
   CITY                              VARCHAR(50) not null        
   STATE                             VARCHAR(2) not null         
@@ -651,8 +651,8 @@ PK_CUSTOMERS                                               [primary key]
   COUNTRY                           ascending                   
 
 FK_SALES_REGIONS                           [foreign key, with no action]
-  POSTALCODE --> PUBLIC.SALES.SALES.POSTALCODE                              
-  COUNTRY --> PUBLIC.SALES.SALES.COUNTRY                              
+  POSTALCODE --> PUBLIC."PUBLISHER SALES".SALES.POSTALCODE                              
+  COUNTRY --> PUBLIC."PUBLISHER SALES".SALES.COUNTRY                              
 
 SYS_IDX_PK_CUSTOMERS_10052                                [unique index]
   POSTALCODE                        ascending                   
@@ -677,7 +677,7 @@ UPDATE                                                       [privilege]
   _SYSTEM --> DBA (grantable)                                   
 
 
-PUBLIC.SALES.SALES                                               [table]
+PUBLIC."PUBLISHER SALES".SALES                                   [table]
 ------------------------------------------------------------------------
   POSTALCODE                        VARCHAR(10) not null        
   COUNTRY                           VARCHAR(50) not null        
@@ -686,8 +686,8 @@ PUBLIC.SALES.SALES                                               [table]
   TOTALAMOUNT                       DOUBLE(64, 0)               
 
 FK_SALES_REGIONS                           [foreign key, with no action]
-  PUBLIC.SALES.REGIONS.POSTALCODE --> POSTALCODE                              
-  PUBLIC.SALES.REGIONS.COUNTRY --> COUNTRY                              
+  PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE --> POSTALCODE                              
+  PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY --> COUNTRY                              
 
                                                       [weak association]
   PUBLIC.BOOKS.BOOKS.ID --> BOOKID                              

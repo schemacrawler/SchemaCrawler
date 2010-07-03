@@ -44,44 +44,6 @@ abstract class AbstractRetriever
   static final String UNKNOWN = "<unknown>";
 
   /**
-   * Checks whether the provided database object belongs to the
-   * specified schema.
-   * 
-   * @param dbObject
-   *        Database object to check
-   * @param catalogName
-   *        Database catalog to check against
-   * @param schemaName
-   *        Database schema to check against
-   * @return Whether the database object belongs to the specified schema
-   */
-  static boolean belongsToSchema(final DatabaseObject dbObject,
-                                 final String catalogName,
-                                 final String schemaName)
-  {
-    if (dbObject == null)
-    {
-      return false;
-    }
-
-    boolean belongsToCatalog = true;
-    boolean belongsToSchema = true;
-    final String dbObjectCatalogName = dbObject.getSchema().getCatalogName();
-    if (!Utility.isBlank(catalogName) && !Utility.isBlank(dbObjectCatalogName)
-        && !catalogName.equals(dbObjectCatalogName))
-    {
-      belongsToCatalog = false;
-    }
-    final String dbObjectSchemaName = dbObject.getSchema().getSchemaName();
-    if (!Utility.isBlank(schemaName) && !Utility.isBlank(dbObjectSchemaName)
-        && !schemaName.equals(dbObjectSchemaName))
-    {
-      belongsToSchema = false;
-    }
-    return belongsToCatalog && belongsToSchema;
-  }
-
-  /**
    * Reads a single column result set as a list.
    * 
    * @param results
@@ -110,6 +72,7 @@ abstract class AbstractRetriever
   }
 
   private final RetrieverConnection retrieverConnection;
+
   final MutableDatabase database;
 
   AbstractRetriever()
@@ -124,6 +87,46 @@ abstract class AbstractRetriever
   {
     this.retrieverConnection = retrieverConnection;
     this.database = database;
+  }
+
+  /**
+   * Checks whether the provided database object belongs to the
+   * specified schema.
+   * 
+   * @param dbObject
+   *        Database object to check
+   * @param catalogName
+   *        Database catalog to check against
+   * @param schemaName
+   *        Database schema to check against
+   * @return Whether the database object belongs to the specified schema
+   */
+  boolean belongsToSchema(final DatabaseObject dbObject,
+                          final String catalogName,
+                          final String schemaName)
+  {
+    if (dbObject == null)
+    {
+      return false;
+    }
+
+    boolean belongsToCatalog = true;
+    boolean belongsToSchema = true;
+    final String dbObjectCatalogName = unquotedName(dbObject.getSchema()
+      .getCatalogName());
+    if (!Utility.isBlank(catalogName) && !Utility.isBlank(dbObjectCatalogName)
+        && !catalogName.equals(dbObjectCatalogName))
+    {
+      belongsToCatalog = false;
+    }
+    final String dbObjectSchemaName = unquotedName(dbObject.getSchema()
+      .getSchemaName());
+    if (!Utility.isBlank(schemaName) && !Utility.isBlank(dbObjectSchemaName)
+        && !schemaName.equals(dbObjectSchemaName))
+    {
+      belongsToSchema = false;
+    }
+    return belongsToCatalog && belongsToSchema;
   }
 
   Connection getDatabaseConnection()

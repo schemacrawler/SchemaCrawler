@@ -62,8 +62,8 @@ final class TableExRetriever
   {
     while (results.next())
     {
-      final String catalogName = results.getString("TABLE_CAT");
-      final String schemaName = results.getString("TABLE_SCHEM");
+      final String catalogName = quotedName(results.getString("TABLE_CAT"));
+      final String schemaName = quotedName(results.getString("TABLE_SCHEM"));
       final String tableName = quotedName(results.getString("TABLE_NAME"));
       final String columnName;
       if (privilegesForColumn)

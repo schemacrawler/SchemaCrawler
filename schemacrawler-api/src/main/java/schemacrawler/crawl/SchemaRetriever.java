@@ -24,6 +24,7 @@ package schemacrawler.crawl;
 import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -65,7 +66,12 @@ final class SchemaRetriever
     {
       try
       {
-        catalogNames.addAll(readResultsVector(getMetaData().getCatalogs()));
+        final List<String> metaDataCatalogNames = readResultsVector(getMetaData()
+          .getCatalogs());
+        for (String catalogName: metaDataCatalogNames)
+        {
+          catalogNames.add(quotedName(catalogName));
+        }
       }
       catch (final SQLException e)
       {
@@ -93,13 +99,13 @@ final class SchemaRetriever
           final String catalogName;
           if (supportsCatalogs)
           {
-            catalogName = results.getString("TABLE_CATALOG");
+            catalogName = quotedName(results.getString("TABLE_CATALOG"));
           }
           else
           {
             catalogName = null;
           }
-          final String schemaName = results.getString("TABLE_SCHEM");
+          final String schemaName = quotedName(results.getString("TABLE_SCHEM"));
           LOGGER.log(Level.FINER, String.format("Retrieving schema: %s --> %s",
                                                 catalogName,
                                                 schemaName));

@@ -60,11 +60,11 @@ PUBLIC.BOOKS.PUBLISHERS                                          [table]
 ------------------------------------------------------------------------
 
 
-PUBLIC.SALES.REGIONS                                             [table]
+PUBLIC."PUBLISHER SALES".REGIONS                                 [table]
 ------------------------------------------------------------------------
 
 
-PUBLIC.SALES.SALES                                               [table]
+PUBLIC."PUBLISHER SALES".SALES                                   [table]
 ------------------------------------------------------------------------
 
 

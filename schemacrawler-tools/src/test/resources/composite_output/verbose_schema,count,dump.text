@@ -97,7 +97,7 @@ procedure term                        PROCEDURE
 result set holdability                1
 row id lifetime                       ROWID_UNSUPPORTED
 schema term                           SCHEMA
-schemas                               BOOKS, INFORMATION_SCHEMA, PUBLIC, SALES, SYSTEM_LOBS
+schemas                               BOOKS, INFORMATION_SCHEMA, PUBLIC, PUBLISHER SALES, SYSTEM_LOBS
 search string escape                  \
 SQL keywords                          
 SQL state type                        2
@@ -618,7 +618,7 @@ UPDATE                                                       [privilege]
   _SYSTEM --> DBA (grantable)                                   
 
 
-PUBLIC.SALES.REGIONS                                             [table]
+PUBLIC."PUBLISHER SALES".REGIONS                                 [table]
 ------------------------------------------------------------------------
   CITY                              VARCHAR(50) not null        
   STATE                             VARCHAR(2) not null         
@@ -630,8 +630,8 @@ PK_CUSTOMERS                                               [primary key]
   COUNTRY                           ascending                   
 
 FK_SALES_REGIONS                           [foreign key, with no action]
-  POSTALCODE --> PUBLIC.SALES.SALES.POSTALCODE                              
-  COUNTRY --> PUBLIC.SALES.SALES.COUNTRY                              
+  POSTALCODE --> PUBLIC."PUBLISHER SALES".SALES.POSTALCODE                              
+  COUNTRY --> PUBLIC."PUBLISHER SALES".SALES.COUNTRY                              
 
 SYS_IDX_PK_CUSTOMERS_10052                                [unique index]
   POSTALCODE                        ascending                   
@@ -656,7 +656,7 @@ UPDATE                                                       [privilege]
   _SYSTEM --> DBA (grantable)                                   
 
 
-PUBLIC.SALES.SALES                                               [table]
+PUBLIC."PUBLISHER SALES".SALES                                   [table]
 ------------------------------------------------------------------------
   POSTALCODE                        VARCHAR(10) not null        
   COUNTRY                           VARCHAR(50) not null        
@@ -665,8 +665,8 @@ PUBLIC.SALES.SALES                                               [table]
   TOTALAMOUNT                       DOUBLE(64, 0)               
 
 FK_SALES_REGIONS                           [foreign key, with no action]
-  PUBLIC.SALES.REGIONS.POSTALCODE --> POSTALCODE                              
-  PUBLIC.SALES.REGIONS.COUNTRY --> COUNTRY                              
+  PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE --> POSTALCODE                              
+  PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY --> COUNTRY                              
 
 SYS_IDX_10056                                         [non-unique index]
   POSTALCODE                        ascending                   
@@ -706,8 +706,8 @@ PUBLIC.BOOKS.BOOKAUTHORS                                         20 rows
 PUBLIC.BOOKS.BOOKS                                               20 rows
 PUBLIC.BOOKS."Global Counts"                                       empty
 PUBLIC.BOOKS.PUBLISHERS                                          20 rows
-PUBLIC.SALES.REGIONS                                             20 rows
-PUBLIC.SALES.SALES                                               20 rows
+PUBLIC."PUBLISHER SALES".REGIONS                                 20 rows
+PUBLIC."PUBLISHER SALES".SALES                                   20 rows
 
 
 
@@ -853,7 +853,7 @@ ID,PUBLISHER
 
 
 
-PUBLIC.SALES.REGIONS
+PUBLIC."PUBLISHER SALES".REGIONS
 ------------------------------------------------------------------------
 CITY,STATE,POSTALCODE,COUNTRY
 Arvada,KY,17131,USA
@@ -879,7 +879,7 @@ Woburn,NV,27392,USA
 
 
 
-PUBLIC.SALES.SALES
+PUBLIC."PUBLISHER SALES".SALES
 ------------------------------------------------------------------------
 POSTALCODE,COUNTRY,BOOKID,PERIODENDDATE,TOTALAMOUNT
 13078,USA,1,2001-07-18,18257.0

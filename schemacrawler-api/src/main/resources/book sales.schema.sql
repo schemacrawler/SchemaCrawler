@@ -7,6 +7,7 @@ CREATE TABLE Regions
   Country VARCHAR(50) NOT NULL,
   CONSTRAINT PK_Customers PRIMARY KEY (PostalCode, Country)
 );
+
 CREATE TABLE Sales
 (
   PostalCode VARCHAR(10) NOT NULL,
