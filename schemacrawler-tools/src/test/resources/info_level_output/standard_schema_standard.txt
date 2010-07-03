@@ -79,7 +79,7 @@ PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
 ------------------------------------------------------------------------
   BOOKID                            INTEGER not null            
   AUTHORID                          INTEGER not null            
-  "UPDATE"                          INTEGER                     
+  "UPDATE"                          CLOB                        
 
 FK_Z_AUTHOR                                [foreign key, with no action]
   PUBLIC.BOOKS.AUTHORS.ID --> AUTHORID                              

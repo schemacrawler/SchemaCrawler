@@ -94,7 +94,7 @@ digraph SchemaCrawler_Diagram {
         <tr>
           <td port="update_7e11958f.start" align="left">"UPDATE"</td>
           <td> </td>
-          <td port="update_7e11958f.end" align="right">INTEGER</td>
+          <td port="update_7e11958f.end" align="right">CLOB</td>
         </tr>
       </table>
     >, pos="118,168", width="2.6944", height="0.83333"];

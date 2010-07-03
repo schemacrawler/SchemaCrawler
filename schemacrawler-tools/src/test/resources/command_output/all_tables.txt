@@ -96,11 +96,11 @@ PUBLIC,INFORMATION_SCHEMA,VIEW_TABLE_USAGE,SYSTEM TABLE,one row for each table i
 PUBLIC,SYSTEM_LOBS,BLOCKS,SYSTEM TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
 PUBLIC,SYSTEM_LOBS,LOBS,SYSTEM TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
 PUBLIC,SYSTEM_LOBS,LOB_IDS,SYSTEM TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
-PUBLIC,BOOKS,AUTHORS,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
-PUBLIC,BOOKS,BOOKAUTHORS,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
-PUBLIC,BOOKS,BOOKS,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
+PUBLIC,BOOKS,AUTHORS,TABLE,Contact details for book authors,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
+PUBLIC,BOOKS,BOOKAUTHORS,TABLE,"Relationship between books and their authors, along with the latest updated information",<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
+PUBLIC,BOOKS,BOOKS,TABLE,Details for published books,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
 PUBLIC,BOOKS,Global Counts,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
-PUBLIC,BOOKS,PUBLISHERS,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
+PUBLIC,BOOKS,PUBLISHERS,TABLE,List of book publishers,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
 PUBLIC,PUBLISHER SALES,REGIONS,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
 PUBLIC,PUBLISHER SALES,SALES,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
 PUBLIC,BOOKS,AUTHORSLIST,VIEW,<null>,<null>,<null>,<null>,<null>,<null>,<null>,false,<null>

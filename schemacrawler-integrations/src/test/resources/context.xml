@@ -178,7 +178,6 @@
     <property name="operationOptions">
       <bean class="schemacrawler.tools.text.operation.OperationOptions">
         <property name="showLobs" value="true" />
-        <property name="mergeRows" value="true" />
       </bean>
     </property>
     <property name="additionalConfiguration">

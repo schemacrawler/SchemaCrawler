@@ -22,16 +22,25 @@ package schemacrawler.tools.text.operation;
 
 
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.sql.Blob;
 import java.sql.Clob;
+import java.sql.NClob;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.SQLFeatureNotSupportedException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.hsqldb.types.Types;
+
+import schemacrawler.crawl.SchemaCrawler;
+import schemacrawler.schema.ResultsColumn;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.BaseFormatter;
@@ -51,41 +60,6 @@ final class DataTextFormatter
 
   private static final String NULL = "<null>";
   private static final String BINARY = "<binary>";
-
-  /**
-   * Reads data from a LOB into a string. Default system encoding is
-   * assumed.
-   * 
-   * @param columnData
-   *        Column data object returned by JDBC
-   * @return A string with the contents of the LOB
-   */
-  private static String readLob(final Object columnData)
-  {
-    BufferedInputStream in = null;
-    final String lobData;
-    try
-    {
-      if (columnData instanceof Blob)
-      {
-        final Blob blob = (Blob) columnData;
-        in = new BufferedInputStream(blob.getBinaryStream());
-      }
-      else if (columnData instanceof Clob)
-      {
-        final Clob clob = (Clob) columnData;
-        in = new BufferedInputStream(clob.getAsciiStream());
-      }
-      lobData = sf.util.Utility.readFully(in);
-      return lobData;
-    }
-    catch (final SQLException e)
-    {
-      LOGGER.log(Level.FINE, "Could not read binary data", e);
-      return BINARY;
-    }
-
-  }
 
   private int dataBlockCount;
 
@@ -110,24 +84,85 @@ final class DataTextFormatter
     this.operation = operation;
   }
 
-  private String convertColumnDataToString(final Object columnData)
+  private String convertColumnDataToString(final ResultsColumn[] resultsColumns,
+                                           final ResultSet rows,
+                                           final int i)
+    throws SQLException
   {
+    final int javaSqlType = resultsColumns[i].getType().getType();
     String columnDataString;
-    if (columnData == null)
+    if (javaSqlType == Types.CLOB)
     {
-      columnDataString = NULL;
-    }
-    else if (columnData instanceof Clob || columnData instanceof Blob)
-    {
-      columnDataString = BINARY;
-      if (options.isShowLobs())
+      final Clob clob = rows.getClob(i + 1);
+      if (rows.wasNull() || clob == null)
       {
-        columnDataString = readLob(columnData);
+        columnDataString = NULL;
+      }
+      else
+      {
+        columnDataString = readClob(clob);
+      }
+    }
+    else if (javaSqlType == Types.NCLOB)
+    {
+      final NClob nClob = rows.getNClob(i + 1);
+      if (rows.wasNull() || nClob == null)
+      {
+        columnDataString = NULL;
+      }
+      else
+      {
+        columnDataString = readClob(nClob);
+      }
+    }
+    else if (javaSqlType == Types.BLOB)
+    {
+      final Blob blob = rows.getBlob(i + 1);
+      if (rows.wasNull() || blob == null)
+      {
+        columnDataString = NULL;
+      }
+      else
+      {
+        columnDataString = readBlob(blob);
+      }
+    }
+    else if (javaSqlType == Types.LONGVARBINARY)
+    {
+      final InputStream stream = rows.getBinaryStream(i + 1);
+      if (rows.wasNull() || stream == null)
+      {
+        columnDataString = NULL;
+      }
+      else
+      {
+        columnDataString = readStream(stream);
+      }
+    }
+    else if (javaSqlType == Types.LONGNVARCHAR
+             || javaSqlType == Types.LONGVARCHAR)
+    {
+      final InputStream stream = rows.getAsciiStream(i + 1);
+      if (rows.wasNull() || stream == null)
+      {
+        columnDataString = NULL;
+      }
+      else
+      {
+        columnDataString = readStream(stream);
       }
     }
     else
     {
-      columnDataString = columnData.toString();
+      final Object columnData = rows.getObject(i + 1);
+      if (rows.wasNull() || columnData == null)
+      {
+        columnDataString = NULL;
+      }
+      else
+      {
+        columnDataString = columnData.toString();
+      }
     }
     return columnDataString;
   }
@@ -191,18 +226,20 @@ final class DataTextFormatter
     out.println(formattingHelper.createNameRow(title, message, false));
   }
 
-  private void iterateRows(final ResultSet rows, final int columnCount)
+  private void iterateRows(final ResultsColumn[] resultsColumns,
+                           final ResultSet rows)
     throws SQLException
   {
     List<String> currentRow;
     while (rows.next())
     {
+      final int columnCount = resultsColumns.length;
       currentRow = new ArrayList<String>(columnCount);
       for (int i = 0; i < columnCount; i++)
       {
-        final int columnIndex = i + 1;
-        final Object columnData = rows.getObject(columnIndex);
-        final String columnDataString = convertColumnDataToString(columnData);
+        final String columnDataString = convertColumnDataToString(resultsColumns,
+                                                                  rows,
+                                                                  i);
         currentRow.add(columnDataString);
       }
       final String[] columnData = currentRow.toArray(new String[currentRow
@@ -211,26 +248,28 @@ final class DataTextFormatter
     }
   }
 
-  private void iterateRowsAndMerge(final ResultSet resultSet,
-                                   final String[] columnNames)
+  private void iterateRowsAndMerge(final ResultsColumn[] resultsColumns,
+                                   final ResultSet rows)
     throws SQLException
   {
-    final int columnCount = columnNames.length;
+    final int columnCount = resultsColumns.length;
     List<String> previousRow = new ArrayList<String>();
     List<String> currentRow;
     StringBuilder currentRowLastColumn = new StringBuilder();
     // write out the data
-    while (resultSet.next())
+    while (rows.next())
     {
       currentRow = new ArrayList<String>(columnCount - 1);
       for (int i = 0; i < columnCount - 1; i++)
       {
-        final Object columnData = resultSet.getObject(i + 1);
-        final String columnDataString = convertColumnDataToString(columnData);
+        final String columnDataString = convertColumnDataToString(resultsColumns,
+                                                                  rows,
+                                                                  i);
         currentRow.add(columnDataString);
       }
-      final Object lastColumnData = resultSet.getObject(columnCount);
-      final String lastColumnDataString = convertColumnDataToString(lastColumnData);
+      final String lastColumnDataString = convertColumnDataToString(resultsColumns,
+                                                                    rows,
+                                                                    resultsColumns.length - 1);
       if (currentRow.equals(previousRow))
       {
         currentRowLastColumn.append(lastColumnDataString);
@@ -269,6 +308,129 @@ final class DataTextFormatter
     {
       out.println(formattingHelper
         .createObjectStart(operation.getDescription()));
+    }
+  }
+
+  private String readBlob(final Blob blob)
+  {
+    if (blob == null)
+    {
+      return NULL;
+    }
+    else if (options.isShowLobs())
+    {
+      InputStream in = null;
+      String lobData;
+      try
+      {
+        try
+        {
+          in = new BufferedInputStream(blob.getBinaryStream());
+        }
+        catch (final SQLFeatureNotSupportedException e)
+        {
+          in = null;
+        }
+
+        if (in != null)
+        {
+          lobData = sf.util.Utility.readFully(in);
+        }
+        else
+        {
+          lobData = BINARY;
+        }
+      }
+      catch (final SQLException e)
+      {
+        LOGGER.log(Level.WARNING, "Could not read BLOB data", e);
+        lobData = BINARY;
+      }
+      return lobData;
+    }
+    else
+    {
+      return BINARY;
+    }
+  }
+
+  private String readClob(final Clob clob)
+  {
+    if (clob == null)
+    {
+      return NULL;
+    }
+    else if (options.isShowLobs())
+    {
+      Reader rdr = null;
+      String lobData;
+      try
+      {
+        try
+        {
+          rdr = new BufferedReader(new InputStreamReader(clob.getAsciiStream()));
+        }
+        catch (final SQLFeatureNotSupportedException e)
+        {
+          rdr = null;
+        }
+        if (rdr == null)
+        {
+          try
+          {
+            rdr = new BufferedReader(clob.getCharacterStream());
+          }
+          catch (final SQLFeatureNotSupportedException e)
+          {
+            rdr = null;
+          }
+        }
+
+        if (rdr != null)
+        {
+          lobData = sf.util.Utility.readFully(rdr);
+        }
+        else
+        {
+          lobData = BINARY;
+        }
+      }
+      catch (final SQLException e)
+      {
+        LOGGER.log(Level.WARNING, "Could not read CLOB data", e);
+        lobData = BINARY;
+      }
+      return lobData;
+    }
+    else
+    {
+      return BINARY;
+    }
+  }
+
+  /**
+   * Reads data from an input stream into a string. Default system
+   * encoding is assumed.
+   * 
+   * @param columnData
+   *        Column data object returned by JDBC
+   * @return A string with the contents of the LOB
+   */
+  private String readStream(final InputStream stream)
+  {
+    if (stream == null)
+    {
+      return NULL;
+    }
+    else if (options.isShowLobs())
+    {
+      final BufferedInputStream in = new BufferedInputStream(stream);
+      final String lobData = sf.util.Utility.readFully(in);
+      return lobData;
+    }
+    else
+    {
+      return BINARY;
     }
   }
 
@@ -313,22 +475,24 @@ final class DataTextFormatter
       out.println(formattingHelper.createObjectStart(title));
       try
       {
-        final ResultSetMetaData rsm = rows.getMetaData();
-        final int columnCount = rsm.getColumnCount();
+        final ResultsColumn[] resultsColumns = SchemaCrawler
+          .getResultColumns(rows).getColumns();
+
+        final int columnCount = resultsColumns.length;
         final String[] columnNames = new String[columnCount];
         for (int i = 0; i < columnCount; i++)
         {
-          columnNames[i] = rsm.getColumnName(i + 1);
+          columnNames[i] = resultsColumns[i].getName();
         }
         out.println(formattingHelper.createRowHeader(columnNames));
 
         if (options.isMergeRows() && columnCount > 1)
         {
-          iterateRowsAndMerge(rows, columnNames);
+          iterateRowsAndMerge(resultsColumns, rows);
         }
         else
         {
-          iterateRows(rows, columnNames.length);
+          iterateRows(resultsColumns, rows);
         }
       }
       catch (final SQLException e)
