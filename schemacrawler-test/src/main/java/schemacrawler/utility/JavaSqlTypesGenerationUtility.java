@@ -132,10 +132,10 @@ public final class JavaSqlTypesGenerationUtility
     javaSqlTypesGroupsMap.put("BIGINT", JavaSqlTypeGroup.integer);
     javaSqlTypesGroupsMap.put("BINARY", JavaSqlTypeGroup.binary);
     javaSqlTypesGroupsMap.put("BIT", JavaSqlTypeGroup.bit);
-    javaSqlTypesGroupsMap.put("BLOB", JavaSqlTypeGroup.binary);
+    javaSqlTypesGroupsMap.put("BLOB", JavaSqlTypeGroup.large_object);
     javaSqlTypesGroupsMap.put("BOOLEAN", JavaSqlTypeGroup.bit);
     javaSqlTypesGroupsMap.put("CHAR", JavaSqlTypeGroup.character);
-    javaSqlTypesGroupsMap.put("CLOB", JavaSqlTypeGroup.character);
+    javaSqlTypesGroupsMap.put("CLOB", JavaSqlTypeGroup.large_object);
     javaSqlTypesGroupsMap.put("DATALINK", JavaSqlTypeGroup.url);
     javaSqlTypesGroupsMap.put("DATE", JavaSqlTypeGroup.temporal);
     javaSqlTypesGroupsMap.put("DECIMAL", JavaSqlTypeGroup.real);
@@ -148,7 +148,7 @@ public final class JavaSqlTypesGenerationUtility
     javaSqlTypesGroupsMap.put("LONGVARBINARY", JavaSqlTypeGroup.binary);
     javaSqlTypesGroupsMap.put("LONGVARCHAR", JavaSqlTypeGroup.character);
     javaSqlTypesGroupsMap.put("NCHAR", JavaSqlTypeGroup.character);
-    javaSqlTypesGroupsMap.put("NCLOB", JavaSqlTypeGroup.character);
+    javaSqlTypesGroupsMap.put("NCLOB", JavaSqlTypeGroup.large_object);
     javaSqlTypesGroupsMap.put("NUMERIC", JavaSqlTypeGroup.real);
     javaSqlTypesGroupsMap.put("NVARCHAR", JavaSqlTypeGroup.character);
     javaSqlTypesGroupsMap.put("OTHER", JavaSqlTypeGroup.binary);

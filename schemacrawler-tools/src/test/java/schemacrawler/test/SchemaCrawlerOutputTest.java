@@ -102,8 +102,9 @@ public class SchemaCrawlerOutputTest
     queriesConfig.put(queryCommand1,
                       "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_TABLES");
     final String queryCommand2 = "dump_tables";
-    queriesConfig.put(queryCommand2,
-                      "SELECT ${columns} FROM ${table} ORDER BY ${columns}");
+    queriesConfig
+      .put(queryCommand2,
+           "SELECT ${orderbycolumns} FROM ${table} ORDER BY ${orderbycolumns}");
 
     final String[] commands = new String[] {
         SchemaTextDetailType.verbose_schema + "," + Operation.count + ","

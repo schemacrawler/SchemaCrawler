@@ -118,8 +118,9 @@ public class SchemaCrawlerTextCommandsOutputTest
   {
     final String queryCommand = "dump_tables";
     final Config config = new Config();
-    config.put(queryCommand,
-               "SELECT ${columns} FROM ${table} ORDER BY ${columns}");
+    config
+      .put(queryCommand,
+           "SELECT ${orderbycolumns} FROM ${table} ORDER BY ${orderbycolumns}");
 
     textOutputTest(queryCommand, config);
   }

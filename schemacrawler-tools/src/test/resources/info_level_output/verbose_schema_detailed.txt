@@ -269,6 +269,9 @@ SYS_CT_10029                                          [check constraint]
 SYS_CT_10030                                          [check constraint]
   BOOKS.AUTHORS.LASTNAME IS NOT NULL
 
+                                                               [remarks]
+  Contact details for book authors
+
 
 PUBLIC.BOOKS.AUTHORSLIST                                          [view]
 ------------------------------------------------------------------------
@@ -284,7 +287,7 @@ PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
 ------------------------------------------------------------------------
   BOOKID                            INTEGER not null            
   AUTHORID                          INTEGER not null            
-  "UPDATE"                          INTEGER                     
+  "UPDATE"                          CLOB                        
 
 FK_Z_AUTHOR                                [foreign key, with no action]
   PUBLIC.BOOKS.AUTHORS.ID --> AUTHORID                              
@@ -307,6 +310,9 @@ SYS_CT_10036                                          [check constraint]
 
 SYS_CT_10037                                          [check constraint]
   BOOKS.BOOKAUTHORS.AUTHORID IS NOT NULL
+
+                                                               [remarks]
+  Relationship between books and their authors, along with the latest updated information
 
 
 PUBLIC.BOOKS.BOOKS                                               [table]
@@ -336,6 +342,9 @@ SYS_CT_10033                                          [check constraint]
 SYS_CT_10034                                          [check constraint]
   BOOKS.BOOKS.PUBLISHERID IS NOT NULL
 
+                                                               [remarks]
+  Details for published books
+
 
 PUBLIC.BOOKS."Global Counts"                                     [table]
 ------------------------------------------------------------------------
@@ -355,6 +364,9 @@ SYS_IDX_PK_PUBLISHERS_10027                               [unique index]
 
 SYS_CT_10026                                          [check constraint]
   BOOKS.PUBLISHERS.ID IS NOT NULL
+
+                                                               [remarks]
+  List of book publishers
 
 
 PUBLIC."PUBLISHER SALES".REGIONS                                 [table]

@@ -483,6 +483,9 @@ UPDATE                                                       [privilege]
 
 TRG_AUTHORS                             [trigger, after delete, per row]
 
+                                                               [remarks]
+  Contact details for book authors
+
 
 PUBLIC.BOOKS.AUTHORSLIST                                          [view]
 ------------------------------------------------------------------------
@@ -516,7 +519,7 @@ PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
 ------------------------------------------------------------------------
   BOOKID                            INTEGER not null            
   AUTHORID                          INTEGER not null            
-  "UPDATE"                          INTEGER                     
+  "UPDATE"                          CLOB                        
 
 FK_Z_AUTHOR                                [foreign key, with no action]
   PUBLIC.BOOKS.AUTHORS.ID --> AUTHORID                              
@@ -557,6 +560,9 @@ TRIGGER                                                      [privilege]
 
 UPDATE                                                       [privilege]
   _SYSTEM --> DBA (grantable)                                   
+
+                                                               [remarks]
+  Relationship between books and their authors, along with the latest updated information
 
 
 PUBLIC.BOOKS.BOOKS                                               [table]
@@ -603,6 +609,9 @@ TRIGGER                                                      [privilege]
 
 UPDATE                                                       [privilege]
   _SYSTEM --> DBA (grantable)                                   
+
+                                                               [remarks]
+  Details for published books
 
 
 PUBLIC.BOOKS."Global Counts"                                     [table]
@@ -659,6 +668,9 @@ TRIGGER                                                      [privilege]
 
 UPDATE                                                       [privilege]
   _SYSTEM --> DBA (grantable)                                   
+
+                                                               [remarks]
+  List of book publishers
 
 
 PUBLIC."PUBLISHER SALES".REGIONS                                 [table]

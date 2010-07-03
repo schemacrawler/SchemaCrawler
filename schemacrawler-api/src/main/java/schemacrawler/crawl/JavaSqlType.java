@@ -33,7 +33,6 @@ public final class JavaSqlType
 
   public enum JavaSqlTypeGroup
   {
-
     unknown,
     binary,
     bit,
@@ -44,8 +43,8 @@ public final class JavaSqlType
     reference,
     temporal,
     url,
-    xml;
-
+    xml,
+    large_object;
   }
 
   private static final long serialVersionUID = 2614819974745473431L;
