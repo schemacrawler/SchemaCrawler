@@ -122,7 +122,6 @@ public final class XmlDatabase
       final String[] xmlElements = new String[] {
           "checkConstraint",
           "column",
-          "columnMap",
           "columnDataType",
           "database",
           "databaseProperty",

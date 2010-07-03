@@ -76,7 +76,7 @@ public class SchemaSerializationTest
     assertNotNull("Could not obtain database", database);
     assertTrue("Could not find any schemas", database.getSchemas().length > 0);
 
-    final Schema schema = database.getSchema("PUBLIC");
+    final Schema schema = database.getSchema("PUBLIC.BOOKS");
     assertNotNull("Could not obtain schema", schema);
     assertEquals("Unexpected number of tables in the schema", 6, schema
       .getTables().length);
@@ -96,7 +96,8 @@ public class SchemaSerializationTest
     xmlDatabase = new XmlDatabase(new StringReader(xmlSerializedCatalog1));
     final Database deserializedDatabase = xmlDatabase;
     assertNotNull("No database deserialized", deserializedDatabase);
-    final Schema deserializedSchema = deserializedDatabase.getSchema("PUBLIC");
+    final Schema deserializedSchema = deserializedDatabase
+      .getSchema("PUBLIC.BOOKS");
     assertNotNull("Could not obtain deserialized schema", deserializedSchema);
     assertEquals("Unexpected number of tables in the deserialized schema",
                  6,

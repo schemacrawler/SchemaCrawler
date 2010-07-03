@@ -122,7 +122,8 @@ public final class ObjectToString
                                    final int indent,
                                    final StringBuilder buffer)
   {
-    if (Map.class.isAssignableFrom(object.getClass()))
+    final Class<?> objectClass = object.getClass();
+    if (Map.class.isAssignableFrom(objectClass))
     {
       final Set<Map.Entry> mapEntries = new TreeMap((Map) object).entrySet();
       for (final Map.Entry mapEntry: mapEntries)
@@ -131,7 +132,7 @@ public final class ObjectToString
           .getKey()).append(": ").append(mapEntry.getValue());
       }
     }
-    else if (Collection.class.isAssignableFrom(object.getClass()))
+    else if (Collection.class.isAssignableFrom(objectClass))
     {
       for (final Iterator<?> iterator = ((Collection<?>) object).iterator(); iterator
         .hasNext();)
@@ -144,7 +145,7 @@ public final class ObjectToString
         }
       }
     }
-    else if (object.getClass().isArray())
+    else if (objectClass.isArray())
     {
       for (final Iterator<?> iterator = Arrays.asList((Object[]) object)
         .iterator(); iterator.hasNext();)
@@ -157,6 +158,10 @@ public final class ObjectToString
         }
       }
     }
+    else if (objectClass.isEnum())
+    {
+      buffer.append(object.toString());
+    }
     else if (Arrays.asList(Integer.class,
                            Long.class,
                            Double.class,
@@ -166,7 +171,7 @@ public final class ObjectToString
                            Byte.class,
                            Void.class,
                            Short.class,
-                           String.class).contains(object.getClass()))
+                           String.class).contains(objectClass))
     {
       buffer.append(object.toString());
     }

@@ -95,8 +95,7 @@ own updates are visible for TYPE_SCROLL_INSENSITIVE result sets  false
 own updates are visible for TYPE_SCROLL_SENSITIVE result sets  false
 procedure term                        PROCEDURE
 result set holdability                1
-row id lifetime                       java.sql.RowIdLifetime@33e228bc[
-]
+row id lifetime                       ROWID_UNSUPPORTED
 schema term                           SCHEMA
 schemas                               BOOKS, INFORMATION_SCHEMA, PUBLIC, SALES, SYSTEM_LOBS
 search string escape                  \

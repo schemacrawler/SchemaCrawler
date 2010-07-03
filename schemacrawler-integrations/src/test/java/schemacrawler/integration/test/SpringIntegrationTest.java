@@ -94,7 +94,8 @@ public class SpringIntegrationTest
     final SchemaCrawlerOptions schemaCrawlerOptions = (SchemaCrawlerOptions) appContext
       .getBean("schemaCrawlerOptions");
 
-    final Schema schema = testUtility.getSchema(schemaCrawlerOptions, "PUBLIC");
+    final Schema schema = testUtility.getSchema(schemaCrawlerOptions,
+                                                "PUBLIC.BOOKS");
     assertNotNull("Could not obtain schema", schema);
 
     assertEquals("Unexpected number of tables in the schema", 6, schema
