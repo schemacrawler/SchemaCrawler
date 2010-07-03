@@ -387,6 +387,12 @@ final class DataTextFormatter
         if (rdr != null)
         {
           lobData = sf.util.Utility.readFully(rdr);
+          if (lobData.length() == 0)
+          {
+            // Attempt yet another read
+            final long clobLength = clob.length();
+            lobData = clob.getSubString(1, (int) clobLength);
+          }
         }
         else
         {
