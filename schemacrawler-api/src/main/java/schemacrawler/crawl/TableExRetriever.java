@@ -406,8 +406,13 @@ final class TableExRetriever
         final String actionStatement = results.getString("ACTION_STATEMENT");
         final ActionOrientationType actionOrientation = results
           .getEnum("ACTION_ORIENTATION", ActionOrientationType.unknown);
+        String conditionTimingString = results.getString("ACTION_TIMING");
+        if (conditionTimingString == null)
+        {
+          conditionTimingString = results.getString("CONDITION_TIMING");
+        }
         final ConditionTimingType conditionTiming = ConditionTimingType
-          .valueOfFromValue(results.getString("CONDITION_TIMING"));
+          .valueOfFromValue(conditionTimingString);
 
         MutableTrigger trigger = table.lookupTrigger(triggerName);
         if (trigger == null)
