@@ -170,15 +170,14 @@ final class TableExRetriever
 
       while (results.next())
       {
-        final String catalogName = results.getString("CONSTRAINT_CATALOG");
-        final String schemaName = results.getString("CONSTRAINT_SCHEMA");
+        final String catalogName = quotedName(results
+          .getString("CONSTRAINT_CATALOG"));
+        final String schemaName = quotedName(results
+          .getString("CONSTRAINT_SCHEMA"));
         final String constraintName = quotedName(results
           .getString("CONSTRAINT_NAME"));
         LOGGER.log(Level.FINER, "Retrieving constraint: " + constraintName);
-        // final String tableCatalogName =
-        // results.getString("TABLE_CATALOG");
-        // final String tableSchemaName =
-        // results.getString("TABLE_SCHEMA");
+        // "TABLE_CATALOG", "TABLE_SCHEMA"
         final String tableName = quotedName(results.getString("TABLE_NAME"));
 
         final MutableTable table = lookupTable(catalogName,
@@ -250,10 +249,7 @@ final class TableExRetriever
         .executeQuery(checkConstraintInformationSql));
       while (results.next())
       {
-        // final String catalogName =
-        // results.getString("CONSTRAINT_CATALOG");
-        // final String schemaName =
-        // results.getString("CONSTRAINT_SCHEMA");
+        // "CONSTRAINT_CATALOG", "CONSTRAINT_SCHEMA"
         final String constraintName = quotedName(results
           .getString("CONSTRAINT_NAME"));
         LOGGER.log(Level.FINER, "Retrieving constraint definition: "
@@ -381,15 +377,14 @@ final class TableExRetriever
 
       while (results.next())
       {
-        final String catalogName = results.getString("TRIGGER_CATALOG");
-        final String schemaName = results.getString("TRIGGER_SCHEMA");
+        final String catalogName = quotedName(results
+          .getString("TRIGGER_CATALOG"));
+        final String schemaName = quotedName(results
+          .getString("TRIGGER_SCHEMA"));
         final String triggerName = quotedName(results.getString("TRIGGER_NAME"));
         LOGGER.log(Level.FINER, "Retrieving trigger: " + triggerName);
 
-        // final String eventObjectCatalog = results
-        // .getString("EVENT_OBJECT_CATALOG");
-        // final String eventObjectSchema = results
-        // .getString("EVENT_OBJECT_SCHEMA");
+        // "EVENT_OBJECT_CATALOG", "EVENT_OBJECT_SCHEMA"
         final String tableName = results.getString("EVENT_OBJECT_TABLE");
 
         final MutableTable table = lookupTable(catalogName,
@@ -477,8 +472,9 @@ final class TableExRetriever
 
       while (results.next())
       {
-        final String catalogName = results.getString("TABLE_CATALOG");
-        final String schemaName = results.getString("TABLE_SCHEMA");
+        final String catalogName = quotedName(results
+          .getString("TABLE_CATALOG"));
+        final String schemaName = quotedName(results.getString("TABLE_SCHEMA"));
         final String viewName = quotedName(results.getString("TABLE_NAME"));
 
         final MutableView view = (MutableView) lookupTable(catalogName,
