@@ -168,8 +168,8 @@ final class TableRetriever
         final boolean uniqueIndex = !results.getBoolean("NON_UNIQUE");
         final int type = results.getInt("TYPE", IndexType.unknown.getId());
         final int ordinalPosition = results.getInt("ORDINAL_POSITION", 0);
-        final IndexColumnSortSequence sortSequence = results
-          .getEnum("ASC_OR_DESC", IndexColumnSortSequence.unknown);
+        final IndexColumnSortSequence sortSequence = IndexColumnSortSequence
+          .valueOfFromCode(results.getString("ASC_OR_DESC"));
         final int cardinality = results.getInt("CARDINALITY", 0);
         final int pages = results.getInt("PAGES", 0);
 
