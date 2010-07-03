@@ -177,6 +177,14 @@ Procedures
 ========================================================================
 
 
+PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
+------------------------------------------------------------------------
+  PUBLISHER                         CHARACTER VARYING, out      
+
+                                                            [definition]
+  NEW_PUBLISHER_10047
+
+
 PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS                   [procedure, no result]
 ------------------------------------------------------------------------
   B_COUNT                           INTEGER, in                 

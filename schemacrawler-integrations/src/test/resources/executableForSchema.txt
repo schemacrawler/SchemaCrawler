@@ -145,6 +145,11 @@ Procedures
 ========================================================================
 
 
+PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
+------------------------------------------------------------------------
+1   PUBLISHER                         VARCHAR, out                
+
+
 PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS                   [procedure, no result]
 ------------------------------------------------------------------------
 1   B_COUNT                           INTEGER, in                 

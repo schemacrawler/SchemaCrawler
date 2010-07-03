@@ -347,16 +347,12 @@ public class SchemaCrawlerTest
     final Schema schema = testUtility.getSchema(schemaCrawlerOptions,
                                                 "PUBLIC.BOOKS");
     final Procedure[] procedures = schema.getProcedures();
-    assertEquals("Procedures should not be found", 0, procedures.length);
+    assertEquals("Wrong number of procedures", 1, procedures.length);
     for (final Procedure procedure: procedures)
     {
-      assertNotNull("Procedure definition is null, for "
-                    + procedure.getFullName(), procedure.getDefinition());
-      assertFalse("Procedure definition not found, for "
-                  + procedure.getFullName(), procedure.getDefinition().trim()
-        .equals(""));
+      assertFalse("Procedure definition not found, for " + procedure, Utility
+        .isBlank(procedure.getDefinition()));
     }
-
   }
 
   @Test
@@ -370,8 +366,8 @@ public class SchemaCrawlerTest
     final Schema schema1 = testUtility.getSchema(schemaCrawlerOptions,
                                                  "PUBLIC.BOOKS");
     assertTrue("Could not find any tables", schema1.getTables().length > 0);
-    assertEquals("Should not find any procedures",
-                 0,
+    assertEquals("Wrong number of procedures",
+                 1,
                  schema1.getProcedures().length);
 
     final Schema schema2 = testUtility.getSchema(schemaCrawlerOptions,

@@ -37,7 +37,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.Executable;
-import schemacrawler.tools.integration.graph.GraphExecutable;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.utility.TestDatabase;
 import sf.util.TestUtility;
@@ -74,11 +73,7 @@ public class SpringIntegrationTest
       if (bean instanceof Executable)
       {
         final Executable executable = (Executable) bean;
-        if (!"graph".equals(executable.getCommand())
-            && !(executable instanceof GraphExecutable))
-        {
-          executeAndCheckForOutputFile(beanDefinitionName, executable, failures);
-        }
+        executeAndCheckForOutputFile(beanDefinitionName, executable, failures);
       }
     }
     if (failures.size() > 0)
