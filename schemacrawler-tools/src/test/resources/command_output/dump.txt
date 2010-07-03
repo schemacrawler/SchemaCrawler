@@ -5,7 +5,7 @@ Dump
 
 
 
-PUBLIC.AUTHORS
+PUBLIC.BOOKS.AUTHORS
 ------------------------------------------------------------------------
 ID,FIRSTNAME,LASTNAME,ADDRESS1,ADDRESS2,CITY,STATE,POSTALCODE,COUNTRY
 1,Oren,Shaffer,900-2273 Integer Avenue,"",Farmer City,MD,37032,Cook Islands
@@ -31,7 +31,7 @@ ID,FIRSTNAME,LASTNAME,ADDRESS1,ADDRESS2,CITY,STATE,POSTALCODE,COUNTRY
 
 
 
-PUBLIC.AUTHORSLIST
+PUBLIC.BOOKS.AUTHORSLIST
 ------------------------------------------------------------------------
 ID,FIRSTNAME,LASTNAME
 1,Oren,Shaffer
@@ -57,7 +57,7 @@ ID,FIRSTNAME,LASTNAME
 
 
 
-PUBLIC.BOOKAUTHORS
+PUBLIC.BOOKS.BOOKAUTHORS
 ------------------------------------------------------------------------
 BOOKID,AUTHORID,UPDATE
 1,7,<null>
@@ -83,19 +83,19 @@ BOOKID,AUTHORID,UPDATE
 
 
 
-PUBLIC.BOOKS
+PUBLIC.BOOKS.BOOKS
 ------------------------------------------------------------------------
 ID,TITLE,DESCRIPTION,PUBLISHERID,PUBLICATIONDATE,PRICE
 1,Neque. In Ornare Sagittis,"Dis Parturient Montes, Nascetur Ridiculus Mus.",18,2000-10-27,69.99
 2,Duis Dignissim Tempor Arcu.,"Eu, Euismod Ac, Fermentum Vel,",20,2002-05-09,27.99
 3,"Lacinia Orci, Consectetuer Euismod Est","Sem Ut Cursus Luctus, Ipsum Leo Elementum Sem, Vitae Aliquam Eros Turpis Non Enim.",15,2006-04-14,37.99
 4,Vitae Sodales,"Rhoncus. Nullam Velit Dui, Semper Et, Lacinia Vitae, Sodales At,",1,2007-05-21,64.99
-5,Posuere Cubilia Curae; Phasellus Ornare.,"Risus A Ultricies Adipiscing, Enim Mi Tempor Lorem, Eget Mollis Lectus Pede",7,2010-05-14,83.99
+5,Posuere Cubilia Curae Phasellus Ornare.,"Risus A Ultricies Adipiscing, Enim Mi Tempor Lorem, Eget Mollis Lectus Pede",7,2010-05-14,83.99
 6,Tincidunt Aliquam Arcu.,"Tristique Pellentesque, Tellus Sem Mollis Dui,",13,2009-07-17,31.99
 7,"Auctor Quis, Tristique","Vel, Faucibus Id, Libero. Donec Consectetuer Mauris Id Sapien. Cras Dolor Dolor, Tempus Non, Lacinia",7,1999-06-09,76.99
 8,Sem. Nulla Interdum. Curabitur,Turpis. Nulla Aliquet. Proin Velit. Sed Malesuada Augue Ut,7,2009-01-24,30.99
 9,Lobortis Ultrices. Vivamus Rhoncus.,"Est, Mollis Non, Cursus Non, Egestas A, Dui. Cras Pellentesque. Sed Dictum.",1,2004-06-25,69.99
-10,"Quisque Purus Sapien, Gravida",Et Ultrices Posuere Cubilia Curae; Phasellus Ornare. Fusce Mollis. Duis Sit Amet Diam Eu Dolor Egestas Rhoncus.,19,2005-11-14,34.99
+10,"Quisque Purus Sapien, Gravida",Et Ultrices Posuere Cubilia Curae Phasellus Ornare. Fusce Mollis. Duis Sit Amet Diam Eu Dolor Egestas Rhoncus.,19,2005-11-14,34.99
 11,Phasellus,Egestas. Duis Ac Arcu. Nunc Mauris.,5,2003-10-19,89.99
 12,Non Massa Non,"Est Mauris, Rhoncus Id, Mollis",5,2002-05-04,64.99
 13,Gravida Mauris Ut Mi. Duis,"Fusce Mollis. Duis Sit Amet Diam Eu Dolor Egestas Rhoncus. Proin Nisl Sem, Consequat Nec,",8,2005-08-03,25.99
@@ -109,13 +109,13 @@ ID,TITLE,DESCRIPTION,PUBLISHERID,PUBLICATIONDATE,PRICE
 
 
 
-PUBLIC."Global Counts"
+PUBLIC.BOOKS."Global Counts"
 ------------------------------------------------------------------------
 Global Count
 
 
 
-PUBLIC.PUBLISHERS
+PUBLIC.BOOKS.PUBLISHERS
 ------------------------------------------------------------------------
 ID,PUBLISHER
 1,Dalton Lewis
@@ -141,7 +141,7 @@ ID,PUBLISHER
 
 
 
-SALES.REGIONS
+PUBLIC.SALES.REGIONS
 ------------------------------------------------------------------------
 CITY,STATE,POSTALCODE,COUNTRY
 Arvada,KY,17131,USA
@@ -167,7 +167,7 @@ Woburn,NV,27392,USA
 
 
 
-SALES.SALES
+PUBLIC.SALES.SALES
 ------------------------------------------------------------------------
 POSTALCODE,COUNTRY,BOOKID,PERIODENDDATE,TOTALAMOUNT
 13078,USA,1,2001-07-18,18257.0

@@ -17,7 +17,7 @@ Database Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
 database product name                 HSQL Database Engine
-database product version              1.8.0
+database product version              2.0.0
 database user name                    SA
 
 
@@ -25,10 +25,10 @@ JDBC Driver Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
 driver name                           HSQL Database Engine Driver
-driver version                        1.8.0
-driver class name                     org.hsqldb.jdbcDriver
+driver version                        2.0.0
+driver class name                     org.hsqldb.jdbc.JDBCDriver
 url                                   jdbc:hsqldb:mem:schemacrawler
-is JDBC compliant                     false
+is JDBC compliant                     true
 
 
 
@@ -36,14 +36,14 @@ Tables
 ========================================================================
 
 
-PUBLIC.AUTHORS                                                   [table]
-PUBLIC.AUTHORSLIST                                                [view]
-PUBLIC.BOOKAUTHORS                                               [table]
-PUBLIC.BOOKS                                                     [table]
-PUBLIC."Global Counts"                                           [table]
-PUBLIC.PUBLISHERS                                                [table]
-SALES.REGIONS                                                    [table]
-SALES.SALES                                                      [table]
+PUBLIC.BOOKS.AUTHORS                                             [table]
+PUBLIC.BOOKS.AUTHORSLIST                                          [view]
+PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
+PUBLIC.BOOKS.BOOKS                                               [table]
+PUBLIC.BOOKS."Global Counts"                                     [table]
+PUBLIC.BOOKS.PUBLISHERS                                          [table]
+PUBLIC.SALES.REGIONS                                             [table]
+PUBLIC.SALES.SALES                                               [table]
 
 
 
@@ -54,14 +54,14 @@ Row Count
 
 Row Count
 ------------------------------------------------------------------------
-PUBLIC.AUTHORS                                                   20 rows
-PUBLIC.AUTHORSLIST                                               20 rows
-PUBLIC.BOOKAUTHORS                                               20 rows
-PUBLIC.BOOKS                                                     20 rows
-PUBLIC."Global Counts"                                             empty
-PUBLIC.PUBLISHERS                                                20 rows
-SALES.REGIONS                                                    20 rows
-SALES.SALES                                                      20 rows
+PUBLIC.BOOKS.AUTHORS                                             20 rows
+PUBLIC.BOOKS.AUTHORSLIST                                         20 rows
+PUBLIC.BOOKS.BOOKAUTHORS                                         20 rows
+PUBLIC.BOOKS.BOOKS                                               20 rows
+PUBLIC.BOOKS."Global Counts"                                       empty
+PUBLIC.BOOKS.PUBLISHERS                                          20 rows
+PUBLIC.SALES.REGIONS                                             20 rows
+PUBLIC.SALES.SALES                                               20 rows
 
 
 

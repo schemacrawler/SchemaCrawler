@@ -90,7 +90,7 @@ hr {
 	</tr>
 	<tr>
 		<td>database product version</td>
-		<td>1.8.0</td>
+		<td>2.0.0</td>
 	</tr>
 	<tr>
 		<td>database user name</td>
@@ -111,16 +111,24 @@ hr {
 		<td>true</td>
 	</tr>
 	<tr>
+		<td>auto commit failure closes all result sets</td>
+		<td>false</td>
+	</tr>
+	<tr>
 		<td>catalog separator</td>
-		<td></td>
+		<td>.</td>
 	</tr>
 	<tr>
 		<td>catalog term</td>
-		<td></td>
+		<td>CATALOG</td>
 	</tr>
 	<tr>
 		<td>catalogs</td>
-		<td></td>
+		<td>PUBLIC</td>
+	</tr>
+	<tr>
+		<td>client info properties</td>
+		<td>files_readonly, hsqldb.applog, hsqldb.cache_free_count_scale, hsqldb.cache_rows, hsqldb.cache_size, hsqldb.default_table_type, hsqldb.defrag_limit, hsqldb.incremental_backup, hsqldb.lock_file, hsqldb.log_data, hsqldb.log_size, hsqldb.max_nio_scale, hsqldb.nio_data_file, hsqldb.result_max_memory_rows, hsqldb.script_format, hsqldb.temp_directory, hsqldb.tx, hsqldb.tx_level, hsqldb.write_delay, hsqldb.write_delay_millis, jdbc.translate_dti_types, readonly, runtime.gc_interval, sql.compare_in_locale, sql.enforce_names, sql.enforce_refs, sql.enforce_size, sql.enforce_strict_size, sql.identity_is_pk, sql.ref_integrity, textdb.all_quoted, textdb.cache_scale, textdb.cache_size_scale, textdb.encoding, textdb.fs, textdb.ignore_first, textdb.lvs, textdb.quoted, textdb.vs</td>
 	</tr>
 	<tr>
 		<td>data definition causes transaction commit</td>
@@ -132,15 +140,15 @@ hr {
 	</tr>
 	<tr>
 		<td>database major version</td>
-		<td>1</td>
+		<td>2</td>
 	</tr>
 	<tr>
 		<td>database minor version</td>
-		<td>8</td>
+		<td>0</td>
 	</tr>
 	<tr>
 		<td>default transaction isolation</td>
-		<td>1</td>
+		<td>2</td>
 	</tr>
 	<tr>
 		<td>deletes are detected for TYPE_FORWARD_ONLY result sets</td>
@@ -160,11 +168,11 @@ hr {
 	</tr>
 	<tr>
 		<td>driver major version</td>
-		<td>1</td>
+		<td>2</td>
 	</tr>
 	<tr>
 		<td>driver minor version</td>
-		<td>8</td>
+		<td>0</td>
 	</tr>
 	<tr>
 		<td>extra name characters</td>
@@ -188,7 +196,7 @@ hr {
 	</tr>
 	<tr>
 		<td>is catalog at start</td>
-		<td>false</td>
+		<td>true</td>
 	</tr>
 	<tr>
 		<td>is read only</td>
@@ -196,7 +204,7 @@ hr {
 	</tr>
 	<tr>
 		<td>JDBC major version</td>
-		<td>3</td>
+		<td>4</td>
 	</tr>
 	<tr>
 		<td>JDBC minor version</td>
@@ -212,7 +220,7 @@ hr {
 	</tr>
 	<tr>
 		<td>max catalog name length</td>
-		<td>0</td>
+		<td>128</td>
 	</tr>
 	<tr>
 		<td>max char literal length</td>
@@ -220,7 +228,7 @@ hr {
 	</tr>
 	<tr>
 		<td>max column name length</td>
-		<td>0</td>
+		<td>128</td>
 	</tr>
 	<tr>
 		<td>max columns in group by</td>
@@ -248,7 +256,7 @@ hr {
 	</tr>
 	<tr>
 		<td>max cursor name length</td>
-		<td>0</td>
+		<td>128</td>
 	</tr>
 	<tr>
 		<td>max index length</td>
@@ -256,7 +264,7 @@ hr {
 	</tr>
 	<tr>
 		<td>max procedure name length</td>
-		<td>0</td>
+		<td>128</td>
 	</tr>
 	<tr>
 		<td>max row size</td>
@@ -264,7 +272,7 @@ hr {
 	</tr>
 	<tr>
 		<td>max schema name length</td>
-		<td>0</td>
+		<td>128</td>
 	</tr>
 	<tr>
 		<td>max statement length</td>
@@ -276,7 +284,7 @@ hr {
 	</tr>
 	<tr>
 		<td>max table name length</td>
-		<td>0</td>
+		<td>128</td>
 	</tr>
 	<tr>
 		<td>max tables in select</td>
@@ -284,7 +292,7 @@ hr {
 	</tr>
 	<tr>
 		<td>max user name length</td>
-		<td>0</td>
+		<td>128</td>
 	</tr>
 	<tr>
 		<td>null plus non null is null</td>
@@ -296,7 +304,7 @@ hr {
 	</tr>
 	<tr>
 		<td>nulls are sorted at start</td>
-		<td>false</td>
+		<td>true</td>
 	</tr>
 	<tr>
 		<td>nulls are sorted high</td>
@@ -304,11 +312,11 @@ hr {
 	</tr>
 	<tr>
 		<td>nulls are sorted low</td>
-		<td>true</td>
+		<td>false</td>
 	</tr>
 	<tr>
 		<td>numeric functions</td>
-		<td>ABS, ACOS, ASIN, ATAN, ATAN2, CEILING, COS, COT, DEGREES, EXP, FLOOR, LOG, LOG10, MOD, PI, POWER, RADIANS, RAND, ROUND, SIGN, SIN, SQRT, TAN, TRUNCATE, BITAND, BITOR, BITXOR, ROUNDMAGIC</td>
+		<td>ABS, ACOS, ASIN, ATAN, ATAN2, BITAND, BITOR, BITXOR, CEILING, COS, COT, DEGREES, EXP, FLOOR, LOG, LOG10, MOD, PI, POWER, RADIANS, RAND, ROUND, ROUNDMAGIC, SIGN, SIN, SQRT, TAN, TRUNCATE</td>
 	</tr>
 	<tr>
 		<td>others inserts are visible for TYPE_FORWARD_ONLY result sets</td>
@@ -372,11 +380,16 @@ hr {
 	</tr>
 	<tr>
 		<td>procedure term</td>
-		<td></td>
+		<td>PROCEDURE</td>
 	</tr>
 	<tr>
 		<td>result set holdability</td>
 		<td>1</td>
+	</tr>
+	<tr>
+		<td>row id lifetime</td>
+		<td>java.sql.RowIdLifetime@33e228bc[
+]</td>
 	</tr>
 	<tr>
 		<td>schema term</td>
@@ -384,7 +397,7 @@ hr {
 	</tr>
 	<tr>
 		<td>schemas</td>
-		<td>INFORMATION_SCHEMA, PUBLIC, SALES</td>
+		<td>BOOKS, INFORMATION_SCHEMA, PUBLIC, SALES, SYSTEM_LOBS</td>
 	</tr>
 	<tr>
 		<td>search string escape</td>
@@ -392,7 +405,7 @@ hr {
 	</tr>
 	<tr>
 		<td>SQL keywords</td>
-		<td>BEFORE, BIGINT, BINARY, CACHED, DATETIME, LIMIT, LONGVARBINARY, LONGVARCHAR, OBJECT, OTHER, SAVEPOINT, TEMP, TEXT, TOP, TRIGGER, TINYINT, VARBINARY, VARCHAR_IGNORECASE</td>
+		<td></td>
 	</tr>
 	<tr>
 		<td>SQL state type</td>
@@ -424,7 +437,7 @@ hr {
 	</tr>
 	<tr>
 		<td>string functions</td>
-		<td>ASCII, BIT_LENGTH, CHAR, CHAR_LENGTH, CHARACTER_LENGTH, CONCAT, DIFFERENCE, HEXTORAW, INSERT, LCASE, LEFT, LENGTH, LOCATE, LTRIM, OCTET_LENGTH, RAWTOHEX, REPEAT, REPLACE, RIGHT, RTRIM, SOUNDEX, SPACE, SUBSTR, SUBSTRING, UCASE, LOWER, UPPER</td>
+		<td>ASCII, CHAR, CONCAT, DIFFERENCE, HEXTORAW, INSERT, LCASE, LEFT, LENGTH, LOCATE, LTRIM, RAWTOHEX, REPEAT, REPLACE, RIGHT, RTRIM, SOUNDEX, SPACE, SUBSTR, UCASE</td>
 	</tr>
 	<tr>
 		<td>supports alter table with add column</td>
@@ -436,15 +449,15 @@ hr {
 	</tr>
 	<tr>
 		<td>supports ANSI92 entry level SQL</td>
-		<td>false</td>
+		<td>true</td>
 	</tr>
 	<tr>
 		<td>supports ANSI92 full SQL</td>
-		<td>false</td>
+		<td>true</td>
 	</tr>
 	<tr>
 		<td>supports ANSI92 intermediate SQL</td>
-		<td>false</td>
+		<td>true</td>
 	</tr>
 	<tr>
 		<td>supports batch updates</td>
@@ -452,23 +465,23 @@ hr {
 	</tr>
 	<tr>
 		<td>supports catalogs in data manipulation</td>
-		<td>false</td>
+		<td>true</td>
 	</tr>
 	<tr>
 		<td>supports catalogs in index definitions</td>
-		<td>false</td>
+		<td>true</td>
 	</tr>
 	<tr>
 		<td>supports catalogs in privilege definitions</td>
-		<td>false</td>
+		<td>true</td>
 	</tr>
 	<tr>
 		<td>supports catalogs in procedure calls</td>
-		<td>false</td>
+		<td>true</td>
 	</tr>
 	<tr>
 		<td>supports catalogs in table definitions</td>
-		<td>false</td>
+		<td>true</td>
 	</tr>
 	<tr>
 		<td>supports column aliasing</td>
@@ -504,15 +517,15 @@ hr {
 	</tr>
 	<tr>
 		<td>supports extended SQL grammar</td>
-		<td>false</td>
+		<td>true</td>
 	</tr>
 	<tr>
 		<td>supports full outer joins</td>
-		<td>false</td>
+		<td>true</td>
 	</tr>
 	<tr>
 		<td>supports get generated keys</td>
-		<td>false</td>
+		<td>true</td>
 	</tr>
 	<tr>
 		<td>supports group by</td>
@@ -540,7 +553,7 @@ hr {
 	</tr>
 	<tr>
 		<td>supports minimum SQL grammar</td>
-		<td>false</td>
+		<td>true</td>
 	</tr>
 	<tr>
 		<td>supports mixed case identifiers</td>
@@ -552,7 +565,7 @@ hr {
 	</tr>
 	<tr>
 		<td>supports multiple open results</td>
-		<td>false</td>
+		<td>true</td>
 	</tr>
 	<tr>
 		<td>supports multiple result sets</td>
@@ -572,7 +585,7 @@ hr {
 	</tr>
 	<tr>
 		<td>supports open cursors across commit</td>
-		<td>false</td>
+		<td>true</td>
 	</tr>
 	<tr>
 		<td>supports open cursors across rollback</td>
@@ -596,11 +609,11 @@ hr {
 	</tr>
 	<tr>
 		<td>supports positioned delete</td>
-		<td>false</td>
+		<td>true</td>
 	</tr>
 	<tr>
 		<td>supports positioned update</td>
-		<td>false</td>
+		<td>true</td>
 	</tr>
 	<tr>
 		<td>supports result set type for TYPE_FORWARD_ONLY result sets</td>
@@ -620,7 +633,7 @@ hr {
 	</tr>
 	<tr>
 		<td>supports schemas in data manipulation</td>
-		<td>false</td>
+		<td>true</td>
 	</tr>
 	<tr>
 		<td>supports schemas in index definitions</td>
@@ -632,7 +645,7 @@ hr {
 	</tr>
 	<tr>
 		<td>supports schemas in procedure calls</td>
-		<td>false</td>
+		<td>true</td>
 	</tr>
 	<tr>
 		<td>supports schemas in table definitions</td>
@@ -640,11 +653,15 @@ hr {
 	</tr>
 	<tr>
 		<td>supports select for update</td>
-		<td>false</td>
+		<td>true</td>
 	</tr>
 	<tr>
 		<td>supports statement pooling</td>
-		<td>false</td>
+		<td>true</td>
+	</tr>
+	<tr>
+		<td>supports stored functions using call syntax</td>
+		<td>true</td>
 	</tr>
 	<tr>
 		<td>supports stored procedures</td>
@@ -684,7 +701,7 @@ hr {
 	</tr>
 	<tr>
 		<td>system functions</td>
-		<td>DATABASE, USER, IDENTITY</td>
+		<td>DATABASE, IFNULL, USER</td>
 	</tr>
 	<tr>
 		<td>table types</td>
@@ -692,11 +709,11 @@ hr {
 	</tr>
 	<tr>
 		<td>time date functions</td>
-		<td>CURDATE, CURTIME, DATEDIFF, DAYNAME, DAY, DAYOFMONTH, DAYOFWEEK, DAYOFYEAR, HOUR, MINUTE, MONTH, MONTHNAME, NOW, QUARTER, SECOND, WEEK, YEAR, TO_CHAR</td>
+		<td>CURDATE, CURTIME, DATEDIFF, DAYNAME, DAYOFMONTH, DAYOFWEEK, DAYOFYEAR, HOUR, MINUTE, MONTH, MONTHNAME, NOW, QUARTER, SECOND, SECONDS_SINCE_MIDNIGHT, TIMESTAMPADD, TIMESTAMPDIFF, TO_CHAR, WEEK, YEAR</td>
 	</tr>
 	<tr>
 		<td>type info</td>
-		<td>TINYINT, BIGINT, LONGVARBINARY, VARBINARY, BINARY, LONGVARCHAR, CHAR, NUMERIC, DECIMAL, INTEGER, SMALLINT, FLOAT, REAL, DOUBLE, VARCHAR, VARCHAR_IGNORECASE, BOOLEAN, DATE, TIME, TIMESTAMP, OTHER</td>
+		<td>BIT, TINYINT, BIGINT, VARBINARY, BINARY, CHARACTER, NUMERIC, DECIMAL, INTEGER, SMALLINT, DOUBLE, FLOAT, REAL, VARCHAR, VARCHAR_IGNORECASE, BOOLEAN, DATE, TIME, TIMESTAMP, OTHER, BLOB, CLOB</td>
 	</tr>
 	<tr>
 		<td>uses local file per table</td>
@@ -718,11 +735,11 @@ hr {
 	</tr>
 	<tr>
 		<td>driver version</td>
-		<td>1.8.0</td>
+		<td>2.0.0</td>
 	</tr>
 	<tr>
 		<td>driver class name</td>
-		<td>org.hsqldb.jdbcDriver</td>
+		<td>org.hsqldb.jdbc.JDBCDriver</td>
 	</tr>
 	<tr>
 		<td>url</td>
@@ -730,7 +747,7 @@ hr {
 	</tr>
 	<tr>
 		<td>is JDBC compliant</td>
-		<td>false</td>
+		<td>true</td>
 	</tr>
 </table>
 <p></p>
@@ -753,7 +770,7 @@ hr {
 	<tr>
 		<td class='ordinal'></td>
 		<td class='subname'>value</td>
-		<td class='type'>null</td>
+		<td class='type'>false</td>
 	</tr>
 </table>
 <p></p>
@@ -793,7 +810,7 @@ hr {
 	<tr>
 		<td class='ordinal'></td>
 		<td class='subname'>value</td>
-		<td class='type'>null</td>
+		<td class='type'>false</td>
 	</tr>
 </table>
 <p></p>
@@ -833,7 +850,7 @@ hr {
 	<tr>
 		<td class='ordinal'></td>
 		<td class='subname'>value</td>
-		<td class='type'>null</td>
+		<td class='type'>false</td>
 	</tr>
 </table>
 <p></p>
@@ -888,7 +905,7 @@ hr {
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>searchable</td>
+		<td colspan='2' class='definition'>searchable except with where .. like</td>
 	</tr>
 </table>
 <p></p>
@@ -908,7 +925,7 @@ hr {
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>defined with no parameters</td>
+		<td colspan='2' class='definition'>defined with LENGTH</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
@@ -921,6 +938,70 @@ hr {
 	<tr>
 		<td class='ordinal'></td>
 		<td colspan='2' class='definition'>searchable</td>
+	</tr>
+</table>
+<p></p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>BIT</td>
+		<td class='description'>[data type]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>based on</td>
+		<td class='type'>BIT</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not user defined</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>defined with LENGTH</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>nullable</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not auto-incrementable</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>searchable except with where .. like</td>
+	</tr>
+</table>
+<p></p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>BLOB</td>
+		<td class='description'>[data type]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>based on</td>
+		<td class='type'>BLOB</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not user defined</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>defined with LENGTH</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>nullable</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not auto-incrementable</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not searchable</td>
 	</tr>
 </table>
 <p></p>
@@ -952,13 +1033,13 @@ hr {
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>searchable</td>
+		<td colspan='2' class='definition'>searchable except with where .. like</td>
 	</tr>
 </table>
 <p></p>
 <table>
 	<tr>
-		<td colspan='2' class='name'>CHAR</td>
+		<td colspan='2' class='name'>CHARACTER</td>
 		<td class='description'>[data type]</td>
 	</tr>
 	<tr>
@@ -990,6 +1071,38 @@ hr {
 <p></p>
 <table>
 	<tr>
+		<td colspan='2' class='name'>CLOB</td>
+		<td class='description'>[data type]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>based on</td>
+		<td class='type'>CLOB</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not user defined</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>defined with LENGTH</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>nullable</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not auto-incrementable</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not searchable</td>
+	</tr>
+</table>
+<p></p>
+<table>
+	<tr>
 		<td colspan='2' class='name'>DATE</td>
 		<td class='description'>[data type]</td>
 	</tr>
@@ -1016,7 +1129,7 @@ hr {
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>searchable</td>
+		<td colspan='2' class='definition'>searchable except with where .. like</td>
 	</tr>
 </table>
 <p></p>
@@ -1044,11 +1157,11 @@ hr {
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>not auto-incrementable</td>
+		<td colspan='2' class='definition'>auto-incrementable</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>searchable</td>
+		<td colspan='2' class='definition'>searchable except with where .. like</td>
 	</tr>
 </table>
 <p></p>
@@ -1080,7 +1193,7 @@ hr {
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>searchable</td>
+		<td colspan='2' class='definition'>searchable except with where .. like</td>
 	</tr>
 </table>
 <p></p>
@@ -1092,7 +1205,7 @@ hr {
 	<tr>
 		<td class='ordinal'></td>
 		<td class='subname'>based on</td>
-		<td class='type'>FLOAT</td>
+		<td class='type'>DOUBLE</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
@@ -1100,7 +1213,7 @@ hr {
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>defined with PRECISION</td>
+		<td colspan='2' class='definition'>defined with no parameters</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
@@ -1112,7 +1225,7 @@ hr {
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>searchable</td>
+		<td colspan='2' class='definition'>searchable except with where .. like</td>
 	</tr>
 </table>
 <p></p>
@@ -1144,71 +1257,7 @@ hr {
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>searchable</td>
-	</tr>
-</table>
-<p></p>
-<table>
-	<tr>
-		<td colspan='2' class='name'>LONGVARBINARY</td>
-		<td class='description'>[data type]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>based on</td>
-		<td class='type'>LONGVARBINARY</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>not user defined</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>defined with no parameters</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>nullable</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>not auto-incrementable</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>searchable</td>
-	</tr>
-</table>
-<p></p>
-<table>
-	<tr>
-		<td colspan='2' class='name'>LONGVARCHAR</td>
-		<td class='description'>[data type]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>based on</td>
-		<td class='type'>LONGVARCHAR</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>not user defined</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>defined with no parameters</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>nullable</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>not auto-incrementable</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>searchable</td>
+		<td colspan='2' class='definition'>searchable except with where .. like</td>
 	</tr>
 </table>
 <p></p>
@@ -1236,11 +1285,11 @@ hr {
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>not auto-incrementable</td>
+		<td colspan='2' class='definition'>auto-incrementable</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>searchable</td>
+		<td colspan='2' class='definition'>searchable except with where .. like</td>
 	</tr>
 </table>
 <p></p>
@@ -1272,7 +1321,7 @@ hr {
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>not searchable</td>
+		<td colspan='2' class='definition'>searchable except with where .. like</td>
 	</tr>
 </table>
 <p></p>
@@ -1284,7 +1333,7 @@ hr {
 	<tr>
 		<td class='ordinal'></td>
 		<td class='subname'>based on</td>
-		<td class='type'>REAL</td>
+		<td class='type'>DOUBLE</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
@@ -1304,7 +1353,7 @@ hr {
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>searchable</td>
+		<td colspan='2' class='definition'>searchable except with where .. like</td>
 	</tr>
 </table>
 <p></p>
@@ -1332,11 +1381,11 @@ hr {
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>not auto-incrementable</td>
+		<td colspan='2' class='definition'>auto-incrementable</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>searchable</td>
+		<td colspan='2' class='definition'>searchable except with where .. like</td>
 	</tr>
 </table>
 <p></p>
@@ -1368,7 +1417,7 @@ hr {
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>searchable</td>
+		<td colspan='2' class='definition'>searchable except with where .. like</td>
 	</tr>
 </table>
 <p></p>
@@ -1388,7 +1437,7 @@ hr {
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>defined with PRECISION</td>
+		<td colspan='2' class='definition'>defined with no parameters</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
@@ -1400,7 +1449,7 @@ hr {
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>searchable</td>
+		<td colspan='2' class='definition'>searchable except with where .. like</td>
 	</tr>
 </table>
 <p></p>
@@ -1428,11 +1477,11 @@ hr {
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>not auto-incrementable</td>
+		<td colspan='2' class='definition'>auto-incrementable</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>searchable</td>
+		<td colspan='2' class='definition'>searchable except with where .. like</td>
 	</tr>
 </table>
 <p></p>
@@ -1452,7 +1501,7 @@ hr {
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>defined with no parameters</td>
+		<td colspan='2' class='definition'>defined with LENGTH</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
@@ -1537,7 +1586,7 @@ hr {
 
 <table>
 	<tr>
-		<td colspan='2' class='name underscore'>PUBLIC.AUTHORS</td>
+		<td colspan='2' class='name underscore'>PUBLIC.BOOKS.AUTHORS</td>
 		<td class='description underscore'>[table]</td>
 	</tr>
 	<tr>
@@ -1589,7 +1638,7 @@ hr {
 		<td colspan='4'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_47</td>
+		<td colspan='2' class='name'>PK_AUTHORS</td>
 		<td class='description'>[primary key]</td>
 	</tr>
 	<tr>
@@ -1606,8 +1655,20 @@ hr {
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td class='subname'>ID &#8594; PUBLIC.BOOKAUTHORS.AUTHORID</td>
+		<td class='subname'>ID &#8594; PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID</td>
 		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_IDX_PK_AUTHORS_10031</td>
+		<td class='description'>[unique index]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>ID</td>
+		<td class='type'>unknown</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
@@ -1619,12 +1680,12 @@ hr {
 	<tr>
 		<td class='ordinal'></td>
 		<td class='subname'>LASTNAME</td>
-		<td class='type'>ascending</td>
+		<td class='type'>unknown</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
 		<td class='subname'>FIRSTNAME</td>
-		<td class='type'>ascending</td>
+		<td class='type'>unknown</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
@@ -1636,33 +1697,22 @@ hr {
 	<tr>
 		<td class='ordinal'></td>
 		<td class='subname'>CITY</td>
-		<td class='type'>ascending</td>
+		<td class='type'>unknown</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
 		<td class='subname'>STATE</td>
-		<td class='type'>ascending</td>
+		<td class='type'>unknown</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
 		<td class='subname'>POSTALCODE</td>
-		<td class='type'>ascending</td>
+		<td class='type'>unknown</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
 		<td class='subname'>COUNTRY</td>
-		<td class='type'>ascending</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>CHECK_UPPERCASE_STATE</td>
-		<td class='description'>[check constraint]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>AUTHORS.STATE=UPPER(AUTHORS.STATE)</td>
+		<td class='type'>unknown</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
@@ -1673,7 +1723,7 @@ hr {
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td class='subname'>DBA &#8594; SA (grantable)</td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -1685,7 +1735,19 @@ hr {
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td class='subname'>DBA &#8594; SA (grantable)</td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>REFERENCES</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -1697,7 +1759,19 @@ hr {
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td class='subname'>DBA &#8594; SA (grantable)</td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>TRIGGER</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -1709,26 +1783,15 @@ hr {
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td class='subname'>DBA &#8594; SA (grantable)</td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
 		<td class='type'></td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>TRG_AUTHORS</td>
-		<td class='description'>[trigger, before delete, per row]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>CREATE TRIGGER TRG_AUTHORS BEFORE DELETE ON AUTHORS FOR EACH ROW CALL &quot;org.hsqldb.sample.TriggerSample&quot;</td>
 	</tr>
 </table>
 <p></p>
 
 <table>
 	<tr>
-		<td colspan='2' class='name underscore'>PUBLIC.AUTHORSLIST</td>
+		<td colspan='2' class='name underscore'>PUBLIC.BOOKS.AUTHORSLIST</td>
 		<td class='description underscore'>[view]</td>
 	</tr>
 	<tr>
@@ -1755,7 +1818,7 @@ hr {
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td class='subname'>DBA &#8594; SA (grantable)</td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -1767,7 +1830,19 @@ hr {
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td class='subname'>DBA &#8594; SA (grantable)</td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>REFERENCES</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -1779,7 +1854,19 @@ hr {
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td class='subname'>DBA &#8594; SA (grantable)</td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>TRIGGER</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -1791,26 +1878,15 @@ hr {
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td class='subname'>DBA &#8594; SA (grantable)</td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
 		<td class='type'></td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description'>[definition]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>SELECT Id, FirstName, LastName FROM Authors</td>
 	</tr>
 </table>
 <p></p>
 
 <table>
 	<tr>
-		<td colspan='2' class='name underscore'>PUBLIC.BOOKAUTHORS</td>
+		<td colspan='2' class='name underscore'>PUBLIC.BOOKS.BOOKAUTHORS</td>
 		<td class='description underscore'>[table]</td>
 	</tr>
 	<tr>
@@ -1837,7 +1913,7 @@ hr {
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td class='subname'>PUBLIC.AUTHORS.ID &#8594; AUTHORID</td>
+		<td class='subname'>PUBLIC.BOOKS.AUTHORS.ID &#8594; AUTHORID</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -1849,32 +1925,32 @@ hr {
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td class='subname'>PUBLIC.BOOKS.ID &#8594; BOOKID</td>
+		<td class='subname'>PUBLIC.BOOKS.BOOKS.ID &#8594; BOOKID</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_52</td>
+		<td colspan='2' class='name'>SYS_IDX_10041</td>
 		<td class='description'>[non-unique index]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
 		<td class='subname'>AUTHORID</td>
-		<td class='type'>ascending</td>
+		<td class='type'>unknown</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_50</td>
+		<td colspan='2' class='name'>SYS_IDX_10039</td>
 		<td class='description'>[non-unique index]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
 		<td class='subname'>BOOKID</td>
-		<td class='type'>ascending</td>
+		<td class='type'>unknown</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
@@ -1886,12 +1962,12 @@ hr {
 	<tr>
 		<td class='ordinal'></td>
 		<td class='subname'>BOOKID</td>
-		<td class='type'>ascending</td>
+		<td class='type'>unknown</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
 		<td class='subname'>AUTHORID</td>
-		<td class='type'>ascending</td>
+		<td class='type'>unknown</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
@@ -1902,7 +1978,7 @@ hr {
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td class='subname'>DBA &#8594; SA (grantable)</td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -1914,7 +1990,19 @@ hr {
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td class='subname'>DBA &#8594; SA (grantable)</td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>REFERENCES</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -1926,7 +2014,19 @@ hr {
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td class='subname'>DBA &#8594; SA (grantable)</td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>TRIGGER</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -1938,7 +2038,7 @@ hr {
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td class='subname'>DBA &#8594; SA (grantable)</td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 </table>
@@ -1946,7 +2046,7 @@ hr {
 
 <table>
 	<tr>
-		<td colspan='2' class='name underscore'>PUBLIC.BOOKS</td>
+		<td colspan='2' class='name underscore'>PUBLIC.BOOKS.BOOKS</td>
 		<td class='description underscore'>[table]</td>
 	</tr>
 	<tr>
@@ -1977,13 +2077,13 @@ hr {
 	<tr>
 		<td class='ordinal'></td>
 		<td class='subname'>PRICE</td>
-		<td class='type'>FLOAT(17, 0)</td>
+		<td class='type'>DOUBLE(64, 0)</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_48</td>
+		<td colspan='2' class='name'>PK_BOOKS</td>
 		<td class='description'>[primary key]</td>
 	</tr>
 	<tr>
@@ -2000,8 +2100,20 @@ hr {
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td class='subname'>ID &#8594; PUBLIC.BOOKAUTHORS.BOOKID</td>
+		<td class='subname'>ID &#8594; PUBLIC.BOOKS.BOOKAUTHORS.BOOKID</td>
 		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_IDX_PK_BOOKS_10035</td>
+		<td class='description'>[unique index]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>ID</td>
+		<td class='type'>unknown</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
@@ -2012,7 +2124,7 @@ hr {
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td class='subname'>DBA &#8594; SA (grantable)</td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -2024,7 +2136,19 @@ hr {
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td class='subname'>DBA &#8594; SA (grantable)</td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>REFERENCES</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -2036,7 +2160,19 @@ hr {
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td class='subname'>DBA &#8594; SA (grantable)</td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>TRIGGER</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -2048,7 +2184,7 @@ hr {
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td class='subname'>DBA &#8594; SA (grantable)</td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 </table>
@@ -2056,7 +2192,7 @@ hr {
 
 <table>
 	<tr>
-		<td colspan='2' class='name underscore'>PUBLIC.&quot;Global Counts&quot;</td>
+		<td colspan='2' class='name underscore'>PUBLIC.BOOKS.&quot;Global Counts&quot;</td>
 		<td class='description underscore'>[table]</td>
 	</tr>
 	<tr>
@@ -2073,7 +2209,7 @@ hr {
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td class='subname'>DBA &#8594; SA (grantable)</td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -2085,7 +2221,19 @@ hr {
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td class='subname'>DBA &#8594; SA (grantable)</td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>REFERENCES</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -2097,7 +2245,19 @@ hr {
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td class='subname'>DBA &#8594; SA (grantable)</td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>TRIGGER</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -2109,7 +2269,7 @@ hr {
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td class='subname'>DBA &#8594; SA (grantable)</td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 </table>
@@ -2117,7 +2277,7 @@ hr {
 
 <table>
 	<tr>
-		<td colspan='2' class='name underscore'>PUBLIC.PUBLISHERS</td>
+		<td colspan='2' class='name underscore'>PUBLIC.BOOKS.PUBLISHERS</td>
 		<td class='description underscore'>[table]</td>
 	</tr>
 	<tr>
@@ -2134,7 +2294,7 @@ hr {
 		<td colspan='4'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_46</td>
+		<td colspan='2' class='name'>PK_PUBLISHERS</td>
 		<td class='description'>[primary key]</td>
 	</tr>
 	<tr>
@@ -2146,12 +2306,24 @@ hr {
 		<td colspan='4'></td>
 	</tr>
 	<tr>
+		<td colspan='2' class='name'>SYS_IDX_PK_PUBLISHERS_10027</td>
+		<td class='description'>[unique index]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>ID</td>
+		<td class='type'>unknown</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
 		<td colspan='2' class='name'>DELETE</td>
 		<td class='description'>[privilege]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td class='subname'>DBA &#8594; SA (grantable)</td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -2163,7 +2335,19 @@ hr {
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td class='subname'>DBA &#8594; SA (grantable)</td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>REFERENCES</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -2175,7 +2359,19 @@ hr {
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td class='subname'>DBA &#8594; SA (grantable)</td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>TRIGGER</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -2187,7 +2383,7 @@ hr {
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td class='subname'>DBA &#8594; SA (grantable)</td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 </table>
@@ -2195,7 +2391,7 @@ hr {
 
 <table>
 	<tr>
-		<td colspan='2' class='name underscore'>SALES.REGIONS</td>
+		<td colspan='2' class='name underscore'>PUBLIC.SALES.REGIONS</td>
 		<td class='description underscore'>[table]</td>
 	</tr>
 	<tr>
@@ -2222,7 +2418,7 @@ hr {
 		<td colspan='4'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_58</td>
+		<td colspan='2' class='name'>PK_CUSTOMERS</td>
 		<td class='description'>[primary key]</td>
 	</tr>
 	<tr>
@@ -2244,13 +2440,30 @@ hr {
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td class='subname'>POSTALCODE &#8594; SALES.SALES.POSTALCODE</td>
+		<td class='subname'>POSTALCODE &#8594; PUBLIC.SALES.SALES.POSTALCODE</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td class='subname'>COUNTRY &#8594; SALES.SALES.COUNTRY</td>
+		<td class='subname'>COUNTRY &#8594; PUBLIC.SALES.SALES.COUNTRY</td>
 		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_IDX_PK_CUSTOMERS_10052</td>
+		<td class='description'>[unique index]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>POSTALCODE</td>
+		<td class='type'>unknown</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>COUNTRY</td>
+		<td class='type'>unknown</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
@@ -2261,7 +2474,7 @@ hr {
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td class='subname'>DBA &#8594; SA (grantable)</td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -2273,7 +2486,19 @@ hr {
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td class='subname'>DBA &#8594; SA (grantable)</td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>REFERENCES</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -2285,7 +2510,19 @@ hr {
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td class='subname'>DBA &#8594; SA (grantable)</td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>TRIGGER</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -2297,7 +2534,7 @@ hr {
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td class='subname'>DBA &#8594; SA (grantable)</td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 </table>
@@ -2305,7 +2542,7 @@ hr {
 
 <table>
 	<tr>
-		<td colspan='2' class='name underscore'>SALES.SALES</td>
+		<td colspan='2' class='name underscore'>PUBLIC.SALES.SALES</td>
 		<td class='description underscore'>[table]</td>
 	</tr>
 	<tr>
@@ -2331,7 +2568,7 @@ hr {
 	<tr>
 		<td class='ordinal'></td>
 		<td class='subname'>TOTALAMOUNT</td>
-		<td class='type'>FLOAT(17, 0)</td>
+		<td class='type'>DOUBLE(64, 0)</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
@@ -2342,30 +2579,30 @@ hr {
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td class='subname'>SALES.REGIONS.POSTALCODE &#8594; POSTALCODE</td>
+		<td class='subname'>PUBLIC.SALES.REGIONS.POSTALCODE &#8594; POSTALCODE</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td class='subname'>SALES.REGIONS.COUNTRY &#8594; COUNTRY</td>
+		<td class='subname'>PUBLIC.SALES.REGIONS.COUNTRY &#8594; COUNTRY</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_60</td>
+		<td colspan='2' class='name'>SYS_IDX_10056</td>
 		<td class='description'>[non-unique index]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
 		<td class='subname'>POSTALCODE</td>
-		<td class='type'>ascending</td>
+		<td class='type'>unknown</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
 		<td class='subname'>COUNTRY</td>
-		<td class='type'>ascending</td>
+		<td class='type'>unknown</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
@@ -2376,7 +2613,7 @@ hr {
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td class='subname'>DBA &#8594; SA (grantable)</td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -2388,7 +2625,19 @@ hr {
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td class='subname'>DBA &#8594; SA (grantable)</td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>REFERENCES</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -2400,7 +2649,19 @@ hr {
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td class='subname'>DBA &#8594; SA (grantable)</td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>TRIGGER</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -2412,7 +2673,7 @@ hr {
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td class='subname'>DBA &#8594; SA (grantable)</td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 </table>
@@ -2425,35 +2686,35 @@ hr {
   <caption>Row Count</caption>
 
 	<tr>
-		<td colspan='2' class='name'>PUBLIC.AUTHORS</td>
+		<td colspan='2' class='name'>PUBLIC.BOOKS.AUTHORS</td>
 		<td class='description'>20 rows</td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>PUBLIC.AUTHORSLIST</td>
+		<td colspan='2' class='name'>PUBLIC.BOOKS.AUTHORSLIST</td>
 		<td class='description'>20 rows</td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>PUBLIC.BOOKAUTHORS</td>
+		<td colspan='2' class='name'>PUBLIC.BOOKS.BOOKAUTHORS</td>
 		<td class='description'>20 rows</td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>PUBLIC.BOOKS</td>
+		<td colspan='2' class='name'>PUBLIC.BOOKS.BOOKS</td>
 		<td class='description'>20 rows</td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>PUBLIC.&quot;Global Counts&quot;</td>
+		<td colspan='2' class='name'>PUBLIC.BOOKS.&quot;Global Counts&quot;</td>
 		<td class='description'>empty</td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>PUBLIC.PUBLISHERS</td>
+		<td colspan='2' class='name'>PUBLIC.BOOKS.PUBLISHERS</td>
 		<td class='description'>20 rows</td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SALES.REGIONS</td>
+		<td colspan='2' class='name'>PUBLIC.SALES.REGIONS</td>
 		<td class='description'>20 rows</td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SALES.SALES</td>
+		<td colspan='2' class='name'>PUBLIC.SALES.SALES</td>
 		<td class='description'>20 rows</td>
 	</tr>
 </table>
@@ -2463,7 +2724,7 @@ hr {
 <h2>Dump</h2>
 
 <table>
-  <caption>PUBLIC.AUTHORS</caption>
+  <caption>PUBLIC.BOOKS.AUTHORS</caption>
 
 	<tr>
 		<td class='name'>ID</td>
@@ -2700,7 +2961,7 @@ hr {
 <p></p>
 
 <table>
-  <caption>PUBLIC.AUTHORSLIST</caption>
+  <caption>PUBLIC.BOOKS.AUTHORSLIST</caption>
 
 	<tr>
 		<td class='name'>ID</td>
@@ -2811,7 +3072,7 @@ hr {
 <p></p>
 
 <table>
-  <caption>PUBLIC.BOOKAUTHORS</caption>
+  <caption>PUBLIC.BOOKS.BOOKAUTHORS</caption>
 
 	<tr>
 		<td class='name'>BOOKID</td>
@@ -2922,7 +3183,7 @@ hr {
 <p></p>
 
 <table>
-  <caption>PUBLIC.BOOKS</caption>
+  <caption>PUBLIC.BOOKS.BOOKS</caption>
 
 	<tr>
 		<td class='name'>ID</td>
@@ -2966,7 +3227,7 @@ hr {
 	</tr>
 	<tr>
 		<td>5</td>
-		<td>Posuere Cubilia Curae; Phasellus Ornare.</td>
+		<td>Posuere Cubilia Curae Phasellus Ornare.</td>
 		<td>Risus A Ultricies Adipiscing, Enim Mi Tempor Lorem, Eget Mollis Lectus Pede</td>
 		<td>7</td>
 		<td>2010-05-14</td>
@@ -3007,7 +3268,7 @@ hr {
 	<tr>
 		<td>10</td>
 		<td>Quisque Purus Sapien, Gravida</td>
-		<td>Et Ultrices Posuere Cubilia Curae; Phasellus Ornare. Fusce Mollis. Duis Sit Amet Diam Eu Dolor Egestas Rhoncus.</td>
+		<td>Et Ultrices Posuere Cubilia Curae Phasellus Ornare. Fusce Mollis. Duis Sit Amet Diam Eu Dolor Egestas Rhoncus.</td>
 		<td>19</td>
 		<td>2005-11-14</td>
 		<td>34.99</td>
@@ -3096,7 +3357,7 @@ hr {
 <p></p>
 
 <table>
-  <caption>PUBLIC."Global Counts"</caption>
+  <caption>PUBLIC.BOOKS."Global Counts"</caption>
 
 	<tr>
 		<td class='name'>Global Count</td>
@@ -3105,7 +3366,7 @@ hr {
 <p></p>
 
 <table>
-  <caption>PUBLIC.PUBLISHERS</caption>
+  <caption>PUBLIC.BOOKS.PUBLISHERS</caption>
 
 	<tr>
 		<td class='name'>ID</td>
@@ -3195,7 +3456,7 @@ hr {
 <p></p>
 
 <table>
-  <caption>SALES.REGIONS</caption>
+  <caption>PUBLIC.SALES.REGIONS</caption>
 
 	<tr>
 		<td class='name'>CITY</td>
@@ -3327,7 +3588,7 @@ hr {
 <p></p>
 
 <table>
-  <caption>SALES.SALES</caption>
+  <caption>PUBLIC.SALES.SALES</caption>
 
 	<tr>
 		<td class='name'>POSTALCODE</td>
