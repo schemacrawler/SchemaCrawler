@@ -1,14 +1,19 @@
 package schemacrawler.integration.test;
 
 
+import static org.junit.Assert.fail;
+
 import java.io.File;
+import java.util.List;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import schemacrawler.tools.hsqldb.Main;
+import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.utility.TestDatabase;
+import sf.util.TestUtility;
 
 public class TestBundledDistributions
 {
@@ -32,7 +37,8 @@ public class TestBundledDistributions
   public void testHsqldbMain()
     throws Exception
   {
-    final String referenceFile = "hsqldb.main";
+    final OutputFormat outputFormat = OutputFormat.text;
+    final String referenceFile = "hsqldb.main" + "." + outputFormat.name();
     final File testOutputFile = File.createTempFile("schemacrawler."
                                                         + referenceFile + ".",
                                                     ".test");
@@ -42,9 +48,17 @@ public class TestBundledDistributions
         "-database=schemacrawler",
         "-user=sa",
         "-password=",
-        "-command=verbose_schema,dump.count",
+        "-command=verbose_schema,dump,count",
         "-outputfile=" + testOutputFile
     });
+
+    final List<String> failures = TestUtility
+      .compareOutput("/" + referenceFile, testOutputFile, outputFormat);
+    if (failures.size() > 0)
+    {
+      fail(failures.toString());
+    }
+
   }
 
 }
