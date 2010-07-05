@@ -52,8 +52,9 @@ public class TestBundledDistributions
         "-outputfile=" + testOutputFile
     });
 
-    final List<String> failures = TestUtility
-      .compareOutput("/" + referenceFile, testOutputFile, outputFormat);
+    final List<String> failures = TestUtility.compareOutput(referenceFile,
+                                                            testOutputFile,
+                                                            outputFormat);
     if (failures.size() > 0)
     {
       fail(failures.toString());
