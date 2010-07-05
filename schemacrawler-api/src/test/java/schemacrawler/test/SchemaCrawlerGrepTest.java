@@ -54,7 +54,7 @@ public class SchemaCrawlerGrepTest
     throws Exception
   {
     TestDatabase.initializeApplicationLogging();
-    testUtility.createMemoryDatabase();
+    testUtility.startMemoryDatabase();
   }
 
   @Test

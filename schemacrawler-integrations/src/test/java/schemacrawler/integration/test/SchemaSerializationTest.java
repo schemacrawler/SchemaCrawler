@@ -61,7 +61,7 @@ public class SchemaSerializationTest
     throws Exception
   {
     TestDatabase.initializeApplicationLogging();
-    testUtility.createMemoryDatabase();
+    testUtility.startMemoryDatabase();
   }
 
   @Test

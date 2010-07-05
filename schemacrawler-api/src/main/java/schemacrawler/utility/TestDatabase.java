@@ -78,7 +78,7 @@ public class TestDatabase
         testDb.shutdownDatabase();
       }
     });
-    testDb.createDatabase();
+    testDb.startDatabase();
   }
 
   /**
@@ -196,19 +196,6 @@ public class TestDatabase
   private DatabaseConnectionOptions connectionOptions;
 
   /**
-   * Create database in memory.
-   * 
-   * @throws SchemaCrawlerException
-   *         On an exception
-   */
-  public void createMemoryDatabase()
-    throws SchemaCrawlerException
-  {
-    LOGGER.log(Level.FINE, toString() + " - Setting up in-memory database");
-    createDatabase("jdbc:hsqldb:mem:schemacrawler");
-  }
-
-  /**
    * Gets the connection.
    * 
    * @return Connection
@@ -307,7 +294,7 @@ public class TestDatabase
    * @throws SchemaCrawlerException
    *         On an exception
    */
-  private void createDatabase()
+  public void startDatabase()
     throws SchemaCrawlerException
   {
     LOGGER.log(Level.FINE, toString() + " - Setting up database");
@@ -325,6 +312,19 @@ public class TestDatabase
         "true"
     });
     createDatabase("jdbc:hsqldb:hsql://localhost/schemacrawler");
+  }
+
+  /**
+   * Create database in memory.
+   * 
+   * @throws SchemaCrawlerException
+   *         On an exception
+   */
+  public void startMemoryDatabase()
+    throws SchemaCrawlerException
+  {
+    LOGGER.log(Level.FINE, toString() + " - Setting up in-memory database");
+    createDatabase("jdbc:hsqldb:mem:schemacrawler");
   }
 
   private void createDatabase(final String url)

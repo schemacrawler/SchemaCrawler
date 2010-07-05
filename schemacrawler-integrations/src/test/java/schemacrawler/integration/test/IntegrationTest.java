@@ -56,7 +56,7 @@ public class IntegrationTest
     throws Exception
   {
     TestDatabase.initializeApplicationLogging();
-    testUtility.createMemoryDatabase();
+    testUtility.startMemoryDatabase();
   }
 
   @Test

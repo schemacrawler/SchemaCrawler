@@ -57,7 +57,7 @@ public class SpringIntegrationTest
     throws Exception
   {
     TestDatabase.initializeApplicationLogging();
-    testUtility.createMemoryDatabase();
+    testUtility.startMemoryDatabase();
   }
 
   private final ApplicationContext appContext = new ClassPathXmlApplicationContext("context.xml");
