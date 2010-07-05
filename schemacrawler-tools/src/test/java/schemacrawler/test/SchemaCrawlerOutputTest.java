@@ -89,7 +89,7 @@ public class SchemaCrawlerOutputTest
     throws Exception
   {
     TestDatabase.initializeApplicationLogging();
-    testUtility.createMemoryDatabase();
+    testUtility.startMemoryDatabase();
     XMLUnit.setControlEntityResolver(new LocalEntityResolver());
   }
 
