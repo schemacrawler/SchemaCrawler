@@ -6,6 +6,9 @@
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
 <listEntry value="2"/>
 </listAttribute>
+<listAttribute key="org.eclipse.debug.ui.favoriteGroups">
+<listEntry value="org.eclipse.debug.ui.launchGroup.run"/>
+</listAttribute>
 <stringAttribute key="org.eclipse.jdt.junit.CONTAINER" value="=SchemaCrawler for HyperSQL/src\/test\/java"/>
 <booleanAttribute key="org.eclipse.jdt.junit.KEEPRUNNING_ATTR" value="false"/>
 <stringAttribute key="org.eclipse.jdt.junit.TESTNAME" value=""/>
@@ -14,4 +17,5 @@
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value=""/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="SchemaCrawler for HyperSQL"/>
 <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.maven.ide.eclipse.launchconfig.sourcepathProvider"/>
+<stringAttribute key="org.eclipse.jdt.launching.WORKING_DIRECTORY" value="${workspace_loc:SchemaCrawler for HyperSQL/target}"/>
 </launchConfiguration>

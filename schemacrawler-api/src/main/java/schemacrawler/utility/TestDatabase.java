@@ -95,6 +95,8 @@ public class TestDatabase
       {
         return Arrays.asList(serverFileStem + ".lck",
                              serverFileStem + ".log",
+                             serverFileStem + ".lobs",
+                             serverFileStem + ".script",
                              serverFileStem + ".properties").contains(name);
       }
     };
