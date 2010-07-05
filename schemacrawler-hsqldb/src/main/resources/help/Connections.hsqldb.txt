@@ -1,0 +1,4 @@
+--- Connection Options ---
+
+-database=<database>
+	Database file name.

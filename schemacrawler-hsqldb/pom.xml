@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>net.sourceforge.schemacrawler</groupId>
+    <artifactId>schemacrawler-all</artifactId>
+    <version>8.3</version>
+  </parent>
+  <groupId>net.sourceforge.schemacrawler</groupId>
+  <artifactId>schemacrawler-hsqldb</artifactId>
+  <packaging>jar</packaging>
+  <name>SchemaCrawler for HyperSQL</name>
+  <licenses>
+    <license>
+      <name>GNU General Public License</name>
+      <url>http://www.gnu.org/copyleft/gpl.html</url>
+    </license>
+  </licenses>
+  <dependencies>
+    <dependency>
+      <groupId>net.sourceforge.schemacrawler</groupId>
+      <artifactId>schemacrawler-integrations</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.hsqldb</groupId>
+      <artifactId>hsqldb</artifactId>
+      <version>2.0.0</version>
+    </dependency>
+  </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <archive>
+            <index>true</index>
+            <manifest>
+              <mainClass>schemacrawler.tools.hsqldb.Main</mainClass>
+              <addClasspath>true</addClasspath>
+            </manifest>
+            <manifestEntries>
+              <Project>${project.name}, ${project.version}</Project>
+              <Author>Sualeh Fatehi, sualeh@hotmail.com</Author>
+            </manifestEntries>
+          </archive>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>assembly</id>
+            <phase>package</phase>
+            <goals>
+              <goal>attached</goal>
+            </goals>
+            <configuration>
+              <descriptors>
+                <descriptor>src/assembly/distrib-zip.xml</descriptor>
+              </descriptors>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <configuration>
+          <skip>false</skip>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

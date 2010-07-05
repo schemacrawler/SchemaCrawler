@@ -55,6 +55,7 @@
     <module>schemacrawler-integrations</module>
     <module>schemacrawler-db2</module>
     <module>schemacrawler-derby</module>
+    <module>schemacrawler-hsqldb</module>
     <module>schemacrawler-mysql</module>
     <module>schemacrawler-oracle</module>
     <module>schemacrawler-postgresql</module>
