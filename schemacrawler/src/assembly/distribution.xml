@@ -18,9 +18,9 @@
           depends="
             do-downloads,
             make-super-jar,
+            make-database-distributions,
             make-binary-distribution,
             make-source-distribution,
-            make-database-distributions,
             make-website-distribution,
             cleanup-distribution
             "
@@ -58,13 +58,13 @@
     </if>
 
     <!-- Download HSQLDB -->
-    <available file="hsqldb_1_8_0_10.zip"
-               property="available.hsqldb_1_8_0_10.zip" />
+    <available file="hsqldb-2.0.0.zip"
+               property="available.hsqldb-2.0.0.zip" />
     <if>
-      <equals arg1="${available.hsqldb_1_8_0_10.zip}" arg2="true" />
+      <equals arg1="${available.hsqldb-2.0.0.zip}" arg2="true" />
       <else>
-        <get src="http://downloads.sourceforge.net/project/hsqldb/hsqldb/hsqldb_1_8_0/hsqldb_1_8_0_10.zip"
-             dest="hsqldb_1_8_0_10.zip"
+        <get src="http://downloads.sourceforge.net/project/hsqldb/hsqldb/hsqldb_2_0/hsqldb-2.0.0.zip"
+             dest="hsqldb-2.0.0.zip"
              verbose="true"
              usetimestamp="true" />
       </else>
@@ -116,15 +116,9 @@
     <delete dir="${distribution.staging.dir}" />
     <mkdir dir="${distribution.staging.dir}/examples" />
 
-    <!-- Copy super-jar -->
-    <copy file="${schemacrawler.distribution.jar}"
-          todir="${distribution.staging.dir}/examples" />
-
     <!-- Copy licenses -->
     <copy file="lgpl-3.0.txt"
           tofile="${distribution.staging.dir}/examples/LICENSE.txt" />
-    <copy file="hsqlLicense.html"
-          tofile="${distribution.staging.dir}/examples/hsqlLicense.html" />
 
     <!-- Copy config files -->
     <copy todir="${distribution.staging.dir}/examples">
@@ -144,14 +138,7 @@
     <copy file="${SchemaCrawler.home}/schemacrawler-test/src/main/java/ApiExample.java"
           todir="${distribution.staging.dir}/examples/api" />
 
-    <!-- Copy database server -->
-    <unzip src="hsqldb_1_8_0_10.zip"
-           dest="${distribution.staging.dir}/examples">
-      <patternset>
-        <include name="**/hsqldb.jar" />
-      </patternset>
-      <mapper type="flatten" />
-    </unzip>
+    <!-- Copy database server shortcuts -->
     <copy todir="${distribution.staging.dir}/examples">
       <fileset dir="${distribution.assembly}">
         <include name="StartDatabase*.*" />
@@ -253,13 +240,14 @@
 
   <target name="make-database-distributions">
 
-  	<create-database-distrib database="db2" />
-    <create-database-distrib database="derby" />
-    <create-database-distrib database="mysql" />
-    <create-database-distrib database="oracle" />
-    <create-database-distrib database="postgresql" />
-    <create-database-distrib database="sqlserver" />
-    <create-database-distrib database="sqlite" />
+  	<create-db-distribution database="db2" />
+    <create-db-distribution database="derby" />
+    <create-db-distribution database="hsqldb" />
+    <create-db-distribution database="mysql" />
+    <create-db-distribution database="oracle" />
+    <create-db-distribution database="postgresql" />
+    <create-db-distribution database="sqlserver" />
+    <create-db-distribution database="sqlite" />
 
   </target>
 
@@ -277,22 +265,29 @@
   </target>
 
 
-  <macrodef name="create-database-distrib">
+  <macrodef name="create-db-distribution">
     <attribute name="database" />
 
     <sequential>
 
-      <move todir="${distribution.target}">
-        <fileset dir="${SchemaCrawler.home}/schemacrawler-@{database}/target">
-          <include name="schemacrawler-@{database}-${SchemaCrawler.version}-distrib.zip" />
-        </fileset>
-      </move>
+      <mkdir dir="${distribution.target}/@{database}-distrib" />
+      <unzip
+        dest="${distribution.target}/@{database}-distrib"
+        src="${SchemaCrawler.home}/schemacrawler-@{database}/target/schemacrawler-@{database}-${SchemaCrawler.version}-distrib.zip" />
 
-      <mkdir dir="${distribution.target}/@{database}-launches" />
+      <delete>
+        <fileset dir="${distribution.target}/@{database}-distrib">
+          <include name="**/schemacrawler-api-${SchemaCrawler.version}.jar" />
+          <include name="**/schemacrawler-commandline-${SchemaCrawler.version}.jar" />
+          <include name="**/schemacrawler-tools-${SchemaCrawler.version}.jar" />
+          <include name="**/schemacrawler-integrations-${SchemaCrawler.version}.jar" />
+          <include name="**/schemacrawler-${SchemaCrawler.version}.jar" />
+        </fileset>
+      </delete>
 
       <filter token="version" value="${SchemaCrawler.version}" />
       <filter token="package" value="schemacrawler.tools.@{database}" />
-      <copy todir="${distribution.target}/@{database}-launches"
+      <copy todir="${distribution.target}/@{database}-distrib/schemacrawler-@{database}-${SchemaCrawler.version}"
             filtering="true">
         <fileset dir="${distribution.assembly}">
           <include name="*.cmd" />
@@ -306,13 +301,12 @@
       <zip destfile="${distribution.target}/schemacrawler-@{database}-${SchemaCrawler.version}-distrib.zip"
            update="true"
            whenempty="fail">
-        <zipfileset dir="${distribution.target}/@{database}-launches"
-                    prefix="schemacrawler-@{database}-${SchemaCrawler.version}" />
+        <fileset dir="${distribution.target}/@{database}-distrib" />
         <zipfileset file="${schemacrawler.distribution.jar}"
                     prefix="schemacrawler-@{database}-${SchemaCrawler.version}/lib" />
       </zip>
 
-      <delete dir="${distribution.target}/@{database}-launches" />
+      <delete dir="${distribution.target}/@{database}-distrib" />
 
     </sequential>
 
