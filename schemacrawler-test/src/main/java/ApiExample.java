@@ -27,7 +27,7 @@ public final class ApiExample
     // time taken to crawl the schema
     options.setSchemaInfoLevel(SchemaInfoLevel.standard());
     options.setShowStoredProcedures(false);
-    options.setSchemaInclusionRule(new InclusionRule("PUBLIC",
+    options.setSchemaInclusionRule(new InclusionRule("PUBLIC.BOOKS",
                                                      InclusionRule.NONE));
     // Sorting options
     options.setAlphabeticalSortForTableColumns(true);

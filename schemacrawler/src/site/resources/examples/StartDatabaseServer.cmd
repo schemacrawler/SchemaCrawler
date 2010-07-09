@@ -1,0 +1,1 @@
+@java -cp lib\hsqldb-2.0.0.jar;lib\schemacrawler-8.3.jar schemacrawler.utility.TestDatabase
