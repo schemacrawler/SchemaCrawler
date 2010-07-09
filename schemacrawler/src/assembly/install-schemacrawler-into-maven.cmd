@@ -1,1 +1,0 @@
-mvn install:install-file -DgroupId=schemacrawler -DartifactId=schemacrawler -Dversion=8.3 -Dpackaging=jar -Dfile=lib/schemacrawler-8.3.jar -DgeneratePom=true -DcreateChecksum=true

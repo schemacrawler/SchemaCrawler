@@ -157,16 +157,22 @@
     <filter token="version" value="${SchemaCrawler.version}" />
     <filter token="package" value="schemacrawler" />
     <copy todir="${distribution.staging.dir}/schemacrawler" filtering="true">
-      <fileset dir="${distribution.assembly}">
-        <include name="*.cmd" />
-        <include name="*.sh" />
-        <include name="*.wsf" />
-        <exclude name="StartDatabase*.*" />
-      </fileset>
       <fileset dir="${SchemaCrawler.home}/schemacrawler">
         <include name="README.txt" />
       </fileset>
     </copy>
+
+    <unzip
+      src="${distribution.target}/schemacrawler-hsqldb-${SchemaCrawler.version}-distrib.zip"
+      dest="${distribution.staging.dir}" />
+    <move
+      todir="${distribution.staging.dir}/examples">
+      <fileset dir="${distribution.staging.dir}/schemacrawler-hsqldb-${SchemaCrawler.version}">
+        <include name="**/*.*" />
+      </fileset>
+    </move>
+    <delete
+      dir="${distribution.staging.dir}/schemacrawler-hsqldb-${SchemaCrawler.version}" />
 
     <!-- Create zip file for distribution -->
     <property name="distribution.zip.prefix"
