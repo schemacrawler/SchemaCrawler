@@ -22,7 +22,9 @@ package schemacrawler.crawl;
 
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 import schemacrawler.schema.ResultsColumn;
 import schemacrawler.schema.ResultsColumns;
@@ -39,7 +41,7 @@ class MutableResultsColumns
 
   private static final long serialVersionUID = 5204766782914559188L;
 
-  private final NamedObjectList<MutableResultsColumn> columns = new NamedObjectList<MutableResultsColumn>();
+  private final Map<String, MutableResultsColumn> columns = new HashMap<String, MutableResultsColumn>();
 
   MutableResultsColumns(final String name)
   {
@@ -53,7 +55,7 @@ class MutableResultsColumns
    */
   public ResultsColumn getColumn(final String name)
   {
-    return columns.lookup(name);
+    return columns.get(name);
   }
 
   /**
@@ -99,7 +101,9 @@ class MutableResultsColumns
 
   void addColumn(final MutableResultsColumn column)
   {
-    columns.add(column);
+    final String columnName = column.getLabel() != null? column.getLabel()
+                                                       : column.getName();
+    columns.put(columnName, column);
   }
 
 }

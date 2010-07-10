@@ -65,11 +65,6 @@ public final class SchemaCrawler
       final ResultsRetriever resultsRetriever = new ResultsRetriever(resultSet);
       resultColumns = resultsRetriever.retrieveResults();
     }
-    catch (final SchemaCrawlerException e)
-    {
-      LOGGER.log(Level.WARNING, e.getMessage(), e);
-      resultColumns = null;
-    }
     catch (final SQLException e)
     {
       LOGGER.log(Level.WARNING, e.getMessage(), e);

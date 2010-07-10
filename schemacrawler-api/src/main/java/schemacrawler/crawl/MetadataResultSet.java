@@ -22,9 +22,7 @@ package schemacrawler.crawl;
 
 
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
@@ -33,6 +31,8 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import schemacrawler.schema.ResultsColumn;
+import schemacrawler.schema.ResultsColumns;
 import sf.util.Utility;
 
 /**
@@ -52,10 +52,11 @@ final class MetadataResultSet
   private static final int FETCHSIZE = 20;
 
   private final ResultSet results;
-  private final Set<String> resultSetColumns;
+  private final ResultsColumns resultsColumns;
   private Set<String> readColumns;
 
   MetadataResultSet(final ResultSet resultSet)
+    throws SQLException
   {
     if (resultSet == null)
     {
@@ -76,27 +77,16 @@ final class MetadataResultSet
       LOGGER.log(Level.WARNING, "Could not set fetch size", e);
     }
 
-    final Set<String> resultSetColumns = new HashSet<String>();
-    try
-    {
-      final ResultSetMetaData rsMetaData = resultSet.getMetaData();
-      for (int i = 0; i < rsMetaData.getColumnCount(); i++)
-      {
-        resultSetColumns.add(rsMetaData.getColumnName(i + 1));
-      }
-    }
-    catch (final SQLException e)
-    {
-      LOGGER.log(Level.WARNING, "Could not get columns list");
-    }
-    this.resultSetColumns = Collections.unmodifiableSet(resultSetColumns);
+    final ResultsRetriever resultsRetriever = new ResultsRetriever(resultSet);
+    this.resultsColumns = resultsRetriever.retrieveResults();
 
     readColumns = new HashSet<String>();
   }
 
   private boolean useColumn(final String columnName)
   {
-    final boolean useColumn = columnName != null;
+    final boolean useColumn = columnName != null
+                              && resultsColumns.getColumn(columnName) != null;
     if (useColumn)
     {
       readColumns.add(columnName);
@@ -118,25 +108,6 @@ final class MetadataResultSet
     results.close();
   }
 
-  String currentRowToString()
-  {
-    final Map<String, String> currentRow = new HashMap<String, String>();
-    for (final String columnName: resultSetColumns)
-    {
-      Object columnData;
-      try
-      {
-        columnData = results.getObject(columnName);
-      }
-      catch (final SQLException e)
-      {
-        columnData = null;
-      }
-      currentRow.put(columnName, String.valueOf(columnData));
-    }
-    return currentRow.toString();
-  }
-
   /**
    * Gets unread (and therefore unmapped) columns from the database
    * metadata resultset, and makes them available as addiiotnal
@@ -146,25 +117,22 @@ final class MetadataResultSet
    */
   Map<String, Object> getAttributes()
   {
-    final Set<String> unusedResultSetColumns = new HashSet<String>(resultSetColumns);
-    // Retain unused columns
-    for (final String readColumn: readColumns)
-    {
-      unusedResultSetColumns.remove(readColumn);
-    }
-    // Set attributes
     final Map<String, Object> attributes = new HashMap<String, Object>();
-    for (final String unusedColumnName: unusedResultSetColumns)
+    for (final ResultsColumn resultsColumn: resultsColumns)
     {
-      try
+      final String columnName = resultsColumn.getName();
+      if (!readColumns.contains(columnName))
       {
-        final Object value = results.getObject(unusedColumnName);
-        attributes.put(unusedColumnName, value);
-      }
-      catch (final SQLException e)
-      {
-        LOGGER.log(Level.WARNING, "Could not read value for column "
-                                  + unusedColumnName, e);
+        try
+        {
+          final Object value = results.getObject(columnName);
+          attributes.put(columnName, value);
+        }
+        catch (final SQLException e)
+        {
+          LOGGER.log(Level.WARNING, "Could not read value for column "
+                                    + columnName, e);
+        }
       }
     }
     return attributes;
