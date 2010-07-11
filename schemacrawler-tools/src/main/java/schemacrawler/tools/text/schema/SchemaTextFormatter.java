@@ -110,8 +110,11 @@ final class SchemaTextFormatter
         out.println(formattingHelper.createNameRow(constraintName,
                                                    "[check constraint]",
                                                    false));
-        out.println(formattingHelper.createDefinitionRow(constraint
-          .getDefinition()));
+        final String definition = constraint.getDefinition();
+        if (!Utility.isBlank(definition))
+        {
+          out.println(formattingHelper.createDefinitionRow(definition));
+        }
       }
     }
   }
