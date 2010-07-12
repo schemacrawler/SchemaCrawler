@@ -17,7 +17,7 @@
       <artifactId>schemacrawler-db2</artifactId>
       <version>${project.version}</version>
       <scope>provided</scope>
-    </dependency>  
+    </dependency>
     <dependency>
       <groupId>net.sourceforge.schemacrawler</groupId>
       <artifactId>schemacrawler-derby</artifactId>
@@ -161,7 +161,11 @@
         </executions>
       </plugin>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-gpg-plugin</artifactId>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
         <executions>
           <execution>
             <id>schemacrawler_release</id>
