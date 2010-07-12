@@ -65,7 +65,10 @@ class MutableResultsColumns
    */
   public ResultsColumn[] getColumns()
   {
-    return columns.values().toArray(new ResultsColumn[columns.size()]);
+    final ResultsColumn[] resultsColumns = columns.values()
+      .toArray(new ResultsColumn[columns.size()]);
+    Arrays.sort(resultsColumns);
+    return resultsColumns;
   }
 
   /**
