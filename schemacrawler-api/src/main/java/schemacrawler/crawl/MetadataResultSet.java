@@ -22,17 +22,19 @@ package schemacrawler.crawl;
 
 
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.schema.ResultsColumn;
-import schemacrawler.schema.ResultsColumns;
 import sf.util.Utility;
 
 /**
@@ -52,7 +54,7 @@ final class MetadataResultSet
   private static final int FETCHSIZE = 20;
 
   private final ResultSet results;
-  private final ResultsColumns resultsColumns;
+  private final List<String> resultSetColumns;
   private Set<String> readColumns;
 
   MetadataResultSet(final ResultSet resultSet)
@@ -77,8 +79,26 @@ final class MetadataResultSet
       LOGGER.log(Level.WARNING, "Could not set fetch size", e);
     }
 
-    final ResultsRetriever resultsRetriever = new ResultsRetriever(resultSet);
-    this.resultsColumns = resultsRetriever.retrieveResults();
+    final List<String> resultSetColumns = new ArrayList<String>();
+    try
+    {
+      final ResultSetMetaData rsMetaData = resultSet.getMetaData();
+      for (int i = 0; i < rsMetaData.getColumnCount(); i++)
+      {
+        String columnName;
+        columnName = rsMetaData.getColumnLabel(i + 1);
+        if (Utility.isBlank(columnName))
+        {
+          columnName = rsMetaData.getColumnName(i + 1);
+        }
+        resultSetColumns.add(columnName);
+      }
+    }
+    catch (final SQLException e)
+    {
+      LOGGER.log(Level.WARNING, "Could not get columns list");
+    }
+    this.resultSetColumns = Collections.unmodifiableList(resultSetColumns);
 
     readColumns = new HashSet<String>();
   }
@@ -86,7 +106,7 @@ final class MetadataResultSet
   private boolean useColumn(final String columnName)
   {
     final boolean useColumn = columnName != null
-                              && resultsColumns.getColumn(columnName) != null;
+                              && resultSetColumns.contains(columnName);
     if (useColumn)
     {
       readColumns.add(columnName);
@@ -118,9 +138,8 @@ final class MetadataResultSet
   Map<String, Object> getAttributes()
   {
     final Map<String, Object> attributes = new HashMap<String, Object>();
-    for (final ResultsColumn resultsColumn: resultsColumns)
+    for (final String columnName: resultSetColumns)
     {
-      final String columnName = resultsColumn.getName();
       if (!readColumns.contains(columnName))
       {
         try
