@@ -145,7 +145,7 @@
       </fileset>
     </copy>
 
-    <!-- Create super jar -->
+    <!-- Copy super jar -->
     <copy file="${schemacrawler.distribution.jar}"
           todir="${distribution.staging.dir}/schemacrawler/lib" />
 
@@ -162,17 +162,12 @@
       </fileset>
     </copy>
 
+    <!-- Unzip the SchemaCrawler distribution for HyperSQL, for use in the examples -->
     <unzip
       src="${distribution.target}/schemacrawler-hsqldb-${SchemaCrawler.version}-distrib.zip"
-      dest="${distribution.staging.dir}" />
-    <move
-      todir="${distribution.staging.dir}/examples">
-      <fileset dir="${distribution.staging.dir}/schemacrawler-hsqldb-${SchemaCrawler.version}">
-        <include name="**/*.*" />
-      </fileset>
-    </move>
-    <delete
-      dir="${distribution.staging.dir}/schemacrawler-hsqldb-${SchemaCrawler.version}" />
+      dest="${distribution.staging.dir}/examples" />
+    <move file="${distribution.staging.dir}/examples/schemacrawler-hsqldb-${SchemaCrawler.version}"
+          tofile="${distribution.staging.dir}/examples/_schemacrawler" />
 
     <!-- Create zip file for distribution -->
     <property name="distribution.zip.prefix"
