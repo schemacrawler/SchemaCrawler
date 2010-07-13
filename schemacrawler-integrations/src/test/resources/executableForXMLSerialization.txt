@@ -2491,20 +2491,7 @@ generate schema diagrams.</schemaCrawlerAbout>
                                           <string>PUBLIC.&quot;PUBLISHER SALES&quot;.SALES.DELETE</string>
                                           <privilege id="325">
                                             <name>DELETE</name>
-                                            <attributeMap id="326">
-                                              <entry>
-                                                <string>PRIVILEGE_TYPE</string>
-                                                <string>DELETE</string>
-                                              </entry>
-                                              <entry>
-                                                <string>TABLE_CATALOG</string>
-                                                <string>PUBLIC</string>
-                                              </entry>
-                                              <entry>
-                                                <string>TABLE_SCHEMA</string>
-                                                <string>PUBLISHER SALES</string>
-                                              </entry>
-                                            </attributeMap>
+                                            <attributeMap id="326"/>
                                             <schema class="schema" reference="239"/>
                                             <parent class="table" reference="283"/>
                                             <grants id="327">
@@ -2521,20 +2508,7 @@ generate schema diagrams.</schemaCrawlerAbout>
                                           <string>PUBLIC.&quot;PUBLISHER SALES&quot;.SALES.INSERT</string>
                                           <privilege id="329">
                                             <name>INSERT</name>
-                                            <attributeMap id="330">
-                                              <entry>
-                                                <string>PRIVILEGE_TYPE</string>
-                                                <string>INSERT</string>
-                                              </entry>
-                                              <entry>
-                                                <string>TABLE_CATALOG</string>
-                                                <string>PUBLIC</string>
-                                              </entry>
-                                              <entry>
-                                                <string>TABLE_SCHEMA</string>
-                                                <string>PUBLISHER SALES</string>
-                                              </entry>
-                                            </attributeMap>
+                                            <attributeMap id="330"/>
                                             <schema class="schema" reference="239"/>
                                             <parent class="table" reference="283"/>
                                             <grants id="331">
@@ -2551,20 +2525,7 @@ generate schema diagrams.</schemaCrawlerAbout>
                                           <string>PUBLIC.&quot;PUBLISHER SALES&quot;.SALES.REFERENCES</string>
                                           <privilege id="333">
                                             <name>REFERENCES</name>
-                                            <attributeMap id="334">
-                                              <entry>
-                                                <string>PRIVILEGE_TYPE</string>
-                                                <string>REFERENCES</string>
-                                              </entry>
-                                              <entry>
-                                                <string>TABLE_CATALOG</string>
-                                                <string>PUBLIC</string>
-                                              </entry>
-                                              <entry>
-                                                <string>TABLE_SCHEMA</string>
-                                                <string>PUBLISHER SALES</string>
-                                              </entry>
-                                            </attributeMap>
+                                            <attributeMap id="334"/>
                                             <schema class="schema" reference="239"/>
                                             <parent class="table" reference="283"/>
                                             <grants id="335">
@@ -2581,20 +2542,7 @@ generate schema diagrams.</schemaCrawlerAbout>
                                           <string>PUBLIC.&quot;PUBLISHER SALES&quot;.SALES.SELECT</string>
                                           <privilege id="337">
                                             <name>SELECT</name>
-                                            <attributeMap id="338">
-                                              <entry>
-                                                <string>PRIVILEGE_TYPE</string>
-                                                <string>SELECT</string>
-                                              </entry>
-                                              <entry>
-                                                <string>TABLE_CATALOG</string>
-                                                <string>PUBLIC</string>
-                                              </entry>
-                                              <entry>
-                                                <string>TABLE_SCHEMA</string>
-                                                <string>PUBLISHER SALES</string>
-                                              </entry>
-                                            </attributeMap>
+                                            <attributeMap id="338"/>
                                             <schema class="schema" reference="239"/>
                                             <parent class="table" reference="283"/>
                                             <grants id="339">
@@ -2611,20 +2559,7 @@ generate schema diagrams.</schemaCrawlerAbout>
                                           <string>PUBLIC.&quot;PUBLISHER SALES&quot;.SALES.TRIGGER</string>
                                           <privilege id="341">
                                             <name>TRIGGER</name>
-                                            <attributeMap id="342">
-                                              <entry>
-                                                <string>PRIVILEGE_TYPE</string>
-                                                <string>TRIGGER</string>
-                                              </entry>
-                                              <entry>
-                                                <string>TABLE_CATALOG</string>
-                                                <string>PUBLIC</string>
-                                              </entry>
-                                              <entry>
-                                                <string>TABLE_SCHEMA</string>
-                                                <string>PUBLISHER SALES</string>
-                                              </entry>
-                                            </attributeMap>
+                                            <attributeMap id="342"/>
                                             <schema class="schema" reference="239"/>
                                             <parent class="table" reference="283"/>
                                             <grants id="343">
@@ -2641,20 +2576,7 @@ generate schema diagrams.</schemaCrawlerAbout>
                                           <string>PUBLIC.&quot;PUBLISHER SALES&quot;.SALES.UPDATE</string>
                                           <privilege id="345">
                                             <name>UPDATE</name>
-                                            <attributeMap id="346">
-                                              <entry>
-                                                <string>PRIVILEGE_TYPE</string>
-                                                <string>UPDATE</string>
-                                              </entry>
-                                              <entry>
-                                                <string>TABLE_CATALOG</string>
-                                                <string>PUBLIC</string>
-                                              </entry>
-                                              <entry>
-                                                <string>TABLE_SCHEMA</string>
-                                                <string>PUBLISHER SALES</string>
-                                              </entry>
-                                            </attributeMap>
+                                            <attributeMap id="346"/>
                                             <schema class="schema" reference="239"/>
                                             <parent class="table" reference="283"/>
                                             <grants id="347">
@@ -2882,20 +2804,7 @@ generate schema diagrams.</schemaCrawlerAbout>
                       <string>PUBLIC.&quot;PUBLISHER SALES&quot;.REGIONS.DELETE</string>
                       <privilege id="377">
                         <name>DELETE</name>
-                        <attributeMap id="378">
-                          <entry>
-                            <string>PRIVILEGE_TYPE</string>
-                            <string>DELETE</string>
-                          </entry>
-                          <entry>
-                            <string>TABLE_CATALOG</string>
-                            <string>PUBLIC</string>
-                          </entry>
-                          <entry>
-                            <string>TABLE_SCHEMA</string>
-                            <string>PUBLISHER SALES</string>
-                          </entry>
-                        </attributeMap>
+                        <attributeMap id="378"/>
                         <schema class="schema" reference="239"/>
                         <parent class="table" reference="245"/>
                         <grants id="379">
@@ -2912,20 +2821,7 @@ generate schema diagrams.</schemaCrawlerAbout>
                       <string>PUBLIC.&quot;PUBLISHER SALES&quot;.REGIONS.INSERT</string>
                       <privilege id="381">
                         <name>INSERT</name>
-                        <attributeMap id="382">
-                          <entry>
-                            <string>PRIVILEGE_TYPE</string>
-                            <string>INSERT</string>
-                          </entry>
-                          <entry>
-                            <string>TABLE_CATALOG</string>
-                            <string>PUBLIC</string>
-                          </entry>
-                          <entry>
-                            <string>TABLE_SCHEMA</string>
-                            <string>PUBLISHER SALES</string>
-                          </entry>
-                        </attributeMap>
+                        <attributeMap id="382"/>
                         <schema class="schema" reference="239"/>
                         <parent class="table" reference="245"/>
                         <grants id="383">
@@ -2942,20 +2838,7 @@ generate schema diagrams.</schemaCrawlerAbout>
                       <string>PUBLIC.&quot;PUBLISHER SALES&quot;.REGIONS.REFERENCES</string>
                       <privilege id="385">
                         <name>REFERENCES</name>
-                        <attributeMap id="386">
-                          <entry>
-                            <string>PRIVILEGE_TYPE</string>
-                            <string>REFERENCES</string>
-                          </entry>
-                          <entry>
-                            <string>TABLE_CATALOG</string>
-                            <string>PUBLIC</string>
-                          </entry>
-                          <entry>
-                            <string>TABLE_SCHEMA</string>
-                            <string>PUBLISHER SALES</string>
-                          </entry>
-                        </attributeMap>
+                        <attributeMap id="386"/>
                         <schema class="schema" reference="239"/>
                         <parent class="table" reference="245"/>
                         <grants id="387">
@@ -2972,20 +2855,7 @@ generate schema diagrams.</schemaCrawlerAbout>
                       <string>PUBLIC.&quot;PUBLISHER SALES&quot;.REGIONS.SELECT</string>
                       <privilege id="389">
                         <name>SELECT</name>
-                        <attributeMap id="390">
-                          <entry>
-                            <string>PRIVILEGE_TYPE</string>
-                            <string>SELECT</string>
-                          </entry>
-                          <entry>
-                            <string>TABLE_CATALOG</string>
-                            <string>PUBLIC</string>
-                          </entry>
-                          <entry>
-                            <string>TABLE_SCHEMA</string>
-                            <string>PUBLISHER SALES</string>
-                          </entry>
-                        </attributeMap>
+                        <attributeMap id="390"/>
                         <schema class="schema" reference="239"/>
                         <parent class="table" reference="245"/>
                         <grants id="391">
@@ -3002,20 +2872,7 @@ generate schema diagrams.</schemaCrawlerAbout>
                       <string>PUBLIC.&quot;PUBLISHER SALES&quot;.REGIONS.TRIGGER</string>
                       <privilege id="393">
                         <name>TRIGGER</name>
-                        <attributeMap id="394">
-                          <entry>
-                            <string>PRIVILEGE_TYPE</string>
-                            <string>TRIGGER</string>
-                          </entry>
-                          <entry>
-                            <string>TABLE_CATALOG</string>
-                            <string>PUBLIC</string>
-                          </entry>
-                          <entry>
-                            <string>TABLE_SCHEMA</string>
-                            <string>PUBLISHER SALES</string>
-                          </entry>
-                        </attributeMap>
+                        <attributeMap id="394"/>
                         <schema class="schema" reference="239"/>
                         <parent class="table" reference="245"/>
                         <grants id="395">
@@ -3032,20 +2889,7 @@ generate schema diagrams.</schemaCrawlerAbout>
                       <string>PUBLIC.&quot;PUBLISHER SALES&quot;.REGIONS.UPDATE</string>
                       <privilege id="397">
                         <name>UPDATE</name>
-                        <attributeMap id="398">
-                          <entry>
-                            <string>PRIVILEGE_TYPE</string>
-                            <string>UPDATE</string>
-                          </entry>
-                          <entry>
-                            <string>TABLE_CATALOG</string>
-                            <string>PUBLIC</string>
-                          </entry>
-                          <entry>
-                            <string>TABLE_SCHEMA</string>
-                            <string>PUBLISHER SALES</string>
-                          </entry>
-                        </attributeMap>
+                        <attributeMap id="398"/>
                         <schema class="schema" reference="239"/>
                         <parent class="table" reference="245"/>
                         <grants id="399">
@@ -3217,20 +3061,7 @@ generate schema diagrams.</schemaCrawlerAbout>
                       <string>PUBLIC.BOOKS.&quot;Global Counts&quot;.DELETE</string>
                       <privilege id="430">
                         <name>DELETE</name>
-                        <attributeMap id="431">
-                          <entry>
-                            <string>PRIVILEGE_TYPE</string>
-                            <string>DELETE</string>
-                          </entry>
-                          <entry>
-                            <string>TABLE_CATALOG</string>
-                            <string>PUBLIC</string>
-                          </entry>
-                          <entry>
-                            <string>TABLE_SCHEMA</string>
-                            <string>BOOKS</string>
-                          </entry>
-                        </attributeMap>
+                        <attributeMap id="431"/>
                         <schema class="schema" reference="404"/>
                         <parent class="table" reference="412"/>
                         <grants id="432">
@@ -3247,20 +3078,7 @@ generate schema diagrams.</schemaCrawlerAbout>
                       <string>PUBLIC.BOOKS.&quot;Global Counts&quot;.INSERT</string>
                       <privilege id="434">
                         <name>INSERT</name>
-                        <attributeMap id="435">
-                          <entry>
-                            <string>PRIVILEGE_TYPE</string>
-                            <string>INSERT</string>
-                          </entry>
-                          <entry>
-                            <string>TABLE_CATALOG</string>
-                            <string>PUBLIC</string>
-                          </entry>
-                          <entry>
-                            <string>TABLE_SCHEMA</string>
-                            <string>BOOKS</string>
-                          </entry>
-                        </attributeMap>
+                        <attributeMap id="435"/>
                         <schema class="schema" reference="404"/>
                         <parent class="table" reference="412"/>
                         <grants id="436">
@@ -3277,20 +3095,7 @@ generate schema diagrams.</schemaCrawlerAbout>
                       <string>PUBLIC.BOOKS.&quot;Global Counts&quot;.REFERENCES</string>
                       <privilege id="438">
                         <name>REFERENCES</name>
-                        <attributeMap id="439">
-                          <entry>
-                            <string>PRIVILEGE_TYPE</string>
-                            <string>REFERENCES</string>
-                          </entry>
-                          <entry>
-                            <string>TABLE_CATALOG</string>
-                            <string>PUBLIC</string>
-                          </entry>
-                          <entry>
-                            <string>TABLE_SCHEMA</string>
-                            <string>BOOKS</string>
-                          </entry>
-                        </attributeMap>
+                        <attributeMap id="439"/>
                         <schema class="schema" reference="404"/>
                         <parent class="table" reference="412"/>
                         <grants id="440">
@@ -3307,20 +3112,7 @@ generate schema diagrams.</schemaCrawlerAbout>
                       <string>PUBLIC.BOOKS.&quot;Global Counts&quot;.SELECT</string>
                       <privilege id="442">
                         <name>SELECT</name>
-                        <attributeMap id="443">
-                          <entry>
-                            <string>PRIVILEGE_TYPE</string>
-                            <string>SELECT</string>
-                          </entry>
-                          <entry>
-                            <string>TABLE_CATALOG</string>
-                            <string>PUBLIC</string>
-                          </entry>
-                          <entry>
-                            <string>TABLE_SCHEMA</string>
-                            <string>BOOKS</string>
-                          </entry>
-                        </attributeMap>
+                        <attributeMap id="443"/>
                         <schema class="schema" reference="404"/>
                         <parent class="table" reference="412"/>
                         <grants id="444">
@@ -3337,20 +3129,7 @@ generate schema diagrams.</schemaCrawlerAbout>
                       <string>PUBLIC.BOOKS.&quot;Global Counts&quot;.TRIGGER</string>
                       <privilege id="446">
                         <name>TRIGGER</name>
-                        <attributeMap id="447">
-                          <entry>
-                            <string>PRIVILEGE_TYPE</string>
-                            <string>TRIGGER</string>
-                          </entry>
-                          <entry>
-                            <string>TABLE_CATALOG</string>
-                            <string>PUBLIC</string>
-                          </entry>
-                          <entry>
-                            <string>TABLE_SCHEMA</string>
-                            <string>BOOKS</string>
-                          </entry>
-                        </attributeMap>
+                        <attributeMap id="447"/>
                         <schema class="schema" reference="404"/>
                         <parent class="table" reference="412"/>
                         <grants id="448">
@@ -3367,20 +3146,7 @@ generate schema diagrams.</schemaCrawlerAbout>
                       <string>PUBLIC.BOOKS.&quot;Global Counts&quot;.UPDATE</string>
                       <privilege id="450">
                         <name>UPDATE</name>
-                        <attributeMap id="451">
-                          <entry>
-                            <string>PRIVILEGE_TYPE</string>
-                            <string>UPDATE</string>
-                          </entry>
-                          <entry>
-                            <string>TABLE_CATALOG</string>
-                            <string>PUBLIC</string>
-                          </entry>
-                          <entry>
-                            <string>TABLE_SCHEMA</string>
-                            <string>BOOKS</string>
-                          </entry>
-                        </attributeMap>
+                        <attributeMap id="451"/>
                         <schema class="schema" reference="404"/>
                         <parent class="table" reference="412"/>
                         <grants id="452">
@@ -4843,20 +4609,7 @@ generate schema diagrams.</schemaCrawlerAbout>
                                                       <string>PUBLIC.BOOKS.BOOKS.DELETE</string>
                                                       <privilege id="580">
                                                         <name>DELETE</name>
-                                                        <attributeMap id="581">
-                                                          <entry>
-                                                            <string>PRIVILEGE_TYPE</string>
-                                                            <string>DELETE</string>
-                                                          </entry>
-                                                          <entry>
-                                                            <string>TABLE_CATALOG</string>
-                                                            <string>PUBLIC</string>
-                                                          </entry>
-                                                          <entry>
-                                                            <string>TABLE_SCHEMA</string>
-                                                            <string>BOOKS</string>
-                                                          </entry>
-                                                        </attributeMap>
+                                                        <attributeMap id="581"/>
                                                         <schema class="schema" reference="404"/>
                                                         <parent class="table" reference="522"/>
                                                         <grants id="582">
@@ -4873,20 +4626,7 @@ generate schema diagrams.</schemaCrawlerAbout>
                                                       <string>PUBLIC.BOOKS.BOOKS.INSERT</string>
                                                       <privilege id="584">
                                                         <name>INSERT</name>
-                                                        <attributeMap id="585">
-                                                          <entry>
-                                                            <string>PRIVILEGE_TYPE</string>
-                                                            <string>INSERT</string>
-                                                          </entry>
-                                                          <entry>
-                                                            <string>TABLE_CATALOG</string>
-                                                            <string>PUBLIC</string>
-                                                          </entry>
-                                                          <entry>
-                                                            <string>TABLE_SCHEMA</string>
-                                                            <string>BOOKS</string>
-                                                          </entry>
-                                                        </attributeMap>
+                                                        <attributeMap id="585"/>
                                                         <schema class="schema" reference="404"/>
                                                         <parent class="table" reference="522"/>
                                                         <grants id="586">
@@ -4903,20 +4643,7 @@ generate schema diagrams.</schemaCrawlerAbout>
                                                       <string>PUBLIC.BOOKS.BOOKS.REFERENCES</string>
                                                       <privilege id="588">
                                                         <name>REFERENCES</name>
-                                                        <attributeMap id="589">
-                                                          <entry>
-                                                            <string>PRIVILEGE_TYPE</string>
-                                                            <string>REFERENCES</string>
-                                                          </entry>
-                                                          <entry>
-                                                            <string>TABLE_CATALOG</string>
-                                                            <string>PUBLIC</string>
-                                                          </entry>
-                                                          <entry>
-                                                            <string>TABLE_SCHEMA</string>
-                                                            <string>BOOKS</string>
-                                                          </entry>
-                                                        </attributeMap>
+                                                        <attributeMap id="589"/>
                                                         <schema class="schema" reference="404"/>
                                                         <parent class="table" reference="522"/>
                                                         <grants id="590">
@@ -4933,20 +4660,7 @@ generate schema diagrams.</schemaCrawlerAbout>
                                                       <string>PUBLIC.BOOKS.BOOKS.SELECT</string>
                                                       <privilege id="592">
                                                         <name>SELECT</name>
-                                                        <attributeMap id="593">
-                                                          <entry>
-                                                            <string>PRIVILEGE_TYPE</string>
-                                                            <string>SELECT</string>
-                                                          </entry>
-                                                          <entry>
-                                                            <string>TABLE_CATALOG</string>
-                                                            <string>PUBLIC</string>
-                                                          </entry>
-                                                          <entry>
-                                                            <string>TABLE_SCHEMA</string>
-                                                            <string>BOOKS</string>
-                                                          </entry>
-                                                        </attributeMap>
+                                                        <attributeMap id="593"/>
                                                         <schema class="schema" reference="404"/>
                                                         <parent class="table" reference="522"/>
                                                         <grants id="594">
@@ -4963,20 +4677,7 @@ generate schema diagrams.</schemaCrawlerAbout>
                                                       <string>PUBLIC.BOOKS.BOOKS.TRIGGER</string>
                                                       <privilege id="596">
                                                         <name>TRIGGER</name>
-                                                        <attributeMap id="597">
-                                                          <entry>
-                                                            <string>PRIVILEGE_TYPE</string>
-                                                            <string>TRIGGER</string>
-                                                          </entry>
-                                                          <entry>
-                                                            <string>TABLE_CATALOG</string>
-                                                            <string>PUBLIC</string>
-                                                          </entry>
-                                                          <entry>
-                                                            <string>TABLE_SCHEMA</string>
-                                                            <string>BOOKS</string>
-                                                          </entry>
-                                                        </attributeMap>
+                                                        <attributeMap id="597"/>
                                                         <schema class="schema" reference="404"/>
                                                         <parent class="table" reference="522"/>
                                                         <grants id="598">
@@ -4993,20 +4694,7 @@ generate schema diagrams.</schemaCrawlerAbout>
                                                       <string>PUBLIC.BOOKS.BOOKS.UPDATE</string>
                                                       <privilege id="600">
                                                         <name>UPDATE</name>
-                                                        <attributeMap id="601">
-                                                          <entry>
-                                                            <string>PRIVILEGE_TYPE</string>
-                                                            <string>UPDATE</string>
-                                                          </entry>
-                                                          <entry>
-                                                            <string>TABLE_CATALOG</string>
-                                                            <string>PUBLIC</string>
-                                                          </entry>
-                                                          <entry>
-                                                            <string>TABLE_SCHEMA</string>
-                                                            <string>BOOKS</string>
-                                                          </entry>
-                                                        </attributeMap>
+                                                        <attributeMap id="601"/>
                                                         <schema class="schema" reference="404"/>
                                                         <parent class="table" reference="522"/>
                                                         <grants id="602">
@@ -5300,20 +4988,7 @@ generate schema diagrams.</schemaCrawlerAbout>
                                           <string>PUBLIC.BOOKS.BOOKAUTHORS.DELETE</string>
                                           <privilege id="642">
                                             <name>DELETE</name>
-                                            <attributeMap id="643">
-                                              <entry>
-                                                <string>PRIVILEGE_TYPE</string>
-                                                <string>DELETE</string>
-                                              </entry>
-                                              <entry>
-                                                <string>TABLE_CATALOG</string>
-                                                <string>PUBLIC</string>
-                                              </entry>
-                                              <entry>
-                                                <string>TABLE_SCHEMA</string>
-                                                <string>BOOKS</string>
-                                              </entry>
-                                            </attributeMap>
+                                            <attributeMap id="643"/>
                                             <schema class="schema" reference="404"/>
                                             <parent class="table" reference="510"/>
                                             <grants id="644">
@@ -5330,20 +5005,7 @@ generate schema diagrams.</schemaCrawlerAbout>
                                           <string>PUBLIC.BOOKS.BOOKAUTHORS.INSERT</string>
                                           <privilege id="646">
                                             <name>INSERT</name>
-                                            <attributeMap id="647">
-                                              <entry>
-                                                <string>PRIVILEGE_TYPE</string>
-                                                <string>INSERT</string>
-                                              </entry>
-                                              <entry>
-                                                <string>TABLE_CATALOG</string>
-                                                <string>PUBLIC</string>
-                                              </entry>
-                                              <entry>
-                                                <string>TABLE_SCHEMA</string>
-                                                <string>BOOKS</string>
-                                              </entry>
-                                            </attributeMap>
+                                            <attributeMap id="647"/>
                                             <schema class="schema" reference="404"/>
                                             <parent class="table" reference="510"/>
                                             <grants id="648">
@@ -5360,20 +5022,7 @@ generate schema diagrams.</schemaCrawlerAbout>
                                           <string>PUBLIC.BOOKS.BOOKAUTHORS.REFERENCES</string>
                                           <privilege id="650">
                                             <name>REFERENCES</name>
-                                            <attributeMap id="651">
-                                              <entry>
-                                                <string>PRIVILEGE_TYPE</string>
-                                                <string>REFERENCES</string>
-                                              </entry>
-                                              <entry>
-                                                <string>TABLE_CATALOG</string>
-                                                <string>PUBLIC</string>
-                                              </entry>
-                                              <entry>
-                                                <string>TABLE_SCHEMA</string>
-                                                <string>BOOKS</string>
-                                              </entry>
-                                            </attributeMap>
+                                            <attributeMap id="651"/>
                                             <schema class="schema" reference="404"/>
                                             <parent class="table" reference="510"/>
                                             <grants id="652">
@@ -5390,20 +5039,7 @@ generate schema diagrams.</schemaCrawlerAbout>
                                           <string>PUBLIC.BOOKS.BOOKAUTHORS.SELECT</string>
                                           <privilege id="654">
                                             <name>SELECT</name>
-                                            <attributeMap id="655">
-                                              <entry>
-                                                <string>PRIVILEGE_TYPE</string>
-                                                <string>SELECT</string>
-                                              </entry>
-                                              <entry>
-                                                <string>TABLE_CATALOG</string>
-                                                <string>PUBLIC</string>
-                                              </entry>
-                                              <entry>
-                                                <string>TABLE_SCHEMA</string>
-                                                <string>BOOKS</string>
-                                              </entry>
-                                            </attributeMap>
+                                            <attributeMap id="655"/>
                                             <schema class="schema" reference="404"/>
                                             <parent class="table" reference="510"/>
                                             <grants id="656">
@@ -5420,20 +5056,7 @@ generate schema diagrams.</schemaCrawlerAbout>
                                           <string>PUBLIC.BOOKS.BOOKAUTHORS.TRIGGER</string>
                                           <privilege id="658">
                                             <name>TRIGGER</name>
-                                            <attributeMap id="659">
-                                              <entry>
-                                                <string>PRIVILEGE_TYPE</string>
-                                                <string>TRIGGER</string>
-                                              </entry>
-                                              <entry>
-                                                <string>TABLE_CATALOG</string>
-                                                <string>PUBLIC</string>
-                                              </entry>
-                                              <entry>
-                                                <string>TABLE_SCHEMA</string>
-                                                <string>BOOKS</string>
-                                              </entry>
-                                            </attributeMap>
+                                            <attributeMap id="659"/>
                                             <schema class="schema" reference="404"/>
                                             <parent class="table" reference="510"/>
                                             <grants id="660">
@@ -5450,20 +5073,7 @@ generate schema diagrams.</schemaCrawlerAbout>
                                           <string>PUBLIC.BOOKS.BOOKAUTHORS.UPDATE</string>
                                           <privilege id="662">
                                             <name>UPDATE</name>
-                                            <attributeMap id="663">
-                                              <entry>
-                                                <string>PRIVILEGE_TYPE</string>
-                                                <string>UPDATE</string>
-                                              </entry>
-                                              <entry>
-                                                <string>TABLE_CATALOG</string>
-                                                <string>PUBLIC</string>
-                                              </entry>
-                                              <entry>
-                                                <string>TABLE_SCHEMA</string>
-                                                <string>BOOKS</string>
-                                              </entry>
-                                            </attributeMap>
+                                            <attributeMap id="663"/>
                                             <schema class="schema" reference="404"/>
                                             <parent class="table" reference="510"/>
                                             <grants id="664">
@@ -5876,20 +5486,7 @@ generate schema diagrams.</schemaCrawlerAbout>
                       <string>PUBLIC.BOOKS.AUTHORS.DELETE</string>
                       <privilege id="714">
                         <name>DELETE</name>
-                        <attributeMap id="715">
-                          <entry>
-                            <string>PRIVILEGE_TYPE</string>
-                            <string>DELETE</string>
-                          </entry>
-                          <entry>
-                            <string>TABLE_CATALOG</string>
-                            <string>PUBLIC</string>
-                          </entry>
-                          <entry>
-                            <string>TABLE_SCHEMA</string>
-                            <string>BOOKS</string>
-                          </entry>
-                        </attributeMap>
+                        <attributeMap id="715"/>
                         <schema class="schema" reference="404"/>
                         <parent class="table" reference="454"/>
                         <grants id="716">
@@ -5906,20 +5503,7 @@ generate schema diagrams.</schemaCrawlerAbout>
                       <string>PUBLIC.BOOKS.AUTHORS.INSERT</string>
                       <privilege id="718">
                         <name>INSERT</name>
-                        <attributeMap id="719">
-                          <entry>
-                            <string>PRIVILEGE_TYPE</string>
-                            <string>INSERT</string>
-                          </entry>
-                          <entry>
-                            <string>TABLE_CATALOG</string>
-                            <string>PUBLIC</string>
-                          </entry>
-                          <entry>
-                            <string>TABLE_SCHEMA</string>
-                            <string>BOOKS</string>
-                          </entry>
-                        </attributeMap>
+                        <attributeMap id="719"/>
                         <schema class="schema" reference="404"/>
                         <parent class="table" reference="454"/>
                         <grants id="720">
@@ -5936,20 +5520,7 @@ generate schema diagrams.</schemaCrawlerAbout>
                       <string>PUBLIC.BOOKS.AUTHORS.REFERENCES</string>
                       <privilege id="722">
                         <name>REFERENCES</name>
-                        <attributeMap id="723">
-                          <entry>
-                            <string>PRIVILEGE_TYPE</string>
-                            <string>REFERENCES</string>
-                          </entry>
-                          <entry>
-                            <string>TABLE_CATALOG</string>
-                            <string>PUBLIC</string>
-                          </entry>
-                          <entry>
-                            <string>TABLE_SCHEMA</string>
-                            <string>BOOKS</string>
-                          </entry>
-                        </attributeMap>
+                        <attributeMap id="723"/>
                         <schema class="schema" reference="404"/>
                         <parent class="table" reference="454"/>
                         <grants id="724">
@@ -5966,20 +5537,7 @@ generate schema diagrams.</schemaCrawlerAbout>
                       <string>PUBLIC.BOOKS.AUTHORS.SELECT</string>
                       <privilege id="726">
                         <name>SELECT</name>
-                        <attributeMap id="727">
-                          <entry>
-                            <string>PRIVILEGE_TYPE</string>
-                            <string>SELECT</string>
-                          </entry>
-                          <entry>
-                            <string>TABLE_CATALOG</string>
-                            <string>PUBLIC</string>
-                          </entry>
-                          <entry>
-                            <string>TABLE_SCHEMA</string>
-                            <string>BOOKS</string>
-                          </entry>
-                        </attributeMap>
+                        <attributeMap id="727"/>
                         <schema class="schema" reference="404"/>
                         <parent class="table" reference="454"/>
                         <grants id="728">
@@ -5996,20 +5554,7 @@ generate schema diagrams.</schemaCrawlerAbout>
                       <string>PUBLIC.BOOKS.AUTHORS.TRIGGER</string>
                       <privilege id="730">
                         <name>TRIGGER</name>
-                        <attributeMap id="731">
-                          <entry>
-                            <string>PRIVILEGE_TYPE</string>
-                            <string>TRIGGER</string>
-                          </entry>
-                          <entry>
-                            <string>TABLE_CATALOG</string>
-                            <string>PUBLIC</string>
-                          </entry>
-                          <entry>
-                            <string>TABLE_SCHEMA</string>
-                            <string>BOOKS</string>
-                          </entry>
-                        </attributeMap>
+                        <attributeMap id="731"/>
                         <schema class="schema" reference="404"/>
                         <parent class="table" reference="454"/>
                         <grants id="732">
@@ -6026,20 +5571,7 @@ generate schema diagrams.</schemaCrawlerAbout>
                       <string>PUBLIC.BOOKS.AUTHORS.UPDATE</string>
                       <privilege id="734">
                         <name>UPDATE</name>
-                        <attributeMap id="735">
-                          <entry>
-                            <string>PRIVILEGE_TYPE</string>
-                            <string>UPDATE</string>
-                          </entry>
-                          <entry>
-                            <string>TABLE_CATALOG</string>
-                            <string>PUBLIC</string>
-                          </entry>
-                          <entry>
-                            <string>TABLE_SCHEMA</string>
-                            <string>BOOKS</string>
-                          </entry>
-                        </attributeMap>
+                        <attributeMap id="735"/>
                         <schema class="schema" reference="404"/>
                         <parent class="table" reference="454"/>
                         <grants id="736">
@@ -6308,20 +5840,7 @@ generate schema diagrams.</schemaCrawlerAbout>
                       <string>PUBLIC.BOOKS.AUTHORSLIST.DELETE</string>
                       <privilege id="764">
                         <name>DELETE</name>
-                        <attributeMap id="765">
-                          <entry>
-                            <string>PRIVILEGE_TYPE</string>
-                            <string>DELETE</string>
-                          </entry>
-                          <entry>
-                            <string>TABLE_CATALOG</string>
-                            <string>PUBLIC</string>
-                          </entry>
-                          <entry>
-                            <string>TABLE_SCHEMA</string>
-                            <string>BOOKS</string>
-                          </entry>
-                        </attributeMap>
+                        <attributeMap id="765"/>
                         <schema class="schema" reference="404"/>
                         <parent class="view" reference="738"/>
                         <grants id="766">
@@ -6338,20 +5857,7 @@ generate schema diagrams.</schemaCrawlerAbout>
                       <string>PUBLIC.BOOKS.AUTHORSLIST.INSERT</string>
                       <privilege id="768">
                         <name>INSERT</name>
-                        <attributeMap id="769">
-                          <entry>
-                            <string>PRIVILEGE_TYPE</string>
-                            <string>INSERT</string>
-                          </entry>
-                          <entry>
-                            <string>TABLE_CATALOG</string>
-                            <string>PUBLIC</string>
-                          </entry>
-                          <entry>
-                            <string>TABLE_SCHEMA</string>
-                            <string>BOOKS</string>
-                          </entry>
-                        </attributeMap>
+                        <attributeMap id="769"/>
                         <schema class="schema" reference="404"/>
                         <parent class="view" reference="738"/>
                         <grants id="770">
@@ -6368,20 +5874,7 @@ generate schema diagrams.</schemaCrawlerAbout>
                       <string>PUBLIC.BOOKS.AUTHORSLIST.REFERENCES</string>
                       <privilege id="772">
                         <name>REFERENCES</name>
-                        <attributeMap id="773">
-                          <entry>
-                            <string>PRIVILEGE_TYPE</string>
-                            <string>REFERENCES</string>
-                          </entry>
-                          <entry>
-                            <string>TABLE_CATALOG</string>
-                            <string>PUBLIC</string>
-                          </entry>
-                          <entry>
-                            <string>TABLE_SCHEMA</string>
-                            <string>BOOKS</string>
-                          </entry>
-                        </attributeMap>
+                        <attributeMap id="773"/>
                         <schema class="schema" reference="404"/>
                         <parent class="view" reference="738"/>
                         <grants id="774">
@@ -6398,20 +5891,7 @@ generate schema diagrams.</schemaCrawlerAbout>
                       <string>PUBLIC.BOOKS.AUTHORSLIST.SELECT</string>
                       <privilege id="776">
                         <name>SELECT</name>
-                        <attributeMap id="777">
-                          <entry>
-                            <string>PRIVILEGE_TYPE</string>
-                            <string>SELECT</string>
-                          </entry>
-                          <entry>
-                            <string>TABLE_CATALOG</string>
-                            <string>PUBLIC</string>
-                          </entry>
-                          <entry>
-                            <string>TABLE_SCHEMA</string>
-                            <string>BOOKS</string>
-                          </entry>
-                        </attributeMap>
+                        <attributeMap id="777"/>
                         <schema class="schema" reference="404"/>
                         <parent class="view" reference="738"/>
                         <grants id="778">
@@ -6428,20 +5908,7 @@ generate schema diagrams.</schemaCrawlerAbout>
                       <string>PUBLIC.BOOKS.AUTHORSLIST.TRIGGER</string>
                       <privilege id="780">
                         <name>TRIGGER</name>
-                        <attributeMap id="781">
-                          <entry>
-                            <string>PRIVILEGE_TYPE</string>
-                            <string>TRIGGER</string>
-                          </entry>
-                          <entry>
-                            <string>TABLE_CATALOG</string>
-                            <string>PUBLIC</string>
-                          </entry>
-                          <entry>
-                            <string>TABLE_SCHEMA</string>
-                            <string>BOOKS</string>
-                          </entry>
-                        </attributeMap>
+                        <attributeMap id="781"/>
                         <schema class="schema" reference="404"/>
                         <parent class="view" reference="738"/>
                         <grants id="782">
@@ -6458,20 +5925,7 @@ generate schema diagrams.</schemaCrawlerAbout>
                       <string>PUBLIC.BOOKS.AUTHORSLIST.UPDATE</string>
                       <privilege id="784">
                         <name>UPDATE</name>
-                        <attributeMap id="785">
-                          <entry>
-                            <string>PRIVILEGE_TYPE</string>
-                            <string>UPDATE</string>
-                          </entry>
-                          <entry>
-                            <string>TABLE_CATALOG</string>
-                            <string>PUBLIC</string>
-                          </entry>
-                          <entry>
-                            <string>TABLE_SCHEMA</string>
-                            <string>BOOKS</string>
-                          </entry>
-                        </attributeMap>
+                        <attributeMap id="785"/>
                         <schema class="schema" reference="404"/>
                         <parent class="view" reference="738"/>
                         <grants id="786">
@@ -6775,20 +6229,7 @@ generate schema diagrams.</schemaCrawlerAbout>
                       <string>PUBLIC.BOOKS.PUBLISHERS.DELETE</string>
                       <privilege id="825">
                         <name>DELETE</name>
-                        <attributeMap id="826">
-                          <entry>
-                            <string>PRIVILEGE_TYPE</string>
-                            <string>DELETE</string>
-                          </entry>
-                          <entry>
-                            <string>TABLE_CATALOG</string>
-                            <string>PUBLIC</string>
-                          </entry>
-                          <entry>
-                            <string>TABLE_SCHEMA</string>
-                            <string>BOOKS</string>
-                          </entry>
-                        </attributeMap>
+                        <attributeMap id="826"/>
                         <schema class="schema" reference="404"/>
                         <parent class="table" reference="789"/>
                         <grants id="827">
@@ -6805,20 +6246,7 @@ generate schema diagrams.</schemaCrawlerAbout>
                       <string>PUBLIC.BOOKS.PUBLISHERS.INSERT</string>
                       <privilege id="829">
                         <name>INSERT</name>
-                        <attributeMap id="830">
-                          <entry>
-                            <string>PRIVILEGE_TYPE</string>
-                            <string>INSERT</string>
-                          </entry>
-                          <entry>
-                            <string>TABLE_CATALOG</string>
-                            <string>PUBLIC</string>
-                          </entry>
-                          <entry>
-                            <string>TABLE_SCHEMA</string>
-                            <string>BOOKS</string>
-                          </entry>
-                        </attributeMap>
+                        <attributeMap id="830"/>
                         <schema class="schema" reference="404"/>
                         <parent class="table" reference="789"/>
                         <grants id="831">
@@ -6835,20 +6263,7 @@ generate schema diagrams.</schemaCrawlerAbout>
                       <string>PUBLIC.BOOKS.PUBLISHERS.REFERENCES</string>
                       <privilege id="833">
                         <name>REFERENCES</name>
-                        <attributeMap id="834">
-                          <entry>
-                            <string>PRIVILEGE_TYPE</string>
-                            <string>REFERENCES</string>
-                          </entry>
-                          <entry>
-                            <string>TABLE_CATALOG</string>
-                            <string>PUBLIC</string>
-                          </entry>
-                          <entry>
-                            <string>TABLE_SCHEMA</string>
-                            <string>BOOKS</string>
-                          </entry>
-                        </attributeMap>
+                        <attributeMap id="834"/>
                         <schema class="schema" reference="404"/>
                         <parent class="table" reference="789"/>
                         <grants id="835">
@@ -6865,20 +6280,7 @@ generate schema diagrams.</schemaCrawlerAbout>
                       <string>PUBLIC.BOOKS.PUBLISHERS.SELECT</string>
                       <privilege id="837">
                         <name>SELECT</name>
-                        <attributeMap id="838">
-                          <entry>
-                            <string>PRIVILEGE_TYPE</string>
-                            <string>SELECT</string>
-                          </entry>
-                          <entry>
-                            <string>TABLE_CATALOG</string>
-                            <string>PUBLIC</string>
-                          </entry>
-                          <entry>
-                            <string>TABLE_SCHEMA</string>
-                            <string>BOOKS</string>
-                          </entry>
-                        </attributeMap>
+                        <attributeMap id="838"/>
                         <schema class="schema" reference="404"/>
                         <parent class="table" reference="789"/>
                         <grants id="839">
@@ -6895,20 +6297,7 @@ generate schema diagrams.</schemaCrawlerAbout>
                       <string>PUBLIC.BOOKS.PUBLISHERS.TRIGGER</string>
                       <privilege id="841">
                         <name>TRIGGER</name>
-                        <attributeMap id="842">
-                          <entry>
-                            <string>PRIVILEGE_TYPE</string>
-                            <string>TRIGGER</string>
-                          </entry>
-                          <entry>
-                            <string>TABLE_CATALOG</string>
-                            <string>PUBLIC</string>
-                          </entry>
-                          <entry>
-                            <string>TABLE_SCHEMA</string>
-                            <string>BOOKS</string>
-                          </entry>
-                        </attributeMap>
+                        <attributeMap id="842"/>
                         <schema class="schema" reference="404"/>
                         <parent class="table" reference="789"/>
                         <grants id="843">
@@ -6925,20 +6314,7 @@ generate schema diagrams.</schemaCrawlerAbout>
                       <string>PUBLIC.BOOKS.PUBLISHERS.UPDATE</string>
                       <privilege id="845">
                         <name>UPDATE</name>
-                        <attributeMap id="846">
-                          <entry>
-                            <string>PRIVILEGE_TYPE</string>
-                            <string>UPDATE</string>
-                          </entry>
-                          <entry>
-                            <string>TABLE_CATALOG</string>
-                            <string>PUBLIC</string>
-                          </entry>
-                          <entry>
-                            <string>TABLE_SCHEMA</string>
-                            <string>BOOKS</string>
-                          </entry>
-                        </attributeMap>
+                        <attributeMap id="846"/>
                         <schema class="schema" reference="404"/>
                         <parent class="table" reference="789"/>
                         <grants id="847">
