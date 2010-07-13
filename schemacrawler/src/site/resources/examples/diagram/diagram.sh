@@ -1,3 +1,3 @@
 rm -f database-diagram.pdf
-java -classpath ../schemacrawler-8.3.jar:../hsqldb.jar schemacrawler.Main -c hsqldb -infolevel=lint -command=diagram -outputformat=pdf -outputfile=database-diagram.pdf
+java -classpath ../_schemacrawler/lib/schemacrawler-8.3.jar:../_schemacrawler/lib/hsqldb.jar schemacrawler.Main -c hsqldb -infolevel=lint -command=diagram -outputformat=pdf -outputfile=database-diagram.pdf
 echo Database diagram is in database-diagram.pdf
