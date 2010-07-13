@@ -1,3 +1,3 @@
 rm -f *.class
-javac -classpath ../lib/schemacrawler-8.3.jar ApiExample.java
-java -classpath ../lib/schemacrawler-8.3.jar:../lib/hsqldb.jar:. ApiExample
+javac -classpath ../_schemacrawler/lib/schemacrawler-8.3.jar ApiExample.java
+java -classpath ../_schemacrawler/lib/schemacrawler-8.3.jar:../_schemacrawler/lib/hsqldb.jar:. ApiExample
