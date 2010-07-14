@@ -115,6 +115,12 @@ final class ConfigConnectionOptionsParser
     {
       connectionName = optionConnection.getValue();
     }
+    if (config.isEmpty())
+    {
+      throw new SchemaCrawlerException(String
+        .format("No configuration provided for connection \"%s\"",
+                connectionName));
+    }
 
     final Map<String, String> databaseConnectionConfig = partition(config,
                                                                    connectionName);
