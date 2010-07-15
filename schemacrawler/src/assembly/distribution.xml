@@ -29,15 +29,6 @@
   <target name="do-downloads">
 
     <!-- Download licenses -->
-    <available file="gpl-3.0.txt" property="available.gpl-3.0.txt" />
-    <if>
-      <equals arg1="${available.gpl-3.0.txt}" arg2="true" />
-      <else>
-        <get src="http://www.gnu.org/licenses/gpl-3.0.txt"
-             dest="gpl-3.0.txt"
-             usetimestamp="true" />
-      </else>
-    </if>
     <available file="lgpl-3.0.txt" property="available.lgpl-3.0.txt" />
     <if>
       <equals arg1="${available.lgpl-3.0.txt}" arg2="true" />
@@ -276,6 +267,7 @@
           <include name="*.cmd" />
           <include name="*.sh" />
           <include name="*.wsf" />
+        	<include name="*.txt" />
         </fileset>
       </copy>
 
