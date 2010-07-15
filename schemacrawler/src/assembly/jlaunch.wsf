@@ -23,7 +23,7 @@
   <script language="VBScript">
     Function CommandLineArguments()
       For x = 0 To WScript.Arguments.Count - 1
-        CommandLineArguments = CommandLineArguments + WScript.Arguments(x) + " "
+        CommandLineArguments = CommandLineArguments + """" + WScript.Arguments(x) + """ "
       Next
     End Function
 
