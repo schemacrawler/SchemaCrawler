@@ -47,28 +47,6 @@
              usetimestamp="true" />
       </else>
     </if>
-    <available file="hsqlLicense.html" property="available.hsqlLicense.html" />
-    <if>
-      <equals arg1="${available.hsqlLicense.html}" arg2="true" />
-      <else>
-        <get src="http://hsqldb.org/web/hsqlLicense.html"
-             dest="hsqlLicense.html"
-             usetimestamp="false" />
-      </else>
-    </if>
-
-    <!-- Download HSQLDB -->
-    <available file="hsqldb-2.0.0.zip"
-               property="available.hsqldb-2.0.0.zip" />
-    <if>
-      <equals arg1="${available.hsqldb-2.0.0.zip}" arg2="true" />
-      <else>
-        <get src="http://downloads.sourceforge.net/project/hsqldb/hsqldb/hsqldb_2_0/hsqldb-2.0.0.zip"
-             dest="hsqldb-2.0.0.zip"
-             verbose="true"
-             usetimestamp="true" />
-      </else>
-    </if>
 
   </target>
 
@@ -114,6 +92,9 @@
     <property name="distribution.staging.dir"
               location="${distribution.target}/_distribution" />
     <delete dir="${distribution.staging.dir}" />
+  	
+  	<!-- 1. CREATE STAGING FOR EXAMPLES -->
+  	
     <mkdir dir="${distribution.staging.dir}/examples" />
 
     <!-- Copy licenses -->
@@ -138,30 +119,6 @@
     <copy file="${SchemaCrawler.home}/schemacrawler-test/src/main/java/ApiExample.java"
           todir="${distribution.staging.dir}/examples/api" />
 
-    <!-- Copy database server shortcuts -->
-    <copy todir="${distribution.staging.dir}/examples">
-      <fileset dir="${distribution.assembly}">
-        <include name="StartDatabase*.*" />
-      </fileset>
-    </copy>
-
-    <!-- Copy super jar -->
-    <copy file="${schemacrawler.distribution.jar}"
-          todir="${distribution.staging.dir}/schemacrawler/lib" />
-
-    <!-- Get licenses -->
-    <copy file="lgpl-3.0.txt"
-          tofile="${distribution.staging.dir}/schemacrawler/LICENSE.txt" />
-
-    <!-- Create shortcuts -->
-    <filter token="version" value="${SchemaCrawler.version}" />
-    <filter token="package" value="schemacrawler" />
-    <copy todir="${distribution.staging.dir}/schemacrawler" filtering="true">
-      <fileset dir="${SchemaCrawler.home}/schemacrawler">
-        <include name="README.txt" />
-      </fileset>
-    </copy>
-
     <!-- Unzip the SchemaCrawler distribution for HyperSQL, for use in the examples -->
     <unzip
       src="${distribution.target}/schemacrawler-hsqldb-${SchemaCrawler.version}-distrib.zip"
@@ -169,6 +126,31 @@
     <move file="${distribution.staging.dir}/examples/schemacrawler-hsqldb-${SchemaCrawler.version}"
           tofile="${distribution.staging.dir}/examples/_schemacrawler" />
 
+  	<!-- 2. CREATE STAGING FOR NON-SPECIFIC SchemaCrawler DISTRIBUTION -->
+  	
+    <!-- Copy super jar -->
+    <copy file="${schemacrawler.distribution.jar}"
+          todir="${distribution.staging.dir}/schemacrawler/lib" />
+
+    <!-- Copy license and readme -->
+    <copy file="lgpl-3.0.txt"
+          tofile="${distribution.staging.dir}/schemacrawler/LICENSE.txt" />
+    <copy file="${SchemaCrawler.home}/schemacrawler/README.txt" 
+          tofile="${distribution.staging.dir}/schemacrawler/README.txt" />
+  	
+    <!-- Create shortcuts -->
+    <filter token="version" value="${SchemaCrawler.version}" />
+    <filter token="package" value="schemacrawler" />
+    <copy todir="${distribution.staging.dir}/schemacrawler" filtering="true">
+      <fileset dir="${distribution.assembly}">
+        <include name="*.cmd" />
+        <include name="*.sh" />
+        <include name="*.wsf" />
+      </fileset>
+    </copy>  	
+        	
+  	<!-- 3. CREATE BINARY DISTRIBUTION FROM THE STAGED DIRECTORIES -->
+  	
     <!-- Create zip file for distribution -->
     <property name="distribution.zip.prefix"
               value="schemacrawler-${SchemaCrawler.version}-distrib" />
@@ -294,8 +276,6 @@
           <include name="*.cmd" />
           <include name="*.sh" />
           <include name="*.wsf" />
-          <exclude name="StartDatabase*.*" />
-          <exclude name="install*.*" />
         </fileset>
       </copy>
 
