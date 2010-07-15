@@ -12,11 +12,8 @@
   <property name="schemacrawler.distribution.javadoc.jar"
             value="${distribution.target}/schemacrawler-${SchemaCrawler.version}-javadoc.jar" />
 
-  <taskdef resource="net/sf/antcontrib/antcontrib.properties" />
-
   <target name="make-distribution"
           depends="
-            do-downloads,
             make-super-jar,
             make-database-distributions,
             make-binary-distribution,
@@ -25,22 +22,6 @@
             cleanup-distribution
             "
           description="Package all sub-project jars into the distributable jar" />
-
-  <target name="do-downloads">
-
-    <!-- Download licenses -->
-    <available file="lgpl-3.0.txt" property="available.lgpl-3.0.txt" />
-    <if>
-      <equals arg1="${available.lgpl-3.0.txt}" arg2="true" />
-      <else>
-        <get src="http://www.gnu.org/licenses/lgpl-3.0.txt"
-             dest="lgpl-3.0.txt"
-             usetimestamp="true" />
-      </else>
-    </if>
-
-  </target>
-
 
   <target name="make-super-jar">
 
@@ -172,7 +153,10 @@
         <exclude name="**/target/**/*" />
         <exclude name="differencer" />
         <exclude name="differencer/**/*" />
-        <exclude name="**/*.launch" />
+        <exclude name="**/.*/*" />      	
+        <exclude name="**/*.jar" />
+      	<exclude name="**/*.launch" />
+        <exclude name="**/*.lob" />      	
         <exclude name="**/*.log" />
         <exclude name="**/*.lck" />
         <exclude name="**/*.ser" />

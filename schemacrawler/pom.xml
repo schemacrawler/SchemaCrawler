@@ -98,16 +98,6 @@
             <artifactId>ant</artifactId>
             <version>1.7.1</version>
           </dependency>
-          <dependency>
-            <groupId>org.apache.ant</groupId>
-            <artifactId>ant-apache-regexp</artifactId>
-            <version>1.7.1</version>
-          </dependency>
-          <dependency>
-            <groupId>ant-contrib</groupId>
-            <artifactId>ant-contrib</artifactId>
-            <version>1.0b3</version>
-          </dependency>
         </dependencies>
       </plugin>
       <plugin>
