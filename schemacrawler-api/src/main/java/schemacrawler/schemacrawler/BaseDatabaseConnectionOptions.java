@@ -54,7 +54,6 @@ abstract class BaseDatabaseConnectionOptions
   }
 
   private String user;
-
   private String password;
 
   public final Connection createConnection()
@@ -68,16 +67,26 @@ abstract class BaseDatabaseConnectionOptions
     {
       LOGGER.log(Level.WARNING, "Database password is not provided");
     }
+
+    String connectionUrl;
     try
     {
-      return DriverManager.getConnection(getConnectionUrl(), user, password);
+      connectionUrl = getConnectionUrl();
+    }
+    catch (final Exception e)
+    {
+      throw new SchemaCrawlerException(String
+        .format("Could not connect to database, for user %s", user), e);
+    }
+
+    try
+    {
+      return DriverManager.getConnection(connectionUrl, user, password);
     }
     catch (final SQLException e)
     {
       throw new SchemaCrawlerException(String
-        .format("Could not connect to %s, for user %s",
-                getConnectionUrl(),
-                user), e);
+        .format("Could not connect to %s, for user %s", connectionUrl, user), e);
     }
   }
 

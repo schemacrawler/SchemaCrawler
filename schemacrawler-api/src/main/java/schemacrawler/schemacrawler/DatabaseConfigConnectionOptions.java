@@ -68,7 +68,12 @@ public final class DatabaseConfigConnectionOptions
   {
     final Map<String, String> properties = new HashMap<String, String>(this.properties);
     TemplatingUtility.substituteVariables(properties);
-    return properties.get(URL);
+    final String connectionUrl = properties.get(URL);
+    if (!TemplatingUtility.extractTemplateVariables(connectionUrl).isEmpty())
+    {
+      throw new IllegalArgumentException("Insufficient parameters for database connection URL");
+    }
+    return connectionUrl;
   }
 
   public String getDatabase()
