@@ -471,7 +471,7 @@ for (final Catalog catalog: database.getCatalogs())
         <p>
           <i>
             See the documentation in
-            <a href="INFORMATION_SCHEMA.html">INFORMATION_SCHEMA Views</a>
+            <a href="features/INFORMATION_SCHEMA.html">INFORMATION_SCHEMA Views</a>
             .
           </i>
         </p>
@@ -485,7 +485,7 @@ for (final Catalog catalog: database.getCatalogs())
         <p>
           <i>
             See the documentation in
-            <a href="INFORMATION_SCHEMA.html">INFORMATION_SCHEMA Views</a>
+            <a href="features/INFORMATION_SCHEMA.html">INFORMATION_SCHEMA Views</a>
             .
           </i>
         </p>

@@ -94,105 +94,7 @@ hsqldb.select.INFORMATION_SCHEMA.VIEWS=\
             </tr>
           </tbody>
         </table>
-      </subsection>
-      <subsection name="INFORMATION_SCHEMA.CHECK_CONSTRAINTS">
-        <table>
-          <thead>
-            <tr>
-              <th>Column name</th>
-              <th>Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>CONSTRAINT_CATALOG</td>
-              <td>
-                The name of the catalog containing the check constraint.
-              </td>
-            </tr>
-            <tr>
-              <td>CONSTRAINT_SCHEMA</td>
-              <td>
-                The name of the schema containing the check constraint.
-              </td>
-            </tr>
-            <tr>
-              <td>CONSTRAINT_NAME</td>
-              <td>The name of the check constraint.</td>
-            </tr>
-            <tr>
-              <td>CHECK_CLAUSE</td>
-              <td>
-                The search condition used in the check clause. If it
-                does not fit, the value is NULL.
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </subsection>
-      <subsection name="INFORMATION_SCHEMA.TABLE_CONSTRAINTS">
-        <table>
-          <thead>
-            <tr>
-              <th>Column name</th>
-              <th>Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>CONSTRAINT_CATALOG</td>
-              <td>
-                The name of the catalog containing the table constraint.
-              </td>
-            </tr>
-            <tr>
-              <td>CONSTRAINT_SCHEMA</td>
-              <td>
-                The name of the schema containing the table constraint.
-              </td>
-            </tr>
-            <tr>
-              <td>CONSTRAINT_NAME</td>
-              <td>The name of the table constraint.</td>
-            </tr>
-            <tr>
-              <td>TABLE_CATALOG</td>
-              <td>
-                The name of the catalog containing the table or view.
-              </td>
-            </tr>
-            <tr>
-              <td>TABLE_SCHEMA</td>
-              <td>
-                The name of the schema containing the table or view.
-              </td>
-            </tr>
-            <tr>
-              <td>TABLE_NAME</td>
-              <td>The name of the table or view.</td>
-            </tr>
-            <tr>
-              <td>CONSTRAINT_TYPE</td>
-              <td>One of: CHECK, FOREIGN KEY, PRIMARY KEY, UNIQUE</td>
-            </tr>
-            <tr>
-              <td>IS_DEFERRABLE</td>
-              <td>
-                One of: YES = the constraint is deferrable; NO = the
-                constraint is not deferrable
-              </td>
-            </tr>
-            <tr>
-              <td>INITIALLY_DEFERRED</td>
-              <td>
-                One of: YES = the constraint is immediate; NO = the
-                constraint is deferred
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </subsection>
-      <subsection name="INFORMATION_SCHEMA.ROUTINES">
+      </subsection><subsection name="INFORMATION_SCHEMA.ROUTINES">
         <table>
           <thead>
             <tr>
@@ -229,8 +131,7 @@ hsqldb.select.INFORMATION_SCHEMA.VIEWS=\
             </tr>
           </tbody>
         </table>
-      </subsection>
-      <subsection name="INFORMATION_SCHEMA.TRIGGERS">
+      </subsection><subsection name="INFORMATION_SCHEMA.TRIGGERS">
         <table>
           <thead>
             <tr>
@@ -328,7 +229,106 @@ hsqldb.select.INFORMATION_SCHEMA.VIEWS=\
             </tr>
           </tbody>
         </table>
+      </subsection><subsection name="INFORMATION_SCHEMA.TABLE_CONSTRAINTS">
+        <table>
+          <thead>
+            <tr>
+              <th>Column name</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>CONSTRAINT_CATALOG</td>
+              <td>
+                The name of the catalog containing the table constraint.
+              </td>
+            </tr>
+            <tr>
+              <td>CONSTRAINT_SCHEMA</td>
+              <td>
+                The name of the schema containing the table constraint.
+              </td>
+            </tr>
+            <tr>
+              <td>CONSTRAINT_NAME</td>
+              <td>The name of the table constraint.</td>
+            </tr>
+            <tr>
+              <td>TABLE_CATALOG</td>
+              <td>
+                The name of the catalog containing the table or view.
+              </td>
+            </tr>
+            <tr>
+              <td>TABLE_SCHEMA</td>
+              <td>
+                The name of the schema containing the table or view.
+              </td>
+            </tr>
+            <tr>
+              <td>TABLE_NAME</td>
+              <td>The name of the table or view.</td>
+            </tr>
+            <tr>
+              <td>CONSTRAINT_TYPE</td>
+              <td>One of: CHECK, FOREIGN KEY, PRIMARY KEY, UNIQUE</td>
+            </tr>
+            <tr>
+              <td>IS_DEFERRABLE</td>
+              <td>
+                One of: YES = the constraint is deferrable; NO = the
+                constraint is not deferrable
+              </td>
+            </tr>
+            <tr>
+              <td>INITIALLY_DEFERRED</td>
+              <td>
+                One of: YES = the constraint is immediate; NO = the
+                constraint is deferred
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </subsection>
+      <subsection name="INFORMATION_SCHEMA.CHECK_CONSTRAINTS">
+        <table>
+          <thead>
+            <tr>
+              <th>Column name</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>CONSTRAINT_CATALOG</td>
+              <td>
+                The name of the catalog containing the check constraint.
+              </td>
+            </tr>
+            <tr>
+              <td>CONSTRAINT_SCHEMA</td>
+              <td>
+                The name of the schema containing the check constraint.
+              </td>
+            </tr>
+            <tr>
+              <td>CONSTRAINT_NAME</td>
+              <td>The name of the check constraint.</td>
+            </tr>
+            <tr>
+              <td>CHECK_CLAUSE</td>
+              <td>
+                The search condition used in the check clause. If it
+                does not fit, the value is NULL.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </subsection>
+      
+      
+      
     </section>
   </body>
 </document>

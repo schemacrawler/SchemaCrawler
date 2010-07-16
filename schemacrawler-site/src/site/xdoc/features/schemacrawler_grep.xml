@@ -17,11 +17,12 @@
         </p>
         <p>
           The SchemaCrawler command-line allows filtering tables, columns, and procedures based on regular expressions,
-          in addition to the grep functionality.
+          in addition to the grep functionality. This can be useful, say, when you want to search through your schema
+          to find all tables that have a CUSTOMER_ID column, for example.
         </p>
         <p>
           For more details, see the
-          <a href="faq.html#whats-schemacrawler-grep">FAQ</a>
+          <a href="../faq.html#whats-schemacrawler-grep">FAQ</a>
           .
         </p>
       </subsection>
