@@ -44,6 +44,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.BaseFormatter;
 import schemacrawler.tools.text.util.TextFormattingHelper.DocumentHeaderType;
+import schemacrawler.utility.SchemaCrawlerUtility;
 
 /**
  * Text formatting of data.
@@ -479,8 +480,7 @@ final class DataTextFormatter
       out.println(formattingHelper.createObjectStart(title));
       try
       {
-        final ResultsColumn[] resultsColumns = SchemaCrawler
-          .getResultColumns(rows).getColumns();
+        final ResultsColumn[] resultsColumns = SchemaCrawlerUtility.getResultColumns(rows).getColumns();
 
         final int columnCount = resultsColumns.length;
         final String[] columnNames = new String[columnCount];

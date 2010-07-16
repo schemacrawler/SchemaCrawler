@@ -22,9 +22,11 @@ package schemacrawler.utility;
 
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Database;
+import schemacrawler.schema.ResultsColumns;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
@@ -43,6 +45,11 @@ public final class SchemaCrawlerUtility
     final SchemaCrawler schemaCrawler = new SchemaCrawler(connection);
     final Database database = schemaCrawler.crawl(schemaCrawlerOptions);
     return database;
+  }
+
+  public static ResultsColumns getResultColumns(ResultSet resultSet)
+  {
+    return SchemaCrawler.getResultColumns(resultSet);
   }
 
   private SchemaCrawlerUtility()
