@@ -14,12 +14,12 @@
           .
           You can filter out tables, columns, and procedures based on regular expressions,
           using the
-          <a href="#whats-schemacrawler-grep">grep</a>
+          <a href="../faq.html#whats-schemacrawler-grep">grep</a>
           functionality.
         </p>
         <p>
           For more details, see the
-          <a href="how-to.html#diagrams">how-to</a>
+          <a href="../how-to.html#diagrams">how-to</a>
           .
         </p>
       </subsection>

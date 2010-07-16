@@ -303,7 +303,8 @@ Or, the following:
           Nexus public repository in your pom.xml. Then, add a dependency to SchemaCrawler in your pom.xml.</p>
         <p>
           <i>
-            See the example in the <code>examples\maven-project</code> 
+            See the example in the
+            <code>examples\maven-project</code>
             directory.
           </i>
         </p>
@@ -488,14 +489,13 @@ Or, the following:
         <p>
           <img src="http://www.gnu.org/graphics/gplv3-88x31.png" alt="GPL" />
           SchemaCrawler is also distributed bundled with a JDBC driver for different database systems such as
-          <a href="http://www.oracle.com/">Oracle</a>
-          ,
-          <a href="http://www.microsoft.com/sqlserver">Microsoft SQL Server</a>
-          ,
+          <a href="http://www.microsoft.com/sqlserver">Microsoft SQL Server,</a>
+          <a href="http://www.sqlite.org/">SQLite,</a>
+          <a href="http://db.apache.org/derby/">Apache Derby (and JavaDB),</a>
           <a href="http://www.mysql.com/">MySQL</a>
           and
-          <a href="http://www.postgresql.org/">PostgreSQL</a>
-          . These
+          <a href="http://www.postgresql.org/">PostgreSQL.</a>
+          These
           <a href="bundled.html">bundled distributions</a>
           are distributed under the
           <a href="http://www.gnu.org/licenses/gpl-3.0.txt">GNU General Public License (GPL) license.</a>
