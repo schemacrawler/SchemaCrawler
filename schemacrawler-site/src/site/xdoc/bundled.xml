@@ -21,7 +21,7 @@
             SchemaCrawler for
             <a href="http://www.ibm.com/software/data/db2/">IBM DB2</a>
             (but the
-            <a href="http://www.ibm.com/support/docview.wss?rs=4020&uid=swg21385217">IBM DB2 JDBC driver</a>
+            <a href="http://www.ibm.com/software/data/db2/linux-unix-windows/download.html">IBM DB2 JDBC driver</a>
             needs to be downloaded separately)
           </li>
           <li>

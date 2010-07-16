@@ -43,6 +43,5 @@
       <item name="Source Code" href="http://schemacrawler.svn.sourceforge.net/viewvc/schemacrawler/" />
       <item name="Project Page on SourceForge" href="http://sourceforge.net/projects/schemacrawler/" />
     </menu>
-    <menu ref="reports" />
   </body>
 </project>
