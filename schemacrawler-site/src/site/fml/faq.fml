@@ -387,6 +387,23 @@ Or, the following:
   </part>
   <part id="features">
     <title>SchemaCrawler Features</title>
+    <faq id="schema-lint">
+      <question> What is SchemaCrawler Lint? </question>
+      <answer>
+        <p>
+          SchemaCrawler can analyze and
+          <a href="http://en.wikipedia.org/wiki/Lint_(software)">lint</a>
+          your database to find potential issues. SchemaCrawler Lint can be run using the
+          <code>-infolevel=lint</code>
+          command-line option.
+        </p>
+        <p>
+          For more details, look at the
+          <a href="features/lint.html">SchemaCrawler Lint</a>
+          page.
+        </p>
+      </answer>
+    </faq>
     <faq id="weak-associations">
       <question> What are weak associations? </question>
       <answer>
@@ -403,6 +420,11 @@ Or, the following:
       <answer>
         <p> When SchemaCrawler is used with J2SE 6 and above, it has built-in support to be used with JavaScript
           scripts. </p>
+        <p>
+          For more details, look at the
+          <a href="features/scripting.html">scripting</a>
+          page.
+        </p>
         <p>
           <i>
             See the example in the
