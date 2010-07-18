@@ -14,3 +14,9 @@
 
 -password=<password>
 	Database password.
+
+-urlx=<properties>
+  Additional properties for the JDBC driver.
+  For example,
+  -urlx=applicationName=SchemaCrawler;readOnly=true
+  	
