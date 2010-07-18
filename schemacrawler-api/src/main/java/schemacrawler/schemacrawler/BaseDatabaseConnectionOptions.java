@@ -25,6 +25,9 @@ import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -53,6 +56,7 @@ abstract class BaseDatabaseConnectionOptions
     }
   }
 
+  private Map<String, String> connectionProperties;
   private String user;
   private String password;
 
@@ -81,13 +85,26 @@ abstract class BaseDatabaseConnectionOptions
 
     try
     {
-      return DriverManager.getConnection(connectionUrl, user, password);
+      final Properties jdbcConnectionProperties = new Properties();
+      if (connectionProperties != null)
+      {
+        jdbcConnectionProperties.putAll(connectionProperties);
+      }
+      jdbcConnectionProperties.put("user", user);
+      jdbcConnectionProperties.put("password", password);
+      return DriverManager.getConnection(connectionUrl,
+                                         jdbcConnectionProperties);
     }
     catch (final SQLException e)
     {
       throw new SchemaCrawlerException(String
         .format("Could not connect to %s, for user %s", connectionUrl, user), e);
     }
+  }
+
+  public Map<String, String> getConnectionProperties()
+  {
+    return connectionProperties;
   }
 
   public final Driver getJdbcDriver()
@@ -113,6 +130,40 @@ abstract class BaseDatabaseConnectionOptions
   public final String getUser()
   {
     return user;
+  }
+
+  public void setConnectionProperties(final Map<String, String> connectionProperties)
+  {
+    this.connectionProperties = connectionProperties;
+  }
+
+  public void setConnectionProperties(final String connectionPropertiesString)
+  {
+    this.connectionProperties = new HashMap<String, String>();
+    if (!Utility.isBlank(connectionPropertiesString))
+    {
+      for (final String property: connectionPropertiesString.split(";"))
+      {
+        if (!Utility.isBlank(property))
+        {
+          final String[] propertyValues = property.split("=");
+          if (propertyValues.length >= 1)
+          {
+            final String key = propertyValues[0];
+            final String value;
+            if (propertyValues.length >= 2)
+            {
+              value = propertyValues[1];
+            }
+            else
+            {
+              value = null;
+            }
+            connectionProperties.put(key, value);
+          }
+        }
+      }
+    }
   }
 
   public final void setPassword(final String password)
