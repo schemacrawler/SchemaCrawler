@@ -1,6 +1,98 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <faqs xmlns="http://maven.apache.org/FML/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/FML/1.0 http://maven.apache.org/xsd/fml-1.0.xsd" title="SchemaCrawler - How-to">
+  <part id="command-line">
+    <title>How to Use the SchemaCrawler Command-line</title>
+    <faq id="excluded-tables">
+      <question>
+        Explanation of the SchemaCrawler main Programs
+      </question>
+      <answer>
+        <p>
+          <table cellspacing="5" cellpadding="5">
+            <tr>
+              <td valign="top">
+                <ul>
+                  <li>schemacrawler.Main</li>
+                </ul>
+              </td>
+              <td valign="top">
+                <p>This is the most usual way to launch SchemaCrawler from the command-line. This launch offer a number
+                  of connection options, including by JDBC driver and URL, and by a connection defined in a properties
+                  configuration file. There are options to load configuration from properties files. For help, use the
+                  -h command-line switch.</p>
+                <p>JDBC drivers and other external libraries must be available on the classpath for this application to
+                  function.</p>
+              </td>
+            </tr>
+            <tr>
+              <td valign="top">
+                <ul>
+                  <li>schemacrawler.tools.db2.Main</li>
+                  <li>schemacrawler.tools.derby.Main</li>
+                  <li>schemacrawler.tools.hsqldb.Main</li>
+                  <li>schemacrawler.tools.mysql.Main</li>
+                  <li>schemacrawler.tools.oracle.Main</li>
+                  <li>schemacrawler.tools.postgresql.Main</li>
+                  <li>schemacrawler.tools.sqlite.Main</li>
+                  <li>schemacrawler.tools.sqlserver.Main</li>
+                </ul>
+              </td>
+              <td valign="top">
+                <p>These are the various "bundled" distributions. A simplified command line is made available, and the
+                  JDBC driver and URL are known for each database version. Typically no additional drivers downloads are
+                  required, except for Oracle and IBM DB2.</p>
+                <p>JDBC drivers and other external libraries must be available on the classpath for this application to
+                  function.</p>
+              </td>
+            </tr>
+            <tr>
+              <td valign="top">
+                <ul>
+                  <li>schemacrawler.tools.integration.spring.Main</li>
+                </ul>
+              </td>
+              <td valign="top">
+                <p>
+                  An alternate to
+                  <code>schemacrawler.Main,</code>
+                  where configuration, including configuration of the SchemaCrawler command is done by means of a Spring
+                  Framework application context file.
+                </p>
+                <p>JDBC drivers, Spring Framework libraries, and other external libraries must be available on the
+                  classpath for this application to function.</p>
+              </td>
+            </tr>
+            <tr>
+              <td valign="top">
+                <ul>
+                  <li>schemacrawler.LauncherMain</li>
+                </ul>
+              </td>
+              <td valign="top">
+                <p>The launcher is designed to conveniently load all external jars from a given folder. Typically used
+                  from within the Unix shell scripts provided by SchemaCrawler.</p>
+              </td>
+            </tr>
+            <tr>
+              <td valign="top">
+                <ul>
+                  <li>schemacrawler.utility.TestDatabase</li>
+                </ul>
+              </td>
+              <td valign="top">
+                <p>Started the test database server, with a test schema, and test data. This is used for examples. Any
+                  schema or data modifications will be restored when the server is restarted.</p>
+                <p>JDBC drivers for HyperSQL 2.0.0, and other external libraries must be available on the
+                  classpath for
+                  this application to function.</p>
+              </td>
+            </tr>
+          </table>
+        </p>
+      </answer>
+    </faq>
+  </part>
   <part id="include-exclude">
     <title>Include and Exclude Stuff from the Output</title>
     <faq id="excluded-tables">
