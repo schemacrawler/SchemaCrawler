@@ -5,6 +5,11 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+    <release version="8.3.1" date="2010-07-15">
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added new command line option, -urlx, to pass JDBC URL properties to bundled distributions.
+      ]]></action>
+    </release>
     <release version="8.3" date="2010-07-15">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Added new bundled distribution for IBM DB2.

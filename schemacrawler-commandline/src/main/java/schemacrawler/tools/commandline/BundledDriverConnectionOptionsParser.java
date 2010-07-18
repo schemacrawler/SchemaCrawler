@@ -47,6 +47,9 @@ final class BundledDriverConnectionOptionsParser
   private final StringOption optionDatabase = new StringOption(Option.NO_SHORT_FORM,
                                                                "database",
                                                                "");
+  private final StringOption optionConnectionProperties = new StringOption(Option.NO_SHORT_FORM,
+                                                                           "urlx",
+                                                                           "");
 
   BundledDriverConnectionOptionsParser(final String[] args, final Config config)
   {
@@ -58,7 +61,12 @@ final class BundledDriverConnectionOptionsParser
     throws SchemaCrawlerException
   {
     parse(new Option[] {
-        optionHost, optionPort, optionDatabase, optionUser, optionPassword,
+        optionHost,
+        optionPort,
+        optionDatabase,
+        optionConnectionProperties,
+        optionUser,
+        optionPassword,
     });
 
     final DatabaseConfigConnectionOptions connectionOptions = new DatabaseConfigConnectionOptions(config);
@@ -74,6 +82,11 @@ final class BundledDriverConnectionOptionsParser
     if (optionDatabase.isFound())
     {
       connectionOptions.setDatabase(optionDatabase.getValue());
+    }
+    if (optionConnectionProperties.isFound())
+    {
+      connectionOptions.setConnectionProperties(optionConnectionProperties
+        .getValue());
     }
 
     connectionOptions.setUser(optionUser.getValue());
