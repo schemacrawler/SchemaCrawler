@@ -17,6 +17,7 @@
 	
 -urlx=<properties>
   Additional properties for the JDBC driver.
+  Optional, no default.
   For example,
   -urlx=applicationName=SchemaCrawler;readOnly=true
   	
