@@ -19,10 +19,10 @@
               <td valign="top">
                 <p>This is the most usual way to launch SchemaCrawler from the command-line. This launch offer a number
                   of connection options, including by JDBC driver and URL, and by a connection defined in a properties
-                  configuration file. There are options to load configuration from properties files. For help, use the
-                  -h command-line switch.</p>
+                  configuration file. There are options to load configuration from properties files.</p>
                 <p>JDBC drivers and other external libraries must be available on the classpath for this application to
                   function.</p>
+                <p>For help, use the -h command-line switch.</p>
               </td>
             </tr>
             <tr>
@@ -44,6 +44,7 @@
                   required, except for Oracle and IBM DB2.</p>
                 <p>JDBC drivers and other external libraries must be available on the classpath for this application to
                   function.</p>
+                <p>For help, use the -h command-line switch.</p>
               </td>
             </tr>
             <tr>
@@ -61,6 +62,7 @@
                 </p>
                 <p>JDBC drivers, Spring Framework libraries, and other external libraries must be available on the
                   classpath for this application to function.</p>
+                <p>For help, use the -h command-line switch.</p>
               </td>
             </tr>
             <tr>
