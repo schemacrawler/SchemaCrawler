@@ -5,9 +5,12 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-    <release version="8.3.1" date="2010-07-15">
+    <release version="8.3.1" date="2010-07-18">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Added new command line option, -urlx, to pass JDBC URL properties to bundled distributions.
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added details on the "main" command line in the how-to section of the website.
       ]]></action>
     </release>
     <release version="8.3" date="2010-07-15">
