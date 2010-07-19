@@ -83,9 +83,9 @@ abstract class BaseDatabaseConnectionOptions
         .format("Could not connect to database, for user %s", user), e);
     }
 
+    final Properties jdbcConnectionProperties = new Properties();
     try
     {
-      final Properties jdbcConnectionProperties = new Properties();
       if (connectionProperties != null)
       {
         jdbcConnectionProperties.putAll(connectionProperties);
@@ -97,8 +97,11 @@ abstract class BaseDatabaseConnectionOptions
     }
     catch (final SQLException e)
     {
+      jdbcConnectionProperties.remove("password");
       throw new SchemaCrawlerException(String
-        .format("Could not connect to %s, for user %s", connectionUrl, user), e);
+        .format("Could not connect to %s, with properties %s",
+                connectionUrl,
+                jdbcConnectionProperties), e);
     }
   }
 
