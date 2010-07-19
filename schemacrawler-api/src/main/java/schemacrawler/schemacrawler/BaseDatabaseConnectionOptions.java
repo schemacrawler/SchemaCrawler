@@ -84,14 +84,14 @@ abstract class BaseDatabaseConnectionOptions
     }
 
     final Properties jdbcConnectionProperties = new Properties();
+    if (connectionProperties != null)
+    {
+      jdbcConnectionProperties.putAll(connectionProperties);
+    }
+    jdbcConnectionProperties.put("user", user);
+    jdbcConnectionProperties.put("password", password);
     try
     {
-      if (connectionProperties != null)
-      {
-        jdbcConnectionProperties.putAll(connectionProperties);
-      }
-      jdbcConnectionProperties.put("user", user);
-      jdbcConnectionProperties.put("password", password);
       return DriverManager.getConnection(connectionUrl,
                                          jdbcConnectionProperties);
     }
