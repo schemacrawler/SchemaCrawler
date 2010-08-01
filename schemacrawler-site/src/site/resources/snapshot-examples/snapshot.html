@@ -1753,8 +1753,7 @@ hr {
 		<td class='description'>[check constraint]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>BOOKS.AUTHORS.STATE=UPPER(BOOKS.AUTHORS.STATE)</td>
+		<td colspan='3' class='definition'>BOOKS.AUTHORS.STATE=UPPER(BOOKS.AUTHORS.STATE)</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
@@ -1764,8 +1763,7 @@ hr {
 		<td class='description'>[check constraint]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>BOOKS.AUTHORS.ID IS NOT NULL</td>
+		<td colspan='3' class='definition'>BOOKS.AUTHORS.ID IS NOT NULL</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
@@ -1775,8 +1773,7 @@ hr {
 		<td class='description'>[check constraint]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>BOOKS.AUTHORS.FIRSTNAME IS NOT NULL</td>
+		<td colspan='3' class='definition'>BOOKS.AUTHORS.FIRSTNAME IS NOT NULL</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
@@ -1786,8 +1783,7 @@ hr {
 		<td class='description'>[check constraint]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>BOOKS.AUTHORS.LASTNAME IS NOT NULL</td>
+		<td colspan='3' class='definition'>BOOKS.AUTHORS.LASTNAME IS NOT NULL</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
@@ -1867,6 +1863,16 @@ hr {
 	<tr>
 		<td colspan='2' class='name'>TRG_AUTHORS</td>
 		<td class='description'>[trigger, after delete, per row]</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>Contact details for book authors</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
@@ -1984,8 +1990,7 @@ ADDRESS1, ADDRESS2
 		<td class='description'>[definition]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>SELECT ID,FIRSTNAME,LASTNAME FROM BOOKS.AUTHORS</td>
+		<td colspan='3' class='definition'>SELECT ID,FIRSTNAME,LASTNAME FROM BOOKS.AUTHORS</td>
 	</tr>
 </table>
 <p></p>
@@ -2008,7 +2013,7 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td class='ordinal'></td>
 		<td class='subname'>&quot;UPDATE&quot;</td>
-		<td class='type'>INTEGER</td>
+		<td class='type'>CLOB</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
@@ -2083,8 +2088,7 @@ ADDRESS1, ADDRESS2
 		<td class='description'>[check constraint]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>BOOKS.BOOKAUTHORS.BOOKID IS NOT NULL</td>
+		<td colspan='3' class='definition'>BOOKS.BOOKAUTHORS.BOOKID IS NOT NULL</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
@@ -2094,8 +2098,7 @@ ADDRESS1, ADDRESS2
 		<td class='description'>[check constraint]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>BOOKS.BOOKAUTHORS.AUTHORID IS NOT NULL</td>
+		<td colspan='3' class='definition'>BOOKS.BOOKAUTHORS.AUTHORID IS NOT NULL</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
@@ -2168,6 +2171,16 @@ ADDRESS1, ADDRESS2
 		<td class='ordinal'></td>
 		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
 		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>Relationship between books and their authors, along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
@@ -2275,8 +2288,7 @@ ADDRESS1, ADDRESS2
 		<td class='description'>[check constraint]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>BOOKS.BOOKS.ID IS NOT NULL</td>
+		<td colspan='3' class='definition'>BOOKS.BOOKS.ID IS NOT NULL</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
@@ -2286,8 +2298,7 @@ ADDRESS1, ADDRESS2
 		<td class='description'>[check constraint]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>BOOKS.BOOKS.TITLE IS NOT NULL</td>
+		<td colspan='3' class='definition'>BOOKS.BOOKS.TITLE IS NOT NULL</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
@@ -2297,8 +2308,7 @@ ADDRESS1, ADDRESS2
 		<td class='description'>[check constraint]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>BOOKS.BOOKS.PUBLISHERID IS NOT NULL</td>
+		<td colspan='3' class='definition'>BOOKS.BOOKS.PUBLISHERID IS NOT NULL</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
@@ -2371,6 +2381,16 @@ ADDRESS1, ADDRESS2
 		<td class='ordinal'></td>
 		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
 		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>Details for published books</td>
 	</tr>
 </table>
 <p></p>
@@ -2539,8 +2559,7 @@ ADDRESS1, ADDRESS2
 		<td class='description'>[check constraint]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>BOOKS.PUBLISHERS.ID IS NOT NULL</td>
+		<td colspan='3' class='definition'>BOOKS.PUBLISHERS.ID IS NOT NULL</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
@@ -2613,6 +2632,16 @@ ADDRESS1, ADDRESS2
 		<td class='ordinal'></td>
 		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
 		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>List of book publishers</td>
 	</tr>
 </table>
 <p></p>
@@ -2701,8 +2730,7 @@ ADDRESS1, ADDRESS2
 		<td class='description'>[check constraint]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>&quot;PUBLISHER SALES&quot;.REGIONS.CITY IS NOT NULL</td>
+		<td colspan='3' class='definition'>&quot;PUBLISHER SALES&quot;.REGIONS.CITY IS NOT NULL</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
@@ -2712,8 +2740,7 @@ ADDRESS1, ADDRESS2
 		<td class='description'>[check constraint]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>&quot;PUBLISHER SALES&quot;.REGIONS.STATE IS NOT NULL</td>
+		<td colspan='3' class='definition'>&quot;PUBLISHER SALES&quot;.REGIONS.STATE IS NOT NULL</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
@@ -2723,8 +2750,7 @@ ADDRESS1, ADDRESS2
 		<td class='description'>[check constraint]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>&quot;PUBLISHER SALES&quot;.REGIONS.POSTALCODE IS NOT NULL</td>
+		<td colspan='3' class='definition'>&quot;PUBLISHER SALES&quot;.REGIONS.POSTALCODE IS NOT NULL</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
@@ -2734,8 +2760,7 @@ ADDRESS1, ADDRESS2
 		<td class='description'>[check constraint]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>&quot;PUBLISHER SALES&quot;.REGIONS.COUNTRY IS NOT NULL</td>
+		<td colspan='3' class='definition'>&quot;PUBLISHER SALES&quot;.REGIONS.COUNTRY IS NOT NULL</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
@@ -2896,8 +2921,7 @@ ADDRESS1, ADDRESS2
 		<td class='description'>[check constraint]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>&quot;PUBLISHER SALES&quot;.SALES.POSTALCODE IS NOT NULL</td>
+		<td colspan='3' class='definition'>&quot;PUBLISHER SALES&quot;.SALES.POSTALCODE IS NOT NULL</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
@@ -2907,8 +2931,7 @@ ADDRESS1, ADDRESS2
 		<td class='description'>[check constraint]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>&quot;PUBLISHER SALES&quot;.SALES.COUNTRY IS NOT NULL</td>
+		<td colspan='3' class='definition'>&quot;PUBLISHER SALES&quot;.SALES.COUNTRY IS NOT NULL</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
@@ -3006,8 +3029,7 @@ ADDRESS1, ADDRESS2
 		<td class='description'>[definition]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>CREATE PROCEDURE BOOKS.NEW_PUBLISHER(OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10047 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = &apos;New Publisher&apos;</td>
+		<td colspan='3' class='definition'>CREATE PROCEDURE BOOKS.NEW_PUBLISHER(OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10047 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = &apos;New Publisher&apos;</td>
 	</tr>
 </table>
 <p></p>
@@ -3040,8 +3062,7 @@ ADDRESS1, ADDRESS2
 		<td class='description'>[definition]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>CREATE PROCEDURE SYSTEM_LOBS.ALLOC_BLOCKS(IN B_COUNT INTEGER,IN B_OFFSET INTEGER,IN L_ID BIGINT) SPECIFIC ALLOC_BLOCKS_10024 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE LOB_ADDR INT DEFAULT NULL;DECLARE REMAINING_COUNT INT DEFAULT 0;DECLARE BL_ADDR INT DEFAULT NULL;DECLARE TEMP_COUNT INT DEFAULT 0;DECLARE BL_OFFSET INT DEFAULT 0;SET REMAINING_COUNT=B_COUNT;SET BL_OFFSET=B_OFFSET;MAIN_LOOP:LOOP SET BL_ADDR=(SELECT BLOCK_ADDR FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_COUNT=REMAINING_COUNT AND TX_ID=0 FETCH 1 ROW ONLY);IF BL_ADDR IS NOT NULL THEN CALL CONVERT_BLOCK(BL_ADDR,REMAINING_COUNT,BL_OFFSET,L_ID);IF LOB_ADDR IS NULL THEN SET LOB_ADDR=BL_ADDR;END IF;LEAVE MAIN_LOOP;END IF;SET(BL_ADDR,TEMP_COUNT)=(SELECT BLOCK_ADDR,BLOCK_COUNT FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_COUNT&lt;REMAINING_COUNT AND TX_ID=0 FETCH 1 ROW ONLY);IF BL_ADDR IS NOT NULL THEN CALL CONVERT_BLOCK(BL_ADDR,TEMP_COUNT,BL_OFFSET,L_ID);IF LOB_ADDR IS NULL THEN SET LOB_ADDR=BL_ADDR;END IF;SET REMAINING_COUNT=REMAINING_COUNT-TEMP_COUNT;SET BL_OFFSET=BL_OFFSET+TEMP_COUNT;SET BL_ADDR=NULL;SET TEMP_COUNT=0;ELSE CALL CREATE_EMPTY_BLOCK(BL_ADDR,REMAINING_COUNT);CALL CONVERT_BLOCK(BL_ADDR,REMAINING_COUNT,BL_OFFSET,L_ID);IF LOB_ADDR IS NULL THEN SET LOB_ADDR=BL_ADDR;END IF;LEAVE MAIN_LOOP;END IF;END LOOP MAIN_LOOP;END</td>
+		<td colspan='3' class='definition'>CREATE PROCEDURE SYSTEM_LOBS.ALLOC_BLOCKS(IN B_COUNT INTEGER,IN B_OFFSET INTEGER,IN L_ID BIGINT) SPECIFIC ALLOC_BLOCKS_10024 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE LOB_ADDR INT DEFAULT NULL;DECLARE REMAINING_COUNT INT DEFAULT 0;DECLARE BL_ADDR INT DEFAULT NULL;DECLARE TEMP_COUNT INT DEFAULT 0;DECLARE BL_OFFSET INT DEFAULT 0;SET REMAINING_COUNT=B_COUNT;SET BL_OFFSET=B_OFFSET;MAIN_LOOP:LOOP SET BL_ADDR=(SELECT BLOCK_ADDR FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_COUNT=REMAINING_COUNT AND TX_ID=0 FETCH 1 ROW ONLY);IF BL_ADDR IS NOT NULL THEN CALL CONVERT_BLOCK(BL_ADDR,REMAINING_COUNT,BL_OFFSET,L_ID);IF LOB_ADDR IS NULL THEN SET LOB_ADDR=BL_ADDR;END IF;LEAVE MAIN_LOOP;END IF;SET(BL_ADDR,TEMP_COUNT)=(SELECT BLOCK_ADDR,BLOCK_COUNT FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_COUNT&lt;REMAINING_COUNT AND TX_ID=0 FETCH 1 ROW ONLY);IF BL_ADDR IS NOT NULL THEN CALL CONVERT_BLOCK(BL_ADDR,TEMP_COUNT,BL_OFFSET,L_ID);IF LOB_ADDR IS NULL THEN SET LOB_ADDR=BL_ADDR;END IF;SET REMAINING_COUNT=REMAINING_COUNT-TEMP_COUNT;SET BL_OFFSET=BL_OFFSET+TEMP_COUNT;SET BL_ADDR=NULL;SET TEMP_COUNT=0;ELSE CALL CREATE_EMPTY_BLOCK(BL_ADDR,REMAINING_COUNT);CALL CONVERT_BLOCK(BL_ADDR,REMAINING_COUNT,BL_OFFSET,L_ID);IF LOB_ADDR IS NULL THEN SET LOB_ADDR=BL_ADDR;END IF;LEAVE MAIN_LOOP;END IF;END LOOP MAIN_LOOP;END</td>
 	</tr>
 </table>
 <p></p>
@@ -3079,8 +3100,7 @@ ADDRESS1, ADDRESS2
 		<td class='description'>[definition]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>CREATE PROCEDURE SYSTEM_LOBS.CONVERT_BLOCK(IN B_ADDR INTEGER,IN B_COUNT INTEGER,IN B_OFFSET INTEGER,IN L_ID BIGINT) SPECIFIC CONVERT_BLOCK_10012 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DELETE FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_ADDR=B_ADDR;INSERT INTO SYSTEM_LOBS.LOBS VALUES(B_ADDR,B_COUNT,B_OFFSET,L_ID);END</td>
+		<td colspan='3' class='definition'>CREATE PROCEDURE SYSTEM_LOBS.CONVERT_BLOCK(IN B_ADDR INTEGER,IN B_COUNT INTEGER,IN B_OFFSET INTEGER,IN L_ID BIGINT) SPECIFIC CONVERT_BLOCK_10012 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DELETE FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_ADDR=B_ADDR;INSERT INTO SYSTEM_LOBS.LOBS VALUES(B_ADDR,B_COUNT,B_OFFSET,L_ID);END</td>
 	</tr>
 </table>
 <p></p>
@@ -3108,8 +3128,7 @@ ADDRESS1, ADDRESS2
 		<td class='description'>[definition]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>CREATE PROCEDURE SYSTEM_LOBS.CREATE_EMPTY_BLOCK(INOUT B_ADDR INTEGER,IN B_COUNT INTEGER) SPECIFIC CREATE_EMPTY_BLOCK_10019 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE TEMP_COUNT INT DEFAULT NULL;DECLARE TEMP_ADDR INT DEFAULT NULL;SET(TEMP_ADDR,TEMP_COUNT)=(SELECT BLOCK_ADDR,BLOCK_COUNT FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_COUNT&gt;B_COUNT AND TX_ID=0 FETCH 1 ROW ONLY);IF TEMP_ADDR IS NULL THEN SIGNAL SQLSTATE&apos;45000&apos;;END IF;UPDATE SYSTEM_LOBS.BLOCKS SET BLOCK_COUNT=B_COUNT WHERE BLOCK_ADDR=TEMP_ADDR;INSERT INTO SYSTEM_LOBS.BLOCKS VALUES(TEMP_ADDR+B_COUNT,TEMP_COUNT-B_COUNT,0);SET B_ADDR=TEMP_ADDR;END</td>
+		<td colspan='3' class='definition'>CREATE PROCEDURE SYSTEM_LOBS.CREATE_EMPTY_BLOCK(INOUT B_ADDR INTEGER,IN B_COUNT INTEGER) SPECIFIC CREATE_EMPTY_BLOCK_10019 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE TEMP_COUNT INT DEFAULT NULL;DECLARE TEMP_ADDR INT DEFAULT NULL;SET(TEMP_ADDR,TEMP_COUNT)=(SELECT BLOCK_ADDR,BLOCK_COUNT FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_COUNT&gt;B_COUNT AND TX_ID=0 FETCH 1 ROW ONLY);IF TEMP_ADDR IS NULL THEN SIGNAL SQLSTATE&apos;45000&apos;;END IF;UPDATE SYSTEM_LOBS.BLOCKS SET BLOCK_COUNT=B_COUNT WHERE BLOCK_ADDR=TEMP_ADDR;INSERT INTO SYSTEM_LOBS.BLOCKS VALUES(TEMP_ADDR+B_COUNT,TEMP_COUNT-B_COUNT,0);SET B_ADDR=TEMP_ADDR;END</td>
 	</tr>
 </table>
 <p></p>
@@ -3147,8 +3166,7 @@ ADDRESS1, ADDRESS2
 		<td class='description'>[definition]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>CREATE PROCEDURE SYSTEM_LOBS.DELETE_BLOCKS(IN L_ID BIGINT,IN B_OFFSET INTEGER,IN B_LIMIT INTEGER,IN TX_ID BIGINT) SPECIFIC DELETE_BLOCKS_10017 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC INSERT INTO SYSTEM_LOBS.BLOCKS(SELECT BLOCK_ADDR,BLOCK_COUNT,TX_ID FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID AND BLOCK_OFFSET&gt;=B_OFFSET AND BLOCK_OFFSET&lt;B_LIMIT);DELETE FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID AND BLOCK_OFFSET&gt;=B_OFFSET AND BLOCK_OFFSET&lt;B_LIMIT;END</td>
+		<td colspan='3' class='definition'>CREATE PROCEDURE SYSTEM_LOBS.DELETE_BLOCKS(IN L_ID BIGINT,IN B_OFFSET INTEGER,IN B_LIMIT INTEGER,IN TX_ID BIGINT) SPECIFIC DELETE_BLOCKS_10017 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC INSERT INTO SYSTEM_LOBS.BLOCKS(SELECT BLOCK_ADDR,BLOCK_COUNT,TX_ID FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID AND BLOCK_OFFSET&gt;=B_OFFSET AND BLOCK_OFFSET&lt;B_LIMIT);DELETE FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID AND BLOCK_OFFSET&gt;=B_OFFSET AND BLOCK_OFFSET&lt;B_LIMIT;END</td>
 	</tr>
 </table>
 <p></p>
@@ -3176,8 +3194,7 @@ ADDRESS1, ADDRESS2
 		<td class='description'>[definition]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>CREATE PROCEDURE SYSTEM_LOBS.DELETE_LOB(IN L_ID BIGINT,IN TX_ID BIGINT) SPECIFIC DELETE_LOB_10013 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC INSERT INTO SYSTEM_LOBS.BLOCKS(SELECT BLOCK_ADDR,BLOCK_COUNT,TX_ID FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID);DELETE FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID;DELETE FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_ID=L_ID;END</td>
+		<td colspan='3' class='definition'>CREATE PROCEDURE SYSTEM_LOBS.DELETE_LOB(IN L_ID BIGINT,IN TX_ID BIGINT) SPECIFIC DELETE_LOB_10013 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC INSERT INTO SYSTEM_LOBS.BLOCKS(SELECT BLOCK_ADDR,BLOCK_COUNT,TX_ID FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID);DELETE FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID;DELETE FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_ID=L_ID;END</td>
 	</tr>
 </table>
 <p></p>
@@ -3195,8 +3212,7 @@ ADDRESS1, ADDRESS2
 		<td class='description'>[definition]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>CREATE PROCEDURE SYSTEM_LOBS.DELETE_UNUSED() SPECIFIC DELETE_UNUSED_10016 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC INSERT INTO SYSTEM_LOBS.BLOCKS(SELECT BLOCK_ADDR,BLOCK_COUNT,0 FROM SYSTEM_LOBS.LOBS WHERE LOB_ID IN(SELECT LOB_ID FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_USAGE_COUNT&lt;1));DELETE FROM SYSTEM_LOBS.LOBS WHERE LOB_ID IN(SELECT LOB_ID FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_USAGE_COUNT&lt;1);DELETE FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_USAGE_COUNT&lt;1;END</td>
+		<td colspan='3' class='definition'>CREATE PROCEDURE SYSTEM_LOBS.DELETE_UNUSED() SPECIFIC DELETE_UNUSED_10016 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC INSERT INTO SYSTEM_LOBS.BLOCKS(SELECT BLOCK_ADDR,BLOCK_COUNT,0 FROM SYSTEM_LOBS.LOBS WHERE LOB_ID IN(SELECT LOB_ID FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_USAGE_COUNT&lt;1));DELETE FROM SYSTEM_LOBS.LOBS WHERE LOB_ID IN(SELECT LOB_ID FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_USAGE_COUNT&lt;1);DELETE FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_USAGE_COUNT&lt;1;END</td>
 	</tr>
 </table>
 <p></p>
@@ -3224,8 +3240,7 @@ ADDRESS1, ADDRESS2
 		<td class='description'>[definition]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>CREATE PROCEDURE SYSTEM_LOBS.DIVIDE_BLOCK(IN B_OFFSET INTEGER,IN L_ID BIGINT) SPECIFIC DIVIDE_BLOCK_10021 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE BL_ADDR INT DEFAULT NULL;DECLARE BL_COUNT INT DEFAULT NULL;DECLARE BL_OFFSET INT DEFAULT NULL;SET(BL_ADDR,BL_COUNT,BL_OFFSET)=(SELECT BLOCK_ADDR,BLOCK_COUNT,BLOCK_OFFSET FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID AND B_OFFSET&gt;BLOCK_OFFSET AND B_OFFSET&lt;BLOCK_OFFSET+BLOCK_COUNT);IF BL_ADDR IS NULL THEN SIGNAL SQLSTATE&apos;45000&apos;;END IF;DELETE FROM SYSTEM_LOBS.LOBS WHERE BLOCK_ADDR=BL_ADDR;INSERT INTO SYSTEM_LOBS.LOBS VALUES(BL_ADDR,B_OFFSET-BL_OFFSET,BL_OFFSET,L_ID);INSERT INTO SYSTEM_LOBS.LOBS VALUES(BL_ADDR+B_OFFSET-BL_OFFSET,BL_OFFSET+BL_COUNT-B_OFFSET,B_OFFSET,L_ID);END</td>
+		<td colspan='3' class='definition'>CREATE PROCEDURE SYSTEM_LOBS.DIVIDE_BLOCK(IN B_OFFSET INTEGER,IN L_ID BIGINT) SPECIFIC DIVIDE_BLOCK_10021 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE BL_ADDR INT DEFAULT NULL;DECLARE BL_COUNT INT DEFAULT NULL;DECLARE BL_OFFSET INT DEFAULT NULL;SET(BL_ADDR,BL_COUNT,BL_OFFSET)=(SELECT BLOCK_ADDR,BLOCK_COUNT,BLOCK_OFFSET FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID AND B_OFFSET&gt;BLOCK_OFFSET AND B_OFFSET&lt;BLOCK_OFFSET+BLOCK_COUNT);IF BL_ADDR IS NULL THEN SIGNAL SQLSTATE&apos;45000&apos;;END IF;DELETE FROM SYSTEM_LOBS.LOBS WHERE BLOCK_ADDR=BL_ADDR;INSERT INTO SYSTEM_LOBS.LOBS VALUES(BL_ADDR,B_OFFSET-BL_OFFSET,BL_OFFSET,L_ID);INSERT INTO SYSTEM_LOBS.LOBS VALUES(BL_ADDR+B_OFFSET-BL_OFFSET,BL_OFFSET+BL_COUNT-B_OFFSET,B_OFFSET,L_ID);END</td>
 	</tr>
 </table>
 <p></p>
@@ -3633,7 +3648,7 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td>1</td>
 		<td>7</td>
-		<td>&lt;null&gt;</td>
+		<td>&lt;binary&gt;</td>
 	</tr>
 	<tr>
 		<td>2</td>
@@ -3643,7 +3658,7 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td>2</td>
 		<td>6</td>
-		<td>&lt;null&gt;</td>
+		<td>&lt;binary&gt;</td>
 	</tr>
 	<tr>
 		<td>3</td>
@@ -3653,7 +3668,7 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td>3</td>
 		<td>4</td>
-		<td>&lt;null&gt;</td>
+		<td>&lt;binary&gt;</td>
 	</tr>
 	<tr>
 		<td>3</td>
