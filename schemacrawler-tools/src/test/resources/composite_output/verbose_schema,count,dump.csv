@@ -444,16 +444,16 @@ IDX_A_AUTHORS,[non-unique index]
 "",COUNTRY,ascending
 ""
 CHECK_UPPERCASE_STATE,[check constraint]
-"",BOOKS.AUTHORS.STATE=UPPER(BOOKS.AUTHORS.STATE)
+BOOKS.AUTHORS.STATE=UPPER(BOOKS.AUTHORS.STATE)
 ""
 SYS_CT_10028,[check constraint]
-"",BOOKS.AUTHORS.ID IS NOT NULL
+BOOKS.AUTHORS.ID IS NOT NULL
 ""
 SYS_CT_10029,[check constraint]
-"",BOOKS.AUTHORS.FIRSTNAME IS NOT NULL
+BOOKS.AUTHORS.FIRSTNAME IS NOT NULL
 ""
 SYS_CT_10030,[check constraint]
-"",BOOKS.AUTHORS.LASTNAME IS NOT NULL
+BOOKS.AUTHORS.LASTNAME IS NOT NULL
 ""
 DELETE,[privilege]
 "",_SYSTEM --> DBA (grantable),""
@@ -476,7 +476,7 @@ UPDATE,[privilege]
 TRG_AUTHORS,"[trigger, after delete, per row]"
 ""
 "",[remarks]
-"",Contact details for book authors
+Contact details for book authors
 
 
 PUBLIC.BOOKS.AUTHORSLIST,[view]
@@ -504,7 +504,7 @@ UPDATE,[privilege]
 "",_SYSTEM --> DBA (grantable),""
 ""
 "",[definition]
-"","SELECT ID,FIRSTNAME,LASTNAME FROM BOOKS.AUTHORS"
+"SELECT ID,FIRSTNAME,LASTNAME FROM BOOKS.AUTHORS"
 
 
 PUBLIC.BOOKS.BOOKAUTHORS,[table]
@@ -530,10 +530,10 @@ UIDX_BOOKAUTHORS,[unique index]
 "",AUTHORID,ascending
 ""
 SYS_CT_10036,[check constraint]
-"",BOOKS.BOOKAUTHORS.BOOKID IS NOT NULL
+BOOKS.BOOKAUTHORS.BOOKID IS NOT NULL
 ""
 SYS_CT_10037,[check constraint]
-"",BOOKS.BOOKAUTHORS.AUTHORID IS NOT NULL
+BOOKS.BOOKAUTHORS.AUTHORID IS NOT NULL
 ""
 DELETE,[privilege]
 "",_SYSTEM --> DBA (grantable),""
@@ -554,7 +554,7 @@ UPDATE,[privilege]
 "",_SYSTEM --> DBA (grantable),""
 ""
 "",[remarks]
-"","Relationship between books and their authors, along with the latest updated information"
+"Relationship between books and their authors, along with the latest updated information"
 
 
 PUBLIC.BOOKS.BOOKS,[table]
@@ -576,13 +576,13 @@ SYS_IDX_PK_BOOKS_10035,[unique index]
 "",ID,ascending
 ""
 SYS_CT_10032,[check constraint]
-"",BOOKS.BOOKS.ID IS NOT NULL
+BOOKS.BOOKS.ID IS NOT NULL
 ""
 SYS_CT_10033,[check constraint]
-"",BOOKS.BOOKS.TITLE IS NOT NULL
+BOOKS.BOOKS.TITLE IS NOT NULL
 ""
 SYS_CT_10034,[check constraint]
-"",BOOKS.BOOKS.PUBLISHERID IS NOT NULL
+BOOKS.BOOKS.PUBLISHERID IS NOT NULL
 ""
 DELETE,[privilege]
 "",_SYSTEM --> DBA (grantable),""
@@ -603,7 +603,7 @@ UPDATE,[privilege]
 "",_SYSTEM --> DBA (grantable),""
 ""
 "",[remarks]
-"",Details for published books
+Details for published books
 
 
 "PUBLIC.BOOKS.""Global Counts""",[table]
@@ -641,7 +641,7 @@ SYS_IDX_PK_PUBLISHERS_10027,[unique index]
 "",ID,ascending
 ""
 SYS_CT_10026,[check constraint]
-"",BOOKS.PUBLISHERS.ID IS NOT NULL
+BOOKS.PUBLISHERS.ID IS NOT NULL
 ""
 DELETE,[privilege]
 "",_SYSTEM --> DBA (grantable),""
@@ -662,7 +662,7 @@ UPDATE,[privilege]
 "",_SYSTEM --> DBA (grantable),""
 ""
 "",[remarks]
-"",List of book publishers
+List of book publishers
 
 
 "PUBLIC.""PUBLISHER SALES"".REGIONS",[table]
@@ -685,16 +685,16 @@ SYS_IDX_PK_CUSTOMERS_10052,[unique index]
 "",COUNTRY,ascending
 ""
 SYS_CT_10048,[check constraint]
-"","""PUBLISHER SALES"".REGIONS.CITY IS NOT NULL"
+"""PUBLISHER SALES"".REGIONS.CITY IS NOT NULL"
 ""
 SYS_CT_10049,[check constraint]
-"","""PUBLISHER SALES"".REGIONS.STATE IS NOT NULL"
+"""PUBLISHER SALES"".REGIONS.STATE IS NOT NULL"
 ""
 SYS_CT_10050,[check constraint]
-"","""PUBLISHER SALES"".REGIONS.POSTALCODE IS NOT NULL"
+"""PUBLISHER SALES"".REGIONS.POSTALCODE IS NOT NULL"
 ""
 SYS_CT_10051,[check constraint]
-"","""PUBLISHER SALES"".REGIONS.COUNTRY IS NOT NULL"
+"""PUBLISHER SALES"".REGIONS.COUNTRY IS NOT NULL"
 ""
 DELETE,[privilege]
 "",_SYSTEM --> DBA (grantable),""
@@ -732,10 +732,10 @@ SYS_IDX_10056,[non-unique index]
 "",COUNTRY,ascending
 ""
 SYS_CT_10053,[check constraint]
-"","""PUBLISHER SALES"".SALES.POSTALCODE IS NOT NULL"
+"""PUBLISHER SALES"".SALES.POSTALCODE IS NOT NULL"
 ""
 SYS_CT_10054,[check constraint]
-"","""PUBLISHER SALES"".SALES.COUNTRY IS NOT NULL"
+"""PUBLISHER SALES"".SALES.COUNTRY IS NOT NULL"
 ""
 DELETE,[privilege]
 "",_SYSTEM --> DBA (grantable),""

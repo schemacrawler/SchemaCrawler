@@ -258,7 +258,7 @@ IDX_A_AUTHORS                                         [non-unique index]
   COUNTRY                           ascending                   
 
                                                                [remarks]
-  Contact details for book authors
+Contact details for book authors
 
 
 PUBLIC.BOOKS.AUTHORSLIST                                          [view]
@@ -291,7 +291,7 @@ UIDX_BOOKAUTHORS                                          [unique index]
   AUTHORID                          ascending                   
 
                                                                [remarks]
-  Relationship between books and their authors, along with the latest updated information
+Relationship between books and their authors, along with the latest updated information
 
 
 PUBLIC.BOOKS.BOOKS                                               [table]
@@ -313,7 +313,7 @@ SYS_IDX_PK_BOOKS_10035                                    [unique index]
   ID                                ascending                   
 
                                                                [remarks]
-  Details for published books
+Details for published books
 
 
 PUBLIC.BOOKS."Global Counts"                                     [table]
@@ -333,7 +333,7 @@ SYS_IDX_PK_PUBLISHERS_10027                               [unique index]
   ID                                ascending                   
 
                                                                [remarks]
-  List of book publishers
+List of book publishers
 
 
 PUBLIC."PUBLISHER SALES".REGIONS                                 [table]

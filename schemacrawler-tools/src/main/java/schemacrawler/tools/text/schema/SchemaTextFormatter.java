@@ -106,15 +106,8 @@ final class SchemaTextFormatter
         {
           constraintName = constraint.getName();
         }
-        out.println(formattingHelper.createEmptyRow());
-        out.println(formattingHelper.createNameRow(constraintName,
-                                                   "[check constraint]",
-                                                   false));
-        final String definition = constraint.getDefinition();
-        if (!Utility.isBlank(definition))
-        {
-          out.println(formattingHelper.createDefinitionRow(definition));
-        }
+        printDefinition("check constraint", constraintName, constraint
+          .getDefinition());
       }
     }
   }
@@ -141,11 +134,11 @@ final class SchemaTextFormatter
                                                "[data type]",
                                                false));
     out.println(formattingHelper.createDetailRow("", "based on", typeName));
-    out.println(formattingHelper.createDefinitionRow(userDefined));
-    out.println(formattingHelper.createDefinitionRow(definedWith));
-    out.println(formattingHelper.createDefinitionRow(nullable));
-    out.println(formattingHelper.createDefinitionRow(autoIncrementable));
-    out.println(formattingHelper.createDefinitionRow(columnDataType
+    out.println(formattingHelper.createDescriptionRow(userDefined));
+    out.println(formattingHelper.createDescriptionRow(definedWith));
+    out.println(formattingHelper.createDescriptionRow(nullable));
+    out.println(formattingHelper.createDescriptionRow(autoIncrementable));
+    out.println(formattingHelper.createDescriptionRow(columnDataType
       .getSearchable().toString()));
   }
 
@@ -191,6 +184,29 @@ final class SchemaTextFormatter
                                                        + fkColumnName,
                                                    ""));
     }
+  }
+
+  private void printDefinition(final String heading,
+                               final String name,
+                               final String definition)
+  {
+    if (Utility.isBlank(definition))
+    {
+      return;
+    }
+    final String definitionName;
+    if (Utility.isBlank(name))
+    {
+      definitionName = "";
+    }
+    else
+    {
+      definitionName = name;
+    }
+    out.println(formattingHelper.createEmptyRow());
+    out.println(formattingHelper.createNameRow(definitionName, "[" + heading
+                                                               + "]", false));
+    out.println(formattingHelper.createDefinitionRow(definition));
   }
 
   private void printForeignKeys(final String tableName,
@@ -284,15 +300,15 @@ final class SchemaTextFormatter
         {
           if ((Boolean) lintValue)
           {
-            out.println(formattingHelper.createDefinitionRow(lint
+            out.println(formattingHelper.createDescriptionRow(lint
               .getDescription()));
           }
         }
         else
         {
           out.println(formattingHelper
-            .createDefinitionRow(lint.getDescription() + Utility.NEWLINE
-                                 + lint.getLintValueAsString()));
+            .createDescriptionRow(lint.getDescription() + Utility.NEWLINE
+                                  + lint.getLintValueAsString()));
         }
       }
     }
@@ -408,17 +424,6 @@ final class SchemaTextFormatter
     }
   }
 
-  private void printText(final String heading, final String text)
-  {
-    if (sf.util.Utility.isBlank(text))
-    {
-      return;
-    }
-    out.println(formattingHelper.createEmptyRow());
-    out.println(formattingHelper.createNameRow("", "[" + heading + "]", false));
-    out.println(formattingHelper.createDefinitionRow(text));
-  }
-
   private void printTriggers(final Trigger[] triggers)
   {
     for (final Trigger trigger: triggers)
@@ -454,13 +459,13 @@ final class SchemaTextFormatter
                                                    triggerType,
                                                    false));
 
-        if (!sf.util.Utility.isBlank(actionCondition))
+        if (!Utility.isBlank(actionCondition))
         {
-          out.println(formattingHelper.createDefinitionRow(actionCondition));
+          out.println(formattingHelper.createDescriptionRow(actionCondition));
         }
-        if (!sf.util.Utility.isBlank(actionStatement))
+        if (!Utility.isBlank(actionStatement))
         {
-          out.println(formattingHelper.createDefinitionRow(actionStatement));
+          out.println(formattingHelper.createDescriptionRow(actionStatement));
         }
       }
     }
@@ -537,12 +542,12 @@ final class SchemaTextFormatter
     if (schemaTextDetailType != SchemaTextDetailType.list_objects)
     {
       printProcedureColumns(procedure.getColumns());
-      printText("definition", procedure.getDefinition());
+      printDefinition("definition", "", procedure.getDefinition());
 
       if (schemaTextDetailType
         .isGreaterThanOrEqualTo(SchemaTextDetailType.verbose_schema))
       {
-        printText("remarks", procedure.getRemarks());
+        printDefinition("remarks", "", procedure.getRemarks());
       }
 
       out.println(formattingHelper.createObjectEnd());
@@ -595,12 +600,22 @@ final class SchemaTextFormatter
       if (table instanceof View)
       {
         final View view = (View) table;
-        printText("definition", view.getDefinition());
+        printDefinition("definition", "", view.getDefinition());
       }
       if (schemaTextDetailType
         .isGreaterThanOrEqualTo(SchemaTextDetailType.verbose_schema))
       {
-        printText("remarks", table.getRemarks());
+        printDefinition("remarks", "", table.getRemarks());
+        for (final Column column: table.getColumns())
+        {
+          final String remarks = column.getRemarks();
+          if (!Utility.isBlank(remarks))
+          {
+            out.println(formattingHelper.createDetailRow("",
+                                                         column.getName(),
+                                                         remarks));
+          }
+        }
         printLint(table);
       }
       out.println(formattingHelper.createObjectEnd());
