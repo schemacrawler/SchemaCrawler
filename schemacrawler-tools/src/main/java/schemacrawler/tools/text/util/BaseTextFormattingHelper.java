@@ -59,16 +59,28 @@ abstract class BaseTextFormattingHelper
   /**
    * {@inheritDoc}
    * 
-   * @see TextFormattingHelper#createDefinitionRow(java.lang.String)
+   * @see TextFormattingHelper#createDescriptionRow(java.lang.String)
    */
-  public String createDefinitionRow(final String definition)
+  public String createDescriptionRow(final String description)
   {
     final TableRow row = new TableRow(outputFormat);
     row.add(new TableCell("", "ordinal", outputFormat));
-    row.add(new TableCell(definition,
+    row.add(new TableCell(description,
                           0,
                           Align.left,
                           2,
+                          "definition",
+                          outputFormat));
+    return row.toString();
+  }
+
+  public String createDefinitionRow(final String definition)
+  {
+    final TableRow row = new TableRow(outputFormat);
+    row.add(new TableCell(definition,
+                          0,
+                          Align.left,
+                          3,
                           "definition",
                           outputFormat));
     return row.toString();

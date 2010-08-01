@@ -40,7 +40,7 @@ PUBLIC.BOOKS.AUTHORS                                             [table]
 ------------------------------------------------------------------------
 
                                                                [remarks]
-  Contact details for book authors
+Contact details for book authors
 
 
 PUBLIC.BOOKS.AUTHORSLIST                                          [view]
@@ -51,14 +51,14 @@ PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
 ------------------------------------------------------------------------
 
                                                                [remarks]
-  Relationship between books and their authors, along with the latest updated information
+Relationship between books and their authors, along with the latest updated information
 
 
 PUBLIC.BOOKS.BOOKS                                               [table]
 ------------------------------------------------------------------------
 
                                                                [remarks]
-  Details for published books
+Details for published books
 
 
 PUBLIC.BOOKS."Global Counts"                                     [table]
@@ -69,7 +69,7 @@ PUBLIC.BOOKS.PUBLISHERS                                          [table]
 ------------------------------------------------------------------------
 
                                                                [remarks]
-  List of book publishers
+List of book publishers
 
 
 PUBLIC."PUBLISHER SALES".REGIONS                                 [table]

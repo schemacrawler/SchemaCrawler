@@ -252,9 +252,9 @@ public abstract class BaseFormatter<O extends Options>
     out.println(formattingHelper.createNameRow(driverProperty.getName(),
                                                "[driver property]",
                                                false));
-    out.println(formattingHelper.createDefinitionRow(driverProperty
+    out.println(formattingHelper.createDescriptionRow(driverProperty
       .getDescription()));
-    out.println(formattingHelper.createDefinitionRow(details));
+    out.println(formattingHelper.createDescriptionRow(details));
     out.println(formattingHelper.createDetailRow("", "value", value));
   }
 
