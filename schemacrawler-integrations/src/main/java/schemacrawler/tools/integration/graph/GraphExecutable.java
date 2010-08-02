@@ -23,7 +23,11 @@ package schemacrawler.tools.integration.graph;
 
 import java.io.File;
 import java.sql.Connection;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
+import schemacrawler.schema.ColumnMap;
 import schemacrawler.schema.Database;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
@@ -94,6 +98,18 @@ public final class GraphExecutable
       database = db;
     }
 
+    final Set<Table> tables = new HashSet<Table>();
+    final Set<ColumnMap> weakAssociations = new HashSet<ColumnMap>();
+    for (final Schema schema: database.getSchemas())
+    {
+      for (final Table table: schema.getTables())
+      {
+        tables.add(table);
+        weakAssociations.addAll(Arrays.asList(AnalyzedDatabase
+          .getWeakAssociations(table)));
+      }
+    }
+
     // Create dot file
     final File dotFile = File.createTempFile("schemacrawler.", ".dot");
     final DotWriter dotWriter = new DotWriter(dotFile);
@@ -101,14 +117,7 @@ public final class GraphExecutable
     dotWriter.print(database.getSchemaCrawlerInfo(),
                     database.getDatabaseInfo(),
                     database.getJdbcDriverInfo());
-    for (final Schema schema: database.getSchemas())
-    {
-      for (final Table table: schema.getTables())
-      {
-        dotWriter.print(table);
-        dotWriter.print(AnalyzedDatabase.getWeakAssociations(table));
-      }
-    }
+    dotWriter.print(tables, weakAssociations);
     dotWriter.close();
 
     // Create graph image
@@ -124,4 +133,5 @@ public final class GraphExecutable
       throw e;
     }
   }
+
 }

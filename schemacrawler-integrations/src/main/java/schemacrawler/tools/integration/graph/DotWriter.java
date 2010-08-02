@@ -28,12 +28,12 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnMap;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.ForeignKey;
-import schemacrawler.schema.ForeignKeyColumnMap;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Schema;
@@ -48,8 +48,8 @@ import sf.util.Utility;
 final class DotWriter
 {
 
-  private static final Random random = new Random((long) DotWriter.class
-    .getName().hashCode());
+  private static final Random random = new Random(DotWriter.class.getName()
+    .hashCode());
 
   private static String nextRandomHTMLPastelColorValue()
   {
@@ -60,7 +60,7 @@ final class DotWriter
 
     final float hue = random.nextFloat();
     // Saturation between 0.1 and 0.3
-    final float saturation = ((float) (random.nextInt(2000) + 1000)) / 10000f;
+    final float saturation = (random.nextInt(2000) + 1000) / 10000f;
     final float luminance = 0.9f;
     final Color color = Color.getHSBColor(hue, saturation, luminance);
 
@@ -101,23 +101,6 @@ final class DotWriter
   {
     final String text = Utility.readResourceFully("/dot.header.txt");
     out.println(text);
-  }
-
-  public void print(final ColumnMap[] weakAssociations)
-  {
-    if (weakAssociations != null)
-    {
-      out.write(Utility.NEWLINE);
-      for (final ColumnMap columnMap: weakAssociations)
-      {
-        final Column primaryKeyColumn = columnMap.getPrimaryKeyColumn();
-        final Column foreignKeyColumn = columnMap.getForeignKeyColumn();
-        out
-          .write(printColumnAssociation("", primaryKeyColumn, foreignKeyColumn));
-      }
-    }
-    out.write(Utility.NEWLINE);
-    out.write(Utility.NEWLINE);
   }
 
   public void print(final SchemaCrawlerInfo schemaCrawlerInfo,
@@ -173,7 +156,109 @@ final class DotWriter
     out.println(graphLabel);
   }
 
-  public void print(final Table table)
+  public void print(final Set<Table> tables,
+                    final Set<ColumnMap> weakAssociations)
+  {
+    if (tables != null)
+    {
+      for (final Table table: tables)
+      {
+        print(table);
+        out.write(Utility.NEWLINE);
+        // Print foreign keys
+        for (final ForeignKey foreignKey: table.getForeignKeys())
+        {
+          final ColumnMap[] columnPairs = foreignKey.getColumnPairs();
+          for (final ColumnMap columnMap: columnPairs)
+          {
+            if (table.equals(columnMap.getPrimaryKeyColumn().getParent()))
+            {
+              out.write(printColumnAssociation(foreignKey.getName(),
+                                               columnMap,
+                                               tables));
+            }
+          }
+        }
+        out.write(Utility.NEWLINE);
+        out.write(Utility.NEWLINE);
+      }
+    }
+
+    out.write(Utility.NEWLINE);
+    for (final ColumnMap columnMap: weakAssociations)
+    {
+      out.write(printColumnAssociation("", columnMap, tables));
+    }
+    out.write(Utility.NEWLINE);
+  }
+
+  private String[] getPortIds(final Column column, final Set<Table> tables)
+  {
+    final String portIds[] = new String[2];
+    if (tables.contains(column.getParent()))
+    {
+      portIds[0] = String.format("\"%s\":\"%s.start\"", nodeId(column
+        .getParent()), nodeId(column));
+      portIds[1] = String.format("\"%s\":\"%s.end\"",
+                                 nodeId(column.getParent()),
+                                 nodeId(column));
+    }
+    else
+    {
+      // Create new node
+      print(column);
+      //
+      portIds[0] = String.format("\"%s\":\"%s.start\"",
+                                 nodeId(column),
+                                 nodeId(column));
+      portIds[1] = String.format("\"%s\":\"%s.end\"",
+                                 nodeId(column),
+                                 nodeId(column));
+    }
+    return portIds;
+  }
+
+  private String nodeId(final NamedObject namedOjbect)
+  {
+    if (namedOjbect == null)
+    {
+      return "";
+    }
+    else
+    {
+      return Utility.convertForComparison(namedOjbect.getName()) + "_"
+             + Integer.toHexString(namedOjbect.getFullName().hashCode());
+    }
+  }
+
+  private void print(final Column column)
+  {
+    final StringBuilder buffer = new StringBuilder();
+    buffer.append("  /* ").append(column.getFullName())
+      .append(" --------------------------- */").append(Utility.NEWLINE);
+    buffer.append("  \"").append(nodeId(column)).append("\" [")
+      .append(Utility.NEWLINE).append("    label=<").append(Utility.NEWLINE);
+    buffer
+      .append("      <table border=\"0\" cellborder=\"0\" cellspacing=\"0\" bgcolor=\"white\">")
+      .append(Utility.NEWLINE);
+    buffer.append("        <tr>").append(Utility.NEWLINE);
+    buffer.append("          <td port=\"").append(nodeId(column))
+      .append(".start\" align=\"left\">");
+    buffer.append(column.getFullName());
+    buffer.append("</td>").append(Utility.NEWLINE);
+    buffer.append("          <td port=\"").append(nodeId(column))
+      .append(".end\" align=\"right\">");
+    buffer.append("</td>").append(Utility.NEWLINE);
+    buffer.append("        </tr>").append(Utility.NEWLINE);
+
+    buffer.append("      </table>").append(Utility.NEWLINE);
+    buffer.append("    >").append(Utility.NEWLINE).append("  ];")
+      .append(Utility.NEWLINE);
+
+    out.write(buffer.toString());
+  }
+
+  private void print(final Table table)
   {
     final Schema schema = table.getSchema();
 
@@ -236,44 +321,19 @@ final class DotWriter
     buffer.append("    >").append(Utility.NEWLINE).append("  ];")
       .append(Utility.NEWLINE);
 
-    for (final ForeignKey foreignKey: table.getForeignKeys())
-    {
-      for (final ForeignKeyColumnMap foreignKeyColumnMap: foreignKey
-        .getColumnPairs())
-      {
-        final Column primaryKeyColumn = foreignKeyColumnMap
-          .getPrimaryKeyColumn();
-        final Column foreignKeyColumn = foreignKeyColumnMap
-          .getForeignKeyColumn();
-        if (primaryKeyColumn.getParent().equals(table))
-        {
-          buffer.append(printColumnAssociation(foreignKey.getName(),
-                                               primaryKeyColumn,
-                                               foreignKeyColumn));
-        }
-      }
-    }
-
     out.write(buffer.toString());
   }
 
-  private String nodeId(final NamedObject namedOjbect)
-  {
-    if (namedOjbect == null)
-    {
-      return "";
-    }
-    else
-    {
-      return Utility.convertForComparison(namedOjbect.getName()) + "_"
-             + Integer.toHexString(namedOjbect.getFullName().hashCode());
-    }
-  }
-
   private String printColumnAssociation(final String associationName,
-                                        final Column primaryKeyColumn,
-                                        final Column foreignKeyColumn)
+                                        final ColumnMap columnMap,
+                                        final Set<Table> tables)
   {
+    final Column primaryKeyColumn = columnMap.getPrimaryKeyColumn();
+    final Column foreignKeyColumn = columnMap.getForeignKeyColumn();
+
+    final String[] pkPortIds = getPortIds(primaryKeyColumn, tables);
+    final String[] fkPortIds = getPortIds(foreignKeyColumn, tables);
+
     final Connectivity connectivity = MetaDataUtility
       .getConnectivity(foreignKeyColumn);
     final String pkSymbol = "teetee";
@@ -308,11 +368,9 @@ final class DotWriter
     }
 
     return String
-      .format("  \"%s\":\"%s.start\":w -> \"%s\":\"%s.end\":e [label=<%s> style=\"%s\" arrowhead=\"%s\" arrowtail=\"%s\"];%n",
-              nodeId(primaryKeyColumn.getParent()),
-              nodeId(primaryKeyColumn),
-              nodeId(foreignKeyColumn.getParent()),
-              nodeId(foreignKeyColumn),
+      .format("  %s:w -> %s:e [label=<%s> style=\"%s\" arrowhead=\"%s\" arrowtail=\"%s\"];%n",
+              pkPortIds[0],
+              fkPortIds[1],
               associationName,
               style,
               fkSymbol,
