@@ -25,10 +25,10 @@ import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
-import java.util.Set;
 import java.util.UUID;
 
 import schemacrawler.schema.Column;
@@ -157,8 +157,8 @@ final class DotWriter
     out.println(graphLabel);
   }
 
-  public void print(final Set<Table> tables,
-                    final Set<ColumnMap> weakAssociations)
+  public void print(final Collection<Table> tables,
+                    final Collection<ColumnMap> weakAssociations)
   {
     if (tables != null)
     {
@@ -193,7 +193,8 @@ final class DotWriter
     out.write(Utility.NEWLINE);
   }
 
-  private String[] getPortIds(final Column column, final Set<Table> tables)
+  private String[] getPortIds(final Column column,
+                              final Collection<Table> tables)
   {
     final String portIds[] = new String[2];
     if (tables.contains(column.getParent()))
@@ -307,7 +308,7 @@ final class DotWriter
 
   private String printColumnAssociation(final String associationName,
                                         final ColumnMap columnMap,
-                                        final Set<Table> tables)
+                                        final Collection<Table> tables)
   {
     final Column primaryKeyColumn = columnMap.getPrimaryKeyColumn();
     final Column foreignKeyColumn = columnMap.getForeignKeyColumn();

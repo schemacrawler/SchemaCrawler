@@ -52,7 +52,7 @@
           and views. SchemaCrawler can be fine-tuned using configuration files. </p>
         <source><![CDATA[
 
-SchemaCrawler 8.3.1
+SchemaCrawler 8.3.2
 Copyright (c) 2000-2010, Sualeh Fatehi.
 SchemaCrawler is a platform (operating system and database) independent command-
 line tool to output your database schema and data in a readable form. The output 
