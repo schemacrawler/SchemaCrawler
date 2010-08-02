@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
+import java.util.UUID;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnMap;
@@ -206,14 +207,10 @@ final class DotWriter
     else
     {
       // Create new node
-      print(column);
+      String nodeId = print(column);
       //
-      portIds[0] = String.format("\"%s\":\"%s.start\"",
-                                 nodeId(column),
-                                 nodeId(column));
-      portIds[1] = String.format("\"%s\":\"%s.end\"",
-                                 nodeId(column),
-                                 nodeId(column));
+      portIds[0] = nodeId;
+      portIds[1] = nodeId;
     }
     return portIds;
   }
@@ -231,31 +228,15 @@ final class DotWriter
     }
   }
 
-  private void print(final Column column)
+  private String print(final Column column)
   {
-    final StringBuilder buffer = new StringBuilder();
-    buffer.append("  /* ").append(column.getFullName())
-      .append(" --------------------------- */").append(Utility.NEWLINE);
-    buffer.append("  \"").append(nodeId(column)).append("\" [")
-      .append(Utility.NEWLINE).append("    label=<").append(Utility.NEWLINE);
-    buffer
-      .append("      <table border=\"0\" cellborder=\"0\" cellspacing=\"0\" bgcolor=\"white\">")
-      .append(Utility.NEWLINE);
-    buffer.append("        <tr>").append(Utility.NEWLINE);
-    buffer.append("          <td port=\"").append(nodeId(column))
-      .append(".start\" align=\"left\">");
-    buffer.append(column.getFullName());
-    buffer.append("</td>").append(Utility.NEWLINE);
-    buffer.append("          <td port=\"").append(nodeId(column))
-      .append(".end\" align=\"right\">");
-    buffer.append("</td>").append(Utility.NEWLINE);
-    buffer.append("        </tr>").append(Utility.NEWLINE);
+    String nodeId = "\"" + UUID.randomUUID().toString() + "\"";
+    String columnNode = String.format("  %s [label=\"%s\"];\n", nodeId, column
+      .getFullName());
 
-    buffer.append("      </table>").append(Utility.NEWLINE);
-    buffer.append("    >").append(Utility.NEWLINE).append("  ];")
-      .append(Utility.NEWLINE);
+    out.write(columnNode);
 
-    out.write(buffer.toString());
+    return nodeId;
   }
 
   private void print(final Table table)
