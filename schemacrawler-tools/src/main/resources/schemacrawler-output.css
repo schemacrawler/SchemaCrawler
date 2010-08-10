@@ -1,5 +1,6 @@
 .underscore {
-	border-bottom: 1px solid #BBBBBB;
+	color: #950007;
+	border-bottom: 2px solid #BBBBBB;
 }
 
 .name {
@@ -29,6 +30,14 @@
 	white-space: pre;
 }
 
+h2 {
+  color: #174188;
+}
+
+h3 {
+  color: #3E8400;
+}
+
 body,p,pre,table,th,td,caption {
 	text-align: left;
 	font-family: Trebuchet MS;
@@ -36,7 +45,7 @@ body,p,pre,table,th,td,caption {
 }
 
 table,th,td {
-	border: 1px solid #EBDDE2;
+	border: 1px solid #EBEBEB;
 	border-collapse: collapse;
 	vertical-align: top;
 	padding: 2px;
