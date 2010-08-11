@@ -21,9 +21,9 @@
 package schemacrawler.tools.text.util;
 
 
+import static sf.util.Utility.NEWLINE;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.text.util.TableCell.Align;
-import sf.util.Utility;
 
 /**
  * Methods to format entire rows of output as HTML.
@@ -174,7 +174,7 @@ abstract class BaseTextFormattingHelper
 
     if (underscore && outputFormat != OutputFormat.html)
     {
-      nameRowString = nameRowString + Utility.NEWLINE + DASHED_SEPARATOR;
+      nameRowString = nameRowString + NEWLINE + DASHED_SEPARATOR;
     }
 
     return nameRowString;

@@ -580,7 +580,8 @@ final class SchemaTextFormatter
 
     if (schemaTextDetailType != SchemaTextDetailType.list_objects)
     {
-      printTableColumns(table.getColumns());
+      final Column[] columns = table.getColumns();
+      printTableColumns(columns);
 
       printPrimaryKey(table.getPrimaryKey());
       printForeignKeys(table.getName(), table.getForeignKeys());
@@ -605,8 +606,28 @@ final class SchemaTextFormatter
       if (schemaTextDetailType
         .isGreaterThanOrEqualTo(SchemaTextDetailType.verbose_schema))
       {
-        printDefinition("remarks", "", table.getRemarks());
-        for (final Column column: table.getColumns())
+        final String tableRemarks = table.getRemarks();
+        boolean hasColumnRemarks = false;
+        for (final Column column: columns)
+        {
+          final String remarks = column.getRemarks();
+          if (!Utility.isBlank(remarks))
+          {
+            hasColumnRemarks = true;
+            break;
+          }
+        }
+
+        if (Utility.isBlank(tableRemarks) && hasColumnRemarks)
+        {
+          out.println(formattingHelper.createEmptyRow());
+          out.println(formattingHelper.createNameRow("", "[remarks]", false));
+        }
+        else
+        {
+          printDefinition("remarks", "", tableRemarks);
+        }
+        for (final Column column: columns)
         {
           final String remarks = column.getRemarks();
           if (!Utility.isBlank(remarks))
