@@ -127,7 +127,6 @@ public class SchemaCrawlerXmlOutputTest
 
     final SchemaCrawlerOptions options = executable.getSchemaCrawlerOptions();
     options.setSchemaInfoLevel(SchemaInfoLevel.minimum());
-    options.setShowStoredProcedures(true);
 
     executable.setOutputOptions(outputOptions);
     executable.execute(testUtility.getConnection());

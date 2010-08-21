@@ -40,7 +40,6 @@ public final class SchemaCrawlerOptions
   private static final String SC_SCHEMA_PATTERN_INCLUDE = "schemacrawler.schema.pattern.include";
 
   private static final String SC_TABLE_TYPES = "schemacrawler.table_types";
-  private static final String SC_SHOW_STORED_PROCEDURES = "schemacrawler.show_stored_procedures";
 
   private static final String SC_COLUMN_PATTERN_EXCLUDE = "schemacrawler.column.pattern.exclude";
   private static final String SC_COLUMN_PATTERN_INCLUDE = "schemacrawler.column.pattern.include";
@@ -74,7 +73,6 @@ public final class SchemaCrawlerOptions
 
   private InclusionRule schemaInclusionRule;
   private TableType[] tableTypes;
-  private boolean showStoredProcedures;
 
   private String tableNamePattern;
   private InclusionRule tableInclusionRule;
@@ -125,9 +123,6 @@ public final class SchemaCrawlerOptions
     final String tableTypesString = configProperties
       .getStringValue(SC_TABLE_TYPES, DEFAULT_TABLE_TYPES);
     tableTypes = TableType.valueOf(tableTypesString.split(","));
-
-    showStoredProcedures = configProperties
-      .getBooleanValue(SC_SHOW_STORED_PROCEDURES);
 
     informationSchemaViews = new InformationSchemaViews(config);
 
@@ -370,16 +365,6 @@ public final class SchemaCrawlerOptions
   }
 
   /**
-   * Whether stored procedures are output.
-   * 
-   * @return Whether stored procedures are output
-   */
-  public boolean isShowStoredProcedures()
-  {
-    return showStoredProcedures;
-  }
-
-  /**
    * Sets whether foreign keys should be alphabetically sorted.
    * 
    * @param alphabeticalSort
@@ -563,17 +548,6 @@ public final class SchemaCrawlerOptions
   public void setSchemaInfoLevel(final SchemaInfoLevel schemaInfoLevel)
   {
     this.schemaInfoLevel = schemaInfoLevel;
-  }
-
-  /**
-   * Set show stored procedures.
-   * 
-   * @param showStoredProcedures
-   *        Show stored procedures
-   */
-  public void setShowStoredProcedures(final boolean showStoredProcedures)
-  {
-    this.showStoredProcedures = showStoredProcedures;
   }
 
   /**

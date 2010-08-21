@@ -69,7 +69,6 @@ public class SchemaSerializationTest
     throws Exception
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setShowStoredProcedures(true);
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
 
     final Database database = testUtility.getDatabase(schemaCrawlerOptions);

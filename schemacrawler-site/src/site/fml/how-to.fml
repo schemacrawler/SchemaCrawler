@@ -156,16 +156,8 @@
       </question>
       <answer>
         <p>
-          Change the configuration for the SchemaCrawler stored procedures to
-          <code>schemacrawler.show_stored_procedures=false </code>
-          in the
-          <code>schemacrawler.config.properties </code>
-          file.
-        </p>
-        <p>
           The option in the configuration can be overridden by the
-          -show_stored_procedures command-line
-          option. Further,
+          -procedures= command-line option. Further,
           see the
           <a href="faq.html#commands">details on the command-line options.</a>
         </p>
@@ -601,7 +593,7 @@ for (final Catalog catalog: database.getCatalogs())
             the reverse of the "create" order. Use the following command-line
             arguments to obtain tables
             in "create" order:
-            <code>-command=brief_schema -sorttables=false -show_stored_procedures=false</code>
+            <code>-command=brief_schema -sorttables=false -procedures=</code>
           </i>
         </p>
       </answer>

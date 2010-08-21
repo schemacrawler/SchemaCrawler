@@ -26,7 +26,7 @@ public final class ApiExample
     // Set what details are required in the schema - this affects the
     // time taken to crawl the schema
     options.setSchemaInfoLevel(SchemaInfoLevel.standard());
-    options.setShowStoredProcedures(false);
+    options.setProcedureInclusionRule(new InclusionRule(InclusionRule.NONE, InclusionRule.ALL));
     options.setSchemaInclusionRule(new InclusionRule("PUBLIC.BOOKS",
                                                      InclusionRule.NONE));
     // Sorting options

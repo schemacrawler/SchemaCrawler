@@ -32,7 +32,6 @@
     <property name="alphabeticalSortForProcedureColumns" value="true" />
     <property name="alphabeticalSortForIndexes" value="true" />
     <property name="alphabeticalSortForForeignKeys" value="true" />
-    <property name="showStoredProcedures" value="true" />
     <property name="tableInclusionRule">
       <bean class="schemacrawler.schemacrawler.InclusionRule">
         <constructor-arg value=".*" />

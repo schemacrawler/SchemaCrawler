@@ -46,8 +46,6 @@ final class SchemaCrawlerOptionsParser
                                                               "schemas",
                                                               InclusionRule.NONE);
 
-  private final BooleanOption optionShowStoredProcedures = new BooleanOption(Option.NO_SHORT_FORM,
-                                                                             "show_stored_procedures");
   private final StringOption optionTableTypes = new StringOption(Option.NO_SHORT_FORM,
                                                                  "table_types",
                                                                  SchemaCrawlerOptions.DEFAULT_TABLE_TYPES);
@@ -97,7 +95,6 @@ final class SchemaCrawlerOptionsParser
         optionInfoLevel,
         optionSchemas,
         optionTableTypes,
-        optionShowStoredProcedures,
         optionTables,
         optionExcludeColumns,
         optionProcedures,
@@ -135,10 +132,6 @@ final class SchemaCrawlerOptionsParser
     if (optionTableTypes.isFound())
     {
       options.setTableTypes(optionTableTypes.getValue());
-    }
-    if (optionShowStoredProcedures.isFound())
-    {
-      options.setShowStoredProcedures(optionShowStoredProcedures.getValue());
     }
 
     if (optionTables.isFound())
