@@ -109,9 +109,9 @@ public class SchemaCrawlerOutputTest
     final String[] commands = new String[] {
         SchemaTextDetailType.verbose_schema + "," + Operation.count + ","
             + Operation.dump,
-        SchemaTextDetailType.list_objects + "," + Operation.count,
+        SchemaTextDetailType.list + "," + Operation.count,
         queryCommand1 + "," + queryCommand2 + "," + Operation.count + ","
-            + SchemaTextDetailType.list_objects,
+            + SchemaTextDetailType.list,
     };
 
     final List<String> failures = new ArrayList<String>();

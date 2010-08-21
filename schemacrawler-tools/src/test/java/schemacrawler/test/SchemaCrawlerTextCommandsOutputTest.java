@@ -129,7 +129,7 @@ public class SchemaCrawlerTextCommandsOutputTest
   public void schemaOutput()
     throws Exception
   {
-    textOutputTest(SchemaTextDetailType.list_objects.name(), new Config());
+    textOutputTest(SchemaTextDetailType.list.name(), new Config());
   }
 
   private void textOutputTest(final String command, final Config config)

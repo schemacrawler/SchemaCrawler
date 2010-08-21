@@ -527,19 +527,19 @@ final class SchemaTextFormatter
    */
   void handle(final Procedure procedure)
   {
-    final boolean underscore = schemaTextDetailType != SchemaTextDetailType.list_objects;
+    final boolean underscore = schemaTextDetailType != SchemaTextDetailType.list;
     final String procedureTypeDetail = "procedure, " + procedure.getType();
     final String nameRow = formattingHelper.createNameRow(procedure
       .getFullName(), "[" + procedureTypeDetail + "]", underscore);
 
-    if (schemaTextDetailType != SchemaTextDetailType.list_objects)
+    if (schemaTextDetailType != SchemaTextDetailType.list)
     {
       out.print(formattingHelper.createObjectStart(""));
     }
 
     out.println(nameRow);
 
-    if (schemaTextDetailType != SchemaTextDetailType.list_objects)
+    if (schemaTextDetailType != SchemaTextDetailType.list)
     {
       printProcedureColumns(procedure.getColumns());
       printDefinition("definition", "", procedure.getDefinition());
@@ -565,20 +565,20 @@ final class SchemaTextFormatter
    */
   void handle(final Table table)
   {
-    final boolean underscore = schemaTextDetailType != SchemaTextDetailType.list_objects;
+    final boolean underscore = schemaTextDetailType != SchemaTextDetailType.list;
     final String nameRow = formattingHelper.createNameRow(table.getFullName(),
                                                           "[" + table.getType()
                                                               + "]",
                                                           underscore);
 
-    if (schemaTextDetailType != SchemaTextDetailType.list_objects)
+    if (schemaTextDetailType != SchemaTextDetailType.list)
     {
       out.print(formattingHelper.createObjectStart(""));
     }
 
     out.println(nameRow);
 
-    if (schemaTextDetailType != SchemaTextDetailType.list_objects)
+    if (schemaTextDetailType != SchemaTextDetailType.list)
     {
       final Column[] columns = table.getColumns();
       printTableColumns(columns);
@@ -661,7 +661,7 @@ final class SchemaTextFormatter
   void handleProceduresEnd()
     throws SchemaCrawlerException
   {
-    if (schemaTextDetailType == SchemaTextDetailType.list_objects)
+    if (schemaTextDetailType == SchemaTextDetailType.list)
     {
       out.print(formattingHelper.createObjectEnd());
     }
@@ -673,7 +673,7 @@ final class SchemaTextFormatter
     out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
                                               "Procedures"));
 
-    if (schemaTextDetailType == SchemaTextDetailType.list_objects)
+    if (schemaTextDetailType == SchemaTextDetailType.list)
     {
       out.print(formattingHelper.createObjectStart(""));
     }
@@ -682,7 +682,7 @@ final class SchemaTextFormatter
   void handleTablesEnd()
     throws SchemaCrawlerException
   {
-    if (schemaTextDetailType == SchemaTextDetailType.list_objects)
+    if (schemaTextDetailType == SchemaTextDetailType.list)
     {
       out.print(formattingHelper.createObjectEnd());
     }
@@ -694,7 +694,7 @@ final class SchemaTextFormatter
     out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
                                               "Tables"));
 
-    if (schemaTextDetailType == SchemaTextDetailType.list_objects)
+    if (schemaTextDetailType == SchemaTextDetailType.list)
     {
       out.print(formattingHelper.createObjectStart(""));
     }

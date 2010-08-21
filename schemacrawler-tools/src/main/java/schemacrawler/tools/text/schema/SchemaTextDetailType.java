@@ -30,7 +30,7 @@ public enum SchemaTextDetailType
   /**
    * No column detail.
    */
-  list_objects,
+  list,
   /**
    * Standard column detail.
    */
