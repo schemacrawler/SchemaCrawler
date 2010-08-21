@@ -153,8 +153,7 @@ public final class SchemaCrawler
     throws SchemaCrawlerException
   {
     final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
-    final boolean retrieveProcedures = options.isShowStoredProcedures()
-                                       && infoLevel.isRetrieveProcedures();
+    final boolean retrieveProcedures = infoLevel.isRetrieveProcedures();
     if (!retrieveProcedures)
     {
       return;

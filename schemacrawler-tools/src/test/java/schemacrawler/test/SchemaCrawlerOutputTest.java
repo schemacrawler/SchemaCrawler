@@ -192,7 +192,6 @@ public class SchemaCrawlerOutputTest
           .getResourceAsStream("/hsqldb.INFORMATION_SCHEMA.config.properties"));
         final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
         schemaCrawlerOptions.setSchemaInfoLevel(infoLevel.getSchemaInfoLevel());
-        schemaCrawlerOptions.setShowStoredProcedures(true);
 
         final DatabaseConnectionOptions connectionOptions = testUtility
           .getDatabaseConnectionOptions();

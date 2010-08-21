@@ -36,16 +36,13 @@
   TABLE,VIEW,SYSTEM_TABLE,GLOBAL_TEMPORARY,LOCAL_TEMPORARY,ALIAS
   Optional, defaults to TABLE,VIEW
   
--show_stored_procedures=<boolean>
-  Whether to show procedures, or not
-  Optional, defaults to true
-  
 -tables=<regular-expression>
   <regular-expression> is a regular expression to match fully qualified table 
   names, in the form "CATALOGNAME.SCHEMANAME.TABLENAME" - for example, 
   -tables=.*\.C.*|.*\.P.*
   matches any tables whose names start with C or P
   Tables that do not match the pattern are not displayed
+  Use -tables= to omit tables
   Optional, defaults to showing all tables
     
 -excludecolumns=<regular-expression>
@@ -62,6 +59,7 @@
   -procedures=.*\.C.*|.*\.P.*
   matches any procedures whose names start with C or P
   Procedures that do not match the pattern are not displayed
+  Use -procedures= to omit procedures
   Optional, defaults to showing all procedures
     
 -excludeinout=<regular-expression>

@@ -63,7 +63,6 @@ public class SchemaCrawlerDeepTest
   {
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setShowStoredProcedures(true);
 
     final Schema systemSchema = testUtility.getSchema(schemaCrawlerOptions,
                                                       "PUBLIC.SYSTEM_LOBS");

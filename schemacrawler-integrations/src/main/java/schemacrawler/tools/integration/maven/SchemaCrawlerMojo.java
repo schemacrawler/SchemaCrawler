@@ -176,14 +176,6 @@ public class SchemaCrawlerMojo
   private String table_types;
 
   /**
-   * Whether to show procedures, or not.
-   * 
-   * @parameter expression="${show_stored_procedures}"
-   *            alias="show_stored_procedures"
-   */
-  private final String show_stored_procedures = Boolean.TRUE.toString();
-
-  /**
    * Regular expression to match fully qualified table names, in the
    * form "CATALOGNAME.SCHEMANAME.TABLENAME" - for example,
    * .*\.C.*|.*\.P.* Tables that do not match the pattern are not
@@ -269,8 +261,6 @@ public class SchemaCrawlerMojo
     {
       schemaCrawlerOptions.setTableTypes(table_types);
     }
-    schemaCrawlerOptions.setShowStoredProcedures(Boolean
-      .parseBoolean(show_stored_procedures));
     schemaCrawlerOptions.setAlphabeticalSortForTables(Boolean
       .parseBoolean(sorttables));
     schemaCrawlerOptions.setAlphabeticalSortForTableColumns(Boolean

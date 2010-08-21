@@ -340,7 +340,6 @@ public class SchemaCrawlerTest
       .setRoutinesSql("SELECT * FROM INFORMATION_SCHEMA.ROUTINES");
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setShowStoredProcedures(true);
     schemaCrawlerOptions.setInformationSchemaViews(informationSchemaViews);
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
 
@@ -361,7 +360,6 @@ public class SchemaCrawlerTest
   {
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setShowStoredProcedures(true);
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.detailed());
     final Schema schema1 = testUtility.getSchema(schemaCrawlerOptions,
                                                  "PUBLIC.BOOKS");
@@ -523,7 +521,6 @@ public class SchemaCrawlerTest
       .setTriggersSql("SELECT * FROM INFORMATION_SCHEMA.TRIGGERS");
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setShowStoredProcedures(true);
     schemaCrawlerOptions.setInformationSchemaViews(informationSchemaViews);
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
     final Schema schema = testUtility.getSchema(schemaCrawlerOptions,
