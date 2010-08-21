@@ -203,7 +203,7 @@ Or, the following:
 
 -command=<command>
   Where <command> is a comma-separated list of:
-    list_objects
+    list
       Shows only table, view and procedure names  
     standard_schema
       Shows the commonly needed detail of the schema, including details of 

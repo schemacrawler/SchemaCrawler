@@ -41,9 +41,9 @@
           </li>
           <li>
             To start with, run
-            <span class="code">sc.cmd -c hsqldb -command=list_objects</span>
+            <span class="code">sc.cmd -c hsqldb -command=list</span>
             (or
-            <span class="code">sc.sh -c hsqldb -command=list_objects</span>
+            <span class="code">sc.sh -c hsqldb -command=list</span>
             on Unix)
           </li>
         </ol>
