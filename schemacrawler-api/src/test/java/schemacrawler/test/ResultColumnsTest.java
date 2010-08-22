@@ -31,7 +31,6 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.ResultsColumn;
 import schemacrawler.schema.ResultsColumns;
 import schemacrawler.utility.SchemaCrawlerUtility;
@@ -87,7 +86,8 @@ public class ResultColumnsTest
     final Statement statement = connection.createStatement();
     final ResultSet resultSet = statement.executeQuery(sql);
 
-    final ResultsColumns resultColumns = SchemaCrawlerUtility.getResultColumns(resultSet);
+    final ResultsColumns resultColumns = SchemaCrawlerUtility
+      .getResultColumns(resultSet);
     connection.close();
 
     assertNotNull("Could not obtain result columns", resultColumns);

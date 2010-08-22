@@ -142,7 +142,7 @@ abstract class BaseDatabaseConnectionOptions
 
   public void setConnectionProperties(final String connectionPropertiesString)
   {
-    this.connectionProperties = new HashMap<String, String>();
+    connectionProperties = new HashMap<String, String>();
     if (!Utility.isBlank(connectionPropertiesString))
     {
       for (final String property: connectionPropertiesString.split(";"))

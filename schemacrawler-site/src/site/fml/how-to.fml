@@ -136,14 +136,7 @@
       </question>
       <answer>
         <p>
-          Change the configuration for the SchemaCrawler table types to
-          <code>schemacrawler.table_types=TABLE </code>
-          in the
-          <code>schemacrawler.config.properties </code>
-          file.
-        </p>
-        <p>
-          The option in the configuration can be overridden by the
+          Use the
           -table_types command-line
           option. Further, see the
           <a href="faq.html#commands">details on the command-line options.</a>

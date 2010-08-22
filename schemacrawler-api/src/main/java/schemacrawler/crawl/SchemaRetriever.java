@@ -68,7 +68,7 @@ final class SchemaRetriever
       {
         final List<String> metaDataCatalogNames = readResultsVector(getMetaData()
           .getCatalogs());
-        for (String catalogName: metaDataCatalogNames)
+        for (final String catalogName: metaDataCatalogNames)
         {
           catalogNames.add(quotedName(catalogName));
         }

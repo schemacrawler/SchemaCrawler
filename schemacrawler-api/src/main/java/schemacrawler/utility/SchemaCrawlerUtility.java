@@ -47,7 +47,7 @@ public final class SchemaCrawlerUtility
     return database;
   }
 
-  public static ResultsColumns getResultColumns(ResultSet resultSet)
+  public static ResultsColumns getResultColumns(final ResultSet resultSet)
   {
     return SchemaCrawler.getResultColumns(resultSet);
   }
