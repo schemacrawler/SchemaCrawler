@@ -39,8 +39,6 @@ public final class SchemaCrawlerOptions
   private static final String SC_SCHEMA_PATTERN_EXCLUDE = "schemacrawler.schema.pattern.exclude";
   private static final String SC_SCHEMA_PATTERN_INCLUDE = "schemacrawler.schema.pattern.include";
 
-  private static final String SC_TABLE_TYPES = "schemacrawler.table_types";
-
   private static final String SC_COLUMN_PATTERN_EXCLUDE = "schemacrawler.column.pattern.exclude";
   private static final String SC_COLUMN_PATTERN_INCLUDE = "schemacrawler.column.pattern.include";
   private static final String SC_TABLE_PATTERN_EXCLUDE = "schemacrawler.table.pattern.exclude";
@@ -99,7 +97,28 @@ public final class SchemaCrawlerOptions
    */
   public SchemaCrawlerOptions()
   {
-    this(new Config());
+    informationSchemaViews = new InformationSchemaViews();
+
+    schemaInclusionRule = InclusionRule.INCLUDE_ALL;
+
+    tableTypes = new TableType[] {
+        TableType.table, TableType.view
+    };
+    tableInclusionRule = InclusionRule.INCLUDE_ALL;
+    columnInclusionRule = InclusionRule.INCLUDE_ALL;
+
+    procedureInclusionRule = InclusionRule.INCLUDE_ALL;
+    procedureColumnInclusionRule = InclusionRule.INCLUDE_ALL;
+
+    grepColumnInclusionRule = InclusionRule.INCLUDE_ALL;
+    grepProcedureColumnInclusionRule = InclusionRule.INCLUDE_ALL;
+    grepInvertMatch = false;
+
+    isAlphabeticalSortForTables = true;
+    isAlphabeticalSortForTableColumns = false;
+    isAlphabeticalSortForForeignKeys = false;
+    isAlphabeticalSortForIndexes = false;
+    isAlphabeticalSortForProcedureColumns = false;
   }
 
   /**
@@ -110,6 +129,7 @@ public final class SchemaCrawlerOptions
    */
   public SchemaCrawlerOptions(final Config config)
   {
+    this();
     final Config configProperties;
     if (config == null)
     {
@@ -119,10 +139,6 @@ public final class SchemaCrawlerOptions
     {
       configProperties = config;
     }
-
-    final String tableTypesString = configProperties
-      .getStringValue(SC_TABLE_TYPES, DEFAULT_TABLE_TYPES);
-    tableTypes = TableType.valueOf(tableTypesString.split(","));
 
     informationSchemaViews = new InformationSchemaViews(config);
 

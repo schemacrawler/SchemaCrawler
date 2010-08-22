@@ -226,7 +226,7 @@ final class MetadataResultSet
     {
       try
       {
-        enumValue = (E) defaultValue.valueOf(defaultValue.getClass(), value
+        enumValue = (E) Enum.valueOf(defaultValue.getClass(), value
           .toLowerCase(Locale.ENGLISH));
       }
       catch (final Exception e)
@@ -260,7 +260,6 @@ final class MetadataResultSet
         {
           value = defaultValue;
         }
-        return value;
       }
       catch (final SQLException e)
       {
@@ -293,7 +292,6 @@ final class MetadataResultSet
         {
           value = defaultValue;
         }
-        return value;
       }
       catch (final SQLException e)
       {
@@ -326,7 +324,6 @@ final class MetadataResultSet
         {
           value = defaultValue;
         }
-        return value;
       }
       catch (final SQLException e)
       {
