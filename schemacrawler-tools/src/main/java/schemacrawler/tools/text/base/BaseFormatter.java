@@ -54,7 +54,7 @@ public abstract class BaseFormatter<O extends Options>
   protected final OutputOptions outputOptions;
   protected final PrintWriter out;
   protected final TextFormattingHelper formattingHelper;
-  private final boolean printVerboseDatabaseInfo;
+  protected final boolean printVerboseDatabaseInfo;
 
   protected BaseFormatter(final O options,
                           final boolean printVerboseDatabaseInfo,
@@ -67,7 +67,8 @@ public abstract class BaseFormatter<O extends Options>
     }
     this.options = options;
 
-    this.printVerboseDatabaseInfo = printVerboseDatabaseInfo;
+    this.printVerboseDatabaseInfo = !outputOptions.isNoInfo()
+                                    && printVerboseDatabaseInfo;
 
     if (outputOptions == null)
     {
