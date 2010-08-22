@@ -70,7 +70,9 @@ final class SchemaTextFormatter
     return textValue;
   }
 
-  private final SchemaTextDetailType schemaTextDetailType;
+  private final boolean isVerbose;
+  private final boolean isNotList;
+  private final boolean isList;
 
   /**
    * Text formatting of schema.
@@ -92,7 +94,10 @@ final class SchemaTextFormatter
     super(options,
           schemaTextDetailType == SchemaTextDetailType.verbose_schema,
           outputOptions);
-    this.schemaTextDetailType = schemaTextDetailType;
+    isVerbose = schemaTextDetailType
+      .isGreaterThanOrEqualTo(SchemaTextDetailType.verbose_schema);
+    isNotList = schemaTextDetailType != SchemaTextDetailType.list;
+    isList = schemaTextDetailType == SchemaTextDetailType.list;
   }
 
   private void printCheckConstraints(final CheckConstraint[] constraints)
@@ -510,8 +515,7 @@ final class SchemaTextFormatter
   void handle(final ColumnDataType columnDataType)
     throws SchemaCrawlerException
   {
-    if (schemaTextDetailType
-      .isGreaterThanOrEqualTo(SchemaTextDetailType.verbose_schema))
+    if (printVerboseDatabaseInfo && isVerbose)
     {
       out.print(formattingHelper.createObjectStart(""));
       printColumnDataType(columnDataType);
@@ -527,25 +531,24 @@ final class SchemaTextFormatter
    */
   void handle(final Procedure procedure)
   {
-    final boolean underscore = schemaTextDetailType != SchemaTextDetailType.list;
+    final boolean underscore = isNotList;
     final String procedureTypeDetail = "procedure, " + procedure.getType();
     final String nameRow = formattingHelper.createNameRow(procedure
       .getFullName(), "[" + procedureTypeDetail + "]", underscore);
 
-    if (schemaTextDetailType != SchemaTextDetailType.list)
+    if (isNotList)
     {
       out.print(formattingHelper.createObjectStart(""));
     }
 
     out.println(nameRow);
 
-    if (schemaTextDetailType != SchemaTextDetailType.list)
+    if (isNotList)
     {
       printProcedureColumns(procedure.getColumns());
       printDefinition("definition", "", procedure.getDefinition());
 
-      if (schemaTextDetailType
-        .isGreaterThanOrEqualTo(SchemaTextDetailType.verbose_schema))
+      if (isVerbose)
       {
         printDefinition("remarks", "", procedure.getRemarks());
       }
@@ -565,34 +568,32 @@ final class SchemaTextFormatter
    */
   void handle(final Table table)
   {
-    final boolean underscore = schemaTextDetailType != SchemaTextDetailType.list;
+    final boolean underscore = isNotList;
     final String nameRow = formattingHelper.createNameRow(table.getFullName(),
                                                           "[" + table.getType()
                                                               + "]",
                                                           underscore);
 
-    if (schemaTextDetailType != SchemaTextDetailType.list)
+    if (isNotList)
     {
       out.print(formattingHelper.createObjectStart(""));
     }
 
     out.println(nameRow);
 
-    if (schemaTextDetailType != SchemaTextDetailType.list)
+    if (isNotList)
     {
       final Column[] columns = table.getColumns();
       printTableColumns(columns);
 
       printPrimaryKey(table.getPrimaryKey());
       printForeignKeys(table.getName(), table.getForeignKeys());
-      if (schemaTextDetailType
-        .isGreaterThanOrEqualTo(SchemaTextDetailType.verbose_schema))
+      if (isVerbose)
       {
         printWeakAssociations(table);
       }
       printIndices(table.getIndices());
-      if (schemaTextDetailType
-        .isGreaterThanOrEqualTo(SchemaTextDetailType.verbose_schema))
+      if (isVerbose)
       {
         printCheckConstraints(table.getCheckConstraints());
         printPrivileges(table.getPrivileges());
@@ -603,8 +604,7 @@ final class SchemaTextFormatter
         final View view = (View) table;
         printDefinition("definition", "", view.getDefinition());
       }
-      if (schemaTextDetailType
-        .isGreaterThanOrEqualTo(SchemaTextDetailType.verbose_schema))
+      if (isVerbose)
       {
         final String tableRemarks = table.getRemarks();
         boolean hasColumnRemarks = false;
@@ -650,8 +650,7 @@ final class SchemaTextFormatter
 
   void handleColumnDataTypesStart()
   {
-    if (schemaTextDetailType
-      .isGreaterThanOrEqualTo(SchemaTextDetailType.verbose_schema))
+    if (printVerboseDatabaseInfo && isVerbose)
     {
       out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
                                                 "Data Types"));
@@ -661,7 +660,7 @@ final class SchemaTextFormatter
   void handleProceduresEnd()
     throws SchemaCrawlerException
   {
-    if (schemaTextDetailType == SchemaTextDetailType.list)
+    if (isList)
     {
       out.print(formattingHelper.createObjectEnd());
     }
@@ -673,7 +672,7 @@ final class SchemaTextFormatter
     out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
                                               "Procedures"));
 
-    if (schemaTextDetailType == SchemaTextDetailType.list)
+    if (isList)
     {
       out.print(formattingHelper.createObjectStart(""));
     }
@@ -682,7 +681,7 @@ final class SchemaTextFormatter
   void handleTablesEnd()
     throws SchemaCrawlerException
   {
-    if (schemaTextDetailType == SchemaTextDetailType.list)
+    if (isList)
     {
       out.print(formattingHelper.createObjectEnd());
     }
@@ -694,7 +693,7 @@ final class SchemaTextFormatter
     out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
                                               "Tables"));
 
-    if (schemaTextDetailType == SchemaTextDetailType.list)
+    if (isList)
     {
       out.print(formattingHelper.createObjectStart(""));
     }
