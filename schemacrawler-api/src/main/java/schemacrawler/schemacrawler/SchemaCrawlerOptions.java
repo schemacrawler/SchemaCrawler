@@ -53,6 +53,8 @@ public final class SchemaCrawlerOptions
   private static final String SC_GREP_COLUMN_PATTERN_INCLUDE = "schemacrawler.grep.column.pattern.include";
   private static final String SC_GREP_PROCEDURE_COLUMN_PATTERN_EXCLUDE = "schemacrawler.grep.procedure.inout.pattern.exclude";
   private static final String SC_GREP_PROCEDURE_COLUMN_PATTERN_INCLUDE = "schemacrawler.grep.procedure.inout.pattern.include";
+  private static final String SC_GREP_DEFINITION_PATTERN_EXCLUDE = "schemacrawler.grep.definition.pattern.exclude";
+  private static final String SC_GREP_DEFINITION_PATTERN_INCLUDE = "schemacrawler.grep.definition.pattern.include";
 
   private static final String SC_GREP_INVERT_MATCH = "schemacrawler.grep.invert-match";
 
@@ -81,6 +83,7 @@ public final class SchemaCrawlerOptions
 
   private InclusionRule grepColumnInclusionRule;
   private InclusionRule grepProcedureColumnInclusionRule;
+  private InclusionRule grepDefinitionInclusionRule;
 
   private boolean grepInvertMatch;
   private boolean isAlphabeticalSortForTables;
@@ -112,6 +115,7 @@ public final class SchemaCrawlerOptions
 
     grepColumnInclusionRule = InclusionRule.INCLUDE_ALL;
     grepProcedureColumnInclusionRule = InclusionRule.INCLUDE_ALL;
+    grepDefinitionInclusionRule = InclusionRule.INCLUDE_ALL;
     grepInvertMatch = false;
 
     isAlphabeticalSortForTables = true;
@@ -186,6 +190,12 @@ public final class SchemaCrawlerOptions
                       InclusionRule.ALL), configProperties
       .getStringValue(SC_GREP_PROCEDURE_COLUMN_PATTERN_EXCLUDE,
                       InclusionRule.NONE));
+    grepDefinitionInclusionRule = new InclusionRule(configProperties
+                                                      .getStringValue(SC_GREP_DEFINITION_PATTERN_INCLUDE,
+                                                                      InclusionRule.ALL),
+                                                    configProperties
+                                                      .getStringValue(SC_GREP_DEFINITION_PATTERN_EXCLUDE,
+                                                                      InclusionRule.NONE));
     grepInvertMatch = configProperties.getBooleanValue(SC_GREP_INVERT_MATCH);
 
     isAlphabeticalSortForTables = Boolean.parseBoolean(configProperties
@@ -219,6 +229,16 @@ public final class SchemaCrawlerOptions
   public InclusionRule getGrepColumnInclusionRule()
   {
     return grepColumnInclusionRule;
+  }
+
+  /**
+   * Gets the definitions inclusion rule for grep.
+   * 
+   * @return Definitions inclusion rule for grep.
+   */
+  public InclusionRule getGrepDefinitionInclusionRule()
+  {
+    return grepDefinitionInclusionRule;
   }
 
   /**
@@ -463,6 +483,21 @@ public final class SchemaCrawlerOptions
       throw new IllegalArgumentException("Cannot use null value in a setter");
     }
     this.grepColumnInclusionRule = grepColumnInclusionRule;
+  }
+
+  /**
+   * Sets the definition inclusion rule for grep.
+   * 
+   * @param grepDefinitionInclusionRule
+   *        Definition inclusion rule for grep
+   */
+  public void setGrepDefinitionInclusionRule(InclusionRule grepDefinitionInclusionRule)
+  {
+    if (grepDefinitionInclusionRule == null)
+    {
+      throw new IllegalArgumentException("Cannot use null value in a setter");
+    }
+    this.grepDefinitionInclusionRule = grepDefinitionInclusionRule;
   }
 
   /**

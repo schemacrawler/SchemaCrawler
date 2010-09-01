@@ -86,5 +86,10 @@
   matches inouts named STREET or PRICE in any table
   Optional, default is no grep
   
+-grepdef=<regular-expression>
+  <regular-expression> is a regular expression to match text within remarks and
+  definitions of views, stored proedures and triggers, if available
+  Optional, default is no grep
+    
 -v (short for -invert-match)        
   Optional, inverts the match, and shows non-matching tables and columns
