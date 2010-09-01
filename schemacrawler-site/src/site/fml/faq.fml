@@ -42,207 +42,26 @@
     <faq id="commands">
       <question> What are the SchemaCrawler commands? </question>
       <answer>
-        <p> SchemaCrawler can produce brief, basic, or verbose details of your schema. The brief schema option gives you
-          just table, view, and procedure names. The basic schema option gives you the column names and primary keys.
-          The verbose schema option will give you details of data types, indices, primary and foreign keys, view and
-          procedure definitions. The maximum schema option will give you details of privileges, triggers, and check
-          constraints. Each successive option takes more time to execute. </p>
+        <p>The easiest way to see the SchemaCrawler commands is to download and install SchemaCrawler, and run the
+          provided scripts (<code>sc.sh</code> on Unix, and <code>sc.cmd</code> on Windows). Detailed command-line help will be displayed.</p>
+        <p>
+          SchemaCrawler can produce listings, and standard, or verbose details of your schema. The list schema option
+          gives you
+          just table, view, and procedure names. The standard schema option gives you the column names and
+          primary keys.
+          The verbose schema option will give you details of data types, indices, primary and foreign keys,
+          view and
+          procedure definitions. The SchemaCrawler command can be combined with an
+          <i>infolevel</i>
+          , which determines the level of detail of schema metadata obtained. The maximum infolevel will give you
+          privileges, triggers definitions, and check constraints. Each successive option takes
+          more time to execute.
+        </p>
+        <p>SchemaCrawler provides commands for producing graphs and running templates, if the appropriate extensions are
+          installed.</p>
         <p> SchemaCrawler can also manipulate your data. You can get counts of the rows in tables and views.
           SchemaCrawler can output all the data in your tables and views, or run specific SQL statements against table
           and views. SchemaCrawler can be fine-tuned using configuration files. </p>
-        <source><![CDATA[
-
-SchemaCrawler 8.4
-Copyright (c) 2000-2010, Sualeh Fatehi.
-SchemaCrawler is a platform (operating system and database) independent command-
-line tool to output your database schema and data in a readable form. The output 
-is designed to be diff-ed with previous versions of your database schema. 
-SchemaCrawler has powerful grep  functionality that allows you to search for 
-table and column names using regular expressions. SchemaCrawler can also 
-generate schema diagrams.
-
---- Connection Options ---
-
-Required, one of:
-
--c <connection_name> (short for -connection <connection_name>)
-  Uses a named connection
-
--d (short for -default)
-  Uses the default connection
-
-Or, the following:
-
--driver=<driver-class-name>
-  Fully qualified name of the JDBC driver class.
-
--url=<url>
-  JDBC connection URL to the database.
-
--user=<user>
-  Database user name.
-
--password=<password>
-  Database password.
-
---- Sort Options ---
-
--sorttables=<boolean>
-  Sort tables alphabetically
-  <boolean> can be true or false
-  Optional, defaults to true
-  
--sortcolumns=<boolean>
-  Sort columns in a table alphabetically, defaults to false
-  <boolean> can be true or false
-  Optional, defaults to false
-
--sortinout=<boolean>
-  Sort parameters in a stored procedure alphabetically
-  <boolean> can be true or false
-  Optional, defaults to false
-  
---- Filtering Options ---
-     
--infolevel=<infolevel>
-  <infolevel> is one of minimum, standard, detailed, or maximum
-  The info level determines the amount of database metadata retrieved,
-  and also determines the time taken to crawl the schema
-  Optional, defaults to standard
-       
--schemas=<regular-expression>
-  <regular-expression> is a regular expression to match fully qualified schema 
-  namess, in the form "CATALOGNAME.SCHEMANAME" - for example,
-  -schemas=.*\.C.*|.*\.P.*
-  matches any schemas whose names start with C or P
-  Schemas that do not match the pattern are not displayed
-  Optional, defaults to showing all schemas
-  
--table_types=<table_types>
-  <table_types> is a comma-separated list of table types of 
-  TABLE,VIEW,SYSTEM_TABLE,GLOBAL_TEMPORARY,LOCAL_TEMPORARY,ALIAS
-  Optional, defaults to TABLE,VIEW
-  
--tables=<regular-expression>
-  <regular-expression> is a regular expression to match fully qualified table 
-  names, in the form "CATALOGNAME.SCHEMANAME.TABLENAME" - for example, 
-  -tables=.*\.C.*|.*\.P.*
-  matches any tables whose names start with C or P
-  Tables that do not match the pattern are not displayed
-  Use -tables= to omit all tables
-  Optional, defaults to showing all tables
-    
--excludecolumns=<regular-expression>
-  <regular-expression> is a regular expression to match fully qualified column 
-  names, in the form "CATALOGNAME.SCHEMANAME.TABLENAME.COLUMNNAME" - for example, 
-  -excludecolumns=.*\.STREET|.*\.PRICE
-  matches columns named STREET or PRICE in any table
-  Columns that match the pattern are not displayed
-  Optional, default is to show all columns
-      
--procedures=<regular-expression>
-  <regular-expression> is a regular expression to match fully qualified procedure 
-  names, in the form "CATALOGNAME.SCHEMANAME.PROCEDURENAME" - for example, 
-  -procedures=.*\.C.*|.*\.P.*
-  matches any procedures whose names start with C or P
-  Procedures that do not match the pattern are not displayed
-  Use -procedures= to omit all procedures
-  Optional, defaults to showing all procedures
-    
--excludeinout=<regular-expression>
-  <regular-expression> is a regular expression to match fully qualified 
-  parameter names - for example, 
-  -excludeinout=@p1|@p2
-  matches parameters named @p1 or @p2 in any procedure 
-  Parameters that match the pattern are not displayed
-  Optional, default is to show all parameters
-        
---- Grep Options ---
-    
--grepcolumns=<regular-expression>
-  <regular-expression> is a regular expression to match fully qualified 
-  column names, in the form "SCHEMANAME.TABLENAME.COLUMNNAME" - for example,
-  -grepcolumns=.*\.STREET|.*\.PRICE
-  matches columns named STREET or PRICE in any table
-  Optional, default is no grep
-   
--grepinout=<regular-expression>
-  <regular-expression> is a regular expression to match fully qualified 
-  inout names, in the form "SCHEMANAME.TABLENAME.INOUTNAME" - for example,
-  -grepinout=.*\.STREET|.*\.PRICE
-  matches inouts named STREET or PRICE in any table
-  Optional, default is no grep
-  
--v (short for -invert-match)        
-  Optional, inverts the match, and shows non-matching tables and columns
-
---- Configuration Options ---
-
--g=<config-file> (short for -configfile <config-file>)
-  Reads SchemaCrawler configuration properties from <config-file>
-  Optional, uses the default schemacrawler.config.properties file
-  in the current directory, or in-built default options
-
--p=<config-override-file> (short for -configoverridefile <config-override-file>)
-  Reads SchemaCrawler configuration properties from 
-  <config-override-file> and overrides the properties from the 
-  configuration file
-  Optional, defaults to no overrides
-
---- Application Options ---
-
--loglevel=<loglevel>
-  Sets the logging granularity, where <loglevel> is one of: 
-  OFF, SEVERE, WARNING, INFO, CONFIG, FINE, FINER, FINEST, ALL
-  Optional, default OFF
-
--?, -h, -help, --help
-  Shows this help text
-
---- Command ---
-
--command=<command>
-  Where <command> is a comma-separated list of:
-    list
-      Shows only table, view and procedure names  
-    standard_schema
-      Shows the commonly needed detail of the schema, including details of 
-      tables, views and procedures, columns, primary keys, indexes, 
-      and foreign keys
-    verbose_schema
-      Shows maximum possible detail of the schema, including privileges, and 
-      details of privileges, triggers, and check constraints
-    count
-      Shows counts of rows in the tables
-    dump
-      Shows data from all rows in the tables
-    <query_name>
-      Shows results of query <query_name>, as specified in the configuration 
-      properties file
-      The query itself can contain the variables ${table}, ${columns} 
-      and ${tabletype},  or system properties referenced as 
-      ${<system-property-name>}
-      Queries without any variables are executed exactly once; queries
-      with variables are executed once for each table, with the variables
-      substituted
-  Optional, default is standard_schema
-
---- Output Options ---
-
--outputformat=<outputformat>
-  Format of the SchemaCrawler output, where <outputformat> is one of:
-    text
-      For text output (default)
-    html
-      For XHTML output
-    csv
-      For CSV output
-  Optional, defaults to text    
-      
--outputfile=<outputfile>
-  <outputfile> is the path to the output file
-  Optional, defaults to the console (stdout)
-]]></source>
       </answer>
     </faq>
     <faq id="config">
