@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
 	<name>SchemaCrawler - 2 - Commandline</name>
-	<comment>SchemaCrawler is an API that improves on the standard JDBC metadata. SchemaCrawler is also a command-line tool to output your database schema and data in a readable form. The output is designed to be diff-ed with previous versions of your database schema.</comment>
-	<projects>
-	</projects>
 	<buildSpec>
 		<buildCommand>
 			<name>org.eclipse.jdt.core.javabuilder</name>
