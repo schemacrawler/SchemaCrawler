@@ -115,7 +115,7 @@ public final class SchemaCrawlerOptions
 
     grepColumnInclusionRule = InclusionRule.INCLUDE_ALL;
     grepProcedureColumnInclusionRule = InclusionRule.INCLUDE_ALL;
-    grepDefinitionInclusionRule = InclusionRule.INCLUDE_ALL;
+    grepDefinitionInclusionRule = InclusionRule.EXCLUDE_ALL;
     grepInvertMatch = false;
 
     isAlphabeticalSortForTables = true;
