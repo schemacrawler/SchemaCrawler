@@ -70,6 +70,9 @@ final class SchemaCrawlerOptionsParser
   private final StringOption optionGrepProcedureColumns = new StringOption(Option.NO_SHORT_FORM,
                                                                            "grepinout",
                                                                            InclusionRule.NONE);
+  private final StringOption optionGrepDefinitions = new StringOption(Option.NO_SHORT_FORM,
+                                                                      "grepdef",
+                                                                      InclusionRule.NONE);
   private final BooleanOption optionGrepInvertMatch = new BooleanOption('v',
                                                                         "invert-match");
 
@@ -101,6 +104,7 @@ final class SchemaCrawlerOptionsParser
         optionExcludeProcedureColumns,
         optionGrepColumns,
         optionGrepProcedureColumns,
+        optionGrepDefinitions,
         optionGrepInvertMatch,
         optionSortTables,
         optionSortColumns,
@@ -183,6 +187,14 @@ final class SchemaCrawlerOptionsParser
                                                                                InclusionRule.NONE);
       options
         .setGrepProcedureColumnInclusionRule(grepProcedureColumnInclusionRule);
+    }
+
+    if (optionGrepDefinitions.isFound())
+    {
+      final InclusionRule grepDefinitionInclusionRule = new InclusionRule(optionGrepDefinitions
+                                                                            .getValue(),
+                                                                          InclusionRule.NONE);
+      options.setGrepDefinitionInclusionRule(grepDefinitionInclusionRule);
     }
 
     if (optionSortColumns.isFound())
