@@ -5,7 +5,12 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-    <release version="8.4" date="2010-08-01">
+    <release version="8.4" date="2010-08-31">
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Simplified commands - list_objects is now simply list. Removed the -show_stored_procedures command line option - simply use -proedures=
+      ]]></action>
+    </release>
+    <release version="8.3.3" date="2010-08-01">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Added color to headings in HTML output.
       ]]></action>
@@ -14,7 +19,7 @@
       ]]></action>
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         DB2 INFORMATION_SCHCEMA SQL fixed.
-      ]]></action>      
+      ]]></action>
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Foreign keys show full column names in graphs, even when the table is excluded.
       ]]></action>
