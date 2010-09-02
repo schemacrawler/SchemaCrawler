@@ -29,7 +29,6 @@
         <artifactId>schemacrawler-integrations</artifactId>
         <version>8.4</version>
         <configuration>
-          <config>schemacrawler.config.properties</config>
           <driver>org.hsqldb.jdbcDriver</driver>
           <url>jdbc:hsqldb:hsql://localhost:9001/schemacrawler</url>
           <user>sa</user>

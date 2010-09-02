@@ -22,13 +22,6 @@
             and make sure that Maven is on your path.
           </li>
           <li>
-            Copy the
-            <span class="code">schemacrawler.config.properties</span>
-            into the
-            <span class="code">maven-site-report</span>
-            example directory.
-          </li>
-          <li>
             Copy the hsqldb jar file from distribution directory into the
             <span class="code">maven-site-report</span>
             example directory.
@@ -50,9 +43,6 @@
       </subsection>
       <subsection name="How to Experiment">
         <ol>
-          <li>Try modifying the schemacrawler.config.properties with regular
-            expressions, logging, and so on.
-          </li>
           <li>
             Try using different SchemaCrawler commands in the Maven test project's
             pom.xml file. (For a complete list of

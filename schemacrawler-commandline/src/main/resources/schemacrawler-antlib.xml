@@ -4,15 +4,6 @@
   <macrodef name="schemacrawler">
 
     <attribute
-      name="config"
-      description="Path to the configuration file"
-      default="schemacrawler.config.properties"/>
-    <attribute
-      name="config-override"
-      description="Path to the configuration override file"
-      default="schemacrawler.config.override.properties"/>
-
-    <attribute
       name="schemacrawler-classpath"
       description="SchemaCrawler jars, and database driver classpath"
       default="${schemacrawler-classpath}"/>

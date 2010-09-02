@@ -77,23 +77,6 @@ public class SchemaCrawlerMojo
   private String jdbcDriverClasspath;
 
   /**
-   * Config file.
-   * 
-   * @parameter expression="${config}" alias="config"
-   *            default-value="config.properties"
-   * @required
-   */
-  private String config;
-
-  /**
-   * Config override file.
-   * 
-   * @parameter expression="${config-override}" alias="config-override"
-   *            default-value="schemacrawler.config.override.properties"
-   */
-  private String configOverride;
-
-  /**
    * JDBC driver class name.
    * 
    * @parameter expression="${driver}" alias="driver"
@@ -346,8 +329,7 @@ public class SchemaCrawlerMojo
 
       final File outputFile = File.createTempFile("schemacrawler.report.",
                                                   ".html");
-      final Config additionalConfiguration = Config
-        .load(config, configOverride);
+      final Config additionalConfiguration = new Config();
 
       // Execute SchemaCrawler
       executable.setOutputOptions(createOutputOptions(outputFile));
