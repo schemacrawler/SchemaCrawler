@@ -21,7 +21,6 @@
 package schemacrawler.tools.commandline;
 
 
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
@@ -85,10 +84,10 @@ final class SchemaCrawlerOptionsParser
 
   private final SchemaCrawlerOptions options;
 
-  SchemaCrawlerOptionsParser(final String[] args, final Config config)
+  SchemaCrawlerOptionsParser(final String[] args)
   {
     super(args);
-    options = new SchemaCrawlerOptions(config);
+    options = new SchemaCrawlerOptions();
   }
 
   @Override

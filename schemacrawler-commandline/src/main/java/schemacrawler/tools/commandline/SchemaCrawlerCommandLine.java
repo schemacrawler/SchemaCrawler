@@ -102,14 +102,7 @@ public final class SchemaCrawlerCommandLine
     }
     else
     {
-      if (args != null && args.length > 0)
-      {
-        config = new ConfigParser(args).getOptions();
-      }
-      else
-      {
-        config = new Config();
-      }
+      config = new Config();
 
       if (connectionOptions != null)
       {
@@ -117,21 +110,12 @@ public final class SchemaCrawlerCommandLine
       }
       else
       {
-        ConnectionOptions parsedConnectionOptions = new CommandLineConnectionOptionsParser(args,
-                                                                                           config)
+        this.connectionOptions = new CommandLineConnectionOptionsParser(args)
           .getOptions();
-        if (parsedConnectionOptions == null)
-        {
-          parsedConnectionOptions = new ConfigConnectionOptionsParser(args,
-                                                                      config)
-            .getOptions();
-        }
-        this.connectionOptions = parsedConnectionOptions;
       }
     }
 
-    schemaCrawlerOptions = new SchemaCrawlerOptionsParser(args, config)
-      .getOptions();
+    schemaCrawlerOptions = new SchemaCrawlerOptionsParser(args).getOptions();
   }
 
   public void execute()

@@ -36,34 +36,6 @@ public final class SchemaCrawlerOptions
 
   private static final long serialVersionUID = -3557794862382066029L;
 
-  private static final String SC_SCHEMA_PATTERN_EXCLUDE = "schemacrawler.schema.pattern.exclude";
-  private static final String SC_SCHEMA_PATTERN_INCLUDE = "schemacrawler.schema.pattern.include";
-
-  private static final String SC_COLUMN_PATTERN_EXCLUDE = "schemacrawler.column.pattern.exclude";
-  private static final String SC_COLUMN_PATTERN_INCLUDE = "schemacrawler.column.pattern.include";
-  private static final String SC_TABLE_PATTERN_EXCLUDE = "schemacrawler.table.pattern.exclude";
-  private static final String SC_TABLE_PATTERN_INCLUDE = "schemacrawler.table.pattern.include";
-
-  private static final String SC_PROCEDURE_COLUMN_PATTERN_EXCLUDE = "schemacrawler.procedure.inout.pattern.exclude";
-  private static final String SC_PROCEDURE_COLUMN_PATTERN_INCLUDE = "schemacrawler.procedure.inout.pattern.include";
-  private static final String SC_PROCEDURE_PATTERN_EXCLUDE = "schemacrawler.procedure.pattern.exclude";
-  private static final String SC_PROCEDURE_PATTERN_INCLUDE = "schemacrawler.procedure.pattern.include";
-
-  private static final String SC_GREP_COLUMN_PATTERN_EXCLUDE = "schemacrawler.grep.column.pattern.exclude";
-  private static final String SC_GREP_COLUMN_PATTERN_INCLUDE = "schemacrawler.grep.column.pattern.include";
-  private static final String SC_GREP_PROCEDURE_COLUMN_PATTERN_EXCLUDE = "schemacrawler.grep.procedure.inout.pattern.exclude";
-  private static final String SC_GREP_PROCEDURE_COLUMN_PATTERN_INCLUDE = "schemacrawler.grep.procedure.inout.pattern.include";
-  private static final String SC_GREP_DEFINITION_PATTERN_EXCLUDE = "schemacrawler.grep.definition.pattern.exclude";
-  private static final String SC_GREP_DEFINITION_PATTERN_INCLUDE = "schemacrawler.grep.definition.pattern.include";
-
-  private static final String SC_GREP_INVERT_MATCH = "schemacrawler.grep.invert-match";
-
-  private static final String SC_SORT_ALPHABETICALLY_TABLES = "schemacrawler.sort_alphabetically.tables";
-  private static final String SC_SORT_ALPHABETICALLY_PROCEDURE_COLUMNS = "schemacrawler.sort_alphabetically.procedure_columns";
-  private static final String SC_SORT_ALPHABETICALLY_TABLE_INDEXES = "schemacrawler.sort_alphabetically.table_indices";
-  private static final String SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS = "schemacrawler.sort_alphabetically.table_foreignkeys";
-  private static final String SC_SORT_ALPHABETICALLY_TABLE_COLUMNS = "schemacrawler.sort_alphabetically.table_columns";
-
   private static TableType[] copyTableTypes(final TableType[] tableTypes)
   {
     final TableType[] tableTypesCopy = new TableType[tableTypes.length];
@@ -92,6 +64,7 @@ public final class SchemaCrawlerOptions
   private boolean isAlphabeticalSortForForeignKeys;
   private boolean isAlphabeticalSortForIndexes;
   private boolean isAlphabeticalSortForProcedureColumns;
+
   private SchemaInfoLevel schemaInfoLevel;
   private InformationSchemaViews informationSchemaViews;
 
@@ -123,92 +96,6 @@ public final class SchemaCrawlerOptions
     isAlphabeticalSortForForeignKeys = false;
     isAlphabeticalSortForIndexes = false;
     isAlphabeticalSortForProcedureColumns = false;
-  }
-
-  /**
-   * Options from properties.
-   * 
-   * @param config
-   *        Configuration properties
-   */
-  public SchemaCrawlerOptions(final Config config)
-  {
-    this();
-    final Config configProperties;
-    if (config == null)
-    {
-      configProperties = new Config();
-    }
-    else
-    {
-      configProperties = config;
-    }
-
-    informationSchemaViews = new InformationSchemaViews(config);
-
-    schemaInclusionRule = new InclusionRule(configProperties
-                                              .getStringValue(SC_SCHEMA_PATTERN_INCLUDE,
-                                                              InclusionRule.ALL),
-                                            configProperties
-                                              .getStringValue(SC_SCHEMA_PATTERN_EXCLUDE,
-                                                              InclusionRule.NONE));
-
-    tableInclusionRule = new InclusionRule(configProperties
-                                             .getStringValue(SC_TABLE_PATTERN_INCLUDE,
-                                                             InclusionRule.ALL),
-                                           configProperties
-                                             .getStringValue(SC_TABLE_PATTERN_EXCLUDE,
-                                                             InclusionRule.NONE));
-    columnInclusionRule = new InclusionRule(configProperties
-                                              .getStringValue(SC_COLUMN_PATTERN_INCLUDE,
-                                                              InclusionRule.ALL),
-                                            configProperties
-                                              .getStringValue(SC_COLUMN_PATTERN_EXCLUDE,
-                                                              InclusionRule.NONE));
-
-    procedureInclusionRule = new InclusionRule(configProperties
-                                                 .getStringValue(SC_PROCEDURE_PATTERN_INCLUDE,
-                                                                 InclusionRule.ALL),
-                                               configProperties
-                                                 .getStringValue(SC_PROCEDURE_PATTERN_EXCLUDE,
-                                                                 InclusionRule.NONE));
-    procedureColumnInclusionRule = new InclusionRule(configProperties
-                                                       .getStringValue(SC_PROCEDURE_COLUMN_PATTERN_INCLUDE,
-                                                                       InclusionRule.ALL),
-                                                     configProperties
-                                                       .getStringValue(SC_PROCEDURE_COLUMN_PATTERN_EXCLUDE,
-                                                                       InclusionRule.NONE));
-
-    grepColumnInclusionRule = new InclusionRule(configProperties
-                                                  .getStringValue(SC_GREP_COLUMN_PATTERN_INCLUDE,
-                                                                  InclusionRule.ALL),
-                                                configProperties
-                                                  .getStringValue(SC_GREP_COLUMN_PATTERN_EXCLUDE,
-                                                                  InclusionRule.NONE));
-    grepProcedureColumnInclusionRule = new InclusionRule(configProperties
-      .getStringValue(SC_GREP_PROCEDURE_COLUMN_PATTERN_INCLUDE,
-                      InclusionRule.ALL), configProperties
-      .getStringValue(SC_GREP_PROCEDURE_COLUMN_PATTERN_EXCLUDE,
-                      InclusionRule.NONE));
-    grepDefinitionInclusionRule = new InclusionRule(configProperties
-                                                      .getStringValue(SC_GREP_DEFINITION_PATTERN_INCLUDE,
-                                                                      InclusionRule.ALL),
-                                                    configProperties
-                                                      .getStringValue(SC_GREP_DEFINITION_PATTERN_EXCLUDE,
-                                                                      InclusionRule.NONE));
-    grepInvertMatch = configProperties.getBooleanValue(SC_GREP_INVERT_MATCH);
-
-    isAlphabeticalSortForTables = Boolean.parseBoolean(configProperties
-      .getStringValue(SC_SORT_ALPHABETICALLY_TABLES, "true"));
-    isAlphabeticalSortForTableColumns = configProperties
-      .getBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_COLUMNS);
-    isAlphabeticalSortForForeignKeys = configProperties
-      .getBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS);
-    isAlphabeticalSortForIndexes = configProperties
-      .getBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_INDEXES);
-    isAlphabeticalSortForProcedureColumns = configProperties
-      .getBooleanValue(SC_SORT_ALPHABETICALLY_PROCEDURE_COLUMNS);
-
   }
 
   /**
