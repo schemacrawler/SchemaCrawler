@@ -51,9 +51,12 @@ final class BundledDriverConnectionOptionsParser
                                                                            "urlx",
                                                                            "");
 
+  private final Config config;
+
   BundledDriverConnectionOptionsParser(final String[] args, final Config config)
   {
-    super(args, config);
+    super(args);
+    this.config = config;
   }
 
   @Override

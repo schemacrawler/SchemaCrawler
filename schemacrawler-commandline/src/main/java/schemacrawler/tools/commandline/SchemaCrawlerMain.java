@@ -63,8 +63,7 @@ public class SchemaCrawlerMain
     if (showHelp)
     {
       commandLine = new SchemaCrawlerHelpCommandLine(args,
-                                                     helpOptions,
-                                                     configResource);
+                                                     helpOptions);
     }
     else
     {

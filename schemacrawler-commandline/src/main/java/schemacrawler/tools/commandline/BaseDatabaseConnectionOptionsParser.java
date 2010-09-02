@@ -21,7 +21,6 @@
 package schemacrawler.tools.commandline;
 
 
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.ConnectionOptions;
 import sf.util.CommandLineParser.Option;
 import sf.util.CommandLineParser.StringOption;
@@ -42,12 +41,9 @@ abstract class BaseDatabaseConnectionOptionsParser
                                                        "password",
                                                        null);
 
-  final Config config;
-
-  BaseDatabaseConnectionOptionsParser(final String[] args, final Config config)
+  BaseDatabaseConnectionOptionsParser(final String[] args)
   {
     super(args);
-    this.config = config;
   }
 
 }
