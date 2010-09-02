@@ -17,7 +17,7 @@
 <stringAttribute key="org.eclipse.jdt.launching.CLASSPATH_PROVIDER" value="org.maven.ide.eclipse.launchconfig.classpathProvider"/>
 <booleanAttribute key="org.eclipse.jdt.launching.DEFAULT_CLASSPATH" value="false"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="schemacrawler.Main"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-g &quot;${workspace_loc:SchemaCrawler - Website/src/site/resources/config}/schemacrawler.config.properties&quot; &#13;&#10;-c hsqldb &#13;&#10;-infolevel=lint&#13;&#10;-command=verbose_schema,count,dump &#13;&#10;-showstoredprocedures=true&#13;&#10;-outputformat=csv &#13;&#10;-outputfile=snapshot.csv&#13;&#10;-loglevel=CONFIG"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-url jdbc:hsqldb:hsql://localhost:9001/schemacrawler &#13;&#10;-driver org.hsqldb.jdbcDriver &#13;&#10;-user sa &#13;&#10;-password &quot;&quot; &#13;&#10;-infolevel=lint&#13;&#10;-command=verbose_schema,count,dump &#13;&#10;-showstoredprocedures=true&#13;&#10;-outputformat=csv &#13;&#10;-outputfile=snapshot.csv&#13;&#10;-loglevel=CONFIG"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="SchemaCrawler - 2 - Commandline"/>
 <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.maven.ide.eclipse.launchconfig.sourcepathProvider"/>
 <stringAttribute key="org.eclipse.jdt.launching.WORKING_DIRECTORY" value="${workspace_loc:SchemaCrawler - Website/src/site/resources/snapshot-examples}"/>
