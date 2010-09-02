@@ -10,43 +10,28 @@
       <subsection name="Enhancing SchemaCrawler Output">
         <p>
           SchemaCrawler can display view and procedure definitions,
-          trigger information, and check constaints by using data from
+          trigger information, and check constaints by using
+          data from
           the INFORMATION_SCHEMA views. Even though INFORMATION_SCHEMA
-          views are defined in the SQL Standard, not all database
+          views are defined in the SQL Standard,
+          not all database
           systems provide these views. However, if it is possible to
-          construct a metadata view with columns that match the
+          construct a metadata view with
+          columns that match the
           INFORMATION_SCHEMA views, then SchemaCrawler can use the data
-          to obtain view and procedure definitions, trigger information,
+          to obtain view and
+          procedure definitions, trigger information,
           and check constaints. The INFORMATION_SCHEMA views currently
           processed by SchemaCrawler are shown below.
         </p>
         <p>
           To get SchemaCrawler to use the views you will need to modify
-          your database connection properties in your SchemaCrawler
-          configuration file. Some examples are provided in the
-          <code>schemacrawler.config.properties</code>
-          file in the
+          your SchemaCrawler
+          configuration file. Some
+          examples are provided in the
           <code>_distrib</code>
           folder of the download.
         </p>
-        <p>
-          For example, if you had defined a connection called
-          <code>hsqldb</code>
-          , going against the HSQLDB database, and wanted to get view
-          definitions in the schema output, you would create a property
-          in your
-          <code>schemacrawler.config.properties</code>
-          file like this:
-        </p>
-        <source>
-          <![CDATA[        
-hsqldb.select.INFORMATION_SCHEMA.VIEWS=\
-  SELECT \
-    * \
-  FROM \
-    INFORMATION_SCHEMA.SYSTEM_VIEWS
-]]>
-        </source>
       </subsection>
       <subsection name="INFORMATION_SCHEMA.VIEWS">
         <table>
@@ -73,7 +58,8 @@ hsqldb.select.INFORMATION_SCHEMA.VIEWS=\
               <td>VIEW_DEFINITION</td>
               <td>
                 The definition of the view as it would appear in a
-                CREATE VIEW statement. If it does not fit, the value is
+                CREATE VIEW statement. If it does not fit, the value
+                is
                 NULL.
               </td>
             </tr>
@@ -81,7 +67,8 @@ hsqldb.select.INFORMATION_SCHEMA.VIEWS=\
               <td>CHECK_OPTION</td>
               <td>
                 One of: CASCADED = if WITH CHECK OPTION was specified in
-                the CREATE VIEW statement that created the view; NONE =
+                the CREATE VIEW statement that created the
+                view; NONE =
                 otherwise.
               </td>
             </tr>
@@ -94,7 +81,8 @@ hsqldb.select.INFORMATION_SCHEMA.VIEWS=\
             </tr>
           </tbody>
         </table>
-      </subsection><subsection name="INFORMATION_SCHEMA.ROUTINES">
+      </subsection>
+      <subsection name="INFORMATION_SCHEMA.ROUTINES">
         <table>
           <thead>
             <tr>
@@ -131,7 +119,8 @@ hsqldb.select.INFORMATION_SCHEMA.VIEWS=\
             </tr>
           </tbody>
         </table>
-      </subsection><subsection name="INFORMATION_SCHEMA.TRIGGERS">
+      </subsection>
+      <subsection name="INFORMATION_SCHEMA.TRIGGERS">
         <table>
           <thead>
             <tr>
@@ -156,7 +145,8 @@ hsqldb.select.INFORMATION_SCHEMA.VIEWS=\
               <td>EVENT_MANIPULATION</td>
               <td>
                 The data manipulation event triggering execution of the
-                trigger (the trigger event). One of: INSERT, DELETE,
+                trigger (the trigger event). One of: INSERT,
+                DELETE,
                 UPDATE
               </td>
             </tr>
@@ -185,11 +175,13 @@ hsqldb.select.INFORMATION_SCHEMA.VIEWS=\
               <td>ACTION_ORDER</td>
               <td>
                 Ordinal number for trigger execution. This number will
-                define the execution order of triggers on the same table
+                define the execution order of triggers on the
+                same table
                 and with the same value for EVENT_MANIPULATION,
                 ACTION_CONDITION, CONDITION_TIMING and
                 ACTION_ORIENTATION. The trigger with 1 in this column
-                will be executed first, followed by the trigger with 2,
+                will be executed first, followed by the trigger
+                with 2,
                 etc.
               </td>
             </tr>
@@ -197,7 +189,8 @@ hsqldb.select.INFORMATION_SCHEMA.VIEWS=\
               <td>ACTION_CONDITION</td>
               <td>
                 The character representation of the search condition in
-                the WHEN clause of the trigger. If the length of the
+                the WHEN clause of the trigger. If the length
+                of the
                 text exceeds 400 characters, the NULL value will be
                 shown.
               </td>
@@ -206,7 +199,8 @@ hsqldb.select.INFORMATION_SCHEMA.VIEWS=\
               <td>ACTION_STATEMENT</td>
               <td>
                 The character representation of the body of the trigger.
-                If the length of the text exceeds 400 characters, the
+                If the length of the text exceeds 400
+                characters, the
                 NULL value will be shown.
               </td>
             </tr>
@@ -221,15 +215,18 @@ hsqldb.select.INFORMATION_SCHEMA.VIEWS=\
               <td>CONDITION_TIMING</td>
               <td>
                 One of: BEFORE = the trigger is executed before the
-                triggering data manipulation operation; INSTEAD OF = the
+                triggering data manipulation operation; INSTEAD OF
+                = the
                 trigger is executed instead of the triggering data
-                manipulation operation; AFTER = the trigger is executed
+                manipulation operation; AFTER = the trigger is
+                executed
                 after the triggering data manipulation operation.
               </td>
             </tr>
           </tbody>
         </table>
-      </subsection><subsection name="INFORMATION_SCHEMA.TABLE_CONSTRAINTS">
+      </subsection>
+      <subsection name="INFORMATION_SCHEMA.TABLE_CONSTRAINTS">
         <table>
           <thead>
             <tr>
@@ -326,9 +323,6 @@ hsqldb.select.INFORMATION_SCHEMA.VIEWS=\
           </tbody>
         </table>
       </subsection>
-      
-      
-      
     </section>
   </body>
 </document>
