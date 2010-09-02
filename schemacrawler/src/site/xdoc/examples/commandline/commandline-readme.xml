@@ -15,14 +15,6 @@
       <subsection name="How to Run">
         <ol>
           <li>Make sure that the Java executable is on your path.</li>
-          <li>
-            Copy the
-            <span class="code">schemacrawler.config.properties</span>
-            file into the
-            <span class="code">commandline</span>
-            example
-            directory.
-          </li>
           <li>Start the database server by running StartDatabaseServer script from the
             distribution directory.
           </li>
@@ -50,11 +42,6 @@
       </subsection>
       <subsection name="How to Experiment">
         <ol>
-          <li>
-            Try modifying the
-            <span class="code">schemacrawler.config.properties</span>
-            file with regular expressions, logging, and so on.
-          </li>
           <li>Try using different SchemaCrawler command line options.</li>
           <li>
             Redirect the output of SchemaCrawler into a file, by running

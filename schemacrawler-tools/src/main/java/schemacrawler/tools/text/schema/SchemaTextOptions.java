@@ -41,10 +41,6 @@ public class SchemaTextOptions
   private static final String HIDE_CONSTRAINT_NAMES = "schemacrawler.format.hide_constraint_names";
   private static final String SHOW_ORDINAL_NUMBERS = "schemacrawler.format.show_ordinal_numbers";
   private static final String SHOW_STANDARD_COLUMN_TYPE_NAMES = "schemacrawler.format.show_standard_column_type_names";
-  /**
-   * Deprecated
-   */
-  private static final String SHOW_JDBC_COLUMN_TYPE_NAMES = "schemacrawler.format.show_jdbc_column_type_names";
 
   private boolean showStandardColumnTypeNames;
   private boolean showOrdinalNumbers;
@@ -74,9 +70,7 @@ public class SchemaTextOptions
     if (config != null)
     {
       showStandardColumnTypeNames = config
-        .getBooleanValue(SHOW_JDBC_COLUMN_TYPE_NAMES)
-                                    || config
-                                      .getBooleanValue(SHOW_STANDARD_COLUMN_TYPE_NAMES);
+        .getBooleanValue(SHOW_STANDARD_COLUMN_TYPE_NAMES);
       showOrdinalNumbers = config.getBooleanValue(SHOW_ORDINAL_NUMBERS);
 
       hideForeignKeyNames = config.getBooleanValue(HIDE_FOREIGN_KEY_NAMES);
