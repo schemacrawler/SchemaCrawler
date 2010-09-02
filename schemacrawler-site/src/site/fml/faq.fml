@@ -64,15 +64,6 @@
           and views. SchemaCrawler can be fine-tuned using configuration files. </p>
       </answer>
     </faq>
-    <faq id="config">
-      <question> What does a SchemaCrawler configuration file look like?  </question>
-      <answer>
-        <p>
-          An example of a
-          <a href="config/schemacrawler.config.properties"> SchemaCrawler configuration file. </a>
-        </p>
-      </answer>
-    </faq>
   </part>
   <part id="supported-platforms">
     <title>Supported Platforms</title>
@@ -189,15 +180,6 @@
           See the
           <a href="#commands">filtering and grep command-line options</a>
           above.
-        </p>
-      </answer>
-    </faq>
-    <faq id="config">
-      <question> What does a SchemaCrawler configuration file look like?  </question>
-      <answer>
-        <p>
-          The SchemaCrawler Grep configuration file is the same as the
-          <a href="config/schemacrawler.config.properties"> SchemaCrawler configuration file. </a>
         </p>
       </answer>
     </faq>
