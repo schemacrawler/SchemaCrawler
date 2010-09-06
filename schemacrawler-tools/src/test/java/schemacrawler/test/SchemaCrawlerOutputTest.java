@@ -39,7 +39,6 @@ import org.xml.sax.SAXException;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.DatabaseConnectionOptions;
-import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.tools.commandline.InfoLevel;
@@ -136,10 +135,8 @@ public class SchemaCrawlerOutputTest
 
         final Config config = Config.load(SchemaCrawlerOutputTest.class
           .getResourceAsStream("/hsqldb.INFORMATION_SCHEMA.config.properties"));
-        final InformationSchemaViews informationSchemaViews = new InformationSchemaViews(config);
-        final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+        final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
         schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
-        schemaCrawlerOptions.setInformationSchemaViews(informationSchemaViews);
 
         final DatabaseConnectionOptions connectionOptions = testUtility
           .getDatabaseConnectionOptions();
@@ -193,10 +190,8 @@ public class SchemaCrawlerOutputTest
 
         final Config config = Config.load(SchemaCrawlerOutputTest.class
           .getResourceAsStream("/hsqldb.INFORMATION_SCHEMA.config.properties"));
-        final InformationSchemaViews informationSchemaViews = new InformationSchemaViews(config);
-        final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+        final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
         schemaCrawlerOptions.setSchemaInfoLevel(infoLevel.getSchemaInfoLevel());
-        schemaCrawlerOptions.setInformationSchemaViews(informationSchemaViews);
 
         final DatabaseConnectionOptions connectionOptions = testUtility
           .getDatabaseConnectionOptions();

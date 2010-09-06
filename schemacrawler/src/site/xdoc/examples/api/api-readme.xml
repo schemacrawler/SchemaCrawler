@@ -30,6 +30,11 @@
       </subsection>
       <subsection name="How to Experiment">
         <ol>
+          <li>Try modifying the
+            <span class="code">schemacrawler.config.properties</span>
+            with regular
+            expressions, logging, and so on.
+          </li>
           <li>Try uncommenting the code block in
             <span class="code">ApiExample.java</span>
             that

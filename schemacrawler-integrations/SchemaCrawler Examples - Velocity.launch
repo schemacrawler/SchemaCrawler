@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
-<listEntry value="/SchemaCrawler - 2 - Commandline/src/main/java/schemacrawler/Main.java"/>
+<listEntry value="/SchemaCrawler - 4 - Integrations"/>
 </listAttribute>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
-<listEntry value="1"/>
+<listEntry value="4"/>
 </listAttribute>
 <booleanAttribute key="org.eclipse.debug.core.appendEnvironmentVariables" value="true"/>
 <stringAttribute key="org.eclipse.jdt.launching.CLASSPATH_PROVIDER" value="org.maven.ide.eclipse.launchconfig.classpathProvider"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="schemacrawler.Main"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-url jdbc:hsqldb:hsql://localhost:9001/schemacrawler &#13;&#10;-driver org.hsqldb.jdbcDriver &#13;&#10;-user sa &#13;&#10;-password &quot;&quot; &#13;&#10;-command=velocity&#13;&#10;-outputformat &quot;${workspace_loc:SchemaCrawler - 4 - Integrations/src/test/resources}/plaintextschema.vm&quot; &#13;&#10;--outputfile=tables-by-velocity.txt&#13;&#10;--loglevel=ALL"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-g &quot;${workspace_loc:SchemaCrawler - Website/src/site/resources/config}/schemacrawler.config.properties&quot; &#13;&#10;-c hsqldb &#13;&#10;-command=velocity&#13;&#10;-outputformat &quot;${workspace_loc:SchemaCrawler - 4 - Integrations/src/test/resources}/plaintextschema.vm&quot; &#13;&#10;--outputfile=tables-by-velocity.txt&#13;&#10;--loglevel=ALL"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="SchemaCrawler - 4 - Integrations"/>
 <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.maven.ide.eclipse.launchconfig.sourcepathProvider"/>
 <stringAttribute key="org.eclipse.jdt.launching.WORKING_DIRECTORY" value="${workspace_loc:SchemaCrawler - 4 - Integrations/target}"/>

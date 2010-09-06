@@ -55,8 +55,8 @@ public final class InclusionRule
   private final Pattern patternInclude;
   private final Pattern patternExclude;
 
+  /** Include all, exclude none. */
   public static InclusionRule INCLUDE_ALL = new InclusionRule(ALL, NONE);
-  public static InclusionRule EXCLUDE_ALL = new InclusionRule(NONE, ALL);
 
   /**
    * Set include and exclude patterns.

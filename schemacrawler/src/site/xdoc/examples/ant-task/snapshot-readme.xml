@@ -18,6 +18,13 @@
             <a href="http://ant.apache.org/">ant</a>, and make sure that ant is on your
             path.
           </li>
+          <li>Copy the
+            <span class="code">schemacrawler.config.properties</span>
+            into
+            the
+            <span class="code">ant-task</span>
+            example directory.
+          </li>
           <li>Start the database server by running the
             <span class="code">StartDatabaseServer</span>
             script from the
@@ -37,6 +44,9 @@
       </subsection>
       <subsection name="How to Experiment">
         <ol>
+          <li>Try modifying the schemacrawler.config.properties with regular
+            expressions, logging, and so on.
+          </li>
           <li>Try using different SchemaCrawler commands. (For a complete list of
             SchemaCrawler commands, run
             <span class="code">java -jar

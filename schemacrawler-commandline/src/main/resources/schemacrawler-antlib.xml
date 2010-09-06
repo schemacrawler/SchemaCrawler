@@ -4,6 +4,15 @@
   <macrodef name="schemacrawler">
 
     <attribute
+      name="config"
+      description="Path to the configuration file"
+      default="schemacrawler.config.properties"/>
+    <attribute
+      name="config-override"
+      description="Path to the configuration override file"
+      default="schemacrawler.config.override.properties"/>
+
+    <attribute
       name="schemacrawler-classpath"
       description="SchemaCrawler jars, and database driver classpath"
       default="${schemacrawler-classpath}"/>
@@ -75,10 +84,6 @@
       description="Regular expression to grep procedure parameters"
       default=".*"/>
     <attribute
-      name="grepdef"
-      description="Regular expression to grep definitions and remarks"
-      default=""/>      
-    <attribute
       name="invert-match"
       description="Whether to invert the matching tables"
       default="false"/>
@@ -107,6 +112,8 @@
           </fileset>
           <path refid="@{schemacrawler-classpath}"/>
         </classpath>
+        <arg value="-g=@{config}"/>
+        <arg value="-p=@{config-override}"/>
         <arg value="-c=@{datasource}"/>
         <arg value="-driver=@{driver}"/>
         <arg value="-url=@{url}"/>
@@ -119,7 +126,6 @@
         <arg value="-excludeinout=@{excludeinout}"/>
         <arg value="-grepcolumns=@{grepcolumns}"/>
         <arg value="-grepinout=@{grepinout}"/>
-        <arg value="-grepdef=@{grepdef}"/>
         <arg value="-v=@{invert-match}"/>
         <arg value="-noinfo=@{no-info}"/>
         <arg value="-outputformat=@{outputformat}"/>
