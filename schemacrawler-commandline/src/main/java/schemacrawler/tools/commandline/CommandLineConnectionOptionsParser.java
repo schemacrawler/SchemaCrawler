@@ -21,6 +21,7 @@
 package schemacrawler.tools.commandline;
 
 
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.DatabaseConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import sf.util.Utility;
@@ -43,9 +44,9 @@ final class CommandLineConnectionOptionsParser
                                                                     "url",
                                                                     null);
 
-  CommandLineConnectionOptionsParser(final String[] args)
+  CommandLineConnectionOptionsParser(final String[] args, final Config config)
   {
-    super(args);
+    super(args, config);
   }
 
   @Override
@@ -56,23 +57,28 @@ final class CommandLineConnectionOptionsParser
         optionDriver, optionConnectionUrl, optionUser, optionPassword,
     });
 
-    final String jdbcDriverClassName = optionDriver.getValue();
-    if (Utility.isBlank(jdbcDriverClassName))
-    {
-      throw new SchemaCrawlerException("JDBC driver class name needs to be provided");
-    }
-    final String connectionUrl = optionConnectionUrl.getValue();
-    if (Utility.isBlank(connectionUrl))
-    {
-      throw new SchemaCrawlerException("Database connection URL needs to be provided");
-    }
-
     final DatabaseConnectionOptions conenctionOptions;
-    conenctionOptions = new DatabaseConnectionOptions(jdbcDriverClassName,
-                                                      connectionUrl);
-    conenctionOptions.setUser(optionUser.getValue());
-    conenctionOptions.setPassword(optionPassword.getValue());
-
+    if (optionConnectionUrl.isFound())
+    {
+      final String jdbcDriverClassName = optionDriver.getValue();
+      final String connectionUrl = optionConnectionUrl.getValue();
+      if (Utility.isBlank(jdbcDriverClassName)
+          || Utility.isBlank(connectionUrl))
+      {
+        conenctionOptions = null;
+      }
+      else
+      {
+        conenctionOptions = new DatabaseConnectionOptions(jdbcDriverClassName,
+                                                          connectionUrl);
+        conenctionOptions.setUser(optionUser.getValue());
+        conenctionOptions.setPassword(optionPassword.getValue());
+      }
+    }
+    else
+    {
+      conenctionOptions = null;
+    }
     return conenctionOptions;
   }
 

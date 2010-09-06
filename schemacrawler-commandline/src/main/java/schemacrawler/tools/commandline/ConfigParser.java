@@ -22,32 +22,40 @@ package schemacrawler.tools.commandline;
 
 
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.ConnectionOptions;
 import sf.util.CommandLineParser.Option;
 import sf.util.CommandLineParser.StringOption;
 
 /**
- * Options for the command line.
+ * Parses the command line.
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  */
-abstract class BaseDatabaseConnectionOptionsParser
-  extends BaseOptionsParser<ConnectionOptions>
+class ConfigParser
+  extends BaseOptionsParser<Config>
 {
 
-  final StringOption optionUser = new StringOption(Option.NO_SHORT_FORM,
-                                                   "user",
-                                                   null);
-  final StringOption optionPassword = new StringOption(Option.NO_SHORT_FORM,
-                                                       "password",
-                                                       null);
+  private final StringOption optionConfigFile = new StringOption('g',
+                                                                 "configfile",
+                                                                 "schemacrawler.config.properties");
+  private final StringOption optionConfigOverrideFile = new StringOption('p',
+                                                                         "configoverridefile",
+                                                                         "schemacrawler.config.override.properties");
 
-  final Config config;
-
-  BaseDatabaseConnectionOptionsParser(final String[] args, final Config config)
+  ConfigParser(final String[] args)
   {
     super(args);
-    this.config = config;
+  }
+
+  @Override
+  protected Config getOptions()
+  {
+    parse(new Option[] {
+        optionConfigFile, optionConfigOverrideFile
+    });
+
+    final String cfgFile = optionConfigFile.getValue();
+    final String cfgOverrideFile = optionConfigOverrideFile.getValue();
+    return Config.load(cfgFile, cfgOverrideFile);
   }
 
 }

@@ -21,6 +21,13 @@
             </a>
             and make sure that ant is on your path.
           </li>
+          <li>
+            Copy the
+            <span class="code">schemacrawler.config.properties</span>
+            file into the
+            <span class="code">velocity</span>
+            example directory.
+          </li>
           <li>Start the database server by running StartDatabaseServer script from the
             distribution directory.
           </li>

@@ -52,22 +52,27 @@ public final class SchemaCrawlerHelpCommandLine
     System.out.println(helpText);
   }
 
+  private final boolean hideConfig;
   private final String command;
 
   private final HelpOptions helpOptions;
 
   /**
-   * Shows comman line help.
+   * Loads objects from command line options. Optionally loads the
+   * config from the classpath.
    * 
    * @param args
    *        Command line arguments.
    * @param helpOptions
    *        Help options.
+   * @param configResource
+   *        Config resource.
    * @throws SchemaCrawlerException
    *         On an exception
    */
   public SchemaCrawlerHelpCommandLine(final String[] args,
-                                      final HelpOptions helpOptions)
+                                      final HelpOptions helpOptions,
+                                      final String configResource)
     throws SchemaCrawlerException
   {
     if (args == null)
@@ -80,6 +85,8 @@ public final class SchemaCrawlerHelpCommandLine
       throw new SchemaCrawlerException("No help options provided");
     }
     this.helpOptions = helpOptions;
+
+    hideConfig = !Utility.isBlank(configResource);
 
     if (args.length == 0)
     {
@@ -105,6 +112,10 @@ public final class SchemaCrawlerHelpCommandLine
 
     showHelp(helpOptions.getResourceConnections());
     showHelp("/help/SchemaCrawlerOptions.txt");
+    if (!hideConfig)
+    {
+      showHelp("/help/Config.txt");
+    }
     showHelp("/help/ApplicationOptions.txt");
     final CommandRegistry commandRegistry = new CommandRegistry();
     if (command == null)
