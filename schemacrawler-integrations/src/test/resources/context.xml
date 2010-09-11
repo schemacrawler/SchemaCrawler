@@ -135,7 +135,7 @@
   </bean>
 
   <bean id="executableForSchema" class="schemacrawler.tools.text.schema.SchemaTextExecutable">
-    <constructor-arg value="standard_schema" />
+    <constructor-arg value="schema" />
     <property name="schemaCrawlerOptions" ref="schemaCrawlerOptions" />
     <property name="schemaTextOptions">
       <bean class="schemacrawler.tools.text.schema.SchemaTextOptions">

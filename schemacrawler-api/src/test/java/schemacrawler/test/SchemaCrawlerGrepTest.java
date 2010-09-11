@@ -105,7 +105,6 @@ public class SchemaCrawlerGrepTest
     };
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-
     schemaCrawlerOptions
       .setGrepColumnInclusionRule(new InclusionRule(".*\\..*\\.BOOKID", ""));
 

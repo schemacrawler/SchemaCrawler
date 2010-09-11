@@ -45,29 +45,9 @@ public final class GraphExecutable
   extends BaseExecutable
 {
 
-  enum GraphCommandType
-  {
-    graph, detailed_graph
-  }
-
-  private final GraphCommandType graphCommandType;
-
   public GraphExecutable()
   {
-    this(null);
-  }
-
-  public GraphExecutable(final String command)
-  {
-    super(command);
-    if (command == null)
-    {
-      graphCommandType = GraphCommandType.graph;
-    }
-    else
-    {
-      graphCommandType = GraphCommandType.valueOf(command);
-    }
+    super("graph");
   }
 
   /**

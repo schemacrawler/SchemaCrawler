@@ -28,10 +28,12 @@ import java.util.logging.Logger;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Database;
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.tools.options.OutputOptions;
 import sf.util.ObjectToString;
+import sf.util.Utility;
 
 /**
  * A SchemaCrawler tools executable unit.
@@ -54,7 +56,12 @@ public abstract class BaseExecutable
 
   protected BaseExecutable(final String command)
   {
+    if (Utility.isBlank(command))
+    {
+      throw new IllegalArgumentException("No command specified");
+    }
     this.command = command;
+
     schemaCrawlerOptions = new SchemaCrawlerOptions();
     outputOptions = new OutputOptions();
   }
@@ -69,7 +76,7 @@ public abstract class BaseExecutable
   {
     if (connection == null)
     {
-      throw new IllegalArgumentException("No connection provided");
+      throw new SchemaCrawlerException("No connection provided");
     }
     adjustSchemaInfoLevel();
 

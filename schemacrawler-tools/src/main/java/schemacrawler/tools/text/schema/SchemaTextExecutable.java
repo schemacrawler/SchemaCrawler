@@ -84,7 +84,7 @@ public final class SchemaTextExecutable
     }
     catch (final IllegalArgumentException e)
     {
-      schemaTextDetailType = SchemaTextDetailType.standard_schema;
+      schemaTextDetailType = SchemaTextDetailType.schema;
     }
     final SchemaTextOptions schemaTextOptions = getSchemaTextOptions();
     formatter = new SchemaTextFormatter(schemaTextDetailType,
