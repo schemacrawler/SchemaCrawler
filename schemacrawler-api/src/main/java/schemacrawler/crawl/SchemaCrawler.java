@@ -360,6 +360,14 @@ public final class SchemaCrawler
       .getGrepDefinitionInclusionRule();
     final boolean invertMatch = options.isGrepInvertMatch();
 
+    final boolean checkIncludeForColumns = grepProcedureColumnInclusionRule != null;
+    final boolean checkIncludeForDefinitions = grepDefinitionInclusionRule != null;
+
+    if (!checkIncludeForColumns && !checkIncludeForDefinitions)
+    {
+      return true;
+    }
+
     boolean includeForColumns = false;
     boolean includeForDefinitions = false;
     final ProcedureColumn[] columns = procedure.getColumns();
@@ -371,21 +379,27 @@ public final class SchemaCrawler
     {
       for (final ProcedureColumn column: columns)
       {
-        if (grepProcedureColumnInclusionRule.include(column.getFullName()))
+        if (checkIncludeForColumns)
         {
-          includeForColumns = true;
-          break;
+          if (grepProcedureColumnInclusionRule.include(column.getFullName()))
+          {
+            includeForColumns = true;
+            break;
+          }
         }
       }
     }
     // Additional include checks for definitions
-    if (grepDefinitionInclusionRule.include(procedure.getRemarks()))
+    if (checkIncludeForDefinitions)
     {
-      includeForDefinitions = true;
-    }
-    if (grepDefinitionInclusionRule.include(procedure.getDefinition()))
-    {
-      includeForDefinitions = true;
+      if (grepDefinitionInclusionRule.include(procedure.getRemarks()))
+      {
+        includeForDefinitions = true;
+      }
+      if (grepDefinitionInclusionRule.include(procedure.getDefinition()))
+      {
+        includeForDefinitions = true;
+      }
     }
 
     boolean include = includeForColumns || includeForDefinitions;
@@ -423,6 +437,14 @@ public final class SchemaCrawler
       .getGrepDefinitionInclusionRule();
     final boolean invertMatch = options.isGrepInvertMatch();
 
+    final boolean checkIncludeForColumns = grepColumnInclusionRule != null;
+    final boolean checkIncludeForDefinitions = grepDefinitionInclusionRule != null;
+
+    if (!checkIncludeForColumns && !checkIncludeForDefinitions)
+    {
+      return true;
+    }
+
     boolean includeForColumns = false;
     boolean includeForDefinitions = false;
     final Column[] columns = table.getColumns();
@@ -434,40 +456,50 @@ public final class SchemaCrawler
     {
       for (final Column column: columns)
       {
-        if (grepColumnInclusionRule.include(column.getFullName()))
+        if (checkIncludeForColumns)
         {
-          includeForColumns = true;
-          break;
+          if (grepColumnInclusionRule.include(column.getFullName()))
+          {
+            includeForColumns = true;
+            break;
+          }
         }
-        if (grepDefinitionInclusionRule.include(column.getRemarks()))
+        if (checkIncludeForDefinitions)
+        {
+          if (grepDefinitionInclusionRule.include(column.getRemarks()))
+          {
+            includeForDefinitions = true;
+            break;
+          }
+        }
+      }
+    }
+    // Additional include checks for definitions
+    if (checkIncludeForDefinitions)
+    {
+      if (grepDefinitionInclusionRule.include(table.getRemarks()))
+      {
+        includeForDefinitions = true;
+      }
+      if (table instanceof View)
+      {
+        if (grepDefinitionInclusionRule.include(((View) table).getDefinition()))
+        {
+          includeForDefinitions = true;
+        }
+      }
+      for (Trigger trigger: table.getTriggers())
+      {
+        if (grepDefinitionInclusionRule.include(trigger.getActionStatement()))
         {
           includeForDefinitions = true;
           break;
         }
       }
     }
-    // Additional include checks for definitions
-    if (grepDefinitionInclusionRule.include(table.getRemarks()))
-    {
-      includeForDefinitions = true;
-    }
-    if (table instanceof View)
-    {
-      if (grepDefinitionInclusionRule.include(((View) table).getDefinition()))
-      {
-        includeForDefinitions = true;
-      }
-    }
-    for (Trigger trigger: table.getTriggers())
-    {
-      if (grepDefinitionInclusionRule.include(trigger.getActionStatement()))
-      {
-        includeForDefinitions = true;
-        break;
-      }
-    }
 
-    boolean include = includeForColumns || includeForDefinitions;
+    boolean include = (checkIncludeForColumns && includeForColumns)
+                      || (checkIncludeForDefinitions && includeForDefinitions);
     if (invertMatch)
     {
       include = !include;

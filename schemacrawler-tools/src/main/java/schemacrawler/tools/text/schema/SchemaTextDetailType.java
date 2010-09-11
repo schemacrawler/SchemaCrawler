@@ -34,7 +34,7 @@ public enum SchemaTextDetailType
   /**
    * Standard column detail.
    */
-  standard_schema,
+  schema,
   /**
    * Maximum column detail, everything supported by SchemaCrawler.
    */

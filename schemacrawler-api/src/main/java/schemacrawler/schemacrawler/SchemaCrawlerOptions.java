@@ -113,11 +113,6 @@ public final class SchemaCrawlerOptions
     procedureInclusionRule = InclusionRule.INCLUDE_ALL;
     procedureColumnInclusionRule = InclusionRule.INCLUDE_ALL;
 
-    grepColumnInclusionRule = InclusionRule.INCLUDE_ALL;
-    grepProcedureColumnInclusionRule = InclusionRule.INCLUDE_ALL;
-    grepDefinitionInclusionRule = InclusionRule.INCLUDE_ALL;
-    grepInvertMatch = false;
-
     isAlphabeticalSortForTables = true;
     isAlphabeticalSortForTableColumns = false;
     isAlphabeticalSortForForeignKeys = false;
@@ -478,10 +473,6 @@ public final class SchemaCrawlerOptions
    */
   public void setGrepColumnInclusionRule(final InclusionRule grepColumnInclusionRule)
   {
-    if (grepColumnInclusionRule == null)
-    {
-      throw new IllegalArgumentException("Cannot use null value in a setter");
-    }
     this.grepColumnInclusionRule = grepColumnInclusionRule;
   }
 
@@ -493,10 +484,6 @@ public final class SchemaCrawlerOptions
    */
   public void setGrepDefinitionInclusionRule(InclusionRule grepDefinitionInclusionRule)
   {
-    if (grepDefinitionInclusionRule == null)
-    {
-      throw new IllegalArgumentException("Cannot use null value in a setter");
-    }
     this.grepDefinitionInclusionRule = grepDefinitionInclusionRule;
   }
 
@@ -519,10 +506,6 @@ public final class SchemaCrawlerOptions
    */
   public void setGrepProcedureColumnInclusionRule(final InclusionRule grepProcedureColumnInclusionRule)
   {
-    if (grepProcedureColumnInclusionRule == null)
-    {
-      throw new IllegalArgumentException("Cannot use null value in a setter");
-    }
     this.grepProcedureColumnInclusionRule = grepProcedureColumnInclusionRule;
   }
 
