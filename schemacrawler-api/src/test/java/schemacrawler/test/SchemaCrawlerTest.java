@@ -457,10 +457,10 @@ public class SchemaCrawlerTest
   {
 
     final String[] tableNames = {
-        "\"Global Counts\"",
-        "PUBLISHERS",
         "AUTHORS",
         "BOOKS",
+        "\"Global Counts\"",
+        "PUBLISHERS",
         "BOOKAUTHORS",
         "AUTHORSLIST",
     };

@@ -3161,7 +3161,7 @@ generate schema diagrams.</schemaCrawlerAbout>
                     </entry>
                   </objects>
                 </privileges>
-                <sortIndex>0</sortIndex>
+                <sortIndex>2</sortIndex>
               </table>
             </entry>
             <entry>
@@ -4709,7 +4709,7 @@ generate schema diagrams.</schemaCrawlerAbout>
                                                     </entry>
                                                   </objects>
                                                 </privileges>
-                                                <sortIndex>3</sortIndex>
+                                                <sortIndex>1</sortIndex>
                                               </parent>
                                               <type class="columnDataType" reference="215"/>
                                               <ordinalPosition>1</ordinalPosition>
@@ -5586,7 +5586,7 @@ generate schema diagrams.</schemaCrawlerAbout>
                     </entry>
                   </objects>
                 </privileges>
-                <sortIndex>2</sortIndex>
+                <sortIndex>0</sortIndex>
               </table>
             </entry>
             <entry>
@@ -6329,7 +6329,7 @@ generate schema diagrams.</schemaCrawlerAbout>
                     </entry>
                   </objects>
                 </privileges>
-                <sortIndex>1</sortIndex>
+                <sortIndex>3</sortIndex>
               </table>
             </entry>
           </objects>
