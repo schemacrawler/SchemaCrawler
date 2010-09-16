@@ -38,7 +38,6 @@ public class DirectedGraph<T extends Comparable<? super T>>
    * Directed edge in a graph.
    */
   private class DirectedEdge
-    implements Comparable<DirectedEdge>
   {
 
     private final Vertex from;
@@ -48,36 +47,6 @@ public class DirectedGraph<T extends Comparable<? super T>>
     {
       this.from = from;
       this.to = to;
-    }
-
-    public int compareTo(final DirectedEdge edge)
-    {
-      if (edge == null)
-      {
-        return 1;
-      }
-      else if (this.equals(edge))
-      {
-        return 0;
-      }
-      else if (from == null && edge.from != null || to == null
-               && edge.to != null)
-      {
-        return -1;
-      }
-      else
-      {
-        int compareTo = 0;
-        if (compareTo == 0)
-        {
-          compareTo = from.compareTo(edge.from);
-        }
-        if (compareTo == 0)
-        {
-          compareTo = to.compareTo(edge.to);
-        }
-        return compareTo;
-      }
     }
 
     @Override
@@ -173,7 +142,6 @@ public class DirectedGraph<T extends Comparable<? super T>>
    *        Type of node object
    */
   private class Vertex
-    implements Comparable<Vertex>
   {
 
     private final T value;
@@ -182,22 +150,6 @@ public class DirectedGraph<T extends Comparable<? super T>>
     Vertex(final T value)
     {
       this.value = value;
-    }
-
-    public int compareTo(final Vertex vertex)
-    {
-      if (vertex == null)
-      {
-        return 1;
-      }
-      else if (value == null)
-      {
-        return -1;
-      }
-      else
-      {
-        return value.compareTo(vertex.value);
-      }
     }
 
     @Override
