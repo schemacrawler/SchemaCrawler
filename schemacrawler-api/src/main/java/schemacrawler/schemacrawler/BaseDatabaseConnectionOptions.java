@@ -79,8 +79,9 @@ abstract class BaseDatabaseConnectionOptions
     }
     catch (final Exception e)
     {
-      throw new SchemaCrawlerException(String
-        .format("Could not connect to database, for user %s", user), e);
+      throw new SchemaCrawlerException(String.format("Could not connect to database, for user %s",
+                                                     user),
+                                       e);
     }
 
     final Properties jdbcConnectionProperties = new Properties();
@@ -88,8 +89,14 @@ abstract class BaseDatabaseConnectionOptions
     {
       jdbcConnectionProperties.putAll(connectionProperties);
     }
-    jdbcConnectionProperties.put("user", user);
-    jdbcConnectionProperties.put("password", password);
+    if (user != null)
+    {
+      jdbcConnectionProperties.put("user", user);
+    }
+    if (password != null)
+    {
+      jdbcConnectionProperties.put("password", password);
+    }
     try
     {
       return DriverManager.getConnection(connectionUrl,
@@ -98,10 +105,10 @@ abstract class BaseDatabaseConnectionOptions
     catch (final SQLException e)
     {
       jdbcConnectionProperties.remove("password");
-      throw new SchemaCrawlerException(String
-        .format("Could not connect to %s, with properties %s",
-                connectionUrl,
-                jdbcConnectionProperties), e);
+      throw new SchemaCrawlerException(String.format("Could not connect to %s, with properties %s",
+                                                     connectionUrl,
+                                                     jdbcConnectionProperties),
+                                       e);
     }
   }
 
