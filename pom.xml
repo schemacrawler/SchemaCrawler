@@ -85,6 +85,7 @@
     </dependency>
   </dependencies>
   <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <schemacrawler.version>8.4</schemacrawler.version>
   </properties>
   <build>
