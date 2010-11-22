@@ -91,7 +91,7 @@ final class MetadataResultSet
         {
           columnName = rsMetaData.getColumnName(i + 1);
         }
-        resultSetColumns.add(columnName);
+        resultSetColumns.add(columnName.toUpperCase());
       }
     }
     catch (final SQLException e)
@@ -226,8 +226,8 @@ final class MetadataResultSet
     {
       try
       {
-        enumValue = (E) Enum.valueOf(defaultValue.getClass(), value
-          .toLowerCase(Locale.ENGLISH));
+        enumValue = (E) Enum.valueOf(defaultValue.getClass(),
+                                     value.toLowerCase(Locale.ENGLISH));
       }
       catch (final Exception e)
       {
