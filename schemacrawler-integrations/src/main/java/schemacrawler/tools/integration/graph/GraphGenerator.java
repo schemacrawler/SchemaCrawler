@@ -127,7 +127,7 @@ final class GraphGenerator
 
         private final InputStream in;
 
-        StreamReader(final InputStream in)
+        private StreamReader(final InputStream in)
         {
           this.in = in;
         }
@@ -159,8 +159,9 @@ final class GraphGenerator
       final String processError = errReaderTask.get();
       if (exitCode != 0)
       {
-        throw new IOException(String
-          .format("Process returned exit code %d\n%s", exitCode, processError));
+        throw new IOException(String.format("Process returned exit code %d\n%s",
+                                            exitCode,
+                                            processError));
       }
       if (!Utility.isBlank(processError))
       {
@@ -183,21 +184,6 @@ final class GraphGenerator
     {
       threadPool.shutdown();
     }
-  }
-
-  File getDiagramFile()
-  {
-    return diagramFile;
-  }
-
-  final File getDotFile()
-  {
-    return dotFile;
-  }
-
-  final String getGraphOutputFormat()
-  {
-    return graphOutputFormat;
   }
 
 }

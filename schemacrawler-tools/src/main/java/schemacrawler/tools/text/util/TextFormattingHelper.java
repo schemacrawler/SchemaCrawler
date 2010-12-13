@@ -148,17 +148,6 @@ public interface TextFormattingHelper
   String createObjectStart(final String name);
 
   /**
-   * Creates a pre-formatted text section.
-   * 
-   * @param id
-   *        Element id
-   * @param text
-   *        Text
-   * @return Pre-formatted text section
-   */
-  String createPreformattedText(String id, String text);
-
-  /**
    * Creates a row of data.
    * 
    * @param columnData

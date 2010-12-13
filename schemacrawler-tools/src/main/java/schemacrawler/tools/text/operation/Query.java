@@ -26,8 +26,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import schemacrawler.crawl.JavaSqlTypesUtility;
 import schemacrawler.crawl.JavaSqlType.JavaSqlTypeGroup;
+import schemacrawler.crawl.JavaSqlTypesUtility;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
 import sf.util.TemplatingUtility;
@@ -38,7 +38,7 @@ import sf.util.Utility;
  * 
  * @author sfatehi
  */
-public final class Query
+final class Query
   implements Serializable
 {
 
@@ -78,7 +78,7 @@ public final class Query
    * @param query
    *        Query SQL.
    */
-  public Query(final String name, final String query)
+  Query(final String name, final String query)
   {
     if (Utility.isBlank(name))
     {
@@ -121,7 +121,7 @@ public final class Query
    *        Table information
    * @return Ready-to-execute quer
    */
-  public String getQueryForTable(final Table table)
+  String getQueryForTable(final Table table)
   {
     final Map<String, String> tableProperties = new HashMap<String, String>();
     if (table != null)

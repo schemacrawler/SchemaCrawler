@@ -44,8 +44,6 @@ public abstract class BaseExecutable
   implements Executable
 {
 
-  private static final long serialVersionUID = -7346631903113057945L;
-
   private static final Logger LOGGER = Logger.getLogger(BaseExecutable.class
     .getName());
 

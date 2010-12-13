@@ -57,10 +57,10 @@ public final class JavaSqlType
   /**
    * Unknown SQL data type.
    */
-  public static final JavaSqlType UNKNOWN = new JavaSqlType(Integer.MAX_VALUE,
-                                                            "<UNKNOWN>",
-                                                            null,
-                                                            JavaSqlTypeGroup.unknown);
+  static final JavaSqlType UNKNOWN = new JavaSqlType(Integer.MAX_VALUE,
+                                                     "<UNKNOWN>",
+                                                     null,
+                                                     JavaSqlTypeGroup.unknown);
 
   JavaSqlType(final int javaSqlType,
               final String javaSqlTypeName,

@@ -121,7 +121,7 @@ final class MutableJdbcDriverInfo
   public String toString()
   {
     final StringBuilder info = new StringBuilder();
-    info.append("-- driver: ").append(getDriverName()).append(" ")
+    info.append("-- driver: ").append(getDriverName()).append(' ')
       .append(getDriverVersion()).append(NEWLINE);
     info.append("-- driver class: ").append(getDriverClassName())
       .append(NEWLINE);

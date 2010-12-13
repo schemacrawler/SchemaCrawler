@@ -153,11 +153,4 @@ public final class HtmlFormattingHelper
     return objectStart;
   }
 
-  /**
-   * {@inheritDoc}
-   */
-  public String createPreformattedText(final String id, final String text)
-  {
-    return String.format("<pre id=\'%s\'>%n%s</pre>", id, text);
-  }
 }

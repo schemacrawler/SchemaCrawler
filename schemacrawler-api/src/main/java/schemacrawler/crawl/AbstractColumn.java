@@ -144,13 +144,13 @@ abstract class AbstractColumn
     final StringBuilder columnWidthBuffer = new StringBuilder();
     if (needWidth)
     {
-      columnWidthBuffer.append("(");
+      columnWidthBuffer.append('(');
       columnWidthBuffer.append(size);
       if (sqlDataTypeGroup == JavaSqlTypeGroup.real)
       {
         columnWidthBuffer.append(", ").append(getDecimalDigits());
       }
-      columnWidthBuffer.append(")");
+      columnWidthBuffer.append(')');
     }
 
     return columnWidthBuffer.toString();

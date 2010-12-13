@@ -137,7 +137,7 @@ abstract class AbstractDependantObject
       final String parentFullName = parent.getFullName();
       if (parent != null && !Utility.isBlank(parentFullName))
       {
-        buffer.append(parentFullName).append(".");
+        buffer.append(parentFullName).append('.');
       }
       final String quotedName = getName();
       if (!Utility.isBlank(quotedName))

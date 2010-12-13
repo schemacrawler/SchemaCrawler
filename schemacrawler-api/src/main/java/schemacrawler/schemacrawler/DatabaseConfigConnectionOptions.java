@@ -57,13 +57,6 @@ public final class DatabaseConfigConnectionOptions
     setPassword(properties.get(PASSWORD));
   }
 
-  public DatabaseConfigConnectionOptions(final String configResource)
-    throws SchemaCrawlerException
-  {
-    this(Config.load(DatabaseConfigConnectionOptions.class
-      .getResourceAsStream(configResource)));
-  }
-
   public String getConnectionUrl()
   {
     final Map<String, String> properties = new HashMap<String, String>(this.properties);
