@@ -136,7 +136,7 @@ abstract class AbstractDatabaseObject
       final String schemaFullName = schema.getFullName();
       if (schema != null && !Utility.isBlank(schemaFullName))
       {
-        buffer.append(schemaFullName).append(".");
+        buffer.append(schemaFullName).append('.');
       }
       final String quotedName = getName();
       if (!Utility.isBlank(quotedName))

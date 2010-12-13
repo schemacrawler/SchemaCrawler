@@ -38,8 +38,6 @@ public final class SchemaCrawlerCommandLine
   implements CommandLine
 {
 
-  private static final long serialVersionUID = -3748989545708155963L;
-
   private final String command;
   private final Config config;
   private final SchemaCrawlerOptions schemaCrawlerOptions;

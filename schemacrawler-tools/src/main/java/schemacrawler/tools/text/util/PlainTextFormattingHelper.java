@@ -131,12 +131,4 @@ public class PlainTextFormattingHelper
     return objectStart;
   }
 
-  /**
-   * {@inheritDoc}
-   */
-  public String createPreformattedText(final String id, final String text)
-  {
-    return Utility.NEWLINE + text;
-  }
-
 }

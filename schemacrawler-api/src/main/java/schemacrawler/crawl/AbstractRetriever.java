@@ -110,13 +110,20 @@ abstract class AbstractRetriever
       return false;
     }
 
+    final boolean supportsCatalogs = retrieverConnection
+      .getDatabaseSystemParameters().isSupportsCatalogs();
+
     boolean belongsToCatalog = true;
     boolean belongsToSchema = true;
-    final String dbObjectCatalogName = dbObject.getSchema().getCatalogName();
-    if (catalogName != null
-        && !unquotedName(catalogName).equals(unquotedName(dbObjectCatalogName)))
+    if (supportsCatalogs)
     {
-      belongsToCatalog = false;
+      final String dbObjectCatalogName = dbObject.getSchema().getCatalogName();
+      if (catalogName != null
+          && !unquotedName(catalogName)
+            .equals(unquotedName(dbObjectCatalogName)))
+      {
+        belongsToCatalog = false;
+      }
     }
     final String dbObjectSchemaName = dbObject.getSchema().getSchemaName();
     if (schemaName != null

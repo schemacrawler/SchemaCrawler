@@ -59,7 +59,7 @@ public enum Operation
    *        Number value in the message
    * @return Message format for the counts
    */
-  public String getCountMessage(final Number number)
+  String getCountMessage(final Number number)
   {
     return MessageFormat.format(countMessageFormat, number);
   }

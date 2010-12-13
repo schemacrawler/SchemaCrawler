@@ -30,11 +30,9 @@ import sf.util.Utility;
  * 
  * @author Sualeh Fatehi
  */
-public final class SchemaCrawlerHelpCommandLine
+final class SchemaCrawlerHelpCommandLine
   implements CommandLine
 {
-
-  private static final long serialVersionUID = -3748989545708155963L;
 
   private static void showHelp(final String helpResource)
   {
@@ -70,9 +68,9 @@ public final class SchemaCrawlerHelpCommandLine
    * @throws SchemaCrawlerException
    *         On an exception
    */
-  public SchemaCrawlerHelpCommandLine(final String[] args,
-                                      final HelpOptions helpOptions,
-                                      final String configResource)
+  SchemaCrawlerHelpCommandLine(final String[] args,
+                               final HelpOptions helpOptions,
+                               final String configResource)
     throws SchemaCrawlerException
   {
     if (args == null)

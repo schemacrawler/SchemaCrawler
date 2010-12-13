@@ -71,7 +71,7 @@ class NamedObjectList<N extends NamedObject>
     }
     if (buffer.length() > 0)
     {
-      buffer.append(".");
+      buffer.append('.');
     }
     buffer.append(name);
 

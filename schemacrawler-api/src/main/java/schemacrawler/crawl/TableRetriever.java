@@ -107,6 +107,7 @@ final class TableRetriever
                                                 .getId());
         final int deferrability = results
           .getInt("DEFERRABILITY", ForeignKeyDeferrability.unknown.getId());
+
         final MutableColumn pkColumn = lookupOrCreateColumn(pkTableCatalogName,
                                                             pkTableSchemaName,
                                                             pkTableName,
@@ -152,8 +153,9 @@ final class TableRetriever
         {
           indexName = UNKNOWN;
         }
-        LOGGER.log(Level.FINER, String.format("Retrieving index: %s.%s", table
-          .getFullName(), indexName));
+        LOGGER.log(Level.FINER, String.format("Retrieving index: %s.%s",
+                                              table.getFullName(),
+                                              indexName));
         final String columnName = quotedName(results.getString("COLUMN_NAME"));
         if (Utility.isBlank(columnName))
         {
@@ -213,8 +215,9 @@ final class TableRetriever
       column = new MutableColumn(table, columnName);
       if (add)
       {
-        LOGGER.log(Level.FINER, String.format("Adding column to table: %s",
-                                              column.getFullName()));
+        LOGGER.log(Level.FINER,
+                   String.format("Adding column to table: %s",
+                                 column.getFullName()));
         table.addColumn(column);
       }
     }
@@ -231,8 +234,12 @@ final class TableRetriever
                                              final String tableName,
                                              final String columnName)
   {
+    final boolean supportsCatalogs = getRetrieverConnection()
+      .getDatabaseSystemParameters().isSupportsCatalogs();
     MutableColumn column = null;
-    final MutableSchema schema = lookupSchema(catalogName, schemaName);
+    final MutableSchema schema = lookupSchema(supportsCatalogs? catalogName
+                                                              : null,
+                                              schemaName);
     if (schema != null)
     {
       MutableTable table = schema.getTable(tableName);
@@ -249,8 +256,8 @@ final class TableRetriever
       {
         column = new MutableColumn(table, columnName);
         LOGGER.log(Level.FINER, String
-          .format("Adding referenced foreign key column to table: %s", column
-            .getFullName()));
+          .format("Adding referenced foreign key column to table: %s",
+                  column.getFullName()));
         table.addColumn(column);
       }
     }

@@ -92,7 +92,7 @@ final class MutableDatabaseInfo
   public String toString()
   {
     final StringBuilder info = new StringBuilder();
-    info.append("-- database: ").append(getProductName()).append(" ")
+    info.append("-- database: ").append(getProductName()).append(' ')
       .append(getProductVersion()).append(NEWLINE);
     return info.toString();
   }

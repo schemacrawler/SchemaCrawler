@@ -7,6 +7,4 @@ public interface CommandLine
   void execute()
     throws Exception;
 
-  String getCommand();
-
 }
