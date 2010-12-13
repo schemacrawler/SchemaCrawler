@@ -187,20 +187,6 @@ public final class Config
   }
 
   /**
-   * Clones a config.
-   * 
-   * @param config
-   *        Config to clone
-   */
-  public Config(final Map<String, String> config)
-  {
-    if (config != null)
-    {
-      putAll(config);
-    }
-  }
-
-  /**
    * Copies properties into a map.
    * 
    * @param properties
