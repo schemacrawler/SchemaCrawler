@@ -17,6 +17,13 @@
       <artifactId>schemacrawler-commandline</artifactId>
       <version>${project.version}</version>
     </dependency>
+    <dependency>
+      <groupId>net.sourceforge.schemacrawler</groupId>
+      <artifactId>schemacrawler-commandline</artifactId>
+      <version>${project.version}</version>
+      <type>test-jar</type>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
   <build>
     <plugins>

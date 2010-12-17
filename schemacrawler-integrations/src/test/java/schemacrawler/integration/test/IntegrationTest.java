@@ -30,6 +30,7 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import schemacrawler.test.TestUtility;
 import schemacrawler.tools.commandline.SchemaCrawlerCommandLine;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.integration.freemarker.FreeMarkerRenderer;
@@ -38,7 +39,6 @@ import schemacrawler.tools.integration.velocity.VelocityRenderer;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.utility.TestDatabase;
-import sf.util.TestUtility;
 
 public class IntegrationTest
 {
@@ -126,6 +126,7 @@ public class IntegrationTest
                                                                                 .getDatabaseConnectionOptions(),
                                                                               "-command="
                                                                                   + command,
+                                                                              "-infolevel=standard",
                                                                               "-sortcolumns=true",
                                                                               "-outputformat="
                                                                                   + outputFormatValue,

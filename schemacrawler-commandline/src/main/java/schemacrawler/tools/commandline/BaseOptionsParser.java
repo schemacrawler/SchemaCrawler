@@ -46,7 +46,7 @@ public abstract class BaseOptionsParser<O extends Options>
   protected abstract O getOptions()
     throws SchemaCrawlerException;
 
-  protected void parse(final CommandLineParser.Option<?>[] options)
+  protected final void parse(final CommandLineParser.Option<?>[] options)
   {
     final CommandLineParser parser = new CommandLineParser();
     for (final Option<?> option: options)

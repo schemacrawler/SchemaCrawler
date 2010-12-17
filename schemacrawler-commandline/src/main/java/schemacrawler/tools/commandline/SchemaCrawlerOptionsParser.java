@@ -23,6 +23,7 @@ package schemacrawler.tools.commandline;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.InclusionRule;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import sf.util.CommandLineParser.BooleanOption;
@@ -93,6 +94,7 @@ final class SchemaCrawlerOptionsParser
 
   @Override
   protected SchemaCrawlerOptions getOptions()
+    throws SchemaCrawlerException
   {
     parse(new Option[] {
         optionInfoLevel,
@@ -125,11 +127,15 @@ final class SchemaCrawlerOptionsParser
         options.setSchemaInfoLevel(SchemaInfoLevel.standard());
       }
     }
+    else
+    {
+      throw new SchemaCrawlerException("No infolevel specified");
+    }
 
     if (optionSchemas.isFound())
     {
-      final InclusionRule schemaInclusionRule = new InclusionRule(optionSchemas
-        .getValue(), InclusionRule.NONE);
+      final InclusionRule schemaInclusionRule = new InclusionRule(optionSchemas.getValue(),
+                                                                  InclusionRule.NONE);
       options.setSchemaInclusionRule(schemaInclusionRule);
     }
 
@@ -140,8 +146,8 @@ final class SchemaCrawlerOptionsParser
 
     if (optionTables.isFound())
     {
-      final InclusionRule tableInclusionRule = new InclusionRule(optionTables
-        .getValue(), InclusionRule.NONE);
+      final InclusionRule tableInclusionRule = new InclusionRule(optionTables.getValue(),
+                                                                 InclusionRule.NONE);
       options.setTableInclusionRule(tableInclusionRule);
     }
     if (optionExcludeColumns.isFound())

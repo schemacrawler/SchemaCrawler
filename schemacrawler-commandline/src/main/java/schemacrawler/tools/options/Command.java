@@ -2,6 +2,7 @@ package schemacrawler.tools.options;
 
 
 import schemacrawler.schemacrawler.Options;
+import sf.util.Utility;
 
 public final class Command
   implements Options
@@ -11,13 +12,12 @@ public final class Command
 
   private final String command;
 
-  public Command()
-  {
-    this(null);
-  }
-
   public Command(final String command)
   {
+    if (Utility.isBlank(command))
+    {
+      throw new IllegalArgumentException("No command specified");
+    }
     this.command = command;
   }
 

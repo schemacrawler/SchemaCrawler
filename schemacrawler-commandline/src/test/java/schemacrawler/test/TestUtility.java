@@ -17,7 +17,7 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package sf.util;
+package schemacrawler.test;
 
 
 import java.io.BufferedReader;
@@ -31,9 +31,11 @@ import java.util.Collections;
 import java.util.List;
 
 import org.custommonkey.xmlunit.Validator;
+import org.junit.Ignore;
 
 import schemacrawler.tools.options.OutputFormat;
 
+@Ignore
 public final class TestUtility
 {
 

@@ -74,21 +74,13 @@ public final class SchemaCrawlerCommandLine
                                    final String... args)
     throws SchemaCrawlerException
   {
-    if (args == null)
+    if (args == null || args.length == 0)
     {
       throw new IllegalArgumentException("No command line arguments provided");
     }
 
-    if (args.length > 0)
-    {
-      command = new CommandParser(args).getOptions().toString();
-      outputOptions = new OutputOptionsParser(args).getOptions();
-    }
-    else
-    {
-      command = null;
-      outputOptions = new OutputOptions();
-    }
+    command = new CommandParser(args).getOptions().toString();
+    outputOptions = new OutputOptionsParser(args).getOptions();
 
     if (!Utility.isBlank(configResource))
     {

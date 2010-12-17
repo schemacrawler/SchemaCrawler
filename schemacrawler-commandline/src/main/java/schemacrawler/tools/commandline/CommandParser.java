@@ -21,6 +21,7 @@
 package schemacrawler.tools.commandline;
 
 
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.Command;
 import sf.util.CommandLineParser.Option;
 import sf.util.CommandLineParser.StringOption;
@@ -45,14 +46,22 @@ final class CommandParser
 
   @Override
   protected Command getOptions()
+    throws SchemaCrawlerException
   {
     parse(new Option[] {
       optionCommand
     });
 
-    final String commandOptionValue = optionCommand.getValue();
-    final Command command = new Command(commandOptionValue);
-    return command;
+    if (optionCommand.isFound())
+    {
+      final String commandOptionValue = optionCommand.getValue();
+      final Command command = new Command(commandOptionValue);
+      return command;
+    }
+    else
+    {
+      throw new SchemaCrawlerException("No command specified");
+    }
   }
 
 }

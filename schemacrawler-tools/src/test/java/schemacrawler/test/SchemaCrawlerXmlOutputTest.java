@@ -46,7 +46,6 @@ import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import schemacrawler.utility.TestDatabase;
-import sf.util.TestUtility;
 
 public class SchemaCrawlerXmlOutputTest
 {
