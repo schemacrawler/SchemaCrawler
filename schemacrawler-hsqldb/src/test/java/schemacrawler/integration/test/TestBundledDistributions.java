@@ -10,10 +10,10 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import schemacrawler.test.TestUtility;
 import schemacrawler.tools.hsqldb.Main;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.utility.TestDatabase;
-import sf.util.TestUtility;
 
 public class TestBundledDistributions
 {
@@ -49,6 +49,7 @@ public class TestBundledDistributions
         "-user=sa",
         "-password=",
         "-command=verbose_schema,dump,count",
+        "-infolevel=standard",
         "-outputfile=" + testOutputFile
     });
 

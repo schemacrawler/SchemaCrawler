@@ -36,10 +36,10 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.test.TestUtility;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.utility.TestDatabase;
-import sf.util.TestUtility;
 
 public class SpringIntegrationTest
 {

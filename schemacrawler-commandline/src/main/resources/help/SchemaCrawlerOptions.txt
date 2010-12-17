@@ -21,7 +21,6 @@
   <infolevel> is one of minimum, standard, detailed, maximum, or lint
   The info level determines the amount of database metadata retrieved,
   and also determines the time taken to crawl the schema
-  Optional, defaults to standard
        
 -schemas=<regular-expression>
   <regular-expression> is a regular expression to match fully qualified schema 
