@@ -496,6 +496,12 @@ final class TableRetriever
                       final InclusionRule tableInclusionRule)
     throws SQLException
   {
+    if (tableInclusionRule == null
+        || tableInclusionRule.equals(InclusionRule.EXCLUDE_ALL))
+    {
+      return;
+    }
+
     MetadataResultSet results = null;
     try
     {

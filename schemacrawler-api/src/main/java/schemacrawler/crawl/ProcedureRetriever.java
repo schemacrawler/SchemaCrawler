@@ -132,6 +132,12 @@ final class ProcedureRetriever
                           final InclusionRule procedureInclusionRule)
     throws SQLException
   {
+    if (procedureInclusionRule == null
+        || procedureInclusionRule.equals(InclusionRule.EXCLUDE_ALL))
+    {
+      return;
+    }
+
     MetadataResultSet results = null;
     try
     {
