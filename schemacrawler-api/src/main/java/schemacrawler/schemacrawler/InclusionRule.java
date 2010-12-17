@@ -57,6 +57,8 @@ public final class InclusionRule
 
   /** Include all, exclude none. */
   public static InclusionRule INCLUDE_ALL = new InclusionRule(ALL, NONE);
+  /** Exclude all. */
+  public static InclusionRule EXCLUDE_ALL = new InclusionRule(NONE, NONE);
 
   /**
    * Set include and exclude patterns.
@@ -109,7 +111,7 @@ public final class InclusionRule
         return false;
       }
     }
-    else if (!patternExclude.equals(other.patternExclude))
+    else if (!patternExclude.pattern().equals(other.patternExclude.pattern()))
     {
       return false;
     }
@@ -120,7 +122,7 @@ public final class InclusionRule
         return false;
       }
     }
-    else if (!patternInclude.equals(other.patternInclude))
+    else if (!patternInclude.pattern().equals(other.patternInclude.pattern()))
     {
       return false;
     }
