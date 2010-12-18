@@ -8,7 +8,7 @@
       Shows the commonly needed detail of the schema, including details of 
       tables, views and procedures, columns, primary keys, indexes, 
       and foreign keys
-    verbose_schema
+    details
       Shows maximum possible detail of the schema, including privileges, and 
       details of privileges, triggers, and check constraints
     count

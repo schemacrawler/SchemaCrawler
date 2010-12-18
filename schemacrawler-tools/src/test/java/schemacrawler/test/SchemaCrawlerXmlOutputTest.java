@@ -99,7 +99,7 @@ public class SchemaCrawlerXmlOutputTest
     checkValidXmlOutput(Operation.dump.name(), failures);
     checkValidXmlOutput(SchemaTextDetailType.list.name(), failures);
     checkValidXmlOutput(SchemaTextDetailType.schema.name(), failures);
-    checkValidXmlOutput(SchemaTextDetailType.verbose_schema.name(), failures);
+    checkValidXmlOutput(SchemaTextDetailType.details.name(), failures);
 
     if (failures.size() > 0)
     {

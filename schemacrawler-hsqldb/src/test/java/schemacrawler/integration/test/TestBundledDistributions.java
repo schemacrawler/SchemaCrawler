@@ -48,7 +48,7 @@ public class TestBundledDistributions
         "-database=schemacrawler",
         "-user=sa",
         "-password=",
-        "-command=verbose_schema,dump,count",
+        "-command=details,dump,count",
         "-infolevel=standard",
         "-outputfile=" + testOutputFile
     });
