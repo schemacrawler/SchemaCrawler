@@ -92,10 +92,10 @@ final class SchemaTextFormatter
     throws SchemaCrawlerException
   {
     super(options,
-          schemaTextDetailType == SchemaTextDetailType.verbose_schema,
+          schemaTextDetailType == SchemaTextDetailType.details,
           outputOptions);
     isVerbose = schemaTextDetailType
-      .isGreaterThanOrEqualTo(SchemaTextDetailType.verbose_schema);
+      .isGreaterThanOrEqualTo(SchemaTextDetailType.details);
     isNotList = schemaTextDetailType != SchemaTextDetailType.list;
     isList = schemaTextDetailType == SchemaTextDetailType.list;
   }

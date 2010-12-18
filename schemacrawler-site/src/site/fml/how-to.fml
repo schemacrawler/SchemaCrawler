@@ -522,7 +522,7 @@ for (final Catalog catalog: database.getCatalogs())
       <configuration>
         <schemacrawler.config>schemacrawler.config.properties</schemacrawler.config>
         <schemacrawler.datasource>hsqldb</schemacrawler.datasource>
-        <schemacrawler.command>verbose_schema</schemacrawler.command>
+        <schemacrawler.command>details</schemacrawler.command>
         <schemacrawler.outputformat>html</schemacrawler.outputformat>
         <schemacrawler.jdbc.driver.classpath>hsqldb.jar</schemacrawler.jdbc.driver.classpath>
       </configuration>

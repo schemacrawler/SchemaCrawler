@@ -106,7 +106,7 @@ public class SchemaCrawlerOutputTest
            "SELECT ${orderbycolumns} FROM ${table} ORDER BY ${orderbycolumns}");
 
     final String[] commands = new String[] {
-        SchemaTextDetailType.verbose_schema + "," + Operation.count + ","
+        SchemaTextDetailType.details + "," + Operation.count + ","
             + Operation.dump,
         SchemaTextDetailType.list + "," + Operation.count,
         queryCommand1 + "," + queryCommand2 + "," + Operation.count + ","

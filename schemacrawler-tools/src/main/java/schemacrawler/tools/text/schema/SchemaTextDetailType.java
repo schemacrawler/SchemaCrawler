@@ -38,7 +38,7 @@ public enum SchemaTextDetailType
   /**
    * Maximum column detail, everything supported by SchemaCrawler.
    */
-  verbose_schema, ;
+  details, ;
 
   /**
    * Checks if this is greater than or equal to the provided info level.
