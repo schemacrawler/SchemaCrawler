@@ -63,6 +63,7 @@
     <schemacrawler
       datasource="hsqldb"
       schemacrawler-classpath="schemacrawler-classpath"
+    	infolevel="standard"
       command="velocity"
       outputformat="${velocity-template}"
       outputfile="${outputfile}"/>

@@ -34,6 +34,7 @@
       password=""
     	driver="org.hsqldb.jdbcDriver"
       url="jdbc:hsqldb:hsql://localhost:9001/schemacrawler"
+    	infolevel="lint"
       command="details,count"
       outputfile="${outputfile}"/>
 

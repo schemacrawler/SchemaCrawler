@@ -41,9 +41,9 @@
           </li>
           <li>
             To start with, run
-            <span class="code">sc.cmd -c hsqldb -command=list</span>
+            <span class="code">sc.cmd -c hsqldb -infolevel=minimum -command=list</span>
             (or
-            <span class="code">sc.sh -c hsqldb -command=list</span>
+            <span class="code">sc.sh -c hsqldb -infolevel=minimum -command=list</span>
             on Unix)
           </li>
         </ol>
