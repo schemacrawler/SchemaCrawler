@@ -12,8 +12,12 @@
   <property name="schemacrawler.distribution.javadoc.jar"
             value="${distribution.target}/schemacrawler-${SchemaCrawler.version}-javadoc.jar" />
 
+  <available file="gpl-3.0.txt" property="available.gpl-3.0.txt"/>
+  <available file="lgpl-3.0.txt" property="available.lgpl-3.0.txt"/>
+
   <target name="make-distribution"
           depends="
+            download-licenses,
             make-super-jar,
             make-database-distributions,
             make-binary-distribution,
@@ -22,6 +26,14 @@
             cleanup-distribution
             "
           description="Package all sub-project jars into the distributable jar" />
+
+
+  <target name="download-licenses" unless="gpl-3.0.txt,lgpl-3.0.txt">
+
+    <get src="http://www.gnu.org/licenses/gpl-3.0.txt" dest="gpl-3.0.txt" usetimestamp="true" />
+    <get src="http://www.gnu.org/licenses/lgpl-3.0.txt" dest="lgpl-3.0.txt" usetimestamp="true" />
+
+  </target>
 
   <target name="make-super-jar">
 
@@ -64,9 +76,9 @@
     <property name="distribution.staging.dir"
               location="${distribution.target}/_distribution" />
     <delete dir="${distribution.staging.dir}" />
-  	
+
   	<!-- 1. CREATE STAGING FOR EXAMPLES -->
-  	
+
     <mkdir dir="${distribution.staging.dir}/examples" />
 
     <!-- Copy licenses -->
@@ -83,13 +95,15 @@
       </fileset>
     </copy>
 
-    <!-- Copy examples -->
+    <!-- Stage examples -->
     <mkdir dir="${distribution.target}/site/examples" />
-    <copy todir="${distribution.staging.dir}/examples">
+    <copy includeEmptyDirs="true" todir="${distribution.staging.dir}/examples">
       <fileset dir="${distribution.target}/site/examples" />
     </copy>
     <copy file="${SchemaCrawler.home}/schemacrawler-test/src/main/java/ApiExample.java"
           todir="${distribution.staging.dir}/examples/api" />
+    <copy file="${SchemaCrawler.home}/schemacrawler-test/src/main/java/ApiExample.java"
+          todir="${distribution.staging.dir}/examples/maven-project/src/main/java" />
 
     <!-- Unzip the SchemaCrawler distribution for HyperSQL, for use in the examples -->
     <unzip
@@ -99,7 +113,7 @@
           tofile="${distribution.staging.dir}/examples/_schemacrawler" />
 
   	<!-- 2. CREATE STAGING FOR NON-SPECIFIC SchemaCrawler DISTRIBUTION -->
-  	
+
     <!-- Copy super jar -->
     <copy file="${schemacrawler.distribution.jar}"
           todir="${distribution.staging.dir}/schemacrawler/lib" />
@@ -107,9 +121,9 @@
     <!-- Copy license and readme -->
     <copy file="lgpl-3.0.txt"
           tofile="${distribution.staging.dir}/schemacrawler/LICENSE.txt" />
-    <copy file="${SchemaCrawler.home}/schemacrawler/README.txt" 
+    <copy file="${SchemaCrawler.home}/schemacrawler/README.txt"
           tofile="${distribution.staging.dir}/schemacrawler/README.txt" />
-  	
+
     <!-- Create shortcuts -->
     <filter token="version" value="${SchemaCrawler.version}" />
     <filter token="package" value="schemacrawler" />
@@ -119,10 +133,10 @@
         <include name="*.sh" />
         <include name="*.wsf" />
       </fileset>
-    </copy>  	
-        	
+    </copy>
+
   	<!-- 3. CREATE BINARY DISTRIBUTION FROM THE STAGED DIRECTORIES -->
-  	
+
     <!-- Create zip file for distribution -->
     <property name="distribution.zip.prefix"
               value="schemacrawler-${SchemaCrawler.version}-distrib" />
@@ -153,10 +167,10 @@
         <exclude name="**/target/**/*" />
         <exclude name="differencer" />
         <exclude name="differencer/**/*" />
-        <exclude name="**/.*/*" />      	
+        <exclude name="**/.*/*" />
         <exclude name="**/*.jar" />
       	<exclude name="**/*.launch" />
-        <exclude name="**/*.lob" />      	
+        <exclude name="**/*.lob" />
         <exclude name="**/*.log" />
         <exclude name="**/*.lck" />
         <exclude name="**/*.ser" />
@@ -254,6 +268,9 @@
         	<include name="*.txt" />
         </fileset>
       </copy>
+
+      <copy file="gpl-3.0.txt"
+            tofile="${distribution.target}/@{database}-distrib/LICENSE.txt" />
 
       <zip destfile="${distribution.target}/schemacrawler-@{database}-${SchemaCrawler.version}-distrib.zip"
            update="true"
