@@ -43,6 +43,9 @@
       default=""/>
 
     <attribute
+      name="infolevel"
+      description="determines the amount of database metadata retrieved, and also determines the time taken to crawl the schema"/>
+    <attribute
       name="command"
       description="Comma-separated list of commands"/>
 
@@ -120,6 +123,7 @@
         <arg value="-user=@{user}"/>
         <arg value="-password=@{password}"/>
         <arg value="-command=@{command}"/>
+        <arg value="-infolevel=@{infolevel}"/>
         <arg value="-tables=@{tables}"/>
         <arg value="-excludecolumns=@{excludecolumns}"/>
         <arg value="-procedures=@{procedures}"/>
