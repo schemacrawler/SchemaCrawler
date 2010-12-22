@@ -87,6 +87,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <schemacrawler.version>8.4</schemacrawler.version>
+    <sign-artifacts>false</sign-artifacts>
   </properties>
   <build>
     <plugins>
@@ -131,18 +132,6 @@
               </links>
             </configuration>              
           </execution>       
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>cobertura-maven-plugin</artifactId>
-        <version>2.4</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>clean</goal>
-            </goals>
-          </execution>
         </executions>
       </plugin>
       <plugin>
