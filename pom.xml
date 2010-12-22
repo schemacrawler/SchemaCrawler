@@ -150,7 +150,7 @@
         <artifactId>maven-gpg-plugin</artifactId>
         <version>1.1</version>
         <configuration>
-          <skip>true</skip>
+          <skip>${sign-artifacts}</skip>
         </configuration>
         <executions>
           <execution>
