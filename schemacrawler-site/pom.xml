@@ -24,6 +24,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-site-plugin</artifactId>
+        <version>3.0-beta-3</version>
         <executions>
           <execution>
             <id>site</id>
@@ -45,6 +46,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-changes-plugin</artifactId>
+        <version>2.3</version>
         <configuration>
           <xmlPath>${basedir}/src/site/changes.xml</xmlPath>
         </configuration>
