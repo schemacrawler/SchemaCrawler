@@ -33,31 +33,28 @@
               <goal>site</goal>
             </goals>
             <configuration>
-              <generateReports>false</generateReports>
               <generateSitemap>true</generateSitemap>
+              <reportPlugins>
+                <plugin>
+                  <groupId>org.apache.maven.plugins</groupId>
+                  <artifactId>maven-changes-plugin</artifactId>
+                  <version>2.3</version>
+                  <configuration>
+                    <xmlPath>${basedir}/src/site/changes.xml</xmlPath>
+                  </configuration>
+                  <reportSets>
+                    <reportSet>
+                      <reports>
+                        <report>changes-report</report>
+                      </reports>
+                    </reportSet>
+                  </reportSets>
+                </plugin>
+              </reportPlugins>              
             </configuration>
           </execution>
         </executions>
       </plugin>
     </plugins>
   </build>
-  <reporting>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-changes-plugin</artifactId>
-        <version>2.3</version>
-        <configuration>
-          <xmlPath>${basedir}/src/site/changes.xml</xmlPath>
-        </configuration>
-        <reportSets>
-          <reportSet>
-            <reports>
-              <report>changes-report</report>
-            </reports>
-          </reportSet>
-        </reportSets>
-      </plugin>
-    </plugins>
-  </reporting>
 </project>
