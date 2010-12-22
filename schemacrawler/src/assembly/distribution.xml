@@ -191,7 +191,7 @@
     <property name="website.location"
               location="${SchemaCrawler.home}/schemacrawler-site/target/site" />
     <property name="website.apidocs.location"
-              location="${SchemaCrawler.home}/schemacrawler-api/target/site/apidocs" />
+              location="${SchemaCrawler.home}/schemacrawler-api/target/apidocs" />
     <mkdir dir="${website.location}" />
     <mkdir dir="${website.apidocs.location}" />
     <property name="website.zip.prefix"
