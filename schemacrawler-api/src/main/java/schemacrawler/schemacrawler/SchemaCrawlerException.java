@@ -30,17 +30,11 @@ public class SchemaCrawlerException
 
   private static final long serialVersionUID = 3257848770627713076L;
 
-  /**
-   * {@inheritDoc}
-   */
   public SchemaCrawlerException(final String message)
   {
     super(message);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   public SchemaCrawlerException(final String message, final Throwable cause)
   {
     super(message + ": " + cause.getMessage(), cause);
