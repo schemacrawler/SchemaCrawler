@@ -11,18 +11,17 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import schemacrawler.test.TestUtility;
-import schemacrawler.tools.hsqldb.Main;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.utility.TestDatabase;
 
 public class TestBundledDistributions
 {
-  private static TestDatabase testUtility = new TestDatabase();
+  private static TestDatabase testDb = new TestDatabase();
 
   @AfterClass
   public static void afterAllTests()
   {
-    testUtility.shutdownDatabase();
+    testDb.shutdownDatabase();
   }
 
   @BeforeClass
@@ -30,7 +29,7 @@ public class TestBundledDistributions
     throws Exception
   {
     TestDatabase.initializeApplicationLogging();
-    testUtility.startDatabase();
+    testDb.startDatabase(true);
   }
 
   @Test
@@ -44,7 +43,7 @@ public class TestBundledDistributions
                                                     ".test");
     testOutputFile.delete();
 
-    Main.main(new String[] {
+    schemacrawler.tools.hsqldb.Main.main(new String[] {
         "-database=schemacrawler",
         "-user=sa",
         "-password=",

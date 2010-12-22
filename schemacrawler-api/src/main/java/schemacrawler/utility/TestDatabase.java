@@ -78,7 +78,7 @@ public class TestDatabase
         testDb.shutdownDatabase();
       }
     });
-    testDb.startDatabase();
+    testDb.startDatabase(false);
   }
 
   /**
@@ -296,7 +296,7 @@ public class TestDatabase
    * @throws SchemaCrawlerException
    *         On an exception
    */
-  public void startDatabase()
+  public void startDatabase(boolean silent)
     throws SchemaCrawlerException
   {
     LOGGER.log(Level.FINE, toString() + " - Setting up database");
@@ -309,9 +309,9 @@ public class TestDatabase
         "-dbname.0",
         "schemacrawler",
         "-silent",
-        "false",
+        Boolean.toString(silent),
         "-trace",
-        "true"
+        Boolean.toString(!silent),
     });
     createDatabase("jdbc:hsqldb:hsql://localhost/schemacrawler");
   }

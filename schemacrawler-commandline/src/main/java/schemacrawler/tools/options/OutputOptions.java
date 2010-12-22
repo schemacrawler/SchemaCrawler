@@ -70,8 +70,8 @@ public final class OutputOptions
    * 
    * @param outputFormatValue
    *        Type of output, which is dependent on the executor
-   * @param outputFilename
-   *        Output filename
+   * @param outputFile
+   *        Output file
    */
   public OutputOptions(final String outputFormatValue, final File outputFile)
   {
@@ -106,8 +106,9 @@ public final class OutputOptions
         try
         {
           writer.close();
-          LOGGER.log(Level.INFO, "Closed output writer to file, "
-                                 + outputFile.getAbsolutePath());
+          LOGGER.log(Level.INFO,
+                     "Closed output writer to file, "
+                         + outputFile.getAbsolutePath());
         }
         catch (final IOException e)
         {
@@ -248,8 +249,9 @@ public final class OutputOptions
                                                                   * autoFlush
                                                                   * =
                                                                   */true);
-        LOGGER.log(Level.INFO, "Opened output writer to file, "
-                               + outputFile.getAbsolutePath());
+        LOGGER.log(Level.INFO,
+                   "Opened output writer to file, "
+                       + outputFile.getAbsolutePath());
       }
     }
     catch (final Exception e)
