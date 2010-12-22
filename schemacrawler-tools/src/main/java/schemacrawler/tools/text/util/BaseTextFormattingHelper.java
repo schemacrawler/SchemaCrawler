@@ -133,8 +133,8 @@ abstract class BaseTextFormattingHelper
   /**
    * {@inheritDoc}
    * 
-   * @see TextFormattingHelper#createNameRow(java.lang.String,
-   *      java.lang.String)
+   * @see schemacrawler.tools.text.util.TextFormattingHelper#createNameRow(java.lang.String,
+   *      java.lang.String, boolean)
    */
   public String createNameRow(final String name,
                               final String description,
