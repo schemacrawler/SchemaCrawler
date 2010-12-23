@@ -160,7 +160,7 @@
         <artifactId>maven-gpg-plugin</artifactId>
         <version>1.1</version>
         <configuration>
-          <skip>${sign-artifacts}</skip>
+          <skip>${skip.signing.artifacts}</skip>
         </configuration>
         <executions>
           <execution>
