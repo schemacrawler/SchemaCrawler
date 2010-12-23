@@ -87,7 +87,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <schemacrawler.version>8.4</schemacrawler.version>
-    <sign-artifacts>false</sign-artifacts>
+    <skip.signing.artifacts>true</skip.signing.artifacts>
   </properties>
   <build>
     <plugins>
@@ -125,13 +125,13 @@
             <configuration>
               <quiet>true</quiet>
               <show>public</show>
-              <detectOfflineLinks>true</detectOfflineLinks> 
+              <detectOfflineLinks>true</detectOfflineLinks>
               <stylesheetfile>${basedir}/src/javadoc/javadocs.css</stylesheetfile>
               <links>
                 <link>http://java.sun.com/j2se/1.5.0/docs/api</link>
               </links>
-            </configuration>              
-          </execution>       
+            </configuration>
+          </execution>
         </executions>
       </plugin>
       <plugin>
@@ -139,7 +139,7 @@
         <artifactId>maven-gpg-plugin</artifactId>
         <version>1.1</version>
         <configuration>
-          <skip>${sign-artifacts}</skip>
+          <skip>${skip.signing.artifacts}</skip>
         </configuration>
         <executions>
           <execution>
