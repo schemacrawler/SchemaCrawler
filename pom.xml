@@ -87,7 +87,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <schemacrawler.version>8.4</schemacrawler.version>
-    <skip.signing.artifacts>false</skip.signing.artifacts>
+    <skip.signing.artifacts>true</skip.signing.artifacts>
   </properties>
   <build>
     <plugins>
