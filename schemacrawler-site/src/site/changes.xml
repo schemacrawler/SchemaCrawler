@@ -5,7 +5,7 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-    <release version="8.4" date="2010-08-31">
+    <release version="8.4" date="2010-12-23">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Simplified commands - list_objects is now simply list. Removed the -show_stored_procedures command line option - simply use -proedures=
       ]]></action>
@@ -17,6 +17,9 @@
       ]]></action>
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Made -infolevel a required command line argument.
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Use Maven 3.0 in the build.
       ]]></action>
     </release>
     <release version="8.3.3" date="2010-08-01">

@@ -116,7 +116,7 @@
           SchemaCrawler jar, and can also
           create the project
           web-site. Download
-          <a href="http://maven.apache.org/">Maven 2.0.
+          <a href="http://maven.apache.org/">Maven 3.0.
           </a>
           Then run
           <code>mvn package</code>

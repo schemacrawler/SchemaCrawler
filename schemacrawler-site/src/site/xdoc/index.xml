@@ -118,6 +118,10 @@
         </p>
         <source><![CDATA[
 final SchemaCrawlerOptions options = new SchemaCrawlerOptions();
+// Set what details are required in the schema - this affects the
+// time taken to crawl the schema
+options.setSchemaInfoLevel(SchemaInfoLevel.standard());
+
 final Database database = SchemaCrawlerUtility.getDatabase(connection, options);
 for (final Schema schema: database.getSchemas())
 {

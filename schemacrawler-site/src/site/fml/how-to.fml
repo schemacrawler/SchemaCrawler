@@ -330,19 +330,15 @@ final SchemaCrawlerOptions options = new SchemaCrawlerOptions();
 options.setSchemaInfoLevel(SchemaInfoLevel.standard());
 
 final Database database = SchemaCrawlerUtility.getDatabase(connection, options);
-
-for (final Catalog catalog: database.getCatalogs())
+for (final Schema schema: database.getSchemas())
 {
-  for (final Schema schema: catalog.getSchemas())
+  System.out.println(schema);
+  for (final Table table: schema.getTables())
   {
-    System.out.println(schema);
-    for (final Table table: schema.getTables())
+    System.out.println("o--> " + table);
+    for (final Column column: table.getColumns())
     {
-      System.out.print("o--> " + table);
-      for (final Column column: table.getColumns())
-      {
-        System.out.println("     o--> " + column);
-      }
+      System.out.println("     o--> " + column);
     }
   }
 }
@@ -408,69 +404,73 @@ for (final Catalog catalog: database.getCatalogs())
           useful. </p>
         <ul>
           <li>
-            config
+            config<br/>
             Path to the configuration file (default value -
             schemacrawler.config.properties)
           </li>
           <li>
-            config-override
+            config-override<br/>
             Path to the configuration override file (default value -
             schemacrawler.config.override.properties)
           </li>
           <li>
-            schemacrawler-classpath
+            schemacrawler-classpath<br/>
             Database driver classpath (default value - value of the ant property value
             ${schemacrawler-classpath})
           </li>
           <li>
-            datasource
+            datasource<br/>
             Datasource defined in the configuration (either the datasource, or the
             connection properties
             should be
             provided - if both sets are provided, the datasource is ignored)
           </li>
           <li>
-            driver
+            driver<br/>
             JDBC driver class name
           </li>
           <li>
-            url
+            url<br/>
             Database connection string
           </li>
           <li>
-            user
+            user<br/>
             Database connection user name
           </li>
           <li>
-            password
+            password<br/>
             Database connection password (default value is an empty string)
           </li>
           <li>
-            command
+            command<br/>
             Comma-separated list of commands
           </li>
           <li>
-            no-header
+            infolevel<br/>
+            Schema information level
+          </li>          
+          <li>
+            no-header<br/>
             Whether to print the header - true or false (default value - false)
           </li>
           <li>
-            no-footer
+            no-footer<br/>
             Whether to print the footer - true or false (default value - false)
           </li>
           <li>
-            no-info
+            no-info<br/>
             Whether to print information - true or false (default value - false)
           </li>
           <li>
-            outputformat
+            outputformat<br/>
             Output format (default value - text)
           </li>
           <li>
-            outputfile
+            outputfile<br/>
             Path to output file
           </li>
           <li>
-            append
+            append<br/>
             Whether to append to the output - true or false (default value - false)
 					</li>
         </ul>
@@ -586,7 +586,7 @@ for (final Catalog catalog: database.getCatalogs())
             the reverse of the "create" order. Use the following command-line
             arguments to obtain tables
             in "create" order:
-            <code>-command=brief_schema -sorttables=false -procedures=</code>
+            <code>-command=list -sorttables=false -procedures=</code>
           </i>
         </p>
       </answer>
