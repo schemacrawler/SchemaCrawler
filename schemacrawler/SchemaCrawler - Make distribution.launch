@@ -22,7 +22,7 @@
 <stringAttribute key="org.eclipse.jdt.launching.VM_INSTALL_TYPE_ID" value="org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType"/>
 <booleanAttribute key="org.eclipse.ui.externaltools.ATTR_HIDE_INTERNAL_TARGETS" value="true"/>
 <stringAttribute key="org.eclipse.ui.externaltools.ATTR_LOCATION" value="${workspace_loc:/SchemaCrawler - Distribution/src/assembly/distribution.xml}"/>
-<stringAttribute key="org.eclipse.ui.externaltools.ATTR_TOOL_ARGUMENTS" value="&quot;-DSchemaCrawler.home=${workspace_loc:/SchemaCrawler - Distribution}/..&quot;&#13;&#10;-DSchemaCrawler.version=8.4"/>
+<stringAttribute key="org.eclipse.ui.externaltools.ATTR_TOOL_ARGUMENTS" value="&quot;-DSchemaCrawler.home=${workspace_loc:/SchemaCrawler - Distribution}/..&quot;&#13;&#10;-DSchemaCrawler.version=8.5"/>
 <stringAttribute key="org.eclipse.ui.externaltools.ATTR_WORKING_DIRECTORY" value="${workspace_loc:/SchemaCrawler - Distribution}"/>
 <stringAttribute key="process_factory_id" value="org.eclipse.ant.ui.remoteAntProcessFactory"/>
 </launchConfiguration>

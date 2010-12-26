@@ -5,7 +5,7 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-    <release version="8.4" date="2010-12-23">
+    <release version="8.5" date="2010-12-23">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Simplified commands - list_objects is now simply list. Removed the -show_stored_procedures command line option - simply use -proedures=
       ]]></action>
