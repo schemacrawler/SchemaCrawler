@@ -6,7 +6,7 @@
   <parent>
     <artifactId>schemacrawler-all</artifactId>
     <groupId>net.sourceforge.schemacrawler</groupId>
-    <version>8.4</version>
+    <version>8.5</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>net.sourceforge.schemacrawler</groupId>
