@@ -66,7 +66,8 @@ public final class TestUtility
     else
     {
       contentEquals = contentEquals(new InputStreamReader(referenceStream),
-                                    new FileReader(testOutputFile));
+                                    new FileReader(testOutputFile),
+                                    "url                                   jdbc:hsqldb");
     }
 
     final boolean isOutputValidXml;
@@ -119,7 +120,8 @@ public final class TestUtility
   }
 
   private static boolean contentEquals(final Reader expectedInputReader,
-                                       final Reader actualInputReader)
+                                       final Reader actualInputReader,
+                                       final String... ignoreLines)
     throws Exception
   {
     if (expectedInputReader == null || actualInputReader == null)
@@ -131,10 +133,26 @@ public final class TestUtility
     final BufferedReader actualBufferedReader = new BufferedReader(actualInputReader);
     try
     {
-      String line;
-      while ((line = expectedBufferedReader.readLine()) != null)
+      String expectedline;
+      while ((expectedline = expectedBufferedReader.readLine()) != null)
       {
-        if (!line.equals(actualBufferedReader.readLine()))
+        final String actualLine = actualBufferedReader.readLine();
+
+        boolean ignore = false;
+        for (final String ignoreLine: ignoreLines)
+        {
+          if (expectedline.contains(ignoreLine))
+          {
+            ignore = true;
+            break;
+          }
+        }
+        if (ignore)
+        {
+          continue;
+        }
+
+        if (!expectedline.equals(actualLine))
         {
           return false;
         }

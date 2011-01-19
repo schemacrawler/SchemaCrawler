@@ -69,6 +69,8 @@ public class SchemaCrawlerTextCommandsOutputTest
 
   }
 
+  private static final String COMMAND_OUTPUT = "command_output/";
+
   private static TestDatabase testUtility = new TestDatabase();
 
   @AfterClass
@@ -140,8 +142,8 @@ public class SchemaCrawlerTextCommandsOutputTest
                                                     ".test");
     testOutputFile.delete();
 
-    final OutputOptions outputOptions = new OutputOptions(OutputFormat.text
-      .name(), testOutputFile);
+    final OutputOptions outputOptions = new OutputOptions(OutputFormat.text.name(),
+                                                          testOutputFile);
     outputOptions.setNoInfo(true);
     outputOptions.setNoHeader(true);
     outputOptions.setNoFooter(true);
@@ -152,7 +154,7 @@ public class SchemaCrawlerTextCommandsOutputTest
     executable.execute(testUtility.getConnection());
 
     final List<String> failures = TestUtility
-      .compareOutput("command_output/" + referenceFile,
+      .compareOutput(COMMAND_OUTPUT + referenceFile,
                      testOutputFile,
                      outputOptions.getOutputFormat());
     if (failures.size() > 0)

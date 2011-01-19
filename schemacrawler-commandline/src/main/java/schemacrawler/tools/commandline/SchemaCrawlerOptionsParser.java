@@ -197,10 +197,15 @@ final class SchemaCrawlerOptionsParser
 
     if (optionGrepDefinitions.isFound())
     {
+      options.setGrepDefinitions(true);
       final InclusionRule grepDefinitionInclusionRule = new InclusionRule(optionGrepDefinitions
                                                                             .getValue(),
                                                                           InclusionRule.NONE);
       options.setGrepDefinitionInclusionRule(grepDefinitionInclusionRule);
+    }
+    else
+    {
+      options.setGrepDefinitions(false);
     }
 
     if (optionSortColumns.isFound())

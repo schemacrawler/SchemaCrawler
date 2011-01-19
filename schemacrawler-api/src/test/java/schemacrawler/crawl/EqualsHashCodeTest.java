@@ -36,4 +36,18 @@ public class EqualsHashCodeTest
     assertEquals("", inclusionRule, InclusionRule.EXCLUDE_ALL);
   }
 
+  @Test
+  public void schemaRef()
+  {
+    final SchemaReference[] schemaRefs = new SchemaReference[] {
+        new SchemaReference("catalog", "schema"),
+        new SchemaReference(null, "schema"),
+        new SchemaReference("catalog", null)
+    };
+    for (final SchemaReference schemaRef: schemaRefs)
+    {
+      assertEquals(schemaRef.toString(), schemaRef.getFullName());
+    }
+  }
+
 }
