@@ -361,7 +361,7 @@ public final class SchemaCrawler
     final boolean invertMatch = options.isGrepInvertMatch();
 
     final boolean checkIncludeForColumns = grepProcedureColumnInclusionRule != null;
-    final boolean checkIncludeForDefinitions = grepDefinitionInclusionRule != null;
+    final boolean checkIncludeForDefinitions = options.isGrepDefinitions();
 
     if (!checkIncludeForColumns && !checkIncludeForDefinitions)
     {
@@ -371,21 +371,14 @@ public final class SchemaCrawler
     boolean includeForColumns = false;
     boolean includeForDefinitions = false;
     final ProcedureColumn[] columns = procedure.getColumns();
-    if (columns.length == 0)
+    for (final ProcedureColumn column: columns)
     {
-      includeForColumns = true;
-    }
-    else
-    {
-      for (final ProcedureColumn column: columns)
+      if (checkIncludeForColumns)
       {
-        if (checkIncludeForColumns)
+        if (grepProcedureColumnInclusionRule.include(column.getFullName()))
         {
-          if (grepProcedureColumnInclusionRule.include(column.getFullName()))
-          {
-            includeForColumns = true;
-            break;
-          }
+          includeForColumns = true;
+          break;
         }
       }
     }
@@ -438,7 +431,7 @@ public final class SchemaCrawler
     final boolean invertMatch = options.isGrepInvertMatch();
 
     final boolean checkIncludeForColumns = grepColumnInclusionRule != null;
-    final boolean checkIncludeForDefinitions = grepDefinitionInclusionRule != null;
+    final boolean checkIncludeForDefinitions = options.isGrepDefinitions();
 
     if (!checkIncludeForColumns && !checkIncludeForDefinitions)
     {
@@ -448,29 +441,22 @@ public final class SchemaCrawler
     boolean includeForColumns = false;
     boolean includeForDefinitions = false;
     final Column[] columns = table.getColumns();
-    if (columns.length == 0)
+    for (final Column column: columns)
     {
-      includeForColumns = true;
-    }
-    else
-    {
-      for (final Column column: columns)
+      if (checkIncludeForColumns)
       {
-        if (checkIncludeForColumns)
+        if (grepColumnInclusionRule.include(column.getFullName()))
         {
-          if (grepColumnInclusionRule.include(column.getFullName()))
-          {
-            includeForColumns = true;
-            break;
-          }
+          includeForColumns = true;
+          break;
         }
-        if (checkIncludeForDefinitions)
+      }
+      if (checkIncludeForDefinitions)
+      {
+        if (grepDefinitionInclusionRule.include(column.getRemarks()))
         {
-          if (grepDefinitionInclusionRule.include(column.getRemarks()))
-          {
-            includeForDefinitions = true;
-            break;
-          }
+          includeForDefinitions = true;
+          break;
         }
       }
     }

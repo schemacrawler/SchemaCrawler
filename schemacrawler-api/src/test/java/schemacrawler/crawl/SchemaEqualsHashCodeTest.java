@@ -12,9 +12,9 @@ import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnMap;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Privilege;
+import schemacrawler.schema.Privilege.Grant;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
-import schemacrawler.schema.Privilege.Grant;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
@@ -38,6 +38,19 @@ public class SchemaEqualsHashCodeTest
   public static Schema schemaNull = null;
   @DataPoint
   public static Schema schemaEmpty = new MutableSchema();
+
+  @DataPoint
+  public static SchemaReference schemaRef;
+  @DataPoint
+  public static SchemaReference schemaRefNull = null;
+  @DataPoint
+  public static SchemaReference schemaRef1 = new SchemaReference("catalog",
+                                                                 "schema");
+  @DataPoint
+  public static SchemaReference schemaRef2 = new SchemaReference(null, "schema");
+  @DataPoint
+  public static SchemaReference schemaRef3 = new SchemaReference("catalog",
+                                                                 null);
 
   @DataPoint
   public static Table table;

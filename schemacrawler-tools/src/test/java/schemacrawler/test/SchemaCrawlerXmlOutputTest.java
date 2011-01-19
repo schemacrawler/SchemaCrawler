@@ -72,6 +72,8 @@ public class SchemaCrawlerXmlOutputTest
 
   }
 
+  private static final String XML_OUTPUT = "xml_output/";
+
   private static TestDatabase testUtility = new TestDatabase();
 
   @AfterClass
@@ -116,8 +118,8 @@ public class SchemaCrawlerXmlOutputTest
                                                         + referenceFile + ".",
                                                     ".test");
 
-    final OutputOptions outputOptions = new OutputOptions(OutputFormat.html
-      .name(), testOutputFile);
+    final OutputOptions outputOptions = new OutputOptions(OutputFormat.html.name(),
+                                                          testOutputFile);
     outputOptions.setNoHeader(false);
     outputOptions.setNoFooter(false);
     outputOptions.setNoInfo(false);
@@ -130,7 +132,7 @@ public class SchemaCrawlerXmlOutputTest
     executable.setOutputOptions(outputOptions);
     executable.execute(testUtility.getConnection());
 
-    failures.addAll(TestUtility.compareOutput("xml_output/" + referenceFile,
+    failures.addAll(TestUtility.compareOutput(XML_OUTPUT + referenceFile,
                                               testOutputFile,
                                               OutputFormat.html));
   }

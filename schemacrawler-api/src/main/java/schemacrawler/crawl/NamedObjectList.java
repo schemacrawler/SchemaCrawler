@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Map;
 
 import schemacrawler.schema.NamedObject;
+import sf.util.ObjectToString;
 import sf.util.Utility;
 
 /**
@@ -114,7 +115,7 @@ class NamedObjectList<N extends NamedObject>
   @Override
   public String toString()
   {
-    return values().toString();
+    return ObjectToString.toString(values());
   }
 
   /**
@@ -131,11 +132,6 @@ class NamedObjectList<N extends NamedObject>
     }
     final String key = makeLookupKey(namedObject);
     objects.put(key, namedObject);
-  }
-
-  boolean isEmpty()
-  {
-    return objects.isEmpty();
   }
 
   N lookup(final NamedObject namedObject, final String name)

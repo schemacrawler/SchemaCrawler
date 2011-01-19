@@ -75,6 +75,10 @@ public class SchemaCrawlerOutputTest
 
   }
 
+  private static final String INFO_LEVEL_OUTPUT = "info_level_output/";
+
+  private static final String COMPOSITE_OUTPUT = "composite_output/";
+
   private static TestDatabase testUtility = new TestDatabase();
 
   @AfterClass
@@ -126,8 +130,8 @@ public class SchemaCrawlerOutputTest
                                                         ".test");
         testOutputFile.delete();
 
-        final OutputOptions outputOptions = new OutputOptions(outputFormat
-          .name(), testOutputFile);
+        final OutputOptions outputOptions = new OutputOptions(outputFormat.name(),
+                                                              testOutputFile);
         outputOptions.setNoInfo(false);
         outputOptions.setNoHeader(false);
         outputOptions.setNoFooter(false);
@@ -146,7 +150,7 @@ public class SchemaCrawlerOutputTest
         executable.setAdditionalConfiguration(queriesConfig);
         executable.execute(connectionOptions.createConnection());
 
-        failures.addAll(TestUtility.compareOutput("composite_output/"
+        failures.addAll(TestUtility.compareOutput(COMPOSITE_OUTPUT
                                                       + referenceFile,
                                                   testOutputFile,
                                                   outputFormat));
@@ -181,8 +185,8 @@ public class SchemaCrawlerOutputTest
                                                         ".test");
         testOutputFile.delete();
 
-        final OutputOptions outputOptions = new OutputOptions(OutputFormat.text
-          .name(), testOutputFile);
+        final OutputOptions outputOptions = new OutputOptions(OutputFormat.text.name(),
+                                                              testOutputFile);
         outputOptions.setNoInfo(false);
         outputOptions.setNoHeader(false);
         outputOptions.setNoFooter(false);
@@ -201,7 +205,7 @@ public class SchemaCrawlerOutputTest
         executable.setOutputOptions(outputOptions);
         executable.execute(connectionOptions.createConnection());
 
-        failures.addAll(TestUtility.compareOutput("info_level_output/"
+        failures.addAll(TestUtility.compareOutput(INFO_LEVEL_OUTPUT
                                                       + referenceFile,
                                                   testOutputFile,
                                                   outputOptions

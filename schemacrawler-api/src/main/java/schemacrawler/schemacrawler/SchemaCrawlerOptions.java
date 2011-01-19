@@ -84,12 +84,13 @@ public final class SchemaCrawlerOptions
   private InclusionRule grepColumnInclusionRule;
   private InclusionRule grepProcedureColumnInclusionRule;
   private InclusionRule grepDefinitionInclusionRule;
-
+  private boolean grepDefinitions;
   private boolean grepInvertMatch;
+
   private boolean isAlphabeticalSortForTables;
   private boolean isAlphabeticalSortForTableColumns;
-
   private boolean isAlphabeticalSortForForeignKeys;
+
   private boolean isAlphabeticalSortForIndexes;
   private boolean isAlphabeticalSortForProcedureColumns;
   private SchemaInfoLevel schemaInfoLevel;
@@ -141,29 +142,25 @@ public final class SchemaCrawlerOptions
 
     informationSchemaViews = new InformationSchemaViews(config);
 
-    schemaInclusionRule = new InclusionRule(configProperties
-                                              .getStringValue(SC_SCHEMA_PATTERN_INCLUDE,
-                                                              InclusionRule.ALL),
+    schemaInclusionRule = new InclusionRule(configProperties.getStringValue(SC_SCHEMA_PATTERN_INCLUDE,
+                                                                            InclusionRule.ALL),
                                             configProperties
                                               .getStringValue(SC_SCHEMA_PATTERN_EXCLUDE,
                                                               InclusionRule.NONE));
 
-    tableInclusionRule = new InclusionRule(configProperties
-                                             .getStringValue(SC_TABLE_PATTERN_INCLUDE,
-                                                             InclusionRule.ALL),
+    tableInclusionRule = new InclusionRule(configProperties.getStringValue(SC_TABLE_PATTERN_INCLUDE,
+                                                                           InclusionRule.ALL),
                                            configProperties
                                              .getStringValue(SC_TABLE_PATTERN_EXCLUDE,
                                                              InclusionRule.NONE));
-    columnInclusionRule = new InclusionRule(configProperties
-                                              .getStringValue(SC_COLUMN_PATTERN_INCLUDE,
-                                                              InclusionRule.ALL),
+    columnInclusionRule = new InclusionRule(configProperties.getStringValue(SC_COLUMN_PATTERN_INCLUDE,
+                                                                            InclusionRule.ALL),
                                             configProperties
                                               .getStringValue(SC_COLUMN_PATTERN_EXCLUDE,
                                                               InclusionRule.NONE));
 
-    procedureInclusionRule = new InclusionRule(configProperties
-                                                 .getStringValue(SC_PROCEDURE_PATTERN_INCLUDE,
-                                                                 InclusionRule.ALL),
+    procedureInclusionRule = new InclusionRule(configProperties.getStringValue(SC_PROCEDURE_PATTERN_INCLUDE,
+                                                                               InclusionRule.ALL),
                                                configProperties
                                                  .getStringValue(SC_PROCEDURE_PATTERN_EXCLUDE,
                                                                  InclusionRule.NONE));
@@ -181,10 +178,11 @@ public final class SchemaCrawlerOptions
                                                   .getStringValue(SC_GREP_COLUMN_PATTERN_EXCLUDE,
                                                                   InclusionRule.NONE));
     grepProcedureColumnInclusionRule = new InclusionRule(configProperties
-      .getStringValue(SC_GREP_PROCEDURE_COLUMN_PATTERN_INCLUDE,
-                      InclusionRule.ALL), configProperties
-      .getStringValue(SC_GREP_PROCEDURE_COLUMN_PATTERN_EXCLUDE,
-                      InclusionRule.NONE));
+                                                           .getStringValue(SC_GREP_PROCEDURE_COLUMN_PATTERN_INCLUDE,
+                                                                           InclusionRule.ALL),
+                                                         configProperties
+                                                           .getStringValue(SC_GREP_PROCEDURE_COLUMN_PATTERN_EXCLUDE,
+                                                                           InclusionRule.NONE));
     grepDefinitionInclusionRule = new InclusionRule(configProperties
                                                       .getStringValue(SC_GREP_DEFINITION_PATTERN_INCLUDE,
                                                                       InclusionRule.ALL),
@@ -385,6 +383,11 @@ public final class SchemaCrawlerOptions
     return isAlphabeticalSortForTables;
   }
 
+  public boolean isGrepDefinitions()
+  {
+    return grepDefinitions;
+  }
+
   /**
    * Whether to invert matches.
    * 
@@ -485,6 +488,11 @@ public final class SchemaCrawlerOptions
   public void setGrepDefinitionInclusionRule(InclusionRule grepDefinitionInclusionRule)
   {
     this.grepDefinitionInclusionRule = grepDefinitionInclusionRule;
+  }
+
+  public void setGrepDefinitions(boolean grepDefinitions)
+  {
+    this.grepDefinitions = grepDefinitions;
   }
 
   /**
