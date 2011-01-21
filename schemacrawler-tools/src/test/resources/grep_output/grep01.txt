@@ -1,0 +1,39 @@
+
+
+
+Tables
+========================================================================
+
+
+PUBLIC.BOOKS.BOOKS                                               [table]
+------------------------------------------------------------------------
+  ID                                INTEGER not null            
+  TITLE                             VARCHAR(255) not null       
+  DESCRIPTION                       VARCHAR(255)                
+  PUBLISHERID                       INTEGER not null            
+  PUBLICATIONDATE                   DATE                        
+  PRICE                             DOUBLE(64, 0)               
+
+PK_BOOKS                                                   [primary key]
+  ID                                ascending                   
+
+FK_Y_BOOK                                  [foreign key, with no action]
+  ID --> PUBLIC.BOOKS.BOOKAUTHORS.BOOKID                              
+
+SYS_IDX_PK_BOOKS_10035                                    [unique index]
+  ID                                ascending                   
+
+SYS_CT_10032                                          [check constraint]
+BOOKS.BOOKS.ID IS NOT NULL
+
+SYS_CT_10033                                          [check constraint]
+BOOKS.BOOKS.TITLE IS NOT NULL
+
+SYS_CT_10034                                          [check constraint]
+BOOKS.BOOKS.PUBLISHERID IS NOT NULL
+
+                                                               [remarks]
+Details for published books
+
+
+

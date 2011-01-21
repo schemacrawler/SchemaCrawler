@@ -1,0 +1,65 @@
+
+
+
+Tables
+========================================================================
+
+
+PUBLIC.BOOKS.AUTHORS                                             [table]
+------------------------------------------------------------------------
+  ID                                INTEGER not null            
+  FIRSTNAME                         VARCHAR(20) not null        
+  LASTNAME                          VARCHAR(20) not null        
+  ADDRESS1                          VARCHAR(255)                
+  ADDRESS2                          VARCHAR(255)                
+  CITY                              VARCHAR(50)                 
+  STATE                             VARCHAR(2)                  
+  POSTALCODE                        VARCHAR(10)                 
+  COUNTRY                           VARCHAR(50)                 
+
+PK_AUTHORS                                                 [primary key]
+  ID                                ascending                   
+
+FK_Z_AUTHOR                                [foreign key, with no action]
+  ID --> PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID                              
+
+SYS_IDX_PK_AUTHORS_10031                                  [unique index]
+  ID                                ascending                   
+
+IDX_B_AUTHORS                                         [non-unique index]
+  LASTNAME                          ascending                   
+  FIRSTNAME                         ascending                   
+
+IDX_A_AUTHORS                                         [non-unique index]
+  CITY                              ascending                   
+  STATE                             ascending                   
+  POSTALCODE                        ascending                   
+  COUNTRY                           ascending                   
+
+CHECK_UPPERCASE_STATE                                 [check constraint]
+BOOKS.AUTHORS.STATE=UPPER(BOOKS.AUTHORS.STATE)
+
+SYS_CT_10028                                          [check constraint]
+BOOKS.AUTHORS.ID IS NOT NULL
+
+SYS_CT_10029                                          [check constraint]
+BOOKS.AUTHORS.FIRSTNAME IS NOT NULL
+
+SYS_CT_10030                                          [check constraint]
+BOOKS.AUTHORS.LASTNAME IS NOT NULL
+
+                                                               [remarks]
+Contact details for book authors
+
+
+PUBLIC.BOOKS.AUTHORSLIST                                          [view]
+------------------------------------------------------------------------
+  ID                                INTEGER                     
+  FIRSTNAME                         VARCHAR(20)                 
+  LASTNAME                          VARCHAR(20)                 
+
+                                                            [definition]
+SELECT ID,FIRSTNAME,LASTNAME FROM BOOKS.AUTHORS
+
+
+
