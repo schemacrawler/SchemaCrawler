@@ -312,6 +312,8 @@ public class TestDatabase
         Boolean.toString(silent),
         "-trace",
         Boolean.toString(!silent),
+        "-no_system_exit",
+        "true"
     });
     createDatabase("jdbc:hsqldb:hsql://localhost/schemacrawler");
   }
