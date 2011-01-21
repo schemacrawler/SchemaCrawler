@@ -81,17 +81,19 @@ public final class SchemaCrawlerOptions
   private InclusionRule procedureInclusionRule;
   private InclusionRule procedureColumnInclusionRule;
 
+  private boolean grepColumns;
   private InclusionRule grepColumnInclusionRule;
+  private boolean grepProcedureColumns;
   private InclusionRule grepProcedureColumnInclusionRule;
-  private InclusionRule grepDefinitionInclusionRule;
   private boolean grepDefinitions;
+  private InclusionRule grepDefinitionInclusionRule;
   private boolean grepInvertMatch;
 
   private boolean isAlphabeticalSortForTables;
   private boolean isAlphabeticalSortForTableColumns;
   private boolean isAlphabeticalSortForForeignKeys;
-
   private boolean isAlphabeticalSortForIndexes;
+
   private boolean isAlphabeticalSortForProcedureColumns;
   private SchemaInfoLevel schemaInfoLevel;
   private InformationSchemaViews informationSchemaViews;
@@ -383,6 +385,11 @@ public final class SchemaCrawlerOptions
     return isAlphabeticalSortForTables;
   }
 
+  public boolean isGrepColumns()
+  {
+    return grepColumns;
+  }
+
   public boolean isGrepDefinitions()
   {
     return grepDefinitions;
@@ -396,6 +403,11 @@ public final class SchemaCrawlerOptions
   public boolean isGrepInvertMatch()
   {
     return grepInvertMatch;
+  }
+
+  public boolean isGrepProcedureColumns()
+  {
+    return grepProcedureColumns;
   }
 
   /**
@@ -479,18 +491,23 @@ public final class SchemaCrawlerOptions
     this.grepColumnInclusionRule = grepColumnInclusionRule;
   }
 
+  public void setGrepColumns(final boolean grepColumns)
+  {
+    this.grepColumns = grepColumns;
+  }
+
   /**
    * Sets the definition inclusion rule for grep.
    * 
    * @param grepDefinitionInclusionRule
    *        Definition inclusion rule for grep
    */
-  public void setGrepDefinitionInclusionRule(InclusionRule grepDefinitionInclusionRule)
+  public void setGrepDefinitionInclusionRule(final InclusionRule grepDefinitionInclusionRule)
   {
     this.grepDefinitionInclusionRule = grepDefinitionInclusionRule;
   }
 
-  public void setGrepDefinitions(boolean grepDefinitions)
+  public void setGrepDefinitions(final boolean grepDefinitions)
   {
     this.grepDefinitions = grepDefinitions;
   }
@@ -515,6 +532,11 @@ public final class SchemaCrawlerOptions
   public void setGrepProcedureColumnInclusionRule(final InclusionRule grepProcedureColumnInclusionRule)
   {
     this.grepProcedureColumnInclusionRule = grepProcedureColumnInclusionRule;
+  }
+
+  public void setGrepProcedureColumns(boolean grepProcedureColumns)
+  {
+    this.grepProcedureColumns = grepProcedureColumns;
   }
 
   /**
