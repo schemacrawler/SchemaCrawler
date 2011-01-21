@@ -354,14 +354,14 @@ public final class SchemaCrawler
   private static boolean grepMatch(final SchemaCrawlerOptions options,
                                    final Procedure procedure)
   {
+    final boolean invertMatch = options.isGrepInvertMatch();
+    final boolean checkIncludeForColumns = options.isGrepProcedureColumns();
+    final boolean checkIncludeForDefinitions = options.isGrepDefinitions();
+
     final InclusionRule grepProcedureColumnInclusionRule = options
       .getGrepProcedureColumnInclusionRule();
     final InclusionRule grepDefinitionInclusionRule = options
       .getGrepDefinitionInclusionRule();
-    final boolean invertMatch = options.isGrepInvertMatch();
-
-    final boolean checkIncludeForColumns = grepProcedureColumnInclusionRule != null;
-    final boolean checkIncludeForDefinitions = options.isGrepDefinitions();
 
     if (!checkIncludeForColumns && !checkIncludeForDefinitions)
     {
@@ -424,14 +424,14 @@ public final class SchemaCrawler
   private static boolean grepMatch(final SchemaCrawlerOptions options,
                                    final Table table)
   {
+    final boolean invertMatch = options.isGrepInvertMatch();
+    final boolean checkIncludeForColumns = options.isGrepColumns();
+    final boolean checkIncludeForDefinitions = options.isGrepDefinitions();
+
     final InclusionRule grepColumnInclusionRule = options
       .getGrepColumnInclusionRule();
     final InclusionRule grepDefinitionInclusionRule = options
       .getGrepDefinitionInclusionRule();
-    final boolean invertMatch = options.isGrepInvertMatch();
-
-    final boolean checkIncludeForColumns = grepColumnInclusionRule != null;
-    final boolean checkIncludeForDefinitions = options.isGrepDefinitions();
 
     if (!checkIncludeForColumns && !checkIncludeForDefinitions)
     {

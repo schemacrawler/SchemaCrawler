@@ -76,7 +76,6 @@ public class SchemaCrawlerOutputTest
   }
 
   private static final String INFO_LEVEL_OUTPUT = "info_level_output/";
-
   private static final String COMPOSITE_OUTPUT = "composite_output/";
 
   private static TestDatabase testUtility = new TestDatabase();

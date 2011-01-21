@@ -184,6 +184,11 @@ final class SchemaCrawlerOptionsParser
                                                                         .getValue(),
                                                                       InclusionRule.NONE);
       options.setGrepColumnInclusionRule(grepColumnInclusionRule);
+      options.setGrepColumns(true);
+    }
+    else
+    {
+      options.setGrepColumns(false);
     }
 
     if (optionGrepProcedureColumns.isFound())
@@ -193,6 +198,11 @@ final class SchemaCrawlerOptionsParser
                                                                                InclusionRule.NONE);
       options
         .setGrepProcedureColumnInclusionRule(grepProcedureColumnInclusionRule);
+      options.setGrepProcedureColumns(true);
+    }
+    else
+    {
+      options.setGrepProcedureColumns(false);
     }
 
     if (optionGrepDefinitions.isFound())
