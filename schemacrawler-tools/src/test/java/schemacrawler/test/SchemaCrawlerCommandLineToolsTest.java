@@ -106,7 +106,7 @@ public class SchemaCrawlerCommandLineToolsTest
   {
     final List<String> failures = new ArrayList<String>();
 
-    final String[][] grepArgs1 = new String[][] {
+    final String[][] grepArgs = new String[][] {
         new String[] {
             "-grepcolumns=.*\\.STREET|.*\\.PRICE", "-procedures=",
         }, new String[] {
@@ -118,11 +118,6 @@ public class SchemaCrawlerCommandLineToolsTest
         }, new String[] {
             "-tables=", "-grepinout=.*\\.B_OFFSET",
         },
-    };
-    final String[][] grepArgs = new String[][] {
-      new String[] {
-          "-grepdef=.*book authors.*", "-procedures=",
-      },
     };
     for (int i = 0; i < grepArgs.length; i++)
     {
