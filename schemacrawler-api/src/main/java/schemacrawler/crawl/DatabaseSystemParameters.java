@@ -47,7 +47,6 @@ final class DatabaseSystemParameters
 
   private final boolean supportsCatalogs;
   private final boolean supportsSchemas;
-  private final String catalogSeparator;
   private final String identifierQuoteString;
   private final List<String> reservedWords;
 
@@ -66,7 +65,6 @@ final class DatabaseSystemParameters
       .format("Database %s schemas", (supportsSchemas? "supports"
                                                      : "does not support")));
 
-    catalogSeparator = dbMetaData.getCatalogSeparator();
     identifierQuoteString = dbMetaData.getIdentifierQuoteString();
 
     final Set<String> rawReservedWords = new HashSet<String>();
@@ -81,11 +79,6 @@ final class DatabaseSystemParameters
     }
     Collections.sort(reservedWordsList);
     reservedWords = Collections.unmodifiableList(reservedWordsList);
-  }
-
-  String getCatalogSeparator()
-  {
-    return catalogSeparator;
   }
 
   String getIdentifierQuoteString()
