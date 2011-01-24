@@ -41,7 +41,6 @@ public final class InformationSchemaViews
   private static final String KEY_INFORMATION_SCHEMA_VIEWS = "select.INFORMATION_SCHEMA.VIEWS";
   private static final String KEY_INFORMATION_SCHEMA_TRIGGERS = "select.INFORMATION_SCHEMA.TRIGGERS";
   private static final String KEY_INFORMATION_SCHEMA_TABLE_CONSTRAINTS = "select.INFORMATION_SCHEMA.TABLE_CONSTRAINTS";
-  private static final String KEY_GET_INDEX_INFO = "getIndexInfo";
   private static final String KEY_INFORMATION_SCHEMA_ROUTINES = "select.INFORMATION_SCHEMA.ROUTINES";
   private static final String KEY_INFORMATION_SCHEMA_CHECK_CONSTRAINTS = "select.INFORMATION_SCHEMA.CHECK_CONSTRAINTS";
 
@@ -70,7 +69,6 @@ public final class InformationSchemaViews
           KEY_INFORMATION_SCHEMA_VIEWS,
           KEY_INFORMATION_SCHEMA_TRIGGERS,
           KEY_INFORMATION_SCHEMA_TABLE_CONSTRAINTS,
-          KEY_GET_INDEX_INFO,
           KEY_INFORMATION_SCHEMA_ROUTINES,
           KEY_INFORMATION_SCHEMA_CHECK_CONSTRAINTS,
       };
@@ -80,8 +78,8 @@ public final class InformationSchemaViews
         {
           try
           {
-            informationSchemaQueries.put(key, informationSchemaViewsSql
-              .get(key));
+            informationSchemaQueries.put(key,
+                                         informationSchemaViewsSql.get(key));
           }
           catch (final IllegalArgumentException e)
           {
@@ -102,16 +100,6 @@ public final class InformationSchemaViews
   {
     return informationSchemaQueries
       .get(KEY_INFORMATION_SCHEMA_CHECK_CONSTRAINTS);
-  }
-
-  /**
-   * Gets the index info SQL from the additional configuration.
-   * 
-   * @return Index info constraints SQL.
-   */
-  public String getIndexInfo()
-  {
-    return informationSchemaQueries.get(KEY_GET_INDEX_INFO);
   }
 
   /**
@@ -162,11 +150,6 @@ public final class InformationSchemaViews
       .containsKey(KEY_INFORMATION_SCHEMA_CHECK_CONSTRAINTS);
   }
 
-  public boolean hasIndexInfoSql()
-  {
-    return informationSchemaQueries.containsKey(KEY_GET_INDEX_INFO);
-  }
-
   public boolean hasRoutinesSql()
   {
     return informationSchemaQueries
@@ -200,17 +183,6 @@ public final class InformationSchemaViews
   public void setCheckConstraintsSql(final String sql)
   {
     informationSchemaQueries.put(KEY_INFORMATION_SCHEMA_CHECK_CONSTRAINTS, sql);
-  }
-
-  /**
-   * Sets the index info SQL from the additional configuration.
-   * 
-   * @param sql
-   *        Index info constraints SQL.
-   */
-  public void setIndexInfoSql(final String sql)
-  {
-    informationSchemaQueries.put(KEY_GET_INDEX_INFO, sql);
   }
 
   /**

@@ -21,12 +21,8 @@
 package schemacrawler.crawl;
 
 
-import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -37,7 +33,6 @@ import schemacrawler.schema.IndexType;
 import schemacrawler.schema.TableType;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.InformationSchemaViews;
-import sf.util.TemplatingUtility;
 import sf.util.Utility;
 
 /**
@@ -379,32 +374,16 @@ final class TableRetriever
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
       .getInformationSchemaViews();
 
-    Statement statement = null;
     MetadataResultSet results = null;
     try
     {
-      if (informationSchemaViews.hasIndexInfoSql())
-      {
-        final Map<String, String> map = new HashMap<String, String>();
-        map.put("table", table.getFullName());
-        final String indexInfoSql = TemplatingUtility
-          .expandTemplate(informationSchemaViews.getIndexInfo(), map);
-        LOGGER.log(Level.FINE, "Using getIndexInfo SQL:\n" + indexInfoSql);
-        final Connection connection = getDatabaseConnection();
-        statement = connection.createStatement();
-        results = new MetadataResultSet(statement.executeQuery(indexInfoSql));
-        createIndices(table, results);
-      }
-      else
-      {
-        results = new MetadataResultSet(getMetaData()
-          .getIndexInfo(unquotedName(table.getSchema().getCatalogName()),
-                        unquotedName(table.getSchema().getSchemaName()),
-                        unquotedName(table.getName()),
-                        unique,
-                        true/* approximate */));
-        createIndices(table, results);
-      }
+      results = new MetadataResultSet(getMetaData()
+        .getIndexInfo(unquotedName(table.getSchema().getCatalogName()),
+                      unquotedName(table.getSchema().getSchemaName()),
+                      unquotedName(table.getName()),
+                      unique,
+                      true/* approximate */));
+      createIndices(table, results);
     }
     catch (final SQLException e)
     {
@@ -420,10 +399,6 @@ final class TableRetriever
       if (results != null)
       {
         results.close();
-      }
-      if (statement != null)
-      {
-        statement.close();
       }
     }
 
