@@ -302,26 +302,26 @@ public class SchemaCrawlerTest
                                    table.getFullName()),
                      tableColumnCounts[schemaIdx][tableIdx],
                      table.getColumns().length);
-        assertEquals(String
-          .format("Table %s check constraints count does not match", table
-            .getFullName()), checkConstraints[schemaIdx][tableIdx], table
-          .getCheckConstraints().length);
-        assertEquals(String.format("Table %s index count does not match", table
-                       .getFullName()),
+        assertEquals(String.format("Table %s check constraints count does not match",
+                                   table.getFullName()),
+                     checkConstraints[schemaIdx][tableIdx],
+                     table.getCheckConstraints().length);
+        assertEquals(String.format("Table %s index count does not match",
+                                   table.getFullName()),
                      indexCounts[schemaIdx][tableIdx],
                      table.getIndices().length);
         assertEquals(String.format("Table %s foreign key count does not match",
                                    table.getFullName()),
                      fkCounts[schemaIdx][tableIdx],
                      table.getForeignKeys().length);
-        assertEquals(String
-          .format("Table %s exported foreign key count does not match", table
-            .getFullName()), exportedFkCounts[schemaIdx][tableIdx], table
-          .getExportedForeignKeys().length);
-        assertEquals(String
-          .format("Table %s imported foreign key count does not match", table
-            .getFullName()), importedFkCounts[schemaIdx][tableIdx], table
-          .getImportedForeignKeys().length);
+        assertEquals(String.format("Table %s exported foreign key count does not match",
+                                   table.getFullName()),
+                     exportedFkCounts[schemaIdx][tableIdx],
+                     table.getExportedForeignKeys().length);
+        assertEquals(String.format("Table %s imported foreign key count does not match",
+                                   table.getFullName()),
+                     importedFkCounts[schemaIdx][tableIdx],
+                     table.getImportedForeignKeys().length);
         assertEquals(String.format("Table %s privileges count does not match",
                                    table.getFullName()),
                      tablePrivilegesCounts[schemaIdx][tableIdx],
@@ -349,8 +349,8 @@ public class SchemaCrawlerTest
     assertEquals("Wrong number of procedures", 1, procedures.length);
     for (final Procedure procedure: procedures)
     {
-      assertFalse("Procedure definition not found, for " + procedure, Utility
-        .isBlank(procedure.getDefinition()));
+      assertFalse("Procedure definition not found, for " + procedure,
+                  Utility.isBlank(procedure.getDefinition()));
     }
   }
 
@@ -372,8 +372,9 @@ public class SchemaCrawlerTest
                                                  "PUBLIC.BOOKS");
 
     assertEquals("Schema not not match", schema1, schema2);
-    assertArrayEquals("Tables do not match", schema1.getTables(), schema2
-      .getTables());
+    assertArrayEquals("Tables do not match",
+                      schema1.getTables(),
+                      schema2.getTables());
     assertArrayEquals("Procedures do not match",
                       schema1.getProcedures(),
                       schema2.getProcedures());
@@ -480,9 +481,11 @@ public class SchemaCrawlerTest
       for (int j = 0; j < tableNames.length; j++)
       {
         final String tableName2 = tableNames[j];
-        assertEquals(tableName1 + " <--> " + tableName2, Math.signum(schema
-          .getTable(tableName1).compareTo(schema.getTable(tableName2))), Math
-          .signum(i - j), 1e-100);
+        assertEquals(tableName1 + " <--> " + tableName2,
+                     Math.signum(schema.getTable(tableName1).compareTo(schema
+                       .getTable(tableName2))),
+                     Math.signum(i - j),
+                     1e-100);
       }
     }
 
