@@ -14,12 +14,12 @@
   <dependencies>
     <dependency>
       <groupId>net.sourceforge.schemacrawler</groupId>
-      <artifactId>schemacrawler-tools</artifactId>
+      <artifactId>schemacrawler-commandline</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.schemacrawler</groupId>
-      <artifactId>schemacrawler-commandline</artifactId>
+      <artifactId>schemacrawler-tools</artifactId>
       <version>${project.version}</version>
       <type>test-jar</type>
       <scope>test</scope>

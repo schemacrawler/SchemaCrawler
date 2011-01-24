@@ -50,8 +50,8 @@
   </distributionManagement>
   <modules>
     <module>schemacrawler-api</module>
-    <module>schemacrawler-commandline</module>
     <module>schemacrawler-tools</module>
+    <module>schemacrawler-commandline</module>
     <module>schemacrawler-integrations</module>
     <module>schemacrawler-db2</module>
     <module>schemacrawler-derby</module>

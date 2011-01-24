@@ -33,8 +33,8 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.analysis.AnalyzedDatabase;
-import schemacrawler.tools.commandline.InfoLevel;
 import schemacrawler.tools.executable.BaseExecutable;
+import schemacrawler.tools.options.InfoLevel;
 
 /**
  * Basic SchemaCrawler executor.
