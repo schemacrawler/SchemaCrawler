@@ -34,7 +34,7 @@ import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaCrawlerInfo;
 import schemacrawler.schema.Table;
-import schemacrawler.tools.commandline.InfoLevel;
+import schemacrawler.tools.options.InfoLevel;
 
 public final class AnalyzedDatabase
   implements Database

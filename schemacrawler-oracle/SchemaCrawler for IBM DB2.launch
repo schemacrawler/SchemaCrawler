@@ -13,5 +13,5 @@
 <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-host=10.0.0.2&#13;&#10;-port=50000&#13;&#10;-database=SAMPLE&#13;&#10;&quot;-schemas=\&quot;SUALEH FATEHI\&quot;&quot;&#13;&#10;&quot;-user=SUALEH FATEHI&quot;&#13;&#10;-password=&#13;&#10;-urlx=securityMechanism=4&#13;&#10;-infolevel=lint&#13;&#10;-command=details &#13;&#10;-loglevel=WARNING"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="SchemaCrawler for IBM DB2"/>
 <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.maven.ide.eclipse.launchconfig.sourcepathProvider"/>
-<stringAttribute key="org.eclipse.jdt.launching.WORKING_DIRECTORY" value="${workspace_loc:SchemaCrawler - 3 - Tools/target}"/>
+<stringAttribute key="org.eclipse.jdt.launching.WORKING_DIRECTORY" value="${workspace_loc:SchemaCrawler - 2 - Tools/target}"/>
 </launchConfiguration>
