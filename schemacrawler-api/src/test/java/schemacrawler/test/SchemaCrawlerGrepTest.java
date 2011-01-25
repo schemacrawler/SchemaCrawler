@@ -98,7 +98,6 @@ public class SchemaCrawlerGrepTest
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions
       .setGrepColumnInclusionRule(new InclusionRule(".*\\..*\\.BOOKID", ""));
-    schemaCrawlerOptions.setGrepColumns(true);
 
     final Database database = testUtility.getDatabase(schemaCrawlerOptions);
     final Schema[] schemas = database.getSchemas();
@@ -168,7 +167,6 @@ public class SchemaCrawlerGrepTest
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions
       .setGrepDefinitionInclusionRule(new InclusionRule(".*book author.*", ""));
-    schemaCrawlerOptions.setGrepDefinitions(true);
 
     final Database database = testUtility.getDatabase(schemaCrawlerOptions);
     final Schema[] schemas = database.getSchemas();
@@ -241,7 +239,6 @@ public class SchemaCrawlerGrepTest
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions
       .setGrepProcedureColumnInclusionRule(new InclusionRule(".*\\.B_COUNT", ""));
-    schemaCrawlerOptions.setGrepProcedureColumns(true);
 
     final Database database = testUtility.getDatabase(schemaCrawlerOptions);
     final Schema[] schemas = database.getSchemas();

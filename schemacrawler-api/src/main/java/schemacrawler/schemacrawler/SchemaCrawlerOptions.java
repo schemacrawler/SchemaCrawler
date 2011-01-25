@@ -81,11 +81,8 @@ public final class SchemaCrawlerOptions
   private InclusionRule procedureInclusionRule;
   private InclusionRule procedureColumnInclusionRule;
 
-  private boolean grepColumns;
   private InclusionRule grepColumnInclusionRule;
-  private boolean grepProcedureColumns;
   private InclusionRule grepProcedureColumnInclusionRule;
-  private boolean grepDefinitions;
   private InclusionRule grepDefinitionInclusionRule;
   private boolean grepInvertMatch;
 
@@ -387,12 +384,12 @@ public final class SchemaCrawlerOptions
 
   public boolean isGrepColumns()
   {
-    return grepColumns;
+    return grepColumnInclusionRule != null;
   }
 
   public boolean isGrepDefinitions()
   {
-    return grepDefinitions;
+    return grepDefinitionInclusionRule != null;
   }
 
   /**
@@ -407,7 +404,7 @@ public final class SchemaCrawlerOptions
 
   public boolean isGrepProcedureColumns()
   {
-    return grepProcedureColumns;
+    return grepProcedureColumnInclusionRule != null;
   }
 
   /**
@@ -491,11 +488,6 @@ public final class SchemaCrawlerOptions
     this.grepColumnInclusionRule = grepColumnInclusionRule;
   }
 
-  public void setGrepColumns(final boolean grepColumns)
-  {
-    this.grepColumns = grepColumns;
-  }
-
   /**
    * Sets the definition inclusion rule for grep.
    * 
@@ -505,11 +497,6 @@ public final class SchemaCrawlerOptions
   public void setGrepDefinitionInclusionRule(final InclusionRule grepDefinitionInclusionRule)
   {
     this.grepDefinitionInclusionRule = grepDefinitionInclusionRule;
-  }
-
-  public void setGrepDefinitions(final boolean grepDefinitions)
-  {
-    this.grepDefinitions = grepDefinitions;
   }
 
   /**
@@ -532,11 +519,6 @@ public final class SchemaCrawlerOptions
   public void setGrepProcedureColumnInclusionRule(final InclusionRule grepProcedureColumnInclusionRule)
   {
     this.grepProcedureColumnInclusionRule = grepProcedureColumnInclusionRule;
-  }
-
-  public void setGrepProcedureColumns(boolean grepProcedureColumns)
-  {
-    this.grepProcedureColumns = grepProcedureColumns;
   }
 
   /**
