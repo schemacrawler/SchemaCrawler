@@ -60,7 +60,7 @@ public class SchemaCrawlerGrepTest
   }
 
   @Test
-  public void grep()
+  public void grepColumns()
     throws Exception
   {
     final String[] schemaNames = {
@@ -98,6 +98,90 @@ public class SchemaCrawlerGrepTest
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions
       .setGrepColumnInclusionRule(new InclusionRule(".*\\..*\\.BOOKID", ""));
+
+    final Database database = testUtility.getDatabase(schemaCrawlerOptions);
+    final Schema[] schemas = database.getSchemas();
+    assertEquals("Schema count does not match", 5, schemas.length);
+    for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++)
+    {
+      final Schema schema = schemas[schemaIdx];
+      assertEquals("Schema name does not match",
+                   "PUBLIC." + schemaNames[schemaIdx],
+                   schema.getName());
+      final Table[] tables = schema.getTables();
+      assertEquals("Table count does not match for schema " + schema,
+                   tableCounts[schemaIdx],
+                   tables.length);
+      for (int tableIdx = 0; tableIdx < tables.length; tableIdx++)
+      {
+        final Table table = tables[tableIdx];
+        final Column[] columns = table.getColumns();
+        final String[] columnsNamesForTable = columnNames[schemaIdx][tableIdx];
+        for (int columnIdx = 0; columnIdx < columns.length; columnIdx++)
+        {
+          final Column column = columns[columnIdx];
+          LOGGER.log(Level.FINE, column.toString());
+          assertEquals("Column full name does not match",
+                       "PUBLIC." + schemaNames[schemaIdx] + "."
+                           + columnsNamesForTable[columnIdx],
+                       column.getFullName());
+        }
+      }
+    }
+  }
+
+  @Test
+  public void grepCombined()
+    throws Exception
+  {
+    final String[] schemaNames = {
+        "BOOKS",
+        "INFORMATION_SCHEMA",
+        "PUBLIC",
+        "\"PUBLISHER SALES\"",
+        "SYSTEM_LOBS"
+    };
+    final int[] tableCounts = {
+        2, 0, 0, 1, 0
+    };
+    final String[][][] columnNames = {
+        {
+            {
+                "AUTHORS.ID",
+                "AUTHORS.FIRSTNAME",
+                "AUTHORS.LASTNAME",
+                "AUTHORS.ADDRESS1",
+                "AUTHORS.ADDRESS2",
+                "AUTHORS.CITY",
+                "AUTHORS.STATE",
+                "AUTHORS.POSTALCODE",
+                "AUTHORS.COUNTRY",
+            },
+            {
+                "BOOKAUTHORS.BOOKID",
+                "BOOKAUTHORS.AUTHORID",
+                "BOOKAUTHORS.\"UPDATE\"",
+            },
+        },
+        {},
+        {},
+        {
+          {
+              "SALES.POSTALCODE",
+              "SALES.COUNTRY",
+              "SALES.BOOKID",
+              "SALES.PERIODENDDATE",
+              "SALES.TOTALAMOUNT",
+          },
+        },
+        {},
+    };
+
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+    schemaCrawlerOptions
+      .setGrepColumnInclusionRule(new InclusionRule(".*\\..*\\.BOOKID", ""));
+    schemaCrawlerOptions
+      .setGrepDefinitionInclusionRule(new InclusionRule(".*book author.*", ""));
 
     final Database database = testUtility.getDatabase(schemaCrawlerOptions);
     final Schema[] schemas = database.getSchemas();
