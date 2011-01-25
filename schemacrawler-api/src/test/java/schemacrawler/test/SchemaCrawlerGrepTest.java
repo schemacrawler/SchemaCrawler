@@ -92,17 +92,6 @@ public class SchemaCrawlerGrepTest
         },
         {},
     };
-    final String[][][] columnDataTypes = {
-        {
-          {
-              "INTEGER", "INTEGER", "CLOB",
-          },
-        }, {}, {}, {
-          {
-              "VARCHAR", "VARCHAR", "INTEGER", "DATE", "DOUBLE",
-          },
-        }, {},
-    };
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions
@@ -135,12 +124,76 @@ public class SchemaCrawlerGrepTest
                        "PUBLIC." + schemaNames[schemaIdx] + "."
                            + columnsNamesForTable[columnIdx],
                        column.getFullName());
-          assertEquals("Column type does not match",
-                       columnDataTypes[schemaIdx][tableIdx][columnIdx],
-                       column.getType().getDatabaseSpecificTypeName());
-          assertEquals("Column JDBC type does not match",
-                       columnDataTypes[schemaIdx][tableIdx][columnIdx],
-                       column.getType().getTypeName());
+        }
+      }
+    }
+  }
+
+  @Test
+  public void grepDefinitions()
+    throws Exception
+  {
+    final String[] schemaNames = {
+        "BOOKS",
+        "INFORMATION_SCHEMA",
+        "PUBLIC",
+        "\"PUBLISHER SALES\"",
+        "SYSTEM_LOBS"
+    };
+    final int[] tableCounts = {
+        1, 0, 0, 0, 0
+    };
+    final String[][][] columnNames = {
+        {
+          {
+              "AUTHORS.ID",
+              "AUTHORS.FIRSTNAME",
+              "AUTHORS.LASTNAME",
+              "AUTHORS.ADDRESS1",
+              "AUTHORS.ADDRESS2",
+              "AUTHORS.CITY",
+              "AUTHORS.STATE",
+              "AUTHORS.POSTALCODE",
+              "AUTHORS.COUNTRY",
+          },
+        },
+        {},
+        {},
+        {},
+        {},
+    };
+
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+    schemaCrawlerOptions
+      .setGrepDefinitionInclusionRule(new InclusionRule(".*book author.*", ""));
+    schemaCrawlerOptions.setGrepDefinitions(true);
+
+    final Database database = testUtility.getDatabase(schemaCrawlerOptions);
+    final Schema[] schemas = database.getSchemas();
+    assertEquals("Schema count does not match", 5, schemas.length);
+    for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++)
+    {
+      final Schema schema = schemas[schemaIdx];
+      assertEquals("Schema name does not match",
+                   "PUBLIC." + schemaNames[schemaIdx],
+                   schema.getName());
+      final Table[] tables = schema.getTables();
+      assertEquals("Table count does not match for schema " + schema,
+                   tableCounts[schemaIdx],
+                   tables.length);
+      for (int tableIdx = 0; tableIdx < tables.length; tableIdx++)
+      {
+        final Table table = tables[tableIdx];
+        final Column[] columns = table.getColumns();
+        final String[] columnsNamesForTable = columnNames[schemaIdx][tableIdx];
+        for (int columnIdx = 0; columnIdx < columns.length; columnIdx++)
+        {
+          final Column column = columns[columnIdx];
+          LOGGER.log(Level.FINE, column.toString());
+          assertEquals("Column full name does not match",
+                       "PUBLIC." + schemaNames[schemaIdx] + "."
+                           + columnsNamesForTable[columnIdx],
+                       column.getFullName());
         }
       }
     }
