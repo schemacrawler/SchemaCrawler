@@ -29,6 +29,8 @@ import org.junit.Test;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Database;
+import schemacrawler.schema.Procedure;
+import schemacrawler.schema.ProcedureColumn;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.InclusionRule;
@@ -193,6 +195,79 @@ public class SchemaCrawlerGrepTest
           assertEquals("Column full name does not match",
                        "PUBLIC." + schemaNames[schemaIdx] + "."
                            + columnsNamesForTable[columnIdx],
+                       column.getFullName());
+        }
+      }
+    }
+  }
+
+  @Test
+  public void grepProcedures()
+    throws Exception
+  {
+    final String[] schemaNames = {
+        "BOOKS",
+        "INFORMATION_SCHEMA",
+        "PUBLIC",
+        "\"PUBLISHER SALES\"",
+        "SYSTEM_LOBS"
+    };
+    final int[] procedureCounts = {
+        0, 0, 0, 0, 3
+    };
+    final String[][][] columnNames = {
+        {},
+        {},
+        {},
+        {},
+        {
+            {
+                "ALLOC_BLOCKS.B_COUNT",
+                "ALLOC_BLOCKS.B_OFFSET",
+                "ALLOC_BLOCKS.L_ID",
+            },
+            {
+                "CONVERT_BLOCK.B_ADDR",
+                "CONVERT_BLOCK.B_COUNT",
+                "CONVERT_BLOCK.B_OFFSET",
+                "CONVERT_BLOCK.L_ID",
+            },
+            {
+                "CREATE_EMPTY_BLOCK.B_ADDR", "CREATE_EMPTY_BLOCK.B_COUNT",
+            },
+        },
+    };
+
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+    schemaCrawlerOptions
+      .setGrepProcedureColumnInclusionRule(new InclusionRule(".*\\.B_COUNT", ""));
+    schemaCrawlerOptions.setGrepProcedureColumns(true);
+
+    final Database database = testUtility.getDatabase(schemaCrawlerOptions);
+    final Schema[] schemas = database.getSchemas();
+    assertEquals("Schema count does not match", 5, schemas.length);
+    for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++)
+    {
+      final Schema schema = schemas[schemaIdx];
+      assertEquals("Schema name does not match",
+                   "PUBLIC." + schemaNames[schemaIdx],
+                   schema.getName());
+      final Procedure[] procedures = schema.getProcedures();
+      assertEquals("Procedure count does not match for schema " + schema,
+                   procedureCounts[schemaIdx],
+                   procedures.length);
+      for (int procedureIdx = 0; procedureIdx < procedures.length; procedureIdx++)
+      {
+        final Procedure procedure = procedures[procedureIdx];
+        final ProcedureColumn[] columns = procedure.getColumns();
+        final String[] columnsNamesForProcedure = columnNames[schemaIdx][procedureIdx];
+        for (int columnIdx = 0; columnIdx < columns.length; columnIdx++)
+        {
+          final ProcedureColumn column = columns[columnIdx];
+          LOGGER.log(Level.FINE, column.toString());
+          assertEquals("Procedure column full name does not match",
+                       "PUBLIC." + schemaNames[schemaIdx] + "."
+                           + columnsNamesForProcedure[columnIdx],
                        column.getFullName());
         }
       }
