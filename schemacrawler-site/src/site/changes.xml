@@ -5,7 +5,18 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-    <release version="8.5" date="2010-12-23">
+    <release version="8.5" date="2011-01-28">
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Changed copyright to 2011.
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Fixed grep.
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Better unit test coverage. Restructuring of Eclipse projects.
+      ]]></action>
+    </release>
+    <release version="8.4" date="2010-12-23">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Simplified commands - list_objects is now simply list. Removed the -show_stored_procedures command line option - simply use -proedures=
       ]]></action>

@@ -831,7 +831,7 @@
     <schemaCrawlerProductName>SchemaCrawler</schemaCrawlerProductName>
     <schemaCrawlerVersion>8.5</schemaCrawlerVersion>
     <schemaCrawlerAbout>SchemaCrawler 8.5&#xd;
-Copyright (c) 2000-2010, Sualeh Fatehi.&#xd;
+Copyright (c) 2000-2011, Sualeh Fatehi.&#xd;
 SchemaCrawler is a platform (operating system and database) independent command-&#xd;
 line tool to output your database schema and data in a readable form. The output &#xd;
 is designed to be diff-ed with previous versions of your database schema. &#xd;
