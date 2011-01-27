@@ -1,6 +1,6 @@
 SchemaCrawler
 http://sourceforge.net/projects/schemacrawler
-Copyright (c) 2000-2010, Sualeh Fatehi.
+Copyright (c) 2000-2011, Sualeh Fatehi.
 
 This distribution of SchemaCrawler will work for any database that has a JDBC 
 driver. Simply place the JDBC driver jar file in the lib directory, and 
