@@ -321,8 +321,7 @@ public class DirectedGraph<T extends Comparable<? super T>>
 
     final int collectionSize = verticesMap.size();
 
-    final Collection<Vertex> vertices = new ArrayList<Vertex>(verticesMap
-      .values());
+    final Collection<Vertex> vertices = new ArrayList<Vertex>(verticesMap.values());
     final Collection<DirectedEdge> edges = new ArrayList<DirectedEdge>(this.edges);
     final List<T> sortedValues = new ArrayList<T>(collectionSize);
 

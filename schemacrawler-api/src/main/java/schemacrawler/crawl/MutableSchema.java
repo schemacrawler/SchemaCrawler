@@ -81,8 +81,8 @@ class MutableSchema
    */
   public ColumnDataType[] getColumnDataTypes()
   {
-    return columnDataTypes.values().toArray(new ColumnDataType[columnDataTypes
-      .size()]);
+    return columnDataTypes.values()
+      .toArray(new ColumnDataType[columnDataTypes.size()]);
   }
 
   /**
