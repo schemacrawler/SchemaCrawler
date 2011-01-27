@@ -27,7 +27,7 @@ JDBC Driver Information
 driver name                           HSQL Database Engine Driver
 driver version                        2.0.0
 driver class name                     org.hsqldb.jdbc.JDBCDriver
-url                                   jdbc:hsqldb:mem:schemacrawler
+url                                   jdbc:hsqldb:hsql://localhost/schemacrawler
 is JDBC compliant                     true
 
 
@@ -37,19 +37,8 @@ Tables
 
 
 PUBLIC.BOOKS.AUTHORS                                             [table]
-------------------------------------------------------------------------
-
-
 PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
-------------------------------------------------------------------------
-
-
 PUBLIC.BOOKS.BOOKS                                               [table]
-------------------------------------------------------------------------
-
-
 PUBLIC.BOOKS.PUBLISHERS                                          [table]
-------------------------------------------------------------------------
-
 
 

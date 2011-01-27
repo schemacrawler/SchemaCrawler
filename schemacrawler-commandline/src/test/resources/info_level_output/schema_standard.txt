@@ -27,198 +27,8 @@ JDBC Driver Information
 driver name                           HSQL Database Engine Driver
 driver version                        2.0.0
 driver class name                     org.hsqldb.jdbc.JDBCDriver
-url                                   jdbc:hsqldb:mem:schemacrawler
+url                                   jdbc:hsqldb:hsql://localhost/schemacrawler
 is JDBC compliant                     true
-
-
-
-Data Types
-========================================================================
-
-
-BIGINT                                                       [data type]
-  based on                          BIGINT                      
-  not user defined
-  defined with no parameters
-  nullable
-  auto-incrementable
-  searchable except with where .. like
-
-BINARY                                                       [data type]
-  based on                          BINARY                      
-  not user defined
-  defined with LENGTH
-  nullable
-  not auto-incrementable
-  searchable
-
-BIT                                                          [data type]
-  based on                          BIT                         
-  not user defined
-  defined with LENGTH
-  nullable
-  not auto-incrementable
-  searchable except with where .. like
-
-BLOB                                                         [data type]
-  based on                          BLOB                        
-  not user defined
-  defined with LENGTH
-  nullable
-  not auto-incrementable
-  not searchable
-
-BOOLEAN                                                      [data type]
-  based on                          BOOLEAN                     
-  not user defined
-  defined with no parameters
-  nullable
-  not auto-incrementable
-  searchable except with where .. like
-
-CHARACTER                                                    [data type]
-  based on                          CHAR                        
-  not user defined
-  defined with LENGTH
-  nullable
-  not auto-incrementable
-  searchable
-
-CLOB                                                         [data type]
-  based on                          CLOB                        
-  not user defined
-  defined with LENGTH
-  nullable
-  not auto-incrementable
-  not searchable
-
-DATE                                                         [data type]
-  based on                          DATE                        
-  not user defined
-  defined with no parameters
-  nullable
-  not auto-incrementable
-  searchable except with where .. like
-
-DECIMAL                                                      [data type]
-  based on                          DECIMAL                     
-  not user defined
-  defined with PRECISION,SCALE
-  nullable
-  auto-incrementable
-  searchable except with where .. like
-
-DOUBLE                                                       [data type]
-  based on                          DOUBLE                      
-  not user defined
-  defined with no parameters
-  nullable
-  not auto-incrementable
-  searchable except with where .. like
-
-FLOAT                                                        [data type]
-  based on                          DOUBLE                      
-  not user defined
-  defined with no parameters
-  nullable
-  not auto-incrementable
-  searchable except with where .. like
-
-INTEGER                                                      [data type]
-  based on                          INTEGER                     
-  not user defined
-  defined with no parameters
-  nullable
-  auto-incrementable
-  searchable except with where .. like
-
-NUMERIC                                                      [data type]
-  based on                          NUMERIC                     
-  not user defined
-  defined with PRECISION,SCALE
-  nullable
-  auto-incrementable
-  searchable except with where .. like
-
-OTHER                                                        [data type]
-  based on                          OTHER                       
-  not user defined
-  defined with no parameters
-  nullable
-  not auto-incrementable
-  searchable except with where .. like
-
-REAL                                                         [data type]
-  based on                          DOUBLE                      
-  not user defined
-  defined with no parameters
-  nullable
-  not auto-incrementable
-  searchable except with where .. like
-
-SMALLINT                                                     [data type]
-  based on                          SMALLINT                    
-  not user defined
-  defined with no parameters
-  nullable
-  auto-incrementable
-  searchable except with where .. like
-
-TIME                                                         [data type]
-  based on                          TIME                        
-  not user defined
-  defined with no parameters
-  nullable
-  not auto-incrementable
-  searchable except with where .. like
-
-TIMESTAMP                                                    [data type]
-  based on                          TIMESTAMP                   
-  not user defined
-  defined with no parameters
-  nullable
-  not auto-incrementable
-  searchable except with where .. like
-
-TINYINT                                                      [data type]
-  based on                          TINYINT                     
-  not user defined
-  defined with no parameters
-  nullable
-  auto-incrementable
-  searchable except with where .. like
-
-VARBINARY                                                    [data type]
-  based on                          VARBINARY                   
-  not user defined
-  defined with LENGTH
-  nullable
-  not auto-incrementable
-  searchable
-
-VARCHAR                                                      [data type]
-  based on                          VARCHAR                     
-  not user defined
-  defined with LENGTH
-  nullable
-  not auto-incrementable
-  searchable
-
-VARCHAR_IGNORECASE                                           [data type]
-  based on                          VARCHAR                     
-  not user defined
-  defined with LENGTH
-  nullable
-  not auto-incrementable
-  searchable
-
-PUBLIC.BOOKS.CHARACTER VARYING                               [data type]
-  based on                          VARCHAR                     
-  not user defined
-  defined with 
-  not nullable
-  not auto-incrementable
-  unknown
 
 
 
@@ -257,9 +67,6 @@ IDX_A_AUTHORS                                         [non-unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
 
-                                                               [remarks]
-Contact details for book authors
-
 
 PUBLIC.BOOKS.AUTHORSLIST                                          [view]
 ------------------------------------------------------------------------
@@ -290,9 +97,6 @@ UIDX_BOOKAUTHORS                                          [unique index]
   BOOKID                            ascending                   
   AUTHORID                          ascending                   
 
-                                                               [remarks]
-Relationship between books and their authors, along with the latest updated information
-
 
 PUBLIC.BOOKS.BOOKS                                               [table]
 ------------------------------------------------------------------------
@@ -312,9 +116,6 @@ FK_Y_BOOK                                  [foreign key, with no action]
 SYS_IDX_PK_BOOKS_10035                                    [unique index]
   ID                                ascending                   
 
-                                                               [remarks]
-Details for published books
-
 
 PUBLIC.BOOKS."Global Counts"                                     [table]
 ------------------------------------------------------------------------
@@ -331,9 +132,6 @@ PK_PUBLISHERS                                              [primary key]
 
 SYS_IDX_PK_PUBLISHERS_10027                               [unique index]
   ID                                ascending                   
-
-                                                               [remarks]
-List of book publishers
 
 
 PUBLIC."PUBLISHER SALES".REGIONS                                 [table]

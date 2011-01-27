@@ -57,7 +57,6 @@ PUBLIC.SYSTEM_LOBS.CONVERT_BLOCK,"[procedure, no result]"
 PUBLIC.SYSTEM_LOBS.CREATE_EMPTY_BLOCK,"[procedure, no result]"
 PUBLIC.SYSTEM_LOBS.DELETE_BLOCKS,"[procedure, no result]"
 PUBLIC.SYSTEM_LOBS.DELETE_LOB,"[procedure, no result]"
-PUBLIC.SYSTEM_LOBS.DELETE_UNUSED,"[procedure, no result]"
 PUBLIC.SYSTEM_LOBS.DIVIDE_BLOCK,"[procedure, no result]"
 
 

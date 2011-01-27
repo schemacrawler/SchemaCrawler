@@ -3130,24 +3130,6 @@ hr {
 
 <table>
 	<tr>
-		<td colspan='2' class='name underscore'>PUBLIC.SYSTEM_LOBS.DELETE_UNUSED</td>
-		<td class='description underscore'>[procedure, no result]</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description'>[definition]</td>
-	</tr>
-	<tr>
-		<td colspan='3' class='definition'>CREATE PROCEDURE SYSTEM_LOBS.DELETE_UNUSED() SPECIFIC DELETE_UNUSED_10016 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC INSERT INTO SYSTEM_LOBS.BLOCKS(SELECT BLOCK_ADDR,BLOCK_COUNT,0 FROM SYSTEM_LOBS.LOBS WHERE LOB_ID IN(SELECT LOB_ID FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_USAGE_COUNT&lt;1));DELETE FROM SYSTEM_LOBS.LOBS WHERE LOB_ID IN(SELECT LOB_ID FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_USAGE_COUNT&lt;1);DELETE FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_USAGE_COUNT&lt;1;END</td>
-	</tr>
-</table>
-<p></p>
-
-<table>
-	<tr>
 		<td colspan='2' class='name underscore'>PUBLIC.SYSTEM_LOBS.DIVIDE_BLOCK</td>
 		<td class='description underscore'>[procedure, no result]</td>
 	</tr>

@@ -109,14 +109,23 @@ public class SchemaCrawlerCommandLineToolsTest
     final String[][] grepArgs = new String[][] {
         new String[] {
             "-grepcolumns=.*\\.STREET|.*\\.PRICE", "-procedures=",
-        }, new String[] {
+        },
+        new String[] {
             "-grepcolumns=.*\\..*NAME", "-procedures=",
-        }, new String[] {
+        },
+        new String[] {
             "-grepdef=.*book authors.*", "-procedures=",
-        }, new String[] {
+        },
+        new String[] {
             "-tables=", "-grepinout=.*\\.B_COUNT",
-        }, new String[] {
+        },
+        new String[] {
             "-tables=", "-grepinout=.*\\.B_OFFSET",
+        },
+        new String[] {
+            "-grepcolumns=.*\\.STREET|.*\\.PRICE",
+            "-grepdef=.*book authors.*",
+            "-procedures=",
         },
     };
     for (int i = 0; i < grepArgs.length; i++)
