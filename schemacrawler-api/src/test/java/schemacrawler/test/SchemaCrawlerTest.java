@@ -241,9 +241,9 @@ public class SchemaCrawlerTest
     };
     final int[][] checkConstraints = {
         {
-            0, 0, 0, 0, 0, 0, 0
+            4, 0, 2, 3, 0, 1, 0
         }, {}, {}, {
-            0, 0
+            4, 2
         }, {},
     };
     final int[][] indexCounts = {
@@ -282,8 +282,15 @@ public class SchemaCrawlerTest
         }, {},
     };
 
+    final InformationSchemaViews informationSchemaViews = new InformationSchemaViews();
+    informationSchemaViews
+      .setTableConstraintsSql("SELECT * FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS");
+    informationSchemaViews
+      .setCheckConstraintsSql("SELECT * FROM INFORMATION_SCHEMA.CHECK_CONSTRAINTS");
+
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
+    schemaCrawlerOptions.setInformationSchemaViews(informationSchemaViews);
 
     final Database database = testUtility.getDatabase(schemaCrawlerOptions);
     final Schema[] schemas = database.getSchemas();
@@ -298,31 +305,45 @@ public class SchemaCrawlerTest
       for (int tableIdx = 0; tableIdx < tables.length; tableIdx++)
       {
         final Table table = tables[tableIdx];
-        assertEquals(String.format("Table %s columns count does not match",
+        assertEquals(String.format("Table [%d][%d] %s columns count does not match",
+                                   schemaIdx,
+                                   tableIdx,
                                    table.getFullName()),
                      tableColumnCounts[schemaIdx][tableIdx],
                      table.getColumns().length);
-        assertEquals(String.format("Table %s check constraints count does not match",
+        assertEquals(String.format("Table [%d][%d] %s check constraints count does not match",
+                                   schemaIdx,
+                                   tableIdx,
                                    table.getFullName()),
                      checkConstraints[schemaIdx][tableIdx],
                      table.getCheckConstraints().length);
-        assertEquals(String.format("Table %s index count does not match",
+        assertEquals(String.format("Table [%d][%d] %s index count does not match",
+                                   schemaIdx,
+                                   tableIdx,
                                    table.getFullName()),
                      indexCounts[schemaIdx][tableIdx],
                      table.getIndices().length);
-        assertEquals(String.format("Table %s foreign key count does not match",
+        assertEquals(String.format("Table [%d][%d] %s foreign key count does not match",
+                                   schemaIdx,
+                                   tableIdx,
                                    table.getFullName()),
                      fkCounts[schemaIdx][tableIdx],
                      table.getForeignKeys().length);
-        assertEquals(String.format("Table %s exported foreign key count does not match",
+        assertEquals(String.format("Table [%d][%d] %s exported foreign key count does not match",
+                                   schemaIdx,
+                                   tableIdx,
                                    table.getFullName()),
                      exportedFkCounts[schemaIdx][tableIdx],
                      table.getExportedForeignKeys().length);
-        assertEquals(String.format("Table %s imported foreign key count does not match",
+        assertEquals(String.format("Table [%d][%d] %s imported foreign key count does not match",
+                                   schemaIdx,
+                                   tableIdx,
                                    table.getFullName()),
                      importedFkCounts[schemaIdx][tableIdx],
                      table.getImportedForeignKeys().length);
-        assertEquals(String.format("Table %s privileges count does not match",
+        assertEquals(String.format("Table [%d][%d] %s privileges count does not match",
+                                   schemaIdx,
+                                   tableIdx,
                                    table.getFullName()),
                      tablePrivilegesCounts[schemaIdx][tableIdx],
                      table.getPrivileges().length);
