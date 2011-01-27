@@ -27,7 +27,7 @@ JDBC Driver Information
 driver name                           HSQL Database Engine Driver
 driver version                        2.0.0
 driver class name                     org.hsqldb.jdbc.JDBCDriver
-url                                   jdbc:hsqldb:mem:schemacrawler
+url                                   jdbc:hsqldb:hsql://localhost/schemacrawler
 is JDBC compliant                     true
 
 
@@ -37,19 +37,26 @@ Tables
 
 
 PUBLIC.BOOKS.AUTHORS                                             [table]
-------------------------------------------------------------------------
-
-
+PUBLIC.BOOKS.AUTHORSLIST                                          [view]
 PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
-------------------------------------------------------------------------
-
-
 PUBLIC.BOOKS.BOOKS                                               [table]
-------------------------------------------------------------------------
-
-
+PUBLIC.BOOKS."Global Counts"                                     [table]
 PUBLIC.BOOKS.PUBLISHERS                                          [table]
-------------------------------------------------------------------------
+PUBLIC."PUBLISHER SALES".REGIONS                                 [table]
+PUBLIC."PUBLISHER SALES".SALES                                   [table]
 
+
+
+Procedures
+========================================================================
+
+
+PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
+PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS                   [procedure, no result]
+PUBLIC.SYSTEM_LOBS.CONVERT_BLOCK                  [procedure, no result]
+PUBLIC.SYSTEM_LOBS.CREATE_EMPTY_BLOCK             [procedure, no result]
+PUBLIC.SYSTEM_LOBS.DELETE_BLOCKS                  [procedure, no result]
+PUBLIC.SYSTEM_LOBS.DELETE_LOB                     [procedure, no result]
+PUBLIC.SYSTEM_LOBS.DIVIDE_BLOCK                   [procedure, no result]
 
 
