@@ -24,9 +24,9 @@ package sf.util;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.Set;
-import java.util.Map.Entry;
 
 /**
  * Configuration properties.
@@ -181,8 +181,8 @@ public final class TemplatingUtility
     {
       for (final Map.Entry<String, String> entry: variablesMap.entrySet())
       {
-        variablesMap.put(entry.getKey(), expandTemplate(entry.getValue(),
-                                                        variablesMap));
+        variablesMap.put(entry.getKey(),
+                         expandTemplate(entry.getValue(), variablesMap));
       }
     }
   }

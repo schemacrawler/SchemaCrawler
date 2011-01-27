@@ -474,7 +474,7 @@ public final class SchemaCrawler
           includeForDefinitions = true;
         }
       }
-      for (Trigger trigger: table.getTriggers())
+      for (final Trigger trigger: table.getTriggers())
       {
         if (grepDefinitionInclusionRule.include(trigger.getActionStatement()))
         {
@@ -484,8 +484,8 @@ public final class SchemaCrawler
       }
     }
 
-    boolean include = (checkIncludeForColumns && includeForColumns)
-                      || (checkIncludeForDefinitions && includeForDefinitions);
+    boolean include = checkIncludeForColumns && includeForColumns
+                      || checkIncludeForDefinitions && includeForDefinitions;
     if (invertMatch)
     {
       include = !include;

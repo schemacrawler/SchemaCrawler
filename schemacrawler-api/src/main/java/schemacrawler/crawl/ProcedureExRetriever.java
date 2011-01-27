@@ -74,8 +74,7 @@ final class ProcedureExRetriever
     MetadataResultSet results = null;
     try
     {
-      results = new MetadataResultSet(statement
-        .executeQuery(procedureDefinitionsSql));
+      results = new MetadataResultSet(statement.executeQuery(procedureDefinitionsSql));
     }
     catch (final SQLException e)
     {

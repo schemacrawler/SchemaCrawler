@@ -24,8 +24,8 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import schemacrawler.schema.DatabaseProperty;
 
@@ -100,8 +100,8 @@ class MutableDatabaseProperty
 
       for (final Entry<String, String> acronym: acronyms)
       {
-        description = description.replaceAll(acronym.getKey(), acronym
-          .getValue());
+        description = description.replaceAll(acronym.getKey(),
+                                             acronym.getValue());
       }
 
       final int strLen = description.length();
@@ -124,8 +124,8 @@ class MutableDatabaseProperty
       {
         description = description.replaceAll(acronym.getValue().toLowerCase(),
                                              acronym.getKey());
-        description = description.replaceAll(acronym.getValue(), acronym
-          .getKey());
+        description = description.replaceAll(acronym.getValue(),
+                                             acronym.getKey());
       }
 
       description = description.trim();

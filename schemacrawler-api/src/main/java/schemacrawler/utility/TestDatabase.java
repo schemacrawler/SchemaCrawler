@@ -296,7 +296,7 @@ public class TestDatabase
    * @throws SchemaCrawlerException
    *         On an exception
    */
-  public void startDatabase(boolean silent)
+  public void startDatabase(final boolean silent)
     throws SchemaCrawlerException
   {
     LOGGER.log(Level.FINE, toString() + " - Setting up database");

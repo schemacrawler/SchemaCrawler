@@ -68,8 +68,7 @@ final class DatabaseInfoRetriever
   {
     final Class<?> returnType = method.getReturnType();
     final boolean isPropertiesResultSetMethod = returnType
-      .equals(ResultSet.class)
-                                                && method.getParameterTypes().length == 0;
+      .equals(ResultSet.class) && method.getParameterTypes().length == 0;
     return isPropertiesResultSetMethod;
   }
 
@@ -124,8 +123,8 @@ final class DatabaseInfoRetriever
     final String name = method.getName() + "For" + resultSetTypeName
                         + "ResultSets";
     Boolean propertyValue = null;
-    propertyValue = (Boolean) method.invoke(dbMetaData, Integer
-      .valueOf(resultSetType));
+    propertyValue = (Boolean) method.invoke(dbMetaData,
+                                            Integer.valueOf(resultSetType));
     return new MutableDatabaseProperty(name, propertyValue);
   }
 
@@ -220,8 +219,9 @@ final class DatabaseInfoRetriever
       }
       catch (final InvocationTargetException e)
       {
-        LOGGER.log(Level.FINE, "Could not execute method, " + method, e
-          .getCause());
+        LOGGER.log(Level.FINE,
+                   "Could not execute method, " + method,
+                   e.getCause());
       }
     }
 
