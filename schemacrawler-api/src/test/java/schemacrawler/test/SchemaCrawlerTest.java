@@ -34,6 +34,7 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import schemacrawler.schema.CheckConstraint;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Database;
 import schemacrawler.schema.EventManipulationType;
@@ -68,6 +69,96 @@ public class SchemaCrawlerTest
   {
     TestDatabase.initializeApplicationLogging();
     testUtility.startMemoryDatabase();
+  }
+
+  @Test
+  public void checkConstraints()
+    throws Exception
+  {
+
+    final int[] tableCounts = {
+        6, 0, 0, 2, 0,
+    };
+    final int[][] checkConstraintCounts = {
+        {
+            4, 0, 2, 3, 0, 1, 0
+        }, {}, {}, {
+            4, 2
+        }, {},
+    };
+    final String[][][] checkConstraintNames = {
+        {
+            {
+                "CHECK_UPPERCASE_STATE",
+                "SYS_CT_10028",
+                "SYS_CT_10029",
+                "SYS_CT_10030"
+            },
+            {},
+            {
+                "SYS_CT_10036", "SYS_CT_10037"
+            },
+            {
+                "SYS_CT_10032", "SYS_CT_10033", "SYS_CT_10034"
+            },
+            {},
+            {
+              "SYS_CT_10026"
+            },
+            {}
+        },
+        {},
+        {},
+        {
+            {
+                "SYS_CT_10048", "SYS_CT_10049", "SYS_CT_10050", "SYS_CT_10051"
+            }, {
+                "SYS_CT_10053", "SYS_CT_10054"
+            }
+        },
+        {},
+    };
+
+    final InformationSchemaViews informationSchemaViews = new InformationSchemaViews();
+    informationSchemaViews
+      .setTableConstraintsSql("SELECT * FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS");
+    informationSchemaViews
+      .setCheckConstraintsSql("SELECT * FROM INFORMATION_SCHEMA.CHECK_CONSTRAINTS");
+
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
+    schemaCrawlerOptions.setInformationSchemaViews(informationSchemaViews);
+
+    final Database database = testUtility.getDatabase(schemaCrawlerOptions);
+    final Schema[] schemas = database.getSchemas();
+    assertEquals("Schema count does not match", 5, schemas.length);
+    for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++)
+    {
+      final Schema schema = schemas[schemaIdx];
+      final Table[] tables = schema.getTables();
+      assertEquals("Table count does not match",
+                   tableCounts[schemaIdx],
+                   tables.length);
+      for (int tableIdx = 0; tableIdx < tables.length; tableIdx++)
+      {
+        final Table table = tables[tableIdx];
+        final CheckConstraint[] checkConstraints = table.getCheckConstraints();
+        assertEquals(String.format("Table [%d][%d] %s check constraints count does not match",
+                                   schemaIdx,
+                                   tableIdx,
+                                   table.getFullName()),
+                     checkConstraintCounts[schemaIdx][tableIdx],
+                     checkConstraints.length);
+        for (int i = 0; i < checkConstraints.length; i++)
+        {
+          final CheckConstraint checkConstraint = checkConstraints[i];
+          assertEquals("Check constraint name does not match for table "
+                           + table,
+                       checkConstraintNames[schemaIdx][tableIdx][i],
+                       checkConstraint.getName());
+        }
+      }
+    }
   }
 
   @Test
@@ -590,5 +681,4 @@ public class SchemaCrawlerTest
     assertFalse("View definition not found", view.getDefinition().trim()
       .equals(""));
   }
-
 }
