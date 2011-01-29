@@ -13,6 +13,9 @@
         Fixed grep.
       ]]></action>
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Removed option to provide index info SQL.
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Better unit test coverage. Restructuring of Eclipse projects.
       ]]></action>
     </release>
