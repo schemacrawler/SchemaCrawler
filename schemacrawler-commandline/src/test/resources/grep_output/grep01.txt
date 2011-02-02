@@ -5,85 +5,6 @@ Tables
 ========================================================================
 
 
-PUBLIC.BOOKS.AUTHORS                                             [table]
-------------------------------------------------------------------------
-  ID                                INTEGER not null            
-  FIRSTNAME                         VARCHAR(20) not null        
-  LASTNAME                          VARCHAR(20) not null        
-  ADDRESS1                          VARCHAR(255)                
-  ADDRESS2                          VARCHAR(255)                
-  CITY                              VARCHAR(50)                 
-  STATE                             VARCHAR(2)                  
-  POSTALCODE                        VARCHAR(10)                 
-  COUNTRY                           VARCHAR(50)                 
-
-PK_AUTHORS                                                 [primary key]
-  ID                                ascending                   
-
-FK_Z_AUTHOR                                [foreign key, with no action]
-  ID --> PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID                              
-
-SYS_IDX_PK_AUTHORS_10031                                  [unique index]
-  ID                                ascending                   
-
-IDX_B_AUTHORS                                         [non-unique index]
-  LASTNAME                          ascending                   
-  FIRSTNAME                         ascending                   
-
-IDX_A_AUTHORS                                         [non-unique index]
-  CITY                              ascending                   
-  STATE                             ascending                   
-  POSTALCODE                        ascending                   
-  COUNTRY                           ascending                   
-
-CHECK_UPPERCASE_STATE                                 [check constraint]
-BOOKS.AUTHORS.STATE=UPPER(BOOKS.AUTHORS.STATE)
-
-SYS_CT_10028                                          [check constraint]
-BOOKS.AUTHORS.ID IS NOT NULL
-
-SYS_CT_10029                                          [check constraint]
-BOOKS.AUTHORS.FIRSTNAME IS NOT NULL
-
-SYS_CT_10030                                          [check constraint]
-BOOKS.AUTHORS.LASTNAME IS NOT NULL
-
-                                                               [remarks]
-Contact details for book authors
-
-
-PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
-------------------------------------------------------------------------
-  BOOKID                            INTEGER not null            
-  AUTHORID                          INTEGER not null            
-  "UPDATE"                          CLOB                        
-
-FK_Z_AUTHOR                                [foreign key, with no action]
-  PUBLIC.BOOKS.AUTHORS.ID --> AUTHORID                              
-
-FK_Y_BOOK                                  [foreign key, with no action]
-  PUBLIC.BOOKS.BOOKS.ID --> BOOKID                              
-
-SYS_IDX_10041                                         [non-unique index]
-  AUTHORID                          ascending                   
-
-SYS_IDX_10039                                         [non-unique index]
-  BOOKID                            ascending                   
-
-UIDX_BOOKAUTHORS                                          [unique index]
-  BOOKID                            ascending                   
-  AUTHORID                          ascending                   
-
-SYS_CT_10036                                          [check constraint]
-BOOKS.BOOKAUTHORS.BOOKID IS NOT NULL
-
-SYS_CT_10037                                          [check constraint]
-BOOKS.BOOKAUTHORS.AUTHORID IS NOT NULL
-
-                                                               [remarks]
-Relationship between books and their authors, along with the latest updated information
-
-
 PUBLIC.BOOKS.BOOKS                                               [table]
 ------------------------------------------------------------------------
   ID                                INTEGER not null            
@@ -113,24 +34,6 @@ BOOKS.BOOKS.PUBLISHERID IS NOT NULL
 
                                                                [remarks]
 Details for published books
-
-
-PUBLIC.BOOKS.PUBLISHERS                                          [table]
-------------------------------------------------------------------------
-  ID                                INTEGER not null            
-  PUBLISHER                         VARCHAR(255)                
-
-PK_PUBLISHERS                                              [primary key]
-  ID                                ascending                   
-
-SYS_IDX_PK_PUBLISHERS_10027                               [unique index]
-  ID                                ascending                   
-
-SYS_CT_10026                                          [check constraint]
-BOOKS.PUBLISHERS.ID IS NOT NULL
-
-                                                               [remarks]
-List of book publishers
 
 
 
