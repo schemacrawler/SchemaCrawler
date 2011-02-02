@@ -186,6 +186,10 @@ final class SchemaCrawlerOptionsParser
                                                                       InclusionRule.NONE);
       options.setGrepColumnInclusionRule(grepColumnInclusionRule);
     }
+    else
+    {
+      options.setGrepColumnInclusionRule(null);
+    }
 
     if (optionGrepProcedureColumns.isFound())
     {
@@ -195,6 +199,10 @@ final class SchemaCrawlerOptionsParser
       options
         .setGrepProcedureColumnInclusionRule(grepProcedureColumnInclusionRule);
     }
+    else
+    {
+      options.setGrepProcedureColumnInclusionRule(null);
+    }
 
     if (optionGrepDefinitions.isFound())
     {
@@ -202,6 +210,10 @@ final class SchemaCrawlerOptionsParser
                                                                             .getValue(),
                                                                           InclusionRule.NONE);
       options.setGrepDefinitionInclusionRule(grepDefinitionInclusionRule);
+    }
+    else
+    {
+      options.setGrepDefinitionInclusionRule(null);
     }
 
     if (optionSortColumns.isFound())
