@@ -60,14 +60,12 @@ final class BundledDriverConnectionOptionsParser
   public ConnectionOptions getOptions()
     throws SchemaCrawlerException
   {
-    parse(new Option[] {
-        optionHost,
-        optionPort,
-        optionDatabase,
-        optionConnectionProperties,
-        optionUser,
-        optionPassword,
-    });
+    parse(optionHost,
+          optionPort,
+          optionDatabase,
+          optionConnectionProperties,
+          optionUser,
+          optionPassword);
 
     final DatabaseConfigConnectionOptions connectionOptions = new DatabaseConfigConnectionOptions(config);
 
@@ -94,5 +92,4 @@ final class BundledDriverConnectionOptionsParser
 
     return connectionOptions;
   }
-
 }

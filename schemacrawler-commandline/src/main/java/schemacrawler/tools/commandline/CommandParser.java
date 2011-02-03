@@ -48,9 +48,7 @@ final class CommandParser
   protected Command getOptions()
     throws SchemaCrawlerException
   {
-    parse(new Option[] {
-      optionCommand
-    });
+    parse(optionCommand);
 
     if (optionCommand.isFound())
     {

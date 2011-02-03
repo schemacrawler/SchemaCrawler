@@ -97,22 +97,20 @@ final class SchemaCrawlerOptionsParser
   protected SchemaCrawlerOptions getOptions()
     throws SchemaCrawlerException
   {
-    parse(new Option[] {
-        optionInfoLevel,
-        optionSchemas,
-        optionTableTypes,
-        optionTables,
-        optionExcludeColumns,
-        optionProcedures,
-        optionExcludeProcedureColumns,
-        optionGrepColumns,
-        optionGrepProcedureColumns,
-        optionGrepDefinitions,
-        optionGrepInvertMatch,
-        optionSortTables,
-        optionSortColumns,
-        optionSortInout,
-    });
+    parse(optionInfoLevel,
+          optionSchemas,
+          optionTableTypes,
+          optionTables,
+          optionExcludeColumns,
+          optionProcedures,
+          optionExcludeProcedureColumns,
+          optionGrepColumns,
+          optionGrepProcedureColumns,
+          optionGrepDefinitions,
+          optionGrepInvertMatch,
+          optionSortTables,
+          optionSortColumns,
+          optionSortInout);
 
     if (optionInfoLevel.isFound())
     {

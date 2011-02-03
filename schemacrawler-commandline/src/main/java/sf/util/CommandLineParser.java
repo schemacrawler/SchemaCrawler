@@ -260,6 +260,10 @@ public final class CommandLineParser
       {
         return null;
       }
+      catch (final NullPointerException e)
+      {
+        return null;
+      }
     }
   }
 
@@ -367,8 +371,6 @@ public final class CommandLineParser
 
   private static final String DASH = "-";
 
-  private String[] remainingArgs = new String[0];
-
   private final Map<String, Option<?>> optionsMap = new HashMap<String, Option<?>>();
 
   /**
@@ -427,22 +429,6 @@ public final class CommandLineParser
   }
 
   /**
-   * Remaining arguments, that are not parsed.
-   * 
-   * @return The non-option arguments
-   */
-  public String[] getRemainingArgs()
-  {
-    final String[] remainingArgsCopy = new String[remainingArgs.length];
-    System.arraycopy(remainingArgs,
-                     0,
-                     remainingArgsCopy,
-                     0,
-                     remainingArgs.length);
-    return remainingArgsCopy;
-  }
-
-  /**
    * Get an option value by name.
    * 
    * @param optionName
@@ -467,7 +453,7 @@ public final class CommandLineParser
    * @param args
    *        Command line arguments
    */
-  public void parse(final String[] args)
+  public String[] parse(final String[] args)
   {
     // Reset all options
     for (final Option<?> element: optionsMap.values())
@@ -475,7 +461,7 @@ public final class CommandLineParser
       ((BaseOption<?>) element).reset();
     }
 
-    final List<String> otherArgs = new ArrayList<String>();
+    final List<String> remainingArgs = new ArrayList<String>();
     int position = 0;
     while (position < args.length)
     {
@@ -494,30 +480,10 @@ public final class CommandLineParser
       final BaseOption<?> option = (BaseOption<?>) optionsMap.get(currentArg);
       if (option == null)
       {
-        otherArgs.add(currentArg);
+        remainingArgs.add(args[position]);
         position++;
         continue;
       }
-
-      // // Check if a value is needed
-      // final boolean wantsValue = !(option instanceof BooleanOption);
-      // if (wantsValue)
-      // {
-      // if (valueArg == null)
-      // {
-      // // The next argument is the value argument
-      // position++;
-      // if (position < args.length)
-      // {
-      // valueArg = args[position];
-      // }
-      // }
-      // }
-      // else
-      // {
-      // valueArg = Boolean.TRUE.toString();
-      // }
-      // Check if a value is needed
 
       if (valueArg == null)
       {
@@ -544,7 +510,9 @@ public final class CommandLineParser
       position++;
     }
 
-    remainingArgs = otherArgs.toArray(new String[otherArgs.size()]);
+    final String[] unparsedArgs = remainingArgs
+      .toArray(new String[remainingArgs.size()]);
+    return unparsedArgs;
   }
 
 }

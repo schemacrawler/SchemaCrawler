@@ -28,10 +28,9 @@ import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.DatabaseConfigConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import sf.util.Utility;
 import sf.util.CommandLineParser.BooleanOption;
-import sf.util.CommandLineParser.Option;
 import sf.util.CommandLineParser.StringOption;
+import sf.util.Utility;
 
 /**
  * Options for the command line.
@@ -99,12 +98,10 @@ final class ConfigConnectionOptionsParser
   public ConnectionOptions getOptions()
     throws SchemaCrawlerException
   {
-    parse(new Option[] {
-        optionUseDefaultConnection,
-        optionConnection,
-        optionUser,
-        optionPassword,
-    });
+    parse(optionUseDefaultConnection,
+          optionConnection,
+          optionUser,
+          optionPassword);
 
     final String connectionName;
     if (optionUseDefaultConnection.getValue())
@@ -117,9 +114,8 @@ final class ConfigConnectionOptionsParser
     }
     if (config.isEmpty())
     {
-      throw new SchemaCrawlerException(String
-        .format("No configuration provided for connection \"%s\"",
-                connectionName));
+      throw new SchemaCrawlerException(String.format("No configuration provided for connection \"%s\"",
+                                                     connectionName));
     }
 
     final Map<String, String> databaseConnectionConfig = partition(config,

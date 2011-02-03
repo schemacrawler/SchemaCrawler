@@ -26,7 +26,6 @@ import java.util.logging.Level;
 import schemacrawler.tools.options.ApplicationOptions;
 import sf.util.CommandLineParser;
 import sf.util.CommandLineParser.BooleanOption;
-import sf.util.CommandLineParser.Option;
 import sf.util.CommandLineParser.StringOption;
 
 /**
@@ -52,9 +51,7 @@ public final class ApplicationOptionsParser
   @Override
   public ApplicationOptions getOptions()
   {
-    parse(new Option[] {
-        optionLogLevel, optionHelp1, optionHelp2
-    });
+    parse(optionLogLevel, optionHelp1, optionHelp2);
 
     final ApplicationOptions options = new ApplicationOptions();
 

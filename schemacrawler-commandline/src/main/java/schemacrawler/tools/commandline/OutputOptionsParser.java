@@ -25,10 +25,10 @@ import java.io.File;
 
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
-import sf.util.Utility;
 import sf.util.CommandLineParser.BooleanOption;
 import sf.util.CommandLineParser.Option;
 import sf.util.CommandLineParser.StringOption;
+import sf.util.Utility;
 
 /**
  * Parses the command line.
@@ -57,9 +57,7 @@ final class OutputOptionsParser
   @Override
   protected OutputOptions getOptions()
   {
-    parse(new Option[] {
-        optionOutputFormat, optionOutputFile, optionNoInfo, optionNoInfo
-    });
+    parse(optionOutputFormat, optionOutputFile, optionNoInfo, optionNoInfo);
 
     final String outputFormatValue = optionOutputFormat.getValue();
     final String outputFileName = optionOutputFile.getValue();

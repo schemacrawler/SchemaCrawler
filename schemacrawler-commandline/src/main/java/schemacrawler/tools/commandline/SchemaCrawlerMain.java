@@ -47,14 +47,17 @@ public class SchemaCrawlerMain
     final CommandLine commandLine;
     final boolean showHelp;
     final ApplicationOptions applicationOptions;
-    if (args.length == 0)
+    String[] remainingArgs = args;
+    if (remainingArgs.length == 0)
     {
       applicationOptions = new ApplicationOptions();
       showHelp = true;
     }
     else
     {
-      applicationOptions = new ApplicationOptionsParser(args).getOptions();
+      final ApplicationOptionsParser applicationOptionsParser = new ApplicationOptionsParser(remainingArgs);
+      applicationOptions = applicationOptionsParser.getOptions();
+      remainingArgs = applicationOptionsParser.getUnparsedArgs();
       showHelp = applicationOptions.isShowHelp();
     }
     applicationOptions.applyApplicationLogLevel();
@@ -62,13 +65,13 @@ public class SchemaCrawlerMain
 
     if (showHelp)
     {
-      commandLine = new SchemaCrawlerHelpCommandLine(args,
+      commandLine = new SchemaCrawlerHelpCommandLine(remainingArgs,
                                                      helpOptions,
                                                      configResource);
     }
     else
     {
-      commandLine = new SchemaCrawlerCommandLine(configResource, args);
+      commandLine = new SchemaCrawlerCommandLine(configResource, remainingArgs);
     }
     commandLine.execute();
   }
