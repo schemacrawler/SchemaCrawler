@@ -124,8 +124,8 @@ public final class LauncherMain
 
       Thread.currentThread().setContextClassLoader(newLoader);
 
-      LOGGER.log(Level.INFO, "Lauching " + launchClassName + " -"
-                             + Arrays.toString(args));
+      LOGGER.log(Level.INFO,
+                 "Lauching " + launchClassName + " -" + Arrays.toString(args));
       final Class<?> launchClass = newLoader.loadClass(launchClassName);
       final Method main = launchClass.getMethod("main", new Class[] {
         String[].class
@@ -203,15 +203,15 @@ public final class LauncherMain
 
     if (!dir.exists())
     {
-      LOGGER.log(Level.WARNING, String.format("Directory %s does not exist",
-                                              directoryName));
+      LOGGER.log(Level.WARNING,
+                 String.format("Directory %s does not exist", directoryName));
       return null;
     }
 
     if (!dir.isDirectory())
     {
-      LOGGER.log(Level.WARNING, String.format("%s is not a directory",
-                                              directoryName));
+      LOGGER.log(Level.WARNING,
+                 String.format("%s is not a directory", directoryName));
       return null;
     }
 
@@ -226,8 +226,9 @@ public final class LauncherMain
     }
     catch (final MalformedURLException ex)
     {
-      LOGGER.log(Level.WARNING, String.format("Cannot convert %s to a URL",
-                                              file), ex);
+      LOGGER.log(Level.WARNING,
+                 String.format("Cannot convert %s to a URL", file),
+                 ex);
       return null;
     }
   }

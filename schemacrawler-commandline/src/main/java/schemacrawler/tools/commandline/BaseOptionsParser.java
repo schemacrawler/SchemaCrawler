@@ -37,23 +37,29 @@ public abstract class BaseOptionsParser<O extends Options>
 {
 
   private final String[] args;
+  private String[] unparsedArgs;
 
   protected BaseOptionsParser(final String[] args)
   {
     this.args = args;
   }
 
+  public String[] getUnparsedArgs()
+  {
+    return unparsedArgs;
+  }
+
   protected abstract O getOptions()
     throws SchemaCrawlerException;
 
-  protected final void parse(final CommandLineParser.Option<?>[] options)
+  protected void parse(final CommandLineParser.Option<?>... options)
   {
     final CommandLineParser parser = new CommandLineParser();
     for (final Option<?> option: options)
     {
       parser.addOption(option);
     }
-    parser.parse(args);
+    unparsedArgs = parser.parse(args);
   }
 
 }

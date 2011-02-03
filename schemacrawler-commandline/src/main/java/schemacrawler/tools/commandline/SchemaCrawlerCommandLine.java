@@ -27,6 +27,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputOptions;
+import sf.util.ObjectToString;
 import sf.util.Utility;
 
 /**
@@ -79,22 +80,33 @@ public final class SchemaCrawlerCommandLine
       throw new IllegalArgumentException("No command line arguments provided");
     }
 
-    command = new CommandParser(args).getOptions().toString();
-    outputOptions = new OutputOptionsParser(args).getOptions();
+    String[] remainingArgs = args;
+
+    final CommandParser commandParser = new CommandParser(remainingArgs);
+    command = commandParser.getOptions().toString();
+    remainingArgs = commandParser.getUnparsedArgs();
+
+    final OutputOptionsParser outputOptionsParser = new OutputOptionsParser(remainingArgs);
+    outputOptions = outputOptionsParser.getOptions();
+    remainingArgs = outputOptionsParser.getUnparsedArgs();
 
     if (!Utility.isBlank(configResource))
     {
       config = Config.load(SchemaCrawlerCommandLine.class
         .getResourceAsStream(configResource));
-      this.connectionOptions = new BundledDriverConnectionOptionsParser(args,
-                                                                        config)
+      final BundledDriverConnectionOptionsParser bundledDriverConnectionOptionsParser = new BundledDriverConnectionOptionsParser(remainingArgs,
+                                                                                                                                 config);
+      this.connectionOptions = bundledDriverConnectionOptionsParser
         .getOptions();
+      remainingArgs = bundledDriverConnectionOptionsParser.getUnparsedArgs();
     }
     else
     {
-      if (args != null && args.length > 0)
+      if (remainingArgs.length > 0)
       {
-        config = new ConfigParser(args).getOptions();
+        final ConfigParser configParser = new ConfigParser(remainingArgs);
+        config = configParser.getOptions();
+        remainingArgs = configParser.getUnparsedArgs();
       }
       else
       {
@@ -107,21 +119,32 @@ public final class SchemaCrawlerCommandLine
       }
       else
       {
-        ConnectionOptions parsedConnectionOptions = new CommandLineConnectionOptionsParser(args,
-                                                                                           config)
+        final CommandLineConnectionOptionsParser commandLineConnectionOptionsParser = new CommandLineConnectionOptionsParser(remainingArgs,
+                                                                                                                             config);
+        ConnectionOptions parsedConnectionOptions = commandLineConnectionOptionsParser
           .getOptions();
+        remainingArgs = commandLineConnectionOptionsParser.getUnparsedArgs();
         if (parsedConnectionOptions == null)
         {
-          parsedConnectionOptions = new ConfigConnectionOptionsParser(args,
-                                                                      config)
-            .getOptions();
+          final ConfigConnectionOptionsParser configConnectionOptionsParser = new ConfigConnectionOptionsParser(remainingArgs,
+                                                                                                                config);
+          parsedConnectionOptions = configConnectionOptionsParser.getOptions();
+          remainingArgs = configConnectionOptionsParser.getUnparsedArgs();
         }
         this.connectionOptions = parsedConnectionOptions;
       }
     }
 
-    schemaCrawlerOptions = new SchemaCrawlerOptionsParser(args, config)
-      .getOptions();
+    final SchemaCrawlerOptionsParser schemaCrawlerOptionsParser = new SchemaCrawlerOptionsParser(remainingArgs,
+                                                                                                 config);
+    schemaCrawlerOptions = schemaCrawlerOptionsParser.getOptions();
+    remainingArgs = schemaCrawlerOptionsParser.getUnparsedArgs();
+
+    if (remainingArgs.length > 0)
+    {
+      throw new IllegalArgumentException("Too many command line arguments provided: "
+                                         + ObjectToString.toString(remainingArgs));
+    }
   }
 
   public void execute()

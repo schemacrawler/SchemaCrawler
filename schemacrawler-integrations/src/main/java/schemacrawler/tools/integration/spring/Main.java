@@ -23,6 +23,7 @@ package schemacrawler.tools.integration.spring;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -34,6 +35,7 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
 import schemacrawler.tools.commandline.ApplicationOptionsParser;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.options.ApplicationOptions;
+import sf.util.ObjectToString;
 import sf.util.Utility;
 
 /**
@@ -56,8 +58,12 @@ public final class Main
     Connection connection = null;
     try
     {
-      final ApplicationOptions applicationOptions = new ApplicationOptionsParser(args)
+      String[] remainingArgs = args;
+      final ApplicationOptionsParser applicationOptionsParser = new ApplicationOptionsParser(remainingArgs);
+      final ApplicationOptions applicationOptions = applicationOptionsParser
         .getOptions();
+      remainingArgs = applicationOptionsParser.getUnparsedArgs();
+
       if (applicationOptions.isShowHelp())
       {
         final String text = Utility
@@ -66,14 +72,23 @@ public final class Main
         System.exit(0);
       }
 
-      // Spring shuold use JDK logging, like the rest of SchemaCrawler
+      // Spring should use JDK logging, like the rest of SchemaCrawler
       System.setProperty("org.apache.commons.logging.Log",
                          org.apache.commons.logging.impl.Jdk14Logger.class
                            .getName());
       applicationOptions.applyApplicationLogLevel();
+      LOGGER.log(Level.CONFIG, "Command line: " + Arrays.toString(args));
 
-      final SpringOptions springOptions = new SpringOptionsParser(args)
-        .getOptions();
+      final SpringOptionsParser springOptionsParser = new SpringOptionsParser(remainingArgs);
+      final SpringOptions springOptions = springOptionsParser.getOptions();
+      remainingArgs = applicationOptionsParser.getUnparsedArgs();
+
+      if (remainingArgs.length > 0)
+      {
+        throw new IllegalArgumentException("Too many command line arguments provided: "
+                                           + ObjectToString.toString(remainingArgs));
+      }
+
       final ApplicationContext appContext = new FileSystemXmlApplicationContext(springOptions
         .getContextFileName());
       final Executable executable = (Executable) appContext

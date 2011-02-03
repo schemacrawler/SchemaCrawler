@@ -22,7 +22,6 @@ package schemacrawler.tools.commandline;
 
 
 import schemacrawler.schemacrawler.Config;
-import sf.util.CommandLineParser.Option;
 import sf.util.CommandLineParser.StringOption;
 
 /**
@@ -49,9 +48,7 @@ class ConfigParser
   @Override
   protected Config getOptions()
   {
-    parse(new Option[] {
-        optionConfigFile, optionConfigOverrideFile
-    });
+    parse(optionConfigFile, optionConfigOverrideFile);
 
     final String cfgFile = optionConfigFile.getValue();
     final String cfgOverrideFile = optionConfigOverrideFile.getValue();

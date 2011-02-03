@@ -136,6 +136,28 @@ public class CommandLineParserTest
   }
 
   @Test
+  public void missingValue1()
+  {
+    final CommandLineParser parser = new CommandLineParser();
+    parser.addOption(new CommandLineParser.NumberOption('s', "size", null));
+    parser.parse(new String[] {
+      "-size="
+    });
+    assertTrue(!parser.getOption("size").isFound());
+  }
+
+  @Test
+  public void missingValue2()
+  {
+    final CommandLineParser parser = new CommandLineParser();
+    parser.addOption(new CommandLineParser.NumberOption('s', "size", null));
+    parser.parse(new String[] {
+      "-size"
+    });
+    assertTrue(!parser.getOption("size").isFound());
+  }
+
+  @Test
   public void resetBetweenParse()
   {
     final CommandLineParser parser = new CommandLineParser();
@@ -160,18 +182,19 @@ public class CommandLineParserTest
     parser.addOption(new CommandLineParser.NumberOption('f', "fraction", null));
     parser.addOption(new CommandLineParser.BooleanOption('m', "missing"));
     assertNull(parser.getOption("size").getValue());
-    parser.parse(new String[] {
+    final String[] unparsedArgs = parser.parse(new String[] {
         "-v", "-size=100", "-n", "foo", "-f", "0.1", "rest"
     });
     assertTrue(!parser.getOption("missing").isFound());
     assertEquals(Boolean.TRUE, parser.getOption("verbose").getValue());
     assertEquals(100, ((Number) parser.getOption("size").getValue()).intValue());
     assertEquals("foo", parser.getOption("name").getValue());
-    assertEquals(0.1, ((Number) parser.getOption("fraction").getValue())
-      .doubleValue(), 0.1e-6);
-    final String[] otherArgs = parser.getRemainingArgs();
-    assertEquals(1, otherArgs.length);
-    assertEquals("rest", otherArgs[0]);
+    assertEquals(0.1,
+                 ((Number) parser.getOption("fraction").getValue())
+                   .doubleValue(),
+                 0.1e-6);
+    assertEquals(1, unparsedArgs.length);
+    assertEquals("rest", unparsedArgs[0]);
   }
 
   @Test

@@ -22,7 +22,6 @@ package schemacrawler.tools.integration.spring;
 
 
 import schemacrawler.tools.commandline.BaseOptionsParser;
-import sf.util.CommandLineParser.Option;
 import sf.util.CommandLineParser.StringOption;
 
 /**
@@ -58,9 +57,7 @@ final class SpringOptionsParser
   @Override
   protected SpringOptions getOptions()
   {
-    parse(new Option[] {
-        optionContextFile, optionExecutable, optionDataSourceName,
-    });
+    parse(optionContextFile, optionExecutable, optionDataSourceName);
 
     final SpringOptions options = new SpringOptions();
     options.setContextFileName(optionContextFile.getValue());

@@ -24,9 +24,9 @@ package schemacrawler.tools.commandline;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.DatabaseConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import sf.util.Utility;
 import sf.util.CommandLineParser.Option;
 import sf.util.CommandLineParser.StringOption;
+import sf.util.Utility;
 
 /**
  * Options for the command line.
@@ -53,9 +53,7 @@ final class CommandLineConnectionOptionsParser
   public DatabaseConnectionOptions getOptions()
     throws SchemaCrawlerException
   {
-    parse(new Option[] {
-        optionDriver, optionConnectionUrl, optionUser, optionPassword,
-    });
+    parse(optionDriver, optionConnectionUrl, optionUser, optionPassword);
 
     final DatabaseConnectionOptions conenctionOptions;
     if (optionConnectionUrl.isFound())
