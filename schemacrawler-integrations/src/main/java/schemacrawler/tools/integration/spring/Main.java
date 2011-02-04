@@ -21,21 +21,12 @@
 package schemacrawler.tools.integration.spring;
 
 
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.sql.DataSource;
-
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.FileSystemXmlApplicationContext;
-
 import schemacrawler.tools.commandline.ApplicationOptionsParser;
-import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.options.ApplicationOptions;
-import sf.util.ObjectToString;
 import sf.util.Utility;
 
 /**
@@ -52,73 +43,34 @@ public final class Main
    * 
    * @param args
    *        Arguments passed into the program from the command line.
+   * @throws Exception
    */
   public static void main(final String[] args)
+    throws Exception
   {
-    Connection connection = null;
-    try
+    String[] remainingArgs = args;
+    final ApplicationOptionsParser applicationOptionsParser = new ApplicationOptionsParser(remainingArgs);
+    final ApplicationOptions applicationOptions = applicationOptionsParser
+      .getOptions();
+    remainingArgs = applicationOptionsParser.getUnparsedArgs();
+
+    if (applicationOptions.isShowHelp())
     {
-      String[] remainingArgs = args;
-      final ApplicationOptionsParser applicationOptionsParser = new ApplicationOptionsParser(remainingArgs);
-      final ApplicationOptions applicationOptions = applicationOptionsParser
-        .getOptions();
-      remainingArgs = applicationOptionsParser.getUnparsedArgs();
-
-      if (applicationOptions.isShowHelp())
-      {
-        final String text = Utility
-          .readResourceFully("/help/SchemaCrawler.spring.txt");
-        System.out.println(text);
-        System.exit(0);
-      }
-
-      // Spring should use JDK logging, like the rest of SchemaCrawler
-      System.setProperty("org.apache.commons.logging.Log",
-                         org.apache.commons.logging.impl.Jdk14Logger.class
-                           .getName());
-      applicationOptions.applyApplicationLogLevel();
-      LOGGER.log(Level.CONFIG, "Command line: " + Arrays.toString(args));
-
-      final SpringOptionsParser springOptionsParser = new SpringOptionsParser(remainingArgs);
-      final SpringOptions springOptions = springOptionsParser.getOptions();
-      remainingArgs = applicationOptionsParser.getUnparsedArgs();
-
-      if (remainingArgs.length > 0)
-      {
-        throw new IllegalArgumentException("Too many command line arguments provided: "
-                                           + ObjectToString.toString(remainingArgs));
-      }
-
-      final ApplicationContext appContext = new FileSystemXmlApplicationContext(springOptions
-        .getContextFileName());
-      final Executable executable = (Executable) appContext
-        .getBean(springOptions.getExecutableName());
-      final DataSource dataSource = (DataSource) appContext
-        .getBean(springOptions.getDataSourceName());
-      connection = dataSource.getConnection();
-      executable.execute(connection);
+      final String text = Utility
+        .readResourceFully("/help/SchemaCrawler.spring.txt");
+      System.out.println(text);
+      return;
     }
-    catch (final Exception e)
-    {
-      e.printStackTrace();
-    }
-    finally
-    {
-      try
-      {
-        if (connection != null)
-        {
-          connection.close();
-          LOGGER.log(Level.INFO, "Closed database connection, " + connection);
-        }
-      }
-      catch (final SQLException e)
-      {
-        final String errorMessage = e.getMessage();
-        LOGGER.log(Level.WARNING, "Could not close the connection: "
-                                  + errorMessage);
-      }
-    }
+
+    // Spring should use JDK logging, like the rest of SchemaCrawler
+    System.setProperty("org.apache.commons.logging.Log",
+                       org.apache.commons.logging.impl.Jdk14Logger.class
+                         .getName());
+    applicationOptions.applyApplicationLogLevel();
+    LOGGER.log(Level.CONFIG, "Command line: " + Arrays.toString(args));
+
+    final SchemaCrawlerSpringCommandLine commandLine = new SchemaCrawlerSpringCommandLine(remainingArgs);
+    commandLine.execute();
   }
 
   private Main()
