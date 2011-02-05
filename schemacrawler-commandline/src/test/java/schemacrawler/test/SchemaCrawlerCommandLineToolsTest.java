@@ -161,7 +161,6 @@ public class SchemaCrawlerCommandLineToolsTest
           "-outputformat=" + outputFormat,
           "-outputfile=" + testOutputFile.getAbsolutePath(),
           "-noinfo",
-          "-noheader"
       }));
       args.addAll(Arrays.asList(grepArgsForRun));
 
