@@ -5,6 +5,11 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+    <release version="8.5.1" date="2011-01-28">
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Re-organized command line code, including grep command line.
+      ]]></action>
+    </release>
     <release version="8.5" date="2011-01-28">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Changed copyright to 2011.
