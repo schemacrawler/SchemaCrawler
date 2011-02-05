@@ -419,6 +419,10 @@ PUBLIC.SYSTEM_LOBS.DELETE_LOB                     [procedure, no result]
   TX_ID                             BIGINT, in                  
 
 
+PUBLIC.SYSTEM_LOBS.DELETE_UNUSED                  [procedure, no result]
+------------------------------------------------------------------------
+
+
 PUBLIC.SYSTEM_LOBS.DIVIDE_BLOCK                   [procedure, no result]
 ------------------------------------------------------------------------
   B_OFFSET                          INTEGER, in                 

@@ -89,8 +89,13 @@ public final class TestUtility
 
     if (!contentEquals || !isOutputValidXml)
     {
-      final File testOutputLocalFile = new File("./unit_tests_results_output",
-                                                referenceFile);
+      File testOutputLocalFile = new File("./unit_tests_results_output",
+                                          referenceFile);
+      if (!testOutputLocalFile.getCanonicalPath().contains("target"))
+      {
+        testOutputLocalFile = new File("./target/unit_tests_results_output",
+                                       referenceFile);
+      }
       testOutputLocalFile.getParentFile().mkdirs();
       testOutputLocalFile.delete();
       final boolean renamed = testOutputFile.renameTo(testOutputLocalFile);
