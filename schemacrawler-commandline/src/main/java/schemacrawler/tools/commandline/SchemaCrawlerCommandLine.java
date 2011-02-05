@@ -77,7 +77,7 @@ public final class SchemaCrawlerCommandLine
   {
     if (args == null || args.length == 0)
     {
-      throw new IllegalArgumentException("No command line arguments provided");
+      throw new SchemaCrawlerException("No command line arguments provided");
     }
 
     String[] remainingArgs = args;
@@ -142,8 +142,8 @@ public final class SchemaCrawlerCommandLine
 
     if (remainingArgs.length > 0)
     {
-      throw new IllegalArgumentException("Too many command line arguments provided: "
-                                         + ObjectToString.toString(remainingArgs));
+      throw new SchemaCrawlerException("Too many command line arguments provided: "
+                                       + ObjectToString.toString(remainingArgs));
     }
   }
 
