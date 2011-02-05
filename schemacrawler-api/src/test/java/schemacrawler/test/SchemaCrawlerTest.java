@@ -22,6 +22,7 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
@@ -159,6 +160,24 @@ public class SchemaCrawlerTest
         }
       }
     }
+  }
+
+  @Test
+  public void columnLookup()
+    throws Exception
+  {
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+
+    final Database database = testUtility.getDatabase(schemaCrawlerOptions);
+    assertNotNull(database);
+    final Schema schema = database.getSchema("PUBLIC.BOOKS");
+    assertNotNull(schema);
+    final Table table = schema.getTable("AUTHORS");
+    assertNotNull(table);
+    assertNull(table.getColumn(null));
+    assertNull(table.getColumn(""));
+    assertNull(table.getColumn("NO_COLUMN"));
+    assertNotNull(table.getColumn("ID"));
   }
 
   @Test
