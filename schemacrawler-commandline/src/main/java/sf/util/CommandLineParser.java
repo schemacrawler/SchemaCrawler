@@ -478,7 +478,7 @@ public final class CommandLineParser
       }
 
       final BaseOption<?> option = (BaseOption<?>) optionsMap.get(currentArg);
-      if (option == null)
+      if (option == null || option.isFound())
       {
         remainingArgs.add(args[position]);
         position++;
