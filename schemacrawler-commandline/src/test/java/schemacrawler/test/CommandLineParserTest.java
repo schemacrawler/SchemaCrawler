@@ -23,6 +23,7 @@ package schemacrawler.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
@@ -34,6 +35,7 @@ import java.util.Date;
 import org.junit.Test;
 
 import sf.util.CommandLineParser;
+import sf.util.CommandLineParser.Option;
 
 public class CommandLineParserTest
 {
@@ -123,6 +125,20 @@ public class CommandLineParserTest
   }
 
   @Test
+  public void customOption()
+  {
+    final CommandLineParser parser = new CommandLineParser();
+    parser.addOption(new CommandLineParserTest.ShortDateOption('d', "date"));
+    parser.parse(new String[] {
+        "-d", "11/03/2003"
+    });
+    final Calendar d = (Calendar) parser.getOption("date").getValue();
+    assertEquals(11, d.get(Calendar.MONTH) + 1);
+    assertEquals(3, d.get(Calendar.DATE));
+    assertEquals(2003, d.get(Calendar.YEAR));
+  }
+
+  @Test
   public void illegalCustomOption()
   {
 
@@ -155,6 +171,22 @@ public class CommandLineParserTest
       "-size"
     });
     assertTrue(!parser.getOption("size").isFound());
+  }
+
+  @Test
+  public void repeatedOption()
+  {
+    final CommandLineParser parser = new CommandLineParser();
+    parser.addOption(new CommandLineParser.NumberOption('n', "number", null));
+    final String[] remainingArgs = parser.parse(new String[] {
+        "-number=4", "-number=5"
+    });
+    final Option<Number> option = (Option<Number>) parser.getOption("number");
+    assertNotNull(option);
+    assertEquals(4L, option.getValue());
+
+    assertEquals(1, remainingArgs.length);
+    assertEquals("-number=5", remainingArgs[0]);
   }
 
   @Test
@@ -251,20 +283,6 @@ public class CommandLineParserTest
     assertTrue(parser.getOption(string).isFound());
     assertTrue(parser.getStringOptionValue(string).equals("value"));
     assertTrue(parser.getStringOptionValue("name").equals("schemacrawler"));
-  }
-
-  @Test
-  public void testCustomOption()
-  {
-    final CommandLineParser parser = new CommandLineParser();
-    parser.addOption(new CommandLineParserTest.ShortDateOption('d', "date"));
-    parser.parse(new String[] {
-        "-d", "11/03/2003"
-    });
-    final Calendar d = (Calendar) parser.getOption("date").getValue();
-    assertEquals(11, d.get(Calendar.MONTH) + 1);
-    assertEquals(3, d.get(Calendar.DATE));
-    assertEquals(2003, d.get(Calendar.YEAR));
   }
 
 }
