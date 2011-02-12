@@ -18,33 +18,44 @@
  *
  */
 
-package schemacrawler.tools.commandline;
+package sf.util.clparser;
 
-
-import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.ConnectionOptions;
-import sf.util.clparser.StringOption;
 
 /**
- * Options for the command line.
- * 
- * @author sfatehi
+ * An option that expects a string value.
  */
-abstract class BaseDatabaseConnectionOptionsParser
-  extends BaseOptionsParser<ConnectionOptions>
+public final class StringOption
+  extends BaseOption<String>
 {
 
-  final Config config;
-
-  BaseDatabaseConnectionOptionsParser(final Config config)
+  public StringOption(final Character shortForm, final String defaultValue)
   {
-    super(new StringOption("user", null), new StringOption("password", null));
-    this.config = config;
+    super(shortForm, defaultValue);
   }
 
-  protected final void setCredentials(final ConnectionOptions connectionOptions)
+  public StringOption(final Character shortForm,
+                      final String longForm,
+                      final String defaultValue)
   {
-    connectionOptions.setUser(getStringValue("user"));
-    connectionOptions.setPassword(getStringValue("password"));
+    super(shortForm, longForm, defaultValue);
   }
+
+  public StringOption(final String longForm, final String defaultValue)
+  {
+    super(longForm, defaultValue);
+  }
+
+  @Override
+  protected OptionValue<String> parseValue(final String value)
+  {
+    if (value == null)
+    {
+      return null;
+    }
+    else
+    {
+      return new OptionValue<String>(this, value);
+    }
+  }
+
 }

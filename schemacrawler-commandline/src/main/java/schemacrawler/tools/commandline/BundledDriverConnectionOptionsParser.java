@@ -25,9 +25,8 @@ import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.DatabaseConfigConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import sf.util.CommandLineParser.NumberOption;
-import sf.util.CommandLineParser.Option;
-import sf.util.CommandLineParser.StringOption;
+import sf.util.clparser.NumberOption;
+import sf.util.clparser.StringOption;
 
 /**
  * Options for the command line.
@@ -38,58 +37,40 @@ final class BundledDriverConnectionOptionsParser
   extends BaseDatabaseConnectionOptionsParser
 {
 
-  private final StringOption optionHost = new StringOption(Option.NO_SHORT_FORM,
-                                                           "host",
-                                                           null);
-  private final NumberOption optionPort = new NumberOption(Option.NO_SHORT_FORM,
-                                                           "port",
-                                                           0);
-  private final StringOption optionDatabase = new StringOption(Option.NO_SHORT_FORM,
-                                                               "database",
-                                                               "");
-  private final StringOption optionConnectionProperties = new StringOption(Option.NO_SHORT_FORM,
-                                                                           "urlx",
-                                                                           "");
-
-  BundledDriverConnectionOptionsParser(final String[] args, final Config config)
+  BundledDriverConnectionOptionsParser(final Config config)
   {
-    super(args, config);
+    super(config);
+    addOption(new StringOption("host", null));
+    addOption(new NumberOption("port", 0));
+    addOption(new StringOption("database", ""));
+    addOption(new StringOption("urlx", ""));
   }
 
   @Override
   public ConnectionOptions getOptions()
     throws SchemaCrawlerException
   {
-    parse(optionHost,
-          optionPort,
-          optionDatabase,
-          optionConnectionProperties,
-          optionUser,
-          optionPassword);
-
     final DatabaseConfigConnectionOptions connectionOptions = new DatabaseConfigConnectionOptions(config);
+    setCredentials(connectionOptions);
 
-    if (optionHost.isFound())
+    if (hasOptionValue("host"))
     {
-      connectionOptions.setHost(optionHost.getValue());
+      connectionOptions.setHost(getStringValue("host"));
     }
-    if (optionPort.isFound())
+    if (hasOptionValue("port"))
     {
-      connectionOptions.setPort(optionPort.getValue().intValue());
+      connectionOptions.setPort(getIntegerValue("port"));
     }
-    if (optionDatabase.isFound())
+    if (hasOptionValue("database"))
     {
-      connectionOptions.setDatabase(optionDatabase.getValue());
+      connectionOptions.setDatabase(getStringValue("database"));
     }
-    if (optionConnectionProperties.isFound())
+    if (hasOptionValue("urlx"))
     {
-      connectionOptions.setConnectionProperties(optionConnectionProperties
-        .getValue());
+      connectionOptions.setConnectionProperties(getStringValue("urlx"));
     }
-
-    connectionOptions.setUser(optionUser.getValue());
-    connectionOptions.setPassword(optionPassword.getValue());
 
     return connectionOptions;
   }
+
 }

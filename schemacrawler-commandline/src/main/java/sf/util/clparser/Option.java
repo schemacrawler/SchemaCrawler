@@ -18,33 +18,47 @@
  *
  */
 
-package schemacrawler.tools.commandline;
+package sf.util.clparser;
 
-
-import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.ConnectionOptions;
-import sf.util.clparser.StringOption;
 
 /**
- * Options for the command line.
+ * Representation of a command-line option.
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
+ * @param <T>
+ *        Option type
  */
-abstract class BaseDatabaseConnectionOptionsParser
-  extends BaseOptionsParser<ConnectionOptions>
+public interface Option<T>
 {
 
-  final Config config;
+  public abstract T getDefaultValue();
 
-  BaseDatabaseConnectionOptionsParser(final Config config)
-  {
-    super(new StringOption("user", null), new StringOption("password", null));
-    this.config = config;
-  }
+  /**
+   * Gets the long form of the switch for the option.
+   * 
+   * @return Long form of the switch
+   */
+  String getLongForm();
 
-  protected final void setCredentials(final ConnectionOptions connectionOptions)
-  {
-    connectionOptions.setUser(getStringValue("user"));
-    connectionOptions.setPassword(getStringValue("password"));
-  }
+  /**
+   * Gets the short form of the switch for the option.
+   * 
+   * @return Short form of the switch
+   */
+  String getShortForm();
+
+  /**
+   * Whether the option has the long form of the switch.
+   * 
+   * @return Whether the option has the long form of the switch
+   */
+  boolean hasLongForm();
+
+  /**
+   * Whether the option has the short form of the switch.
+   * 
+   * @return Whether the option has the short form of the switch
+   */
+  boolean hasShortForm();
+
 }

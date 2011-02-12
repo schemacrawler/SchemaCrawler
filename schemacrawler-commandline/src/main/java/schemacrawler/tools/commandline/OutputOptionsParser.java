@@ -25,10 +25,9 @@ import java.io.File;
 
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
-import sf.util.CommandLineParser.BooleanOption;
-import sf.util.CommandLineParser.Option;
-import sf.util.CommandLineParser.StringOption;
 import sf.util.Utility;
+import sf.util.clparser.BooleanOption;
+import sf.util.clparser.StringOption;
 
 /**
  * Parses the command line.
@@ -39,28 +38,18 @@ final class OutputOptionsParser
   extends BaseOptionsParser<OutputOptions>
 {
 
-  private final StringOption optionOutputFormat = new StringOption(Option.NO_SHORT_FORM,
-                                                                   "outputformat",
-                                                                   OutputFormat.text
-                                                                     .toString());
-  private final StringOption optionOutputFile = new StringOption(Option.NO_SHORT_FORM,
-                                                                 "outputfile",
-                                                                 "");
-  private final BooleanOption optionNoInfo = new BooleanOption(Option.NO_SHORT_FORM,
-                                                               "noinfo");
-
-  OutputOptionsParser(final String[] args)
+  OutputOptionsParser()
   {
-    super(args);
+    super(new StringOption("outputformat", OutputFormat.text.toString()),
+          new StringOption("outputfile", ""),
+          new BooleanOption("noinfo"));
   }
 
   @Override
   protected OutputOptions getOptions()
   {
-    parse(optionOutputFormat, optionOutputFile, optionNoInfo, optionNoInfo);
-
-    final String outputFormatValue = optionOutputFormat.getValue();
-    final String outputFileName = optionOutputFile.getValue();
+    final String outputFormatValue = getStringValue("outputformat");
+    final String outputFileName = getStringValue("outputfile");
 
     final File outputFile;
     if (Utility.isBlank(outputFileName))
@@ -73,7 +62,7 @@ final class OutputOptionsParser
     }
     final OutputOptions outputOptions = new OutputOptions(outputFormatValue,
                                                           outputFile);
-    outputOptions.setNoInfo(optionNoInfo.getValue());
+    outputOptions.setNoInfo(getBooleanValue("noinfo"));
 
     return outputOptions;
   }

@@ -24,9 +24,8 @@ package schemacrawler.tools.commandline;
 import java.util.logging.Level;
 
 import schemacrawler.tools.options.ApplicationOptions;
-import sf.util.CommandLineParser;
-import sf.util.CommandLineParser.BooleanOption;
-import sf.util.CommandLineParser.StringOption;
+import sf.util.clparser.BooleanOption;
+import sf.util.clparser.StringOption;
 
 /**
  * Parses the command line.
@@ -37,25 +36,19 @@ public final class ApplicationOptionsParser
   extends BaseOptionsParser<ApplicationOptions>
 {
 
-  private final StringOption optionLogLevel = new StringOption(CommandLineParser.Option.NO_SHORT_FORM,
-                                                               "loglevel",
-                                                               "OFF");
-  private final BooleanOption optionHelp1 = new BooleanOption('?', "help");
-  private final BooleanOption optionHelp2 = new BooleanOption('h', "-help");
-
-  public ApplicationOptionsParser(final String[] args)
+  public ApplicationOptionsParser()
   {
-    super(args);
+    super(new StringOption("loglevel", "OFF"),
+          new BooleanOption('?', "help"),
+          new BooleanOption('h', "-help"));
   }
 
   @Override
-  public ApplicationOptions getOptions()
+  protected ApplicationOptions getOptions()
   {
-    parse(optionLogLevel, optionHelp1, optionHelp2);
-
     final ApplicationOptions options = new ApplicationOptions();
 
-    final String logLevelString = optionLogLevel.getValue();
+    final String logLevelString = getStringValue("loglevel");
     if (!sf.util.Utility.isBlank(logLevelString))
     {
       final Level applicationLogLevel = Level.parse(logLevelString
@@ -63,7 +56,7 @@ public final class ApplicationOptionsParser
       options.setApplicationLogLevel(applicationLogLevel);
     }
 
-    if (optionHelp1.getValue() || optionHelp2.getValue())
+    if (getBooleanValue("?") || getBooleanValue("h"))
     {
       options.setShowHelp(true);
     }
