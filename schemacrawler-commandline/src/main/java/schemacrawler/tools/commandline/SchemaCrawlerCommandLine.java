@@ -20,6 +20,9 @@
 package schemacrawler.tools.commandline;
 
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -38,6 +41,9 @@ import sf.util.Utility;
 public final class SchemaCrawlerCommandLine
   implements CommandLine
 {
+
+  private static final Logger LOGGER = Logger
+    .getLogger(SchemaCrawlerCommandLine.class.getName());
 
   private final String command;
   private final Config config;
@@ -90,15 +96,11 @@ public final class SchemaCrawlerCommandLine
     outputOptions = outputOptionsParser.getOptions();
     remainingArgs = outputOptionsParser.getUnparsedArgs();
 
-    if (!Utility.isBlank(configResource))
+    final boolean hasConfigResource = !Utility.isBlank(configResource);
+    if (hasConfigResource)
     {
       config = Config.load(SchemaCrawlerCommandLine.class
         .getResourceAsStream(configResource));
-      final BundledDriverConnectionOptionsParser bundledDriverConnectionOptionsParser = new BundledDriverConnectionOptionsParser(remainingArgs,
-                                                                                                                                 config);
-      this.connectionOptions = bundledDriverConnectionOptionsParser
-        .getOptions();
-      remainingArgs = bundledDriverConnectionOptionsParser.getUnparsedArgs();
     }
     else
     {
@@ -112,27 +114,35 @@ public final class SchemaCrawlerCommandLine
       {
         config = new Config();
       }
+    }
 
-      if (connectionOptions != null)
+    if (connectionOptions != null)
+    {
+      this.connectionOptions = connectionOptions;
+    }
+    else if (hasConfigResource)
+    {
+      final BundledDriverConnectionOptionsParser bundledDriverConnectionOptionsParser = new BundledDriverConnectionOptionsParser(remainingArgs,
+                                                                                                                                 config);
+      this.connectionOptions = bundledDriverConnectionOptionsParser
+        .getOptions();
+      remainingArgs = bundledDriverConnectionOptionsParser.getUnparsedArgs();
+    }
+    else
+    {
+      final CommandLineConnectionOptionsParser commandLineConnectionOptionsParser = new CommandLineConnectionOptionsParser(remainingArgs,
+                                                                                                                           config);
+      ConnectionOptions parsedConnectionOptions = commandLineConnectionOptionsParser
+        .getOptions();
+      remainingArgs = commandLineConnectionOptionsParser.getUnparsedArgs();
+      if (parsedConnectionOptions == null)
       {
-        this.connectionOptions = connectionOptions;
+        final ConfigConnectionOptionsParser configConnectionOptionsParser = new ConfigConnectionOptionsParser(remainingArgs,
+                                                                                                              config);
+        parsedConnectionOptions = configConnectionOptionsParser.getOptions();
+        remainingArgs = configConnectionOptionsParser.getUnparsedArgs();
       }
-      else
-      {
-        final CommandLineConnectionOptionsParser commandLineConnectionOptionsParser = new CommandLineConnectionOptionsParser(remainingArgs,
-                                                                                                                             config);
-        ConnectionOptions parsedConnectionOptions = commandLineConnectionOptionsParser
-          .getOptions();
-        remainingArgs = commandLineConnectionOptionsParser.getUnparsedArgs();
-        if (parsedConnectionOptions == null)
-        {
-          final ConfigConnectionOptionsParser configConnectionOptionsParser = new ConfigConnectionOptionsParser(remainingArgs,
-                                                                                                                config);
-          parsedConnectionOptions = configConnectionOptionsParser.getOptions();
-          remainingArgs = configConnectionOptionsParser.getUnparsedArgs();
-        }
-        this.connectionOptions = parsedConnectionOptions;
-      }
+      this.connectionOptions = parsedConnectionOptions;
     }
 
     final SchemaCrawlerOptionsParser schemaCrawlerOptionsParser = new SchemaCrawlerOptionsParser(remainingArgs,
@@ -142,8 +152,8 @@ public final class SchemaCrawlerCommandLine
 
     if (remainingArgs.length > 0)
     {
-      throw new SchemaCrawlerException("Too many command line arguments provided: "
-                                       + ObjectToString.toString(remainingArgs));
+      LOGGER.log(Level.INFO, "Too many command line arguments provided: "
+                             + ObjectToString.toString(remainingArgs));
     }
   }
 
