@@ -28,9 +28,9 @@ import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.DatabaseConfigConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import sf.util.CommandLineParser.BooleanOption;
-import sf.util.CommandLineParser.StringOption;
 import sf.util.Utility;
+import sf.util.clparser.BooleanOption;
+import sf.util.clparser.StringOption;
 
 /**
  * Options for the command line.
@@ -74,13 +74,6 @@ final class ConfigConnectionOptionsParser
     return partition;
   }
 
-  private final BooleanOption optionUseDefaultConnection = new BooleanOption('d',
-                                                                             "default");
-
-  private final StringOption optionConnection = new StringOption('c',
-                                                                 "connection",
-                                                                 null);
-
   /**
    * Parses the command line into options.
    * 
@@ -89,28 +82,25 @@ final class ConfigConnectionOptionsParser
    * @param config
    *        Configuration
    */
-  ConfigConnectionOptionsParser(final String[] args, final Config config)
+  ConfigConnectionOptionsParser(final Config config)
   {
-    super(args, config);
+    super(config);
+    addOption(new BooleanOption('d', "default"));
+    addOption(new StringOption('c', "connection", null));
   }
 
   @Override
   public ConnectionOptions getOptions()
     throws SchemaCrawlerException
   {
-    parse(optionUseDefaultConnection,
-          optionConnection,
-          optionUser,
-          optionPassword);
-
     final String connectionName;
-    if (optionUseDefaultConnection.getValue())
+    if (hasOptionValue("default"))
     {
       connectionName = config.get("defaultconnection");
     }
     else
     {
-      connectionName = optionConnection.getValue();
+      connectionName = getStringValue("connection");
     }
     if (config.isEmpty())
     {
@@ -124,16 +114,15 @@ final class ConfigConnectionOptionsParser
 
     final ConnectionOptions connectionOptions = new DatabaseConfigConnectionOptions(databaseConnectionConfig);
 
-    final String user = optionUser.getValue();
-    if (user != null && !databaseConnectionConfig.containsKey("user"))
+    if (hasOptionValue("user") && !databaseConnectionConfig.containsKey("user"))
     {
-      connectionOptions.setUser(user);
+      connectionOptions.setUser(getStringValue("user"));
     }
 
-    final String password = optionPassword.getValue();
-    if (password != null && !databaseConnectionConfig.containsKey("password"))
+    if (hasOptionValue("password")
+        && !databaseConnectionConfig.containsKey("password"))
     {
-      connectionOptions.setPassword(password);
+      connectionOptions.setPassword(getStringValue("password"));
     }
 
     return connectionOptions;

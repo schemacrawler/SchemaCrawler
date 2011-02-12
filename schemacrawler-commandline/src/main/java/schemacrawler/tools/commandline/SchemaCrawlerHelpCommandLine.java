@@ -92,7 +92,9 @@ final class SchemaCrawlerHelpCommandLine
     }
     else
     {
-      command = new CommandParser(args).getOptions().toString();
+      final CommandParser commandParser = new CommandParser();
+      commandParser.parse(args);
+      command = commandParser.getOptions().toString();
     }
   }
 
@@ -101,6 +103,7 @@ final class SchemaCrawlerHelpCommandLine
    * 
    * @see schemacrawler.tools.commandline.CommandLine#execute()
    */
+  @Override
   public void execute()
     throws SchemaCrawlerException
   {

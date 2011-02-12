@@ -23,8 +23,8 @@ package schemacrawler.tools.commandline;
 
 import schemacrawler.schemacrawler.Options;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import sf.util.CommandLineParser;
-import sf.util.CommandLineParser.Option;
+import sf.util.clparser.CommandLineParser;
+import sf.util.clparser.Option;
 
 /**
  * Parses the command line.
@@ -34,32 +34,15 @@ import sf.util.CommandLineParser.Option;
  *        Options to be parsed from the command line.
  */
 public abstract class BaseOptionsParser<O extends Options>
+  extends CommandLineParser
 {
 
-  private final String[] args;
-  private String[] unparsedArgs;
-
-  protected BaseOptionsParser(final String[] args)
+  protected BaseOptionsParser(final Option<?>... options)
   {
-    this.args = args;
-  }
-
-  public String[] getUnparsedArgs()
-  {
-    return unparsedArgs;
+    super(options);
   }
 
   protected abstract O getOptions()
     throws SchemaCrawlerException;
-
-  protected void parse(final CommandLineParser.Option<?>... options)
-  {
-    final CommandLineParser parser = new CommandLineParser();
-    for (final Option<?> option: options)
-    {
-      parser.addOption(option);
-    }
-    unparsedArgs = parser.parse(args);
-  }
 
 }

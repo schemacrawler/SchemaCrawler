@@ -22,7 +22,7 @@ package schemacrawler.tools.commandline;
 
 
 import schemacrawler.schemacrawler.Config;
-import sf.util.CommandLineParser.StringOption;
+import sf.util.clparser.StringOption;
 
 /**
  * Parses the command line.
@@ -33,25 +33,19 @@ class ConfigParser
   extends BaseOptionsParser<Config>
 {
 
-  private final StringOption optionConfigFile = new StringOption('g',
-                                                                 "configfile",
-                                                                 "schemacrawler.config.properties");
-  private final StringOption optionConfigOverrideFile = new StringOption('p',
-                                                                         "configoverridefile",
-                                                                         "schemacrawler.config.override.properties");
-
-  ConfigParser(final String[] args)
+  ConfigParser()
   {
-    super(args);
+    super(new StringOption('g', "configfile", "schemacrawler.config.properties"),
+          new StringOption('p',
+                           "configoverridefile",
+                           "schemacrawler.config.override.properties"));
   }
 
   @Override
   protected Config getOptions()
   {
-    parse(optionConfigFile, optionConfigOverrideFile);
-
-    final String cfgFile = optionConfigFile.getValue();
-    final String cfgOverrideFile = optionConfigOverrideFile.getValue();
+    final String cfgFile = getStringValue("g");
+    final String cfgOverrideFile = getStringValue("p");
     return Config.load(cfgFile, cfgOverrideFile);
   }
 

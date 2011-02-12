@@ -23,8 +23,7 @@ package schemacrawler.tools.commandline;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.Command;
-import sf.util.CommandLineParser.Option;
-import sf.util.CommandLineParser.StringOption;
+import sf.util.clparser.StringOption;
 
 /**
  * Parses the command line.
@@ -35,26 +34,18 @@ final class CommandParser
   extends BaseOptionsParser<Command>
 {
 
-  private final StringOption optionCommand = new StringOption(Option.NO_SHORT_FORM,
-                                                              "command",
-                                                              null);
-
-  CommandParser(final String[] args)
+  CommandParser()
   {
-    super(args);
+    super(new StringOption("command", null));
   }
 
   @Override
   protected Command getOptions()
     throws SchemaCrawlerException
   {
-    parse(optionCommand);
-
-    if (optionCommand.isFound())
+    if (hasOptionValue("command"))
     {
-      final String commandOptionValue = optionCommand.getValue();
-      final Command command = new Command(commandOptionValue);
-      return command;
+      return new Command(getStringValue("command"));
     }
     else
     {

@@ -34,8 +34,9 @@ import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import sf.util.CommandLineParser;
 import sf.util.Utility;
+import sf.util.clparser.CommandLineParser;
+import sf.util.clparser.StringOption;
 
 /**
  * A wrapper used to assemble the classpath before launching the actual
@@ -159,6 +160,7 @@ public final class LauncherMain
     {
       final File[] jarFiles = dir.listFiles(new FilenameFilter()
       {
+        @Override
         public boolean accept(final File dir, final String name)
         {
           return name.endsWith(".jar");
@@ -184,14 +186,11 @@ public final class LauncherMain
   {
     final String OPTION_loglevel = "loglevel";
 
-    final CommandLineParser parser = new CommandLineParser();
-    parser
-      .addOption(new CommandLineParser.StringOption(CommandLineParser.Option.NO_SHORT_FORM,
-                                                    OPTION_loglevel,
-                                                    "OFF"));
+    final CommandLineParser parser = new CommandLineParser(new StringOption(OPTION_loglevel,
+                                                                            "OFF"));
     parser.parse(args);
 
-    final String logLevelString = parser.getStringOptionValue(OPTION_loglevel);
+    final String logLevelString = parser.getStringValue(OPTION_loglevel);
     final Level logLevel = Level.parse(logLevelString
       .toUpperCase(Locale.ENGLISH));
     Utility.setApplicationLogLevel(logLevel);

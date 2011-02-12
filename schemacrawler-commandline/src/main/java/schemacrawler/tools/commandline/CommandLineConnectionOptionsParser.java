@@ -24,9 +24,8 @@ package schemacrawler.tools.commandline;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.DatabaseConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import sf.util.CommandLineParser.Option;
-import sf.util.CommandLineParser.StringOption;
 import sf.util.Utility;
+import sf.util.clparser.StringOption;
 
 /**
  * Options for the command line.
@@ -37,47 +36,39 @@ final class CommandLineConnectionOptionsParser
   extends BaseDatabaseConnectionOptionsParser
 {
 
-  private final StringOption optionDriver = new StringOption(Option.NO_SHORT_FORM,
-                                                             "driver",
-                                                             null);
-  private final StringOption optionConnectionUrl = new StringOption(Option.NO_SHORT_FORM,
-                                                                    "url",
-                                                                    null);
-
-  CommandLineConnectionOptionsParser(final String[] args, final Config config)
+  CommandLineConnectionOptionsParser(final Config config)
   {
-    super(args, config);
+    super(config);
+    addOption(new StringOption("driver", null));
+    addOption(new StringOption("url", null));
   }
 
   @Override
   public DatabaseConnectionOptions getOptions()
     throws SchemaCrawlerException
   {
-    parse(optionDriver, optionConnectionUrl, optionUser, optionPassword);
-
-    final DatabaseConnectionOptions conenctionOptions;
-    if (optionConnectionUrl.isFound())
+    final DatabaseConnectionOptions connectionOptions;
+    if (hasOptionValue("url"))
     {
-      final String jdbcDriverClassName = optionDriver.getValue();
-      final String connectionUrl = optionConnectionUrl.getValue();
+      final String jdbcDriverClassName = getStringValue("driver");
+      final String connectionUrl = getStringValue("url");
       if (Utility.isBlank(jdbcDriverClassName)
           || Utility.isBlank(connectionUrl))
       {
-        conenctionOptions = null;
+        connectionOptions = null;
       }
       else
       {
-        conenctionOptions = new DatabaseConnectionOptions(jdbcDriverClassName,
+        connectionOptions = new DatabaseConnectionOptions(jdbcDriverClassName,
                                                           connectionUrl);
-        conenctionOptions.setUser(optionUser.getValue());
-        conenctionOptions.setPassword(optionPassword.getValue());
+        setCredentials(connectionOptions);
       }
     }
     else
     {
-      conenctionOptions = null;
+      connectionOptions = null;
     }
-    return conenctionOptions;
+    return connectionOptions;
   }
 
 }

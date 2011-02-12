@@ -18,33 +18,41 @@
  *
  */
 
-package schemacrawler.tools.commandline;
+package sf.util.clparser;
 
-
-import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.ConnectionOptions;
-import sf.util.clparser.StringOption;
 
 /**
- * Options for the command line.
- * 
- * @author sfatehi
+ * An option that expects a boolean value.
  */
-abstract class BaseDatabaseConnectionOptionsParser
-  extends BaseOptionsParser<ConnectionOptions>
+public final class BooleanOption
+  extends BaseOption<Boolean>
 {
 
-  final Config config;
-
-  BaseDatabaseConnectionOptionsParser(final Config config)
+  public BooleanOption(final Character shortForm)
   {
-    super(new StringOption("user", null), new StringOption("password", null));
-    this.config = config;
+    super(shortForm, false);
   }
 
-  protected final void setCredentials(final ConnectionOptions connectionOptions)
+  public BooleanOption(final Character shortForm, final String longForm)
   {
-    connectionOptions.setUser(getStringValue("user"));
-    connectionOptions.setPassword(getStringValue("password"));
+    super(shortForm, longForm, false);
   }
+
+  public BooleanOption(final String longForm)
+  {
+    super(longForm, false);
+  }
+
+  @Override
+  protected OptionValue<Boolean> parseValue(final String valueString)
+  {
+    Boolean value;
+    if (valueString == null || valueString.length() == 0)
+    {
+      value = false;
+    }
+    value = Boolean.valueOf(valueString);
+    return new OptionValue<Boolean>(this, value);
+  }
+
 }

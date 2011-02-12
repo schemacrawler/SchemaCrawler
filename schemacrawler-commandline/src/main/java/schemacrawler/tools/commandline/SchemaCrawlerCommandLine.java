@@ -88,13 +88,13 @@ public final class SchemaCrawlerCommandLine
 
     String[] remainingArgs = args;
 
-    final CommandParser commandParser = new CommandParser(remainingArgs);
+    final CommandParser commandParser = new CommandParser();
+    remainingArgs = commandParser.parse(remainingArgs);
     command = commandParser.getOptions().toString();
-    remainingArgs = commandParser.getUnparsedArgs();
 
-    final OutputOptionsParser outputOptionsParser = new OutputOptionsParser(remainingArgs);
+    final OutputOptionsParser outputOptionsParser = new OutputOptionsParser();
+    remainingArgs = outputOptionsParser.parse(remainingArgs);
     outputOptions = outputOptionsParser.getOptions();
-    remainingArgs = outputOptionsParser.getUnparsedArgs();
 
     final boolean hasConfigResource = !Utility.isBlank(configResource);
     if (hasConfigResource)
@@ -106,9 +106,9 @@ public final class SchemaCrawlerCommandLine
     {
       if (remainingArgs.length > 0)
       {
-        final ConfigParser configParser = new ConfigParser(remainingArgs);
+        final ConfigParser configParser = new ConfigParser();
+        remainingArgs = configParser.parse(remainingArgs);
         config = configParser.getOptions();
-        remainingArgs = configParser.getUnparsedArgs();
       }
       else
       {
@@ -122,33 +122,29 @@ public final class SchemaCrawlerCommandLine
     }
     else if (hasConfigResource)
     {
-      final BundledDriverConnectionOptionsParser bundledDriverConnectionOptionsParser = new BundledDriverConnectionOptionsParser(remainingArgs,
-                                                                                                                                 config);
+      final BaseDatabaseConnectionOptionsParser bundledDriverConnectionOptionsParser = new BundledDriverConnectionOptionsParser(config);
+      remainingArgs = bundledDriverConnectionOptionsParser.parse(remainingArgs);
       this.connectionOptions = bundledDriverConnectionOptionsParser
         .getOptions();
-      remainingArgs = bundledDriverConnectionOptionsParser.getUnparsedArgs();
     }
     else
     {
-      final CommandLineConnectionOptionsParser commandLineConnectionOptionsParser = new CommandLineConnectionOptionsParser(remainingArgs,
-                                                                                                                           config);
+      final CommandLineConnectionOptionsParser commandLineConnectionOptionsParser = new CommandLineConnectionOptionsParser(config);
+      remainingArgs = commandLineConnectionOptionsParser.parse(remainingArgs);
       ConnectionOptions parsedConnectionOptions = commandLineConnectionOptionsParser
         .getOptions();
-      remainingArgs = commandLineConnectionOptionsParser.getUnparsedArgs();
       if (parsedConnectionOptions == null)
       {
-        final ConfigConnectionOptionsParser configConnectionOptionsParser = new ConfigConnectionOptionsParser(remainingArgs,
-                                                                                                              config);
+        final ConfigConnectionOptionsParser configConnectionOptionsParser = new ConfigConnectionOptionsParser(config);
+        remainingArgs = configConnectionOptionsParser.parse(remainingArgs);
         parsedConnectionOptions = configConnectionOptionsParser.getOptions();
-        remainingArgs = configConnectionOptionsParser.getUnparsedArgs();
       }
       this.connectionOptions = parsedConnectionOptions;
     }
 
-    final SchemaCrawlerOptionsParser schemaCrawlerOptionsParser = new SchemaCrawlerOptionsParser(remainingArgs,
-                                                                                                 config);
+    final SchemaCrawlerOptionsParser schemaCrawlerOptionsParser = new SchemaCrawlerOptionsParser(config);
+    remainingArgs = schemaCrawlerOptionsParser.parse(remainingArgs);
     schemaCrawlerOptions = schemaCrawlerOptionsParser.getOptions();
-    remainingArgs = schemaCrawlerOptionsParser.getUnparsedArgs();
 
     if (remainingArgs.length > 0)
     {
@@ -157,6 +153,7 @@ public final class SchemaCrawlerCommandLine
     }
   }
 
+  @Override
   public void execute()
     throws Exception
   {

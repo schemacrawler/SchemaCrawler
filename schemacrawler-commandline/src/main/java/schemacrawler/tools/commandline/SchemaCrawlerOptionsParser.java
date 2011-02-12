@@ -27,9 +27,8 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.tools.options.InfoLevel;
-import sf.util.CommandLineParser.BooleanOption;
-import sf.util.CommandLineParser.Option;
-import sf.util.CommandLineParser.StringOption;
+import sf.util.clparser.BooleanOption;
+import sf.util.clparser.StringOption;
 
 /**
  * Parses the command line.
@@ -40,56 +39,25 @@ final class SchemaCrawlerOptionsParser
   extends BaseOptionsParser<SchemaCrawlerOptions>
 {
 
-  private final StringOption optionInfoLevel = new StringOption(Option.NO_SHORT_FORM,
-                                                                "infolevel",
-                                                                "standard");
-
-  private final StringOption optionSchemas = new StringOption(Option.NO_SHORT_FORM,
-                                                              "schemas",
-                                                              InclusionRule.NONE);
-
-  private final StringOption optionTableTypes = new StringOption(Option.NO_SHORT_FORM,
-                                                                 "table_types",
-                                                                 SchemaCrawlerOptions.DEFAULT_TABLE_TYPES);
-
-  private final StringOption optionTables = new StringOption(Option.NO_SHORT_FORM,
-                                                             "tables",
-                                                             InclusionRule.ALL);
-  private final StringOption optionExcludeColumns = new StringOption(Option.NO_SHORT_FORM,
-                                                                     "excludecolumns",
-                                                                     InclusionRule.NONE);
-
-  private final StringOption optionProcedures = new StringOption(Option.NO_SHORT_FORM,
-                                                                 "procedures",
-                                                                 InclusionRule.ALL);
-  private final StringOption optionExcludeProcedureColumns = new StringOption(Option.NO_SHORT_FORM,
-                                                                              "excludeinout",
-                                                                              InclusionRule.NONE);
-
-  private final StringOption optionGrepColumns = new StringOption(Option.NO_SHORT_FORM,
-                                                                  "grepcolumns",
-                                                                  InclusionRule.NONE);
-  private final StringOption optionGrepProcedureColumns = new StringOption(Option.NO_SHORT_FORM,
-                                                                           "grepinout",
-                                                                           InclusionRule.NONE);
-  private final StringOption optionGrepDefinitions = new StringOption(Option.NO_SHORT_FORM,
-                                                                      "grepdef",
-                                                                      InclusionRule.NONE);
-  private final BooleanOption optionGrepInvertMatch = new BooleanOption('v',
-                                                                        "invert-match");
-
-  private final BooleanOption optionSortTables = new BooleanOption(Option.NO_SHORT_FORM,
-                                                                   "sorttables");
-  private final BooleanOption optionSortColumns = new BooleanOption(Option.NO_SHORT_FORM,
-                                                                    "sortcolumns");
-  private final BooleanOption optionSortInout = new BooleanOption(Option.NO_SHORT_FORM,
-                                                                  "sortinout");
-
   private final SchemaCrawlerOptions options;
 
-  SchemaCrawlerOptionsParser(final String[] args, final Config config)
+  SchemaCrawlerOptionsParser(final Config config)
   {
-    super(args);
+    super(new StringOption("infolevel", "standard"),
+          new StringOption("schemas", InclusionRule.NONE),
+          new StringOption("table_types",
+                           SchemaCrawlerOptions.DEFAULT_TABLE_TYPES),
+          new StringOption("tables", InclusionRule.ALL),
+          new StringOption("excludecolumns", InclusionRule.NONE),
+          new StringOption("procedures", InclusionRule.ALL),
+          new StringOption("excludeinout", InclusionRule.NONE),
+          new StringOption("grepcolumns", InclusionRule.NONE),
+          new StringOption("grepinout", InclusionRule.NONE),
+          new StringOption("grepdef", InclusionRule.NONE),
+          new BooleanOption('v', "invert-match"),
+          new BooleanOption("sorttables"),
+          new BooleanOption("sortcolumns"),
+          new BooleanOption("sortinout"));
     options = new SchemaCrawlerOptions(config);
   }
 
@@ -97,26 +65,11 @@ final class SchemaCrawlerOptionsParser
   protected SchemaCrawlerOptions getOptions()
     throws SchemaCrawlerException
   {
-    parse(optionInfoLevel,
-          optionSchemas,
-          optionTableTypes,
-          optionTables,
-          optionExcludeColumns,
-          optionProcedures,
-          optionExcludeProcedureColumns,
-          optionGrepColumns,
-          optionGrepProcedureColumns,
-          optionGrepDefinitions,
-          optionGrepInvertMatch,
-          optionSortTables,
-          optionSortColumns,
-          optionSortInout);
-
-    if (optionInfoLevel.isFound())
+    if (hasOptionValue("infolevel"))
     {
       try
       {
-        final String infoLevel = optionInfoLevel.getValue();
+        final String infoLevel = getStringValue("infolevel");
         final SchemaInfoLevel schemaInfoLevel = InfoLevel.valueOf(infoLevel)
           .getSchemaInfoLevel();
         options.setSchemaInfoLevel(schemaInfoLevel);
@@ -131,56 +84,52 @@ final class SchemaCrawlerOptionsParser
       throw new SchemaCrawlerException("No infolevel specified");
     }
 
-    if (optionSchemas.isFound())
+    if (hasOptionValue("schemas"))
     {
-      final InclusionRule schemaInclusionRule = new InclusionRule(optionSchemas.getValue(),
+      final InclusionRule schemaInclusionRule = new InclusionRule(getStringValue("schemas"),
                                                                   InclusionRule.NONE);
       options.setSchemaInclusionRule(schemaInclusionRule);
     }
 
-    if (optionTableTypes.isFound())
+    if (hasOptionValue("table_types"))
     {
-      options.setTableTypes(optionTableTypes.getValue());
+      options.setTableTypes(getStringValue("table_types"));
     }
 
-    if (optionTables.isFound())
+    if (hasOptionValue("tables"))
     {
-      final InclusionRule tableInclusionRule = new InclusionRule(optionTables.getValue(),
+      final InclusionRule tableInclusionRule = new InclusionRule(getStringValue("tables"),
                                                                  InclusionRule.NONE);
       options.setTableInclusionRule(tableInclusionRule);
     }
-    if (optionExcludeColumns.isFound())
+    if (hasOptionValue("excludecolumns"))
     {
       final InclusionRule columnInclusionRule = new InclusionRule(InclusionRule.ALL,
-                                                                  optionExcludeColumns
-                                                                    .getValue());
+                                                                  getStringValue("excludecolumns"));
       options.setColumnInclusionRule(columnInclusionRule);
     }
 
-    if (optionProcedures.isFound())
+    if (hasOptionValue("procedures"))
     {
-      final InclusionRule procedureInclusionRule = new InclusionRule(optionProcedures
-                                                                       .getValue(),
+      final InclusionRule procedureInclusionRule = new InclusionRule(getStringValue("procedures"),
                                                                      InclusionRule.NONE);
       options.setProcedureInclusionRule(procedureInclusionRule);
     }
-    if (optionExcludeProcedureColumns.isFound())
+    if (hasOptionValue("excludeinout"))
     {
       final InclusionRule procedureColumnInclusionRule = new InclusionRule(InclusionRule.ALL,
-                                                                           optionExcludeProcedureColumns
-                                                                             .getValue());
+                                                                           getStringValue("excludeinout"));
       options.setProcedureColumnInclusionRule(procedureColumnInclusionRule);
     }
 
-    if (optionGrepInvertMatch.isFound())
+    if (hasOptionValue("v"))
     {
-      options.setGrepInvertMatch(optionGrepInvertMatch.getValue());
+      options.setGrepInvertMatch(getBooleanValue("v"));
     }
 
-    if (optionGrepColumns.isFound())
+    if (hasOptionValue("grepcolumns"))
     {
-      final InclusionRule grepColumnInclusionRule = new InclusionRule(optionGrepColumns
-                                                                        .getValue(),
+      final InclusionRule grepColumnInclusionRule = new InclusionRule(getStringValue("grepcolumns"),
                                                                       InclusionRule.NONE);
       options.setGrepColumnInclusionRule(grepColumnInclusionRule);
     }
@@ -189,10 +138,9 @@ final class SchemaCrawlerOptionsParser
       options.setGrepColumnInclusionRule(null);
     }
 
-    if (optionGrepProcedureColumns.isFound())
+    if (hasOptionValue("grepinout"))
     {
-      final InclusionRule grepProcedureColumnInclusionRule = new InclusionRule(optionGrepProcedureColumns
-                                                                                 .getValue(),
+      final InclusionRule grepProcedureColumnInclusionRule = new InclusionRule(getStringValue("grepinout"),
                                                                                InclusionRule.NONE);
       options
         .setGrepProcedureColumnInclusionRule(grepProcedureColumnInclusionRule);
@@ -202,10 +150,9 @@ final class SchemaCrawlerOptionsParser
       options.setGrepProcedureColumnInclusionRule(null);
     }
 
-    if (optionGrepDefinitions.isFound())
+    if (hasOptionValue("grepdef"))
     {
-      final InclusionRule grepDefinitionInclusionRule = new InclusionRule(optionGrepDefinitions
-                                                                            .getValue(),
+      final InclusionRule grepDefinitionInclusionRule = new InclusionRule(getStringValue("grepdef"),
                                                                           InclusionRule.NONE);
       options.setGrepDefinitionInclusionRule(grepDefinitionInclusionRule);
     }
@@ -214,18 +161,19 @@ final class SchemaCrawlerOptionsParser
       options.setGrepDefinitionInclusionRule(null);
     }
 
-    if (optionSortColumns.isFound())
+    if (hasOptionValue("sorttables"))
     {
-      options.setAlphabeticalSortForTableColumns(optionSortColumns.getValue());
+      options.setAlphabeticalSortForTables(getBooleanValue("sorttables"));
     }
-    if (optionSortTables.isFound())
-    {
-      options.setAlphabeticalSortForTables(optionSortTables.getValue());
-    }
-    if (optionSortInout.isFound())
+    if (hasOptionValue("sortcolumns"))
     {
       options
-        .setAlphabeticalSortForProcedureColumns(optionSortInout.getValue());
+        .setAlphabeticalSortForTableColumns(getBooleanValue("sortcolumns"));
+    }
+    if (hasOptionValue("sortinout"))
+    {
+      options
+        .setAlphabeticalSortForProcedureColumns(getBooleanValue("sortinout"));
     }
 
     return options;

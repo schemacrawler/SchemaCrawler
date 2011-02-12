@@ -55,9 +55,9 @@ public class SchemaCrawlerMain
     }
     else
     {
-      final ApplicationOptionsParser applicationOptionsParser = new ApplicationOptionsParser(remainingArgs);
+      final ApplicationOptionsParser applicationOptionsParser = new ApplicationOptionsParser();
+      remainingArgs = applicationOptionsParser.parse(remainingArgs);
       applicationOptions = applicationOptionsParser.getOptions();
-      remainingArgs = applicationOptionsParser.getUnparsedArgs();
       showHelp = applicationOptions.isShowHelp();
     }
     applicationOptions.applyApplicationLogLevel();
