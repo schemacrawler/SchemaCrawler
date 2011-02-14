@@ -38,7 +38,6 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.TestUtility;
 import schemacrawler.tools.executable.Executable;
-import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.utility.TestDatabase;
 
 public class SpringIntegrationTest
@@ -93,8 +92,9 @@ public class SpringIntegrationTest
                                                 "PUBLIC.BOOKS");
     assertNotNull("Could not obtain schema", schema);
 
-    assertEquals("Unexpected number of tables in the schema", 6, schema
-      .getTables().length);
+    assertEquals("Unexpected number of tables in the schema",
+                 6,
+                 schema.getTables().length);
   }
 
   private void executeAndCheckForOutputFile(final String executableName,
@@ -107,13 +107,12 @@ public class SpringIntegrationTest
                                                     ".test");
     testOutputFile.delete();
 
-    executable.getOutputOptions().setOutputFileName(testOutputFile
-      .getAbsolutePath());
+    executable.getOutputOptions()
+      .setOutputFileName(testOutputFile.getAbsolutePath());
     executable.execute(testUtility.getConnection());
 
     failures.addAll(TestUtility.compareOutput(executableName + ".txt",
-                                              testOutputFile,
-                                              (OutputFormat) null));
+                                              testOutputFile));
   }
 
 }

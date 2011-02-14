@@ -59,6 +59,7 @@
     <property name="noHeader" value="true" />
     <property name="noInfo" value="true" />
     <property name="outputFormatValue" value="text" />
+    <property name="outputFileName" value="scOutput.txt" />
   </bean>
 
   <bean id="informationSchemaViews" class="schemacrawler.schemacrawler.InformationSchemaViews">

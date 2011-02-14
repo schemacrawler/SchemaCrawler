@@ -49,6 +49,10 @@ public class SchemaCrawlerCommandLineToolsTest
     throws Exception
   {
     final List<String> failures = new ArrayList<String>();
+
+    final File additionalProperties = TestUtility
+      .copyResourceToTempFile("/hsqldb.INFORMATION_SCHEMA.config.properties");
+
     for (final InfoLevel infoLevel: InfoLevel.values())
     {
       if (infoLevel == InfoLevel.unknown)
@@ -58,13 +62,6 @@ public class SchemaCrawlerCommandLineToolsTest
       for (final SchemaTextDetailType schemaTextDetailType: SchemaTextDetailType
         .values())
       {
-        final File additionalProperties = File
-          .createTempFile("hsqldb.INFORMATION_SCHEMA.config", ".properties");
-        final Writer writer = new BufferedWriter(new FileWriter(additionalProperties));
-        final Properties properties = new Properties();
-        properties.load(SchemaCrawlerOutputTest.class
-          .getResourceAsStream("/hsqldb.INFORMATION_SCHEMA.config.properties"));
-        properties.store(writer, this.getClass().getName());
 
         final String referenceFile = schemaTextDetailType + "_" + infoLevel
                                      + ".txt";

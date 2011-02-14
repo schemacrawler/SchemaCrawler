@@ -55,7 +55,7 @@ public class SchemaCrawlerSpringCommandLine
     if (remainingArgs.length > 0)
     {
       throw new SchemaCrawlerException("Too many command line arguments provided: "
-                                       + ObjectToString.toString(args));
+                                       + ObjectToString.toString(remainingArgs));
     }
   }
 
