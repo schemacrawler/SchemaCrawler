@@ -114,15 +114,14 @@ final class ConfigConnectionOptionsParser
 
     final ConnectionOptions connectionOptions = new DatabaseConfigConnectionOptions(databaseConnectionConfig);
 
-    if (hasOptionValue("user") && !databaseConnectionConfig.containsKey("user"))
+    if (!databaseConnectionConfig.containsKey("user"))
     {
-      connectionOptions.setUser(getStringValue("user"));
+      setUser(connectionOptions);
     }
 
-    if (hasOptionValue("password")
-        && !databaseConnectionConfig.containsKey("password"))
+    if (!databaseConnectionConfig.containsKey("password"))
     {
-      connectionOptions.setPassword(getStringValue("password"));
+      setPassword(connectionOptions);
     }
 
     return connectionOptions;

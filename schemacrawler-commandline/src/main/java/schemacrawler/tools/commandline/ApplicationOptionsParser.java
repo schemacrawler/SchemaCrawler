@@ -44,7 +44,7 @@ public final class ApplicationOptionsParser
   }
 
   @Override
-  protected ApplicationOptions getOptions()
+  public ApplicationOptions getOptions()
   {
     final ApplicationOptions options = new ApplicationOptions();
 

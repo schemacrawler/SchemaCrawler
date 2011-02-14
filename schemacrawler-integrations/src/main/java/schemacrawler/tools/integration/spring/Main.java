@@ -49,10 +49,10 @@ public final class Main
     throws Exception
   {
     String[] remainingArgs = args;
-    final ApplicationOptionsParser applicationOptionsParser = new ApplicationOptionsParser(remainingArgs);
+    final ApplicationOptionsParser applicationOptionsParser = new ApplicationOptionsParser();
+    remainingArgs = applicationOptionsParser.parse(remainingArgs);
     final ApplicationOptions applicationOptions = applicationOptionsParser
       .getOptions();
-    remainingArgs = applicationOptionsParser.getUnparsedArgs();
 
     if (applicationOptions.isShowHelp())
     {
