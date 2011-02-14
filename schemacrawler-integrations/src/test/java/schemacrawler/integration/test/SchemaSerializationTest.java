@@ -77,8 +77,9 @@ public class SchemaSerializationTest
 
     final Schema schema = database.getSchema("PUBLIC.BOOKS");
     assertNotNull("Could not obtain schema", schema);
-    assertEquals("Unexpected number of tables in the schema", 6, schema
-      .getTables().length);
+    assertEquals("Unexpected number of tables in the schema",
+                 6,
+                 schema.getTables().length);
 
     XmlDatabase xmlDatabase;
     StringWriter writer;

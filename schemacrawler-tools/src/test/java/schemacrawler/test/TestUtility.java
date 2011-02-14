@@ -22,10 +22,18 @@ package schemacrawler.test;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.Reader;
+import java.nio.ByteBuffer;
+import java.nio.channels.Channels;
+import java.nio.channels.ReadableByteChannel;
+import java.nio.channels.WritableByteChannel;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -34,10 +42,18 @@ import org.custommonkey.xmlunit.Validator;
 import org.junit.Ignore;
 
 import schemacrawler.tools.options.OutputFormat;
+import sf.util.Utility;
 
 @Ignore
 public final class TestUtility
 {
+
+  public static List<String> compareOutput(final String referenceFile,
+                                           final File testOutputFile)
+    throws Exception
+  {
+    return compareOutput(referenceFile, testOutputFile, null);
+  }
 
   public static List<String> compareOutput(final String referenceFile,
                                            final File testOutputFile,
@@ -121,8 +137,20 @@ public final class TestUtility
                + testOutputFile.getAbsolutePath());
       }
     }
+    else
+    {
+      testOutputFile.delete();
+    }
 
     return failures;
+  }
+
+  public static File copyResourceToTempFile(final String resource)
+    throws IOException
+  {
+    final InputStream resourceStream = Utility.class
+      .getResourceAsStream(resource);
+    return writeToTempFile(resourceStream);
   }
 
   private static boolean contentEquals(final Reader expectedInputReader,
@@ -180,6 +208,43 @@ public final class TestUtility
       expectedBufferedReader.close();
       actualBufferedReader.close();
     }
+  }
+
+  private static void fastChannelCopy(final ReadableByteChannel src,
+                                      final WritableByteChannel dest)
+    throws IOException
+  {
+    final ByteBuffer buffer = ByteBuffer.allocateDirect(16 * 1024);
+    while (src.read(buffer) != -1)
+    {
+      // prepare the buffer to be drained
+      buffer.flip();
+      // write to the channel, may block
+      dest.write(buffer);
+      // If partial transfer, shift remainder down
+      // If buffer is empty, same as doing clear()
+      buffer.compact();
+    }
+    // EOF will leave buffer in fill state
+    buffer.flip();
+    // make sure the buffer is fully drained.
+    while (buffer.hasRemaining())
+    {
+      dest.write(buffer);
+    }
+  }
+
+  private static File writeToTempFile(final InputStream resourceStream)
+    throws IOException, FileNotFoundException
+  {
+    final File tempFile = File.createTempFile("SchemaCrawler", ".dat");
+    final OutputStream tempFileStream = new FileOutputStream(tempFile);
+    fastChannelCopy(Channels.newChannel(resourceStream),
+                    Channels.newChannel(tempFileStream));
+    tempFileStream.close();
+    resourceStream.close();
+    tempFile.deleteOnExit();
+    return tempFile;
   }
 
   private TestUtility()
