@@ -48,9 +48,9 @@ public class SchemaCrawlerSpringCommandLine
   public SchemaCrawlerSpringCommandLine(final String[] args)
     throws SchemaCrawlerException
   {
-    final SpringOptionsParser springOptionsParser = new SpringOptionsParser(args);
+    final SpringOptionsParser springOptionsParser = new SpringOptionsParser();
+    final String[] remainingArgs = springOptionsParser.parse(args);
     springOptions = springOptionsParser.getOptions();
-    final String[] remainingArgs = springOptionsParser.getUnparsedArgs();
 
     if (remainingArgs.length > 0)
     {

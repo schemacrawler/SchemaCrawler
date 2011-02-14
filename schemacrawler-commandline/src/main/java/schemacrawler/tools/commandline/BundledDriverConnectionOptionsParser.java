@@ -51,7 +51,8 @@ final class BundledDriverConnectionOptionsParser
     throws SchemaCrawlerException
   {
     final DatabaseConfigConnectionOptions connectionOptions = new DatabaseConfigConnectionOptions(config);
-    setCredentials(connectionOptions);
+    setUser(connectionOptions);
+    setPassword(connectionOptions);
 
     if (hasOptionValue("host"))
     {

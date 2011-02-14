@@ -21,6 +21,11 @@
 package schemacrawler.tools.commandline;
 
 
+import java.io.Console;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import schemacrawler.Version;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.ConnectionOptions;
 import sf.util.clparser.StringOption;
@@ -34,7 +39,10 @@ abstract class BaseDatabaseConnectionOptionsParser
   extends BaseOptionsParser<ConnectionOptions>
 {
 
-  final Config config;
+  private static final Logger LOGGER = Logger
+    .getLogger(BaseDatabaseConnectionOptionsParser.class.getName());
+
+  protected final Config config;
 
   BaseDatabaseConnectionOptionsParser(final Config config)
   {
@@ -42,9 +50,45 @@ abstract class BaseDatabaseConnectionOptionsParser
     this.config = config;
   }
 
-  protected final void setCredentials(final ConnectionOptions connectionOptions)
+  private String promptForPassword()
+  {
+    final Console console = System.console();
+    if (console == null)
+    {
+      LOGGER.log(Level.WARNING, "System console is not available");
+      return null;
+    }
+
+    try
+    {
+      console.format(Version.about());
+      final char[] passwordChars = console.readPassword("password: ");
+      return new String(passwordChars);
+    }
+    catch (final Exception e)
+    {
+      LOGGER.log(Level.WARNING, "System console is not available", e);
+      return null;
+    }
+  }
+
+  protected final void setPassword(final ConnectionOptions connectionOptions)
+  {
+    final String password;
+    if (hasOptionValue("password"))
+    {
+      password = getStringValue("password");
+    }
+    else
+    {
+      password = promptForPassword();
+    }
+    connectionOptions.setPassword(password);
+  }
+
+  protected final void setUser(final ConnectionOptions connectionOptions)
   {
     connectionOptions.setUser(getStringValue("user"));
-    connectionOptions.setPassword(getStringValue("password"));
   }
+
 }

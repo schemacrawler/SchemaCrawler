@@ -61,7 +61,8 @@ final class CommandLineConnectionOptionsParser
       {
         connectionOptions = new DatabaseConnectionOptions(jdbcDriverClassName,
                                                           connectionUrl);
-        setCredentials(connectionOptions);
+        setUser(connectionOptions);
+        setPassword(connectionOptions);
       }
     }
     else

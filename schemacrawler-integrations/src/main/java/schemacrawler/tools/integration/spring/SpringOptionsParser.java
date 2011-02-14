@@ -22,7 +22,7 @@ package schemacrawler.tools.integration.spring;
 
 
 import schemacrawler.tools.commandline.BaseOptionsParser;
-import sf.util.CommandLineParser.StringOption;
+import sf.util.clparser.StringOption;
 
 /**
  * Options for the command line.
@@ -33,36 +33,26 @@ final class SpringOptionsParser
   extends BaseOptionsParser<SpringOptions>
 {
 
-  private final StringOption optionContextFile = new StringOption('c',
-                                                                  "context-file",
-                                                                  "schemacrawler.context.xml");
-  private final StringOption optionExecutable = new StringOption('x',
-                                                                 "executable",
-                                                                 "executable");
-  private final StringOption optionDataSourceName = new StringOption('d',
-                                                                     "datasource",
-                                                                     "datasource");
-
   /**
    * Parses the command line into options.
    * 
    * @param args
    *        Command-line arguments
    */
-  SpringOptionsParser(final String[] args)
+  SpringOptionsParser()
   {
-    super(args);
+    super(new StringOption('c', "context-file", "schemacrawler.context.xml"),
+          new StringOption('x', "executable", "executable"),
+          new StringOption('d', "datasource", "datasource"));
   }
 
   @Override
   protected SpringOptions getOptions()
   {
-    parse(optionContextFile, optionExecutable, optionDataSourceName);
-
     final SpringOptions options = new SpringOptions();
-    options.setContextFileName(optionContextFile.getValue());
-    options.setExecutableName(optionExecutable.getValue());
-    options.setDataSourceName(optionDataSourceName.getValue());
+    options.setContextFileName(getStringValue("c"));
+    options.setExecutableName(getStringValue("x"));
+    options.setDataSourceName(getStringValue("d"));
 
     return options;
   }
