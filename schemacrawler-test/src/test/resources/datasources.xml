@@ -1,43 +1,39 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<!--
-  /* * SchemaCrawler * Copyright (c) 2000-2011, Sualeh Fatehi. * * Licensed under the Apache License, Version 2.0 (the
-  "License"); * you may not use this file except in compliance with the License. * You may obtain a copy of the
-  License at * * http://www.apache.org/licenses/LICENSE-2.0 * * Unless required by applicable law or agreed to in
-  writing, software * distributed under the License is distributed on an "AS IS" BASIS, * WITHOUT WARRANTIES OR
-  CONDITIONS OF ANY KIND, either express or implied. * See the License for the specific language governing permissions
-  and * limitations under the License. */
--->
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="
+  xsi:schemaLocation="
        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 
   <bean id="host" class="java.lang.String">
     <constructor-arg type="java.lang.String">
-      <value>172.17.30.50</value>
+      <value>10.0.0.2</value>
     </constructor-arg>
   </bean>
-
+  
   <bean id="MicrosoftSQLServer" class="schemacrawler.schemacrawler.DatabaseConfigConnectionOptions">
-    <constructor-arg type="java.lang.String">
-      <value>/schemacrawler-sqlserver.config.properties</value>
+    <constructor-arg type="java.util.Map">
+      <bean class="schemacrawler.test.ConfigLoader" factory-method="configFromResource">
+        <constructor-arg value="/schemacrawler-sqlserver.config.properties" />
+      </bean>
     </constructor-arg>
-    <property name="host" ref="host"/>
+    <property name="host" ref="host" />
     <property name="database">
-      <value>schemacrawler</value>
+      <value>books</value>
     </property>
     <property name="user">
-      <value>schemacrawler</value>
+      <value>books</value>
     </property>
     <property name="password">
-      <value>schemacrawler</value>
+      <value>books</value>
     </property>
   </bean>
 
   <bean id="MySQL" class="schemacrawler.schemacrawler.DatabaseConfigConnectionOptions">
-    <constructor-arg type="java.lang.String">
-      <value>/schemacrawler-mysql.config.properties</value>
+    <constructor-arg type="java.util.Map">
+      <bean class="schemacrawler.test.ConfigLoader" factory-method="configFromResource">
+        <constructor-arg value="/schemacrawler-mysql.config.properties" />
+      </bean>
     </constructor-arg>
-    <property name="host" ref="host"/>
+    <property name="host" ref="host" />
     <property name="database">
       <value>schemacrawler</value>
     </property>
@@ -50,10 +46,12 @@
   </bean>
 
   <bean id="Oracle" class="schemacrawler.schemacrawler.DatabaseConfigConnectionOptions">
-    <constructor-arg type="java.lang.String">
-      <value>/schemacrawler-oracle.config.properties</value>
+    <constructor-arg type="java.util.Map">
+      <bean class="schemacrawler.test.ConfigLoader" factory-method="configFromResource">
+        <constructor-arg value="/schemacrawler-oracle.config.properties" />
+      </bean>
     </constructor-arg>
-    <property name="host" ref="host"/>
+    <property name="host" ref="host" />
     <property name="database">
       <value>XE</value>
     </property>
@@ -66,10 +64,12 @@
   </bean>
 
   <bean id="PostgreSQL" class="schemacrawler.schemacrawler.DatabaseConfigConnectionOptions">
-    <constructor-arg type="java.lang.String">
-      <value>/schemacrawler-postgresql.config.properties</value>
+    <constructor-arg type="java.util.Map">
+      <bean class="schemacrawler.test.ConfigLoader" factory-method="configFromResource">
+        <constructor-arg value="/schemacrawler-postgresql.config.properties" />
+      </bean>
     </constructor-arg>
-    <property name="host" ref="host"/>
+    <property name="host" ref="host" />
     <property name="database">
       <value>schemacrawler</value>
     </property>
@@ -82,8 +82,10 @@
   </bean>
 
   <bean id="SQLite" class="schemacrawler.schemacrawler.DatabaseConfigConnectionOptions">
-    <constructor-arg type="java.lang.String">
-      <value>/schemacrawler-sqlite.config.properties</value>
+    <constructor-arg type="java.util.Map">
+      <bean class="schemacrawler.test.ConfigLoader" factory-method="configFromResource">
+        <constructor-arg value="/schemacrawler-sqlite.config.properties" />
+      </bean>
     </constructor-arg>
     <property name="database">
       <value>C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-sqlite\src\test\resources\sc.db
@@ -96,5 +98,24 @@
       <value>schemacrawler</value>
     </property>
   </bean>
+
+  <bean id="Derby" class="schemacrawler.schemacrawler.DatabaseConfigConnectionOptions">
+    <constructor-arg type="java.util.Map">
+      <bean class="schemacrawler.test.ConfigLoader" factory-method="configFromResource">
+        <constructor-arg value="/schemacrawler-derby.config.properties" />
+      </bean>
+    </constructor-arg>
+    <property name="host" ref="host" />
+    <property name="database">
+      <value>schemacrawler</value>
+    </property>
+    <property name="user">
+      <value>schemacrawler</value>
+    </property>
+    <property name="password">
+      <value>schemacrawler</value>
+    </property>
+  </bean>
+
 
 </beans>
