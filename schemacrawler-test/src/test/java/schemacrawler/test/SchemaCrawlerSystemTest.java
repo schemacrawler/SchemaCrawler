@@ -41,15 +41,15 @@ import schemacrawler.utility.SchemaCrawlerUtility;
 public class SchemaCrawlerSystemTest
 {
 
-  private final ApplicationContext appContext = new ClassPathXmlApplicationContext("context.xml");
+  private final ApplicationContext appContext = new ClassPathXmlApplicationContext("datasources.xml");
+  private final String[] dataSources = {
+      "MicrosoftSQLServer", "MySQL", "Oracle", "PostgreSQL", "SQLite",
+  };
 
   @Test
   public void schemaCounts()
     throws Exception
   {
-    final String[] dataSources = {
-        "MicrosoftSQLServer", "MySQL", "Oracle", "PostgreSQL", "SQLite",
-    };
     final int[] schemaCounts = {
         52, 4, 14, 5, 1,
     };
@@ -80,7 +80,7 @@ public class SchemaCrawlerSystemTest
     Schema schema;
 
     dataSourceName = "MicrosoftSQLServer";
-    schema = retrieveSchema(dataSourceName, "schemacrawler.dbo");
+    schema = retrieveSchema(dataSourceName, "books.dbo");
     tables(dataSourceName, schema);
     counts(dataSourceName, schema);
 
@@ -163,20 +163,20 @@ public class SchemaCrawlerSystemTest
                                  table.getFullName()),
                    tableColumnCounts[tableIdx],
                    table.getColumns().length);
-      assertEquals(String
-        .format("%s table %s check constraints count does not match",
-                dataSourceName,
-                table.getFullName()), checkConstraints[tableIdx], table
-        .getCheckConstraints().length);
+      assertEquals(String.format("%s table %s check constraints count does not match",
+                                 dataSourceName,
+                                 table.getFullName()),
+                   checkConstraints[tableIdx],
+                   table.getCheckConstraints().length);
       // assertEquals(String.format("%s table %s index count does not match",dataSourceName,
       // table
       // .getFullName()), indexCounts[tableIdx],
       // table.getIndices().length);
-      assertEquals(String
-        .format("%s table %s foreign key count does not match",
-                dataSourceName,
-                table.getFullName()), fkCounts[tableIdx], table
-        .getForeignKeys().length);
+      assertEquals(String.format("%s table %s foreign key count does not match",
+                                 dataSourceName,
+                                 table.getFullName()),
+                   fkCounts[tableIdx],
+                   table.getForeignKeys().length);
     }
   }
 
