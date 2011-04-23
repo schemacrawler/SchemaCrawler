@@ -16,6 +16,19 @@
     <logo name="Maven" href="http://maven.apache.org/" img="http://maven.apache.org/images/logos/maven-button-1.png" />
   </poweredBy>
   <body>
+    <head>
+      <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-22913512-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+      </script>
+    </head>
     <links>
       <item name="Donations" href="http://sourceforge.net/donate/index.php?group_id=148383" />
       <item name="Download" href="http://sourceforge.net/projects/schemacrawler/files/" />
@@ -28,12 +41,12 @@
       <item name="Database-specific Distributions" href="bundled.html" />
       <item name="Who Uses" href="who-uses.html" />
     </menu>
-    <menu name="Special Features">      
+    <menu name="Special Features">
       <item name="SchemaCrawler Grep" href="features/schemacrawler_grep.html" />
       <item name="Database Diagramming" href="features/diagramming.html" />
       <item name="Database Scripting" href="features/scripting.html" />
       <item name="Schema Lint" href="features/lint.html" />
-      <item name="Using INFORMATION_SCHEMA Views" href="features/INFORMATION_SCHEMA.html" />      
+      <item name="Using INFORMATION_SCHEMA Views" href="features/INFORMATION_SCHEMA.html" />
     </menu>
     <menu name="Project Pages">
       <item name="Donations" href="http://sourceforge.net/donate/index.php?group_id=148383" />
