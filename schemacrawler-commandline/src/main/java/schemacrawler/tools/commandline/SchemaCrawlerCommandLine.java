@@ -90,6 +90,10 @@ public final class SchemaCrawlerCommandLine
 
     final CommandParser commandParser = new CommandParser();
     remainingArgs = commandParser.parse(remainingArgs);
+    if (!commandParser.hasOptions())
+    {
+      throw new SchemaCrawlerException("No command specified");
+    }
     command = commandParser.getOptions().toString();
 
     final OutputOptionsParser outputOptionsParser = new OutputOptionsParser();
