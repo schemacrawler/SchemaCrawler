@@ -6,7 +6,7 @@ digraph "SchemaCrawler_Diagram" {
     rankdir="RL"
     fontname="Helvetica"
     fontsize="8"
-    size="8.6,11"
+    size="8.5,11"
     dpi="300"
     packmode="node"
     overlap="false"
