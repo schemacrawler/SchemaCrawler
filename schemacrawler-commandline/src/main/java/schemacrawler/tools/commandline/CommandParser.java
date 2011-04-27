@@ -23,6 +23,7 @@ package schemacrawler.tools.commandline;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.Command;
+import sf.util.Utility;
 import sf.util.clparser.StringOption;
 
 /**
@@ -43,7 +44,7 @@ final class CommandParser
   protected Command getOptions()
     throws SchemaCrawlerException
   {
-    if (hasOptionValue("command"))
+    if (hasOptions())
     {
       return new Command(getStringValue("command"));
     }
@@ -51,6 +52,22 @@ final class CommandParser
     {
       throw new SchemaCrawlerException("No command specified");
     }
+  }
+
+  protected boolean hasOptions()
+    throws SchemaCrawlerException
+  {
+    boolean hasOptions;
+    if (hasOptionValue("command")
+        && !Utility.isBlank(getStringValue("command")))
+    {
+      hasOptions = true;
+    }
+    else
+    {
+      hasOptions = false;
+    }
+    return hasOptions;
   }
 
 }

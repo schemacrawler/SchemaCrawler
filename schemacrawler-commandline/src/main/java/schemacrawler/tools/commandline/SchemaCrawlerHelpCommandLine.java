@@ -86,16 +86,17 @@ final class SchemaCrawlerHelpCommandLine
 
     hideConfig = !Utility.isBlank(configResource);
 
-    if (args.length == 0)
-    {
-      command = null;
-    }
-    else
+    String command = null;
+    if (args.length != 0)
     {
       final CommandParser commandParser = new CommandParser();
       commandParser.parse(args);
-      command = commandParser.getOptions().toString();
+      if (commandParser.hasOptions())
+      {
+        command = commandParser.getOptions().toString();
+      }
     }
+    this.command = command;
   }
 
   /**
