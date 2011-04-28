@@ -62,8 +62,8 @@ public final class FreeMarkerRenderer
    * {@inheritDoc}
    */
   @Override
-  public final void executeOn(final Database database,
-                              final Connection connection)
+  protected final void executeOn(final Database database,
+                                 final Connection connection)
     throws Exception
   {
     // Set the file path, in case the template is a file template
