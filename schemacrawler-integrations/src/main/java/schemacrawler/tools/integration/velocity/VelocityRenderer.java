@@ -73,8 +73,8 @@ public final class VelocityRenderer
    * {@inheritDoc}
    */
   @Override
-  public final void executeOn(final Database database,
-                              final Connection connection)
+  protected final void executeOn(final Database database,
+                                 final Connection connection)
     throws Exception
   {
     // Set the file path, in case the template is a file template
@@ -115,8 +115,8 @@ public final class VelocityRenderer
                                       "path",
                                       templatePath);
 
-    LOGGER.log(Level.INFO, "Velocity configuration properties - "
-                           + p.toString());
+    LOGGER.log(Level.INFO,
+               "Velocity configuration properties - " + p.toString());
 
     // Initialize the engine
     ve.init(p);

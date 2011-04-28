@@ -66,8 +66,8 @@ public final class ScriptExecutable
    * {@inheritDoc}
    */
   @Override
-  public final void executeOn(final Database database,
-                              final Connection connection)
+  protected final void executeOn(final Database database,
+                                 final Connection connection)
     throws Exception
   {
     final String scriptFileName = outputOptions.getOutputFormatValue();
@@ -105,9 +105,11 @@ public final class ScriptExecutable
     for (final ScriptEngineFactory engineFactory: engineFactories)
     {
       LOGGER.log(Level.FINER, String
-        .format("Evaluating script engine: %s %s (%s %s)", engineFactory
-          .getEngineName(), engineFactory.getEngineVersion(), engineFactory
-          .getLanguageName(), engineFactory.getLanguageVersion()));
+        .format("Evaluating script engine: %s %s (%s %s)",
+                engineFactory.getEngineName(),
+                engineFactory.getEngineVersion(),
+                engineFactory.getLanguageName(),
+                engineFactory.getLanguageVersion()));
       final List<String> extensions = engineFactory.getExtensions();
       if (extensions.contains(FileUtility.getFileExtension(scriptFile)))
       {
