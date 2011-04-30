@@ -90,7 +90,7 @@ public final class OperationExecutable
 
   }
 
-  protected OperationHandler getHandler(final Connection connection)
+  private OperationHandler getHandler(final Connection connection)
     throws SchemaCrawlerException
   {
     final OperationHandler handler;
