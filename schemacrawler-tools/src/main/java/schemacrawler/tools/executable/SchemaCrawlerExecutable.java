@@ -1,12 +1,9 @@
 package schemacrawler.tools.executable;
 
 
-import java.lang.reflect.Constructor;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import schemacrawler.schema.Database;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -15,9 +12,6 @@ import schemacrawler.tools.options.OutputOptions;
 public class SchemaCrawlerExecutable
   extends BaseExecutable
 {
-
-  private static final Logger LOGGER = Logger
-    .getLogger(SchemaCrawlerExecutable.class.getName());
 
   public SchemaCrawlerExecutable(final String commands)
   {
@@ -37,28 +31,8 @@ public class SchemaCrawlerExecutable
     final List<Executable> executables = new ArrayList<Executable>();
     for (final String command: commands)
     {
-      final String commandExecutableClassName = commandRegistry
-        .lookupCommandExecutableClassName(command);
-      final Class<? extends Executable> commandExecutableClass = (Class<? extends Executable>) Class
-        .forName(commandExecutableClassName);
-
-      Executable executable;
-      try
-      {
-        executable = commandExecutableClass.newInstance();
-      }
-      catch (final Exception e)
-      {
-        LOGGER.log(Level.FINE, "Could not instantiate "
-                               + commandExecutableClassName
-                               + " using the default constructor", e);
-        final Constructor<? extends Executable> constructor = commandExecutableClass
-          .getConstructor(new Class[] {
-            String.class
-          });
-        executable = (Executable) constructor.newInstance(command);
-      }
-
+      final Executable executable = commandRegistry
+        .instantiateExecutableForCommand(command);
       executables.add(executable);
     }
 

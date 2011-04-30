@@ -22,6 +22,7 @@ package schemacrawler.tools.executable;
 
 
 import java.io.IOException;
+import java.lang.reflect.Constructor;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Collections;
@@ -104,6 +105,57 @@ public final class CommandRegistry
     commandRegistry = loadCommandRegistry();
   }
 
+  public Executable instantiateExecutableForCommand(final String command)
+    throws SchemaCrawlerException
+  {
+    final String commandExecutableClassName = lookupExecutableClassName(command);
+    if (commandExecutableClassName == null)
+    {
+      throw new SchemaCrawlerException("No executable found for command '"
+                                       + command + "'");
+    }
+
+    Class<? extends Executable> commandExecutableClass;
+    try
+    {
+      commandExecutableClass = (Class<? extends Executable>) Class
+        .forName(commandExecutableClassName);
+    }
+    catch (final ClassNotFoundException e)
+    {
+      throw new SchemaCrawlerException("Could not load class "
+                                       + commandExecutableClassName, e);
+    }
+
+    Executable executable;
+    try
+    {
+      executable = commandExecutableClass.newInstance();
+    }
+    catch (final Exception e)
+    {
+      LOGGER.log(Level.FINE, "Could not instantiate "
+                             + commandExecutableClassName
+                             + " using the default constructor", e);
+      try
+      {
+        final Constructor<? extends Executable> constructor = commandExecutableClass
+          .getConstructor(new Class[] {
+            String.class
+          });
+        executable = constructor.newInstance(command);
+      }
+      catch (final Exception e1)
+      {
+        throw new SchemaCrawlerException("Could not instantiate executable for command '"
+                                             + command + "'",
+                                         e1);
+      }
+    }
+
+    return executable;
+  }
+
   public String[] lookupAvailableCommands()
   {
     final Set<String> availableCommandsList = commandRegistry.keySet();
@@ -114,7 +166,7 @@ public final class CommandRegistry
     return availableCommands;
   }
 
-  public String lookupCommandExecutableClassName(final String command)
+  public String lookupExecutableClassName(final String command)
   {
     final String commandExecutableClassName;
     if (commandRegistry.containsKey(command))
