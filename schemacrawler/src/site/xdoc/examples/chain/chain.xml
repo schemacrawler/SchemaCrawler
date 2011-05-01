@@ -1,0 +1,60 @@
+<!DOCTYPE document PUBLIC "-//Apache Software Foundation//DTD XDOC 1.0//EN"
+  "http://maven.apache.org/dtd/xdoc_1_0.dtd">
+<document>
+  <properties>
+    <title>SchemaCrawler - JavaScript Example</title>
+    <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
+  </properties>
+  <body>
+    <section name="SchemaCrawler - Chain Example">
+      <subsection name="Description">
+        <p>SchemaCrawler allows scripting with database
+          metadata, using JavaScript. This example shows how to "chain" or run multiple SchemaCrawler commands.
+        </p>
+      </subsection>
+      <subsection name="How to Run">
+        <ol type="1">
+          <li>
+            Make sure that the Java executable is on your path. (J2SE
+            6 or better is required.)
+          </li>
+          <li>
+            Copy the
+            <span class="code">schemacrawler.config.properties
+            </span>
+            file into the
+            <span class="code">javascript</span>
+            example directory.
+          </li>
+          <li>Start the database server by running
+            StartDatabaseServer script from the
+            distribution directory.
+          </li>
+          <li>
+            Start a command shell in the
+            <span class="code">chain</span>
+            example directory.
+          </li>
+          <li>
+            Run
+            <span class="code">chain.cmd chain.js
+            </span>
+            (or
+            <span class="code">chain.sh chain.js
+            </span>
+            on
+            Unix).
+          </li>
+        </ol>
+      </subsection>
+      <subsection name="How to Experiment">
+        <ol>
+          <li>
+            Try modifying the JavaScript in the *.js files
+            to run different SchemaCrawler commands.
+          </li>
+        </ol>
+      </subsection>
+    </section>
+  </body>
+</document>
