@@ -136,7 +136,7 @@ public final class CommandRegistry
     {
       LOGGER.log(Level.FINE, "Could not instantiate "
                              + commandExecutableClassName
-                             + " using the default constructor", e);
+                             + " using the default constructor");
       try
       {
         final Constructor<? extends Executable> constructor = commandExecutableClass

@@ -70,6 +70,12 @@ public final class ScriptExecutable
                                  final Connection connection)
     throws Exception
   {
+
+    final CommandsChain chain = new CommandsChain(schemaCrawlerOptions,
+                                                  additionalConfiguration,
+                                                  database,
+                                                  connection);
+
     final String scriptFileName = outputOptions.getOutputFormatValue();
     if (Utility.isBlank(scriptFileName))
     {
@@ -153,6 +159,7 @@ public final class ScriptExecutable
     scriptEngine.getContext().setWriter(writer);
     scriptEngine.put("database", database);
     scriptEngine.put("connection", connection);
+    scriptEngine.put("chain", chain);
 
     // Evaluate the script
     scriptEngine.eval(reader);
