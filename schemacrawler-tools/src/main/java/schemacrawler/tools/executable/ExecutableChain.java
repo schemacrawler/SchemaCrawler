@@ -43,7 +43,7 @@ public abstract class ExecutableChain
     executables = new ArrayList<Executable>();
   }
 
-  public Executable addNext(final Executable executable)
+  public final Executable addNext(final Executable executable)
   {
     executables.add(executable);
     return executable;
