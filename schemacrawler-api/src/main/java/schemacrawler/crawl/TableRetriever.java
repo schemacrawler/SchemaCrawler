@@ -166,8 +166,6 @@ final class TableRetriever
     throws SQLException
   {
 
-    getRetrieverConnection().getInformationSchemaViews();
-
     MetadataResultSet results = null;
     try
     {
