@@ -2,7 +2,7 @@
   "http://maven.apache.org/dtd/xdoc_1_0.dtd">
 <document>
   <properties>
-    <title>SchemaCrawler - JavaScript Example</title>
+    <title>SchemaCrawler - Chaining Commands Example</title>
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
@@ -23,7 +23,7 @@
             <span class="code">schemacrawler.config.properties
             </span>
             file into the
-            <span class="code">javascript</span>
+            <span class="code">chain</span>
             example directory.
           </li>
           <li>Start the database server by running
