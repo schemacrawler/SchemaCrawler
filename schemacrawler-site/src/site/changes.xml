@@ -5,6 +5,11 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+    <release version="8.6" date="2011-05-08">
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        New feature to chain, or run multiple SchemaCrawler commands using JavaScript.
+      ]]></action>
+    </release>  
     <release version="8.5.1" date="2011-01-28">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Re-organized command line code, including grep command line.
