@@ -147,7 +147,7 @@ public class SchemaCrawlerOutputTest
         executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
         executable.setOutputOptions(outputOptions);
         executable.setAdditionalConfiguration(queriesConfig);
-        executable.execute(connectionOptions.createConnection());
+        executable.execute(connectionOptions.getConnection());
 
         failures.addAll(TestUtility.compareOutput(COMPOSITE_OUTPUT
                                                       + referenceFile,
@@ -202,7 +202,7 @@ public class SchemaCrawlerOutputTest
           .name());
         executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
         executable.setOutputOptions(outputOptions);
-        executable.execute(connectionOptions.createConnection());
+        executable.execute(connectionOptions.getConnection());
 
         failures.addAll(TestUtility.compareOutput(INFO_LEVEL_OUTPUT
                                                       + referenceFile,

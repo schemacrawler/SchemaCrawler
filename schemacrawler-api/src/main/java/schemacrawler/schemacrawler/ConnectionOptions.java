@@ -1,21 +1,17 @@
 package schemacrawler.schemacrawler;
 
 
-import java.sql.Connection;
 import java.sql.Driver;
 
-public interface ConnectionOptions
-  extends Options
-{
+import javax.sql.DataSource;
 
-  Connection createConnection()
-    throws SchemaCrawlerException;
+public interface ConnectionOptions
+  extends Options, DataSource
+{
 
   String getConnectionUrl();
 
   Driver getJdbcDriver();
-
-  String getPassword();
 
   String getUser();
 

@@ -1,3 +1,7 @@
+import java.sql.Connection;
+
+import javax.sql.DataSource;
+
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Database;
 import schemacrawler.schema.Schema;
@@ -16,25 +20,25 @@ public final class ApiExample
     throws Exception
   {
     // Create a database connection
-    final DatabaseConnectionOptions connectionOptions = new DatabaseConnectionOptions("org.hsqldb.jdbcDriver",
-                                                                                      "jdbc:hsqldb:hsql://localhost:9001/schemacrawler");
-    connectionOptions.setUser("sa");
-    connectionOptions.setPassword("");
+    final DataSource dataSource = new DatabaseConnectionOptions("org.hsqldb.jdbcDriver",
+                                                                "jdbc:hsqldb:hsql://localhost:9001/schemacrawler");
+    final Connection connection = dataSource.getConnection("sa", "");
 
     // Create the options
     final SchemaCrawlerOptions options = new SchemaCrawlerOptions();
     // Set what details are required in the schema - this affects the
     // time taken to crawl the schema
     options.setSchemaInfoLevel(SchemaInfoLevel.standard());
-    options.setProcedureInclusionRule(new InclusionRule(InclusionRule.NONE, InclusionRule.ALL));
+    options.setProcedureInclusionRule(new InclusionRule(InclusionRule.NONE,
+                                                        InclusionRule.ALL));
     options.setSchemaInclusionRule(new InclusionRule("PUBLIC.BOOKS",
                                                      InclusionRule.NONE));
     // Sorting options
     options.setAlphabeticalSortForTableColumns(true);
 
     // Get the schema definition
-    final Database database = SchemaCrawlerUtility
-      .getDatabase(connectionOptions.createConnection(), options);
+    final Database database = SchemaCrawlerUtility.getDatabase(connection,
+                                                               options);
 
     for (final Schema schema: database.getSchemas())
     {

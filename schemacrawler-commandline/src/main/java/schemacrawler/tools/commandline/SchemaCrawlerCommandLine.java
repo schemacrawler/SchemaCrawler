@@ -176,7 +176,7 @@ public final class SchemaCrawlerCommandLine
     }
     if (connectionOptions != null)
     {
-      executable.execute(connectionOptions.createConnection());
+      executable.execute(connectionOptions.getConnection());
     }
     else
     {
