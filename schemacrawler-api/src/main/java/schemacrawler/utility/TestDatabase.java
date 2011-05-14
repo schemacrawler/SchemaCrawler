@@ -91,6 +91,7 @@ public class TestDatabase
   {
     final FilenameFilter serverFilesFilter = new FilenameFilter()
     {
+      @Override
       public boolean accept(final File dir, final String name)
       {
         return Arrays.asList(serverFileStem + ".lck",
@@ -129,7 +130,7 @@ public class TestDatabase
     {
       if (dataSource != null)
       {
-        connection = dataSource.createConnection();
+        connection = dataSource.getConnection();
         connection.setAutoCommit(true);
         statement = connection.createStatement();
         for (final String schema: new String[] {
@@ -160,13 +161,9 @@ public class TestDatabase
         connection.close();
       }
     }
-    catch (final SchemaCrawlerException e)
-    {
-      LOGGER.log(Level.WARNING, "", e);
-    }
     catch (final SQLException e)
     {
-      LOGGER.log(Level.WARNING, "", e);
+      LOGGER.log(Level.WARNING, e.getMessage(), e);
     }
     finally
     {
@@ -207,7 +204,14 @@ public class TestDatabase
   public Connection getConnection()
     throws SchemaCrawlerException
   {
-    return connectionOptions.createConnection();
+    try
+    {
+      return connectionOptions.getConnection();
+    }
+    catch (final SQLException e)
+    {
+      throw new SchemaCrawlerException(e.getMessage(), e);
+    }
   }
 
   public Database getDatabase(final SchemaCrawlerOptions schemaCrawlerOptions)
@@ -243,7 +247,7 @@ public class TestDatabase
     {
       if (connectionOptions != null)
       {
-        connection = connectionOptions.createConnection();
+        connection = connectionOptions.getConnection();
         if (connection != null)
         {
           statement = connection.createStatement();
@@ -255,13 +259,9 @@ public class TestDatabase
       deleteServerFiles();
       LOGGER.log(Level.INFO, "SHUTDOWN database");
     }
-    catch (final SchemaCrawlerException e)
-    {
-      LOGGER.log(Level.WARNING, "", e);
-    }
     catch (final SQLException e)
     {
-      LOGGER.log(Level.WARNING, "", e);
+      LOGGER.log(Level.WARNING, e.getMessage(), e);
     }
     finally
     {

@@ -110,7 +110,7 @@ public class SchemaCrawlerMojo
   private String url;
 
   /**
-   *Database connection user name.
+   * Database connection user name.
    * 
    * @parameter expression="${user}" alias="user"
    * @required
@@ -118,7 +118,7 @@ public class SchemaCrawlerMojo
   private String user;
 
   /**
-   *Database connection user password.
+   * Database connection user password.
    * 
    * @parameter expression="${password}" alias="password"
    * @required
@@ -360,7 +360,7 @@ public class SchemaCrawlerMojo
       connectionOptions.setPassword(password);
 
       getLog().debug(ObjectToString.toString(executable));
-      executable.execute(connectionOptions.createConnection());
+      executable.execute(connectionOptions.getConnection());
 
       // Create report
       final String styleSheet = Utility

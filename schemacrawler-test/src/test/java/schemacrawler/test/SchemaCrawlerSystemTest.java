@@ -199,7 +199,7 @@ public class SchemaCrawlerSystemTest
   {
     final ConnectionOptions connectionOptions = (ConnectionOptions) appContext
       .getBean(dataSourceName);
-    final Connection connection = connectionOptions.createConnection();
+    final Connection connection = connectionOptions.getConnection();
 
     try
     {

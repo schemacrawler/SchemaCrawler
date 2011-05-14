@@ -21,6 +21,7 @@
 package schemacrawler.schemacrawler;
 
 
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
@@ -60,8 +61,16 @@ abstract class BaseDatabaseConnectionOptions
   private String user;
   private String password;
 
-  public final Connection createConnection()
-    throws SchemaCrawlerException
+  @Override
+  public final Connection getConnection()
+    throws SQLException
+  {
+    return getConnection(user, password);
+  }
+
+  @Override
+  public final Connection getConnection(final String user, final String password)
+    throws SQLException
   {
     if (user == null)
     {
@@ -79,9 +88,9 @@ abstract class BaseDatabaseConnectionOptions
     }
     catch (final Exception e)
     {
-      throw new SchemaCrawlerException(String.format("Could not connect to database, for user %s",
-                                                     user),
-                                       e);
+      throw new SQLException(String.format("Could not connect to database, for user %s",
+                                           user),
+                             e);
     }
 
     final Properties jdbcConnectionProperties = new Properties();
@@ -105,10 +114,10 @@ abstract class BaseDatabaseConnectionOptions
     catch (final SQLException e)
     {
       jdbcConnectionProperties.remove("password");
-      throw new SchemaCrawlerException(String.format("Could not connect to %s, with properties %s",
-                                                     connectionUrl,
-                                                     jdbcConnectionProperties),
-                                       e);
+      throw new SQLException(String.format("Could not connect to %s, with properties %s",
+                                           connectionUrl,
+                                           jdbcConnectionProperties),
+                             e);
     }
   }
 
@@ -117,6 +126,7 @@ abstract class BaseDatabaseConnectionOptions
     return connectionProperties;
   }
 
+  @Override
   public final Driver getJdbcDriver()
   {
     try
@@ -132,14 +142,31 @@ abstract class BaseDatabaseConnectionOptions
     }
   }
 
-  public final String getPassword()
+  @Override
+  public int getLoginTimeout()
+    throws SQLException
   {
-    return password;
+    return 0;
   }
 
+  @Override
+  public PrintWriter getLogWriter()
+    throws SQLException
+  {
+    return null;
+  }
+
+  @Override
   public final String getUser()
   {
     return user;
+  }
+
+  @Override
+  public boolean isWrapperFor(final Class<?> iface)
+    throws SQLException
+  {
+    return false;
   }
 
   public void setConnectionProperties(final Map<String, String> connectionProperties)
@@ -176,11 +203,27 @@ abstract class BaseDatabaseConnectionOptions
     }
   }
 
+  @Override
+  public void setLoginTimeout(final int seconds)
+    throws SQLException
+  {
+    throw new SQLException("Not implemented");
+  }
+
+  @Override
+  public void setLogWriter(final PrintWriter out)
+    throws SQLException
+  {
+    throw new SQLException("Not implemented");
+  }
+
+  @Override
   public final void setPassword(final String password)
   {
     this.password = password;
   }
 
+  @Override
   public final void setUser(final String user)
   {
     this.user = user;
@@ -195,6 +238,13 @@ abstract class BaseDatabaseConnectionOptions
     builder.append("url=").append(getConnectionUrl()).append(Utility.NEWLINE);
     builder.append("user=").append(getUser()).append(Utility.NEWLINE);
     return builder.toString();
+  }
+
+  @Override
+  public <T> T unwrap(final Class<T> iface)
+    throws SQLException
+  {
+    return null;
   }
 
 }
