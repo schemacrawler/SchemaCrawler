@@ -93,7 +93,8 @@ public final class DatabaseConfigConnectionOptions
 
   public void setDatabase(final String database)
   {
-    if (!Utility.isBlank(database))
+    // (database can be an empty string)
+    if (database != null)
     {
       properties.put(DATABASE, database);
     }
