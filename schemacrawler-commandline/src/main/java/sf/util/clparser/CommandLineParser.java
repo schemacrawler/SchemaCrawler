@@ -180,19 +180,10 @@ public class CommandLineParser
     return unparsedArgs;
   }
 
-  private final <T> OptionValue<T> getOptionValue(final String optionName)
+  @Override
+  public String toString()
   {
-    OptionValue<T> optionValue = null;
-    final Option<T> option = (Option<T>) optionsMap.get(DASH + optionName);
-    if (option != null)
-    {
-      optionValue = (OptionValue<T>) optionValues.get(option);
-      if (optionValue == null)
-      {
-        optionValue = new OptionValue<T>(option, null);
-      }
-    }
-    return optionValue;
+    return optionValues.values().toString();
   }
 
   /**
@@ -215,6 +206,21 @@ public class CommandLineParser
     {
       optionsMap.put(DASH + option.getLongForm(), option);
     }
+  }
+
+  private final <T> OptionValue<T> getOptionValue(final String optionName)
+  {
+    OptionValue<T> optionValue = null;
+    final Option<T> option = (Option<T>) optionsMap.get(DASH + optionName);
+    if (option != null)
+    {
+      optionValue = (OptionValue<T>) optionValues.get(option);
+      if (optionValue == null)
+      {
+        optionValue = new OptionValue<T>(option, null);
+      }
+    }
+    return optionValue;
   }
 
 }
