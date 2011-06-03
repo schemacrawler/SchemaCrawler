@@ -31,7 +31,7 @@
             </a>
           </li>
           <li>
-           Mynitor's May 2, 2010 
+            Mynitor's May 2, 2010
             <a href="http://www.mynitor.com/2010/05/02/tool-of-the-week-schemacrawler/">
               Tool of the week – SchemaCrawler
             </a>
@@ -40,19 +40,28 @@
             <a href="http://twitter.com/willchinelato/status/12117092941">
               Twitter message
             </a>
-          </li>      
+          </li>
+          <li>
+            <a href="http://twitter.com/#!/stigkj/statuses/70973992479109121">
+              Twitter message
+            </a>
+          </li>
           <li>
             IT journalist Lee Schlesinger's blog on
             <a href="http://www.schlesinger.us/?p=650">
               SchemaCrawler
             </a>
-          </li>          
+          </li>
           <li>
             Buffer of My Mind on
             <a href="http://mindbuffer.wordpress.com/2010/10/14/schema-crawler/">
               SchemaCrawler
             </a>
-          </li>                          
+          </li>
+          <li>
+            "worker and parasite", blog post on
+            <a href="http://thegreyhope.co.za/linux/creating-er-diagrams-from-oracle-schemas/">Creating ER Diagrams from Oracle schemas.</a>
+          </li>
         </ul>
       </subsection>
       <subsection name="Open Source Projects">
@@ -68,7 +77,7 @@
           </li>
           <li>
             <a href="http://code.google.com/p/anhquan/wiki/CodeGenerator4j">CodeGenerator4j,</a>
-              a Java tool to generate Java source codes from XML files, using Apache Velocity and JAXB 
+            a Java tool to generate Java source codes from XML files, using Apache Velocity and JAXB
           </li>
         </ul>
       </subsection>
@@ -86,7 +95,7 @@
           <li>
             <a href="http://au.linkedin.com/in/ralfweinand">Ralf Weinand</a>
             uses SchemaCrawler.
-          </li>                    
+          </li>
         </ul>
       </subsection>
 
