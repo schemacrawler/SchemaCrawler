@@ -21,12 +21,14 @@ digraph SchemaCrawler_Diagram {
 	node [label="\N", fontname=Helvetica, fontsize=8, shape=plaintext];
 	edge [fontname=Helvetica, fontsize=8, arrowsize="0.6"];
 	graph [lp="484.5,29.5",
+		lwidth="2.88",
+		lheight="0.71",
 		bb="0,0,596,573"];
 	authors_dba8a1ff [label=<
       <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
         <tr>
-          <td colspan="2" bgcolor="#E6B8CA" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC.BOOKS.AUTHORS</font></td>
-          <td bgcolor="#E6B8CA" align="right">[table]</td>
+          <td colspan="2" bgcolor="#E6AAAD" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC.BOOKS.AUTHORS</font></td>
+          <td bgcolor="#E6AAAD" align="right">[table]</td>
         </tr>
         <tr>
           <td port="address1_d0f1f1ec.start" align="left">ADDRESS1</td>
@@ -78,8 +80,8 @@ digraph SchemaCrawler_Diagram {
 	bookauthors_aa4376 [label=<
       <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
         <tr>
-          <td colspan="2" bgcolor="#E6B8CA" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC.BOOKS.BOOKAUTHORS</font></td>
-          <td bgcolor="#E6B8CA" align="right">[table]</td>
+          <td colspan="2" bgcolor="#E6AAAD" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC.BOOKS.BOOKAUTHORS</font></td>
+          <td bgcolor="#E6AAAD" align="right">[table]</td>
         </tr>
         <tr>
           <td port="authorid_19681b5e.start" align="left">AUTHORID</td>
@@ -97,12 +99,12 @@ digraph SchemaCrawler_Diagram {
           <td port="update_7e11958f.end" align="right">CLOB</td>
         </tr>
       </table>
-    >, pos="118,168", width="2.6944", height="0.83333"];
+    >, pos="118,168", width="2.7083", height="0.83333"];
 	authorslist_b29d331d [label=<
       <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
         <tr>
-          <td colspan="2" bgcolor="#E6B8CA" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC.BOOKS.AUTHORSLIST</font></td>
-          <td bgcolor="#E6B8CA" align="right">[view]</td>
+          <td colspan="2" bgcolor="#E6AAAD" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC.BOOKS.AUTHORSLIST</font></td>
+          <td bgcolor="#E6AAAD" align="right">[view]</td>
         </tr>
         <tr>
           <td port="firstname_d3258b8a.start" align="left">FIRSTNAME</td>
@@ -120,12 +122,12 @@ digraph SchemaCrawler_Diagram {
           <td port="lastname_b7deb1d2.end" align="right">VARCHAR(20)</td>
         </tr>
       </table>
-    >, pos="473,343", width="2.9444", height="0.83333"];
+    >, pos="473,343", width="2.6944", height="0.83333"];
 	books_afd2ba21 [label=<
       <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
         <tr>
-          <td colspan="2" bgcolor="#E6B8CA" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC.BOOKS.BOOKS</font></td>
-          <td bgcolor="#E6B8CA" align="right">[table]</td>
+          <td colspan="2" bgcolor="#E6AAAD" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC.BOOKS.BOOKS</font></td>
+          <td bgcolor="#E6AAAD" align="right">[table]</td>
         </tr>
         <tr>
           <td port="description_f1e45f8f.start" align="left">DESCRIPTION</td>
@@ -162,8 +164,8 @@ digraph SchemaCrawler_Diagram {
 	globalcounts_2ab3635a [label=<
       <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
         <tr>
-          <td colspan="2" bgcolor="#E6B8CA" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC.BOOKS."Global Counts"</font></td>
-          <td bgcolor="#E6B8CA" align="right">[table]</td>
+          <td colspan="2" bgcolor="#E6AAAD" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC.BOOKS."Global Counts"</font></td>
+          <td bgcolor="#E6AAAD" align="right">[table]</td>
         </tr>
         <tr>
           <td port="globalcount_22cfa042.start" align="left">"Global Count"</td>
@@ -171,12 +173,12 @@ digraph SchemaCrawler_Diagram {
           <td port="globalcount_22cfa042.end" align="right">INTEGER</td>
         </tr>
       </table>
-    >, pos="473,404", width="2.6944", height="0.5"];
+    >, pos="473,404", width="2.7083", height="0.5"];
 	publishers_b8da20c0 [label=<
       <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
         <tr>
-          <td colspan="2" bgcolor="#E6B8CA" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC.BOOKS.PUBLISHERS</font></td>
-          <td bgcolor="#E6B8CA" align="right">[table]</td>
+          <td colspan="2" bgcolor="#E6AAAD" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC.BOOKS.PUBLISHERS</font></td>
+          <td bgcolor="#E6AAAD" align="right">[table]</td>
         </tr>
         <tr>
           <td port="id_6fc9dd09.start" align="left"><font face="Helvetica-BoldOblique">ID</font></td>
@@ -189,12 +191,12 @@ digraph SchemaCrawler_Diagram {
           <td port="publisher_13c8362e.end" align="right">VARCHAR(255)</td>
         </tr>
       </table>
-    >, pos="473,459", width="2.9167", height="0.66667"];
+    >, pos="473,459", width="2.7222", height="0.66667"];
 	regions_bc895c48 [label=<
       <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
         <tr>
-          <td colspan="2" bgcolor="#BBE6CB" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC."PUBLISHER SALES".REGIONS</font></td>
-          <td bgcolor="#BBE6CB" align="right">[table]</td>
+          <td colspan="2" bgcolor="#D7E6C8" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC."PUBLISHER SALES".REGIONS</font></td>
+          <td bgcolor="#D7E6C8" align="right">[table]</td>
         </tr>
         <tr>
           <td port="city_2c74db51.start" align="left">CITY</td>
@@ -221,8 +223,8 @@ digraph SchemaCrawler_Diagram {
 	sales_20be6f95 [label=<
       <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
         <tr>
-          <td colspan="2" bgcolor="#BBE6CB" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC."PUBLISHER SALES".SALES</font></td>
-          <td bgcolor="#BBE6CB" align="right">[table]</td>
+          <td colspan="2" bgcolor="#D7E6C8" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC."PUBLISHER SALES".SALES</font></td>
+          <td bgcolor="#D7E6C8" align="right">[table]</td>
         </tr>
         <tr>
           <td port="bookid_3c829a3d.start" align="left">BOOKID</td>
@@ -251,8 +253,8 @@ digraph SchemaCrawler_Diagram {
         </tr>
       </table>
     >, pos="118,531", width="3.2778", height="1.1667"];
-	authors_dba8a1ff:"id_ecfc5f6a.start":w -> bookauthors_aa4376:"authorid_19681b5e.end":e [label=<FK_Z_AUTHOR>, style=solid, arrowhead=crowodot, arrowtail=teetee, pos="e,207,173 384,215 306.94,215 289.43,176.85 217.95,173.27", lp="293,212.5"];
-	books_afd2ba21:"id_bb8abc08.start":w -> bookauthors_aa4376:"bookid_931bd73c.end":e [label=<FK_Y_BOOK>, style=solid, arrowhead=crowodot, arrowtail=teetee, pos="e,207,161 378,118 303.46,118 286.91,156.9 218.04,160.7", lp="293,159.5"];
-	regions_bc895c48:"postalcode_9b2bfe9e.start":w -> sales_20be6f95:"postalcode_738bc931.end":e [label=<FK_SALES_REGIONS>, style=solid, arrowhead=crowodot, arrowtail=teetee, pos="e,227,512 359,519 347.14,519 344.78,514.4 333,513 290.05,507.9 276.33,511.32 237.93,511.92", lp="293,517.5"];
-	regions_bc895c48:"country_7d0587d0.start":w -> sales_20be6f95:"country_890cfe1d.end":e [label=<FK_SALES_REGIONS>, style=solid, arrowhead=crowodot, arrowtail=teetee, pos="e,227,536 359,531 304.08,531 287.77,535.38 237.83,535.94", lp="293,539.5"];
+	authors_dba8a1ff:"id_ecfc5f6a.start":w -> bookauthors_aa4376:"authorid_19681b5e.end":e [label=<FK_Z_AUTHOR>, style=solid, arrowhead=crowodot, arrowtail=teetee, pos="e,208,173 383,215 306.76,215 289.54,176.85 218.83,173.27", lp="293,212.5"];
+	books_afd2ba21:"id_bb8abc08.start":w -> bookauthors_aa4376:"bookid_931bd73c.end":e [label=<FK_Y_BOOK>, style=solid, arrowhead=crowodot, arrowtail=teetee, pos="e,208,161 377,118 303.28,118 287.02,156.9 218.91,160.7", lp="293,159.5"];
+	regions_bc895c48:"postalcode_9b2bfe9e.start":w -> sales_20be6f95:"postalcode_738bc931.end":e [label=<FK_SALES_REGIONS>, style=solid, arrowhead=crowodot, arrowtail=teetee, pos="e,228,512 358,519 346.57,519 344.34,514.4 333,513 290.48,507.76 276.87,511.3 238.82,511.91", lp="293,517.5"];
+	regions_bc895c48:"country_7d0587d0.start":w -> sales_20be6f95:"country_890cfe1d.end":e [label=<FK_SALES_REGIONS>, style=solid, arrowhead=crowodot, arrowtail=teetee, pos="e,228,536 358,531 304.02,531 287.92,535.36 238.97,535.94", lp="293,539.5"];
 }
