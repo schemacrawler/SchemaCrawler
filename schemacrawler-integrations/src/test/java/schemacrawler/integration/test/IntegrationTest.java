@@ -120,7 +120,7 @@ public class IntegrationTest
     assertTrue(testOutputFile.exists());
     assertTrue(testOutputFile.length() > 0);
     final BufferedImage image = ImageIO.read(testOutputFile);
-    assertEquals(BufferedImage.TYPE_4BYTE_ABGR, image.getType());
+    assertEquals(BufferedImage.TYPE_3BYTE_BGR, image.getType());
     assertEquals(2421, image.getHeight());
     assertEquals(2517, image.getWidth());
   }
