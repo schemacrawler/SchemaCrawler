@@ -20,10 +20,6 @@ digraph SchemaCrawler_Diagram {
       </table>    >, labeljust=r, labelloc=b];
 	node [label="\N", fontname=Helvetica, fontsize=8, shape=plaintext];
 	edge [fontname=Helvetica, fontsize=8, arrowsize="0.6"];
-	graph [lp="484.5,29.5",
-		lwidth="2.88",
-		lheight="0.71",
-		bb="0,0,596,573"];
 	authors_dba8a1ff [label=<
       <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
         <tr>
@@ -76,7 +72,7 @@ digraph SchemaCrawler_Diagram {
           <td port="state_4d789fc2.end" align="right">VARCHAR(2)</td>
         </tr>
       </table>
-    >, pos="473,234", width="2.7222", height="1.8333"];
+    >];
 	bookauthors_aa4376 [label=<
       <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
         <tr>
@@ -99,7 +95,7 @@ digraph SchemaCrawler_Diagram {
           <td port="update_7e11958f.end" align="right">CLOB</td>
         </tr>
       </table>
-    >, pos="118,168", width="2.7083", height="0.83333"];
+    >];
 	authorslist_b29d331d [label=<
       <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
         <tr>
@@ -122,7 +118,7 @@ digraph SchemaCrawler_Diagram {
           <td port="lastname_b7deb1d2.end" align="right">VARCHAR(20)</td>
         </tr>
       </table>
-    >, pos="473,343", width="2.6944", height="0.83333"];
+    >];
 	books_afd2ba21 [label=<
       <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
         <tr>
@@ -160,7 +156,7 @@ digraph SchemaCrawler_Diagram {
           <td port="title_764df42b.end" align="right">VARCHAR(255)</td>
         </tr>
       </table>
-    >, pos="473,107", width="2.8889", height="1.3333"];
+    >];
 	globalcounts_2ab3635a [label=<
       <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
         <tr>
@@ -173,7 +169,7 @@ digraph SchemaCrawler_Diagram {
           <td port="globalcount_22cfa042.end" align="right">INTEGER</td>
         </tr>
       </table>
-    >, pos="473,404", width="2.7083", height="0.5"];
+    >];
 	publishers_b8da20c0 [label=<
       <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
         <tr>
@@ -191,7 +187,7 @@ digraph SchemaCrawler_Diagram {
           <td port="publisher_13c8362e.end" align="right">VARCHAR(255)</td>
         </tr>
       </table>
-    >, pos="473,459", width="2.7222", height="0.66667"];
+    >];
 	regions_bc895c48 [label=<
       <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
         <tr>
@@ -219,7 +215,7 @@ digraph SchemaCrawler_Diagram {
           <td port="state_630cbf4b.end" align="right">VARCHAR(2)</td>
         </tr>
       </table>
-    >, pos="473,532", width="3.4167", height=1];
+    >];
 	sales_20be6f95 [label=<
       <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
         <tr>
@@ -252,9 +248,9 @@ digraph SchemaCrawler_Diagram {
           <td port="totalamount_63baaba3.end" align="right">DOUBLE(64, 0)</td>
         </tr>
       </table>
-    >, pos="118,531", width="3.2778", height="1.1667"];
-	authors_dba8a1ff:"id_ecfc5f6a.start":w -> bookauthors_aa4376:"authorid_19681b5e.end":e [label=<FK_Z_AUTHOR>, style=solid, arrowhead=crowodot, arrowtail=teetee, pos="e,208,173 383,215 306.76,215 289.54,176.85 218.83,173.27", lp="293,212.5"];
-	books_afd2ba21:"id_bb8abc08.start":w -> bookauthors_aa4376:"bookid_931bd73c.end":e [label=<FK_Y_BOOK>, style=solid, arrowhead=crowodot, arrowtail=teetee, pos="e,208,161 377,118 303.28,118 287.02,156.9 218.91,160.7", lp="293,159.5"];
-	regions_bc895c48:"postalcode_9b2bfe9e.start":w -> sales_20be6f95:"postalcode_738bc931.end":e [label=<FK_SALES_REGIONS>, style=solid, arrowhead=crowodot, arrowtail=teetee, pos="e,228,512 358,519 346.57,519 344.34,514.4 333,513 290.48,507.76 276.87,511.3 238.82,511.91", lp="293,517.5"];
-	regions_bc895c48:"country_7d0587d0.start":w -> sales_20be6f95:"country_890cfe1d.end":e [label=<FK_SALES_REGIONS>, style=solid, arrowhead=crowodot, arrowtail=teetee, pos="e,228,536 358,531 304.02,531 287.92,535.36 238.97,535.94", lp="293,539.5"];
+    >];
+	authors_dba8a1ff:"id_ecfc5f6a.start":w -> bookauthors_aa4376:"authorid_19681b5e.end":e [label=<FK_Z_AUTHOR>, style=solid, arrowhead=crowodot, arrowtail=teetee];
+	books_afd2ba21:"id_bb8abc08.start":w -> bookauthors_aa4376:"bookid_931bd73c.end":e [label=<FK_Y_BOOK>, style=solid, arrowhead=crowodot, arrowtail=teetee];
+	regions_bc895c48:"postalcode_9b2bfe9e.start":w -> sales_20be6f95:"postalcode_738bc931.end":e [label=<FK_SALES_REGIONS>, style=solid, arrowhead=crowodot, arrowtail=teetee];
+	regions_bc895c48:"country_7d0587d0.start":w -> sales_20be6f95:"country_890cfe1d.end":e [label=<FK_SALES_REGIONS>, style=solid, arrowhead=crowodot, arrowtail=teetee];
 }

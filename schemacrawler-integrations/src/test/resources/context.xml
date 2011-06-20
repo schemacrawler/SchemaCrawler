@@ -203,7 +203,7 @@
     <property name="schemaCrawlerOptions" ref="schemaCrawlerOptions" />
     <property name="outputOptions">
       <bean class="schemacrawler.tools.options.OutputOptions">
-        <property name="outputFormatValue" value="dot" />
+        <property name="outputFormatValue" value="canon" />
       </bean>
     </property>
   </bean>
