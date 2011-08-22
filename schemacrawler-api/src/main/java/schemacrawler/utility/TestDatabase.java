@@ -134,16 +134,15 @@ public class TestDatabase
         connection.setAutoCommit(true);
         statement = connection.createStatement();
         for (final String schema: new String[] {
-            "Books", "Book Sales",
+            "books", "publisher sales",
         })
         {
           for (final String scriptType: new String[] {
               "pre_schema", "schema", "post_schema", "data",
           })
           {
-            final String scriptResource = String.format("/%s.%s.sql",
-                                                        schema,
-                                                        scriptType)
+            final String scriptResource = String
+              .format("/testdatabase/%s.%s.sql", schema, scriptType)
               .toLowerCase(Locale.ENGLISH);
             final String sqlScript = Utility.readResourceFully(scriptResource);
             if (!Utility.isBlank(sqlScript))
