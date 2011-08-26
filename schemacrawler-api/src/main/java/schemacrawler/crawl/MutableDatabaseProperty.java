@@ -59,6 +59,7 @@ class MutableDatabaseProperty
     buildDescription();
   }
 
+  @Override
   public int compareTo(final DatabaseProperty otherDbProperty)
   {
     if (otherDbProperty == null)
@@ -75,6 +76,7 @@ class MutableDatabaseProperty
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getDescription()
   {
     buildDescription();

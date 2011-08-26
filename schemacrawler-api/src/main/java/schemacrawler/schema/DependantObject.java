@@ -36,6 +36,7 @@ public interface DependantObject
    * 
    * @return Parent database object
    */
+  @Override
   DatabaseObject getParent();
 
 }

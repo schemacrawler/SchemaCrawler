@@ -51,6 +51,7 @@ class MutableResultsColumns
    * 
    * @see schemacrawler.schema.ResultsColumns#getColumn(java.lang.String)
    */
+  @Override
   public ResultsColumn getColumn(final String name)
   {
     return columns.lookup(name);
@@ -61,6 +62,7 @@ class MutableResultsColumns
    * 
    * @see schemacrawler.schema.ResultsColumns#getColumns()
    */
+  @Override
   public ResultsColumn[] getColumns()
   {
     return columns.values().toArray(new ResultsColumn[columns.size()]);
@@ -71,6 +73,7 @@ class MutableResultsColumns
    * 
    * @see schemacrawler.schema.ResultsColumns#getColumnsListAsString()
    */
+  @Override
   public String getColumnsListAsString()
   {
     String columnsList = "";
@@ -92,6 +95,7 @@ class MutableResultsColumns
     return columnsList;
   }
 
+  @Override
   public Iterator<ResultsColumn> iterator()
   {
     return Arrays.asList(getColumns()).iterator();

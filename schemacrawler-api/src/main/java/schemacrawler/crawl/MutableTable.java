@@ -107,6 +107,7 @@ class MutableTable
    * 
    * @see Table#getCheckConstraints()
    */
+  @Override
   public CheckConstraint[] getCheckConstraints()
   {
     return checkConstraints.values()
@@ -118,6 +119,7 @@ class MutableTable
    * 
    * @see schemacrawler.schema.Table#getColumn(java.lang.String)
    */
+  @Override
   public MutableColumn getColumn(final String name)
   {
     return columns.lookup(this, name);
@@ -128,6 +130,7 @@ class MutableTable
    * 
    * @see Table#getColumns()
    */
+  @Override
   public Column[] getColumns()
   {
     return columns.values().toArray(new Column[columns.size()]);
@@ -138,6 +141,7 @@ class MutableTable
    * 
    * @see schemacrawler.schema.Table#getColumnsListAsString()
    */
+  @Override
   public String getColumnsListAsString()
   {
     final Column[] columnsArray = getColumns();
@@ -159,6 +163,7 @@ class MutableTable
    * 
    * @see schemacrawler.schema.Table#getExportedForeignKeys()
    */
+  @Override
   public ForeignKey[] getExportedForeignKeys()
   {
     return getForeignKeys(TableAssociationType.exported);
@@ -169,6 +174,7 @@ class MutableTable
    * 
    * @see schemacrawler.schema.Table#getForeignKey(java.lang.String)
    */
+  @Override
   public MutableForeignKey getForeignKey(final String name)
   {
     return foreignKeys.lookup(this, name);
@@ -179,11 +185,13 @@ class MutableTable
    * 
    * @see schemacrawler.schema.Table#getForeignKeys()
    */
+  @Override
   public ForeignKey[] getForeignKeys()
   {
     return getForeignKeys(TableAssociationType.all);
   }
 
+  @Override
   public ForeignKey[] getImportedForeignKeys()
   {
     return getForeignKeys(TableAssociationType.imported);
@@ -194,6 +202,7 @@ class MutableTable
    * 
    * @see schemacrawler.schema.Table#getIndex(java.lang.String)
    */
+  @Override
   public MutableIndex getIndex(final String name)
   {
     return indices.lookup(this, name);
@@ -204,6 +213,7 @@ class MutableTable
    * 
    * @see Table#getIndices()
    */
+  @Override
   public Index[] getIndices()
   {
     return indices.values().toArray(new Index[indices.size()]);
@@ -214,6 +224,7 @@ class MutableTable
    * 
    * @see Table#getPrimaryKey()
    */
+  @Override
   public MutablePrimaryKey getPrimaryKey()
   {
     return primaryKey;
@@ -224,6 +235,7 @@ class MutableTable
    * 
    * @see schemacrawler.schema.Table#getPrivilege(java.lang.String)
    */
+  @Override
   public MutablePrivilege getPrivilege(final String name)
   {
     return privileges.lookup(this, name);
@@ -234,6 +246,7 @@ class MutableTable
    * 
    * @see Table#getPrivileges()
    */
+  @Override
   public Privilege[] getPrivileges()
   {
     return privileges.values().toArray(new Privilege[privileges.size()]);
@@ -244,6 +257,7 @@ class MutableTable
    * 
    * @see schemacrawler.schema.Table#getRelatedTables(schemacrawler.schema.TableRelationshipType)
    */
+  @Override
   public Table[] getRelatedTables(final TableRelationshipType tableRelationshipType)
   {
     final Set<MutableTable> relatedTables = new HashSet<MutableTable>();
@@ -289,6 +303,7 @@ class MutableTable
    * 
    * @see schemacrawler.schema.Table#getTrigger(java.lang.String)
    */
+  @Override
   public MutableTrigger getTrigger(final String name)
   {
     return lookupTrigger(name);
@@ -299,6 +314,7 @@ class MutableTable
    * 
    * @see Table#getTriggers()
    */
+  @Override
   public Trigger[] getTriggers()
   {
     return triggers.values().toArray(new Trigger[triggers.size()]);
@@ -309,9 +325,58 @@ class MutableTable
    * 
    * @see Table#getType()
    */
+  @Override
   public TableType getType()
   {
     return type;
+  }
+
+  private ForeignKey[] getForeignKeys(final TableAssociationType tableAssociationType)
+  {
+    final List<MutableForeignKey> foreignKeysList = new ArrayList<MutableForeignKey>(foreignKeys
+      .values());
+    if (tableAssociationType != null
+        && tableAssociationType != TableAssociationType.all)
+    {
+      for (final Iterator<MutableForeignKey> iterator = foreignKeysList
+        .iterator(); iterator.hasNext();)
+      {
+        final MutableForeignKey mutableForeignKey = iterator.next();
+        final ForeignKeyColumnMap[] columnPairs = mutableForeignKey
+          .getColumnPairs();
+        boolean isExportedKey = false;
+        boolean isImportedKey = false;
+        for (final ForeignKeyColumnMap columnPair: columnPairs)
+        {
+          if (columnPair.getPrimaryKeyColumn().getParent().equals(this))
+          {
+            isExportedKey = true;
+          }
+          if (columnPair.getForeignKeyColumn().getParent().equals(this))
+          {
+            isImportedKey = true;
+          }
+        }
+        switch (tableAssociationType)
+        {
+          case exported:
+            if (!isExportedKey)
+            {
+              iterator.remove();
+            }
+            break;
+          case imported:
+            if (!isImportedKey)
+            {
+              iterator.remove();
+            }
+            break;
+          default:
+            break;
+        }
+      }
+    }
+    return foreignKeysList.toArray(new ForeignKey[foreignKeysList.size()]);
   }
 
   void addCheckConstraint(final MutableCheckConstraint checkConstraint)
@@ -426,54 +491,6 @@ class MutableTable
       throw new IllegalArgumentException("Null table type");
     }
     this.type = type;
-  }
-
-  private ForeignKey[] getForeignKeys(final TableAssociationType tableAssociationType)
-  {
-    final List<MutableForeignKey> foreignKeysList = new ArrayList<MutableForeignKey>(foreignKeys
-      .values());
-    if (tableAssociationType != null
-        && tableAssociationType != TableAssociationType.all)
-    {
-      for (final Iterator<MutableForeignKey> iterator = foreignKeysList
-        .iterator(); iterator.hasNext();)
-      {
-        final MutableForeignKey mutableForeignKey = iterator.next();
-        final ForeignKeyColumnMap[] columnPairs = mutableForeignKey
-          .getColumnPairs();
-        boolean isExportedKey = false;
-        boolean isImportedKey = false;
-        for (final ForeignKeyColumnMap columnPair: columnPairs)
-        {
-          if (columnPair.getPrimaryKeyColumn().getParent().equals(this))
-          {
-            isExportedKey = true;
-          }
-          if (columnPair.getForeignKeyColumn().getParent().equals(this))
-          {
-            isImportedKey = true;
-          }
-        }
-        switch (tableAssociationType)
-        {
-          case exported:
-            if (!isExportedKey)
-            {
-              iterator.remove();
-            }
-            break;
-          case imported:
-            if (!isImportedKey)
-            {
-              iterator.remove();
-            }
-            break;
-          default:
-            break;
-        }
-      }
-    }
-    return foreignKeysList.toArray(new ForeignKey[foreignKeysList.size()]);
   }
 
 }

@@ -102,6 +102,7 @@ class NamedObjectList<N extends NamedObject>
    * 
    * @see java.lang.Iterable#iterator()
    */
+  @Override
   public Iterator<N> iterator()
   {
     return values().iterator();

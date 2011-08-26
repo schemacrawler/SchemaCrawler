@@ -51,6 +51,7 @@ class MutableView
   /**
    * {@inheritDoc}
    */
+  @Override
   public CheckOptionType getCheckOption()
   {
     return checkOption;
@@ -61,6 +62,7 @@ class MutableView
    * 
    * @see schemacrawler.schema.View#getDefinition()
    */
+  @Override
   public String getDefinition()
   {
     return definition.toString();
@@ -80,6 +82,7 @@ class MutableView
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isUpdatable()
   {
     return updatable;

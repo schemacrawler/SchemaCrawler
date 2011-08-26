@@ -50,6 +50,7 @@ final class MutableProcedureColumn
    * 
    * @see ProcedureColumn#getPrecision()
    */
+  @Override
   public int getPrecision()
   {
     return getDecimalDigits();
@@ -60,6 +61,7 @@ final class MutableProcedureColumn
    * 
    * @see ProcedureColumn#getProcedureColumnType()
    */
+  @Override
   public ProcedureColumnType getProcedureColumnType()
   {
     return procedureColumnType;

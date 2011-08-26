@@ -58,6 +58,7 @@ final class MutablePrivilege
       this.isGrantable = isGrantable;
     }
 
+    @Override
     public int compareTo(final Grant otherGrant)
     {
       int compare = 0;
@@ -124,6 +125,7 @@ final class MutablePrivilege
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getGrantee()
     {
       return grantee;
@@ -132,6 +134,7 @@ final class MutablePrivilege
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getGrantor()
     {
       return grantor;
@@ -152,6 +155,7 @@ final class MutablePrivilege
     /**
      * {@inheritDoc}
      */
+    @Override
     public boolean isGrantable()
     {
       return isGrantable;
@@ -173,6 +177,7 @@ final class MutablePrivilege
     super(parent, name);
   }
 
+  @Override
   public Grant[] getGrants()
   {
     final Grant[] grantsArray = grants.toArray(new Grant[grants.size()]);

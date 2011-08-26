@@ -54,6 +54,7 @@ class MutableColumn
    * 
    * @see schemacrawler.schema.Column#getDefaultValue()
    */
+  @Override
   public String getDefaultValue()
   {
     return defaultValue;
@@ -64,6 +65,7 @@ class MutableColumn
    * 
    * @see schemacrawler.schema.Column#getPrivilege(java.lang.String)
    */
+  @Override
   public MutablePrivilege getPrivilege(final String name)
   {
     return privileges.lookup(this, name);
@@ -74,6 +76,7 @@ class MutableColumn
    * 
    * @see Column#getPrivileges()
    */
+  @Override
   public Privilege[] getPrivileges()
   {
     return privileges.values().toArray(new Privilege[privileges.size()]);
@@ -84,6 +87,7 @@ class MutableColumn
    * 
    * @see schemacrawler.schema.Column#getReferencedColumn()
    */
+  @Override
   public Column getReferencedColumn()
   {
     return referencedColumn;
@@ -94,6 +98,7 @@ class MutableColumn
    * 
    * @see schemacrawler.schema.Column#isPartOfForeignKey()
    */
+  @Override
   public boolean isPartOfForeignKey()
   {
     return referencedColumn != null;
@@ -104,6 +109,7 @@ class MutableColumn
    * 
    * @see schemacrawler.schema.Column#isPartOfPrimaryKey()
    */
+  @Override
   public boolean isPartOfPrimaryKey()
   {
     return isPartOfPrimaryKey;
@@ -114,6 +120,7 @@ class MutableColumn
    * 
    * @see schemacrawler.schema.Column#isPartOfUniqueIndex()
    */
+  @Override
   public boolean isPartOfUniqueIndex()
   {
     return isPartOfUniqueIndex;

@@ -62,6 +62,7 @@ final class MutableDatabase
     schemaRefsCache = new HashMap<SchemaReference, MutableSchema>();
   }
 
+  @Override
   public MutableDatabaseInfo getDatabaseInfo()
   {
     return databaseInfo;
@@ -72,6 +73,7 @@ final class MutableDatabase
    * 
    * @see schemacrawler.schema.Database#getJdbcDriverInfo()
    */
+  @Override
   public MutableJdbcDriverInfo getJdbcDriverInfo()
   {
     return jdbcDriverInfo;
@@ -82,6 +84,7 @@ final class MutableDatabase
    * 
    * @see schemacrawler.schema.Database#getSchema(java.lang.String)
    */
+  @Override
   public MutableSchema getSchema(final String name)
   {
     final Collection<SchemaReference> schemaRefs = getSchemaNames();
@@ -100,6 +103,7 @@ final class MutableDatabase
    * 
    * @see schemacrawler.schema.Database#getSchemaCrawlerInfo()
    */
+  @Override
   public MutableSchemaCrawlerInfo getSchemaCrawlerInfo()
   {
     return schemaCrawlerInfo;
@@ -110,6 +114,7 @@ final class MutableDatabase
    * 
    * @see schemacrawler.schema.Database#getSchemas()
    */
+  @Override
   public Schema[] getSchemas()
   {
     final List<MutableSchema> schemas = new ArrayList<MutableSchema>(schemaRefsCache
@@ -123,6 +128,7 @@ final class MutableDatabase
    * 
    * @see schemacrawler.schema.Database#getSystemColumnDataType(java.lang.String)
    */
+  @Override
   public MutableColumnDataType getSystemColumnDataType(final String name)
   {
     return systemColumnDataTypes.lookup(name);
@@ -133,6 +139,7 @@ final class MutableDatabase
    * 
    * @see schemacrawler.schema.Database#getSystemColumnDataTypes()
    */
+  @Override
   public ColumnDataType[] getSystemColumnDataTypes()
   {
     return systemColumnDataTypes.values()

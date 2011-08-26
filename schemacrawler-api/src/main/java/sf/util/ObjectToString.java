@@ -265,6 +265,7 @@ public final class ObjectToString
     Collections.sort(allFields, new Comparator<Field>()
     {
 
+      @Override
       public int compare(final Field field1, final Field field2)
       {
         return field1.getName().compareTo(field2.getName());

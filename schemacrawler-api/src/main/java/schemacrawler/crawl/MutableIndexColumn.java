@@ -59,6 +59,7 @@ final class MutableIndexColumn
    * 
    * @see schemacrawler.schema.BaseColumn#getDecimalDigits()
    */
+  @Override
   public int getDecimalDigits()
   {
     return column.getDecimalDigits();
@@ -69,6 +70,7 @@ final class MutableIndexColumn
    * 
    * @see schemacrawler.schema.Column#getDefaultValue()
    */
+  @Override
   public String getDefaultValue()
   {
     return column.getDefaultValue();
@@ -79,6 +81,7 @@ final class MutableIndexColumn
    * 
    * @see schemacrawler.schema.IndexColumn#getIndex()
    */
+  @Override
   public Index getIndex()
   {
     return index;
@@ -89,6 +92,7 @@ final class MutableIndexColumn
    * 
    * @see schemacrawler.schema.IndexColumn#getIndexOrdinalPosition()
    */
+  @Override
   public int getIndexOrdinalPosition()
   {
     return indexOrdinalPosition;
@@ -99,6 +103,7 @@ final class MutableIndexColumn
    * 
    * @see schemacrawler.schema.BaseColumn#getOrdinalPosition()
    */
+  @Override
   public int getOrdinalPosition()
   {
     return column.getOrdinalPosition();
@@ -109,6 +114,7 @@ final class MutableIndexColumn
    * 
    * @see schemacrawler.schema.Column#getPrivilege(java.lang.String)
    */
+  @Override
   public Privilege getPrivilege(final String name)
   {
     return column.getPrivilege(name);
@@ -119,6 +125,7 @@ final class MutableIndexColumn
    * 
    * @see schemacrawler.schema.Column#getPrivileges()
    */
+  @Override
   public Privilege[] getPrivileges()
   {
     return column.getPrivileges();
@@ -129,6 +136,7 @@ final class MutableIndexColumn
    * 
    * @see schemacrawler.schema.Column#getReferencedColumn()
    */
+  @Override
   public Column getReferencedColumn()
   {
     return column.getReferencedColumn();
@@ -139,6 +147,7 @@ final class MutableIndexColumn
    * 
    * @see schemacrawler.schema.BaseColumn#getSize()
    */
+  @Override
   public int getSize()
   {
     return column.getSize();
@@ -149,11 +158,13 @@ final class MutableIndexColumn
    * 
    * @see schemacrawler.schema.IndexColumn#getSortSequence()
    */
+  @Override
   public IndexColumnSortSequence getSortSequence()
   {
     return sortSequence;
   }
 
+  @Override
   public ColumnDataType getType()
   {
     return column.getType();
@@ -164,6 +175,7 @@ final class MutableIndexColumn
    * 
    * @see schemacrawler.schema.BaseColumn#getWidth()
    */
+  @Override
   public String getWidth()
   {
     return column.getWidth();
@@ -174,6 +186,7 @@ final class MutableIndexColumn
    * 
    * @see schemacrawler.schema.BaseColumn#isNullable()
    */
+  @Override
   public boolean isNullable()
   {
     return column.isNullable();
@@ -184,6 +197,7 @@ final class MutableIndexColumn
    * 
    * @see schemacrawler.schema.Column#isPartOfForeignKey()
    */
+  @Override
   public boolean isPartOfForeignKey()
   {
     return column.isPartOfForeignKey();
@@ -194,6 +208,7 @@ final class MutableIndexColumn
    * 
    * @see schemacrawler.schema.Column#isPartOfPrimaryKey()
    */
+  @Override
   public boolean isPartOfPrimaryKey()
   {
     return column.isPartOfPrimaryKey();
@@ -204,6 +219,7 @@ final class MutableIndexColumn
    * 
    * @see schemacrawler.schema.Column#isPartOfUniqueIndex()
    */
+  @Override
   public boolean isPartOfUniqueIndex()
   {
     return column.isPartOfUniqueIndex();

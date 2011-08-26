@@ -48,6 +48,7 @@ public interface JdbcDriverProperty
    * 
    * @return Value of the property
    */
+  @Override
   String getValue();
 
   /**

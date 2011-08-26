@@ -50,6 +50,7 @@ final class MutableJdbcDriverProperty
     choices = driverPropertyInfo.choices;
   }
 
+  @Override
   public int compareTo(final JdbcDriverProperty otherProperty)
   {
     if (otherProperty == null)
@@ -68,6 +69,7 @@ final class MutableJdbcDriverProperty
    * 
    * @see schemacrawler.schema.JdbcDriverProperty#getChoices()
    */
+  @Override
   public String[] getChoices()
   {
     if (choices != null)
@@ -85,6 +87,7 @@ final class MutableJdbcDriverProperty
    * 
    * @see schemacrawler.schema.JdbcDriverProperty#getDescription()
    */
+  @Override
   public String getDescription()
   {
     if (description != null)
@@ -111,6 +114,7 @@ final class MutableJdbcDriverProperty
    * 
    * @see schemacrawler.schema.JdbcDriverProperty#isRequired()
    */
+  @Override
   public boolean isRequired()
   {
     return required;

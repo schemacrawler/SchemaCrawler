@@ -57,15 +57,24 @@ final class DatabaseSystemParameters
 
     supportsCatalogs = dbMetaData.supportsCatalogsInTableDefinitions();
     LOGGER.log(Level.CONFIG, String
-      .format("Database %s catalogs", (supportsCatalogs? "supports"
-                                                       : "does not support")));
+      .format("Database %s catalogs", supportsCatalogs? "supports"
+                                                      : "does not support"));
 
     supportsSchemas = dbMetaData.supportsSchemasInTableDefinitions();
-    LOGGER.log(Level.CONFIG, String
-      .format("Database %s schemas", (supportsSchemas? "supports"
-                                                     : "does not support")));
+    LOGGER
+      .log(Level.CONFIG, String.format("Database %s schemas",
+                                       supportsSchemas? "supports"
+                                                      : "does not support"));
 
-    identifierQuoteString = dbMetaData.getIdentifierQuoteString();
+    final String identifierQuoteString = dbMetaData.getIdentifierQuoteString();
+    if (Utility.isBlank(identifierQuoteString))
+    {
+      this.identifierQuoteString = "";
+    }
+    else
+    {
+      this.identifierQuoteString = identifierQuoteString;
+    }
 
     final Set<String> rawReservedWords = new HashSet<String>();
     rawReservedWords.addAll(Arrays.asList(dbMetaData.getSQLKeywords()

@@ -86,6 +86,7 @@ final class MutableForeignKeyColumnMap
    * 
    * @see schemacrawler.schema.ForeignKeyColumnMap#getForeignKeyColumn()
    */
+  @Override
   public Column getForeignKeyColumn()
   {
     return foreignKeyColumn;
@@ -96,6 +97,7 @@ final class MutableForeignKeyColumnMap
    * 
    * @see schemacrawler.schema.ForeignKeyColumnMap#getKeySequence()
    */
+  @Override
   public int getKeySequence()
   {
     return keySequence;
@@ -106,6 +108,7 @@ final class MutableForeignKeyColumnMap
    * 
    * @see schemacrawler.schema.ForeignKeyColumnMap#getPrimaryKeyColumn()
    */
+  @Override
   public Column getPrimaryKeyColumn()
   {
     return primaryKeyColumn;

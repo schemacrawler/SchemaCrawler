@@ -86,6 +86,7 @@ abstract class AbstractDependantNamedObject
    * 
    * @see schemacrawler.schema.DependantNamedObject#getParent()
    */
+  @Override
   public final NamedObject getParent()
   {
     return parent;

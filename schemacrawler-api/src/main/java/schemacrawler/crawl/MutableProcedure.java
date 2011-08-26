@@ -59,6 +59,7 @@ final class MutableProcedure
    * 
    * @see schemacrawler.schema.Procedure#getColumn(java.lang.String)
    */
+  @Override
   public MutableProcedureColumn getColumn(final String name)
   {
     return columns.lookup(this, name);
@@ -69,6 +70,7 @@ final class MutableProcedure
    * 
    * @see Procedure#getColumns()
    */
+  @Override
   public ProcedureColumn[] getColumns()
   {
     return columns.values().toArray(new ProcedureColumn[columns.size()]);
@@ -79,6 +81,7 @@ final class MutableProcedure
    * 
    * @see Procedure#getDefinition()
    */
+  @Override
   public String getDefinition()
   {
     return definition.toString();
@@ -89,6 +92,7 @@ final class MutableProcedure
    * 
    * @see Procedure#getRoutineBodyType()
    */
+  @Override
   public RoutineBodyType getRoutineBodyType()
   {
     return routineBodyType;
@@ -99,6 +103,7 @@ final class MutableProcedure
    * 
    * @see Procedure#getType()
    */
+  @Override
   public ProcedureType getType()
   {
     return procedureType;
