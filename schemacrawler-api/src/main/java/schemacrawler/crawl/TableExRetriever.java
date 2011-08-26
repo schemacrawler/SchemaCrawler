@@ -56,6 +56,85 @@ final class TableExRetriever
     super(retrieverConnection, database);
   }
 
+  private void createPrivileges(final MetadataResultSet results,
+                                final boolean privilegesForColumn)
+    throws SQLException
+  {
+    while (results.next())
+    {
+      final String catalogName = quotedName(results.getString("TABLE_CAT"));
+      final String schemaName = quotedName(results.getString("TABLE_SCHEM"));
+      final String tableName = quotedName(results.getString("TABLE_NAME"));
+      final String columnName;
+      if (privilegesForColumn)
+      {
+        columnName = quotedName(results.getString("COLUMN_NAME"));
+      }
+      else
+      {
+        columnName = null;
+      }
+
+      final MutableTable table = lookupTable(catalogName, schemaName, tableName);
+      if (table == null)
+      {
+        continue;
+      }
+
+      final MutableColumn column = table.getColumn(columnName);
+      if (privilegesForColumn && column == null)
+      {
+        continue;
+      }
+
+      final String privilegeName = results.getString("PRIVILEGE");
+      final String grantor = results.getString("GRANTOR");
+      final String grantee = results.getString("GRANTEE");
+      final boolean isGrantable = results.getBoolean("IS_GRANTABLE");
+
+      final MutablePrivilege privilege;
+      if (privilegesForColumn)
+      {
+        final MutablePrivilege columnPrivilege = column
+          .getPrivilege(privilegeName);
+        if (columnPrivilege == null)
+        {
+          privilege = new MutablePrivilege(column, privilegeName);
+          column.addPrivilege(privilege);
+        }
+        else
+        {
+          privilege = columnPrivilege;
+        }
+      }
+      else
+      {
+        final MutablePrivilege tablePrivilege = table
+          .getPrivilege(privilegeName);
+        if (tablePrivilege == null)
+        {
+          privilege = new MutablePrivilege(table, privilegeName);
+          table.addPrivilege(privilege);
+        }
+        else
+        {
+          privilege = tablePrivilege;
+        }
+      }
+      privilege.addGrant(grantor, grantee, isGrantable);
+      privilege.addAttributes(results.getAttributes());
+
+      if (privilegesForColumn)
+      {
+        column.addPrivilege(privilege);
+      }
+      else
+      {
+        table.addPrivilege(privilege);
+      }
+    }
+  }
+
   /**
    * Retrieves a check constraint information from the database, in the
    * INFORMATION_SCHEMA format.
@@ -437,85 +516,6 @@ final class TableExRetriever
       statement.close();
     }
 
-  }
-
-  private void createPrivileges(final MetadataResultSet results,
-                                final boolean privilegesForColumn)
-    throws SQLException
-  {
-    while (results.next())
-    {
-      final String catalogName = quotedName(results.getString("TABLE_CAT"));
-      final String schemaName = quotedName(results.getString("TABLE_SCHEM"));
-      final String tableName = quotedName(results.getString("TABLE_NAME"));
-      final String columnName;
-      if (privilegesForColumn)
-      {
-        columnName = quotedName(results.getString("COLUMN_NAME"));
-      }
-      else
-      {
-        columnName = null;
-      }
-
-      final MutableTable table = lookupTable(catalogName, schemaName, tableName);
-      if (table == null)
-      {
-        continue;
-      }
-
-      final MutableColumn column = table.getColumn(columnName);
-      if (privilegesForColumn && column == null)
-      {
-        continue;
-      }
-
-      final String privilegeName = results.getString("PRIVILEGE");
-      final String grantor = results.getString("GRANTOR");
-      final String grantee = results.getString("GRANTEE");
-      final boolean isGrantable = results.getBoolean("IS_GRANTABLE");
-
-      final MutablePrivilege privilege;
-      if (privilegesForColumn)
-      {
-        final MutablePrivilege columnPrivilege = column
-          .getPrivilege(privilegeName);
-        if (columnPrivilege == null)
-        {
-          privilege = new MutablePrivilege(column, privilegeName);
-          column.addPrivilege(privilege);
-        }
-        else
-        {
-          privilege = columnPrivilege;
-        }
-      }
-      else
-      {
-        final MutablePrivilege tablePrivilege = table
-          .getPrivilege(privilegeName);
-        if (tablePrivilege == null)
-        {
-          privilege = new MutablePrivilege(table, privilegeName);
-          table.addPrivilege(privilege);
-        }
-        else
-        {
-          privilege = tablePrivilege;
-        }
-      }
-      privilege.addGrant(grantor, grantee, isGrantable);
-      privilege.addAttributes(results.getAttributes());
-
-      if (privilegesForColumn)
-      {
-        column.addPrivilege(privilege);
-      }
-      else
-      {
-        table.addPrivilege(privilege);
-      }
-    }
   }
 
 }

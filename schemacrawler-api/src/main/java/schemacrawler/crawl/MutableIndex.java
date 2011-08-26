@@ -107,6 +107,7 @@ class MutableIndex
    * 
    * @see Index#getCardinality()
    */
+  @Override
   public final int getCardinality()
   {
     return cardinality;
@@ -117,6 +118,7 @@ class MutableIndex
    * 
    * @see Index#getColumns()
    */
+  @Override
   public IndexColumn[] getColumns()
   {
     return columns.values().toArray(new IndexColumn[columns.size()]);
@@ -127,6 +129,7 @@ class MutableIndex
    * 
    * @see Index#getPages()
    */
+  @Override
   public final int getPages()
   {
     return pages;
@@ -137,6 +140,7 @@ class MutableIndex
    * 
    * @see Index#getType()
    */
+  @Override
   public final IndexType getType()
   {
     return type;
@@ -147,6 +151,7 @@ class MutableIndex
    * 
    * @see Index#isUnique()
    */
+  @Override
   public boolean isUnique()
   {
     return isUnique;

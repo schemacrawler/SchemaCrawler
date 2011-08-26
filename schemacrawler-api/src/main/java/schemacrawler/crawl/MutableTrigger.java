@@ -60,6 +60,7 @@ class MutableTrigger
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getActionCondition()
   {
     return actionCondition.toString();
@@ -68,6 +69,7 @@ class MutableTrigger
   /**
    * {@inheritDoc}
    */
+  @Override
   public int getActionOrder()
   {
     return actionOrder;
@@ -76,6 +78,7 @@ class MutableTrigger
   /**
    * {@inheritDoc}
    */
+  @Override
   public ActionOrientationType getActionOrientation()
   {
     return actionOrientation;
@@ -84,6 +87,7 @@ class MutableTrigger
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getActionStatement()
   {
     return actionStatement.toString();
@@ -92,6 +96,7 @@ class MutableTrigger
   /**
    * {@inheritDoc}
    */
+  @Override
   public ConditionTimingType getConditionTiming()
   {
     return conditionTiming;
@@ -100,6 +105,7 @@ class MutableTrigger
   /**
    * {@inheritDoc}
    */
+  @Override
   public EventManipulationType getEventManipulationType()
   {
     return eventManipulationType;

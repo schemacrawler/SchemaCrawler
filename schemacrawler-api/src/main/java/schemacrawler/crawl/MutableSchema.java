@@ -59,6 +59,7 @@ class MutableSchema
    * 
    * @see schemacrawler.schema.Schema#getCatalogName()
    */
+  @Override
   public String getCatalogName()
   {
     return schemaRef.getCatalogName();
@@ -69,6 +70,7 @@ class MutableSchema
    * 
    * @see schemacrawler.schema.Schema#getColumnDataType(java.lang.String)
    */
+  @Override
   public MutableColumnDataType getColumnDataType(final String name)
   {
     return columnDataTypes.lookup(name);
@@ -79,6 +81,7 @@ class MutableSchema
    * 
    * @see schemacrawler.schema.Database#getSystemColumnDataTypes()
    */
+  @Override
   public ColumnDataType[] getColumnDataTypes()
   {
     return columnDataTypes.values()
@@ -101,6 +104,7 @@ class MutableSchema
    * 
    * @see schemacrawler.schema.Schema#getProcedure(java.lang.String)
    */
+  @Override
   public MutableProcedure getProcedure(final String name)
   {
     return procedures.lookup(this, name);
@@ -111,6 +115,7 @@ class MutableSchema
    * 
    * @see schemacrawler.schema.Schema#getProcedures()
    */
+  @Override
   public Procedure[] getProcedures()
   {
     return procedures.values().toArray(new Procedure[procedures.size()]);
@@ -121,6 +126,7 @@ class MutableSchema
    * 
    * @see schemacrawler.schema.Schema#getSchemaName()
    */
+  @Override
   public String getSchemaName()
   {
     return schemaRef.getSchemaName();
@@ -131,6 +137,7 @@ class MutableSchema
    * 
    * @see schemacrawler.schema.Schema#getTable(java.lang.String)
    */
+  @Override
   public MutableTable getTable(final String name)
   {
     return tables.lookup(this, name);
@@ -141,6 +148,7 @@ class MutableSchema
    * 
    * @see schemacrawler.schema.Schema#getTables()
    */
+  @Override
   public Table[] getTables()
   {
     return tables.values().toArray(new Table[tables.size()]);

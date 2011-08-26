@@ -73,6 +73,7 @@ public final class JavaSqlType
     this.javaSqlTypeMappedClassName = javaSqlTypeMappedClassName;
   }
 
+  @Override
   public int compareTo(final JavaSqlType otherSqlDataType)
   {
     return javaSqlTypeName.compareTo(otherSqlDataType.javaSqlTypeName);

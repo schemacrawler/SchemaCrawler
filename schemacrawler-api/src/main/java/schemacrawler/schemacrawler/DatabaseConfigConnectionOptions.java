@@ -57,6 +57,7 @@ public final class DatabaseConfigConnectionOptions
     setPassword(properties.get(PASSWORD));
   }
 
+  @Override
   public String getConnectionUrl()
   {
     final Map<String, String> properties = new HashMap<String, String>(this.properties);

@@ -93,6 +93,7 @@ abstract class MutableProperty
   /**
    * {@inheritDoc}
    */
+  @Override
   public final String getName()
   {
     return name;
@@ -101,6 +102,7 @@ abstract class MutableProperty
   /**
    * {@inheritDoc}
    */
+  @Override
   public Serializable getValue()
   {
     return value;

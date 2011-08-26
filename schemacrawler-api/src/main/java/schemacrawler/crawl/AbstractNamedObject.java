@@ -53,6 +53,7 @@ abstract class AbstractNamedObject
    * 
    * @see java.lang.Comparable#compareTo(java.lang.Object)
    */
+  @Override
   public int compareTo(final NamedObject obj)
   {
     if (obj == null)
@@ -98,6 +99,7 @@ abstract class AbstractNamedObject
    * 
    * @see schemacrawler.schema.NamedObject#getAttribute(java.lang.String)
    */
+  @Override
   public final Object getAttribute(final String name)
   {
     return attributeMap.get(name);
@@ -109,6 +111,7 @@ abstract class AbstractNamedObject
    * @see schemacrawler.schema.NamedObject#getAttribute(java.lang.String,
    *      java.lang.Object)
    */
+  @Override
   public final <T> T getAttribute(final String name, final T defaultValue)
   {
     final Object attributeValue = getAttribute(name);
@@ -134,6 +137,7 @@ abstract class AbstractNamedObject
    * 
    * @see schemacrawler.schema.NamedObject#getAttributes()
    */
+  @Override
   public final Map<String, Object> getAttributes()
   {
     return Collections.unmodifiableMap(attributeMap);
@@ -144,6 +148,7 @@ abstract class AbstractNamedObject
    * 
    * @see schemacrawler.schema.NamedObject#getFullName()
    */
+  @Override
   public String getFullName()
   {
     return name;
@@ -154,6 +159,7 @@ abstract class AbstractNamedObject
    * 
    * @see schemacrawler.schema.NamedObject#getName()
    */
+  @Override
   public final String getName()
   {
     return name;
@@ -164,6 +170,7 @@ abstract class AbstractNamedObject
    * 
    * @see schemacrawler.schema.DatabaseObject#getRemarks()
    */
+  @Override
   public final String getRemarks()
   {
     return remarks;
@@ -183,6 +190,7 @@ abstract class AbstractNamedObject
    * 
    * @see NamedObject#setAttribute(String, Object)
    */
+  @Override
   public final void setAttribute(final String name, final Object value)
   {
     if (!Utility.isBlank(name))

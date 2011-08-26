@@ -48,6 +48,7 @@ class MutableCheckConstraint
    * 
    * @see schemacrawler.schema.CheckConstraint#getDefinition()
    */
+  @Override
   public String getDefinition()
   {
     return definition;
@@ -58,6 +59,7 @@ class MutableCheckConstraint
    * 
    * @see schemacrawler.schema.CheckConstraint#isDeferrable()
    */
+  @Override
   public boolean isDeferrable()
   {
     return deferrable;
@@ -68,6 +70,7 @@ class MutableCheckConstraint
    * 
    * @see schemacrawler.schema.CheckConstraint#isInitiallyDeferred()
    */
+  @Override
   public boolean isInitiallyDeferred()
   {
     return initiallyDeferred;

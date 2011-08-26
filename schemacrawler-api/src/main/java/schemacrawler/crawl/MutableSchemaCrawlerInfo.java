@@ -50,16 +50,19 @@ final class MutableSchemaCrawlerInfo
    */
   private final Map<String, String> systemProperties = new HashMap<String, String>();
 
+  @Override
   public String getSchemaCrawlerAbout()
   {
     return schemaCrawlerAbout;
   }
 
+  @Override
   public String getSchemaCrawlerProductName()
   {
     return schemaCrawlerProductName;
   }
 
+  @Override
   public String getSchemaCrawlerVersion()
   {
     return schemaCrawlerVersion;
@@ -70,6 +73,7 @@ final class MutableSchemaCrawlerInfo
    * 
    * @see schemacrawler.schema.SchemaCrawlerInfo#getSystemProperties()
    */
+  @Override
   public Map<String, String> getSystemProperties()
   {
     return Collections.unmodifiableMap(systemProperties);

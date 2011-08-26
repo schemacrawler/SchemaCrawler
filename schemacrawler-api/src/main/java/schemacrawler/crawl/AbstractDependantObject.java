@@ -101,6 +101,7 @@ abstract class AbstractDependantObject
    * 
    * @see schemacrawler.schema.DependantObject#getParent()
    */
+  @Override
   public final DatabaseObject getParent()
   {
     return parent;

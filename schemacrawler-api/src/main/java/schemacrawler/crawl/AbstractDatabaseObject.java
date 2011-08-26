@@ -100,6 +100,7 @@ abstract class AbstractDatabaseObject
    * 
    * @see schemacrawler.schema.DatabaseObject#getSchema()
    */
+  @Override
   public final Schema getSchema()
   {
     return schema;

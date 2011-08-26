@@ -106,6 +106,7 @@ class MutableForeignKey
    * 
    * @see ForeignKey#getColumnPairs()
    */
+  @Override
   public ForeignKeyColumnMap[] getColumnPairs()
   {
     return columnPairs.values()
@@ -117,6 +118,7 @@ class MutableForeignKey
    * 
    * @see ForeignKey#getDeferrability()
    */
+  @Override
   public final ForeignKeyDeferrability getDeferrability()
   {
     return deferrability;
@@ -127,6 +129,7 @@ class MutableForeignKey
    * 
    * @see ForeignKey#getDeleteRule()
    */
+  @Override
   public final ForeignKeyUpdateRule getDeleteRule()
   {
     return deleteRule;
@@ -137,6 +140,7 @@ class MutableForeignKey
    * 
    * @see ForeignKey#getUpdateRule()
    */
+  @Override
   public final ForeignKeyUpdateRule getUpdateRule()
   {
     return updateRule;

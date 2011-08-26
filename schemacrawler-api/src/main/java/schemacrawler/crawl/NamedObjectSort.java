@@ -75,6 +75,7 @@ enum NamedObjectSort
    * @see java.util.Comparator#compare(java.lang.Object,
    *      java.lang.Object)
    */
+  @Override
   public abstract int compare(final NamedObject namedObject1,
                               final NamedObject namedObject2);
 

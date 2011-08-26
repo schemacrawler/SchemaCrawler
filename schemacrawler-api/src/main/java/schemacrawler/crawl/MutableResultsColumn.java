@@ -57,6 +57,7 @@ final class MutableResultsColumn
    * 
    * @see schemacrawler.schema.ResultsColumn#getDisplaySize()
    */
+  @Override
   public int getDisplaySize()
   {
     return displaySize;
@@ -67,6 +68,7 @@ final class MutableResultsColumn
    * 
    * @see schemacrawler.schema.ResultsColumn#getLabel()
    */
+  @Override
   public String getLabel()
   {
     return label;
@@ -77,6 +79,7 @@ final class MutableResultsColumn
    * 
    * @see schemacrawler.schema.ResultsColumn#isAutoIncrement()
    */
+  @Override
   public boolean isAutoIncrement()
   {
     return autoIncrement;
@@ -87,6 +90,7 @@ final class MutableResultsColumn
    * 
    * @see schemacrawler.schema.ResultsColumn#isCaseSensitive()
    */
+  @Override
   public boolean isCaseSensitive()
   {
     return caseSensitive;
@@ -97,6 +101,7 @@ final class MutableResultsColumn
    * 
    * @see schemacrawler.schema.ResultsColumn#isCurrency()
    */
+  @Override
   public boolean isCurrency()
   {
     return currency;
@@ -107,6 +112,7 @@ final class MutableResultsColumn
    * 
    * @see schemacrawler.schema.ResultsColumn#isDefinitelyWritable()
    */
+  @Override
   public boolean isDefinitelyWritable()
   {
     return definitelyWritable;
@@ -117,6 +123,7 @@ final class MutableResultsColumn
    * 
    * @see schemacrawler.schema.ResultsColumn#isReadOnly()
    */
+  @Override
   public boolean isReadOnly()
   {
     return readOnly;
@@ -127,6 +134,7 @@ final class MutableResultsColumn
    * 
    * @see schemacrawler.schema.ResultsColumn#isSearchable()
    */
+  @Override
   public boolean isSearchable()
   {
     return searchable;
@@ -137,6 +145,7 @@ final class MutableResultsColumn
    * 
    * @see schemacrawler.schema.ResultsColumn#isSigned()
    */
+  @Override
   public boolean isSigned()
   {
     return signed;
@@ -147,6 +156,7 @@ final class MutableResultsColumn
    * 
    * @see schemacrawler.schema.ResultsColumn#isWritable()
    */
+  @Override
   public boolean isWritable()
   {
     return writable;

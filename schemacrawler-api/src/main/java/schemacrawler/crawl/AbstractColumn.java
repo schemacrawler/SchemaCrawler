@@ -82,6 +82,7 @@ abstract class AbstractColumn
    * 
    * @see schemacrawler.schema.BaseColumn#getDecimalDigits()
    */
+  @Override
   public final int getDecimalDigits()
   {
     return decimalDigits;
@@ -92,6 +93,7 @@ abstract class AbstractColumn
    * 
    * @see schemacrawler.schema.BaseColumn#getOrdinalPosition()
    */
+  @Override
   public final int getOrdinalPosition()
   {
     return ordinalPosition;
@@ -102,6 +104,7 @@ abstract class AbstractColumn
    * 
    * @see schemacrawler.schema.BaseColumn#getSize()
    */
+  @Override
   public final int getSize()
   {
     return size;
@@ -112,6 +115,7 @@ abstract class AbstractColumn
    * 
    * @see schemacrawler.schema.BaseColumn#getType()
    */
+  @Override
   public final ColumnDataType getType()
   {
     return type;
@@ -122,6 +126,7 @@ abstract class AbstractColumn
    * 
    * @see schemacrawler.schema.BaseColumn#getWidth()
    */
+  @Override
   public final String getWidth()
   {
 
@@ -162,6 +167,7 @@ abstract class AbstractColumn
    * 
    * @see schemacrawler.schema.BaseColumn#isNullable()
    */
+  @Override
   public final boolean isNullable()
   {
     return nullable;

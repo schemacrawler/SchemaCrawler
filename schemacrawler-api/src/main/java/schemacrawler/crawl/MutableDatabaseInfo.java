@@ -51,6 +51,7 @@ final class MutableDatabaseInfo
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getProductName()
   {
     return productName;
@@ -59,6 +60,7 @@ final class MutableDatabaseInfo
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getProductVersion()
   {
     return productVersion;
@@ -67,6 +69,7 @@ final class MutableDatabaseInfo
   /**
    * {@inheritDoc}
    */
+  @Override
   public DatabaseProperty[] getProperties()
   {
     final DatabaseProperty[] properties = databaseProperties
@@ -78,6 +81,7 @@ final class MutableDatabaseInfo
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getUserName()
   {
     return userName;
