@@ -32,6 +32,7 @@ import schemacrawler.schema.IndexColumnSortSequence;
 import schemacrawler.schema.IndexType;
 import schemacrawler.schema.TableType;
 import schemacrawler.schemacrawler.InclusionRule;
+import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import sf.util.Utility;
 
 /**
@@ -329,12 +330,9 @@ final class TableRetriever
     }
     catch (final SQLException e)
     {
-      final SQLException sqlEx = new SQLException("Could not retrieve columns for table "
-                                                  + table
-                                                  + ":"
-                                                  + e.getMessage());
-      sqlEx.setNextException(e);
-      throw sqlEx;
+      throw new SchemaCrawlerSQLException("Could not retrieve columns for table "
+                                              + table,
+                                          e);
     }
     finally
     {
@@ -383,12 +381,9 @@ final class TableRetriever
     }
     catch (final SQLException e)
     {
-      final SQLException sqlEx = new SQLException("Could not retrieve indices for table "
-                                                  + table
-                                                  + ": "
-                                                  + e.getMessage());
-      sqlEx.setNextException(e);
-      throw sqlEx;
+      throw new SchemaCrawlerSQLException("Could not retrieve indices for table "
+                                              + table,
+                                          e);
     }
     finally
     {
@@ -443,12 +438,9 @@ final class TableRetriever
     }
     catch (final SQLException e)
     {
-      final SQLException sqlEx = new SQLException("Could not retrieve primary keys for table "
-                                                  + table
-                                                  + ": "
-                                                  + e.getMessage());
-      sqlEx.setNextException(e);
-      throw sqlEx;
+      throw new SchemaCrawlerSQLException("Could not retrieve primary keys for table "
+                                              + table,
+                                          e);
     }
     finally
     {

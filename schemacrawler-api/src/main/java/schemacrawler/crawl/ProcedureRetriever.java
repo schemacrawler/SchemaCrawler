@@ -29,6 +29,7 @@ import java.util.logging.Logger;
 import schemacrawler.schema.ProcedureColumnType;
 import schemacrawler.schema.ProcedureType;
 import schemacrawler.schemacrawler.InclusionRule;
+import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 
 /**
  * A retriever uses database metadata to get the details about the
@@ -110,12 +111,9 @@ final class ProcedureRetriever
     }
     catch (final SQLException e)
     {
-      final SQLException sqlEx = new SQLException("Could not retrieve columns for procedure "
-                                                  + procedure
-                                                  + ": "
-                                                  + e.getMessage());
-      sqlEx.setNextException(e);
-      throw sqlEx;
+      throw new SchemaCrawlerSQLException("Could not retrieve columns for procedure "
+                                              + procedure,
+                                          e);
     }
     finally
     {
