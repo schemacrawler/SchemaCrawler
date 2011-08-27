@@ -55,6 +55,270 @@ final class TableRetriever
     super(retrieverConnection, database);
   }
 
+  void retrieveColumns(final MutableTable table,
+                       final InclusionRule columnInclusionRule)
+    throws SQLException
+  {
+    MetadataResultSet results = null;
+    try
+    {
+      results = new MetadataResultSet(getMetaData()
+        .getColumns(unquotedName(table.getSchema().getCatalogName()),
+                    unquotedName(table.getSchema().getSchemaName()),
+                    unquotedName(table.getName()),
+                    null));
+
+      while (results.next())
+      {
+        // Get the "COLUMN_DEF" value first as it the Oracle drivers
+        // don't handle it properly otherwise.
+        // http://issues.apache.org/jira/browse/DDLUTILS-29?page=all
+        final String defaultValue = results.getString("COLUMN_DEF");
+        //
+        final String columnCatalogName = quotedName(results
+          .getString("TABLE_CAT"));
+        final String schemaName = quotedName(results.getString("TABLE_SCHEM"));
+        final String tableName = quotedName(results.getString("TABLE_NAME"));
+        final String columnName = quotedName(results.getString("COLUMN_NAME"));
+        LOGGER.log(Level.FINER, String.format("Retrieving column: %s.%s",
+                                              tableName,
+                                              columnName));
+
+        MutableColumn column;
+
+        column = lookupOrCreateColumn(table, columnName, false/* add */);
+        final String columnFullName = column.getFullName();
+        // Note: If the table name contains an underscore character,
+        // this is a wildcard character. We need to do another check to
+        // see if the table name matches.
+        if (columnInclusionRule.include(columnFullName)
+            && table.getName().equals(tableName)
+            && belongsToSchema(table, columnCatalogName, schemaName))
+        {
+          column = lookupOrCreateColumn(table, columnName, true/* add */);
+
+          final int ordinalPosition = results.getInt("ORDINAL_POSITION", 0);
+          final int dataType = results.getInt("DATA_TYPE", 0);
+          final String typeName = results.getString("TYPE_NAME");
+          final int size = results.getInt("COLUMN_SIZE", 0);
+          final int decimalDigits = results.getInt("DECIMAL_DIGITS", 0);
+          final boolean isNullable = results
+            .getInt("NULLABLE", DatabaseMetaData.columnNullableUnknown) == DatabaseMetaData.columnNullable;
+          final String remarks = results.getString("REMARKS");
+
+          column.setOrdinalPosition(ordinalPosition);
+          column.setType(lookupOrCreateColumnDataType((MutableSchema) table
+            .getSchema(), dataType, typeName));
+          column.setSize(size);
+          column.setDecimalDigits(decimalDigits);
+          column.setRemarks(remarks);
+          column.setNullable(isNullable);
+          if (defaultValue != null)
+          {
+            column.setDefaultValue(defaultValue);
+          }
+
+          column.addAttributes(results.getAttributes());
+
+          table.addColumn(column);
+        }
+      }
+    }
+    catch (final SQLException e)
+    {
+      throw new SchemaCrawlerSQLException("Could not retrieve columns for table "
+                                              + table,
+                                          e);
+    }
+    finally
+    {
+      if (results != null)
+      {
+        results.close();
+      }
+    }
+
+  }
+
+  void retrieveForeignKeys(final MutableTable table)
+    throws SQLException
+  {
+
+    final NamedObjectList<MutableForeignKey> foreignKeys = new NamedObjectList<MutableForeignKey>();
+    MetadataResultSet results;
+
+    final DatabaseMetaData metaData = getMetaData();
+
+    results = new MetadataResultSet(metaData.getImportedKeys(unquotedName(table
+      .getSchema().getCatalogName()), unquotedName(table.getSchema()
+      .getSchemaName()), unquotedName(table.getName())));
+    createForeignKeys(results, foreignKeys);
+
+    results = new MetadataResultSet(metaData.getExportedKeys(unquotedName(table
+      .getSchema().getCatalogName()), unquotedName(table.getSchema()
+      .getSchemaName()), unquotedName(table.getName())));
+    createForeignKeys(results, foreignKeys);
+  }
+
+  void retrieveIndices(final MutableTable table, final boolean unique)
+    throws SQLException
+  {
+
+    SQLException sqlEx = null;
+    try
+    {
+      retrieveIndices1(table, unique);
+    }
+    catch (final SQLException e)
+    {
+      sqlEx = e;
+    }
+
+    if (sqlEx != null)
+    {
+      try
+      {
+        sqlEx = null;
+        retrieveIndices2(table, unique);
+      }
+      catch (final SQLException e)
+      {
+        sqlEx = e;
+      }
+    }
+
+    if (sqlEx != null)
+    {
+      throw sqlEx;
+    }
+  }
+
+  void retrievePrimaryKey(final MutableTable table)
+    throws SQLException
+  {
+    MetadataResultSet results = null;
+    try
+    {
+      results = new MetadataResultSet(getMetaData()
+        .getPrimaryKeys(unquotedName(table.getSchema().getCatalogName()),
+                        unquotedName(table.getSchema().getSchemaName()),
+                        unquotedName(table.getName())));
+
+      MutablePrimaryKey primaryKey;
+      while (results.next())
+      {
+        // "TABLE_CAT", "TABLE_SCHEM", "TABLE_NAME"
+        final String columnName = quotedName(results.getString("COLUMN_NAME"));
+        final String primaryKeyName = quotedName(results.getString("PK_NAME"));
+        final int keySequence = Integer.parseInt(results.getString("KEY_SEQ"));
+
+        primaryKey = table.getPrimaryKey();
+        if (primaryKey == null)
+        {
+          primaryKey = new MutablePrimaryKey(table, primaryKeyName);
+        }
+
+        // Register primary key information
+        final MutableColumn column = table.getColumn(columnName);
+        if (column != null)
+        {
+          column.setPartOfPrimaryKey(true);
+          final MutableIndexColumn indexColumn = new MutableIndexColumn(primaryKey,
+                                                                        column);
+          indexColumn.setSortSequence(IndexColumnSortSequence.ascending);
+          indexColumn.setIndexOrdinalPosition(keySequence);
+          //
+          primaryKey.addColumn(indexColumn);
+        }
+
+        table.setPrimaryKey(primaryKey);
+      }
+    }
+    catch (final SQLException e)
+    {
+      throw new SchemaCrawlerSQLException("Could not retrieve primary keys for table "
+                                              + table,
+                                          e);
+    }
+    finally
+    {
+      if (results != null)
+      {
+        results.close();
+      }
+    }
+
+  }
+
+  void retrieveTables(final String catalogName,
+                      final String schemaName,
+                      final String tableNamePattern,
+                      final TableType[] tableTypes,
+                      final InclusionRule tableInclusionRule)
+    throws SQLException
+  {
+    if (tableInclusionRule == null
+        || tableInclusionRule.equals(InclusionRule.EXCLUDE_ALL))
+    {
+      return;
+    }
+
+    MetadataResultSet results = null;
+    try
+    {
+      results = new MetadataResultSet(getMetaData()
+        .getTables(unquotedName(catalogName),
+                   unquotedName(schemaName),
+                   tableNamePattern,
+                   TableType.toStrings(tableTypes)));
+
+      while (results.next())
+      {
+        // "TABLE_CAT", "TABLE_SCHEM"
+        final String tableName = quotedName(results.getString("TABLE_NAME"));
+        LOGGER.log(Level.FINER, String.format("Retrieving table: %s.%s",
+                                              schemaName,
+                                              tableName));
+        final TableType tableType = results.getEnum("TABLE_TYPE",
+                                                    TableType.unknown);
+        final String remarks = results.getString("REMARKS");
+
+        final MutableSchema schema = lookupSchema(catalogName, schemaName);
+        if (schema == null)
+        {
+          LOGGER.log(Level.FINE, String.format("Cannot find schema, %s.%s",
+                                               catalogName,
+                                               schemaName));
+          continue;
+        }
+
+        final MutableTable table;
+        if (tableType == TableType.view)
+        {
+          table = new MutableView(schema, tableName);
+        }
+        else
+        {
+          table = new MutableTable(schema, tableName);
+        }
+        if (tableInclusionRule.include(table.getFullName()))
+        {
+          table.setType(tableType);
+          table.setRemarks(remarks);
+
+          schema.addTable(table);
+        }
+      }
+    }
+    finally
+    {
+      if (results != null)
+      {
+        results.close();
+      }
+    }
+  }
+
   private void createForeignKeys(final MetadataResultSet results,
                                  final NamedObjectList<MutableForeignKey> foreignKeys)
     throws SQLException
@@ -260,112 +524,7 @@ final class TableRetriever
     return column;
   }
 
-  void retrieveColumns(final MutableTable table,
-                       final InclusionRule columnInclusionRule)
-    throws SQLException
-  {
-    MetadataResultSet results = null;
-    try
-    {
-      results = new MetadataResultSet(getMetaData()
-        .getColumns(unquotedName(table.getSchema().getCatalogName()),
-                    unquotedName(table.getSchema().getSchemaName()),
-                    unquotedName(table.getName()),
-                    null));
-
-      while (results.next())
-      {
-        // Get the "COLUMN_DEF" value first as it the Oracle drivers
-        // don't handle it properly otherwise.
-        // http://issues.apache.org/jira/browse/DDLUTILS-29?page=all
-        final String defaultValue = results.getString("COLUMN_DEF");
-        //
-        final String columnCatalogName = quotedName(results
-          .getString("TABLE_CAT"));
-        final String schemaName = quotedName(results.getString("TABLE_SCHEM"));
-        final String tableName = quotedName(results.getString("TABLE_NAME"));
-        final String columnName = quotedName(results.getString("COLUMN_NAME"));
-        LOGGER.log(Level.FINER, String.format("Retrieving column: %s.%s",
-                                              tableName,
-                                              columnName));
-
-        MutableColumn column;
-
-        column = lookupOrCreateColumn(table, columnName, false/* add */);
-        final String columnFullName = column.getFullName();
-        // Note: If the table name contains an underscore character,
-        // this is a wildcard character. We need to do another check to
-        // see if the table name matches.
-        if (columnInclusionRule.include(columnFullName)
-            && table.getName().equals(tableName)
-            && belongsToSchema(table, columnCatalogName, schemaName))
-        {
-          column = lookupOrCreateColumn(table, columnName, true/* add */);
-
-          final int ordinalPosition = results.getInt("ORDINAL_POSITION", 0);
-          final int dataType = results.getInt("DATA_TYPE", 0);
-          final String typeName = results.getString("TYPE_NAME");
-          final int size = results.getInt("COLUMN_SIZE", 0);
-          final int decimalDigits = results.getInt("DECIMAL_DIGITS", 0);
-          final boolean isNullable = results
-            .getInt("NULLABLE", DatabaseMetaData.columnNullableUnknown) == DatabaseMetaData.columnNullable;
-          final String remarks = results.getString("REMARKS");
-
-          column.setOrdinalPosition(ordinalPosition);
-          column.setType(lookupOrCreateColumnDataType((MutableSchema) table
-            .getSchema(), dataType, typeName));
-          column.setSize(size);
-          column.setDecimalDigits(decimalDigits);
-          column.setRemarks(remarks);
-          column.setNullable(isNullable);
-          if (defaultValue != null)
-          {
-            column.setDefaultValue(defaultValue);
-          }
-
-          column.addAttributes(results.getAttributes());
-
-          table.addColumn(column);
-        }
-      }
-    }
-    catch (final SQLException e)
-    {
-      throw new SchemaCrawlerSQLException("Could not retrieve columns for table "
-                                              + table,
-                                          e);
-    }
-    finally
-    {
-      if (results != null)
-      {
-        results.close();
-      }
-    }
-
-  }
-
-  void retrieveForeignKeys(final MutableTable table)
-    throws SQLException
-  {
-
-    final NamedObjectList<MutableForeignKey> foreignKeys = new NamedObjectList<MutableForeignKey>();
-    MetadataResultSet results;
-
-    final DatabaseMetaData metaData = getMetaData();
-
-    results = new MetadataResultSet(metaData.getImportedKeys(unquotedName(table
-      .getSchema().getCatalogName()), unquotedName(table.getSchema()
-      .getSchemaName()), unquotedName(table.getName())));
-    createForeignKeys(results, foreignKeys);
-
-    results = new MetadataResultSet(metaData.getExportedKeys(unquotedName(table
-      .getSchema().getCatalogName()), unquotedName(table.getSchema()
-      .getSchemaName()), unquotedName(table.getName())));
-    createForeignKeys(results, foreignKeys);
-  }
-
-  void retrieveIndices(final MutableTable table, final boolean unique)
+  private void retrieveIndices1(final MutableTable table, final boolean unique)
     throws SQLException
   {
 
@@ -396,50 +555,20 @@ final class TableRetriever
 
   }
 
-  void retrievePrimaryKey(final MutableTable table)
+  private void retrieveIndices2(final MutableTable table, final boolean unique)
     throws SQLException
   {
+
     MetadataResultSet results = null;
     try
     {
       results = new MetadataResultSet(getMetaData()
-        .getPrimaryKeys(unquotedName(table.getSchema().getCatalogName()),
-                        unquotedName(table.getSchema().getSchemaName()),
-                        unquotedName(table.getName())));
-
-      MutablePrimaryKey primaryKey;
-      while (results.next())
-      {
-        // "TABLE_CAT", "TABLE_SCHEM", "TABLE_NAME"
-        final String columnName = quotedName(results.getString("COLUMN_NAME"));
-        final String primaryKeyName = quotedName(results.getString("PK_NAME"));
-        final int keySequence = Integer.parseInt(results.getString("KEY_SEQ"));
-
-        primaryKey = table.getPrimaryKey();
-        if (primaryKey == null)
-        {
-          primaryKey = new MutablePrimaryKey(table, primaryKeyName);
-        }
-
-        // Register primary key information
-        final MutableColumn column = table.getColumn(columnName);
-        if (column != null)
-        {
-          column.setPartOfPrimaryKey(true);
-          final MutableIndexColumn indexColumn = new MutableIndexColumn(primaryKey,
-                                                                        column);
-          indexColumn.setSortSequence(IndexColumnSortSequence.ascending);
-          indexColumn.setIndexOrdinalPosition(keySequence);
-          //
-          primaryKey.addColumn(indexColumn);
-        }
-
-        table.setPrimaryKey(primaryKey);
-      }
+        .getIndexInfo(null, null, table.getName(), unique, true/* approximate */));
+      createIndices(table, results);
     }
     catch (final SQLException e)
     {
-      throw new SchemaCrawlerSQLException("Could not retrieve primary keys for table "
+      throw new SchemaCrawlerSQLException("Could not retrieve indices for table "
                                               + table,
                                           e);
     }
@@ -451,75 +580,6 @@ final class TableRetriever
       }
     }
 
-  }
-
-  void retrieveTables(final String catalogName,
-                      final String schemaName,
-                      final String tableNamePattern,
-                      final TableType[] tableTypes,
-                      final InclusionRule tableInclusionRule)
-    throws SQLException
-  {
-    if (tableInclusionRule == null
-        || tableInclusionRule.equals(InclusionRule.EXCLUDE_ALL))
-    {
-      return;
-    }
-
-    MetadataResultSet results = null;
-    try
-    {
-      results = new MetadataResultSet(getMetaData()
-        .getTables(unquotedName(catalogName),
-                   unquotedName(schemaName),
-                   tableNamePattern,
-                   TableType.toStrings(tableTypes)));
-
-      while (results.next())
-      {
-        // "TABLE_CAT", "TABLE_SCHEM"
-        final String tableName = quotedName(results.getString("TABLE_NAME"));
-        LOGGER.log(Level.FINER, String.format("Retrieving table: %s.%s",
-                                              schemaName,
-                                              tableName));
-        final TableType tableType = results.getEnum("TABLE_TYPE",
-                                                    TableType.unknown);
-        final String remarks = results.getString("REMARKS");
-
-        final MutableSchema schema = lookupSchema(catalogName, schemaName);
-        if (schema == null)
-        {
-          LOGGER.log(Level.FINE, String.format("Cannot find schema, %s.%s",
-                                               catalogName,
-                                               schemaName));
-          continue;
-        }
-
-        final MutableTable table;
-        if (tableType == TableType.view)
-        {
-          table = new MutableView(schema, tableName);
-        }
-        else
-        {
-          table = new MutableTable(schema, tableName);
-        }
-        if (tableInclusionRule.include(table.getFullName()))
-        {
-          table.setType(tableType);
-          table.setRemarks(remarks);
-
-          schema.addTable(table);
-        }
-      }
-    }
-    finally
-    {
-      if (results != null)
-      {
-        results.close();
-      }
-    }
   }
 
 }
