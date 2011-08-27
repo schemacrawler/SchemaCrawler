@@ -114,10 +114,10 @@ abstract class BaseDatabaseConnectionOptions
     catch (final SQLException e)
     {
       jdbcConnectionProperties.remove("password");
-      throw new SQLException(String.format("Could not connect to %s, with properties %s",
-                                           connectionUrl,
-                                           jdbcConnectionProperties),
-                             e);
+      throw new SchemaCrawlerSQLException(String.format("Could not connect to %s, with properties %s",
+                                                        connectionUrl,
+                                                        jdbcConnectionProperties),
+                                          e);
     }
   }
 
