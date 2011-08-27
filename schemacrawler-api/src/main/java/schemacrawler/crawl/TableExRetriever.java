@@ -210,7 +210,7 @@ final class TableExRetriever
         }
       }
     }
-    catch (final SQLException e)
+    catch (final Exception e)
     {
       LOGGER.log(Level.WARNING,
                  "Could not retrieve check constraint information",
@@ -307,7 +307,7 @@ final class TableExRetriever
                                                                         "%"));
       createPrivileges(results, true);
     }
-    catch (final SQLException e)
+    catch (final Exception e)
     {
       LOGGER.log(Level.WARNING, "Could not retrieve table column privileges:"
                                 + e.getMessage());
@@ -332,7 +332,7 @@ final class TableExRetriever
                                                                        "%"));
       createPrivileges(results, false);
     }
-    catch (final SQLException e)
+    catch (final Exception e)
     {
       LOGGER.log(Level.WARNING, "Could not retrieve table privileges", e);
     }
@@ -429,7 +429,7 @@ final class TableExRetriever
 
       }
     }
-    catch (final SQLException e)
+    catch (final Exception e)
     {
       LOGGER.log(Level.WARNING, "Could not retrieve trigger information", e);
     }
@@ -503,7 +503,7 @@ final class TableExRetriever
         view.addAttributes(results.getAttributes());
       }
     }
-    catch (final SQLException e)
+    catch (final Exception e)
     {
       LOGGER.log(Level.WARNING, "Could not retrieve view information", e);
     }
