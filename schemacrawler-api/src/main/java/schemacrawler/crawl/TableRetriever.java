@@ -242,18 +242,19 @@ final class TableRetriever
       {
         column = table.getColumn(columnName);
       }
-      else
+
+      if (column == null)
       {
         // Create the table, but do not add it to the schema
         table = new MutableTable(schema, tableName);
-      }
-      if (column == null)
-      {
         column = new MutableColumn(table, columnName);
-        LOGGER.log(Level.FINER, String
-          .format("Adding referenced foreign key column to table: %s",
-                  column.getFullName()));
         table.addColumn(column);
+
+        LOGGER
+          .log(Level.FINER,
+               String
+                 .format("Creating new column that is referenced by a foreign key: %s",
+                         column.getFullName()));
       }
     }
     return column;
