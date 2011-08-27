@@ -101,8 +101,10 @@ public final class GraphExecutable
     dotWriter.close();
 
     // Create graph image
-    final GraphGenerator dot = new GraphGenerator(dotFile, outputOptions
-      .getOutputFormatValue(), outputOptions.getOutputFile());
+    final GraphGenerator dot = new GraphGenerator(dotFile,
+                                                  outputOptions
+                                                    .getOutputFormatValue(),
+                                                  outputOptions.getOutputFile());
     try
     {
       dot.generateDiagram();

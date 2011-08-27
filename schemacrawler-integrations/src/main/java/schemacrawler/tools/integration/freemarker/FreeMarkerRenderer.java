@@ -48,8 +48,6 @@ public final class FreeMarkerRenderer
   extends BaseExecutable
 {
 
-  private static final long serialVersionUID = 4029489563062547982L;
-
   private static final Logger LOGGER = Logger
     .getLogger(FreeMarkerRenderer.class.getName());
 

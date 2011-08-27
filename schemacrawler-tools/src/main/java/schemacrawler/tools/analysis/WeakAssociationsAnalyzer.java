@@ -27,9 +27,9 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.SortedMap;
 import java.util.TreeMap;
-import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -225,8 +225,9 @@ final class WeakAssociationsAnalyzer
                   && fkColumnType.getType() == pkColumnType.getType())
               {
                 LOGGER.log(Level.FINE, String
-                  .format("Found weak association: %s --> %s", fkColumn
-                    .getFullName(), pkColumn.getFullName()));
+                  .format("Found weak association: %s --> %s",
+                          fkColumn.getFullName(),
+                          pkColumn.getFullName()));
                 final ColumnMap weakAssociation = new WeakAssociation(pkColumn,
                                                                       fkColumn);
                 addWeakAssociation((Table) pkColumn.getParent(),
@@ -328,8 +329,8 @@ final class WeakAssociationsAnalyzer
     if (LOGGER.isLoggable(Level.FINE))
     {
       LOGGER.log(Level.FINE, "Table prefixes=" + prefixes);
-      LOGGER.log(Level.FINE, "Table matches map:"
-                             + ObjectToString.toString(tableMatchMap));
+      LOGGER.log(Level.FINE,
+                 "Table matches map:" + ObjectToString.toString(tableMatchMap));
     }
 
     final Map<String, ForeignKeyColumnMap> fkColumnsMap = mapForeignKeyColumns(tables);

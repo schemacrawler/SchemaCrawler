@@ -43,15 +43,6 @@ public interface TextFormattingHelper
   String createArrow();
 
   /**
-   * Creates a description row with a blank spacer cells.
-   * 
-   * @param description
-   *        Description
-   * @return Row as a string
-   */
-  String createDescriptionRow(final String description);
-
-  /**
    * Creates a definition row.
    * 
    * @param definition
@@ -59,6 +50,15 @@ public interface TextFormattingHelper
    * @return Row as a string
    */
   String createDefinitionRow(final String definition);
+
+  /**
+   * Creates a description row with a blank spacer cells.
+   * 
+   * @param description
+   *        Description
+   * @return Row as a string
+   */
+  String createDescriptionRow(final String description);
 
   /**
    * Creates a detail row, with four fields.

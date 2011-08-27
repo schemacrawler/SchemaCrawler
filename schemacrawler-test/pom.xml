@@ -28,6 +28,11 @@
     </dependency>
     <dependency>
       <groupId>net.sourceforge.schemacrawler</groupId>
+      <artifactId>schemacrawler-db2</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>net.sourceforge.schemacrawler</groupId>
       <artifactId>schemacrawler-mysql</artifactId>
       <version>${project.version}</version>
     </dependency>
@@ -50,6 +55,12 @@
       <groupId>oracle</groupId>
       <artifactId>oracle-jdbc</artifactId>
       <version>11.2.0.1.0</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>db2</groupId>
+      <artifactId>db2-jdbc</artifactId>
+      <version>3.50.152</version>
       <scope>provided</scope>
     </dependency>
     <dependency>

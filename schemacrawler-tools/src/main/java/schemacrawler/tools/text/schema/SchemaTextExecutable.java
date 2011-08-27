@@ -45,8 +45,6 @@ public final class SchemaTextExecutable
   extends BaseExecutable
 {
 
-  private static final long serialVersionUID = -6824567755397315920L;
-
   private SchemaTextOptions schemaTextOptions;
 
   public SchemaTextExecutable(final String command)
@@ -119,8 +117,9 @@ public final class SchemaTextExecutable
     final SchemaTextFormatter formatter = getDatabaseTraversalHandler();
 
     formatter.begin();
-    formatter.handle(database.getSchemaCrawlerInfo(), database
-      .getDatabaseInfo(), database.getJdbcDriverInfo());
+    formatter.handle(database.getSchemaCrawlerInfo(),
+                     database.getDatabaseInfo(),
+                     database.getJdbcDriverInfo());
 
     final List<ColumnDataType> columnDataTypes = new ArrayList<ColumnDataType>();
     final List<Table> tables = new ArrayList<Table>();

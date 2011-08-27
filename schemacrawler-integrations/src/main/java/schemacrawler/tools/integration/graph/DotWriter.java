@@ -104,6 +104,42 @@ final class DotWriter
     out.println(text);
   }
 
+  public void print(final Collection<Table> tables,
+                    final Collection<ColumnMap> weakAssociations)
+  {
+    if (tables != null)
+    {
+      for (final Table table: tables)
+      {
+        print(table);
+        out.write(Utility.NEWLINE);
+        // Print foreign keys
+        for (final ForeignKey foreignKey: table.getForeignKeys())
+        {
+          final ColumnMap[] columnPairs = foreignKey.getColumnPairs();
+          for (final ColumnMap columnMap: columnPairs)
+          {
+            if (table.equals(columnMap.getPrimaryKeyColumn().getParent()))
+            {
+              out.write(printColumnAssociation(foreignKey.getName(),
+                                               columnMap,
+                                               tables));
+            }
+          }
+        }
+        out.write(Utility.NEWLINE);
+        out.write(Utility.NEWLINE);
+      }
+    }
+
+    out.write(Utility.NEWLINE);
+    for (final ColumnMap columnMap: weakAssociations)
+    {
+      out.write(printColumnAssociation("", columnMap, tables));
+    }
+    out.write(Utility.NEWLINE);
+  }
+
   public void print(final SchemaCrawlerInfo schemaCrawlerInfo,
                     final DatabaseInfo databaseInfo,
                     final JdbcDriverInfo jdbcDriverInfo)
@@ -161,42 +197,6 @@ final class DotWriter
     out.println(graphLabel);
   }
 
-  public void print(final Collection<Table> tables,
-                    final Collection<ColumnMap> weakAssociations)
-  {
-    if (tables != null)
-    {
-      for (final Table table: tables)
-      {
-        print(table);
-        out.write(Utility.NEWLINE);
-        // Print foreign keys
-        for (final ForeignKey foreignKey: table.getForeignKeys())
-        {
-          final ColumnMap[] columnPairs = foreignKey.getColumnPairs();
-          for (final ColumnMap columnMap: columnPairs)
-          {
-            if (table.equals(columnMap.getPrimaryKeyColumn().getParent()))
-            {
-              out.write(printColumnAssociation(foreignKey.getName(),
-                                               columnMap,
-                                               tables));
-            }
-          }
-        }
-        out.write(Utility.NEWLINE);
-        out.write(Utility.NEWLINE);
-      }
-    }
-
-    out.write(Utility.NEWLINE);
-    for (final ColumnMap columnMap: weakAssociations)
-    {
-      out.write(printColumnAssociation("", columnMap, tables));
-    }
-    out.write(Utility.NEWLINE);
-  }
-
   private String[] getPortIds(final Column column,
                               final Collection<Table> tables)
   {
@@ -213,7 +213,7 @@ final class DotWriter
     else
     {
       // Create new node
-      String nodeId = print(column);
+      final String nodeId = print(column);
       //
       portIds[0] = nodeId;
       portIds[1] = nodeId;
@@ -236,10 +236,10 @@ final class DotWriter
 
   private String print(final Column column)
   {
-    String nodeId = "\"" + UUID.randomUUID().toString() + "\"";
-    String columnNode = String.format("  %s [label=<%s>];\n",
-                                      nodeId,
-                                      column.getFullName());
+    final String nodeId = "\"" + UUID.randomUUID().toString() + "\"";
+    final String columnNode = String.format("  %s [label=<%s>];\n",
+                                            nodeId,
+                                            column.getFullName());
 
     out.write(columnNode);
 
@@ -280,7 +280,7 @@ final class DotWriter
       .append(Utility.NEWLINE);
     buffer.append("          <td bgcolor=\"").append(tableNameBgColor)
       .append("\" align=\"right\">")
-      .append((table instanceof View? "[view]": "[table]")).append("</td>")
+      .append(table instanceof View? "[view]": "[table]").append("</td>")
       .append(Utility.NEWLINE);
     buffer.append("        </tr>").append(Utility.NEWLINE);
     for (final Column column: table.getColumns())

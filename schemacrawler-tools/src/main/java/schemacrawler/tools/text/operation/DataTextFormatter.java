@@ -38,7 +38,6 @@ import java.util.logging.Logger;
 
 import org.hsqldb.types.Types;
 
-import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.ResultsColumn;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputOptions;
@@ -305,8 +304,8 @@ final class DataTextFormatter
 
     if (operation == Operation.count)
     {
-      out.println(formattingHelper
-        .createObjectStart(operation.getDescription()));
+      out
+        .println(formattingHelper.createObjectStart(operation.getDescription()));
     }
   }
 
@@ -480,7 +479,8 @@ final class DataTextFormatter
       out.println(formattingHelper.createObjectStart(title));
       try
       {
-        final ResultsColumn[] resultsColumns = SchemaCrawlerUtility.getResultColumns(rows).getColumns();
+        final ResultsColumn[] resultsColumns = SchemaCrawlerUtility
+          .getResultColumns(rows).getColumns();
 
         final int columnCount = resultsColumns.length;
         final String[] columnNames = new String[columnCount];

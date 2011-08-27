@@ -139,7 +139,7 @@ public class SchemaCrawlerCommandLineToolsTest
         .getResourceAsStream("/hsqldb.INFORMATION_SCHEMA.config.properties"));
       properties.store(writer, this.getClass().getName());
 
-      final String referenceFile = String.format("grep%02d.txt", (i + 1));
+      final String referenceFile = String.format("grep%02d.txt", i + 1);
 
       final File testOutputFile = File
         .createTempFile("schemacrawler." + referenceFile + ".", ".test");

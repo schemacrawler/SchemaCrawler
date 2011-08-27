@@ -117,16 +117,19 @@ public class SchemaEqualsHashCodeTest
 
     private static final long serialVersionUID = 1440765929570312732L;
 
+    @Override
     public String getGrantee()
     {
       return "grantEmpty-Grantee";
     }
 
+    @Override
     public String getGrantor()
     {
       return "grantEmpty-Grantor";
     }
 
+    @Override
     public boolean isGrantable()
     {
       return false;

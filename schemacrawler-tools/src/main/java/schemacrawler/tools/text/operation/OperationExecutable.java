@@ -38,8 +38,6 @@ public final class OperationExecutable
   extends BaseExecutable
 {
 
-  private static final long serialVersionUID = -6824567755397315920L;
-
   private OperationOptions operationOptions;
 
   public OperationExecutable(final String command)
@@ -64,30 +62,6 @@ public final class OperationExecutable
   public final void setOperationOptions(final OperationOptions operationOptions)
   {
     this.operationOptions = operationOptions;
-  }
-
-  @Override
-  protected void executeOn(final Database database, final Connection connection)
-    throws Exception
-  {
-    final OperationHandler handler = getHandler(connection);
-
-    handler.begin();
-    handler.handle(database.getSchemaCrawlerInfo(),
-                   database.getDatabaseInfo(),
-                   database.getJdbcDriverInfo());
-
-    for (final Schema schema: database.getSchemas())
-    {
-      final Table[] tables = schema.getTables();
-      for (final Table table: tables)
-      {
-        handler.handle(table);
-      }
-    }
-
-    handler.end();
-
   }
 
   private OperationHandler getHandler(final Connection connection)
@@ -135,6 +109,30 @@ public final class OperationExecutable
                                    connection);
 
     return handler;
+  }
+
+  @Override
+  protected void executeOn(final Database database, final Connection connection)
+    throws Exception
+  {
+    final OperationHandler handler = getHandler(connection);
+
+    handler.begin();
+    handler.handle(database.getSchemaCrawlerInfo(),
+                   database.getDatabaseInfo(),
+                   database.getJdbcDriverInfo());
+
+    for (final Schema schema: database.getSchemas())
+    {
+      final Table[] tables = schema.getTables();
+      for (final Table table: tables)
+      {
+        handler.handle(table);
+      }
+    }
+
+    handler.end();
+
   }
 
 }

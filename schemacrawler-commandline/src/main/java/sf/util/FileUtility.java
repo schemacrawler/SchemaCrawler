@@ -34,8 +34,8 @@ public final class FileUtility
   {
     final String oldExt = getFileExtension(file);
     final String oldFileName = file.getName();
-    final String newFileName = oldFileName.substring(0, (oldFileName
-      .lastIndexOf(oldExt) - 1))
+    final String newFileName = oldFileName.substring(0, oldFileName
+      .lastIndexOf(oldExt) - 1)
                                + ext;
     return new File(file.getParentFile(), newFileName);
   }

@@ -49,34 +49,20 @@ public class CoverageTest
     testUtility.startMemoryDatabase();
   }
 
-  @Test(expected = SQLException.class)
-  public void retrieverConnection()
-    throws SQLException
-  {
-    final RetrieverConnection retrieverConnection = new RetrieverConnection(null,
-                                                                            null);
-  }
-
-  @Test(expected = SQLException.class)
-  public void retrieverConnectionClosed()
-    throws SQLException, SchemaCrawlerException
-  {
-    final Connection connection = testUtility.getConnection();
-    connection.close();
-    final RetrieverConnection retrieverConnection = new RetrieverConnection(connection,
-                                                                            null);
-  }
-
   @Test
   public void namedObjectList()
   {
-    NamedObjectList<NamedObject> list = new NamedObjectList<NamedObject>();
+    final NamedObjectList<NamedObject> list = new NamedObjectList<NamedObject>();
     list.add(new AbstractNamedObject("name1")
     {
+
+      private static final long serialVersionUID = -514565049545540452L;
 
     });
     list.add(new AbstractNamedObject("name2")
     {
+
+      private static final long serialVersionUID = 6176088733525976950L;
 
     });
     assertEquals("NamedObjectList size", 2, list.size());
@@ -86,7 +72,23 @@ public class CoverageTest
   @Test(expected = IllegalArgumentException.class)
   public void namedObjectListNull()
   {
-    NamedObjectList<NamedObject> list = new NamedObjectList<NamedObject>();
+    final NamedObjectList<NamedObject> list = new NamedObjectList<NamedObject>();
     list.add(null);
+  }
+
+  @Test(expected = SQLException.class)
+  public void retrieverConnection()
+    throws SQLException
+  {
+    new RetrieverConnection(null, null);
+  }
+
+  @Test(expected = SQLException.class)
+  public void retrieverConnectionClosed()
+    throws SQLException, SchemaCrawlerException
+  {
+    final Connection connection = testUtility.getConnection();
+    connection.close();
+    new RetrieverConnection(connection, null);
   }
 }

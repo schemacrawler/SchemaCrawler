@@ -53,18 +53,6 @@ public enum Operation
   }
 
   /**
-   * Message format for the counts.
-   * 
-   * @param number
-   *        Number value in the message
-   * @return Message format for the counts
-   */
-  String getCountMessage(final Number number)
-  {
-    return MessageFormat.format(countMessageFormat, number);
-  }
-
-  /**
    * Operation description.
    * 
    * @return Operation description
@@ -82,6 +70,18 @@ public enum Operation
   public Query getQuery()
   {
     return new Query(name(), queryString);
+  }
+
+  /**
+   * Message format for the counts.
+   * 
+   * @param number
+   *        Number value in the message
+   * @return Message format for the counts
+   */
+  String getCountMessage(final Number number)
+  {
+    return MessageFormat.format(countMessageFormat, number);
   }
 
 }
