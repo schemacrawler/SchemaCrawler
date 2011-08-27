@@ -143,15 +143,15 @@ public final class XmlDatabase
       };
       for (final String xmlElement: xmlElements)
       {
-        xStream.alias(xmlElement, Class.forName("schemacrawler.crawl.Mutable"
-                                                + xmlElement.substring(0, 1)
-                                                  .toUpperCase()
-                                                + xmlElement.substring(1)));
+        xStream.alias(xmlElement,
+                      Class.forName("schemacrawler.crawl.Mutable"
+                                    + xmlElement.substring(0, 1).toUpperCase()
+                                    + xmlElement.substring(1)));
       }
       xStream.alias("grant", Class
         .forName("schemacrawler.crawl.MutablePrivilege$PrivilegeGrant"));
-      xStream.alias("schemaReference", Class
-        .forName("schemacrawler.crawl.SchemaReference"));
+      xStream.alias("schemaReference",
+                    Class.forName("schemacrawler.crawl.SchemaReference"));
 
       return xStream;
     }

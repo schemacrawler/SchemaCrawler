@@ -18,10 +18,13 @@ package schemacrawler.test;
 
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
 
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import org.junit.Test;
@@ -37,21 +40,53 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.utility.SchemaCrawlerUtility;
+import sf.util.ObjectToString;
 
 public class SchemaCrawlerSystemTest
 {
 
   private final ApplicationContext appContext = new ClassPathXmlApplicationContext("datasources.xml");
   private final String[] dataSources = {
-      "MicrosoftSQLServer", "MySQL", "Oracle", "PostgreSQL", "SQLite",
+      "MicrosoftSQLServer",
+      "Oracle",
+      "IBM_DB2",
+      "MySQL",
+      "PostgreSQL",
+      "SQLite",
   };
+
+  @Test
+  public void connections()
+    throws Exception
+  {
+    final List<String> connectionErrors = new ArrayList<String>();
+    for (final String dataSource: dataSources)
+    {
+      try
+      {
+        connect(dataSource);
+      }
+      catch (final Exception e)
+      {
+        final String message = dataSource + ": " + e.getMessage();
+        System.out.println(message);
+        connectionErrors.add(message);
+      }
+    }
+    if (!connectionErrors.isEmpty())
+    {
+      final String error = ObjectToString.toString(connectionErrors);
+      System.out.println(error);
+      fail(error);
+    }
+  }
 
   @Test
   public void schemaCounts()
     throws Exception
   {
     final int[] schemaCounts = {
-        52, 4, 14, 5, 1,
+        65, 19, 16, 6, 5, 1,
     };
 
     final SchemaCrawlerOptions schemaCrawlerOptions = createOptions(".*");
@@ -66,9 +101,8 @@ public class SchemaCrawlerSystemTest
       final Database database = retrieveDatabase(dataSource,
                                                  schemaCrawlerOptions);
       final Schema[] schemas = database.getSchemas();
-      assertEquals("Incorrect number of schemas for " + dataSource,
-                   schemaCounts[i],
-                   schemas.length);
+      assertEquals("Incorrect number of schemas for " + dataSource + ": "
+                   + Arrays.toString(schemas), schemaCounts[i], schemas.length);
     }
   }
 
@@ -76,33 +110,50 @@ public class SchemaCrawlerSystemTest
   public void tablesAndCounts()
     throws Exception
   {
-    String dataSourceName;
-    Schema schema;
+    final List<String> messages = new ArrayList<String>();
+    String message;
+    message = tablesAndCounts("MicrosoftSQLServer", "Books.dbo", "\"");
+    if (message != null)
+    {
+      messages.add(message);
+    }
 
-    dataSourceName = "MicrosoftSQLServer";
-    schema = retrieveSchema(dataSourceName, "books.dbo");
-    tables(dataSourceName, schema);
-    counts(dataSourceName, schema);
+    message = tablesAndCounts("Oracle", "BOOKS", "\"");
+    if (message != null)
+    {
+      messages.add(message);
+    }
 
-    dataSourceName = "MySQL";
-    schema = retrieveSchema(dataSourceName, null);
-    tables(dataSourceName, schema);
-    counts(dataSourceName, schema);
+    message = tablesAndCounts("IBM_DB2", "BOOKS", "\"");
+    if (message != null)
+    {
+      messages.add(message);
+    }
 
-    dataSourceName = "Oracle";
-    schema = retrieveSchema(dataSourceName, "SCHEMACRAWLER");
-    tables(dataSourceName, schema);
-    counts(dataSourceName, schema);
+    message = tablesAndCounts("MySQL", null, "`");
+    if (message != null)
+    {
+      messages.add(message);
+    }
 
-    dataSourceName = "PostgreSQL";
-    schema = retrieveSchema(dataSourceName, "schemacrawler");
-    tables(dataSourceName, schema);
-    counts(dataSourceName, schema);
+    message = tablesAndCounts("PostgreSQL", "books", "\"");
+    if (message != null)
+    {
+      messages.add(message);
+    }
 
-    dataSourceName = "SQLite";
-    schema = retrieveSchema(dataSourceName, null);
-    tables(dataSourceName, schema);
-    // counts(dataSourceName, schema);
+    // message = tablesAndCounts("SQLite", null, "\"");
+    // if (message != null)
+    // {
+    // messages.add(message);
+    // }
+
+    if (!messages.isEmpty())
+    {
+      final String error = ObjectToString.toString(messages);
+      System.out.println(error);
+      fail(error);
+    }
   }
 
   @Test
@@ -128,10 +179,20 @@ public class SchemaCrawlerSystemTest
     schema = retrieveSchema(dataSourceName, "unknown");
     assertNull(dataSourceName, schema);
 
-    // SQLite does not support catalogs or schemas, so rules are ignored
-    dataSourceName = "SQLite";
-    schema = retrieveSchema(dataSourceName, "unknown");
-    assertNotNull(dataSourceName, schema);
+    // // SQLite does not support catalogs or schemas, so rules are
+    // ignored
+    // dataSourceName = "SQLite";
+    // schema = retrieveSchema(dataSourceName, "unknown");
+    // assertNotNull(dataSourceName, schema);
+  }
+
+  private Connection connect(final String dataSourceName)
+    throws Exception
+  {
+    final ConnectionOptions connectionOptions = (ConnectionOptions) appContext
+      .getBean(dataSourceName);
+    final Connection connection = connectionOptions.getConnection();
+    return connection;
   }
 
   private void counts(final String dataSourceName, final Schema schema)
@@ -139,16 +200,16 @@ public class SchemaCrawlerSystemTest
   {
 
     final int[] tableColumnCounts = {
-        5, 3, 3, 5, 3, 2
+        9, 3, 3, 6, 1, 2
     };
     final int[] checkConstraints = {
         0, 0, 0, 0, 0, 0
     };
-    // final int[] indexCounts = {
-    // 0, 0, 2, 4, 0, 2
-    // };
+    /*
+     * final int[] indexCounts = { 1, 0, 2, 4, 0, 2 };
+     */
     final int[] fkCounts = {
-        1, 0, 2, 2, 1, 0
+        1, 0, 2, 1, 0, 0
     };
 
     final Table[] tables = schema.getTables();
@@ -168,10 +229,11 @@ public class SchemaCrawlerSystemTest
                                  table.getFullName()),
                    checkConstraints[tableIdx],
                    table.getCheckConstraints().length);
-      // assertEquals(String.format("%s table %s index count does not match",dataSourceName,
-      // table
-      // .getFullName()), indexCounts[tableIdx],
-      // table.getIndices().length);
+      /*
+       * assertEquals(String.format("%s table %s index count does not match"
+       * , dataSourceName, table.getFullName()), indexCounts[tableIdx],
+       * table.getIndices().length);
+       */
       assertEquals(String.format("%s table %s foreign key count does not match",
                                  dataSourceName,
                                  table.getFullName()),
@@ -197,10 +259,7 @@ public class SchemaCrawlerSystemTest
                                     final SchemaCrawlerOptions schemaCrawlerOptions)
     throws Exception
   {
-    final ConnectionOptions connectionOptions = (ConnectionOptions) appContext
-      .getBean(dataSourceName);
-    final Connection connection = connectionOptions.getConnection();
-
+    final Connection connection = connect(dataSourceName);
     try
     {
       final Database database = SchemaCrawlerUtility
@@ -211,7 +270,6 @@ public class SchemaCrawlerSystemTest
     {
       throw new SchemaCrawlerException(dataSourceName, e);
     }
-
   }
 
   private Schema retrieveSchema(final String dataSourceName,
@@ -234,12 +292,12 @@ public class SchemaCrawlerSystemTest
     }
     else
     {
-      final Pattern schemaPattern = Pattern.compile(".*schemacrawler");
+      final Pattern schemaPattern = Pattern.compile(".*books",
+                                                    Pattern.CASE_INSENSITIVE);
       Schema scSchema = null;
       for (final Schema currSchema: schemas)
       {
-        if (schemaPattern.matcher(currSchema.getFullName().toLowerCase())
-          .matches())
+        if (schemaPattern.matcher(currSchema.getFullName()).matches())
         {
           scSchema = currSchema;
           break;
@@ -250,18 +308,31 @@ public class SchemaCrawlerSystemTest
     return schema;
   }
 
-  private void tables(final String dataSourceName, final Schema schema)
+  private void tables(final String dataSourceName,
+                      final Schema schema,
+                      final String quote)
     throws Exception
   {
+    if (schema == null)
+    {
+      throw new SchemaCrawlerException("No schema found");
+    }
+
     final String[] tableNames = {
-        "CUSTOMER", "CUSTOMERLIST", "INVOICE", "ITEM", "PRODUCT", "SUPPLIER"
+        "AUTHORS",
+        "AUTHORSLIST",
+        "BOOKAUTHORS",
+        "BOOKS",
+        quote + "GLOBAL COUNTS" + quote,
+        "PUBLISHERS",
     };
     final String[] tableTypes = {
         "TABLE", "VIEW", "TABLE", "TABLE", "TABLE", "TABLE"
     };
 
     final Table[] tables = schema.getTables();
-    assertEquals(dataSourceName + " table count does not match",
+    assertEquals(dataSourceName + " table count does not match - "
+                     + ObjectToString.toString(tables),
                  tableNames.length,
                  tables.length);
     for (int tableIdx = 0; tableIdx < tables.length; tableIdx++)
@@ -273,6 +344,25 @@ public class SchemaCrawlerSystemTest
       assertEquals(dataSourceName + " table type does not match",
                    tableTypes[tableIdx],
                    table.getType().toString().toUpperCase());
+    }
+  }
+
+  private String tablesAndCounts(final String dataSourceName,
+                                 final String schemaInclusion,
+                                 final String quote)
+  {
+    try
+    {
+      Schema schema;
+      schema = retrieveSchema(dataSourceName, schemaInclusion);
+      tables(dataSourceName, schema, quote);
+      counts(dataSourceName, schema);
+      return null;
+    }
+    catch (final Exception e)
+    {
+      e.printStackTrace();
+      return e.getMessage();
     }
   }
 

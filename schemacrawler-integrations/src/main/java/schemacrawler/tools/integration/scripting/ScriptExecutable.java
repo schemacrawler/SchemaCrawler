@@ -52,8 +52,6 @@ public final class ScriptExecutable
   extends BaseExecutable
 {
 
-  private static final long serialVersionUID = -2232328675306451328L;
-
   private static final Logger LOGGER = Logger.getLogger(ScriptExecutable.class
     .getName());
 

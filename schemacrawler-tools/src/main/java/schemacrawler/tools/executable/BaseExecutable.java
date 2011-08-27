@@ -161,9 +161,6 @@ public abstract class BaseExecutable
     return ObjectToString.toString(this);
   }
 
-  protected abstract void executeOn(Database database, Connection connection)
-    throws Exception;
-
   /**
    * Initializes the executable before execution.
    */
@@ -185,5 +182,8 @@ public abstract class BaseExecutable
       LOGGER.log(Level.CONFIG, toString());
     }
   }
+
+  protected abstract void executeOn(Database database, Connection connection)
+    throws Exception;
 
 }

@@ -22,8 +22,8 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 
 public class ConfigLoader
 {
-  
-  public static Config configFromResource(String resource)
+
+  public static Config configFromResource(final String resource)
     throws SchemaCrawlerException
   {
     if (resource == null)
@@ -36,6 +36,5 @@ public class ConfigLoader
   private ConfigLoader()
   {
   }
-  
-  
+
 }

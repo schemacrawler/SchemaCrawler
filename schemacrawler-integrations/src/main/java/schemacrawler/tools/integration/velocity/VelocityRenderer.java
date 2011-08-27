@@ -49,8 +49,6 @@ public final class VelocityRenderer
   extends BaseExecutable
 {
 
-  private static final long serialVersionUID = -3346519953252968289L;
-
   private static final Logger LOGGER = Logger.getLogger(VelocityRenderer.class
     .getName());
 

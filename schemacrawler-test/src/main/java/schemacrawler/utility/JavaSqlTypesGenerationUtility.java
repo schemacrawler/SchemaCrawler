@@ -32,8 +32,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.Map.Entry;
+import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -172,8 +172,9 @@ public final class JavaSqlTypesGenerationUtility
   {
     final Writer writer;
     writer = new FileWriter(new File(directory, fileName));
-    writer.write(String.format("# java.sql.Types from Java %s %s%n", System
-      .getProperty("java.version"), System.getProperty("java.vendor")));
+    writer.write(String.format("# java.sql.Types from Java %s %s%n",
+                               System.getProperty("java.version"),
+                               System.getProperty("java.vendor")));
     return writer;
   }
 
@@ -214,8 +215,7 @@ public final class JavaSqlTypesGenerationUtility
     writers[1] = startWriting(directory, "java.sql.Types.mappings.properties");
     writers[2] = startWriting(directory, "java.sql.Types.groups.properties");
 
-    final List<String> javaSqlTypeNames = new ArrayList<String>(javaSqlTypesMap
-      .keySet());
+    final List<String> javaSqlTypeNames = new ArrayList<String>(javaSqlTypesMap.keySet());
     Collections.sort(javaSqlTypeNames);
     for (final String javaSqlTypeName: javaSqlTypeNames)
     {

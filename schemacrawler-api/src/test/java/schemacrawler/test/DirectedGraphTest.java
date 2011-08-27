@@ -46,30 +46,6 @@ public class DirectedGraphTest
   }
 
   @Test
-  public void topologicalSort()
-    throws Exception
-  {
-    for (int i = 0; i < 8; i++)
-    {
-      final DirectedGraph<String> graph = makeGraph();
-
-      assertEquals("Test run #" + (i + 1), "[A, E, B, D, C]", graph
-        .topologicalSort().toString());
-    }
-  }
-
-  @Test(expected = GraphException.class)
-  public void topologicalSortCyclical()
-    throws Exception
-  {
-    final DirectedGraph<String> graph = makeGraph();
-    graph.addDirectedEdge("C", "A");
-
-    assertEquals(Arrays.asList("E", "A", "D", "B", "C"), graph
-      .topologicalSort().toString());
-  }
-
-  @Test
   public void subGraph()
     throws Exception
   {
@@ -94,6 +70,30 @@ public class DirectedGraphTest
       .toString());
     assertEquals("[B, C, G, F]", graph.subGraph("B", 3).topologicalSort()
       .toString());
+  }
+
+  @Test
+  public void topologicalSort()
+    throws Exception
+  {
+    for (int i = 0; i < 8; i++)
+    {
+      final DirectedGraph<String> graph = makeGraph();
+
+      assertEquals("Test run #" + (i + 1), "[A, E, B, D, C]", graph
+        .topologicalSort().toString());
+    }
+  }
+
+  @Test(expected = GraphException.class)
+  public void topologicalSortCyclical()
+    throws Exception
+  {
+    final DirectedGraph<String> graph = makeGraph();
+    graph.addDirectedEdge("C", "A");
+
+    assertEquals(Arrays.asList("E", "A", "D", "B", "C"), graph
+      .topologicalSort().toString());
   }
 
   private DirectedGraph<String> makeGraph()

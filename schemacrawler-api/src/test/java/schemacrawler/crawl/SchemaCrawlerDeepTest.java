@@ -69,8 +69,9 @@ public class SchemaCrawlerDeepTest
     assertNotNull("Could not obtain schema", systemSchema);
     assertTrue("Should not find any tables",
                systemSchema.getTables().length == 0);
-    assertEquals("Could not find any procedures", 7, systemSchema
-      .getProcedures().length);
+    assertEquals("Could not find any procedures",
+                 7,
+                 systemSchema.getProcedures().length);
 
     final Schema schema = testUtility.getSchema(schemaCrawlerOptions,
                                                 "PUBLIC.BOOKS");

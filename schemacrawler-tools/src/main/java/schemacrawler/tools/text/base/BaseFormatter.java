@@ -23,9 +23,9 @@ package schemacrawler.tools.text.base;
 
 import java.io.PrintWriter;
 import java.util.Arrays;
+import java.util.Map.Entry;
 import java.util.SortedMap;
 import java.util.TreeMap;
-import java.util.Map.Entry;
 
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.DatabaseProperty;
@@ -163,8 +163,9 @@ public abstract class BaseFormatter<O extends Options>
                                               "JDBC Driver Information"));
 
     out.print(formattingHelper.createObjectStart(""));
-    out.println(formattingHelper.createNameValueRow("driver name", driverInfo
-      .getDriverName()));
+    out
+      .println(formattingHelper.createNameValueRow("driver name",
+                                                   driverInfo.getDriverName()));
     out.println(formattingHelper.createNameValueRow("driver version",
                                                     driverInfo
                                                       .getDriverVersion()));
@@ -207,11 +208,11 @@ public abstract class BaseFormatter<O extends Options>
 
     out.print(formattingHelper.createObjectStart(""));
     out.println(formattingHelper
-      .createNameValueRow("product name", schemaCrawlerInfo
-        .getSchemaCrawlerProductName()));
+      .createNameValueRow("product name",
+                          schemaCrawlerInfo.getSchemaCrawlerProductName()));
     out.println(formattingHelper
-      .createNameValueRow("product version", schemaCrawlerInfo
-        .getSchemaCrawlerVersion()));
+      .createNameValueRow("product version",
+                          schemaCrawlerInfo.getSchemaCrawlerVersion()));
     out.print(formattingHelper.createObjectEnd());
 
     if (printVerboseDatabaseInfo)

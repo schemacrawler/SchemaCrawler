@@ -92,8 +92,8 @@ public class LinterTableWithIncrementingColumns
         final String columnNameBase = matcher.group(1);
         if (incrementingColumnsMap.containsKey(columnNameBase))
         {
-          incrementingColumnsMap.put(columnNameBase, incrementingColumnsMap
-            .get(columnNameBase) + 1);
+          incrementingColumnsMap
+            .put(columnNameBase, incrementingColumnsMap.get(columnNameBase) + 1);
         }
         else
         {

@@ -37,12 +37,12 @@ import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.IndexType;
 import schemacrawler.schema.Privilege;
+import schemacrawler.schema.Privilege.Grant;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.ProcedureColumn;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schema.View;
-import schemacrawler.schema.Privilege.Grant;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.analysis.AnalyzedDatabase;
 import schemacrawler.tools.analysis.Lint;
@@ -111,8 +111,9 @@ final class SchemaTextFormatter
         {
           constraintName = constraint.getName();
         }
-        printDefinition("check constraint", constraintName, constraint
-          .getDefinition());
+        printDefinition("check constraint",
+                        constraintName,
+                        constraint.getDefinition());
       }
     }
   }
@@ -124,8 +125,8 @@ final class SchemaTextFormatter
     final String userDefined = negate(columnDataType.isUserDefined(),
                                       "user defined");
     final String nullable = negate(columnDataType.isNullable(), "nullable");
-    final String autoIncrementable = negate(columnDataType
-      .isAutoIncrementable(), "auto-incrementable");
+    final String autoIncrementable = negate(columnDataType.isAutoIncrementable(),
+                                            "auto-incrementable");
     String definedWith = "defined with ";
     if (columnDataType.getCreateParameters() == null)
     {
@@ -311,9 +312,8 @@ final class SchemaTextFormatter
         }
         else
         {
-          out.println(formattingHelper
-            .createDescriptionRow(lint.getDescription() + Utility.NEWLINE
-                                  + lint.getLintValueAsString()));
+          out.println(formattingHelper.createDescriptionRow(lint
+            .getDescription() + Utility.NEWLINE + lint.getLintValueAsString()));
         }
       }
     }
@@ -390,8 +390,9 @@ final class SchemaTextFormatter
       {
         ordinalNumberString = String.valueOf(column.getOrdinalPosition() + 1);
       }
-      out.println(formattingHelper.createDetailRow(ordinalNumberString, column
-        .getName(), columnType.toString()));
+      out.println(formattingHelper.createDetailRow(ordinalNumberString,
+                                                   column.getName(),
+                                                   columnType.toString()));
     }
   }
 

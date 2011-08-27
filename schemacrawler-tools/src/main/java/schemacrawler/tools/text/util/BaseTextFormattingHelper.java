@@ -56,6 +56,18 @@ abstract class BaseTextFormattingHelper
     this.outputFormat = outputFormat;
   }
 
+  public String createDefinitionRow(final String definition)
+  {
+    final TableRow row = new TableRow(outputFormat);
+    row.add(new TableCell(definition,
+                          0,
+                          Align.left,
+                          3,
+                          "definition",
+                          outputFormat));
+    return row.toString();
+  }
+
   /**
    * {@inheritDoc}
    * 
@@ -69,18 +81,6 @@ abstract class BaseTextFormattingHelper
                           0,
                           Align.left,
                           2,
-                          "definition",
-                          outputFormat));
-    return row.toString();
-  }
-
-  public String createDefinitionRow(final String definition)
-  {
-    final TableRow row = new TableRow(outputFormat);
-    row.add(new TableCell(definition,
-                          0,
-                          Align.left,
-                          3,
                           "definition",
                           outputFormat));
     return row.toString();

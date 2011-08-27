@@ -90,9 +90,8 @@ final class OperationHandler
   private void executeSqlAndHandleData(final String title, final String sql)
     throws SchemaCrawlerException
   {
-    LOGGER.log(Level.FINE, String.format("Executing query for %s: %s",
-                                         title,
-                                         sql));
+    LOGGER.log(Level.FINE,
+               String.format("Executing query for %s: %s", title, sql));
     Statement statement = null;
     ResultSet results = null;
     try
