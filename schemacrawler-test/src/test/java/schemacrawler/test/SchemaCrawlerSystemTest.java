@@ -21,65 +21,23 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.regex.Pattern;
 
 import org.junit.Test;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import schemacrawler.schema.Database;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.ConnectionOptions;
-import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
-import schemacrawler.utility.SchemaCrawlerUtility;
 import sf.util.ObjectToString;
 
 public class SchemaCrawlerSystemTest
+  extends AbstractSchemaCrawlerSystemTest
 {
-
-  private final ApplicationContext appContext = new ClassPathXmlApplicationContext("datasources.xml");
-  private final String[] dataSources = {
-      "MicrosoftSQLServer",
-      "Oracle",
-      "IBM_DB2",
-      "MySQL",
-      "PostgreSQL",
-      "SQLite",
-  };
-
-  @Test
-  public void connections()
-    throws Exception
-  {
-    final List<String> connectionErrors = new ArrayList<String>();
-    for (final String dataSource: dataSources)
-    {
-      try
-      {
-        connect(dataSource);
-      }
-      catch (final Exception e)
-      {
-        final String message = dataSource + ": " + e.getMessage();
-        System.out.println(message);
-        connectionErrors.add(message);
-      }
-    }
-    if (!connectionErrors.isEmpty())
-    {
-      final String error = ObjectToString.toString(connectionErrors);
-      System.out.println(error);
-      fail(error);
-    }
-  }
 
   @Test
   public void schemaCounts()
@@ -186,15 +144,6 @@ public class SchemaCrawlerSystemTest
     // assertNotNull(dataSourceName, schema);
   }
 
-  private Connection connect(final String dataSourceName)
-    throws Exception
-  {
-    final ConnectionOptions connectionOptions = (ConnectionOptions) appContext
-      .getBean(dataSourceName);
-    final Connection connection = connectionOptions.getConnection();
-    return connection;
-  }
-
   private void counts(final String dataSourceName, final Schema schema)
     throws Exception
   {
@@ -240,72 +189,6 @@ public class SchemaCrawlerSystemTest
                    fkCounts[tableIdx],
                    table.getForeignKeys().length);
     }
-  }
-
-  private SchemaCrawlerOptions createOptions(final String schemaInclusion)
-  {
-    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
-    if (schemaInclusion != null)
-    {
-      schemaCrawlerOptions
-        .setSchemaInclusionRule(new InclusionRule(schemaInclusion,
-                                                  InclusionRule.NONE));
-    }
-    return schemaCrawlerOptions;
-  }
-
-  private Database retrieveDatabase(final String dataSourceName,
-                                    final SchemaCrawlerOptions schemaCrawlerOptions)
-    throws Exception
-  {
-    final Connection connection = connect(dataSourceName);
-    try
-    {
-      final Database database = SchemaCrawlerUtility
-        .getDatabase(connection, schemaCrawlerOptions);
-      return database;
-    }
-    catch (final Exception e)
-    {
-      throw new SchemaCrawlerException(dataSourceName, e);
-    }
-  }
-
-  private Schema retrieveSchema(final String dataSourceName,
-                                final String schemaInclusion)
-    throws Exception
-  {
-    final SchemaCrawlerOptions schemaCrawlerOptions = createOptions(schemaInclusion);
-    final Database database = retrieveDatabase(dataSourceName,
-                                               schemaCrawlerOptions);
-
-    final Schema[] schemas = database.getSchemas();
-    final Schema schema;
-    if (schemas == null || schemas.length == 0)
-    {
-      schema = null;
-    }
-    else if (schemas.length == 1)
-    {
-      schema = schemas[0];
-    }
-    else
-    {
-      final Pattern schemaPattern = Pattern.compile(".*books",
-                                                    Pattern.CASE_INSENSITIVE);
-      Schema scSchema = null;
-      for (final Schema currSchema: schemas)
-      {
-        if (schemaPattern.matcher(currSchema.getFullName()).matches())
-        {
-          scSchema = currSchema;
-          break;
-        }
-      }
-      schema = scSchema;
-    }
-    return schema;
   }
 
   private void tables(final String dataSourceName,
