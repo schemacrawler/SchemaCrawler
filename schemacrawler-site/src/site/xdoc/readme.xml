@@ -51,7 +51,7 @@
             <a href="http://www.schlesinger.us/?p=650">
               SchemaCrawler
             </a>
-          </li>        
+          </li>
           <li>
             <a href="http://www.devx.com/Java/Article/32443">
               Java API Makes Database Metadata as Easily Accessible as
@@ -68,13 +68,24 @@
             </a>
             .
           </li>
+          <li>
+            <div style="width:425px" id="__ss_8267188">
+              <strong style="display:block;margin:12px 0 4px">
+                <a href="http://www.slideshare.net/sualeh/schemacrawler" title="SchemaCrawler" target="_blank">SchemaCrawler
+                </a>
+              </strong>
+              <iframe src="http://www.slideshare.net/slideshow/embed_code/8267188" width="425" height="355"
+                frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+            </div>
+          </li>
         </ul>
       </subsection>
     </section>
     <section name="Using SchemaCrawler in Your Projects">
       <subsection name="Maven Projects">
         <p>In order to use SchemaCrawler in your Maven projects, add a repositories pointing to the location of the
-          Sonatype Nexus public repository in your pom.xml.</p>
+          Sonatype Nexus public repository in your pom.xml.
+        </p>
         <source><![CDATA[
 <repositories>
   ...
@@ -147,16 +158,19 @@
       <subsection name="SonarJ">
         <p>
           SchemaCrawler is grateful to hello2morrow for providing a license for SonarJ.
-          <a href="http://www.hello2morrow.com/products/sonarj"><img alt="Powered by SonarJ" 
-          src="images/by SonarJ-500px-transp.gif"/></a>
+          <a href="http://www.hello2morrow.com/products/sonarj">
+            <img alt="Powered by SonarJ" src="images/by SonarJ-500px-transp.gif" />
+          </a>
         </p>
       </subsection>
       <subsection name="Clover">
         <p>
-          SchemaCrawler is grateful to Atlassian for providing a license 
-          for <a href="http://www.atlassian.com/software/clover/">Clover</a>.
+          SchemaCrawler is grateful to Atlassian for providing a license
+          for
+          <a href="http://www.atlassian.com/software/clover/">Clover</a>
+          .
         </p>
       </subsection>
-    </section>    
+    </section>
   </body>
 </document>
