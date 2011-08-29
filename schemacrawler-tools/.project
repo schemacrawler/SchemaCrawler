@@ -1,9 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
 	<name>SchemaCrawler - 2 - Tools</name>
+	<comment></comment>
+	<projects>
+	</projects>
 	<buildSpec>
 		<buildCommand>
+			<name>com.cenqua.clover.core.prejavabuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
 			<name>org.eclipse.jdt.core.javabuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>com.cenqua.clover.core.postjavabuilder</name>
 			<arguments>
 			</arguments>
 		</buildCommand>
@@ -23,5 +36,6 @@
 		<nature>org.maven.ide.eclipse.maven2Nature</nature>
 		<nature>de.tobject.findbugs.findbugsNature</nature>
 		<nature>com.atlassw.tools.eclipse.checkstyle.CheckstyleNature</nature>
+		<nature>com.cenqua.clover.core.clovernature</nature>
 	</natures>
 </projectDescription>

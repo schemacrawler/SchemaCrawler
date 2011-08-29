@@ -4,7 +4,7 @@
   <parent>
     <groupId>net.sourceforge.schemacrawler</groupId>
     <artifactId>schemacrawler-all</artifactId>
-    <version>8.6</version>
+    <version>8.7</version>
   </parent>
   <groupId>net.sourceforge.schemacrawler</groupId>
   <artifactId>schemacrawler-hsqldb</artifactId>
@@ -32,7 +32,7 @@
     <dependency>
       <groupId>org.hsqldb</groupId>
       <artifactId>hsqldb</artifactId>
-      <version>2.0.0</version>
+      <version>2.2.4</version>
     </dependency>
   </dependencies>
   <build>

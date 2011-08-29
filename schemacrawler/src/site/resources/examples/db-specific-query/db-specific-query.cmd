@@ -1,1 +1,1 @@
-@java -classpath ..\_schemacrawler\lib\schemacrawler-8.6.jar;..\_schemacrawler\lib\hsqldb-2.0.0.jar schemacrawler.Main -c hsqldb -infolevel=standard -command=hsqldb.tables
+@java -classpath ..\_schemacrawler\lib\schemacrawler-8.7.jar;..\_schemacrawler\lib\hsqldb-2.0.0.jar schemacrawler.Main -c hsqldb -infolevel=standard -command=hsqldb.tables

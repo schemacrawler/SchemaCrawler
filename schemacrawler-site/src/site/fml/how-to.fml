@@ -380,7 +380,7 @@ for (final Schema schema: database.getSchemas())
   <dependency>
     <groupId>net.sourceforge.schemacrawler</groupId>
     <artifactId>schemacrawler</artifactId>
-    <version>8.6</version>
+    <version>8.7</version>
   </dependency>
 </dependencies>
         ]]></source>
@@ -518,7 +518,7 @@ for (final Schema schema: database.getSchemas())
     <plugin>
       <groupId>schemacrawler</groupId>
       <artifactId>schemacrawler-maven-plugin</artifactId>
-      <version>8.6</version>
+      <version>8.7</version>
       <configuration>
         <schemacrawler.config>schemacrawler.config.properties</schemacrawler.config>
         <schemacrawler.datasource>hsqldb</schemacrawler.datasource>

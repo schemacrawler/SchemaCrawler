@@ -86,7 +86,7 @@ hr {
 	</tr>
 	<tr>
 		<td>product version</td>
-		<td>8.6</td>
+		<td>8.7</td>
 	</tr>
 </table>
 <p></p>
@@ -100,7 +100,7 @@ hr {
 	</tr>
 	<tr>
 		<td>database product version</td>
-		<td>2.0.0</td>
+		<td>2.2.4</td>
 	</tr>
 	<tr>
 		<td>database user name</td>
@@ -138,7 +138,7 @@ hr {
 	</tr>
 	<tr>
 		<td>client info properties</td>
-		<td>files_readonly, hsqldb.applog, hsqldb.cache_free_count_scale, hsqldb.cache_rows, hsqldb.cache_size, hsqldb.default_table_type, hsqldb.defrag_limit, hsqldb.incremental_backup, hsqldb.lock_file, hsqldb.log_data, hsqldb.log_size, hsqldb.max_nio_scale, hsqldb.nio_data_file, hsqldb.result_max_memory_rows, hsqldb.script_format, hsqldb.temp_directory, hsqldb.tx, hsqldb.tx_level, hsqldb.write_delay, hsqldb.write_delay_millis, jdbc.translate_dti_types, readonly, runtime.gc_interval, sql.compare_in_locale, sql.enforce_names, sql.enforce_refs, sql.enforce_size, sql.enforce_strict_size, sql.identity_is_pk, sql.ref_integrity, textdb.all_quoted, textdb.cache_scale, textdb.cache_size_scale, textdb.encoding, textdb.fs, textdb.ignore_first, textdb.lvs, textdb.quoted, textdb.vs</td>
+		<td>files_readonly, hsqldb.applog, hsqldb.cache_file_scale, hsqldb.cache_free_count_scale, hsqldb.cache_rows, hsqldb.cache_size, hsqldb.default_table_type, hsqldb.defrag_limit, hsqldb.full_log_replay, hsqldb.inc_backup, hsqldb.lob_file_scale, hsqldb.lock_file, hsqldb.log_data, hsqldb.log_size, hsqldb.nio_data_file, hsqldb.nio_max_size, hsqldb.result_max_memory_rows, hsqldb.script_format, hsqldb.sqllog, hsqldb.temp_directory, hsqldb.tx, hsqldb.tx_deadlock_rollback, hsqldb.tx_level, hsqldb.write_delay, hsqldb.write_delay_millis, jdbc.translate_tti_types, readonly, runtime.gc_interval, sql.compare_in_locale, sql.concat_nulls, sql.convert_trunc, sql.double_nan, sql.enforce_names, sql.enforce_refs, sql.enforce_size, sql.enforce_tdc_delete, sql.enforce_tdc_update, sql.enforce_types, sql.identity_is_pk, sql.longvar_is_lob, sql.ref_integrity, sql.syntax_mss, sql.syntax_mys, sql.syntax_ora, sql.syntax_pgs, sql.unique_nulls, textdb.all_quoted, textdb.cache_rows, textdb.cache_scale, textdb.cache_size, textdb.cache_size_scale, textdb.encoding, textdb.fs, textdb.ignore_first, textdb.lvs, textdb.quoted, textdb.vs</td>
 	</tr>
 	<tr>
 		<td>data definition causes transaction commit</td>
@@ -154,7 +154,7 @@ hr {
 	</tr>
 	<tr>
 		<td>database minor version</td>
-		<td>0</td>
+		<td>2</td>
 	</tr>
 	<tr>
 		<td>default transaction isolation</td>
@@ -182,7 +182,7 @@ hr {
 	</tr>
 	<tr>
 		<td>driver minor version</td>
-		<td>0</td>
+		<td>2</td>
 	</tr>
 	<tr>
 		<td>extra name characters</td>
@@ -578,7 +578,7 @@ hr {
 	</tr>
 	<tr>
 		<td>supports multiple result sets</td>
-		<td>false</td>
+		<td>true</td>
 	</tr>
 	<tr>
 		<td>supports multiple transactions</td>
@@ -722,7 +722,7 @@ hr {
 	</tr>
 	<tr>
 		<td>type info</td>
-		<td>BIT, TINYINT, BIGINT, VARBINARY, BINARY, CHARACTER, NUMERIC, DECIMAL, INTEGER, SMALLINT, DOUBLE, FLOAT, REAL, VARCHAR, VARCHAR_IGNORECASE, BOOLEAN, DATE, TIME, TIMESTAMP, OTHER, BLOB, CLOB</td>
+		<td>BIT, TINYINT, BIGINT, VARBINARY, BINARY, CHARACTER, NUMERIC, DECIMAL, INTEGER, SMALLINT, DOUBLE, FLOAT, REAL, NVARCHAR, VARCHAR, VARCHAR_IGNORECASE, BOOLEAN, DATE, TIME, TIMESTAMP, OTHER, BLOB, CLOB</td>
 	</tr>
 	<tr>
 		<td>uses local file per table</td>
@@ -744,7 +744,7 @@ hr {
 	</tr>
 	<tr>
 		<td>driver version</td>
-		<td>2.0.0</td>
+		<td>2.2.4</td>
 	</tr>
 	<tr>
 		<td>driver class name</td>
@@ -1299,6 +1299,38 @@ hr {
 	<tr>
 		<td class='ordinal'></td>
 		<td colspan='2' class='definition'>searchable except with where .. like</td>
+	</tr>
+</table>
+<p></p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>NVARCHAR</td>
+		<td class='description'>[data type]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>based on</td>
+		<td class='type'>VARCHAR</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not user defined</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>defined with LENGTH</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>nullable</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not auto-incrementable</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>searchable</td>
 	</tr>
 </table>
 <p></p>
@@ -1873,6 +1905,10 @@ hr {
 	<tr>
 		<td colspan='2' class='name'>TRG_AUTHORS</td>
 		<td class='description'>[trigger, after delete, per row]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>UPDATE BOOKS.PUBLISHERS SET PUBLISHER=&apos;Jacob&apos;WHERE PUBLISHER=&apos;John&apos;</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>

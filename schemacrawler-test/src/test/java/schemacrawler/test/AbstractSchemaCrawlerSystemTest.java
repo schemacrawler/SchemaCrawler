@@ -34,7 +34,6 @@ import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.tools.options.InfoLevel;
 import schemacrawler.utility.SchemaCrawlerUtility;
 import sf.util.ObjectToString;
@@ -42,13 +41,14 @@ import sf.util.ObjectToString;
 public abstract class AbstractSchemaCrawlerSystemTest
 {
 
-  private final ApplicationContext appContext = new ClassPathXmlApplicationContext("datasources.xml");
+  protected final ApplicationContext appContext = new ClassPathXmlApplicationContext("datasources.xml");
   protected final String[] dataSources = {
       "MicrosoftSQLServer",
       "Oracle",
       "IBM_DB2",
       "MySQL",
       "PostgreSQL",
+      "Derby",
       "SQLite",
   };
 

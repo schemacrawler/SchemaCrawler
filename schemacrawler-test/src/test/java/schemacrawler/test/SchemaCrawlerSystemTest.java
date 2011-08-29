@@ -44,7 +44,7 @@ public class SchemaCrawlerSystemTest
     throws Exception
   {
     final int[] schemaCounts = {
-        65, 19, 16, 6, 5, 1,
+        65, 19, 16, 6, 5, 12, 1,
     };
 
     final SchemaCrawlerOptions schemaCrawlerOptions = createOptions(".*");
@@ -95,6 +95,12 @@ public class SchemaCrawlerSystemTest
     }
 
     message = tablesAndCounts("PostgreSQL", "books", "\"");
+    if (message != null)
+    {
+      messages.add(message);
+    }
+
+    message = tablesAndCounts("Derby", "BOOKS", "\"");
     if (message != null)
     {
       messages.add(message);
