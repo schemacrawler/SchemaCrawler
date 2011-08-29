@@ -10,14 +10,14 @@ SchemaCrawler Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
 product name                          SchemaCrawler
-product version                       8.6
+product version                       8.7
 
 
 Database Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
 database product name                 HSQL Database Engine
-database product version              2.0.0
+database product version              2.2.4
 database user name                    SA
 
 
@@ -25,7 +25,7 @@ JDBC Driver Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
 driver name                           HSQL Database Engine Driver
-driver version                        2.0.0
+driver version                        2.2.4
 driver class name                     org.hsqldb.jdbc.JDBCDriver
 url                                   jdbc:hsqldb:mem:schemacrawler
 is JDBC compliant                     true
@@ -139,6 +139,14 @@ NUMERIC                                                      [data type]
   nullable
   auto-incrementable
   searchable except with where .. like
+
+NVARCHAR                                                     [data type]
+  based on                          VARCHAR                     
+  not user defined
+  defined with LENGTH
+  nullable
+  not auto-incrementable
+  searchable
 
 OTHER                                                        [data type]
   based on                          OTHER                       

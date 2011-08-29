@@ -366,7 +366,7 @@ final class DataTextFormatter
       {
         try
         {
-          rdr = new InputStreamReader(clob.getAsciiStream());
+          rdr = clob.getCharacterStream();
         }
         catch (final SQLFeatureNotSupportedException e)
         {
@@ -376,7 +376,7 @@ final class DataTextFormatter
         {
           try
           {
-            rdr = clob.getCharacterStream();
+            rdr = new InputStreamReader(clob.getAsciiStream());
           }
           catch (final SQLFeatureNotSupportedException e)
           {

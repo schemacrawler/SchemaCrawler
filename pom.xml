@@ -6,7 +6,7 @@
   <groupId>net.sourceforge.schemacrawler</groupId>
   <artifactId>schemacrawler-all</artifactId>
   <packaging>pom</packaging>
-  <version>8.6</version>
+  <version>8.7</version>
   <name>SchemaCrawler [All]</name>
   <description>SchemaCrawler is an API that improves on the standard JDBC metadata. SchemaCrawler is also a database schema discovery and comprehension, and schema documentation tool. You can search for database schema objects using regular expressions, and output the schema and data in a readable text format. The output is designed to be diff-ed against other database schemas.</description>
   <url>http://schemacrawler.sourceforge.net</url>
@@ -80,13 +80,13 @@
     <dependency>
       <groupId>org.hsqldb</groupId>
       <artifactId>hsqldb</artifactId>
-      <version>2.0.0</version>
+      <version>2.2.4</version>
       <scope>provided</scope>
     </dependency>
   </dependencies>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <schemacrawler.version>8.6</schemacrawler.version>
+    <schemacrawler.version>8.7</schemacrawler.version>
     <skip.signing.artifacts>true</skip.signing.artifacts>
   </properties>
   <build>

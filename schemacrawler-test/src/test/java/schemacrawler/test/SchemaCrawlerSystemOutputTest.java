@@ -23,9 +23,11 @@ import java.io.File;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
 
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputFormat;
@@ -74,6 +76,12 @@ public class SchemaCrawlerSystemOutputTest
       messages.add(message);
     }
 
+    message = output("Derby", "BOOKS");
+    if (message != null)
+    {
+      messages.add(message);
+    }
+    
     // message = tablesAndCounts("SQLite", null, "\"");
     // if (message != null)
     // {
@@ -107,6 +115,8 @@ public class SchemaCrawlerSystemOutputTest
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    executable.setAdditionalConfiguration((Config) appContext
+      .getBean(dataSourceName + ".properties"));
     executable.setOutputOptions(outputOptions);
     executable.execute(connection);
 

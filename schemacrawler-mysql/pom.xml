@@ -4,7 +4,7 @@
   <parent>
     <groupId>net.sourceforge.schemacrawler</groupId>
     <artifactId>schemacrawler-all</artifactId>
-    <version>8.6</version>
+    <version>8.7</version>
   </parent>
   <groupId>net.sourceforge.schemacrawler</groupId>
   <artifactId>schemacrawler-mysql</artifactId>
@@ -25,7 +25,7 @@
     <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
-      <version>5.1.13</version>
+      <version>5.1.17</version>
     </dependency>
   </dependencies>
   <build>
