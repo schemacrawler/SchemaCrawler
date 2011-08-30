@@ -28,6 +28,7 @@ import java.util.Map;
 import org.junit.Test;
 
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputFormat;
@@ -81,7 +82,7 @@ public class SchemaCrawlerSystemOutputTest
     {
       messages.add(message);
     }
-    
+
     // message = tablesAndCounts("SQLite", null, "\"");
     // if (message != null)
     // {
@@ -108,15 +109,14 @@ public class SchemaCrawlerSystemOutputTest
 
     final Connection connection = connect(dataSourceName);
 
-    final SchemaCrawlerOptions schemaCrawlerOptions = createOptions(schemaInclusion);
+    final SchemaCrawlerOptions schemaCrawlerOptions = createOptions(dataSourceName,
+                                                                    schemaInclusion);
 
     final OutputOptions outputOptions = new OutputOptions(OutputFormat.text.name(),
                                                           testOutputFile);
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    executable.setAdditionalConfiguration((Config) appContext
-      .getBean(dataSourceName + ".properties"));
     executable.setOutputOptions(outputOptions);
     executable.execute(connection);
 

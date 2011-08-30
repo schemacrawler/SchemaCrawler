@@ -30,6 +30,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import schemacrawler.schema.Database;
 import schemacrawler.schema.Schema;
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -87,10 +88,14 @@ public abstract class AbstractSchemaCrawlerSystemTest
     return connection;
   }
 
-  protected SchemaCrawlerOptions createOptions(final String schemaInclusion)
+  protected SchemaCrawlerOptions createOptions(final String dataSourceName,
+                                               final String schemaInclusion)
   {
-    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setSchemaInfoLevel(InfoLevel.lint.getSchemaInfoLevel());
+    final Config config = (Config) appContext.getBean(dataSourceName
+                                                      + ".properties");
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
+    schemaCrawlerOptions
+      .setSchemaInfoLevel(InfoLevel.lint.getSchemaInfoLevel());
     if (schemaInclusion != null)
     {
       schemaCrawlerOptions
@@ -101,7 +106,7 @@ public abstract class AbstractSchemaCrawlerSystemTest
   }
 
   protected Database retrieveDatabase(final String dataSourceName,
-                                    final SchemaCrawlerOptions schemaCrawlerOptions)
+                                      final SchemaCrawlerOptions schemaCrawlerOptions)
     throws Exception
   {
     final Connection connection = connect(dataSourceName);
@@ -118,10 +123,11 @@ public abstract class AbstractSchemaCrawlerSystemTest
   }
 
   protected Schema retrieveSchema(final String dataSourceName,
-                                final String schemaInclusion)
+                                  final String schemaInclusion)
     throws Exception
   {
-    final SchemaCrawlerOptions schemaCrawlerOptions = createOptions(schemaInclusion);
+    final SchemaCrawlerOptions schemaCrawlerOptions = createOptions(dataSourceName,
+                                                                    schemaInclusion);
     final Database database = retrieveDatabase(dataSourceName,
                                                schemaCrawlerOptions);
 

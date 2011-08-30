@@ -34,7 +34,7 @@
           <url>jdbc:hsqldb:hsql://localhost:9001/schemacrawler</url>
           <user>sa</user>
           <command>details</command>
-          <jdbc.driver.classpath>hsqldb-2.0.0.jar</jdbc.driver.classpath>
+          <jdbc.driver.classpath>hsqldb-2.2.4.jar</jdbc.driver.classpath>
         </configuration>
       </plugin>
     </plugins>

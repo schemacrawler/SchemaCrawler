@@ -47,15 +47,17 @@ public class SchemaCrawlerSystemTest
         65, 19, 16, 6, 5, 12, 1,
     };
 
-    final SchemaCrawlerOptions schemaCrawlerOptions = createOptions(".*");
-    final SchemaInfoLevel infoLevel = SchemaInfoLevel.minimum();
-    infoLevel.setRetrieveTables(false);
-    infoLevel.setRetrieveProcedures(false);
-    schemaCrawlerOptions.setSchemaInfoLevel(infoLevel);
-
     for (int i = 0; i < dataSources.length; i++)
     {
       final String dataSource = dataSources[i];
+
+      final SchemaCrawlerOptions schemaCrawlerOptions = createOptions(dataSource,
+                                                                      ".*");
+      final SchemaInfoLevel infoLevel = SchemaInfoLevel.minimum();
+      infoLevel.setRetrieveTables(false);
+      infoLevel.setRetrieveProcedures(false);
+      schemaCrawlerOptions.setSchemaInfoLevel(infoLevel);
+
       final Database database = retrieveDatabase(dataSource,
                                                  schemaCrawlerOptions);
       final Schema[] schemas = database.getSchemas();
@@ -158,7 +160,7 @@ public class SchemaCrawlerSystemTest
         9, 3, 3, 6, 1, 2
     };
     final int[] checkConstraints = {
-        0, 0, 0, 0, 0, 0
+        1, 0, 0, 0, 0, 0
     };
     /*
      * final int[] indexCounts = { 1, 0, 2, 4, 0, 2 };
