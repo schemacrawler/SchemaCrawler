@@ -59,6 +59,11 @@
       <version>${project.version}</version>
     </dependency>
     <dependency>
+      <groupId>net.sourceforge.schemacrawler</groupId>
+      <artifactId>schemacrawler-hsqldb</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
       <groupId>oracle</groupId>
       <artifactId>oracle-jdbc</artifactId>
       <version>11.2.0.1.0</version>

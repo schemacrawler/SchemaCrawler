@@ -94,7 +94,7 @@ public final class SchemaCrawler
         for (final SchemaReference schemaNameObject: retriever.getSchemaNames())
         {
           retriever.retrieveUserDefinedColumnDataTypes(schemaNameObject
-            .getSchemaName(), schemaNameObject.getSchemaName());
+            .getCatalogName(), schemaNameObject.getSchemaName());
         }
       }
     }
