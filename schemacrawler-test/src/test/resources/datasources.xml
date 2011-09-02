@@ -135,5 +135,22 @@
     </property>
   </bean>
 
+  <bean id="HyperSQL.properties" class="schemacrawler.test.ConfigLoader" factory-method="configFromResource">
+    <constructor-arg value="/schemacrawler-hsqldb.config.properties" />
+  </bean>
+
+  <bean id="HyperSQL" class="schemacrawler.schemacrawler.DatabaseConfigConnectionOptions" scope="singleton">
+    <constructor-arg type="java.util.Map" ref="HyperSQL.properties" />
+    <property name="host" value="localhost" />
+    <property name="database">
+      <value>schemacrawler</value>
+    </property>
+    <property name="user">
+      <value>sa</value>
+    </property>
+    <property name="password">
+      <value></value>
+    </property>
+  </bean>
 
 </beans>

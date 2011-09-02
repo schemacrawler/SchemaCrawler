@@ -400,8 +400,7 @@ final class DatabaseInfoRetriever
     {
       while (results.next())
       {
-        // final String catalogName = results.getString("TYPE_CAT");
-        // final String schemaName = results.getString("TYPE_SCHEM");
+        // "TYPE_CAT", "TYPE_SCHEM"
         final String typeName = results.getString("TYPE_NAME");
         LOGGER.log(Level.FINER, "Retrieving data type: " + typeName);
         final short dataType = results.getShort("DATA_TYPE", (short) 0);
