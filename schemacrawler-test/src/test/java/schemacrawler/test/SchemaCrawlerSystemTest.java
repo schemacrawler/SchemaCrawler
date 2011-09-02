@@ -108,6 +108,12 @@ public class SchemaCrawlerSystemTest
       messages.add(message);
     }
 
+    message = tablesAndCounts("HyperSQL", "PUBLIC.BOOKS", "\"");
+    if (message != null)
+    {
+      messages.add(message);
+    }
+
     // message = tablesAndCounts("SQLite", null, "\"");
     // if (message != null)
     // {
@@ -159,12 +165,7 @@ public class SchemaCrawlerSystemTest
     final int[] tableColumnCounts = {
         9, 3, 3, 6, 1, 2
     };
-    final int[] checkConstraints = {
-        1, 0, 0, 0, 0, 0
-    };
-    /*
-     * final int[] indexCounts = { 1, 0, 2, 4, 0, 2 };
-     */
+
     final int[] fkCounts = {
         1, 0, 2, 1, 0, 0
     };
@@ -181,16 +182,6 @@ public class SchemaCrawlerSystemTest
                                  table.getFullName()),
                    tableColumnCounts[tableIdx],
                    table.getColumns().length);
-      assertEquals(String.format("%s table %s check constraints count does not match",
-                                 dataSourceName,
-                                 table.getFullName()),
-                   checkConstraints[tableIdx],
-                   table.getCheckConstraints().length);
-      /*
-       * assertEquals(String.format("%s table %s index count does not match"
-       * , dataSourceName, table.getFullName()), indexCounts[tableIdx],
-       * table.getIndices().length);
-       */
       assertEquals(String.format("%s table %s foreign key count does not match",
                                  dataSourceName,
                                  table.getFullName()),
