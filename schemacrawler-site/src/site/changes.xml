@@ -9,6 +9,9 @@
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         New INFORMATION_SCHEMA views to provide Oracle metadata details.
       ]]></action>
+      <action dev="Sualeh Fatehi" type="update"><![CDATA[
+        Update database driver versions.
+      ]]></action>
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Fixed bug #3392557 - NullPointer exception thrown when columns excluded in Oracle.
       ]]></action>
