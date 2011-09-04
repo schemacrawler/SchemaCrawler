@@ -6,11 +6,17 @@
   </properties>
   <body>
     <release version="8.7" date="2011-08-28">
-      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
-        Fixed bug - NullPointer exception thrown when columns excluded in Oracle - ID: 3392557.
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        New INFORMATION_SCHEMA views to provide Oracle metadata details.
       ]]></action>
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
-        Fixed bug - Exception retrieving tables: Could not retrieve indices for - ID: 3392976.
+        Fixed bug #3392557 - NullPointer exception thrown when columns excluded in Oracle.
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Fixed bug #3392976 - Exception retrieving tables: Could not retrieve indices for Oracle schemas with $ in the name.
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Fixed bug #3401752 - Attempt to locate database 'dbo' by name failed.
       ]]></action>
     </release>
     <release version="8.6" date="2011-05-08">
