@@ -80,6 +80,15 @@
           </li>
         </ul>
       </subsection>
+      <subsection name="Tutorials">
+        <ul>
+          <li>
+            Fred Forester's tutorial on using SchemaCrawler to explore an unknown schema.
+            <br />
+            <iframe width="560" height="345" src="http://www.youtube.com/embed/iWwDGjTW05c" frameborder="0"></iframe>
+          </li>
+        </ul>
+      </subsection>
     </section>
     <section name="Using SchemaCrawler in Your Projects">
       <subsection name="Maven Projects">
@@ -155,14 +164,6 @@
       </subsection>
     </section>
     <section name="Acknowledgements">
-      <subsection name="SonarJ">
-        <p>
-          SchemaCrawler is grateful to hello2morrow for providing a license for SonarJ.
-          <a href="http://www.hello2morrow.com/products/sonarj">
-            <img alt="Powered by SonarJ" src="images/by SonarJ-500px-transp.gif" />
-          </a>
-        </p>
-      </subsection>
       <subsection name="Clover">
         <p>
           SchemaCrawler is grateful to Atlassian for providing a license

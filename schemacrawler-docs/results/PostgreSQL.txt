@@ -1,0 +1,2737 @@
+
+
+
+System Information
+========================================================================
+
+
+
+SchemaCrawler Information
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
+
+product name                          SchemaCrawler
+product version                       8.7
+
+
+Database Information
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
+
+database product name                 PostgreSQL
+database product version              9.0.4
+database user name                    books
+
+
+Database Characteristics
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
+
+all procedures are callable           true
+all tables are selectable             true
+auto commit failure closes all result sets  false
+catalog separator                     .
+catalog term                          database
+catalogs                              books
+client info properties                
+data definition causes transaction commit  false
+data definition ignored in transactions  false
+database major version                9
+database minor version                0
+default transaction isolation         2
+deletes are detected for TYPE_FORWARD_ONLY result sets  false
+deletes are detected for TYPE_SCROLL_INSENSITIVE result sets  false
+deletes are detected for TYPE_SCROLL_SENSITIVE result sets  false
+does max row size include blobs       false
+driver major version                  9
+driver minor version                  0
+extra name characters                 
+identifier quote string               "
+inserts are detected for TYPE_FORWARD_ONLY result sets  false
+inserts are detected for TYPE_SCROLL_INSENSITIVE result sets  false
+inserts are detected for TYPE_SCROLL_SENSITIVE result sets  false
+is catalog at start                   true
+is read only                          false
+JDBC major version                    4
+JDBC minor version                    0
+locators update copy                  true
+max binary literal length             0
+max catalog name length               63
+max char literal length               0
+max column name length                63
+max columns in group by               0
+max columns in index                  32
+max columns in order by               0
+max columns in select                 0
+max columns in table                  1600
+max connections                       8192
+max cursor name length                63
+max index length                      0
+max procedure name length             63
+max row size                          1073741824
+max schema name length                63
+max statement length                  0
+max statements                        0
+max table name length                 63
+max tables in select                  0
+max user name length                  63
+null plus non null is null            true
+nulls are sorted at end               false
+nulls are sorted at start             false
+nulls are sorted high                 true
+nulls are sorted low                  false
+numeric functions                     abs, acos, asin, atan, atan2, ceiling, cos, cot, degrees, exp, floor, log, log10, mod, pi, power, radians, round, sign, sin, sqrt, tan, truncate
+others inserts are visible for TYPE_FORWARD_ONLY result sets  false
+others inserts are visible for TYPE_SCROLL_INSENSITIVE result sets  false
+others inserts are visible for TYPE_SCROLL_SENSITIVE result sets  false
+others updates are visible for TYPE_FORWARD_ONLY result sets  false
+others updates are visible for TYPE_SCROLL_INSENSITIVE result sets  false
+others updates are visible for TYPE_SCROLL_SENSITIVE result sets  false
+own deletes are visible for TYPE_FORWARD_ONLY result sets  true
+own deletes are visible for TYPE_SCROLL_INSENSITIVE result sets  true
+own deletes are visible for TYPE_SCROLL_SENSITIVE result sets  true
+own inserts are visible for TYPE_FORWARD_ONLY result sets  true
+own inserts are visible for TYPE_SCROLL_INSENSITIVE result sets  true
+own inserts are visible for TYPE_SCROLL_SENSITIVE result sets  true
+own updates are visible for TYPE_FORWARD_ONLY result sets  true
+own updates are visible for TYPE_SCROLL_INSENSITIVE result sets  true
+own updates are visible for TYPE_SCROLL_SENSITIVE result sets  true
+procedure term                        function
+result set holdability                1
+schema term                           schema
+schemas                               books, information_schema, pg_catalog, pg_toast_temp_1, public
+search string escape                  \
+SQL keywords                          abort, acl, add, aggregate, append, archive, arch_store, backward, binary, boolean, change, cluster, copy, database, delimiter, delimiters, do, extend, explain, forward, heavy, index, inherits, isnull, light, listen, load, merge, nothing, notify, notnull, oids, purge, rename, replace, retrieve, returns, rule, recipe, setof, stdin, stdout, store, vacuum, verbose, version
+SQL state type                        2
+stores lower case identifiers         true
+stores lower case quoted identifiers  false
+stores mixed case identifiers         false
+stores mixed case quoted identifiers  false
+stores upper case identifiers         false
+stores upper case quoted identifiers  false
+string functions                      ascii, char, concat, lcase, left, length, ltrim, repeat, rtrim, space, substring, ucase, replace
+supports alter table with add column  true
+supports alter table with drop column  true
+supports ANSI92 entry level SQL       true
+supports ANSI92 full SQL              false
+supports ANSI92 intermediate SQL      false
+supports batch updates                true
+supports catalogs in data manipulation  false
+supports catalogs in index definitions  false
+supports catalogs in privilege definitions  false
+supports catalogs in procedure calls  false
+supports catalogs in table definitions  false
+supports column aliasing              true
+supports convert                      false
+supports core SQL grammar             false
+supports correlated subqueries        true
+supports data definition and data manipulation transactions  true
+supports data manipulation transactions only  false
+supports different table correlation names  false
+supports expressions in order by      true
+supports extended SQL grammar         false
+supports full outer joins             true
+supports get generated keys           true
+supports group by                     true
+supports group by beyond select       true
+supports group by unrelated           true
+supports integrity enhancement facility  true
+supports like escape clause           true
+supports limited outer joins          true
+supports minimum SQL grammar          true
+supports mixed case identifiers       false
+supports mixed case quoted identifiers  true
+supports multiple open results        false
+supports multiple result sets         true
+supports multiple transactions        true
+supports named parameters             false
+supports non nullable columns         true
+supports open cursors across commit   false
+supports open cursors across rollback  false
+supports open statements across commit  true
+supports open statements across rollback  true
+supports order by unrelated           true
+supports outer joins                  true
+supports positioned delete            false
+supports positioned update            false
+supports result set type for TYPE_FORWARD_ONLY result sets  true
+supports result set type for TYPE_SCROLL_INSENSITIVE result sets  true
+supports result set type for TYPE_SCROLL_SENSITIVE result sets  false
+supports savepoints                   true
+supports schemas in data manipulation  true
+supports schemas in index definitions  true
+supports schemas in privilege definitions  true
+supports schemas in procedure calls   true
+supports schemas in table definitions  true
+supports select for update            true
+supports statement pooling            false
+supports stored functions using call syntax  true
+supports stored procedures            true
+supports subqueries in comparisons    true
+supports subqueries in exists         true
+supports subqueries in ins            true
+supports subqueries in quantifieds    true
+supports table correlation names      true
+supports transactions                 true
+supports union                        true
+supports union all                    true
+system functions                      database, ifnull, user
+table types                           INDEX, SEQUENCE, SYSTEM INDEX, SYSTEM TABLE, SYSTEM TOAST INDEX, SYSTEM TOAST TABLE, SYSTEM VIEW, TABLE, TEMPORARY INDEX, TEMPORARY SEQUENCE, TEMPORARY TABLE, TEMPORARY VIEW, TYPE, VIEW
+time date functions                   curdate, curtime, dayname, dayofmonth, dayofweek, dayofyear, hour, minute, month, monthname, now, quarter, second, week, year, timestampadd
+type info                             bool, bytea, char, name, int8, bigserial, int2, int2vector, int4, serial, regproc, text, oid, tid, xid, cid, oidvector, pg_type, pg_attribute, pg_proc, pg_class, xml, _xml, smgr, point, lseg, path, box, polygon, line, _line, float4, float8, abstime, reltime, tinterval, unknown, circle, _circle, money, _money, macaddr, inet, cidr, _bool, _bytea, _char, _name, _int2, _int2vector, _int4, _regproc, _text, _oid, _tid, _xid, _cid, _oidvector, _bpchar, _varchar, _int8, _point, _lseg, _path, _box, _float4, _float8, _abstime, _reltime, _tinterval, _polygon, aclitem, _aclitem, _macaddr, _inet, _cidr, _cstring, bpchar, varchar, date, time, timestamp, _timestamp, _date, _time, timestamptz, _timestamptz, interval, _interval, _numeric, timetz, _timetz, bit, _bit, varbit, _varbit, numeric, refcursor, _refcursor, regprocedure, regoper, regoperator, regclass, regtype, _regprocedure, _regoper, _regoperator, _regclass, _regtype, uuid, _uuid, tsvector, gtsvector, tsquery, regconfig, regdictionary, _tsvector, _gtsvector, _tsquery, _regconfig, _regdictionary, txid_snapshot, _txid_snapshot, record, _record, cstring, any, anyarray, void, trigger, language_handler, internal, opaque, anyelement, anynonarray, anyenum, pg_attrdef, pg_constraint, pg_inherits, pg_index, pg_operator, pg_opfamily, pg_opclass, pg_am, pg_amop, pg_amproc, pg_language, pg_largeobject_metadata, pg_largeobject, pg_aggregate, pg_statistic, pg_rewrite, pg_trigger, pg_description, pg_cast, pg_enum, pg_namespace, pg_conversion, pg_depend, pg_database, pg_db_role_setting, pg_tablespace, pg_pltemplate, pg_authid, pg_auth_members, pg_shdepend, pg_shdescription, pg_ts_config, pg_ts_config_map, pg_ts_dict, pg_ts_parser, pg_ts_template, pg_foreign_data_wrapper, pg_foreign_server, pg_user_mapping, pg_default_acl, pg_roles, pg_shadow, pg_group, pg_user, pg_rules, pg_views, pg_tables, pg_indexes, pg_stats, pg_locks, pg_cursors, pg_prepared_xacts, pg_prepared_statements, pg_settings, pg_timezone_abbrevs, pg_timezone_names, pg_stat_all_tables, pg_stat_sys_tables, pg_stat_user_tables, pg_statio_all_tables, pg_statio_sys_tables, pg_statio_user_tables, pg_stat_all_indexes, pg_stat_sys_indexes, pg_stat_user_indexes, pg_statio_all_indexes, pg_statio_sys_indexes, pg_statio_user_indexes, pg_statio_all_sequences, pg_statio_sys_sequences, pg_statio_user_sequences, pg_stat_activity, pg_stat_database, pg_stat_user_functions, pg_stat_bgwriter, pg_user_mappings, cardinal_number, character_data, sql_identifier, information_schema_catalog_name, time_stamp, yes_or_no, applicable_roles, administrable_role_authorizations, attributes, check_constraint_routine_usage, check_constraints, column_domain_usage, column_privileges, column_udt_usage, columns, constraint_column_usage, constraint_table_usage, domain_constraints, domain_udt_usage, domains, enabled_roles, key_column_usage, parameters, referential_constraints, role_column_grants, routine_privileges, role_routine_grants, routines, schemata, sequences, sql_features, sql_implementation_info, sql_languages, sql_packages, sql_parts, sql_sizing, sql_sizing_profiles, table_constraints, table_privileges, role_table_grants, tables, triggered_update_columns, triggers, usage_privileges, role_usage_grants, view_column_usage, view_routine_usage, view_table_usage, views, data_type_privileges, element_types, _pg_foreign_data_wrappers, foreign_data_wrapper_options, foreign_data_wrappers, _pg_foreign_servers, foreign_server_options, foreign_servers, _pg_user_mappings, user_mapping_options, user_mappings, publishers, _publishers, authors, _authors, books, _books, bookauthors, _bookauthors, Global Counts, _Global Counts, authorslist, _authorslist
+uses local file per table             false
+uses local files                      false
+
+
+JDBC Driver Information
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
+
+driver name                           PostgreSQL Native Driver
+driver version                        PostgreSQL 9.0 JDBC4 (build 801)
+driver class name                     org.postgresql.Driver
+url                                   jdbc:postgresql://192.168.62.133:5432/books
+is JDBC compliant                     false
+
+
+JDBC Driver Properties
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
+
+allowEncodingChanges                                   [driver property]
+  Allow the user to change the client_encoding variable.
+  not required
+  value                             null                        
+
+charSet                                                [driver property]
+  When connecting to a pre-7.3 server, the database encoding to assume is in use.
+  not required
+  value                             null                        
+
+compatible                                             [driver property]
+  Force compatibility of some features with an older version of the driver.
+  not required; choices [7.1, 7.2, 7.3, 7.4, 8.0, 8.1, 8.2]
+  value                             null                        
+
+jaasApplicationName                                    [driver property]
+  Specifies the name of the JAAS system or application login configuration.
+  not required
+  value                             null                        
+
+kerberosServerName                                     [driver property]
+  The Kerberos service name to use when authenticating with GSSAPI.  This is equivalent to libpq's PGKRBSRVNAME environment variable.
+  not required
+  value                             null                        
+
+loginTimeout                                           [driver property]
+  The login timeout, in seconds; 0 means no timeout beyond the normal TCP connection timout.
+  not required
+  value                             null                        
+
+loglevel                                               [driver property]
+  Control the driver's log verbosity: 0 is off, 1 is INFO, 2 is DEBUG.
+  not required; choices [0, 1, 2]
+  value                             null                        
+
+logUnclosedConnections                                 [driver property]
+  When connections that are not explicitly closed are garbage collected, log the stacktrace from the opening of the connection to trace the leak source.
+  not required
+  value                             null                        
+
+password                                               [driver property]
+  Password to use when authenticating.
+  not required
+  value                             null                        
+
+PGDBNAME                                               [driver property]
+  Database name to connect to; may be specified directly in the JDBC URL.
+  required
+  value                             null                        
+
+PGHOST                                                 [driver property]
+  Hostname of the PostgreSQL server; may be specified directly in the JDBC URL.
+  not required
+  value                             null                        
+
+PGPORT                                                 [driver property]
+  Port number to connect to the PostgreSQL server on; may be specified directly in the JDBC URL.
+  not required
+  value                             null                        
+
+prepareThreshold                                       [driver property]
+  Default statement prepare threshold (numeric).
+  not required
+  value                             null                        
+
+protocolVersion                                        [driver property]
+  Force use of a particular protocol version when connecting; if set, disables protocol version fallback.
+  not required
+  value                             null                        
+
+socketTimeout                                          [driver property]
+  The timeout value for socket read operations, in seconds; 0 means no timeout.
+  not required
+  value                             null                        
+
+ssl                                                    [driver property]
+  Control use of SSL; any nonnull value causes SSL to be required.
+  not required
+  value                             null                        
+
+sslfactory                                             [driver property]
+  Provide a SSLSocketFactory class when using SSL.
+  not required
+  value                             null                        
+
+sslfactoryarg                                          [driver property]
+  Argument forwarded to constructor of SSLSocketFactory class.
+  not required
+  value                             null                        
+
+stringtype                                             [driver property]
+  The type to bind String parameters as (usually 'varchar'; 'unspecified' allows implicit casting to other types)
+  not required; choices [varchar, unspecified]
+  value                             null                        
+
+tcpKeepAlive                                           [driver property]
+  Enable or disable TCP keep-alive probe.
+  not required
+  value                             null                        
+
+user                                                   [driver property]
+  Username to connect to the database as.
+  required
+  value                             null                        
+
+
+
+Data Types
+========================================================================
+
+
+_abstime                                                     [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_aclitem                                                     [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_authors                                                     [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_authorslist                                                 [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_bit                                                         [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_bookauthors                                                 [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_books                                                       [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_bool                                                        [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_box                                                         [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_bpchar                                                      [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_bytea                                                       [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_char                                                        [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_cid                                                         [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_cidr                                                        [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_circle                                                      [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_cstring                                                     [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_date                                                        [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_float4                                                      [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_float8                                                      [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_Global Counts                                               [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_gtsvector                                                   [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_inet                                                        [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_int2                                                        [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_int2vector                                                  [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_int4                                                        [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_int8                                                        [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_interval                                                    [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_line                                                        [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_lseg                                                        [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_macaddr                                                     [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_money                                                       [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_name                                                        [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_numeric                                                     [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_oid                                                         [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_oidvector                                                   [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_path                                                        [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_pg_foreign_data_wrappers                                    [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_pg_foreign_servers                                          [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_pg_user_mappings                                            [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_point                                                       [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_polygon                                                     [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_publishers                                                  [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_record                                                      [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_refcursor                                                   [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_regclass                                                    [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_regconfig                                                   [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_regdictionary                                               [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_regoper                                                     [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_regoperator                                                 [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_regproc                                                     [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_regprocedure                                                [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_regtype                                                     [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_reltime                                                     [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_text                                                        [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_tid                                                         [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_time                                                        [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_timestamp                                                   [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_timestamptz                                                 [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_timetz                                                      [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_tinterval                                                   [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_tsquery                                                     [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_tsvector                                                    [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_txid_snapshot                                               [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_uuid                                                        [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_varbit                                                      [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_varchar                                                     [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_xid                                                         [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+_xml                                                         [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+abstime                                                      [data type]
+  based on                          OTHER                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+aclitem                                                      [data type]
+  based on                          OTHER                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+administrable_role_authorizations                            [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+any                                                          [data type]
+  based on                          OTHER                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+anyarray                                                     [data type]
+  based on                          OTHER                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+anyelement                                                   [data type]
+  based on                          OTHER                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+anyenum                                                      [data type]
+  based on                          OTHER                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+anynonarray                                                  [data type]
+  based on                          OTHER                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+applicable_roles                                             [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+attributes                                                   [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+authors                                                      [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+authorslist                                                  [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+bigserial                                                    [data type]
+  based on                          BIGINT                      
+  not user defined
+  defined with no parameters
+  nullable
+  auto-incrementable
+  searchable
+
+bit                                                          [data type]
+  based on                          BIT                         
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+bookauthors                                                  [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+books                                                        [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+bool                                                         [data type]
+  based on                          BIT                         
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+box                                                          [data type]
+  based on                          OTHER                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+bpchar                                                       [data type]
+  based on                          CHAR                        
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+bytea                                                        [data type]
+  based on                          BINARY                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+cardinal_number                                              [data type]
+  based on                          DISTINCT                    
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+char                                                         [data type]
+  based on                          CHAR                        
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+character_data                                               [data type]
+  based on                          DISTINCT                    
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+check_constraint_routine_usage                               [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+check_constraints                                            [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+cid                                                          [data type]
+  based on                          OTHER                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+cidr                                                         [data type]
+  based on                          OTHER                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+circle                                                       [data type]
+  based on                          OTHER                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+column_domain_usage                                          [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+column_privileges                                            [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+column_udt_usage                                             [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+columns                                                      [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+constraint_column_usage                                      [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+constraint_table_usage                                       [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+cstring                                                      [data type]
+  based on                          OTHER                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+data_type_privileges                                         [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+date                                                         [data type]
+  based on                          DATE                        
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+domain_constraints                                           [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+domain_udt_usage                                             [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+domains                                                      [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+element_types                                                [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+enabled_roles                                                [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+float4                                                       [data type]
+  based on                          REAL                        
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+float8                                                       [data type]
+  based on                          DOUBLE                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+foreign_data_wrapper_options                                 [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+foreign_data_wrappers                                        [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+foreign_server_options                                       [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+foreign_servers                                              [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+Global Counts                                                [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+gtsvector                                                    [data type]
+  based on                          OTHER                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+inet                                                         [data type]
+  based on                          OTHER                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+information_schema_catalog_name                              [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+int2                                                         [data type]
+  based on                          SMALLINT                    
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+int2vector                                                   [data type]
+  based on                          OTHER                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+int4                                                         [data type]
+  based on                          INTEGER                     
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+int8                                                         [data type]
+  based on                          BIGINT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+internal                                                     [data type]
+  based on                          OTHER                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+interval                                                     [data type]
+  based on                          OTHER                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+key_column_usage                                             [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+language_handler                                             [data type]
+  based on                          OTHER                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+line                                                         [data type]
+  based on                          OTHER                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+lseg                                                         [data type]
+  based on                          OTHER                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+macaddr                                                      [data type]
+  based on                          OTHER                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+money                                                        [data type]
+  based on                          DOUBLE                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+name                                                         [data type]
+  based on                          VARCHAR                     
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+numeric                                                      [data type]
+  based on                          NUMERIC                     
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+oid                                                          [data type]
+  based on                          BIGINT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+oidvector                                                    [data type]
+  based on                          OTHER                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+opaque                                                       [data type]
+  based on                          OTHER                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+parameters                                                   [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+path                                                         [data type]
+  based on                          OTHER                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_aggregate                                                 [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_am                                                        [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_amop                                                      [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_amproc                                                    [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_attrdef                                                   [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_attribute                                                 [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_auth_members                                              [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_authid                                                    [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_cast                                                      [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_class                                                     [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_constraint                                                [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_conversion                                                [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_cursors                                                   [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_database                                                  [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_db_role_setting                                           [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_default_acl                                               [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_depend                                                    [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_description                                               [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_enum                                                      [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_foreign_data_wrapper                                      [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_foreign_server                                            [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_group                                                     [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_index                                                     [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_indexes                                                   [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_inherits                                                  [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_language                                                  [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_largeobject                                               [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_largeobject_metadata                                      [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_locks                                                     [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_namespace                                                 [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_opclass                                                   [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_operator                                                  [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_opfamily                                                  [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_pltemplate                                                [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_prepared_statements                                       [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_prepared_xacts                                            [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_proc                                                      [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_rewrite                                                   [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_roles                                                     [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_rules                                                     [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_settings                                                  [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_shadow                                                    [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_shdepend                                                  [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_shdescription                                             [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_stat_activity                                             [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_stat_all_indexes                                          [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_stat_all_tables                                           [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_stat_bgwriter                                             [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_stat_database                                             [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_stat_sys_indexes                                          [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_stat_sys_tables                                           [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_stat_user_functions                                       [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_stat_user_indexes                                         [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_stat_user_tables                                          [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_statio_all_indexes                                        [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_statio_all_sequences                                      [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_statio_all_tables                                         [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_statio_sys_indexes                                        [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_statio_sys_sequences                                      [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_statio_sys_tables                                         [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_statio_user_indexes                                       [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_statio_user_sequences                                     [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_statio_user_tables                                        [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_statistic                                                 [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_stats                                                     [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_tables                                                    [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_tablespace                                                [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_timezone_abbrevs                                          [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_timezone_names                                            [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_trigger                                                   [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_ts_config                                                 [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_ts_config_map                                             [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_ts_dict                                                   [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_ts_parser                                                 [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_ts_template                                               [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_type                                                      [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_user                                                      [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_user_mapping                                              [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_user_mappings                                             [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+pg_views                                                     [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+point                                                        [data type]
+  based on                          OTHER                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+polygon                                                      [data type]
+  based on                          OTHER                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+publishers                                                   [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+record                                                       [data type]
+  based on                          OTHER                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+refcursor                                                    [data type]
+  based on                          OTHER                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+referential_constraints                                      [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+regclass                                                     [data type]
+  based on                          OTHER                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+regconfig                                                    [data type]
+  based on                          OTHER                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+regdictionary                                                [data type]
+  based on                          OTHER                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+regoper                                                      [data type]
+  based on                          OTHER                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+regoperator                                                  [data type]
+  based on                          OTHER                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+regproc                                                      [data type]
+  based on                          OTHER                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+regprocedure                                                 [data type]
+  based on                          OTHER                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+regtype                                                      [data type]
+  based on                          OTHER                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+reltime                                                      [data type]
+  based on                          OTHER                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+role_column_grants                                           [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+role_routine_grants                                          [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+role_table_grants                                            [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+role_usage_grants                                            [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+routine_privileges                                           [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+routines                                                     [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+schemata                                                     [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+sequences                                                    [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+serial                                                       [data type]
+  based on                          INTEGER                     
+  not user defined
+  defined with no parameters
+  nullable
+  auto-incrementable
+  searchable
+
+smgr                                                         [data type]
+  based on                          OTHER                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+sql_features                                                 [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+sql_identifier                                               [data type]
+  based on                          DISTINCT                    
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+sql_implementation_info                                      [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+sql_languages                                                [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+sql_packages                                                 [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+sql_parts                                                    [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+sql_sizing                                                   [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+sql_sizing_profiles                                          [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+table_constraints                                            [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+table_privileges                                             [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+tables                                                       [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+text                                                         [data type]
+  based on                          VARCHAR                     
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+tid                                                          [data type]
+  based on                          OTHER                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+time                                                         [data type]
+  based on                          TIME                        
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+time_stamp                                                   [data type]
+  based on                          DISTINCT                    
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+timestamp                                                    [data type]
+  based on                          TIMESTAMP                   
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+timestamptz                                                  [data type]
+  based on                          TIMESTAMP                   
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+timetz                                                       [data type]
+  based on                          TIME                        
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+tinterval                                                    [data type]
+  based on                          OTHER                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+trigger                                                      [data type]
+  based on                          OTHER                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+triggered_update_columns                                     [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+triggers                                                     [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+tsquery                                                      [data type]
+  based on                          OTHER                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+tsvector                                                     [data type]
+  based on                          OTHER                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+txid_snapshot                                                [data type]
+  based on                          OTHER                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+unknown                                                      [data type]
+  based on                          OTHER                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+usage_privileges                                             [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+user_mapping_options                                         [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+user_mappings                                                [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+uuid                                                         [data type]
+  based on                          OTHER                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+varbit                                                       [data type]
+  based on                          OTHER                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+varchar                                                      [data type]
+  based on                          VARCHAR                     
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+view_column_usage                                            [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+view_routine_usage                                           [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+view_table_usage                                             [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+views                                                        [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+void                                                         [data type]
+  based on                          OTHER                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+xid                                                          [data type]
+  based on                          OTHER                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+xml                                                          [data type]
+  based on                          SQLXML                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+yes_or_no                                                    [data type]
+  based on                          DISTINCT                    
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+books.authors                                                [data type]
+  based on                          STRUCT                      
+  user defined
+  defined with 
+  not nullable
+  not auto-incrementable
+  unknown
+
+books.authorslist                                            [data type]
+  based on                          STRUCT                      
+  user defined
+  defined with 
+  not nullable
+  not auto-incrementable
+  unknown
+
+books.bookauthors                                            [data type]
+  based on                          STRUCT                      
+  user defined
+  defined with 
+  not nullable
+  not auto-incrementable
+  unknown
+
+books.books                                                  [data type]
+  based on                          STRUCT                      
+  user defined
+  defined with 
+  not nullable
+  not auto-incrementable
+  unknown
+
+books.Global Counts                                          [data type]
+  based on                          STRUCT                      
+  user defined
+  defined with 
+  not nullable
+  not auto-incrementable
+  unknown
+
+books.publishers                                             [data type]
+  based on                          STRUCT                      
+  user defined
+  defined with 
+  not nullable
+  not auto-incrementable
+  unknown
+
+
+
+Tables
+========================================================================
+
+
+books.authors                                                    [table]
+------------------------------------------------------------------------
+  id                                int4 not null               
+  firstname                         varchar(20) not null        
+  lastname                          varchar(20) not null        
+  address1                          varchar(255)                
+  address2                          varchar(255)                
+  city                              varchar(50)                 
+  state                             varchar(2)                  
+  postalcode                        varchar(10)                 
+  country                           varchar(50)                 
+
+pk_authors                                                 [primary key]
+  id                                ascending                   
+
+fk_z_author                                [foreign key, with no action]
+  id --> books.bookauthors.authorid                              
+
+idx_b_authors                                         [non-unique index]
+  lastname                          ascending                   
+  firstname                         ascending                   
+
+idx_a_authors                                         [non-unique index]
+  city                              ascending                   
+  state                             ascending                   
+  postalcode                        ascending                   
+  country                           ascending                   
+
+                                                                  [lint]
+  incrementing columns
+address1, address2
+
+
+
+books.authorslist                                                 [view]
+------------------------------------------------------------------------
+  id                                int4                        
+  firstname                         varchar(20)                 
+  lastname                          varchar(20)                 
+
+
+books.bookauthors                                                [table]
+------------------------------------------------------------------------
+  bookid                            int4 not null               
+  authorid                          int4 not null               
+  "UPDATE"                          text                        
+
+fk_z_author                                [foreign key, with no action]
+  books.authors.id --> authorid                                 
+
+fk_y_book                                  [foreign key, with no action]
+  books.books.id --> bookid                                     
+
+uidx_bookauthors                                          [unique index]
+  bookid                            ascending                   
+  authorid                          ascending                   
+
+                                                                  [lint]
+  spaces in names, or reserved words
+"UPDATE"
+
+
+books.books                                                      [table]
+------------------------------------------------------------------------
+  id                                int4 not null               
+  title                             varchar(255) not null       
+  description                       varchar(255)                
+  publisherid                       int4 not null               
+  publicationdate                   date                        
+  price                             float8(17, 17)              
+
+pk_books                                                   [primary key]
+  id                                ascending                   
+
+fk_y_book                                  [foreign key, with no action]
+  id --> books.bookauthors.bookid                               
+
+                                                      [weak association]
+  books.publishers.id --> publisherid                              
+
+
+books."Global Counts"                                            [table]
+------------------------------------------------------------------------
+  "Global Count"                    int4                        
+
+                                                                  [lint]
+  no indices
+  single column
+  spaces in names, or reserved words
+"Global Counts", "Global Count"
+
+
+books.publishers                                                 [table]
+------------------------------------------------------------------------
+  id                                int4 not null               
+  publisher                         varchar(255)                
+
+pk_publishers                                              [primary key]
+  id                                ascending                   
+
+                                                      [weak association]
+  id --> books.books.publisherid                                
+
+
+
