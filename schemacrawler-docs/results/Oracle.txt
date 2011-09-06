@@ -1,0 +1,1069 @@
+
+
+
+System Information
+========================================================================
+
+
+
+SchemaCrawler Information
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
+
+product name                          SchemaCrawler
+product version                       8.7
+
+
+Database Information
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
+
+database product name                 Oracle
+database product version              Oracle Database 11g Express Edition Release 11.2.0.2.0 - Beta
+database user name                    BOOKS
+
+
+Database Characteristics
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
+
+all procedures are callable           false
+all tables are selectable             false
+auto commit failure closes all result sets  false
+catalog separator                     
+catalog term                          
+catalogs                              
+client info properties                
+data definition causes transaction commit  true
+data definition ignored in transactions  false
+database major version                11
+database minor version                2
+default transaction isolation         2
+deletes are detected for TYPE_FORWARD_ONLY result sets  false
+deletes are detected for TYPE_SCROLL_INSENSITIVE result sets  false
+deletes are detected for TYPE_SCROLL_SENSITIVE result sets  false
+does max row size include blobs       true
+driver major version                  11
+driver minor version                  2
+extra name characters                 $#
+identifier quote string               "
+inserts are detected for TYPE_FORWARD_ONLY result sets  false
+inserts are detected for TYPE_SCROLL_INSENSITIVE result sets  false
+inserts are detected for TYPE_SCROLL_SENSITIVE result sets  false
+is catalog at start                   false
+is read only                          false
+JDBC major version                    11
+JDBC minor version                    2
+locators update copy                  true
+max binary literal length             1000
+max catalog name length               0
+max char literal length               2000
+max column name length                30
+max columns in group by               0
+max columns in index                  32
+max columns in order by               0
+max columns in select                 0
+max columns in table                  1000
+max connections                       0
+max cursor name length                0
+max index length                      0
+max procedure name length             30
+max row size                          0
+max schema name length                30
+max statement length                  65535
+max statements                        0
+max table name length                 30
+max tables in select                  0
+max user name length                  30
+null plus non null is null            true
+nulls are sorted at end               false
+nulls are sorted at start             false
+nulls are sorted high                 false
+nulls are sorted low                  true
+numeric functions                     ABS, ACOS, ASIN, ATAN, ATAN2, CEILING, COS, EXP, FLOOR, LOG, LOG10, MOD, PI, POWER, ROUND, SIGN, SIN, SQRT, TAN, TRUNCATE
+others inserts are visible for TYPE_FORWARD_ONLY result sets  false
+others inserts are visible for TYPE_SCROLL_INSENSITIVE result sets  false
+others inserts are visible for TYPE_SCROLL_SENSITIVE result sets  false
+others updates are visible for TYPE_FORWARD_ONLY result sets  false
+others updates are visible for TYPE_SCROLL_INSENSITIVE result sets  false
+others updates are visible for TYPE_SCROLL_SENSITIVE result sets  true
+own deletes are visible for TYPE_FORWARD_ONLY result sets  false
+own deletes are visible for TYPE_SCROLL_INSENSITIVE result sets  true
+own deletes are visible for TYPE_SCROLL_SENSITIVE result sets  true
+own inserts are visible for TYPE_FORWARD_ONLY result sets  false
+own inserts are visible for TYPE_SCROLL_INSENSITIVE result sets  false
+own inserts are visible for TYPE_SCROLL_SENSITIVE result sets  false
+own updates are visible for TYPE_FORWARD_ONLY result sets  false
+own updates are visible for TYPE_SCROLL_INSENSITIVE result sets  true
+own updates are visible for TYPE_SCROLL_SENSITIVE result sets  true
+procedure term                        procedure
+result set holdability                1
+row id lifetime                       ROWID_VALID_FOREVER
+schema term                           schema
+schemas                               ANONYMOUS, APEX_040000, APEX_PUBLIC_USER, APPQOSSYS, BOOKS, CTXSYS, DBSNMP, DIP, FLOWS_FILES, HR, MDSYS, ORACLE_OCM, OUTLN, PUBLISHER SALES, SYS, SYSTEM, TE$TU$ER, XDB, XS$NULL
+search string escape                  /
+SQL keywords                          ACCESS,  ADD,  ALTER,  AUDIT,  CLUSTER,  COLUMN,  COMMENT,  COMPRESS,  CONNECT,  DATE,  DROP,  EXCLUSIVE,  FILE,  IDENTIFIED,  IMMEDIATE,  INCREMENT,  INDEX,  INITIAL,  INTERSECT,  LEVEL,  LOCK,  LONG,  MAXEXTENTS,  MINUS,  MODE,  NOAUDIT,  NOCOMPRESS,  NOWAIT,  NUMBER,  OFFLINE,  ONLINE,  PCTFREE,  PRIOR,  all_PL_SQL_reserved_ words
+SQL state type                        0
+stores lower case identifiers         false
+stores lower case quoted identifiers  false
+stores mixed case identifiers         false
+stores mixed case quoted identifiers  true
+stores upper case identifiers         true
+stores upper case quoted identifiers  false
+string functions                      ASCII, CHAR, CHAR_LENGTH, CHARACTER_LENGTH, CONCAT, LCASE, LENGTH, LTRIM, OCTET_LENGTH, REPLACE, RTRIM, SOUNDEX, SUBSTRING, UCASE
+supports alter table with add column  true
+supports alter table with drop column  false
+supports ANSI92 entry level SQL       true
+supports ANSI92 full SQL              false
+supports ANSI92 intermediate SQL      false
+supports batch updates                true
+supports catalogs in data manipulation  false
+supports catalogs in index definitions  false
+supports catalogs in privilege definitions  false
+supports catalogs in procedure calls  false
+supports catalogs in table definitions  false
+supports column aliasing              true
+supports convert                      false
+supports core SQL grammar             true
+supports correlated subqueries        true
+supports data definition and data manipulation transactions  true
+supports data manipulation transactions only  true
+supports different table correlation names  true
+supports expressions in order by      true
+supports extended SQL grammar         true
+supports full outer joins             true
+supports get generated keys           true
+supports group by                     true
+supports group by beyond select       true
+supports group by unrelated           true
+supports integrity enhancement facility  true
+supports like escape clause           true
+supports limited outer joins          true
+supports minimum SQL grammar          true
+supports mixed case identifiers       false
+supports mixed case quoted identifiers  true
+supports multiple open results        false
+supports multiple result sets         false
+supports multiple transactions        true
+supports named parameters             true
+supports non nullable columns         true
+supports open cursors across commit   false
+supports open cursors across rollback  false
+supports open statements across commit  false
+supports open statements across rollback  false
+supports order by unrelated           true
+supports outer joins                  true
+supports positioned delete            false
+supports positioned update            false
+supports result set type for TYPE_FORWARD_ONLY result sets  true
+supports result set type for TYPE_SCROLL_INSENSITIVE result sets  true
+supports result set type for TYPE_SCROLL_SENSITIVE result sets  true
+supports savepoints                   true
+supports schemas in data manipulation  true
+supports schemas in index definitions  true
+supports schemas in privilege definitions  true
+supports schemas in procedure calls   true
+supports schemas in table definitions  true
+supports select for update            true
+supports statement pooling            true
+supports stored functions using call syntax  true
+supports stored procedures            true
+supports subqueries in comparisons    true
+supports subqueries in exists         true
+supports subqueries in ins            true
+supports subqueries in quantifieds    true
+supports table correlation names      true
+supports transactions                 true
+supports union                        true
+supports union all                    true
+system functions                      USER
+table types                           SYNONYM, TABLE, VIEW
+time date functions                   CURRENT_DATE, CURRENT_TIMESTAMP, CURDATE, EXTRACT, HOUR, MINUTE, MONTH, SECOND, YEAR
+type info                             INTERVALDS, INTERVALYM, TIMESTAMP WITH LOCAL TIME ZONE, TIMESTAMP WITH TIME ZONE, NUMBER, NUMBER, NUMBER, LONG RAW, RAW, LONG, CHAR, NUMBER, NUMBER, NUMBER, FLOAT, REAL, VARCHAR2, DATE, DATE, TIMESTAMP, STRUCT, ARRAY, BLOB, CLOB, REF
+uses local file per table             false
+uses local files                      false
+
+
+JDBC Driver Information
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
+
+driver name                           Oracle JDBC driver
+driver version                        11.2.0.2.0
+driver class name                     oracle.jdbc.OracleDriver
+url                                   jdbc:oracle:thin:@192.168.62.133:1521:XE
+is JDBC compliant                     true
+
+
+JDBC Driver Properties
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
+
+AccumulateBatchResult                                  [driver property]
+  
+  not required
+  value                             true                        
+
+autoCommit                                             [driver property]
+  
+  not required
+  value                             true                        
+
+database                                               [driver property]
+  
+  not required
+  value                             null                        
+
+defaultExecuteBatch                                    [driver property]
+  
+  not required
+  value                             1                           
+
+defaultNChar                                           [driver property]
+  
+  not required
+  value                             false                       
+
+defaultRowPrefetch                                     [driver property]
+  
+  not required
+  value                             10                          
+
+disableDefineColumnType                                [driver property]
+  
+  not required
+  value                             false                       
+
+fixedString                                            [driver property]
+  
+  not required
+  value                             false                       
+
+includeSynonyms                                        [driver property]
+  
+  not required
+  value                             false                       
+
+internal_logon                                         [driver property]
+  
+  not required
+  value                             null                        
+
+java.naming.factory.initial                            [driver property]
+  
+  not required
+  value                             null                        
+
+java.naming.provider.url                               [driver property]
+  
+  not required
+  value                             null                        
+
+java.naming.security.authentication                    [driver property]
+  
+  not required
+  value                             null                        
+
+java.naming.security.credentials                       [driver property]
+  
+  not required
+  value                             null                        
+
+java.naming.security.principal                         [driver property]
+  
+  not required
+  value                             null                        
+
+javax.net.ssl.keyStore                                 [driver property]
+  
+  not required
+  value                             null                        
+
+javax.net.ssl.keyStorePassword                         [driver property]
+  
+  not required
+  value                             null                        
+
+javax.net.ssl.keyStoreType                             [driver property]
+  
+  not required
+  value                             null                        
+
+javax.net.ssl.trustStore                               [driver property]
+  
+  not required
+  value                             null                        
+
+javax.net.ssl.trustStorePassword                       [driver property]
+  
+  not required
+  value                             null                        
+
+javax.net.ssl.trustStoreType                           [driver property]
+  
+  not required
+  value                             null                        
+
+JDBCDriverCharSetId                                    [driver property]
+  
+  not required
+  value                             null                        
+
+OCIEnvHandle                                           [driver property]
+  
+  not required
+  value                             0                           
+
+OCIErrHandle                                           [driver property]
+  
+  not required
+  value                             0                           
+
+OCINewPassword                                         [driver property]
+  
+  not required
+  value                             null                        
+
+OCISvcCtxHandle                                        [driver property]
+  
+  not required
+  value                             0                           
+
+oracle.jdbc.commitOption                               [driver property]
+  
+  not required
+  value                             null                        
+
+oracle.jdbc.convertNcharLiterals                       [driver property]
+  
+  not required
+  value                             false                       
+
+oracle.jdbc.createDescriptorUseCurrentSchemaForSchemaName  [driver property]
+  
+  not required
+  value                             false                       
+
+oracle.jdbc.defaultLobPrefetchSize                     [driver property]
+  
+  not required
+  value                             4000                        
+
+oracle.jdbc.driverNameAttribute                        [driver property]
+  
+  not required
+  value                             null                        
+
+oracle.jdbc.editionName                                [driver property]
+  
+  not required
+  value                             null                        
+
+oracle.jdbc.enableDataInLocator                        [driver property]
+  
+  not required
+  value                             true                        
+
+oracle.jdbc.enableReadDataInLocator                    [driver property]
+  
+  not required
+  value                             true                        
+
+oracle.jdbc.getObjectReturnsXMLType                    [driver property]
+  
+  not required
+  value                             false                       
+
+oracle.jdbc.implicitStatementCacheSize                 [driver property]
+  
+  not required
+  value                             0                           
+
+oracle.jdbc.J2EE13Compliant                            [driver property]
+  
+  not required
+  value                             false                       
+
+oracle.jdbc.LobStreamPosStandardCompliant              [driver property]
+  
+  not required
+  value                             false                       
+
+oracle.jdbc.mapDateToTimestamp                         [driver property]
+  
+  not required
+  value                             true                        
+
+oracle.jdbc.maxCachedBufferSize                        [driver property]
+  
+  not required
+  value                             30                          
+
+oracle.jdbc.ocinativelibrary                           [driver property]
+  
+  not required
+  value                             null                        
+
+oracle.jdbc.proxyClientName                            [driver property]
+  
+  not required
+  value                             null                        
+
+oracle.jdbc.ReadTimeout                                [driver property]
+  
+  not required
+  value                             null                        
+
+oracle.jdbc.RetainV9LongBindBehavior                   [driver property]
+  
+  not required
+  value                             false                       
+
+oracle.jdbc.StreamChunkSize                            [driver property]
+  
+  not required
+  value                             16384                       
+
+oracle.jdbc.strictASCIIConversion                      [driver property]
+  
+  not required
+  value                             false                       
+
+oracle.jdbc.TcpNoDelay                                 [driver property]
+  
+  not required
+  value                             false                       
+
+oracle.jdbc.thinForceDNSLoadBalancing                  [driver property]
+  
+  not required
+  value                             false                       
+
+oracle.jdbc.timestampTzInGmt                           [driver property]
+  
+  not required
+  value                             true                        
+
+oracle.jdbc.timezoneAsRegion                           [driver property]
+  
+  not required
+  value                             true                        
+
+oracle.jdbc.use1900AsYearForTime                       [driver property]
+  
+  not required
+  value                             false                       
+
+oracle.jdbc.useNio                                     [driver property]
+  
+  not required
+  value                             false                       
+
+oracle.jdbc.useThreadLocalBufferCache                  [driver property]
+  
+  not required
+  value                             false                       
+
+oracle.net.authentication_services                     [driver property]
+  
+  not required
+  value                             null                        
+
+oracle.net.CONNECT_TIMEOUT                             [driver property]
+  
+  not required
+  value                             null                        
+
+oracle.net.crypto_checksum_client                      [driver property]
+  
+  not required
+  value                             null                        
+
+oracle.net.crypto_checksum_types_client                [driver property]
+  
+  not required
+  value                             null                        
+
+oracle.net.crypto_seed                                 [driver property]
+  
+  not required
+  value                             null                        
+
+oracle.net.disableOob                                  [driver property]
+  
+  not required
+  value                             false                       
+
+oracle.net.encryption_client                           [driver property]
+  
+  not required
+  value                             null                        
+
+oracle.net.encryption_types_client                     [driver property]
+  
+  not required
+  value                             null                        
+
+oracle.net.kerberos5_cc_name                           [driver property]
+  
+  not required
+  value                             null                        
+
+oracle.net.kerberos5_mutual_authentication             [driver property]
+  
+  not required
+  value                             null                        
+
+oracle.net.oldSyntax                                   [driver property]
+  
+  not required
+  value                             null                        
+
+oracle.net.profile                                     [driver property]
+  
+  not required
+  value                             null                        
+
+oracle.net.SDP                                         [driver property]
+  
+  not required
+  value                             false                       
+
+oracle.net.ssl_cipher_suites                           [driver property]
+  
+  not required
+  value                             null                        
+
+oracle.net.ssl_server_dn_match                         [driver property]
+  
+  not required
+  value                             null                        
+
+oracle.net.ssl_version                                 [driver property]
+  
+  not required
+  value                             null                        
+
+oracle.net.useZeroCopyIO                               [driver property]
+  
+  not required
+  value                             true                        
+
+oracle.net.wallet_location                             [driver property]
+  
+  not required
+  value                             null                        
+
+oracle.net.wallet_password                             [driver property]
+  
+  not required
+  value                             null                        
+
+password                                               [driver property]
+  
+  not required
+  value                             null                        
+
+prelim_auth                                            [driver property]
+  
+  not required
+  value                             false                       
+
+processEscapes                                         [driver property]
+  
+  not required
+  value                             true                        
+
+protocol                                               [driver property]
+  
+  not required
+  value                             null                        
+
+remarksReporting                                       [driver property]
+  
+  not required
+  value                             false                       
+
+RessourceManagerId                                     [driver property]
+  
+  not required
+  value                             0000                        
+
+restrictGetTables                                      [driver property]
+  
+  not required
+  value                             false                       
+
+server                                                 [driver property]
+  
+  not required
+  value                             null                        
+
+SetFloatAndDoubleUseBinary                             [driver property]
+  
+  not required
+  value                             false                       
+
+ssl.keyManagerFactory.algorithm                        [driver property]
+  
+  not required
+  value                             null                        
+
+ssl.trustManagerFactory.algorithm                      [driver property]
+  
+  not required
+  value                             null                        
+
+useFetchSizeWithLongColumn                             [driver property]
+  
+  not required
+  value                             false                       
+
+user                                                   [driver property]
+  
+  not required
+  value                             null                        
+
+v$session.ename                                        [driver property]
+  
+  not required
+  value                             null                        
+
+v$session.iname                                        [driver property]
+  
+  not required
+  value                             jdbc_ttc_impl               
+
+v$session.machine                                      [driver property]
+  
+  not required
+  value                             null                        
+
+v$session.osuser                                       [driver property]
+  
+  not required
+  value                             null                        
+
+v$session.process                                      [driver property]
+  
+  not required
+  value                             1234                        
+
+v$session.program                                      [driver property]
+  
+  not required
+  value                             JDBC Thin Client            
+
+v$session.terminal                                     [driver property]
+  
+  not required
+  value                             unknown                     
+
+
+
+Data Types
+========================================================================
+
+
+ARRAY                                                        [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  not searchable
+
+BLOB                                                         [data type]
+  based on                          BLOB                        
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  not searchable
+
+CHAR                                                         [data type]
+  based on                          CHAR                        
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+CLOB                                                         [data type]
+  based on                          CLOB                        
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  not searchable
+
+DATE                                                         [data type]
+  based on                          TIMESTAMP                   
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+FLOAT                                                        [data type]
+  based on                          FLOAT                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+INTERVALDS                                                   [data type]
+  based on                          <UNKNOWN>                   
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+INTERVALYM                                                   [data type]
+  based on                          <UNKNOWN>                   
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+LONG                                                         [data type]
+  based on                          LONGVARCHAR                 
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  not searchable
+
+LONG RAW                                                     [data type]
+  based on                          LONGVARBINARY               
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  not searchable
+
+NUMBER                                                       [data type]
+  based on                          SMALLINT                    
+  not user defined
+  defined with (5)
+  nullable
+  not auto-incrementable
+  searchable
+
+RAW                                                          [data type]
+  based on                          VARBINARY                   
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+REAL                                                         [data type]
+  based on                          REAL                        
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+REF                                                          [data type]
+  based on                          REF                         
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  not searchable
+
+STRUCT                                                       [data type]
+  based on                          STRUCT                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  not searchable
+
+TIMESTAMP                                                    [data type]
+  based on                          TIMESTAMP                   
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+TIMESTAMP WITH LOCAL TIME ZONE                               [data type]
+  based on                          <UNKNOWN>                   
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+TIMESTAMP WITH TIME ZONE                                     [data type]
+  based on                          <UNKNOWN>                   
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+VARCHAR2                                                     [data type]
+  based on                          VARCHAR                     
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+BOOKS.PL/SQL BOOLEAN                                         [data type]
+  based on                          OTHER                       
+  not user defined
+  defined with 
+  not nullable
+  not auto-incrementable
+  unknown
+
+
+
+Tables
+========================================================================
+
+
+BOOKS.AUTHORS                                                    [table]
+------------------------------------------------------------------------
+  ID                                NUMBER not null             
+  FIRSTNAME                         VARCHAR2(20) not null       
+  LASTNAME                          VARCHAR2(20) not null       
+  ADDRESS1                          VARCHAR2(255)               
+  ADDRESS2                          VARCHAR2(255)               
+  CITY                              VARCHAR2(50)                
+  STATE                             VARCHAR2(2)                 
+  POSTALCODE                        VARCHAR2(10)                
+  COUNTRY                           VARCHAR2(50)                
+
+PK_AUTHORS                                                 [primary key]
+  ID                                unknown                     
+
+FK_Z_AUTHOR                            [foreign key, on delete restrict]
+  ID --> BOOKS.BOOKAUTHORS.AUTHORID                              
+
+IDX_B_AUTHORS                               [non-unique clustered index]
+  LASTNAME                          unknown                     
+  FIRSTNAME                         unknown                     
+
+IDX_A_AUTHORS                               [non-unique clustered index]
+  CITY                              unknown                     
+  STATE                             unknown                     
+  POSTALCODE                        unknown                     
+  COUNTRY                           unknown                     
+
+CHECK_UPPERCASE_STATE                                 [check constraint]
+State=UPPER(State)
+
+SYS_C007265                                           [check constraint]
+"ID" IS NOT NULL
+
+SYS_C007266                                           [check constraint]
+"FIRSTNAME" IS NOT NULL
+
+SYS_C007267                                           [check constraint]
+"LASTNAME" IS NOT NULL
+
+TRG_AUTHORS                             [trigger, after insert, per row]
+  BEGIN
+	UPDATE Authors SET FIRSTNAME = 'John' WHERE FIRSTNAME = 'John';
+END;
+
+                                                                  [lint]
+  incrementing columns
+ADDRESS1, ADDRESS2
+
+
+
+BOOKS.AUTHORSLIST                                                 [view]
+------------------------------------------------------------------------
+  ID                                NUMBER not null             
+  FIRSTNAME                         VARCHAR2(20) not null       
+  LASTNAME                          VARCHAR2(20) not null       
+
+                                                            [definition]
+SELECT Id, FirstName, LastName FROM Authors
+
+
+
+BOOKS.BOOKAUTHORS                                                [table]
+------------------------------------------------------------------------
+  BOOKID                            NUMBER not null             
+  AUTHORID                          NUMBER not null             
+  "UPDATE"                          CLOB                        
+
+FK_Z_AUTHOR                            [foreign key, on delete restrict]
+  BOOKS.AUTHORS.ID --> AUTHORID                                 
+
+FK_Y_BOOK                              [foreign key, on delete restrict]
+  BOOKS.BOOKS.ID --> BOOKID                                     
+
+UIDX_BOOKAUTHORS                                [unique clustered index]
+  BOOKID                            unknown                     
+  AUTHORID                          unknown                     
+
+SYS_C007274                                           [check constraint]
+"BOOKID" IS NOT NULL
+
+SYS_C007275                                           [check constraint]
+"AUTHORID" IS NOT NULL
+
+                                                                  [lint]
+  spaces in names, or reserved words
+"UPDATE"
+
+
+BOOKS.BOOKS                                                      [table]
+------------------------------------------------------------------------
+  ID                                NUMBER not null             
+  TITLE                             VARCHAR2(255) not null      
+  DESCRIPTION                       VARCHAR2(255)               
+  PUBLISHERID                       NUMBER not null             
+  PUBLICATIONDATE                   DATE                        
+  PRICE                             FLOAT(126, 0)               
+
+PK_BOOKS                                                   [primary key]
+  ID                                unknown                     
+
+FK_Y_BOOK                              [foreign key, on delete restrict]
+  ID --> BOOKS.BOOKAUTHORS.BOOKID                               
+
+                                                      [weak association]
+  BOOKS.PUBLISHERS.ID --> PUBLISHERID                              
+
+SYS_C007270                                           [check constraint]
+"ID" IS NOT NULL
+
+SYS_C007271                                           [check constraint]
+"TITLE" IS NOT NULL
+
+SYS_C007272                                           [check constraint]
+"PUBLISHERID" IS NOT NULL
+
+
+BOOKS."Global Counts"                                            [table]
+------------------------------------------------------------------------
+  "Global Count"                    NUMBER                      
+
+                                                                  [lint]
+  no indices
+  single column
+  spaces in names, or reserved words
+"Global Counts", "Global Count"
+
+
+BOOKS.PUBLISHERS                                                 [table]
+------------------------------------------------------------------------
+  ID                                NUMBER not null             
+  PUBLISHER                         VARCHAR2(255)               
+
+PK_PUBLISHERS                                              [primary key]
+  ID                                unknown                     
+
+                                                      [weak association]
+  ID --> BOOKS.BOOKS.PUBLISHERID                                
+
+SYS_C007263                                           [check constraint]
+"ID" IS NOT NULL
+
+
+
+
+Procedures
+========================================================================
+
+
+BOOKS.CUSTOM_AUTH                            [procedure, returns result]
+------------------------------------------------------------------------
+  null                              PL/SQL BOOLEAN, return      
+  P_USERNAME                        VARCHAR2, in                
+  P_PASSWORD                        VARCHAR2, in                
+
+                                                            [definition]
+function custom_auth (p_username in VARCHAR2, p_password in VARCHAR2)
+return BOOLEAN
+is
+  l_password varchar2(4000);
+  l_stored_password varchar2(4000);
+  l_expires_on date;
+  l_count number;
+begin
+-- First, check to see if the user is in the user table
+select count(*) into l_count from demo_users where user_name = p_username;
+if l_count > 0 then
+  -- First, we fetch the stored hashed password & expire date
+  select password, expires_on into l_stored_password, l_expires_on
+   from demo_users where user_name = p_username;
+
+  -- Next, we check to see if the user's account is expired
+  -- If it is, return FALSE
+  if l_expires_on > sysdate or l_expires_on is null then
+
+    -- If the account is not expired, we have to apply the custom hash
+    -- function to the password
+    l_password := custom_hash(p_username, p_password);
+
+    -- Finally, we compare them to see if they are the same and return
+    -- either TRUE or FALSE
+    if l_password = l_stored_password then
+      return true;
+    else
+      return false;
+    end if;
+  else
+    return false;
+  end if;
+else
+  -- The username provided is not in the DEMO_USERS table
+  return false;
+end if;
+end;
+
+                                                               [remarks]
+Standalone procedure or function
+
+
+BOOKS.CUSTOM_HASH                            [procedure, returns result]
+------------------------------------------------------------------------
+  null                              VARCHAR2, return            
+  P_USERNAME                        VARCHAR2, in                
+  P_PASSWORD                        VARCHAR2, in                
+
+                                                            [definition]
+function custom_hash (p_username in varchar2, p_password in varchar2)
+return varchar2
+is
+  l_password varchar2(4000);
+  l_salt varchar2(4000) := 'MJBUWA2R0NND1GPT2EFVRF1XOGKHSJ';
+begin
+
+-- This function should be wrapped, as the hash algorhythm is exposed here.
+-- You can change the value of l_salt or the method of which to call the
+-- DBMS_OBFUSCATOIN toolkit, but you much reset all of your passwords
+-- if you choose to do this.
+
+l_password := utl_raw.cast_to_raw(dbms_obfuscation_toolkit.md5
+  (input_string => p_password || substr(l_salt,10,13) || p_username ||
+    substr(l_salt, 4,10)));
+return l_password;
+end;
+
+                                                               [remarks]
+Standalone procedure or function
+
+
+BOOKS.SQUIRREL_GET_ERROR_OFFSET              [procedure, returns result]
+------------------------------------------------------------------------
+  null                              NUMBER, return              
+  QUERY                             VARCHAR2, in                
+
+                                                            [definition]
+function SQUIRREL_GET_ERROR_OFFSET (query IN varchar2) return number authid current_user is      l_theCursor     integer default dbms_sql.open_cursor;      l_status        integer; begin          begin          dbms_sql.parse(  l_theCursor, query, dbms_sql.native );          exception                  when others then l_status := dbms_sql.last_error_position;          end;          dbms_sql.close_cursor( l_theCursor );          return l_status; end; 
+
+                                                               [remarks]
+Standalone procedure or function
+
+
+

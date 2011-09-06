@@ -1,0 +1,514 @@
+
+
+
+System Information
+========================================================================
+
+
+
+SchemaCrawler Information
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
+
+product name                          SchemaCrawler
+product version                       8.7
+
+
+Database Information
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
+
+database product name                 Apache Derby
+database product version              10.8.1.2 - (1095077)
+database user name                    books
+
+
+Database Characteristics
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
+
+all procedures are callable           true
+all tables are selectable             true
+auto commit failure closes all result sets  false
+catalog separator                     
+catalog term                          CATALOG
+catalogs                              
+client info properties                
+data definition causes transaction commit  false
+data definition ignored in transactions  false
+database major version                10
+database minor version                8
+default transaction isolation         2
+deletes are detected for TYPE_FORWARD_ONLY result sets  false
+deletes are detected for TYPE_SCROLL_INSENSITIVE result sets  true
+deletes are detected for TYPE_SCROLL_SENSITIVE result sets  false
+does max row size include blobs       true
+driver major version                  10
+driver minor version                  8
+extra name characters                 
+identifier quote string               "
+inserts are detected for TYPE_FORWARD_ONLY result sets  false
+inserts are detected for TYPE_SCROLL_INSENSITIVE result sets  false
+inserts are detected for TYPE_SCROLL_SENSITIVE result sets  false
+is catalog at start                   false
+is read only                          false
+JDBC major version                    4
+JDBC minor version                    0
+locators update copy                  true
+max binary literal length             0
+max catalog name length               0
+max char literal length               0
+max column name length                128
+max columns in group by               0
+max columns in index                  0
+max columns in order by               0
+max columns in select                 0
+max columns in table                  0
+max connections                       0
+max cursor name length                128
+max index length                      0
+max procedure name length             128
+max row size                          0
+max schema name length                128
+max statement length                  0
+max statements                        0
+max table name length                 128
+max tables in select                  0
+max user name length                  30
+null plus non null is null            true
+nulls are sorted at end               false
+nulls are sorted at start             false
+nulls are sorted high                 true
+nulls are sorted low                  false
+numeric functions                     ABS, ACOS, ASIN, ATAN, ATAN2, CEILING, COS, COT, DEGREES, EXP, FLOOR, LOG, LOG10, MOD, PI, RADIANS, RAND, SIGN, SIN, SQRT, TAN
+others inserts are visible for TYPE_FORWARD_ONLY result sets  true
+others inserts are visible for TYPE_SCROLL_INSENSITIVE result sets  false
+others inserts are visible for TYPE_SCROLL_SENSITIVE result sets  false
+others updates are visible for TYPE_FORWARD_ONLY result sets  true
+others updates are visible for TYPE_SCROLL_INSENSITIVE result sets  false
+others updates are visible for TYPE_SCROLL_SENSITIVE result sets  false
+own deletes are visible for TYPE_FORWARD_ONLY result sets  false
+own deletes are visible for TYPE_SCROLL_INSENSITIVE result sets  true
+own deletes are visible for TYPE_SCROLL_SENSITIVE result sets  false
+own inserts are visible for TYPE_FORWARD_ONLY result sets  false
+own inserts are visible for TYPE_SCROLL_INSENSITIVE result sets  false
+own inserts are visible for TYPE_SCROLL_SENSITIVE result sets  false
+own updates are visible for TYPE_FORWARD_ONLY result sets  false
+own updates are visible for TYPE_SCROLL_INSENSITIVE result sets  true
+own updates are visible for TYPE_SCROLL_SENSITIVE result sets  false
+procedure term                        PROCEDURE
+result set holdability                1
+row id lifetime                       ROWID_UNSUPPORTED
+schema term                           SCHEMA
+schemas                               APP, BOOKS, NULLID, SQLJ, SYS, SYSCAT, SYSCS_DIAG, SYSCS_UTIL, SYSFUN, SYSIBM, SYSPROC, SYSSTAT
+search string escape                  
+SQL keywords                          ALIAS, BIGINT, BOOLEAN, CALL, CLASS, COPY, DB2J_DEBUG, EXECUTE, EXPLAIN, FILE, FILTER, GETCURRENTCONNECTION, INDEX, INSTANCEOF, METHOD, NEW, OFF, PROPERTIES, RECOMPILE, RENAME, RUNTIMESTATISTICS, STATEMENT, STATISTICS, TIMING, WAIT
+SQL state type                        2
+stores lower case identifiers         false
+stores lower case quoted identifiers  false
+stores mixed case identifiers         false
+stores mixed case quoted identifiers  true
+stores upper case identifiers         true
+stores upper case quoted identifiers  false
+string functions                      CONCAT, LENGTH, LCASE, LOCATE, LTRIM, RTRIM, SUBSTRING, UCASE
+supports alter table with add column  true
+supports alter table with drop column  true
+supports ANSI92 entry level SQL       true
+supports ANSI92 full SQL              false
+supports ANSI92 intermediate SQL      false
+supports batch updates                true
+supports catalogs in data manipulation  false
+supports catalogs in index definitions  false
+supports catalogs in privilege definitions  false
+supports catalogs in procedure calls  false
+supports catalogs in table definitions  false
+supports column aliasing              true
+supports convert                      false
+supports core SQL grammar             false
+supports correlated subqueries        true
+supports data definition and data manipulation transactions  true
+supports data manipulation transactions only  false
+supports different table correlation names  true
+supports expressions in order by      true
+supports extended SQL grammar         false
+supports full outer joins             false
+supports get generated keys           false
+supports group by                     true
+supports group by beyond select       true
+supports group by unrelated           true
+supports integrity enhancement facility  false
+supports like escape clause           true
+supports limited outer joins          true
+supports minimum SQL grammar          true
+supports mixed case identifiers       false
+supports mixed case quoted identifiers  true
+supports multiple open results        true
+supports multiple result sets         true
+supports multiple transactions        true
+supports named parameters             false
+supports non nullable columns         true
+supports open cursors across commit   false
+supports open cursors across rollback  false
+supports open statements across commit  true
+supports open statements across rollback  false
+supports order by unrelated           false
+supports outer joins                  true
+supports positioned delete            true
+supports positioned update            true
+supports result set type for TYPE_FORWARD_ONLY result sets  true
+supports result set type for TYPE_SCROLL_INSENSITIVE result sets  true
+supports result set type for TYPE_SCROLL_SENSITIVE result sets  false
+supports savepoints                   true
+supports schemas in data manipulation  true
+supports schemas in index definitions  true
+supports schemas in privilege definitions  true
+supports schemas in procedure calls   true
+supports schemas in table definitions  true
+supports select for update            true
+supports statement pooling            false
+supports stored functions using call syntax  true
+supports stored procedures            true
+supports subqueries in comparisons    true
+supports subqueries in exists         true
+supports subqueries in ins            true
+supports subqueries in quantifieds    true
+supports table correlation names      true
+supports transactions                 true
+supports union                        true
+supports union all                    true
+system functions                      USER
+table types                           SYNONYM, SYSTEM TABLE, TABLE, VIEW
+time date functions                   CURDATE, CURTIME, HOUR, MINUTE, MONTH, SECOND, TIMESTAMPADD, TIMESTAMPDIFF, YEAR
+type info                             BIGINT, LONG VARCHAR FOR BIT DATA, VARCHAR () FOR BIT DATA, CHAR () FOR BIT DATA, LONG VARCHAR, CHAR, NUMERIC, DECIMAL, INTEGER, SMALLINT, FLOAT, REAL, DOUBLE, VARCHAR, BOOLEAN, DATE, TIME, TIMESTAMP, OBJECT, BLOB, CLOB, XML
+uses local file per table             true
+uses local files                      true
+
+
+JDBC Driver Information
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
+
+driver name                           Apache Derby Network Client JDBC Driver
+driver version                        10.8.1.2 - (1095077)
+driver class name                     org.apache.derby.jdbc.ClientDriver40
+url                                   jdbc:derby://192.168.62.133:1527/books
+is JDBC compliant                     true
+
+
+JDBC Driver Properties
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
+
+password                                               [driver property]
+  The user's password for the connection
+  not required
+  value                             null                        
+
+user                                                   [driver property]
+  The user name for the connection
+  required
+  value                             APP                         
+
+
+
+Data Types
+========================================================================
+
+
+BIGINT                                                       [data type]
+  based on                          BIGINT                      
+  not user defined
+  defined with no parameters
+  nullable
+  auto-incrementable
+  searchable except with where .. like
+
+BLOB                                                         [data type]
+  based on                          BLOB                        
+  not user defined
+  defined with length
+  nullable
+  not auto-incrementable
+  not searchable
+
+BOOLEAN                                                      [data type]
+  based on                          BOOLEAN                     
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable except with where .. like
+
+CHAR                                                         [data type]
+  based on                          CHAR                        
+  not user defined
+  defined with length
+  nullable
+  not auto-incrementable
+  searchable
+
+CHAR () FOR BIT DATA                                         [data type]
+  based on                          BINARY                      
+  not user defined
+  defined with length
+  nullable
+  not auto-incrementable
+  searchable except with where .. like
+
+CLOB                                                         [data type]
+  based on                          CLOB                        
+  not user defined
+  defined with length
+  nullable
+  not auto-incrementable
+  only searchable with where .. like
+
+DATE                                                         [data type]
+  based on                          DATE                        
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable except with where .. like
+
+DECIMAL                                                      [data type]
+  based on                          DECIMAL                     
+  not user defined
+  defined with precision,scale
+  nullable
+  not auto-incrementable
+  searchable except with where .. like
+
+DOUBLE                                                       [data type]
+  based on                          DOUBLE                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable except with where .. like
+
+FLOAT                                                        [data type]
+  based on                          FLOAT                       
+  not user defined
+  defined with precision
+  nullable
+  not auto-incrementable
+  searchable except with where .. like
+
+INTEGER                                                      [data type]
+  based on                          INTEGER                     
+  not user defined
+  defined with no parameters
+  nullable
+  auto-incrementable
+  searchable except with where .. like
+
+LONG VARCHAR                                                 [data type]
+  based on                          LONGVARCHAR                 
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  only searchable with where .. like
+
+LONG VARCHAR FOR BIT DATA                                    [data type]
+  based on                          LONGVARBINARY               
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  not searchable
+
+NUMERIC                                                      [data type]
+  based on                          NUMERIC                     
+  not user defined
+  defined with precision,scale
+  nullable
+  not auto-incrementable
+  searchable except with where .. like
+
+OBJECT                                                       [data type]
+  based on                          JAVA_OBJECT                 
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable except with where .. like
+
+REAL                                                         [data type]
+  based on                          REAL                        
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable except with where .. like
+
+SMALLINT                                                     [data type]
+  based on                          SMALLINT                    
+  not user defined
+  defined with no parameters
+  nullable
+  auto-incrementable
+  searchable except with where .. like
+
+TIME                                                         [data type]
+  based on                          TIME                        
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable except with where .. like
+
+TIMESTAMP                                                    [data type]
+  based on                          TIMESTAMP                   
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable except with where .. like
+
+VARCHAR                                                      [data type]
+  based on                          VARCHAR                     
+  not user defined
+  defined with length
+  nullable
+  not auto-incrementable
+  searchable
+
+VARCHAR () FOR BIT DATA                                      [data type]
+  based on                          VARBINARY                   
+  not user defined
+  defined with length
+  nullable
+  not auto-incrementable
+  searchable except with where .. like
+
+XML                                                          [data type]
+  based on                          SQLXML                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  not searchable
+
+
+
+Tables
+========================================================================
+
+
+BOOKS.AUTHORS                                                    [table]
+------------------------------------------------------------------------
+  ID                                INTEGER not null            
+  FIRSTNAME                         VARCHAR(20) not null        
+  LASTNAME                          VARCHAR(20) not null        
+  ADDRESS1                          VARCHAR(255)                
+  ADDRESS2                          VARCHAR(255)                
+  CITY                              VARCHAR(50)                 
+  STATE                             VARCHAR(2)                  
+  POSTALCODE                        VARCHAR(10)                 
+  COUNTRY                           VARCHAR(50)                 
+
+PK_AUTHORS                                                 [primary key]
+  ID                                ascending                   
+
+FK_Z_AUTHOR                                [foreign key, with no action]
+  ID --> BOOKS.BOOKAUTHORS.AUTHORID                              
+
+SQL110828153850130                                        [unique index]
+  ID                                ascending                   
+
+IDX_B_AUTHORS                                         [non-unique index]
+  LASTNAME                          ascending                   
+  FIRSTNAME                         ascending                   
+
+IDX_A_AUTHORS                                         [non-unique index]
+  CITY                              ascending                   
+  STATE                             ascending                   
+  POSTALCODE                        ascending                   
+  COUNTRY                           ascending                   
+
+                                                                  [lint]
+  incrementing columns
+ADDRESS1, ADDRESS2
+
+
+
+BOOKS.AUTHORSLIST                                                 [view]
+------------------------------------------------------------------------
+  ID                                INTEGER not null            
+  FIRSTNAME                         VARCHAR(20) not null        
+  LASTNAME                          VARCHAR(20) not null        
+
+
+BOOKS.BOOKAUTHORS                                                [table]
+------------------------------------------------------------------------
+  BOOKID                            INTEGER not null            
+  AUTHORID                          INTEGER not null            
+  "UPDATE"                          CLOB                        
+
+FK_Z_AUTHOR                                [foreign key, with no action]
+  BOOKS.AUTHORS.ID --> AUTHORID                                 
+
+FK_Y_BOOK                                  [foreign key, with no action]
+  BOOKS.BOOKS.ID --> BOOKID                                     
+
+SQL110828153858841                                    [non-unique index]
+  AUTHORID                          ascending                   
+
+SQL110828153858840                                    [non-unique index]
+  BOOKID                            ascending                   
+
+UIDX_BOOKAUTHORS                                          [unique index]
+  BOOKID                            ascending                   
+  AUTHORID                          ascending                   
+
+                                                                  [lint]
+  spaces in names, or reserved words
+"UPDATE"
+
+
+BOOKS.BOOKS                                                      [table]
+------------------------------------------------------------------------
+  ID                                INTEGER not null            
+  TITLE                             VARCHAR(255) not null       
+  DESCRIPTION                       VARCHAR(255)                
+  PUBLISHERID                       INTEGER not null            
+  PUBLICATIONDATE                   DATE                        
+  PRICE                             DOUBLE(52, 0)               
+
+PK_BOOKS                                                   [primary key]
+  ID                                ascending                   
+
+FK_Y_BOOK                                  [foreign key, with no action]
+  ID --> BOOKS.BOOKAUTHORS.BOOKID                               
+
+                                                      [weak association]
+  BOOKS.PUBLISHERS.ID --> PUBLISHERID                              
+
+SQL110828153855260                                        [unique index]
+  ID                                ascending                   
+
+
+BOOKS."Global Counts"                                            [table]
+------------------------------------------------------------------------
+  "Global Count"                    INTEGER                     
+
+                                                                  [lint]
+  no indices
+  single column
+  spaces in names, or reserved words
+"Global Counts", "Global Count"
+
+
+BOOKS.PUBLISHERS                                                 [table]
+------------------------------------------------------------------------
+  ID                                INTEGER not null            
+  PUBLISHER                         VARCHAR(255)                
+
+PK_PUBLISHERS                                              [primary key]
+  ID                                ascending                   
+
+                                                      [weak association]
+  ID --> BOOKS.BOOKS.PUBLISHERID                                
+
+SQL110828153844240                                        [unique index]
+  ID                                ascending                   
+
+
+
