@@ -17,6 +17,7 @@
   </poweredBy>
   <body>
     <head>
+      <link rel="meta" title="DOAP" href="doap_schemacrawler-all.rdf" type="application/rdf+xml"/>
       <script type="text/javascript">
         var _gaq = _gaq || [];
         _gaq.push(['_setAccount', 'UA-22913512-1']);
@@ -36,6 +37,7 @@
     <menu name="SchemaCrawler">
       <item name="About SchemaCrawler" href="index.html" />
       <item name="Readme" href="readme.html" />
+      <item name="Resources" href="resources.html" />
       <item name="FAQS" href="faq.html" />
       <item name="How-tos" href="how-to.html" />
       <item name="Database-specific Distributions" href="bundled.html" />
