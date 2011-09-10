@@ -80,15 +80,6 @@
           </li>
         </ul>
       </subsection>
-      <subsection name="Tutorials">
-        <ul>
-          <li>
-            Fred Forester's tutorial on using SchemaCrawler to explore an unknown schema.
-            <br />
-            <iframe width="560" height="345" src="http://www.youtube.com/embed/iWwDGjTW05c" frameborder="0"></iframe>
-          </li>
-        </ul>
-      </subsection>
     </section>
     <section name="Using SchemaCrawler in Your Projects">
       <subsection name="Maven Projects">

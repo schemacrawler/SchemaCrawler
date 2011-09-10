@@ -1,0 +1,23 @@
+<!DOCTYPE document PUBLIC "-//Apache Software Foundation//DTD XDOC 1.0//EN"
+  "http://maven.apache.org/dtd/xdoc_1_0.dtd">
+<document>
+  <properties>
+    <title>SchemaCrawler - Resources</title>
+    <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
+  </properties>
+  <body>
+    <section name="Presentations">
+      <subsection name="Sualeh's Presentation at NEJUG">
+        <iframe width="560" height="345" src="http://www.youtube.com/embed/zYPfOzImuTk" frameborder="0"></iframe>
+      </subsection>
+    </section>
+    <section name="Tutorials">
+      <subsection name="Fred Forester's Tutorial">
+        <p>
+          Fred Forester's tutorial on using SchemaCrawler to explore an unknown schema.
+        </p>
+        <iframe width="560" height="345" src="http://www.youtube.com/embed/iWwDGjTW05c" frameborder="0"></iframe>
+      </subsection>
+    </section>
+  </body>
+</document>
