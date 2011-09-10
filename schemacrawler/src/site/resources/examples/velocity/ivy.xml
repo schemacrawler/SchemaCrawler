@@ -5,6 +5,6 @@
                    "http://ant.apache.org/ivy/schemas/ivy.xsd">
 	<info organisation="schemacrawler" module="schemacrawler-velocity" />
 	<dependencies>
-		<dependency org="org.apache.velocity" name="velocity" rev="1.5" />
+		<dependency org="org.apache.velocity" name="velocity" rev="1.7" />
 	</dependencies>
 </ivy-module>
