@@ -15,13 +15,11 @@
           objects.
         </p>
         <p>
-          SchemaCrawler is also a command-line tool to output your database
-          schema and data in a
-          readable form.
-          The output
-          is designed to be
+          SchemaCrawler is also a database schema discovery and comprehension, and schema documentation tool. You can
+          search for database schema objects using regular expressions, and output the schema and data in a readable
+          text format. The output is designed to be
           <a href="http://en.wikipedia.org/wiki/Diff">diff-ed</a>
-          with previous versions of your database schema.
+          against other database schemas.
         </p>
       </subsection>
       <subsection name="SchemaCrawler API">
