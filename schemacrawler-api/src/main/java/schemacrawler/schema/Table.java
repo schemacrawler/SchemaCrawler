@@ -123,14 +123,14 @@ public interface Table
    *        Name
    * @return Privilege.
    */
-  Privilege getPrivilege(String name);
+  Privilege<Table> getPrivilege(String name);
 
   /**
    * Gets the list of privileges.
    * 
    * @return Privileges for the table.
    */
-  Privilege[] getPrivileges();
+  Privilege<Table>[] getPrivileges();
 
   /**
    * Gets the tables related to this one, based on the specified

@@ -8,9 +8,10 @@ import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.IndexColumnSortSequence;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Privilege;
+import schemacrawler.schema.Table;
 
 final class MutableIndexColumn
-  extends AbstractDependantObject
+  extends AbstractDependantObject<Table>
   implements IndexColumn
 {
 
@@ -115,7 +116,7 @@ final class MutableIndexColumn
    * @see schemacrawler.schema.Column#getPrivilege(java.lang.String)
    */
   @Override
-  public Privilege getPrivilege(final String name)
+  public Privilege<Column> getPrivilege(final String name)
   {
     return column.getPrivilege(name);
   }
@@ -126,7 +127,7 @@ final class MutableIndexColumn
    * @see schemacrawler.schema.Column#getPrivileges()
    */
   @Override
-  public Privilege[] getPrivileges()
+  public Privilege<Column>[] getPrivileges()
   {
     return column.getPrivileges();
   }

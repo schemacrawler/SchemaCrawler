@@ -31,19 +31,19 @@ import sf.util.Utility;
  * 
  * @author Sualeh Fatehi
  */
-abstract class AbstractDependantObject
+abstract class AbstractDependantObject<P extends DatabaseObject>
   extends AbstractDatabaseObject
-  implements DependantObject
+  implements DependantObject<P>
 {
 
   private static final long serialVersionUID = -4327208866052082457L;
 
-  private final DatabaseObject parent;
+  private final P parent;
   private transient String fullName;
 
   private transient int hashCode;
 
-  AbstractDependantObject(final DatabaseObject parent, final String name)
+  AbstractDependantObject(final P parent, final String name)
   {
     super(parent.getSchema(), name);
     this.parent = parent;
@@ -69,15 +69,15 @@ abstract class AbstractDependantObject
     {
       return false;
     }
-    final AbstractDependantObject other = (AbstractDependantObject) obj;
+    final DependantObject<P> other = (DependantObject<P>) obj;
     if (parent == null)
     {
-      if (other.parent != null)
+      if (other.getParent() != null)
       {
         return false;
       }
     }
-    else if (!parent.equals(other.parent))
+    else if (!parent.equals(other.getParent()))
     {
       return false;
     }
@@ -102,7 +102,7 @@ abstract class AbstractDependantObject
    * @see schemacrawler.schema.DependantObject#getParent()
    */
   @Override
-  public final DatabaseObject getParent()
+  public final P getParent()
   {
     return parent;
   }

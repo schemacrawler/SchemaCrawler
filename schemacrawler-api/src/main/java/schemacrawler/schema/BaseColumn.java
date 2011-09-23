@@ -26,8 +26,8 @@ package schemacrawler.schema;
  * 
  * @author Sualeh Fatehi
  */
-public interface BaseColumn
-  extends DependantObject
+public interface BaseColumn<P extends DatabaseObject>
+  extends DependantObject<P>
 {
 
   /**

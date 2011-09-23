@@ -33,7 +33,7 @@ import schemacrawler.schema.Trigger;
  * @author Sualeh Fatehi
  */
 class MutableTrigger
-  extends AbstractDependantObject
+  extends AbstractDependantObject<Table>
   implements Trigger
 {
 

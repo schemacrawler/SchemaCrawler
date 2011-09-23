@@ -27,7 +27,7 @@ package schemacrawler.schema;
  * @author Sualeh Fatehi
  */
 public interface CheckConstraint
-  extends DependantObject
+  extends DependantObject<Table>
 {
 
   /**

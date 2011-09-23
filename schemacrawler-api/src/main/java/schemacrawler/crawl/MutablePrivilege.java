@@ -34,9 +34,9 @@ import sf.util.Utility;
  * 
  * @author Sualeh Fatehi
  */
-final class MutablePrivilege
-  extends AbstractDependantObject
-  implements Privilege
+final class MutablePrivilege<P extends DatabaseObject>
+  extends AbstractDependantObject<P>
+  implements Privilege<P>
 {
 
   private final class PrivilegeGrant
@@ -161,7 +161,7 @@ final class MutablePrivilege
       return isGrantable;
     }
 
-    private MutablePrivilege getOuterType()
+    private MutablePrivilege<P> getOuterType()
     {
       return MutablePrivilege.this;
     }
@@ -172,7 +172,7 @@ final class MutablePrivilege
 
   private static final long serialVersionUID = -1117664231494271886L;
 
-  MutablePrivilege(final DatabaseObject parent, final String name)
+  MutablePrivilege(final P parent, final String name)
   {
     super(parent, name);
   }

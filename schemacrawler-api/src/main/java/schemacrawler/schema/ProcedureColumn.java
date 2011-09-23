@@ -27,7 +27,7 @@ package schemacrawler.schema;
  * @author Sualeh Fatehi
  */
 public interface ProcedureColumn
-  extends BaseColumn
+  extends BaseColumn<Procedure>
 {
 
   /**

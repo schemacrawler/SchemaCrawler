@@ -33,9 +33,9 @@ import schemacrawler.schema.NamedObject;
  * 
  * @author Sualeh Fatehi
  */
-abstract class AbstractColumn
-  extends AbstractDependantObject
-  implements BaseColumn
+abstract class AbstractColumn<P extends DatabaseObject>
+  extends AbstractDependantObject<P>
+  implements BaseColumn<P>
 {
 
   private static final long serialVersionUID = -8492662324895309485L;
@@ -46,7 +46,7 @@ abstract class AbstractColumn
   private int decimalDigits;
   private boolean nullable;
 
-  AbstractColumn(final DatabaseObject parent, final String name)
+  AbstractColumn(final P parent, final String name)
   {
     super(parent, name);
   }
@@ -62,7 +62,7 @@ abstract class AbstractColumn
       return -1;
     }
 
-    final BaseColumn other = (BaseColumn) obj;
+    final BaseColumn<P> other = (BaseColumn<P>) obj;
     int comparison = 0;
 
     if (comparison == 0)

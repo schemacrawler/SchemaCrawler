@@ -32,8 +32,10 @@ import java.util.logging.Logger;
 
 import schemacrawler.schema.ActionOrientationType;
 import schemacrawler.schema.CheckOptionType;
+import schemacrawler.schema.Column;
 import schemacrawler.schema.ConditionTimingType;
 import schemacrawler.schema.EventManipulationType;
+import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 
 /**
@@ -92,15 +94,15 @@ final class TableExRetriever
       final String grantee = results.getString("GRANTEE");
       final boolean isGrantable = results.getBoolean("IS_GRANTABLE");
 
-      final MutablePrivilege privilege;
+      final MutablePrivilege<?> privilege;
       if (privilegesForColumn)
       {
-        final MutablePrivilege columnPrivilege = column
+        final MutablePrivilege<Column> columnPrivilege = column
           .getPrivilege(privilegeName);
         if (columnPrivilege == null)
         {
-          privilege = new MutablePrivilege(column, privilegeName);
-          column.addPrivilege(privilege);
+          privilege = new MutablePrivilege<Column>(column, privilegeName);
+          column.addPrivilege((MutablePrivilege<Column>) privilege);
         }
         else
         {
@@ -109,12 +111,12 @@ final class TableExRetriever
       }
       else
       {
-        final MutablePrivilege tablePrivilege = table
+        final MutablePrivilege<Table> tablePrivilege = table
           .getPrivilege(privilegeName);
         if (tablePrivilege == null)
         {
-          privilege = new MutablePrivilege(table, privilegeName);
-          table.addPrivilege(privilege);
+          privilege = new MutablePrivilege<Table>(table, privilegeName);
+          table.addPrivilege((MutablePrivilege<Table>) privilege);
         }
         else
         {
@@ -126,11 +128,11 @@ final class TableExRetriever
 
       if (privilegesForColumn)
       {
-        column.addPrivilege(privilege);
+        column.addPrivilege((MutablePrivilege<Column>) privilege);
       }
       else
       {
-        table.addPrivilege(privilege);
+        table.addPrivilege((MutablePrivilege<Table>) privilege);
       }
     }
   }
