@@ -28,7 +28,7 @@ package schemacrawler.schema;
  * @author Sualeh Fatehi
  */
 public interface DependantObject<P extends DatabaseObject>
-  extends DatabaseObject, DependantNamedObject<P>
+  extends DatabaseObject, ContainedObject<P>
 {
 
 }

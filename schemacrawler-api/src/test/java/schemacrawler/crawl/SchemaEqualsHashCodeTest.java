@@ -86,8 +86,7 @@ public class SchemaEqualsHashCodeTest
   @DataPoint
   public static ForeignKeyColumnMap fkColumnPairNull = null;
   @DataPoint
-  public static ForeignKeyColumnMap fkColumnPairEmpty = new MutableForeignKeyColumnMap(foreignKey,
-                                                                                       "fkColumnPairEmpty");
+  public static ForeignKeyColumnMap fkColumnPairEmpty = new MutableForeignKeyColumnMap();
 
   @DataPoint
   public static JavaSqlType LONGNVARCHAR = JavaSqlTypesUtility

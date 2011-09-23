@@ -21,6 +21,9 @@
 package schemacrawler.crawl;
 
 
+import java.util.SortedSet;
+import java.util.TreeSet;
+
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnMap;
@@ -40,7 +43,7 @@ class MutableForeignKey
 
   private static final long serialVersionUID = 4121411795974895671L;
 
-  private final NamedObjectList<MutableForeignKeyColumnMap> columnPairs = new NamedObjectList<MutableForeignKeyColumnMap>();
+  private final SortedSet<MutableForeignKeyColumnMap> columnPairs = new TreeSet<MutableForeignKeyColumnMap>();
   private ForeignKeyUpdateRule updateRule;
   private ForeignKeyUpdateRule deleteRule;
   private ForeignKeyDeferrability deferrability;
@@ -109,8 +112,7 @@ class MutableForeignKey
   @Override
   public ForeignKeyColumnMap[] getColumnPairs()
   {
-    return columnPairs.values()
-      .toArray(new ForeignKeyColumnMap[columnPairs.size()]);
+    return columnPairs.toArray(new ForeignKeyColumnMap[columnPairs.size()]);
   }
 
   /**
@@ -150,9 +152,7 @@ class MutableForeignKey
                      final Column pkColumn,
                      final Column fkColumn)
   {
-    final String fkColumnMapName = getName() + "." + keySequence;
-    final MutableForeignKeyColumnMap fkColumnPair = new MutableForeignKeyColumnMap(this,
-                                                                                   fkColumnMapName);
+    final MutableForeignKeyColumnMap fkColumnPair = new MutableForeignKeyColumnMap();
     fkColumnPair.setKeySequence(keySequence);
     fkColumnPair.setPrimaryKeyColumn(pkColumn);
     fkColumnPair.setForeignKeyColumn(fkColumn);

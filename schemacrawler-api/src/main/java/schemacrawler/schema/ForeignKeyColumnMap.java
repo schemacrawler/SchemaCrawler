@@ -28,7 +28,7 @@ package schemacrawler.schema;
  * @author Sualeh Fatehi
  */
 public interface ForeignKeyColumnMap
-  extends DependantNamedObject<ForeignKey>, ColumnMap
+  extends ColumnMap, Comparable<ForeignKeyColumnMap>
 {
 
   /**
