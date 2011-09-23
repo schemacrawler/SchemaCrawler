@@ -27,7 +27,7 @@ package schemacrawler.schema;
  * @author Sualeh Fatehi
  */
 public interface ResultsColumn
-  extends BaseColumn
+  extends BaseColumn<Table>
 {
 
   /**

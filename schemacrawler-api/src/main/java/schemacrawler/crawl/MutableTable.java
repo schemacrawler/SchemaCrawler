@@ -68,7 +68,7 @@ class MutableTable
   private final NamedObjectList<MutableIndex> indices = new NamedObjectList<MutableIndex>();
   private final NamedObjectList<MutableCheckConstraint> checkConstraints = new NamedObjectList<MutableCheckConstraint>();
   private final NamedObjectList<MutableTrigger> triggers = new NamedObjectList<MutableTrigger>();
-  private final NamedObjectList<MutablePrivilege> privileges = new NamedObjectList<MutablePrivilege>();
+  private final NamedObjectList<MutablePrivilege<Table>> privileges = new NamedObjectList<MutablePrivilege<Table>>();
   private int sortIndex;
 
   MutableTable(final Schema schema, final String name)
@@ -236,7 +236,7 @@ class MutableTable
    * @see schemacrawler.schema.Table#getPrivilege(java.lang.String)
    */
   @Override
-  public MutablePrivilege getPrivilege(final String name)
+  public MutablePrivilege<Table> getPrivilege(final String name)
   {
     return privileges.lookup(this, name);
   }
@@ -247,7 +247,7 @@ class MutableTable
    * @see Table#getPrivileges()
    */
   @Override
-  public Privilege[] getPrivileges()
+  public Privilege<Table>[] getPrivileges()
   {
     return privileges.values().toArray(new Privilege[privileges.size()]);
   }
@@ -399,7 +399,7 @@ class MutableTable
     indices.add(index);
   }
 
-  void addPrivilege(final MutablePrivilege privilege)
+  void addPrivilege(final MutablePrivilege<Table> privilege)
   {
     privileges.add(privilege);
   }

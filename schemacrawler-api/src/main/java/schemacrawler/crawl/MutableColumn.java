@@ -22,8 +22,8 @@ package schemacrawler.crawl;
 
 
 import schemacrawler.schema.Column;
-import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.Privilege;
+import schemacrawler.schema.Table;
 
 /**
  * Represents a column in a database table or procedure. Created from
@@ -32,7 +32,7 @@ import schemacrawler.schema.Privilege;
  * @author Sualeh Fatehi
  */
 class MutableColumn
-  extends AbstractColumn
+  extends AbstractColumn<Table>
   implements Column
 {
 
@@ -42,9 +42,9 @@ class MutableColumn
   private boolean isPartOfPrimaryKey;
   private boolean isPartOfUniqueIndex;
   private MutableColumn referencedColumn;
-  private final NamedObjectList<MutablePrivilege> privileges = new NamedObjectList<MutablePrivilege>();
+  private final NamedObjectList<MutablePrivilege<Column>> privileges = new NamedObjectList<MutablePrivilege<Column>>();
 
-  MutableColumn(final DatabaseObject parent, final String name)
+  MutableColumn(final Table parent, final String name)
   {
     super(parent, name);
   }
@@ -66,7 +66,7 @@ class MutableColumn
    * @see schemacrawler.schema.Column#getPrivilege(java.lang.String)
    */
   @Override
-  public MutablePrivilege getPrivilege(final String name)
+  public MutablePrivilege<Column> getPrivilege(final String name)
   {
     return privileges.lookup(this, name);
   }
@@ -77,7 +77,7 @@ class MutableColumn
    * @see Column#getPrivileges()
    */
   @Override
-  public Privilege[] getPrivileges()
+  public Privilege<Column>[] getPrivileges()
   {
     return privileges.values().toArray(new Privilege[privileges.size()]);
   }
@@ -126,7 +126,7 @@ class MutableColumn
     return isPartOfUniqueIndex;
   }
 
-  void addPrivilege(final MutablePrivilege privilege)
+  void addPrivilege(final MutablePrivilege<Column> privilege)
   {
     privileges.add(privilege);
   }

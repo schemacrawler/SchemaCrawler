@@ -27,16 +27,8 @@ package schemacrawler.schema;
  * 
  * @author Sualeh Fatehi
  */
-public interface DependantObject
-  extends DatabaseObject, DependantNamedObject
+public interface DependantObject<P extends DatabaseObject>
+  extends DatabaseObject, DependantNamedObject<P>
 {
-
-  /**
-   * Gets the parent database object.
-   * 
-   * @return Parent database object
-   */
-  @Override
-  DatabaseObject getParent();
 
 }

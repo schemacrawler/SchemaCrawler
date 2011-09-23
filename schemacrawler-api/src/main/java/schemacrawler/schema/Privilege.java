@@ -28,8 +28,8 @@ import java.io.Serializable;
  * 
  * @author Sualeh Fatehi
  */
-public interface Privilege
-  extends DependantObject
+public interface Privilege<P extends DatabaseObject>
+  extends DependantObject<P>
 {
 
   public interface Grant

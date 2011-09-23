@@ -22,13 +22,13 @@ package schemacrawler.crawl;
 
 
 import schemacrawler.schema.CheckConstraint;
-import schemacrawler.schema.DatabaseObject;
+import schemacrawler.schema.Table;
 
 /**
  * Represents a table constraint.
  */
 class MutableCheckConstraint
-  extends AbstractDependantObject
+  extends AbstractDependantObject<Table>
   implements CheckConstraint
 {
 
@@ -38,7 +38,7 @@ class MutableCheckConstraint
   private boolean initiallyDeferred;
   private String definition;
 
-  MutableCheckConstraint(final DatabaseObject parent, final String name)
+  MutableCheckConstraint(final Table parent, final String name)
   {
     super(parent, name);
   }

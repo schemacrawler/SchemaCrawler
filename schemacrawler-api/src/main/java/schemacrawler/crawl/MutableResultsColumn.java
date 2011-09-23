@@ -21,8 +21,8 @@
 package schemacrawler.crawl;
 
 
-import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.ResultsColumn;
+import schemacrawler.schema.Table;
 
 /**
  * Represents a column in a result set.
@@ -30,7 +30,7 @@ import schemacrawler.schema.ResultsColumn;
  * @author Sualeh Fatehi
  */
 final class MutableResultsColumn
-  extends AbstractColumn
+  extends AbstractColumn<Table>
   implements ResultsColumn
 {
 
@@ -47,7 +47,7 @@ final class MutableResultsColumn
   private boolean signed;
   private boolean writable;
 
-  MutableResultsColumn(final DatabaseObject parent, final String name)
+  MutableResultsColumn(final Table parent, final String name)
   {
     super(parent, name);
   }

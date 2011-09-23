@@ -34,7 +34,7 @@ import schemacrawler.schema.Table;
  * @author Sualeh Fatehi
  */
 class MutableIndex
-  extends AbstractDependantObject
+  extends AbstractDependantObject<Table>
   implements Index
 {
 

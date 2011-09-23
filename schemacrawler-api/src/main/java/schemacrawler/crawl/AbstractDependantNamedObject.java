@@ -29,18 +29,18 @@ import schemacrawler.schema.NamedObject;
  * 
  * @author Sualeh Fatehi
  */
-abstract class AbstractDependantNamedObject
+abstract class AbstractDependantNamedObject<P extends NamedObject>
   extends AbstractNamedObject
-  implements DependantNamedObject
+  implements DependantNamedObject<P>
 {
 
   private static final long serialVersionUID = -4327208866052082457L;
 
-  private final NamedObject parent;
+  private final P parent;
 
   private transient int hashCode;
 
-  AbstractDependantNamedObject(final NamedObject parent, final String name)
+  AbstractDependantNamedObject(final P parent, final String name)
   {
     super(name);
     this.parent = parent;
@@ -66,15 +66,15 @@ abstract class AbstractDependantNamedObject
     {
       return false;
     }
-    final AbstractDependantNamedObject other = (AbstractDependantNamedObject) obj;
+    final DependantNamedObject<P> other = (DependantNamedObject<P>) obj;
     if (parent == null)
     {
-      if (other.parent != null)
+      if (other.getParent() != null)
       {
         return false;
       }
     }
-    else if (!parent.equals(other.parent))
+    else if (!parent.equals(other.getParent()))
     {
       return false;
     }
@@ -87,7 +87,7 @@ abstract class AbstractDependantNamedObject
    * @see schemacrawler.schema.DependantNamedObject#getParent()
    */
   @Override
-  public final NamedObject getParent()
+  public final P getParent()
   {
     return parent;
   }

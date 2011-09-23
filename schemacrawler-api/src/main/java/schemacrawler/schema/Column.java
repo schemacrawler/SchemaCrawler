@@ -27,7 +27,7 @@ package schemacrawler.schema;
  * @author Sualeh Fatehi
  */
 public interface Column
-  extends BaseColumn
+  extends BaseColumn<Table>
 {
 
   /**
@@ -44,14 +44,14 @@ public interface Column
    *        Name
    * @return Privilege.
    */
-  Privilege getPrivilege(String name);
+  Privilege<Column> getPrivilege(String name);
 
   /**
    * Gets the list of privileges for the table.
    * 
    * @return Privileges for the table
    */
-  Privilege[] getPrivileges();
+  Privilege<Column>[] getPrivileges();
 
   /**
    * Referenced column if this column is part of a foreign key, null
