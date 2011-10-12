@@ -38,6 +38,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import net.sf.json.JSONObject;
+import net.sf.json.JSONSerializer;
+
 import org.custommonkey.xmlunit.Validator;
 import org.junit.Ignore;
 
@@ -86,24 +89,36 @@ public final class TestUtility
                                     "url                                   jdbc:hsqldb");
     }
 
-    final boolean isOutputValidXml;
+    final boolean isOutputValid;
     if (outputFormat == OutputFormat.html)
     {
       final Reader reader = new BufferedReader(new FileReader(testOutputFile));
       final Validator validator = new Validator(reader);
-      isOutputValidXml = validator.isValid();
-      if (!isOutputValidXml)
+      isOutputValid = validator.isValid();
+      if (!isOutputValid)
       {
         failures.add(validator.toString());
       }
       reader.close();
     }
+    else if (outputFormat == OutputFormat.json)
+    {
+      final Reader reader = new BufferedReader(new FileReader(testOutputFile));
+      final String jsonString = Utility.readFully(reader);
+      final JSONObject json = (JSONObject) JSONSerializer.toJSON(jsonString);
+      reader.close();
+      isOutputValid = json.entrySet().size() > 0;
+      if (!isOutputValid)
+      {
+        failures.add("Invalid JSON string");
+      }
+    }
     else
     {
-      isOutputValidXml = true;
+      isOutputValid = true;
     }
 
-    if (!contentEquals || !isOutputValidXml)
+    if (!contentEquals || !isOutputValid)
     {
       File testOutputLocalFile = new File("./unit_tests_results_output",
                                           referenceFile);
@@ -121,7 +136,7 @@ public final class TestUtility
         {
           failures.add("Output does not match");
         }
-        if (!isOutputValidXml)
+        if (!isOutputValid)
         {
           failures.add("Output is invalid XML");
         }

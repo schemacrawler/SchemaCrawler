@@ -47,7 +47,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.analysis.AnalyzedDatabase;
 import schemacrawler.tools.analysis.Lint;
 import schemacrawler.tools.options.OutputOptions;
-import schemacrawler.tools.text.base.BaseFormatter;
+import schemacrawler.tools.text.base.BaseTabularFormatter;
 import schemacrawler.tools.text.util.TextFormattingHelper.DocumentHeaderType;
 import sf.util.Utility;
 
@@ -57,7 +57,8 @@ import sf.util.Utility;
  * @author Sualeh Fatehi
  */
 final class SchemaTextFormatter
-  extends BaseFormatter<SchemaTextOptions>
+  extends BaseTabularFormatter<SchemaTextOptions>
+  implements SchemaFormatter
 {
 
   private static String negate(final boolean positive, final String text)
@@ -492,7 +493,12 @@ final class SchemaTextFormatter
     }
   }
 
-  void begin()
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.text.schema.SchemaFormatter#begin()
+   */
+  public void begin()
     throws SchemaCrawlerException
   {
     if (!outputOptions.isNoHeader())
@@ -501,19 +507,28 @@ final class SchemaTextFormatter
     }
   }
 
-  void end()
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.text.schema.SchemaFormatter#end()
+   */
+  public void end()
     throws SchemaCrawlerException
   {
     if (!outputOptions.isNoFooter())
     {
       out.println(formattingHelper.createDocumentEnd());
     }
+
     out.flush();
-    //
-    outputOptions.closeOutputWriter(out);
   }
 
-  void handle(final ColumnDataType columnDataType)
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.text.schema.SchemaFormatter#handle(schemacrawler.schema.ColumnDataType)
+   */
+  public void handle(final ColumnDataType columnDataType)
     throws SchemaCrawlerException
   {
     if (printVerboseDatabaseInfo && isVerbose)
@@ -525,12 +540,11 @@ final class SchemaTextFormatter
   }
 
   /**
-   * Provides information on the database schema.
+   * {@inheritDoc}
    * 
-   * @param procedure
-   *        Procedure metadata.
+   * @see schemacrawler.tools.text.schema.SchemaFormatter#handle(schemacrawler.schema.Procedure)
    */
-  void handle(final Procedure procedure)
+  public void handle(final Procedure procedure)
   {
     final boolean underscore = isNotList;
     final String procedureTypeDetail = "procedure, " + procedure.getType();
@@ -562,12 +576,11 @@ final class SchemaTextFormatter
   }
 
   /**
-   * Provides information on the database schema.
+   * {@inheritDoc}
    * 
-   * @param table
-   *        Table metadata.
+   * @see schemacrawler.tools.text.schema.SchemaFormatter#handle(schemacrawler.schema.Table)
    */
-  void handle(final Table table)
+  public void handle(final Table table)
   {
     final boolean underscore = isNotList;
     final String nameRow = formattingHelper.createNameRow(table.getFullName(),
@@ -645,11 +658,21 @@ final class SchemaTextFormatter
     out.flush();
   }
 
-  void handleColumnDataTypesEnd()
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.text.schema.SchemaFormatter#handleColumnDataTypesEnd()
+   */
+  public void handleColumnDataTypesEnd()
   {
   }
 
-  void handleColumnDataTypesStart()
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.text.schema.SchemaFormatter#handleColumnDataTypesStart()
+   */
+  public void handleColumnDataTypesStart()
   {
     if (printVerboseDatabaseInfo && isVerbose)
     {
@@ -658,7 +681,12 @@ final class SchemaTextFormatter
     }
   }
 
-  void handleProceduresEnd()
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.text.schema.SchemaFormatter#handleProceduresEnd()
+   */
+  public void handleProceduresEnd()
     throws SchemaCrawlerException
   {
     if (isList)
@@ -667,7 +695,12 @@ final class SchemaTextFormatter
     }
   }
 
-  void handleProceduresStart()
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.text.schema.SchemaFormatter#handleProceduresStart()
+   */
+  public void handleProceduresStart()
     throws SchemaCrawlerException
   {
     out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
@@ -679,7 +712,12 @@ final class SchemaTextFormatter
     }
   }
 
-  void handleTablesEnd()
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.text.schema.SchemaFormatter#handleTablesEnd()
+   */
+  public void handleTablesEnd()
     throws SchemaCrawlerException
   {
     if (isList)
@@ -688,7 +726,12 @@ final class SchemaTextFormatter
     }
   }
 
-  void handleTablesStart()
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.text.schema.SchemaFormatter#handleTablesStart()
+   */
+  public void handleTablesStart()
     throws SchemaCrawlerException
   {
     out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,

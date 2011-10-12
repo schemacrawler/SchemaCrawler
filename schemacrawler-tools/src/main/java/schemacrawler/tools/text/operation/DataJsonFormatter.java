@@ -26,23 +26,25 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sf.json.JSONObject;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputOptions;
-import schemacrawler.tools.text.base.BaseTabularFormatter;
-import schemacrawler.tools.text.util.TextFormattingHelper.DocumentHeaderType;
+import schemacrawler.tools.text.base.BaseJsonFormatter;
+import sf.util.org.json.JSONArray;
+import sf.util.org.json.JSONException;
 
 /**
  * Text formatting of data.
  * 
  * @author Sualeh Fatehi
  */
-final class DataTextFormatter
-  extends BaseTabularFormatter<OperationOptions>
+final class DataJsonFormatter
+  extends BaseJsonFormatter<OperationOptions>
   implements DataFormatter
 {
 
-  private int dataBlockCount;
   private final Operation operation;
+  private final JSONArray jsonDataArray;
 
   /**
    * Text formatting of data.
@@ -54,46 +56,23 @@ final class DataTextFormatter
    * @param outputOptions
    *        Options for text formatting of data
    */
-  DataTextFormatter(final Operation operation,
+  DataJsonFormatter(final Operation operation,
                     final OperationOptions options,
                     final OutputOptions outputOptions)
     throws SchemaCrawlerException
   {
     super(options, /* printVerboseDatabaseInfo */false, outputOptions);
     this.operation = operation;
-  }
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.text.operation.DataFormatter#begin()
-   */
-  public void begin()
-  {
-    if (!outputOptions.isNoHeader())
+    jsonDataArray = new JSONArray();
+    try
     {
-      out.println(formattingHelper.createDocumentStart());
+      jsonDatabase.put("data", jsonDataArray);
     }
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.text.operation.DataFormatter#end()
-   */
-  public void end()
-  {
-    if (operation == Operation.count)
+    catch (JSONException e)
     {
-      out.println(formattingHelper.createObjectEnd());
+      throw new SchemaCrawlerException(e.getMessage(), e);
     }
-
-    if (!outputOptions.isNoFooter())
-    {
-      out.println(formattingHelper.createDocumentEnd());
-    }
-
-    out.flush();
   }
 
   /**
@@ -105,73 +84,68 @@ final class DataTextFormatter
   public void handleData(final String title, final ResultSet rows)
     throws SchemaCrawlerException
   {
-    if (dataBlockCount == 0)
+    try
     {
-      printHeader();
-    }
+      JSONObject jsonData = new JSONObject();
+      jsonData.put("title", title);
 
-    if (operation == Operation.count)
-    {
-      handleAggregateOperationForTable(title, rows);
-    }
-    else
-    {
-      out.println(formattingHelper.createObjectStart(title));
-      try
+      if (operation != null)
       {
-        final DataResultSet dataRows = new DataResultSet(rows,
-                                                         options.isShowLobs());
+        jsonData.put("description", operation.getDescription());
+      }
 
-        out
-          .println(formattingHelper.createRowHeader(dataRows.getColumnNames()));
-
-        if (options.isMergeRows() && dataRows.width() > 1)
+      if (operation == Operation.count)
+      {
+        long aggregate = handleAggregateOperationForTable(title, rows);
+        jsonData.put("value", aggregate);
+      }
+      else
+      {
+        try
         {
-          iterateRowsAndMerge(dataRows);
+          final DataResultSet dataRows = new DataResultSet(rows,
+                                                           options.isShowLobs());
+
+          jsonData.put("columnNames", new JSONArray(dataRows.getColumnNames()));
+
+          JSONArray jsonRows;
+          if (options.isMergeRows() && dataRows.width() > 1)
+          {
+            jsonRows = iterateRowsAndMerge(dataRows);
+          }
+          else
+          {
+            jsonRows = iterateRows(dataRows);
+          }
+
+          jsonData.put("rows", jsonRows);
         }
-        else
+        catch (final SQLException e)
         {
-          iterateRows(dataRows);
+          throw new SchemaCrawlerException(e.getMessage(), e);
         }
       }
-      catch (final SQLException e)
-      {
-        throw new SchemaCrawlerException(e.getMessage(), e);
-      }
-      out.println(formattingHelper.createObjectEnd());
+
+      jsonDataArray.put(jsonData);
+    }
+    catch (final JSONException e)
+    {
+      throw new SchemaCrawlerException("Could not convert data to JSON", e);
     }
 
-    dataBlockCount++;
   }
 
-  private void doHandleOneRow(final List<String> row,
-                              final String lastColumnData)
+  private JSONArray doHandleOneRow(final List<String> row,
+                                   final String lastColumnData)
   {
     if (row.isEmpty())
     {
-      return;
+      return new JSONArray();
     }
     final List<String> outputRow = new ArrayList<String>();
-    // output
     outputRow.addAll(row);
     outputRow.add(lastColumnData);
-    final String[] columnData = outputRow.toArray(new String[outputRow.size()]);
-    out.println(formattingHelper.createRow(columnData));
-  }
-
-  private String getMessage(final double aggregate)
-  {
-    final Number number;
-    if (Math.abs(aggregate - (int) aggregate) < 1E-10D)
-    {
-      number = Integer.valueOf((int) aggregate);
-    }
-    else
-    {
-      number = Double.valueOf(aggregate);
-    }
-    final String message = operation.getCountMessage(number);
-    return message;
+    return new JSONArray(outputRow);
   }
 
   /**
@@ -182,42 +156,41 @@ final class DataTextFormatter
    * @param results
    *        Results
    */
-  private void handleAggregateOperationForTable(final String title,
+  private long handleAggregateOperationForTable(final String title,
                                                 final ResultSet results)
     throws SchemaCrawlerException
   {
-    long aggregate = 0;
     try
     {
+      long aggregate = 0;
       if (results.next())
       {
         aggregate = results.getLong(1);
       }
+      return aggregate;
     }
     catch (final SQLException e)
     {
       throw new SchemaCrawlerException("Could not obtain aggregate data", e);
     }
-    final String message = getMessage(aggregate);
-    //
-    out.println(formattingHelper.createNameRow(title, message, false));
   }
 
-  private void iterateRows(final DataResultSet dataRows)
+  private JSONArray iterateRows(final DataResultSet dataRows)
     throws SQLException
   {
+    final JSONArray jsonRows = new JSONArray();
     while (dataRows.next())
     {
       final List<String> currentRow = dataRows.row();
-      final String[] columnData = currentRow.toArray(new String[currentRow
-        .size()]);
-      out.println(formattingHelper.createRow(columnData));
+      jsonRows.put(new JSONArray(currentRow));
     }
+    return jsonRows;
   }
 
-  private void iterateRowsAndMerge(final DataResultSet dataRows)
+  private JSONArray iterateRowsAndMerge(final DataResultSet dataRows)
     throws SQLException
   {
+    final JSONArray jsonRows = new JSONArray();
     List<String> previousRow = new ArrayList<String>();
     List<String> currentRow;
     StringBuilder currentRowLastColumn = new StringBuilder();
@@ -235,7 +208,10 @@ final class DataTextFormatter
       {
         // At this point, we have a new row coming in, so dump the
         // previous merged row out
-        doHandleOneRow(previousRow, currentRowLastColumn.toString());
+        final JSONArray jsonRow = doHandleOneRow(previousRow,
+                                                 currentRowLastColumn
+                                                   .toString());
+        jsonRows.put(jsonRow);
         // reset
         currentRowLastColumn = new StringBuilder();
         // save the last column
@@ -245,27 +221,10 @@ final class DataTextFormatter
       previousRow = currentRow;
     }
     // Dump the last row out
-    doHandleOneRow(previousRow, currentRowLastColumn.toString());
+    final JSONArray jsonRow = doHandleOneRow(previousRow,
+                                             currentRowLastColumn.toString());
+    jsonRows.put(jsonRow);
+
+    return jsonRows;
   }
-
-  private void printHeader()
-  {
-    if (operation != null)
-    {
-      out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
-                                                operation.getDescription()));
-    }
-    else
-    {
-      out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
-                                                "Query"));
-    }
-
-    if (operation == Operation.count)
-    {
-      out
-        .println(formattingHelper.createObjectStart(operation.getDescription()));
-    }
-  }
-
 }

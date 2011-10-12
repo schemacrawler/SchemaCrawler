@@ -24,9 +24,7 @@ package schemacrawler.tools.options;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.Writer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -47,6 +45,9 @@ public final class OutputOptions
 
   private static final Logger LOGGER = Logger.getLogger(OutputOptions.class
     .getName());
+
+  /** Not thread-safe */
+  private PrintWriter writer;
 
   private String outputFormatValue;
   private File outputFile;
@@ -81,39 +82,23 @@ public final class OutputOptions
 
   /**
    * Close the output writer.
-   * 
-   * @param writer
-   *        Output writer
    */
-  public void closeOutputWriter(final Writer writer)
+  public void closeOutputWriter()
   {
     if (writer != null)
     {
-      try
-      {
-        writer.flush();
-      }
-      catch (final IOException e)
-      {
-        LOGGER.log(Level.WARNING, "Exception flushing output writer", e);
-      }
+      boolean error = writer.checkError();
+      if (error) LOGGER.log(Level.WARNING, "Exception flushing output writer");
     }
 
     if (outputFile != null)
     {
       if (writer != null)
       {
-        try
-        {
-          writer.close();
-          LOGGER.log(Level.INFO,
-                     "Closed output writer to file, "
-                         + outputFile.getAbsolutePath());
-        }
-        catch (final IOException e)
-        {
-          LOGGER.log(Level.WARNING, "Exception closing output writer", e);
-        }
+        writer.close();
+        LOGGER.log(Level.INFO,
+                   "Closed output writer to file, "
+                       + outputFile.getAbsolutePath());
       }
     }
     else
@@ -234,29 +219,31 @@ public final class OutputOptions
   public PrintWriter openOutputWriter()
     throws SchemaCrawlerException
   {
-    final PrintWriter writer;
-    try
+    if (writer == null)
     {
-      if (outputFile == null)
+      try
       {
-        writer = new PrintWriter(System.out, /* autoFlush = */true);
-        LOGGER.log(Level.INFO, "Opened output writer to console");
+        if (outputFile == null)
+        {
+          writer = new PrintWriter(System.out, /* autoFlush = */true);
+          LOGGER.log(Level.INFO, "Opened output writer to console");
+        }
+        else
+        {
+          final FileWriter fileWriter = new FileWriter(outputFile, appendOutput);
+          writer = new PrintWriter(new BufferedWriter(fileWriter), /*
+                                                                    * autoFlush
+                                                                    * =
+                                                                    */true);
+          LOGGER.log(Level.INFO,
+                     "Opened output writer to file, "
+                         + outputFile.getAbsolutePath());
+        }
       }
-      else
+      catch (final Exception e)
       {
-        final FileWriter fileWriter = new FileWriter(outputFile, appendOutput);
-        writer = new PrintWriter(new BufferedWriter(fileWriter), /*
-                                                                  * autoFlush
-                                                                  * =
-                                                                  */true);
-        LOGGER.log(Level.INFO,
-                   "Opened output writer to file, "
-                       + outputFile.getAbsolutePath());
+        throw new SchemaCrawlerException("Could not obtain output writer", e);
       }
-    }
-    catch (final Exception e)
-    {
-      throw new SchemaCrawlerException("Could not obtain output writer", e);
     }
     return writer;
   }

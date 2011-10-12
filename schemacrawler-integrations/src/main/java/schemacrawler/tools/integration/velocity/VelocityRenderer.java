@@ -129,7 +129,7 @@ public final class VelocityRenderer
     final Template template = ve.getTemplate(templateLocation);
     template.merge(context, writer);
 
-    outputOptions.closeOutputWriter(writer);
+    outputOptions.closeOutputWriter();
   }
 
 }
