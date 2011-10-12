@@ -1,4 +1,4 @@
-package sf.util.org.json;
+package net.sf.util.org.json;
 
 
 /*
@@ -32,8 +32,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
-
-import net.sf.json.util.JSONTokener;
 
 /**
  * A JSONArray is an ordered sequence of values. Its external text form
@@ -98,72 +96,6 @@ public class JSONArray
   public JSONArray()
   {
     this.myArrayList = new ArrayList();
-  }
-
-  /**
-   * Construct a JSONArray from a JSONTokener.
-   * 
-   * @param x
-   *        A JSONTokener
-   * @throws JSONException
-   *         If there is a syntax error.
-   */
-  public JSONArray(JSONTokener x)
-    throws JSONException
-  {
-    this();
-    if (x.nextClean() != '[')
-    {
-      throw x.syntaxError("A JSONArray text must start with '['");
-    }
-    if (x.nextClean() != ']')
-    {
-      x.back();
-      for (;;)
-      {
-        if (x.nextClean() == ',')
-        {
-          x.back();
-          this.myArrayList.add(JSONObject.NULL);
-        }
-        else
-        {
-          x.back();
-          this.myArrayList.add(x.nextValue());
-        }
-        switch (x.nextClean())
-        {
-          case ';':
-          case ',':
-            if (x.nextClean() == ']')
-            {
-              return;
-            }
-            x.back();
-            break;
-          case ']':
-            return;
-          default:
-            throw x.syntaxError("Expected a ',' or ']'");
-        }
-      }
-    }
-  }
-
-  /**
-   * Construct a JSONArray from a source JSON text.
-   * 
-   * @param source
-   *        A string that begins with <code>[</code>&nbsp;<small>(left
-   *        bracket)</small> and ends with <code>]</code>
-   *        &nbsp;<small>(right bracket)</small>.
-   * @throws JSONException
-   *         If there is a syntax error.
-   */
-  public JSONArray(String source)
-    throws JSONException
-  {
-    this(new JSONTokener(source));
   }
 
   /**

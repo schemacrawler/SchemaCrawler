@@ -120,11 +120,6 @@ public class SchemaCrawlerOutputTest
     final List<String> failures = new ArrayList<String>();
     for (final OutputFormat outputFormat: OutputFormat.values())
     {
-      if (outputFormat == OutputFormat.json)
-      {
-        continue;
-      }
-
       for (final String command: commands)
       {
         final String referenceFile = command + "." + outputFormat.name();
