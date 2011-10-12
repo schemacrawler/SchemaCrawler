@@ -28,6 +28,9 @@ import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import net.sf.util.org.json.JSONArray;
+import net.sf.util.org.json.JSONException;
+import net.sf.util.org.json.JSONObject;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.DatabaseProperty;
 import schemacrawler.schema.JdbcDriverInfo;
@@ -36,9 +39,6 @@ import schemacrawler.schema.SchemaCrawlerInfo;
 import schemacrawler.schemacrawler.Options;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputOptions;
-import sf.util.org.json.JSONArray;
-import sf.util.org.json.JSONException;
-import sf.util.org.json.JSONObject;
 
 /**
  * Text formatting of schema.
@@ -74,7 +74,7 @@ public abstract class BaseJsonFormatter<O extends Options>
     try
     {
       jsonDatabase.write(out);
-      out.flush();
+      outputOptions.closeOutputWriter();
     }
     catch (final JSONException e)
     {

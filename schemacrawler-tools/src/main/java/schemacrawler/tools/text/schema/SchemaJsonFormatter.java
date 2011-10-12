@@ -23,6 +23,10 @@ package schemacrawler.tools.text.schema;
 
 import java.util.logging.Level;
 
+import net.sf.util.org.json.JSONArray;
+import net.sf.util.org.json.JSONException;
+import net.sf.util.org.json.JSONObject;
+
 import schemacrawler.schema.CheckConstraint;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
@@ -47,9 +51,6 @@ import schemacrawler.tools.analysis.AnalyzedDatabase;
 import schemacrawler.tools.analysis.Lint;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.BaseJsonFormatter;
-import sf.util.org.json.JSONArray;
-import sf.util.org.json.JSONException;
-import sf.util.org.json.JSONObject;
 
 /**
  * Text formatting of schema.

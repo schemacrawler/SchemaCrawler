@@ -38,14 +38,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.sf.json.JSONObject;
-import net.sf.json.JSONSerializer;
-
 import org.custommonkey.xmlunit.Validator;
 import org.junit.Ignore;
 
 import schemacrawler.tools.options.OutputFormat;
 import sf.util.Utility;
+
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonToken;
 
 @Ignore
 public final class TestUtility
@@ -103,15 +106,27 @@ public final class TestUtility
     }
     else if (outputFormat == OutputFormat.json)
     {
-      final Reader reader = new BufferedReader(new FileReader(testOutputFile));
-      final String jsonString = Utility.readFully(reader);
-      final JSONObject json = (JSONObject) JSONSerializer.toJSON(jsonString);
-      reader.close();
-      isOutputValid = json.entrySet().size() > 0;
-      if (!isOutputValid)
+      try
       {
-        failures.add("Invalid JSON string");
+        final Reader reader = new BufferedReader(new FileReader(testOutputFile));
+        final JsonReader jsonReader = new JsonReader(reader);
+        final JsonElement jsonElement = new JsonParser().parse(jsonReader);
+        if (jsonReader.peek() != JsonToken.END_DOCUMENT)
+        {
+          failures.add("JSON document was not fully consumed.");
+        }
+        jsonReader.close();
+        final JsonObject json = jsonElement.getAsJsonObject();
+        if (json.entrySet().size() == 0)
+        {
+          failures.add("Invalid JSON string");
+        }
       }
+      catch (final Exception e)
+      {
+        failures.add(e.getMessage());
+      }
+      isOutputValid = failures.size() == 0;
     }
     else
     {
@@ -158,14 +173,6 @@ public final class TestUtility
     }
 
     return failures;
-  }
-
-  public static File copyResourceToTempFile(final String resource)
-    throws IOException
-  {
-    final InputStream resourceStream = Utility.class
-      .getResourceAsStream(resource);
-    return writeToTempFile(resourceStream);
   }
 
   private static boolean contentEquals(final Reader expectedInputReader,
@@ -223,6 +230,14 @@ public final class TestUtility
       expectedBufferedReader.close();
       actualBufferedReader.close();
     }
+  }
+
+  public static File copyResourceToTempFile(final String resource)
+    throws IOException
+  {
+    final InputStream resourceStream = Utility.class
+      .getResourceAsStream(resource);
+    return writeToTempFile(resourceStream);
   }
 
   private static void fastChannelCopy(final ReadableByteChannel src,

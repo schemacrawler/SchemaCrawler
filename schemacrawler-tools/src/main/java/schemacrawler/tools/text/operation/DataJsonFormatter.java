@@ -26,12 +26,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sf.json.JSONObject;
+import net.sf.util.org.json.JSONArray;
+import net.sf.util.org.json.JSONException;
+import net.sf.util.org.json.JSONObject;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.BaseJsonFormatter;
-import sf.util.org.json.JSONArray;
-import sf.util.org.json.JSONException;
 
 /**
  * Text formatting of data.

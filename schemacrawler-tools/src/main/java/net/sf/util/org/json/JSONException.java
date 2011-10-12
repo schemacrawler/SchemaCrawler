@@ -1,4 +1,4 @@
-package sf.util.org.json;
+package net.sf.util.org.json;
 
 
 /**
