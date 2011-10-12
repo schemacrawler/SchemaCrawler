@@ -35,6 +35,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.analysis.AnalyzedDatabase;
 import schemacrawler.tools.executable.BaseExecutable;
 import schemacrawler.tools.options.InfoLevel;
+import schemacrawler.tools.options.OutputFormat;
 
 /**
  * Basic SchemaCrawler executor.
@@ -71,10 +72,10 @@ public final class SchemaTextExecutable
     this.schemaTextOptions = schemaTextOptions;
   }
 
-  private SchemaTextFormatter getDatabaseTraversalHandler()
+  private SchemaFormatter getDatabaseTraversalHandler()
     throws SchemaCrawlerException
   {
-    final SchemaTextFormatter formatter;
+    final SchemaFormatter formatter;
     SchemaTextDetailType schemaTextDetailType;
     try
     {
@@ -85,9 +86,20 @@ public final class SchemaTextExecutable
       schemaTextDetailType = SchemaTextDetailType.schema;
     }
     final SchemaTextOptions schemaTextOptions = getSchemaTextOptions();
-    formatter = new SchemaTextFormatter(schemaTextDetailType,
-                                        schemaTextOptions,
-                                        outputOptions);
+
+    final OutputFormat outputFormat = outputOptions.getOutputFormat();
+    if (outputFormat == OutputFormat.json)
+    {
+      formatter = new SchemaJsonFormatter(schemaTextDetailType,
+                                          schemaTextOptions,
+                                          outputOptions);
+    }
+    else
+    {
+      formatter = new SchemaTextFormatter(schemaTextDetailType,
+                                          schemaTextOptions,
+                                          outputOptions);
+    }
 
     return formatter;
   }
@@ -114,12 +126,15 @@ public final class SchemaTextExecutable
       database = new AnalyzedDatabase(database, infoLevel);
     }
 
-    final SchemaTextFormatter formatter = getDatabaseTraversalHandler();
+    final SchemaFormatter formatter = getDatabaseTraversalHandler();
 
     formatter.begin();
-    formatter.handle(database.getSchemaCrawlerInfo(),
-                     database.getDatabaseInfo(),
-                     database.getJdbcDriverInfo());
+
+    formatter.handleInfoStart();
+    formatter.handle(database.getSchemaCrawlerInfo());
+    formatter.handle(database.getDatabaseInfo());
+    formatter.handle(database.getJdbcDriverInfo());
+    formatter.handleInfoEnd();
 
     final List<ColumnDataType> columnDataTypes = new ArrayList<ColumnDataType>();
     final List<Table> tables = new ArrayList<Table>();

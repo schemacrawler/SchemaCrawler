@@ -107,7 +107,7 @@ public final class FreeMarkerRenderer
     final Template template = cfg.getTemplate(templateLocation);
     template.process(objectMap, writer);
 
-    outputOptions.closeOutputWriter(writer);
+    outputOptions.closeOutputWriter();
   }
 
 }

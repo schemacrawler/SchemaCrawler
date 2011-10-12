@@ -33,6 +33,7 @@ import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.SchemaCrawlerInfo;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 
 /**
@@ -47,7 +48,7 @@ final class OperationHandler
     .getName());
 
   private final Connection connection;
-  private final DataTextFormatter dataFormatter;
+  private final DataFormatter dataFormatter;
   private final Query query;
 
   OperationHandler(final Operation operation,
@@ -73,7 +74,16 @@ final class OperationHandler
     {
       throw new SchemaCrawlerException("No operation options provided");
     }
-    dataFormatter = new DataTextFormatter(operation, options, outputOptions);
+
+    final OutputFormat outputFormat = outputOptions.getOutputFormat();
+    if (outputFormat == OutputFormat.json)
+    {
+      dataFormatter = new DataJsonFormatter(operation, options, outputOptions);
+    }
+    else
+    {
+      dataFormatter = new DataTextFormatter(operation, options, outputOptions);
+    }
   }
 
   /**
@@ -84,7 +94,11 @@ final class OperationHandler
                      final JdbcDriverInfo jdbcDriverInfo)
     throws SchemaCrawlerException
   {
-    dataFormatter.handle(schemaCrawlerInfo, databaseInfo, jdbcDriverInfo);
+    dataFormatter.handleInfoStart();
+    dataFormatter.handle(schemaCrawlerInfo);
+    dataFormatter.handle(databaseInfo);
+    dataFormatter.handle(jdbcDriverInfo);
+    dataFormatter.handleInfoEnd();
   }
 
   private void executeSqlAndHandleData(final String title, final String sql)

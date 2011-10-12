@@ -162,6 +162,6 @@ public final class ScriptExecutable
     // Evaluate the script
     scriptEngine.eval(reader);
 
-    outputOptions.closeOutputWriter(writer);
+    outputOptions.closeOutputWriter();
   }
 }

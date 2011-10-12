@@ -77,6 +77,7 @@ public class SchemaCrawlerOutputTest
 
   private static final String INFO_LEVEL_OUTPUT = "info_level_output/";
   private static final String COMPOSITE_OUTPUT = "composite_output/";
+  private static final String JSON_OUTPUT = "json_output/";
 
   private static TestDatabase testUtility = new TestDatabase();
 
@@ -119,6 +120,11 @@ public class SchemaCrawlerOutputTest
     final List<String> failures = new ArrayList<String>();
     for (final OutputFormat outputFormat: OutputFormat.values())
     {
+      if (outputFormat == OutputFormat.json)
+      {
+        continue;
+      }
+
       for (final String command: commands)
       {
         final String referenceFile = command + "." + outputFormat.name();
@@ -210,6 +216,53 @@ public class SchemaCrawlerOutputTest
                                                   outputOptions
                                                     .getOutputFormat()));
       }
+    }
+    if (failures.size() > 0)
+    {
+      fail(failures.toString());
+    }
+  }
+
+  @Test
+  public void compareJsonOutput()
+    throws Exception
+  {
+    final List<String> failures = new ArrayList<String>();
+    final InfoLevel infoLevel = InfoLevel.lint;
+    for (final SchemaTextDetailType schemaTextDetailType: SchemaTextDetailType
+      .values())
+    {
+      final String referenceFile = schemaTextDetailType + "_" + infoLevel
+                                   + ".json";
+
+      final File testOutputFile = File
+        .createTempFile("schemacrawler." + referenceFile + ".", ".test");
+      testOutputFile.delete();
+
+      final OutputOptions outputOptions = new OutputOptions(OutputFormat.json.name(),
+                                                            testOutputFile);
+      outputOptions.setNoInfo(false);
+      outputOptions.setNoHeader(false);
+      outputOptions.setNoFooter(false);
+
+      final Config config = Config.load(SchemaCrawlerOutputTest.class
+        .getResourceAsStream("/hsqldb.INFORMATION_SCHEMA.config.properties"));
+      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
+      schemaCrawlerOptions.setSchemaInfoLevel(infoLevel.getSchemaInfoLevel());
+
+      final DatabaseConnectionOptions connectionOptions = testUtility
+        .getDatabaseConnectionOptions();
+
+      final Executable executable = new SchemaCrawlerExecutable(schemaTextDetailType
+        .name());
+      executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+      executable.setOutputOptions(outputOptions);
+      executable.execute(connectionOptions.getConnection());
+
+      failures.addAll(TestUtility
+        .compareOutput(JSON_OUTPUT + referenceFile,
+                       testOutputFile,
+                       outputOptions.getOutputFormat()));
     }
     if (failures.size() > 0)
     {
