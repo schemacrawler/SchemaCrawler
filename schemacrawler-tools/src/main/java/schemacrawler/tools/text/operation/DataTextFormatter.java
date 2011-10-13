@@ -66,34 +66,18 @@ final class DataTextFormatter
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.text.operation.DataFormatter#begin()
-   */
-  public void begin()
-  {
-    if (!outputOptions.isNoHeader())
-    {
-      out.println(formattingHelper.createDocumentStart());
-    }
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
+   * @throws SchemaCrawlerException
    * @see schemacrawler.tools.text.operation.DataFormatter#end()
    */
   public void end()
+    throws SchemaCrawlerException
   {
     if (operation == Operation.count)
     {
       out.println(formattingHelper.createObjectEnd());
     }
 
-    if (!outputOptions.isNoFooter())
-    {
-      out.println(formattingHelper.createDocumentEnd());
-    }
-
-    out.close();
+    super.end();
   }
 
   /**

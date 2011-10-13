@@ -496,36 +496,6 @@ final class SchemaTextFormatter
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.text.schema.SchemaFormatter#begin()
-   */
-  public void begin()
-    throws SchemaCrawlerException
-  {
-    if (!outputOptions.isNoHeader())
-    {
-      out.println(formattingHelper.createDocumentStart());
-    }
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.text.schema.SchemaFormatter#end()
-   */
-  public void end()
-    throws SchemaCrawlerException
-  {
-    if (!outputOptions.isNoFooter())
-    {
-      out.println(formattingHelper.createDocumentEnd());
-    }
-
-    out.close();
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
    * @see schemacrawler.tools.text.schema.SchemaFormatter#handle(schemacrawler.schema.ColumnDataType)
    */
   public void handle(final ColumnDataType columnDataType)
