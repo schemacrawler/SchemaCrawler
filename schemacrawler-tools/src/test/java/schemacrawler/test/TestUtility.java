@@ -45,7 +45,6 @@ import schemacrawler.tools.options.OutputFormat;
 import sf.util.Utility;
 
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
@@ -116,8 +115,21 @@ public final class TestUtility
           failures.add("JSON document was not fully consumed.");
         }
         jsonReader.close();
-        final JsonObject json = jsonElement.getAsJsonObject();
-        if (json.entrySet().size() == 0)
+        final int size;
+        if (jsonElement.isJsonObject())
+        {
+          size = jsonElement.getAsJsonObject().entrySet().size();
+        }
+        else if (jsonElement.isJsonArray())
+        {
+          size = jsonElement.getAsJsonArray().size();
+        }
+        else
+        {
+          size = 0;
+        }
+
+        if (size == 0)
         {
           failures.add("Invalid JSON string");
         }
