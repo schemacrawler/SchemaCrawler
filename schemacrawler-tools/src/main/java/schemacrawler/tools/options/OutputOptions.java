@@ -21,15 +21,11 @@
 package schemacrawler.tools.options;
 
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.PrintWriter;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.Options;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import sf.util.Utility;
 
 /**
@@ -78,34 +74,6 @@ public final class OutputOptions
   {
     this.outputFormatValue = outputFormatValue;
     this.outputFile = outputFile;
-  }
-
-  /**
-   * Close the output writer.
-   */
-  public void closeOutputWriter()
-  {
-    if (writer != null)
-    {
-      boolean error = writer.checkError();
-      if (error) LOGGER.log(Level.WARNING, "Exception flushing output writer");
-    }
-
-    if (outputFile != null)
-    {
-      if (writer != null)
-      {
-        writer.close();
-        LOGGER.log(Level.INFO,
-                   "Closed output writer to file, "
-                       + outputFile.getAbsolutePath());
-      }
-    }
-    else
-    {
-      LOGGER.log(Level.INFO,
-                 "Not closing output writer, since output is to console");
-    }
   }
 
   /**
@@ -207,45 +175,6 @@ public final class OutputOptions
   public boolean isNoInfo()
   {
     return noInfo;
-  }
-
-  /**
-   * Opens the output writer.
-   * 
-   * @return Writer
-   * @throws SchemaCrawlerException
-   *         On an exception
-   */
-  public PrintWriter openOutputWriter()
-    throws SchemaCrawlerException
-  {
-    if (writer == null)
-    {
-      try
-      {
-        if (outputFile == null)
-        {
-          writer = new PrintWriter(System.out, /* autoFlush = */true);
-          LOGGER.log(Level.INFO, "Opened output writer to console");
-        }
-        else
-        {
-          final FileWriter fileWriter = new FileWriter(outputFile, appendOutput);
-          writer = new PrintWriter(new BufferedWriter(fileWriter), /*
-                                                                    * autoFlush
-                                                                    * =
-                                                                    */true);
-          LOGGER.log(Level.INFO,
-                     "Opened output writer to file, "
-                         + outputFile.getAbsolutePath());
-        }
-      }
-      catch (final Exception e)
-      {
-        throw new SchemaCrawlerException("Could not obtain output writer", e);
-      }
-    }
-    return writer;
   }
 
   /**

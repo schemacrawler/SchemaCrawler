@@ -74,7 +74,7 @@ public abstract class BaseJsonFormatter<O extends Options>
     try
     {
       jsonDatabase.write(out);
-      outputOptions.closeOutputWriter();
+      out.close();
     }
     catch (final JSONException e)
     {

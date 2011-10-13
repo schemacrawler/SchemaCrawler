@@ -520,7 +520,7 @@ final class SchemaTextFormatter
       out.println(formattingHelper.createDocumentEnd());
     }
 
-    out.flush();
+    out.close();
   }
 
   /**
