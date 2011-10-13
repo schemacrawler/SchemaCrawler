@@ -77,7 +77,7 @@ public abstract class BaseJsonFormatter<O extends Options>
   {
     try
     {
-      jsonDatabase.write(out);
+      jsonDatabase.write(out, 2);
 
       if (outputOptions.isNoFooter())
       {
