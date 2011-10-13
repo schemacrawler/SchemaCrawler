@@ -10,6 +10,7 @@ import schemacrawler.schemacrawler.Options;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.options.OutputWriter;
 import schemacrawler.tools.text.util.HtmlFormattingHelper;
 import schemacrawler.tools.text.util.PlainTextFormattingHelper;
 import schemacrawler.tools.text.util.TextFormattingHelper;
@@ -53,7 +54,7 @@ public abstract class BaseFormatter<O extends Options>
       formattingHelper = new PlainTextFormattingHelper(outputFormat);
     }
 
-    out = outputOptions.openOutputWriter();
+    out = new PrintWriter(new OutputWriter(outputOptions));
   }
 
   abstract void handleInfoStart()

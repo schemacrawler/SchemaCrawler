@@ -93,7 +93,7 @@ final class DataTextFormatter
       out.println(formattingHelper.createDocumentEnd());
     }
 
-    out.flush();
+    out.close();
   }
 
   /**
