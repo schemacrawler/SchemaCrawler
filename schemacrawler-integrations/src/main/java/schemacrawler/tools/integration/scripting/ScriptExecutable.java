@@ -25,6 +25,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.io.Reader;
 import java.io.Writer;
 import java.sql.Connection;
@@ -152,7 +153,7 @@ public final class ScriptExecutable
 
     final ScriptEngine scriptEngine = scriptEngineFactory.getScriptEngine();
 
-    final Writer writer = new OutputWriter(outputOptions);
+    final Writer writer = new PrintWriter(new OutputWriter(outputOptions));
 
     // Set up the context
     scriptEngine.getContext().setWriter(writer);
