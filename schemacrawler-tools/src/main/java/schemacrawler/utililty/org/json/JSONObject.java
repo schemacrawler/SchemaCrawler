@@ -26,6 +26,7 @@ package schemacrawler.utililty.org.json;
  */
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.Writer;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -1860,4 +1861,106 @@ public class JSONObject
       throw new JSONException(exception);
     }
   }
+
+  /**
+   * Make a prettyprinted JSON text of this JSONObject.
+   * <p>
+   * Warning: This method assumes that the data structure is acyclical.
+   * 
+   * @param indentFactor
+   *        The number of spaces to add to each level of indentation.
+   * @param indent
+   *        The indentation of the top level.
+   * @return a printable, displayable, transmittable representation of
+   *         the object, beginning with <code>{</code>&nbsp;<small>(left
+   *         brace)</small> and ending with <code>}</code>
+   *         &nbsp;<small>(right brace)</small>.
+   * @throws JSONException
+   *         If the object contains an invalid number.
+   */
+  void write(PrintWriter writer, int indentFactor, int indent)
+    throws JSONException
+  {
+    int i;
+    int length = this.length();
+    if (length == 0)
+    {
+      writer.println("{}");
+    }
+    Iterator keys = this.keys();
+    int newindent = indent + indentFactor;
+    Object object;
+    writer.println("{");
+    if (length == 1)
+    {
+      object = keys.next();
+      writer.print(quote(object.toString()));
+      writer.print(": ");
+      final Object value = this.map.get(object);
+      if (value instanceof JSONObject)
+      {
+        ((JSONObject) value).write(writer, indentFactor, newindent);
+      }
+      else if (value instanceof JSONArray)
+      {
+        ((JSONArray) value).write(writer, indentFactor, newindent);
+      }
+      else
+      {
+        writer.println(valueToString(value));
+      }
+    }
+    else
+    {
+      int keyCount = 0;
+      while (keys.hasNext())
+      {
+        keyCount++;
+        object = keys.next();
+        if (keyCount > 1)
+        {
+          writer.println(",");
+        }
+        else
+        {
+          writer.println();
+        }
+        for (i = 0; i < newindent; i += 1)
+        {
+          writer.print(' ');
+        }
+        writer.print(quote(object.toString()));
+        writer.print(": ");
+        final Object value = this.map.get(object);
+        if (value instanceof JSONObject)
+        {
+          ((JSONObject) value).write(writer, indentFactor, newindent);
+        }
+        else if (value instanceof JSONArray)
+        {
+          ((JSONArray) value).write(writer, indentFactor, newindent);
+        }
+        else
+        {
+          writer.println(valueToString(value));
+        }
+      }
+      if (keyCount > 1)
+      {
+        writer.println();
+        for (i = 0; i < indent; i += 1)
+        {
+          writer.print(' ');
+        }
+      }
+    }
+    writer.print('}');
+  }
+
+  public void write(Writer writer, int indentFactor)
+    throws JSONException
+  {
+    write(new PrintWriter(writer), indentFactor, 0);
+  }
+
 }

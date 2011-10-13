@@ -26,6 +26,7 @@ package schemacrawler.utililty.org.json;
  */
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.Writer;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -1043,4 +1044,60 @@ public class JSONArray
       throw new JSONException(e);
     }
   }
+
+  /**
+   * Make a prettyprinted JSON text of this JSONArray. Warning: This
+   * method assumes that the data structure is acyclical.
+   * 
+   * @param indentFactor
+   *        The number of spaces to add to each level of indentation.
+   * @param indent
+   *        The indention of the top level.
+   * @return a printable, displayable, transmittable representation of
+   *         the array.
+   * @throws JSONException
+   */
+  void write(PrintWriter writer, int indentFactor, int indent)
+    throws JSONException
+  {
+    int len = length();
+    if (len == 0)
+    {
+      writer.write("[]");
+    }
+    int i;
+    writer.write("[");
+    if (len == 1)
+    {
+      writer.write(JSONObject.valueToString(this.myArrayList.get(0),
+                                            indentFactor,
+                                            indent));
+    }
+    else
+    {
+      int newindent = indent + indentFactor;
+      writer.println();
+      for (i = 0; i < len; i += 1)
+      {
+        if (i > 0)
+        {
+          writer.println(",");
+        }
+        for (int j = 0; j < newindent; j += 1)
+        {
+          writer.write(' ');
+        }
+        writer.print(JSONObject.valueToString(this.myArrayList.get(i),
+                                              indentFactor,
+                                              newindent));
+      }
+      writer.println();
+      for (i = 0; i < indent; i += 1)
+      {
+        writer.print(' ');
+      }
+    }
+    writer.println(']');
+  }
+
 }
