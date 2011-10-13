@@ -21,7 +21,6 @@
 package schemacrawler.integration.test;
 
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -120,7 +119,6 @@ public class IntegrationTest
     assertTrue(testOutputFile.exists());
     assertTrue(testOutputFile.length() > 0);
     final BufferedImage image = ImageIO.read(testOutputFile);
-    assertEquals(BufferedImage.TYPE_3BYTE_BGR, image.getType());
     assertTrue(image.getHeight() > 0);
     assertTrue(image.getWidth() > 0);
   }
