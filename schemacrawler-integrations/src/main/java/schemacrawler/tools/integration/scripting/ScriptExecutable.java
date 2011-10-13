@@ -39,6 +39,7 @@ import javax.script.ScriptEngineManager;
 import schemacrawler.schema.Database;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseExecutable;
+import schemacrawler.tools.options.OutputWriter;
 import sf.util.FileUtility;
 import sf.util.ObjectToString;
 import sf.util.Utility;
@@ -151,7 +152,7 @@ public final class ScriptExecutable
 
     final ScriptEngine scriptEngine = scriptEngineFactory.getScriptEngine();
 
-    final Writer writer = outputOptions.openOutputWriter();
+    final Writer writer = new OutputWriter(outputOptions);
 
     // Set up the context
     scriptEngine.getContext().setWriter(writer);
@@ -162,6 +163,6 @@ public final class ScriptExecutable
     // Evaluate the script
     scriptEngine.eval(reader);
 
-    outputOptions.closeOutputWriter();
+    writer.close();
   }
 }

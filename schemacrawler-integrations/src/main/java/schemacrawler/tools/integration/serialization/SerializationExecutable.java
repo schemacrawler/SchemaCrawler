@@ -27,6 +27,7 @@ import java.util.logging.Logger;
 
 import schemacrawler.schema.Database;
 import schemacrawler.tools.executable.BaseExecutable;
+import schemacrawler.tools.options.OutputWriter;
 import sf.util.Utility;
 
 /**
@@ -81,7 +82,7 @@ public final class SerializationExecutable
       }
     }
 
-    final Writer writer = outputOptions.openOutputWriter();
+    final Writer writer = new OutputWriter(outputOptions);
     final SerializableDatabase database;
     switch (outputFormat)
     {
@@ -94,7 +95,7 @@ public final class SerializationExecutable
         break;
     }
     database.save(writer);
-    outputOptions.closeOutputWriter();
+    writer.close();
   }
 
 }
