@@ -39,6 +39,7 @@ import org.apache.velocity.runtime.resource.loader.FileResourceLoader;
 
 import schemacrawler.schema.Database;
 import schemacrawler.tools.executable.BaseExecutable;
+import schemacrawler.tools.options.OutputWriter;
 
 /**
  * Main executor for the Velocity integration.
@@ -123,13 +124,13 @@ public final class VelocityRenderer
     final Context context = new VelocityContext();
     context.put("database", database);
 
-    final Writer writer = outputOptions.openOutputWriter();
+    final Writer writer = new OutputWriter(outputOptions);
 
     // Evaluate the template
     final Template template = ve.getTemplate(templateLocation);
     template.merge(context, writer);
 
-    outputOptions.closeOutputWriter();
+    writer.close();
   }
 
 }

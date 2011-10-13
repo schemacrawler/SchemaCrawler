@@ -31,6 +31,7 @@ import java.util.logging.Logger;
 
 import schemacrawler.schema.Database;
 import schemacrawler.tools.executable.BaseExecutable;
+import schemacrawler.tools.options.OutputWriter;
 import freemarker.cache.ClassTemplateLoader;
 import freemarker.cache.FileTemplateLoader;
 import freemarker.cache.MultiTemplateLoader;
@@ -101,13 +102,13 @@ public final class FreeMarkerRenderer
     final Map<String, Object> objectMap = new HashMap<String, Object>();
     objectMap.put("database", database);
 
-    final Writer writer = outputOptions.openOutputWriter();
+    final Writer writer = new OutputWriter(outputOptions);
 
     // Evaluate the template
     final Template template = cfg.getTemplate(templateLocation);
     template.process(objectMap, writer);
 
-    outputOptions.closeOutputWriter();
+    writer.close();
   }
 
 }
