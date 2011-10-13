@@ -54,6 +54,22 @@ public abstract class BaseTabularFormatter<O extends Options>
     super(options, printVerboseDatabaseInfo, outputOptions);
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.text.schema.SchemaFormatter#end()
+   */
+  public void end()
+    throws SchemaCrawlerException
+  {
+    if (!outputOptions.isNoFooter())
+    {
+      out.println(formattingHelper.createDocumentEnd());
+    }
+
+    out.close();
+  }
+
   public final void handleInfoStart()
     throws SchemaCrawlerException
   {
@@ -64,6 +80,19 @@ public abstract class BaseTabularFormatter<O extends Options>
 
     out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
                                               "System Information"));
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.text.operation.DataFormatter#begin()
+   */
+  public void begin()
+  {
+    if (!outputOptions.isNoHeader())
+    {
+      out.println(formattingHelper.createDocumentStart());
+    }
   }
 
   public final void handleInfoEnd()
