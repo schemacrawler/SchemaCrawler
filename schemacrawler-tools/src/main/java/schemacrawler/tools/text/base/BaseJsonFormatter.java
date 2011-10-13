@@ -28,9 +28,6 @@ import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import net.sf.util.org.json.JSONArray;
-import net.sf.util.org.json.JSONException;
-import net.sf.util.org.json.JSONObject;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.DatabaseProperty;
 import schemacrawler.schema.JdbcDriverInfo;
@@ -39,6 +36,9 @@ import schemacrawler.schema.SchemaCrawlerInfo;
 import schemacrawler.schemacrawler.Options;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.utililty.org.json.JSONArray;
+import schemacrawler.utililty.org.json.JSONException;
+import schemacrawler.utililty.org.json.JSONObject;
 
 /**
  * Text formatting of schema.
@@ -66,6 +66,10 @@ public abstract class BaseJsonFormatter<O extends Options>
   public void begin()
     throws SchemaCrawlerException
   {
+    if (!outputOptions.isNoHeader())
+    {
+      out.println("[");
+    }
   }
 
   public void end()
@@ -74,6 +78,16 @@ public abstract class BaseJsonFormatter<O extends Options>
     try
     {
       jsonDatabase.write(out);
+
+      if (outputOptions.isNoFooter())
+      {
+        out.println(",");
+      }
+      else
+      {
+        out.println("]");
+      }
+
       out.close();
     }
     catch (final JSONException e)
@@ -204,6 +218,18 @@ public abstract class BaseJsonFormatter<O extends Options>
     }
   }
 
+  @Override
+  public void handleInfoEnd()
+    throws SchemaCrawlerException
+  {
+  }
+
+  @Override
+  public void handleInfoStart()
+    throws SchemaCrawlerException
+  {
+  }
+
   private JSONObject printJdbcDriverProperty(final JdbcDriverProperty driverProperty)
   {
     final JSONObject jsonDriverProperty = new JSONObject();
@@ -230,18 +256,6 @@ public abstract class BaseJsonFormatter<O extends Options>
     }
 
     return jsonDriverProperty;
-  }
-
-  @Override
-  public void handleInfoStart()
-    throws SchemaCrawlerException
-  {
-  }
-
-  @Override
-  public void handleInfoEnd()
-    throws SchemaCrawlerException
-  {
   }
 
 }

@@ -57,6 +57,19 @@ public abstract class BaseTabularFormatter<O extends Options>
   /**
    * {@inheritDoc}
    * 
+   * @see schemacrawler.tools.text.operation.DataFormatter#begin()
+   */
+  public void begin()
+  {
+    if (!outputOptions.isNoHeader())
+    {
+      out.println(formattingHelper.createDocumentStart());
+    }
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
    * @see schemacrawler.tools.text.schema.SchemaFormatter#end()
    */
   public void end()
@@ -68,37 +81,6 @@ public abstract class BaseTabularFormatter<O extends Options>
     }
 
     out.close();
-  }
-
-  public final void handleInfoStart()
-    throws SchemaCrawlerException
-  {
-    if (outputOptions.isNoInfo())
-    {
-      return;
-    }
-
-    out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
-                                              "System Information"));
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.text.operation.DataFormatter#begin()
-   */
-  public void begin()
-  {
-    if (!outputOptions.isNoHeader())
-    {
-      out.println(formattingHelper.createDocumentStart());
-    }
-  }
-
-  public final void handleInfoEnd()
-    throws SchemaCrawlerException
-  {
-
   }
 
   public final void handle(final DatabaseInfo dbInfo)
@@ -226,6 +208,24 @@ public abstract class BaseTabularFormatter<O extends Options>
     }
 
     out.flush();
+  }
+
+  public final void handleInfoEnd()
+    throws SchemaCrawlerException
+  {
+
+  }
+
+  public final void handleInfoStart()
+    throws SchemaCrawlerException
+  {
+    if (outputOptions.isNoInfo())
+    {
+      return;
+    }
+
+    out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
+                                              "System Information"));
   }
 
   private void printJdbcDriverProperty(final JdbcDriverProperty driverProperty)

@@ -1,4 +1,4 @@
-package net.sf.util.org.json;
+package schemacrawler.utililty.org.json;
 
 
 /*
@@ -1670,23 +1670,6 @@ public class JSONObject
     {
       return "null";
     }
-    if (value instanceof JSONString)
-    {
-      Object object;
-      try
-      {
-        object = ((JSONString) value).toJSONString();
-      }
-      catch (Exception e)
-      {
-        throw new JSONException(e);
-      }
-      if (object instanceof String)
-      {
-        return (String) object;
-      }
-      throw new JSONException("Bad value from toJSONString: " + object);
-    }
     if (value instanceof Number)
     {
       return numberToString((Number) value);
@@ -1735,20 +1718,6 @@ public class JSONObject
     if (value == null || value.equals(null))
     {
       return "null";
-    }
-    try
-    {
-      if (value instanceof JSONString)
-      {
-        Object o = ((JSONString) value).toJSONString();
-        if (o instanceof String)
-        {
-          return (String) o;
-        }
-      }
-    }
-    catch (Exception ignore)
-    {
     }
     if (value instanceof Number)
     {
@@ -1803,12 +1772,11 @@ public class JSONObject
         return NULL;
       }
       if (object instanceof JSONObject || object instanceof JSONArray
-          || NULL.equals(object) || object instanceof JSONString
-          || object instanceof Byte || object instanceof Character
-          || object instanceof Short || object instanceof Integer
-          || object instanceof Long || object instanceof Boolean
-          || object instanceof Float || object instanceof Double
-          || object instanceof String)
+          || NULL.equals(object) || object instanceof Byte
+          || object instanceof Character || object instanceof Short
+          || object instanceof Integer || object instanceof Long
+          || object instanceof Boolean || object instanceof Float
+          || object instanceof Double || object instanceof String)
       {
         return object;
       }

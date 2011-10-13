@@ -57,19 +57,19 @@ public abstract class BaseFormatter<O extends Options>
     out = new PrintWriter(new OutputWriter(outputOptions));
   }
 
-  abstract void handleInfoStart()
-    throws SchemaCrawlerException;
-
-  abstract void handle(SchemaCrawlerInfo schemaCrawlerInfo)
-    throws SchemaCrawlerException;
-
   abstract void handle(DatabaseInfo databaseInfo)
     throws SchemaCrawlerException;
 
   abstract void handle(JdbcDriverInfo jdbcDriverInfo)
     throws SchemaCrawlerException;
 
+  abstract void handle(SchemaCrawlerInfo schemaCrawlerInfo)
+    throws SchemaCrawlerException;
+
   abstract void handleInfoEnd()
+    throws SchemaCrawlerException;
+
+  abstract void handleInfoStart()
     throws SchemaCrawlerException;
 
 }

@@ -15,19 +15,19 @@ public interface Formatter
   void end()
     throws SchemaCrawlerException;
 
-  void handleInfoStart()
-    throws SchemaCrawlerException;
-
-  void handle(SchemaCrawlerInfo schemaCrawlerInfo)
-    throws SchemaCrawlerException;
-
   void handle(DatabaseInfo databaseInfo)
     throws SchemaCrawlerException;
 
   void handle(JdbcDriverInfo jdbcDriverInfo)
     throws SchemaCrawlerException;
 
+  void handle(SchemaCrawlerInfo schemaCrawlerInfo)
+    throws SchemaCrawlerException;
+
   void handleInfoEnd()
+    throws SchemaCrawlerException;
+
+  void handleInfoStart()
     throws SchemaCrawlerException;
 
 }
