@@ -40,7 +40,11 @@
     html
       For XHTML output
     csv
-      For CSV output
+      For comma-separated values output
+    tsv
+      For tab-separated values output
+    json
+      For JavaScript Object Notation output            
   Optional, defaults to text    
       
 -outputfile=<outputfile>
