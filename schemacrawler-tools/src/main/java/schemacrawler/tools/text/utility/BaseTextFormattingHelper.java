@@ -207,7 +207,7 @@ abstract class BaseTextFormattingHelper
     OutputFormat outputFormat = this.outputFormat;
     if (outputFormat == OutputFormat.text)
     {
-      outputFormat = OutputFormat.csv;
+      outputFormat = OutputFormat.tsv;
     }
     final TableRow row = new TableRow(outputFormat);
     for (final String element: columnData)
@@ -229,7 +229,7 @@ abstract class BaseTextFormattingHelper
     OutputFormat outputFormat = this.outputFormat;
     if (outputFormat == OutputFormat.text)
     {
-      outputFormat = OutputFormat.csv;
+      outputFormat = OutputFormat.tsv;
     }
     final TableRow row = new TableRow(outputFormat);
     for (final String columnName: columnNames)
