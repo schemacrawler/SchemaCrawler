@@ -1890,7 +1890,7 @@ public class JSONObject
     Iterator keys = this.keys();
     int newindent = indent + indentFactor;
     Object object;
-    writer.println("{");
+    writer.print("{");
     if (length == 1)
     {
       object = keys.next();
@@ -1942,7 +1942,7 @@ public class JSONObject
         }
         else
         {
-          writer.println(valueToString(value));
+          writer.print(valueToString(value));
         }
       }
       if (keyCount > 1)
