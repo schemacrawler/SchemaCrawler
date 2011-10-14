@@ -1506,7 +1506,6 @@
       ]
     ]
   }]
-
 },
 {"data": [
     {
@@ -2494,8 +2493,7 @@
         ]
       ]
     }
-  ]
-},
+  ]},
 {"data": [
     {
       "title": "PUBLIC.BOOKS.AUTHORS",
@@ -2537,8 +2535,7 @@
       "description": "Row Count",
       "value": 20
     }
-  ]
-},
+  ]},
 {
   "tables": [
     {
@@ -2573,8 +2570,7 @@
       "name": "PUBLIC.\"PUBLISHER SALES\".SALES",
       "table": "table"
     }
-  ]
-,
+  ],
   "procedures": [
     {
       "name": "PUBLIC.BOOKS.NEW_PUBLISHER",
@@ -2605,5 +2601,4 @@
       "procedure": "no result"
     }
   ]
-
 }]

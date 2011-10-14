@@ -1150,8 +1150,7 @@
       "triggers": [],
       "table": "table"
     }
-  ]
-,
+  ],
   "databaseInfo": {
     "databaseProperties": [
       {
@@ -2097,8 +2096,7 @@
         "name": "usesLocalFiles",
         "value": false
       }
-    ]
-,
+    ],
     "databaseProductName": "HSQL Database Engine",
     "databaseUserName": "SA",
     "databaseProductVersion": "2.2.4"
@@ -2284,8 +2282,7 @@
       "databaseSpecificTypeName": "CHARACTER VARYING",
       "searchable": "unknown"
     }
-  ]
-,
+  ],
   "schemaCrawlerInfo": {
     "productVersion": "8.7",
     "productName": "SchemaCrawler"
@@ -2343,8 +2340,7 @@
         "name": "user",
         "required": true
       }
-    ]
-,
+    ],
     "driverClassName": "org.hsqldb.jdbc.JDBCDriver",
     "driverVersion": "2.2.4",
     "driverName": "HSQL Database Engine Driver",
@@ -2532,5 +2528,4 @@
       "procedure": "no result"
     }
   ]
-
 }]

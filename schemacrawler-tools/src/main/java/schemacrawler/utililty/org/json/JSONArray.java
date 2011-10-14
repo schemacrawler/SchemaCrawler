@@ -1097,7 +1097,7 @@ public class JSONArray
         writer.print(' ');
       }
     }
-    writer.println(']');
+    writer.print(']');
   }
 
 }
