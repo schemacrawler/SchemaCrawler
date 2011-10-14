@@ -141,7 +141,7 @@ public final class ScriptExecutable
       LOGGER
         .log(Level.CONFIG,
              String
-               .format("Using script engine\n%s %s (%s %s)\nScript engine names: %s\nSupported file extensions: %s",
+               .format("Using script engine%n%s %s (%s %s)%nScript engine names: %s%nSupported file extensions: %s",
                        scriptEngineFactory.getEngineName(),
                        scriptEngineFactory.getEngineVersion(),
                        scriptEngineFactory.getLanguageName(),
