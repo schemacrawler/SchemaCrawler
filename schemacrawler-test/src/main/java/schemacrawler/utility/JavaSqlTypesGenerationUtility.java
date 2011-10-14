@@ -219,7 +219,7 @@ public final class JavaSqlTypesGenerationUtility
     Collections.sort(javaSqlTypeNames);
     for (final String javaSqlTypeName: javaSqlTypeNames)
     {
-      writers[0].write(String.format("%s=%d\n",
+      writers[0].write(String.format("%s=%d%n",
                                      javaSqlTypeName,
                                      javaSqlTypesMap.get(javaSqlTypeName)));
       //
@@ -227,7 +227,7 @@ public final class JavaSqlTypesGenerationUtility
         .get(javaSqlTypeName);
       if (!Utility.isBlank(javaSqlTypeMappedClassName))
       {
-        writers[1].write(String.format("%s=%s\n",
+        writers[1].write(String.format("%s=%s%n",
                                        javaSqlTypeName,
                                        javaSqlTypeMappedClassName));
       }
@@ -236,7 +236,7 @@ public final class JavaSqlTypesGenerationUtility
         .get(javaSqlTypeName);
       if (javaSqlTypeGroup != null)
       {
-        writers[2].write(String.format("%s=%s\n",
+        writers[2].write(String.format("%s=%s%n",
                                        javaSqlTypeName,
                                        javaSqlTypeGroup.name()));
       }

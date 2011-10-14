@@ -159,7 +159,7 @@ final class GraphGenerator
       final String processError = errReaderTask.get();
       if (exitCode != 0)
       {
-        throw new IOException(String.format("Process returned exit code %d\n%s",
+        throw new IOException(String.format("Process returned exit code %d%n%s",
                                             exitCode,
                                             processError));
       }

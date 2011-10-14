@@ -237,7 +237,7 @@ final class DotWriter
   private String print(final Column column)
   {
     final String nodeId = "\"" + UUID.randomUUID().toString() + "\"";
-    final String columnNode = String.format("  %s [label=<%s>];\n",
+    final String columnNode = String.format("  %s [label=<%s>];%n",
                                             nodeId,
                                             column.getFullName());
 
