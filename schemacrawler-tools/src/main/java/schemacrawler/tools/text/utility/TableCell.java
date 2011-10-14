@@ -163,6 +163,10 @@ final class TableCell
     {
       return escapeAndQuoteCsv(text);
     }
+    else if (outputFormat == OutputFormat.tsv)
+    {
+      return String.valueOf(text);
+    }
     else
     {
       if (characterWidth > 0)

@@ -27,6 +27,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.List;
 
 import org.custommonkey.xmlunit.XMLUnit;
@@ -118,7 +119,8 @@ public class SchemaCrawlerOutputTest
     };
 
     final List<String> failures = new ArrayList<String>();
-    for (final OutputFormat outputFormat: OutputFormat.values())
+    for (final OutputFormat outputFormat: EnumSet.complementOf(EnumSet
+      .of(OutputFormat.tsv)))
     {
       for (final String command: commands)
       {

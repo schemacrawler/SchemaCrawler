@@ -75,14 +75,19 @@ final class TableRow
 
   private String getFieldSeparator()
   {
-    if (outputFormat == OutputFormat.csv)
+    String fieldSeparator;
+    switch (outputFormat)
     {
-      return ",";
+      case csv:
+        fieldSeparator = ",";
+        break;
+      case tsv:
+        fieldSeparator = "\t";
+        break;
+      default:
+        fieldSeparator = "  ";
     }
-    else
-    {
-      return "  ";
-    }
+    return fieldSeparator;
   }
 
   /**

@@ -27,6 +27,6 @@ package schemacrawler.tools.options;
 public enum OutputFormat
 {
 
-  text, html, csv, json, ;
+  text, html, csv, tsv, json, ;
 
 }
