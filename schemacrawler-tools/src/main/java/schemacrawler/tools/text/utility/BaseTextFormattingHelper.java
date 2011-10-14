@@ -18,12 +18,12 @@
  *
  */
 
-package schemacrawler.tools.text.util;
+package schemacrawler.tools.text.utility;
 
 
 import static sf.util.Utility.NEWLINE;
 import schemacrawler.tools.options.OutputFormat;
-import schemacrawler.tools.text.util.TableCell.Align;
+import schemacrawler.tools.text.utility.TableCell.Align;
 
 /**
  * Methods to format entire rows of output as HTML.
@@ -133,7 +133,7 @@ abstract class BaseTextFormattingHelper
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.text.util.TextFormattingHelper#createNameRow(java.lang.String,
+   * @see schemacrawler.tools.text.utility.TextFormattingHelper#createNameRow(java.lang.String,
    *      java.lang.String, boolean)
    */
   public String createNameRow(final String name,

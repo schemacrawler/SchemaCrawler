@@ -34,7 +34,7 @@ import schemacrawler.schema.SchemaCrawlerInfo;
 import schemacrawler.schemacrawler.Options;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputOptions;
-import schemacrawler.tools.text.util.TextFormattingHelper.DocumentHeaderType;
+import schemacrawler.tools.text.utility.TextFormattingHelper.DocumentHeaderType;
 import sf.util.ObjectToString;
 
 /**
