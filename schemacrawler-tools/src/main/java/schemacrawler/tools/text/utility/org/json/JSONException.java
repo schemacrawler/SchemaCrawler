@@ -1,4 +1,4 @@
-package schemacrawler.utililty.org.json;
+package schemacrawler.tools.text.utility.org.json;
 
 
 /**

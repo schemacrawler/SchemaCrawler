@@ -36,9 +36,9 @@ import schemacrawler.schema.SchemaCrawlerInfo;
 import schemacrawler.schemacrawler.Options;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputOptions;
-import schemacrawler.utililty.org.json.JSONArray;
-import schemacrawler.utililty.org.json.JSONException;
-import schemacrawler.utililty.org.json.JSONObject;
+import schemacrawler.tools.text.utility.org.json.JSONArray;
+import schemacrawler.tools.text.utility.org.json.JSONException;
+import schemacrawler.tools.text.utility.org.json.JSONObject;
 
 /**
  * Text formatting of schema.
