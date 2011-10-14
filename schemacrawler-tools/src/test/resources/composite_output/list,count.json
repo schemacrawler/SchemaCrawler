@@ -33,8 +33,7 @@
       "name": "PUBLIC.\"PUBLISHER SALES\".SALES",
       "table": "table"
     }
-  ]
-,
+  ],
   "databaseInfo": {
     "databaseProductName": "HSQL Database Engine",
     "databaseUserName": "SA",
@@ -81,7 +80,6 @@
       "procedure": "no result"
     }
   ]
-
 },
 {"data": [
     {
@@ -124,5 +122,4 @@
       "description": "Row Count",
       "value": 20
     }
-  ]
-}]
+  ]}]
