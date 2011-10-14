@@ -18,35 +18,56 @@
  *
  */
 
-package schemacrawler.tools.text.util;
+package schemacrawler.tools.text.utility;
 
 
 import schemacrawler.tools.options.OutputFormat;
 import sf.util.Utility;
 
 /**
- * Methods to format entire rows of output as text.
+ * Methods to format entire rows of output as HTML.
  * 
  * @author Sualeh Fatehi
  */
-public class PlainTextFormattingHelper
+public final class HtmlFormattingHelper
   extends BaseTextFormattingHelper
 {
 
   /**
-   * Constructor.
-   * 
-   * @param outputFormat
-   *        Output format - text or CSV.
+   * HTML footer.
    */
-  public PlainTextFormattingHelper(final OutputFormat outputFormat)
+  private static final String HTML_FOOTER = "</body>" + Utility.NEWLINE
+                                            + "</html>";
+  /**
+   * HTML header.
+   */
+  private static final String HTML_HEADER = htmlHeader();
+
+  private static String htmlHeader()
+  {
+    final String styleSheet = Utility
+      .readResourceFully("/schemacrawler-output.css");
+
+    return ""
+           + "<?xml version='1.0' encoding='UTF-8'?>"
+           + Utility.NEWLINE
+           + "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">"
+           + Utility.NEWLINE + "<html xmlns='http://www.w3.org/1999/xhtml'>"
+           + Utility.NEWLINE + "<head>" + Utility.NEWLINE
+           + "  <title>SchemaCrawler Output</title>" + Utility.NEWLINE
+           + "  <style type='text/css'>" + Utility.NEWLINE + styleSheet
+           + Utility.NEWLINE + "  </style>" + Utility.NEWLINE + "</head>"
+           + Utility.NEWLINE + "<body>" + Utility.NEWLINE;
+  }
+
+  public HtmlFormattingHelper(final OutputFormat outputFormat)
   {
     super(outputFormat);
   }
 
   public String createArrow()
   {
-    return " --> ";
+    return " \u2192 ";
   }
 
   /**
@@ -54,7 +75,7 @@ public class PlainTextFormattingHelper
    */
   public String createDocumentEnd()
   {
-    return "";
+    return HTML_FOOTER;
   }
 
   /**
@@ -62,46 +83,47 @@ public class PlainTextFormattingHelper
    */
   public String createDocumentStart()
   {
-    return "";
+    return HTML_HEADER;
   }
 
   public String createHeader(final DocumentHeaderType type, final String header)
   {
     if (!sf.util.Utility.isBlank(header))
     {
-      final String defaultSeparator = separator("=");
-
       final String prefix;
-      final String separator;
+      final String headerTag;
       if (type == null)
       {
-        prefix = Utility.NEWLINE;
-        separator = defaultSeparator;
+        prefix = "<p>&nbsp;</p>";
+        headerTag = "h2";
       }
       else
       {
         switch (type)
         {
           case title:
-            prefix = Utility.NEWLINE;
-            separator = separator("_");
+            prefix = "<p>&nbsp;</p>";
+            headerTag = "h1";
             break;
           case subTitle:
-            prefix = Utility.NEWLINE;
-            separator = defaultSeparator;
+            prefix = "<p>&nbsp;</p>";
+            headerTag = "h2";
             break;
           case section:
             prefix = "";
-            separator = separator("-=-");
+            headerTag = "h3";
             break;
           default:
-            prefix = Utility.NEWLINE;
-            separator = defaultSeparator;
+            prefix = "<p>&nbsp;</p>";
+            headerTag = "h2";
             break;
         }
       }
-      return Utility.NEWLINE + prefix + header + Utility.NEWLINE + separator
-             + Utility.NEWLINE + prefix;
+      return String.format("%s%n<%s>%s</%s>%n",
+                           prefix,
+                           headerTag,
+                           header,
+                           headerTag);
     }
     else
     {
@@ -114,7 +136,7 @@ public class PlainTextFormattingHelper
    */
   public String createObjectEnd()
   {
-    return Utility.NEWLINE;
+    return "</table>" + Utility.NEWLINE + "<p></p>" + Utility.NEWLINE;
   }
 
   /**
@@ -122,11 +144,11 @@ public class PlainTextFormattingHelper
    */
   public String createObjectStart(final String name)
   {
-    String objectStart = "";
+    String objectStart = "<table>" + Utility.NEWLINE;
     if (!sf.util.Utility.isBlank(name))
     {
-      objectStart = objectStart + Utility.NEWLINE + name + Utility.NEWLINE
-                    + DASHED_SEPARATOR;
+      objectStart = objectStart + "  <caption>" + name + "</caption>"
+                    + Utility.NEWLINE;
     }
     return objectStart;
   }

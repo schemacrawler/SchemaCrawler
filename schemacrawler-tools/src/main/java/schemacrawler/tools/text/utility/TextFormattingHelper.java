@@ -18,7 +18,7 @@
  *
  */
 
-package schemacrawler.tools.text.util;
+package schemacrawler.tools.text.utility;
 
 
 /**

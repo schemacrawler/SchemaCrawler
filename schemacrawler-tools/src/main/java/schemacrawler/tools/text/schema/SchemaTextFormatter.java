@@ -48,7 +48,7 @@ import schemacrawler.tools.analysis.AnalyzedDatabase;
 import schemacrawler.tools.analysis.Lint;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.BaseTabularFormatter;
-import schemacrawler.tools.text.util.TextFormattingHelper.DocumentHeaderType;
+import schemacrawler.tools.text.utility.TextFormattingHelper.DocumentHeaderType;
 import sf.util.Utility;
 
 /**

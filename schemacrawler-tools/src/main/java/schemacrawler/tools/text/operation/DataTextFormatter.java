@@ -29,7 +29,7 @@ import java.util.List;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.BaseTabularFormatter;
-import schemacrawler.tools.text.util.TextFormattingHelper.DocumentHeaderType;
+import schemacrawler.tools.text.utility.TextFormattingHelper.DocumentHeaderType;
 
 /**
  * Text formatting of data.
