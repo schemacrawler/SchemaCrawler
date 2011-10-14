@@ -67,7 +67,11 @@ final class DataJsonFormatter
     jsonDataArray = new JSONArray();
     try
     {
-      jsonDatabase.put("data", jsonDataArray);
+      if (operation != null)
+      {
+        jsonRoot.put("description", operation.getDescription());
+      }
+      jsonRoot.put("data", jsonDataArray);
     }
     catch (JSONException e)
     {
@@ -88,11 +92,6 @@ final class DataJsonFormatter
     {
       JSONObject jsonData = new JSONObject();
       jsonData.put("title", title);
-
-      if (operation != null)
-      {
-        jsonData.put("description", operation.getDescription());
-      }
 
       if (operation == Operation.count)
       {

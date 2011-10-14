@@ -2494,48 +2494,43 @@
       ]
     }
   ]},
-{"data": [
+{
+  "description": "Row Count",
+  "data": [
     {
       "title": "PUBLIC.BOOKS.AUTHORS",
-      "description": "Row Count",
       "value": 20
     },
     {
       "title": "PUBLIC.BOOKS.AUTHORSLIST",
-      "description": "Row Count",
       "value": 20
     },
     {
       "title": "PUBLIC.BOOKS.BOOKAUTHORS",
-      "description": "Row Count",
       "value": 20
     },
     {
       "title": "PUBLIC.BOOKS.BOOKS",
-      "description": "Row Count",
       "value": 20
     },
     {
       "title": "PUBLIC.BOOKS.\"Global Counts\"",
-      "description": "Row Count",
       "value": 0
     },
     {
       "title": "PUBLIC.BOOKS.PUBLISHERS",
-      "description": "Row Count",
       "value": 20
     },
     {
       "title": "PUBLIC.\"PUBLISHER SALES\".REGIONS",
-      "description": "Row Count",
       "value": 20
     },
     {
       "title": "PUBLIC.\"PUBLISHER SALES\".SALES",
-      "description": "Row Count",
       "value": 20
     }
-  ]},
+  ]
+},
 {
   "tables": [
     {

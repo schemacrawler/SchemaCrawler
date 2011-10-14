@@ -52,7 +52,7 @@ public abstract class BaseJsonFormatter<O extends Options>
   protected static final Logger LOGGER = Logger
     .getLogger(BaseJsonFormatter.class.getName());
 
-  protected final JSONObject jsonDatabase;
+  protected final JSONObject jsonRoot;
 
   protected BaseJsonFormatter(final O options,
                               final boolean printVerboseDatabaseInfo,
@@ -60,7 +60,7 @@ public abstract class BaseJsonFormatter<O extends Options>
     throws SchemaCrawlerException
   {
     super(options, printVerboseDatabaseInfo, outputOptions);
-    jsonDatabase = new JSONObject();
+    jsonRoot = new JSONObject();
   }
 
   public void begin()
@@ -77,7 +77,7 @@ public abstract class BaseJsonFormatter<O extends Options>
   {
     try
     {
-      jsonDatabase.write(out, 2);
+      jsonRoot.write(out, 2);
 
       if (outputOptions.isNoFooter())
       {
@@ -106,7 +106,7 @@ public abstract class BaseJsonFormatter<O extends Options>
     try
     {
       final JSONObject jsonDbInfo = new JSONObject();
-      jsonDatabase.put("databaseInfo", jsonDbInfo);
+      jsonRoot.put("databaseInfo", jsonDbInfo);
 
       jsonDbInfo.put("databaseProductName", dbInfo.getProductName());
       jsonDbInfo.put("databaseProductVersion", dbInfo.getProductVersion());
@@ -146,7 +146,7 @@ public abstract class BaseJsonFormatter<O extends Options>
     try
     {
       final JSONObject jsonDriverInfo = new JSONObject();
-      jsonDatabase.put("jdbcDriverInfo", jsonDriverInfo);
+      jsonRoot.put("jdbcDriverInfo", jsonDriverInfo);
 
       jsonDriverInfo.put("driverName", driverInfo.getDriverName());
       jsonDriverInfo.put("driverVersion", driverInfo.getDriverVersion());
@@ -186,7 +186,7 @@ public abstract class BaseJsonFormatter<O extends Options>
     try
     {
       final JSONObject jsonSchemaCrawlerInfo = new JSONObject();
-      jsonDatabase.put("schemaCrawlerInfo", jsonSchemaCrawlerInfo);
+      jsonRoot.put("schemaCrawlerInfo", jsonSchemaCrawlerInfo);
 
       jsonSchemaCrawlerInfo
         .put("productName", schemaCrawlerInfo.getSchemaCrawlerProductName());
