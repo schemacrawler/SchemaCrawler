@@ -101,9 +101,11 @@ final class SchemaJsonFormatter
 
         jsonColumnDataType.put("databaseSpecificTypeName",
                                columnDataType.getDatabaseSpecificTypeName());
-        // jsonColumnDataType.put("basedOn",
-        // columnDataType.getBaseType()
-        // .getName());
+        jsonColumnDataType
+          .put("basedOn", columnDataType.getBaseType() == null? ""
+                                                              : columnDataType
+                                                                .getBaseType()
+                                                                .getName());
         jsonColumnDataType.put("userDefined", columnDataType.isUserDefined());
         jsonColumnDataType.put("createParameters",
                                columnDataType.getCreateParameters());
