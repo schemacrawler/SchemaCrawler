@@ -97,7 +97,7 @@ final class SchemaJsonFormatter
       try
       {
         final JSONObject jsonColumnDataType = new JSONObject();
-        jsonDatabase.accumulate("columnDataypes", jsonColumnDataType);
+        jsonRoot.accumulate("columnDataypes", jsonColumnDataType);
 
         jsonColumnDataType.put("databaseSpecificTypeName",
                                columnDataType.getDatabaseSpecificTypeName());
@@ -133,7 +133,7 @@ final class SchemaJsonFormatter
     try
     {
       final JSONObject jsonProcedure = new JSONObject();
-      jsonDatabase.accumulate("procedures", jsonProcedure);
+      jsonRoot.accumulate("procedures", jsonProcedure);
 
       jsonProcedure.put("name", procedure.getName());
       jsonProcedure.put("fullName", procedure.getFullName());
@@ -177,7 +177,7 @@ final class SchemaJsonFormatter
 
     try
     {
-      jsonDatabase.accumulate("tables", jsonTable);
+      jsonRoot.accumulate("tables", jsonTable);
 
       jsonTable.put("name", table.getName());
       jsonTable.put("fullName", table.getFullName());

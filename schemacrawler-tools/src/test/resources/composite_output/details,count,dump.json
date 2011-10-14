@@ -2576,52 +2576,48 @@
     }
   ]
 },
-{"data": [
+{
+  "description": "Row Count",
+  "data": [
     {
       "title": "PUBLIC.BOOKS.AUTHORS",
-      "description": "Row Count",
       "value": 20
     },
     {
       "title": "PUBLIC.BOOKS.AUTHORSLIST",
-      "description": "Row Count",
       "value": 20
     },
     {
       "title": "PUBLIC.BOOKS.BOOKAUTHORS",
-      "description": "Row Count",
       "value": 20
     },
     {
       "title": "PUBLIC.BOOKS.BOOKS",
-      "description": "Row Count",
       "value": 20
     },
     {
       "title": "PUBLIC.BOOKS.\"Global Counts\"",
-      "description": "Row Count",
       "value": 0
     },
     {
       "title": "PUBLIC.BOOKS.PUBLISHERS",
-      "description": "Row Count",
       "value": 20
     },
     {
       "title": "PUBLIC.\"PUBLISHER SALES\".REGIONS",
-      "description": "Row Count",
       "value": 20
     },
     {
       "title": "PUBLIC.\"PUBLISHER SALES\".SALES",
-      "description": "Row Count",
       "value": 20
     }
-  ]},
-{"data": [
+  ]
+},
+{
+  "description": "Dump",
+  "data": [
     {
       "title": "PUBLIC.BOOKS.AUTHORS",
-      "description": "Dump",
       "columnNames": [
         "ID",
         "FIRSTNAME",
@@ -2858,7 +2854,6 @@
     },
     {
       "title": "PUBLIC.BOOKS.AUTHORSLIST",
-      "description": "Dump",
       "columnNames": [
         "ID",
         "FIRSTNAME",
@@ -2969,7 +2964,6 @@
     },
     {
       "title": "PUBLIC.BOOKS.BOOKAUTHORS",
-      "description": "Dump",
       "columnNames": [
         "BOOKID",
         "AUTHORID",
@@ -3080,7 +3074,6 @@
     },
     {
       "title": "PUBLIC.BOOKS.BOOKS",
-      "description": "Dump",
       "columnNames": [
         "ID",
         "TITLE",
@@ -3254,13 +3247,11 @@
     },
     {
       "title": "PUBLIC.BOOKS.\"Global Counts\"",
-      "description": "Dump",
       "columnNames": ["Global Count"],
       "rows": []
     },
     {
       "title": "PUBLIC.BOOKS.PUBLISHERS",
-      "description": "Dump",
       "columnNames": [
         "ID",
         "PUBLISHER"
@@ -3350,7 +3341,6 @@
     },
     {
       "title": "PUBLIC.\"PUBLISHER SALES\".REGIONS",
-      "description": "Dump",
       "columnNames": [
         "CITY",
         "STATE",
@@ -3482,7 +3472,6 @@
     },
     {
       "title": "PUBLIC.\"PUBLISHER SALES\".SALES",
-      "description": "Dump",
       "columnNames": [
         "POSTALCODE",
         "COUNTRY",
@@ -3633,4 +3622,5 @@
         ]
       ]
     }
-  ]}]
+  ]
+}]
