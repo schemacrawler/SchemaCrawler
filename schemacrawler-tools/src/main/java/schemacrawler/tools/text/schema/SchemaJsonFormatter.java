@@ -23,7 +23,6 @@ package schemacrawler.tools.text.schema;
 
 import java.util.logging.Level;
 
-
 import schemacrawler.schema.CheckConstraint;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
@@ -136,8 +135,9 @@ final class SchemaJsonFormatter
       final JSONObject jsonProcedure = new JSONObject();
       jsonDatabase.accumulate("procedures", jsonProcedure);
 
-      jsonProcedure.put("name", procedure.getFullName());
-      jsonProcedure.put("procedure", procedure.getType());
+      jsonProcedure.put("name", procedure.getName());
+      jsonProcedure.put("fullName", procedure.getFullName());
+      jsonProcedure.put("type", procedure.getType());
 
       if (isNotList)
       {
@@ -179,8 +179,9 @@ final class SchemaJsonFormatter
     {
       jsonDatabase.accumulate("tables", jsonTable);
 
-      jsonTable.put("name", table.getFullName());
-      jsonTable.put("table", table.getType());
+      jsonTable.put("name", table.getName());
+      jsonTable.put("fullName", table.getFullName());
+      jsonTable.put("type", table.getType());
 
       if (isNotList)
       {
@@ -407,7 +408,7 @@ final class SchemaJsonFormatter
           final JSONObject jsonLint = new JSONObject();
           jsonLints.put(jsonLint);
           jsonLint.put("description", lint.getDescription());
-          jsonLint.put("value", lint.getLintValue());
+          jsonLint.put("value", lint.getLintValueAsString());
         }
         catch (final JSONException e)
         {
@@ -460,6 +461,8 @@ final class SchemaJsonFormatter
         jsonColumn.put("databaseSpecificType", column.getType()
           .getDatabaseSpecificTypeName());
         jsonColumn.put("width", column.getWidth());
+        jsonColumn.put("size", column.getSize());
+        jsonColumn.put("decimalDigits", column.getDecimalDigits());
         jsonColumn.put("nullable", column.isNullable());
       }
 

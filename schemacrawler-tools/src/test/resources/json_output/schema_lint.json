@@ -20,79 +20,97 @@
           "ordinal": 1
         }
       },
-      "name": "PUBLIC.BOOKS.AUTHORS",
+      "name": "AUTHORS",
       "columns": [
         {
           "dataType": "INTEGER",
+          "decimalDigits": 0,
           "width": "",
           "name": "ID",
           "ordinal": 1,
           "nullable": false,
-          "databaseSpecificType": "INTEGER"
+          "databaseSpecificType": "INTEGER",
+          "size": 32
         },
         {
           "dataType": "VARCHAR",
+          "decimalDigits": 0,
           "width": "(20)",
           "name": "FIRSTNAME",
           "ordinal": 2,
           "nullable": false,
-          "databaseSpecificType": "VARCHAR"
+          "databaseSpecificType": "VARCHAR",
+          "size": 20
         },
         {
           "dataType": "VARCHAR",
+          "decimalDigits": 0,
           "width": "(20)",
           "name": "LASTNAME",
           "ordinal": 3,
           "nullable": false,
-          "databaseSpecificType": "VARCHAR"
+          "databaseSpecificType": "VARCHAR",
+          "size": 20
         },
         {
           "dataType": "VARCHAR",
+          "decimalDigits": 0,
           "width": "(255)",
           "name": "ADDRESS1",
           "ordinal": 4,
           "nullable": true,
-          "databaseSpecificType": "VARCHAR"
+          "databaseSpecificType": "VARCHAR",
+          "size": 255
         },
         {
           "dataType": "VARCHAR",
+          "decimalDigits": 0,
           "width": "(255)",
           "name": "ADDRESS2",
           "ordinal": 5,
           "nullable": true,
-          "databaseSpecificType": "VARCHAR"
+          "databaseSpecificType": "VARCHAR",
+          "size": 255
         },
         {
           "dataType": "VARCHAR",
+          "decimalDigits": 0,
           "width": "(50)",
           "name": "CITY",
           "ordinal": 6,
           "nullable": true,
-          "databaseSpecificType": "VARCHAR"
+          "databaseSpecificType": "VARCHAR",
+          "size": 50
         },
         {
           "dataType": "VARCHAR",
+          "decimalDigits": 0,
           "width": "(2)",
           "name": "STATE",
           "ordinal": 7,
           "nullable": true,
-          "databaseSpecificType": "VARCHAR"
+          "databaseSpecificType": "VARCHAR",
+          "size": 2
         },
         {
           "dataType": "VARCHAR",
+          "decimalDigits": 0,
           "width": "(10)",
           "name": "POSTALCODE",
           "ordinal": 8,
           "nullable": true,
-          "databaseSpecificType": "VARCHAR"
+          "databaseSpecificType": "VARCHAR",
+          "size": 10
         },
         {
           "dataType": "VARCHAR",
+          "decimalDigits": 0,
           "width": "(50)",
           "name": "COUNTRY",
           "ordinal": 9,
           "nullable": true,
-          "databaseSpecificType": "VARCHAR"
+          "databaseSpecificType": "VARCHAR",
+          "size": 50
         }
       ],
       "indices": [
@@ -148,41 +166,49 @@
           ]
         }
       ],
-      "table": "table"
+      "fullName": "PUBLIC.BOOKS.AUTHORS",
+      "type": "table"
     },
     {
       "definition": "SELECT ID,FIRSTNAME,LASTNAME FROM BOOKS.AUTHORS",
       "foreignKeys": [],
       "primaryKey": {},
-      "name": "PUBLIC.BOOKS.AUTHORSLIST",
+      "name": "AUTHORSLIST",
       "columns": [
         {
           "dataType": "INTEGER",
+          "decimalDigits": 0,
           "width": "",
           "name": "ID",
           "ordinal": 1,
           "nullable": true,
-          "databaseSpecificType": "INTEGER"
+          "databaseSpecificType": "INTEGER",
+          "size": 32
         },
         {
           "dataType": "VARCHAR",
+          "decimalDigits": 0,
           "width": "(20)",
           "name": "FIRSTNAME",
           "ordinal": 2,
           "nullable": true,
-          "databaseSpecificType": "VARCHAR"
+          "databaseSpecificType": "VARCHAR",
+          "size": 20
         },
         {
           "dataType": "VARCHAR",
+          "decimalDigits": 0,
           "width": "(20)",
           "name": "LASTNAME",
           "ordinal": 3,
           "nullable": true,
-          "databaseSpecificType": "VARCHAR"
+          "databaseSpecificType": "VARCHAR",
+          "size": 20
         }
       ],
       "indices": [],
-      "table": "view"
+      "fullName": "PUBLIC.BOOKS.AUTHORSLIST",
+      "type": "view"
     },
     {
       "foreignKeys": [
@@ -206,31 +232,37 @@
         }
       ],
       "primaryKey": {},
-      "name": "PUBLIC.BOOKS.BOOKAUTHORS",
+      "name": "BOOKAUTHORS",
       "columns": [
         {
           "dataType": "INTEGER",
+          "decimalDigits": 0,
           "width": "",
           "name": "BOOKID",
           "ordinal": 1,
           "nullable": false,
-          "databaseSpecificType": "INTEGER"
+          "databaseSpecificType": "INTEGER",
+          "size": 32
         },
         {
           "dataType": "INTEGER",
+          "decimalDigits": 0,
           "width": "",
           "name": "AUTHORID",
           "ordinal": 2,
           "nullable": false,
-          "databaseSpecificType": "INTEGER"
+          "databaseSpecificType": "INTEGER",
+          "size": 32
         },
         {
           "dataType": "CLOB",
+          "decimalDigits": 0,
           "width": "",
           "name": "\"UPDATE\"",
           "ordinal": 3,
           "nullable": true,
-          "databaseSpecificType": "CLOB"
+          "databaseSpecificType": "CLOB",
+          "size": 16777216
         }
       ],
       "indices": [
@@ -269,7 +301,8 @@
           ]
         }
       ],
-      "table": "table"
+      "fullName": "PUBLIC.BOOKS.BOOKAUTHORS",
+      "type": "table"
     },
     {
       "foreignKeys": [{
@@ -290,55 +323,67 @@
           "ordinal": 1
         }
       },
-      "name": "PUBLIC.BOOKS.BOOKS",
+      "name": "BOOKS",
       "columns": [
         {
           "dataType": "INTEGER",
+          "decimalDigits": 0,
           "width": "",
           "name": "ID",
           "ordinal": 1,
           "nullable": false,
-          "databaseSpecificType": "INTEGER"
+          "databaseSpecificType": "INTEGER",
+          "size": 32
         },
         {
           "dataType": "VARCHAR",
+          "decimalDigits": 0,
           "width": "(255)",
           "name": "TITLE",
           "ordinal": 2,
           "nullable": false,
-          "databaseSpecificType": "VARCHAR"
+          "databaseSpecificType": "VARCHAR",
+          "size": 255
         },
         {
           "dataType": "VARCHAR",
+          "decimalDigits": 0,
           "width": "(255)",
           "name": "DESCRIPTION",
           "ordinal": 3,
           "nullable": true,
-          "databaseSpecificType": "VARCHAR"
+          "databaseSpecificType": "VARCHAR",
+          "size": 255
         },
         {
           "dataType": "INTEGER",
+          "decimalDigits": 0,
           "width": "",
           "name": "PUBLISHERID",
           "ordinal": 4,
           "nullable": false,
-          "databaseSpecificType": "INTEGER"
+          "databaseSpecificType": "INTEGER",
+          "size": 32
         },
         {
           "dataType": "DATE",
+          "decimalDigits": 0,
           "width": "",
           "name": "PUBLICATIONDATE",
           "ordinal": 5,
           "nullable": true,
-          "databaseSpecificType": "DATE"
+          "databaseSpecificType": "DATE",
+          "size": 10
         },
         {
           "dataType": "DOUBLE",
+          "decimalDigits": 0,
           "width": "(64, 0)",
           "name": "PRICE",
           "ordinal": 6,
           "nullable": true,
-          "databaseSpecificType": "DOUBLE"
+          "databaseSpecificType": "DOUBLE",
+          "size": 64
         }
       ],
       "indices": [{
@@ -350,22 +395,26 @@
           "ordinal": 1
         }
       }],
-      "table": "table"
+      "fullName": "PUBLIC.BOOKS.BOOKS",
+      "type": "table"
     },
     {
       "foreignKeys": [],
       "primaryKey": {},
-      "name": "PUBLIC.BOOKS.\"Global Counts\"",
+      "name": "\"Global Counts\"",
       "columns": [{
         "dataType": "INTEGER",
+        "decimalDigits": 0,
         "width": "",
         "name": "\"Global Count\"",
         "ordinal": 1,
         "nullable": true,
-        "databaseSpecificType": "INTEGER"
+        "databaseSpecificType": "INTEGER",
+        "size": 32
       }],
       "indices": [],
-      "table": "table"
+      "fullName": "PUBLIC.BOOKS.\"Global Counts\"",
+      "type": "table"
     },
     {
       "foreignKeys": [],
@@ -378,23 +427,27 @@
           "ordinal": 1
         }
       },
-      "name": "PUBLIC.BOOKS.PUBLISHERS",
+      "name": "PUBLISHERS",
       "columns": [
         {
           "dataType": "INTEGER",
+          "decimalDigits": 0,
           "width": "",
           "name": "ID",
           "ordinal": 1,
           "nullable": false,
-          "databaseSpecificType": "INTEGER"
+          "databaseSpecificType": "INTEGER",
+          "size": 32
         },
         {
           "dataType": "VARCHAR",
+          "decimalDigits": 0,
           "width": "(255)",
           "name": "PUBLISHER",
           "ordinal": 2,
           "nullable": true,
-          "databaseSpecificType": "VARCHAR"
+          "databaseSpecificType": "VARCHAR",
+          "size": 255
         }
       ],
       "indices": [{
@@ -406,7 +459,8 @@
           "ordinal": 1
         }
       }],
-      "table": "table"
+      "fullName": "PUBLIC.BOOKS.PUBLISHERS",
+      "type": "table"
     },
     {
       "foreignKeys": [{
@@ -440,39 +494,47 @@
           }
         ]
       },
-      "name": "PUBLIC.\"PUBLISHER SALES\".REGIONS",
+      "name": "REGIONS",
       "columns": [
         {
           "dataType": "VARCHAR",
+          "decimalDigits": 0,
           "width": "(50)",
           "name": "CITY",
           "ordinal": 1,
           "nullable": false,
-          "databaseSpecificType": "VARCHAR"
+          "databaseSpecificType": "VARCHAR",
+          "size": 50
         },
         {
           "dataType": "VARCHAR",
+          "decimalDigits": 0,
           "width": "(2)",
           "name": "STATE",
           "ordinal": 2,
           "nullable": false,
-          "databaseSpecificType": "VARCHAR"
+          "databaseSpecificType": "VARCHAR",
+          "size": 2
         },
         {
           "dataType": "VARCHAR",
+          "decimalDigits": 0,
           "width": "(10)",
           "name": "POSTALCODE",
           "ordinal": 3,
           "nullable": false,
-          "databaseSpecificType": "VARCHAR"
+          "databaseSpecificType": "VARCHAR",
+          "size": 10
         },
         {
           "dataType": "VARCHAR",
+          "decimalDigits": 0,
           "width": "(50)",
           "name": "COUNTRY",
           "ordinal": 4,
           "nullable": false,
-          "databaseSpecificType": "VARCHAR"
+          "databaseSpecificType": "VARCHAR",
+          "size": 50
         }
       ],
       "indices": [{
@@ -491,7 +553,8 @@
           }
         ]
       }],
-      "table": "table"
+      "fullName": "PUBLIC.\"PUBLISHER SALES\".REGIONS",
+      "type": "table"
     },
     {
       "foreignKeys": [{
@@ -510,47 +573,57 @@
         "name": "FK_SALES_REGIONS"
       }],
       "primaryKey": {},
-      "name": "PUBLIC.\"PUBLISHER SALES\".SALES",
+      "name": "SALES",
       "columns": [
         {
           "dataType": "VARCHAR",
+          "decimalDigits": 0,
           "width": "(10)",
           "name": "POSTALCODE",
           "ordinal": 1,
           "nullable": false,
-          "databaseSpecificType": "VARCHAR"
+          "databaseSpecificType": "VARCHAR",
+          "size": 10
         },
         {
           "dataType": "VARCHAR",
+          "decimalDigits": 0,
           "width": "(50)",
           "name": "COUNTRY",
           "ordinal": 2,
           "nullable": false,
-          "databaseSpecificType": "VARCHAR"
+          "databaseSpecificType": "VARCHAR",
+          "size": 50
         },
         {
           "dataType": "INTEGER",
+          "decimalDigits": 0,
           "width": "",
           "name": "BOOKID",
           "ordinal": 3,
           "nullable": true,
-          "databaseSpecificType": "INTEGER"
+          "databaseSpecificType": "INTEGER",
+          "size": 32
         },
         {
           "dataType": "DATE",
+          "decimalDigits": 0,
           "width": "",
           "name": "PERIODENDDATE",
           "ordinal": 4,
           "nullable": true,
-          "databaseSpecificType": "DATE"
+          "databaseSpecificType": "DATE",
+          "size": 10
         },
         {
           "dataType": "DOUBLE",
+          "decimalDigits": 0,
           "width": "(64, 0)",
           "name": "TOTALAMOUNT",
           "ordinal": 5,
           "nullable": true,
-          "databaseSpecificType": "DOUBLE"
+          "databaseSpecificType": "DOUBLE",
+          "size": 64
         }
       ],
       "indices": [{
@@ -569,7 +642,8 @@
           }
         ]
       }],
-      "table": "table"
+      "fullName": "PUBLIC.\"PUBLISHER SALES\".SALES",
+      "type": "table"
     }
   ],
   "databaseInfo": {
@@ -591,7 +665,7 @@
   "procedures": [
     {
       "definition": "CREATE PROCEDURE BOOKS.NEW_PUBLISHER(OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10047 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = 'New Publisher'",
-      "name": "PUBLIC.BOOKS.NEW_PUBLISHER",
+      "name": "NEW_PUBLISHER",
       "parameters": [{
         "dataType": "VARCHAR",
         "width": "",
@@ -599,11 +673,12 @@
         "type": "out",
         "databaseSpecificType": "CHARACTER VARYING"
       }],
-      "procedure": "no result"
+      "fullName": "PUBLIC.BOOKS.NEW_PUBLISHER",
+      "type": "no result"
     },
     {
       "definition": "CREATE PROCEDURE SYSTEM_LOBS.ALLOC_BLOCKS(IN B_COUNT INTEGER,IN B_OFFSET INTEGER,IN L_ID BIGINT) SPECIFIC ALLOC_BLOCKS_10024 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE LOB_ADDR INT DEFAULT NULL;DECLARE REMAINING_COUNT INT DEFAULT 0;DECLARE BL_ADDR INT DEFAULT NULL;DECLARE TEMP_COUNT INT DEFAULT 0;DECLARE BL_OFFSET INT DEFAULT 0;SET REMAINING_COUNT=B_COUNT;SET BL_OFFSET=B_OFFSET;MAIN_LOOP:LOOP SET BL_ADDR=(SELECT BLOCK_ADDR FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_COUNT=REMAINING_COUNT AND TX_ID=0 FETCH 1 ROW ONLY);IF BL_ADDR IS NOT NULL THEN CALL CONVERT_BLOCK(BL_ADDR,REMAINING_COUNT,BL_OFFSET,L_ID);IF LOB_ADDR IS NULL THEN SET LOB_ADDR=BL_ADDR;END IF;LEAVE MAIN_LOOP;END IF;SET(BL_ADDR,TEMP_COUNT)=(SELECT BLOCK_ADDR,BLOCK_COUNT FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_COUNT<REMAINING_COUNT AND TX_ID=0 FETCH 1 ROW ONLY);IF BL_ADDR IS NOT NULL THEN CALL CONVERT_BLOCK(BL_ADDR,TEMP_COUNT,BL_OFFSET,L_ID);IF LOB_ADDR IS NULL THEN SET LOB_ADDR=BL_ADDR;END IF;SET REMAINING_COUNT=REMAINING_COUNT-TEMP_COUNT;SET BL_OFFSET=BL_OFFSET+TEMP_COUNT;SET BL_ADDR=NULL;SET TEMP_COUNT=0;ELSE CALL CREATE_EMPTY_BLOCK(BL_ADDR,REMAINING_COUNT);CALL CONVERT_BLOCK(BL_ADDR,REMAINING_COUNT,BL_OFFSET,L_ID);IF LOB_ADDR IS NULL THEN SET LOB_ADDR=BL_ADDR;END IF;LEAVE MAIN_LOOP;END IF;END LOOP MAIN_LOOP;END",
-      "name": "PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS",
+      "name": "ALLOC_BLOCKS",
       "parameters": [
         {
           "dataType": "INTEGER",
@@ -627,11 +702,12 @@
           "databaseSpecificType": "BIGINT"
         }
       ],
-      "procedure": "no result"
+      "fullName": "PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS",
+      "type": "no result"
     },
     {
       "definition": "CREATE PROCEDURE SYSTEM_LOBS.CONVERT_BLOCK(IN B_ADDR INTEGER,IN B_COUNT INTEGER,IN B_OFFSET INTEGER,IN L_ID BIGINT) SPECIFIC CONVERT_BLOCK_10012 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DELETE FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_ADDR=B_ADDR;INSERT INTO SYSTEM_LOBS.LOBS VALUES(B_ADDR,B_COUNT,B_OFFSET,L_ID);END",
-      "name": "PUBLIC.SYSTEM_LOBS.CONVERT_BLOCK",
+      "name": "CONVERT_BLOCK",
       "parameters": [
         {
           "dataType": "INTEGER",
@@ -662,11 +738,12 @@
           "databaseSpecificType": "BIGINT"
         }
       ],
-      "procedure": "no result"
+      "fullName": "PUBLIC.SYSTEM_LOBS.CONVERT_BLOCK",
+      "type": "no result"
     },
     {
       "definition": "CREATE PROCEDURE SYSTEM_LOBS.CREATE_EMPTY_BLOCK(INOUT B_ADDR INTEGER,IN B_COUNT INTEGER) SPECIFIC CREATE_EMPTY_BLOCK_10019 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE TEMP_COUNT INT DEFAULT NULL;DECLARE TEMP_ADDR INT DEFAULT NULL;SET(TEMP_ADDR,TEMP_COUNT)=(SELECT BLOCK_ADDR,BLOCK_COUNT FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_COUNT>B_COUNT AND TX_ID=0 FETCH 1 ROW ONLY);IF TEMP_ADDR IS NULL THEN SIGNAL SQLSTATE'45000';END IF;UPDATE SYSTEM_LOBS.BLOCKS SET BLOCK_COUNT=B_COUNT WHERE BLOCK_ADDR=TEMP_ADDR;INSERT INTO SYSTEM_LOBS.BLOCKS VALUES(TEMP_ADDR+B_COUNT,TEMP_COUNT-B_COUNT,0);SET B_ADDR=TEMP_ADDR;END",
-      "name": "PUBLIC.SYSTEM_LOBS.CREATE_EMPTY_BLOCK",
+      "name": "CREATE_EMPTY_BLOCK",
       "parameters": [
         {
           "dataType": "INTEGER",
@@ -683,11 +760,12 @@
           "databaseSpecificType": "INTEGER"
         }
       ],
-      "procedure": "no result"
+      "fullName": "PUBLIC.SYSTEM_LOBS.CREATE_EMPTY_BLOCK",
+      "type": "no result"
     },
     {
       "definition": "CREATE PROCEDURE SYSTEM_LOBS.DELETE_BLOCKS(IN L_ID BIGINT,IN B_OFFSET INTEGER,IN B_LIMIT INTEGER,IN TX_ID BIGINT) SPECIFIC DELETE_BLOCKS_10017 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC INSERT INTO SYSTEM_LOBS.BLOCKS(SELECT BLOCK_ADDR,BLOCK_COUNT,TX_ID FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID AND BLOCK_OFFSET>=B_OFFSET AND BLOCK_OFFSET<B_LIMIT);DELETE FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID AND BLOCK_OFFSET>=B_OFFSET AND BLOCK_OFFSET<B_LIMIT;END",
-      "name": "PUBLIC.SYSTEM_LOBS.DELETE_BLOCKS",
+      "name": "DELETE_BLOCKS",
       "parameters": [
         {
           "dataType": "BIGINT",
@@ -718,11 +796,12 @@
           "databaseSpecificType": "BIGINT"
         }
       ],
-      "procedure": "no result"
+      "fullName": "PUBLIC.SYSTEM_LOBS.DELETE_BLOCKS",
+      "type": "no result"
     },
     {
       "definition": "CREATE PROCEDURE SYSTEM_LOBS.DELETE_LOB(IN L_ID BIGINT,IN TX_ID BIGINT) SPECIFIC DELETE_LOB_10013 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC INSERT INTO SYSTEM_LOBS.BLOCKS(SELECT BLOCK_ADDR,BLOCK_COUNT,TX_ID FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID);DELETE FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID;DELETE FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_ID=L_ID;END",
-      "name": "PUBLIC.SYSTEM_LOBS.DELETE_LOB",
+      "name": "DELETE_LOB",
       "parameters": [
         {
           "dataType": "BIGINT",
@@ -739,11 +818,12 @@
           "databaseSpecificType": "BIGINT"
         }
       ],
-      "procedure": "no result"
+      "fullName": "PUBLIC.SYSTEM_LOBS.DELETE_LOB",
+      "type": "no result"
     },
     {
       "definition": "CREATE PROCEDURE SYSTEM_LOBS.DIVIDE_BLOCK(IN B_OFFSET INTEGER,IN L_ID BIGINT) SPECIFIC DIVIDE_BLOCK_10021 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE BL_ADDR INT DEFAULT NULL;DECLARE BL_COUNT INT DEFAULT NULL;DECLARE BL_OFFSET INT DEFAULT NULL;SET(BL_ADDR,BL_COUNT,BL_OFFSET)=(SELECT BLOCK_ADDR,BLOCK_COUNT,BLOCK_OFFSET FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID AND B_OFFSET>BLOCK_OFFSET AND B_OFFSET<BLOCK_OFFSET+BLOCK_COUNT);IF BL_ADDR IS NULL THEN SIGNAL SQLSTATE'45000';END IF;DELETE FROM SYSTEM_LOBS.LOBS WHERE BLOCK_ADDR=BL_ADDR;INSERT INTO SYSTEM_LOBS.LOBS VALUES(BL_ADDR,B_OFFSET-BL_OFFSET,BL_OFFSET,L_ID);INSERT INTO SYSTEM_LOBS.LOBS VALUES(BL_ADDR+B_OFFSET-BL_OFFSET,BL_OFFSET+BL_COUNT-B_OFFSET,B_OFFSET,L_ID);END",
-      "name": "PUBLIC.SYSTEM_LOBS.DIVIDE_BLOCK",
+      "name": "DIVIDE_BLOCK",
       "parameters": [
         {
           "dataType": "INTEGER",
@@ -760,7 +840,8 @@
           "databaseSpecificType": "BIGINT"
         }
       ],
-      "procedure": "no result"
+      "fullName": "PUBLIC.SYSTEM_LOBS.DIVIDE_BLOCK",
+      "type": "no result"
     }
   ]
 }]

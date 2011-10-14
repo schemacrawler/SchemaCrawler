@@ -2,36 +2,44 @@
 {
   "tables": [
     {
-      "name": "PUBLIC.BOOKS.AUTHORS",
-      "table": "table"
+      "name": "AUTHORS",
+      "fullName": "PUBLIC.BOOKS.AUTHORS",
+      "type": "table"
     },
     {
-      "name": "PUBLIC.BOOKS.AUTHORSLIST",
-      "table": "view"
+      "name": "AUTHORSLIST",
+      "fullName": "PUBLIC.BOOKS.AUTHORSLIST",
+      "type": "view"
     },
     {
-      "name": "PUBLIC.BOOKS.BOOKAUTHORS",
-      "table": "table"
+      "name": "BOOKAUTHORS",
+      "fullName": "PUBLIC.BOOKS.BOOKAUTHORS",
+      "type": "table"
     },
     {
-      "name": "PUBLIC.BOOKS.BOOKS",
-      "table": "table"
+      "name": "BOOKS",
+      "fullName": "PUBLIC.BOOKS.BOOKS",
+      "type": "table"
     },
     {
-      "name": "PUBLIC.BOOKS.\"Global Counts\"",
-      "table": "table"
+      "name": "\"Global Counts\"",
+      "fullName": "PUBLIC.BOOKS.\"Global Counts\"",
+      "type": "table"
     },
     {
-      "name": "PUBLIC.BOOKS.PUBLISHERS",
-      "table": "table"
+      "name": "PUBLISHERS",
+      "fullName": "PUBLIC.BOOKS.PUBLISHERS",
+      "type": "table"
     },
     {
-      "name": "PUBLIC.\"PUBLISHER SALES\".REGIONS",
-      "table": "table"
+      "name": "REGIONS",
+      "fullName": "PUBLIC.\"PUBLISHER SALES\".REGIONS",
+      "type": "table"
     },
     {
-      "name": "PUBLIC.\"PUBLISHER SALES\".SALES",
-      "table": "table"
+      "name": "SALES",
+      "fullName": "PUBLIC.\"PUBLISHER SALES\".SALES",
+      "type": "table"
     }
   ],
   "databaseInfo": {
@@ -52,32 +60,39 @@
   },
   "procedures": [
     {
-      "name": "PUBLIC.BOOKS.NEW_PUBLISHER",
-      "procedure": "no result"
+      "name": "NEW_PUBLISHER",
+      "fullName": "PUBLIC.BOOKS.NEW_PUBLISHER",
+      "type": "no result"
     },
     {
-      "name": "PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS",
-      "procedure": "no result"
+      "name": "ALLOC_BLOCKS",
+      "fullName": "PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS",
+      "type": "no result"
     },
     {
-      "name": "PUBLIC.SYSTEM_LOBS.CONVERT_BLOCK",
-      "procedure": "no result"
+      "name": "CONVERT_BLOCK",
+      "fullName": "PUBLIC.SYSTEM_LOBS.CONVERT_BLOCK",
+      "type": "no result"
     },
     {
-      "name": "PUBLIC.SYSTEM_LOBS.CREATE_EMPTY_BLOCK",
-      "procedure": "no result"
+      "name": "CREATE_EMPTY_BLOCK",
+      "fullName": "PUBLIC.SYSTEM_LOBS.CREATE_EMPTY_BLOCK",
+      "type": "no result"
     },
     {
-      "name": "PUBLIC.SYSTEM_LOBS.DELETE_BLOCKS",
-      "procedure": "no result"
+      "name": "DELETE_BLOCKS",
+      "fullName": "PUBLIC.SYSTEM_LOBS.DELETE_BLOCKS",
+      "type": "no result"
     },
     {
-      "name": "PUBLIC.SYSTEM_LOBS.DELETE_LOB",
-      "procedure": "no result"
+      "name": "DELETE_LOB",
+      "fullName": "PUBLIC.SYSTEM_LOBS.DELETE_LOB",
+      "type": "no result"
     },
     {
-      "name": "PUBLIC.SYSTEM_LOBS.DIVIDE_BLOCK",
-      "procedure": "no result"
+      "name": "DIVIDE_BLOCK",
+      "fullName": "PUBLIC.SYSTEM_LOBS.DIVIDE_BLOCK",
+      "type": "no result"
     }
   ]
 },
