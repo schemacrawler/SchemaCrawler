@@ -2173,6 +2173,7 @@
     {
       "userDefined": false,
       "autoIncrementable": true,
+      "basedOn": "",
       "nullable": true,
       "databaseSpecificTypeName": "BIGINT",
       "searchable": "searchable except with where .. like"
@@ -2181,6 +2182,7 @@
       "userDefined": false,
       "autoIncrementable": false,
       "createParameters": "LENGTH",
+      "basedOn": "",
       "nullable": true,
       "databaseSpecificTypeName": "BINARY",
       "searchable": "searchable"
@@ -2189,6 +2191,7 @@
       "userDefined": false,
       "autoIncrementable": false,
       "createParameters": "LENGTH",
+      "basedOn": "",
       "nullable": true,
       "databaseSpecificTypeName": "BIT",
       "searchable": "searchable except with where .. like"
@@ -2197,6 +2200,7 @@
       "userDefined": false,
       "autoIncrementable": false,
       "createParameters": "LENGTH",
+      "basedOn": "",
       "nullable": true,
       "databaseSpecificTypeName": "BLOB",
       "searchable": "not searchable"
@@ -2204,6 +2208,7 @@
     {
       "userDefined": false,
       "autoIncrementable": false,
+      "basedOn": "",
       "nullable": true,
       "databaseSpecificTypeName": "BOOLEAN",
       "searchable": "searchable except with where .. like"
@@ -2212,6 +2217,7 @@
       "userDefined": false,
       "autoIncrementable": false,
       "createParameters": "LENGTH",
+      "basedOn": "",
       "nullable": true,
       "databaseSpecificTypeName": "CHARACTER",
       "searchable": "searchable"
@@ -2220,6 +2226,7 @@
       "userDefined": false,
       "autoIncrementable": false,
       "createParameters": "LENGTH",
+      "basedOn": "",
       "nullable": true,
       "databaseSpecificTypeName": "CLOB",
       "searchable": "not searchable"
@@ -2227,6 +2234,7 @@
     {
       "userDefined": false,
       "autoIncrementable": false,
+      "basedOn": "",
       "nullable": true,
       "databaseSpecificTypeName": "DATE",
       "searchable": "searchable except with where .. like"
@@ -2235,6 +2243,7 @@
       "userDefined": false,
       "autoIncrementable": true,
       "createParameters": "PRECISION,SCALE",
+      "basedOn": "",
       "nullable": true,
       "databaseSpecificTypeName": "DECIMAL",
       "searchable": "searchable except with where .. like"
@@ -2242,6 +2251,7 @@
     {
       "userDefined": false,
       "autoIncrementable": false,
+      "basedOn": "",
       "nullable": true,
       "databaseSpecificTypeName": "DOUBLE",
       "searchable": "searchable except with where .. like"
@@ -2249,6 +2259,7 @@
     {
       "userDefined": false,
       "autoIncrementable": false,
+      "basedOn": "",
       "nullable": true,
       "databaseSpecificTypeName": "FLOAT",
       "searchable": "searchable except with where .. like"
@@ -2256,6 +2267,7 @@
     {
       "userDefined": false,
       "autoIncrementable": true,
+      "basedOn": "",
       "nullable": true,
       "databaseSpecificTypeName": "INTEGER",
       "searchable": "searchable except with where .. like"
@@ -2264,6 +2276,7 @@
       "userDefined": false,
       "autoIncrementable": true,
       "createParameters": "PRECISION,SCALE",
+      "basedOn": "",
       "nullable": true,
       "databaseSpecificTypeName": "NUMERIC",
       "searchable": "searchable except with where .. like"
@@ -2272,6 +2285,7 @@
       "userDefined": false,
       "autoIncrementable": false,
       "createParameters": "LENGTH",
+      "basedOn": "",
       "nullable": true,
       "databaseSpecificTypeName": "NVARCHAR",
       "searchable": "searchable"
@@ -2279,6 +2293,7 @@
     {
       "userDefined": false,
       "autoIncrementable": false,
+      "basedOn": "",
       "nullable": true,
       "databaseSpecificTypeName": "OTHER",
       "searchable": "searchable except with where .. like"
@@ -2286,6 +2301,7 @@
     {
       "userDefined": false,
       "autoIncrementable": false,
+      "basedOn": "",
       "nullable": true,
       "databaseSpecificTypeName": "REAL",
       "searchable": "searchable except with where .. like"
@@ -2293,6 +2309,7 @@
     {
       "userDefined": false,
       "autoIncrementable": true,
+      "basedOn": "",
       "nullable": true,
       "databaseSpecificTypeName": "SMALLINT",
       "searchable": "searchable except with where .. like"
@@ -2300,6 +2317,7 @@
     {
       "userDefined": false,
       "autoIncrementable": false,
+      "basedOn": "",
       "nullable": true,
       "databaseSpecificTypeName": "TIME",
       "searchable": "searchable except with where .. like"
@@ -2307,6 +2325,7 @@
     {
       "userDefined": false,
       "autoIncrementable": false,
+      "basedOn": "",
       "nullable": true,
       "databaseSpecificTypeName": "TIMESTAMP",
       "searchable": "searchable except with where .. like"
@@ -2314,6 +2333,7 @@
     {
       "userDefined": false,
       "autoIncrementable": true,
+      "basedOn": "",
       "nullable": true,
       "databaseSpecificTypeName": "TINYINT",
       "searchable": "searchable except with where .. like"
@@ -2322,6 +2342,7 @@
       "userDefined": false,
       "autoIncrementable": false,
       "createParameters": "LENGTH",
+      "basedOn": "",
       "nullable": true,
       "databaseSpecificTypeName": "VARBINARY",
       "searchable": "searchable"
@@ -2330,6 +2351,7 @@
       "userDefined": false,
       "autoIncrementable": false,
       "createParameters": "LENGTH",
+      "basedOn": "",
       "nullable": true,
       "databaseSpecificTypeName": "VARCHAR",
       "searchable": "searchable"
@@ -2338,6 +2360,7 @@
       "userDefined": false,
       "autoIncrementable": false,
       "createParameters": "LENGTH",
+      "basedOn": "",
       "nullable": true,
       "databaseSpecificTypeName": "VARCHAR_IGNORECASE",
       "searchable": "searchable"
@@ -2346,6 +2369,7 @@
       "userDefined": false,
       "autoIncrementable": false,
       "createParameters": "",
+      "basedOn": "",
       "nullable": false,
       "databaseSpecificTypeName": "CHARACTER VARYING",
       "searchable": "unknown"
