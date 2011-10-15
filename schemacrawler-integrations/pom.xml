@@ -9,7 +9,7 @@
   </parent>
   <groupId>net.sourceforge.schemacrawler</groupId>
   <artifactId>schemacrawler-integrations</artifactId>
-  <packaging>maven-plugin</packaging>
+  <packaging>jar</packaging>
   <name>SchemaCrawler Integrations</name>
   <dependencies>
     <dependency>
