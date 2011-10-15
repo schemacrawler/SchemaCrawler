@@ -1,4 +1,4 @@
-SchemaCrawler 8.7
+SchemaCrawler 8.8
 Copyright (c) 2000-2011, Sualeh Fatehi.
 SchemaCrawler is a platform (operating system and database) independent command-
 line tool to output your database schema and data in a readable form. The output 
