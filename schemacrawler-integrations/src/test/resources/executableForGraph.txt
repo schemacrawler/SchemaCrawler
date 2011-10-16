@@ -23,8 +23,8 @@ digraph SchemaCrawler_Diagram {
 	authors_dba8a1ff [label=<
       <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
         <tr>
-          <td colspan="2" bgcolor="#E6AAAD" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC.BOOKS.AUTHORS</font></td>
-          <td bgcolor="#E6AAAD" align="right">[table]</td>
+          <td colspan="2" bgcolor="#FA96A3" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC.BOOKS.AUTHORS</font></td>
+          <td bgcolor="#FA96A3" align="right">[table]</td>
         </tr>
         <tr>
           <td port="address1_d0f1f1ec.start" align="left">ADDRESS1</td>
@@ -76,8 +76,8 @@ digraph SchemaCrawler_Diagram {
 	bookauthors_aa4376 [label=<
       <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
         <tr>
-          <td colspan="2" bgcolor="#E6AAAD" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC.BOOKS.BOOKAUTHORS</font></td>
-          <td bgcolor="#E6AAAD" align="right">[table]</td>
+          <td colspan="2" bgcolor="#FA96A3" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC.BOOKS.BOOKAUTHORS</font></td>
+          <td bgcolor="#FA96A3" align="right">[table]</td>
         </tr>
         <tr>
           <td port="authorid_19681b5e.start" align="left">AUTHORID</td>
@@ -99,8 +99,8 @@ digraph SchemaCrawler_Diagram {
 	authorslist_b29d331d [label=<
       <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
         <tr>
-          <td colspan="2" bgcolor="#E6AAAD" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC.BOOKS.AUTHORSLIST</font></td>
-          <td bgcolor="#E6AAAD" align="right">[view]</td>
+          <td colspan="2" bgcolor="#FA96A3" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC.BOOKS.AUTHORSLIST</font></td>
+          <td bgcolor="#FA96A3" align="right">[view]</td>
         </tr>
         <tr>
           <td port="firstname_d3258b8a.start" align="left">FIRSTNAME</td>
@@ -122,8 +122,8 @@ digraph SchemaCrawler_Diagram {
 	books_afd2ba21 [label=<
       <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
         <tr>
-          <td colspan="2" bgcolor="#E6AAAD" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC.BOOKS.BOOKS</font></td>
-          <td bgcolor="#E6AAAD" align="right">[table]</td>
+          <td colspan="2" bgcolor="#FA96A3" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC.BOOKS.BOOKS</font></td>
+          <td bgcolor="#FA96A3" align="right">[table]</td>
         </tr>
         <tr>
           <td port="description_f1e45f8f.start" align="left">DESCRIPTION</td>
@@ -160,8 +160,8 @@ digraph SchemaCrawler_Diagram {
 	globalcounts_2ab3635a [label=<
       <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
         <tr>
-          <td colspan="2" bgcolor="#E6AAAD" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC.BOOKS."Global Counts"</font></td>
-          <td bgcolor="#E6AAAD" align="right">[table]</td>
+          <td colspan="2" bgcolor="#FA96A3" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC.BOOKS."Global Counts"</font></td>
+          <td bgcolor="#FA96A3" align="right">[table]</td>
         </tr>
         <tr>
           <td port="globalcount_22cfa042.start" align="left">"Global Count"</td>
@@ -173,8 +173,8 @@ digraph SchemaCrawler_Diagram {
 	publishers_b8da20c0 [label=<
       <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
         <tr>
-          <td colspan="2" bgcolor="#E6AAAD" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC.BOOKS.PUBLISHERS</font></td>
-          <td bgcolor="#E6AAAD" align="right">[table]</td>
+          <td colspan="2" bgcolor="#FA96A3" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC.BOOKS.PUBLISHERS</font></td>
+          <td bgcolor="#FA96A3" align="right">[table]</td>
         </tr>
         <tr>
           <td port="id_6fc9dd09.start" align="left"><font face="Helvetica-BoldOblique">ID</font></td>
@@ -191,8 +191,8 @@ digraph SchemaCrawler_Diagram {
 	regions_bc895c48 [label=<
       <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
         <tr>
-          <td colspan="2" bgcolor="#D7E6C8" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC."PUBLISHER SALES".REGIONS</font></td>
-          <td bgcolor="#D7E6C8" align="right">[table]</td>
+          <td colspan="2" bgcolor="#96C1FA" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC."PUBLISHER SALES".REGIONS</font></td>
+          <td bgcolor="#96C1FA" align="right">[table]</td>
         </tr>
         <tr>
           <td port="city_2c74db51.start" align="left">CITY</td>
@@ -219,8 +219,8 @@ digraph SchemaCrawler_Diagram {
 	sales_20be6f95 [label=<
       <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
         <tr>
-          <td colspan="2" bgcolor="#D7E6C8" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC."PUBLISHER SALES".SALES</font></td>
-          <td bgcolor="#D7E6C8" align="right">[table]</td>
+          <td colspan="2" bgcolor="#96C1FA" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC."PUBLISHER SALES".SALES</font></td>
+          <td bgcolor="#96C1FA" align="right">[table]</td>
         </tr>
         <tr>
           <td port="bookid_3c829a3d.start" align="left">BOOKID</td>
