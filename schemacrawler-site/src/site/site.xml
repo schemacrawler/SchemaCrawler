@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <project name="SchemaCrawler">
   <skin>
-    <groupId>org.apache.maven.skins</groupId>
-    <artifactId>maven-default-skin</artifactId>
-    <version>1.0</version>
+    <groupId>com.sourcesense.maven</groupId>
+    <artifactId>maven-skin</artifactId>
+    <version>1.0.0</version>
   </skin>
   <version />
   <bannerLeft>
@@ -52,11 +52,11 @@
       <item name="Who Uses" href="who-uses.html" />
     </menu>
     <menu name="Special Features">
-      <item name="SchemaCrawler Grep" href="features/schemacrawler_grep.html" />
-      <item name="Database Diagramming" href="features/diagramming.html" />
-      <item name="Database Scripting" href="features/scripting.html" />
-      <item name="Schema Lint" href="features/lint.html" />
-      <item name="Using INFORMATION_SCHEMA Views" href="features/INFORMATION_SCHEMA.html" />
+      <item name="SchemaCrawler Grep" href="schemacrawler_grep.html" />
+      <item name="Database Diagramming" href="diagramming.html" />
+      <item name="Database Scripting" href="scripting.html" />
+      <item name="Schema Lint" href="lint.html" />
+      <item name="Using INFORMATION_SCHEMA Views" href="INFORMATION_SCHEMA.html" />
     </menu>
     <menu name="Project Pages">
       <item name="Donations" href="http://sourceforge.net/donate/index.php?group_id=148383" />

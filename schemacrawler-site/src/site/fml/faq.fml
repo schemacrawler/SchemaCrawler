@@ -9,7 +9,8 @@
         <p>
           SchemaCrawler is an open-source Java API that makes working with database metadata as easy as working with
           plain old Java
-          objects.</p>
+          objects.
+        </p>
         <p>
           SchemaCrawler is also a command-line tool to output your database schema and data in a
           readable form.
@@ -25,11 +26,11 @@
       <answer>
         <p>
           SchemaCrawler can produce
-          <a href="snapshot-examples/snapshot.txt">plain text</a>
-          output,
+          <a href="snapshot-examples/snapshot.txt">plain text,</a>
+          <a href="snapshot-examples/snapshot.csv">comma-separated text (CSV),</a>
           <a href="snapshot-examples/snapshot.html">XHTML,</a>
           or
-          <a href="snapshot-examples/snapshot.csv"> comma-separated text (CSV).</a>
+          <a href="snapshot-examples/snapshot.json">JavaScript object notation (JSON).</a>
           The XHTML output is a combination of valid XML (that can be manipulated by XML tools or XSLT), and HTML that
           can be viewed in a browser. SchemaCrawler can produce output in the
           <a href="http://www.graphviz.org/doc/info/lang.html ">DOT format,</a>
@@ -42,8 +43,14 @@
     <faq id="commands">
       <question> What are the SchemaCrawler commands? </question>
       <answer>
-        <p>The easiest way to see the SchemaCrawler commands is to download and install SchemaCrawler, and run the
-          provided scripts (<code>sc.sh</code> on Unix, and <code>sc.cmd</code> on Windows). Detailed command-line help will be displayed.</p>
+        <p>
+          The easiest way to see the SchemaCrawler commands is to download and install SchemaCrawler, and run the
+          provided scripts (
+          <code>sc.sh</code>
+          on Unix, and
+          <code>sc.cmd</code>
+          on Windows). Detailed command-line help will be displayed.
+        </p>
         <p>
           SchemaCrawler can produce listings, and standard, or verbose details of your schema. The list schema option
           gives you
@@ -58,10 +65,12 @@
           more time to execute.
         </p>
         <p>SchemaCrawler provides commands for producing graphs and running templates, if the appropriate extensions are
-          installed.</p>
+          installed.
+        </p>
         <p> SchemaCrawler can also manipulate your data. You can get counts of the rows in tables and views.
           SchemaCrawler can output all the data in your tables and views, or run specific SQL statements against table
-          and views. SchemaCrawler can be fine-tuned using configuration files. </p>
+          and views. SchemaCrawler can be fine-tuned using configuration files.
+        </p>
       </answer>
     </faq>
     <faq id="config">
@@ -80,16 +89,16 @@
       <question> What databases does SchemaCrawler work with? </question>
       <answer>
         <p> SchemaCrawler supports any database for which there is a JDBC database driver available. SchemaCrawler has
-          been tested with various databases, and JDBC drivers. </p>
+          been tested with various databases, and JDBC drivers.
+        </p>
       </answer>
     </faq>
     <faq id="supported-java">
       <question> What Java version does SchemaCrawler work with? </question>
       <answer>
-        <p> SchemaCrawler works with J2SE 5 and above. SchemaCrawler does not depend on any Java libraries other than
-          the standard J2SE 5 runtime libraries and a JDBC driver. However, J2SE 6 is required for JavaScript scripting
-          using the
-          SchemaCrawler API.</p>
+        <p> SchemaCrawler works with J2SE 6 and above. SchemaCrawler does not depend on any Java libraries other than
+          the standard J2SE 6 runtime libraries and a JDBC driver.
+        </p>
       </answer>
     </faq>
     <faq id="supported-os">
@@ -117,7 +126,8 @@
         <p>Yes SchemaCrawler can be used in a Maven project as an API, or to generate Maven reports in your projects. In
           order to use SchemaCrawler in your Maven projects, add a repositories pointing to the location of the
           Sonatype
-          Nexus public repository in your pom.xml. Then, add a dependency to SchemaCrawler in your pom.xml.</p>
+          Nexus public repository in your pom.xml. Then, add a dependency to SchemaCrawler in your pom.xml.
+        </p>
         <p>
           <i>
             See the example in the
@@ -125,15 +135,12 @@
             directory.
           </i>
         </p>
-        <p>Using the SchemaCrawler Maven plug-in, you can generate a SchemaCrawler report along with other
-          reports for
-          your Maven generated site. </p>
         <p>
-          <i>
-            See the example in the
-            <code>examples\maven-site-report</code>
-            directory.
-          </i>
+          Using the
+          <a href="https://sourceforge.net/p/mvn-schemacrwlr/code">Maven SchemaCrawler Plugin</a>
+          , you can generate a SchemaCrawler report along with other
+          reports for
+          your Maven generated site.
         </p>
       </answer>
     </faq>
@@ -236,7 +243,8 @@
       <question> Can SchemaCrawler be used with scripting languages? </question>
       <answer>
         <p> When SchemaCrawler is used with J2SE 6 and above, it has built-in support to be used with JavaScript
-          scripts. </p>
+          scripts.
+        </p>
         <p>
           For more details, look at the
           <a href="features/scripting.html">scripting</a>
@@ -255,7 +263,8 @@
       <question> Can SchemaCrawler be used programmatically? </question>
       <answer>
         <p> SchemaCrawler is an API that improves on the standard JDBC metadata facilities. SchemaCrawler provides an
-          easy to use set of plain old Java objects (POJOs) that represent your database schema. </p>
+          easy to use set of plain old Java objects (POJOs) that represent your database schema.
+        </p>
         <p>
           Read
           <a href="http://www.devx.com/Java/Article/32443"> Java API Makes Database Metadata as Easily Accessible as POJOs </a>
