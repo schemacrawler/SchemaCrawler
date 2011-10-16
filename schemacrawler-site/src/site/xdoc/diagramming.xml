@@ -14,14 +14,15 @@
           .
           You can filter out tables, columns, and procedures based on regular expressions,
           using the
-          <a href="../faq.html#whats-schemacrawler-grep">grep</a>
+          <a href="faq.html#whats-schemacrawler-grep">grep</a>
           functionality.
         </p>
         <p>
-          For more details, and to see an example of a diagram, see the
-          <a href="../how-to.html#diagrams">how-to</a>
+          For more details, see the
+          <a href="how-to.html#diagrams">how-to</a>
           .
         </p>
+        <p><img src="images/diagram.png" width="100%" alt="SchemaCrawler database diagram" /></p>
       </subsection>
     </section>
   </body>

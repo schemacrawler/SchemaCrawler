@@ -9,13 +9,11 @@
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Added JSON and TSV output formats.
       ]]></action>
-    </release>
-    <release version="8.6" date="2011-05-08">
-      <action dev="Sualeh Fatehi" type="add"><![CDATA[
-        New feature to chain, or run multiple SchemaCrawler commands using JavaScript.
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Moved Maven SchemaCrawler Plugin into a new SourceForge project.
       ]]></action>
     </release>
-    <release version="8.8" date="2011-09-05">
+    <release version="8.7" date="2011-09-05">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         New INFORMATION_SCHEMA views to provide Oracle metadata details.
       ]]></action>

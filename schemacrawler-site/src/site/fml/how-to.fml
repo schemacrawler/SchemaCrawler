@@ -19,9 +19,11 @@
               <td valign="top">
                 <p>This is the most usual way to launch SchemaCrawler from the command-line. This launch offer a number
                   of connection options, including by JDBC driver and URL, and by a connection defined in a properties
-                  configuration file. There are options to load configuration from properties files.</p>
+                  configuration file. There are options to load configuration from properties files.
+                </p>
                 <p>JDBC drivers and other external libraries must be available on the classpath for this application to
-                  function.</p>
+                  function.
+                </p>
                 <p>For help, use the -h command-line switch.</p>
               </td>
             </tr>
@@ -41,9 +43,11 @@
               <td valign="top">
                 <p>These are the various "bundled" distributions. A simplified command line is made available, and the
                   JDBC driver and URL are known for each database version. Typically no additional drivers downloads are
-                  required, except for Oracle and IBM DB2.</p>
+                  required, except for Oracle and IBM DB2.
+                </p>
                 <p>JDBC drivers and other external libraries must be available on the classpath for this application to
-                  function.</p>
+                  function.
+                </p>
                 <p>For help, use the -h command-line switch.</p>
               </td>
             </tr>
@@ -61,7 +65,8 @@
                   Framework application context file.
                 </p>
                 <p>JDBC drivers, Spring Framework libraries, and other external libraries must be available on the
-                  classpath for this application to function.</p>
+                  classpath for this application to function.
+                </p>
                 <p>For help, use the -h command-line switch.</p>
               </td>
             </tr>
@@ -73,7 +78,8 @@
               </td>
               <td valign="top">
                 <p>The launcher is designed to conveniently load all external jars from a given folder. Typically used
-                  from within the Unix shell scripts provided by SchemaCrawler.</p>
+                  from within the Unix shell scripts provided by SchemaCrawler.
+                </p>
               </td>
             </tr>
             <tr>
@@ -84,10 +90,12 @@
               </td>
               <td valign="top">
                 <p>Started the test database server, with a test schema, and test data. This is used for examples. Any
-                  schema or data modifications will be restored when the server is restarted.</p>
+                  schema or data modifications will be restored when the server is restarted.
+                </p>
                 <p>JDBC drivers for HyperSQL 2.2.4, and other external libraries must be available on the
                   classpath for
-                  this application to function.</p>
+                  this application to function.
+                </p>
               </td>
             </tr>
           </table>
@@ -181,7 +189,7 @@
         <p>
           Change the configuration for the SchemaCrawler
           <code>schemacrawler.format.show_standard_column_type_names=true
-					</code>
+          </code>
           in the
           <code>schemacrawler.config.properties </code>
           file. This setting will show standard data types across different
@@ -194,7 +202,7 @@
     <faq id="ordinal-numbers">
       <question>
         How to allow diffs of tables that have columns added in between
-			</question>
+      </question>
       <answer>
         <p>
           When columns are added into a table, they can change the column
@@ -307,7 +315,8 @@ schemacrawler.format.hide_constraint_names=false
         <p>
           Read
           <a href="http://www.devx.com/Java/Article/32443">Java API Makes Database Metadata as Easily Accessible as
-            POJOs</a>
+            POJOs
+          </a>
           for an introduction to the SchemaCrawler API. (This article may
           refer to an older release of the SchemaCrawler
           API, but the concepts are the same.) You can also browse the
@@ -352,7 +361,8 @@ for (final Schema schema: database.getSchemas())
       </question>
       <answer>
         <p>In order to use SchemaCrawler in your Maven projects, add a repository pointing to the location of the
-          Sonatype Nexus public repository in your pom.xml.</p>
+          Sonatype Nexus public repository in your pom.xml.
+        </p>
         <source><![CDATA[
 <repositories>
   ...
@@ -401,78 +411,95 @@ for (final Schema schema: database.getSchemas())
         </p>
         <p> In addition to the ant task parameters mentioned in the example,
           you may find the following parameters
-          useful. </p>
+          useful.
+        </p>
         <ul>
           <li>
-            config<br/>
+            config
+            <br />
             Path to the configuration file (default value -
             schemacrawler.config.properties)
           </li>
           <li>
-            config-override<br/>
+            config-override
+            <br />
             Path to the configuration override file (default value -
             schemacrawler.config.override.properties)
           </li>
           <li>
-            schemacrawler-classpath<br/>
+            schemacrawler-classpath
+            <br />
             Database driver classpath (default value - value of the ant property value
             ${schemacrawler-classpath})
           </li>
           <li>
-            datasource<br/>
+            datasource
+            <br />
             Datasource defined in the configuration (either the datasource, or the
             connection properties
             should be
             provided - if both sets are provided, the datasource is ignored)
           </li>
           <li>
-            driver<br/>
+            driver
+            <br />
             JDBC driver class name
           </li>
           <li>
-            url<br/>
+            url
+            <br />
             Database connection string
           </li>
           <li>
-            user<br/>
+            user
+            <br />
             Database connection user name
           </li>
           <li>
-            password<br/>
+            password
+            <br />
             Database connection password (default value is an empty string)
           </li>
           <li>
-            command<br/>
+            command
+            <br />
             Comma-separated list of commands
           </li>
           <li>
-            infolevel<br/>
+            infolevel
+            <br />
             Schema information level
-          </li>          
+          </li>
           <li>
-            no-header<br/>
+            no-header
+            <br />
             Whether to print the header - true or false (default value - false)
           </li>
           <li>
-            no-footer<br/>
+            no-footer
+            <br />
             Whether to print the footer - true or false (default value - false)
           </li>
           <li>
-            no-info<br/>
+            no-info
+            <br />
             Whether to print information - true or false (default value - false)
           </li>
           <li>
-            outputformat<br/>
+            outputformat
+            <br />
             Output format (default value - text)
           </li>
           <li>
-            outputfile<br/>
+            outputfile
+            <br />
             Path to output file
           </li>
           <li>
-            append<br/>
+            append
+            <br />
             Whether to append to the output - true or false (default value - false)
-					</li>
+          </li>
         </ul>
       </answer>
     </faq>
@@ -481,61 +508,11 @@ for (final Schema schema: database.getSchemas())
         How to use SchemaCrawler To Produce a Maven Report
       </question>
       <answer>
-        <p> SchemaCrawler comes with a Maven reports plug-in. You can
-          generate a SchemaCrawler report along with other
-          reports for your Maven generated site. In order to use the SchemaCrawler Maven reports plug-in in your Maven
-          projects, add a pluginRepository pointing to the location of the
-          Sonatype Nexus public repository in your
-          pom.xml.</p>
-        <source><![CDATA[
-<pluginRepositories>
-  ...
-  <pluginRepository>
-    <id>sonatype-nexus</id>
-    <name>Sonatype Nexus</name>
-    <url>http://oss.sonatype.org/content/groups/public</url>
-    <releases>
-      <enabled>true</enabled>
-      <updatePolicy>daily</updatePolicy>
-      <checksumPolicy>fail</checksumPolicy>
-    </releases>
-    <snapshots>
-      <enabled>true</enabled>
-      <updatePolicy>always</updatePolicy>
-      <checksumPolicy>fail</checksumPolicy>
-    </snapshots>
-  </pluginRepository>
-</pluginRepositories>
-        ]]></source>
-        <p> Next, add a section to your Maven project's pom.xml file,
-          similar to that below, changing what needs to
-          be
-          changed: </p>
-        <source><![CDATA[
-<reporting>
-  <plugins>
-    ...
-    <plugin>
-      <groupId>schemacrawler</groupId>
-      <artifactId>schemacrawler-maven-plugin</artifactId>
-      <version>8.8</version>
-      <configuration>
-        <schemacrawler.config>schemacrawler.config.properties</schemacrawler.config>
-        <schemacrawler.datasource>hsqldb</schemacrawler.datasource>
-        <schemacrawler.command>details</schemacrawler.command>
-        <schemacrawler.outputformat>html</schemacrawler.outputformat>
-        <schemacrawler.jdbc.driver.classpath>hsqldb.jar</schemacrawler.jdbc.driver.classpath>
-      </configuration>
-    </plugin>
-  </plugins>
-</reporting>
-]]></source>
         <p>
-          Run
-          <code>mvn site</code>
-          . See the output produced in the
-          <code>target/site</code>
-          directory of your project.
+          <a href="https://sourceforge.net/p/mvn-schemacrwlr/code/">Maven SchemaCrawler Plugin</a>
+          is a SourceForge project that provides a Maven plugin that can generate database
+          documentation for a
+          Maven-generated website.
         </p>
       </answer>
     </faq>
@@ -572,7 +549,7 @@ for (final Schema schema: database.getSchemas())
     </faq>
     <faq id="create_order">
       <question>
-        How to get tables in "create" or "drop" order 
+        How to get tables in "create" or "drop" order
       </question>
       <answer>
         <p>

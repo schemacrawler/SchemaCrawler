@@ -28,7 +28,6 @@ import java.io.PrintWriter;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 import java.util.UUID;
 
 import schemacrawler.schema.Column;
@@ -49,20 +48,20 @@ import sf.util.Utility;
 final class DotWriter
 {
 
-  private static final Random random = new Random(DotWriter.class.getName()
-    .hashCode());
+  private static float random = 0.123456f;
 
-  private static String nextRandomHTMLPastelColorValue(final long seed)
+  private static String nextRandomHTMLPastelColorValue()
   {
-    random.setSeed(seed);
-    for (int i = 0; i < random.nextInt(64); i++)
-    {
-      random.nextInt();
-    }
-    final float hue = random.nextFloat();
-    // Saturation between 0.1 and 0.3
-    final float saturation = (random.nextInt(2000) + 1000) / 10000f;
-    final float luminance = 0.9f;
+    final float golden_ratio_conjugate = 0.618033988749895f;
+
+    float hue = random;
+    hue += golden_ratio_conjugate;
+    hue %= 1;
+    random = hue;
+
+    final float saturation = 0.4f;
+    final float luminance = 0.98f;
+
     final Color color = Color.getHSBColor(hue, saturation, luminance);
 
     return "#" + Integer.toHexString(color.getRGB()).substring(2).toUpperCase();
@@ -253,8 +252,7 @@ final class DotWriter
     final String tableNameBgColor;
     if (!colorMap.containsKey(schema))
     {
-      tableNameBgColor = nextRandomHTMLPastelColorValue(schema.getFullName()
-        .hashCode());
+      tableNameBgColor = nextRandomHTMLPastelColorValue();
       colorMap.put(schema, tableNameBgColor);
     }
     else

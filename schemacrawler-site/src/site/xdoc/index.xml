@@ -139,11 +139,11 @@ for (final Schema schema: database.getSchemas())
         <p>
           SchemaCrawler comes with a set of command line tools that allow
           database metadata to be output as
-          <a href="snapshot-examples/snapshot.txt">plain text</a>
-          ,
+          <a href="snapshot-examples/snapshot.txt">plain text,</a>
+          <a href="snapshot-examples/snapshot.csv">comma-separated text (CSV),</a>
           <a href="snapshot-examples/snapshot.html">XHTML,</a>
           or
-          <a href="snapshot-examples/snapshot.csv">comma-separated text (CSV).</a>
+          <a href="snapshot-examples/snapshot.json">JavaScript object notation (JSON).</a>
           The XHTML output is a combination of valid XML (that can be
           manipulated by XML tools or XSLT), and HTML that
           can be viewed in a browser.
