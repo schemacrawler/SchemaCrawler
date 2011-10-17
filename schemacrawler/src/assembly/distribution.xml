@@ -181,6 +181,8 @@
         <exclude name="*.html" />
         <exclude name="workspace/**" />
         <exclude name="*.epf" />
+		<exclude name=".git" />
+		<exclude name="**/.svn" />
       </zipfileset>
     </zip>
 
