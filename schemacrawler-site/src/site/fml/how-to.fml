@@ -509,7 +509,7 @@ for (final Schema schema: database.getSchemas())
       </question>
       <answer>
         <p>
-          <a href="https://sourceforge.net/p/mvn-schemacrwlr/code/">Maven SchemaCrawler Plugin</a>
+          <a href="https://sourceforge.net/p/mvn-schemacrwlr/code/">SchemaCrawler Maven Plugin</a>
           is a SourceForge project that provides a Maven plugin that can generate database
           documentation for a
           Maven-generated website.

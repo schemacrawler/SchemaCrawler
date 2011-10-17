@@ -137,7 +137,7 @@
         </p>
         <p>
           Using the
-          <a href="https://sourceforge.net/p/mvn-schemacrwlr/code">Maven SchemaCrawler Plugin</a>
+          <a href="https://sourceforge.net/p/mvn-schemacrwlr/code">SchemaCrawler Maven Plugin</a>
           , you can generate a SchemaCrawler report along with other
           reports for
           your Maven generated site.
