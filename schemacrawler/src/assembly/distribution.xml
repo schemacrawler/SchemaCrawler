@@ -212,7 +212,11 @@
         <include name="**/*.*" />
       </zipfileset>
     </zip>
-
+	
+	<unzip 
+		src="${distribution.target}/${website.zip.prefix}.zip" 
+		dest="${distribution.target}"/>
+  
   </target>
 
   <target name="make-database-distributions">
