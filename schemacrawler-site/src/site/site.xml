@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<project name="SchemaCrawler">
+<project xmlns="http://maven.apache.org/DECORATION/1.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/DECORATION/1.0.0 http://maven.apache.org/xsd/decoration-1.0.0.xsd"
+  name="SchemaCrawler">
   <skin>
-    <groupId>wicket</groupId>
-    <artifactId>wicket-site-skin</artifactId>
-    <version>1.2.6</version>
+    <groupId>com.sourcesense.maven</groupId>
+    <artifactId>maven-skin</artifactId>
+    <version>1.0.0</version>
   </skin>
   <version />
   <bannerLeft>
@@ -36,8 +39,7 @@
         var s = document.getElementsByTagName('script')[0];
         s.parentNode.insertBefore(ga, s);
         })();
-      </script> 
-	  <link rel="stylesheet" href="./css/sc.css" type="text/css" media="all" />	
+      </script>
     </head>
     <links>
       <item name="Donations" href="http://sourceforge.net/donate/index.php?group_id=148383" />
