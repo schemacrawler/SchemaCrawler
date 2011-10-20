@@ -2,3 +2,14 @@
   background-image: url(../images/schemacrawler.png);
   background-repeat: no-repeat;
 }
+
+#bannerLeft {
+  background-image: url(../images/schemacrawler_logo.png);
+  background-repeat: no-repeat;
+  height: 62px;
+  padding-left: 62px;
+}
+
+#wrapper {
+    background-image: none;
+}
