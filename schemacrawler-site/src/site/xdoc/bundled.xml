@@ -8,7 +8,7 @@
   <body>
     <section name="Bundled Distributions">
       <subsection name="Bundled Distributions">
-        <p>SchemaCrawler supports almost any database that has a JDBC driver, bt for convenience is bundled with drivers
+        <p>SchemaCrawler supports almost any database that has a JDBC driver, but for convenience is bundled with drivers
           for some commonly used RDBMS systems. The bundled distributions of SchemaCrawler are ready to use for a given
           RDBMS system. Most come with
           open-source JDBC drivers bundled in, so not further downloads are required. The

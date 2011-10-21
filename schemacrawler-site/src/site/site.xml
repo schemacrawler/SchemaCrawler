@@ -11,8 +11,10 @@
   <version />
   <bannerLeft>
     <name>SchemaCrawler</name>
+	<!--
     <src>images/schemacrawler.png</src>
     <href>http://sourceforge.net/projects/schemacrawler</href>
+	-->
   </bannerLeft>
   <bannerRight>
     <name>SourceForge</name>
@@ -40,6 +42,7 @@
         s.parentNode.insertBefore(ga, s);
         })();
       </script>
+	  <link rel="stylesheet" href="./css/sc.css" type="text/css"/>
     </head>
     <links>
       <item name="Donations" href="http://sourceforge.net/donate/index.php?group_id=148383" />

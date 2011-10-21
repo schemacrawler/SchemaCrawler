@@ -10,14 +10,14 @@
       <subsection name="Enhancing SchemaCrawler Output">
         <p>
           SchemaCrawler can display view and procedure definitions,
-          trigger information, and check constaints by using data from
+          trigger information, and check constraints by using data from
           the INFORMATION_SCHEMA views. Even though INFORMATION_SCHEMA
           views are defined in the SQL Standard, not all database
           systems provide these views. However, if it is possible to
           construct a metadata view with columns that match the
           INFORMATION_SCHEMA views, then SchemaCrawler can use the data
           to obtain view and procedure definitions, trigger information,
-          and check constaints. The INFORMATION_SCHEMA views currently
+          and check constraints. The INFORMATION_SCHEMA views currently
           processed by SchemaCrawler are shown below.
         </p>
         <p>

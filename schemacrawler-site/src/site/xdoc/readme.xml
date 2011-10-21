@@ -155,7 +155,7 @@
       </subsection>
       <subsection name="Proprietary JDBC Drivers">
         <p>
-          The Maven build depends on some propietary JDBC drivers for IBM DB2 and Oracle. Download the
+          The Maven build depends on some proprietary JDBC drivers for IBM DB2 and Oracle. Download the
           <a href="http://www-306.ibm.com/software/data/db2/express/download.html">IBM DB2 JDBC
             drivers</a>
           , place them in the schemacrawler-db2 source directory, and install them into your local Maven repository
