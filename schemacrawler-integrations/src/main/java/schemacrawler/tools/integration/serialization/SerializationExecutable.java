@@ -23,12 +23,10 @@ package schemacrawler.tools.integration.serialization;
 
 import java.io.Writer;
 import java.sql.Connection;
-import java.util.logging.Logger;
 
 import schemacrawler.schema.Database;
 import schemacrawler.tools.executable.BaseExecutable;
 import schemacrawler.tools.options.OutputWriter;
-import sf.util.Utility;
 
 /**
  * Main executor for the graphing integration.
@@ -39,17 +37,9 @@ public final class SerializationExecutable
   extends BaseExecutable
 {
 
-  enum OutputFormat
-  {
-    xml, json, ;
-  }
-
-  private static final Logger LOGGER = Logger
-    .getLogger(SerializationExecutable.class.getName());
-
   public SerializationExecutable()
   {
-    this(null);
+    this("serialize");
   }
 
   public SerializationExecutable(final String command)
@@ -64,36 +54,8 @@ public final class SerializationExecutable
   protected void executeOn(final Database db, final Connection connection)
     throws Exception
   {
-    OutputFormat outputFormat;
-    final String outputFormatString = outputOptions.getOutputFormatValue();
-    if (Utility.isBlank(outputFormatString))
-    {
-      outputFormat = OutputFormat.xml;
-    }
-    else
-    {
-      try
-      {
-        outputFormat = OutputFormat.valueOf(outputFormatString);
-      }
-      catch (final IllegalArgumentException e)
-      {
-        outputFormat = OutputFormat.xml;
-      }
-    }
-
     final Writer writer = new OutputWriter(outputOptions);
-    final SerializableDatabase database;
-    switch (outputFormat)
-    {
-      case xml:
-        database = new XmlDatabase(db);
-        break;
-
-      default:
-        database = new XmlDatabase(db);
-        break;
-    }
+    final SerializableDatabase database = new XmlDatabase(db);
     database.save(writer);
     writer.close();
   }

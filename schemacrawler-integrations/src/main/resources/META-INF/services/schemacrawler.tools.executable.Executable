@@ -1,0 +1,5 @@
+schemacrawler.tools.integration.freemarker.FreeMarkerRenderer
+schemacrawler.tools.integration.scripting.ScriptExecutable
+schemacrawler.tools.integration.velocity.VelocityRenderer
+schemacrawler.tools.integration.graph.GraphExecutable
+schemacrawler.tools.integration.serialization.SerializationExecutable
