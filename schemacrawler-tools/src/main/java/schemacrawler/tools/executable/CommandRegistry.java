@@ -26,12 +26,11 @@ import java.lang.reflect.Constructor;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.ServiceLoader;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -53,47 +52,53 @@ public final class CommandRegistry
     throws SchemaCrawlerException
   {
     final Map<String, String> commandRegistry = new HashMap<String, String>();
-    final Set<URL> commandRegistryUrls = new HashSet<URL>();
+
     try
     {
       final ClassLoader classLoader = CommandRegistry.class.getClassLoader();
-      Enumeration<URL> resources;
+      final URL commandRegistryUrl = classLoader
+        .getResource("tools.command.properties");
 
-      resources = classLoader.getResources("tools.command.properties");
-      commandRegistryUrls.addAll(Collections.list(resources));
-      //
-      resources = classLoader.getResources("command.properties");
-      commandRegistryUrls.addAll(Collections.list(resources));
+      final Properties commandRegistryProperties = new Properties();
+      commandRegistryProperties.load(commandRegistryUrl.openStream());
+      final List<String> propertyNames = (List<String>) Collections
+        .list(commandRegistryProperties.propertyNames());
+      for (final String commandName: propertyNames)
+      {
+        final String executableClassName = commandRegistryProperties
+          .getProperty(commandName);
+        commandRegistry.put(commandName, executableClassName);
+      }
+      if (commandRegistry.isEmpty())
+      {
+        throw new SchemaCrawlerException("Could not load base command registry");
+      }
     }
     catch (final IOException e)
     {
-      throw new SchemaCrawlerException("Could not load command registry", e);
+      throw new SchemaCrawlerException("Could not load base command registry",
+                                       e);
     }
-    for (final URL commandRegistryUrl: commandRegistryUrls)
+
+    try
     {
-      try
+      final ServiceLoader<Executable> serviceLoader = ServiceLoader
+        .load(Executable.class);
+      for (final Executable executable: serviceLoader)
       {
-        final Properties commandRegistryProperties = new Properties();
-        commandRegistryProperties.load(commandRegistryUrl.openStream());
-        final List<String> propertyNames = (List<String>) Collections
-          .list(commandRegistryProperties.propertyNames());
-        for (final String commandName: propertyNames)
-        {
-          final String executableClassName = commandRegistryProperties
-            .getProperty(commandName);
-          commandRegistry.put(commandName, executableClassName);
-        }
-      }
-      catch (final IOException e)
-      {
-        LOGGER.log(Level.WARNING, "Could not load command registry, "
-                                  + commandRegistryUrl, e);
+        final String executableCommand = executable.getCommand();
+        final String executableClassName = executable.getClass().getName();
+        LOGGER.log(Level.FINER, "Loading executable, " + executableCommand
+                                + "=" + executableClassName);
+        commandRegistry.put(executableCommand, executableClassName);
       }
     }
-    if (commandRegistry.isEmpty())
+    catch (final Exception e)
     {
-      throw new SchemaCrawlerException("Could not load any command registry");
+      throw new SchemaCrawlerException("Could not load extended command registry",
+                                       e);
     }
+
     return commandRegistry;
   }
 
@@ -105,7 +110,7 @@ public final class CommandRegistry
     commandRegistry = loadCommandRegistry();
   }
 
-  public Executable instantiateExecutableForCommand(final String command)
+  Executable instantiateExecutableForCommand(final String command)
     throws SchemaCrawlerException
   {
     final String commandExecutableClassName = lookupExecutableClassName(command);
