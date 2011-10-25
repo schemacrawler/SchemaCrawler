@@ -22,7 +22,6 @@ package schemacrawler.tools.executable;
 
 
 import java.io.IOException;
-import java.lang.reflect.Constructor;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Collections;
@@ -48,10 +47,10 @@ public final class CommandRegistry
   private static final Logger LOGGER = Logger.getLogger(CommandRegistry.class
     .getName());
 
-  private static Map<String, String> loadCommandRegistry()
+  private static Map<String, CommandRegistryEntry> loadCommandRegistry()
     throws SchemaCrawlerException
   {
-    final Map<String, String> commandRegistry = new HashMap<String, String>();
+    final Map<String, CommandRegistryEntry> commandRegistry = new HashMap<String, CommandRegistryEntry>();
 
     try
     {
@@ -67,7 +66,10 @@ public final class CommandRegistry
       {
         final String executableClassName = commandRegistryProperties
           .getProperty(commandName);
-        commandRegistry.put(commandName, executableClassName);
+        commandRegistry
+          .put(commandName,
+               new ExecutableCommandRegistryEntry(commandName,
+                                                  executableClassName));
       }
       if (commandRegistry.isEmpty())
       {
@@ -82,15 +84,15 @@ public final class CommandRegistry
 
     try
     {
-      final ServiceLoader<Executable> serviceLoader = ServiceLoader
-        .load(Executable.class);
-      for (final Executable executable: serviceLoader)
+      final ServiceLoader<CommandRegistryEntry> serviceLoader = ServiceLoader
+        .load(CommandRegistryEntry.class);
+      for (final CommandRegistryEntry commandRegistryEntry: serviceLoader)
       {
-        final String executableCommand = executable.getCommand();
-        final String executableClassName = executable.getClass().getName();
+        final String executableCommand = commandRegistryEntry.getCommand();
         LOGGER.log(Level.FINER, "Loading executable, " + executableCommand
-                                + "=" + executableClassName);
-        commandRegistry.put(executableCommand, executableClassName);
+                                + "="
+                                + commandRegistryEntry.getClass().getName());
+        commandRegistry.put(executableCommand, commandRegistryEntry);
       }
     }
     catch (final Exception e)
@@ -102,63 +104,12 @@ public final class CommandRegistry
     return commandRegistry;
   }
 
-  private final Map<String, String> commandRegistry;
+  private final Map<String, CommandRegistryEntry> commandRegistry;
 
   public CommandRegistry()
     throws SchemaCrawlerException
   {
     commandRegistry = loadCommandRegistry();
-  }
-
-  Executable instantiateExecutableForCommand(final String command)
-    throws SchemaCrawlerException
-  {
-    final String commandExecutableClassName = lookupExecutableClassName(command);
-    if (commandExecutableClassName == null)
-    {
-      throw new SchemaCrawlerException("No executable found for command '"
-                                       + command + "'");
-    }
-
-    Class<? extends Executable> commandExecutableClass;
-    try
-    {
-      commandExecutableClass = (Class<? extends Executable>) Class
-        .forName(commandExecutableClassName);
-    }
-    catch (final ClassNotFoundException e)
-    {
-      throw new SchemaCrawlerException("Could not load class "
-                                       + commandExecutableClassName, e);
-    }
-
-    Executable executable;
-    try
-    {
-      executable = commandExecutableClass.newInstance();
-    }
-    catch (final Exception e)
-    {
-      LOGGER.log(Level.FINE, "Could not instantiate "
-                             + commandExecutableClassName
-                             + " using the default constructor");
-      try
-      {
-        final Constructor<? extends Executable> constructor = commandExecutableClass
-          .getConstructor(new Class[] {
-            String.class
-          });
-        executable = constructor.newInstance(command);
-      }
-      catch (final Exception e1)
-      {
-        throw new SchemaCrawlerException("Could not instantiate executable for command '"
-                                             + command + "'",
-                                         e1);
-      }
-    }
-
-    return executable;
   }
 
   public String[] lookupAvailableCommands()
@@ -173,16 +124,24 @@ public final class CommandRegistry
 
   public String lookupExecutableClassName(final String command)
   {
-    final String commandExecutableClassName;
+    return null;
+  }
+
+  Executable instantiateExecutableForCommand(final String command)
+    throws SchemaCrawlerException
+  {
+    final CommandRegistryEntry commandRegistryEntry;
     if (commandRegistry.containsKey(command))
     {
-      commandExecutableClassName = commandRegistry.get(command);
+      commandRegistryEntry = commandRegistry.get(command);
     }
     else
     {
-      commandExecutableClassName = commandRegistry.get("default");
+      commandRegistryEntry = new ExecutableCommandRegistryEntry(command,
+                                                                "schemacrawler.tools.text.operation.OperationExecutable");
     }
-    return commandExecutableClassName;
+
+    return commandRegistryEntry.newExecutable();
   }
 
 }
