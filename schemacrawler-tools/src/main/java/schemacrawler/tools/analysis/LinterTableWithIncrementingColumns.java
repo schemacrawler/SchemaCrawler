@@ -34,18 +34,20 @@ import sf.util.ObjectToString;
 import sf.util.Utility;
 
 public class LinterTableWithIncrementingColumns
-  extends BaseLinter<Table>
+  extends BaseLinter
 {
 
-  public void lint(final Table table)
+  @Override
+  public Lint lint(final Table table)
   {
+    Lint lint = null;
     if (table != null)
     {
       final HashMap<String, List<Column>> incrementingColumns = findIncrementingColumns(table
         .getColumns());
       if (!incrementingColumns.isEmpty())
       {
-        addLint(table, new Lint("incrementing columns", incrementingColumns)
+        lint = new Lint("incrementing columns", incrementingColumns)
         {
 
           private static final long serialVersionUID = -9152369844685463520L;
@@ -67,9 +69,10 @@ public class LinterTableWithIncrementingColumns
             }
             return buffer.toString();
           }
-        });
+        };
       }
     }
+    return lint;
   }
 
   private HashMap<String, List<Column>> findIncrementingColumns(final Column[] columns)

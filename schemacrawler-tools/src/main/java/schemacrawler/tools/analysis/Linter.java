@@ -20,11 +20,11 @@
 package schemacrawler.tools.analysis;
 
 
-import schemacrawler.schema.DatabaseObject;
+import schemacrawler.schema.Database;
 
-public interface Linter<D extends DatabaseObject>
+public interface Linter
 {
 
-  void lint(D databaseObject);
+  void lint(Database database);
 
 }

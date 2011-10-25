@@ -29,18 +29,20 @@ import schemacrawler.schema.Table;
 import sf.util.ObjectToString;
 
 public class LinterTableWithNullColumnsInIndex
-  extends BaseLinter<Table>
+  extends BaseLinter
 {
 
-  public void lint(final Table table)
+  @Override
+  public Lint lint(final Table table)
   {
+    Lint lint = null;
     if (table != null)
     {
       final Index[] nullableColumnsInUniqueIndex = findNullableColumnsInUniqueIndex(table
         .getIndices());
       if (nullableColumnsInUniqueIndex.length > 0)
       {
-        addLint(table, new Lint("unique indices with nullable columns",
+        lint = new Lint("unique indices with nullable columns",
           nullableColumnsInUniqueIndex)
         {
 
@@ -56,9 +58,10 @@ public class LinterTableWithNullColumnsInIndex
             }
             return ObjectToString.toString(indexNames);
           }
-        });
+        };
       }
     }
+    return lint;
   }
 
   private Index[] findNullableColumnsInUniqueIndex(final Index[] indices)

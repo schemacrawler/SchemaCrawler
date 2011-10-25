@@ -24,17 +24,19 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
 
 public class LinterTableWithSingleColumn
-  extends BaseLinter<Table>
+  extends BaseLinter
 {
 
-  public void lint(final Table table)
+  @Override
+  public Lint lint(final Table table)
   {
+    Lint lint = null;
     if (table != null)
     {
       final Column[] columns = table.getColumns();
       if (columns.length <= 1)
       {
-        addLint(table, new Lint("single column", Boolean.TRUE)
+        lint = new Lint("single column", Boolean.TRUE)
         {
 
           private static final long serialVersionUID = 2580606298217022285L;
@@ -44,9 +46,10 @@ public class LinterTableWithSingleColumn
           {
             return getLintValue().toString();
           }
-        });
+        };
       }
     }
+    return lint;
   }
 
 }

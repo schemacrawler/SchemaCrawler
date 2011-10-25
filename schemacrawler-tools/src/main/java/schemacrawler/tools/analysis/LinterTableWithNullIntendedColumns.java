@@ -29,18 +29,20 @@ import sf.util.ObjectToString;
 import sf.util.Utility;
 
 public class LinterTableWithNullIntendedColumns
-  extends BaseLinter<Table>
+  extends BaseLinter
 {
 
-  public void lint(final Table table)
+  @Override
+  public Lint lint(final Table table)
   {
+    Lint lint = null;
     if (table != null)
     {
       final Column[] nullDefaultValueMayBeIntendedColumns = findNullDefaultValueMayBeIntendedColumns(table
         .getColumns());
       if (nullDefaultValueMayBeIntendedColumns.length > 0)
       {
-        addLint(table, new Lint("columns where NULL may be intended",
+        lint = new Lint("columns where NULL may be intended",
           nullDefaultValueMayBeIntendedColumns)
         {
 
@@ -56,9 +58,10 @@ public class LinterTableWithNullIntendedColumns
             }
             return ObjectToString.toString(columnNames);
           }
-        });
+        };
       }
     }
+    return lint;
   }
 
   private Column[] findNullDefaultValueMayBeIntendedColumns(final Column[] columns)
