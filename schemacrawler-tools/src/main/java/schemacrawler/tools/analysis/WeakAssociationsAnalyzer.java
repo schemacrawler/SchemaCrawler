@@ -230,10 +230,8 @@ final class WeakAssociationsAnalyzer
                           pkColumn.getFullName()));
                 final ColumnMap weakAssociation = new WeakAssociation(pkColumn,
                                                                       fkColumn);
-                addWeakAssociation((Table) pkColumn.getParent(),
-                                   weakAssociation);
-                addWeakAssociation((Table) fkColumn.getParent(),
-                                   weakAssociation);
+                addWeakAssociation(pkColumn.getParent(), weakAssociation);
+                addWeakAssociation(fkColumn.getParent(), weakAssociation);
               }
             }
           }

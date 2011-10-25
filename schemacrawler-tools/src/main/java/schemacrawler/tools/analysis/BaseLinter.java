@@ -23,21 +23,37 @@ package schemacrawler.tools.analysis;
 import java.util.ArrayList;
 import java.util.List;
 
-import schemacrawler.schema.DatabaseObject;
+import schemacrawler.schema.Database;
+import schemacrawler.schema.Schema;
+import schemacrawler.schema.Table;
 
-abstract class BaseLinter<D extends DatabaseObject>
-  implements Linter<D>
+abstract class BaseLinter
+  implements Linter
 {
 
-  protected final void addLint(final D databaseObject, final Lint lint)
+  public void lint(final Database database)
   {
-    final List<Lint> lints = databaseObject.getAttribute(Lint.LINT_KEY,
-                                                         new ArrayList<Lint>());
-    if (lint != null)
+    for (final Schema schema: database.getSchemas())
     {
-      lints.add(lint);
-      databaseObject.setAttribute(Lint.LINT_KEY, lints);
+      for (final Table table: schema.getTables())
+      {
+        final Lint lint = lint(table);
+        addLint(table, lint);
+      }
     }
   }
+
+  private final void addLint(final Table table, final Lint lint)
+  {
+    if (lint != null)
+    {
+      final List<Lint> lints = table.getAttribute(Lint.LINT_KEY,
+                                                  new ArrayList<Lint>());
+      lints.add(lint);
+      table.setAttribute(Lint.LINT_KEY, lints);
+    }
+  }
+
+  protected abstract Lint lint(Table table);
 
 }

@@ -28,11 +28,13 @@ import schemacrawler.schema.Table;
 import sf.util.ObjectToString;
 
 public class LinterTableWithQuotedNames
-  extends BaseLinter<Table>
+  extends BaseLinter
 {
 
-  public void lint(final Table table)
+  @Override
+  public Lint lint(final Table table)
   {
+    Lint lint = null;
     if (table != null)
     {
       final List<String> spacesInNamesList = findColumnsWithQuotedNames(table
@@ -46,8 +48,7 @@ public class LinterTableWithQuotedNames
       {
         final String[] spacesInNames = spacesInNamesList
           .toArray(new String[spacesInNamesList.size()]);
-        addLint(table, new Lint("spaces in names, or reserved words",
-          spacesInNames)
+        lint = new Lint("spaces in names, or reserved words", spacesInNames)
         {
 
           private static final long serialVersionUID = 4306137113072609086L;
@@ -57,9 +58,10 @@ public class LinterTableWithQuotedNames
           {
             return ObjectToString.toString(spacesInNames);
           }
-        });
+        };
       }
     }
+    return lint;
   }
 
   private List<String> findColumnsWithQuotedNames(final Column[] columns)
