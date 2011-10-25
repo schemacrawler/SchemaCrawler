@@ -1,0 +1,6 @@
+schemacrawler.tools.analysis.LinterTableWithIncrementingColumns
+schemacrawler.tools.analysis.LinterTableWithNoIndices
+schemacrawler.tools.analysis.LinterTableWithNullColumnsInIndex
+schemacrawler.tools.analysis.LinterTableWithNullIntendedColumns
+schemacrawler.tools.analysis.LinterTableWithSingleColumn
+schemacrawler.tools.analysis.LinterTableWithQuotedNames
