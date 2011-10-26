@@ -31,6 +31,15 @@ abstract class BaseLinter
   implements Linter
 {
 
+  private LintSeverity severity = LintSeverity.medium;
+
+  @Override
+  public final LintSeverity getLintSeverity()
+  {
+    return severity;
+  }
+
+  @Override
   public void lint(final Database database)
   {
     for (final Schema schema: database.getSchemas())
@@ -43,6 +52,34 @@ abstract class BaseLinter
     }
   }
 
+  @Override
+  public final void setLintSeverity(final LintSeverity severity)
+  {
+    if (severity != null)
+    {
+      this.severity = severity;
+    }
+  }
+
+  protected abstract String convertLintValueToString(Object value);
+
+  protected abstract Lint lint(Table table);
+
+  protected Lint newLint(final Object value)
+  {
+    return new BaseLint(getLintSeverity(), getSummary(), value)
+    {
+
+      private static final long serialVersionUID = 3158466712611884766L;
+
+      @Override
+      public String getLintValueAsString()
+      {
+        return convertLintValueToString(getLintValue());
+      }
+    };
+  }
+
   private final void addLint(final Table table, final Lint lint)
   {
     if (lint != null)
@@ -53,7 +90,5 @@ abstract class BaseLinter
       table.setAttribute(Lint.LINT_KEY, lints);
     }
   }
-
-  protected abstract Lint lint(Table table);
 
 }

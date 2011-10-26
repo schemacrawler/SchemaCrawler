@@ -20,20 +20,7 @@
 package schemacrawler.tools.analysis;
 
 
-import java.io.Serializable;
-
-public interface Lint
-  extends Serializable, Comparable<Lint>
+public enum LintSeverity
 {
-
-  final String LINT_KEY = "schemacrawler.lint";
-
-  Object getLintValue();
-
-  String getLintValueAsString();
-
-  LintSeverity getSeverity();
-
-  String getSummary();
-
+  critical, high, medium, low;
 }

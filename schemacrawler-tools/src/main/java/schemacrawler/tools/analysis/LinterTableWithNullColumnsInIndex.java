@@ -33,6 +33,29 @@ public class LinterTableWithNullColumnsInIndex
 {
 
   @Override
+  public String convertLintValueToString(final Object value)
+  {
+    final List<String> indexNames = new ArrayList<String>();
+    for (final Index index: (Index[]) value)
+    {
+      indexNames.add(index.getName());
+    }
+    return ObjectToString.toString(indexNames);
+  }
+
+  @Override
+  public String getDescription()
+  {
+    return getSummary();
+  }
+
+  @Override
+  public String getSummary()
+  {
+    return "unique indices with nullable columns";
+  }
+
+  @Override
   public Lint lint(final Table table)
   {
     Lint lint = null;
@@ -42,23 +65,7 @@ public class LinterTableWithNullColumnsInIndex
         .getIndices());
       if (nullableColumnsInUniqueIndex.length > 0)
       {
-        lint = new Lint("unique indices with nullable columns",
-          nullableColumnsInUniqueIndex)
-        {
-
-          private static final long serialVersionUID = -1954217739621236510L;
-
-          @Override
-          public String getLintValueAsString()
-          {
-            final List<String> indexNames = new ArrayList<String>();
-            for (final Index index: nullableColumnsInUniqueIndex)
-            {
-              indexNames.add(index.getName());
-            }
-            return ObjectToString.toString(indexNames);
-          }
-        };
+        lint = newLint(nullableColumnsInUniqueIndex);
       }
     }
     return lint;

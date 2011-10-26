@@ -25,6 +25,14 @@ import schemacrawler.schema.Database;
 public interface Linter
 {
 
+  String getDescription();
+
+  LintSeverity getLintSeverity();
+
+  String getSummary();
+
   void lint(Database database);
+
+  void setLintSeverity(LintSeverity severity);
 
 }

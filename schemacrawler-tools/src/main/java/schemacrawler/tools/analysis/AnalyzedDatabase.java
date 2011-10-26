@@ -51,9 +51,9 @@ public final class AnalyzedDatabase
     }
     else
     {
-      final List<Lint> lintList = table.getAttribute(Lint.LINT_KEY,
-                                                     new ArrayList<Lint>());
-      final Lint[] lintArray = lintList.toArray(new Lint[lintList.size()]);
+      final List<BaseLint> lintList = table
+        .getAttribute(Lint.LINT_KEY, new ArrayList<BaseLint>());
+      final Lint[] lintArray = lintList.toArray(new BaseLint[lintList.size()]);
       Arrays.sort(lintArray);
       return lintArray;
     }
@@ -108,76 +108,91 @@ public final class AnalyzedDatabase
 
   }
 
+  @Override
   public int compareTo(final NamedObject o)
   {
     return database.compareTo(o);
   }
 
+  @Override
   public Object getAttribute(final String name)
   {
     return database.getAttribute(name);
   }
 
+  @Override
   public <T> T getAttribute(final String name, final T defaultValue)
   {
     return database.getAttribute(name, defaultValue);
   }
 
+  @Override
   public Map<String, Object> getAttributes()
   {
     return database.getAttributes();
   }
 
+  @Override
   public DatabaseInfo getDatabaseInfo()
   {
     return database.getDatabaseInfo();
   }
 
+  @Override
   public String getFullName()
   {
     return database.getFullName();
   }
 
+  @Override
   public JdbcDriverInfo getJdbcDriverInfo()
   {
     return database.getJdbcDriverInfo();
   }
 
+  @Override
   public String getName()
   {
     return database.getName();
   }
 
+  @Override
   public String getRemarks()
   {
     return database.getRemarks();
   }
 
+  @Override
   public Schema getSchema(final String name)
   {
     return database.getSchema(name);
   }
 
+  @Override
   public SchemaCrawlerInfo getSchemaCrawlerInfo()
   {
     return database.getSchemaCrawlerInfo();
   }
 
+  @Override
   public Schema[] getSchemas()
   {
     return database.getSchemas();
   }
 
+  @Override
   public ColumnDataType getSystemColumnDataType(final String name)
   {
     return database.getSystemColumnDataType(name);
   }
 
+  @Override
   public ColumnDataType[] getSystemColumnDataTypes()
   {
     return database.getSystemColumnDataTypes();
   }
 
+  @Override
   public void setAttribute(final String name, final Object value)
   {
     database.setAttribute(name, value);

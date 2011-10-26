@@ -29,6 +29,24 @@ public class LinterTableWithNoIndices
 {
 
   @Override
+  public String convertLintValueToString(final Object value)
+  {
+    return value.toString();
+  }
+
+  @Override
+  public String getDescription()
+  {
+    return getSummary();
+  }
+
+  @Override
+  public String getSummary()
+  {
+    return "no indices";
+  }
+
+  @Override
   public Lint lint(final Table table)
   {
     Lint lint = null;
@@ -37,17 +55,7 @@ public class LinterTableWithNoIndices
       final Index[] indices = table.getIndices();
       if (table.getPrimaryKey() == null && indices.length == 0)
       {
-        lint = new Lint("no indices", Boolean.TRUE)
-        {
-
-          private static final long serialVersionUID = -9070658409181468265L;
-
-          @Override
-          public String getLintValueAsString()
-          {
-            return getLintValue().toString();
-          }
-        };
+        lint = newLint(Boolean.TRUE);
       }
     }
     return lint;
