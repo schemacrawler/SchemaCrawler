@@ -28,12 +28,14 @@ public interface Lint
 
   final String LINT_KEY = "schemacrawler.lint";
 
-  Object getLintValue();
-
-  String getLintValueAsString();
+  String getId();
 
   LintSeverity getSeverity();
 
   String getSummary();
+
+  Object getValue();
+
+  String getValueAsString();
 
 }

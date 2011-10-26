@@ -302,7 +302,7 @@ final class SchemaTextFormatter
       out.println(formattingHelper.createNameRow("", "[lint]", false));
       for (final Lint lint: lints)
       {
-        final Object lintValue = lint.getLintValue();
+        final Object lintValue = lint.getValue();
         if (lintValue instanceof Boolean)
         {
           if ((Boolean) lintValue)
@@ -314,7 +314,7 @@ final class SchemaTextFormatter
         else
         {
           out.println(formattingHelper.createDescriptionRow(lint
-            .getSummary() + Utility.NEWLINE + lint.getLintValueAsString()));
+            .getSummary() + Utility.NEWLINE + lint.getValueAsString()));
         }
       }
     }

@@ -26,18 +26,20 @@ public abstract class BaseLint
 
   private static final long serialVersionUID = -8627082144974643415L;
 
+  private final String id;
   private final LintSeverity severity;
-
   private final String summary;
-  private final Object lintValue;
+  private final Object value;
 
-  protected BaseLint(final LintSeverity severity,
-                     final String summary,
-                     final Object lintValue)
+  public BaseLint(final String id,
+                  final LintSeverity severity,
+                  final String summary,
+                  final Object lintValue)
   {
+    this.id = id;
     this.severity = severity;
     this.summary = summary;
-    this.lintValue = lintValue;
+    value = lintValue;
   }
 
   /**
@@ -69,11 +71,26 @@ public abstract class BaseLint
     {
       return false;
     }
-    if (!(obj instanceof BaseLint))
+    if (getClass() != obj.getClass())
     {
       return false;
     }
     final BaseLint other = (BaseLint) obj;
+    if (id == null)
+    {
+      if (other.id != null)
+      {
+        return false;
+      }
+    }
+    else if (!id.equals(other.id))
+    {
+      return false;
+    }
+    if (severity != other.severity)
+    {
+      return false;
+    }
     if (summary == null)
     {
       if (other.summary != null)
@@ -85,38 +102,25 @@ public abstract class BaseLint
     {
       return false;
     }
-    if (lintValue == null)
+    if (value == null)
     {
-      if (other.lintValue != null)
+      if (other.value != null)
       {
         return false;
       }
     }
-    else if (!lintValue.equals(other.lintValue))
+    else if (!value.equals(other.value))
     {
       return false;
     }
     return true;
   }
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.analysis.Lint#getLintValue()
-   */
   @Override
-  public final Object getLintValue()
+  public String getId()
   {
-    return lintValue;
+    return id;
   }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.analysis.Lint#getLintValueAsString()
-   */
-  @Override
-  public abstract String getLintValueAsString();
 
   @Override
   public LintSeverity getSeverity()
@@ -135,20 +139,41 @@ public abstract class BaseLint
     return summary;
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.analysis.Lint#getValue()
+   */
+  @Override
+  public final Object getValue()
+  {
+    return value;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.analysis.Lint#getValueAsString()
+   */
+  @Override
+  public abstract String getValueAsString();
+
   @Override
   public int hashCode()
   {
     final int prime = 31;
     int result = 1;
+    result = prime * result + (id == null? 0: id.hashCode());
+    result = prime * result + (severity == null? 0: severity.hashCode());
     result = prime * result + (summary == null? 0: summary.hashCode());
-    result = prime * result + (lintValue == null? 0: lintValue.hashCode());
+    result = prime * result + (value == null? 0: value.hashCode());
     return result;
   }
 
   @Override
   public String toString()
   {
-    return summary + "=" + getLintValueAsString();
+    return summary + "=" + getValueAsString();
   }
 
 }
