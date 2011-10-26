@@ -38,6 +38,36 @@ public class LinterTableWithIncrementingColumns
 {
 
   @Override
+  public String convertLintValueToString(final Object value)
+  {
+    final StringBuilder buffer = new StringBuilder();
+    for (final List<Column> incrementingColumnsGroup: ((HashMap<String, List<Column>>) value)
+      .values())
+    {
+      final List<String> columnNames = new ArrayList<String>();
+      for (final Column column: incrementingColumnsGroup)
+      {
+        columnNames.add(column.getName());
+      }
+      buffer.append(ObjectToString.toString(columnNames))
+        .append(Utility.NEWLINE);
+    }
+    return buffer.toString();
+  }
+
+  @Override
+  public String getDescription()
+  {
+    return getSummary();
+  }
+
+  @Override
+  public String getSummary()
+  {
+    return "incrementing columns";
+  }
+
+  @Override
   public Lint lint(final Table table)
   {
     Lint lint = null;
@@ -47,29 +77,7 @@ public class LinterTableWithIncrementingColumns
         .getColumns());
       if (!incrementingColumns.isEmpty())
       {
-        lint = new Lint("incrementing columns", incrementingColumns)
-        {
-
-          private static final long serialVersionUID = -9152369844685463520L;
-
-          @Override
-          public String getLintValueAsString()
-          {
-            final StringBuilder buffer = new StringBuilder();
-            for (final List<Column> incrementingColumnsGroup: incrementingColumns
-              .values())
-            {
-              final List<String> columnNames = new ArrayList<String>();
-              for (final Column column: incrementingColumnsGroup)
-              {
-                columnNames.add(column.getName());
-              }
-              buffer.append(ObjectToString.toString(columnNames))
-                .append(Utility.NEWLINE);
-            }
-            return buffer.toString();
-          }
-        };
+        lint = newLint(incrementingColumns);
       }
     }
     return lint;

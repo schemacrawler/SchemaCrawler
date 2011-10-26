@@ -33,6 +33,29 @@ public class LinterTableWithNullIntendedColumns
 {
 
   @Override
+  public String convertLintValueToString(final Object value)
+  {
+    final List<String> columnNames = new ArrayList<String>();
+    for (final Column column: (Column[]) value)
+    {
+      columnNames.add(column.getName());
+    }
+    return ObjectToString.toString(columnNames);
+  }
+
+  @Override
+  public String getDescription()
+  {
+    return getSummary();
+  }
+
+  @Override
+  public String getSummary()
+  {
+    return "columns where NULL may be intended";
+  }
+
+  @Override
   public Lint lint(final Table table)
   {
     Lint lint = null;
@@ -42,23 +65,7 @@ public class LinterTableWithNullIntendedColumns
         .getColumns());
       if (nullDefaultValueMayBeIntendedColumns.length > 0)
       {
-        lint = new Lint("columns where NULL may be intended",
-          nullDefaultValueMayBeIntendedColumns)
-        {
-
-          private static final long serialVersionUID = 4306137113072609086L;
-
-          @Override
-          public String getLintValueAsString()
-          {
-            final List<String> columnNames = new ArrayList<String>();
-            for (final Column column: nullDefaultValueMayBeIntendedColumns)
-            {
-              columnNames.add(column.getName());
-            }
-            return ObjectToString.toString(columnNames);
-          }
-        };
+        lint = newLint(nullDefaultValueMayBeIntendedColumns);
       }
     }
     return lint;

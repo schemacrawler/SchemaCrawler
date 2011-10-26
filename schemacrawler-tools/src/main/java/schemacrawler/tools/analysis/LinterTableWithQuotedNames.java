@@ -30,6 +30,23 @@ import sf.util.ObjectToString;
 public class LinterTableWithQuotedNames
   extends BaseLinter
 {
+  @Override
+  public String convertLintValueToString(final Object value)
+  {
+    return ObjectToString.toString(value);
+  }
+
+  @Override
+  public String getDescription()
+  {
+    return getSummary();
+  }
+
+  @Override
+  public String getSummary()
+  {
+    return "spaces in names, or reserved words";
+  }
 
   @Override
   public Lint lint(final Table table)
@@ -48,17 +65,7 @@ public class LinterTableWithQuotedNames
       {
         final String[] spacesInNames = spacesInNamesList
           .toArray(new String[spacesInNamesList.size()]);
-        lint = new Lint("spaces in names, or reserved words", spacesInNames)
-        {
-
-          private static final long serialVersionUID = 4306137113072609086L;
-
-          @Override
-          public String getLintValueAsString()
-          {
-            return ObjectToString.toString(spacesInNames);
-          }
-        };
+        lint = newLint(spacesInNames);
       }
     }
     return lint;

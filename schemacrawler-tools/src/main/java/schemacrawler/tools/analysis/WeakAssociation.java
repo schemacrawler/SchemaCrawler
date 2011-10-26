@@ -44,6 +44,7 @@ public final class WeakAssociation
     this.foreignKeyColumn = foreignKeyColumn;
   }
 
+  @Override
   public int compareTo(final ColumnMap o)
   {
     int compare = 0;
@@ -104,6 +105,7 @@ public final class WeakAssociation
    * 
    * @see schemacrawler.schema.ForeignKeyColumnMap#getForeignKeyColumn()
    */
+  @Override
   public Column getForeignKeyColumn()
   {
     return foreignKeyColumn;
@@ -114,6 +116,7 @@ public final class WeakAssociation
    * 
    * @see schemacrawler.schema.ForeignKeyColumnMap#getPrimaryKeyColumn()
    */
+  @Override
   public Column getPrimaryKeyColumn()
   {
     return primaryKeyColumn;
