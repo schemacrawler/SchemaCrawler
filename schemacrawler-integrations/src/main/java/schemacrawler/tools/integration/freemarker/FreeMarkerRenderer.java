@@ -51,10 +51,11 @@ public final class FreeMarkerRenderer
 
   private static final Logger LOGGER = Logger
     .getLogger(FreeMarkerRenderer.class.getName());
+  static final String COMMAND = "freemarker";
 
   public FreeMarkerRenderer()
   {
-    super("freemarker");
+    super(COMMAND);
   }
 
   /**

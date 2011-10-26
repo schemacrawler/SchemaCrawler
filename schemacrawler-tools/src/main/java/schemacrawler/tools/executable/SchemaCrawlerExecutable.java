@@ -32,7 +32,7 @@ public class SchemaCrawlerExecutable
     for (final String command: commands)
     {
       final Executable executable = commandRegistry
-        .instantiateExecutableForCommand(command);
+        .newExecutable(command);
       executables.add(executable);
     }
 

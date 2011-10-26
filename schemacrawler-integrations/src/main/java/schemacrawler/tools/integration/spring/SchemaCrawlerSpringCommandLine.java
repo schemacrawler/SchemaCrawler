@@ -59,6 +59,7 @@ public class SchemaCrawlerSpringCommandLine
     }
   }
 
+  @Override
   public void execute()
     throws Exception
   {

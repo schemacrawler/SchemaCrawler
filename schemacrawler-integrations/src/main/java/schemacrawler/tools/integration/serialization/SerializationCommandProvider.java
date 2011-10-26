@@ -17,49 +17,32 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-
 package schemacrawler.tools.integration.serialization;
 
 
-import java.io.Writer;
-import java.sql.Connection;
+import schemacrawler.tools.executable.CommandProvider;
+import schemacrawler.tools.executable.Executable;
 
-import schemacrawler.schema.Database;
-import schemacrawler.tools.executable.BaseExecutable;
-import schemacrawler.tools.options.OutputWriter;
-
-/**
- * Main executor for the graphing integration.
- * 
- * @author Sualeh Fatehi
- */
-public final class SerializationExecutable
-  extends BaseExecutable
+public class SerializationCommandProvider
+  implements CommandProvider
 {
 
-  static final String COMMAND = "serialize";
-
-  public SerializationExecutable()
-  {
-    this(COMMAND);
-  }
-
-  public SerializationExecutable(final String command)
-  {
-    super(command);
-  }
-
-  /**
-   * {@inheritDoc}
-   */
   @Override
-  protected void executeOn(final Database db, final Connection connection)
-    throws Exception
+  public String getCommand()
   {
-    final Writer writer = new OutputWriter(outputOptions);
-    final SerializableDatabase database = new XmlDatabase(db);
-    database.save(writer);
-    writer.close();
+    return SerializationExecutable.COMMAND;
+  }
+
+  @Override
+  public String getHelpResource()
+  {
+    return "/help/SerializationExecutable.txt";
+  }
+
+  @Override
+  public Executable newExecutable()
+  {
+    return new SerializationExecutable();
   }
 
 }

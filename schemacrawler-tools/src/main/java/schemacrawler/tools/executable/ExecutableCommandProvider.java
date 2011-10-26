@@ -7,18 +7,18 @@ import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
-class ExecutableCommandRegistryEntry
-  implements CommandRegistryEntry
+class ExecutableCommandProvider
+  implements CommandProvider
 {
 
   private static final Logger LOGGER = Logger
-    .getLogger(ExecutableCommandRegistryEntry.class.getName());
+    .getLogger(ExecutableCommandProvider.class.getName());
 
   private final String command;
   private final String executableClassName;
 
-  ExecutableCommandRegistryEntry(final String command,
-                                 final String executableClassName)
+  ExecutableCommandProvider(final String command,
+                            final String executableClassName)
   {
     this.command = command;
     this.executableClassName = executableClassName;
@@ -27,6 +27,15 @@ class ExecutableCommandRegistryEntry
   public String getCommand()
   {
     return command;
+  }
+
+  public String getHelpResource()
+  {
+    final String helpResource = "/help/"
+                                + executableClassName
+                                  .substring(executableClassName
+                                    .lastIndexOf('.') + 1) + ".txt";
+    return helpResource;
   }
 
   public Executable newExecutable()

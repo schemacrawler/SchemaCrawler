@@ -56,10 +56,11 @@ public final class ScriptExecutable
 
   private static final Logger LOGGER = Logger.getLogger(ScriptExecutable.class
     .getName());
+  static final String COMMAND = "script";
 
   public ScriptExecutable()
   {
-    super("script");
+    super(COMMAND);
   }
 
   /**

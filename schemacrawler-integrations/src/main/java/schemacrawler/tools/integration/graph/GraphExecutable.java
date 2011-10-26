@@ -45,9 +45,11 @@ public final class GraphExecutable
   extends BaseExecutable
 {
 
+  static final String COMMAND = "graph";
+
   public GraphExecutable()
   {
-    super("graph");
+    super(COMMAND);
   }
 
   /**

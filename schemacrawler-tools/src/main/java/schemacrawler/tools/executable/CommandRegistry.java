@@ -47,11 +47,10 @@ public final class CommandRegistry
   private static final Logger LOGGER = Logger.getLogger(CommandRegistry.class
     .getName());
 
-  private static Map<String, CommandRegistryEntry> loadCommandRegistry()
+  private static Map<String, CommandProvider> loadCommandRegistry()
     throws SchemaCrawlerException
   {
-    final Map<String, CommandRegistryEntry> commandRegistry = new HashMap<String, CommandRegistryEntry>();
-
+    final Map<String, CommandProvider> commandRegistry = new HashMap<String, CommandProvider>();
     try
     {
       final ClassLoader classLoader = CommandRegistry.class.getClassLoader();
@@ -60,16 +59,15 @@ public final class CommandRegistry
 
       final Properties commandRegistryProperties = new Properties();
       commandRegistryProperties.load(commandRegistryUrl.openStream());
-      final List<String> propertyNames = (List<String>) Collections
+      final List<String> commands = (List<String>) Collections
         .list(commandRegistryProperties.propertyNames());
-      for (final String commandName: propertyNames)
+      for (final String command: commands)
       {
         final String executableClassName = commandRegistryProperties
-          .getProperty(commandName);
-        commandRegistry
-          .put(commandName,
-               new ExecutableCommandRegistryEntry(commandName,
-                                                  executableClassName));
+          .getProperty(command);
+        commandRegistry.put(command,
+                            new ExecutableCommandProvider(command,
+                                                          executableClassName));
       }
       if (commandRegistry.isEmpty())
       {
@@ -84,9 +82,9 @@ public final class CommandRegistry
 
     try
     {
-      final ServiceLoader<CommandRegistryEntry> serviceLoader = ServiceLoader
-        .load(CommandRegistryEntry.class);
-      for (final CommandRegistryEntry commandRegistryEntry: serviceLoader)
+      final ServiceLoader<CommandProvider> serviceLoader = ServiceLoader
+        .load(CommandProvider.class);
+      for (final CommandProvider commandRegistryEntry: serviceLoader)
       {
         final String executableCommand = commandRegistryEntry.getCommand();
         LOGGER.log(Level.FINER, "Loading executable, " + executableCommand
@@ -104,7 +102,7 @@ public final class CommandRegistry
     return commandRegistry;
   }
 
-  private final Map<String, CommandRegistryEntry> commandRegistry;
+  private final Map<String, CommandProvider> commandRegistry;
 
   public CommandRegistry()
     throws SchemaCrawlerException
@@ -115,30 +113,39 @@ public final class CommandRegistry
   public String[] lookupAvailableCommands()
   {
     final Set<String> availableCommandsList = commandRegistry.keySet();
-    availableCommandsList.remove("default");
     final String[] availableCommands = availableCommandsList
       .toArray(new String[availableCommandsList.size()]);
     Arrays.sort(availableCommands);
     return availableCommands;
   }
 
-  public String lookupExecutableClassName(final String command)
+  public String getHelpResource(final String command)
   {
-    return null;
+    final String helpResource;
+    if (commandRegistry.containsKey(command))
+    {
+      helpResource = commandRegistry.get(command).getHelpResource();
+    }
+    else
+    {
+      helpResource = null;
+    }
+
+    return helpResource;
   }
 
-  Executable instantiateExecutableForCommand(final String command)
+  Executable newExecutable(final String command)
     throws SchemaCrawlerException
   {
-    final CommandRegistryEntry commandRegistryEntry;
+    final CommandProvider commandRegistryEntry;
     if (commandRegistry.containsKey(command))
     {
       commandRegistryEntry = commandRegistry.get(command);
     }
     else
     {
-      commandRegistryEntry = new ExecutableCommandRegistryEntry(command,
-                                                                "schemacrawler.tools.text.operation.OperationExecutable");
+      commandRegistryEntry = new ExecutableCommandProvider(command,
+                                                           "schemacrawler.tools.text.operation.OperationExecutable");
     }
 
     return commandRegistryEntry.newExecutable();
