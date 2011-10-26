@@ -1,5 +1,0 @@
-schemacrawler.tools.integration.freemarker.FreeMarkerCommandRegistryEntry
-schemacrawler.tools.integration.scripting.ScriptCommandRegistryEntry
-schemacrawler.tools.integration.velocity.VelocityCommandRegistryEntry
-schemacrawler.tools.integration.graph.GraphCommandRegistryEntry
-schemacrawler.tools.integration.serialization.SerializationCommandRegistryEntry

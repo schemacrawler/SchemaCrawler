@@ -34,6 +34,12 @@ abstract class BaseLinter
   private LintSeverity severity = LintSeverity.medium;
 
   @Override
+  public String getId()
+  {
+    return getClass().getName();
+  }
+
+  @Override
   public final LintSeverity getLintSeverity()
   {
     return severity;
@@ -67,15 +73,15 @@ abstract class BaseLinter
 
   protected Lint newLint(final Object value)
   {
-    return new BaseLint(getLintSeverity(), getSummary(), value)
+    return new BaseLint(getId(), getLintSeverity(), getSummary(), value)
     {
 
       private static final long serialVersionUID = 3158466712611884766L;
 
       @Override
-      public String getLintValueAsString()
+      public String getValueAsString()
       {
-        return convertLintValueToString(getLintValue());
+        return convertLintValueToString(getValue());
       }
     };
   }

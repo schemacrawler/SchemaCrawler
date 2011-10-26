@@ -27,6 +27,8 @@ public interface Linter
 
   String getDescription();
 
+  String getId();
+
   LintSeverity getLintSeverity();
 
   String getSummary();
