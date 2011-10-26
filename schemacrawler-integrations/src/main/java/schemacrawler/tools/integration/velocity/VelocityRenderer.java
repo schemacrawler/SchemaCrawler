@@ -50,6 +50,7 @@ public final class VelocityRenderer
   extends BaseExecutable
 {
 
+  static final String COMMAND = "velocity";
   private static final Logger LOGGER = Logger.getLogger(VelocityRenderer.class
     .getName());
 
@@ -65,7 +66,7 @@ public final class VelocityRenderer
 
   public VelocityRenderer()
   {
-    super("velocity");
+    super(COMMAND);
   }
 
   /**

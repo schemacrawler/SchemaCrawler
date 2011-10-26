@@ -134,7 +134,7 @@ final class SchemaCrawlerHelpCommandLine
     else
     {
       final String commandExecutableClassName = commandRegistry
-        .lookupExecutableClassName(command);
+        .getHelpResource(command);
       final String helpResource = "/help/"
                                   + commandExecutableClassName
                                     .substring(commandExecutableClassName

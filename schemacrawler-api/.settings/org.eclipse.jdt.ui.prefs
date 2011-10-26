@@ -1,4 +1,4 @@
-#Mon Sep 21 21:03:33 EDT 2009
+#Tue Oct 25 23:09:51 EDT 2011
 cleanup.add_default_serial_version_id=false
 cleanup.add_generated_serial_version_id=true
 cleanup.add_missing_annotations=true
@@ -6,6 +6,7 @@ cleanup.add_missing_deprecated_annotations=true
 cleanup.add_missing_methods=false
 cleanup.add_missing_nls_tags=false
 cleanup.add_missing_override_annotations=true
+cleanup.add_missing_override_annotations_interface_methods=true
 cleanup.add_serial_version_id=true
 cleanup.always_use_blocks=true
 cleanup.always_use_parentheses_in_expressions=false
