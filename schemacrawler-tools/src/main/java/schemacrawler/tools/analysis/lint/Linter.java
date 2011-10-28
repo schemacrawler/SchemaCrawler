@@ -17,10 +17,28 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.tools.analysis;
+package schemacrawler.tools.analysis.lint;
 
 
-public enum LintSeverity
+import schemacrawler.schema.Database;
+
+public interface Linter
 {
-  critical, high, medium, low;
+
+  String getDescription();
+
+  String getId();
+
+  LintCollector getLintCollector();
+
+  LintSeverity getLintSeverity();
+
+  String getSummary();
+
+  void lint(Database database);
+
+  void setLintCollector(LintCollector lintCollector);
+
+  void setLintSeverity(LintSeverity severity);
+
 }

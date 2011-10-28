@@ -1,4 +1,4 @@
-package schemacrawler.tools.analysis;
+package schemacrawler.tools.analysis.associations;
 
 
 import java.util.ArrayList;

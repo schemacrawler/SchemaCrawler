@@ -17,28 +17,27 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.tools.analysis;
+package schemacrawler.tools.analysis.lint;
 
 
-import schemacrawler.schema.Database;
+import java.io.Serializable;
 
-public interface Linter
+public interface Lint
+  extends Serializable, Comparable<Lint>
 {
 
-  String getDescription();
+  final String LINT_KEY = "schemacrawler.lint";
 
   String getId();
 
-  LintCollector getLintCollector();
+  String getMessage();
 
-  LintSeverity getLintSeverity();
+  String getObjectName();
 
-  String getSummary();
+  LintSeverity getSeverity();
 
-  void lint(Database database);
+  Object getValue();
 
-  void setLintCollector(LintCollector lintCollector);
-
-  void setLintSeverity(LintSeverity severity);
+  String getValueAsString();
 
 }

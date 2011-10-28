@@ -17,7 +17,7 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.tools.analysis;
+package schemacrawler.tools.analysis.lint;
 
 
 public abstract class BaseLint
@@ -48,7 +48,7 @@ public abstract class BaseLint
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.analysis.Lint#compareTo(schemacrawler.tools.analysis.BaseLint)
+   * @see schemacrawler.tools.analysis.lint.Lint#compareTo(schemacrawler.tools.analysis.lint.BaseLint)
    */
   @Override
   public final int compareTo(final Lint lint)
@@ -128,7 +128,7 @@ public abstract class BaseLint
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.analysis.Lint#getMessage()
+   * @see schemacrawler.tools.analysis.lint.Lint#getMessage()
    */
   @Override
   public final String getMessage()
@@ -151,7 +151,7 @@ public abstract class BaseLint
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.analysis.Lint#getValue()
+   * @see schemacrawler.tools.analysis.lint.Lint#getValue()
    */
   @Override
   public final Object getValue()
@@ -162,7 +162,7 @@ public abstract class BaseLint
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.analysis.Lint#getValueAsString()
+   * @see schemacrawler.tools.analysis.lint.Lint#getValueAsString()
    */
   @Override
   public abstract String getValueAsString();
