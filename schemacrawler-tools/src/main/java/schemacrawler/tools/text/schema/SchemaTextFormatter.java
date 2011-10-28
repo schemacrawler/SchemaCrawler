@@ -308,13 +308,13 @@ final class SchemaTextFormatter
           if ((Boolean) lintValue)
           {
             out.println(formattingHelper.createDescriptionRow(lint
-              .getSummary()));
+              .getMessage()));
           }
         }
         else
         {
           out.println(formattingHelper.createDescriptionRow(lint
-            .getSummary() + Utility.NEWLINE + lint.getValueAsString()));
+            .getMessage() + Utility.NEWLINE + lint.getValueAsString()));
         }
       }
     }

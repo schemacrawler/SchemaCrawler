@@ -56,19 +56,17 @@ public class LinterTableWithNullIntendedColumns
   }
 
   @Override
-  public Lint lint(final Table table)
+  public void lint(final Table table)
   {
-    Lint lint = null;
     if (table != null)
     {
       final Column[] nullDefaultValueMayBeIntendedColumns = findNullDefaultValueMayBeIntendedColumns(table
         .getColumns());
       if (nullDefaultValueMayBeIntendedColumns.length > 0)
       {
-        lint = newLint(nullDefaultValueMayBeIntendedColumns);
+        addLint(table, getSummary(), nullDefaultValueMayBeIntendedColumns);
       }
     }
-    return lint;
   }
 
   private Column[] findNullDefaultValueMayBeIntendedColumns(final Column[] columns)

@@ -30,9 +30,11 @@ public interface Lint
 
   String getId();
 
-  LintSeverity getSeverity();
+  String getMessage();
 
-  String getSummary();
+  String getObjectName();
+
+  LintSeverity getSeverity();
 
   Object getValue();
 

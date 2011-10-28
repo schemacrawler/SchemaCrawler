@@ -68,19 +68,17 @@ public class LinterTableWithIncrementingColumns
   }
 
   @Override
-  public Lint lint(final Table table)
+  public void lint(final Table table)
   {
-    Lint lint = null;
     if (table != null)
     {
       final HashMap<String, List<Column>> incrementingColumns = findIncrementingColumns(table
         .getColumns());
       if (!incrementingColumns.isEmpty())
       {
-        lint = newLint(incrementingColumns);
+        addLint(table, getSummary(), incrementingColumns);
       }
     }
-    return lint;
   }
 
   private HashMap<String, List<Column>> findIncrementingColumns(final Column[] columns)

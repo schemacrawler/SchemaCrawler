@@ -45,18 +45,16 @@ public class LinterTableWithSingleColumn
   }
 
   @Override
-  public Lint lint(final Table table)
+  public void lint(final Table table)
   {
-    Lint lint = null;
     if (table != null)
     {
       final Column[] columns = table.getColumns();
       if (columns.length <= 1)
       {
-        lint = newLint(Boolean.TRUE);
+        addLint(table, getSummary(), Boolean.TRUE);
       }
     }
-    return lint;
   }
 
 }

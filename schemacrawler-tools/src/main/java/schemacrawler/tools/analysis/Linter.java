@@ -29,11 +29,15 @@ public interface Linter
 
   String getId();
 
+  LintCollector getLintCollector();
+
   LintSeverity getLintSeverity();
 
   String getSummary();
 
   void lint(Database database);
+
+  void setLintCollector(LintCollector lintCollector);
 
   void setLintSeverity(LintSeverity severity);
 
