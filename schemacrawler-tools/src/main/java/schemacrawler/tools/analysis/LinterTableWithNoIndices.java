@@ -47,18 +47,16 @@ public class LinterTableWithNoIndices
   }
 
   @Override
-  public Lint lint(final Table table)
+  public void lint(final Table table)
   {
-    Lint lint = null;
     if (table != null && !(table instanceof View))
     {
       final Index[] indices = table.getIndices();
       if (table.getPrimaryKey() == null && indices.length == 0)
       {
-        lint = newLint(Boolean.TRUE);
+        addLint(table, getSummary(), Boolean.TRUE);
       }
     }
-    return lint;
   }
 
 }

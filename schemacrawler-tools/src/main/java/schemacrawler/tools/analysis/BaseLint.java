@@ -27,19 +27,22 @@ public abstract class BaseLint
   private static final long serialVersionUID = -8627082144974643415L;
 
   private final String id;
+  private final String objectName;
   private final LintSeverity severity;
-  private final String summary;
+  private final String message;
   private final Object value;
 
   public BaseLint(final String id,
+                  final String objectName,
                   final LintSeverity severity,
-                  final String summary,
-                  final Object lintValue)
+                  final String message,
+                  final Object value)
   {
     this.id = id;
+    this.objectName = objectName;
     this.severity = severity;
-    this.summary = summary;
-    value = lintValue;
+    this.message = message;
+    this.value = value;
   }
 
   /**
@@ -50,13 +53,13 @@ public abstract class BaseLint
   @Override
   public final int compareTo(final Lint lint)
   {
-    if (summary == null || lint == null)
+    if (message == null || lint == null)
     {
       return -1;
     }
     else
     {
-      return summary.compareTo(lint.getSummary());
+      return message.compareTo(lint.getMessage());
     }
   }
 
@@ -91,14 +94,14 @@ public abstract class BaseLint
     {
       return false;
     }
-    if (summary == null)
+    if (message == null)
     {
-      if (other.summary != null)
+      if (other.message != null)
       {
         return false;
       }
     }
-    else if (!summary.equals(other.summary))
+    else if (!message.equals(other.message))
     {
       return false;
     }
@@ -122,21 +125,27 @@ public abstract class BaseLint
     return id;
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.analysis.Lint#getMessage()
+   */
+  @Override
+  public final String getMessage()
+  {
+    return message;
+  }
+
+  @Override
+  public String getObjectName()
+  {
+    return objectName;
+  }
+
   @Override
   public LintSeverity getSeverity()
   {
     return severity;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.analysis.Lint#getSummary()
-   */
-  @Override
-  public final String getSummary()
-  {
-    return summary;
   }
 
   /**
@@ -165,7 +174,7 @@ public abstract class BaseLint
     int result = 1;
     result = prime * result + (id == null? 0: id.hashCode());
     result = prime * result + (severity == null? 0: severity.hashCode());
-    result = prime * result + (summary == null? 0: summary.hashCode());
+    result = prime * result + (message == null? 0: message.hashCode());
     result = prime * result + (value == null? 0: value.hashCode());
     return result;
   }
@@ -173,7 +182,7 @@ public abstract class BaseLint
   @Override
   public String toString()
   {
-    return summary + "=" + getValueAsString();
+    return message + "=" + getValueAsString();
   }
 
 }

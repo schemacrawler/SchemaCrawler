@@ -409,7 +409,7 @@ final class SchemaJsonFormatter
         {
           final JSONObject jsonLint = new JSONObject();
           jsonLints.put(jsonLint);
-          jsonLint.put("description", lint.getSummary());
+          jsonLint.put("description", lint.getMessage());
           jsonLint.put("value", lint.getValueAsString());
         }
         catch (final JSONException e)

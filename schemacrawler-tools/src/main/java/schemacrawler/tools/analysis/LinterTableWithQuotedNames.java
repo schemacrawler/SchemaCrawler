@@ -49,9 +49,8 @@ public class LinterTableWithQuotedNames
   }
 
   @Override
-  public Lint lint(final Table table)
+  public void lint(final Table table)
   {
-    Lint lint = null;
     if (table != null)
     {
       final List<String> spacesInNamesList = findColumnsWithQuotedNames(table
@@ -65,10 +64,9 @@ public class LinterTableWithQuotedNames
       {
         final String[] spacesInNames = spacesInNamesList
           .toArray(new String[spacesInNamesList.size()]);
-        lint = newLint(spacesInNames);
+        addLint(table, getSummary(), spacesInNames);
       }
     }
-    return lint;
   }
 
   private List<String> findColumnsWithQuotedNames(final Column[] columns)

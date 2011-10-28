@@ -56,19 +56,17 @@ public class LinterTableWithNullColumnsInIndex
   }
 
   @Override
-  public Lint lint(final Table table)
+  public void lint(final Table table)
   {
-    Lint lint = null;
     if (table != null)
     {
       final Index[] nullableColumnsInUniqueIndex = findNullableColumnsInUniqueIndex(table
         .getIndices());
       if (nullableColumnsInUniqueIndex.length > 0)
       {
-        lint = newLint(nullableColumnsInUniqueIndex);
+        addLint(table, getSummary(), nullableColumnsInUniqueIndex);
       }
     }
-    return lint;
   }
 
   private Index[] findNullableColumnsInUniqueIndex(final Index[] indices)

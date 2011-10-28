@@ -22,6 +22,8 @@ package schemacrawler.tools.analysis;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.ServiceLoader;
@@ -51,8 +53,8 @@ public final class AnalyzedDatabase
     }
     else
     {
-      final List<BaseLint> lintList = table
-        .getAttribute(Lint.LINT_KEY, new ArrayList<BaseLint>());
+      final Collection<Lint> lintList = table.getAttribute(Lint.LINT_KEY,
+                                                           new HashSet<Lint>());
       final Lint[] lintArray = lintList.toArray(new BaseLint[lintList.size()]);
       Arrays.sort(lintArray);
       return lintArray;
@@ -84,10 +86,12 @@ public final class AnalyzedDatabase
 
     if (infoLevel.ordinal() >= InfoLevel.lint.ordinal())
     {
+      final LintCollector lintCollector = new LintCollector();
       final ServiceLoader<Linter> lintLoaders = ServiceLoader
         .load(Linter.class);
       for (final Linter linter: lintLoaders)
       {
+        linter.setLintCollector(lintCollector);
         linter.lint(database);
       }
     }
