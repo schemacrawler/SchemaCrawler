@@ -17,7 +17,7 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.tools.analysis;
+package schemacrawler.tools.analysis.lint;
 
 
 import java.util.Collection;
@@ -29,17 +29,24 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.Database;
 import schemacrawler.schema.Table;
 
-public class LintCollector
-  implements Iterable<Lint>
+public class SimpleLintCollector
+  implements LintCollector
 {
 
   private final Set<Lint> lints;
 
-  public LintCollector()
+  public SimpleLintCollector()
   {
     lints = new HashSet<Lint>();
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.analysis.lint.LintCollector#addLint(schemacrawler.schema.Column,
+   *      schemacrawler.tools.analysis.lint.Lint)
+   */
+  @Override
   public void addLint(final Column column, final Lint lint)
   {
     if (lint != null)
@@ -53,6 +60,13 @@ public class LintCollector
     }
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.analysis.lint.LintCollector#addLint(schemacrawler.schema.Database,
+   *      schemacrawler.tools.analysis.lint.Lint)
+   */
+  @Override
   public void addLint(final Database database, final Lint lint)
   {
     if (lint != null)
@@ -66,6 +80,13 @@ public class LintCollector
     }
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.analysis.lint.LintCollector#addLint(schemacrawler.schema.Table,
+   *      schemacrawler.tools.analysis.lint.Lint)
+   */
+  @Override
   public void addLint(final Table table, final Lint lint)
   {
     if (lint != null)
@@ -79,11 +100,53 @@ public class LintCollector
     }
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.analysis.lint.LintCollector#clear()
+   */
+  @Override
   public void clear()
   {
     lints.clear();
   }
 
+  @Override
+  public Lint[] getLint(final Column column)
+  {
+    if (column == null)
+    {
+      return new Lint[0];
+    }
+    final String fullName = column.getFullName();
+
+    return getLintForObject(fullName);
+  }
+
+  @Override
+  public Lint[] getLint(final Database database)
+  {
+    return getLintForObject(null);
+  }
+
+  @Override
+  public Lint[] getLint(final Table table)
+  {
+    if (table == null)
+    {
+      return new Lint[0];
+    }
+    final String fullName = table.getFullName();
+
+    return getLintForObject(fullName);
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.analysis.lint.LintCollector#isEmpty()
+   */
+  @Override
   public boolean isEmpty()
   {
     return lints.isEmpty();
@@ -95,14 +158,39 @@ public class LintCollector
     return lints.iterator();
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.analysis.lint.LintCollector#size()
+   */
+  @Override
   public int size()
   {
     return lints.size();
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.analysis.lint.LintCollector#toArray()
+   */
+  @Override
   public Lint[] toArray()
   {
     return lints.toArray(new Lint[lints.size()]);
+  }
+
+  private Lint[] getLintForObject(final String fullName)
+  {
+    final Set<Lint> objectLints = new HashSet<Lint>();
+    for (final Lint lint: lints)
+    {
+      if (fullName.equals(lint.getObjectName()))
+      {
+        objectLints.add(lint);
+      }
+    }
+    return objectLints.toArray(new Lint[objectLints.size()]);
   }
 
 }

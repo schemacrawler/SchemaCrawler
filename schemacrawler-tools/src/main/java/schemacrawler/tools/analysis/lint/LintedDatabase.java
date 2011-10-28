@@ -17,66 +17,31 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.tools.analysis;
+package schemacrawler.tools.analysis.lint;
 
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.ServiceLoader;
 
 import schemacrawler.schema.ColumnDataType;
-import schemacrawler.schema.ColumnMap;
 import schemacrawler.schema.Database;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaCrawlerInfo;
-import schemacrawler.schema.Table;
 import schemacrawler.tools.options.InfoLevel;
 
-public final class AnalyzedDatabase
+public final class LintedDatabase
   implements Database
 {
 
   private static final long serialVersionUID = -3953296149824921463L;
 
-  public static final Lint[] getLint(final Table table)
-  {
-    if (table == null)
-    {
-      return null;
-    }
-    else
-    {
-      final Collection<Lint> lintList = table.getAttribute(Lint.LINT_KEY,
-                                                           new HashSet<Lint>());
-      final Lint[] lintArray = lintList.toArray(new BaseLint[lintList.size()]);
-      Arrays.sort(lintArray);
-      return lintArray;
-    }
-  }
-
-  public static final ColumnMap[] getWeakAssociations(final Table table)
-  {
-    if (table == null)
-    {
-      return null;
-    }
-    else
-    {
-      return table.getAttribute(WeakAssociationsAnalyzer.WEAK_ASSOCIATIONS_KEY,
-                                new ColumnMap[0]);
-    }
-  }
-
   private final Database database;
+  private final LintCollector lintCollector;
 
-  public AnalyzedDatabase(final Database database, final InfoLevel infoLevel)
+  public LintedDatabase(final Database database, final InfoLevel infoLevel)
   {
     if (database == null)
     {
@@ -84,9 +49,9 @@ public final class AnalyzedDatabase
     }
     this.database = database;
 
+    lintCollector = new SimpleLintCollector();
     if (infoLevel.ordinal() >= InfoLevel.lint.ordinal())
     {
-      final LintCollector lintCollector = new LintCollector();
       final ServiceLoader<Linter> lintLoaders = ServiceLoader
         .load(Linter.class);
       for (final Linter linter: lintLoaders)
@@ -94,20 +59,6 @@ public final class AnalyzedDatabase
         linter.setLintCollector(lintCollector);
         linter.lint(database);
       }
-    }
-
-    if (infoLevel.ordinal() >= InfoLevel.maximum.ordinal())
-    {
-      final List<Table> allTables = new ArrayList<Table>();
-      for (final Schema schema: database.getSchemas())
-      {
-        for (final Table table: schema.getTables())
-        {
-          allTables.add(table);
-        }
-      }
-      final WeakAssociationsAnalyzer weakAssociationsAnalyzer = new WeakAssociationsAnalyzer(allTables);
-      weakAssociationsAnalyzer.analyzeTables();
     }
 
   }
@@ -152,6 +103,11 @@ public final class AnalyzedDatabase
   public JdbcDriverInfo getJdbcDriverInfo()
   {
     return database.getJdbcDriverInfo();
+  }
+
+  public LintCollector getLintCollector()
+  {
+    return lintCollector;
   }
 
   @Override
