@@ -73,7 +73,7 @@ public final class GraphExecutable
     final Database database;
     if (infoLevel.ordinal() >= InfoLevel.lint.ordinal())
     {
-      database = new AnalyzedDatabase(db, infoLevel);
+      database = new AnalyzedDatabase(db);
     }
     else
     {

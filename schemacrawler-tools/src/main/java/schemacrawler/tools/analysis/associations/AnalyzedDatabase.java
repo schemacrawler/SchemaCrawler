@@ -33,7 +33,6 @@ import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaCrawlerInfo;
 import schemacrawler.schema.Table;
-import schemacrawler.tools.options.InfoLevel;
 
 public final class AnalyzedDatabase
   implements Database
@@ -56,7 +55,7 @@ public final class AnalyzedDatabase
 
   private final Database database;
 
-  public AnalyzedDatabase(final Database database, final InfoLevel infoLevel)
+  public AnalyzedDatabase(final Database database)
   {
     if (database == null)
     {
@@ -64,19 +63,16 @@ public final class AnalyzedDatabase
     }
     this.database = database;
 
-    if (infoLevel.ordinal() >= InfoLevel.maximum.ordinal())
+    final List<Table> allTables = new ArrayList<Table>();
+    for (final Schema schema: database.getSchemas())
     {
-      final List<Table> allTables = new ArrayList<Table>();
-      for (final Schema schema: database.getSchemas())
+      for (final Table table: schema.getTables())
       {
-        for (final Table table: schema.getTables())
-        {
-          allTables.add(table);
-        }
+        allTables.add(table);
       }
-      final WeakAssociationsAnalyzer weakAssociationsAnalyzer = new WeakAssociationsAnalyzer(allTables);
-      weakAssociationsAnalyzer.analyzeTables();
     }
+    final WeakAssociationsAnalyzer weakAssociationsAnalyzer = new WeakAssociationsAnalyzer(allTables);
+    weakAssociationsAnalyzer.analyzeTables();
 
   }
 

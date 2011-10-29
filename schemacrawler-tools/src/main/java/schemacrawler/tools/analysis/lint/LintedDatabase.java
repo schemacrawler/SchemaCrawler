@@ -30,7 +30,6 @@ import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaCrawlerInfo;
-import schemacrawler.tools.options.InfoLevel;
 
 public final class LintedDatabase
   implements Database
@@ -41,7 +40,7 @@ public final class LintedDatabase
   private final Database database;
   private final LintCollector lintCollector;
 
-  public LintedDatabase(final Database database, final InfoLevel infoLevel)
+  public LintedDatabase(final Database database)
   {
     if (database == null)
     {
@@ -50,15 +49,11 @@ public final class LintedDatabase
     this.database = database;
 
     lintCollector = new SimpleLintCollector();
-    if (infoLevel.ordinal() >= InfoLevel.lint.ordinal())
+    final ServiceLoader<Linter> lintLoaders = ServiceLoader.load(Linter.class);
+    for (final Linter linter: lintLoaders)
     {
-      final ServiceLoader<Linter> lintLoaders = ServiceLoader
-        .load(Linter.class);
-      for (final Linter linter: lintLoaders)
-      {
-        linter.setLintCollector(lintCollector);
-        linter.lint(database);
-      }
+      linter.setLintCollector(lintCollector);
+      linter.lint(database);
     }
 
   }

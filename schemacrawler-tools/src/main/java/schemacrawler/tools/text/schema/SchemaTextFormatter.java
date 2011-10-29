@@ -46,6 +46,7 @@ import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.analysis.associations.AnalyzedDatabase;
 import schemacrawler.tools.analysis.lint.Lint;
+import schemacrawler.tools.analysis.lint.SimpleLintCollector;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.BaseTabularFormatter;
 import schemacrawler.tools.text.utility.TextFormattingHelper.DocumentHeaderType;
@@ -295,7 +296,7 @@ final class SchemaTextFormatter
 
   private void printLint(final Table table)
   {
-    final Lint[] lints = AnalyzedDatabase.getLint(table);
+    final Lint[] lints = SimpleLintCollector.getLint(table);
     if (lints != null && lints.length > 0)
     {
       out.println(formattingHelper.createEmptyRow());
@@ -307,14 +308,17 @@ final class SchemaTextFormatter
         {
           if ((Boolean) lintValue)
           {
-            out.println(formattingHelper.createDescriptionRow(lint
-              .getMessage()));
+            out
+              .println(formattingHelper.createDescriptionRow(lint.getMessage()));
           }
         }
         else
         {
-          out.println(formattingHelper.createDescriptionRow(lint
-            .getMessage() + Utility.NEWLINE + lint.getValueAsString()));
+          out
+            .println(formattingHelper.createDescriptionRow(lint.getMessage()
+                                                           + Utility.NEWLINE
+                                                           + lint
+                                                             .getValueAsString()));
         }
       }
     }
