@@ -23,10 +23,4 @@ public interface LintCollector
 
   Lint[] toArray();
 
-  Lint[] getLint(final Column column);
-
-  Lint[] getLint(final Database database);
-
-  Lint[] getLint(final Table table);
-
 }

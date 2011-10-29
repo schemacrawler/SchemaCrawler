@@ -45,6 +45,7 @@ import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.analysis.associations.AnalyzedDatabase;
 import schemacrawler.tools.analysis.lint.Lint;
+import schemacrawler.tools.analysis.lint.SimpleLintCollector;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.BaseJsonFormatter;
 import schemacrawler.tools.text.utility.org.json.JSONArray;
@@ -255,7 +256,7 @@ final class SchemaJsonFormatter
         if (isVerbose)
         {
           jsonTable.put("remarks", table.getRemarks());
-          final Lint[] lints = AnalyzedDatabase.getLint(table);
+          final Lint[] lints = SimpleLintCollector.getLint(table);
           jsonTable.put("lints", handleLint(lints));
         }
       }

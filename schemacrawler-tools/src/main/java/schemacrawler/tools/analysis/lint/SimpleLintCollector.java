@@ -27,11 +27,19 @@ import java.util.Set;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Database;
+import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Table;
 
 public class SimpleLintCollector
   implements LintCollector
 {
+
+  public static Lint[] getLint(final NamedObject namedObject)
+  {
+    final Set<Lint> objectLints = namedObject.getAttribute(Lint.LINT_KEY,
+                                                           new HashSet<Lint>());
+    return objectLints.toArray(new Lint[objectLints.size()]);
+  }
 
   private final Set<Lint> lints;
 
@@ -49,15 +57,7 @@ public class SimpleLintCollector
   @Override
   public void addLint(final Column column, final Lint lint)
   {
-    if (lint != null)
-    {
-      lints.add(lint);
-
-      final Collection<Lint> columnLints = column
-        .getAttribute(Lint.LINT_KEY, new HashSet<Lint>());
-      columnLints.add(lint);
-      column.setAttribute(Lint.LINT_KEY, columnLints);
-    }
+    addNamedObjectLint(column, lint);
   }
 
   /**
@@ -69,15 +69,7 @@ public class SimpleLintCollector
   @Override
   public void addLint(final Database database, final Lint lint)
   {
-    if (lint != null)
-    {
-      lints.add(lint);
-
-      final Collection<Lint> dbLints = database
-        .getAttribute(Lint.LINT_KEY, new HashSet<Lint>());
-      dbLints.add(lint);
-      database.setAttribute(Lint.LINT_KEY, dbLints);
-    }
+    addNamedObjectLint(database, lint);
   }
 
   /**
@@ -89,15 +81,7 @@ public class SimpleLintCollector
   @Override
   public void addLint(final Table table, final Lint lint)
   {
-    if (lint != null)
-    {
-      lints.add(lint);
-
-      final Collection<Lint> tableLints = table
-        .getAttribute(Lint.LINT_KEY, new HashSet<Lint>());
-      tableLints.add(lint);
-      table.setAttribute(Lint.LINT_KEY, tableLints);
-    }
+    addNamedObjectLint(table, lint);
   }
 
   /**
@@ -109,36 +93,6 @@ public class SimpleLintCollector
   public void clear()
   {
     lints.clear();
-  }
-
-  @Override
-  public Lint[] getLint(final Column column)
-  {
-    if (column == null)
-    {
-      return new Lint[0];
-    }
-    final String fullName = column.getFullName();
-
-    return getLintForObject(fullName);
-  }
-
-  @Override
-  public Lint[] getLint(final Database database)
-  {
-    return getLintForObject(null);
-  }
-
-  @Override
-  public Lint[] getLint(final Table table)
-  {
-    if (table == null)
-    {
-      return new Lint[0];
-    }
-    final String fullName = table.getFullName();
-
-    return getLintForObject(fullName);
   }
 
   /**
@@ -180,17 +134,18 @@ public class SimpleLintCollector
     return lints.toArray(new Lint[lints.size()]);
   }
 
-  private Lint[] getLintForObject(final String fullName)
+  private void addNamedObjectLint(final NamedObject namedObject, final Lint lint)
   {
-    final Set<Lint> objectLints = new HashSet<Lint>();
-    for (final Lint lint: lints)
+    if (namedObject != null && lint != null
+        && namedObject.getFullName().equals(lint.getObjectName()))
     {
-      if (fullName.equals(lint.getObjectName()))
-      {
-        objectLints.add(lint);
-      }
+      lints.add(lint);
+
+      final Collection<Lint> columnLints = namedObject
+        .getAttribute(Lint.LINT_KEY, new HashSet<Lint>());
+      columnLints.add(lint);
+      namedObject.setAttribute(Lint.LINT_KEY, columnLints);
     }
-    return objectLints.toArray(new Lint[objectLints.size()]);
   }
 
 }

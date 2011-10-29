@@ -101,7 +101,7 @@ abstract class BaseLinter
   {
     if (lintCollector != null)
     {
-      Lint lint = newLint(column.getFullName(), message, value);
+      final Lint lint = newLint(column.getFullName(), message, value);
       lintCollector.addLint(column, lint);
     }
   }
@@ -112,7 +112,7 @@ abstract class BaseLinter
   {
     if (lintCollector != null)
     {
-      Lint lint = newLint((String) null, message, value);
+      final Lint lint = newLint((String) null, message, value);
       lintCollector.addLint(database, lint);
     }
   }
@@ -123,7 +123,7 @@ abstract class BaseLinter
   {
     if (lintCollector != null)
     {
-      Lint lint = newLint(table.getFullName(), message, value);
+      final Lint lint = newLint(table.getFullName(), message, value);
       lintCollector.addLint(table, lint);
     }
   }
