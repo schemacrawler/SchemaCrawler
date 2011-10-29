@@ -765,12 +765,12 @@
           "value": "true"
         },
         {
-          "description": "single column",
-          "value": "true"
-        },
-        {
           "description": "spaces in names, or reserved words",
           "value": "\"Global Counts\", \"Global Count\""
+        },
+        {
+          "description": "single column",
+          "value": "true"
         }
       ],
       "remarks": "",

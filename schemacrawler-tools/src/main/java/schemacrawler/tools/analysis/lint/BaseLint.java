@@ -20,6 +20,8 @@
 package schemacrawler.tools.analysis.lint;
 
 
+import sf.util.Utility;
+
 public abstract class BaseLint
   implements Lint
 {
@@ -38,10 +40,29 @@ public abstract class BaseLint
                   final String message,
                   final Object value)
   {
+    if (Utility.isBlank(id))
+    {
+      throw new IllegalArgumentException("Lint id not provided");
+    }
     this.id = id;
+
     this.objectName = objectName;
-    this.severity = severity;
+
+    if (severity == null)
+    {
+      this.severity = LintSeverity.critical;
+    }
+    else
+    {
+      this.severity = severity;
+    }
+
+    if (Utility.isBlank(message))
+    {
+      throw new IllegalArgumentException("Lint message not provided");
+    }
     this.message = message;
+
     this.value = value;
   }
 
@@ -53,13 +74,13 @@ public abstract class BaseLint
   @Override
   public final int compareTo(final Lint lint)
   {
-    if (message == null || lint == null)
+    if (lint == null)
     {
       return -1;
     }
     else
     {
-      return message.compareTo(lint.getMessage());
+      return id.compareTo(lint.getId());
     }
   }
 
@@ -74,7 +95,7 @@ public abstract class BaseLint
     {
       return false;
     }
-    if (getClass() != obj.getClass())
+    if (!(obj instanceof BaseLint))
     {
       return false;
     }
@@ -90,10 +111,6 @@ public abstract class BaseLint
     {
       return false;
     }
-    if (severity != other.severity)
-    {
-      return false;
-    }
     if (message == null)
     {
       if (other.message != null)
@@ -105,14 +122,18 @@ public abstract class BaseLint
     {
       return false;
     }
-    if (value == null)
+    if (objectName == null)
     {
-      if (other.value != null)
+      if (other.objectName != null)
       {
         return false;
       }
     }
-    else if (!value.equals(other.value))
+    else if (!objectName.equals(other.objectName))
+    {
+      return false;
+    }
+    if (severity != other.severity)
     {
       return false;
     }
@@ -173,9 +194,9 @@ public abstract class BaseLint
     final int prime = 31;
     int result = 1;
     result = prime * result + (id == null? 0: id.hashCode());
-    result = prime * result + (severity == null? 0: severity.hashCode());
     result = prime * result + (message == null? 0: message.hashCode());
-    result = prime * result + (value == null? 0: value.hashCode());
+    result = prime * result + (objectName == null? 0: objectName.hashCode());
+    result = prime * result + (severity == null? 0: severity.hashCode());
     return result;
   }
 
