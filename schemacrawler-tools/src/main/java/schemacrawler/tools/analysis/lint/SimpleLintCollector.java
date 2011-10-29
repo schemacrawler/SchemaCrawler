@@ -20,6 +20,7 @@
 package schemacrawler.tools.analysis.lint;
 
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -36,9 +37,11 @@ public class SimpleLintCollector
 
   public static Lint[] getLint(final NamedObject namedObject)
   {
-    final Set<Lint> objectLints = namedObject.getAttribute(Lint.LINT_KEY,
-                                                           new HashSet<Lint>());
-    return objectLints.toArray(new Lint[objectLints.size()]);
+    final Set<Lint> lints = namedObject.getAttribute(Lint.LINT_KEY,
+                                                     new HashSet<Lint>());
+    final Lint[] objectLints = lints.toArray(new Lint[lints.size()]);
+    Arrays.sort(objectLints);
+    return objectLints;
   }
 
   private final Set<Lint> lints;

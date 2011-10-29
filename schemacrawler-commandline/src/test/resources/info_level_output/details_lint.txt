@@ -659,9 +659,9 @@ UPDATE                                                       [privilege]
 
                                                                   [lint]
   no indices
-  single column
   spaces in names, or reserved words
 "Global Counts", "Global Count"
+  single column
 
 
 PUBLIC.BOOKS.PUBLISHERS                                          [table]
