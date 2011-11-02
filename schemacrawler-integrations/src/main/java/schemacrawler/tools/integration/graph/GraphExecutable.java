@@ -31,7 +31,8 @@ import schemacrawler.schema.ColumnMap;
 import schemacrawler.schema.Database;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
-import schemacrawler.tools.analysis.associations.AnalyzedDatabase;
+import schemacrawler.tools.analysis.associations.DatabaseWithAssociations;
+import schemacrawler.tools.analysis.associations.SimpleWeakAssociationsCollector;
 import schemacrawler.tools.executable.BaseExecutable;
 import schemacrawler.tools.options.InfoLevel;
 import sf.util.Utility;
@@ -73,7 +74,7 @@ public final class GraphExecutable
     final Database database;
     if (infoLevel.ordinal() >= InfoLevel.lint.ordinal())
     {
-      database = new AnalyzedDatabase(db);
+      database = new DatabaseWithAssociations(db);
     }
     else
     {
@@ -87,7 +88,7 @@ public final class GraphExecutable
       for (final Table table: schema.getTables())
       {
         tables.add(table);
-        weakAssociations.addAll(Arrays.asList(AnalyzedDatabase
+        weakAssociations.addAll(Arrays.asList(SimpleWeakAssociationsCollector
           .getWeakAssociations(table)));
       }
     }

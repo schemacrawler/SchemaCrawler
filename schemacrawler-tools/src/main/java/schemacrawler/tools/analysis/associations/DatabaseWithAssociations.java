@@ -25,7 +25,6 @@ import java.util.List;
 import java.util.Map;
 
 import schemacrawler.schema.ColumnDataType;
-import schemacrawler.schema.ColumnMap;
 import schemacrawler.schema.Database;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.JdbcDriverInfo;
@@ -34,28 +33,16 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaCrawlerInfo;
 import schemacrawler.schema.Table;
 
-public final class AnalyzedDatabase
+public final class DatabaseWithAssociations
   implements Database
 {
 
   private static final long serialVersionUID = -3953296149824921463L;
 
-  public static final ColumnMap[] getWeakAssociations(final Table table)
-  {
-    if (table == null)
-    {
-      return null;
-    }
-    else
-    {
-      return table.getAttribute(WeakAssociationsAnalyzer.WEAK_ASSOCIATIONS_KEY,
-                                new ColumnMap[0]);
-    }
-  }
-
   private final Database database;
+  private final WeakAssociationsCollector collector;
 
-  public AnalyzedDatabase(final Database database)
+  public DatabaseWithAssociations(final Database database)
   {
     if (database == null)
     {
@@ -71,7 +58,9 @@ public final class AnalyzedDatabase
         allTables.add(table);
       }
     }
-    final WeakAssociationsAnalyzer weakAssociationsAnalyzer = new WeakAssociationsAnalyzer(allTables);
+    collector = new SimpleWeakAssociationsCollector();
+    final WeakAssociationsAnalyzer weakAssociationsAnalyzer = new WeakAssociationsAnalyzer(allTables,
+                                                                                           collector);
     weakAssociationsAnalyzer.analyzeTables();
 
   }
@@ -98,6 +87,11 @@ public final class AnalyzedDatabase
   public Map<String, Object> getAttributes()
   {
     return database.getAttributes();
+  }
+
+  public WeakAssociationsCollector getCollector()
+  {
+    return collector;
   }
 
   @Override

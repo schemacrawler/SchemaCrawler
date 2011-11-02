@@ -36,17 +36,13 @@ final class SchemaCrawlerHelpCommandLine
 
   private static void showHelp(final String helpResource)
   {
-    final String helpResourceName;
     if (sf.util.Utility.isBlank(helpResource)
         || SchemaCrawlerHelpCommandLine.class.getResource(helpResource) == null)
     {
-      helpResourceName = "/help/DefaultExecutable.txt";
+      return;
     }
-    else
-    {
-      helpResourceName = helpResource;
-    }
-    final String helpText = Utility.readResourceFully(helpResourceName);
+
+    final String helpText = Utility.readResourceFully(helpResource);
     System.out.println(helpText);
   }
 
@@ -108,6 +104,12 @@ final class SchemaCrawlerHelpCommandLine
   public void execute()
     throws SchemaCrawlerException
   {
+    final CommandRegistry commandRegistry = new CommandRegistry();
+    if (command != null && !commandRegistry.hasCommand(command))
+    {
+      throw new SchemaCrawlerException("Unknown command, " + command);
+    }
+
     System.out.println(helpOptions.getTitle());
     showHelp("/help/SchemaCrawler.txt");
     System.out.println();
@@ -119,7 +121,6 @@ final class SchemaCrawlerHelpCommandLine
       showHelp("/help/Config.txt");
     }
     showHelp("/help/ApplicationOptions.txt");
-    final CommandRegistry commandRegistry = new CommandRegistry();
     if (command == null)
     {
       showHelp("/help/Command.txt");
@@ -133,12 +134,7 @@ final class SchemaCrawlerHelpCommandLine
     }
     else
     {
-      final String commandExecutableClassName = commandRegistry
-        .getHelpResource(command);
-      final String helpResource = "/help/"
-                                  + commandExecutableClassName
-                                    .substring(commandExecutableClassName
-                                      .lastIndexOf('.') + 1) + ".txt";
+      final String helpResource = commandRegistry.getHelpResource(command);
       showHelp(helpResource);
     }
 

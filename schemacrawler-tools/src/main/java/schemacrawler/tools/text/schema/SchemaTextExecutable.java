@@ -32,7 +32,7 @@ import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.analysis.associations.AnalyzedDatabase;
+import schemacrawler.tools.analysis.associations.DatabaseWithAssociations;
 import schemacrawler.tools.analysis.lint.LintedDatabase;
 import schemacrawler.tools.executable.BaseExecutable;
 import schemacrawler.tools.options.InfoLevel;
@@ -124,7 +124,7 @@ public final class SchemaTextExecutable
     Database database = db;
     if (infoLevel.ordinal() >= InfoLevel.lint.ordinal())
     {
-      database = new AnalyzedDatabase(database);
+      database = new DatabaseWithAssociations(database);
       database = new LintedDatabase(database);
     }
 

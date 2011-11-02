@@ -44,7 +44,7 @@ import schemacrawler.schema.Table;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.analysis.associations.AnalyzedDatabase;
+import schemacrawler.tools.analysis.associations.SimpleWeakAssociationsCollector;
 import schemacrawler.tools.analysis.lint.Lint;
 import schemacrawler.tools.analysis.lint.SimpleLintCollector;
 import schemacrawler.tools.options.OutputOptions;
@@ -485,7 +485,7 @@ final class SchemaTextFormatter
   private void printWeakAssociations(final Table table)
   {
     final String tableName = table.getName();
-    final ColumnMap[] weakAssociations = AnalyzedDatabase
+    final ColumnMap[] weakAssociations = SimpleWeakAssociationsCollector
       .getWeakAssociations(table);
     for (final ColumnMap weakAssociation: weakAssociations)
     {

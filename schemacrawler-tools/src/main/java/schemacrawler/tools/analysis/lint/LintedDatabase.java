@@ -22,6 +22,8 @@ package schemacrawler.tools.analysis.lint;
 
 import java.util.Map;
 import java.util.ServiceLoader;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Database;
@@ -35,10 +37,13 @@ public final class LintedDatabase
   implements Database
 {
 
+  private static final Logger LOGGER = Logger.getLogger(LintedDatabase.class
+    .getName());
+
   private static final long serialVersionUID = -3953296149824921463L;
 
   private final Database database;
-  private final LintCollector lintCollector;
+  private final LintCollector collector;
 
   public LintedDatabase(final Database database)
   {
@@ -48,11 +53,13 @@ public final class LintedDatabase
     }
     this.database = database;
 
-    lintCollector = new SimpleLintCollector();
+    collector = new SimpleLintCollector();
     final ServiceLoader<Linter> lintLoaders = ServiceLoader.load(Linter.class);
     for (final Linter linter: lintLoaders)
     {
-      linter.setLintCollector(lintCollector);
+      LOGGER.log(Level.FINE,
+                 String.format("Linting with ", linter.getClass().getName()));
+      linter.setLintCollector(collector);
       linter.lint(database);
     }
 
@@ -82,6 +89,11 @@ public final class LintedDatabase
     return database.getAttributes();
   }
 
+  public LintCollector getCollector()
+  {
+    return collector;
+  }
+
   @Override
   public DatabaseInfo getDatabaseInfo()
   {
@@ -98,11 +110,6 @@ public final class LintedDatabase
   public JdbcDriverInfo getJdbcDriverInfo()
   {
     return database.getJdbcDriverInfo();
-  }
-
-  public LintCollector getLintCollector()
-  {
-    return lintCollector;
   }
 
   @Override

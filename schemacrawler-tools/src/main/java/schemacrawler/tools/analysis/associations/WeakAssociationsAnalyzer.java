@@ -49,28 +49,50 @@ final class WeakAssociationsAnalyzer
   private static final Logger LOGGER = Logger
     .getLogger(WeakAssociationsAnalyzer.class.getName());
 
-  static final String WEAK_ASSOCIATIONS_KEY = "weak associations";
-
   private final List<Table> tables;
-  private final Map<String, List<ColumnMap>> weakAssociationsMap;
+  private final WeakAssociationsCollector collector;
 
-  WeakAssociationsAnalyzer(final List<Table> tables)
+  WeakAssociationsAnalyzer(final List<Table> tables,
+                           final WeakAssociationsCollector collector)
   {
     this.tables = tables;
-    weakAssociationsMap = new HashMap<String, List<ColumnMap>>();
+    this.collector = collector;
   }
 
-  private void addWeakAssociation(final Table table,
-                                  final ColumnMap weakAssociation)
+  void analyzeTables()
   {
-    List<ColumnMap> weakAssociations = weakAssociationsMap.get(table
-      .getFullName());
-    if (weakAssociations == null)
+    if (tables == null || tables.size() < 3)
     {
-      weakAssociations = new ArrayList<ColumnMap>();
-      weakAssociationsMap.put(table.getFullName(), weakAssociations);
+      return;
     }
-    weakAssociations.add(weakAssociation);
+
+    final Collection<String> prefixes = findTableNamePrefixes(tables);
+    final Map<String, Table> tableMatchMap = mapTableNameMatches(tables,
+                                                                 prefixes);
+    if (LOGGER.isLoggable(Level.FINE))
+    {
+      LOGGER.log(Level.FINE, "Table prefixes=" + prefixes);
+      LOGGER.log(Level.FINE,
+                 "Table matches map:" + ObjectToString.toString(tableMatchMap));
+    }
+
+    final Map<String, ForeignKeyColumnMap> fkColumnsMap = mapForeignKeyColumns(tables);
+
+    findWeakAssociations(tables, tableMatchMap, fkColumnsMap);
+  }
+
+  private void addWeakAssociation(final Column fkColumn, final Column pkColumn)
+  {
+    LOGGER.log(Level.FINE,
+               String.format("Found weak association: %s --> %s",
+                             fkColumn.getFullName(),
+                             pkColumn.getFullName()));
+    if (collector != null)
+    {
+      final ColumnMap weakAssociation = new WeakAssociation(pkColumn, fkColumn);
+      collector.addWeakAssociation(pkColumn.getParent(), weakAssociation);
+      collector.addWeakAssociation(fkColumn.getParent(), weakAssociation);
+    }
   }
 
   /**
@@ -226,26 +248,11 @@ final class WeakAssociationsAnalyzer
               if (pkColumnType != null && fkColumnType != null
                   && fkColumnType.getType() == pkColumnType.getType())
               {
-                LOGGER.log(Level.FINE, String
-                  .format("Found weak association: %s --> %s",
-                          fkColumn.getFullName(),
-                          pkColumn.getFullName()));
-                final ColumnMap weakAssociation = new WeakAssociation(pkColumn,
-                                                                      fkColumn);
-                addWeakAssociation(pkColumn.getParent(), weakAssociation);
-                addWeakAssociation(fkColumn.getParent(), weakAssociation);
+                addWeakAssociation(fkColumn, pkColumn);
               }
             }
           }
         }
-      }
-
-      final List<ColumnMap> weakAssociations = weakAssociationsMap.get(table
-        .getFullName());
-      if (weakAssociations != null)
-      {
-        table.setAttribute(WEAK_ASSOCIATIONS_KEY, weakAssociations
-          .toArray(new ColumnMap[weakAssociations.size()]));
       }
     }
   }
@@ -314,28 +321,6 @@ final class WeakAssociationsAnalyzer
     }
     matchMap.remove("");
     return matchMap;
-  }
-
-  void analyzeTables()
-  {
-    if (tables == null || tables.size() < 3)
-    {
-      return;
-    }
-
-    final Collection<String> prefixes = findTableNamePrefixes(tables);
-    final Map<String, Table> tableMatchMap = mapTableNameMatches(tables,
-                                                                 prefixes);
-    if (LOGGER.isLoggable(Level.FINE))
-    {
-      LOGGER.log(Level.FINE, "Table prefixes=" + prefixes);
-      LOGGER.log(Level.FINE,
-                 "Table matches map:" + ObjectToString.toString(tableMatchMap));
-    }
-
-    final Map<String, ForeignKeyColumnMap> fkColumnsMap = mapForeignKeyColumns(tables);
-
-    findWeakAssociations(tables, tableMatchMap, fkColumnsMap);
   }
 
 }

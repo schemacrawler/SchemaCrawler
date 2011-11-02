@@ -666,10 +666,16 @@
       "remarks": "Details for published books",
       "lints": [],
       "type": "table",
-      "weakAssociations": [{
-        "pkColumn": "PUBLIC.BOOKS.PUBLISHERS.ID",
-        "fkColumn": "PUBLIC.BOOKS.BOOKS.PUBLISHERID"
-      }],
+      "weakAssociations": [
+        {
+          "pkColumn": "PUBLIC.BOOKS.BOOKS.ID",
+          "fkColumn": "PUBLIC.\"PUBLISHER SALES\".SALES.BOOKID"
+        },
+        {
+          "pkColumn": "PUBLIC.BOOKS.PUBLISHERS.ID",
+          "fkColumn": "PUBLIC.BOOKS.BOOKS.PUBLISHERID"
+        }
+      ],
       "name": "BOOKS",
       "primaryKey": {
         "unique": true,

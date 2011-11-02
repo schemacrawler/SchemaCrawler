@@ -43,7 +43,7 @@ import schemacrawler.schema.Table;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.analysis.associations.AnalyzedDatabase;
+import schemacrawler.tools.analysis.associations.SimpleWeakAssociationsCollector;
 import schemacrawler.tools.analysis.lint.Lint;
 import schemacrawler.tools.analysis.lint.SimpleLintCollector;
 import schemacrawler.tools.options.OutputOptions;
@@ -200,7 +200,7 @@ final class SchemaJsonFormatter
 
         if (isVerbose)
         {
-          final ColumnMap[] weakAssociations = AnalyzedDatabase
+          final ColumnMap[] weakAssociations = SimpleWeakAssociationsCollector
             .getWeakAssociations(table);
           jsonTable
             .put("weakAssociations", handleColumnPairs(weakAssociations));

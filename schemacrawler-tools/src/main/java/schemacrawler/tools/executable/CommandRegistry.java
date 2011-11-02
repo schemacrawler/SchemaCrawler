@@ -110,15 +110,6 @@ public final class CommandRegistry
     commandRegistry = loadCommandRegistry();
   }
 
-  public String[] lookupAvailableCommands()
-  {
-    final Set<String> availableCommandsList = commandRegistry.keySet();
-    final String[] availableCommands = availableCommandsList
-      .toArray(new String[availableCommandsList.size()]);
-    Arrays.sort(availableCommands);
-    return availableCommands;
-  }
-
   public String getHelpResource(final String command)
   {
     final String helpResource;
@@ -132,6 +123,20 @@ public final class CommandRegistry
     }
 
     return helpResource;
+  }
+
+  public boolean hasCommand(String command)
+  {
+    return commandRegistry.containsKey(command);
+  }
+
+  public String[] lookupAvailableCommands()
+  {
+    final Set<String> availableCommandsList = commandRegistry.keySet();
+    final String[] availableCommands = availableCommandsList
+      .toArray(new String[availableCommandsList.size()]);
+    Arrays.sort(availableCommands);
+    return availableCommands;
   }
 
   Executable newExecutable(final String command)
