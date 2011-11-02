@@ -9,6 +9,8 @@ public interface LintCollector
   extends Iterable<Lint>
 {
 
+  final String LINT_KEY = "schemacrawler.lints";
+
   void addLint(final Column column, final Lint lint);
 
   void addLint(final Database database, final Lint lint);

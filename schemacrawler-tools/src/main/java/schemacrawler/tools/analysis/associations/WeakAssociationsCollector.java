@@ -17,25 +17,26 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.tools.analysis.lint;
+package schemacrawler.tools.analysis.associations;
 
 
-import java.io.Serializable;
+import schemacrawler.schema.ColumnMap;
+import schemacrawler.schema.Table;
 
-public interface Lint
-  extends Serializable, Comparable<Lint>
+public interface WeakAssociationsCollector
+  extends Iterable<ColumnMap>
 {
 
-  String getId();
+  final String WEAK_ASSOCIATIONS_KEY = "schemacrawler.weak_associations";
 
-  String getMessage();
+  void addWeakAssociation(final Table table, final ColumnMap weakAssociation);
 
-  String getObjectName();
+  void clear();
 
-  LintSeverity getSeverity();
+  boolean isEmpty();
 
-  Object getValue();
+  int size();
 
-  String getValueAsString();
+  ColumnMap[] toArray();
 
 }

@@ -20,17 +20,22 @@
 package schemacrawler.tools.analysis.lint;
 
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Database;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 
-abstract class BaseLinter
+public abstract class BaseLinter
   implements Linter
 {
 
-  private LintCollector lintCollector;
+  private static final Logger LOGGER = Logger.getLogger(BaseLinter.class
+    .getName());
 
+  private LintCollector collector;
   private LintSeverity severity = LintSeverity.medium;
 
   @Override
@@ -42,7 +47,7 @@ abstract class BaseLinter
   @Override
   public LintCollector getLintCollector()
   {
-    return lintCollector;
+    return collector;
   }
 
   @Override
@@ -66,7 +71,7 @@ abstract class BaseLinter
   @Override
   public void setLintCollector(final LintCollector lintCollector)
   {
-    this.lintCollector = lintCollector;
+    collector = lintCollector;
   }
 
   @Override
@@ -77,6 +82,53 @@ abstract class BaseLinter
       this.severity = severity;
     }
   }
+
+  protected void addLint(final Column column,
+                         final String message,
+                         final Object value)
+  {
+    LOGGER.log(Level.FINE, String.format("Found column lint for %s: %s --> %s",
+                                         column,
+                                         message,
+                                         value));
+    if (collector != null)
+    {
+      final Lint lint = newLint(column.getFullName(), message, value);
+      collector.addLint(column, lint);
+    }
+  }
+
+  protected void addLint(final Database database,
+                         final String message,
+                         final Object value)
+  {
+    LOGGER.log(Level.FINE,
+               String.format("Found database lint: %s --> %s", message, value));
+    if (collector != null)
+    {
+      final Lint lint = newLint((String) null, message, value);
+      collector.addLint(database, lint);
+    }
+  }
+
+  protected void addLint(final Table table,
+                         final String message,
+                         final Object value)
+  {
+    LOGGER.log(Level.FINE, String.format("Found table lint for %s: %s --> %s",
+                                         table,
+                                         message,
+                                         value));
+    if (collector != null)
+    {
+      final Lint lint = newLint(table.getFullName(), message, value);
+      collector.addLint(table, lint);
+    }
+  }
+
+  protected abstract String convertLintValueToString(Object value);
+
+  protected abstract void lint(Table table);
 
   private Lint newLint(final String objectName,
                        final String message,
@@ -94,42 +146,5 @@ abstract class BaseLinter
       }
     };
   }
-
-  protected void addLint(final Column column,
-                         final String message,
-                         final Object value)
-  {
-    if (lintCollector != null)
-    {
-      final Lint lint = newLint(column.getFullName(), message, value);
-      lintCollector.addLint(column, lint);
-    }
-  }
-
-  protected void addLint(final Database database,
-                         final String message,
-                         final Object value)
-  {
-    if (lintCollector != null)
-    {
-      final Lint lint = newLint((String) null, message, value);
-      lintCollector.addLint(database, lint);
-    }
-  }
-
-  protected void addLint(final Table table,
-                         final String message,
-                         final Object value)
-  {
-    if (lintCollector != null)
-    {
-      final Lint lint = newLint(table.getFullName(), message, value);
-      lintCollector.addLint(table, lint);
-    }
-  }
-
-  protected abstract String convertLintValueToString(Object value);
-
-  protected abstract void lint(Table table);
 
 }

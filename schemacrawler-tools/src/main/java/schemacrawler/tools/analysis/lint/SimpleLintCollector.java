@@ -37,7 +37,12 @@ public class SimpleLintCollector
 
   public static Lint[] getLint(final NamedObject namedObject)
   {
-    final Set<Lint> lints = namedObject.getAttribute(Lint.LINT_KEY,
+    if (namedObject == null)
+    {
+      return null;
+    }
+
+    final Set<Lint> lints = namedObject.getAttribute(LINT_KEY,
                                                      new HashSet<Lint>());
     final Lint[] objectLints = lints.toArray(new Lint[lints.size()]);
     Arrays.sort(objectLints);
@@ -145,9 +150,9 @@ public class SimpleLintCollector
       lints.add(lint);
 
       final Collection<Lint> columnLints = namedObject
-        .getAttribute(Lint.LINT_KEY, new HashSet<Lint>());
+        .getAttribute(LINT_KEY, new HashSet<Lint>());
       columnLints.add(lint);
-      namedObject.setAttribute(Lint.LINT_KEY, columnLints);
+      namedObject.setAttribute(LINT_KEY, columnLints);
     }
   }
 
