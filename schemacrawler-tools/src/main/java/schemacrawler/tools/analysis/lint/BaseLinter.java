@@ -133,16 +133,11 @@ public abstract class BaseLinter
                                                    final String message,
                                                    final V value)
   {
-    return new BaseLint<V>(getId(),
-      objectName,
-      getLintSeverity(),
-      message,
-      value)
-    {
-
-      private static final long serialVersionUID = 3158466712611884766L;
-
-    };
+    return new SimpleLint<V>(getId(),
+                             objectName,
+                             getLintSeverity(),
+                             message,
+                             value);
   }
 
 }

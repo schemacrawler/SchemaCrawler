@@ -20,11 +20,10 @@
 package schemacrawler.tools.analysis.lint;
 
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Set;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Database;
@@ -42,18 +41,18 @@ public class SimpleLintCollector
       return null;
     }
 
-    final Set<Lint<?>> lints = namedObject.getAttribute(LINT_KEY,
-                                                        new HashSet<Lint<?>>());
+    final Collection<Lint<?>> lints = namedObject
+      .getAttribute(LINT_KEY, new ArrayList<Lint<?>>());
     final Lint<?>[] objectLints = lints.toArray(new Lint<?>[lints.size()]);
     Arrays.sort(objectLints);
     return objectLints;
   }
 
-  private final Set<Lint<?>> lints;
+  private final Collection<Lint<?>> lints;
 
   public SimpleLintCollector()
   {
-    lints = new HashSet<Lint<?>>();
+    lints = new ArrayList<Lint<?>>();
   }
 
   /**
@@ -151,7 +150,7 @@ public class SimpleLintCollector
       lints.add(lint);
 
       final Collection<Lint<?>> columnLints = namedObject
-        .getAttribute(LINT_KEY, new HashSet<Lint<?>>());
+        .getAttribute(LINT_KEY, new ArrayList<Lint<?>>());
       columnLints.add(lint);
       namedObject.setAttribute(LINT_KEY, columnLints);
     }
