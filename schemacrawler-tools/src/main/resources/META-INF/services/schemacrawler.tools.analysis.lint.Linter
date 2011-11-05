@@ -4,3 +4,4 @@ schemacrawler.tools.analysis.lint.LinterTableWithNullColumnsInIndex
 schemacrawler.tools.analysis.lint.LinterTableWithNullIntendedColumns
 schemacrawler.tools.analysis.lint.LinterTableWithSingleColumn
 schemacrawler.tools.analysis.lint.LinterTableWithQuotedNames
+schemacrawler.tools.analysis.lint.LinterTableForeignKeyMismatch

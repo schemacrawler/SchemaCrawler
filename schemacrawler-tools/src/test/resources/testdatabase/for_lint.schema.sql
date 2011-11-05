@@ -12,11 +12,11 @@ CREATE TABLE Authors
   FirstName VARCHAR(20) NOT NULL,
   LastName VARCHAR(20) NOT NULL,
   Address1 VARCHAR(255),
-  Address2 VARCHAR(255),
+  Address2 VARCHAR(255) DEFAULT NULL NOT NULL,
   City VARCHAR(50),
   State VARCHAR(2),
   PostalCode VARCHAR(10),
-  Country VARCHAR(50),
+  Country VARCHAR(50) DEFAULT NULL,
   Phone1 VARCHAR(10),
   Phone2 VARCHAR(15),
   Email1 VARCHAR(10),
@@ -67,4 +67,6 @@ CREATE UNIQUE INDEX UIDX_BookAuthors ON BookAuthors(BookId, AuthorId)
 CREATE INDEX IDX_B_Authors ON Authors(LastName, FirstName)
 ;
 CREATE INDEX IDX_A_Authors ON Authors(City, State, PostalCode, Country)
+;
+CREATE UNIQUE INDEX IDX_U_Authors ON Authors(Email1, Country)
 ;

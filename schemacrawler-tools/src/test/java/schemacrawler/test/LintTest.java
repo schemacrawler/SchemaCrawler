@@ -66,10 +66,16 @@ public class LintTest
     final Database database = testUtility
       .getDatabase(new SchemaCrawlerOptions());
     assertNotNull(database);
+    assertEquals(5, database.getSchemas().length);
+    assertNotNull("FOR_LINT schema not found",
+                  database.getSchema("PUBLIC.FOR_LINT"));
+    assertEquals("FOR_LINT tables not found",
+                 6,
+                 database.getSchema("PUBLIC.FOR_LINT").getTables().length);
 
     final LintedDatabase lintedDatabase = new LintedDatabase(database);
     final LintCollector lintCollector = lintedDatabase.getCollector();
-    assertEquals(10, lintCollector.size());
+    assertEquals(13, lintCollector.size());
 
     final Multimap<String, Lint<?>> lintMap = ArrayListMultimap.create();
     for (final Lint<?> lint: lintCollector)
