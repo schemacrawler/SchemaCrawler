@@ -26,11 +26,6 @@ import schemacrawler.schema.Table;
 public class LinterTableWithSingleColumn
   extends BaseLinter
 {
-  @Override
-  public String convertLintValueToString(final Object value)
-  {
-    return value.toString();
-  }
 
   @Override
   public String getDescription()
@@ -52,7 +47,7 @@ public class LinterTableWithSingleColumn
       final Column[] columns = table.getColumns();
       if (columns.length <= 1)
       {
-        addLint(table, getSummary(), Boolean.TRUE);
+        addLint(table, getSummary(), true);
       }
     }
   }

@@ -183,7 +183,7 @@
       "remarks": "Contact details for book authors",
       "lints": [{
         "description": "incrementing columns",
-        "value": "ADDRESS1, ADDRESS2\r\n"
+        "value": "ADDRESS1, ADDRESS2"
       }],
       "type": "table",
       "weakAssociations": [],

@@ -20,10 +20,17 @@
 package schemacrawler.tools.analysis.lint;
 
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import schemacrawler.schema.NamedObject;
+import sf.util.ObjectToString;
 import sf.util.Utility;
 
-public abstract class BaseLint
-  implements Lint
+public abstract class BaseLint<V extends Serializable>
+  implements Lint<V>
 {
 
   private static final long serialVersionUID = -8627082144974643415L;
@@ -32,13 +39,13 @@ public abstract class BaseLint
   private final String objectName;
   private final LintSeverity severity;
   private final String message;
-  private final Object value;
+  private final V value;
 
   public BaseLint(final String id,
                   final String objectName,
                   final LintSeverity severity,
                   final String message,
-                  final Object value)
+                  final V value)
   {
     if (Utility.isBlank(id))
     {
@@ -175,18 +182,54 @@ public abstract class BaseLint
    * @see schemacrawler.tools.analysis.lint.Lint#getValue()
    */
   @Override
-  public final Object getValue()
+  public final V getValue()
   {
     return value;
   }
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.analysis.lint.Lint#getValueAsString()
-   */
   @Override
-  public abstract String getValueAsString();
+  public String getValueAsString()
+  {
+    if (value != null)
+    {
+      Object valueObject = value;
+
+      final Class<? extends Object> valueClass = value.getClass();
+      if (valueClass.isArray()
+          && NamedObject.class.isAssignableFrom(valueClass.getComponentType()))
+      {
+        valueObject = Arrays.asList(Arrays.copyOf((Object[]) value,
+                                                  ((Object[]) value).length,
+                                                  NamedObject[].class));
+      }
+
+      if (Iterable.class.isAssignableFrom(valueObject.getClass()))
+      {
+        final List<String> list = new ArrayList<String>();
+        for (final Object valuePart: (Iterable<?>) valueObject)
+        {
+          if (valuePart instanceof NamedObject)
+          {
+            list.add(((NamedObject) valuePart).getName());
+          }
+          else
+          {
+            list.add(valuePart.toString());
+          }
+        }
+        valueObject = list;
+      }
+      else
+      {
+        valueObject = value;
+      }
+      return ObjectToString.toString(valueObject);
+    }
+    else
+    {
+      return "";
+    }
+  }
 
   @Override
   public int hashCode()
@@ -203,7 +246,7 @@ public abstract class BaseLint
   @Override
   public String toString()
   {
-    return message + "=" + getValueAsString();
+    return String.format("[%s] %s", objectName, message);
   }
 
 }

@@ -30,30 +30,11 @@ import java.util.regex.Pattern;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
-import sf.util.ObjectToString;
 import sf.util.Utility;
 
 public class LinterTableWithIncrementingColumns
   extends BaseLinter
 {
-
-  @Override
-  public String convertLintValueToString(final Object value)
-  {
-    final StringBuilder buffer = new StringBuilder();
-    for (final List<Column> incrementingColumnsGroup: ((HashMap<String, List<Column>>) value)
-      .values())
-    {
-      final List<String> columnNames = new ArrayList<String>();
-      for (final Column column: incrementingColumnsGroup)
-      {
-        columnNames.add(column.getName());
-      }
-      buffer.append(ObjectToString.toString(columnNames))
-        .append(Utility.NEWLINE);
-    }
-    return buffer.toString();
-  }
 
   @Override
   public String getDescription()
@@ -76,7 +57,13 @@ public class LinterTableWithIncrementingColumns
         .getColumns());
       if (!incrementingColumns.isEmpty())
       {
-        addLint(table, getSummary(), incrementingColumns);
+        for (final List<Column> incrementingColumnsList: incrementingColumns
+          .values())
+        {
+          final Column[] incrementingColumnsArray = incrementingColumnsList
+            .toArray(new Column[incrementingColumnsList.size()]);
+          addLint(table, getSummary(), incrementingColumnsArray);
+        }
       }
     }
   }

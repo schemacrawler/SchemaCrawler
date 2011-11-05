@@ -25,23 +25,11 @@ import java.util.List;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
-import sf.util.ObjectToString;
 import sf.util.Utility;
 
 public class LinterTableWithNullIntendedColumns
   extends BaseLinter
 {
-
-  @Override
-  public String convertLintValueToString(final Object value)
-  {
-    final List<String> columnNames = new ArrayList<String>();
-    for (final Column column: (Column[]) value)
-    {
-      columnNames.add(column.getName());
-    }
-    return ObjectToString.toString(columnNames);
-  }
 
   @Override
   public String getDescription()

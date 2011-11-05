@@ -25,16 +25,10 @@ import java.util.List;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
-import sf.util.ObjectToString;
 
 public class LinterTableWithQuotedNames
   extends BaseLinter
 {
-  @Override
-  public String convertLintValueToString(final Object value)
-  {
-    return ObjectToString.toString(value);
-  }
 
   @Override
   public String getDescription()

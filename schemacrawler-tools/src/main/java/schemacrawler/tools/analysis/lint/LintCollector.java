@@ -6,16 +6,16 @@ import schemacrawler.schema.Database;
 import schemacrawler.schema.Table;
 
 public interface LintCollector
-  extends Iterable<Lint>
+  extends Iterable<Lint<?>>
 {
 
   final String LINT_KEY = "schemacrawler.lints";
 
-  void addLint(final Column column, final Lint lint);
+  void addLint(final Column column, final Lint<?> lint);
 
-  void addLint(final Database database, final Lint lint);
+  void addLint(final Database database, final Lint<?> lint);
 
-  void addLint(final Table table, final Lint lint);
+  void addLint(final Table table, final Lint<?> lint);
 
   void clear();
 
@@ -23,6 +23,6 @@ public interface LintCollector
 
   int size();
 
-  Lint[] toArray();
+  Lint<?>[] toArray();
 
 }

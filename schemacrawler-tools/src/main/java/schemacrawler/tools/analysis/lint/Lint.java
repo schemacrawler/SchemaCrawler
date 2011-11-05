@@ -22,8 +22,8 @@ package schemacrawler.tools.analysis.lint;
 
 import java.io.Serializable;
 
-public interface Lint
-  extends Serializable, Comparable<Lint>
+public interface Lint<V extends Serializable>
+  extends Serializable, Comparable<Lint<?>>
 {
 
   String getId();
@@ -34,7 +34,7 @@ public interface Lint
 
   LintSeverity getSeverity();
 
-  Object getValue();
+  V getValue();
 
   String getValueAsString();
 

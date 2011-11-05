@@ -256,7 +256,7 @@ final class SchemaJsonFormatter
         if (isVerbose)
         {
           jsonTable.put("remarks", table.getRemarks());
-          final Lint[] lints = SimpleLintCollector.getLint(table);
+          final Lint<?>[] lints = SimpleLintCollector.getLint(table);
           jsonTable.put("lints", handleLint(lints));
         }
       }
@@ -399,12 +399,12 @@ final class SchemaJsonFormatter
     return jsonIndex;
   }
 
-  private JSONArray handleLint(final Lint[] lints)
+  private JSONArray handleLint(final Lint<?>[] lints)
   {
     final JSONArray jsonLints = new JSONArray();
     if (lints != null && lints.length > 0)
     {
-      for (final Lint lint: lints)
+      for (final Lint<?> lint: lints)
       {
         try
         {
