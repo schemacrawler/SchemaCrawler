@@ -29,7 +29,7 @@ import schemacrawler.schema.NamedObject;
 import sf.util.ObjectToString;
 import sf.util.Utility;
 
-public abstract class BaseLint<V extends Serializable>
+public final class SimpleLint<V extends Serializable>
   implements Lint<V>
 {
 
@@ -41,11 +41,11 @@ public abstract class BaseLint<V extends Serializable>
   private final String message;
   private final V value;
 
-  public BaseLint(final String id,
-                  final String objectName,
-                  final LintSeverity severity,
-                  final String message,
-                  final V value)
+  public SimpleLint(final String id,
+                    final String objectName,
+                    final LintSeverity severity,
+                    final String message,
+                    final V value)
   {
     if (Utility.isBlank(id))
     {
@@ -76,10 +76,10 @@ public abstract class BaseLint<V extends Serializable>
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.analysis.lint.Lint#compareTo(schemacrawler.tools.analysis.lint.BaseLint)
+   * @see schemacrawler.tools.analysis.lint.Lint#compareTo(schemacrawler.tools.analysis.lint.SimpleLint)
    */
   @Override
-  public final int compareTo(final Lint lint)
+  public final int compareTo(final Lint<?> lint)
   {
     if (lint == null)
     {
@@ -102,45 +102,45 @@ public abstract class BaseLint<V extends Serializable>
     {
       return false;
     }
-    if (!(obj instanceof BaseLint))
+    if (!(obj instanceof Lint<?>))
     {
       return false;
     }
-    final BaseLint other = (BaseLint) obj;
+    final Lint<?> other = (Lint<?>) obj;
     if (id == null)
     {
-      if (other.id != null)
+      if (other.getId() != null)
       {
         return false;
       }
     }
-    else if (!id.equals(other.id))
+    else if (!id.equals(other.getId()))
     {
       return false;
     }
     if (message == null)
     {
-      if (other.message != null)
+      if (other.getMessage() != null)
       {
         return false;
       }
     }
-    else if (!message.equals(other.message))
+    else if (!message.equals(other.getMessage()))
     {
       return false;
     }
     if (objectName == null)
     {
-      if (other.objectName != null)
+      if (other.getObjectName() != null)
       {
         return false;
       }
     }
-    else if (!objectName.equals(other.objectName))
+    else if (!objectName.equals(other.getObjectName()))
     {
       return false;
     }
-    if (severity != other.severity)
+    if (severity != other.getSeverity())
     {
       return false;
     }
