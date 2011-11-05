@@ -35,25 +35,25 @@ public class SimpleLintCollector
   implements LintCollector
 {
 
-  public static Lint[] getLint(final NamedObject namedObject)
+  public static Lint<?>[] getLint(final NamedObject namedObject)
   {
     if (namedObject == null)
     {
       return null;
     }
 
-    final Set<Lint> lints = namedObject.getAttribute(LINT_KEY,
-                                                     new HashSet<Lint>());
-    final Lint[] objectLints = lints.toArray(new Lint[lints.size()]);
+    final Set<Lint<?>> lints = namedObject.getAttribute(LINT_KEY,
+                                                        new HashSet<Lint<?>>());
+    final Lint<?>[] objectLints = lints.toArray(new Lint<?>[lints.size()]);
     Arrays.sort(objectLints);
     return objectLints;
   }
 
-  private final Set<Lint> lints;
+  private final Set<Lint<?>> lints;
 
   public SimpleLintCollector()
   {
-    lints = new HashSet<Lint>();
+    lints = new HashSet<Lint<?>>();
   }
 
   /**
@@ -63,7 +63,7 @@ public class SimpleLintCollector
    *      schemacrawler.tools.analysis.lint.Lint)
    */
   @Override
-  public void addLint(final Column column, final Lint lint)
+  public void addLint(final Column column, final Lint<?> lint)
   {
     addNamedObjectLint(column, lint);
   }
@@ -75,7 +75,7 @@ public class SimpleLintCollector
    *      schemacrawler.tools.analysis.lint.Lint)
    */
   @Override
-  public void addLint(final Database database, final Lint lint)
+  public void addLint(final Database database, final Lint<?> lint)
   {
     addNamedObjectLint(database, lint);
   }
@@ -87,7 +87,7 @@ public class SimpleLintCollector
    *      schemacrawler.tools.analysis.lint.Lint)
    */
   @Override
-  public void addLint(final Table table, final Lint lint)
+  public void addLint(final Table table, final Lint<?> lint)
   {
     addNamedObjectLint(table, lint);
   }
@@ -115,7 +115,7 @@ public class SimpleLintCollector
   }
 
   @Override
-  public Iterator<Lint> iterator()
+  public Iterator<Lint<?>> iterator()
   {
     return lints.iterator();
   }
@@ -137,20 +137,21 @@ public class SimpleLintCollector
    * @see schemacrawler.tools.analysis.lint.LintCollector#toArray()
    */
   @Override
-  public Lint[] toArray()
+  public Lint<?>[] toArray()
   {
-    return lints.toArray(new Lint[lints.size()]);
+    return lints.toArray(new Lint<?>[lints.size()]);
   }
 
-  private void addNamedObjectLint(final NamedObject namedObject, final Lint lint)
+  private void addNamedObjectLint(final NamedObject namedObject,
+                                  final Lint<?> lint)
   {
     if (namedObject != null && lint != null
         && namedObject.getFullName().equals(lint.getObjectName()))
     {
       lints.add(lint);
 
-      final Collection<Lint> columnLints = namedObject
-        .getAttribute(LINT_KEY, new HashSet<Lint>());
+      final Collection<Lint<?>> columnLints = namedObject
+        .getAttribute(LINT_KEY, new HashSet<Lint<?>>());
       columnLints.add(lint);
       namedObject.setAttribute(LINT_KEY, columnLints);
     }

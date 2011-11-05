@@ -121,8 +121,11 @@ public class TestDatabase
    * 
    * @param dataSource
    *        Datasource
+   * @param schemas
+   *        Schema names
    */
-  private static void setupSchema(final DatabaseConnectionOptions dataSource)
+  private static void setupSchema(final DatabaseConnectionOptions dataSource,
+                                  final String... schemas)
   {
     Connection connection = null;
     Statement statement = null;
@@ -133,9 +136,7 @@ public class TestDatabase
         connection = dataSource.getConnection();
         connection.setAutoCommit(true);
         statement = connection.createStatement();
-        for (final String schema: new String[] {
-            "books", "publisher sales",
-        })
+        for (final String schema: schemas)
         {
           for (final String scriptType: new String[] {
               "pre_schema", "schema", "post_schema", "data",
@@ -191,7 +192,21 @@ public class TestDatabase
     }
   }
 
+  private final String[] schemas;
+
   private DatabaseConnectionOptions connectionOptions;
+
+  public TestDatabase()
+  {
+    schemas = new String[] {
+        "books", "publisher sales",
+    };
+  }
+
+  public TestDatabase(final String... schemas)
+  {
+    this.schemas = schemas;
+  }
 
   /**
    * Gets the connection.
@@ -334,7 +349,7 @@ public class TestDatabase
     throws SchemaCrawlerException
   {
     makeDataSource(url);
-    setupSchema(connectionOptions);
+    setupSchema(connectionOptions, schemas);
   }
 
   private void makeDataSource(final String url)

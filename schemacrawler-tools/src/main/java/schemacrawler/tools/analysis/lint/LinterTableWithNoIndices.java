@@ -29,12 +29,6 @@ public class LinterTableWithNoIndices
 {
 
   @Override
-  public String convertLintValueToString(final Object value)
-  {
-    return value.toString();
-  }
-
-  @Override
   public String getDescription()
   {
     return getSummary();
@@ -54,7 +48,7 @@ public class LinterTableWithNoIndices
       final Index[] indices = table.getIndices();
       if (table.getPrimaryKey() == null && indices.length == 0)
       {
-        addLint(table, getSummary(), Boolean.TRUE);
+        addLint(table, getSummary(), true);
       }
     }
   }

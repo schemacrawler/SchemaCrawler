@@ -20,6 +20,7 @@
 package schemacrawler.tools.analysis.lint;
 
 
+import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -83,9 +84,9 @@ public abstract class BaseLinter
     }
   }
 
-  protected void addLint(final Column column,
-                         final String message,
-                         final Object value)
+  protected <V extends Serializable> void addLint(final Column column,
+                                                  final String message,
+                                                  final V value)
   {
     LOGGER.log(Level.FINE, String.format("Found column lint for %s: %s --> %s",
                                          column,
@@ -93,27 +94,27 @@ public abstract class BaseLinter
                                          value));
     if (collector != null)
     {
-      final Lint lint = newLint(column.getFullName(), message, value);
+      final Lint<V> lint = newLint(column.getFullName(), message, value);
       collector.addLint(column, lint);
     }
   }
 
-  protected void addLint(final Database database,
-                         final String message,
-                         final Object value)
+  protected <V extends Serializable> void addLint(final Database database,
+                                                  final String message,
+                                                  final V value)
   {
     LOGGER.log(Level.FINE,
                String.format("Found database lint: %s --> %s", message, value));
     if (collector != null)
     {
-      final Lint lint = newLint((String) null, message, value);
+      final Lint<V> lint = newLint((String) null, message, value);
       collector.addLint(database, lint);
     }
   }
 
-  protected void addLint(final Table table,
-                         final String message,
-                         final Object value)
+  protected <V extends Serializable> void addLint(final Table table,
+                                                  final String message,
+                                                  final V value)
   {
     LOGGER.log(Level.FINE, String.format("Found table lint for %s: %s --> %s",
                                          table,
@@ -121,29 +122,26 @@ public abstract class BaseLinter
                                          value));
     if (collector != null)
     {
-      final Lint lint = newLint(table.getFullName(), message, value);
+      final Lint<V> lint = newLint(table.getFullName(), message, value);
       collector.addLint(table, lint);
     }
   }
 
-  protected abstract String convertLintValueToString(Object value);
-
   protected abstract void lint(Table table);
 
-  private Lint newLint(final String objectName,
-                       final String message,
-                       final Object value)
+  private <V extends Serializable> Lint<V> newLint(final String objectName,
+                                                   final String message,
+                                                   final V value)
   {
-    return new BaseLint(getId(), objectName, getLintSeverity(), message, value)
+    return new BaseLint<V>(getId(),
+      objectName,
+      getLintSeverity(),
+      message,
+      value)
     {
 
       private static final long serialVersionUID = 3158466712611884766L;
 
-      @Override
-      public String getValueAsString()
-      {
-        return convertLintValueToString(getValue());
-      }
     };
   }
 

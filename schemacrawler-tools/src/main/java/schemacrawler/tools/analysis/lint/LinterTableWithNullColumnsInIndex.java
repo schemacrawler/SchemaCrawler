@@ -26,22 +26,10 @@ import java.util.List;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.Table;
-import sf.util.ObjectToString;
 
 public class LinterTableWithNullColumnsInIndex
   extends BaseLinter
 {
-
-  @Override
-  public String convertLintValueToString(final Object value)
-  {
-    final List<String> indexNames = new ArrayList<String>();
-    for (final Index index: (Index[]) value)
-    {
-      indexNames.add(index.getName());
-    }
-    return ObjectToString.toString(indexNames);
-  }
 
   @Override
   public String getDescription()

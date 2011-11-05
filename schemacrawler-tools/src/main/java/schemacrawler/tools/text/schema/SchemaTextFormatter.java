@@ -296,12 +296,12 @@ final class SchemaTextFormatter
 
   private void printLint(final Table table)
   {
-    final Lint[] lints = SimpleLintCollector.getLint(table);
+    final Lint<?>[] lints = SimpleLintCollector.getLint(table);
     if (lints != null && lints.length > 0)
     {
       out.println(formattingHelper.createEmptyRow());
       out.println(formattingHelper.createNameRow("", "[lint]", false));
-      for (final Lint lint: lints)
+      for (final Lint<?> lint: lints)
       {
         final Object lintValue = lint.getValue();
         if (lintValue instanceof Boolean)
@@ -316,7 +316,7 @@ final class SchemaTextFormatter
         {
           out
             .println(formattingHelper.createDescriptionRow(lint.getMessage()
-                                                           + Utility.NEWLINE
+                                                           + ": "
                                                            + lint
                                                              .getValueAsString()));
         }

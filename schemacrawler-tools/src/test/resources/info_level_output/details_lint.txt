@@ -496,9 +496,7 @@ TRG_AUTHORS                             [trigger, after delete, per row]
 Contact details for book authors
 
                                                                   [lint]
-  incrementing columns
-ADDRESS1, ADDRESS2
-
+  incrementing columns: ADDRESS1, ADDRESS2
 
 
 PUBLIC.BOOKS.AUTHORSLIST                                          [view]
@@ -579,8 +577,7 @@ UPDATE                                                       [privilege]
 Relationship between books and their authors, along with the latest updated information
 
                                                                   [lint]
-  spaces in names, or reserved words
-"UPDATE"
+  spaces in names, or reserved words: "UPDATE"
 
 
 PUBLIC.BOOKS.BOOKS                                               [table]
@@ -662,8 +659,7 @@ UPDATE                                                       [privilege]
 
                                                                   [lint]
   no indices
-  spaces in names, or reserved words
-"Global Counts", "Global Count"
+  spaces in names, or reserved words: "Global Counts", "Global Count"
   single column
 
 
