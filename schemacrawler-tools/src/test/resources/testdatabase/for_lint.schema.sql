@@ -22,7 +22,9 @@ CREATE TABLE Authors
   Email1 VARCHAR(10),
   Email2 INT,
   Fax VARCHAR(10),
-  Fax2 INT,
+  Fax3 INT,
+  HomeEmail11 VARCHAR(10),
+  HomeEmail12 VARCHAR(10),
   CONSTRAINT PK_Authors PRIMARY KEY (Id),
   CONSTRAINT CHECK_UPPERCASE_State CHECK (State=UPPER(State))
 )

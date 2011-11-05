@@ -23,7 +23,9 @@ package schemacrawler.tools.analysis.lint;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Database;
@@ -48,7 +50,7 @@ public class SimpleLintCollector
     return objectLints;
   }
 
-  private final Collection<Lint<?>> lints;
+  private final List<Lint<?>> lints;
 
   public SimpleLintCollector()
   {
@@ -116,6 +118,7 @@ public class SimpleLintCollector
   @Override
   public Iterator<Lint<?>> iterator()
   {
+    Collections.sort(lints);
     return lints.iterator();
   }
 

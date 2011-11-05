@@ -24,6 +24,9 @@ package schemacrawler.test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -34,10 +37,6 @@ import schemacrawler.tools.analysis.lint.Lint;
 import schemacrawler.tools.analysis.lint.LintCollector;
 import schemacrawler.tools.analysis.lint.LintedDatabase;
 import schemacrawler.utility.TestDatabase;
-import sf.util.ObjectToString;
-
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.Multimap;
 
 public class LintTest
 {
@@ -75,13 +74,13 @@ public class LintTest
 
     final LintedDatabase lintedDatabase = new LintedDatabase(database);
     final LintCollector lintCollector = lintedDatabase.getCollector();
-    assertEquals(13, lintCollector.size());
+    assertEquals(18, lintCollector.size());
 
-    final Multimap<String, Lint<?>> lintMap = ArrayListMultimap.create();
-    for (final Lint<?> lint: lintCollector)
+    PrintWriter writer = new PrintWriter(new StringWriter());
+    for (Lint<?> lint: lintCollector)
     {
-      System.out.println(ObjectToString.toString(lint));
-      lintMap.put(lint.getId(), lint);
+      System.out.println(lint);
+      writer.println(lint);
     }
   }
 
