@@ -85,10 +85,21 @@ public final class SimpleLint<V extends Serializable>
     {
       return -1;
     }
-    else
+
+    int compareTo = 0;
+    compareTo = objectName.compareTo(lint.getObjectName());
+    if (compareTo != 0)
     {
-      return id.compareTo(lint.getId());
+      return compareTo;
     }
+    compareTo = id.compareTo(lint.getId());
+    if (compareTo != 0)
+    {
+      return compareTo;
+    }
+    compareTo = message.compareTo(lint.getMessage());
+
+    return compareTo;
   }
 
   @Override
@@ -246,7 +257,16 @@ public final class SimpleLint<V extends Serializable>
   @Override
   public String toString()
   {
-    return String.format("[%s] %s", objectName, message);
+    final String valueString;
+    if (value != null && !(value instanceof Boolean))
+    {
+      valueString = ": " + getValueAsString();
+    }
+    else
+    {
+      valueString = "";
+    }
+    return String.format("[%s] %s%s", objectName, message, valueString);
   }
 
 }
