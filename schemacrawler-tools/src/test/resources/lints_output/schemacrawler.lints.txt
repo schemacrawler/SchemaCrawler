@@ -1,0 +1,18 @@
+[PUBLIC.FOR_LINT."Global Counts"] no indices
+[PUBLIC.FOR_LINT."Global Counts"] spaces in names, or reserved words: "Global Counts", "Global Count"
+[PUBLIC.FOR_LINT."Global Counts"] single column
+[PUBLIC.FOR_LINT.AUTHORS] incrementing columns: PHONE1, PHONE2
+[PUBLIC.FOR_LINT.AUTHORS] incrementing columns: FAX, FAX3
+[PUBLIC.FOR_LINT.AUTHORS] incrementing columns: ADDRESS1, ADDRESS2
+[PUBLIC.FOR_LINT.AUTHORS] incrementing columns: EMAIL1, EMAIL2
+[PUBLIC.FOR_LINT.AUTHORS] incrementing columns: HOMEEMAIL11, HOMEEMAIL12
+[PUBLIC.FOR_LINT.AUTHORS] incrementing columns are not consecutive: FAX, FAX3
+[PUBLIC.FOR_LINT.AUTHORS] incrementing columns don't have the same data-type: PHONE1, PHONE2
+[PUBLIC.FOR_LINT.AUTHORS] incrementing columns don't have the same data-type: FAX, FAX3
+[PUBLIC.FOR_LINT.AUTHORS] incrementing columns don't have the same data-type: EMAIL1, EMAIL2
+[PUBLIC.FOR_LINT.AUTHORS] unique indices with nullable columns: IDX_U_AUTHORS
+[PUBLIC.FOR_LINT.AUTHORS] columns where NULL may be intended: ADDRESS2, COUNTRY
+[PUBLIC.FOR_LINT.BOOKAUTHORS] foreign key and primary key have different data types: FK_Y_BOOK
+[PUBLIC.FOR_LINT.BOOKAUTHORS] spaces in names, or reserved words: "UPDATE"
+[PUBLIC.FOR_LINT.NO_COLS] no indices
+[PUBLIC.FOR_LINT.NO_COLS] single column
