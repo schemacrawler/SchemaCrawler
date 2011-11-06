@@ -23,9 +23,12 @@ package schemacrawler.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.PrintWriter;
-import java.io.StringWriter;
+import java.util.List;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -43,6 +46,8 @@ public class LintTest
 
   private static TestDatabase testUtility = new TestDatabase("publisher sales",
                                                              "for_lint");
+
+  private static final String LINTS_OUTPUT = "lints_output/";
 
   @AfterClass
   public static void afterAllTests()
@@ -76,11 +81,24 @@ public class LintTest
     final LintCollector lintCollector = lintedDatabase.getCollector();
     assertEquals(18, lintCollector.size());
 
-    PrintWriter writer = new PrintWriter(new StringWriter());
-    for (Lint<?> lint: lintCollector)
+    final File testOutputFile = File.createTempFile("schemacrawler.lints.",
+                                                    ".test");
+    testOutputFile.delete();
+
+    final PrintWriter writer = new PrintWriter(new FileWriter(testOutputFile));
+    for (final Lint<?> lint: lintCollector)
     {
       System.out.println(lint);
       writer.println(lint);
+    }
+    writer.close();
+
+    final List<String> failures = TestUtility
+      .compareOutput(LINTS_OUTPUT + "schemacrawler.lints.txt", testOutputFile);
+
+    if (failures.size() > 0)
+    {
+      fail(failures.toString());
     }
   }
 

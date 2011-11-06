@@ -23,6 +23,7 @@ package schemacrawler.tools.analysis.lint;
 import java.util.ArrayList;
 import java.util.List;
 
+import schemacrawler.schema.Column;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnMap;
 import schemacrawler.schema.Table;
@@ -67,8 +68,10 @@ public class LinterTableForeignKeyMismatch
         final ForeignKeyColumnMap[] columnPairs = foreignKey.getColumnPairs();
         for (final ForeignKeyColumnMap columnPair: columnPairs)
         {
-          if (columnPair.getPrimaryKeyColumn().getType() != columnPair
-            .getForeignKeyColumn().getType())
+          final Column pkColumn = columnPair.getPrimaryKeyColumn();
+          final Column fkColumn = columnPair.getForeignKeyColumn();
+          if (!pkColumn.getType().equals(fkColumn.getType())
+              || pkColumn.getSize() != fkColumn.getSize())
           {
             mismatchedForeignKeys.add(foreignKey);
             break;
