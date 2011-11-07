@@ -163,6 +163,7 @@ public class TestDatabase
     }
     catch (final SQLException e)
     {
+      System.err.println(e.getMessage());
       LOGGER.log(Level.WARNING, e.getMessage(), e);
     }
     finally

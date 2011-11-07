@@ -1,10 +1,3 @@
-CREATE TABLE Publishers
-(
-  Id INTEGER NOT NULL,
-  Publisher VARCHAR(255),
-  CONSTRAINT PK_Publishers PRIMARY KEY (Id)
-)
-;
 
 CREATE TABLE Authors
 (
@@ -25,6 +18,7 @@ CREATE TABLE Authors
   Fax3 INT,
   HomeEmail11 VARCHAR(10),
   HomeEmail12 VARCHAR(10),
+  BookId BIGINT NOT NULL,
   CONSTRAINT PK_Authors PRIMARY KEY (Id),
   CONSTRAINT CHECK_UPPERCASE_State CHECK (State=UPPER(State))
 )
@@ -35,20 +29,12 @@ CREATE TABLE Books
   Id INTEGER NOT NULL,
   Title VARCHAR(255) NOT NULL,
   Description VARCHAR(255),
-  PublisherId INTEGER NOT NULL,
+  AuthorId INTEGER NOT NULL,
   PublicationDate DATE,
   Price FLOAT,
-  CONSTRAINT PK_Books PRIMARY KEY (Id)
-)
-;
-
-CREATE TABLE BookAuthors
-(
-  BookId SMALLINT NOT NULL,
-  AuthorId INTEGER NOT NULL,
   "UPDATE" CLOB,
-  CONSTRAINT FK_Y_Book FOREIGN KEY (BookId) REFERENCES Books (Id),
-  CONSTRAINT FK_Z_Author FOREIGN KEY (AuthorId) REFERENCES Authors (Id)
+  CONSTRAINT PK_Books PRIMARY KEY (Id),
+  CONSTRAINT FK_Books_Author FOREIGN KEY (AuthorId) REFERENCES Authors (Id)
 )
 ;
 
@@ -58,17 +44,19 @@ CREATE TABLE "Global Counts"
 )
 ;
 
-CREATE TABLE NO_COLS
+CREATE TABLE "No_Columns"
 (
 )
 ;
 
+ALTER TABLE Authors ADD CONSTRAINT FK_Authors_Book FOREIGN KEY (BookId) REFERENCES Books (Id);
+
 -- Indices
-CREATE UNIQUE INDEX UIDX_BookAuthors ON BookAuthors(BookId, AuthorId)
-;
 CREATE INDEX IDX_B_Authors ON Authors(LastName, FirstName)
 ;
 CREATE INDEX IDX_A_Authors ON Authors(City, State, PostalCode, Country)
+;
+CREATE INDEX IDX_A1_Authors ON Authors(City, State)
 ;
 CREATE UNIQUE INDEX IDX_U_Authors ON Authors(Email1, Country)
 ;

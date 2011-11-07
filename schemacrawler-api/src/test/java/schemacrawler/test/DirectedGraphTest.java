@@ -43,6 +43,22 @@ public class DirectedGraphTest
     graph.addDirectedEdge("C", "A");
 
     assertTrue(graph.containsCycle());
+
+  }
+
+  @Test
+  public void smallCycle()
+    throws Exception
+  {
+    final DirectedGraph<String> graph = new DirectedGraph<String>();
+
+    assertFalse(graph.containsCycle());
+
+    graph.addDirectedEdge("A", "B");
+    graph.addDirectedEdge("B", "A");
+
+    assertTrue(graph.containsCycle());
+
   }
 
   @Test
