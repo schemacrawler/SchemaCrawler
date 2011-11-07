@@ -37,7 +37,7 @@ public class DirectedGraph<T extends Comparable<? super T>>
   /**
    * Directed edge in a graph.
    */
-  private class DirectedEdge
+  public class DirectedEdge
   {
 
     private final Vertex from;
@@ -102,22 +102,22 @@ public class DirectedGraph<T extends Comparable<? super T>>
       return "(" + from + " --> " + to + ")";
     }
 
-    Vertex getFrom()
+    public Vertex getFrom()
     {
       return from;
     }
 
-    Vertex getTo()
+    public Vertex getTo()
     {
       return to;
     }
 
-    boolean isFrom(final Vertex vertex)
+    public boolean isFrom(final Vertex vertex)
     {
       return vertex != null && vertex.equals(from);
     }
 
-    boolean isTo(final Vertex vertex)
+    public boolean isTo(final Vertex vertex)
     {
       return vertex != null && vertex.equals(to);
     }
@@ -141,7 +141,7 @@ public class DirectedGraph<T extends Comparable<? super T>>
    * @param <T>
    *        Type of node object
    */
-  private class Vertex
+  public class Vertex
   {
 
     private final T value;
@@ -198,7 +198,7 @@ public class DirectedGraph<T extends Comparable<? super T>>
       return traversalState;
     }
 
-    T getValue()
+    public T getValue()
     {
       return value;
     }

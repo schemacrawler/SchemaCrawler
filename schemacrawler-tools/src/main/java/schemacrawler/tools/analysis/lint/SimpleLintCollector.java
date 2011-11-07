@@ -27,10 +27,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import schemacrawler.schema.Column;
-import schemacrawler.schema.Database;
 import schemacrawler.schema.NamedObject;
-import schemacrawler.schema.Table;
 
 public class SimpleLintCollector
   implements LintCollector
@@ -55,42 +52,6 @@ public class SimpleLintCollector
   public SimpleLintCollector()
   {
     lints = new ArrayList<Lint<?>>();
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.analysis.lint.LintCollector#addLint(schemacrawler.schema.Column,
-   *      schemacrawler.tools.analysis.lint.Lint)
-   */
-  @Override
-  public void addLint(final Column column, final Lint<?> lint)
-  {
-    addNamedObjectLint(column, lint);
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.analysis.lint.LintCollector#addLint(schemacrawler.schema.Database,
-   *      schemacrawler.tools.analysis.lint.Lint)
-   */
-  @Override
-  public void addLint(final Database database, final Lint<?> lint)
-  {
-    addNamedObjectLint(database, lint);
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.analysis.lint.LintCollector#addLint(schemacrawler.schema.Table,
-   *      schemacrawler.tools.analysis.lint.Lint)
-   */
-  @Override
-  public void addLint(final Table table, final Lint<?> lint)
-  {
-    addNamedObjectLint(table, lint);
   }
 
   /**
@@ -144,8 +105,7 @@ public class SimpleLintCollector
     return lints.toArray(new Lint<?>[lints.size()]);
   }
 
-  private void addNamedObjectLint(final NamedObject namedObject,
-                                  final Lint<?> lint)
+  public void addLint(final NamedObject namedObject, final Lint<?> lint)
   {
     if (namedObject != null && lint != null
         && namedObject.getFullName().equals(lint.getObjectName()))

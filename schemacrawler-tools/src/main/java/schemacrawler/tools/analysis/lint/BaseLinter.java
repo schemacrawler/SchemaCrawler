@@ -24,8 +24,8 @@ import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.schema.Column;
 import schemacrawler.schema.Database;
+import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 
@@ -84,46 +84,18 @@ public abstract class BaseLinter
     }
   }
 
-  protected <V extends Serializable> void addLint(final Column column,
+  protected <V extends Serializable> void addLint(final NamedObject namedObject,
                                                   final String message,
                                                   final V value)
   {
-    LOGGER.log(Level.FINE, String.format("Found column lint for %s: %s --> %s",
-                                         column,
+    LOGGER.log(Level.FINE, String.format("Found lint for %s: %s --> %s",
+                                         namedObject,
                                          message,
                                          value));
     if (collector != null)
     {
-      final Lint<V> lint = newLint(column.getFullName(), message, value);
-      collector.addLint(column, lint);
-    }
-  }
-
-  protected <V extends Serializable> void addLint(final Database database,
-                                                  final String message,
-                                                  final V value)
-  {
-    LOGGER.log(Level.FINE,
-               String.format("Found database lint: %s --> %s", message, value));
-    if (collector != null)
-    {
-      final Lint<V> lint = newLint((String) null, message, value);
-      collector.addLint(database, lint);
-    }
-  }
-
-  protected <V extends Serializable> void addLint(final Table table,
-                                                  final String message,
-                                                  final V value)
-  {
-    LOGGER.log(Level.FINE, String.format("Found table lint for %s: %s --> %s",
-                                         table,
-                                         message,
-                                         value));
-    if (collector != null)
-    {
-      final Lint<V> lint = newLint(table.getFullName(), message, value);
-      collector.addLint(table, lint);
+      final Lint<V> lint = newLint(namedObject.getFullName(), message, value);
+      collector.addLint(namedObject, lint);
     }
   }
 
