@@ -46,7 +46,6 @@ public class LinterTableCycles
   @Override
   public void lint(final Database database)
   {
-
     final DirectedGraph<Table> tablesGraph = new DirectedGraph<Table>();
     for (final Schema schema: database.getSchemas())
     {
