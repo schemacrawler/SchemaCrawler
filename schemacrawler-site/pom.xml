@@ -23,6 +23,27 @@
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-doap-plugin</artifactId>
+        <version>1.1</version>
+        <configuration>
+          <artifact>
+            <groupId>net.sourceforge.schemacrawler</groupId>
+            <artifactId>schemacrawler-all</artifactId>
+            <version>${project.version}</version>
+          </artifact>
+        </configuration>
+        <executions>
+          <execution>
+            <id>site</id>
+            <phase>package</phase>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-site-plugin</artifactId>
         <version>3.0</version>
         <executions>
