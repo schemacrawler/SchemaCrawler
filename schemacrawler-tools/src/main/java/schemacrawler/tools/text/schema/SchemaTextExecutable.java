@@ -33,7 +33,6 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.analysis.associations.DatabaseWithAssociations;
-import schemacrawler.tools.analysis.lint.LintedDatabase;
 import schemacrawler.tools.executable.BaseExecutable;
 import schemacrawler.tools.options.InfoLevel;
 import schemacrawler.tools.options.OutputFormat;
@@ -122,10 +121,9 @@ public final class SchemaTextExecutable
     }
 
     Database database = db;
-    if (infoLevel.ordinal() >= InfoLevel.lint.ordinal())
+    if (infoLevel == InfoLevel.maximum)
     {
       database = new DatabaseWithAssociations(database);
-      database = new LintedDatabase(database);
     }
 
     final SchemaFormatter formatter = getDatabaseTraversalHandler();

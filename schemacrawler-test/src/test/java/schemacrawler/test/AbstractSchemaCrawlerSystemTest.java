@@ -95,7 +95,7 @@ public abstract class AbstractSchemaCrawlerSystemTest
                                                       + ".properties");
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
     schemaCrawlerOptions
-      .setSchemaInfoLevel(InfoLevel.lint.getSchemaInfoLevel());
+      .setSchemaInfoLevel(InfoLevel.maximum.getSchemaInfoLevel());
     if (schemaInclusion != null)
     {
       schemaCrawlerOptions

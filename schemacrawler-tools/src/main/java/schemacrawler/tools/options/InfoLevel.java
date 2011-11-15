@@ -25,7 +25,7 @@ import schemacrawler.schemacrawler.SchemaInfoLevel;
 public enum InfoLevel
 {
 
-  unknown, minimum, standard, detailed, maximum, lint;
+  unknown, minimum, standard, detailed, maximum, ;
 
   public final SchemaInfoLevel getSchemaInfoLevel()
   {
@@ -42,9 +42,6 @@ public enum InfoLevel
         schemaInfoLevel = SchemaInfoLevel.detailed();
         break;
       case maximum:
-        schemaInfoLevel = SchemaInfoLevel.maximum();
-        break;
-      case lint:
         schemaInfoLevel = SchemaInfoLevel.maximum();
         break;
       default:

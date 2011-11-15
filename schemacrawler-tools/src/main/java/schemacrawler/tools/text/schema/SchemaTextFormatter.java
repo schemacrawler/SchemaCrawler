@@ -45,8 +45,6 @@ import schemacrawler.schema.Trigger;
 import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.analysis.associations.SimpleWeakAssociationsCollector;
-import schemacrawler.tools.analysis.lint.Lint;
-import schemacrawler.tools.analysis.lint.SimpleLintCollector;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.BaseTabularFormatter;
 import schemacrawler.tools.text.utility.TextFormattingHelper.DocumentHeaderType;
@@ -290,36 +288,6 @@ final class SchemaTextFormatter
                                                    indexDetails,
                                                    false));
         printTableColumns(index.getColumns());
-      }
-    }
-  }
-
-  private void printLint(final Table table)
-  {
-    final Lint<?>[] lints = SimpleLintCollector.getLint(table);
-    if (lints != null && lints.length > 0)
-    {
-      out.println(formattingHelper.createEmptyRow());
-      out.println(formattingHelper.createNameRow("", "[lint]", false));
-      for (final Lint<?> lint: lints)
-      {
-        final Object lintValue = lint.getValue();
-        if (lintValue instanceof Boolean)
-        {
-          if ((Boolean) lintValue)
-          {
-            out
-              .println(formattingHelper.createDescriptionRow(lint.getMessage()));
-          }
-        }
-        else
-        {
-          out
-            .println(formattingHelper.createDescriptionRow(lint.getMessage()
-                                                           + ": "
-                                                           + lint
-                                                             .getValueAsString()));
-        }
       }
     }
   }
@@ -625,7 +593,6 @@ final class SchemaTextFormatter
                                                          remarks));
           }
         }
-        printLint(table);
       }
       out.println(formattingHelper.createObjectEnd());
     }

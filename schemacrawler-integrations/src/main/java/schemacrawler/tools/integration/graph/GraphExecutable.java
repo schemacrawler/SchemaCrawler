@@ -72,7 +72,7 @@ public final class GraphExecutable
       infoLevel = InfoLevel.unknown;
     }
     final Database database;
-    if (infoLevel.ordinal() >= InfoLevel.lint.ordinal())
+    if (infoLevel == InfoLevel.maximum)
     {
       database = new DatabaseWithAssociations(db);
     }
