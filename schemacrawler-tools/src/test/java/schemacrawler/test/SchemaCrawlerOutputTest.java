@@ -225,7 +225,7 @@ public class SchemaCrawlerOutputTest
     throws Exception
   {
     final List<String> failures = new ArrayList<String>();
-    final InfoLevel infoLevel = InfoLevel.lint;
+    final InfoLevel infoLevel = InfoLevel.maximum;
     for (final SchemaTextDetailType schemaTextDetailType: SchemaTextDetailType
       .values())
     {

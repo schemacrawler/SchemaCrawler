@@ -18,7 +18,7 @@
 --- Filtering Options ---
      
 -infolevel=<infolevel>
-  <infolevel> is one of minimum, standard, detailed, maximum, or lint
+  <infolevel> is one of minimum, standard, detailed, or maximum
   The info level determines the amount of database metadata retrieved,
   and also determines the time taken to crawl the schema
        
