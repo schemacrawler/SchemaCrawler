@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>net.sourceforge.schemacrawler</groupId>
+    <artifactId>schemacrawler-all</artifactId>
+    <version>8.8</version>
+  </parent>
+  <groupId>net.sourceforge.schemacrawler</groupId>
+  <artifactId>schemacrawler-lint</artifactId>
+  <packaging>pom</packaging>
+  <name>SchemaCrawler Lint</name>
+  <dependencies>
+    <dependency>
+      <groupId>net.sourceforge.schemacrawler</groupId>
+      <artifactId>schemacrawler-tools</artifactId>
+      <version>${project.version}</version>
+      <type>test-jar</type>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>net.sourceforge.schemacrawler</groupId>
+      <artifactId>schemacrawler-tools</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+  </dependencies>
+</project>

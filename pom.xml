@@ -53,6 +53,7 @@
     <module>schemacrawler-tools</module>
     <module>schemacrawler-commandline</module>
     <module>schemacrawler-integrations</module>
+	<module>schemacrawler-lint</module>
     <module>schemacrawler-db2</module>
     <module>schemacrawler-derby</module>
     <module>schemacrawler-hsqldb</module>
