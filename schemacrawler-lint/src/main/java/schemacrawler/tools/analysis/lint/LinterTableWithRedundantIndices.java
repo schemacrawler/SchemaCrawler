@@ -20,9 +20,15 @@
 package schemacrawler.tools.analysis.lint;
 
 
+import static schemacrawler.tools.analysis.lint.LintUtility.columns;
+import static schemacrawler.tools.analysis.lint.LintUtility.listStartsWith;
+
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import schemacrawler.schema.Index;
 import schemacrawler.schema.Table;
@@ -52,15 +58,43 @@ public class LinterTableWithRedundantIndices
       final Index[] indices = table.getIndices();
       if (indices.length > 0)
       {
-        Map<Index, List<String>> indexColumns = new HashMap<Index, List<String>>(indices.length);
-        for (Index index: indices)
+        final Set<Index> redundantIndices = findRedundantIndices(indices);
+        if (!redundantIndices.isEmpty())
         {
-          indexColumns.put(index, LintUtility.columns(index));
+          final Index[] redundantIndexArray = redundantIndices
+            .toArray(new Index[redundantIndices.size()]);
+          addLint(table, getSummary(), redundantIndexArray);
         }
-
-        addLint(table, getSummary(), true);
       }
     }
+  }
+
+  private Set<Index> findRedundantIndices(final Index[] indices)
+  {
+    final Set<Index> redundantIndices = new HashSet<Index>();
+    final Map<Index, List<String>> indexColumns = new HashMap<Index, List<String>>(indices.length);
+    for (final Index index: indices)
+    {
+      indexColumns.put(index, columns(index));
+    }
+
+    for (final Entry<Index, List<String>> indexColumnEntry1: indexColumns
+      .entrySet())
+    {
+      for (final Entry<Index, List<String>> indexColumnEntry2: indexColumns
+        .entrySet())
+      {
+        if (!indexColumnEntry1.equals(indexColumnEntry2))
+        {
+          if (listStartsWith(indexColumnEntry1.getValue(),
+                             indexColumnEntry2.getValue()))
+          {
+            redundantIndices.add(indexColumnEntry2.getKey());
+          }
+        }
+      }
+    }
+    return redundantIndices;
   }
 
 }
