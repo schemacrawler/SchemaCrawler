@@ -2,6 +2,7 @@
 {
   "tables": [
     {
+      "weakAssociations": [],
       "foreignKeys": [{
         "updateRule": "no action",
         "columnPairs": [{
@@ -11,6 +12,34 @@
         "deleteRule": "no action",
         "name": "FK_Z_AUTHOR"
       }],
+      "primaryKey": {
+        "unique": true,
+        "name": "PK_AUTHORS",
+        "columns": {
+          "sortSequence": "ascending",
+          "name": "ID",
+          "ordinal": 1
+        }
+      },
+      "name": "AUTHORS",
+      "constraints": [
+        {
+          "definition": "BOOKS.AUTHORS.STATE=UPPER(BOOKS.AUTHORS.STATE)",
+          "name": "CHECK_UPPERCASE_STATE"
+        },
+        {
+          "definition": "BOOKS.AUTHORS.ID IS NOT NULL",
+          "name": "SYS_CT_10028"
+        },
+        {
+          "definition": "BOOKS.AUTHORS.FIRSTNAME IS NOT NULL",
+          "name": "SYS_CT_10029"
+        },
+        {
+          "definition": "BOOKS.AUTHORS.LASTNAME IS NOT NULL",
+          "name": "SYS_CT_10030"
+        }
+      ],
       "columns": [
         {
           "dataType": "INTEGER",
@@ -112,24 +141,6 @@
           "size": 50
         }
       ],
-      "constraints": [
-        {
-          "definition": "BOOKS.AUTHORS.STATE=UPPER(BOOKS.AUTHORS.STATE)",
-          "name": "CHECK_UPPERCASE_STATE"
-        },
-        {
-          "definition": "BOOKS.AUTHORS.ID IS NOT NULL",
-          "name": "SYS_CT_10028"
-        },
-        {
-          "definition": "BOOKS.AUTHORS.FIRSTNAME IS NOT NULL",
-          "name": "SYS_CT_10029"
-        },
-        {
-          "definition": "BOOKS.AUTHORS.LASTNAME IS NOT NULL",
-          "name": "SYS_CT_10030"
-        }
-      ],
       "privileges": [
         {
           "name": "DELETE",
@@ -180,20 +191,6 @@
           }
         }
       ],
-      "remarks": "Contact details for book authors",
-      "lints": [],
-      "type": "table",
-      "weakAssociations": [],
-      "name": "AUTHORS",
-      "primaryKey": {
-        "unique": true,
-        "name": "PK_AUTHORS",
-        "columns": {
-          "sortSequence": "ascending",
-          "name": "ID",
-          "ordinal": 1
-        }
-      },
       "indices": [
         {
           "unique": true,
@@ -247,18 +244,23 @@
           ]
         }
       ],
-      "fullName": "PUBLIC.BOOKS.AUTHORS",
+      "remarks": "Contact details for book authors",
       "triggers": [{
         "actionCondition": "",
         "eventManipulationType": "delete",
         "conditionTiming": "after",
         "actionStatement": "UPDATE BOOKS.PUBLISHERS SET PUBLISHER='Jacob'WHERE PUBLISHER='John'",
         "actionOrientation": "row"
-      }]
+      }],
+      "fullName": "PUBLIC.BOOKS.AUTHORS",
+      "type": "table"
     },
     {
+      "weakAssociations": [],
       "definition": "SELECT ID,FIRSTNAME,LASTNAME FROM BOOKS.AUTHORS",
       "foreignKeys": [],
+      "primaryKey": {},
+      "name": "AUTHORSLIST",
       "columns": [
         {
           "dataType": "INTEGER",
@@ -344,17 +346,14 @@
           }
         }
       ],
-      "remarks": "",
-      "lints": [],
-      "type": "view",
-      "weakAssociations": [],
-      "name": "AUTHORSLIST",
-      "primaryKey": {},
       "indices": [],
+      "remarks": "",
+      "triggers": [],
       "fullName": "PUBLIC.BOOKS.AUTHORSLIST",
-      "triggers": []
+      "type": "view"
     },
     {
+      "weakAssociations": [],
       "foreignKeys": [
         {
           "updateRule": "no action",
@@ -373,6 +372,18 @@
           }],
           "deleteRule": "no action",
           "name": "FK_Y_BOOK"
+        }
+      ],
+      "primaryKey": {},
+      "name": "BOOKAUTHORS",
+      "constraints": [
+        {
+          "definition": "BOOKS.BOOKAUTHORS.BOOKID IS NOT NULL",
+          "name": "SYS_CT_10036"
+        },
+        {
+          "definition": "BOOKS.BOOKAUTHORS.AUTHORID IS NOT NULL",
+          "name": "SYS_CT_10037"
         }
       ],
       "columns": [
@@ -408,16 +419,6 @@
           "nullable": true,
           "databaseSpecificType": "CLOB",
           "size": 16777216
-        }
-      ],
-      "constraints": [
-        {
-          "definition": "BOOKS.BOOKAUTHORS.BOOKID IS NOT NULL",
-          "name": "SYS_CT_10036"
-        },
-        {
-          "definition": "BOOKS.BOOKAUTHORS.AUTHORID IS NOT NULL",
-          "name": "SYS_CT_10037"
         }
       ],
       "privileges": [
@@ -470,12 +471,6 @@
           }
         }
       ],
-      "remarks": "Relationship between books and their authors, along with the latest updated information",
-      "lints": [],
-      "type": "table",
-      "weakAssociations": [],
-      "name": "BOOKAUTHORS",
-      "primaryKey": {},
       "indices": [
         {
           "unique": false,
@@ -512,10 +507,22 @@
           ]
         }
       ],
+      "remarks": "Relationship between books and their authors, along with the latest updated information",
+      "triggers": [],
       "fullName": "PUBLIC.BOOKS.BOOKAUTHORS",
-      "triggers": []
+      "type": "table"
     },
     {
+      "weakAssociations": [
+        {
+          "pkColumn": "PUBLIC.BOOKS.BOOKS.ID",
+          "fkColumn": "PUBLIC.\"PUBLISHER SALES\".SALES.BOOKID"
+        },
+        {
+          "pkColumn": "PUBLIC.BOOKS.PUBLISHERS.ID",
+          "fkColumn": "PUBLIC.BOOKS.BOOKS.PUBLISHERID"
+        }
+      ],
       "foreignKeys": [{
         "updateRule": "no action",
         "columnPairs": [{
@@ -525,6 +532,30 @@
         "deleteRule": "no action",
         "name": "FK_Y_BOOK"
       }],
+      "primaryKey": {
+        "unique": true,
+        "name": "PK_BOOKS",
+        "columns": {
+          "sortSequence": "ascending",
+          "name": "ID",
+          "ordinal": 1
+        }
+      },
+      "name": "BOOKS",
+      "constraints": [
+        {
+          "definition": "BOOKS.BOOKS.ID IS NOT NULL",
+          "name": "SYS_CT_10032"
+        },
+        {
+          "definition": "BOOKS.BOOKS.TITLE IS NOT NULL",
+          "name": "SYS_CT_10033"
+        },
+        {
+          "definition": "BOOKS.BOOKS.PUBLISHERID IS NOT NULL",
+          "name": "SYS_CT_10034"
+        }
+      ],
       "columns": [
         {
           "dataType": "INTEGER",
@@ -593,20 +624,6 @@
           "size": 64
         }
       ],
-      "constraints": [
-        {
-          "definition": "BOOKS.BOOKS.ID IS NOT NULL",
-          "name": "SYS_CT_10032"
-        },
-        {
-          "definition": "BOOKS.BOOKS.TITLE IS NOT NULL",
-          "name": "SYS_CT_10033"
-        },
-        {
-          "definition": "BOOKS.BOOKS.PUBLISHERID IS NOT NULL",
-          "name": "SYS_CT_10034"
-        }
-      ],
       "privileges": [
         {
           "name": "DELETE",
@@ -657,20 +674,6 @@
           }
         }
       ],
-      "remarks": "Details for published books",
-      "lints": [],
-      "type": "table",
-      "weakAssociations": [],
-      "name": "BOOKS",
-      "primaryKey": {
-        "unique": true,
-        "name": "PK_BOOKS",
-        "columns": {
-          "sortSequence": "ascending",
-          "name": "ID",
-          "ordinal": 1
-        }
-      },
       "indices": [{
         "unique": true,
         "name": "SYS_IDX_PK_BOOKS_10035",
@@ -680,8 +683,10 @@
           "ordinal": 1
         }
       }],
+      "remarks": "Details for published books",
+      "triggers": [],
       "fullName": "PUBLIC.BOOKS.BOOKS",
-      "triggers": []
+      "type": "table"
     },
     {
       "weakAssociations": [],
@@ -750,14 +755,31 @@
         }
       ],
       "indices": [],
-      "lints": [],
       "remarks": "",
       "triggers": [],
       "fullName": "PUBLIC.BOOKS.\"Global Counts\"",
       "type": "table"
     },
     {
+      "weakAssociations": [{
+        "pkColumn": "PUBLIC.BOOKS.PUBLISHERS.ID",
+        "fkColumn": "PUBLIC.BOOKS.BOOKS.PUBLISHERID"
+      }],
       "foreignKeys": [],
+      "primaryKey": {
+        "unique": true,
+        "name": "PK_PUBLISHERS",
+        "columns": {
+          "sortSequence": "ascending",
+          "name": "ID",
+          "ordinal": 1
+        }
+      },
+      "name": "PUBLISHERS",
+      "constraints": {
+        "definition": "BOOKS.PUBLISHERS.ID IS NOT NULL",
+        "name": "SYS_CT_10026"
+      },
       "columns": [
         {
           "dataType": "INTEGER",
@@ -782,10 +804,6 @@
           "size": 255
         }
       ],
-      "constraints": {
-        "definition": "BOOKS.PUBLISHERS.ID IS NOT NULL",
-        "name": "SYS_CT_10026"
-      },
       "privileges": [
         {
           "name": "DELETE",
@@ -836,20 +854,6 @@
           }
         }
       ],
-      "remarks": "List of book publishers",
-      "lints": [],
-      "type": "table",
-      "weakAssociations": [],
-      "name": "PUBLISHERS",
-      "primaryKey": {
-        "unique": true,
-        "name": "PK_PUBLISHERS",
-        "columns": {
-          "sortSequence": "ascending",
-          "name": "ID",
-          "ordinal": 1
-        }
-      },
       "indices": [{
         "unique": true,
         "name": "SYS_IDX_PK_PUBLISHERS_10027",
@@ -859,10 +863,13 @@
           "ordinal": 1
         }
       }],
+      "remarks": "List of book publishers",
+      "triggers": [],
       "fullName": "PUBLIC.BOOKS.PUBLISHERS",
-      "triggers": []
+      "type": "table"
     },
     {
+      "weakAssociations": [],
       "foreignKeys": [{
         "updateRule": "no action",
         "columnPairs": [
@@ -878,6 +885,41 @@
         "deleteRule": "no action",
         "name": "FK_SALES_REGIONS"
       }],
+      "primaryKey": {
+        "unique": true,
+        "name": "PK_CUSTOMERS",
+        "columns": [
+          {
+            "sortSequence": "ascending",
+            "name": "POSTALCODE",
+            "ordinal": 3
+          },
+          {
+            "sortSequence": "ascending",
+            "name": "COUNTRY",
+            "ordinal": 4
+          }
+        ]
+      },
+      "name": "REGIONS",
+      "constraints": [
+        {
+          "definition": "\"PUBLISHER SALES\".REGIONS.CITY IS NOT NULL",
+          "name": "SYS_CT_10048"
+        },
+        {
+          "definition": "\"PUBLISHER SALES\".REGIONS.STATE IS NOT NULL",
+          "name": "SYS_CT_10049"
+        },
+        {
+          "definition": "\"PUBLISHER SALES\".REGIONS.POSTALCODE IS NOT NULL",
+          "name": "SYS_CT_10050"
+        },
+        {
+          "definition": "\"PUBLISHER SALES\".REGIONS.COUNTRY IS NOT NULL",
+          "name": "SYS_CT_10051"
+        }
+      ],
       "columns": [
         {
           "dataType": "VARCHAR",
@@ -924,24 +966,6 @@
           "size": 50
         }
       ],
-      "constraints": [
-        {
-          "definition": "\"PUBLISHER SALES\".REGIONS.CITY IS NOT NULL",
-          "name": "SYS_CT_10048"
-        },
-        {
-          "definition": "\"PUBLISHER SALES\".REGIONS.STATE IS NOT NULL",
-          "name": "SYS_CT_10049"
-        },
-        {
-          "definition": "\"PUBLISHER SALES\".REGIONS.POSTALCODE IS NOT NULL",
-          "name": "SYS_CT_10050"
-        },
-        {
-          "definition": "\"PUBLISHER SALES\".REGIONS.COUNTRY IS NOT NULL",
-          "name": "SYS_CT_10051"
-        }
-      ],
       "privileges": [
         {
           "name": "DELETE",
@@ -992,27 +1016,6 @@
           }
         }
       ],
-      "remarks": "",
-      "lints": [],
-      "type": "table",
-      "weakAssociations": [],
-      "name": "REGIONS",
-      "primaryKey": {
-        "unique": true,
-        "name": "PK_CUSTOMERS",
-        "columns": [
-          {
-            "sortSequence": "ascending",
-            "name": "POSTALCODE",
-            "ordinal": 3
-          },
-          {
-            "sortSequence": "ascending",
-            "name": "COUNTRY",
-            "ordinal": 4
-          }
-        ]
-      },
       "indices": [{
         "unique": true,
         "name": "SYS_IDX_PK_CUSTOMERS_10052",
@@ -1029,10 +1032,16 @@
           }
         ]
       }],
+      "remarks": "",
+      "triggers": [],
       "fullName": "PUBLIC.\"PUBLISHER SALES\".REGIONS",
-      "triggers": []
+      "type": "table"
     },
     {
+      "weakAssociations": [{
+        "pkColumn": "PUBLIC.BOOKS.BOOKS.ID",
+        "fkColumn": "PUBLIC.\"PUBLISHER SALES\".SALES.BOOKID"
+      }],
       "foreignKeys": [{
         "updateRule": "no action",
         "columnPairs": [
@@ -1048,6 +1057,18 @@
         "deleteRule": "no action",
         "name": "FK_SALES_REGIONS"
       }],
+      "primaryKey": {},
+      "name": "SALES",
+      "constraints": [
+        {
+          "definition": "\"PUBLISHER SALES\".SALES.POSTALCODE IS NOT NULL",
+          "name": "SYS_CT_10053"
+        },
+        {
+          "definition": "\"PUBLISHER SALES\".SALES.COUNTRY IS NOT NULL",
+          "name": "SYS_CT_10054"
+        }
+      ],
       "columns": [
         {
           "dataType": "VARCHAR",
@@ -1105,16 +1126,6 @@
           "size": 64
         }
       ],
-      "constraints": [
-        {
-          "definition": "\"PUBLISHER SALES\".SALES.POSTALCODE IS NOT NULL",
-          "name": "SYS_CT_10053"
-        },
-        {
-          "definition": "\"PUBLISHER SALES\".SALES.COUNTRY IS NOT NULL",
-          "name": "SYS_CT_10054"
-        }
-      ],
       "privileges": [
         {
           "name": "DELETE",
@@ -1165,12 +1176,6 @@
           }
         }
       ],
-      "remarks": "",
-      "lints": [],
-      "type": "table",
-      "weakAssociations": [],
-      "name": "SALES",
-      "primaryKey": {},
       "indices": [{
         "unique": false,
         "name": "SYS_IDX_10056",
@@ -1187,8 +1192,10 @@
           }
         ]
       }],
+      "remarks": "",
+      "triggers": [],
       "fullName": "PUBLIC.\"PUBLISHER SALES\".SALES",
-      "triggers": []
+      "type": "table"
     }
   ],
   "databaseInfo": {

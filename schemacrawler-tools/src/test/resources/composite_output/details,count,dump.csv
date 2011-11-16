@@ -589,6 +589,12 @@ PK_BOOKS,[primary key]
 FK_Y_BOOK,"[foreign key, with no action]"
 "",ID --> PUBLIC.BOOKS.BOOKAUTHORS.BOOKID,""
 ""
+"",[weak association]
+"","ID --> PUBLIC.""PUBLISHER SALES"".SALES.BOOKID",""
+""
+"",[weak association]
+"",PUBLIC.BOOKS.PUBLISHERS.ID --> PUBLISHERID,""
+""
 SYS_IDX_PK_BOOKS_10035,[unique index]
 "",ID,ascending
 ""
@@ -653,6 +659,9 @@ PUBLIC.BOOKS.PUBLISHERS,[table]
 ""
 PK_PUBLISHERS,[primary key]
 "",ID,ascending
+""
+"",[weak association]
+"",ID --> PUBLIC.BOOKS.BOOKS.PUBLISHERID,""
 ""
 SYS_IDX_PK_PUBLISHERS_10027,[unique index]
 "",ID,ascending
@@ -743,6 +752,9 @@ UPDATE,[privilege]
 FK_SALES_REGIONS,"[foreign key, with no action]"
 "","PUBLIC.""PUBLISHER SALES"".REGIONS.POSTALCODE --> POSTALCODE",""
 "","PUBLIC.""PUBLISHER SALES"".REGIONS.COUNTRY --> COUNTRY",""
+""
+"",[weak association]
+"",PUBLIC.BOOKS.BOOKS.ID --> BOOKID,""
 ""
 SYS_IDX_10056,[non-unique index]
 "",POSTALCODE,ascending
