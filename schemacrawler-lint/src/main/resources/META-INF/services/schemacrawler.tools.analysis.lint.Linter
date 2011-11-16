@@ -6,3 +6,4 @@ schemacrawler.tools.analysis.lint.LinterTableWithSingleColumn
 schemacrawler.tools.analysis.lint.LinterTableWithQuotedNames
 schemacrawler.tools.analysis.lint.LinterTableForeignKeyMismatch
 schemacrawler.tools.analysis.lint.LinterTableCycles
+schemacrawler.tools.analysis.lint.LinterTableWithRedundantIndices
