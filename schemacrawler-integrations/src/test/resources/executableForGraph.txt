@@ -253,4 +253,6 @@ digraph SchemaCrawler_Diagram {
 	books_afd2ba21:"id_bb8abc08.start":w -> bookauthors_aa4376:"bookid_931bd73c.end":e [label=<FK_Y_BOOK>, style=solid, arrowhead=crowodot, arrowtail=teetee];
 	regions_bc895c48:"postalcode_9b2bfe9e.start":w -> sales_20be6f95:"postalcode_738bc931.end":e [label=<FK_SALES_REGIONS>, style=solid, arrowhead=crowodot, arrowtail=teetee];
 	regions_bc895c48:"country_7d0587d0.start":w -> sales_20be6f95:"country_890cfe1d.end":e [label=<FK_SALES_REGIONS>, style=solid, arrowhead=crowodot, arrowtail=teetee];
+	publishers_b8da20c0:"id_6fc9dd09.start":w -> books_afd2ba21:"publisherid_3413fbaa.end":e [style=dashed, arrowhead=crowodot, arrowtail=teetee];
+	books_afd2ba21:"id_bb8abc08.start":w -> sales_20be6f95:"bookid_3c829a3d.end":e [style=dashed, arrowhead=crowodot, arrowtail=teetee];
 }
