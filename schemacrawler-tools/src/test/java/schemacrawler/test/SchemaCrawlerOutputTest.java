@@ -169,51 +169,41 @@ public class SchemaCrawlerOutputTest
     throws Exception
   {
     final List<String> failures = new ArrayList<String>();
-    for (final InfoLevel infoLevel: InfoLevel.values())
-    {
-      if (infoLevel == InfoLevel.unknown)
-      {
-        continue;
-      }
-      for (final SchemaTextDetailType schemaTextDetailType: SchemaTextDetailType
-        .values())
-      {
-        final String referenceFile = schemaTextDetailType + "_" + infoLevel
-                                     + ".txt";
+    final InfoLevel infoLevel = InfoLevel.maximum;
+    final SchemaTextDetailType schemaTextDetailType = SchemaTextDetailType.details;
+    final String referenceFile = schemaTextDetailType + "_" + infoLevel
+                                 + ".txt";
 
-        final File testOutputFile = File.createTempFile("schemacrawler."
-                                                            + referenceFile
-                                                            + ".",
-                                                        ".test");
-        testOutputFile.delete();
+    final File testOutputFile = File.createTempFile("schemacrawler."
+                                                        + referenceFile + ".",
+                                                    ".test");
+    testOutputFile.delete();
 
-        final OutputOptions outputOptions = new OutputOptions(OutputFormat.text.name(),
-                                                              testOutputFile);
-        outputOptions.setNoInfo(false);
-        outputOptions.setNoHeader(false);
-        outputOptions.setNoFooter(false);
+    final OutputOptions outputOptions = new OutputOptions(OutputFormat.text.name(),
+                                                          testOutputFile);
+    outputOptions.setNoInfo(false);
+    outputOptions.setNoHeader(false);
+    outputOptions.setNoFooter(false);
 
-        final Config config = Config.load(SchemaCrawlerOutputTest.class
-          .getResourceAsStream("/hsqldb.INFORMATION_SCHEMA.config.properties"));
-        final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
-        schemaCrawlerOptions.setSchemaInfoLevel(infoLevel.getSchemaInfoLevel());
+    final Config config = Config.load(SchemaCrawlerOutputTest.class
+      .getResourceAsStream("/hsqldb.INFORMATION_SCHEMA.config.properties"));
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
+    schemaCrawlerOptions.setSchemaInfoLevel(infoLevel.getSchemaInfoLevel());
 
-        final DatabaseConnectionOptions connectionOptions = testUtility
-          .getDatabaseConnectionOptions();
+    final DatabaseConnectionOptions connectionOptions = testUtility
+      .getDatabaseConnectionOptions();
 
-        final Executable executable = new SchemaCrawlerExecutable(schemaTextDetailType
-          .name());
-        executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-        executable.setOutputOptions(outputOptions);
-        executable.execute(connectionOptions.getConnection());
+    final Executable executable = new SchemaCrawlerExecutable(schemaTextDetailType
+      .name());
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    executable.setOutputOptions(outputOptions);
+    executable.execute(connectionOptions.getConnection());
 
-        failures.addAll(TestUtility.compareOutput(INFO_LEVEL_OUTPUT
-                                                      + referenceFile,
-                                                  testOutputFile,
-                                                  outputOptions
-                                                    .getOutputFormat()));
-      }
-    }
+    failures.addAll(TestUtility
+      .compareOutput(INFO_LEVEL_OUTPUT + referenceFile,
+                     testOutputFile,
+                     outputOptions.getOutputFormat()));
+
     if (failures.size() > 0)
     {
       fail(failures.toString());
