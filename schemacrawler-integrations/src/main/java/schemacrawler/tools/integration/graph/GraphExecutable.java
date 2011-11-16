@@ -25,7 +25,9 @@ import java.io.File;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import schemacrawler.schema.ColumnMap;
 import schemacrawler.schema.Database;
@@ -82,7 +84,7 @@ public final class GraphExecutable
     }
 
     final List<Table> tables = new ArrayList<Table>();
-    final List<ColumnMap> weakAssociations = new ArrayList<ColumnMap>();
+    final Set<ColumnMap> weakAssociations = new HashSet<ColumnMap>();
     for (final Schema schema: database.getSchemas())
     {
       for (final Table table: schema.getTables())
