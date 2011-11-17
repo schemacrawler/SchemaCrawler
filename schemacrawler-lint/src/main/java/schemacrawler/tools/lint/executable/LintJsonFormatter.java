@@ -31,10 +31,10 @@ import schemacrawler.tools.lint.Lint;
 import schemacrawler.tools.lint.SimpleLintCollector;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.BaseJsonFormatter;
-import schemacrawler.tools.text.base.SchemaFormatter;
 import schemacrawler.tools.text.utility.org.json.JSONArray;
 import schemacrawler.tools.text.utility.org.json.JSONException;
 import schemacrawler.tools.text.utility.org.json.JSONObject;
+import schemacrawler.tools.traversal.SchemaTraversalHandler;
 
 /**
  * Text formatting of schema.
@@ -43,7 +43,7 @@ import schemacrawler.tools.text.utility.org.json.JSONObject;
  */
 final class LintJsonFormatter
   extends BaseJsonFormatter<LintOptions>
-  implements SchemaFormatter
+  implements SchemaTraversalHandler
 {
 
   /**

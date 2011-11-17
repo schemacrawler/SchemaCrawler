@@ -30,6 +30,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.BaseTabularFormatter;
 import schemacrawler.tools.text.utility.TextFormattingHelper.DocumentHeaderType;
+import schemacrawler.tools.traversal.DataTraversalHandler;
 
 /**
  * Text formatting of data.
@@ -38,7 +39,7 @@ import schemacrawler.tools.text.utility.TextFormattingHelper.DocumentHeaderType;
  */
 final class DataTextFormatter
   extends BaseTabularFormatter<OperationOptions>
-  implements DataFormatter
+  implements DataTraversalHandler
 {
 
   private int dataBlockCount;
@@ -67,7 +68,7 @@ final class DataTextFormatter
    * {@inheritDoc}
    * 
    * @throws SchemaCrawlerException
-   * @see schemacrawler.tools.text.operation.DataFormatter#end()
+   * @see schemacrawler.tools.traversal.DataTraversalHandler#end()
    */
   public void end()
     throws SchemaCrawlerException
@@ -83,7 +84,7 @@ final class DataTextFormatter
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.text.operation.DataFormatter#handleData(java.lang.String,
+   * @see schemacrawler.tools.traversal.DataTraversalHandler#handleData(java.lang.String,
    *      java.sql.ResultSet)
    */
   public void handleData(final String title, final ResultSet rows)

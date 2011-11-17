@@ -8,8 +8,8 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseExecutable;
 import schemacrawler.tools.lint.LintedDatabase;
 import schemacrawler.tools.options.OutputFormat;
-import schemacrawler.tools.text.base.SchemaFormatter;
-import schemacrawler.tools.text.base.SchemaTraverser;
+import schemacrawler.tools.traversal.SchemaTraversalHandler;
+import schemacrawler.tools.traversal.SchemaTraverser;
 
 public class LintExecutable
   extends BaseExecutable
@@ -49,7 +49,7 @@ public class LintExecutable
   {
     final LintedDatabase database = new LintedDatabase(db);
 
-    final SchemaFormatter formatter = getSchemaTraversalHandler();
+    final SchemaTraversalHandler formatter = getSchemaTraversalHandler();
 
     final SchemaTraverser traverser = new SchemaTraverser();
     traverser.setDatabase(database);
@@ -58,10 +58,10 @@ public class LintExecutable
 
   }
 
-  private SchemaFormatter getSchemaTraversalHandler()
+  private SchemaTraversalHandler getSchemaTraversalHandler()
     throws SchemaCrawlerException
   {
-    final SchemaFormatter formatter;
+    final SchemaTraversalHandler formatter;
     final LintOptions lintOptions = getLintOptions();
 
     final OutputFormat outputFormat = outputOptions.getOutputFormat();

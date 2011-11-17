@@ -11,9 +11,10 @@ import schemacrawler.tools.options.OutputWriter;
 import schemacrawler.tools.text.utility.HtmlFormattingHelper;
 import schemacrawler.tools.text.utility.PlainTextFormattingHelper;
 import schemacrawler.tools.text.utility.TextFormattingHelper;
+import schemacrawler.tools.traversal.TraversalHandler;
 
 public abstract class BaseFormatter<O extends Options>
-  implements Formatter
+  implements TraversalHandler
 {
 
   protected final O options;

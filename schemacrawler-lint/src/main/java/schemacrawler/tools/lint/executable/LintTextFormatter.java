@@ -29,8 +29,8 @@ import schemacrawler.tools.lint.Lint;
 import schemacrawler.tools.lint.SimpleLintCollector;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.BaseTabularFormatter;
-import schemacrawler.tools.text.base.SchemaFormatter;
 import schemacrawler.tools.text.utility.TextFormattingHelper.DocumentHeaderType;
+import schemacrawler.tools.traversal.SchemaTraversalHandler;
 
 /**
  * Text formatting of schema.
@@ -39,7 +39,7 @@ import schemacrawler.tools.text.utility.TextFormattingHelper.DocumentHeaderType;
  */
 final class LintTextFormatter
   extends BaseTabularFormatter<LintOptions>
-  implements SchemaFormatter
+  implements SchemaTraversalHandler
 {
 
   /**
@@ -63,7 +63,7 @@ final class LintTextFormatter
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.text.base.SchemaFormatter#handle(schemacrawler.schema.ColumnDataType)
+   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handle(schemacrawler.schema.ColumnDataType)
    */
   @Override
   public void handle(final ColumnDataType columnDataType)
@@ -75,7 +75,7 @@ final class LintTextFormatter
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.text.base.SchemaFormatter#handle(schemacrawler.schema.Procedure)
+   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handle(schemacrawler.schema.Procedure)
    */
   @Override
   public void handle(final Procedure procedure)
@@ -86,7 +86,7 @@ final class LintTextFormatter
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.text.base.SchemaFormatter#handle(schemacrawler.schema.Table)
+   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handle(schemacrawler.schema.Table)
    */
   @Override
   public void handle(final Table table)
@@ -106,7 +106,7 @@ final class LintTextFormatter
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.text.base.SchemaFormatter#handleColumnDataTypesEnd()
+   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handleColumnDataTypesEnd()
    */
   @Override
   public void handleColumnDataTypesEnd()
@@ -116,7 +116,7 @@ final class LintTextFormatter
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.text.base.SchemaFormatter#handleColumnDataTypesStart()
+   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handleColumnDataTypesStart()
    */
   @Override
   public void handleColumnDataTypesStart()
@@ -126,7 +126,7 @@ final class LintTextFormatter
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.text.base.SchemaFormatter#handleProceduresEnd()
+   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handleProceduresEnd()
    */
   @Override
   public void handleProceduresEnd()
@@ -137,7 +137,7 @@ final class LintTextFormatter
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.text.base.SchemaFormatter#handleProceduresStart()
+   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handleProceduresStart()
    */
   @Override
   public void handleProceduresStart()
@@ -148,7 +148,7 @@ final class LintTextFormatter
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.text.base.SchemaFormatter#handleTablesEnd()
+   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handleTablesEnd()
    */
   @Override
   public void handleTablesEnd()
@@ -159,7 +159,7 @@ final class LintTextFormatter
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.text.base.SchemaFormatter#handleTablesStart()
+   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handleTablesStart()
    */
   @Override
   public void handleTablesStart()

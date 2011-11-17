@@ -29,8 +29,8 @@ import schemacrawler.tools.analysis.associations.DatabaseWithAssociations;
 import schemacrawler.tools.executable.BaseExecutable;
 import schemacrawler.tools.options.InfoLevel;
 import schemacrawler.tools.options.OutputFormat;
-import schemacrawler.tools.text.base.SchemaFormatter;
-import schemacrawler.tools.text.base.SchemaTraverser;
+import schemacrawler.tools.traversal.SchemaTraversalHandler;
+import schemacrawler.tools.traversal.SchemaTraverser;
 
 /**
  * Basic SchemaCrawler executor.
@@ -67,10 +67,10 @@ public final class SchemaTextExecutable
     this.schemaTextOptions = schemaTextOptions;
   }
 
-  private SchemaFormatter getSchemaTraversalHandler()
+  private SchemaTraversalHandler getSchemaTraversalHandler()
     throws SchemaCrawlerException
   {
-    final SchemaFormatter formatter;
+    final SchemaTraversalHandler formatter;
     SchemaTextDetailType schemaTextDetailType;
     try
     {
@@ -120,7 +120,7 @@ public final class SchemaTextExecutable
       database = new DatabaseWithAssociations(database);
     }
 
-    final SchemaFormatter formatter = getSchemaTraversalHandler();
+    final SchemaTraversalHandler formatter = getSchemaTraversalHandler();
 
     SchemaTraverser traverser = new SchemaTraverser();
     traverser.setDatabase(database);

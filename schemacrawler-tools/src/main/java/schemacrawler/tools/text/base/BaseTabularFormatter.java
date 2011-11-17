@@ -57,7 +57,7 @@ public abstract class BaseTabularFormatter<O extends Options>
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.text.operation.DataFormatter#begin()
+   * @see schemacrawler.tools.traversal.DataTraversalHandler#begin()
    */
   public void begin()
   {
@@ -70,7 +70,7 @@ public abstract class BaseTabularFormatter<O extends Options>
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.text.base.SchemaFormatter#end()
+   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#end()
    */
   public void end()
     throws SchemaCrawlerException
