@@ -1,0 +1,334 @@
+[
+{
+  "databaseInfo": {
+    "databaseProductName": "HSQL Database Engine",
+    "databaseUserName": "SA",
+    "databaseProductVersion": "2.2.4"
+  },
+  "schemaCrawlerInfo": {
+    "productVersion": "8.8",
+    "productName": "SchemaCrawler"
+  },
+  "jdbcDriverInfo": {
+    "isJDBCCompliant": "true",
+    "driverClassName": "org.hsqldb.jdbc.JDBCDriver",
+    "driverVersion": "2.2.4",
+    "driverName": "HSQL Database Engine Driver",
+    "url": "jdbc:hsqldb:mem:schemacrawler"
+  },
+  "data": [
+    {
+      "title": "PUBLIC.FOR_LINT.AUTHORS",
+      "columnNames": [
+        "ID",
+        "FIRSTNAME",
+        "LASTNAME",
+        "ADDRESS1",
+        "ADDRESS2",
+        "CITY",
+        "STATE",
+        "POSTALCODE",
+        "COUNTRY",
+        "PHONE1",
+        "PHONE2",
+        "EMAIL1",
+        "EMAIL2",
+        "FAX",
+        "FAX3",
+        "HOMEEMAIL11",
+        "HOMEEMAIL12",
+        "BOOKID"
+      ],
+      "rows": []
+    },
+    {
+      "title": "PUBLIC.FOR_LINT.BOOKS",
+      "columnNames": [
+        "ID",
+        "TITLE",
+        "DESCRIPTION",
+        "AUTHORID",
+        "PUBLICATIONDATE",
+        "PRICE"
+      ],
+      "rows": []
+    },
+    {
+      "title": "PUBLIC.FOR_LINT.\"Global Counts\"",
+      "columnNames": ["Global Count"],
+      "rows": []
+    },
+    {
+      "title": "PUBLIC.\"PUBLISHER SALES\".REGIONS",
+      "columnNames": [
+        "CITY",
+        "STATE",
+        "POSTALCODE",
+        "COUNTRY"
+      ],
+      "rows": [
+        [
+          "Arvada",
+          "KY",
+          "17131",
+          "USA"
+        ],
+        [
+          "Baltimore",
+          "AK",
+          "34702",
+          "USA"
+        ],
+        [
+          "Clairton",
+          "MA",
+          "42875",
+          "USA"
+        ],
+        [
+          "Del Rio",
+          "CA",
+          "24179",
+          "USA"
+        ],
+        [
+          "Duluth",
+          "ND",
+          "82539",
+          "USA"
+        ]
+      ]
+    },
+    {
+      "title": "PUBLIC.\"PUBLISHER SALES\".SALES",
+      "columnNames": [
+        "POSTALCODE",
+        "COUNTRY",
+        "BOOKID",
+        "PERIODENDDATE",
+        "TOTALAMOUNT"
+      ],
+      "rows": [
+        [
+          "13078",
+          "USA",
+          "1",
+          "2001-07-18",
+          "18257.0"
+        ],
+        [
+          "13078",
+          "USA",
+          "1",
+          "2001-09-29",
+          "14895.0"
+        ],
+        [
+          "13078",
+          "USA",
+          "6",
+          "2003-12-28",
+          "6083.0"
+        ],
+        [
+          "13078",
+          "USA",
+          "6",
+          "2006-06-11",
+          "7840.0"
+        ],
+        [
+          "17131",
+          "USA",
+          "2",
+          "2002-04-30",
+          "17887.0"
+        ]
+      ]
+    }
+  ]
+},
+{
+  "tables": [
+    {
+      "name": "AUTHORS",
+      "fullName": "PUBLIC.FOR_LINT.AUTHORS",
+      "type": "table"
+    },
+    {
+      "name": "BOOKS",
+      "fullName": "PUBLIC.FOR_LINT.BOOKS",
+      "type": "table"
+    },
+    {
+      "name": "\"Global Counts\"",
+      "fullName": "PUBLIC.FOR_LINT.\"Global Counts\"",
+      "type": "table"
+    },
+    {
+      "name": "REGIONS",
+      "fullName": "PUBLIC.\"PUBLISHER SALES\".REGIONS",
+      "type": "table"
+    },
+    {
+      "name": "SALES",
+      "fullName": "PUBLIC.\"PUBLISHER SALES\".SALES",
+      "type": "table"
+    }
+  ],
+  "procedures": [
+    {
+      "name": "ALLOC_BLOCKS",
+      "fullName": "PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS",
+      "type": "no result"
+    },
+    {
+      "name": "CONVERT_BLOCK",
+      "fullName": "PUBLIC.SYSTEM_LOBS.CONVERT_BLOCK",
+      "type": "no result"
+    },
+    {
+      "name": "CREATE_EMPTY_BLOCK",
+      "fullName": "PUBLIC.SYSTEM_LOBS.CREATE_EMPTY_BLOCK",
+      "type": "no result"
+    },
+    {
+      "name": "DELETE_BLOCKS",
+      "fullName": "PUBLIC.SYSTEM_LOBS.DELETE_BLOCKS",
+      "type": "no result"
+    },
+    {
+      "name": "DELETE_LOB",
+      "fullName": "PUBLIC.SYSTEM_LOBS.DELETE_LOB",
+      "type": "no result"
+    },
+    {
+      "name": "DIVIDE_BLOCK",
+      "fullName": "PUBLIC.SYSTEM_LOBS.DIVIDE_BLOCK",
+      "type": "no result"
+    }
+  ]
+},
+{"table_lints": [
+    {
+      "name": "AUTHORS",
+      "lints": [
+        {
+          "id": "schemacrawler.tools.lint.LinterTableForeignKeyMismatch",
+          "description": "foreign key and primary key have different data types",
+          "value": "FK_AUTHORS_BOOK",
+          "severity": "medium"
+        },
+        {
+          "id": "schemacrawler.tools.lint.LinterTableWithIncrementingColumns",
+          "description": "incrementing columns",
+          "value": "PHONE1, PHONE2",
+          "severity": "medium"
+        },
+        {
+          "id": "schemacrawler.tools.lint.LinterTableWithIncrementingColumns",
+          "description": "incrementing columns",
+          "value": "FAX, FAX3",
+          "severity": "medium"
+        },
+        {
+          "id": "schemacrawler.tools.lint.LinterTableWithIncrementingColumns",
+          "description": "incrementing columns",
+          "value": "ADDRESS1, ADDRESS2",
+          "severity": "medium"
+        },
+        {
+          "id": "schemacrawler.tools.lint.LinterTableWithIncrementingColumns",
+          "description": "incrementing columns",
+          "value": "EMAIL1, EMAIL2",
+          "severity": "medium"
+        },
+        {
+          "id": "schemacrawler.tools.lint.LinterTableWithIncrementingColumns",
+          "description": "incrementing columns",
+          "value": "HOMEEMAIL11, HOMEEMAIL12",
+          "severity": "medium"
+        },
+        {
+          "id": "schemacrawler.tools.lint.LinterTableWithIncrementingColumns",
+          "description": "incrementing columns are not consecutive",
+          "value": "FAX, FAX3",
+          "severity": "medium"
+        },
+        {
+          "id": "schemacrawler.tools.lint.LinterTableWithIncrementingColumns",
+          "description": "incrementing columns don't have the same data-type",
+          "value": "PHONE1, PHONE2",
+          "severity": "medium"
+        },
+        {
+          "id": "schemacrawler.tools.lint.LinterTableWithIncrementingColumns",
+          "description": "incrementing columns don't have the same data-type",
+          "value": "FAX, FAX3",
+          "severity": "medium"
+        },
+        {
+          "id": "schemacrawler.tools.lint.LinterTableWithIncrementingColumns",
+          "description": "incrementing columns don't have the same data-type",
+          "value": "EMAIL1, EMAIL2",
+          "severity": "medium"
+        },
+        {
+          "id": "schemacrawler.tools.lint.LinterTableWithNullColumnsInIndex",
+          "description": "unique indices with nullable columns",
+          "value": "IDX_U_AUTHORS",
+          "severity": "medium"
+        },
+        {
+          "id": "schemacrawler.tools.lint.LinterTableWithNullIntendedColumns",
+          "description": "columns where NULL may be intended",
+          "value": "ADDRESS2, COUNTRY",
+          "severity": "medium"
+        },
+        {
+          "id": "schemacrawler.tools.lint.LinterTableWithRedundantIndices",
+          "description": "redundant indices",
+          "value": "IDX_A1_AUTHORS",
+          "severity": "medium"
+        }
+      ],
+      "fullName": "PUBLIC.FOR_LINT.AUTHORS",
+      "type": "table"
+    },
+    {
+      "name": "BOOKS",
+      "lints": [{
+        "id": "schemacrawler.tools.lint.LinterTableWithQuotedNames",
+        "description": "spaces in names, or reserved words",
+        "value": "\"UPDATE\"",
+        "severity": "medium"
+      }],
+      "fullName": "PUBLIC.FOR_LINT.BOOKS",
+      "type": "table"
+    },
+    {
+      "name": "\"Global Counts\"",
+      "lints": [
+        {
+          "id": "schemacrawler.tools.lint.LinterTableWithNoIndices",
+          "description": "no indices",
+          "value": "true",
+          "severity": "medium"
+        },
+        {
+          "id": "schemacrawler.tools.lint.LinterTableWithQuotedNames",
+          "description": "spaces in names, or reserved words",
+          "value": "\"Global Counts\", \"Global Count\"",
+          "severity": "medium"
+        },
+        {
+          "id": "schemacrawler.tools.lint.LinterTableWithSingleColumn",
+          "description": "single column",
+          "value": "true",
+          "severity": "medium"
+        }
+      ],
+      "fullName": "PUBLIC.FOR_LINT.\"Global Counts\"",
+      "type": "table"
+    }
+  ]}]

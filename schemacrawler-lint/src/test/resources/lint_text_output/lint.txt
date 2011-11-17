@@ -1,0 +1,88 @@
+
+
+
+System Information
+========================================================================
+
+
+
+SchemaCrawler Information
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
+
+product name                          SchemaCrawler
+product version                       8.8
+
+
+Database Information
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
+
+database product name                 HSQL Database Engine
+database product version              2.2.4
+database user name                    SA
+
+
+JDBC Driver Information
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
+
+driver name                           HSQL Database Engine Driver
+driver version                        2.2.4
+driver class name                     org.hsqldb.jdbc.JDBCDriver
+url                                   jdbc:hsqldb:mem:schemacrawler
+is JDBC compliant                     true
+
+
+
+Tables
+========================================================================
+
+
+PUBLIC.FOR_LINT.AUTHORS                                          [table]
+------------------------------------------------------------------------
+
+schemacrawler.tools.lint.LinterTableForeignKeyMismatch    [lint, medium]
+foreign key and primary key have different data types  FK_AUTHORS_BOOK
+schemacrawler.tools.lint.LinterTableWithIncrementingColumns  [lint, medium]
+incrementing columns                  PHONE1, PHONE2
+schemacrawler.tools.lint.LinterTableWithIncrementingColumns  [lint, medium]
+incrementing columns                  FAX, FAX3
+schemacrawler.tools.lint.LinterTableWithIncrementingColumns  [lint, medium]
+incrementing columns                  ADDRESS1, ADDRESS2
+schemacrawler.tools.lint.LinterTableWithIncrementingColumns  [lint, medium]
+incrementing columns                  EMAIL1, EMAIL2
+schemacrawler.tools.lint.LinterTableWithIncrementingColumns  [lint, medium]
+incrementing columns                  HOMEEMAIL11, HOMEEMAIL12
+schemacrawler.tools.lint.LinterTableWithIncrementingColumns  [lint, medium]
+incrementing columns are not consecutive  FAX, FAX3
+schemacrawler.tools.lint.LinterTableWithIncrementingColumns  [lint, medium]
+incrementing columns don't have the same data-type  PHONE1, PHONE2
+schemacrawler.tools.lint.LinterTableWithIncrementingColumns  [lint, medium]
+incrementing columns don't have the same data-type  FAX, FAX3
+schemacrawler.tools.lint.LinterTableWithIncrementingColumns  [lint, medium]
+incrementing columns don't have the same data-type  EMAIL1, EMAIL2
+schemacrawler.tools.lint.LinterTableWithNullColumnsInIndex  [lint, medium]
+unique indices with nullable columns  IDX_U_AUTHORS
+schemacrawler.tools.lint.LinterTableWithNullIntendedColumns  [lint, medium]
+columns where NULL may be intended    ADDRESS2, COUNTRY
+schemacrawler.tools.lint.LinterTableWithRedundantIndices  [lint, medium]
+redundant indices                     IDX_A1_AUTHORS
+
+
+PUBLIC.FOR_LINT.BOOKS                                            [table]
+------------------------------------------------------------------------
+
+schemacrawler.tools.lint.LinterTableWithQuotedNames       [lint, medium]
+spaces in names, or reserved words    "UPDATE"
+
+
+PUBLIC.FOR_LINT."Global Counts"                                  [table]
+------------------------------------------------------------------------
+
+schemacrawler.tools.lint.LinterTableWithNoIndices         [lint, medium]
+  no indices
+schemacrawler.tools.lint.LinterTableWithQuotedNames       [lint, medium]
+spaces in names, or reserved words    "Global Counts", "Global Count"
+schemacrawler.tools.lint.LinterTableWithSingleColumn      [lint, medium]
+  single column
+
+
+
