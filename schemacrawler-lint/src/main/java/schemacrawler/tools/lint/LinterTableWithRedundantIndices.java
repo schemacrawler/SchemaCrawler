@@ -17,11 +17,11 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.tools.analysis.lint;
+package schemacrawler.tools.lint;
 
 
-import static schemacrawler.tools.analysis.lint.LintUtility.columns;
-import static schemacrawler.tools.analysis.lint.LintUtility.listStartsWith;
+import static schemacrawler.tools.lint.LintUtility.columns;
+import static schemacrawler.tools.lint.LintUtility.listStartsWith;
 
 import java.util.HashMap;
 import java.util.HashSet;

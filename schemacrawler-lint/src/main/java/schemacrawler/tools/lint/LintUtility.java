@@ -1,4 +1,4 @@
-package schemacrawler.tools.analysis.lint;
+package schemacrawler.tools.lint;
 
 
 import java.util.ArrayList;

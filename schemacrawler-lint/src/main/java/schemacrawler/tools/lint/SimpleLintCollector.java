@@ -17,7 +17,7 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.tools.analysis.lint;
+package schemacrawler.tools.lint;
 
 
 import java.util.ArrayList;
@@ -57,7 +57,7 @@ public class SimpleLintCollector
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.analysis.lint.LintCollector#clear()
+   * @see schemacrawler.tools.lint.LintCollector#clear()
    */
   @Override
   public void clear()
@@ -68,7 +68,7 @@ public class SimpleLintCollector
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.analysis.lint.LintCollector#isEmpty()
+   * @see schemacrawler.tools.lint.LintCollector#isEmpty()
    */
   @Override
   public boolean isEmpty()
@@ -86,7 +86,7 @@ public class SimpleLintCollector
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.analysis.lint.LintCollector#size()
+   * @see schemacrawler.tools.lint.LintCollector#size()
    */
   @Override
   public int size()
@@ -97,7 +97,7 @@ public class SimpleLintCollector
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.analysis.lint.LintCollector#toArray()
+   * @see schemacrawler.tools.lint.LintCollector#toArray()
    */
   @Override
   public Lint<?>[] toArray()

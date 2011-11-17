@@ -1,0 +1,13 @@
+--- Command ---
+
+-command=lint
+  Lints the database
+  
+--- Output Options ---
+
+-outputformat=<outputformat>
+  Where <outputformat> is the output format
+
+-outputfile=<outputfile>
+  Optional 
+  <outputfile> is the path to the output file

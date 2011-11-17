@@ -1,13 +1,12 @@
-package schemacrawler.tools.text.schema;
+package schemacrawler.tools.text.base;
 
 
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.text.base.Formatter;
 
-interface SchemaFormatter
+public interface SchemaFormatter
   extends Formatter
 {
 

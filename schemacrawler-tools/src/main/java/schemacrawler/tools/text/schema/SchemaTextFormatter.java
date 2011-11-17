@@ -47,6 +47,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.analysis.associations.SimpleWeakAssociationsCollector;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.BaseTabularFormatter;
+import schemacrawler.tools.text.base.SchemaFormatter;
 import schemacrawler.tools.text.utility.TextFormattingHelper.DocumentHeaderType;
 import sf.util.Utility;
 
@@ -468,7 +469,7 @@ final class SchemaTextFormatter
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.text.schema.SchemaFormatter#handle(schemacrawler.schema.ColumnDataType)
+   * @see schemacrawler.tools.text.base.SchemaFormatter#handle(schemacrawler.schema.ColumnDataType)
    */
   public void handle(final ColumnDataType columnDataType)
     throws SchemaCrawlerException
@@ -484,7 +485,7 @@ final class SchemaTextFormatter
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.text.schema.SchemaFormatter#handle(schemacrawler.schema.Procedure)
+   * @see schemacrawler.tools.text.base.SchemaFormatter#handle(schemacrawler.schema.Procedure)
    */
   public void handle(final Procedure procedure)
   {
@@ -520,7 +521,7 @@ final class SchemaTextFormatter
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.text.schema.SchemaFormatter#handle(schemacrawler.schema.Table)
+   * @see schemacrawler.tools.text.base.SchemaFormatter#handle(schemacrawler.schema.Table)
    */
   public void handle(final Table table)
   {
@@ -602,7 +603,7 @@ final class SchemaTextFormatter
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.text.schema.SchemaFormatter#handleColumnDataTypesEnd()
+   * @see schemacrawler.tools.text.base.SchemaFormatter#handleColumnDataTypesEnd()
    */
   public void handleColumnDataTypesEnd()
   {
@@ -611,7 +612,7 @@ final class SchemaTextFormatter
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.text.schema.SchemaFormatter#handleColumnDataTypesStart()
+   * @see schemacrawler.tools.text.base.SchemaFormatter#handleColumnDataTypesStart()
    */
   public void handleColumnDataTypesStart()
   {
@@ -625,7 +626,7 @@ final class SchemaTextFormatter
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.text.schema.SchemaFormatter#handleProceduresEnd()
+   * @see schemacrawler.tools.text.base.SchemaFormatter#handleProceduresEnd()
    */
   public void handleProceduresEnd()
     throws SchemaCrawlerException
@@ -639,7 +640,7 @@ final class SchemaTextFormatter
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.text.schema.SchemaFormatter#handleProceduresStart()
+   * @see schemacrawler.tools.text.base.SchemaFormatter#handleProceduresStart()
    */
   public void handleProceduresStart()
     throws SchemaCrawlerException
@@ -656,7 +657,7 @@ final class SchemaTextFormatter
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.text.schema.SchemaFormatter#handleTablesEnd()
+   * @see schemacrawler.tools.text.base.SchemaFormatter#handleTablesEnd()
    */
   public void handleTablesEnd()
     throws SchemaCrawlerException
@@ -670,7 +671,7 @@ final class SchemaTextFormatter
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.text.schema.SchemaFormatter#handleTablesStart()
+   * @see schemacrawler.tools.text.base.SchemaFormatter#handleTablesStart()
    */
   public void handleTablesStart()
     throws SchemaCrawlerException

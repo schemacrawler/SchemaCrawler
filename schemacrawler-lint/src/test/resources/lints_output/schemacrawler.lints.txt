@@ -13,6 +13,7 @@
 [PUBLIC.FOR_LINT.AUTHORS] incrementing columns don't have the same data-type: EMAIL1, EMAIL2
 [PUBLIC.FOR_LINT.AUTHORS] unique indices with nullable columns: IDX_U_AUTHORS
 [PUBLIC.FOR_LINT.AUTHORS] columns where NULL may be intended: ADDRESS2, COUNTRY
+[PUBLIC.FOR_LINT.AUTHORS] redundant indices: IDX_A1_AUTHORS
 [PUBLIC.FOR_LINT.BOOKS] spaces in names, or reserved words: "UPDATE"
 [PUBLIC.FOR_LINT.No_Columns] no indices
 [PUBLIC.FOR_LINT.No_Columns] single column

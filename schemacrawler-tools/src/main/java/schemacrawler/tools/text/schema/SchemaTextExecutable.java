@@ -22,20 +22,15 @@ package schemacrawler.tools.text.schema;
 
 
 import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
-import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Database;
-import schemacrawler.schema.Procedure;
-import schemacrawler.schema.Schema;
-import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.analysis.associations.DatabaseWithAssociations;
 import schemacrawler.tools.executable.BaseExecutable;
 import schemacrawler.tools.options.InfoLevel;
 import schemacrawler.tools.options.OutputFormat;
+import schemacrawler.tools.text.base.SchemaFormatter;
+import schemacrawler.tools.text.base.SchemaTraverser;
 
 /**
  * Basic SchemaCrawler executor.
@@ -72,7 +67,7 @@ public final class SchemaTextExecutable
     this.schemaTextOptions = schemaTextOptions;
   }
 
-  private SchemaFormatter getDatabaseTraversalHandler()
+  private SchemaFormatter getSchemaTraversalHandler()
     throws SchemaCrawlerException
   {
     final SchemaFormatter formatter;
@@ -108,7 +103,6 @@ public final class SchemaTextExecutable
   protected void executeOn(final Database db, final Connection connection)
     throws Exception
   {
-    // Determine what decorators to apply to the database
     InfoLevel infoLevel;
     try
     {
@@ -126,59 +120,12 @@ public final class SchemaTextExecutable
       database = new DatabaseWithAssociations(database);
     }
 
-    final SchemaFormatter formatter = getDatabaseTraversalHandler();
+    final SchemaFormatter formatter = getSchemaTraversalHandler();
 
-    formatter.begin();
-
-    formatter.handleInfoStart();
-    formatter.handle(database.getSchemaCrawlerInfo());
-    formatter.handle(database.getDatabaseInfo());
-    formatter.handle(database.getJdbcDriverInfo());
-    formatter.handleInfoEnd();
-
-    final List<ColumnDataType> columnDataTypes = new ArrayList<ColumnDataType>();
-    final List<Table> tables = new ArrayList<Table>();
-    final List<Procedure> procedures = new ArrayList<Procedure>();
-
-    columnDataTypes.addAll(Arrays.asList(database.getSystemColumnDataTypes()));
-    for (final Schema schema: database.getSchemas())
-    {
-      columnDataTypes.addAll(Arrays.asList(schema.getColumnDataTypes()));
-      tables.addAll(Arrays.asList(schema.getTables()));
-      procedures.addAll(Arrays.asList(schema.getProcedures()));
-    }
-
-    if (!columnDataTypes.isEmpty())
-    {
-      formatter.handleColumnDataTypesStart();
-      for (final ColumnDataType columnDataType: columnDataTypes)
-      {
-        formatter.handle(columnDataType);
-      }
-      formatter.handleColumnDataTypesEnd();
-    }
-
-    if (!tables.isEmpty())
-    {
-      formatter.handleTablesStart();
-      for (final Table table: tables)
-      {
-        formatter.handle(table);
-      }
-      formatter.handleTablesEnd();
-    }
-
-    if (!procedures.isEmpty())
-    {
-      formatter.handleProceduresStart();
-      for (final Procedure procedure: procedures)
-      {
-        formatter.handle(procedure);
-      }
-      formatter.handleProceduresEnd();
-    }
-
-    formatter.end();
+    SchemaTraverser traverser = new SchemaTraverser();
+    traverser.setDatabase(database);
+    traverser.setFormatter(formatter);
+    traverser.traverse();
 
   }
 
