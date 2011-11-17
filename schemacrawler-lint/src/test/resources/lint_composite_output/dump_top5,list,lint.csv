@@ -1,0 +1,159 @@
+
+
+
+System Information
+========================================================================
+
+
+
+SchemaCrawler Information
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
+
+product name,SchemaCrawler
+product version,8.8
+
+
+Database Information
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
+
+database product name,HSQL Database Engine
+database product version,2.2.4
+database user name,SA
+
+
+JDBC Driver Information
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
+
+driver name,HSQL Database Engine Driver
+driver version,2.2.4
+driver class name,org.hsqldb.jdbc.JDBCDriver
+url,jdbc:hsqldb:mem:schemacrawler
+is JDBC compliant,true
+
+
+
+Query
+========================================================================
+
+
+
+PUBLIC.FOR_LINT.AUTHORS
+------------------------------------------------------------------------
+ID,FIRSTNAME,LASTNAME,ADDRESS1,ADDRESS2,CITY,STATE,POSTALCODE,COUNTRY,PHONE1,PHONE2,EMAIL1,EMAIL2,FAX,FAX3,HOMEEMAIL11,HOMEEMAIL12,BOOKID
+
+
+
+PUBLIC.FOR_LINT.BOOKS
+------------------------------------------------------------------------
+ID,TITLE,DESCRIPTION,AUTHORID,PUBLICATIONDATE,PRICE
+
+
+
+PUBLIC.FOR_LINT."Global Counts"
+------------------------------------------------------------------------
+Global Count
+
+
+
+PUBLIC."PUBLISHER SALES".REGIONS
+------------------------------------------------------------------------
+CITY,STATE,POSTALCODE,COUNTRY
+Arvada,KY,17131,USA
+Baltimore,AK,34702,USA
+Clairton,MA,42875,USA
+Del Rio,CA,24179,USA
+Duluth,ND,82539,USA
+
+
+
+PUBLIC."PUBLISHER SALES".SALES
+------------------------------------------------------------------------
+POSTALCODE,COUNTRY,BOOKID,PERIODENDDATE,TOTALAMOUNT
+13078,USA,1,2001-07-18,18257.0
+13078,USA,1,2001-09-29,14895.0
+13078,USA,6,2003-12-28,6083.0
+13078,USA,6,2006-06-11,7840.0
+17131,USA,2,2002-04-30,17887.0
+
+
+
+
+Tables
+========================================================================
+
+
+PUBLIC.FOR_LINT.AUTHORS,[table]
+PUBLIC.FOR_LINT.BOOKS,[table]
+"PUBLIC.FOR_LINT.""Global Counts""",[table]
+"PUBLIC.""PUBLISHER SALES"".REGIONS",[table]
+"PUBLIC.""PUBLISHER SALES"".SALES",[table]
+
+
+
+Procedures
+========================================================================
+
+
+PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS,"[procedure, no result]"
+PUBLIC.SYSTEM_LOBS.CONVERT_BLOCK,"[procedure, no result]"
+PUBLIC.SYSTEM_LOBS.CREATE_EMPTY_BLOCK,"[procedure, no result]"
+PUBLIC.SYSTEM_LOBS.DELETE_BLOCKS,"[procedure, no result]"
+PUBLIC.SYSTEM_LOBS.DELETE_LOB,"[procedure, no result]"
+PUBLIC.SYSTEM_LOBS.DIVIDE_BLOCK,"[procedure, no result]"
+
+
+
+Tables
+========================================================================
+
+
+PUBLIC.FOR_LINT.AUTHORS,[table]
+------------------------------------------------------------------------
+""
+schemacrawler.tools.lint.LinterTableForeignKeyMismatch,"[lint, medium]"
+foreign key and primary key have different data types,FK_AUTHORS_BOOK
+schemacrawler.tools.lint.LinterTableWithIncrementingColumns,"[lint, medium]"
+incrementing columns,"PHONE1, PHONE2"
+schemacrawler.tools.lint.LinterTableWithIncrementingColumns,"[lint, medium]"
+incrementing columns,"FAX, FAX3"
+schemacrawler.tools.lint.LinterTableWithIncrementingColumns,"[lint, medium]"
+incrementing columns,"ADDRESS1, ADDRESS2"
+schemacrawler.tools.lint.LinterTableWithIncrementingColumns,"[lint, medium]"
+incrementing columns,"EMAIL1, EMAIL2"
+schemacrawler.tools.lint.LinterTableWithIncrementingColumns,"[lint, medium]"
+incrementing columns,"HOMEEMAIL11, HOMEEMAIL12"
+schemacrawler.tools.lint.LinterTableWithIncrementingColumns,"[lint, medium]"
+incrementing columns are not consecutive,"FAX, FAX3"
+schemacrawler.tools.lint.LinterTableWithIncrementingColumns,"[lint, medium]"
+incrementing columns don't have the same data-type,"PHONE1, PHONE2"
+schemacrawler.tools.lint.LinterTableWithIncrementingColumns,"[lint, medium]"
+incrementing columns don't have the same data-type,"FAX, FAX3"
+schemacrawler.tools.lint.LinterTableWithIncrementingColumns,"[lint, medium]"
+incrementing columns don't have the same data-type,"EMAIL1, EMAIL2"
+schemacrawler.tools.lint.LinterTableWithNullColumnsInIndex,"[lint, medium]"
+unique indices with nullable columns,IDX_U_AUTHORS
+schemacrawler.tools.lint.LinterTableWithNullIntendedColumns,"[lint, medium]"
+columns where NULL may be intended,"ADDRESS2, COUNTRY"
+schemacrawler.tools.lint.LinterTableWithRedundantIndices,"[lint, medium]"
+redundant indices,IDX_A1_AUTHORS
+
+
+PUBLIC.FOR_LINT.BOOKS,[table]
+------------------------------------------------------------------------
+""
+schemacrawler.tools.lint.LinterTableWithQuotedNames,"[lint, medium]"
+"spaces in names, or reserved words","""UPDATE"""
+
+
+"PUBLIC.FOR_LINT.""Global Counts""",[table]
+------------------------------------------------------------------------
+""
+schemacrawler.tools.lint.LinterTableWithNoIndices,"[lint, medium]"
+"",no indices
+schemacrawler.tools.lint.LinterTableWithQuotedNames,"[lint, medium]"
+"spaces in names, or reserved words","""Global Counts"", ""Global Count"""
+schemacrawler.tools.lint.LinterTableWithSingleColumn,"[lint, medium]"
+"",single column
+
+
+

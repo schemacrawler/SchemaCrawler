@@ -1,0 +1,142 @@
+[
+{
+  "table_lints": [
+    {
+      "name": "AUTHORS",
+      "lints": [
+        {
+          "id": "schemacrawler.tools.lint.LinterTableForeignKeyMismatch",
+          "description": "foreign key and primary key have different data types",
+          "value": "FK_AUTHORS_BOOK",
+          "severity": "medium"
+        },
+        {
+          "id": "schemacrawler.tools.lint.LinterTableWithIncrementingColumns",
+          "description": "incrementing columns",
+          "value": "PHONE1, PHONE2",
+          "severity": "medium"
+        },
+        {
+          "id": "schemacrawler.tools.lint.LinterTableWithIncrementingColumns",
+          "description": "incrementing columns",
+          "value": "FAX, FAX3",
+          "severity": "medium"
+        },
+        {
+          "id": "schemacrawler.tools.lint.LinterTableWithIncrementingColumns",
+          "description": "incrementing columns",
+          "value": "ADDRESS1, ADDRESS2",
+          "severity": "medium"
+        },
+        {
+          "id": "schemacrawler.tools.lint.LinterTableWithIncrementingColumns",
+          "description": "incrementing columns",
+          "value": "EMAIL1, EMAIL2",
+          "severity": "medium"
+        },
+        {
+          "id": "schemacrawler.tools.lint.LinterTableWithIncrementingColumns",
+          "description": "incrementing columns",
+          "value": "HOMEEMAIL11, HOMEEMAIL12",
+          "severity": "medium"
+        },
+        {
+          "id": "schemacrawler.tools.lint.LinterTableWithIncrementingColumns",
+          "description": "incrementing columns are not consecutive",
+          "value": "FAX, FAX3",
+          "severity": "medium"
+        },
+        {
+          "id": "schemacrawler.tools.lint.LinterTableWithIncrementingColumns",
+          "description": "incrementing columns don't have the same data-type",
+          "value": "PHONE1, PHONE2",
+          "severity": "medium"
+        },
+        {
+          "id": "schemacrawler.tools.lint.LinterTableWithIncrementingColumns",
+          "description": "incrementing columns don't have the same data-type",
+          "value": "FAX, FAX3",
+          "severity": "medium"
+        },
+        {
+          "id": "schemacrawler.tools.lint.LinterTableWithIncrementingColumns",
+          "description": "incrementing columns don't have the same data-type",
+          "value": "EMAIL1, EMAIL2",
+          "severity": "medium"
+        },
+        {
+          "id": "schemacrawler.tools.lint.LinterTableWithNullColumnsInIndex",
+          "description": "unique indices with nullable columns",
+          "value": "IDX_U_AUTHORS",
+          "severity": "medium"
+        },
+        {
+          "id": "schemacrawler.tools.lint.LinterTableWithNullIntendedColumns",
+          "description": "columns where NULL may be intended",
+          "value": "ADDRESS2, COUNTRY",
+          "severity": "medium"
+        },
+        {
+          "id": "schemacrawler.tools.lint.LinterTableWithRedundantIndices",
+          "description": "redundant indices",
+          "value": "IDX_A1_AUTHORS",
+          "severity": "medium"
+        }
+      ],
+      "fullName": "PUBLIC.FOR_LINT.AUTHORS",
+      "type": "table"
+    },
+    {
+      "name": "BOOKS",
+      "lints": [{
+        "id": "schemacrawler.tools.lint.LinterTableWithQuotedNames",
+        "description": "spaces in names, or reserved words",
+        "value": "\"UPDATE\"",
+        "severity": "medium"
+      }],
+      "fullName": "PUBLIC.FOR_LINT.BOOKS",
+      "type": "table"
+    },
+    {
+      "name": "\"Global Counts\"",
+      "lints": [
+        {
+          "id": "schemacrawler.tools.lint.LinterTableWithNoIndices",
+          "description": "no indices",
+          "value": "true",
+          "severity": "medium"
+        },
+        {
+          "id": "schemacrawler.tools.lint.LinterTableWithQuotedNames",
+          "description": "spaces in names, or reserved words",
+          "value": "\"Global Counts\", \"Global Count\"",
+          "severity": "medium"
+        },
+        {
+          "id": "schemacrawler.tools.lint.LinterTableWithSingleColumn",
+          "description": "single column",
+          "value": "true",
+          "severity": "medium"
+        }
+      ],
+      "fullName": "PUBLIC.FOR_LINT.\"Global Counts\"",
+      "type": "table"
+    }
+  ],
+  "databaseInfo": {
+    "databaseProductName": "HSQL Database Engine",
+    "databaseUserName": "SA",
+    "databaseProductVersion": "2.2.4"
+  },
+  "schemaCrawlerInfo": {
+    "productVersion": "8.8",
+    "productName": "SchemaCrawler"
+  },
+  "jdbcDriverInfo": {
+    "isJDBCCompliant": "true",
+    "driverClassName": "org.hsqldb.jdbc.JDBCDriver",
+    "driverVersion": "2.2.4",
+    "driverName": "HSQL Database Engine Driver",
+    "url": "jdbc:hsqldb:mem:schemacrawler"
+  }
+}]
