@@ -17,17 +17,17 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.tools.analysis.lint;
+package schemacrawler.tools.lint;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
-import schemacrawler.schema.Index;
-import schemacrawler.schema.IndexColumn;
+import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
+import sf.util.Utility;
 
-public class LinterTableWithNullColumnsInIndex
+public class LinterTableWithNullIntendedColumns
   extends BaseLinter
 {
 
@@ -40,7 +40,7 @@ public class LinterTableWithNullColumnsInIndex
   @Override
   public String getSummary()
   {
-    return "unique indices with nullable columns";
+    return "columns where NULL may be intended";
   }
 
   @Override
@@ -48,35 +48,29 @@ public class LinterTableWithNullColumnsInIndex
   {
     if (table != null)
     {
-      final Index[] nullableColumnsInUniqueIndex = findNullableColumnsInUniqueIndex(table
-        .getIndices());
-      if (nullableColumnsInUniqueIndex.length > 0)
+      final Column[] nullDefaultValueMayBeIntendedColumns = findNullDefaultValueMayBeIntendedColumns(table
+        .getColumns());
+      if (nullDefaultValueMayBeIntendedColumns.length > 0)
       {
-        addLint(table, getSummary(), nullableColumnsInUniqueIndex);
+        addLint(table, getSummary(), nullDefaultValueMayBeIntendedColumns);
       }
     }
   }
 
-  private Index[] findNullableColumnsInUniqueIndex(final Index[] indices)
+  private Column[] findNullDefaultValueMayBeIntendedColumns(final Column[] columns)
   {
-    final List<Index> nullableColumnsInUniqueIndex = new ArrayList<Index>();
-    for (final Index index: indices)
+    final List<Column> nullDefaultValueMayBeIntendedColumns = new ArrayList<Column>();
+    for (final Column column: columns)
     {
-      if (index.isUnique())
+      final String columnDefaultValue = column.getDefaultValue();
+      if (!Utility.isBlank(columnDefaultValue)
+          && columnDefaultValue.trim().equalsIgnoreCase("NULL"))
       {
-        final IndexColumn[] indexColumns = index.getColumns();
-        for (final IndexColumn indexColumn: indexColumns)
-        {
-          if (indexColumn.isNullable())
-          {
-            nullableColumnsInUniqueIndex.add(index);
-            break;
-          }
-        }
+        nullDefaultValueMayBeIntendedColumns.add(column);
       }
     }
-    return nullableColumnsInUniqueIndex
-      .toArray(new Index[nullableColumnsInUniqueIndex.size()]);
+    return nullDefaultValueMayBeIntendedColumns
+      .toArray(new Column[nullDefaultValueMayBeIntendedColumns.size()]);
   }
 
 }

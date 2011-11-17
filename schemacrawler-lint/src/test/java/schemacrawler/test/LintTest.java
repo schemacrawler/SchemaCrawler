@@ -36,9 +36,9 @@ import org.junit.Test;
 
 import schemacrawler.schema.Database;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.tools.analysis.lint.Lint;
-import schemacrawler.tools.analysis.lint.LintCollector;
-import schemacrawler.tools.analysis.lint.LintedDatabase;
+import schemacrawler.tools.lint.Lint;
+import schemacrawler.tools.lint.LintCollector;
+import schemacrawler.tools.lint.LintedDatabase;
 import schemacrawler.utility.TestDatabase;
 
 public class LintTest
@@ -88,7 +88,6 @@ public class LintTest
     final PrintWriter writer = new PrintWriter(new FileWriter(testOutputFile));
     for (final Lint<?> lint: lintCollector)
     {
-      System.out.println(lint);
       writer.println(lint);
     }
     writer.close();

@@ -17,7 +17,7 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.tools.analysis.lint;
+package schemacrawler.tools.lint;
 
 
 import java.io.Serializable;
@@ -76,7 +76,7 @@ public final class SimpleLint<V extends Serializable>
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.analysis.lint.Lint#compareTo(schemacrawler.tools.analysis.lint.SimpleLint)
+   * @see schemacrawler.tools.lint.Lint#compareTo(schemacrawler.tools.lint.SimpleLint)
    */
   @Override
   public final int compareTo(final Lint<?> lint)
@@ -167,7 +167,7 @@ public final class SimpleLint<V extends Serializable>
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.analysis.lint.Lint#getMessage()
+   * @see schemacrawler.tools.lint.Lint#getMessage()
    */
   @Override
   public final String getMessage()
@@ -190,7 +190,7 @@ public final class SimpleLint<V extends Serializable>
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.analysis.lint.Lint#getValue()
+   * @see schemacrawler.tools.lint.Lint#getValue()
    */
   @Override
   public final V getValue()

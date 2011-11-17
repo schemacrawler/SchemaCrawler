@@ -70,7 +70,7 @@ public abstract class BaseTabularFormatter<O extends Options>
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.text.schema.SchemaFormatter#end()
+   * @see schemacrawler.tools.text.base.SchemaFormatter#end()
    */
   public void end()
     throws SchemaCrawlerException

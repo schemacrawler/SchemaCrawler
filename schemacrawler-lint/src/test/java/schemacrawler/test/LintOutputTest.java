@@ -51,13 +51,14 @@ import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import schemacrawler.utility.TestDatabase;
 
-public class SchemaCrawlerOutputTest
+public class LintOutputTest
 {
 
   private static class LocalEntityResolver
     implements EntityResolver
   {
 
+    @Override
     public InputSource resolveEntity(final String publicId,
                                      final String systemId)
       throws SAXException, IOException
@@ -76,11 +77,12 @@ public class SchemaCrawlerOutputTest
 
   }
 
-  private static final String INFO_LEVEL_OUTPUT = "info_level_output/";
-  private static final String COMPOSITE_OUTPUT = "composite_output/";
-  private static final String JSON_OUTPUT = "json_output/";
+  private static final String TEXT_OUTPUT = "lint_text_output/";
+  private static final String COMPOSITE_OUTPUT = "lint_composite_output/";
+  private static final String JSON_OUTPUT = "lint_json_output/";
 
-  private static TestDatabase testUtility = new TestDatabase();
+  private static TestDatabase testUtility = new TestDatabase("publisher sales",
+                                                             "for_lint");
 
   @AfterClass
   public static void afterAllTests()
@@ -101,21 +103,15 @@ public class SchemaCrawlerOutputTest
   public void compareCompositeOutput()
     throws Exception
   {
-    final String queryCommand1 = "all_tables";
+    final String queryCommand1 = "dump_top5";
     final Config queriesConfig = new Config();
-    queriesConfig.put(queryCommand1,
-                      "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_TABLES");
-    final String queryCommand2 = "dump_tables";
     queriesConfig
-      .put(queryCommand2,
-           "SELECT ${orderbycolumns} FROM ${table} ORDER BY ${orderbycolumns}");
+      .put(queryCommand1,
+           "SELECT TOP 5 ${orderbycolumns} FROM ${table} ORDER BY ${orderbycolumns}");
 
     final String[] commands = new String[] {
-        SchemaTextDetailType.details + "," + Operation.count + ","
-            + Operation.dump,
-        SchemaTextDetailType.list + "," + Operation.count,
-        queryCommand1 + "," + queryCommand2 + "," + Operation.count + ","
-            + SchemaTextDetailType.list,
+        SchemaTextDetailType.list + "," + Operation.count + "," + "lint",
+        queryCommand1 + "," + SchemaTextDetailType.list + "," + "lint",
     };
 
     final List<String> failures = new ArrayList<String>();
@@ -138,7 +134,7 @@ public class SchemaCrawlerOutputTest
         outputOptions.setNoHeader(false);
         outputOptions.setNoFooter(false);
 
-        final Config config = Config.load(SchemaCrawlerOutputTest.class
+        final Config config = Config.load(LintOutputTest.class
           .getResourceAsStream("/hsqldb.INFORMATION_SCHEMA.config.properties"));
         final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
         schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
@@ -165,55 +161,42 @@ public class SchemaCrawlerOutputTest
   }
 
   @Test
-  public void compareInfoLevelOutput()
+  public void compareJsonOutput()
     throws Exception
   {
     final List<String> failures = new ArrayList<String>();
-    for (final InfoLevel infoLevel: InfoLevel.values())
-    {
-      if (infoLevel == InfoLevel.unknown)
-      {
-        continue;
-      }
-      for (final SchemaTextDetailType schemaTextDetailType: SchemaTextDetailType
-        .values())
-      {
-        final String referenceFile = schemaTextDetailType + "_" + infoLevel
-                                     + ".txt";
+    final InfoLevel infoLevel = InfoLevel.standard;
 
-        final File testOutputFile = File.createTempFile("schemacrawler."
-                                                            + referenceFile
-                                                            + ".",
-                                                        ".test");
-        testOutputFile.delete();
+    final String referenceFile = "lints.json";
 
-        final OutputOptions outputOptions = new OutputOptions(OutputFormat.text.name(),
-                                                              testOutputFile);
-        outputOptions.setNoInfo(false);
-        outputOptions.setNoHeader(false);
-        outputOptions.setNoFooter(false);
+    final File testOutputFile = File.createTempFile("schemacrawler."
+                                                        + referenceFile + ".",
+                                                    ".test");
+    testOutputFile.delete();
 
-        final Config config = Config.load(SchemaCrawlerOutputTest.class
-          .getResourceAsStream("/hsqldb.INFORMATION_SCHEMA.config.properties"));
-        final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
-        schemaCrawlerOptions.setSchemaInfoLevel(infoLevel.getSchemaInfoLevel());
+    final OutputOptions outputOptions = new OutputOptions(OutputFormat.json.name(),
+                                                          testOutputFile);
+    outputOptions.setNoInfo(false);
+    outputOptions.setNoHeader(false);
+    outputOptions.setNoFooter(false);
 
-        final DatabaseConnectionOptions connectionOptions = testUtility
-          .getDatabaseConnectionOptions();
+    final Config config = Config.load(LintOutputTest.class
+      .getResourceAsStream("/hsqldb.INFORMATION_SCHEMA.config.properties"));
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
+    schemaCrawlerOptions.setSchemaInfoLevel(infoLevel.getSchemaInfoLevel());
 
-        final Executable executable = new SchemaCrawlerExecutable(schemaTextDetailType
-          .name());
-        executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-        executable.setOutputOptions(outputOptions);
-        executable.execute(connectionOptions.getConnection());
+    final DatabaseConnectionOptions connectionOptions = testUtility
+      .getDatabaseConnectionOptions();
 
-        failures.addAll(TestUtility.compareOutput(INFO_LEVEL_OUTPUT
-                                                      + referenceFile,
-                                                  testOutputFile,
-                                                  outputOptions
-                                                    .getOutputFormat()));
-      }
-    }
+    final Executable executable = new SchemaCrawlerExecutable("lint");
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    executable.setOutputOptions(outputOptions);
+    executable.execute(connectionOptions.getConnection());
+
+    failures.addAll(TestUtility.compareOutput(JSON_OUTPUT + referenceFile,
+                                              testOutputFile,
+                                              outputOptions.getOutputFormat()));
+
     if (failures.size() > 0)
     {
       fail(failures.toString());
@@ -221,50 +204,44 @@ public class SchemaCrawlerOutputTest
   }
 
   @Test
-  public void compareJsonOutput()
+  public void compareTextOutput()
     throws Exception
   {
     final List<String> failures = new ArrayList<String>();
-    final InfoLevel infoLevel = InfoLevel.maximum;
-    for (final SchemaTextDetailType schemaTextDetailType: SchemaTextDetailType
-      .values())
-    {
-      final String referenceFile = schemaTextDetailType + "_" + infoLevel
-                                   + ".json";
+    final InfoLevel infoLevel = InfoLevel.standard;
+    final String referenceFile = "lint.txt";
 
-      final File testOutputFile = File
-        .createTempFile("schemacrawler." + referenceFile + ".", ".test");
-      testOutputFile.delete();
+    final File testOutputFile = File.createTempFile("schemacrawler."
+                                                        + referenceFile + ".",
+                                                    ".test");
+    testOutputFile.delete();
 
-      final OutputOptions outputOptions = new OutputOptions(OutputFormat.json.name(),
-                                                            testOutputFile);
-      outputOptions.setNoInfo(false);
-      outputOptions.setNoHeader(false);
-      outputOptions.setNoFooter(false);
+    final OutputOptions outputOptions = new OutputOptions(OutputFormat.text.name(),
+                                                          testOutputFile);
+    outputOptions.setNoInfo(false);
+    outputOptions.setNoHeader(false);
+    outputOptions.setNoFooter(false);
 
-      final Config config = Config.load(SchemaCrawlerOutputTest.class
-        .getResourceAsStream("/hsqldb.INFORMATION_SCHEMA.config.properties"));
-      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
-      schemaCrawlerOptions.setSchemaInfoLevel(infoLevel.getSchemaInfoLevel());
+    final Config config = Config.load(LintOutputTest.class
+      .getResourceAsStream("/hsqldb.INFORMATION_SCHEMA.config.properties"));
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
+    schemaCrawlerOptions.setSchemaInfoLevel(infoLevel.getSchemaInfoLevel());
 
-      final DatabaseConnectionOptions connectionOptions = testUtility
-        .getDatabaseConnectionOptions();
+    final DatabaseConnectionOptions connectionOptions = testUtility
+      .getDatabaseConnectionOptions();
 
-      final Executable executable = new SchemaCrawlerExecutable(schemaTextDetailType
-        .name());
-      executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-      executable.setOutputOptions(outputOptions);
-      executable.execute(connectionOptions.getConnection());
+    final Executable executable = new SchemaCrawlerExecutable("lint");
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    executable.setOutputOptions(outputOptions);
+    executable.execute(connectionOptions.getConnection());
 
-      failures.addAll(TestUtility
-        .compareOutput(JSON_OUTPUT + referenceFile,
-                       testOutputFile,
-                       outputOptions.getOutputFormat()));
-    }
+    failures.addAll(TestUtility.compareOutput(TEXT_OUTPUT + referenceFile,
+                                              testOutputFile,
+                                              outputOptions.getOutputFormat()));
+
     if (failures.size() > 0)
     {
       fail(failures.toString());
     }
   }
-
 }

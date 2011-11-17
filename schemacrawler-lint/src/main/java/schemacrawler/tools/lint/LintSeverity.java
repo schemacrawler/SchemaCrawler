@@ -17,40 +17,10 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.tools.analysis.lint;
+package schemacrawler.tools.lint;
 
 
-import schemacrawler.schema.Index;
-import schemacrawler.schema.Table;
-import schemacrawler.schema.View;
-
-public class LinterTableWithNoIndices
-  extends BaseLinter
+public enum LintSeverity
 {
-
-  @Override
-  public String getDescription()
-  {
-    return getSummary();
-  }
-
-  @Override
-  public String getSummary()
-  {
-    return "no indices";
-  }
-
-  @Override
-  public void lint(final Table table)
-  {
-    if (table != null && !(table instanceof View))
-    {
-      final Index[] indices = table.getIndices();
-      if (table.getPrimaryKey() == null && indices.length == 0)
-      {
-        addLint(table, getSummary(), true);
-      }
-    }
-  }
-
+  critical, high, medium, low;
 }

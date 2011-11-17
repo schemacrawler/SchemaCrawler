@@ -17,39 +17,28 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.tools.analysis.lint;
+package schemacrawler.tools.lint;
 
 
-import schemacrawler.schema.Column;
-import schemacrawler.schema.Table;
+import schemacrawler.schema.Database;
 
-public class LinterTableWithSingleColumn
-  extends BaseLinter
+public interface Linter
 {
 
-  @Override
-  public String getDescription()
-  {
-    return getSummary();
-  }
+  String getDescription();
 
-  @Override
-  public String getSummary()
-  {
-    return "single column";
-  }
+  String getId();
 
-  @Override
-  public void lint(final Table table)
-  {
-    if (table != null)
-    {
-      final Column[] columns = table.getColumns();
-      if (columns.length <= 1)
-      {
-        addLint(table, getSummary(), true);
-      }
-    }
-  }
+  LintCollector getLintCollector();
+
+  LintSeverity getLintSeverity();
+
+  String getSummary();
+
+  void lint(Database database);
+
+  void setLintCollector(LintCollector lintCollector);
+
+  void setLintSeverity(LintSeverity severity);
 
 }

@@ -17,25 +17,40 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.tools.analysis.lint;
+package schemacrawler.tools.lint;
 
 
-import java.io.Serializable;
+import schemacrawler.schema.Index;
+import schemacrawler.schema.Table;
+import schemacrawler.schema.View;
 
-public interface Lint<V extends Serializable>
-  extends Serializable, Comparable<Lint<?>>
+public class LinterTableWithNoIndices
+  extends BaseLinter
 {
 
-  String getId();
+  @Override
+  public String getDescription()
+  {
+    return getSummary();
+  }
 
-  String getMessage();
+  @Override
+  public String getSummary()
+  {
+    return "no indices";
+  }
 
-  String getObjectName();
-
-  LintSeverity getSeverity();
-
-  V getValue();
-
-  String getValueAsString();
+  @Override
+  public void lint(final Table table)
+  {
+    if (table != null && !(table instanceof View))
+    {
+      final Index[] indices = table.getIndices();
+      if (table.getPrimaryKey() == null && indices.length == 0)
+      {
+        addLint(table, getSummary(), true);
+      }
+    }
+  }
 
 }

@@ -3,9 +3,6 @@ package schemacrawler.tools.text.base;
 
 import java.io.PrintWriter;
 
-import schemacrawler.schema.DatabaseInfo;
-import schemacrawler.schema.JdbcDriverInfo;
-import schemacrawler.schema.SchemaCrawlerInfo;
 import schemacrawler.schemacrawler.Options;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputFormat;
@@ -16,6 +13,7 @@ import schemacrawler.tools.text.utility.PlainTextFormattingHelper;
 import schemacrawler.tools.text.utility.TextFormattingHelper;
 
 public abstract class BaseFormatter<O extends Options>
+  implements Formatter
 {
 
   protected final O options;
@@ -56,20 +54,5 @@ public abstract class BaseFormatter<O extends Options>
 
     out = new PrintWriter(new OutputWriter(outputOptions));
   }
-
-  abstract void handle(DatabaseInfo databaseInfo)
-    throws SchemaCrawlerException;
-
-  abstract void handle(JdbcDriverInfo jdbcDriverInfo)
-    throws SchemaCrawlerException;
-
-  abstract void handle(SchemaCrawlerInfo schemaCrawlerInfo)
-    throws SchemaCrawlerException;
-
-  abstract void handleInfoEnd()
-    throws SchemaCrawlerException;
-
-  abstract void handleInfoStart()
-    throws SchemaCrawlerException;
 
 }

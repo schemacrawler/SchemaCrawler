@@ -17,10 +17,25 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.tools.analysis.lint;
+package schemacrawler.tools.lint;
 
 
-public enum LintSeverity
+import java.io.Serializable;
+
+public interface Lint<V extends Serializable>
+  extends Serializable, Comparable<Lint<?>>
 {
-  critical, high, medium, low;
+
+  String getId();
+
+  String getMessage();
+
+  String getObjectName();
+
+  LintSeverity getSeverity();
+
+  V getValue();
+
+  String getValueAsString();
+
 }
