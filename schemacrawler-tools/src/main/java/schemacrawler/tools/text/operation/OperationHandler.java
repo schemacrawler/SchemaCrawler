@@ -35,6 +35,7 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.traversal.DataTraversalHandler;
 
 /**
  * Text formatting of operations output.
@@ -48,7 +49,7 @@ final class OperationHandler
     .getName());
 
   private final Connection connection;
-  private final DataFormatter dataFormatter;
+  private final DataTraversalHandler dataFormatter;
   private final Query query;
 
   OperationHandler(final Operation operation,
