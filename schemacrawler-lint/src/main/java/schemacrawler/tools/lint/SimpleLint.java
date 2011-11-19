@@ -113,45 +113,56 @@ public final class SimpleLint<V extends Serializable>
     {
       return false;
     }
-    if (!(obj instanceof Lint<?>))
+    if (!(obj instanceof SimpleLint))
     {
       return false;
     }
-    final Lint<?> other = (Lint<?>) obj;
+    final SimpleLint other = (SimpleLint) obj;
     if (id == null)
     {
-      if (other.getId() != null)
+      if (other.id != null)
       {
         return false;
       }
     }
-    else if (!id.equals(other.getId()))
+    else if (!id.equals(other.id))
     {
       return false;
     }
     if (message == null)
     {
-      if (other.getMessage() != null)
+      if (other.message != null)
       {
         return false;
       }
     }
-    else if (!message.equals(other.getMessage()))
+    else if (!message.equals(other.message))
     {
       return false;
     }
     if (objectName == null)
     {
-      if (other.getObjectName() != null)
+      if (other.objectName != null)
       {
         return false;
       }
     }
-    else if (!objectName.equals(other.getObjectName()))
+    else if (!objectName.equals(other.objectName))
     {
       return false;
     }
-    if (severity != other.getSeverity())
+    if (severity != other.severity)
+    {
+      return false;
+    }
+    if (value == null)
+    {
+      if (other.value != null)
+      {
+        return false;
+      }
+    }
+    else if (!value.equals(other.value))
     {
       return false;
     }
@@ -255,6 +266,7 @@ public final class SimpleLint<V extends Serializable>
     result = prime * result + (message == null? 0: message.hashCode());
     result = prime * result + (objectName == null? 0: objectName.hashCode());
     result = prime * result + (severity == null? 0: severity.hashCode());
+    result = prime * result + (value == null? 0: value.hashCode());
     return result;
   }
 

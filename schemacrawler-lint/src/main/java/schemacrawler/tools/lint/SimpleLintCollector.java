@@ -54,6 +54,21 @@ public class SimpleLintCollector
     lints = new ArrayList<Lint<?>>();
   }
 
+  @Override
+  public void addLint(final NamedObject namedObject, final Lint<?> lint)
+  {
+    if (namedObject != null && lint != null
+        && namedObject.getFullName().equals(lint.getObjectName()))
+    {
+      lints.add(lint);
+
+      final Collection<Lint<?>> columnLints = namedObject
+        .getAttribute(LINT_KEY, new ArrayList<Lint<?>>());
+      columnLints.add(lint);
+      namedObject.setAttribute(LINT_KEY, columnLints);
+    }
+  }
+
   /**
    * {@inheritDoc}
    * 
@@ -103,20 +118,6 @@ public class SimpleLintCollector
   public Lint<?>[] toArray()
   {
     return lints.toArray(new Lint<?>[lints.size()]);
-  }
-
-  public void addLint(final NamedObject namedObject, final Lint<?> lint)
-  {
-    if (namedObject != null && lint != null
-        && namedObject.getFullName().equals(lint.getObjectName()))
-    {
-      lints.add(lint);
-
-      final Collection<Lint<?>> columnLints = namedObject
-        .getAttribute(LINT_KEY, new ArrayList<Lint<?>>());
-      columnLints.add(lint);
-      namedObject.setAttribute(LINT_KEY, columnLints);
-    }
   }
 
 }

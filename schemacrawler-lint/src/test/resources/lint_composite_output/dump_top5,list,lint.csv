@@ -110,54 +110,44 @@ Tables
 PUBLIC.FOR_LINT.AUTHORS,[table]
 ------------------------------------------------------------------------
 ""
-schemacrawler.tools.lint.LinterTableForeignKeyMismatch,"[lint, medium]"
-foreign key and primary key have different data types,FK_AUTHORS_BOOK
-schemacrawler.tools.lint.LinterTableWithIncrementingColumns,"[lint, medium]"
-incrementing columns,"PHONE1, PHONE2"
-schemacrawler.tools.lint.LinterTableWithIncrementingColumns,"[lint, medium]"
-incrementing columns,"FAX, FAX3"
-schemacrawler.tools.lint.LinterTableWithIncrementingColumns,"[lint, medium]"
-incrementing columns,"ADDRESS1, ADDRESS2"
-schemacrawler.tools.lint.LinterTableWithIncrementingColumns,"[lint, medium]"
-incrementing columns,"EMAIL1, EMAIL2"
-schemacrawler.tools.lint.LinterTableWithIncrementingColumns,"[lint, medium]"
-incrementing columns,"HOMEEMAIL11, HOMEEMAIL12"
-schemacrawler.tools.lint.LinterTableWithIncrementingColumns,"[lint, medium]"
-incrementing columns are not consecutive,"FAX, FAX3"
-schemacrawler.tools.lint.LinterTableWithIncrementingColumns,"[lint, medium]"
-incrementing columns don't have the same data-type,"PHONE1, PHONE2"
-schemacrawler.tools.lint.LinterTableWithIncrementingColumns,"[lint, medium]"
-incrementing columns don't have the same data-type,"FAX, FAX3"
-schemacrawler.tools.lint.LinterTableWithIncrementingColumns,"[lint, medium]"
-incrementing columns don't have the same data-type,"EMAIL1, EMAIL2"
-schemacrawler.tools.lint.LinterTableWithNullColumnsInIndex,"[lint, medium]"
-unique index with nullable columns,IDX_U_AUTHORS
-schemacrawler.tools.lint.LinterTableWithNullIntendedColumns,"[lint, medium]"
+schemacrawler.tools.lint.LinterTableWithNullIntendedColumns,"[lint, **medium]"
 column where NULL may be intended,ADDRESS2
-schemacrawler.tools.lint.LinterTableWithNullIntendedColumns,"[lint, medium]"
 column where NULL may be intended,COUNTRY
-schemacrawler.tools.lint.LinterTableWithRedundantIndices,"[lint, medium]"
+schemacrawler.tools.lint.LinterTableWithRedundantIndices,"[lint, **medium]"
 redundant index,IDX_A1_AUTHORS
+schemacrawler.tools.lint.LinterTableWithIncrementingColumns,"[lint, **medium]"
+incrementing columns,"PHONE1, PHONE2"
+incrementing columns,"FAX, FAX3"
+incrementing columns,"ADDRESS1, ADDRESS2"
+incrementing columns,"EMAIL1, EMAIL2"
+incrementing columns,"HOMEEMAIL11, HOMEEMAIL12"
+incrementing columns are not consecutive,"FAX, FAX3"
+incrementing columns don't have the same data-type,"PHONE1, PHONE2"
+incrementing columns don't have the same data-type,"FAX, FAX3"
+incrementing columns don't have the same data-type,"EMAIL1, EMAIL2"
+schemacrawler.tools.lint.LinterTableWithNullColumnsInIndex,"[lint, **medium]"
+unique index with nullable columns,IDX_U_AUTHORS
+schemacrawler.tools.lint.LinterTableForeignKeyMismatch,"[lint, **medium]"
+foreign key and primary key have different data types,FK_AUTHORS_BOOK
 
 
 PUBLIC.FOR_LINT.BOOKS,[table]
 ------------------------------------------------------------------------
 ""
-schemacrawler.tools.lint.LinterTableWithQuotedNames,"[lint, medium]"
+schemacrawler.tools.lint.LinterTableWithQuotedNames,"[lint, **medium]"
 "spaces in name, or reserved word","""UPDATE"""
 
 
 "PUBLIC.FOR_LINT.""Global Counts""",[table]
 ------------------------------------------------------------------------
 ""
-schemacrawler.tools.lint.LinterTableWithNoIndices,"[lint, medium]"
-"",no indices
-schemacrawler.tools.lint.LinterTableWithQuotedNames,"[lint, medium]"
-"spaces in name, or reserved word","""Global Counts"""
-schemacrawler.tools.lint.LinterTableWithQuotedNames,"[lint, medium]"
-"spaces in name, or reserved word","""Global Count"""
-schemacrawler.tools.lint.LinterTableWithSingleColumn,"[lint, medium]"
+schemacrawler.tools.lint.LinterTableWithSingleColumn,"[lint, **medium]"
 "",single column
+schemacrawler.tools.lint.LinterTableWithNoIndices,"[lint, **medium]"
+"",no indices
+schemacrawler.tools.lint.LinterTableWithQuotedNames,"[lint, **medium]"
+"spaces in name, or reserved word","""Global Counts"""
+"spaces in name, or reserved word","""Global Count"""
 
 
 
