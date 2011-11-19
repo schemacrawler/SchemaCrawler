@@ -49,11 +49,9 @@ public class LinterTableForeignKeyMismatch
   public void lint(final Table table)
   {
     final List<ForeignKey> mismatchedForeignKeys = findMismatchedForeignKeys(table);
-    if (!mismatchedForeignKeys.isEmpty())
+    for (final ForeignKey foreignKey: mismatchedForeignKeys)
     {
-      final ForeignKey[] mismatchedForeignKeysArray = mismatchedForeignKeys
-        .toArray(new ForeignKey[mismatchedForeignKeys.size()]);
-      addLint(table, getSummary(), mismatchedForeignKeysArray);
+      addLint(table, getSummary(), foreignKey);
     }
   }
 

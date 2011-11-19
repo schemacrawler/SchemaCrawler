@@ -40,7 +40,7 @@ public class LinterTableWithNullColumnsInIndex
   @Override
   public String getSummary()
   {
-    return "unique indices with nullable columns";
+    return "unique index with nullable columns";
   }
 
   @Override
@@ -48,16 +48,16 @@ public class LinterTableWithNullColumnsInIndex
   {
     if (table != null)
     {
-      final Index[] nullableColumnsInUniqueIndex = findNullableColumnsInUniqueIndex(table
+      final List<Index> nullableColumnsInUniqueIndex = findNullableColumnsInUniqueIndex(table
         .getIndices());
-      if (nullableColumnsInUniqueIndex.length > 0)
+      for (final Index index: nullableColumnsInUniqueIndex)
       {
-        addLint(table, getSummary(), nullableColumnsInUniqueIndex);
+        addLint(table, getSummary(), index);
       }
     }
   }
 
-  private Index[] findNullableColumnsInUniqueIndex(final Index[] indices)
+  private List<Index> findNullableColumnsInUniqueIndex(final Index[] indices)
   {
     final List<Index> nullableColumnsInUniqueIndex = new ArrayList<Index>();
     for (final Index index: indices)
@@ -75,8 +75,7 @@ public class LinterTableWithNullColumnsInIndex
         }
       }
     }
-    return nullableColumnsInUniqueIndex
-      .toArray(new Index[nullableColumnsInUniqueIndex.size()]);
+    return nullableColumnsInUniqueIndex;
   }
 
 }

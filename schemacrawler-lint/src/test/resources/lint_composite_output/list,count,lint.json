@@ -167,19 +167,25 @@
         },
         {
           "id": "schemacrawler.tools.lint.LinterTableWithNullColumnsInIndex",
-          "description": "unique indices with nullable columns",
+          "description": "unique index with nullable columns",
           "value": "IDX_U_AUTHORS",
           "severity": "medium"
         },
         {
           "id": "schemacrawler.tools.lint.LinterTableWithNullIntendedColumns",
-          "description": "columns where NULL may be intended",
-          "value": "ADDRESS2, COUNTRY",
+          "description": "column where NULL may be intended",
+          "value": "ADDRESS2",
+          "severity": "medium"
+        },
+        {
+          "id": "schemacrawler.tools.lint.LinterTableWithNullIntendedColumns",
+          "description": "column where NULL may be intended",
+          "value": "COUNTRY",
           "severity": "medium"
         },
         {
           "id": "schemacrawler.tools.lint.LinterTableWithRedundantIndices",
-          "description": "redundant indices",
+          "description": "redundant index",
           "value": "IDX_A1_AUTHORS",
           "severity": "medium"
         }
@@ -191,7 +197,7 @@
       "name": "BOOKS",
       "lints": [{
         "id": "schemacrawler.tools.lint.LinterTableWithQuotedNames",
-        "description": "spaces in names, or reserved words",
+        "description": "spaces in name, or reserved word",
         "value": "\"UPDATE\"",
         "severity": "medium"
       }],
@@ -209,8 +215,14 @@
         },
         {
           "id": "schemacrawler.tools.lint.LinterTableWithQuotedNames",
-          "description": "spaces in names, or reserved words",
-          "value": "\"Global Counts\", \"Global Count\"",
+          "description": "spaces in name, or reserved word",
+          "value": "\"Global Counts\"",
+          "severity": "medium"
+        },
+        {
+          "id": "schemacrawler.tools.lint.LinterTableWithQuotedNames",
+          "description": "spaces in name, or reserved word",
+          "value": "\"Global Count\"",
           "severity": "medium"
         },
         {
