@@ -21,6 +21,9 @@
 package schemacrawler.tools.lint.executable;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Table;
@@ -172,23 +175,35 @@ final class LintTextFormatter
   private void printTableLints(final Lint<?>[] lints)
   {
     out.println(formattingHelper.createEmptyRow());
+
+    final Multimap<String, Lint> multiMap = new Multimap<String, Lint>();
     for (final Lint<?> lint: lints)
     {
-      out.println(formattingHelper.createNameRow(lint.getId(), String
-        .format("[lint, %s]", lint.getSeverity()), false));
-      final Object lintValue = lint.getValue();
-      if (lintValue instanceof Boolean)
+      multiMap.add(lint.getId(), lint);
+    }
+    for (final String lintId: multiMap.keySet())
+    {
+      out.println(formattingHelper.createNameRow(lintId, String
+        .format("[lint, %s]", "**medium"), false));
+      final List<Lint> lintsById = new ArrayList<Lint>(multiMap.get(lintId));
+      for (final Lint<?> lint: lintsById)
       {
-        if ((Boolean) lintValue)
+        final Object lintValue = lint.getValue();
+        if (lintValue instanceof Boolean)
         {
-          out.println(formattingHelper.createDescriptionRow(lint.getMessage()));
+          if ((Boolean) lintValue)
+          {
+            out
+              .println(formattingHelper.createDescriptionRow(lint.getMessage()));
+          }
         }
-      }
-      else
-      {
-        out
-          .println(formattingHelper.createNameValueRow(lint.getMessage(),
-                                                       lint.getValueAsString()));
+        else
+        {
+          out
+            .println(formattingHelper.createNameValueRow(lint.getMessage(),
+                                                         lint
+                                                           .getValueAsString()));
+        }
       }
     }
   }
