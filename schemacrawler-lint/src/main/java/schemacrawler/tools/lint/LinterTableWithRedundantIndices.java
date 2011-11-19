@@ -47,7 +47,7 @@ public class LinterTableWithRedundantIndices
   @Override
   public String getSummary()
   {
-    return "redundant indices";
+    return "redundant index";
   }
 
   @Override
@@ -59,11 +59,9 @@ public class LinterTableWithRedundantIndices
       if (indices.length > 0)
       {
         final Set<Index> redundantIndices = findRedundantIndices(indices);
-        if (!redundantIndices.isEmpty())
+        for (final Index index: redundantIndices)
         {
-          final Index[] redundantIndexArray = redundantIndices
-            .toArray(new Index[redundantIndices.size()]);
-          addLint(table, getSummary(), redundantIndexArray);
+          addLint(table, getSummary(), index);
         }
       }
     }

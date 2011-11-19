@@ -39,7 +39,7 @@ public class LinterTableWithQuotedNames
   @Override
   public String getSummary()
   {
-    return "spaces in names, or reserved words";
+    return "spaces in name, or reserved word";
   }
 
   @Override
@@ -54,11 +54,9 @@ public class LinterTableWithQuotedNames
       {
         spacesInNamesList.add(0, tableName);
       }
-      if (!spacesInNamesList.isEmpty())
+      for (final String spacesInName: spacesInNamesList)
       {
-        final String[] spacesInNames = spacesInNamesList
-          .toArray(new String[spacesInNamesList.size()]);
-        addLint(table, getSummary(), spacesInNames);
+        addLint(table, getSummary(), spacesInName);
       }
     }
   }

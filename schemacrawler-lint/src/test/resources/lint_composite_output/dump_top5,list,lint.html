@@ -428,7 +428,7 @@ hr {
 		<td class='description'>[lint, medium]</td>
 	</tr>
 	<tr>
-		<td>unique indices with nullable columns</td>
+		<td>unique index with nullable columns</td>
 		<td>IDX_U_AUTHORS</td>
 	</tr>
 	<tr>
@@ -436,15 +436,23 @@ hr {
 		<td class='description'>[lint, medium]</td>
 	</tr>
 	<tr>
-		<td>columns where NULL may be intended</td>
-		<td>ADDRESS2, COUNTRY</td>
+		<td>column where NULL may be intended</td>
+		<td>ADDRESS2</td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>schemacrawler.tools.lint.LinterTableWithNullIntendedColumns</td>
+		<td class='description'>[lint, medium]</td>
+	</tr>
+	<tr>
+		<td>column where NULL may be intended</td>
+		<td>COUNTRY</td>
 	</tr>
 	<tr>
 		<td colspan='2' class='name'>schemacrawler.tools.lint.LinterTableWithRedundantIndices</td>
 		<td class='description'>[lint, medium]</td>
 	</tr>
 	<tr>
-		<td>redundant indices</td>
+		<td>redundant index</td>
 		<td>IDX_A1_AUTHORS</td>
 	</tr>
 </table>
@@ -463,7 +471,7 @@ hr {
 		<td class='description'>[lint, medium]</td>
 	</tr>
 	<tr>
-		<td>spaces in names, or reserved words</td>
+		<td>spaces in name, or reserved word</td>
 		<td>&quot;UPDATE&quot;</td>
 	</tr>
 </table>
@@ -490,8 +498,16 @@ hr {
 		<td class='description'>[lint, medium]</td>
 	</tr>
 	<tr>
-		<td>spaces in names, or reserved words</td>
-		<td>&quot;Global Counts&quot;, &quot;Global Count&quot;</td>
+		<td>spaces in name, or reserved word</td>
+		<td>&quot;Global Counts&quot;</td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>schemacrawler.tools.lint.LinterTableWithQuotedNames</td>
+		<td class='description'>[lint, medium]</td>
+	</tr>
+	<tr>
+		<td>spaces in name, or reserved word</td>
+		<td>&quot;Global Count&quot;</td>
 	</tr>
 	<tr>
 		<td colspan='2' class='name'>schemacrawler.tools.lint.LinterTableWithSingleColumn</td>

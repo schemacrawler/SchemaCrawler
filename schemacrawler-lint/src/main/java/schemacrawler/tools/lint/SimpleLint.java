@@ -203,9 +203,9 @@ public final class SimpleLint<V extends Serializable>
   {
     if (value != null)
     {
+      final Class<? extends Object> valueClass = value.getClass();
       Object valueObject = value;
 
-      final Class<? extends Object> valueClass = value.getClass();
       if (valueClass.isArray()
           && NamedObject.class.isAssignableFrom(valueClass.getComponentType()))
       {
@@ -229,6 +229,10 @@ public final class SimpleLint<V extends Serializable>
           }
         }
         valueObject = list;
+      }
+      else if (NamedObject.class.isAssignableFrom(valueClass))
+      {
+        valueObject = ((NamedObject) valueObject).getName();
       }
       else
       {

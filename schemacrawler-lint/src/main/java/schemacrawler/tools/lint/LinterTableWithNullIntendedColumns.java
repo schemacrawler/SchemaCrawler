@@ -40,7 +40,7 @@ public class LinterTableWithNullIntendedColumns
   @Override
   public String getSummary()
   {
-    return "columns where NULL may be intended";
+    return "column where NULL may be intended";
   }
 
   @Override
@@ -48,16 +48,16 @@ public class LinterTableWithNullIntendedColumns
   {
     if (table != null)
     {
-      final Column[] nullDefaultValueMayBeIntendedColumns = findNullDefaultValueMayBeIntendedColumns(table
+      final List<Column> nullDefaultValueMayBeIntendedColumns = findNullDefaultValueMayBeIntendedColumns(table
         .getColumns());
-      if (nullDefaultValueMayBeIntendedColumns.length > 0)
+      for (final Column column: nullDefaultValueMayBeIntendedColumns)
       {
-        addLint(table, getSummary(), nullDefaultValueMayBeIntendedColumns);
+        addLint(table, getSummary(), column);
       }
     }
   }
 
-  private Column[] findNullDefaultValueMayBeIntendedColumns(final Column[] columns)
+  private List<Column> findNullDefaultValueMayBeIntendedColumns(final Column[] columns)
   {
     final List<Column> nullDefaultValueMayBeIntendedColumns = new ArrayList<Column>();
     for (final Column column: columns)
@@ -69,8 +69,7 @@ public class LinterTableWithNullIntendedColumns
         nullDefaultValueMayBeIntendedColumns.add(column);
       }
     }
-    return nullDefaultValueMayBeIntendedColumns
-      .toArray(new Column[nullDefaultValueMayBeIntendedColumns.size()]);
+    return nullDefaultValueMayBeIntendedColumns;
   }
 
 }

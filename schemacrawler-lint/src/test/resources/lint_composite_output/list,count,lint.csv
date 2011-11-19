@@ -101,18 +101,20 @@ incrementing columns don't have the same data-type,"FAX, FAX3"
 schemacrawler.tools.lint.LinterTableWithIncrementingColumns,"[lint, medium]"
 incrementing columns don't have the same data-type,"EMAIL1, EMAIL2"
 schemacrawler.tools.lint.LinterTableWithNullColumnsInIndex,"[lint, medium]"
-unique indices with nullable columns,IDX_U_AUTHORS
+unique index with nullable columns,IDX_U_AUTHORS
 schemacrawler.tools.lint.LinterTableWithNullIntendedColumns,"[lint, medium]"
-columns where NULL may be intended,"ADDRESS2, COUNTRY"
+column where NULL may be intended,ADDRESS2
+schemacrawler.tools.lint.LinterTableWithNullIntendedColumns,"[lint, medium]"
+column where NULL may be intended,COUNTRY
 schemacrawler.tools.lint.LinterTableWithRedundantIndices,"[lint, medium]"
-redundant indices,IDX_A1_AUTHORS
+redundant index,IDX_A1_AUTHORS
 
 
 PUBLIC.FOR_LINT.BOOKS,[table]
 ------------------------------------------------------------------------
 ""
 schemacrawler.tools.lint.LinterTableWithQuotedNames,"[lint, medium]"
-"spaces in names, or reserved words","""UPDATE"""
+"spaces in name, or reserved word","""UPDATE"""
 
 
 "PUBLIC.FOR_LINT.""Global Counts""",[table]
@@ -121,7 +123,9 @@ schemacrawler.tools.lint.LinterTableWithQuotedNames,"[lint, medium]"
 schemacrawler.tools.lint.LinterTableWithNoIndices,"[lint, medium]"
 "",no indices
 schemacrawler.tools.lint.LinterTableWithQuotedNames,"[lint, medium]"
-"spaces in names, or reserved words","""Global Counts"", ""Global Count"""
+"spaces in name, or reserved word","""Global Counts"""
+schemacrawler.tools.lint.LinterTableWithQuotedNames,"[lint, medium]"
+"spaces in name, or reserved word","""Global Count"""
 schemacrawler.tools.lint.LinterTableWithSingleColumn,"[lint, medium]"
 "",single column
 
