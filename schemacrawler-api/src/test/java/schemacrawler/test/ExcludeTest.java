@@ -41,12 +41,12 @@ public class ExcludeTest
   private static final Logger LOGGER = Logger.getLogger(ExcludeTest.class
     .getName());
 
-  private static TestDatabase testUtility = new TestDatabase();
+  private static TestDatabase testDatabase = new TestDatabase();
 
   @AfterClass
   public static void afterAllTests()
   {
-    testUtility.shutdownDatabase();
+    testDatabase.shutdownDatabase();
   }
 
   @BeforeClass
@@ -54,7 +54,7 @@ public class ExcludeTest
     throws Exception
   {
     TestDatabase.initializeApplicationLogging();
-    testUtility.startMemoryDatabase();
+    testDatabase.startMemoryDatabase();
   }
 
   @Test
@@ -175,7 +175,7 @@ public class ExcludeTest
       .setColumnInclusionRule(new InclusionRule(InclusionRule.ALL,
                                                 ".*\\..*\\.ID"));
 
-    final Database database = testUtility.getDatabase(schemaCrawlerOptions);
+    final Database database = testDatabase.getDatabase(schemaCrawlerOptions);
     final Schema[] schemas = database.getSchemas();
     assertEquals("Schema count does not match",
                  schemaNames.length,

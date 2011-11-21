@@ -48,12 +48,12 @@ import schemacrawler.utility.TestDatabase;
 public class SchemaSerializationTest
 {
 
-  private static TestDatabase testUtility = new TestDatabase();
+  private static TestDatabase testDatabase = new TestDatabase();
 
   @AfterClass
   public static void afterAllTests()
   {
-    testUtility.shutdownDatabase();
+    testDatabase.shutdownDatabase();
   }
 
   @BeforeClass
@@ -61,7 +61,7 @@ public class SchemaSerializationTest
     throws Exception
   {
     TestDatabase.initializeApplicationLogging();
-    testUtility.startMemoryDatabase();
+    testDatabase.startMemoryDatabase();
   }
 
   @Test
@@ -71,7 +71,7 @@ public class SchemaSerializationTest
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
 
-    final Database database = testUtility.getDatabase(schemaCrawlerOptions);
+    final Database database = testDatabase.getDatabase(schemaCrawlerOptions);
     assertNotNull("Could not obtain database", database);
     assertTrue("Could not find any schemas", database.getSchemas().length > 0);
 

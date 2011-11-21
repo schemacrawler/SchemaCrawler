@@ -80,12 +80,12 @@ public class SchemaCrawlerOutputTest
   private static final String COMPOSITE_OUTPUT = "composite_output/";
   private static final String JSON_OUTPUT = "json_output/";
 
-  private static TestDatabase testUtility = new TestDatabase();
+  private static TestDatabase testDatabase = new TestDatabase();
 
   @AfterClass
   public static void afterAllTests()
   {
-    testUtility.shutdownDatabase();
+    testDatabase.shutdownDatabase();
   }
 
   @BeforeClass
@@ -93,7 +93,7 @@ public class SchemaCrawlerOutputTest
     throws Exception
   {
     TestDatabase.initializeApplicationLogging();
-    testUtility.startMemoryDatabase();
+    testDatabase.startMemoryDatabase();
     XMLUnit.setControlEntityResolver(new LocalEntityResolver());
   }
 
@@ -143,7 +143,7 @@ public class SchemaCrawlerOutputTest
         final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
         schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
 
-        final DatabaseConnectionOptions connectionOptions = testUtility
+        final DatabaseConnectionOptions connectionOptions = testDatabase
           .getDatabaseConnectionOptions();
 
         final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
@@ -198,7 +198,7 @@ public class SchemaCrawlerOutputTest
         final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
         schemaCrawlerOptions.setSchemaInfoLevel(infoLevel.getSchemaInfoLevel());
 
-        final DatabaseConnectionOptions connectionOptions = testUtility
+        final DatabaseConnectionOptions connectionOptions = testDatabase
           .getDatabaseConnectionOptions();
 
         final Executable executable = new SchemaCrawlerExecutable(schemaTextDetailType
@@ -247,7 +247,7 @@ public class SchemaCrawlerOutputTest
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
       schemaCrawlerOptions.setSchemaInfoLevel(infoLevel.getSchemaInfoLevel());
 
-      final DatabaseConnectionOptions connectionOptions = testUtility
+      final DatabaseConnectionOptions connectionOptions = testDatabase
         .getDatabaseConnectionOptions();
 
       final Executable executable = new SchemaCrawlerExecutable(schemaTextDetailType

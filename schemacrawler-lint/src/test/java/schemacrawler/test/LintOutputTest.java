@@ -81,13 +81,13 @@ public class LintOutputTest
   private static final String COMPOSITE_OUTPUT = "lint_composite_output/";
   private static final String JSON_OUTPUT = "lint_json_output/";
 
-  private static TestDatabase testUtility = new TestDatabase("publisher sales",
-                                                             "for_lint");
+  private static TestDatabase testDatabase = new TestDatabase("publisher sales",
+                                                              "for_lint");
 
   @AfterClass
   public static void afterAllTests()
   {
-    testUtility.shutdownDatabase();
+    testDatabase.shutdownDatabase();
   }
 
   @BeforeClass
@@ -95,7 +95,7 @@ public class LintOutputTest
     throws Exception
   {
     TestDatabase.initializeApplicationLogging();
-    testUtility.startMemoryDatabase();
+    testDatabase.startMemoryDatabase();
     XMLUnit.setControlEntityResolver(new LocalEntityResolver());
   }
 
@@ -139,7 +139,7 @@ public class LintOutputTest
         final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
         schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
 
-        final DatabaseConnectionOptions connectionOptions = testUtility
+        final DatabaseConnectionOptions connectionOptions = testDatabase
           .getDatabaseConnectionOptions();
 
         final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
@@ -185,7 +185,7 @@ public class LintOutputTest
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
     schemaCrawlerOptions.setSchemaInfoLevel(infoLevel.getSchemaInfoLevel());
 
-    final DatabaseConnectionOptions connectionOptions = testUtility
+    final DatabaseConnectionOptions connectionOptions = testDatabase
       .getDatabaseConnectionOptions();
 
     final Executable executable = new SchemaCrawlerExecutable("lint");
@@ -227,7 +227,7 @@ public class LintOutputTest
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
     schemaCrawlerOptions.setSchemaInfoLevel(infoLevel.getSchemaInfoLevel());
 
-    final DatabaseConnectionOptions connectionOptions = testUtility
+    final DatabaseConnectionOptions connectionOptions = testDatabase
       .getDatabaseConnectionOptions();
 
     final Executable executable = new SchemaCrawlerExecutable("lint");

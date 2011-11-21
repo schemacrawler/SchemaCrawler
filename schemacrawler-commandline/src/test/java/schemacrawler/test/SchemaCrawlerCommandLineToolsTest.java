@@ -28,12 +28,12 @@ public class SchemaCrawlerCommandLineToolsTest
   private static final String INFO_LEVEL_OUTPUT = "info_level_output/";
   private static final String GREP_OUTPUT = "grep_output/";
 
-  private static TestDatabase testUtility = new TestDatabase();
+  private static TestDatabase testDb = new TestDatabase();
 
   @AfterClass
   public static void afterAllTests()
   {
-    testUtility.shutdownDatabase();
+    testDb.shutdownDatabase();
   }
 
   @BeforeClass
@@ -41,7 +41,7 @@ public class SchemaCrawlerCommandLineToolsTest
     throws Exception
   {
     TestDatabase.initializeApplicationLogging();
-    testUtility.startDatabase(true);
+    testDb.startDatabase(true);
   }
 
   @Test

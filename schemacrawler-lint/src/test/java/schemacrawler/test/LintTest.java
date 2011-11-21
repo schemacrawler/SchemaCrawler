@@ -44,15 +44,15 @@ import schemacrawler.utility.TestDatabase;
 public class LintTest
 {
 
-  private static TestDatabase testUtility = new TestDatabase("publisher sales",
-                                                             "for_lint");
+  private static TestDatabase testDatabase = new TestDatabase("publisher sales",
+                                                              "for_lint");
 
   private static final String LINTS_OUTPUT = "lints_output/";
 
   @AfterClass
   public static void afterAllTests()
   {
-    testUtility.shutdownDatabase();
+    testDatabase.shutdownDatabase();
   }
 
   @BeforeClass
@@ -60,14 +60,14 @@ public class LintTest
     throws Exception
   {
     TestDatabase.initializeApplicationLogging();
-    testUtility.startMemoryDatabase();
+    testDatabase.startMemoryDatabase();
   }
 
   @Test
   public void lints()
     throws Exception
   {
-    final Database database = testUtility
+    final Database database = testDatabase
       .getDatabase(new SchemaCrawlerOptions());
     assertNotNull(database);
     assertEquals(5, database.getSchemas().length);
