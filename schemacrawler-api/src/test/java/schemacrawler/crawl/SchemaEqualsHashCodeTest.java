@@ -137,14 +137,14 @@ public class SchemaEqualsHashCodeTest
 
   static
   {
-    final TestDatabase testUtility = new TestDatabase();
+    final TestDatabase testDatabase = new TestDatabase();
     try
     {
       TestDatabase.initializeApplicationLogging();
-      testUtility.startMemoryDatabase();
+      testDatabase.startMemoryDatabase();
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
       schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
-      database = testUtility.getDatabase(schemaCrawlerOptions);
+      database = testDatabase.getDatabase(schemaCrawlerOptions);
       final Schema[] schemas = database.getSchemas();
       assertTrue("No schemas found", schemas.length > 0);
       schema = schemas[0];
@@ -174,7 +174,7 @@ public class SchemaEqualsHashCodeTest
     }
     finally
     {
-      testUtility.shutdownDatabase();
+      testDatabase.shutdownDatabase();
     }
   }
 

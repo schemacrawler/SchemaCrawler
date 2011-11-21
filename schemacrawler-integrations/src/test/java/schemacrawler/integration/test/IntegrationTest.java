@@ -47,12 +47,12 @@ import schemacrawler.utility.TestDatabase;
 public class IntegrationTest
 {
 
-  private static TestDatabase testUtility = new TestDatabase();
+  private static TestDatabase testDatabase = new TestDatabase();
 
   @AfterClass
   public static void afterAllTests()
   {
-    testUtility.shutdownDatabase();
+    testDatabase.shutdownDatabase();
   }
 
   @BeforeClass
@@ -60,7 +60,7 @@ public class IntegrationTest
     throws Exception
   {
     TestDatabase.initializeApplicationLogging();
-    testUtility.startMemoryDatabase();
+    testDatabase.startMemoryDatabase();
   }
 
   @Test
@@ -114,7 +114,7 @@ public class IntegrationTest
     executable.getSchemaCrawlerOptions()
       .setAlphabeticalSortForTableColumns(true);
     executable.setOutputOptions(outputOptions);
-    executable.execute(testUtility.getConnection());
+    executable.execute(testDatabase.getConnection());
 
     assertTrue(testOutputFile.exists());
     assertTrue(testOutputFile.length() > 0);
@@ -150,7 +150,7 @@ public class IntegrationTest
                                                     + ".", ".test");
     testOutputFile.delete();
 
-    final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(testUtility
+    final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(testDatabase
                                                                                 .getDatabaseConnectionOptions(),
                                                                               "-command="
                                                                                   + command,
@@ -187,7 +187,7 @@ public class IntegrationTest
     executable.getSchemaCrawlerOptions()
       .setAlphabeticalSortForTableColumns(true);
     executable.setOutputOptions(outputOptions);
-    executable.execute(testUtility.getConnection());
+    executable.execute(testDatabase.getConnection());
 
     final List<String> failures = TestUtility.compareOutput(referenceFileName
                                                                 + ".txt",

@@ -74,12 +74,12 @@ public class SchemaCrawlerXmlOutputTest
 
   private static final String XML_OUTPUT = "xml_output/";
 
-  private static TestDatabase testUtility = new TestDatabase();
+  private static TestDatabase testDatabase = new TestDatabase();
 
   @AfterClass
   public static void afterAllTests()
   {
-    testUtility.shutdownDatabase();
+    testDatabase.shutdownDatabase();
   }
 
   @BeforeClass
@@ -87,7 +87,7 @@ public class SchemaCrawlerXmlOutputTest
     throws Exception
   {
     TestDatabase.initializeApplicationLogging();
-    testUtility.startMemoryDatabase();
+    testDatabase.startMemoryDatabase();
     XMLUnit.setControlEntityResolver(new LocalEntityResolver());
   }
 
@@ -130,7 +130,7 @@ public class SchemaCrawlerXmlOutputTest
     options.setSchemaInfoLevel(SchemaInfoLevel.minimum());
 
     executable.setOutputOptions(outputOptions);
-    executable.execute(testUtility.getConnection());
+    executable.execute(testDatabase.getConnection());
 
     failures.addAll(TestUtility.compareOutput(XML_OUTPUT + referenceFile,
                                               testOutputFile,

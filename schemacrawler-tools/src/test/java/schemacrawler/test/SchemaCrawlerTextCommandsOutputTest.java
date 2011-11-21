@@ -71,12 +71,12 @@ public class SchemaCrawlerTextCommandsOutputTest
 
   private static final String COMMAND_OUTPUT = "command_output/";
 
-  private static TestDatabase testUtility = new TestDatabase();
+  private static TestDatabase testDatabase = new TestDatabase();
 
   @AfterClass
   public static void afterAllTests()
   {
-    testUtility.shutdownDatabase();
+    testDatabase.shutdownDatabase();
   }
 
   @BeforeClass
@@ -84,7 +84,7 @@ public class SchemaCrawlerTextCommandsOutputTest
     throws Exception
   {
     TestDatabase.initializeApplicationLogging();
-    testUtility.startMemoryDatabase();
+    testDatabase.startMemoryDatabase();
     XMLUnit.setControlEntityResolver(new LocalEntityResolver());
   }
 
@@ -151,7 +151,7 @@ public class SchemaCrawlerTextCommandsOutputTest
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
     executable.setAdditionalConfiguration(config);
     executable.setOutputOptions(outputOptions);
-    executable.execute(testUtility.getConnection());
+    executable.execute(testDatabase.getConnection());
 
     final List<String> failures = TestUtility
       .compareOutput(COMMAND_OUTPUT + referenceFile,

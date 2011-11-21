@@ -41,12 +41,12 @@ import schemacrawler.utility.TestDatabase;
 public class SchemaCrawlerDeepTest
 {
 
-  private static TestDatabase testUtility = new TestDatabase();
+  private static TestDatabase testDatabase = new TestDatabase();
 
   @AfterClass
   public static void afterAllTests()
   {
-    testUtility.shutdownDatabase();
+    testDatabase.shutdownDatabase();
   }
 
   @BeforeClass
@@ -54,7 +54,7 @@ public class SchemaCrawlerDeepTest
     throws Exception
   {
     TestDatabase.initializeApplicationLogging();
-    testUtility.startMemoryDatabase();
+    testDatabase.startMemoryDatabase();
   }
 
   @Test
@@ -64,7 +64,7 @@ public class SchemaCrawlerDeepTest
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
 
-    final Schema systemSchema = testUtility.getSchema(schemaCrawlerOptions,
+    final Schema systemSchema = testDatabase.getSchema(schemaCrawlerOptions,
                                                       "PUBLIC.SYSTEM_LOBS");
     assertNotNull("Could not obtain schema", systemSchema);
     assertTrue("Should not find any tables",
@@ -73,7 +73,7 @@ public class SchemaCrawlerDeepTest
                  7,
                  systemSchema.getProcedures().length);
 
-    final Schema schema = testUtility.getSchema(schemaCrawlerOptions,
+    final Schema schema = testDatabase.getSchema(schemaCrawlerOptions,
                                                 "PUBLIC.BOOKS");
     assertNotNull("Could not obtain schema", schema);
     assertEquals("Could not find any tables", 6, schema.getTables().length);

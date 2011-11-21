@@ -43,12 +43,12 @@ import schemacrawler.utility.TestDatabase;
 public class SpringIntegrationTest
 {
 
-  private static TestDatabase testUtility = new TestDatabase();
+  private static TestDatabase testDatabase = new TestDatabase();
 
   @AfterClass
   public static void afterAllTests()
   {
-    testUtility.shutdownDatabase();
+    testDatabase.shutdownDatabase();
   }
 
   @BeforeClass
@@ -56,7 +56,7 @@ public class SpringIntegrationTest
     throws Exception
   {
     TestDatabase.initializeApplicationLogging();
-    testUtility.startMemoryDatabase();
+    testDatabase.startMemoryDatabase();
   }
 
   private final ApplicationContext appContext = new ClassPathXmlApplicationContext("context.xml");
@@ -88,8 +88,8 @@ public class SpringIntegrationTest
     final SchemaCrawlerOptions schemaCrawlerOptions = (SchemaCrawlerOptions) appContext
       .getBean("schemaCrawlerOptions");
 
-    final Schema schema = testUtility.getSchema(schemaCrawlerOptions,
-                                                "PUBLIC.BOOKS");
+    final Schema schema = testDatabase.getSchema(schemaCrawlerOptions,
+                                                 "PUBLIC.BOOKS");
     assertNotNull("Could not obtain schema", schema);
 
     assertEquals("Unexpected number of tables in the schema",
@@ -109,7 +109,7 @@ public class SpringIntegrationTest
 
     executable.getOutputOptions()
       .setOutputFileName(testOutputFile.getAbsolutePath());
-    executable.execute(testUtility.getConnection());
+    executable.execute(testDatabase.getConnection());
 
     failures.addAll(TestUtility.compareOutput(executableName + ".txt",
                                               testOutputFile));

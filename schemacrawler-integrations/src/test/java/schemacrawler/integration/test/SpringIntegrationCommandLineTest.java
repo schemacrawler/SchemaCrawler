@@ -38,12 +38,12 @@ import schemacrawler.utility.TestDatabase;
 public class SpringIntegrationCommandLineTest
 {
 
-  private static TestDatabase testUtility = new TestDatabase();
+  private static TestDatabase testDatabase = new TestDatabase();
 
   @AfterClass
   public static void afterAllTests()
   {
-    testUtility.shutdownDatabase();
+    testDatabase.shutdownDatabase();
   }
 
   @BeforeClass
@@ -51,7 +51,7 @@ public class SpringIntegrationCommandLineTest
     throws Exception
   {
     TestDatabase.initializeApplicationLogging();
-    testUtility.startDatabase(true);
+    testDatabase.startDatabase(true);
   }
 
   @Test

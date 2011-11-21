@@ -33,12 +33,12 @@ import schemacrawler.utility.TestDatabase;
 public class CoverageTest
 {
 
-  private static TestDatabase testUtility = new TestDatabase();
+  private static TestDatabase testDatabase = new TestDatabase();
 
   @AfterClass
   public static void afterAllTests()
   {
-    testUtility.shutdownDatabase();
+    testDatabase.shutdownDatabase();
   }
 
   @BeforeClass
@@ -46,7 +46,7 @@ public class CoverageTest
     throws Exception
   {
     TestDatabase.initializeApplicationLogging();
-    testUtility.startMemoryDatabase();
+    testDatabase.startMemoryDatabase();
   }
 
   @Test
@@ -87,7 +87,7 @@ public class CoverageTest
   public void retrieverConnectionClosed()
     throws SQLException, SchemaCrawlerException
   {
-    final Connection connection = testUtility.getConnection();
+    final Connection connection = testDatabase.getConnection();
     connection.close();
     new RetrieverConnection(connection, null);
   }

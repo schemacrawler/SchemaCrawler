@@ -42,12 +42,12 @@ public class ResultColumnsTest
   private static final Logger LOGGER = Logger.getLogger(ResultColumnsTest.class
     .getName());
 
-  private static TestDatabase testUtility = new TestDatabase();
+  private static TestDatabase testDatabase = new TestDatabase();
 
   @AfterClass
   public static void afterAllTests()
   {
-    testUtility.shutdownDatabase();
+    testDatabase.shutdownDatabase();
   }
 
   @BeforeClass
@@ -55,7 +55,7 @@ public class ResultColumnsTest
     throws Exception
   {
     TestDatabase.initializeApplicationLogging();
-    testUtility.startMemoryDatabase();
+    testDatabase.startMemoryDatabase();
   }
 
   @Test
@@ -82,7 +82,7 @@ public class ResultColumnsTest
                        + " INNER JOIN PUBLIC.BOOKS.AUTHORS                                          "
                        + "   ON PUBLIC.BOOKS.AUTHORS.ID = PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID         ";
 
-    final Connection connection = testUtility.getConnection();
+    final Connection connection = testDatabase.getConnection();
     final Statement statement = connection.createStatement();
     final ResultSet resultSet = statement.executeQuery(sql);
 
