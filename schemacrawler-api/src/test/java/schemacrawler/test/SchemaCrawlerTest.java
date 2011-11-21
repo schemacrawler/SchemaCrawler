@@ -91,20 +91,20 @@ public class SchemaCrawlerTest
         {
             {
                 "CHECK_UPPERCASE_STATE",
-                "SYS_CT_10028",
-                "SYS_CT_10029",
-                "SYS_CT_10030"
+                "SYS_CT_10032",
+                "SYS_CT_10033",
+                "SYS_CT_10034"
             },
             {},
             {
-                "SYS_CT_10036", "SYS_CT_10037"
+                "SYS_CT_10040", "SYS_CT_10041"
             },
             {
-                "SYS_CT_10032", "SYS_CT_10033", "SYS_CT_10034"
+                "SYS_CT_10036", "SYS_CT_10037", "SYS_CT_10038"
             },
             {},
             {
-              "SYS_CT_10026"
+              "SYS_CT_10030"
             },
             {}
         },
@@ -112,9 +112,9 @@ public class SchemaCrawlerTest
         {},
         {
             {
-                "SYS_CT_10048", "SYS_CT_10049", "SYS_CT_10050", "SYS_CT_10051"
+                "SYS_CT_10052", "SYS_CT_10053", "SYS_CT_10054", "SYS_CT_10055"
             }, {
-                "SYS_CT_10053", "SYS_CT_10054"
+                "SYS_CT_10057", "SYS_CT_10058"
             }
         },
         {},
@@ -475,7 +475,7 @@ public class SchemaCrawlerTest
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
 
     final Schema schema = testDatabase.getSchema(schemaCrawlerOptions,
-                                                "PUBLIC.BOOKS");
+                                                 "PUBLIC.BOOKS");
     final Procedure[] procedures = schema.getProcedures();
     assertEquals("Wrong number of procedures", 1, procedures.length);
     for (final Procedure procedure: procedures)
@@ -493,14 +493,14 @@ public class SchemaCrawlerTest
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.detailed());
     final Schema schema1 = testDatabase.getSchema(schemaCrawlerOptions,
-                                                 "PUBLIC.BOOKS");
+                                                  "PUBLIC.BOOKS");
     assertTrue("Could not find any tables", schema1.getTables().length > 0);
     assertEquals("Wrong number of procedures",
                  1,
                  schema1.getProcedures().length);
 
     final Schema schema2 = testDatabase.getSchema(schemaCrawlerOptions,
-                                                 "PUBLIC.BOOKS");
+                                                  "PUBLIC.BOOKS");
 
     assertEquals("Schema not not match", schema1, schema2);
     assertArrayEquals("Tables do not match",
@@ -658,7 +658,7 @@ public class SchemaCrawlerTest
     schemaCrawlerOptions.setInformationSchemaViews(informationSchemaViews);
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
     final Schema schema = testDatabase.getSchema(schemaCrawlerOptions,
-                                                "PUBLIC.BOOKS");
+                                                 "PUBLIC.BOOKS");
     final Table[] tables = schema.getTables();
     boolean foundTrigger = false;
     for (final Table table: tables)
@@ -692,7 +692,7 @@ public class SchemaCrawlerTest
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
 
     final Schema schema = testDatabase.getSchema(schemaCrawlerOptions,
-                                                "PUBLIC.BOOKS");
+                                                 "PUBLIC.BOOKS");
     assertNotNull("Schema not found", schema);
     final View view = (View) schema.getTable("AUTHORSLIST");
     assertNotNull("View not found", view);

@@ -20,16 +20,16 @@ PK_BOOKS                                                   [primary key]
 FK_Y_BOOK                                  [foreign key, with no action]
   ID --> PUBLIC.BOOKS.BOOKAUTHORS.BOOKID                              
 
-SYS_IDX_PK_BOOKS_10035                                    [unique index]
+SYS_IDX_PK_BOOKS_10039                                    [unique index]
   ID                                ascending                   
 
-SYS_CT_10032                                          [check constraint]
+SYS_CT_10036                                          [check constraint]
 BOOKS.BOOKS.ID IS NOT NULL
 
-SYS_CT_10033                                          [check constraint]
+SYS_CT_10037                                          [check constraint]
 BOOKS.BOOKS.TITLE IS NOT NULL
 
-SYS_CT_10034                                          [check constraint]
+SYS_CT_10038                                          [check constraint]
 BOOKS.BOOKS.PUBLISHERID IS NOT NULL
 
                                                                [remarks]

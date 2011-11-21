@@ -1,17 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
 	<name>SchemaCrawler - Distribution</name>
-	<comment></comment>
-	<projects>
-		<project>SchemaCrawler - Differencer</project>
-		<project>SchemaCrawler for Microsoft SQL Server</project>
-		<project>SchemaCrawler for MySQL</project>
-		<project>SchemaCrawler for PostgreSQL</project>
-		<project>SchemaCrawler - Integrations</project>
-		<project>SchemaCrawler - Main</project>
-		<project>SchemaCrawler - Maven Plugin</project>
-		<project>SchemaCrawler - Test</project>
-	</projects>
 	<buildSpec>
 		<buildCommand>
 			<name>org.eclipse.jdt.core.javabuilder</name>
