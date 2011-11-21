@@ -17,7 +17,7 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.tools.lint;
+package schemacrawler.tools.linter;
 
 
 import static schemacrawler.tools.lint.LintUtility.columns;
@@ -33,6 +33,7 @@ import java.util.Set;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
+import schemacrawler.tools.lint.BaseLinter;
 
 public class LinterTableWithRedundantIndices
   extends BaseLinter

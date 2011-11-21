@@ -17,17 +17,15 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.tools.lint;
+package schemacrawler.tools.linter;
 
 
-import java.util.ArrayList;
-import java.util.List;
-
-import schemacrawler.schema.Column;
+import schemacrawler.schema.Index;
 import schemacrawler.schema.Table;
-import sf.util.Utility;
+import schemacrawler.schema.View;
+import schemacrawler.tools.lint.BaseLinter;
 
-public class LinterTableWithNullIntendedColumns
+public class LinterTableWithNoIndices
   extends BaseLinter
 {
 
@@ -40,36 +38,20 @@ public class LinterTableWithNullIntendedColumns
   @Override
   public String getSummary()
   {
-    return "column where NULL may be intended";
+    return "no indices";
   }
 
   @Override
   public void lint(final Table table)
   {
-    if (table != null)
+    if (table != null && !(table instanceof View))
     {
-      final List<Column> nullDefaultValueMayBeIntendedColumns = findNullDefaultValueMayBeIntendedColumns(table
-        .getColumns());
-      for (final Column column: nullDefaultValueMayBeIntendedColumns)
+      final Index[] indices = table.getIndices();
+      if (table.getPrimaryKey() == null && indices.length == 0)
       {
-        addLint(table, getSummary(), column);
+        addLint(table, getSummary(), true);
       }
     }
-  }
-
-  private List<Column> findNullDefaultValueMayBeIntendedColumns(final Column[] columns)
-  {
-    final List<Column> nullDefaultValueMayBeIntendedColumns = new ArrayList<Column>();
-    for (final Column column: columns)
-    {
-      final String columnDefaultValue = column.getDefaultValue();
-      if (!Utility.isBlank(columnDefaultValue)
-          && columnDefaultValue.trim().equalsIgnoreCase("NULL"))
-      {
-        nullDefaultValueMayBeIntendedColumns.add(column);
-      }
-    }
-    return nullDefaultValueMayBeIntendedColumns;
   }
 
 }

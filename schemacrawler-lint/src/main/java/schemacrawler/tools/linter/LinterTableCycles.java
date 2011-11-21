@@ -17,7 +17,7 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.tools.lint;
+package schemacrawler.tools.linter;
 
 
 import schemacrawler.schema.Database;
@@ -25,6 +25,7 @@ import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnMap;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
+import schemacrawler.tools.lint.BaseLinter;
 import sf.util.DirectedGraph;
 
 public class LinterTableCycles

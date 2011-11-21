@@ -17,7 +17,7 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.tools.lint;
+package schemacrawler.tools.linter;
 
 
 import java.util.ArrayList;
@@ -28,6 +28,7 @@ import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnMap;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
+import schemacrawler.tools.lint.BaseLinter;
 
 public class LinterTableForeignKeyMismatch
   extends BaseLinter

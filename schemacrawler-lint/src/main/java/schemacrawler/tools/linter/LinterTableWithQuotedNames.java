@@ -17,7 +17,7 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.tools.lint;
+package schemacrawler.tools.linter;
 
 
 import java.util.ArrayList;
@@ -25,6 +25,7 @@ import java.util.List;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
+import schemacrawler.tools.lint.BaseLinter;
 
 public class LinterTableWithQuotedNames
   extends BaseLinter

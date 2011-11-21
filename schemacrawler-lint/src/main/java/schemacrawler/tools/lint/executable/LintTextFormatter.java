@@ -22,18 +22,22 @@ package schemacrawler.tools.lint.executable;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.lint.Lint;
+import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.tools.lint.SimpleLintCollector;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.BaseTabularFormatter;
 import schemacrawler.tools.text.utility.TextFormattingHelper.DocumentHeaderType;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
+import sf.util.Multimap;
 
 /**
  * Text formatting of schema.
@@ -176,16 +180,18 @@ final class LintTextFormatter
   {
     out.println(formattingHelper.createEmptyRow());
 
-    final Multimap<String, Lint> multiMap = new Multimap<String, Lint>();
+    final Multimap<String, Lint<?>> multiMap = new Multimap<String, Lint<?>>();
+    final Map<String, LintSeverity> lintSeverityMap = new HashMap<String, LintSeverity>();
     for (final Lint<?> lint: lints)
     {
       multiMap.add(lint.getId(), lint);
+      lintSeverityMap.put(lint.getId(), lint.getSeverity());
     }
     for (final String lintId: multiMap.keySet())
     {
       out.println(formattingHelper.createNameRow(lintId, String
-        .format("[lint, %s]", "**medium"), false));
-      final List<Lint> lintsById = new ArrayList<Lint>(multiMap.get(lintId));
+        .format("[lint, %s]", lintSeverityMap.get(lintId).name()), false));
+      final List<Lint<?>> lintsById = new ArrayList<Lint<?>>(multiMap.get(lintId));
       for (final Lint<?> lint: lintsById)
       {
         final Object lintValue = lint.getValue();

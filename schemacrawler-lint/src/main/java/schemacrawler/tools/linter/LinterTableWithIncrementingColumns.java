@@ -17,10 +17,9 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.tools.lint;
+package schemacrawler.tools.linter;
 
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -33,6 +32,8 @@ import java.util.regex.Pattern;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Table;
+import schemacrawler.tools.lint.BaseLinter;
+import sf.util.Multimap;
 import sf.util.Utility;
 
 public class LinterTableWithIncrementingColumns
@@ -88,15 +89,12 @@ public class LinterTableWithIncrementingColumns
   {
     if (table != null)
     {
-      final HashMap<String, List<IncrementingColumn>> incrementingColumns = findIncrementingColumns(table
+      final Multimap<String, IncrementingColumn> incrementingColumns = findIncrementingColumns(table
         .getColumns());
-      if (!incrementingColumns.isEmpty())
+      for (final List<IncrementingColumn> incrementingColumnsList: incrementingColumns
+        .values())
       {
-        for (final List<IncrementingColumn> incrementingColumnsList: incrementingColumns
-          .values())
-        {
-          addIncrementingColumnsLints(table, incrementingColumnsList);
-        }
+        addIncrementingColumnsLints(table, incrementingColumnsList);
       }
     }
   }
@@ -150,11 +148,11 @@ public class LinterTableWithIncrementingColumns
 
   }
 
-  private HashMap<String, List<IncrementingColumn>> findIncrementingColumns(final Column[] columns)
+  private Multimap<String, IncrementingColumn> findIncrementingColumns(final Column[] columns)
   {
     if (columns == null || columns.length <= 1)
     {
-      return new HashMap<String, List<IncrementingColumn>>();
+      return new Multimap<String, IncrementingColumn>();
     }
 
     final Pattern pattern = Pattern.compile("([^0-9]*)([0-9]+)");
@@ -190,20 +188,16 @@ public class LinterTableWithIncrementingColumns
       }
     }
 
-    final HashMap<String, List<IncrementingColumn>> incrementingColumns = new HashMap<String, List<IncrementingColumn>>();
-    for (final String columnNameBase: incrementingColumnsMap.keySet())
-    {
-      incrementingColumns.put(columnNameBase,
-                              new ArrayList<IncrementingColumn>());
-    }
+    final Multimap<String, IncrementingColumn> incrementingColumns = new Multimap<String, IncrementingColumn>();
 
     for (final Column column: columns)
     {
       final String columnName = Utility.convertForComparison(column.getName());
       if (incrementingColumnsMap.containsKey(columnName))
       {
-        incrementingColumns.get(columnName)
-          .add(new IncrementingColumn(columnName, "0", column));
+        incrementingColumns.add(columnName, new IncrementingColumn(columnName,
+                                                                   "0",
+                                                                   column));
       }
       final Matcher matcher = pattern.matcher(columnName);
       if (matcher.matches())
@@ -212,9 +206,10 @@ public class LinterTableWithIncrementingColumns
         final String columnIncrement = matcher.group(2);
         if (incrementingColumnsMap.containsKey(columnNameBase))
         {
-          incrementingColumns
-            .get(columnNameBase)
-            .add(new IncrementingColumn(columnNameBase, columnIncrement, column));
+          incrementingColumns.add(columnNameBase,
+                                  new IncrementingColumn(columnNameBase,
+                                                         columnIncrement,
+                                                         column));
         }
       }
     }
