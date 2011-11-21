@@ -17,17 +17,18 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.tools.lint;
+package schemacrawler.tools.linter;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
-import schemacrawler.schema.Index;
-import schemacrawler.schema.IndexColumn;
+import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
+import schemacrawler.tools.lint.BaseLinter;
+import sf.util.Utility;
 
-public class LinterTableWithNullColumnsInIndex
+public class LinterTableWithNullIntendedColumns
   extends BaseLinter
 {
 
@@ -40,7 +41,7 @@ public class LinterTableWithNullColumnsInIndex
   @Override
   public String getSummary()
   {
-    return "unique index with nullable columns";
+    return "column where NULL may be intended";
   }
 
   @Override
@@ -48,34 +49,28 @@ public class LinterTableWithNullColumnsInIndex
   {
     if (table != null)
     {
-      final List<Index> nullableColumnsInUniqueIndex = findNullableColumnsInUniqueIndex(table
-        .getIndices());
-      for (final Index index: nullableColumnsInUniqueIndex)
+      final List<Column> nullDefaultValueMayBeIntendedColumns = findNullDefaultValueMayBeIntendedColumns(table
+        .getColumns());
+      for (final Column column: nullDefaultValueMayBeIntendedColumns)
       {
-        addLint(table, getSummary(), index);
+        addLint(table, getSummary(), column);
       }
     }
   }
 
-  private List<Index> findNullableColumnsInUniqueIndex(final Index[] indices)
+  private List<Column> findNullDefaultValueMayBeIntendedColumns(final Column[] columns)
   {
-    final List<Index> nullableColumnsInUniqueIndex = new ArrayList<Index>();
-    for (final Index index: indices)
+    final List<Column> nullDefaultValueMayBeIntendedColumns = new ArrayList<Column>();
+    for (final Column column: columns)
     {
-      if (index.isUnique())
+      final String columnDefaultValue = column.getDefaultValue();
+      if (!Utility.isBlank(columnDefaultValue)
+          && columnDefaultValue.trim().equalsIgnoreCase("NULL"))
       {
-        final IndexColumn[] indexColumns = index.getColumns();
-        for (final IndexColumn indexColumn: indexColumns)
-        {
-          if (indexColumn.isNullable())
-          {
-            nullableColumnsInUniqueIndex.add(index);
-            break;
-          }
-        }
+        nullDefaultValueMayBeIntendedColumns.add(column);
       }
     }
-    return nullableColumnsInUniqueIndex;
+    return nullDefaultValueMayBeIntendedColumns;
   }
 
 }

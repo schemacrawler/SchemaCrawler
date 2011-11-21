@@ -5,8 +5,8 @@
 [PUBLIC.FOR_LINT.AUTHORS] foreign key and primary key have different data types: FK_AUTHORS_BOOK
 [PUBLIC.FOR_LINT.AUTHORS] incrementing columns: PHONE1, PHONE2
 [PUBLIC.FOR_LINT.AUTHORS] incrementing columns: FAX, FAX3
-[PUBLIC.FOR_LINT.AUTHORS] incrementing columns: ADDRESS1, ADDRESS2
 [PUBLIC.FOR_LINT.AUTHORS] incrementing columns: EMAIL1, EMAIL2
+[PUBLIC.FOR_LINT.AUTHORS] incrementing columns: ADDRESS1, ADDRESS2
 [PUBLIC.FOR_LINT.AUTHORS] incrementing columns: HOMEEMAIL11, HOMEEMAIL12
 [PUBLIC.FOR_LINT.AUTHORS] incrementing columns are not consecutive: FAX, FAX3
 [PUBLIC.FOR_LINT.AUTHORS] incrementing columns don't have the same data-type: PHONE1, PHONE2

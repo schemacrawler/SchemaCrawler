@@ -5,85 +5,85 @@
       "name": "AUTHORS",
       "lints": [
         {
-          "id": "schemacrawler.tools.lint.LinterTableForeignKeyMismatch",
+          "id": "schemacrawler.tools.linter.LinterTableForeignKeyMismatch",
           "description": "foreign key and primary key have different data types",
           "value": "FK_AUTHORS_BOOK",
           "severity": "medium"
         },
         {
-          "id": "schemacrawler.tools.lint.LinterTableWithIncrementingColumns",
+          "id": "schemacrawler.tools.linter.LinterTableWithIncrementingColumns",
           "description": "incrementing columns",
           "value": "PHONE1, PHONE2",
           "severity": "medium"
         },
         {
-          "id": "schemacrawler.tools.lint.LinterTableWithIncrementingColumns",
+          "id": "schemacrawler.tools.linter.LinterTableWithIncrementingColumns",
           "description": "incrementing columns",
           "value": "FAX, FAX3",
           "severity": "medium"
         },
         {
-          "id": "schemacrawler.tools.lint.LinterTableWithIncrementingColumns",
+          "id": "schemacrawler.tools.linter.LinterTableWithIncrementingColumns",
+          "description": "incrementing columns",
+          "value": "EMAIL1, EMAIL2",
+          "severity": "medium"
+        },
+        {
+          "id": "schemacrawler.tools.linter.LinterTableWithIncrementingColumns",
           "description": "incrementing columns",
           "value": "ADDRESS1, ADDRESS2",
           "severity": "medium"
         },
         {
-          "id": "schemacrawler.tools.lint.LinterTableWithIncrementingColumns",
-          "description": "incrementing columns",
-          "value": "EMAIL1, EMAIL2",
-          "severity": "medium"
-        },
-        {
-          "id": "schemacrawler.tools.lint.LinterTableWithIncrementingColumns",
+          "id": "schemacrawler.tools.linter.LinterTableWithIncrementingColumns",
           "description": "incrementing columns",
           "value": "HOMEEMAIL11, HOMEEMAIL12",
           "severity": "medium"
         },
         {
-          "id": "schemacrawler.tools.lint.LinterTableWithIncrementingColumns",
+          "id": "schemacrawler.tools.linter.LinterTableWithIncrementingColumns",
           "description": "incrementing columns are not consecutive",
           "value": "FAX, FAX3",
           "severity": "medium"
         },
         {
-          "id": "schemacrawler.tools.lint.LinterTableWithIncrementingColumns",
+          "id": "schemacrawler.tools.linter.LinterTableWithIncrementingColumns",
           "description": "incrementing columns don't have the same data-type",
           "value": "PHONE1, PHONE2",
           "severity": "medium"
         },
         {
-          "id": "schemacrawler.tools.lint.LinterTableWithIncrementingColumns",
+          "id": "schemacrawler.tools.linter.LinterTableWithIncrementingColumns",
           "description": "incrementing columns don't have the same data-type",
           "value": "FAX, FAX3",
           "severity": "medium"
         },
         {
-          "id": "schemacrawler.tools.lint.LinterTableWithIncrementingColumns",
+          "id": "schemacrawler.tools.linter.LinterTableWithIncrementingColumns",
           "description": "incrementing columns don't have the same data-type",
           "value": "EMAIL1, EMAIL2",
           "severity": "medium"
         },
         {
-          "id": "schemacrawler.tools.lint.LinterTableWithNullColumnsInIndex",
+          "id": "schemacrawler.tools.linter.LinterTableWithNullColumnsInIndex",
           "description": "unique index with nullable columns",
           "value": "IDX_U_AUTHORS",
           "severity": "medium"
         },
         {
-          "id": "schemacrawler.tools.lint.LinterTableWithNullIntendedColumns",
+          "id": "schemacrawler.tools.linter.LinterTableWithNullIntendedColumns",
           "description": "column where NULL may be intended",
           "value": "ADDRESS2",
           "severity": "medium"
         },
         {
-          "id": "schemacrawler.tools.lint.LinterTableWithNullIntendedColumns",
+          "id": "schemacrawler.tools.linter.LinterTableWithNullIntendedColumns",
           "description": "column where NULL may be intended",
           "value": "COUNTRY",
           "severity": "medium"
         },
         {
-          "id": "schemacrawler.tools.lint.LinterTableWithRedundantIndices",
+          "id": "schemacrawler.tools.linter.LinterTableWithRedundantIndices",
           "description": "redundant index",
           "value": "IDX_A1_AUTHORS",
           "severity": "medium"
@@ -95,7 +95,7 @@
     {
       "name": "BOOKS",
       "lints": [{
-        "id": "schemacrawler.tools.lint.LinterTableWithQuotedNames",
+        "id": "schemacrawler.tools.linter.LinterTableWithQuotedNames",
         "description": "spaces in name, or reserved word",
         "value": "\"UPDATE\"",
         "severity": "medium"
@@ -107,25 +107,25 @@
       "name": "\"Global Counts\"",
       "lints": [
         {
-          "id": "schemacrawler.tools.lint.LinterTableWithNoIndices",
+          "id": "schemacrawler.tools.linter.LinterTableWithNoIndices",
           "description": "no indices",
           "value": "true",
           "severity": "medium"
         },
         {
-          "id": "schemacrawler.tools.lint.LinterTableWithQuotedNames",
+          "id": "schemacrawler.tools.linter.LinterTableWithQuotedNames",
           "description": "spaces in name, or reserved word",
           "value": "\"Global Counts\"",
           "severity": "medium"
         },
         {
-          "id": "schemacrawler.tools.lint.LinterTableWithQuotedNames",
+          "id": "schemacrawler.tools.linter.LinterTableWithQuotedNames",
           "description": "spaces in name, or reserved word",
           "value": "\"Global Count\"",
           "severity": "medium"
         },
         {
-          "id": "schemacrawler.tools.lint.LinterTableWithSingleColumn",
+          "id": "schemacrawler.tools.linter.LinterTableWithSingleColumn",
           "description": "single column",
           "value": "true",
           "severity": "medium"
@@ -141,7 +141,7 @@
     "databaseProductVersion": "2.2.4"
   },
   "schemaCrawlerInfo": {
-    "productVersion": "8.8",
+    "productVersion": "8.9",
     "productName": "SchemaCrawler"
   },
   "jdbcDriverInfo": {

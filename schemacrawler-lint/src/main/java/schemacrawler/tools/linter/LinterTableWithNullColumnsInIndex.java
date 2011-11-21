@@ -17,13 +17,18 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.tools.lint;
+package schemacrawler.tools.linter;
 
 
-import schemacrawler.schema.Column;
+import java.util.ArrayList;
+import java.util.List;
+
+import schemacrawler.schema.Index;
+import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.Table;
+import schemacrawler.tools.lint.BaseLinter;
 
-public class LinterTableWithSingleColumn
+public class LinterTableWithNullColumnsInIndex
   extends BaseLinter
 {
 
@@ -36,7 +41,7 @@ public class LinterTableWithSingleColumn
   @Override
   public String getSummary()
   {
-    return "single column";
+    return "unique index with nullable columns";
   }
 
   @Override
@@ -44,12 +49,34 @@ public class LinterTableWithSingleColumn
   {
     if (table != null)
     {
-      final Column[] columns = table.getColumns();
-      if (columns.length <= 1)
+      final List<Index> nullableColumnsInUniqueIndex = findNullableColumnsInUniqueIndex(table
+        .getIndices());
+      for (final Index index: nullableColumnsInUniqueIndex)
       {
-        addLint(table, getSummary(), true);
+        addLint(table, getSummary(), index);
       }
     }
+  }
+
+  private List<Index> findNullableColumnsInUniqueIndex(final Index[] indices)
+  {
+    final List<Index> nullableColumnsInUniqueIndex = new ArrayList<Index>();
+    for (final Index index: indices)
+    {
+      if (index.isUnique())
+      {
+        final IndexColumn[] indexColumns = index.getColumns();
+        for (final IndexColumn indexColumn: indexColumns)
+        {
+          if (indexColumn.isNullable())
+          {
+            nullableColumnsInUniqueIndex.add(index);
+            break;
+          }
+        }
+      }
+    }
+    return nullableColumnsInUniqueIndex;
   }
 
 }

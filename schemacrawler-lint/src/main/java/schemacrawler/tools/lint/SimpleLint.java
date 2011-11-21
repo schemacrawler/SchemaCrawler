@@ -117,7 +117,7 @@ public final class SimpleLint<V extends Serializable>
     {
       return false;
     }
-    final SimpleLint other = (SimpleLint) obj;
+    final SimpleLint<?> other = (SimpleLint<?>) obj;
     if (id == null)
     {
       if (other.id != null)
