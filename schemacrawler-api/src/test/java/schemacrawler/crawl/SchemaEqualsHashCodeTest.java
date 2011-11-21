@@ -4,6 +4,7 @@ package schemacrawler.crawl;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import org.junit.Ignore;
 import org.junit.experimental.theories.DataPoint;
 
 import schemacrawler.schema.Column;
@@ -21,6 +22,7 @@ import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.util.ObjectEqualsHashCode;
 import schemacrawler.utility.TestDatabase;
 
+@Ignore("Slow test")
 public class SchemaEqualsHashCodeTest
   extends ObjectEqualsHashCode
 {

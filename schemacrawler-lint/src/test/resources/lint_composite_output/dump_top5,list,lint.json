@@ -3,7 +3,7 @@
   "databaseInfo": {
     "databaseProductName": "HSQL Database Engine",
     "databaseUserName": "SA",
-    "databaseProductVersion": "2.2.4"
+    "databaseProductVersion": "2.2.6"
   },
   "schemaCrawlerInfo": {
     "productVersion": "8.9",
@@ -12,7 +12,7 @@
   "jdbcDriverInfo": {
     "isJDBCCompliant": "true",
     "driverClassName": "org.hsqldb.jdbc.JDBCDriver",
-    "driverVersion": "2.2.4",
+    "driverVersion": "2.2.6",
     "driverName": "HSQL Database Engine Driver",
     "url": "jdbc:hsqldb:mem:schemacrawler"
   },
@@ -113,29 +113,8 @@
           "13078",
           "USA",
           "1",
-          "2001-07-18",
-          "18257.0"
-        ],
-        [
-          "13078",
-          "USA",
-          "1",
           "2001-09-29",
           "14895.0"
-        ],
-        [
-          "13078",
-          "USA",
-          "6",
-          "2003-12-28",
-          "6083.0"
-        ],
-        [
-          "13078",
-          "USA",
-          "6",
-          "2006-06-11",
-          "7840.0"
         ],
         [
           "17131",
@@ -143,6 +122,27 @@
           "2",
           "2002-04-30",
           "17887.0"
+        ],
+        [
+          "20239",
+          "USA",
+          "3",
+          "2004-08-28",
+          "18747.0"
+        ],
+        [
+          "24179",
+          "USA",
+          "4",
+          "2009-02-14",
+          "5885.0"
+        ],
+        [
+          "26131",
+          "USA",
+          "5",
+          "2004-11-03",
+          "15348.0"
         ]
       ]
     }
@@ -200,6 +200,11 @@
     {
       "name": "DELETE_LOB",
       "fullName": "PUBLIC.SYSTEM_LOBS.DELETE_LOB",
+      "type": "no result"
+    },
+    {
+      "name": "DELETE_UNUSED",
+      "fullName": "PUBLIC.SYSTEM_LOBS.DELETE_UNUSED",
       "type": "no result"
     },
     {

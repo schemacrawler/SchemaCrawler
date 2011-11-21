@@ -17,7 +17,7 @@ Database Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
 database product name                 HSQL Database Engine
-database product version              2.2.4
+database product version              2.2.6
 database user name                    SA
 
 
@@ -25,7 +25,7 @@ JDBC Driver Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
 driver name                           HSQL Database Engine Driver
-driver version                        2.2.4
+driver version                        2.2.6
 driver class name                     org.hsqldb.jdbc.JDBCDriver
 url                                   jdbc:hsqldb:hsql://localhost:9001/schemacrawler
 is JDBC compliant                     true
@@ -228,6 +228,14 @@ PUBLIC.BOOKS.CHARACTER VARYING                               [data type]
   not auto-incrementable
   unknown
 
+PUBLIC.SYSTEM_LOBS.BIGINT ARRAY                              [data type]
+  based on                          ARRAY                       
+  not user defined
+  defined with 
+  not nullable
+  not auto-incrementable
+  unknown
+
 
 
 Tables
@@ -252,7 +260,7 @@ PK_AUTHORS                                                 [primary key]
 FK_Z_AUTHOR                                [foreign key, with no action]
   ID --> PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID                              
 
-SYS_IDX_PK_AUTHORS_10031                                  [unique index]
+SYS_IDX_PK_AUTHORS_10035                                  [unique index]
   ID                                ascending                   
 
 IDX_B_AUTHORS                                         [non-unique index]
@@ -288,10 +296,10 @@ FK_Z_AUTHOR                                [foreign key, with no action]
 FK_Y_BOOK                                  [foreign key, with no action]
   PUBLIC.BOOKS.BOOKS.ID --> BOOKID                              
 
-SYS_IDX_10041                                         [non-unique index]
+SYS_IDX_10045                                         [non-unique index]
   AUTHORID                          ascending                   
 
-SYS_IDX_10039                                         [non-unique index]
+SYS_IDX_10043                                         [non-unique index]
   BOOKID                            ascending                   
 
 UIDX_BOOKAUTHORS                                          [unique index]
@@ -317,7 +325,7 @@ PK_BOOKS                                                   [primary key]
 FK_Y_BOOK                                  [foreign key, with no action]
   ID --> PUBLIC.BOOKS.BOOKAUTHORS.BOOKID                              
 
-SYS_IDX_PK_BOOKS_10035                                    [unique index]
+SYS_IDX_PK_BOOKS_10039                                    [unique index]
   ID                                ascending                   
 
                                                                [remarks]
@@ -337,7 +345,7 @@ PUBLIC.BOOKS.PUBLISHERS                                          [table]
 PK_PUBLISHERS                                              [primary key]
   ID                                ascending                   
 
-SYS_IDX_PK_PUBLISHERS_10027                               [unique index]
+SYS_IDX_PK_PUBLISHERS_10031                               [unique index]
   ID                                ascending                   
 
                                                                [remarks]
@@ -359,7 +367,7 @@ FK_SALES_REGIONS                           [foreign key, with no action]
   POSTALCODE --> PUBLIC."PUBLISHER SALES".SALES.POSTALCODE                              
   COUNTRY --> PUBLIC."PUBLISHER SALES".SALES.COUNTRY                              
 
-SYS_IDX_PK_CUSTOMERS_10052                                [unique index]
+SYS_IDX_PK_CUSTOMERS_10056                                [unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
 
@@ -376,7 +384,7 @@ FK_SALES_REGIONS                           [foreign key, with no action]
   PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE --> POSTALCODE                              
   PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY --> COUNTRY                              
 
-SYS_IDX_10056                                         [non-unique index]
+SYS_IDX_10060                                         [non-unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
 
@@ -429,6 +437,7 @@ PUBLIC.SYSTEM_LOBS.DELETE_LOB                     [procedure, no result]
 
 PUBLIC.SYSTEM_LOBS.DELETE_UNUSED                  [procedure, no result]
 ------------------------------------------------------------------------
+  L_IDS                             BIGINT ARRAY, in            
 
 
 PUBLIC.SYSTEM_LOBS.DIVIDE_BLOCK                   [procedure, no result]

@@ -108,10 +108,10 @@ public class SortingTest
   {
 
     final String[] sortedAlpha = new String[] {
-        "IDX_A_AUTHORS", "IDX_B_AUTHORS", "SYS_IDX_PK_AUTHORS_10031",
+        "IDX_A_AUTHORS", "IDX_B_AUTHORS", "SYS_IDX_PK_AUTHORS_10035",
     };
     final String[] sortedNatural = new String[] {
-        "SYS_IDX_PK_AUTHORS_10031", "IDX_B_AUTHORS", "IDX_A_AUTHORS",
+        "SYS_IDX_PK_AUTHORS_10035", "IDX_B_AUTHORS", "IDX_A_AUTHORS",
     };
     checkIndexSort("AUTHORS", sortedAlpha, true);
     checkIndexSort("AUTHORS", sortedNatural, false);
@@ -128,7 +128,7 @@ public class SortingTest
     schemaCrawlerOptions.setAlphabeticalSortForTableColumns(sortAlphabetically);
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
     final Schema schema = testDatabase.getSchema(schemaCrawlerOptions,
-                                                "PUBLIC.BOOKS");
+                                                 "PUBLIC.BOOKS");
     assertNotNull("Schema not found", schema);
 
     final Table table = schema.getTable(tableName);
@@ -159,7 +159,7 @@ public class SortingTest
     schemaCrawlerOptions.setAlphabeticalSortForForeignKeys(sortAlphabetically);
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
     final Schema schema = testDatabase.getSchema(schemaCrawlerOptions,
-                                                "PUBLIC.BOOKS");
+                                                 "PUBLIC.BOOKS");
     assertNotNull("Schema not found", schema);
 
     final Table[] tables = schema.getTables();
@@ -192,7 +192,7 @@ public class SortingTest
     schemaCrawlerOptions.setAlphabeticalSortForIndexes(sortAlphabetically);
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
     final Schema schema = testDatabase.getSchema(schemaCrawlerOptions,
-                                                "PUBLIC.BOOKS");
+                                                 "PUBLIC.BOOKS");
     assertNotNull("Schema not found", schema);
 
     final Table[] tables = schema.getTables();
