@@ -1,57 +1,39 @@
 <!DOCTYPE document PUBLIC "-//Apache Software Foundation//DTD XDOC 1.0//EN"
   "http://maven.apache.org/dtd/xdoc_1_0.dtd">
 <document>
-	<properties>
-		<title>SchemaCrawler - Lint Example</title>
-		<author email="sualeh@hotmail.com">Sualeh Fatehi</author>
-	</properties>
-	<body>
-		<section name="SchemaCrawler - Lint Example">
-			<subsection name="Description">
-				<p>SchemaCrawler looks for potential database design issues. Follow
-					the steps below to run SchemaCrawler Lint.
-				</p>
-			</subsection>
-			<subsection name="How to Run">
-				<ol type="1">
-					<li>
-						Make sure that the Java executable is on your path. (J2SE
-						6 or
-						better is required.)
-					</li>
-					<li>
-						Copy the
-						<span class="code">schemacrawler.config.properties
-						</span>
-						file into the
-						<span class="code">lint</span>
-						example directory.
-					</li>
-					<li>Start the database server by running
-						StartDatabaseServer script
-						from the
-						distribution directory.
-					</li>
-					<li>
-						Start a command shell in the
-						<span class="code">lint</span>
-						example directory.
-					</li>
-					<li>
-						To start with, run
-						<span class="code">sc.cmd -c hsqldb -infolevel=maximum -command=lint</span>
-						(or
-						<span class="code">sc.sh -c hsqldb -infolevel=maximum -command=lint</span>
-						on Unix)
-					</li>
-				</ol>
-			</subsection>
-			<subsection name="How to Experiment">
-				<ol>
-					<li>Create the SchemaCrawler Lint report in XHTML and JSON formats.</li>
-					<li>Try creating your own database lints in a new jar.</li>
-				</ol>
-			</subsection>
-		</section>
-	</body>
+  <properties>
+    <title>SchemaCrawler - Lint Example</title>
+    <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
+  </properties>
+  <body>
+    <section name="SchemaCrawler - Lint Example">
+      <subsection name="Description">
+        <p>SchemaCrawler looks for potential database design issues. Follow
+          the steps below to run SchemaCrawler Lint.
+        </p>
+      </subsection>
+      <subsection name="How to Run">
+        <ol>
+          <li>
+            Follow the instructions in the
+            <code>commandline</code>
+            example.
+          </li>
+          <li>
+            To find tables with certain column names, run
+            <span class="code">sc.cmd -c hsqldb -infolevel=standard -command=lint</span>
+            (or
+            <span class="code">sc.sh -c hsqldb -infolevel=standard -command=lint</span>
+            on Unix)
+          </li>
+        </ol>
+      </subsection>
+      <subsection name="How to Experiment">
+        <ol>
+          <li>Create the SchemaCrawler Lint report in XHTML and JSON formats.</li>
+          <li>Try creating your own database lints in a new jar.</li>
+        </ol>
+      </subsection>
+    </section>
+  </body>
 </document>

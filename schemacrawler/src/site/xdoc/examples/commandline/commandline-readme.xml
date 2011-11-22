@@ -8,23 +8,21 @@
   <body>
     <section name="SchemaCrawler - Commandline Example">
       <subsection name="Description">
-        <p>The command example demonstrates the use of SchemaCrawler from the
-          shell command line.
+        <p>The command example demonstrates the use of SchemaCrawler from the shell command line.
         </p>
       </subsection>
       <subsection name="How to Run">
         <ol>
-          <li>Make sure that the Java executable is on your path.</li>
+          <li>Make sure that the Java executable is on your path. (J2SE 6 or better is required.)</li>
           <li>
             Copy the
             <span class="code">schemacrawler.config.properties</span>
             file into the
             <span class="code">commandline</span>
-            example
-            directory.
+            example directory.
           </li>
-          <li>Start the database server by running StartDatabaseServer script from the
-            distribution directory.
+          <li>Start the database server by running StartDatabaseServer script from the distribution
+            directory.
           </li>
           <li>
             Start a command shell in the
@@ -36,8 +34,7 @@
             <span class="code">sc.cmd -help</span>
             (or
             <span class="code">sc.sh -help</span>
-            on Unix). This
-            will give you a list of available command line options.
+            on Unix). This will give you a list of available command line options.
           </li>
           <li>
             To start with, run
@@ -51,6 +48,16 @@
       <subsection name="How to Experiment">
         <ol>
           <li>
+            Take a look at the SchemaCrawler grep example, in the
+            <em>grep</em>
+            example directory.
+          </li>
+          <li>
+            Take a look at the SchemaCrawler lint example, in the
+            <em>lint</em>
+            example directory.
+          </li>
+          <li>
             Try modifying the
             <span class="code">schemacrawler.config.properties</span>
             file with regular expressions, logging, and so on.
@@ -61,9 +68,7 @@
             <span class="code">sc.cmd &gt; file.txt</span>
             .
           </li>
-          <li>Try defining a new database connection, using your favorite
-            database and driver.
-          </li>
+          <li>Try defining a new database connection, using your favorite database and driver.</li>
         </ol>
       </subsection>
     </section>
