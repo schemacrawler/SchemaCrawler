@@ -11,7 +11,8 @@
             value="${distribution.target}/schemacrawler-${SchemaCrawler.version}-sources.jar" />
   <property name="schemacrawler.distribution.javadoc.jar"
             value="${distribution.target}/schemacrawler-${SchemaCrawler.version}-javadoc.jar" />
-
+  <property name="schemacrawler.lint.jar"
+            value="${SchemaCrawler.home}/schemacrawler-lint/target/schemacrawler-lint-${SchemaCrawler.version}.jar" />
   <available file="gpl-3.0.txt" property="available.gpl-3.0.txt"/>
   <available file="lgpl-3.0.txt" property="available.lgpl-3.0.txt"/>
 
@@ -117,10 +118,12 @@
 
   	<!-- 2. CREATE STAGING FOR NON-SPECIFIC SchemaCrawler DISTRIBUTION -->
 
-    <!-- Copy super jar -->
+    <!-- Copy super jar and lint -->
     <copy file="${schemacrawler.distribution.jar}"
           todir="${distribution.staging.dir}/schemacrawler/lib" />
-
+    <copy file="${schemacrawler.lint.jar}"
+          todir="${distribution.staging.dir}/schemacrawler/lib" />
+    	
     <!-- Copy license and readme -->
     <copy file="lgpl-3.0.txt"
           tofile="${distribution.staging.dir}/schemacrawler/LICENSE.txt" />
@@ -149,8 +152,6 @@
                   prefix="${distribution.zip.prefix}"
                   defaultexcludes="yes" />
     </zip>
-
-    <delete dir="${distribution.staging.dir}" />
 
   </target>
 
@@ -287,6 +288,8 @@
         <fileset dir="${distribution.target}/@{database}-distrib" />
         <zipfileset file="${schemacrawler.distribution.jar}"
                     prefix="schemacrawler-@{database}-${SchemaCrawler.version}/lib" />
+        <zipfileset file="${schemacrawler.lint.jar}"
+                    prefix="schemacrawler-@{database}-${SchemaCrawler.version}/lib" />      	
       </zip>
 
       <delete dir="${distribution.target}/@{database}-distrib" />

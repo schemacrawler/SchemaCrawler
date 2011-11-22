@@ -69,16 +69,18 @@ public class TestDatabase
   public static void main(final String[] args)
     throws Exception
   {
-    final TestDatabase testDb = new TestDatabase();
+    final TestDatabase testDatabase = new TestDatabase("books",
+                                                       "publisher sales",
+                                                       "for_lint");
     Runtime.getRuntime().addShutdownHook(new Thread()
     {
       @Override
       public void run()
       {
-        testDb.shutdownDatabase();
+        testDatabase.shutdownDatabase();
       }
     });
-    testDb.startDatabase(false);
+    testDatabase.startDatabase(false);
   }
 
   /**

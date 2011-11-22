@@ -5,31 +5,14 @@
 	<artifactId>test-schemacrawler-project</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Test SchemaCrawler Project</name>
-	<repositories>
-		<repository>
-			<id>sonatype-nexus</id>
-			<name>Sonatype Nexus</name>
-			<url>http://oss.sonatype.org/content/groups/public</url>
-			<releases>
-				<enabled>true</enabled>
-				<updatePolicy>daily</updatePolicy>
-				<checksumPolicy>fail</checksumPolicy>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-				<updatePolicy>always</updatePolicy>
-				<checksumPolicy>fail</checksumPolicy>
-			</snapshots>
-		</repository>
-	</repositories>
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<source>5</source>
-					<target>5</target>
+					<source>6</source>
+					<target>6</target>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -39,11 +22,6 @@
 			<groupId>net.sourceforge.schemacrawler</groupId>
 			<artifactId>schemacrawler</artifactId>
 			<version>8.9</version>
-		</dependency>
-		<dependency>
-			<groupId>hsqldb</groupId>
-			<artifactId>hsqldb</artifactId>
-			<version>1.8.0.10</version>
 		</dependency>
 	</dependencies>
 </project>
