@@ -60,6 +60,11 @@ public abstract class BaseLinter
   @Override
   public void lint(final Database database)
   {
+    if (database == null)
+    {
+      throw new IllegalArgumentException("No database provided");
+    }
+
     for (final Schema schema: database.getSchemas())
     {
       for (final Table table: schema.getTables())

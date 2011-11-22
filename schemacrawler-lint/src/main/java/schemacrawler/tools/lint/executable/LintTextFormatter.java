@@ -22,9 +22,7 @@ package schemacrawler.tools.lint.executable;
 
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Procedure;
@@ -39,28 +37,11 @@ import schemacrawler.tools.text.utility.TextFormattingHelper.DocumentHeaderType;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
 import sf.util.Multimap;
 
-/**
- * Text formatting of schema.
- * 
- * @author Sualeh Fatehi
- */
 final class LintTextFormatter
   extends BaseTabularFormatter<LintOptions>
   implements SchemaTraversalHandler
 {
 
-  /**
-   * Text formatting of schema.
-   * 
-   * @param schemaTextDetailType
-   *        Types for text formatting of schema
-   * @param options
-   *        Options for text formatting of schema
-   * @param outputOptions
-   *        Options for text formatting of schema
-   * @throws SchemaCrawlerException
-   *         On an exception
-   */
   LintTextFormatter(final LintOptions options, final OutputOptions outputOptions)
     throws SchemaCrawlerException
   {
@@ -185,8 +166,13 @@ final class LintTextFormatter
     {
       multiMap.add(lint.getSeverity(), lint);
     }
-    for (final LintSeverity severity: multiMap.keySet())
+    for (final LintSeverity severity: LintSeverity.values())
     {
+      if (!multiMap.containsKey(severity))
+      {
+        continue;
+      }
+
       out.println(formattingHelper.createNameRow("", String
         .format("[lint, %s]", severity), false));
       final List<Lint<?>> lintsById = new ArrayList<Lint<?>>(multiMap.get(severity));

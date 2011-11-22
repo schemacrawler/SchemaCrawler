@@ -87,15 +87,17 @@ public class LinterTableWithIncrementingColumns
   @Override
   public void lint(final Table table)
   {
-    if (table != null)
+    if (table == null)
     {
-      final Multimap<String, IncrementingColumn> incrementingColumns = findIncrementingColumns(table
-        .getColumns());
-      for (final List<IncrementingColumn> incrementingColumnsList: incrementingColumns
-        .values())
-      {
-        addIncrementingColumnsLints(table, incrementingColumnsList);
-      }
+      throw new IllegalArgumentException("No table provided");
+    }
+
+    final Multimap<String, IncrementingColumn> incrementingColumns = findIncrementingColumns(table
+      .getColumns());
+    for (final List<IncrementingColumn> incrementingColumnsList: incrementingColumns
+      .values())
+    {
+      addIncrementingColumnsLints(table, incrementingColumnsList);
     }
   }
 

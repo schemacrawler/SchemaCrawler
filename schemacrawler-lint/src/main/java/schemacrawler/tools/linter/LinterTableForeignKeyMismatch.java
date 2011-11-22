@@ -55,6 +55,11 @@ public class LinterTableForeignKeyMismatch
   @Override
   public void lint(final Table table)
   {
+    if (table == null)
+    {
+      throw new IllegalArgumentException("No table provided");
+    }
+
     final List<ForeignKey> mismatchedForeignKeys = findMismatchedForeignKeys(table);
     for (final ForeignKey foreignKey: mismatchedForeignKeys)
     {

@@ -47,6 +47,11 @@ public class LinterTableCycles
   @Override
   public void lint(final Database database)
   {
+    if (database == null)
+    {
+      throw new IllegalArgumentException("No database provided");
+    }
+
     final DirectedGraph<Table> tablesGraph = new DirectedGraph<Table>();
     for (final Schema schema: database.getSchemas())
     {

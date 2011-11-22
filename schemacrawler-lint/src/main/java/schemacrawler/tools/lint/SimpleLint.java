@@ -53,6 +53,10 @@ public final class SimpleLint<V extends Serializable>
     }
     this.id = id;
 
+    if (objectName == null)
+    {
+      throw new IllegalArgumentException("Object name not provided");
+    }
     this.objectName = objectName;
 
     if (severity == null)
