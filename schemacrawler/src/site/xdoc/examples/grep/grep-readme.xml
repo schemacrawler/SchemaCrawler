@@ -23,16 +23,16 @@
           </li>
           <li>
             To find tables with certain column names, run
-            <span class="code">sc.cmd -c hsqldb -infolevel=standard -command=schema -grepcolumns=.*\.PUBLISHER</span>
+            <span class="code">sc.cmd -c hsqldb -infolevel=standard -command=schema -procedures= -grepcolumns=.*\.PUBLISHER</span>
             (or
-            <span class="code">sc.sh -c hsqldb -infolevel=standard -command=schema -grepcolumns=.*\.PUBLISHER</span>
+            <span class="code">sc.sh -c hsqldb -infolevel=standard -command=schema -procedures= -grepcolumns=.*\.PUBLISHER</span>
             on Unix)
           </li>
           <li>
             To find stored procedures with certain parameter names, run
-            <span class="code">sc.cmd -c hsqldb -infolevel=standard -command=schema -grepinout=.*\.@p2</span>
+            <span class="code">sc.cmd -c hsqldb -infolevel=standard -command=schema -tables= -grepinout=.*\.B_OFFSET</span>
             (or
-            <span class="code">sc.sh -c hsqldb -infolevel=standard -command=schema -grepinout=.*\.@p2</span>
+            <span class="code">sc.sh -c hsqldb -infolevel=standard -command=schema -tables= -grepinout=.*\.B_OFFSET</span>
             on Unix)
           </li>
         </ol>
