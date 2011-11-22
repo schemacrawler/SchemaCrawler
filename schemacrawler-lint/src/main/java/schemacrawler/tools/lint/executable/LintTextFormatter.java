@@ -180,18 +180,16 @@ final class LintTextFormatter
   {
     out.println(formattingHelper.createEmptyRow());
 
-    final Multimap<String, Lint<?>> multiMap = new Multimap<String, Lint<?>>();
-    final Map<String, LintSeverity> lintSeverityMap = new HashMap<String, LintSeverity>();
+    final Multimap<LintSeverity, Lint<?>> multiMap = new Multimap<LintSeverity, Lint<?>>();
     for (final Lint<?> lint: lints)
     {
-      multiMap.add(lint.getId(), lint);
-      lintSeverityMap.put(lint.getId(), lint.getSeverity());
+      multiMap.add(lint.getSeverity(), lint);
     }
-    for (final String lintId: multiMap.keySet())
+    for (final LintSeverity severity: multiMap.keySet())
     {
-      out.println(formattingHelper.createNameRow(lintId, String
-        .format("[lint, %s]", lintSeverityMap.get(lintId).name()), false));
-      final List<Lint<?>> lintsById = new ArrayList<Lint<?>>(multiMap.get(lintId));
+      out.println(formattingHelper.createNameRow("", String
+        .format("[lint, %s]", severity), false));
+      final List<Lint<?>> lintsById = new ArrayList<Lint<?>>(multiMap.get(severity));
       for (final Lint<?> lint: lintsById)
       {
         final Object lintValue = lint.getValue();

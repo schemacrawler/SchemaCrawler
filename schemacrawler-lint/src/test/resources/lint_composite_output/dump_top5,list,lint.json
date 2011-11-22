@@ -222,7 +222,13 @@
           "id": "schemacrawler.tools.linter.LinterTableForeignKeyMismatch",
           "description": "foreign key and primary key have different data types",
           "value": "FK_AUTHORS_BOOK",
-          "severity": "medium"
+          "severity": "high"
+        },
+        {
+          "id": "schemacrawler.tools.linter.LinterTableWithRedundantIndices",
+          "description": "redundant index",
+          "value": "IDX_A1_AUTHORS",
+          "severity": "high"
         },
         {
           "id": "schemacrawler.tools.linter.LinterTableWithIncrementingColumns",
@@ -294,12 +300,6 @@
           "id": "schemacrawler.tools.linter.LinterTableWithNullIntendedColumns",
           "description": "column where NULL may be intended",
           "value": "COUNTRY",
-          "severity": "medium"
-        },
-        {
-          "id": "schemacrawler.tools.linter.LinterTableWithRedundantIndices",
-          "description": "redundant index",
-          "value": "IDX_A1_AUTHORS",
           "severity": "medium"
         }
       ],
