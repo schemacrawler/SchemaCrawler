@@ -36,28 +36,11 @@ import schemacrawler.tools.text.utility.org.json.JSONException;
 import schemacrawler.tools.text.utility.org.json.JSONObject;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
 
-/**
- * Text formatting of schema.
- * 
- * @author Sualeh Fatehi
- */
 final class LintJsonFormatter
   extends BaseJsonFormatter<LintOptions>
   implements SchemaTraversalHandler
 {
 
-  /**
-   * Text formatting of schema.
-   * 
-   * @param schemaTextDetailType
-   *        Types for text formatting of schema
-   * @param options
-   *        Options for text formatting of schema
-   * @param outputOptions
-   *        Options for text formatting of schema
-   * @throws SchemaCrawlerException
-   *         On an exception
-   */
   LintJsonFormatter(final LintOptions options, final OutputOptions outputOptions)
     throws SchemaCrawlerException
   {

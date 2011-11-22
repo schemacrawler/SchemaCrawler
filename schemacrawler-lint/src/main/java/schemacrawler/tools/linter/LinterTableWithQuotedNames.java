@@ -46,19 +46,21 @@ public class LinterTableWithQuotedNames
   @Override
   public void lint(final Table table)
   {
-    if (table != null)
+    if (table == null)
     {
-      final List<String> spacesInNamesList = findColumnsWithQuotedNames(table
-        .getColumns());
-      final String tableName = table.getName();
-      if (isQuotedName(tableName))
-      {
-        spacesInNamesList.add(0, tableName);
-      }
-      for (final String spacesInName: spacesInNamesList)
-      {
-        addLint(table, getSummary(), spacesInName);
-      }
+      throw new IllegalArgumentException("No table provided");
+    }
+
+    final List<String> spacesInNamesList = findColumnsWithQuotedNames(table
+      .getColumns());
+    final String tableName = table.getName();
+    if (isQuotedName(tableName))
+    {
+      spacesInNamesList.add(0, tableName);
+    }
+    for (final String spacesInName: spacesInNamesList)
+    {
+      addLint(table, getSummary(), spacesInName);
     }
   }
 

@@ -47,14 +47,16 @@ public class LinterTableWithNullIntendedColumns
   @Override
   public void lint(final Table table)
   {
-    if (table != null)
+    if (table == null)
     {
-      final List<Column> nullDefaultValueMayBeIntendedColumns = findNullDefaultValueMayBeIntendedColumns(table
-        .getColumns());
-      for (final Column column: nullDefaultValueMayBeIntendedColumns)
-      {
-        addLint(table, getSummary(), column);
-      }
+      throw new IllegalArgumentException("No table provided");
+    }
+
+    final List<Column> nullDefaultValueMayBeIntendedColumns = findNullDefaultValueMayBeIntendedColumns(table
+      .getColumns());
+    for (final Column column: nullDefaultValueMayBeIntendedColumns)
+    {
+      addLint(table, getSummary(), column);
     }
   }
 

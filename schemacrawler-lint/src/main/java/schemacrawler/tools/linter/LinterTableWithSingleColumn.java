@@ -43,13 +43,15 @@ public class LinterTableWithSingleColumn
   @Override
   public void lint(final Table table)
   {
-    if (table != null)
+    if (table == null)
     {
-      final Column[] columns = table.getColumns();
-      if (columns.length <= 1)
-      {
-        addLint(table, getSummary(), true);
-      }
+      throw new IllegalArgumentException("No table provided");
+    }
+
+    final Column[] columns = table.getColumns();
+    if (columns.length <= 1)
+    {
+      addLint(table, getSummary(), true);
     }
   }
 
