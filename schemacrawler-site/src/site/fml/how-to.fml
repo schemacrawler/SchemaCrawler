@@ -92,7 +92,7 @@
                 <p>Started the test database server, with a test schema, and test data. This is used for examples. Any
                   schema or data modifications will be restored when the server is restarted.
                 </p>
-                <p>JDBC drivers for HyperSQL 2.2.4, and other external libraries must be available on the
+                <p>JDBC drivers for HyperSQL 2.2.6, and other external libraries must be available on the
                   classpath for
                   this application to function.
                 </p>
