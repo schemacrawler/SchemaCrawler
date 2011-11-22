@@ -81,16 +81,10 @@ Tables
 PUBLIC.FOR_LINT.AUTHORS,[table]
 ------------------------------------------------------------------------
 ""
-schemacrawler.tools.linter.LinterTableWithRedundantIndices,"[lint, medium]"
-redundant index,IDX_A1_AUTHORS
-schemacrawler.tools.linter.LinterTableForeignKeyMismatch,"[lint, medium]"
+"","[lint, high]"
 foreign key and primary key have different data types,FK_AUTHORS_BOOK
-schemacrawler.tools.linter.LinterTableWithNullIntendedColumns,"[lint, medium]"
-column where NULL may be intended,ADDRESS2
-column where NULL may be intended,COUNTRY
-schemacrawler.tools.linter.LinterTableWithNullColumnsInIndex,"[lint, medium]"
-unique index with nullable columns,IDX_U_AUTHORS
-schemacrawler.tools.linter.LinterTableWithIncrementingColumns,"[lint, medium]"
+redundant index,IDX_A1_AUTHORS
+"","[lint, medium]"
 incrementing columns,"PHONE1, PHONE2"
 incrementing columns,"FAX, FAX3"
 incrementing columns,"EMAIL1, EMAIL2"
@@ -100,24 +94,25 @@ incrementing columns are not consecutive,"FAX, FAX3"
 incrementing columns don't have the same data-type,"PHONE1, PHONE2"
 incrementing columns don't have the same data-type,"FAX, FAX3"
 incrementing columns don't have the same data-type,"EMAIL1, EMAIL2"
+unique index with nullable columns,IDX_U_AUTHORS
+column where NULL may be intended,ADDRESS2
+column where NULL may be intended,COUNTRY
 
 
 PUBLIC.FOR_LINT.BOOKS,[table]
 ------------------------------------------------------------------------
 ""
-schemacrawler.tools.linter.LinterTableWithQuotedNames,"[lint, medium]"
+"","[lint, medium]"
 "spaces in name, or reserved word","""UPDATE"""
 
 
 "PUBLIC.FOR_LINT.""Global Counts""",[table]
 ------------------------------------------------------------------------
 ""
-schemacrawler.tools.linter.LinterTableWithQuotedNames,"[lint, medium]"
+"","[lint, medium]"
+no indices,""
 "spaces in name, or reserved word","""Global Counts"""
 "spaces in name, or reserved word","""Global Count"""
-schemacrawler.tools.linter.LinterTableWithNoIndices,"[lint, medium]"
-no indices,""
-schemacrawler.tools.linter.LinterTableWithSingleColumn,"[lint, medium]"
 single column,""
 
 

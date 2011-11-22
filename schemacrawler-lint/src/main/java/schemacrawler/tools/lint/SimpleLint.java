@@ -92,6 +92,11 @@ public final class SimpleLint<V extends Serializable>
     {
       return compareTo;
     }
+    compareTo = severity.compareTo(lint.getSeverity());
+    if (compareTo != 0)
+    {
+      return compareTo;
+    }
     compareTo = id.compareTo(lint.getId());
     if (compareTo != 0)
     {

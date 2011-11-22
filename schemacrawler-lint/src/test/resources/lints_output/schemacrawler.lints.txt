@@ -3,6 +3,7 @@
 [PUBLIC.FOR_LINT."Global Counts"] spaces in name, or reserved word: "Global Count"
 [PUBLIC.FOR_LINT."Global Counts"] single column
 [PUBLIC.FOR_LINT.AUTHORS] foreign key and primary key have different data types: FK_AUTHORS_BOOK
+[PUBLIC.FOR_LINT.AUTHORS] redundant index: IDX_A1_AUTHORS
 [PUBLIC.FOR_LINT.AUTHORS] incrementing columns: PHONE1, PHONE2
 [PUBLIC.FOR_LINT.AUTHORS] incrementing columns: FAX, FAX3
 [PUBLIC.FOR_LINT.AUTHORS] incrementing columns: EMAIL1, EMAIL2
@@ -15,7 +16,6 @@
 [PUBLIC.FOR_LINT.AUTHORS] unique index with nullable columns: IDX_U_AUTHORS
 [PUBLIC.FOR_LINT.AUTHORS] column where NULL may be intended: ADDRESS2
 [PUBLIC.FOR_LINT.AUTHORS] column where NULL may be intended: COUNTRY
-[PUBLIC.FOR_LINT.AUTHORS] redundant index: IDX_A1_AUTHORS
 [PUBLIC.FOR_LINT.BOOKS] spaces in name, or reserved word: "UPDATE"
 [PUBLIC.FOR_LINT.No_Columns] no indices
 [PUBLIC.FOR_LINT.No_Columns] single column

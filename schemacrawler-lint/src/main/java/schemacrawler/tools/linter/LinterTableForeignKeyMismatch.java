@@ -29,10 +29,16 @@ import schemacrawler.schema.ForeignKeyColumnMap;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
 import schemacrawler.tools.lint.BaseLinter;
+import schemacrawler.tools.lint.LintSeverity;
 
 public class LinterTableForeignKeyMismatch
   extends BaseLinter
 {
+
+  public LinterTableForeignKeyMismatch()
+  {
+    setLintSeverity(LintSeverity.high);
+  }
 
   @Override
   public String getDescription()

@@ -235,43 +235,19 @@ hr {
 		<td colspan='4'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>schemacrawler.tools.linter.LinterTableWithRedundantIndices</td>
-		<td class='description'>[lint, medium]</td>
-	</tr>
-	<tr>
-		<td>redundant index</td>
-		<td colspan='2'>IDX_A1_AUTHORS</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>schemacrawler.tools.linter.LinterTableForeignKeyMismatch</td>
-		<td class='description'>[lint, medium]</td>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[lint, high]</td>
 	</tr>
 	<tr>
 		<td>foreign key and primary key have different data types</td>
 		<td colspan='2'>FK_AUTHORS_BOOK</td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>schemacrawler.tools.linter.LinterTableWithNullIntendedColumns</td>
-		<td class='description'>[lint, medium]</td>
+		<td>redundant index</td>
+		<td colspan='2'>IDX_A1_AUTHORS</td>
 	</tr>
 	<tr>
-		<td>column where NULL may be intended</td>
-		<td colspan='2'>ADDRESS2</td>
-	</tr>
-	<tr>
-		<td>column where NULL may be intended</td>
-		<td colspan='2'>COUNTRY</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>schemacrawler.tools.linter.LinterTableWithNullColumnsInIndex</td>
-		<td class='description'>[lint, medium]</td>
-	</tr>
-	<tr>
-		<td>unique index with nullable columns</td>
-		<td colspan='2'>IDX_U_AUTHORS</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>schemacrawler.tools.linter.LinterTableWithIncrementingColumns</td>
+		<td colspan='2' class='name'></td>
 		<td class='description'>[lint, medium]</td>
 	</tr>
 	<tr>
@@ -310,6 +286,18 @@ hr {
 		<td>incrementing columns don&apos;t have the same data-type</td>
 		<td colspan='2'>EMAIL1, EMAIL2</td>
 	</tr>
+	<tr>
+		<td>unique index with nullable columns</td>
+		<td colspan='2'>IDX_U_AUTHORS</td>
+	</tr>
+	<tr>
+		<td>column where NULL may be intended</td>
+		<td colspan='2'>ADDRESS2</td>
+	</tr>
+	<tr>
+		<td>column where NULL may be intended</td>
+		<td colspan='2'>COUNTRY</td>
+	</tr>
 </table>
 <p></p>
 
@@ -322,7 +310,7 @@ hr {
 		<td colspan='4'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>schemacrawler.tools.linter.LinterTableWithQuotedNames</td>
+		<td colspan='2' class='name'></td>
 		<td class='description'>[lint, medium]</td>
 	</tr>
 	<tr>
@@ -341,8 +329,12 @@ hr {
 		<td colspan='4'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>schemacrawler.tools.linter.LinterTableWithQuotedNames</td>
+		<td colspan='2' class='name'></td>
 		<td class='description'>[lint, medium]</td>
+	</tr>
+	<tr>
+		<td>no indices</td>
+		<td colspan='2'></td>
 	</tr>
 	<tr>
 		<td>spaces in name, or reserved word</td>
@@ -351,18 +343,6 @@ hr {
 	<tr>
 		<td>spaces in name, or reserved word</td>
 		<td colspan='2'>&quot;Global Count&quot;</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>schemacrawler.tools.linter.LinterTableWithNoIndices</td>
-		<td class='description'>[lint, medium]</td>
-	</tr>
-	<tr>
-		<td>no indices</td>
-		<td colspan='2'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>schemacrawler.tools.linter.LinterTableWithSingleColumn</td>
-		<td class='description'>[lint, medium]</td>
 	</tr>
 	<tr>
 		<td>single column</td>
