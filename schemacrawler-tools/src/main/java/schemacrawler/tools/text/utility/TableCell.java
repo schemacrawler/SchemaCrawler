@@ -103,13 +103,6 @@ final class TableCell
     this.align = align;
   }
 
-  TableCell(final String text,
-            final String styleClass,
-            final OutputFormat outputFormat)
-  {
-    this(text, 0, Align.left, 1, styleClass, outputFormat);
-  }
-
   /**
    * Converts the table cell to HTML.
    * 

@@ -56,6 +56,7 @@ abstract class BaseTextFormattingHelper
     this.outputFormat = outputFormat;
   }
 
+  @Override
   public String createDefinitionRow(final String definition)
   {
     final TableRow row = new TableRow(outputFormat);
@@ -73,10 +74,11 @@ abstract class BaseTextFormattingHelper
    * 
    * @see TextFormattingHelper#createDescriptionRow(java.lang.String)
    */
+  @Override
   public String createDescriptionRow(final String description)
   {
     final TableRow row = new TableRow(outputFormat);
-    row.add(new TableCell("", "ordinal", outputFormat));
+    row.add(newTableCell("", "ordinal", outputFormat));
     row.add(new TableCell(description,
                           0,
                           Align.left,
@@ -92,6 +94,7 @@ abstract class BaseTextFormattingHelper
    * @see TextFormattingHelper#createDetailRow(java.lang.String,
    *      java.lang.String, java.lang.String)
    */
+  @Override
   public String createDetailRow(final String ordinal,
                                 final String subName,
                                 final String type)
@@ -102,7 +105,7 @@ abstract class BaseTextFormattingHelper
     final TableRow row = new TableRow(outputFormat);
     if (sf.util.Utility.isBlank(ordinal))
     {
-      row.add(new TableCell("", "ordinal", outputFormat));
+      row.add(newTableCell("", "ordinal", outputFormat));
     }
     else
     {
@@ -125,6 +128,7 @@ abstract class BaseTextFormattingHelper
    * 
    * @see TextFormattingHelper#createEmptyRow()
    */
+  @Override
   public String createEmptyRow()
   {
     return new TableRow(outputFormat, 4).toString();
@@ -136,6 +140,7 @@ abstract class BaseTextFormattingHelper
    * @see schemacrawler.tools.text.utility.TextFormattingHelper#createNameRow(java.lang.String,
    *      java.lang.String, boolean)
    */
+  @Override
   public String createNameRow(final String name,
                               final String description,
                               final boolean underscore)
@@ -186,13 +191,14 @@ abstract class BaseTextFormattingHelper
    * @see TextFormattingHelper#createNameValueRow(java.lang.String,
    *      java.lang.String)
    */
+  @Override
   public String createNameValueRow(final String name, final String value)
   {
     final int nameWidth = 36;
 
     final TableRow row = new TableRow(outputFormat);
     row.add(new TableCell(name, nameWidth, Align.left, 1, "", outputFormat));
-    row.add(new TableCell(value, "", outputFormat));
+    row.add(new TableCell(value, 0, Align.left, 2, "", outputFormat));
     return row.toString();
   }
 
@@ -202,6 +208,7 @@ abstract class BaseTextFormattingHelper
    * @param columnData
    *        Column data
    */
+  @Override
   public String createRow(final String[] columnData)
   {
     OutputFormat outputFormat = this.outputFormat;
@@ -212,7 +219,7 @@ abstract class BaseTextFormattingHelper
     final TableRow row = new TableRow(outputFormat);
     for (final String element: columnData)
     {
-      row.add(new TableCell(element, "", outputFormat));
+      row.add(newTableCell(element, "", outputFormat));
     }
     return row.toString();
   }
@@ -224,6 +231,7 @@ abstract class BaseTextFormattingHelper
    * @param columnNames
    *        Column names
    */
+  @Override
   public String createRowHeader(final String[] columnNames)
   {
     OutputFormat outputFormat = this.outputFormat;
@@ -234,9 +242,16 @@ abstract class BaseTextFormattingHelper
     final TableRow row = new TableRow(outputFormat);
     for (final String columnName: columnNames)
     {
-      row.add(new TableCell(columnName, "name", outputFormat));
+      row.add(newTableCell(columnName, "name", outputFormat));
     }
     return row.toString();
+  }
+
+  private TableCell newTableCell(final String text,
+                                 final String styleClass,
+                                 final OutputFormat outputFormat)
+  {
+    return new TableCell(text, 0, Align.left, 1, styleClass, outputFormat);
   }
 
 }

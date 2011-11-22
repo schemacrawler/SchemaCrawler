@@ -10,16 +10,36 @@
       <subsection name="Description">
         <p>
           The grep example shows how to search a schema for tables and columns
-          matching a regular expression.
+          matching a regular
+          expression.
         </p>
       </subsection>
       <subsection name="How to Run">
         <ol>
           <li>
-            You can find out how to use SchemaCrawler grep in the
+            Follow the instructions in the
             <code>commandline</code>
             example.
           </li>
+          <li>
+            To find tables with certain column names, run
+            <span class="code">sc.cmd -c hsqldb -infolevel=standard -command=schema -grepcolumns=.*\.PUBLISHER</span>
+            (or
+            <span class="code">sc.sh -c hsqldb -infolevel=standard -command=schema -grepcolumns=.*\.PUBLISHER</span>
+            on Unix)
+          </li>
+          <li>
+            To find stored procedures with certain parameter names, run
+            <span class="code">sc.cmd -c hsqldb -infolevel=standard -command=schema -grepinout=.*\.@p2</span>
+            (or
+            <span class="code">sc.sh -c hsqldb -infolevel=standard -command=schema -grepinout=.*\.@p2</span>
+            on Unix)
+          </li>
+        </ol>
+      </subsection>
+      <subsection name="How to Experiment">
+        <ol>
+          <li>Try grep for columns in tables that match a pattern.</li>
         </ol>
       </subsection>
     </section>

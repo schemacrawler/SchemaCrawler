@@ -199,8 +199,8 @@ final class LintTextFormatter
         {
           if ((Boolean) lintValue)
           {
-            out
-              .println(formattingHelper.createDescriptionRow(lint.getMessage()));
+            out.println(formattingHelper.createNameValueRow(lint.getMessage(),
+                                                            ""));
           }
         }
         else
