@@ -37,6 +37,37 @@ o--> "Global Counts"
 o--> PUBLISHERS
      o--> ID
      o--> PUBLISHER
+PUBLIC.FOR_LINT
+o--> AUTHORS
+     o--> ADDRESS1
+     o--> ADDRESS2
+     o--> BOOK_ID
+     o--> CITY
+     o--> COUNTRY
+     o--> EMAIL1
+     o--> EMAIL2
+     o--> FAX
+     o--> FAX3
+     o--> FIRSTNAME
+     o--> HOMEEMAIL11
+     o--> HOMEEMAIL12
+     o--> ID
+     o--> LASTNAME
+     o--> PHONE1
+     o--> PHONE2
+     o--> POSTALCODE
+     o--> STATE
+o--> BOOKS
+     o--> AUTHORID
+     o--> DESCRIPTION
+     o--> ID
+     o--> PRICE
+     o--> PUBLICATIONDATE
+     o--> TITLE
+     o--> "UPDATE"
+o--> "Global Counts"
+     o--> "Global Count"
+o--> No_Columns
 PUBLIC.INFORMATION_SCHEMA
 PUBLIC.PUBLIC
 PUBLIC."PUBLISHER SALES"

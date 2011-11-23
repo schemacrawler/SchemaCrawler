@@ -40,6 +40,7 @@ import org.xml.sax.SAXException;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.DatabaseConnectionOptions;
+import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.tools.executable.Executable;
@@ -81,8 +82,7 @@ public class LintOutputTest
   private static final String COMPOSITE_OUTPUT = "lint_composite_output/";
   private static final String JSON_OUTPUT = "lint_json_output/";
 
-  private static TestDatabase testDatabase = new TestDatabase("publisher sales",
-                                                              "for_lint");
+  private static TestDatabase testDatabase = new TestDatabase();
 
   @AfterClass
   public static void afterAllTests()
@@ -137,6 +137,7 @@ public class LintOutputTest
         final Config config = Config.load(LintOutputTest.class
           .getResourceAsStream("/hsqldb.INFORMATION_SCHEMA.config.properties"));
         final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
+        schemaCrawlerOptions.setSchemaInclusionRule(new InclusionRule(".*FOR_LINT", InclusionRule.NONE));
         schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
 
         final DatabaseConnectionOptions connectionOptions = testDatabase
@@ -183,6 +184,7 @@ public class LintOutputTest
     final Config config = Config.load(LintOutputTest.class
       .getResourceAsStream("/hsqldb.INFORMATION_SCHEMA.config.properties"));
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
+    schemaCrawlerOptions.setSchemaInclusionRule(new InclusionRule(".*FOR_LINT", InclusionRule.NONE));
     schemaCrawlerOptions.setSchemaInfoLevel(infoLevel.getSchemaInfoLevel());
 
     final DatabaseConnectionOptions connectionOptions = testDatabase
@@ -225,6 +227,7 @@ public class LintOutputTest
     final Config config = Config.load(LintOutputTest.class
       .getResourceAsStream("/hsqldb.INFORMATION_SCHEMA.config.properties"));
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
+    schemaCrawlerOptions.setSchemaInclusionRule(new InclusionRule(".*FOR_LINT", InclusionRule.NONE));
     schemaCrawlerOptions.setSchemaInfoLevel(infoLevel.getSchemaInfoLevel());
 
     final DatabaseConnectionOptions connectionOptions = testDatabase

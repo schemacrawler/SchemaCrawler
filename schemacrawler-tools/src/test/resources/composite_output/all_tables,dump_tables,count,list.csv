@@ -135,6 +135,10 @@ PUBLIC,BOOKS,BOOKAUTHORS,TABLE,"Relationship between books and their authors, al
 PUBLIC,BOOKS,BOOKS,TABLE,Details for published books,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
 PUBLIC,BOOKS,Global Counts,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
 PUBLIC,BOOKS,PUBLISHERS,TABLE,List of book publishers,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
+PUBLIC,FOR_LINT,AUTHORS,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
+PUBLIC,FOR_LINT,BOOKS,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
+PUBLIC,FOR_LINT,Global Counts,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
+PUBLIC,FOR_LINT,No_Columns,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
 PUBLIC,PUBLISHER SALES,REGIONS,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
 PUBLIC,PUBLISHER SALES,SALES,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
 PUBLIC,BOOKS,AUTHORSLIST,VIEW,<null>,<null>,<null>,<null>,<null>,<null>,<null>,false,<null>
@@ -283,6 +287,24 @@ ID,PUBLISHER
 
 
 
+PUBLIC.FOR_LINT.AUTHORS
+------------------------------------------------------------------------
+ID,FIRSTNAME,LASTNAME,ADDRESS1,ADDRESS2,CITY,STATE,POSTALCODE,COUNTRY,PHONE1,PHONE2,EMAIL1,EMAIL2,FAX,FAX3,HOMEEMAIL11,HOMEEMAIL12,BOOK_ID
+
+
+
+PUBLIC.FOR_LINT.BOOKS
+------------------------------------------------------------------------
+ID,TITLE,DESCRIPTION,AUTHORID,PUBLICATIONDATE,PRICE
+
+
+
+PUBLIC.FOR_LINT."Global Counts"
+------------------------------------------------------------------------
+Global Count
+
+
+
 PUBLIC."PUBLISHER SALES".REGIONS
 ------------------------------------------------------------------------
 CITY,STATE,POSTALCODE,COUNTRY
@@ -349,6 +371,9 @@ PUBLIC.BOOKS.BOOKAUTHORS,20 rows
 PUBLIC.BOOKS.BOOKS,20 rows
 "PUBLIC.BOOKS.""Global Counts""",empty
 PUBLIC.BOOKS.PUBLISHERS,20 rows
+PUBLIC.FOR_LINT.AUTHORS,empty
+PUBLIC.FOR_LINT.BOOKS,empty
+"PUBLIC.FOR_LINT.""Global Counts""",empty
 "PUBLIC.""PUBLISHER SALES"".REGIONS",20 rows
 "PUBLIC.""PUBLISHER SALES"".SALES",20 rows
 
@@ -365,6 +390,9 @@ PUBLIC.BOOKS.BOOKAUTHORS,[table]
 PUBLIC.BOOKS.BOOKS,[table]
 "PUBLIC.BOOKS.""Global Counts""",[table]
 PUBLIC.BOOKS.PUBLISHERS,[table]
+PUBLIC.FOR_LINT.AUTHORS,[table]
+PUBLIC.FOR_LINT.BOOKS,[table]
+"PUBLIC.FOR_LINT.""Global Counts""",[table]
 "PUBLIC.""PUBLISHER SALES"".REGIONS",[table]
 "PUBLIC.""PUBLISHER SALES"".SALES",[table]
 

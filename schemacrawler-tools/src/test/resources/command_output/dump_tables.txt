@@ -141,6 +141,24 @@ ID	PUBLISHER
 
 
 
+PUBLIC.FOR_LINT.AUTHORS
+------------------------------------------------------------------------
+ID	FIRSTNAME	LASTNAME	ADDRESS1	ADDRESS2	CITY	STATE	POSTALCODE	COUNTRY	PHONE1	PHONE2	EMAIL1	EMAIL2	FAX	FAX3	HOMEEMAIL11	HOMEEMAIL12	BOOK_ID
+
+
+
+PUBLIC.FOR_LINT.BOOKS
+------------------------------------------------------------------------
+ID	TITLE	DESCRIPTION	AUTHORID	PUBLICATIONDATE	PRICE
+
+
+
+PUBLIC.FOR_LINT."Global Counts"
+------------------------------------------------------------------------
+Global Count
+
+
+
 PUBLIC."PUBLISHER SALES".REGIONS
 ------------------------------------------------------------------------
 CITY	STATE	POSTALCODE	COUNTRY

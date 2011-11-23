@@ -32,6 +32,21 @@
       "type": "table"
     },
     {
+      "name": "AUTHORS",
+      "fullName": "PUBLIC.FOR_LINT.AUTHORS",
+      "type": "table"
+    },
+    {
+      "name": "BOOKS",
+      "fullName": "PUBLIC.FOR_LINT.BOOKS",
+      "type": "table"
+    },
+    {
+      "name": "\"Global Counts\"",
+      "fullName": "PUBLIC.FOR_LINT.\"Global Counts\"",
+      "type": "table"
+    },
+    {
       "name": "REGIONS",
       "fullName": "PUBLIC.\"PUBLISHER SALES\".REGIONS",
       "type": "table"

@@ -69,9 +69,7 @@ public class TestDatabase
   public static void main(final String[] args)
     throws Exception
   {
-    final TestDatabase testDatabase = new TestDatabase("books",
-                                                       "publisher sales",
-                                                       "for_lint");
+    final TestDatabase testDatabase = new TestDatabase();
     Runtime.getRuntime().addShutdownHook(new Thread()
     {
       @Override
@@ -202,13 +200,8 @@ public class TestDatabase
   public TestDatabase()
   {
     schemas = new String[] {
-        "books", "publisher sales",
+        "books", "publisher sales", "for_lint",
     };
-  }
-
-  public TestDatabase(final String... schemas)
-  {
-    this.schemas = schemas;
   }
 
   /**

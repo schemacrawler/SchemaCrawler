@@ -58,7 +58,7 @@ public class ExcludeTest
   }
 
   @Test
-  public void excldeColumns()
+  public void excludeColumns()
     throws Exception
   {
     final String[] schemaNames = {
@@ -171,6 +171,9 @@ public class ExcludeTest
     };
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+    schemaCrawlerOptions
+      .setSchemaInclusionRule(new InclusionRule(InclusionRule.ALL,
+                                                ".*\\.FOR_LINT"));
     schemaCrawlerOptions
       .setColumnInclusionRule(new InclusionRule(InclusionRule.ALL,
                                                 ".*\\..*\\.ID"));

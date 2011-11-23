@@ -1461,6 +1461,66 @@
       ],
       [
         "PUBLIC",
+        "FOR_LINT",
+        "AUTHORS",
+        "TABLE",
+        "<null>",
+        "<null>",
+        "<null>",
+        "<null>",
+        "<null>",
+        "<null>",
+        "MEMORY",
+        "false",
+        "<null>"
+      ],
+      [
+        "PUBLIC",
+        "FOR_LINT",
+        "BOOKS",
+        "TABLE",
+        "<null>",
+        "<null>",
+        "<null>",
+        "<null>",
+        "<null>",
+        "<null>",
+        "MEMORY",
+        "false",
+        "<null>"
+      ],
+      [
+        "PUBLIC",
+        "FOR_LINT",
+        "Global Counts",
+        "TABLE",
+        "<null>",
+        "<null>",
+        "<null>",
+        "<null>",
+        "<null>",
+        "<null>",
+        "MEMORY",
+        "false",
+        "<null>"
+      ],
+      [
+        "PUBLIC",
+        "FOR_LINT",
+        "No_Columns",
+        "TABLE",
+        "<null>",
+        "<null>",
+        "<null>",
+        "<null>",
+        "<null>",
+        "<null>",
+        "MEMORY",
+        "false",
+        "<null>"
+      ],
+      [
+        "PUBLIC",
         "PUBLISHER SALES",
         "REGIONS",
         "TABLE",
@@ -2211,6 +2271,47 @@
       ]
     },
     {
+      "title": "PUBLIC.FOR_LINT.AUTHORS",
+      "columnNames": [
+        "ID",
+        "FIRSTNAME",
+        "LASTNAME",
+        "ADDRESS1",
+        "ADDRESS2",
+        "CITY",
+        "STATE",
+        "POSTALCODE",
+        "COUNTRY",
+        "PHONE1",
+        "PHONE2",
+        "EMAIL1",
+        "EMAIL2",
+        "FAX",
+        "FAX3",
+        "HOMEEMAIL11",
+        "HOMEEMAIL12",
+        "BOOK_ID"
+      ],
+      "rows": []
+    },
+    {
+      "title": "PUBLIC.FOR_LINT.BOOKS",
+      "columnNames": [
+        "ID",
+        "TITLE",
+        "DESCRIPTION",
+        "AUTHORID",
+        "PUBLICATIONDATE",
+        "PRICE"
+      ],
+      "rows": []
+    },
+    {
+      "title": "PUBLIC.FOR_LINT.\"Global Counts\"",
+      "columnNames": ["Global Count"],
+      "rows": []
+    },
+    {
       "title": "PUBLIC.\"PUBLISHER SALES\".REGIONS",
       "columnNames": [
         "CITY",
@@ -2522,6 +2623,18 @@
       "value": 20
     },
     {
+      "title": "PUBLIC.FOR_LINT.AUTHORS",
+      "value": 0
+    },
+    {
+      "title": "PUBLIC.FOR_LINT.BOOKS",
+      "value": 0
+    },
+    {
+      "title": "PUBLIC.FOR_LINT.\"Global Counts\"",
+      "value": 0
+    },
+    {
       "title": "PUBLIC.\"PUBLISHER SALES\".REGIONS",
       "value": 20
     },
@@ -2561,6 +2674,21 @@
     {
       "name": "PUBLISHERS",
       "fullName": "PUBLIC.BOOKS.PUBLISHERS",
+      "type": "table"
+    },
+    {
+      "name": "AUTHORS",
+      "fullName": "PUBLIC.FOR_LINT.AUTHORS",
+      "type": "table"
+    },
+    {
+      "name": "BOOKS",
+      "fullName": "PUBLIC.FOR_LINT.BOOKS",
+      "type": "table"
+    },
+    {
+      "name": "\"Global Counts\"",
+      "fullName": "PUBLIC.FOR_LINT.\"Global Counts\"",
       "type": "table"
     },
     {

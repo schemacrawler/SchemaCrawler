@@ -39,7 +39,7 @@ Query
 
 PUBLIC.FOR_LINT.AUTHORS
 ------------------------------------------------------------------------
-ID,FIRSTNAME,LASTNAME,ADDRESS1,ADDRESS2,CITY,STATE,POSTALCODE,COUNTRY,PHONE1,PHONE2,EMAIL1,EMAIL2,FAX,FAX3,HOMEEMAIL11,HOMEEMAIL12,BOOKID
+ID,FIRSTNAME,LASTNAME,ADDRESS1,ADDRESS2,CITY,STATE,POSTALCODE,COUNTRY,PHONE1,PHONE2,EMAIL1,EMAIL2,FAX,FAX3,HOMEEMAIL11,HOMEEMAIL12,BOOK_ID
 
 
 
@@ -55,28 +55,6 @@ Global Count
 
 
 
-PUBLIC."PUBLISHER SALES".REGIONS
-------------------------------------------------------------------------
-CITY,STATE,POSTALCODE,COUNTRY
-Arvada,KY,17131,USA
-Baltimore,AK,34702,USA
-Clairton,MA,42875,USA
-Del Rio,CA,24179,USA
-Duluth,ND,82539,USA
-
-
-
-PUBLIC."PUBLISHER SALES".SALES
-------------------------------------------------------------------------
-POSTALCODE,COUNTRY,BOOKID,PERIODENDDATE,TOTALAMOUNT
-13078,USA,1,2001-09-29,14895.0
-17131,USA,2,2002-04-30,17887.0
-20239,USA,3,2004-08-28,18747.0
-24179,USA,4,2009-02-14,5885.0
-26131,USA,5,2004-11-03,15348.0
-
-
-
 
 Tables
 ========================================================================
@@ -85,22 +63,6 @@ Tables
 PUBLIC.FOR_LINT.AUTHORS,[table]
 PUBLIC.FOR_LINT.BOOKS,[table]
 "PUBLIC.FOR_LINT.""Global Counts""",[table]
-"PUBLIC.""PUBLISHER SALES"".REGIONS",[table]
-"PUBLIC.""PUBLISHER SALES"".SALES",[table]
-
-
-
-Procedures
-========================================================================
-
-
-PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS,"[procedure, no result]"
-PUBLIC.SYSTEM_LOBS.CONVERT_BLOCK,"[procedure, no result]"
-PUBLIC.SYSTEM_LOBS.CREATE_EMPTY_BLOCK,"[procedure, no result]"
-PUBLIC.SYSTEM_LOBS.DELETE_BLOCKS,"[procedure, no result]"
-PUBLIC.SYSTEM_LOBS.DELETE_LOB,"[procedure, no result]"
-PUBLIC.SYSTEM_LOBS.DELETE_UNUSED,"[procedure, no result]"
-PUBLIC.SYSTEM_LOBS.DIVIDE_BLOCK,"[procedure, no result]"
 
 
 

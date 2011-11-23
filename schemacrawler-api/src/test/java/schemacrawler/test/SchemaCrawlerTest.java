@@ -44,6 +44,7 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schema.View;
+import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
@@ -78,14 +79,16 @@ public class SchemaCrawlerTest
   {
 
     final int[] tableCounts = {
-        6, 0, 0, 2, 0,
+        6, 4, 0, 0, 2, 0
     };
     final int[][] checkConstraintCounts = {
         {
             4, 0, 2, 3, 0, 1, 0
+        }, {
+            6, 3, 0, 0
         }, {}, {}, {
             4, 2
-        }, {},
+        }, {}
     };
     final String[][][] checkConstraintNames = {
         {
@@ -108,6 +111,21 @@ public class SchemaCrawlerTest
             },
             {}
         },
+        {
+            {
+                "CHECK_UPPERCASE_STATE",
+                "SYS_CT_10062",
+                "SYS_CT_10063",
+                "SYS_CT_10064",
+                "SYS_CT_10065",
+                "SYS_CT_10066",
+            },
+            {
+                "SYS_CT_10068", "SYS_CT_10069", "SYS_CT_10070",
+            },
+            {},
+            {}
+        },
         {},
         {},
         {
@@ -117,7 +135,7 @@ public class SchemaCrawlerTest
                 "SYS_CT_10057", "SYS_CT_10058"
             }
         },
-        {},
+        {}
     };
 
     final InformationSchemaViews informationSchemaViews = new InformationSchemaViews();
@@ -132,7 +150,7 @@ public class SchemaCrawlerTest
 
     final Database database = testDatabase.getDatabase(schemaCrawlerOptions);
     final Schema[] schemas = database.getSchemas();
-    assertEquals("Schema count does not match", 5, schemas.length);
+    assertEquals("Schema count does not match", 6, schemas.length);
     for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++)
     {
       final Schema schema = schemas[schemaIdx];
@@ -294,6 +312,9 @@ public class SchemaCrawlerTest
     };
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+    schemaCrawlerOptions
+      .setSchemaInclusionRule(new InclusionRule(InclusionRule.ALL,
+                                                ".*\\.FOR_LINT"));
 
     final Database database = testDatabase.getDatabase(schemaCrawlerOptions);
     final Schema[] schemas = database.getSchemas();
@@ -401,6 +422,9 @@ public class SchemaCrawlerTest
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
     schemaCrawlerOptions.setInformationSchemaViews(informationSchemaViews);
+    schemaCrawlerOptions
+      .setSchemaInclusionRule(new InclusionRule(InclusionRule.ALL,
+                                                ".*\\.FOR_LINT"));
 
     final Database database = testDatabase.getDatabase(schemaCrawlerOptions);
     final Schema[] schemas = database.getSchemas();
@@ -554,6 +578,9 @@ public class SchemaCrawlerTest
     };
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.standard());
+    schemaCrawlerOptions
+      .setSchemaInclusionRule(new InclusionRule(InclusionRule.ALL,
+                                                ".*\\.FOR_LINT"));
 
     final Database database = testDatabase.getDatabase(schemaCrawlerOptions);
     final Schema[] schemas = database.getSchemas();
@@ -600,6 +627,9 @@ public class SchemaCrawlerTest
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setAlphabeticalSortForTables(false);
+    schemaCrawlerOptions
+      .setSchemaInclusionRule(new InclusionRule(InclusionRule.ALL,
+                                                ".*\\.FOR_LINT"));
 
     final Database database = testDatabase.getDatabase(schemaCrawlerOptions);
     final Schema[] schemas = database.getSchemas();

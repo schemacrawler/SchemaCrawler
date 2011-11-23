@@ -62,4 +62,77 @@ PUBLIC.BOOKS.AUTHORSLIST                                          [view]
 SELECT ID,FIRSTNAME,LASTNAME FROM BOOKS.AUTHORS
 
 
+PUBLIC.FOR_LINT.AUTHORS                                          [table]
+------------------------------------------------------------------------
+  ID                                INTEGER not null            
+  FIRSTNAME                         VARCHAR(20) not null        
+  LASTNAME                          VARCHAR(20) not null        
+  ADDRESS1                          VARCHAR(255)                
+  ADDRESS2                          VARCHAR(255) not null       
+  CITY                              VARCHAR(50)                 
+  STATE                             VARCHAR(2)                  
+  POSTALCODE                        VARCHAR(10)                 
+  COUNTRY                           VARCHAR(50)                 
+  PHONE1                            VARCHAR(10)                 
+  PHONE2                            VARCHAR(15)                 
+  EMAIL1                            VARCHAR(10)                 
+  EMAIL2                            INTEGER                     
+  FAX                               VARCHAR(10)                 
+  FAX3                              INTEGER                     
+  HOMEEMAIL11                       VARCHAR(10)                 
+  HOMEEMAIL12                       VARCHAR(10)                 
+  BOOK_ID                           BIGINT not null             
+
+PK_AUTHORS                                                 [primary key]
+  ID                                ascending                   
+
+FK_BOOKS_AUTHOR                            [foreign key, with no action]
+  ID --> PUBLIC.FOR_LINT.BOOKS.AUTHORID                              
+
+FK_AUTHORS_BOOK                            [foreign key, with no action]
+  PUBLIC.FOR_LINT.BOOKS.ID --> BOOK_ID                              
+
+SYS_IDX_10076                                         [non-unique index]
+  BOOK_ID                           ascending                   
+
+SYS_IDX_PK_AUTHORS_10067                                  [unique index]
+  ID                                ascending                   
+
+IDX_A1_AUTHORS                                        [non-unique index]
+  CITY                              ascending                   
+  STATE                             ascending                   
+
+IDX_U_AUTHORS                                             [unique index]
+  EMAIL1                            ascending                   
+  COUNTRY                           ascending                   
+
+IDX_B_AUTHORS                                         [non-unique index]
+  LASTNAME                          ascending                   
+  FIRSTNAME                         ascending                   
+
+IDX_A_AUTHORS                                         [non-unique index]
+  CITY                              ascending                   
+  STATE                             ascending                   
+  POSTALCODE                        ascending                   
+  COUNTRY                           ascending                   
+
+CHECK_UPPERCASE_STATE                                 [check constraint]
+FOR_LINT.AUTHORS.STATE=UPPER(FOR_LINT.AUTHORS.STATE)
+
+SYS_CT_10062                                          [check constraint]
+FOR_LINT.AUTHORS.ID IS NOT NULL
+
+SYS_CT_10063                                          [check constraint]
+FOR_LINT.AUTHORS.FIRSTNAME IS NOT NULL
+
+SYS_CT_10064                                          [check constraint]
+FOR_LINT.AUTHORS.LASTNAME IS NOT NULL
+
+SYS_CT_10065                                          [check constraint]
+FOR_LINT.AUTHORS.ADDRESS2 IS NOT NULL
+
+SYS_CT_10066                                          [check constraint]
+FOR_LINT.AUTHORS.BOOK_ID IS NOT NULL
+
+
 

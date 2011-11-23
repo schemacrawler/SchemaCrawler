@@ -18,7 +18,7 @@ CREATE TABLE Authors
   Fax3 INT,
   HomeEmail11 VARCHAR(10),
   HomeEmail12 VARCHAR(10),
-  BookId BIGINT NOT NULL,
+  Book_Id BIGINT NOT NULL,
   CONSTRAINT PK_Authors PRIMARY KEY (Id),
   CONSTRAINT CHECK_UPPERCASE_State CHECK (State=UPPER(State))
 )
@@ -49,7 +49,7 @@ CREATE TABLE "No_Columns"
 )
 ;
 
-ALTER TABLE Authors ADD CONSTRAINT FK_Authors_Book FOREIGN KEY (BookId) REFERENCES Books (Id);
+ALTER TABLE Authors ADD CONSTRAINT FK_Authors_Book FOREIGN KEY (Book_Id) REFERENCES Books (Id);
 
 -- Indices
 CREATE INDEX IDX_B_Authors ON Authors(LastName, FirstName)

@@ -32,6 +32,21 @@
       "type": "table"
     },
     {
+      "name": "AUTHORS",
+      "fullName": "PUBLIC.FOR_LINT.AUTHORS",
+      "type": "table"
+    },
+    {
+      "name": "BOOKS",
+      "fullName": "PUBLIC.FOR_LINT.BOOKS",
+      "type": "table"
+    },
+    {
+      "name": "\"Global Counts\"",
+      "fullName": "PUBLIC.FOR_LINT.\"Global Counts\"",
+      "type": "table"
+    },
+    {
       "name": "REGIONS",
       "fullName": "PUBLIC.\"PUBLISHER SALES\".REGIONS",
       "type": "table"
@@ -127,6 +142,18 @@
     {
       "title": "PUBLIC.BOOKS.PUBLISHERS",
       "value": 20
+    },
+    {
+      "title": "PUBLIC.FOR_LINT.AUTHORS",
+      "value": 0
+    },
+    {
+      "title": "PUBLIC.FOR_LINT.BOOKS",
+      "value": 0
+    },
+    {
+      "title": "PUBLIC.FOR_LINT.\"Global Counts\"",
+      "value": 0
     },
     {
       "title": "PUBLIC.\"PUBLISHER SALES\".REGIONS",

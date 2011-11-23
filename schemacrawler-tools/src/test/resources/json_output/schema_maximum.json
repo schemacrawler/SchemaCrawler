@@ -463,6 +463,460 @@
       "type": "table"
     },
     {
+      "foreignKeys": [
+        {
+          "updateRule": "no action",
+          "columnPairs": [{
+            "pkColumn": "PUBLIC.FOR_LINT.AUTHORS.ID",
+            "fkColumn": "PUBLIC.FOR_LINT.BOOKS.AUTHORID"
+          }],
+          "deleteRule": "no action",
+          "name": "FK_BOOKS_AUTHOR"
+        },
+        {
+          "updateRule": "no action",
+          "columnPairs": [{
+            "pkColumn": "PUBLIC.FOR_LINT.BOOKS.ID",
+            "fkColumn": "PUBLIC.FOR_LINT.AUTHORS.BOOK_ID"
+          }],
+          "deleteRule": "no action",
+          "name": "FK_AUTHORS_BOOK"
+        }
+      ],
+      "primaryKey": {
+        "unique": true,
+        "name": "PK_AUTHORS",
+        "columns": {
+          "sortSequence": "ascending",
+          "name": "ID",
+          "ordinal": 1
+        }
+      },
+      "name": "AUTHORS",
+      "columns": [
+        {
+          "dataType": "INTEGER",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "ID",
+          "ordinal": 1,
+          "nullable": false,
+          "databaseSpecificType": "INTEGER",
+          "size": 32
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(20)",
+          "name": "FIRSTNAME",
+          "ordinal": 2,
+          "nullable": false,
+          "databaseSpecificType": "VARCHAR",
+          "size": 20
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(20)",
+          "name": "LASTNAME",
+          "ordinal": 3,
+          "nullable": false,
+          "databaseSpecificType": "VARCHAR",
+          "size": 20
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(255)",
+          "name": "ADDRESS1",
+          "ordinal": 4,
+          "nullable": true,
+          "databaseSpecificType": "VARCHAR",
+          "size": 255
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(255)",
+          "name": "ADDRESS2",
+          "ordinal": 5,
+          "nullable": false,
+          "databaseSpecificType": "VARCHAR",
+          "size": 255
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(50)",
+          "name": "CITY",
+          "ordinal": 6,
+          "nullable": true,
+          "databaseSpecificType": "VARCHAR",
+          "size": 50
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(2)",
+          "name": "STATE",
+          "ordinal": 7,
+          "nullable": true,
+          "databaseSpecificType": "VARCHAR",
+          "size": 2
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(10)",
+          "name": "POSTALCODE",
+          "ordinal": 8,
+          "nullable": true,
+          "databaseSpecificType": "VARCHAR",
+          "size": 10
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(50)",
+          "name": "COUNTRY",
+          "ordinal": 9,
+          "nullable": true,
+          "databaseSpecificType": "VARCHAR",
+          "size": 50
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(10)",
+          "name": "PHONE1",
+          "ordinal": 10,
+          "nullable": true,
+          "databaseSpecificType": "VARCHAR",
+          "size": 10
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(15)",
+          "name": "PHONE2",
+          "ordinal": 11,
+          "nullable": true,
+          "databaseSpecificType": "VARCHAR",
+          "size": 15
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(10)",
+          "name": "EMAIL1",
+          "ordinal": 12,
+          "nullable": true,
+          "databaseSpecificType": "VARCHAR",
+          "size": 10
+        },
+        {
+          "dataType": "INTEGER",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "EMAIL2",
+          "ordinal": 13,
+          "nullable": true,
+          "databaseSpecificType": "INTEGER",
+          "size": 32
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(10)",
+          "name": "FAX",
+          "ordinal": 14,
+          "nullable": true,
+          "databaseSpecificType": "VARCHAR",
+          "size": 10
+        },
+        {
+          "dataType": "INTEGER",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "FAX3",
+          "ordinal": 15,
+          "nullable": true,
+          "databaseSpecificType": "INTEGER",
+          "size": 32
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(10)",
+          "name": "HOMEEMAIL11",
+          "ordinal": 16,
+          "nullable": true,
+          "databaseSpecificType": "VARCHAR",
+          "size": 10
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(10)",
+          "name": "HOMEEMAIL12",
+          "ordinal": 17,
+          "nullable": true,
+          "databaseSpecificType": "VARCHAR",
+          "size": 10
+        },
+        {
+          "dataType": "BIGINT",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "BOOK_ID",
+          "ordinal": 18,
+          "nullable": false,
+          "databaseSpecificType": "BIGINT",
+          "size": 64
+        }
+      ],
+      "indices": [
+        {
+          "unique": false,
+          "name": "SYS_IDX_10076",
+          "columns": {
+            "sortSequence": "ascending",
+            "name": "BOOK_ID",
+            "ordinal": 18
+          }
+        },
+        {
+          "unique": true,
+          "name": "SYS_IDX_PK_AUTHORS_10067",
+          "columns": {
+            "sortSequence": "ascending",
+            "name": "ID",
+            "ordinal": 1
+          }
+        },
+        {
+          "unique": false,
+          "name": "IDX_A1_AUTHORS",
+          "columns": [
+            {
+              "sortSequence": "ascending",
+              "name": "CITY",
+              "ordinal": 6
+            },
+            {
+              "sortSequence": "ascending",
+              "name": "STATE",
+              "ordinal": 7
+            }
+          ]
+        },
+        {
+          "unique": true,
+          "name": "IDX_U_AUTHORS",
+          "columns": [
+            {
+              "sortSequence": "ascending",
+              "name": "EMAIL1",
+              "ordinal": 12
+            },
+            {
+              "sortSequence": "ascending",
+              "name": "COUNTRY",
+              "ordinal": 9
+            }
+          ]
+        },
+        {
+          "unique": false,
+          "name": "IDX_B_AUTHORS",
+          "columns": [
+            {
+              "sortSequence": "ascending",
+              "name": "LASTNAME",
+              "ordinal": 3
+            },
+            {
+              "sortSequence": "ascending",
+              "name": "FIRSTNAME",
+              "ordinal": 2
+            }
+          ]
+        },
+        {
+          "unique": false,
+          "name": "IDX_A_AUTHORS",
+          "columns": [
+            {
+              "sortSequence": "ascending",
+              "name": "CITY",
+              "ordinal": 6
+            },
+            {
+              "sortSequence": "ascending",
+              "name": "STATE",
+              "ordinal": 7
+            },
+            {
+              "sortSequence": "ascending",
+              "name": "POSTALCODE",
+              "ordinal": 8
+            },
+            {
+              "sortSequence": "ascending",
+              "name": "COUNTRY",
+              "ordinal": 9
+            }
+          ]
+        }
+      ],
+      "fullName": "PUBLIC.FOR_LINT.AUTHORS",
+      "type": "table"
+    },
+    {
+      "foreignKeys": [
+        {
+          "updateRule": "no action",
+          "columnPairs": [{
+            "pkColumn": "PUBLIC.FOR_LINT.AUTHORS.ID",
+            "fkColumn": "PUBLIC.FOR_LINT.BOOKS.AUTHORID"
+          }],
+          "deleteRule": "no action",
+          "name": "FK_BOOKS_AUTHOR"
+        },
+        {
+          "updateRule": "no action",
+          "columnPairs": [{
+            "pkColumn": "PUBLIC.FOR_LINT.BOOKS.ID",
+            "fkColumn": "PUBLIC.FOR_LINT.AUTHORS.BOOK_ID"
+          }],
+          "deleteRule": "no action",
+          "name": "FK_AUTHORS_BOOK"
+        }
+      ],
+      "primaryKey": {
+        "unique": true,
+        "name": "PK_BOOKS",
+        "columns": {
+          "sortSequence": "ascending",
+          "name": "ID",
+          "ordinal": 1
+        }
+      },
+      "name": "BOOKS",
+      "columns": [
+        {
+          "dataType": "INTEGER",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "ID",
+          "ordinal": 1,
+          "nullable": false,
+          "databaseSpecificType": "INTEGER",
+          "size": 32
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(255)",
+          "name": "TITLE",
+          "ordinal": 2,
+          "nullable": false,
+          "databaseSpecificType": "VARCHAR",
+          "size": 255
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(255)",
+          "name": "DESCRIPTION",
+          "ordinal": 3,
+          "nullable": true,
+          "databaseSpecificType": "VARCHAR",
+          "size": 255
+        },
+        {
+          "dataType": "INTEGER",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "AUTHORID",
+          "ordinal": 4,
+          "nullable": false,
+          "databaseSpecificType": "INTEGER",
+          "size": 32
+        },
+        {
+          "dataType": "DATE",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "PUBLICATIONDATE",
+          "ordinal": 5,
+          "nullable": true,
+          "databaseSpecificType": "DATE",
+          "size": 10
+        },
+        {
+          "dataType": "DOUBLE",
+          "decimalDigits": 0,
+          "width": "(64, 0)",
+          "name": "PRICE",
+          "ordinal": 6,
+          "nullable": true,
+          "databaseSpecificType": "DOUBLE",
+          "size": 64
+        },
+        {
+          "dataType": "CLOB",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "\"UPDATE\"",
+          "ordinal": 7,
+          "nullable": true,
+          "databaseSpecificType": "CLOB",
+          "size": 16777216
+        }
+      ],
+      "indices": [
+        {
+          "unique": false,
+          "name": "SYS_IDX_10072",
+          "columns": {
+            "sortSequence": "ascending",
+            "name": "AUTHORID",
+            "ordinal": 4
+          }
+        },
+        {
+          "unique": true,
+          "name": "SYS_IDX_PK_BOOKS_10071",
+          "columns": {
+            "sortSequence": "ascending",
+            "name": "ID",
+            "ordinal": 1
+          }
+        }
+      ],
+      "fullName": "PUBLIC.FOR_LINT.BOOKS",
+      "type": "table"
+    },
+    {
+      "foreignKeys": [],
+      "primaryKey": {},
+      "name": "\"Global Counts\"",
+      "columns": [{
+        "dataType": "INTEGER",
+        "decimalDigits": 0,
+        "width": "",
+        "name": "\"Global Count\"",
+        "ordinal": 1,
+        "nullable": true,
+        "databaseSpecificType": "INTEGER",
+        "size": 32
+      }],
+      "indices": [],
+      "fullName": "PUBLIC.FOR_LINT.\"Global Counts\"",
+      "type": "table"
+    },
+    {
       "foreignKeys": [{
         "updateRule": "no action",
         "columnPairs": [

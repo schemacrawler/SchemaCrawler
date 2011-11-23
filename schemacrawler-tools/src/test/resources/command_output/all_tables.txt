@@ -103,6 +103,10 @@ PUBLIC	BOOKS	BOOKAUTHORS	TABLE	Relationship between books and their authors, alo
 PUBLIC	BOOKS	BOOKS	TABLE	Details for published books	<null>	<null>	<null>	<null>	<null>	MEMORY	false	<null>
 PUBLIC	BOOKS	Global Counts	TABLE	<null>	<null>	<null>	<null>	<null>	<null>	MEMORY	false	<null>
 PUBLIC	BOOKS	PUBLISHERS	TABLE	List of book publishers	<null>	<null>	<null>	<null>	<null>	MEMORY	false	<null>
+PUBLIC	FOR_LINT	AUTHORS	TABLE	<null>	<null>	<null>	<null>	<null>	<null>	MEMORY	false	<null>
+PUBLIC	FOR_LINT	BOOKS	TABLE	<null>	<null>	<null>	<null>	<null>	<null>	MEMORY	false	<null>
+PUBLIC	FOR_LINT	Global Counts	TABLE	<null>	<null>	<null>	<null>	<null>	<null>	MEMORY	false	<null>
+PUBLIC	FOR_LINT	No_Columns	TABLE	<null>	<null>	<null>	<null>	<null>	<null>	MEMORY	false	<null>
 PUBLIC	PUBLISHER SALES	REGIONS	TABLE	<null>	<null>	<null>	<null>	<null>	<null>	MEMORY	false	<null>
 PUBLIC	PUBLISHER SALES	SALES	TABLE	<null>	<null>	<null>	<null>	<null>	<null>	MEMORY	false	<null>
 PUBLIC	BOOKS	AUTHORSLIST	VIEW	<null>	<null>	<null>	<null>	<null>	<null>	<null>	false	<null>

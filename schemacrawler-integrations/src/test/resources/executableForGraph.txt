@@ -23,8 +23,8 @@ digraph SchemaCrawler_Diagram {
 	authors_dba8a1ff [label=<
       <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
         <tr>
-          <td colspan="2" bgcolor="#FA96A3" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC.BOOKS.AUTHORS</font></td>
-          <td bgcolor="#FA96A3" align="right">[table]</td>
+          <td colspan="2" bgcolor="#96C1FA" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC.BOOKS.AUTHORS</font></td>
+          <td bgcolor="#96C1FA" align="right">[table]</td>
         </tr>
         <tr>
           <td port="address1_d0f1f1ec.start" align="left">ADDRESS1</td>
@@ -76,8 +76,8 @@ digraph SchemaCrawler_Diagram {
 	bookauthors_aa4376 [label=<
       <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
         <tr>
-          <td colspan="2" bgcolor="#FA96A3" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC.BOOKS.BOOKAUTHORS</font></td>
-          <td bgcolor="#FA96A3" align="right">[table]</td>
+          <td colspan="2" bgcolor="#96C1FA" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC.BOOKS.BOOKAUTHORS</font></td>
+          <td bgcolor="#96C1FA" align="right">[table]</td>
         </tr>
         <tr>
           <td port="authorid_19681b5e.start" align="left">AUTHORID</td>
@@ -99,8 +99,8 @@ digraph SchemaCrawler_Diagram {
 	authorslist_b29d331d [label=<
       <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
         <tr>
-          <td colspan="2" bgcolor="#FA96A3" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC.BOOKS.AUTHORSLIST</font></td>
-          <td bgcolor="#FA96A3" align="right">[view]</td>
+          <td colspan="2" bgcolor="#96C1FA" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC.BOOKS.AUTHORSLIST</font></td>
+          <td bgcolor="#96C1FA" align="right">[view]</td>
         </tr>
         <tr>
           <td port="firstname_d3258b8a.start" align="left">FIRSTNAME</td>
@@ -122,8 +122,8 @@ digraph SchemaCrawler_Diagram {
 	books_afd2ba21 [label=<
       <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
         <tr>
-          <td colspan="2" bgcolor="#FA96A3" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC.BOOKS.BOOKS</font></td>
-          <td bgcolor="#FA96A3" align="right">[table]</td>
+          <td colspan="2" bgcolor="#96C1FA" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC.BOOKS.BOOKS</font></td>
+          <td bgcolor="#96C1FA" align="right">[table]</td>
         </tr>
         <tr>
           <td port="description_f1e45f8f.start" align="left">DESCRIPTION</td>
@@ -160,8 +160,8 @@ digraph SchemaCrawler_Diagram {
 	globalcounts_2ab3635a [label=<
       <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
         <tr>
-          <td colspan="2" bgcolor="#FA96A3" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC.BOOKS."Global Counts"</font></td>
-          <td bgcolor="#FA96A3" align="right">[table]</td>
+          <td colspan="2" bgcolor="#96C1FA" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC.BOOKS."Global Counts"</font></td>
+          <td bgcolor="#96C1FA" align="right">[table]</td>
         </tr>
         <tr>
           <td port="globalcount_22cfa042.start" align="left">"Global Count"</td>
@@ -173,8 +173,8 @@ digraph SchemaCrawler_Diagram {
 	publishers_b8da20c0 [label=<
       <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
         <tr>
-          <td colspan="2" bgcolor="#FA96A3" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC.BOOKS.PUBLISHERS</font></td>
-          <td bgcolor="#FA96A3" align="right">[table]</td>
+          <td colspan="2" bgcolor="#96C1FA" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC.BOOKS.PUBLISHERS</font></td>
+          <td bgcolor="#96C1FA" align="right">[table]</td>
         </tr>
         <tr>
           <td port="id_6fc9dd09.start" align="left"><font face="Helvetica-BoldOblique">ID</font></td>
@@ -188,11 +188,173 @@ digraph SchemaCrawler_Diagram {
         </tr>
       </table>
     >];
+	authors_396fd1f8 [label=<
+      <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
+        <tr>
+          <td colspan="2" bgcolor="#DEFA96" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC.FOR_LINT.AUTHORS</font></td>
+          <td bgcolor="#DEFA96" align="right">[table]</td>
+        </tr>
+        <tr>
+          <td port="address1_1a3eaa13.start" align="left">ADDRESS1</td>
+          <td> </td>
+          <td port="address1_1a3eaa13.end" align="right">VARCHAR(255)</td>
+        </tr>
+        <tr>
+          <td port="address2_1a3eaa14.start" align="left">ADDRESS2</td>
+          <td> </td>
+          <td port="address2_1a3eaa14.end" align="right">VARCHAR(255)</td>
+        </tr>
+        <tr>
+          <td port="book_id_b477503b.start" align="left">BOOK_ID</td>
+          <td> </td>
+          <td port="book_id_b477503b.end" align="right">BIGINT</td>
+        </tr>
+        <tr>
+          <td port="city_a2a473a1.start" align="left">CITY</td>
+          <td> </td>
+          <td port="city_a2a473a1.end" align="right">VARCHAR(50)</td>
+        </tr>
+        <tr>
+          <td port="country_e9b34d80.start" align="left">COUNTRY</td>
+          <td> </td>
+          <td port="country_e9b34d80.end" align="right">VARCHAR(50)</td>
+        </tr>
+        <tr>
+          <td port="email1_8eef48eb.start" align="left">EMAIL1</td>
+          <td> </td>
+          <td port="email1_8eef48eb.end" align="right">VARCHAR(10)</td>
+        </tr>
+        <tr>
+          <td port="email2_8eef48ec.start" align="left">EMAIL2</td>
+          <td> </td>
+          <td port="email2_8eef48ec.end" align="right">INTEGER</td>
+        </tr>
+        <tr>
+          <td port="fax_78dc0e07.start" align="left">FAX</td>
+          <td> </td>
+          <td port="fax_78dc0e07.end" align="right">VARCHAR(10)</td>
+        </tr>
+        <tr>
+          <td port="fax3_a2a5b30c.start" align="left">FAX3</td>
+          <td> </td>
+          <td port="fax3_a2a5b30c.end" align="right">INTEGER</td>
+        </tr>
+        <tr>
+          <td port="firstname_16f94a5.start" align="left">FIRSTNAME</td>
+          <td> </td>
+          <td port="firstname_16f94a5.end" align="right">VARCHAR(20)</td>
+        </tr>
+        <tr>
+          <td port="homeemail11_988469e7.start" align="left">HOMEEMAIL11</td>
+          <td> </td>
+          <td port="homeemail11_988469e7.end" align="right">VARCHAR(10)</td>
+        </tr>
+        <tr>
+          <td port="homeemail12_988469e8.start" align="left">HOMEEMAIL12</td>
+          <td> </td>
+          <td port="homeemail12_988469e8.end" align="right">VARCHAR(10)</td>
+        </tr>
+        <tr>
+          <td port="id_fba400d1.start" align="left"><font face="Helvetica-BoldOblique">ID</font></td>
+          <td> </td>
+          <td port="id_fba400d1.end" align="right">INTEGER</td>
+        </tr>
+        <tr>
+          <td port="lastname_bf19957.start" align="left">LASTNAME</td>
+          <td> </td>
+          <td port="lastname_bf19957.end" align="right">VARCHAR(20)</td>
+        </tr>
+        <tr>
+          <td port="phone1_a1749159.start" align="left">PHONE1</td>
+          <td> </td>
+          <td port="phone1_a1749159.end" align="right">VARCHAR(10)</td>
+        </tr>
+        <tr>
+          <td port="phone2_a174915a.start" align="left">PHONE2</td>
+          <td> </td>
+          <td port="phone2_a174915a.end" align="right">VARCHAR(15)</td>
+        </tr>
+        <tr>
+          <td port="postalcode_ad3c1aee.start" align="left">POSTALCODE</td>
+          <td> </td>
+          <td port="postalcode_ad3c1aee.end" align="right">VARCHAR(10)</td>
+        </tr>
+        <tr>
+          <td port="state_b2d030fb.start" align="left">STATE</td>
+          <td> </td>
+          <td port="state_b2d030fb.end" align="right">VARCHAR(2)</td>
+        </tr>
+      </table>
+    >];
+	books_9f67945a [label=<
+      <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
+        <tr>
+          <td colspan="2" bgcolor="#DEFA96" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC.FOR_LINT.BOOKS</font></td>
+          <td bgcolor="#DEFA96" align="right">[table]</td>
+        </tr>
+        <tr>
+          <td port="authorid_440d8afa.start" align="left">AUTHORID</td>
+          <td> </td>
+          <td port="authorid_440d8afa.end" align="right">INTEGER</td>
+        </tr>
+        <tr>
+          <td port="description_d22eac48.start" align="left">DESCRIPTION</td>
+          <td> </td>
+          <td port="description_d22eac48.end" align="right">VARCHAR(255)</td>
+        </tr>
+        <tr>
+          <td port="id_16a98b2f.start" align="left"><font face="Helvetica-BoldOblique">ID</font></td>
+          <td> </td>
+          <td port="id_16a98b2f.end" align="right">INTEGER</td>
+        </tr>
+        <tr>
+          <td port="price_3c660e95.start" align="left">PRICE</td>
+          <td> </td>
+          <td port="price_3c660e95.end" align="right">DOUBLE(64, 0)</td>
+        </tr>
+        <tr>
+          <td port="publicationdate_a3fab626.start" align="left">PUBLICATIONDATE</td>
+          <td> </td>
+          <td port="publicationdate_a3fab626.end" align="right">DATE</td>
+        </tr>
+        <tr>
+          <td port="title_3c9a7fa4.start" align="left">TITLE</td>
+          <td> </td>
+          <td port="title_3c9a7fa4.end" align="right">VARCHAR(255)</td>
+        </tr>
+        <tr>
+          <td port="update_a8b7052b.start" align="left">"UPDATE"</td>
+          <td> </td>
+          <td port="update_a8b7052b.end" align="right">CLOB</td>
+        </tr>
+      </table>
+    >];
+	globalcounts_986b8a53 [label=<
+      <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
+        <tr>
+          <td colspan="2" bgcolor="#DEFA96" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC.FOR_LINT."Global Counts"</font></td>
+          <td bgcolor="#DEFA96" align="right">[table]</td>
+        </tr>
+        <tr>
+          <td port="globalcount_9be78829.start" align="left">"Global Count"</td>
+          <td> </td>
+          <td port="globalcount_9be78829.end" align="right">INTEGER</td>
+        </tr>
+      </table>
+    >];
+	no_columns_1899a78f [label=<
+      <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
+        <tr>
+          <td colspan="2" bgcolor="#DEFA96" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC.FOR_LINT.No_Columns</font></td>
+          <td bgcolor="#DEFA96" align="right">[table]</td>
+        </tr>
+      </table>
+    >];
 	regions_bc895c48 [label=<
       <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
         <tr>
-          <td colspan="2" bgcolor="#96C1FA" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC."PUBLISHER SALES".REGIONS</font></td>
-          <td bgcolor="#96C1FA" align="right">[table]</td>
+          <td colspan="2" bgcolor="#F996FA" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC."PUBLISHER SALES".REGIONS</font></td>
+          <td bgcolor="#F996FA" align="right">[table]</td>
         </tr>
         <tr>
           <td port="city_2c74db51.start" align="left">CITY</td>
@@ -219,8 +381,8 @@ digraph SchemaCrawler_Diagram {
 	sales_20be6f95 [label=<
       <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
         <tr>
-          <td colspan="2" bgcolor="#96C1FA" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC."PUBLISHER SALES".SALES</font></td>
-          <td bgcolor="#96C1FA" align="right">[table]</td>
+          <td colspan="2" bgcolor="#F996FA" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC."PUBLISHER SALES".SALES</font></td>
+          <td bgcolor="#F996FA" align="right">[table]</td>
         </tr>
         <tr>
           <td port="bookid_3c829a3d.start" align="left">BOOKID</td>
@@ -251,8 +413,14 @@ digraph SchemaCrawler_Diagram {
     >];
 	authors_dba8a1ff:"id_ecfc5f6a.start":w -> bookauthors_aa4376:"authorid_19681b5e.end":e [label=<FK_Z_AUTHOR>, style=solid, arrowhead=crowodot, arrowtail=teetee];
 	books_afd2ba21:"id_bb8abc08.start":w -> bookauthors_aa4376:"bookid_931bd73c.end":e [label=<FK_Y_BOOK>, style=solid, arrowhead=crowodot, arrowtail=teetee];
+	authors_396fd1f8:"id_fba400d1.start":w -> books_9f67945a:"authorid_440d8afa.end":e [label=<FK_BOOKS_AUTHOR>, style=solid, arrowhead=crowodot, arrowtail=teetee];
+	books_9f67945a:"id_16a98b2f.start":w -> authors_396fd1f8:"book_id_b477503b.end":e [label=<FK_AUTHORS_BOOK>, style=solid, arrowhead=crowodot, arrowtail=teetee];
 	regions_bc895c48:"postalcode_9b2bfe9e.start":w -> sales_20be6f95:"postalcode_738bc931.end":e [label=<FK_SALES_REGIONS>, style=solid, arrowhead=crowodot, arrowtail=teetee];
 	regions_bc895c48:"country_7d0587d0.start":w -> sales_20be6f95:"country_890cfe1d.end":e [label=<FK_SALES_REGIONS>, style=solid, arrowhead=crowodot, arrowtail=teetee];
+	books_9f67945a:"id_16a98b2f.start":w -> bookauthors_aa4376:"bookid_931bd73c.end":e [style=dashed, arrowhead=crowodot, arrowtail=teetee];
+	authors_396fd1f8:"id_fba400d1.start":w -> bookauthors_aa4376:"authorid_19681b5e.end":e [style=dashed, arrowhead=crowodot, arrowtail=teetee];
+	authors_dba8a1ff:"id_ecfc5f6a.start":w -> books_9f67945a:"authorid_440d8afa.end":e [style=dashed, arrowhead=crowodot, arrowtail=teetee];
 	publishers_b8da20c0:"id_6fc9dd09.start":w -> books_afd2ba21:"publisherid_3413fbaa.end":e [style=dashed, arrowhead=crowodot, arrowtail=teetee];
+	books_9f67945a:"id_16a98b2f.start":w -> sales_20be6f95:"bookid_3c829a3d.end":e [style=dashed, arrowhead=crowodot, arrowtail=teetee];
 	books_afd2ba21:"id_bb8abc08.start":w -> sales_20be6f95:"bookid_3c829a3d.end":e [style=dashed, arrowhead=crowodot, arrowtail=teetee];
 }
