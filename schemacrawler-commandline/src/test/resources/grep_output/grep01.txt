@@ -36,4 +36,39 @@ BOOKS.BOOKS.PUBLISHERID IS NOT NULL
 Details for published books
 
 
+PUBLIC.FOR_LINT.BOOKS                                            [table]
+------------------------------------------------------------------------
+  ID                                INTEGER not null            
+  TITLE                             VARCHAR(255) not null       
+  DESCRIPTION                       VARCHAR(255)                
+  AUTHORID                          INTEGER not null            
+  PUBLICATIONDATE                   DATE                        
+  PRICE                             DOUBLE(64, 0)               
+  "UPDATE"                          CLOB                        
+
+PK_BOOKS                                                   [primary key]
+  ID                                ascending                   
+
+FK_BOOKS_AUTHOR                            [foreign key, with no action]
+  PUBLIC.FOR_LINT.AUTHORS.ID --> AUTHORID                              
+
+FK_AUTHORS_BOOK                            [foreign key, with no action]
+  ID --> PUBLIC.FOR_LINT.AUTHORS.BOOK_ID                              
+
+SYS_IDX_10072                                         [non-unique index]
+  AUTHORID                          ascending                   
+
+SYS_IDX_PK_BOOKS_10071                                    [unique index]
+  ID                                ascending                   
+
+SYS_CT_10068                                          [check constraint]
+FOR_LINT.BOOKS.ID IS NOT NULL
+
+SYS_CT_10069                                          [check constraint]
+FOR_LINT.BOOKS.TITLE IS NOT NULL
+
+SYS_CT_10070                                          [check constraint]
+FOR_LINT.BOOKS.AUTHORID IS NOT NULL
+
+
 

@@ -21,7 +21,6 @@ package schemacrawler.tools.analysis.associations;
 
 
 import schemacrawler.schema.ColumnMap;
-import schemacrawler.schema.Table;
 
 public interface WeakAssociationsCollector
   extends Iterable<ColumnMap>
@@ -29,7 +28,7 @@ public interface WeakAssociationsCollector
 
   final String WEAK_ASSOCIATIONS_KEY = "schemacrawler.weak_associations";
 
-  void addWeakAssociation(final Table table, final ColumnMap weakAssociation);
+  void addWeakAssociation(final ColumnMap weakAssociation);
 
   void clear();
 

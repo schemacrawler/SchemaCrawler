@@ -40,6 +40,7 @@ import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnMap;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Table;
+import sf.util.Multimap;
 import sf.util.ObjectToString;
 import sf.util.Utility;
 
@@ -67,8 +68,8 @@ final class WeakAssociationsAnalyzer
     }
 
     final Collection<String> prefixes = findTableNamePrefixes(tables);
-    final Map<String, Table> tableMatchMap = mapTableNameMatches(tables,
-                                                                 prefixes);
+    final Multimap<String, Table> tableMatchMap = mapTableNameMatches(tables,
+                                                                      prefixes);
     if (LOGGER.isLoggable(Level.FINE))
     {
       LOGGER.log(Level.FINE, "Table prefixes=" + prefixes);
@@ -90,8 +91,7 @@ final class WeakAssociationsAnalyzer
     if (collector != null)
     {
       final ColumnMap weakAssociation = new WeakAssociation(pkColumn, fkColumn);
-      collector.addWeakAssociation(pkColumn.getParent(), weakAssociation);
-      collector.addWeakAssociation(fkColumn.getParent(), weakAssociation);
+      collector.addWeakAssociation(weakAssociation);
     }
   }
 
@@ -214,7 +214,7 @@ final class WeakAssociationsAnalyzer
   }
 
   private void findWeakAssociations(final List<Table> tables,
-                                    final Map<String, Table> tableMatchMap,
+                                    final Multimap<String, Table> tableMatchMap,
                                     final Map<String, ForeignKeyColumnMap> fkColumnsMap)
   {
     for (final Table table: tables)
@@ -225,30 +225,37 @@ final class WeakAssociationsAnalyzer
         .entrySet())
       {
         final String matchColumnName = columnEntry.getKey();
-        final Table matchedTable = tableMatchMap.get(matchColumnName);
-        final Column fkColumn = columnEntry.getValue();
-        if (matchedTable != null && fkColumn != null
-            && !fkColumn.getParent().equals(matchedTable))
+        final List<Table> matchedTables = tableMatchMap.get(matchColumnName);
+        if (matchedTables != null)
         {
-          // Check if the table association is already expressed as a
-          // foreign key
-          final ForeignKeyColumnMap fkColumnMap = fkColumnsMap.get(fkColumn
-            .getFullName());
-          if (fkColumnMap == null
-              || !fkColumnMap.getPrimaryKeyColumn().getParent()
-                .equals(matchedTable))
+          for (Table matchedTable: matchedTables)
           {
-            // Ensure that we associate to the primary key
-            final Map<String, Column> pkColumnNameMatchesMap = mapColumnNameMatches(matchedTable);
-            final Column pkColumn = pkColumnNameMatchesMap.get("id");
-            if (pkColumn != null)
+            final Column fkColumn = columnEntry.getValue();
+            if (matchedTable != null && fkColumn != null
+                && !fkColumn.getParent().equals(matchedTable))
             {
-              final ColumnDataType fkColumnType = fkColumn.getType();
-              final ColumnDataType pkColumnType = pkColumn.getType();
-              if (pkColumnType != null && fkColumnType != null
-                  && fkColumnType.getType() == pkColumnType.getType())
+              // Check if the table association is already expressed as
+              // a
+              // foreign key
+              final ForeignKeyColumnMap fkColumnMap = fkColumnsMap.get(fkColumn
+                .getFullName());
+              if (fkColumnMap == null
+                  || !fkColumnMap.getPrimaryKeyColumn().getParent()
+                    .equals(matchedTable))
               {
-                addWeakAssociation(fkColumn, pkColumn);
+                // Ensure that we associate to the primary key
+                final Map<String, Column> pkColumnNameMatchesMap = mapColumnNameMatches(matchedTable);
+                final Column pkColumn = pkColumnNameMatchesMap.get("id");
+                if (pkColumn != null)
+                {
+                  final ColumnDataType fkColumnType = fkColumn.getType();
+                  final ColumnDataType pkColumnType = pkColumn.getType();
+                  if (pkColumnType != null && fkColumnType != null
+                      && fkColumnType.getType() == pkColumnType.getType())
+                  {
+                    addWeakAssociation(fkColumn, pkColumn);
+                  }
+                }
               }
             }
           }
@@ -302,10 +309,10 @@ final class WeakAssociationsAnalyzer
     return fkColumnsMap;
   }
 
-  private Map<String, Table> mapTableNameMatches(final List<Table> tables,
-                                                 final Collection<String> prefixes)
+  private Multimap<String, Table> mapTableNameMatches(final List<Table> tables,
+                                                      final Collection<String> prefixes)
   {
-    final Map<String, Table> matchMap = new HashMap<String, Table>();
+    final Multimap<String, Table> matchMap = new Multimap<String, Table>();
     for (final Table table: tables)
     {
       for (final String prefix: prefixes)
@@ -315,7 +322,7 @@ final class WeakAssociationsAnalyzer
         {
           matchTableName = matchTableName.substring(prefix.length());
           matchTableName = Inflection.singularize(matchTableName);
-          matchMap.put(matchTableName, table);
+          matchMap.add(matchTableName, table);
         }
       }
     }

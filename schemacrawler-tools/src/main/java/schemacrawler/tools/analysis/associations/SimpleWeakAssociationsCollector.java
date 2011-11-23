@@ -56,8 +56,21 @@ public class SimpleWeakAssociationsCollector
   }
 
   @Override
-  public void addWeakAssociation(final Table table,
-                                 final ColumnMap weakAssociation)
+  public void addWeakAssociation(final ColumnMap weakAssociation)
+  {
+    if (weakAssociation != null)
+    {
+      weakAssociations.add(weakAssociation);
+
+      addWeakAssociation(weakAssociation.getPrimaryKeyColumn().getParent(),
+                         weakAssociation);
+      addWeakAssociation(weakAssociation.getForeignKeyColumn().getParent(),
+                         weakAssociation);
+    }
+  }
+
+  private void addWeakAssociation(final Table table,
+                                  final ColumnMap weakAssociation)
   {
     if (table != null && weakAssociation != null)
     {

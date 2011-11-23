@@ -65,13 +65,14 @@ public class SchemaCrawlerGrepTest
   {
     final String[] schemaNames = {
         "BOOKS",
+        "FOR_LINT",
         "INFORMATION_SCHEMA",
         "PUBLIC",
         "\"PUBLISHER SALES\"",
         "SYSTEM_LOBS"
     };
     final int[] tableCounts = {
-        1, 0, 0, 1, 0
+        1, 0, 0, 0, 1, 0
     };
     final String[][][] columnNames = {
         {
@@ -81,6 +82,7 @@ public class SchemaCrawlerGrepTest
               "BOOKAUTHORS.\"UPDATE\"",
           },
         },
+        {},
         {},
         {},
         {
@@ -101,7 +103,7 @@ public class SchemaCrawlerGrepTest
 
     final Database database = testDatabase.getDatabase(schemaCrawlerOptions);
     final Schema[] schemas = database.getSchemas();
-    assertEquals("Schema count does not match", 5, schemas.length);
+    assertEquals("Schema count does not match", 6, schemas.length);
     for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++)
     {
       final Schema schema = schemas[schemaIdx];
@@ -136,13 +138,14 @@ public class SchemaCrawlerGrepTest
   {
     final String[] schemaNames = {
         "BOOKS",
+        "FOR_LINT",
         "INFORMATION_SCHEMA",
         "PUBLIC",
         "\"PUBLISHER SALES\"",
         "SYSTEM_LOBS"
     };
     final int[] tableCounts = {
-        2, 0, 0, 1, 0
+        2, 0, 0, 0, 1, 0
     };
     final String[][][] columnNames = {
         {
@@ -165,6 +168,7 @@ public class SchemaCrawlerGrepTest
         },
         {},
         {},
+        {},
         {
           {
               "SALES.POSTALCODE",
@@ -185,7 +189,7 @@ public class SchemaCrawlerGrepTest
 
     final Database database = testDatabase.getDatabase(schemaCrawlerOptions);
     final Schema[] schemas = database.getSchemas();
-    assertEquals("Schema count does not match", 5, schemas.length);
+    assertEquals("Schema count does not match", 6, schemas.length);
     for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++)
     {
       final Schema schema = schemas[schemaIdx];
@@ -220,13 +224,14 @@ public class SchemaCrawlerGrepTest
   {
     final String[] schemaNames = {
         "BOOKS",
+        "FOR_LINT",
         "INFORMATION_SCHEMA",
         "PUBLIC",
         "\"PUBLISHER SALES\"",
         "SYSTEM_LOBS"
     };
     final int[] tableCounts = {
-        1, 0, 0, 0, 0
+        1, 0, 0, 0, 0, 0
     };
     final String[][][] columnNames = {
         {
@@ -254,7 +259,7 @@ public class SchemaCrawlerGrepTest
 
     final Database database = testDatabase.getDatabase(schemaCrawlerOptions);
     final Schema[] schemas = database.getSchemas();
-    assertEquals("Schema count does not match", 5, schemas.length);
+    assertEquals("Schema count does not match", 6, schemas.length);
     for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++)
     {
       final Schema schema = schemas[schemaIdx];
@@ -289,15 +294,17 @@ public class SchemaCrawlerGrepTest
   {
     final String[] schemaNames = {
         "BOOKS",
+        "FOR_LINT",
         "INFORMATION_SCHEMA",
         "PUBLIC",
         "\"PUBLISHER SALES\"",
         "SYSTEM_LOBS"
     };
     final int[] procedureCounts = {
-        0, 0, 0, 0, 3
+        0, 0, 0, 0, 0, 3
     };
     final String[][][] columnNames = {
+        {},
         {},
         {},
         {},
@@ -326,7 +333,7 @@ public class SchemaCrawlerGrepTest
 
     final Database database = testDatabase.getDatabase(schemaCrawlerOptions);
     final Schema[] schemas = database.getSchemas();
-    assertEquals("Schema count does not match", 5, schemas.length);
+    assertEquals("Schema count does not match", 6, schemas.length);
     for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++)
     {
       final Schema schema = schemas[schemaIdx];

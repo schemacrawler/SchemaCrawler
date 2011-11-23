@@ -35,6 +35,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import schemacrawler.schema.Database;
+import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.lint.Lint;
 import schemacrawler.tools.lint.LintCollector;
@@ -44,8 +45,7 @@ import schemacrawler.utility.TestDatabase;
 public class LintTest
 {
 
-  private static TestDatabase testDatabase = new TestDatabase("publisher sales",
-                                                              "for_lint");
+  private static TestDatabase testDatabase = new TestDatabase();
 
   private static final String LINTS_OUTPUT = "lints_output/";
 
@@ -67,10 +67,13 @@ public class LintTest
   public void lints()
     throws Exception
   {
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+    schemaCrawlerOptions.setSchemaInclusionRule(new InclusionRule(".*FOR_LINT", InclusionRule.NONE));
+    
     final Database database = testDatabase
-      .getDatabase(new SchemaCrawlerOptions());
+      .getDatabase(schemaCrawlerOptions);
     assertNotNull(database);
-    assertEquals(5, database.getSchemas().length);
+    assertEquals(1, database.getSchemas().length);
     assertNotNull("FOR_LINT schema not found",
                   database.getSchema("PUBLIC.FOR_LINT"));
     assertEquals("FOR_LINT tables not found",
