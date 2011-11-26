@@ -102,48 +102,6 @@ final class OperationHandler
     dataFormatter.handleInfoEnd();
   }
 
-  private void executeSqlAndHandleData(final String title, final String sql)
-    throws SchemaCrawlerException
-  {
-    LOGGER.log(Level.FINE,
-               String.format("Executing query for %s: %s", title, sql));
-    Statement statement = null;
-    ResultSet results = null;
-    try
-    {
-      statement = connection.createStatement();
-      final boolean hasResults = statement.execute(sql);
-      // Pass into data handler for output
-      if (hasResults)
-      {
-        results = statement.getResultSet();
-        dataFormatter.handleData(title, results);
-      }
-    }
-    catch (final SQLException e)
-    {
-      LOGGER.log(Level.WARNING, "Error executing: " + sql, e);
-    }
-    finally
-    {
-      try
-      {
-        if (results != null)
-        {
-          results.close();
-        }
-        if (statement != null)
-        {
-          statement.close();
-        }
-      }
-      catch (final SQLException e)
-      {
-        LOGGER.log(Level.WARNING, "Error releasing resources", e);
-      }
-    }
-  }
-
   void begin()
     throws SchemaCrawlerException
   {
@@ -183,6 +141,48 @@ final class OperationHandler
       final String title = table.getFullName();
       final String sql = query.getQueryForTable(table);
       executeSqlAndHandleData(title, sql);
+    }
+  }
+
+  private void executeSqlAndHandleData(final String title, final String sql)
+    throws SchemaCrawlerException
+  {
+    LOGGER.log(Level.FINE,
+               String.format("Executing query for %s: %s", title, sql));
+    Statement statement = null;
+    ResultSet results = null;
+    try
+    {
+      statement = connection.createStatement();
+      final boolean hasResults = statement.execute(sql);
+      // Pass into data handler for output
+      if (hasResults)
+      {
+        results = statement.getResultSet();
+        dataFormatter.handleData(title, results);
+      }
+    }
+    catch (final SQLException e)
+    {
+      LOGGER.log(Level.WARNING, "Error executing: " + sql, e);
+    }
+    finally
+    {
+      try
+      {
+        if (results != null)
+        {
+          results.close();
+        }
+        if (statement != null)
+        {
+          statement.close();
+        }
+      }
+      catch (final SQLException e)
+      {
+        LOGGER.log(Level.WARNING, "Error releasing resources", e);
+      }
     }
   }
 

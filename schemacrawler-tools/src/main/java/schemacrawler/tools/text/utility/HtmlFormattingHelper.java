@@ -65,6 +65,7 @@ public final class HtmlFormattingHelper
     super(outputFormat);
   }
 
+  @Override
   public String createArrow()
   {
     return " \u2192 ";
@@ -73,6 +74,7 @@ public final class HtmlFormattingHelper
   /**
    * {@inheritDoc}
    */
+  @Override
   public String createDocumentEnd()
   {
     return HTML_FOOTER;
@@ -81,11 +83,13 @@ public final class HtmlFormattingHelper
   /**
    * {@inheritDoc}
    */
+  @Override
   public String createDocumentStart()
   {
     return HTML_HEADER;
   }
 
+  @Override
   public String createHeader(final DocumentHeaderType type, final String header)
   {
     if (!sf.util.Utility.isBlank(header))
@@ -134,6 +138,7 @@ public final class HtmlFormattingHelper
   /**
    * {@inheritDoc}
    */
+  @Override
   public String createObjectEnd()
   {
     return "</table>" + Utility.NEWLINE + "<p></p>" + Utility.NEWLINE;
@@ -142,6 +147,7 @@ public final class HtmlFormattingHelper
   /**
    * {@inheritDoc}
    */
+  @Override
   public String createObjectStart(final String name)
   {
     String objectStart = "<table>" + Utility.NEWLINE;

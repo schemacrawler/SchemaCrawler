@@ -67,6 +67,36 @@ public final class SchemaTextExecutable
     this.schemaTextOptions = schemaTextOptions;
   }
 
+  @Override
+  protected void executeOn(final Database db, final Connection connection)
+    throws Exception
+  {
+    InfoLevel infoLevel;
+    try
+    {
+      infoLevel = InfoLevel.valueOf(getSchemaCrawlerOptions()
+        .getSchemaInfoLevel().getTag());
+    }
+    catch (final Exception e)
+    {
+      infoLevel = InfoLevel.unknown;
+    }
+
+    Database database = db;
+    if (infoLevel == InfoLevel.maximum)
+    {
+      database = new DatabaseWithAssociations(database);
+    }
+
+    final SchemaTraversalHandler formatter = getSchemaTraversalHandler();
+
+    final SchemaTraverser traverser = new SchemaTraverser();
+    traverser.setDatabase(database);
+    traverser.setFormatter(formatter);
+    traverser.traverse();
+
+  }
+
   private SchemaTraversalHandler getSchemaTraversalHandler()
     throws SchemaCrawlerException
   {
@@ -97,36 +127,6 @@ public final class SchemaTextExecutable
     }
 
     return formatter;
-  }
-
-  @Override
-  protected void executeOn(final Database db, final Connection connection)
-    throws Exception
-  {
-    InfoLevel infoLevel;
-    try
-    {
-      infoLevel = InfoLevel.valueOf(getSchemaCrawlerOptions()
-        .getSchemaInfoLevel().getTag());
-    }
-    catch (final Exception e)
-    {
-      infoLevel = InfoLevel.unknown;
-    }
-
-    Database database = db;
-    if (infoLevel == InfoLevel.maximum)
-    {
-      database = new DatabaseWithAssociations(database);
-    }
-
-    final SchemaTraversalHandler formatter = getSchemaTraversalHandler();
-
-    SchemaTraverser traverser = new SchemaTraverser();
-    traverser.setDatabase(database);
-    traverser.setFormatter(formatter);
-    traverser.traverse();
-
   }
 
 }

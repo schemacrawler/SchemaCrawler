@@ -125,7 +125,7 @@ public final class CommandRegistry
     return helpResource;
   }
 
-  public boolean hasCommand(String command)
+  public boolean hasCommand(final String command)
   {
     return commandRegistry.containsKey(command);
   }

@@ -70,6 +70,7 @@ final class DataTextFormatter
    * @throws SchemaCrawlerException
    * @see schemacrawler.tools.traversal.DataTraversalHandler#end()
    */
+  @Override
   public void end()
     throws SchemaCrawlerException
   {
@@ -87,6 +88,7 @@ final class DataTextFormatter
    * @see schemacrawler.tools.traversal.DataTraversalHandler#handleData(java.lang.String,
    *      java.sql.ResultSet)
    */
+  @Override
   public void handleData(final String title, final ResultSet rows)
     throws SchemaCrawlerException
   {

@@ -74,7 +74,7 @@ final class DataJsonFormatter
       }
       jsonRoot.put("data", jsonDataArray);
     }
-    catch (JSONException e)
+    catch (final JSONException e)
     {
       throw new SchemaCrawlerException(e.getMessage(), e);
     }
@@ -86,17 +86,18 @@ final class DataJsonFormatter
    * @see schemacrawler.tools.traversal.DataTraversalHandler#handleData(java.lang.String,
    *      java.sql.ResultSet)
    */
+  @Override
   public void handleData(final String title, final ResultSet rows)
     throws SchemaCrawlerException
   {
     try
     {
-      JSONObject jsonData = new JSONObject();
+      final JSONObject jsonData = new JSONObject();
       jsonData.put("title", title);
 
       if (operation == Operation.count)
       {
-        long aggregate = handleAggregateOperationForTable(title, rows);
+        final long aggregate = handleAggregateOperationForTable(title, rows);
         jsonData.put("value", aggregate);
       }
       else

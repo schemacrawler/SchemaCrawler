@@ -68,10 +68,11 @@ public class LintTest
     throws Exception
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setSchemaInclusionRule(new InclusionRule(".*FOR_LINT", InclusionRule.NONE));
-    
-    final Database database = testDatabase
-      .getDatabase(schemaCrawlerOptions);
+    schemaCrawlerOptions
+      .setSchemaInclusionRule(new InclusionRule(".*FOR_LINT",
+                                                InclusionRule.NONE));
+
+    final Database database = testDatabase.getDatabase(schemaCrawlerOptions);
     assertNotNull(database);
     assertEquals(1, database.getSchemas().length);
     assertNotNull("FOR_LINT schema not found",

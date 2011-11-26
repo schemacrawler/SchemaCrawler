@@ -111,6 +111,11 @@ final class DataResultSet
     return currentRow;
   }
 
+  public int width()
+  {
+    return resultsColumns.length;
+  }
+
   private String convertColumnDataToString(final int i)
     throws SQLException
   {
@@ -319,10 +324,5 @@ final class DataResultSet
     {
       return BINARY;
     }
-  }
-
-  public int width()
-  {
-    return resultsColumns.length;
   }
 }

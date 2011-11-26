@@ -69,20 +69,6 @@ public class SimpleWeakAssociationsCollector
     }
   }
 
-  private void addWeakAssociation(final Table table,
-                                  final ColumnMap weakAssociation)
-  {
-    if (table != null && weakAssociation != null)
-    {
-      weakAssociations.add(weakAssociation);
-
-      final Collection<ColumnMap> tableWeakAssociations = table
-        .getAttribute(WEAK_ASSOCIATIONS_KEY, new HashSet<ColumnMap>());
-      tableWeakAssociations.add(weakAssociation);
-      table.setAttribute(WEAK_ASSOCIATIONS_KEY, tableWeakAssociations);
-    }
-  }
-
   @Override
   public void clear()
   {
@@ -111,6 +97,20 @@ public class SimpleWeakAssociationsCollector
   public ColumnMap[] toArray()
   {
     return weakAssociations.toArray(new ColumnMap[weakAssociations.size()]);
+  }
+
+  private void addWeakAssociation(final Table table,
+                                  final ColumnMap weakAssociation)
+  {
+    if (table != null && weakAssociation != null)
+    {
+      weakAssociations.add(weakAssociation);
+
+      final Collection<ColumnMap> tableWeakAssociations = table
+        .getAttribute(WEAK_ASSOCIATIONS_KEY, new HashSet<ColumnMap>());
+      tableWeakAssociations.add(weakAssociation);
+      table.setAttribute(WEAK_ASSOCIATIONS_KEY, tableWeakAssociations);
+    }
   }
 
 }

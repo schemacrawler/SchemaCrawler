@@ -69,6 +69,7 @@ public abstract class BaseExecutable
    * 
    * @see schemacrawler.tools.executable.Executable#execute(java.sql.Connection)
    */
+  @Override
   public final void execute(final Connection connection)
     throws Exception
   {
@@ -83,6 +84,7 @@ public abstract class BaseExecutable
     executeOn(database, connection);
   }
 
+  @Override
   public final Config getAdditionalConfiguration()
   {
     return additionalConfiguration;
@@ -93,6 +95,7 @@ public abstract class BaseExecutable
    * 
    * @see schemacrawler.tools.executable.Executable#getCommand()
    */
+  @Override
   public final String getCommand()
   {
     return command;
@@ -103,6 +106,7 @@ public abstract class BaseExecutable
    * 
    * @see schemacrawler.tools.executable.Executable#getOutputOptions()
    */
+  @Override
   public final OutputOptions getOutputOptions()
   {
     return outputOptions;
@@ -113,11 +117,13 @@ public abstract class BaseExecutable
    * 
    * @see schemacrawler.tools.executable.Executable#getSchemaCrawlerOptions()
    */
+  @Override
   public final SchemaCrawlerOptions getSchemaCrawlerOptions()
   {
     return schemaCrawlerOptions;
   }
 
+  @Override
   public final void setAdditionalConfiguration(final Config additionalConfiguration)
   {
     if (additionalConfiguration == null)
@@ -135,6 +141,7 @@ public abstract class BaseExecutable
    * 
    * @see schemacrawler.tools.executable.Executable#setOutputOptions(schemacrawler.tools.options.OutputOptions)
    */
+  @Override
   public final void setOutputOptions(final OutputOptions outputOptions)
   {
     this.outputOptions = outputOptions;
@@ -145,6 +152,7 @@ public abstract class BaseExecutable
    * 
    * @see schemacrawler.tools.executable.Executable#setSchemaCrawlerOptions(schemacrawler.schemacrawler.SchemaCrawlerOptions)
    */
+  @Override
   public final void setSchemaCrawlerOptions(final SchemaCrawlerOptions schemaCrawlerOptions)
   {
     this.schemaCrawlerOptions = schemaCrawlerOptions;
@@ -160,6 +168,9 @@ public abstract class BaseExecutable
   {
     return ObjectToString.toString(this);
   }
+
+  protected abstract void executeOn(Database database, Connection connection)
+    throws Exception;
 
   /**
    * Initializes the executable before execution.
@@ -182,8 +193,5 @@ public abstract class BaseExecutable
       LOGGER.log(Level.CONFIG, toString());
     }
   }
-
-  protected abstract void executeOn(Database database, Connection connection)
-    throws Exception;
 
 }

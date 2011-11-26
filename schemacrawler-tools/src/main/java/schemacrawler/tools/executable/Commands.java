@@ -27,6 +27,7 @@ final class Commands
     }
   }
 
+  @Override
   public Iterator<String> iterator()
   {
     return commands.iterator();

@@ -186,21 +186,6 @@ public class CommandLineParser
     return optionValues.values().toString();
   }
 
-  private final <T> OptionValue<T> getOptionValue(final String optionName)
-  {
-    OptionValue<T> optionValue = null;
-    final Option<T> option = (Option<T>) optionsMap.get(DASH + optionName);
-    if (option != null)
-    {
-      optionValue = (OptionValue<T>) optionValues.get(option);
-      if (optionValue == null)
-      {
-        optionValue = new OptionValue<T>(option, null);
-      }
-    }
-    return optionValue;
-  }
-
   /**
    * Add the specified Option to the list of accepted options.
    * 
@@ -221,6 +206,21 @@ public class CommandLineParser
     {
       optionsMap.put(DASH + option.getLongForm(), option);
     }
+  }
+
+  private final <T> OptionValue<T> getOptionValue(final String optionName)
+  {
+    OptionValue<T> optionValue = null;
+    final Option<T> option = (Option<T>) optionsMap.get(DASH + optionName);
+    if (option != null)
+    {
+      optionValue = (OptionValue<T>) optionValues.get(option);
+      if (optionValue == null)
+      {
+        optionValue = new OptionValue<T>(option, null);
+      }
+    }
+    return optionValue;
   }
 
 }
