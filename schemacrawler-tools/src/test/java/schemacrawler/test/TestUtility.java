@@ -187,6 +187,14 @@ public final class TestUtility
     return failures;
   }
 
+  public static File copyResourceToTempFile(final String resource)
+    throws IOException
+  {
+    final InputStream resourceStream = Utility.class
+      .getResourceAsStream(resource);
+    return writeToTempFile(resourceStream);
+  }
+
   private static boolean contentEquals(final Reader expectedInputReader,
                                        final Reader actualInputReader,
                                        final String... ignoreLines)
@@ -242,14 +250,6 @@ public final class TestUtility
       expectedBufferedReader.close();
       actualBufferedReader.close();
     }
-  }
-
-  public static File copyResourceToTempFile(final String resource)
-    throws IOException
-  {
-    final InputStream resourceStream = Utility.class
-      .getResourceAsStream(resource);
-    return writeToTempFile(resourceStream);
   }
 
   private static void fastChannelCopy(final ReadableByteChannel src,

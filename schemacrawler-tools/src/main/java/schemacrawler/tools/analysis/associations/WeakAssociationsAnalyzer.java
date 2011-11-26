@@ -228,7 +228,7 @@ final class WeakAssociationsAnalyzer
         final List<Table> matchedTables = tableMatchMap.get(matchColumnName);
         if (matchedTables != null)
         {
-          for (Table matchedTable: matchedTables)
+          for (final Table matchedTable: matchedTables)
           {
             final Column fkColumn = columnEntry.getValue();
             if (matchedTable != null && fkColumn != null

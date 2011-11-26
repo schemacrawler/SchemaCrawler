@@ -44,6 +44,7 @@ public class PlainTextFormattingHelper
     super(outputFormat);
   }
 
+  @Override
   public String createArrow()
   {
     return " --> ";
@@ -52,6 +53,7 @@ public class PlainTextFormattingHelper
   /**
    * {@inheritDoc}
    */
+  @Override
   public String createDocumentEnd()
   {
     return "";
@@ -60,11 +62,13 @@ public class PlainTextFormattingHelper
   /**
    * {@inheritDoc}
    */
+  @Override
   public String createDocumentStart()
   {
     return "";
   }
 
+  @Override
   public String createHeader(final DocumentHeaderType type, final String header)
   {
     if (!sf.util.Utility.isBlank(header))
@@ -112,6 +116,7 @@ public class PlainTextFormattingHelper
   /**
    * {@inheritDoc}
    */
+  @Override
   public String createObjectEnd()
   {
     return Utility.NEWLINE;
@@ -120,6 +125,7 @@ public class PlainTextFormattingHelper
   /**
    * {@inheritDoc}
    */
+  @Override
   public String createObjectStart(final String name)
   {
     String objectStart = "";

@@ -22,7 +22,6 @@ package schemacrawler.tools.options;
 
 
 import java.io.File;
-import java.io.PrintWriter;
 import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.Options;
@@ -41,9 +40,6 @@ public final class OutputOptions
 
   private static final Logger LOGGER = Logger.getLogger(OutputOptions.class
     .getName());
-
-  /** Not thread-safe */
-  private PrintWriter writer;
 
   private String outputFormatValue;
   private File outputFile;

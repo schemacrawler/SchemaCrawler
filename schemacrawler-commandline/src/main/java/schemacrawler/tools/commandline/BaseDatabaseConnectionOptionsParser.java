@@ -50,6 +50,25 @@ abstract class BaseDatabaseConnectionOptionsParser
     this.config = config;
   }
 
+  protected final void setPassword(final ConnectionOptions connectionOptions)
+  {
+    final String password;
+    if (hasOptionValue("password"))
+    {
+      password = getStringValue("password");
+    }
+    else
+    {
+      password = promptForPassword();
+    }
+    connectionOptions.setPassword(password);
+  }
+
+  protected final void setUser(final ConnectionOptions connectionOptions)
+  {
+    connectionOptions.setUser(getStringValue("user"));
+  }
+
   private String promptForPassword()
   {
     final Console console = System.console();
@@ -70,25 +89,6 @@ abstract class BaseDatabaseConnectionOptionsParser
       LOGGER.log(Level.WARNING, "System console is not available", e);
       return null;
     }
-  }
-
-  protected final void setPassword(final ConnectionOptions connectionOptions)
-  {
-    final String password;
-    if (hasOptionValue("password"))
-    {
-      password = getStringValue("password");
-    }
-    else
-    {
-      password = promptForPassword();
-    }
-    connectionOptions.setPassword(password);
-  }
-
-  protected final void setUser(final ConnectionOptions connectionOptions)
-  {
-    connectionOptions.setUser(getStringValue("user"));
   }
 
 }

@@ -137,7 +137,9 @@ public class LintOutputTest
         final Config config = Config.load(LintOutputTest.class
           .getResourceAsStream("/hsqldb.INFORMATION_SCHEMA.config.properties"));
         final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
-        schemaCrawlerOptions.setSchemaInclusionRule(new InclusionRule(".*FOR_LINT", InclusionRule.NONE));
+        schemaCrawlerOptions
+          .setSchemaInclusionRule(new InclusionRule(".*FOR_LINT",
+                                                    InclusionRule.NONE));
         schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
 
         final DatabaseConnectionOptions connectionOptions = testDatabase
@@ -184,7 +186,9 @@ public class LintOutputTest
     final Config config = Config.load(LintOutputTest.class
       .getResourceAsStream("/hsqldb.INFORMATION_SCHEMA.config.properties"));
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
-    schemaCrawlerOptions.setSchemaInclusionRule(new InclusionRule(".*FOR_LINT", InclusionRule.NONE));
+    schemaCrawlerOptions
+      .setSchemaInclusionRule(new InclusionRule(".*FOR_LINT",
+                                                InclusionRule.NONE));
     schemaCrawlerOptions.setSchemaInfoLevel(infoLevel.getSchemaInfoLevel());
 
     final DatabaseConnectionOptions connectionOptions = testDatabase
@@ -227,7 +231,9 @@ public class LintOutputTest
     final Config config = Config.load(LintOutputTest.class
       .getResourceAsStream("/hsqldb.INFORMATION_SCHEMA.config.properties"));
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
-    schemaCrawlerOptions.setSchemaInclusionRule(new InclusionRule(".*FOR_LINT", InclusionRule.NONE));
+    schemaCrawlerOptions
+      .setSchemaInclusionRule(new InclusionRule(".*FOR_LINT",
+                                                InclusionRule.NONE));
     schemaCrawlerOptions.setSchemaInfoLevel(infoLevel.getSchemaInfoLevel());
 
     final DatabaseConnectionOptions connectionOptions = testDatabase

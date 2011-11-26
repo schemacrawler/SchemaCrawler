@@ -63,6 +63,7 @@ public abstract class BaseJsonFormatter<O extends Options>
     jsonRoot = new JSONObject();
   }
 
+  @Override
   public void begin()
     throws SchemaCrawlerException
   {
@@ -72,6 +73,7 @@ public abstract class BaseJsonFormatter<O extends Options>
     }
   }
 
+  @Override
   public void end()
     throws SchemaCrawlerException
   {
@@ -96,6 +98,7 @@ public abstract class BaseJsonFormatter<O extends Options>
     }
   }
 
+  @Override
   public void handle(final DatabaseInfo dbInfo)
   {
     if (outputOptions.isNoInfo() || dbInfo == null)
@@ -136,6 +139,7 @@ public abstract class BaseJsonFormatter<O extends Options>
 
   }
 
+  @Override
   public void handle(final JdbcDriverInfo driverInfo)
   {
     if (outputOptions.isNoInfo() || driverInfo == null)
@@ -176,6 +180,7 @@ public abstract class BaseJsonFormatter<O extends Options>
 
   }
 
+  @Override
   public void handle(final SchemaCrawlerInfo schemaCrawlerInfo)
   {
     if (outputOptions.isNoInfo() || schemaCrawlerInfo == null)

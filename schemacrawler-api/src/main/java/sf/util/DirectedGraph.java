@@ -86,22 +86,6 @@ public class DirectedGraph<T extends Comparable<? super T>>
       return true;
     }
 
-    @Override
-    public int hashCode()
-    {
-      final int prime = 31;
-      int result = 1;
-      result = prime * result + (from == null? 0: from.hashCode());
-      result = prime * result + (to == null? 0: to.hashCode());
-      return result;
-    }
-
-    @Override
-    public String toString()
-    {
-      return "(" + from + " --> " + to + ")";
-    }
-
     public Vertex getFrom()
     {
       return from;
@@ -110,6 +94,16 @@ public class DirectedGraph<T extends Comparable<? super T>>
     public Vertex getTo()
     {
       return to;
+    }
+
+    @Override
+    public int hashCode()
+    {
+      final int prime = 31;
+      int result = 1;
+      result = prime * result + (from == null? 0: from.hashCode());
+      result = prime * result + (to == null? 0: to.hashCode());
+      return result;
     }
 
     public boolean isFrom(final Vertex vertex)
@@ -122,17 +116,12 @@ public class DirectedGraph<T extends Comparable<? super T>>
       return vertex != null && vertex.equals(to);
     }
 
-  }
+    @Override
+    public String toString()
+    {
+      return "(" + from + " --> " + to + ")";
+    }
 
-  /**
-   * Traversal state when detecting cycle.
-   */
-  private enum TraversalState
-  {
-
-    notStarted,
-    inProgress,
-    complete;
   }
 
   /**
@@ -178,6 +167,11 @@ public class DirectedGraph<T extends Comparable<? super T>>
       return true;
     }
 
+    public T getValue()
+    {
+      return value;
+    }
+
     @Override
     public int hashCode()
     {
@@ -198,16 +192,22 @@ public class DirectedGraph<T extends Comparable<? super T>>
       return traversalState;
     }
 
-    public T getValue()
-    {
-      return value;
-    }
-
     void setTraversalState(final TraversalState traversalState)
     {
       this.traversalState = traversalState;
     }
 
+  }
+
+  /**
+   * Traversal state when detecting cycle.
+   */
+  private enum TraversalState
+  {
+
+    notStarted,
+    inProgress,
+    complete;
   }
 
   private final Map<T, Vertex> verticesMap;

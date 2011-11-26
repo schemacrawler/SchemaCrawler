@@ -8,9 +8,9 @@ public interface CommandProvider
 
   String getCommand();
 
+  String getHelpResource();
+
   Executable newExecutable()
     throws SchemaCrawlerException;
-
-  String getHelpResource();
 
 }

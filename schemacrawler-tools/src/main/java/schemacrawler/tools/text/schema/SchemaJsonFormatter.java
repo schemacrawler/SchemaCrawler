@@ -89,6 +89,7 @@ final class SchemaJsonFormatter
     isNotList = schemaTextDetailType != SchemaTextDetailType.list;
   }
 
+  @Override
   public void handle(final ColumnDataType columnDataType)
     throws SchemaCrawlerException
   {
@@ -130,6 +131,7 @@ final class SchemaJsonFormatter
    * @param procedure
    *        Procedure metadata.
    */
+  @Override
   public void handle(final Procedure procedure)
   {
     try
@@ -173,6 +175,7 @@ final class SchemaJsonFormatter
    * @param table
    *        Table metadata.
    */
+  @Override
   public void handle(final Table table)
   {
     final JSONObject jsonTable = new JSONObject();
@@ -264,29 +267,35 @@ final class SchemaJsonFormatter
     }
   }
 
+  @Override
   public void handleColumnDataTypesEnd()
   {
   }
 
+  @Override
   public void handleColumnDataTypesStart()
   {
   }
 
+  @Override
   public void handleProceduresEnd()
     throws SchemaCrawlerException
   {
   }
 
+  @Override
   public void handleProceduresStart()
     throws SchemaCrawlerException
   {
   }
 
+  @Override
   public void handleTablesEnd()
     throws SchemaCrawlerException
   {
   }
 
+  @Override
   public void handleTablesStart()
     throws SchemaCrawlerException
   {

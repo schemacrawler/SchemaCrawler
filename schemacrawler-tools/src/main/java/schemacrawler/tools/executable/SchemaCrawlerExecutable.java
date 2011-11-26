@@ -31,8 +31,7 @@ public class SchemaCrawlerExecutable
     final List<Executable> executables = new ArrayList<Executable>();
     for (final String command: commands)
     {
-      final Executable executable = commandRegistry
-        .newExecutable(command);
+      final Executable executable = commandRegistry.newExecutable(command);
       executables.add(executable);
     }
 

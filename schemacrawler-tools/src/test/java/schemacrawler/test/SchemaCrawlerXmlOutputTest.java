@@ -54,6 +54,7 @@ public class SchemaCrawlerXmlOutputTest
     implements EntityResolver
   {
 
+    @Override
     public InputSource resolveEntity(final String publicId,
                                      final String systemId)
       throws SAXException, IOException

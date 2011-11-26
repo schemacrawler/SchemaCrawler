@@ -65,7 +65,7 @@ public class SchemaCrawlerDeepTest
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
 
     final Schema systemSchema = testDatabase.getSchema(schemaCrawlerOptions,
-                                                      "PUBLIC.SYSTEM_LOBS");
+                                                       "PUBLIC.SYSTEM_LOBS");
     assertNotNull("Could not obtain schema", systemSchema);
     assertTrue("Should not find any tables",
                systemSchema.getTables().length == 0);
@@ -74,7 +74,7 @@ public class SchemaCrawlerDeepTest
                  systemSchema.getProcedures().length);
 
     final Schema schema = testDatabase.getSchema(schemaCrawlerOptions,
-                                                "PUBLIC.BOOKS");
+                                                 "PUBLIC.BOOKS");
     assertNotNull("Could not obtain schema", schema);
     assertEquals("Could not find any tables", 6, schema.getTables().length);
     assertEquals("Wrong number of procedures", 1, schema.getProcedures().length);

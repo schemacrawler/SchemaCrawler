@@ -42,19 +42,19 @@ public class SchemaTraverser
     return database;
   }
 
-  public void setDatabase(Database database)
-  {
-    this.database = database;
-  }
-
   public SchemaTraversalHandler getFormatter()
   {
     return handler;
   }
 
-  public void setFormatter(SchemaTraversalHandler formatter)
+  public void setDatabase(final Database database)
   {
-    this.handler = formatter;
+    this.database = database;
+  }
+
+  public void setFormatter(final SchemaTraversalHandler formatter)
+  {
+    handler = formatter;
   }
 
   public final void traverse()

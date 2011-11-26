@@ -101,6 +101,234 @@ final class SchemaTextFormatter
     isList = schemaTextDetailType == SchemaTextDetailType.list;
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handle(schemacrawler.schema.ColumnDataType)
+   */
+  @Override
+  public void handle(final ColumnDataType columnDataType)
+    throws SchemaCrawlerException
+  {
+    if (printVerboseDatabaseInfo && isVerbose)
+    {
+      out.print(formattingHelper.createObjectStart(""));
+      printColumnDataType(columnDataType);
+      out.print(formattingHelper.createObjectEnd());
+    }
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handle(schemacrawler.schema.Procedure)
+   */
+  @Override
+  public void handle(final Procedure procedure)
+  {
+    final boolean underscore = isNotList;
+    final String procedureTypeDetail = "procedure, " + procedure.getType();
+    final String nameRow = formattingHelper.createNameRow(procedure
+      .getFullName(), "[" + procedureTypeDetail + "]", underscore);
+
+    if (isNotList)
+    {
+      out.print(formattingHelper.createObjectStart(""));
+    }
+
+    out.println(nameRow);
+
+    if (isNotList)
+    {
+      printProcedureColumns(procedure.getColumns());
+      printDefinition("definition", "", procedure.getDefinition());
+
+      if (isVerbose)
+      {
+        printDefinition("remarks", "", procedure.getRemarks());
+      }
+
+      out.println(formattingHelper.createObjectEnd());
+    }
+
+    out.flush();
+
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handle(schemacrawler.schema.Table)
+   */
+  @Override
+  public void handle(final Table table)
+  {
+    final boolean underscore = isNotList;
+    final String nameRow = formattingHelper.createNameRow(table.getFullName(),
+                                                          "[" + table.getType()
+                                                              + "]",
+                                                          underscore);
+
+    if (isNotList)
+    {
+      out.print(formattingHelper.createObjectStart(""));
+    }
+
+    out.println(nameRow);
+
+    if (isNotList)
+    {
+      final Column[] columns = table.getColumns();
+      printTableColumns(columns);
+
+      printPrimaryKey(table.getPrimaryKey());
+      printForeignKeys(table.getName(), table.getForeignKeys());
+      if (isVerbose)
+      {
+        printWeakAssociations(table);
+      }
+      printIndices(table.getIndices());
+      if (isVerbose)
+      {
+        printCheckConstraints(table.getCheckConstraints());
+        printPrivileges(table.getPrivileges());
+        printTriggers(table.getTriggers());
+      }
+      if (table instanceof View)
+      {
+        final View view = (View) table;
+        printDefinition("definition", "", view.getDefinition());
+      }
+      if (isVerbose)
+      {
+        final String tableRemarks = table.getRemarks();
+        boolean hasColumnRemarks = false;
+        for (final Column column: columns)
+        {
+          final String remarks = column.getRemarks();
+          if (!Utility.isBlank(remarks))
+          {
+            hasColumnRemarks = true;
+            break;
+          }
+        }
+
+        if (Utility.isBlank(tableRemarks) && hasColumnRemarks)
+        {
+          out.println(formattingHelper.createEmptyRow());
+          out.println(formattingHelper.createNameRow("", "[remarks]", false));
+        }
+        else
+        {
+          printDefinition("remarks", "", tableRemarks);
+        }
+        for (final Column column: columns)
+        {
+          final String remarks = column.getRemarks();
+          if (!Utility.isBlank(remarks))
+          {
+            out.println(formattingHelper.createDetailRow("",
+                                                         column.getName(),
+                                                         remarks));
+          }
+        }
+      }
+      out.println(formattingHelper.createObjectEnd());
+    }
+    out.flush();
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handleColumnDataTypesEnd()
+   */
+  @Override
+  public void handleColumnDataTypesEnd()
+  {
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handleColumnDataTypesStart()
+   */
+  @Override
+  public void handleColumnDataTypesStart()
+  {
+    if (printVerboseDatabaseInfo && isVerbose)
+    {
+      out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
+                                                "Data Types"));
+    }
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handleProceduresEnd()
+   */
+  @Override
+  public void handleProceduresEnd()
+    throws SchemaCrawlerException
+  {
+    if (isList)
+    {
+      out.print(formattingHelper.createObjectEnd());
+    }
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handleProceduresStart()
+   */
+  @Override
+  public void handleProceduresStart()
+    throws SchemaCrawlerException
+  {
+    out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
+                                              "Procedures"));
+
+    if (isList)
+    {
+      out.print(formattingHelper.createObjectStart(""));
+    }
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handleTablesEnd()
+   */
+  @Override
+  public void handleTablesEnd()
+    throws SchemaCrawlerException
+  {
+    if (isList)
+    {
+      out.print(formattingHelper.createObjectEnd());
+    }
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handleTablesStart()
+   */
+  @Override
+  public void handleTablesStart()
+    throws SchemaCrawlerException
+  {
+    out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
+                                              "Tables"));
+
+    if (isList)
+    {
+      out.print(formattingHelper.createObjectStart(""));
+    }
+  }
+
   private void printCheckConstraints(final CheckConstraint[] constraints)
   {
     for (final CheckConstraint constraint: constraints)
@@ -463,225 +691,6 @@ final class SchemaTextFormatter
                                                  "[weak association]",
                                                  false));
       printColumnPairs(tableName, weakAssociation);
-    }
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handle(schemacrawler.schema.ColumnDataType)
-   */
-  public void handle(final ColumnDataType columnDataType)
-    throws SchemaCrawlerException
-  {
-    if (printVerboseDatabaseInfo && isVerbose)
-    {
-      out.print(formattingHelper.createObjectStart(""));
-      printColumnDataType(columnDataType);
-      out.print(formattingHelper.createObjectEnd());
-    }
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handle(schemacrawler.schema.Procedure)
-   */
-  public void handle(final Procedure procedure)
-  {
-    final boolean underscore = isNotList;
-    final String procedureTypeDetail = "procedure, " + procedure.getType();
-    final String nameRow = formattingHelper.createNameRow(procedure
-      .getFullName(), "[" + procedureTypeDetail + "]", underscore);
-
-    if (isNotList)
-    {
-      out.print(formattingHelper.createObjectStart(""));
-    }
-
-    out.println(nameRow);
-
-    if (isNotList)
-    {
-      printProcedureColumns(procedure.getColumns());
-      printDefinition("definition", "", procedure.getDefinition());
-
-      if (isVerbose)
-      {
-        printDefinition("remarks", "", procedure.getRemarks());
-      }
-
-      out.println(formattingHelper.createObjectEnd());
-    }
-
-    out.flush();
-
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handle(schemacrawler.schema.Table)
-   */
-  public void handle(final Table table)
-  {
-    final boolean underscore = isNotList;
-    final String nameRow = formattingHelper.createNameRow(table.getFullName(),
-                                                          "[" + table.getType()
-                                                              + "]",
-                                                          underscore);
-
-    if (isNotList)
-    {
-      out.print(formattingHelper.createObjectStart(""));
-    }
-
-    out.println(nameRow);
-
-    if (isNotList)
-    {
-      final Column[] columns = table.getColumns();
-      printTableColumns(columns);
-
-      printPrimaryKey(table.getPrimaryKey());
-      printForeignKeys(table.getName(), table.getForeignKeys());
-      if (isVerbose)
-      {
-        printWeakAssociations(table);
-      }
-      printIndices(table.getIndices());
-      if (isVerbose)
-      {
-        printCheckConstraints(table.getCheckConstraints());
-        printPrivileges(table.getPrivileges());
-        printTriggers(table.getTriggers());
-      }
-      if (table instanceof View)
-      {
-        final View view = (View) table;
-        printDefinition("definition", "", view.getDefinition());
-      }
-      if (isVerbose)
-      {
-        final String tableRemarks = table.getRemarks();
-        boolean hasColumnRemarks = false;
-        for (final Column column: columns)
-        {
-          final String remarks = column.getRemarks();
-          if (!Utility.isBlank(remarks))
-          {
-            hasColumnRemarks = true;
-            break;
-          }
-        }
-
-        if (Utility.isBlank(tableRemarks) && hasColumnRemarks)
-        {
-          out.println(formattingHelper.createEmptyRow());
-          out.println(formattingHelper.createNameRow("", "[remarks]", false));
-        }
-        else
-        {
-          printDefinition("remarks", "", tableRemarks);
-        }
-        for (final Column column: columns)
-        {
-          final String remarks = column.getRemarks();
-          if (!Utility.isBlank(remarks))
-          {
-            out.println(formattingHelper.createDetailRow("",
-                                                         column.getName(),
-                                                         remarks));
-          }
-        }
-      }
-      out.println(formattingHelper.createObjectEnd());
-    }
-    out.flush();
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handleColumnDataTypesEnd()
-   */
-  public void handleColumnDataTypesEnd()
-  {
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handleColumnDataTypesStart()
-   */
-  public void handleColumnDataTypesStart()
-  {
-    if (printVerboseDatabaseInfo && isVerbose)
-    {
-      out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
-                                                "Data Types"));
-    }
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handleProceduresEnd()
-   */
-  public void handleProceduresEnd()
-    throws SchemaCrawlerException
-  {
-    if (isList)
-    {
-      out.print(formattingHelper.createObjectEnd());
-    }
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handleProceduresStart()
-   */
-  public void handleProceduresStart()
-    throws SchemaCrawlerException
-  {
-    out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
-                                              "Procedures"));
-
-    if (isList)
-    {
-      out.print(formattingHelper.createObjectStart(""));
-    }
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handleTablesEnd()
-   */
-  public void handleTablesEnd()
-    throws SchemaCrawlerException
-  {
-    if (isList)
-    {
-      out.print(formattingHelper.createObjectEnd());
-    }
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handleTablesStart()
-   */
-  public void handleTablesStart()
-    throws SchemaCrawlerException
-  {
-    out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
-                                              "Tables"));
-
-    if (isList)
-    {
-      out.print(formattingHelper.createObjectStart(""));
     }
   }
 

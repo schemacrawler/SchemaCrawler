@@ -68,8 +68,7 @@ public abstract class ExecutableChain
     try
     {
       final CommandRegistry commandRegistry = new CommandRegistry();
-      final Executable executable = commandRegistry
-        .newExecutable(command);
+      final Executable executable = commandRegistry.newExecutable(command);
 
       final OutputOptions outputOptions = new OutputOptions(outputFormat,
                                                             outputFile);

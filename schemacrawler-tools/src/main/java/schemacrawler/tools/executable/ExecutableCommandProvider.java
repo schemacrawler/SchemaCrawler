@@ -24,11 +24,13 @@ class ExecutableCommandProvider
     this.executableClassName = executableClassName;
   }
 
+  @Override
   public String getCommand()
   {
     return command;
   }
 
+  @Override
   public String getHelpResource()
   {
     final String helpResource = "/help/"
@@ -38,6 +40,7 @@ class ExecutableCommandProvider
     return helpResource;
   }
 
+  @Override
   public Executable newExecutable()
     throws SchemaCrawlerException
   {
