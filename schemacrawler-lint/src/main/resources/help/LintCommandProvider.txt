@@ -1,7 +1,7 @@
 --- Command ---
 
 -command=lint
-  Lints the database
+  Lints the database schema
   
 --- Output Options ---
 

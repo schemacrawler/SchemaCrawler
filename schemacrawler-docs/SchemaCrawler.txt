@@ -17,10 +17,10 @@ sc -host=192.168.153.139 -user=sa -password=sualeh -database=AdventureWorks -sch
 sc -host=192.168.153.139 -user=sa -password=sualeh -database=AdventureWorks -schemas=AdventureWorks\.(?:(?!sys).)* -infolevel=standard -procedures= -tables=.*\..*\.Product.* -command=schema -outputformat=html > ProductTables.html
 
  7. Plain text, detailed
-sc -host=192.168.153.139 -user=sa -password=sualeh -database=AdventureWorks -schemas=AdventureWorks.Production -procedures= -tables=AdventureWorks.Production.WorkOrder -noinfo -infolevel=lint -command=details
+sc -host=192.168.153.139 -user=sa -password=sualeh -database=AdventureWorks -schemas=AdventureWorks.Production -procedures= -tables=AdventureWorks.Production.WorkOrder -noinfo -infolevel=maximum -command=details
 
  8. Detailed plain text for a view
-sc -host=192.168.153.139 -user=sa -password=sualeh -database=AdventureWorks -schemas=AdventureWorks.Sales -procedures= -tables=AdventureWorks.Sales.vIndividualCustomer -noinfo -infolevel=lint -command=details
+sc -host=192.168.153.139 -user=sa -password=sualeh -database=AdventureWorks -schemas=AdventureWorks.Sales -procedures= -tables=AdventureWorks.Sales.vIndividualCustomer -noinfo -infolevel=maximum -command=details
 
  9. Counts
 sc -host=192.168.153.139 -user=sa -password=sualeh -database=AdventureWorks -schemas=AdventureWorks\.(?:(?!sys).)* -infolevel=minimum -procedures= -tables=.*\..*\.Product.* -command=count
@@ -35,7 +35,7 @@ sc -host=192.168.153.139 -user=sa -password=sualeh -database=AdventureWorks -sch
 sc -host=192.168.153.139 -user=sa -password=sualeh -database=AdventureWorks -schemas=AdventureWorks\.HumanResources -noinfo -infolevel=maximum -tables= -command=details
 
 13. Diagram
-sc -host=192.168.153.139 -user=sa -password=sualeh -database=AdventureWorks -schemas=AdventureWorks\.(?:(?!sys).)* -infolevel=lint -table_types=TABLE -procedures= -grepcolumns=.*\..*CustomerID -command=graph -outputformat=pdf
+sc -host=192.168.153.139 -user=sa -password=sualeh -database=AdventureWorks -schemas=AdventureWorks\.(?:(?!sys).)* -infolevel=maximum -table_types=TABLE -procedures= -grepcolumns=.*\..*CustomerID -command=graph -outputformat=pdf
 
 14. Javascript
 sc -host=192.168.153.139 -user=sa -password=sualeh -database=AdventureWorks -schemas=AdventureWorks\.(?:(?!sys).)* -tables=.*\..*\.Product.* -infolevel=standard -procedures= -command=script -outputformat=tables.js

@@ -10,7 +10,7 @@
 <stringAttribute key="org.eclipse.jdt.launching.CLASSPATH_PROVIDER" value="org.maven.ide.eclipse.launchconfig.classpathProvider"/>
 <stringAttribute key="org.eclipse.jdt.launching.JRE_CONTAINER" value="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="schemacrawler.tools.mysql.Main"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-host=10.0.0.2&#13;&#10;-database=books &#13;&#10;-user=root&#13;&#10;-password=sualeh&#13;&#10;-infolevel=lint&#13;&#10;-command=details"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-host=10.0.0.2&#13;&#10;-database=books &#13;&#10;-user=root&#13;&#10;-password=sualeh&#13;&#10;-infolevel=maximum&#13;&#10;-command=details"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="SchemaCrawler for MySQL"/>
 <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.maven.ide.eclipse.launchconfig.sourcepathProvider"/>
 <stringAttribute key="org.eclipse.jdt.launching.WORKING_DIRECTORY" value="${workspace_loc:SchemaCrawler - 2 - Tools/target}"/>
