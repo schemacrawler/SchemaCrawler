@@ -36,9 +36,9 @@ Tables
 ========================================================================
 
 
-PUBLIC.FOR_LINT.AUTHORS                                          [table]
-PUBLIC.FOR_LINT.BOOKS                                            [table]
 PUBLIC.FOR_LINT."Global Counts"                                  [table]
+PUBLIC.FOR_LINT.PUBLICATIONS                                     [table]
+PUBLIC.FOR_LINT.WRITERS                                          [table]
 
 
 
@@ -49,43 +49,15 @@ Row Count
 
 Row Count
 ------------------------------------------------------------------------
-PUBLIC.FOR_LINT.AUTHORS                                            empty
-PUBLIC.FOR_LINT.BOOKS                                              empty
 PUBLIC.FOR_LINT."Global Counts"                                    empty
+PUBLIC.FOR_LINT.PUBLICATIONS                                       empty
+PUBLIC.FOR_LINT.WRITERS                                            empty
 
 
 
 
 Tables
 ========================================================================
-
-
-PUBLIC.FOR_LINT.AUTHORS                                          [table]
-------------------------------------------------------------------------
-
-                                                            [lint, high]
-foreign key and primary key have different data types  FK_AUTHORS_BOOK
-redundant index                       IDX_A1_AUTHORS
-                                                          [lint, medium]
-incrementing columns                  PHONE1, PHONE2
-incrementing columns                  FAX, FAX3
-incrementing columns                  EMAIL1, EMAIL2
-incrementing columns                  ADDRESS1, ADDRESS2
-incrementing columns                  HOMEEMAIL11, HOMEEMAIL12
-incrementing columns are not consecutive  FAX, FAX3
-incrementing columns don't have the same data-type  PHONE1, PHONE2
-incrementing columns don't have the same data-type  FAX, FAX3
-incrementing columns don't have the same data-type  EMAIL1, EMAIL2
-unique index with nullable columns    IDX_U_AUTHORS
-column where NULL may be intended     ADDRESS2
-column where NULL may be intended     COUNTRY
-
-
-PUBLIC.FOR_LINT.BOOKS                                            [table]
-------------------------------------------------------------------------
-
-                                                          [lint, medium]
-spaces in name, or reserved word      "UPDATE"
 
 
 PUBLIC.FOR_LINT."Global Counts"                                  [table]
@@ -96,6 +68,36 @@ no indices
 spaces in name, or reserved word      "Global Counts"
 spaces in name, or reserved word      "Global Count"
 single column                         
+
+
+PUBLIC.FOR_LINT.PUBLICATIONS                                     [table]
+------------------------------------------------------------------------
+
+                                                          [lint, medium]
+spaces in name, or reserved word      "UPDATE"
+                                                             [lint, low]
+too many binary objects               "UPDATE", PRESS_RELEASE
+
+
+PUBLIC.FOR_LINT.WRITERS                                          [table]
+------------------------------------------------------------------------
+
+                                                            [lint, high]
+foreign key and primary key have different data types  FK_WRITERS_PUBLICATION
+redundant index                       IDX_A1_WRITERS
+                                                          [lint, medium]
+unique index with nullable columns    IDX_U_WRITERS
+column where NULL may be intended     ADDRESS2
+column where NULL may be intended     COUNTRY
+incrementing columns                  PHONE1, PHONE2
+incrementing columns                  FAX, FAX3
+incrementing columns                  EMAIL1, EMAIL2
+incrementing columns                  ADDRESS1, ADDRESS2
+incrementing columns                  HOMEEMAIL11, HOMEEMAIL12
+incrementing columns are not consecutive  FAX, FAX3
+incrementing columns don't have the same data-type  PHONE1, PHONE2
+incrementing columns don't have the same data-type  FAX, FAX3
+incrementing columns don't have the same data-type  EMAIL1, EMAIL2
 
 
 

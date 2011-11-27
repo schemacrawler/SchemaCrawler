@@ -1462,36 +1462,6 @@
       [
         "PUBLIC",
         "FOR_LINT",
-        "AUTHORS",
-        "TABLE",
-        "<null>",
-        "<null>",
-        "<null>",
-        "<null>",
-        "<null>",
-        "<null>",
-        "MEMORY",
-        "false",
-        "<null>"
-      ],
-      [
-        "PUBLIC",
-        "FOR_LINT",
-        "BOOKS",
-        "TABLE",
-        "<null>",
-        "<null>",
-        "<null>",
-        "<null>",
-        "<null>",
-        "<null>",
-        "MEMORY",
-        "false",
-        "<null>"
-      ],
-      [
-        "PUBLIC",
-        "FOR_LINT",
         "Global Counts",
         "TABLE",
         "<null>",
@@ -1508,6 +1478,36 @@
         "PUBLIC",
         "FOR_LINT",
         "No_Columns",
+        "TABLE",
+        "<null>",
+        "<null>",
+        "<null>",
+        "<null>",
+        "<null>",
+        "<null>",
+        "MEMORY",
+        "false",
+        "<null>"
+      ],
+      [
+        "PUBLIC",
+        "FOR_LINT",
+        "PUBLICATIONS",
+        "TABLE",
+        "<null>",
+        "<null>",
+        "<null>",
+        "<null>",
+        "<null>",
+        "<null>",
+        "MEMORY",
+        "false",
+        "<null>"
+      ],
+      [
+        "PUBLIC",
+        "FOR_LINT",
+        "WRITERS",
         "TABLE",
         "<null>",
         "<null>",
@@ -2271,7 +2271,24 @@
       ]
     },
     {
-      "title": "PUBLIC.FOR_LINT.AUTHORS",
+      "title": "PUBLIC.FOR_LINT.\"Global Counts\"",
+      "columnNames": ["Global Count"],
+      "rows": []
+    },
+    {
+      "title": "PUBLIC.FOR_LINT.PUBLICATIONS",
+      "columnNames": [
+        "ID",
+        "TITLE",
+        "DESCRIPTION",
+        "WRITERID",
+        "PUBLICATIONDATE",
+        "PRICE"
+      ],
+      "rows": []
+    },
+    {
+      "title": "PUBLIC.FOR_LINT.WRITERS",
       "columnNames": [
         "ID",
         "FIRSTNAME",
@@ -2290,25 +2307,8 @@
         "FAX3",
         "HOMEEMAIL11",
         "HOMEEMAIL12",
-        "BOOK_ID"
+        "PUBLICATION_ID"
       ],
-      "rows": []
-    },
-    {
-      "title": "PUBLIC.FOR_LINT.BOOKS",
-      "columnNames": [
-        "ID",
-        "TITLE",
-        "DESCRIPTION",
-        "AUTHORID",
-        "PUBLICATIONDATE",
-        "PRICE"
-      ],
-      "rows": []
-    },
-    {
-      "title": "PUBLIC.FOR_LINT.\"Global Counts\"",
-      "columnNames": ["Global Count"],
       "rows": []
     },
     {
@@ -2623,15 +2623,15 @@
       "value": 20
     },
     {
-      "title": "PUBLIC.FOR_LINT.AUTHORS",
-      "value": 0
-    },
-    {
-      "title": "PUBLIC.FOR_LINT.BOOKS",
-      "value": 0
-    },
-    {
       "title": "PUBLIC.FOR_LINT.\"Global Counts\"",
+      "value": 0
+    },
+    {
+      "title": "PUBLIC.FOR_LINT.PUBLICATIONS",
+      "value": 0
+    },
+    {
+      "title": "PUBLIC.FOR_LINT.WRITERS",
       "value": 0
     },
     {
@@ -2677,18 +2677,18 @@
       "type": "table"
     },
     {
-      "name": "AUTHORS",
-      "fullName": "PUBLIC.FOR_LINT.AUTHORS",
-      "type": "table"
-    },
-    {
-      "name": "BOOKS",
-      "fullName": "PUBLIC.FOR_LINT.BOOKS",
-      "type": "table"
-    },
-    {
       "name": "\"Global Counts\"",
       "fullName": "PUBLIC.FOR_LINT.\"Global Counts\"",
+      "type": "table"
+    },
+    {
+      "name": "PUBLICATIONS",
+      "fullName": "PUBLIC.FOR_LINT.PUBLICATIONS",
+      "type": "table"
+    },
+    {
+      "name": "WRITERS",
+      "fullName": "PUBLIC.FOR_LINT.WRITERS",
       "type": "table"
     },
     {

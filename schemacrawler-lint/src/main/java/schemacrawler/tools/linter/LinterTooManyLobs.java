@@ -23,14 +23,21 @@ package schemacrawler.tools.linter;
 import java.util.ArrayList;
 import java.util.List;
 
+import schemacrawler.crawl.JavaSqlType.JavaSqlTypeGroup;
+import schemacrawler.crawl.JavaSqlTypesUtility;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
-import sf.util.Utility;
+import schemacrawler.tools.lint.LintSeverity;
 
-public class LinterTableWithNullIntendedColumns
+public class LinterTooManyLobs
   extends BaseLinter
 {
+
+  public LinterTooManyLobs()
+  {
+    setLintSeverity(LintSeverity.low);
+  }
 
   @Override
   public String getDescription()
@@ -41,7 +48,7 @@ public class LinterTableWithNullIntendedColumns
   @Override
   public String getSummary()
   {
-    return "column where NULL may be intended";
+    return "too many binary objects";
   }
 
   @Override
@@ -52,27 +59,28 @@ public class LinterTableWithNullIntendedColumns
       throw new IllegalArgumentException("No table provided");
     }
 
-    final List<Column> nullDefaultValueMayBeIntendedColumns = findNullDefaultValueMayBeIntendedColumns(table
-      .getColumns());
-    for (final Column column: nullDefaultValueMayBeIntendedColumns)
+    final List<Column> lobColumns = findLobColumns(table.getColumns());
+    if (lobColumns.size() > 1)
     {
-      addLint(table, getSummary(), column);
+      final Column[] columns = lobColumns
+        .toArray(new Column[lobColumns.size()]);
+      addLint(table, getSummary(), columns);
     }
   }
 
-  private List<Column> findNullDefaultValueMayBeIntendedColumns(final Column[] columns)
+  private List<Column> findLobColumns(final Column[] columns)
   {
-    final List<Column> nullDefaultValueMayBeIntendedColumns = new ArrayList<Column>();
+    final List<Column> lobColumns = new ArrayList<Column>();
     for (final Column column: columns)
     {
-      final String columnDefaultValue = column.getDefaultValue();
-      if (!Utility.isBlank(columnDefaultValue)
-          && columnDefaultValue.trim().equalsIgnoreCase("NULL"))
+      final JavaSqlTypeGroup javaSqlTypeGroup = JavaSqlTypesUtility
+        .lookupSqlDataType(column.getType().getType()).getJavaSqlTypeGroup();
+      if (javaSqlTypeGroup == JavaSqlTypeGroup.large_object)
       {
-        nullDefaultValueMayBeIntendedColumns.add(column);
+        lobColumns.add(column);
       }
     }
-    return nullDefaultValueMayBeIntendedColumns;
+    return lobColumns;
   }
 
 }

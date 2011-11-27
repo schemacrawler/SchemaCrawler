@@ -105,11 +105,46 @@ SYS_IDX_PK_PUBLISHERS_10031                               [unique index]
 1   ID                                ascending                   
 
 
-PUBLIC.FOR_LINT.AUTHORS                                          [table]
+PUBLIC.FOR_LINT."Global Counts"                                  [table]
+------------------------------------------------------------------------
+1   "Global Count"                    INTEGER                     
+
+
+PUBLIC.FOR_LINT.No_Columns                                       [table]
+------------------------------------------------------------------------
+
+
+PUBLIC.FOR_LINT.PUBLICATIONS                                     [table]
+------------------------------------------------------------------------
+3   DESCRIPTION                       VARCHAR(255)                
+1   ID                                INTEGER not null            
+8   PRESS_RELEASE                     CLOB                        
+6   PRICE                             DOUBLE(64, 0)               
+5   PUBLICATIONDATE                   DATE                        
+2   TITLE                             VARCHAR(255) not null       
+7   "UPDATE"                          CLOB                        
+4   WRITERID                          INTEGER not null            
+
+PK_PUBLICATIONS                                            [primary key]
+1   ID                                ascending                   
+
+FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
+ 1  PUBLIC.FOR_LINT.WRITERS.ID --> WRITERID                              
+
+FK_WRITERS_PUBLICATION                     [foreign key, with no action]
+ 1  ID --> PUBLIC.FOR_LINT.WRITERS.PUBLICATION_ID                              
+
+SYS_IDX_10072                                         [non-unique index]
+4   WRITERID                          ascending                   
+
+SYS_IDX_PK_PUBLICATIONS_10071                             [unique index]
+1   ID                                ascending                   
+
+
+PUBLIC.FOR_LINT.WRITERS                                          [table]
 ------------------------------------------------------------------------
 4   ADDRESS1                          VARCHAR(255)                
 5   ADDRESS2                          VARCHAR(255) not null       
-18  BOOK_ID                           BIGINT not null             
 6   CITY                              VARCHAR(50)                 
 9   COUNTRY                           VARCHAR(50)                 
 12  EMAIL1                            VARCHAR(10)                 
@@ -124,75 +159,41 @@ PUBLIC.FOR_LINT.AUTHORS                                          [table]
 10  PHONE1                            VARCHAR(10)                 
 11  PHONE2                            VARCHAR(15)                 
 8   POSTALCODE                        VARCHAR(10)                 
+18  PUBLICATION_ID                    BIGINT not null             
 7   STATE                             VARCHAR(2)                  
 
-PK_AUTHORS                                                 [primary key]
+PK_WRITERS                                                 [primary key]
 1   ID                                ascending                   
 
-FK_AUTHORS_BOOK                            [foreign key, with no action]
- 1  PUBLIC.FOR_LINT.BOOKS.ID --> BOOK_ID                              
+FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
+ 1  ID --> PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID                              
 
-FK_BOOKS_AUTHOR                            [foreign key, with no action]
- 1  ID --> PUBLIC.FOR_LINT.BOOKS.AUTHORID                              
+FK_WRITERS_PUBLICATION                     [foreign key, with no action]
+ 1  PUBLIC.FOR_LINT.PUBLICATIONS.ID --> PUBLICATION_ID                              
 
-IDX_A1_AUTHORS                                        [non-unique index]
+IDX_A1_WRITERS                                        [non-unique index]
 6   CITY                              ascending                   
 7   STATE                             ascending                   
 
-IDX_A_AUTHORS                                         [non-unique index]
+IDX_A_WRITERS                                         [non-unique index]
 6   CITY                              ascending                   
 7   STATE                             ascending                   
 8   POSTALCODE                        ascending                   
 9   COUNTRY                           ascending                   
 
-IDX_B_AUTHORS                                         [non-unique index]
+IDX_B_WRITERS                                         [non-unique index]
 3   LASTNAME                          ascending                   
 2   FIRSTNAME                         ascending                   
 
-IDX_U_AUTHORS                                             [unique index]
+IDX_U_WRITERS                                             [unique index]
 12  EMAIL1                            ascending                   
 9   COUNTRY                           ascending                   
 
 SYS_IDX_10076                                         [non-unique index]
-18  BOOK_ID                           ascending                   
+18  PUBLICATION_ID                    ascending                   
 
-SYS_IDX_PK_AUTHORS_10067                                  [unique index]
+SYS_IDX_PK_WRITERS_10067                                  [unique index]
 1   ID                                ascending                   
-
-
-PUBLIC.FOR_LINT.BOOKS                                            [table]
-------------------------------------------------------------------------
-4   AUTHORID                          INTEGER not null            
-3   DESCRIPTION                       VARCHAR(255)                
-1   ID                                INTEGER not null            
-6   PRICE                             DOUBLE(64, 0)               
-5   PUBLICATIONDATE                   DATE                        
-2   TITLE                             VARCHAR(255) not null       
-7   "UPDATE"                          CLOB                        
-
-PK_BOOKS                                                   [primary key]
-1   ID                                ascending                   
-
-FK_AUTHORS_BOOK                            [foreign key, with no action]
- 1  ID --> PUBLIC.FOR_LINT.AUTHORS.BOOK_ID                              
-
-FK_BOOKS_AUTHOR                            [foreign key, with no action]
- 1  PUBLIC.FOR_LINT.AUTHORS.ID --> AUTHORID                              
-
-SYS_IDX_10072                                         [non-unique index]
-4   AUTHORID                          ascending                   
-
-SYS_IDX_PK_BOOKS_10071                                    [unique index]
-1   ID                                ascending                   
-
-
-PUBLIC.FOR_LINT."Global Counts"                                  [table]
-------------------------------------------------------------------------
-1   "Global Count"                    INTEGER                     
-
-
-PUBLIC.FOR_LINT.No_Columns                                       [table]
-------------------------------------------------------------------------
 
 
 PUBLIC."PUBLISHER SALES".REGIONS                                 [table]

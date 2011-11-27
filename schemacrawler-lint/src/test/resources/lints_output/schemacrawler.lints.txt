@@ -2,21 +2,22 @@
 [PUBLIC.FOR_LINT."Global Counts"] spaces in name, or reserved word: "Global Counts"
 [PUBLIC.FOR_LINT."Global Counts"] spaces in name, or reserved word: "Global Count"
 [PUBLIC.FOR_LINT."Global Counts"] single column
-[PUBLIC.FOR_LINT.AUTHORS] foreign key and primary key have different data types: FK_AUTHORS_BOOK
-[PUBLIC.FOR_LINT.AUTHORS] redundant index: IDX_A1_AUTHORS
-[PUBLIC.FOR_LINT.AUTHORS] incrementing columns: PHONE1, PHONE2
-[PUBLIC.FOR_LINT.AUTHORS] incrementing columns: FAX, FAX3
-[PUBLIC.FOR_LINT.AUTHORS] incrementing columns: EMAIL1, EMAIL2
-[PUBLIC.FOR_LINT.AUTHORS] incrementing columns: ADDRESS1, ADDRESS2
-[PUBLIC.FOR_LINT.AUTHORS] incrementing columns: HOMEEMAIL11, HOMEEMAIL12
-[PUBLIC.FOR_LINT.AUTHORS] incrementing columns are not consecutive: FAX, FAX3
-[PUBLIC.FOR_LINT.AUTHORS] incrementing columns don't have the same data-type: PHONE1, PHONE2
-[PUBLIC.FOR_LINT.AUTHORS] incrementing columns don't have the same data-type: FAX, FAX3
-[PUBLIC.FOR_LINT.AUTHORS] incrementing columns don't have the same data-type: EMAIL1, EMAIL2
-[PUBLIC.FOR_LINT.AUTHORS] unique index with nullable columns: IDX_U_AUTHORS
-[PUBLIC.FOR_LINT.AUTHORS] column where NULL may be intended: ADDRESS2
-[PUBLIC.FOR_LINT.AUTHORS] column where NULL may be intended: COUNTRY
-[PUBLIC.FOR_LINT.BOOKS] spaces in name, or reserved word: "UPDATE"
 [PUBLIC.FOR_LINT.No_Columns] no indices
 [PUBLIC.FOR_LINT.No_Columns] single column
+[PUBLIC.FOR_LINT.PUBLICATIONS] spaces in name, or reserved word: "UPDATE"
+[PUBLIC.FOR_LINT.PUBLICATIONS] too many binary objects: "UPDATE", PRESS_RELEASE
+[PUBLIC.FOR_LINT.WRITERS] foreign key and primary key have different data types: FK_WRITERS_PUBLICATION
+[PUBLIC.FOR_LINT.WRITERS] redundant index: IDX_A1_WRITERS
+[PUBLIC.FOR_LINT.WRITERS] unique index with nullable columns: IDX_U_WRITERS
+[PUBLIC.FOR_LINT.WRITERS] column where NULL may be intended: ADDRESS2
+[PUBLIC.FOR_LINT.WRITERS] column where NULL may be intended: COUNTRY
+[PUBLIC.FOR_LINT.WRITERS] incrementing columns: PHONE1, PHONE2
+[PUBLIC.FOR_LINT.WRITERS] incrementing columns: FAX, FAX3
+[PUBLIC.FOR_LINT.WRITERS] incrementing columns: EMAIL1, EMAIL2
+[PUBLIC.FOR_LINT.WRITERS] incrementing columns: ADDRESS1, ADDRESS2
+[PUBLIC.FOR_LINT.WRITERS] incrementing columns: HOMEEMAIL11, HOMEEMAIL12
+[PUBLIC.FOR_LINT.WRITERS] incrementing columns are not consecutive: FAX, FAX3
+[PUBLIC.FOR_LINT.WRITERS] incrementing columns don't have the same data-type: PHONE1, PHONE2
+[PUBLIC.FOR_LINT.WRITERS] incrementing columns don't have the same data-type: FAX, FAX3
+[PUBLIC.FOR_LINT.WRITERS] incrementing columns don't have the same data-type: EMAIL1, EMAIL2
 [database] cycles in table relationships

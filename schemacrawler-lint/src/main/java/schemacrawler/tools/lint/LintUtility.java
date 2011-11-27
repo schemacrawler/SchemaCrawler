@@ -32,7 +32,7 @@ import schemacrawler.schema.IndexColumn;
 public class LintUtility
 {
 
-  public static final List<String> columns(final ForeignKey foreignKey)
+  public static final List<String> foreignKeyColumns(final ForeignKey foreignKey)
   {
     if (foreignKey == null)
     {

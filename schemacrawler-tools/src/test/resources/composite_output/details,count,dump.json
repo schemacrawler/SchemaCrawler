@@ -2,10 +2,7 @@
 {
   "tables": [
     {
-      "weakAssociations": [{
-        "pkColumn": "PUBLIC.BOOKS.AUTHORS.ID",
-        "fkColumn": "PUBLIC.FOR_LINT.BOOKS.AUTHORID"
-      }],
+      "weakAssociations": [],
       "foreignKeys": [{
         "updateRule": "no action",
         "columnPairs": [{
@@ -356,16 +353,7 @@
       "type": "view"
     },
     {
-      "weakAssociations": [
-        {
-          "pkColumn": "PUBLIC.FOR_LINT.AUTHORS.ID",
-          "fkColumn": "PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID"
-        },
-        {
-          "pkColumn": "PUBLIC.FOR_LINT.BOOKS.ID",
-          "fkColumn": "PUBLIC.BOOKS.BOOKAUTHORS.BOOKID"
-        }
-      ],
+      "weakAssociations": [],
       "foreignKeys": [
         {
           "updateRule": "no action",
@@ -881,63 +869,343 @@
       "type": "table"
     },
     {
-      "weakAssociations": [{
-        "pkColumn": "PUBLIC.FOR_LINT.AUTHORS.ID",
-        "fkColumn": "PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID"
+      "weakAssociations": [],
+      "foreignKeys": [],
+      "primaryKey": {},
+      "name": "\"Global Counts\"",
+      "columns": [{
+        "dataType": "INTEGER",
+        "decimalDigits": 0,
+        "width": "",
+        "name": "\"Global Count\"",
+        "ordinal": 1,
+        "remarks": "",
+        "nullable": true,
+        "databaseSpecificType": "INTEGER",
+        "size": 32
       }],
+      "privileges": [
+        {
+          "name": "DELETE",
+          "grants": {
+            "grantable": true,
+            "grantor": "_SYSTEM",
+            "grantee": "DBA"
+          }
+        },
+        {
+          "name": "INSERT",
+          "grants": {
+            "grantable": true,
+            "grantor": "_SYSTEM",
+            "grantee": "DBA"
+          }
+        },
+        {
+          "name": "REFERENCES",
+          "grants": {
+            "grantable": true,
+            "grantor": "_SYSTEM",
+            "grantee": "DBA"
+          }
+        },
+        {
+          "name": "SELECT",
+          "grants": {
+            "grantable": true,
+            "grantor": "_SYSTEM",
+            "grantee": "DBA"
+          }
+        },
+        {
+          "name": "TRIGGER",
+          "grants": {
+            "grantable": true,
+            "grantor": "_SYSTEM",
+            "grantee": "DBA"
+          }
+        },
+        {
+          "name": "UPDATE",
+          "grants": {
+            "grantable": true,
+            "grantor": "_SYSTEM",
+            "grantee": "DBA"
+          }
+        }
+      ],
+      "indices": [],
+      "remarks": "",
+      "triggers": [],
+      "fullName": "PUBLIC.FOR_LINT.\"Global Counts\"",
+      "type": "table"
+    },
+    {
+      "weakAssociations": [],
       "foreignKeys": [
         {
           "updateRule": "no action",
           "columnPairs": [{
-            "pkColumn": "PUBLIC.FOR_LINT.AUTHORS.ID",
-            "fkColumn": "PUBLIC.FOR_LINT.BOOKS.AUTHORID"
+            "pkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.ID",
+            "fkColumn": "PUBLIC.FOR_LINT.WRITERS.PUBLICATION_ID"
           }],
           "deleteRule": "no action",
-          "name": "FK_BOOKS_AUTHOR"
+          "name": "FK_WRITERS_PUBLICATION"
         },
         {
           "updateRule": "no action",
           "columnPairs": [{
-            "pkColumn": "PUBLIC.FOR_LINT.BOOKS.ID",
-            "fkColumn": "PUBLIC.FOR_LINT.AUTHORS.BOOK_ID"
+            "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
+            "fkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID"
           }],
           "deleteRule": "no action",
-          "name": "FK_AUTHORS_BOOK"
+          "name": "FK_PUBLICATIONS_WRITER"
         }
       ],
       "primaryKey": {
         "unique": true,
-        "name": "PK_AUTHORS",
+        "name": "PK_PUBLICATIONS",
         "columns": {
           "sortSequence": "ascending",
           "name": "ID",
           "ordinal": 1
         }
       },
-      "name": "AUTHORS",
+      "name": "PUBLICATIONS",
       "constraints": [
         {
-          "definition": "FOR_LINT.AUTHORS.STATE=UPPER(FOR_LINT.AUTHORS.STATE)",
+          "definition": "FOR_LINT.PUBLICATIONS.ID IS NOT NULL",
+          "name": "SYS_CT_10068"
+        },
+        {
+          "definition": "FOR_LINT.PUBLICATIONS.TITLE IS NOT NULL",
+          "name": "SYS_CT_10069"
+        },
+        {
+          "definition": "FOR_LINT.PUBLICATIONS.WRITERID IS NOT NULL",
+          "name": "SYS_CT_10070"
+        }
+      ],
+      "columns": [
+        {
+          "dataType": "INTEGER",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "ID",
+          "ordinal": 1,
+          "remarks": "",
+          "nullable": false,
+          "databaseSpecificType": "INTEGER",
+          "size": 32
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(255)",
+          "name": "TITLE",
+          "ordinal": 2,
+          "remarks": "",
+          "nullable": false,
+          "databaseSpecificType": "VARCHAR",
+          "size": 255
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(255)",
+          "name": "DESCRIPTION",
+          "ordinal": 3,
+          "remarks": "",
+          "nullable": true,
+          "databaseSpecificType": "VARCHAR",
+          "size": 255
+        },
+        {
+          "dataType": "INTEGER",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "WRITERID",
+          "ordinal": 4,
+          "remarks": "",
+          "nullable": false,
+          "databaseSpecificType": "INTEGER",
+          "size": 32
+        },
+        {
+          "dataType": "DATE",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "PUBLICATIONDATE",
+          "ordinal": 5,
+          "remarks": "",
+          "nullable": true,
+          "databaseSpecificType": "DATE",
+          "size": 10
+        },
+        {
+          "dataType": "DOUBLE",
+          "decimalDigits": 0,
+          "width": "(64, 0)",
+          "name": "PRICE",
+          "ordinal": 6,
+          "remarks": "",
+          "nullable": true,
+          "databaseSpecificType": "DOUBLE",
+          "size": 64
+        },
+        {
+          "dataType": "CLOB",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "\"UPDATE\"",
+          "ordinal": 7,
+          "remarks": "",
+          "nullable": true,
+          "databaseSpecificType": "CLOB",
+          "size": 16777216
+        },
+        {
+          "dataType": "CLOB",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "PRESS_RELEASE",
+          "ordinal": 8,
+          "remarks": "",
+          "nullable": true,
+          "databaseSpecificType": "CLOB",
+          "size": 16777216
+        }
+      ],
+      "privileges": [
+        {
+          "name": "DELETE",
+          "grants": {
+            "grantable": true,
+            "grantor": "_SYSTEM",
+            "grantee": "DBA"
+          }
+        },
+        {
+          "name": "INSERT",
+          "grants": {
+            "grantable": true,
+            "grantor": "_SYSTEM",
+            "grantee": "DBA"
+          }
+        },
+        {
+          "name": "REFERENCES",
+          "grants": {
+            "grantable": true,
+            "grantor": "_SYSTEM",
+            "grantee": "DBA"
+          }
+        },
+        {
+          "name": "SELECT",
+          "grants": {
+            "grantable": true,
+            "grantor": "_SYSTEM",
+            "grantee": "DBA"
+          }
+        },
+        {
+          "name": "TRIGGER",
+          "grants": {
+            "grantable": true,
+            "grantor": "_SYSTEM",
+            "grantee": "DBA"
+          }
+        },
+        {
+          "name": "UPDATE",
+          "grants": {
+            "grantable": true,
+            "grantor": "_SYSTEM",
+            "grantee": "DBA"
+          }
+        }
+      ],
+      "indices": [
+        {
+          "unique": true,
+          "name": "SYS_IDX_PK_PUBLICATIONS_10071",
+          "columns": {
+            "sortSequence": "ascending",
+            "name": "ID",
+            "ordinal": 1
+          }
+        },
+        {
+          "unique": false,
+          "name": "SYS_IDX_10072",
+          "columns": {
+            "sortSequence": "ascending",
+            "name": "WRITERID",
+            "ordinal": 4
+          }
+        }
+      ],
+      "remarks": "",
+      "triggers": [],
+      "fullName": "PUBLIC.FOR_LINT.PUBLICATIONS",
+      "type": "table"
+    },
+    {
+      "weakAssociations": [],
+      "foreignKeys": [
+        {
+          "updateRule": "no action",
+          "columnPairs": [{
+            "pkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.ID",
+            "fkColumn": "PUBLIC.FOR_LINT.WRITERS.PUBLICATION_ID"
+          }],
+          "deleteRule": "no action",
+          "name": "FK_WRITERS_PUBLICATION"
+        },
+        {
+          "updateRule": "no action",
+          "columnPairs": [{
+            "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
+            "fkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID"
+          }],
+          "deleteRule": "no action",
+          "name": "FK_PUBLICATIONS_WRITER"
+        }
+      ],
+      "primaryKey": {
+        "unique": true,
+        "name": "PK_WRITERS",
+        "columns": {
+          "sortSequence": "ascending",
+          "name": "ID",
+          "ordinal": 1
+        }
+      },
+      "name": "WRITERS",
+      "constraints": [
+        {
+          "definition": "FOR_LINT.WRITERS.STATE=UPPER(FOR_LINT.WRITERS.STATE)",
           "name": "CHECK_UPPERCASE_STATE"
         },
         {
-          "definition": "FOR_LINT.AUTHORS.ID IS NOT NULL",
+          "definition": "FOR_LINT.WRITERS.ID IS NOT NULL",
           "name": "SYS_CT_10062"
         },
         {
-          "definition": "FOR_LINT.AUTHORS.FIRSTNAME IS NOT NULL",
+          "definition": "FOR_LINT.WRITERS.FIRSTNAME IS NOT NULL",
           "name": "SYS_CT_10063"
         },
         {
-          "definition": "FOR_LINT.AUTHORS.LASTNAME IS NOT NULL",
+          "definition": "FOR_LINT.WRITERS.LASTNAME IS NOT NULL",
           "name": "SYS_CT_10064"
         },
         {
-          "definition": "FOR_LINT.AUTHORS.ADDRESS2 IS NOT NULL",
+          "definition": "FOR_LINT.WRITERS.ADDRESS2 IS NOT NULL",
           "name": "SYS_CT_10065"
         },
         {
-          "definition": "FOR_LINT.AUTHORS.BOOK_ID IS NOT NULL",
+          "definition": "FOR_LINT.WRITERS.PUBLICATION_ID IS NOT NULL",
           "name": "SYS_CT_10066"
         }
       ],
@@ -1133,7 +1401,7 @@
           "dataType": "BIGINT",
           "decimalDigits": 0,
           "width": "",
-          "name": "BOOK_ID",
+          "name": "PUBLICATION_ID",
           "ordinal": 18,
           "remarks": "",
           "nullable": false,
@@ -1193,17 +1461,8 @@
       ],
       "indices": [
         {
-          "unique": false,
-          "name": "SYS_IDX_10076",
-          "columns": {
-            "sortSequence": "ascending",
-            "name": "BOOK_ID",
-            "ordinal": 18
-          }
-        },
-        {
           "unique": true,
-          "name": "SYS_IDX_PK_AUTHORS_10067",
+          "name": "SYS_IDX_PK_WRITERS_10067",
           "columns": {
             "sortSequence": "ascending",
             "name": "ID",
@@ -1212,7 +1471,16 @@
         },
         {
           "unique": false,
-          "name": "IDX_A1_AUTHORS",
+          "name": "SYS_IDX_10076",
+          "columns": {
+            "sortSequence": "ascending",
+            "name": "PUBLICATION_ID",
+            "ordinal": 18
+          }
+        },
+        {
+          "unique": false,
+          "name": "IDX_A1_WRITERS",
           "columns": [
             {
               "sortSequence": "ascending",
@@ -1228,7 +1496,7 @@
         },
         {
           "unique": true,
-          "name": "IDX_U_AUTHORS",
+          "name": "IDX_U_WRITERS",
           "columns": [
             {
               "sortSequence": "ascending",
@@ -1244,7 +1512,7 @@
         },
         {
           "unique": false,
-          "name": "IDX_B_AUTHORS",
+          "name": "IDX_B_WRITERS",
           "columns": [
             {
               "sortSequence": "ascending",
@@ -1260,7 +1528,7 @@
         },
         {
           "unique": false,
-          "name": "IDX_A_AUTHORS",
+          "name": "IDX_A_WRITERS",
           "columns": [
             {
               "sortSequence": "ascending",
@@ -1287,292 +1555,7 @@
       ],
       "remarks": "",
       "triggers": [],
-      "fullName": "PUBLIC.FOR_LINT.AUTHORS",
-      "type": "table"
-    },
-    {
-      "weakAssociations": [
-        {
-          "pkColumn": "PUBLIC.BOOKS.AUTHORS.ID",
-          "fkColumn": "PUBLIC.FOR_LINT.BOOKS.AUTHORID"
-        },
-        {
-          "pkColumn": "PUBLIC.FOR_LINT.BOOKS.ID",
-          "fkColumn": "PUBLIC.BOOKS.BOOKAUTHORS.BOOKID"
-        },
-        {
-          "pkColumn": "PUBLIC.FOR_LINT.BOOKS.ID",
-          "fkColumn": "PUBLIC.\"PUBLISHER SALES\".SALES.BOOKID"
-        }
-      ],
-      "foreignKeys": [
-        {
-          "updateRule": "no action",
-          "columnPairs": [{
-            "pkColumn": "PUBLIC.FOR_LINT.AUTHORS.ID",
-            "fkColumn": "PUBLIC.FOR_LINT.BOOKS.AUTHORID"
-          }],
-          "deleteRule": "no action",
-          "name": "FK_BOOKS_AUTHOR"
-        },
-        {
-          "updateRule": "no action",
-          "columnPairs": [{
-            "pkColumn": "PUBLIC.FOR_LINT.BOOKS.ID",
-            "fkColumn": "PUBLIC.FOR_LINT.AUTHORS.BOOK_ID"
-          }],
-          "deleteRule": "no action",
-          "name": "FK_AUTHORS_BOOK"
-        }
-      ],
-      "primaryKey": {
-        "unique": true,
-        "name": "PK_BOOKS",
-        "columns": {
-          "sortSequence": "ascending",
-          "name": "ID",
-          "ordinal": 1
-        }
-      },
-      "name": "BOOKS",
-      "constraints": [
-        {
-          "definition": "FOR_LINT.BOOKS.ID IS NOT NULL",
-          "name": "SYS_CT_10068"
-        },
-        {
-          "definition": "FOR_LINT.BOOKS.TITLE IS NOT NULL",
-          "name": "SYS_CT_10069"
-        },
-        {
-          "definition": "FOR_LINT.BOOKS.AUTHORID IS NOT NULL",
-          "name": "SYS_CT_10070"
-        }
-      ],
-      "columns": [
-        {
-          "dataType": "INTEGER",
-          "decimalDigits": 0,
-          "width": "",
-          "name": "ID",
-          "ordinal": 1,
-          "remarks": "",
-          "nullable": false,
-          "databaseSpecificType": "INTEGER",
-          "size": 32
-        },
-        {
-          "dataType": "VARCHAR",
-          "decimalDigits": 0,
-          "width": "(255)",
-          "name": "TITLE",
-          "ordinal": 2,
-          "remarks": "",
-          "nullable": false,
-          "databaseSpecificType": "VARCHAR",
-          "size": 255
-        },
-        {
-          "dataType": "VARCHAR",
-          "decimalDigits": 0,
-          "width": "(255)",
-          "name": "DESCRIPTION",
-          "ordinal": 3,
-          "remarks": "",
-          "nullable": true,
-          "databaseSpecificType": "VARCHAR",
-          "size": 255
-        },
-        {
-          "dataType": "INTEGER",
-          "decimalDigits": 0,
-          "width": "",
-          "name": "AUTHORID",
-          "ordinal": 4,
-          "remarks": "",
-          "nullable": false,
-          "databaseSpecificType": "INTEGER",
-          "size": 32
-        },
-        {
-          "dataType": "DATE",
-          "decimalDigits": 0,
-          "width": "",
-          "name": "PUBLICATIONDATE",
-          "ordinal": 5,
-          "remarks": "",
-          "nullable": true,
-          "databaseSpecificType": "DATE",
-          "size": 10
-        },
-        {
-          "dataType": "DOUBLE",
-          "decimalDigits": 0,
-          "width": "(64, 0)",
-          "name": "PRICE",
-          "ordinal": 6,
-          "remarks": "",
-          "nullable": true,
-          "databaseSpecificType": "DOUBLE",
-          "size": 64
-        },
-        {
-          "dataType": "CLOB",
-          "decimalDigits": 0,
-          "width": "",
-          "name": "\"UPDATE\"",
-          "ordinal": 7,
-          "remarks": "",
-          "nullable": true,
-          "databaseSpecificType": "CLOB",
-          "size": 16777216
-        }
-      ],
-      "privileges": [
-        {
-          "name": "DELETE",
-          "grants": {
-            "grantable": true,
-            "grantor": "_SYSTEM",
-            "grantee": "DBA"
-          }
-        },
-        {
-          "name": "INSERT",
-          "grants": {
-            "grantable": true,
-            "grantor": "_SYSTEM",
-            "grantee": "DBA"
-          }
-        },
-        {
-          "name": "REFERENCES",
-          "grants": {
-            "grantable": true,
-            "grantor": "_SYSTEM",
-            "grantee": "DBA"
-          }
-        },
-        {
-          "name": "SELECT",
-          "grants": {
-            "grantable": true,
-            "grantor": "_SYSTEM",
-            "grantee": "DBA"
-          }
-        },
-        {
-          "name": "TRIGGER",
-          "grants": {
-            "grantable": true,
-            "grantor": "_SYSTEM",
-            "grantee": "DBA"
-          }
-        },
-        {
-          "name": "UPDATE",
-          "grants": {
-            "grantable": true,
-            "grantor": "_SYSTEM",
-            "grantee": "DBA"
-          }
-        }
-      ],
-      "indices": [
-        {
-          "unique": false,
-          "name": "SYS_IDX_10072",
-          "columns": {
-            "sortSequence": "ascending",
-            "name": "AUTHORID",
-            "ordinal": 4
-          }
-        },
-        {
-          "unique": true,
-          "name": "SYS_IDX_PK_BOOKS_10071",
-          "columns": {
-            "sortSequence": "ascending",
-            "name": "ID",
-            "ordinal": 1
-          }
-        }
-      ],
-      "remarks": "",
-      "triggers": [],
-      "fullName": "PUBLIC.FOR_LINT.BOOKS",
-      "type": "table"
-    },
-    {
-      "weakAssociations": [],
-      "foreignKeys": [],
-      "primaryKey": {},
-      "name": "\"Global Counts\"",
-      "columns": [{
-        "dataType": "INTEGER",
-        "decimalDigits": 0,
-        "width": "",
-        "name": "\"Global Count\"",
-        "ordinal": 1,
-        "remarks": "",
-        "nullable": true,
-        "databaseSpecificType": "INTEGER",
-        "size": 32
-      }],
-      "privileges": [
-        {
-          "name": "DELETE",
-          "grants": {
-            "grantable": true,
-            "grantor": "_SYSTEM",
-            "grantee": "DBA"
-          }
-        },
-        {
-          "name": "INSERT",
-          "grants": {
-            "grantable": true,
-            "grantor": "_SYSTEM",
-            "grantee": "DBA"
-          }
-        },
-        {
-          "name": "REFERENCES",
-          "grants": {
-            "grantable": true,
-            "grantor": "_SYSTEM",
-            "grantee": "DBA"
-          }
-        },
-        {
-          "name": "SELECT",
-          "grants": {
-            "grantable": true,
-            "grantor": "_SYSTEM",
-            "grantee": "DBA"
-          }
-        },
-        {
-          "name": "TRIGGER",
-          "grants": {
-            "grantable": true,
-            "grantor": "_SYSTEM",
-            "grantee": "DBA"
-          }
-        },
-        {
-          "name": "UPDATE",
-          "grants": {
-            "grantable": true,
-            "grantor": "_SYSTEM",
-            "grantee": "DBA"
-          }
-        }
-      ],
-      "indices": [],
-      "remarks": "",
-      "triggers": [],
-      "fullName": "PUBLIC.FOR_LINT.\"Global Counts\"",
+      "fullName": "PUBLIC.FOR_LINT.WRITERS",
       "type": "table"
     },
     {
@@ -1745,16 +1728,10 @@
       "type": "table"
     },
     {
-      "weakAssociations": [
-        {
-          "pkColumn": "PUBLIC.BOOKS.BOOKS.ID",
-          "fkColumn": "PUBLIC.\"PUBLISHER SALES\".SALES.BOOKID"
-        },
-        {
-          "pkColumn": "PUBLIC.FOR_LINT.BOOKS.ID",
-          "fkColumn": "PUBLIC.\"PUBLISHER SALES\".SALES.BOOKID"
-        }
-      ],
+      "weakAssociations": [{
+        "pkColumn": "PUBLIC.BOOKS.BOOKS.ID",
+        "fkColumn": "PUBLIC.\"PUBLISHER SALES\".SALES.BOOKID"
+      }],
       "foreignKeys": [{
         "updateRule": "no action",
         "columnPairs": [
@@ -3373,15 +3350,15 @@
       "value": 20
     },
     {
-      "title": "PUBLIC.FOR_LINT.AUTHORS",
-      "value": 0
-    },
-    {
-      "title": "PUBLIC.FOR_LINT.BOOKS",
-      "value": 0
-    },
-    {
       "title": "PUBLIC.FOR_LINT.\"Global Counts\"",
+      "value": 0
+    },
+    {
+      "title": "PUBLIC.FOR_LINT.PUBLICATIONS",
+      "value": 0
+    },
+    {
+      "title": "PUBLIC.FOR_LINT.WRITERS",
       "value": 0
     },
     {
@@ -4121,7 +4098,26 @@
       ]
     },
     {
-      "title": "PUBLIC.FOR_LINT.AUTHORS",
+      "title": "PUBLIC.FOR_LINT.\"Global Counts\"",
+      "columnNames": ["Global Count"],
+      "rows": []
+    },
+    {
+      "title": "PUBLIC.FOR_LINT.PUBLICATIONS",
+      "columnNames": [
+        "ID",
+        "TITLE",
+        "DESCRIPTION",
+        "WRITERID",
+        "PUBLICATIONDATE",
+        "PRICE",
+        "UPDATE",
+        "PRESS_RELEASE"
+      ],
+      "rows": []
+    },
+    {
+      "title": "PUBLIC.FOR_LINT.WRITERS",
       "columnNames": [
         "ID",
         "FIRSTNAME",
@@ -4140,26 +4136,8 @@
         "FAX3",
         "HOMEEMAIL11",
         "HOMEEMAIL12",
-        "BOOK_ID"
+        "PUBLICATION_ID"
       ],
-      "rows": []
-    },
-    {
-      "title": "PUBLIC.FOR_LINT.BOOKS",
-      "columnNames": [
-        "ID",
-        "TITLE",
-        "DESCRIPTION",
-        "AUTHORID",
-        "PUBLICATIONDATE",
-        "PRICE",
-        "UPDATE"
-      ],
-      "rows": []
-    },
-    {
-      "title": "PUBLIC.FOR_LINT.\"Global Counts\"",
-      "columnNames": ["Global Count"],
       "rows": []
     },
     {

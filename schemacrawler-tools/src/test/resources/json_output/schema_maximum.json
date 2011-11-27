@@ -463,36 +463,190 @@
       "type": "table"
     },
     {
+      "foreignKeys": [],
+      "primaryKey": {},
+      "name": "\"Global Counts\"",
+      "columns": [{
+        "dataType": "INTEGER",
+        "decimalDigits": 0,
+        "width": "",
+        "name": "\"Global Count\"",
+        "ordinal": 1,
+        "nullable": true,
+        "databaseSpecificType": "INTEGER",
+        "size": 32
+      }],
+      "indices": [],
+      "fullName": "PUBLIC.FOR_LINT.\"Global Counts\"",
+      "type": "table"
+    },
+    {
       "foreignKeys": [
         {
           "updateRule": "no action",
           "columnPairs": [{
-            "pkColumn": "PUBLIC.FOR_LINT.AUTHORS.ID",
-            "fkColumn": "PUBLIC.FOR_LINT.BOOKS.AUTHORID"
+            "pkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.ID",
+            "fkColumn": "PUBLIC.FOR_LINT.WRITERS.PUBLICATION_ID"
           }],
           "deleteRule": "no action",
-          "name": "FK_BOOKS_AUTHOR"
+          "name": "FK_WRITERS_PUBLICATION"
         },
         {
           "updateRule": "no action",
           "columnPairs": [{
-            "pkColumn": "PUBLIC.FOR_LINT.BOOKS.ID",
-            "fkColumn": "PUBLIC.FOR_LINT.AUTHORS.BOOK_ID"
+            "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
+            "fkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID"
           }],
           "deleteRule": "no action",
-          "name": "FK_AUTHORS_BOOK"
+          "name": "FK_PUBLICATIONS_WRITER"
         }
       ],
       "primaryKey": {
         "unique": true,
-        "name": "PK_AUTHORS",
+        "name": "PK_PUBLICATIONS",
         "columns": {
           "sortSequence": "ascending",
           "name": "ID",
           "ordinal": 1
         }
       },
-      "name": "AUTHORS",
+      "name": "PUBLICATIONS",
+      "columns": [
+        {
+          "dataType": "INTEGER",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "ID",
+          "ordinal": 1,
+          "nullable": false,
+          "databaseSpecificType": "INTEGER",
+          "size": 32
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(255)",
+          "name": "TITLE",
+          "ordinal": 2,
+          "nullable": false,
+          "databaseSpecificType": "VARCHAR",
+          "size": 255
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(255)",
+          "name": "DESCRIPTION",
+          "ordinal": 3,
+          "nullable": true,
+          "databaseSpecificType": "VARCHAR",
+          "size": 255
+        },
+        {
+          "dataType": "INTEGER",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "WRITERID",
+          "ordinal": 4,
+          "nullable": false,
+          "databaseSpecificType": "INTEGER",
+          "size": 32
+        },
+        {
+          "dataType": "DATE",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "PUBLICATIONDATE",
+          "ordinal": 5,
+          "nullable": true,
+          "databaseSpecificType": "DATE",
+          "size": 10
+        },
+        {
+          "dataType": "DOUBLE",
+          "decimalDigits": 0,
+          "width": "(64, 0)",
+          "name": "PRICE",
+          "ordinal": 6,
+          "nullable": true,
+          "databaseSpecificType": "DOUBLE",
+          "size": 64
+        },
+        {
+          "dataType": "CLOB",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "\"UPDATE\"",
+          "ordinal": 7,
+          "nullable": true,
+          "databaseSpecificType": "CLOB",
+          "size": 16777216
+        },
+        {
+          "dataType": "CLOB",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "PRESS_RELEASE",
+          "ordinal": 8,
+          "nullable": true,
+          "databaseSpecificType": "CLOB",
+          "size": 16777216
+        }
+      ],
+      "indices": [
+        {
+          "unique": true,
+          "name": "SYS_IDX_PK_PUBLICATIONS_10071",
+          "columns": {
+            "sortSequence": "ascending",
+            "name": "ID",
+            "ordinal": 1
+          }
+        },
+        {
+          "unique": false,
+          "name": "SYS_IDX_10072",
+          "columns": {
+            "sortSequence": "ascending",
+            "name": "WRITERID",
+            "ordinal": 4
+          }
+        }
+      ],
+      "fullName": "PUBLIC.FOR_LINT.PUBLICATIONS",
+      "type": "table"
+    },
+    {
+      "foreignKeys": [
+        {
+          "updateRule": "no action",
+          "columnPairs": [{
+            "pkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.ID",
+            "fkColumn": "PUBLIC.FOR_LINT.WRITERS.PUBLICATION_ID"
+          }],
+          "deleteRule": "no action",
+          "name": "FK_WRITERS_PUBLICATION"
+        },
+        {
+          "updateRule": "no action",
+          "columnPairs": [{
+            "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
+            "fkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID"
+          }],
+          "deleteRule": "no action",
+          "name": "FK_PUBLICATIONS_WRITER"
+        }
+      ],
+      "primaryKey": {
+        "unique": true,
+        "name": "PK_WRITERS",
+        "columns": {
+          "sortSequence": "ascending",
+          "name": "ID",
+          "ordinal": 1
+        }
+      },
+      "name": "WRITERS",
       "columns": [
         {
           "dataType": "INTEGER",
@@ -668,7 +822,7 @@
           "dataType": "BIGINT",
           "decimalDigits": 0,
           "width": "",
-          "name": "BOOK_ID",
+          "name": "PUBLICATION_ID",
           "ordinal": 18,
           "nullable": false,
           "databaseSpecificType": "BIGINT",
@@ -677,17 +831,8 @@
       ],
       "indices": [
         {
-          "unique": false,
-          "name": "SYS_IDX_10076",
-          "columns": {
-            "sortSequence": "ascending",
-            "name": "BOOK_ID",
-            "ordinal": 18
-          }
-        },
-        {
           "unique": true,
-          "name": "SYS_IDX_PK_AUTHORS_10067",
+          "name": "SYS_IDX_PK_WRITERS_10067",
           "columns": {
             "sortSequence": "ascending",
             "name": "ID",
@@ -696,7 +841,16 @@
         },
         {
           "unique": false,
-          "name": "IDX_A1_AUTHORS",
+          "name": "SYS_IDX_10076",
+          "columns": {
+            "sortSequence": "ascending",
+            "name": "PUBLICATION_ID",
+            "ordinal": 18
+          }
+        },
+        {
+          "unique": false,
+          "name": "IDX_A1_WRITERS",
           "columns": [
             {
               "sortSequence": "ascending",
@@ -712,7 +866,7 @@
         },
         {
           "unique": true,
-          "name": "IDX_U_AUTHORS",
+          "name": "IDX_U_WRITERS",
           "columns": [
             {
               "sortSequence": "ascending",
@@ -728,7 +882,7 @@
         },
         {
           "unique": false,
-          "name": "IDX_B_AUTHORS",
+          "name": "IDX_B_WRITERS",
           "columns": [
             {
               "sortSequence": "ascending",
@@ -744,7 +898,7 @@
         },
         {
           "unique": false,
-          "name": "IDX_A_AUTHORS",
+          "name": "IDX_A_WRITERS",
           "columns": [
             {
               "sortSequence": "ascending",
@@ -769,151 +923,7 @@
           ]
         }
       ],
-      "fullName": "PUBLIC.FOR_LINT.AUTHORS",
-      "type": "table"
-    },
-    {
-      "foreignKeys": [
-        {
-          "updateRule": "no action",
-          "columnPairs": [{
-            "pkColumn": "PUBLIC.FOR_LINT.AUTHORS.ID",
-            "fkColumn": "PUBLIC.FOR_LINT.BOOKS.AUTHORID"
-          }],
-          "deleteRule": "no action",
-          "name": "FK_BOOKS_AUTHOR"
-        },
-        {
-          "updateRule": "no action",
-          "columnPairs": [{
-            "pkColumn": "PUBLIC.FOR_LINT.BOOKS.ID",
-            "fkColumn": "PUBLIC.FOR_LINT.AUTHORS.BOOK_ID"
-          }],
-          "deleteRule": "no action",
-          "name": "FK_AUTHORS_BOOK"
-        }
-      ],
-      "primaryKey": {
-        "unique": true,
-        "name": "PK_BOOKS",
-        "columns": {
-          "sortSequence": "ascending",
-          "name": "ID",
-          "ordinal": 1
-        }
-      },
-      "name": "BOOKS",
-      "columns": [
-        {
-          "dataType": "INTEGER",
-          "decimalDigits": 0,
-          "width": "",
-          "name": "ID",
-          "ordinal": 1,
-          "nullable": false,
-          "databaseSpecificType": "INTEGER",
-          "size": 32
-        },
-        {
-          "dataType": "VARCHAR",
-          "decimalDigits": 0,
-          "width": "(255)",
-          "name": "TITLE",
-          "ordinal": 2,
-          "nullable": false,
-          "databaseSpecificType": "VARCHAR",
-          "size": 255
-        },
-        {
-          "dataType": "VARCHAR",
-          "decimalDigits": 0,
-          "width": "(255)",
-          "name": "DESCRIPTION",
-          "ordinal": 3,
-          "nullable": true,
-          "databaseSpecificType": "VARCHAR",
-          "size": 255
-        },
-        {
-          "dataType": "INTEGER",
-          "decimalDigits": 0,
-          "width": "",
-          "name": "AUTHORID",
-          "ordinal": 4,
-          "nullable": false,
-          "databaseSpecificType": "INTEGER",
-          "size": 32
-        },
-        {
-          "dataType": "DATE",
-          "decimalDigits": 0,
-          "width": "",
-          "name": "PUBLICATIONDATE",
-          "ordinal": 5,
-          "nullable": true,
-          "databaseSpecificType": "DATE",
-          "size": 10
-        },
-        {
-          "dataType": "DOUBLE",
-          "decimalDigits": 0,
-          "width": "(64, 0)",
-          "name": "PRICE",
-          "ordinal": 6,
-          "nullable": true,
-          "databaseSpecificType": "DOUBLE",
-          "size": 64
-        },
-        {
-          "dataType": "CLOB",
-          "decimalDigits": 0,
-          "width": "",
-          "name": "\"UPDATE\"",
-          "ordinal": 7,
-          "nullable": true,
-          "databaseSpecificType": "CLOB",
-          "size": 16777216
-        }
-      ],
-      "indices": [
-        {
-          "unique": false,
-          "name": "SYS_IDX_10072",
-          "columns": {
-            "sortSequence": "ascending",
-            "name": "AUTHORID",
-            "ordinal": 4
-          }
-        },
-        {
-          "unique": true,
-          "name": "SYS_IDX_PK_BOOKS_10071",
-          "columns": {
-            "sortSequence": "ascending",
-            "name": "ID",
-            "ordinal": 1
-          }
-        }
-      ],
-      "fullName": "PUBLIC.FOR_LINT.BOOKS",
-      "type": "table"
-    },
-    {
-      "foreignKeys": [],
-      "primaryKey": {},
-      "name": "\"Global Counts\"",
-      "columns": [{
-        "dataType": "INTEGER",
-        "decimalDigits": 0,
-        "width": "",
-        "name": "\"Global Count\"",
-        "ordinal": 1,
-        "nullable": true,
-        "databaseSpecificType": "INTEGER",
-        "size": 32
-      }],
-      "indices": [],
-      "fullName": "PUBLIC.FOR_LINT.\"Global Counts\"",
+      "fullName": "PUBLIC.FOR_LINT.WRITERS",
       "type": "table"
     },
     {

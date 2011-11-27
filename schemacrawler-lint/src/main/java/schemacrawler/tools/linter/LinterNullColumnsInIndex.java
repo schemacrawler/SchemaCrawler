@@ -23,22 +23,14 @@ package schemacrawler.tools.linter;
 import java.util.ArrayList;
 import java.util.List;
 
-import schemacrawler.schema.Column;
-import schemacrawler.schema.ForeignKey;
-import schemacrawler.schema.ForeignKeyColumnMap;
+import schemacrawler.schema.Index;
+import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.Table;
-import schemacrawler.schema.View;
 import schemacrawler.tools.lint.BaseLinter;
-import schemacrawler.tools.lint.LintSeverity;
 
-public class LinterTableForeignKeyMismatch
+public class LinterNullColumnsInIndex
   extends BaseLinter
 {
-
-  public LinterTableForeignKeyMismatch()
-  {
-    setLintSeverity(LintSeverity.high);
-  }
 
   @Override
   public String getDescription()
@@ -49,7 +41,7 @@ public class LinterTableForeignKeyMismatch
   @Override
   public String getSummary()
   {
-    return "foreign key and primary key have different data types";
+    return "unique index with nullable columns";
   }
 
   @Override
@@ -60,35 +52,33 @@ public class LinterTableForeignKeyMismatch
       throw new IllegalArgumentException("No table provided");
     }
 
-    final List<ForeignKey> mismatchedForeignKeys = findMismatchedForeignKeys(table);
-    for (final ForeignKey foreignKey: mismatchedForeignKeys)
+    final List<Index> nullableColumnsInUniqueIndex = findNullableColumnsInUniqueIndex(table
+      .getIndices());
+    for (final Index index: nullableColumnsInUniqueIndex)
     {
-      addLint(table, getSummary(), foreignKey);
+      addLint(table, getSummary(), index);
     }
   }
 
-  private List<ForeignKey> findMismatchedForeignKeys(final Table table)
+  private List<Index> findNullableColumnsInUniqueIndex(final Index[] indices)
   {
-    final List<ForeignKey> mismatchedForeignKeys = new ArrayList<ForeignKey>();
-    if (table != null && !(table instanceof View))
+    final List<Index> nullableColumnsInUniqueIndex = new ArrayList<Index>();
+    for (final Index index: indices)
     {
-      final ForeignKey[] importedForeignKeys = table.getImportedForeignKeys();
-      for (final ForeignKey foreignKey: importedForeignKeys)
+      if (index.isUnique())
       {
-        final ForeignKeyColumnMap[] columnPairs = foreignKey.getColumnPairs();
-        for (final ForeignKeyColumnMap columnPair: columnPairs)
+        final IndexColumn[] indexColumns = index.getColumns();
+        for (final IndexColumn indexColumn: indexColumns)
         {
-          final Column pkColumn = columnPair.getPrimaryKeyColumn();
-          final Column fkColumn = columnPair.getForeignKeyColumn();
-          if (!pkColumn.getType().equals(fkColumn.getType())
-              || pkColumn.getSize() != fkColumn.getSize())
+          if (indexColumn.isNullable())
           {
-            mismatchedForeignKeys.add(foreignKey);
+            nullableColumnsInUniqueIndex.add(index);
             break;
           }
         }
       }
     }
-    return mismatchedForeignKeys;
+    return nullableColumnsInUniqueIndex;
   }
+
 }
