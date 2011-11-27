@@ -1,0 +1,366 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+  <title>SchemaCrawler Output</title>
+  <style type='text/css'>
+.underscore {
+	color: #950007;
+	border-bottom: 2px solid #BBBBBB;
+}
+
+.name {
+	font-weight: bold;
+	width: 150px;
+}
+
+.description {
+	text-align: right;
+	width: 450px;
+}
+
+.ordinal {
+	width: 20px;
+}
+
+.subname {
+	width: 150px;
+}
+
+.type {
+	width: 150px;
+}
+
+.definition {
+	width: 580px;
+	white-space: pre;
+}
+
+h2 {
+  color: #174188;
+}
+
+h3 {
+  color: #3E8400;
+}
+
+body,p,pre,table,th,td,caption {
+	text-align: left;
+	font-family: Trebuchet MS;
+	font-size: 8pt;
+}
+
+table,th,td {
+	border: 1px solid #EBEBEB;
+	border-collapse: collapse;
+	vertical-align: top;
+	padding: 2px;
+}
+
+table {
+	width: 600px;
+}
+
+caption {
+	font-weight: bold;
+}
+
+hr {
+	height: 1px;
+}
+
+  </style>
+</head>
+<body>
+
+<p>&nbsp;</p>
+<h2>System Information</h2>
+
+
+<h3>SchemaCrawler Information</h3>
+
+<table>
+	<tr>
+		<td>product name</td>
+		<td colspan='2'>SchemaCrawler</td>
+	</tr>
+	<tr>
+		<td>product version</td>
+		<td colspan='2'>8.9</td>
+	</tr>
+</table>
+<p></p>
+
+<h3>Database Information</h3>
+
+<table>
+	<tr>
+		<td>database product name</td>
+		<td colspan='2'>HSQL Database Engine</td>
+	</tr>
+	<tr>
+		<td>database product version</td>
+		<td colspan='2'>2.2.6</td>
+	</tr>
+	<tr>
+		<td>database user name</td>
+		<td colspan='2'>SA</td>
+	</tr>
+</table>
+<p></p>
+
+<h3>JDBC Driver Information</h3>
+
+<table>
+	<tr>
+		<td>driver name</td>
+		<td colspan='2'>HSQL Database Engine Driver</td>
+	</tr>
+	<tr>
+		<td>driver version</td>
+		<td colspan='2'>2.2.6</td>
+	</tr>
+	<tr>
+		<td>driver class name</td>
+		<td colspan='2'>org.hsqldb.jdbc.JDBCDriver</td>
+	</tr>
+	<tr>
+		<td>url</td>
+		<td colspan='2'>jdbc:hsqldb:hsql://localhost:9001/schemacrawler</td>
+	</tr>
+	<tr>
+		<td>is JDBC compliant</td>
+		<td colspan='2'>true</td>
+	</tr>
+</table>
+<p></p>
+<p>&nbsp;</p>
+<h2>Tables</h2>
+
+<table>
+	<tr>
+		<td colspan='2' class='name underscore'>PUBLIC.BOOKS.AUTHORS</td>
+		<td class='description underscore'>[table]</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[lint, medium]</td>
+	</tr>
+	<tr>
+		<td>incrementing columns</td>
+		<td colspan='2'>ADDRESS1, ADDRESS2</td>
+	</tr>
+</table>
+<p></p>
+
+<table>
+	<tr>
+		<td colspan='2' class='name underscore'>PUBLIC.BOOKS.BOOKAUTHORS</td>
+		<td class='description underscore'>[table]</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[lint, high]</td>
+	</tr>
+	<tr>
+		<td>redundant index</td>
+		<td colspan='2'>SYS_IDX_10043</td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[lint, medium]</td>
+	</tr>
+	<tr>
+		<td>spaces in name, or reserved word</td>
+		<td colspan='2'>&quot;UPDATE&quot;</td>
+	</tr>
+</table>
+<p></p>
+
+<table>
+	<tr>
+		<td colspan='2' class='name underscore'>PUBLIC.BOOKS.&quot;Global Counts&quot;</td>
+		<td class='description underscore'>[table]</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[lint, medium]</td>
+	</tr>
+	<tr>
+		<td>no indices</td>
+		<td colspan='2'></td>
+	</tr>
+	<tr>
+		<td>spaces in name, or reserved word</td>
+		<td colspan='2'>&quot;Global Counts&quot;</td>
+	</tr>
+	<tr>
+		<td>spaces in name, or reserved word</td>
+		<td colspan='2'>&quot;Global Count&quot;</td>
+	</tr>
+	<tr>
+		<td>single column</td>
+		<td colspan='2'></td>
+	</tr>
+</table>
+<p></p>
+
+<table>
+	<tr>
+		<td colspan='2' class='name underscore'>PUBLIC.FOR_LINT.AUTHORS</td>
+		<td class='description underscore'>[table]</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[lint, high]</td>
+	</tr>
+	<tr>
+		<td>foreign key and primary key have different data types</td>
+		<td colspan='2'>FK_AUTHORS_BOOK</td>
+	</tr>
+	<tr>
+		<td>redundant index</td>
+		<td colspan='2'>IDX_A1_AUTHORS</td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[lint, medium]</td>
+	</tr>
+	<tr>
+		<td>incrementing columns</td>
+		<td colspan='2'>PHONE1, PHONE2</td>
+	</tr>
+	<tr>
+		<td>incrementing columns</td>
+		<td colspan='2'>FAX, FAX3</td>
+	</tr>
+	<tr>
+		<td>incrementing columns</td>
+		<td colspan='2'>EMAIL1, EMAIL2</td>
+	</tr>
+	<tr>
+		<td>incrementing columns</td>
+		<td colspan='2'>ADDRESS1, ADDRESS2</td>
+	</tr>
+	<tr>
+		<td>incrementing columns</td>
+		<td colspan='2'>HOMEEMAIL11, HOMEEMAIL12</td>
+	</tr>
+	<tr>
+		<td>incrementing columns are not consecutive</td>
+		<td colspan='2'>FAX, FAX3</td>
+	</tr>
+	<tr>
+		<td>incrementing columns don&apos;t have the same data-type</td>
+		<td colspan='2'>PHONE1, PHONE2</td>
+	</tr>
+	<tr>
+		<td>incrementing columns don&apos;t have the same data-type</td>
+		<td colspan='2'>FAX, FAX3</td>
+	</tr>
+	<tr>
+		<td>incrementing columns don&apos;t have the same data-type</td>
+		<td colspan='2'>EMAIL1, EMAIL2</td>
+	</tr>
+	<tr>
+		<td>unique index with nullable columns</td>
+		<td colspan='2'>IDX_U_AUTHORS</td>
+	</tr>
+	<tr>
+		<td>column where NULL may be intended</td>
+		<td colspan='2'>ADDRESS2</td>
+	</tr>
+	<tr>
+		<td>column where NULL may be intended</td>
+		<td colspan='2'>COUNTRY</td>
+	</tr>
+</table>
+<p></p>
+
+<table>
+	<tr>
+		<td colspan='2' class='name underscore'>PUBLIC.FOR_LINT.BOOKS</td>
+		<td class='description underscore'>[table]</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[lint, medium]</td>
+	</tr>
+	<tr>
+		<td>spaces in name, or reserved word</td>
+		<td colspan='2'>&quot;UPDATE&quot;</td>
+	</tr>
+</table>
+<p></p>
+
+<table>
+	<tr>
+		<td colspan='2' class='name underscore'>PUBLIC.FOR_LINT.&quot;Global Counts&quot;</td>
+		<td class='description underscore'>[table]</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[lint, medium]</td>
+	</tr>
+	<tr>
+		<td>no indices</td>
+		<td colspan='2'></td>
+	</tr>
+	<tr>
+		<td>spaces in name, or reserved word</td>
+		<td colspan='2'>&quot;Global Counts&quot;</td>
+	</tr>
+	<tr>
+		<td>spaces in name, or reserved word</td>
+		<td colspan='2'>&quot;Global Count&quot;</td>
+	</tr>
+	<tr>
+		<td>single column</td>
+		<td colspan='2'></td>
+	</tr>
+</table>
+<p></p>
+
+<table>
+	<tr>
+		<td colspan='2' class='name underscore'>PUBLIC.FOR_LINT.No_Columns</td>
+		<td class='description underscore'>[table]</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[lint, medium]</td>
+	</tr>
+	<tr>
+		<td>no indices</td>
+		<td colspan='2'></td>
+	</tr>
+	<tr>
+		<td>single column</td>
+		<td colspan='2'></td>
+	</tr>
+</table>
+<p></p>
+
+</body>
+</html>
