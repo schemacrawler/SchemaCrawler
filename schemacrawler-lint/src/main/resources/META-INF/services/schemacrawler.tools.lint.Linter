@@ -1,9 +1,11 @@
+schemacrawler.tools.linter.LinterForeignKeyMismatch
+schemacrawler.tools.linter.LinterForeignKeyWithNoIndices
+schemacrawler.tools.linter.LinterNullColumnsInIndex
+schemacrawler.tools.linter.LinterNullIntendedColumns
+schemacrawler.tools.linter.LinterRedundantIndices
 schemacrawler.tools.linter.LinterTableCycles
-schemacrawler.tools.linter.LinterTableForeignKeyMismatch
 schemacrawler.tools.linter.LinterTableWithIncrementingColumns
 schemacrawler.tools.linter.LinterTableWithNoIndices
-schemacrawler.tools.linter.LinterTableWithNullColumnsInIndex
-schemacrawler.tools.linter.LinterTableWithNullIntendedColumns
 schemacrawler.tools.linter.LinterTableWithQuotedNames
-schemacrawler.tools.linter.LinterTableWithRedundantIndices
 schemacrawler.tools.linter.LinterTableWithSingleColumn
+schemacrawler.tools.linter.LinterTooManyLobs

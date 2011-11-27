@@ -2,18 +2,18 @@
 {
   "tables": [
     {
-      "name": "AUTHORS",
-      "fullName": "PUBLIC.FOR_LINT.AUTHORS",
-      "type": "table"
-    },
-    {
-      "name": "BOOKS",
-      "fullName": "PUBLIC.FOR_LINT.BOOKS",
-      "type": "table"
-    },
-    {
       "name": "\"Global Counts\"",
       "fullName": "PUBLIC.FOR_LINT.\"Global Counts\"",
+      "type": "table"
+    },
+    {
+      "name": "PUBLICATIONS",
+      "fullName": "PUBLIC.FOR_LINT.PUBLICATIONS",
+      "type": "table"
+    },
+    {
+      "name": "WRITERS",
+      "fullName": "PUBLIC.FOR_LINT.WRITERS",
       "type": "table"
     }
   ],
@@ -38,34 +38,102 @@
   "description": "Row Count",
   "data": [
     {
-      "title": "PUBLIC.FOR_LINT.AUTHORS",
-      "value": 0
-    },
-    {
-      "title": "PUBLIC.FOR_LINT.BOOKS",
-      "value": 0
-    },
-    {
       "title": "PUBLIC.FOR_LINT.\"Global Counts\"",
+      "value": 0
+    },
+    {
+      "title": "PUBLIC.FOR_LINT.PUBLICATIONS",
+      "value": 0
+    },
+    {
+      "title": "PUBLIC.FOR_LINT.WRITERS",
       "value": 0
     }
   ]
 },
 {"table_lints": [
     {
-      "name": "AUTHORS",
+      "name": "\"Global Counts\"",
       "lints": [
         {
-          "id": "schemacrawler.tools.linter.LinterTableForeignKeyMismatch",
+          "id": "schemacrawler.tools.linter.LinterTableWithNoIndices",
+          "description": "no indices",
+          "value": "true",
+          "severity": "medium"
+        },
+        {
+          "id": "schemacrawler.tools.linter.LinterTableWithQuotedNames",
+          "description": "spaces in name, or reserved word",
+          "value": "\"Global Counts\"",
+          "severity": "medium"
+        },
+        {
+          "id": "schemacrawler.tools.linter.LinterTableWithQuotedNames",
+          "description": "spaces in name, or reserved word",
+          "value": "\"Global Count\"",
+          "severity": "medium"
+        },
+        {
+          "id": "schemacrawler.tools.linter.LinterTableWithSingleColumn",
+          "description": "single column",
+          "value": "true",
+          "severity": "medium"
+        }
+      ],
+      "fullName": "PUBLIC.FOR_LINT.\"Global Counts\"",
+      "type": "table"
+    },
+    {
+      "name": "PUBLICATIONS",
+      "lints": [
+        {
+          "id": "schemacrawler.tools.linter.LinterTableWithQuotedNames",
+          "description": "spaces in name, or reserved word",
+          "value": "\"UPDATE\"",
+          "severity": "medium"
+        },
+        {
+          "id": "schemacrawler.tools.linter.LinterTooManyLobs",
+          "description": "too many binary objects",
+          "value": "\"UPDATE\", PRESS_RELEASE",
+          "severity": "low"
+        }
+      ],
+      "fullName": "PUBLIC.FOR_LINT.PUBLICATIONS",
+      "type": "table"
+    },
+    {
+      "name": "WRITERS",
+      "lints": [
+        {
+          "id": "schemacrawler.tools.linter.LinterForeignKeyMismatch",
           "description": "foreign key and primary key have different data types",
-          "value": "FK_AUTHORS_BOOK",
+          "value": "FK_WRITERS_PUBLICATION",
           "severity": "high"
         },
         {
-          "id": "schemacrawler.tools.linter.LinterTableWithRedundantIndices",
+          "id": "schemacrawler.tools.linter.LinterRedundantIndices",
           "description": "redundant index",
-          "value": "IDX_A1_AUTHORS",
+          "value": "IDX_A1_WRITERS",
           "severity": "high"
+        },
+        {
+          "id": "schemacrawler.tools.linter.LinterNullColumnsInIndex",
+          "description": "unique index with nullable columns",
+          "value": "IDX_U_WRITERS",
+          "severity": "medium"
+        },
+        {
+          "id": "schemacrawler.tools.linter.LinterNullIntendedColumns",
+          "description": "column where NULL may be intended",
+          "value": "ADDRESS2",
+          "severity": "medium"
+        },
+        {
+          "id": "schemacrawler.tools.linter.LinterNullIntendedColumns",
+          "description": "column where NULL may be intended",
+          "value": "COUNTRY",
+          "severity": "medium"
         },
         {
           "id": "schemacrawler.tools.linter.LinterTableWithIncrementingColumns",
@@ -120,69 +188,9 @@
           "description": "incrementing columns don't have the same data-type",
           "value": "EMAIL1, EMAIL2",
           "severity": "medium"
-        },
-        {
-          "id": "schemacrawler.tools.linter.LinterTableWithNullColumnsInIndex",
-          "description": "unique index with nullable columns",
-          "value": "IDX_U_AUTHORS",
-          "severity": "medium"
-        },
-        {
-          "id": "schemacrawler.tools.linter.LinterTableWithNullIntendedColumns",
-          "description": "column where NULL may be intended",
-          "value": "ADDRESS2",
-          "severity": "medium"
-        },
-        {
-          "id": "schemacrawler.tools.linter.LinterTableWithNullIntendedColumns",
-          "description": "column where NULL may be intended",
-          "value": "COUNTRY",
-          "severity": "medium"
         }
       ],
-      "fullName": "PUBLIC.FOR_LINT.AUTHORS",
-      "type": "table"
-    },
-    {
-      "name": "BOOKS",
-      "lints": [{
-        "id": "schemacrawler.tools.linter.LinterTableWithQuotedNames",
-        "description": "spaces in name, or reserved word",
-        "value": "\"UPDATE\"",
-        "severity": "medium"
-      }],
-      "fullName": "PUBLIC.FOR_LINT.BOOKS",
-      "type": "table"
-    },
-    {
-      "name": "\"Global Counts\"",
-      "lints": [
-        {
-          "id": "schemacrawler.tools.linter.LinterTableWithNoIndices",
-          "description": "no indices",
-          "value": "true",
-          "severity": "medium"
-        },
-        {
-          "id": "schemacrawler.tools.linter.LinterTableWithQuotedNames",
-          "description": "spaces in name, or reserved word",
-          "value": "\"Global Counts\"",
-          "severity": "medium"
-        },
-        {
-          "id": "schemacrawler.tools.linter.LinterTableWithQuotedNames",
-          "description": "spaces in name, or reserved word",
-          "value": "\"Global Count\"",
-          "severity": "medium"
-        },
-        {
-          "id": "schemacrawler.tools.linter.LinterTableWithSingleColumn",
-          "description": "single column",
-          "value": "true",
-          "severity": "medium"
-        }
-      ],
-      "fullName": "PUBLIC.FOR_LINT.\"Global Counts\"",
+      "fullName": "PUBLIC.FOR_LINT.WRITERS",
       "type": "table"
     }
   ]}]

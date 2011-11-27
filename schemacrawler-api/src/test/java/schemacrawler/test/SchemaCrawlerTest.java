@@ -85,7 +85,7 @@ public class SchemaCrawlerTest
         {
             4, 0, 2, 3, 0, 1, 0
         }, {
-            6, 3, 0, 0
+            0, 0, 3, 6,
         }, {}, {}, {
             4, 2
         }, {}
@@ -112,6 +112,11 @@ public class SchemaCrawlerTest
             {}
         },
         {
+            {},
+            {},
+            {
+                "SYS_CT_10068", "SYS_CT_10069", "SYS_CT_10070",
+            },
             {
                 "CHECK_UPPERCASE_STATE",
                 "SYS_CT_10062",
@@ -120,11 +125,6 @@ public class SchemaCrawlerTest
                 "SYS_CT_10065",
                 "SYS_CT_10066",
             },
-            {
-                "SYS_CT_10068", "SYS_CT_10069", "SYS_CT_10070",
-            },
-            {},
-            {}
         },
         {},
         {},

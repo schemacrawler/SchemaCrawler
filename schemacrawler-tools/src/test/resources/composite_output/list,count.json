@@ -32,18 +32,18 @@
       "type": "table"
     },
     {
-      "name": "AUTHORS",
-      "fullName": "PUBLIC.FOR_LINT.AUTHORS",
-      "type": "table"
-    },
-    {
-      "name": "BOOKS",
-      "fullName": "PUBLIC.FOR_LINT.BOOKS",
-      "type": "table"
-    },
-    {
       "name": "\"Global Counts\"",
       "fullName": "PUBLIC.FOR_LINT.\"Global Counts\"",
+      "type": "table"
+    },
+    {
+      "name": "PUBLICATIONS",
+      "fullName": "PUBLIC.FOR_LINT.PUBLICATIONS",
+      "type": "table"
+    },
+    {
+      "name": "WRITERS",
+      "fullName": "PUBLIC.FOR_LINT.WRITERS",
       "type": "table"
     },
     {
@@ -144,15 +144,15 @@
       "value": 20
     },
     {
-      "title": "PUBLIC.FOR_LINT.AUTHORS",
-      "value": 0
-    },
-    {
-      "title": "PUBLIC.FOR_LINT.BOOKS",
-      "value": 0
-    },
-    {
       "title": "PUBLIC.FOR_LINT.\"Global Counts\"",
+      "value": 0
+    },
+    {
+      "title": "PUBLIC.FOR_LINT.PUBLICATIONS",
+      "value": 0
+    },
+    {
+      "title": "PUBLIC.FOR_LINT.WRITERS",
       "value": 0
     },
     {

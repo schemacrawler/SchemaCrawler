@@ -83,7 +83,7 @@ public class LintTest
 
     final LintedDatabase lintedDatabase = new LintedDatabase(database);
     final LintCollector lintCollector = lintedDatabase.getCollector();
-    assertEquals(22, lintCollector.size());
+    assertEquals(23, lintCollector.size());
 
     final File testOutputFile = File.createTempFile("schemacrawler.lints.",
                                                     ".test");

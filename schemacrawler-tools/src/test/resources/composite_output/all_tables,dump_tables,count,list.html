@@ -1583,36 +1583,6 @@ hr {
 	<tr>
 		<td>PUBLIC</td>
 		<td>FOR_LINT</td>
-		<td>AUTHORS</td>
-		<td>TABLE</td>
-		<td>&lt;null&gt;</td>
-		<td>&lt;null&gt;</td>
-		<td>&lt;null&gt;</td>
-		<td>&lt;null&gt;</td>
-		<td>&lt;null&gt;</td>
-		<td>&lt;null&gt;</td>
-		<td>MEMORY</td>
-		<td>false</td>
-		<td>&lt;null&gt;</td>
-	</tr>
-	<tr>
-		<td>PUBLIC</td>
-		<td>FOR_LINT</td>
-		<td>BOOKS</td>
-		<td>TABLE</td>
-		<td>&lt;null&gt;</td>
-		<td>&lt;null&gt;</td>
-		<td>&lt;null&gt;</td>
-		<td>&lt;null&gt;</td>
-		<td>&lt;null&gt;</td>
-		<td>&lt;null&gt;</td>
-		<td>MEMORY</td>
-		<td>false</td>
-		<td>&lt;null&gt;</td>
-	</tr>
-	<tr>
-		<td>PUBLIC</td>
-		<td>FOR_LINT</td>
 		<td>Global Counts</td>
 		<td>TABLE</td>
 		<td>&lt;null&gt;</td>
@@ -1629,6 +1599,36 @@ hr {
 		<td>PUBLIC</td>
 		<td>FOR_LINT</td>
 		<td>No_Columns</td>
+		<td>TABLE</td>
+		<td>&lt;null&gt;</td>
+		<td>&lt;null&gt;</td>
+		<td>&lt;null&gt;</td>
+		<td>&lt;null&gt;</td>
+		<td>&lt;null&gt;</td>
+		<td>&lt;null&gt;</td>
+		<td>MEMORY</td>
+		<td>false</td>
+		<td>&lt;null&gt;</td>
+	</tr>
+	<tr>
+		<td>PUBLIC</td>
+		<td>FOR_LINT</td>
+		<td>PUBLICATIONS</td>
+		<td>TABLE</td>
+		<td>&lt;null&gt;</td>
+		<td>&lt;null&gt;</td>
+		<td>&lt;null&gt;</td>
+		<td>&lt;null&gt;</td>
+		<td>&lt;null&gt;</td>
+		<td>&lt;null&gt;</td>
+		<td>MEMORY</td>
+		<td>false</td>
+		<td>&lt;null&gt;</td>
+	</tr>
+	<tr>
+		<td>PUBLIC</td>
+		<td>FOR_LINT</td>
+		<td>WRITERS</td>
 		<td>TABLE</td>
 		<td>&lt;null&gt;</td>
 		<td>&lt;null&gt;</td>
@@ -2403,7 +2403,30 @@ hr {
 <p></p>
 
 <table>
-  <caption>PUBLIC.FOR_LINT.AUTHORS</caption>
+  <caption>PUBLIC.FOR_LINT."Global Counts"</caption>
+
+	<tr>
+		<td class='name'>Global Count</td>
+	</tr>
+</table>
+<p></p>
+
+<table>
+  <caption>PUBLIC.FOR_LINT.PUBLICATIONS</caption>
+
+	<tr>
+		<td class='name'>ID</td>
+		<td class='name'>TITLE</td>
+		<td class='name'>DESCRIPTION</td>
+		<td class='name'>WRITERID</td>
+		<td class='name'>PUBLICATIONDATE</td>
+		<td class='name'>PRICE</td>
+	</tr>
+</table>
+<p></p>
+
+<table>
+  <caption>PUBLIC.FOR_LINT.WRITERS</caption>
 
 	<tr>
 		<td class='name'>ID</td>
@@ -2423,30 +2446,7 @@ hr {
 		<td class='name'>FAX3</td>
 		<td class='name'>HOMEEMAIL11</td>
 		<td class='name'>HOMEEMAIL12</td>
-		<td class='name'>BOOK_ID</td>
-	</tr>
-</table>
-<p></p>
-
-<table>
-  <caption>PUBLIC.FOR_LINT.BOOKS</caption>
-
-	<tr>
-		<td class='name'>ID</td>
-		<td class='name'>TITLE</td>
-		<td class='name'>DESCRIPTION</td>
-		<td class='name'>AUTHORID</td>
-		<td class='name'>PUBLICATIONDATE</td>
-		<td class='name'>PRICE</td>
-	</tr>
-</table>
-<p></p>
-
-<table>
-  <caption>PUBLIC.FOR_LINT."Global Counts"</caption>
-
-	<tr>
-		<td class='name'>Global Count</td>
+		<td class='name'>PUBLICATION_ID</td>
 	</tr>
 </table>
 <p></p>
@@ -2767,15 +2767,15 @@ hr {
 		<td class='description'>20 rows</td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>PUBLIC.FOR_LINT.AUTHORS</td>
-		<td class='description'>empty</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.FOR_LINT.BOOKS</td>
-		<td class='description'>empty</td>
-	</tr>
-	<tr>
 		<td colspan='2' class='name'>PUBLIC.FOR_LINT.&quot;Global Counts&quot;</td>
+		<td class='description'>empty</td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>PUBLIC.FOR_LINT.PUBLICATIONS</td>
+		<td class='description'>empty</td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>PUBLIC.FOR_LINT.WRITERS</td>
 		<td class='description'>empty</td>
 	</tr>
 	<tr>
@@ -2818,15 +2818,15 @@ hr {
 		<td class='description'>[table]</td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>PUBLIC.FOR_LINT.AUTHORS</td>
-		<td class='description'>[table]</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.FOR_LINT.BOOKS</td>
-		<td class='description'>[table]</td>
-	</tr>
-	<tr>
 		<td colspan='2' class='name'>PUBLIC.FOR_LINT.&quot;Global Counts&quot;</td>
+		<td class='description'>[table]</td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>PUBLIC.FOR_LINT.PUBLICATIONS</td>
+		<td class='description'>[table]</td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>PUBLIC.FOR_LINT.WRITERS</td>
 		<td class='description'>[table]</td>
 	</tr>
 	<tr>

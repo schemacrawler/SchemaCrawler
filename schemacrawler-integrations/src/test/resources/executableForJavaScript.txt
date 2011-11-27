@@ -38,10 +38,21 @@ o--> PUBLISHERS
      o--> ID
      o--> PUBLISHER
 PUBLIC.FOR_LINT
-o--> AUTHORS
+o--> "Global Counts"
+     o--> "Global Count"
+o--> No_Columns
+o--> PUBLICATIONS
+     o--> DESCRIPTION
+     o--> ID
+     o--> PRESS_RELEASE
+     o--> PRICE
+     o--> PUBLICATIONDATE
+     o--> TITLE
+     o--> "UPDATE"
+     o--> WRITERID
+o--> WRITERS
      o--> ADDRESS1
      o--> ADDRESS2
-     o--> BOOK_ID
      o--> CITY
      o--> COUNTRY
      o--> EMAIL1
@@ -56,18 +67,8 @@ o--> AUTHORS
      o--> PHONE1
      o--> PHONE2
      o--> POSTALCODE
+     o--> PUBLICATION_ID
      o--> STATE
-o--> BOOKS
-     o--> AUTHORID
-     o--> DESCRIPTION
-     o--> ID
-     o--> PRICE
-     o--> PUBLICATIONDATE
-     o--> TITLE
-     o--> "UPDATE"
-o--> "Global Counts"
-     o--> "Global Count"
-o--> No_Columns
 PUBLIC.INFORMATION_SCHEMA
 PUBLIC.PUBLIC
 PUBLIC."PUBLISHER SALES"

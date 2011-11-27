@@ -1,5 +1,5 @@
 
-CREATE TABLE Authors
+CREATE TABLE Writers
 (
   Id INTEGER NOT NULL,
   FirstName VARCHAR(20) NOT NULL,
@@ -18,23 +18,24 @@ CREATE TABLE Authors
   Fax3 INT,
   HomeEmail11 VARCHAR(10),
   HomeEmail12 VARCHAR(10),
-  Book_Id BIGINT NOT NULL,
-  CONSTRAINT PK_Authors PRIMARY KEY (Id),
+  Publication_Id BIGINT NOT NULL,
+  CONSTRAINT PK_Writers PRIMARY KEY (Id),
   CONSTRAINT CHECK_UPPERCASE_State CHECK (State=UPPER(State))
 )
 ;
 
-CREATE TABLE Books
+CREATE TABLE Publications
 (
   Id INTEGER NOT NULL,
   Title VARCHAR(255) NOT NULL,
   Description VARCHAR(255),
-  AuthorId INTEGER NOT NULL,
+  WriterId INTEGER NOT NULL,
   PublicationDate DATE,
   Price FLOAT,
   "UPDATE" CLOB,
-  CONSTRAINT PK_Books PRIMARY KEY (Id),
-  CONSTRAINT FK_Books_Author FOREIGN KEY (AuthorId) REFERENCES Authors (Id)
+  PRESS_RELEASE CLOB,
+  CONSTRAINT PK_Publications PRIMARY KEY (Id),
+  CONSTRAINT FK_Publications_Writer FOREIGN KEY (WriterId) REFERENCES Writers (Id)
 )
 ;
 
@@ -49,14 +50,14 @@ CREATE TABLE "No_Columns"
 )
 ;
 
-ALTER TABLE Authors ADD CONSTRAINT FK_Authors_Book FOREIGN KEY (Book_Id) REFERENCES Books (Id);
+ALTER TABLE Writers ADD CONSTRAINT FK_Writers_Publication FOREIGN KEY (Publication_Id) REFERENCES Publications (Id);
 
 -- Indices
-CREATE INDEX IDX_B_Authors ON Authors(LastName, FirstName)
+CREATE INDEX IDX_B_Writers ON Writers(LastName, FirstName)
 ;
-CREATE INDEX IDX_A_Authors ON Authors(City, State, PostalCode, Country)
+CREATE INDEX IDX_A_Writers ON Writers(City, State, PostalCode, Country)
 ;
-CREATE INDEX IDX_A1_Authors ON Authors(City, State)
+CREATE INDEX IDX_A1_Writers ON Writers(City, State)
 ;
-CREATE UNIQUE INDEX IDX_U_Authors ON Authors(Email1, Country)
+CREATE UNIQUE INDEX IDX_U_Writers ON Writers(Email1, Country)
 ;

@@ -36,11 +36,11 @@ import schemacrawler.schema.View;
 import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.LintSeverity;
 
-public class LinterTableWithRedundantIndices
+public class LinterRedundantIndices
   extends BaseLinter
 {
 
-  public LinterTableWithRedundantIndices()
+  public LinterRedundantIndices()
   {
     setLintSeverity(LintSeverity.high);
   }
