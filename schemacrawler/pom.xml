@@ -9,7 +9,7 @@
   </parent>
   <groupId>net.sourceforge.schemacrawler</groupId>
   <artifactId>schemacrawler</artifactId>
-  <packaging>jar</packaging>
+  <packaging>pom</packaging>
   <name>SchemaCrawler Distribution</name>
   <dependencies>
     <dependency>

@@ -1,0 +1,111 @@
+
+
+
+System Information
+========================================================================
+
+
+
+SchemaCrawler Information
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
+
+product name                          SchemaCrawler
+product version                       8.9
+
+
+Database Information
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
+
+database product name                 HSQL Database Engine
+database product version              2.2.6
+database user name                    SA
+
+
+JDBC Driver Information
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
+
+driver name                           HSQL Database Engine Driver
+driver version                        2.2.6
+driver class name                     org.hsqldb.jdbc.JDBCDriver
+url                                   jdbc:hsqldb:hsql://localhost:9001/schemacrawler
+is JDBC compliant                     true
+
+
+
+Tables
+========================================================================
+
+
+PUBLIC.BOOKS.AUTHORS                                             [table]
+------------------------------------------------------------------------
+
+                                                          [lint, medium]
+incrementing columns                  ADDRESS1, ADDRESS2
+
+
+PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
+------------------------------------------------------------------------
+
+                                                            [lint, high]
+redundant index                       SYS_IDX_10043
+                                                          [lint, medium]
+spaces in name, or reserved word      "UPDATE"
+
+
+PUBLIC.BOOKS."Global Counts"                                     [table]
+------------------------------------------------------------------------
+
+                                                          [lint, medium]
+no indices                            
+spaces in name, or reserved word      "Global Counts"
+spaces in name, or reserved word      "Global Count"
+single column                         
+
+
+PUBLIC.FOR_LINT.AUTHORS                                          [table]
+------------------------------------------------------------------------
+
+                                                            [lint, high]
+foreign key and primary key have different data types  FK_AUTHORS_BOOK
+redundant index                       IDX_A1_AUTHORS
+                                                          [lint, medium]
+incrementing columns                  PHONE1, PHONE2
+incrementing columns                  FAX, FAX3
+incrementing columns                  EMAIL1, EMAIL2
+incrementing columns                  ADDRESS1, ADDRESS2
+incrementing columns                  HOMEEMAIL11, HOMEEMAIL12
+incrementing columns are not consecutive  FAX, FAX3
+incrementing columns don't have the same data-type  PHONE1, PHONE2
+incrementing columns don't have the same data-type  FAX, FAX3
+incrementing columns don't have the same data-type  EMAIL1, EMAIL2
+unique index with nullable columns    IDX_U_AUTHORS
+column where NULL may be intended     ADDRESS2
+column where NULL may be intended     COUNTRY
+
+
+PUBLIC.FOR_LINT.BOOKS                                            [table]
+------------------------------------------------------------------------
+
+                                                          [lint, medium]
+spaces in name, or reserved word      "UPDATE"
+
+
+PUBLIC.FOR_LINT."Global Counts"                                  [table]
+------------------------------------------------------------------------
+
+                                                          [lint, medium]
+no indices                            
+spaces in name, or reserved word      "Global Counts"
+spaces in name, or reserved word      "Global Count"
+single column                         
+
+
+PUBLIC.FOR_LINT.No_Columns                                       [table]
+------------------------------------------------------------------------
+
+                                                          [lint, medium]
+no indices                            
+single column                         
+
+
+
