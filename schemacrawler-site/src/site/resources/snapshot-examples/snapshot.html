@@ -1767,18 +1767,6 @@ hr {
 		<td colspan='4'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description'>[weak association]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>ID &#8594; PUBLIC.FOR_LINT.BOOKS.AUTHORID</td>
-		<td class='type'></td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
 		<td colspan='2' class='name'>SYS_IDX_PK_AUTHORS_10035</td>
 		<td class='description'>[unique index]</td>
 	</tr>
@@ -2114,30 +2102,6 @@ hr {
 	<tr>
 		<td class='ordinal'></td>
 		<td class='subname'>PUBLIC.BOOKS.BOOKS.ID &#8594; BOOKID</td>
-		<td class='type'></td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description'>[weak association]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>PUBLIC.FOR_LINT.AUTHORS.ID &#8594; AUTHORID</td>
-		<td class='type'></td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description'>[weak association]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>PUBLIC.FOR_LINT.BOOKS.ID &#8594; BOOKID</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -2729,7 +2693,382 @@ hr {
 
 <table>
 	<tr>
-		<td colspan='2' class='name underscore'>PUBLIC.FOR_LINT.AUTHORS</td>
+		<td colspan='2' class='name underscore'>PUBLIC.FOR_LINT.&quot;Global Counts&quot;</td>
+		<td class='description underscore'>[table]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>&quot;Global Count&quot;</td>
+		<td class='type'>INTEGER</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>DELETE</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>INSERT</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>REFERENCES</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SELECT</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>TRIGGER</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>UPDATE</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+</table>
+<p></p>
+
+<table>
+	<tr>
+		<td colspan='2' class='name underscore'>PUBLIC.FOR_LINT.No_Columns</td>
+		<td class='description underscore'>[table]</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>DELETE</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>INSERT</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>REFERENCES</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SELECT</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>TRIGGER</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>UPDATE</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+</table>
+<p></p>
+
+<table>
+	<tr>
+		<td colspan='2' class='name underscore'>PUBLIC.FOR_LINT.PUBLICATIONS</td>
+		<td class='description underscore'>[table]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>ID</td>
+		<td class='type'>INTEGER not null</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>TITLE</td>
+		<td class='type'>VARCHAR(255) not null</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>DESCRIPTION</td>
+		<td class='type'>VARCHAR(255)</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>WRITERID</td>
+		<td class='type'>INTEGER not null</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>PUBLICATIONDATE</td>
+		<td class='type'>DATE</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>PRICE</td>
+		<td class='type'>DOUBLE(64, 0)</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>&quot;UPDATE&quot;</td>
+		<td class='type'>CLOB</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>PRESS_RELEASE</td>
+		<td class='type'>CLOB</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>PK_PUBLICATIONS</td>
+		<td class='description'>[primary key]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>ID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>FK_WRITERS_PUBLICATION</td>
+		<td class='description'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>ID &#8594; PUBLIC.FOR_LINT.WRITERS.PUBLICATION_ID</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>FK_PUBLICATIONS_WRITER</td>
+		<td class='description'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>PUBLIC.FOR_LINT.WRITERS.ID &#8594; WRITERID</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_IDX_PK_PUBLICATIONS_10071</td>
+		<td class='description'>[unique index]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>ID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_IDX_10072</td>
+		<td class='description'>[non-unique index]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>WRITERID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10068</td>
+		<td class='description'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>FOR_LINT.PUBLICATIONS.ID IS NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10069</td>
+		<td class='description'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>FOR_LINT.PUBLICATIONS.TITLE IS NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10070</td>
+		<td class='description'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>FOR_LINT.PUBLICATIONS.WRITERID IS NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>DELETE</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>INSERT</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>REFERENCES</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SELECT</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>TRIGGER</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>UPDATE</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+</table>
+<p></p>
+
+<table>
+	<tr>
+		<td colspan='2' class='name underscore'>PUBLIC.FOR_LINT.WRITERS</td>
 		<td class='description underscore'>[table]</td>
 	</tr>
 	<tr>
@@ -2819,14 +3158,14 @@ hr {
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td class='subname'>BOOK_ID</td>
+		<td class='subname'>PUBLICATION_ID</td>
 		<td class='type'>BIGINT not null</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>PK_AUTHORS</td>
+		<td colspan='2' class='name'>PK_WRITERS</td>
 		<td class='description'>[primary key]</td>
 	</tr>
 	<tr>
@@ -2838,55 +3177,31 @@ hr {
 		<td colspan='4'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>FK_BOOKS_AUTHOR</td>
+		<td colspan='2' class='name'>FK_WRITERS_PUBLICATION</td>
 		<td class='description'>[foreign key, with no action]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td class='subname'>ID &#8594; PUBLIC.FOR_LINT.BOOKS.AUTHORID</td>
+		<td class='subname'>PUBLIC.FOR_LINT.PUBLICATIONS.ID &#8594; PUBLICATION_ID</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>FK_AUTHORS_BOOK</td>
+		<td colspan='2' class='name'>FK_PUBLICATIONS_WRITER</td>
 		<td class='description'>[foreign key, with no action]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td class='subname'>PUBLIC.FOR_LINT.BOOKS.ID &#8594; BOOK_ID</td>
+		<td class='subname'>ID &#8594; PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description'>[weak association]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>ID &#8594; PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID</td>
-		<td class='type'></td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>SYS_IDX_10076</td>
-		<td class='description'>[non-unique index]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>BOOK_ID</td>
-		<td class='type'>ascending</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>SYS_IDX_PK_AUTHORS_10067</td>
+		<td colspan='2' class='name'>SYS_IDX_PK_WRITERS_10067</td>
 		<td class='description'>[unique index]</td>
 	</tr>
 	<tr>
@@ -2898,7 +3213,19 @@ hr {
 		<td colspan='4'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>IDX_A1_AUTHORS</td>
+		<td colspan='2' class='name'>SYS_IDX_10076</td>
+		<td class='description'>[non-unique index]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>PUBLICATION_ID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>IDX_A1_WRITERS</td>
 		<td class='description'>[non-unique index]</td>
 	</tr>
 	<tr>
@@ -2915,7 +3242,7 @@ hr {
 		<td colspan='4'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>IDX_U_AUTHORS</td>
+		<td colspan='2' class='name'>IDX_U_WRITERS</td>
 		<td class='description'>[unique index]</td>
 	</tr>
 	<tr>
@@ -2932,7 +3259,7 @@ hr {
 		<td colspan='4'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>IDX_B_AUTHORS</td>
+		<td colspan='2' class='name'>IDX_B_WRITERS</td>
 		<td class='description'>[non-unique index]</td>
 	</tr>
 	<tr>
@@ -2949,7 +3276,7 @@ hr {
 		<td colspan='4'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>IDX_A_AUTHORS</td>
+		<td colspan='2' class='name'>IDX_A_WRITERS</td>
 		<td class='description'>[non-unique index]</td>
 	</tr>
 	<tr>
@@ -2980,7 +3307,7 @@ hr {
 		<td class='description'>[check constraint]</td>
 	</tr>
 	<tr>
-		<td colspan='3' class='definition'>FOR_LINT.AUTHORS.STATE=UPPER(FOR_LINT.AUTHORS.STATE)</td>
+		<td colspan='3' class='definition'>FOR_LINT.WRITERS.STATE=UPPER(FOR_LINT.WRITERS.STATE)</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
@@ -2990,7 +3317,7 @@ hr {
 		<td class='description'>[check constraint]</td>
 	</tr>
 	<tr>
-		<td colspan='3' class='definition'>FOR_LINT.AUTHORS.ID IS NOT NULL</td>
+		<td colspan='3' class='definition'>FOR_LINT.WRITERS.ID IS NOT NULL</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
@@ -3000,7 +3327,7 @@ hr {
 		<td class='description'>[check constraint]</td>
 	</tr>
 	<tr>
-		<td colspan='3' class='definition'>FOR_LINT.AUTHORS.FIRSTNAME IS NOT NULL</td>
+		<td colspan='3' class='definition'>FOR_LINT.WRITERS.FIRSTNAME IS NOT NULL</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
@@ -3010,7 +3337,7 @@ hr {
 		<td class='description'>[check constraint]</td>
 	</tr>
 	<tr>
-		<td colspan='3' class='definition'>FOR_LINT.AUTHORS.LASTNAME IS NOT NULL</td>
+		<td colspan='3' class='definition'>FOR_LINT.WRITERS.LASTNAME IS NOT NULL</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
@@ -3020,7 +3347,7 @@ hr {
 		<td class='description'>[check constraint]</td>
 	</tr>
 	<tr>
-		<td colspan='3' class='definition'>FOR_LINT.AUTHORS.ADDRESS2 IS NOT NULL</td>
+		<td colspan='3' class='definition'>FOR_LINT.WRITERS.ADDRESS2 IS NOT NULL</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
@@ -3030,413 +3357,7 @@ hr {
 		<td class='description'>[check constraint]</td>
 	</tr>
 	<tr>
-		<td colspan='3' class='definition'>FOR_LINT.AUTHORS.BOOK_ID IS NOT NULL</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>DELETE</td>
-		<td class='description'>[privilege]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
-		<td class='type'></td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>INSERT</td>
-		<td class='description'>[privilege]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
-		<td class='type'></td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>REFERENCES</td>
-		<td class='description'>[privilege]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
-		<td class='type'></td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>SELECT</td>
-		<td class='description'>[privilege]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
-		<td class='type'></td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>TRIGGER</td>
-		<td class='description'>[privilege]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
-		<td class='type'></td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>UPDATE</td>
-		<td class='description'>[privilege]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
-		<td class='type'></td>
-	</tr>
-</table>
-<p></p>
-
-<table>
-	<tr>
-		<td colspan='2' class='name underscore'>PUBLIC.FOR_LINT.BOOKS</td>
-		<td class='description underscore'>[table]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>ID</td>
-		<td class='type'>INTEGER not null</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>TITLE</td>
-		<td class='type'>VARCHAR(255) not null</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>DESCRIPTION</td>
-		<td class='type'>VARCHAR(255)</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>AUTHORID</td>
-		<td class='type'>INTEGER not null</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>PUBLICATIONDATE</td>
-		<td class='type'>DATE</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>PRICE</td>
-		<td class='type'>DOUBLE(64, 0)</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>&quot;UPDATE&quot;</td>
-		<td class='type'>CLOB</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PK_BOOKS</td>
-		<td class='description'>[primary key]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>ID</td>
-		<td class='type'>ascending</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>FK_BOOKS_AUTHOR</td>
-		<td class='description'>[foreign key, with no action]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>PUBLIC.FOR_LINT.AUTHORS.ID &#8594; AUTHORID</td>
-		<td class='type'></td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>FK_AUTHORS_BOOK</td>
-		<td class='description'>[foreign key, with no action]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>ID &#8594; PUBLIC.FOR_LINT.AUTHORS.BOOK_ID</td>
-		<td class='type'></td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description'>[weak association]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>PUBLIC.BOOKS.AUTHORS.ID &#8594; AUTHORID</td>
-		<td class='type'></td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description'>[weak association]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>ID &#8594; PUBLIC.BOOKS.BOOKAUTHORS.BOOKID</td>
-		<td class='type'></td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description'>[weak association]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>ID &#8594; PUBLIC.&quot;PUBLISHER SALES&quot;.SALES.BOOKID</td>
-		<td class='type'></td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>SYS_IDX_10072</td>
-		<td class='description'>[non-unique index]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>AUTHORID</td>
-		<td class='type'>ascending</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>SYS_IDX_PK_BOOKS_10071</td>
-		<td class='description'>[unique index]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>ID</td>
-		<td class='type'>ascending</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>SYS_CT_10068</td>
-		<td class='description'>[check constraint]</td>
-	</tr>
-	<tr>
-		<td colspan='3' class='definition'>FOR_LINT.BOOKS.ID IS NOT NULL</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>SYS_CT_10069</td>
-		<td class='description'>[check constraint]</td>
-	</tr>
-	<tr>
-		<td colspan='3' class='definition'>FOR_LINT.BOOKS.TITLE IS NOT NULL</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>SYS_CT_10070</td>
-		<td class='description'>[check constraint]</td>
-	</tr>
-	<tr>
-		<td colspan='3' class='definition'>FOR_LINT.BOOKS.AUTHORID IS NOT NULL</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>DELETE</td>
-		<td class='description'>[privilege]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
-		<td class='type'></td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>INSERT</td>
-		<td class='description'>[privilege]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
-		<td class='type'></td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>REFERENCES</td>
-		<td class='description'>[privilege]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
-		<td class='type'></td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>SELECT</td>
-		<td class='description'>[privilege]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
-		<td class='type'></td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>TRIGGER</td>
-		<td class='description'>[privilege]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
-		<td class='type'></td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>UPDATE</td>
-		<td class='description'>[privilege]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
-		<td class='type'></td>
-	</tr>
-</table>
-<p></p>
-
-<table>
-	<tr>
-		<td colspan='2' class='name underscore'>PUBLIC.FOR_LINT.&quot;Global Counts&quot;</td>
-		<td class='description underscore'>[table]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>&quot;Global Count&quot;</td>
-		<td class='type'>INTEGER</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>DELETE</td>
-		<td class='description'>[privilege]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
-		<td class='type'></td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>INSERT</td>
-		<td class='description'>[privilege]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
-		<td class='type'></td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>REFERENCES</td>
-		<td class='description'>[privilege]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
-		<td class='type'></td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>SELECT</td>
-		<td class='description'>[privilege]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
-		<td class='type'></td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>TRIGGER</td>
-		<td class='description'>[privilege]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
-		<td class='type'></td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>UPDATE</td>
-		<td class='description'>[privilege]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
-		<td class='type'></td>
-	</tr>
-</table>
-<p></p>
-
-<table>
-	<tr>
-		<td colspan='2' class='name underscore'>PUBLIC.FOR_LINT.No_Columns</td>
-		<td class='description underscore'>[table]</td>
+		<td colspan='3' class='definition'>FOR_LINT.WRITERS.PUBLICATION_ID IS NOT NULL</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
@@ -3761,18 +3682,6 @@ hr {
 	<tr>
 		<td class='ordinal'></td>
 		<td class='subname'>PUBLIC.BOOKS.BOOKS.ID &#8594; BOOKID</td>
-		<td class='type'></td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description'>[weak association]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>PUBLIC.FOR_LINT.BOOKS.ID &#8594; BOOKID</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -4160,15 +4069,15 @@ hr {
 		<td class='description'>20 rows</td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>PUBLIC.FOR_LINT.AUTHORS</td>
-		<td class='description'>empty</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.FOR_LINT.BOOKS</td>
-		<td class='description'>empty</td>
-	</tr>
-	<tr>
 		<td colspan='2' class='name'>PUBLIC.FOR_LINT.&quot;Global Counts&quot;</td>
+		<td class='description'>empty</td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>PUBLIC.FOR_LINT.PUBLICATIONS</td>
+		<td class='description'>empty</td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>PUBLIC.FOR_LINT.WRITERS</td>
 		<td class='description'>empty</td>
 	</tr>
 	<tr>
@@ -4918,7 +4827,32 @@ hr {
 <p></p>
 
 <table>
-  <caption>PUBLIC.FOR_LINT.AUTHORS</caption>
+  <caption>PUBLIC.FOR_LINT."Global Counts"</caption>
+
+	<tr>
+		<td class='name'>Global Count</td>
+	</tr>
+</table>
+<p></p>
+
+<table>
+  <caption>PUBLIC.FOR_LINT.PUBLICATIONS</caption>
+
+	<tr>
+		<td class='name'>ID</td>
+		<td class='name'>TITLE</td>
+		<td class='name'>DESCRIPTION</td>
+		<td class='name'>WRITERID</td>
+		<td class='name'>PUBLICATIONDATE</td>
+		<td class='name'>PRICE</td>
+		<td class='name'>UPDATE</td>
+		<td class='name'>PRESS_RELEASE</td>
+	</tr>
+</table>
+<p></p>
+
+<table>
+  <caption>PUBLIC.FOR_LINT.WRITERS</caption>
 
 	<tr>
 		<td class='name'>ID</td>
@@ -4938,31 +4872,7 @@ hr {
 		<td class='name'>FAX3</td>
 		<td class='name'>HOMEEMAIL11</td>
 		<td class='name'>HOMEEMAIL12</td>
-		<td class='name'>BOOK_ID</td>
-	</tr>
-</table>
-<p></p>
-
-<table>
-  <caption>PUBLIC.FOR_LINT.BOOKS</caption>
-
-	<tr>
-		<td class='name'>ID</td>
-		<td class='name'>TITLE</td>
-		<td class='name'>DESCRIPTION</td>
-		<td class='name'>AUTHORID</td>
-		<td class='name'>PUBLICATIONDATE</td>
-		<td class='name'>PRICE</td>
-		<td class='name'>UPDATE</td>
-	</tr>
-</table>
-<p></p>
-
-<table>
-  <caption>PUBLIC.FOR_LINT."Global Counts"</caption>
-
-	<tr>
-		<td class='name'>Global Count</td>
+		<td class='name'>PUBLICATION_ID</td>
 	</tr>
 </table>
 <p></p>
