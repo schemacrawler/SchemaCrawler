@@ -12,7 +12,7 @@
           SchemaCrawler can analyze and
           <a href="http://en.wikipedia.org/wiki/Lint_(software)">lint</a>
           your database to find potential issues. SchemaCrawler Lint can be run using the
-          <code>-infolevel=lint</code>
+          <code>-command=lint</code>
           command-line option.
         </p>
         <ul>
