@@ -216,100 +216,6 @@ hr {
 
 <table>
 	<tr>
-		<td colspan='2' class='name underscore'>PUBLIC.FOR_LINT.AUTHORS</td>
-		<td class='description underscore'>[table]</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description'>[lint, high]</td>
-	</tr>
-	<tr>
-		<td>foreign key and primary key have different data types</td>
-		<td colspan='2'>FK_AUTHORS_BOOK</td>
-	</tr>
-	<tr>
-		<td>redundant index</td>
-		<td colspan='2'>IDX_A1_AUTHORS</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description'>[lint, medium]</td>
-	</tr>
-	<tr>
-		<td>incrementing columns</td>
-		<td colspan='2'>PHONE1, PHONE2</td>
-	</tr>
-	<tr>
-		<td>incrementing columns</td>
-		<td colspan='2'>FAX, FAX3</td>
-	</tr>
-	<tr>
-		<td>incrementing columns</td>
-		<td colspan='2'>EMAIL1, EMAIL2</td>
-	</tr>
-	<tr>
-		<td>incrementing columns</td>
-		<td colspan='2'>ADDRESS1, ADDRESS2</td>
-	</tr>
-	<tr>
-		<td>incrementing columns</td>
-		<td colspan='2'>HOMEEMAIL11, HOMEEMAIL12</td>
-	</tr>
-	<tr>
-		<td>incrementing columns are not consecutive</td>
-		<td colspan='2'>FAX, FAX3</td>
-	</tr>
-	<tr>
-		<td>incrementing columns don&apos;t have the same data-type</td>
-		<td colspan='2'>PHONE1, PHONE2</td>
-	</tr>
-	<tr>
-		<td>incrementing columns don&apos;t have the same data-type</td>
-		<td colspan='2'>FAX, FAX3</td>
-	</tr>
-	<tr>
-		<td>incrementing columns don&apos;t have the same data-type</td>
-		<td colspan='2'>EMAIL1, EMAIL2</td>
-	</tr>
-	<tr>
-		<td>unique index with nullable columns</td>
-		<td colspan='2'>IDX_U_AUTHORS</td>
-	</tr>
-	<tr>
-		<td>column where NULL may be intended</td>
-		<td colspan='2'>ADDRESS2</td>
-	</tr>
-	<tr>
-		<td>column where NULL may be intended</td>
-		<td colspan='2'>COUNTRY</td>
-	</tr>
-</table>
-<p></p>
-
-<table>
-	<tr>
-		<td colspan='2' class='name underscore'>PUBLIC.FOR_LINT.BOOKS</td>
-		<td class='description underscore'>[table]</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description'>[lint, medium]</td>
-	</tr>
-	<tr>
-		<td>spaces in name, or reserved word</td>
-		<td colspan='2'>&quot;UPDATE&quot;</td>
-	</tr>
-</table>
-<p></p>
-
-<table>
-	<tr>
 		<td colspan='2' class='name underscore'>PUBLIC.FOR_LINT.&quot;Global Counts&quot;</td>
 		<td class='description underscore'>[table]</td>
 	</tr>
@@ -358,6 +264,108 @@ hr {
 	<tr>
 		<td>single column</td>
 		<td colspan='2'></td>
+	</tr>
+</table>
+<p></p>
+
+<table>
+	<tr>
+		<td colspan='2' class='name underscore'>PUBLIC.FOR_LINT.PUBLICATIONS</td>
+		<td class='description underscore'>[table]</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[lint, medium]</td>
+	</tr>
+	<tr>
+		<td>spaces in name, or reserved word</td>
+		<td colspan='2'>&quot;UPDATE&quot;</td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[lint, low]</td>
+	</tr>
+	<tr>
+		<td>too many binary objects</td>
+		<td colspan='2'>&quot;UPDATE&quot;, PRESS_RELEASE</td>
+	</tr>
+</table>
+<p></p>
+
+<table>
+	<tr>
+		<td colspan='2' class='name underscore'>PUBLIC.FOR_LINT.WRITERS</td>
+		<td class='description underscore'>[table]</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[lint, high]</td>
+	</tr>
+	<tr>
+		<td>foreign key and primary key have different data types</td>
+		<td colspan='2'>FK_WRITERS_PUBLICATION</td>
+	</tr>
+	<tr>
+		<td>redundant index</td>
+		<td colspan='2'>IDX_A1_WRITERS</td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[lint, medium]</td>
+	</tr>
+	<tr>
+		<td>unique index with nullable columns</td>
+		<td colspan='2'>IDX_U_WRITERS</td>
+	</tr>
+	<tr>
+		<td>column where NULL may be intended</td>
+		<td colspan='2'>ADDRESS2</td>
+	</tr>
+	<tr>
+		<td>column where NULL may be intended</td>
+		<td colspan='2'>COUNTRY</td>
+	</tr>
+	<tr>
+		<td>incrementing columns</td>
+		<td colspan='2'>PHONE1, PHONE2</td>
+	</tr>
+	<tr>
+		<td>incrementing columns</td>
+		<td colspan='2'>FAX, FAX3</td>
+	</tr>
+	<tr>
+		<td>incrementing columns</td>
+		<td colspan='2'>EMAIL1, EMAIL2</td>
+	</tr>
+	<tr>
+		<td>incrementing columns</td>
+		<td colspan='2'>ADDRESS1, ADDRESS2</td>
+	</tr>
+	<tr>
+		<td>incrementing columns</td>
+		<td colspan='2'>HOMEEMAIL11, HOMEEMAIL12</td>
+	</tr>
+	<tr>
+		<td>incrementing columns are not consecutive</td>
+		<td colspan='2'>FAX, FAX3</td>
+	</tr>
+	<tr>
+		<td>incrementing columns don&apos;t have the same data-type</td>
+		<td colspan='2'>PHONE1, PHONE2</td>
+	</tr>
+	<tr>
+		<td>incrementing columns don&apos;t have the same data-type</td>
+		<td colspan='2'>FAX, FAX3</td>
+	</tr>
+	<tr>
+		<td>incrementing columns don&apos;t have the same data-type</td>
+		<td colspan='2'>EMAIL1, EMAIL2</td>
 	</tr>
 </table>
 <p></p>
