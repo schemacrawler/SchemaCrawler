@@ -24,22 +24,20 @@ package schemacrawler.tools.lint.executable;
 import java.util.ArrayList;
 import java.util.List;
 
-import schemacrawler.schema.ColumnDataType;
-import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.lint.Lint;
 import schemacrawler.tools.lint.LintSeverity;
+import schemacrawler.tools.lint.LintedDatabase;
 import schemacrawler.tools.lint.SimpleLintCollector;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.BaseTabularFormatter;
 import schemacrawler.tools.text.utility.TextFormattingHelper.DocumentHeaderType;
-import schemacrawler.tools.traversal.SchemaTraversalHandler;
 import sf.util.Multimap;
 
 final class LintTextFormatter
   extends BaseTabularFormatter<LintOptions>
-  implements SchemaTraversalHandler
+  implements LintFormatter
 {
 
   LintTextFormatter(final LintOptions options, final OutputOptions outputOptions)
@@ -48,27 +46,25 @@ final class LintTextFormatter
     super(options, false, outputOptions);
   }
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handle(schemacrawler.schema.ColumnDataType)
-   */
   @Override
-  public void handle(final ColumnDataType columnDataType)
+  public void handle(final LintedDatabase database)
     throws SchemaCrawlerException
   {
+    final Lint<?>[] lints = SimpleLintCollector.getLint(database);
+    if (lints != null && lints.length > 0)
+    {
+      out.print(formattingHelper.createObjectStart(""));
 
-  }
+      final String nameRow = formattingHelper.createNameRow("",
+                                                            "[database]",
+                                                            true);
+      out.println(nameRow);
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handle(schemacrawler.schema.Procedure)
-   */
-  @Override
-  public void handle(final Procedure procedure)
-  {
+      printLints(lints);
+      out.println(formattingHelper.createObjectEnd());
 
+      out.flush();
+    }
   }
 
   /**
@@ -84,7 +80,7 @@ final class LintTextFormatter
     {
       out.print(formattingHelper.createObjectStart(""));
       printTableName(table);
-      printTableLints(lints);
+      printLints(lints);
       out.println(formattingHelper.createObjectEnd());
 
       out.flush();
@@ -94,53 +90,10 @@ final class LintTextFormatter
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handleColumnDataTypesEnd()
-   */
-  @Override
-  public void handleColumnDataTypesEnd()
-  {
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handleColumnDataTypesStart()
-   */
-  @Override
-  public void handleColumnDataTypesStart()
-  {
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handleProceduresEnd()
-   */
-  @Override
-  public void handleProceduresEnd()
-    throws SchemaCrawlerException
-  {
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handleProceduresStart()
-   */
-  @Override
-  public void handleProceduresStart()
-    throws SchemaCrawlerException
-  {
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
    * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handleTablesEnd()
    */
   @Override
-  public void handleTablesEnd()
-    throws SchemaCrawlerException
+  public void handleEnd()
   {
   }
 
@@ -150,14 +103,13 @@ final class LintTextFormatter
    * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handleTablesStart()
    */
   @Override
-  public void handleTablesStart()
-    throws SchemaCrawlerException
+  public void handleStart()
   {
     out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
-                                              "Tables"));
+                                              "Lints"));
   }
 
-  private void printTableLints(final Lint<?>[] lints)
+  private void printLints(final Lint<?>[] lints)
   {
     out.println(formattingHelper.createEmptyRow());
 

@@ -23,12 +23,12 @@ package schemacrawler.tools.lint.executable;
 import java.sql.Connection;
 
 import schemacrawler.schema.Database;
+import schemacrawler.schema.Schema;
+import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseExecutable;
 import schemacrawler.tools.lint.LintedDatabase;
 import schemacrawler.tools.options.OutputFormat;
-import schemacrawler.tools.traversal.SchemaTraversalHandler;
-import schemacrawler.tools.traversal.SchemaTraverser;
 
 public class LintExecutable
   extends BaseExecutable
@@ -68,19 +68,36 @@ public class LintExecutable
   {
     final LintedDatabase database = new LintedDatabase(db);
 
-    final SchemaTraversalHandler formatter = getSchemaTraversalHandler();
+    final LintFormatter formatter = getSchemaTraversalHandler();
 
-    final SchemaTraverser traverser = new SchemaTraverser();
-    traverser.setDatabase(database);
-    traverser.setFormatter(formatter);
-    traverser.traverse();
+    formatter.begin();
+
+    formatter.handleInfoStart();
+    formatter.handle(database.getSchemaCrawlerInfo());
+    formatter.handle(database.getDatabaseInfo());
+    formatter.handle(database.getJdbcDriverInfo());
+    formatter.handleInfoEnd();
+
+    formatter.handleStart();
+    formatter.handle(database);
+    for (final Schema schema: database.getSchemas())
+    {
+      final Table[] tables = schema.getTables();
+      for (final Table table: tables)
+      {
+        formatter.handle(table);
+      }
+    }
+    formatter.handleEnd();
+
+    formatter.end();
 
   }
 
-  private SchemaTraversalHandler getSchemaTraversalHandler()
+  private LintFormatter getSchemaTraversalHandler()
     throws SchemaCrawlerException
   {
-    final SchemaTraversalHandler formatter;
+    final LintFormatter formatter;
     final LintOptions lintOptions = getLintOptions();
 
     final OutputFormat outputFormat = outputOptions.getOutputFormat();
