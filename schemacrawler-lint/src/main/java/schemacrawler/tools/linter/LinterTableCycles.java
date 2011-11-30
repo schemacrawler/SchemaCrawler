@@ -20,10 +20,8 @@
 package schemacrawler.tools.linter;
 
 
-import schemacrawler.schema.Database;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnMap;
-import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
 import sf.util.DirectedGraph;
@@ -31,6 +29,8 @@ import sf.util.DirectedGraph;
 public class LinterTableCycles
   extends BaseLinter
 {
+
+  private DirectedGraph<Table> tablesGraph;
 
   @Override
   public String getDescription()
@@ -45,41 +45,56 @@ public class LinterTableCycles
   }
 
   @Override
-  public void lint(final Database database)
+  protected void end()
   {
-    if (database == null)
+    if (tablesGraph == null)
     {
-      throw new IllegalArgumentException("No database provided");
+      throw new IllegalArgumentException("Not initialized");
     }
 
-    final DirectedGraph<Table> tablesGraph = new DirectedGraph<Table>();
-    for (final Schema schema: database.getSchemas())
-    {
-      for (final Table table: schema.getTables())
-      {
-        tablesGraph.addVertex(table);
-        final ForeignKey[] foreignKeys = table.getForeignKeys();
-        for (final ForeignKey foreignKey: foreignKeys)
-        {
-          final ForeignKeyColumnMap[] columnPairs = foreignKey.getColumnPairs();
-          for (final ForeignKeyColumnMap columnPair: columnPairs)
-          {
-            tablesGraph.addDirectedEdge(columnPair.getPrimaryKeyColumn()
-              .getParent(), columnPair.getForeignKeyColumn().getParent());
-          }
-        }
-      }
-    }
     if (tablesGraph.containsCycle())
     {
-      addLint(database, getSummary(), Boolean.TRUE);
+      addLint(getSummary(), Boolean.TRUE);
     }
+
+    tablesGraph = null;
+
+    super.end();
   }
 
   @Override
   protected void lint(final Table table)
   {
-    // No-op
+    if (table == null)
+    {
+      throw new IllegalArgumentException("No table provided");
+    }
+
+    if (tablesGraph == null)
+    {
+      throw new IllegalArgumentException("Not initialized");
+    }
+
+    tablesGraph.addVertex(table);
+    final ForeignKey[] foreignKeys = table.getForeignKeys();
+    for (final ForeignKey foreignKey: foreignKeys)
+    {
+      final ForeignKeyColumnMap[] columnPairs = foreignKey.getColumnPairs();
+      for (final ForeignKeyColumnMap columnPair: columnPairs)
+      {
+        tablesGraph.addDirectedEdge(columnPair.getPrimaryKeyColumn()
+          .getParent(), columnPair.getForeignKeyColumn().getParent());
+      }
+    }
+
+  }
+
+  @Override
+  protected void start()
+  {
+    super.start();
+
+    tablesGraph = new DirectedGraph<Table>();
   }
 
 }

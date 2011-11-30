@@ -32,6 +32,7 @@ import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaCrawlerInfo;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 
 public final class LintedDatabase
   implements Database
@@ -46,6 +47,7 @@ public final class LintedDatabase
   private final LintCollector collector;
 
   public LintedDatabase(final Database database)
+    throws SchemaCrawlerException
   {
     if (database == null)
     {

@@ -58,7 +58,7 @@ public class LinterRedundantIndices
   }
 
   @Override
-  public void lint(final Table table)
+  protected void lint(final Table table)
   {
     if (table != null && !(table instanceof View))
     {

@@ -9,3 +9,4 @@ schemacrawler.tools.linter.LinterTableWithNoIndices
 schemacrawler.tools.linter.LinterTableWithQuotedNames
 schemacrawler.tools.linter.LinterTableWithSingleColumn
 schemacrawler.tools.linter.LinterTooManyLobs
+schemacrawler.tools.linter.LinterColumnTypes

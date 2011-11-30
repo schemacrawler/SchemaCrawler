@@ -39,6 +39,8 @@ public abstract class BaseLinter
   private LintCollector collector;
   private LintSeverity severity = LintSeverity.medium;
 
+  private Database database;
+
   @Override
   public String getId()
   {
@@ -58,13 +60,15 @@ public abstract class BaseLinter
   }
 
   @Override
-  public void lint(final Database database)
+  public final void lint(final Database database)
   {
     if (database == null)
     {
       throw new IllegalArgumentException("No database provided");
     }
 
+    this.database = database;
+    start();
     for (final Schema schema: database.getSchemas())
     {
       for (final Table table: schema.getTables())
@@ -72,13 +76,16 @@ public abstract class BaseLinter
         lint(table);
       }
     }
+    end();
+    this.database = null;
+
   }
 
   @Override
   public void setLintCollector(final LintCollector lintCollector)
   {
     collector = lintCollector;
-  }
+  };
 
   @Override
   public final void setLintSeverity(final LintSeverity severity)
@@ -87,7 +94,7 @@ public abstract class BaseLinter
     {
       this.severity = severity;
     }
-  }
+  };
 
   protected <V extends Serializable> void addLint(final NamedObject namedObject,
                                                   final String message,
@@ -104,7 +111,24 @@ public abstract class BaseLinter
     }
   }
 
+  protected <V extends Serializable> void addLint(final String message,
+                                                  final V value)
+  {
+    if (database != null)
+    {
+      addLint(database, message, value);
+    }
+  }
+
+  protected void end()
+  {
+  }
+
   protected abstract void lint(Table table);
+
+  protected void start()
+  {
+  }
 
   private <V extends Serializable> Lint<V> newLint(final String objectName,
                                                    final String message,
