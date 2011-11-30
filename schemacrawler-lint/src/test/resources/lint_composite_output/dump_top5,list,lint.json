@@ -77,7 +77,8 @@
       "type": "table"
     }
   ]},
-{"table_lints": [
+{
+  "table_lints": [
     {
       "name": "\"Global Counts\"",
       "lints": [
@@ -219,4 +220,19 @@
       "fullName": "PUBLIC.FOR_LINT.WRITERS",
       "type": "table"
     }
-  ]}]
+  ],
+  "database_lints": {"lints": [
+      {
+        "id": "schemacrawler.tools.linter.LinterColumnTypes",
+        "description": "column with same name but different data types",
+        "value": "ID [INTEGER, BIGINT]",
+        "severity": "medium"
+      },
+      {
+        "id": "schemacrawler.tools.linter.LinterTableCycles",
+        "description": "cycles in table relationships",
+        "value": "true",
+        "severity": "medium"
+      }
+    ]}
+}]

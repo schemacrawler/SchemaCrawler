@@ -23,22 +23,20 @@ package schemacrawler.tools.lint.executable;
 
 import java.util.logging.Level;
 
-import schemacrawler.schema.ColumnDataType;
-import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.lint.Lint;
+import schemacrawler.tools.lint.LintedDatabase;
 import schemacrawler.tools.lint.SimpleLintCollector;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.BaseJsonFormatter;
 import schemacrawler.tools.text.utility.org.json.JSONArray;
 import schemacrawler.tools.text.utility.org.json.JSONException;
 import schemacrawler.tools.text.utility.org.json.JSONObject;
-import schemacrawler.tools.traversal.SchemaTraversalHandler;
 
 final class LintJsonFormatter
   extends BaseJsonFormatter<LintOptions>
-  implements SchemaTraversalHandler
+  implements LintFormatter
 {
 
   LintJsonFormatter(final LintOptions options, final OutputOptions outputOptions)
@@ -48,21 +46,25 @@ final class LintJsonFormatter
   }
 
   @Override
-  public void handle(final ColumnDataType columnDataType)
+  public void handle(final LintedDatabase database)
     throws SchemaCrawlerException
   {
-  }
+    final Lint<?>[] lints = SimpleLintCollector.getLint(database);
+    if (lints != null && lints.length > 0)
+    {
+      final JSONObject jsonDatabase = new JSONObject();
+      try
+      {
+        jsonRoot.accumulate("database_lints", jsonDatabase);
 
-  /**
-   * Provides information on the database schema.
-   * 
-   * @param procedure
-   *        Procedure metadata.
-   */
-  @Override
-  public void handle(final Procedure procedure)
-  {
-
+        final JSONArray jsonLints = handleLints(lints);
+        jsonDatabase.put("lints", jsonLints);
+      }
+      catch (final JSONException e)
+      {
+        LOGGER.log(Level.FINER, "Error outputting Table: " + e.getMessage(), e);
+      }
+    }
   }
 
   /**
@@ -97,36 +99,12 @@ final class LintJsonFormatter
   }
 
   @Override
-  public void handleColumnDataTypesEnd()
+  public void handleEnd()
   {
   }
 
   @Override
-  public void handleColumnDataTypesStart()
-  {
-  }
-
-  @Override
-  public void handleProceduresEnd()
-    throws SchemaCrawlerException
-  {
-  }
-
-  @Override
-  public void handleProceduresStart()
-    throws SchemaCrawlerException
-  {
-  }
-
-  @Override
-  public void handleTablesEnd()
-    throws SchemaCrawlerException
-  {
-  }
-
-  @Override
-  public void handleTablesStart()
-    throws SchemaCrawlerException
+  public void handleStart()
   {
   }
 

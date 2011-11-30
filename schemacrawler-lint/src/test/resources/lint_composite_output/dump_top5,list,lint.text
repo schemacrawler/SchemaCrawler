@@ -66,8 +66,16 @@ PUBLIC.FOR_LINT.WRITERS                                          [table]
 
 
 
-Tables
+Lints
 ========================================================================
+
+
+                                                              [database]
+------------------------------------------------------------------------
+
+                                                          [lint, medium]
+column with same name but different data types  ID [INTEGER, BIGINT]
+cycles in table relationships         
 
 
 PUBLIC.FOR_LINT."Global Counts"                                  [table]

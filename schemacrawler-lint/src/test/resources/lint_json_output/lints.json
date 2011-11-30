@@ -148,6 +148,20 @@
     "databaseUserName": "SA",
     "databaseProductVersion": "2.2.6"
   },
+  "database_lints": {"lints": [
+      {
+        "id": "schemacrawler.tools.linter.LinterColumnTypes",
+        "description": "column with same name but different data types",
+        "value": "ID [INTEGER, BIGINT]",
+        "severity": "medium"
+      },
+      {
+        "id": "schemacrawler.tools.linter.LinterTableCycles",
+        "description": "cycles in table relationships",
+        "value": "true",
+        "severity": "medium"
+      }
+    ]},
   "schemaCrawlerInfo": {
     "productVersion": "8.9",
     "productName": "SchemaCrawler"
