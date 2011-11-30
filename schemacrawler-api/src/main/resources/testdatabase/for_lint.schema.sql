@@ -1,7 +1,7 @@
 
 CREATE TABLE Writers
 (
-  Id INTEGER NOT NULL,
+  Id BIGINT NOT NULL,
   FirstName VARCHAR(20) NOT NULL,
   LastName VARCHAR(20) NOT NULL,
   Address1 VARCHAR(255),
@@ -29,7 +29,7 @@ CREATE TABLE Publications
   Id INTEGER NOT NULL,
   Title VARCHAR(255) NOT NULL,
   Description VARCHAR(255),
-  WriterId INTEGER NOT NULL,
+  WriterId BIGINT NOT NULL,
   PublicationDate DATE,
   Price FLOAT,
   "UPDATE" CLOB,
