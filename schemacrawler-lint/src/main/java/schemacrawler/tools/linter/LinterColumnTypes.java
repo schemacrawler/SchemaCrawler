@@ -20,24 +20,22 @@
 package schemacrawler.tools.linter;
 
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map.Entry;
+import java.util.Set;
 
-import schemacrawler.crawl.JavaSqlType.JavaSqlTypeGroup;
-import schemacrawler.crawl.JavaSqlTypesUtility;
 import schemacrawler.schema.Column;
+import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
-import schemacrawler.tools.lint.LintSeverity;
+import sf.util.Multimap;
 
-public class LinterTooManyLobs
+public class LinterColumnTypes
   extends BaseLinter
 {
 
-  public LinterTooManyLobs()
-  {
-    setLintSeverity(LintSeverity.low);
-  }
+  private Multimap<String, ColumnDataType> columnTypes;
 
   @Override
   public String getDescription()
@@ -48,7 +46,31 @@ public class LinterTooManyLobs
   @Override
   public String getSummary()
   {
-    return "too many binary objects";
+    return "column with same name but different data types";
+  }
+
+  @Override
+  protected void end()
+  {
+    if (columnTypes == null)
+    {
+      throw new IllegalArgumentException("Not initialized");
+    }
+
+    for (final Entry<String, List<ColumnDataType>> entry: columnTypes
+      .entrySet())
+    {
+      final Set<ColumnDataType> currentColumnTypes = new HashSet<ColumnDataType>(entry
+        .getValue());
+      if (currentColumnTypes.size() > 1)
+      {
+        addLint(getSummary(), entry.getKey() + " " + currentColumnTypes);
+      }
+    }
+
+    columnTypes = null;
+
+    super.end();
   }
 
   @Override
@@ -59,28 +81,23 @@ public class LinterTooManyLobs
       throw new IllegalArgumentException("No table provided");
     }
 
-    final List<Column> lobColumns = findLobColumns(table.getColumns());
-    if (lobColumns.size() > 1)
+    if (columnTypes == null)
     {
-      final Column[] columns = lobColumns
-        .toArray(new Column[lobColumns.size()]);
-      addLint(table, getSummary(), columns);
+      throw new IllegalArgumentException("Not initialized");
+    }
+
+    for (final Column column: table.getColumns())
+    {
+      columnTypes.add(column.getName(), column.getType());
     }
   }
 
-  private List<Column> findLobColumns(final Column[] columns)
+  @Override
+  protected void start()
   {
-    final List<Column> lobColumns = new ArrayList<Column>();
-    for (final Column column: columns)
-    {
-      final JavaSqlTypeGroup javaSqlTypeGroup = JavaSqlTypesUtility
-        .lookupSqlDataType(column.getType().getType()).getJavaSqlTypeGroup();
-      if (javaSqlTypeGroup == JavaSqlTypeGroup.large_object)
-      {
-        lobColumns.add(column);
-      }
-    }
-    return lobColumns;
+    super.start();
+
+    columnTypes = new Multimap<String, ColumnDataType>();
   }
 
 }

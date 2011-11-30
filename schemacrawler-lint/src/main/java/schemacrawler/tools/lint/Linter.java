@@ -21,6 +21,7 @@ package schemacrawler.tools.lint;
 
 
 import schemacrawler.schema.Database;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 
 public interface Linter
 {
@@ -35,7 +36,8 @@ public interface Linter
 
   String getSummary();
 
-  void lint(Database database);
+  void lint(Database database)
+    throws SchemaCrawlerException;
 
   void setLintCollector(LintCollector lintCollector);
 

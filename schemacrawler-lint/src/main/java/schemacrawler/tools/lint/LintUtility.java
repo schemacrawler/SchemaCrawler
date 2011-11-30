@@ -32,6 +32,21 @@ import schemacrawler.schema.IndexColumn;
 public class LintUtility
 {
 
+  public static final List<String> columns(final Index index)
+  {
+    if (index == null)
+    {
+      return Collections.emptyList();
+    }
+
+    final List<String> columnNames = new ArrayList<String>();
+    for (final IndexColumn indexColumn: index.getColumns())
+    {
+      columnNames.add(indexColumn.getFullName());
+    }
+    return columnNames;
+  }
+
   public static final List<String> foreignKeyColumns(final ForeignKey foreignKey)
   {
     if (foreignKey == null)
@@ -44,21 +59,6 @@ public class LintUtility
     for (final ForeignKeyColumnMap columnPair: columnPairs)
     {
       columnNames.add(columnPair.getForeignKeyColumn().getFullName());
-    }
-    return columnNames;
-  }
-
-  public static final List<String> columns(final Index index)
-  {
-    if (index == null)
-    {
-      return Collections.emptyList();
-    }
-
-    final List<String> columnNames = new ArrayList<String>();
-    for (final IndexColumn indexColumn: index.getColumns())
-    {
-      columnNames.add(indexColumn.getFullName());
     }
     return columnNames;
   }

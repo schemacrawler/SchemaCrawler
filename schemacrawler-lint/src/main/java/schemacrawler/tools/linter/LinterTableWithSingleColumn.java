@@ -41,7 +41,7 @@ public class LinterTableWithSingleColumn
   }
 
   @Override
-  public void lint(final Table table)
+  protected void lint(final Table table)
   {
     if (table == null)
     {
