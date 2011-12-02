@@ -53,7 +53,7 @@
     <module>schemacrawler-tools</module>
     <module>schemacrawler-commandline</module>
     <module>schemacrawler-integrations</module>
-	<module>schemacrawler-lint</module>
+    <module>schemacrawler-lint</module>
     <module>schemacrawler-db2</module>
     <module>schemacrawler-derby</module>
     <module>schemacrawler-hsqldb</module>
@@ -141,7 +141,7 @@
               <detectOfflineLinks>true</detectOfflineLinks>
               <stylesheetfile>${basedir}/src/javadoc/javadocs.css</stylesheetfile>
               <links>
-                <link>http://download.oracle.com/javase/1.5.0/docs/api/</link>
+                <link>http://docs.oracle.com/javase/6/docs/api/</link>
               </links>
             </configuration>
           </execution>
