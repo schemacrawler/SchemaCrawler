@@ -41,7 +41,7 @@ PUBLIC.FOR_LINT.PUBLICATIONS                                     [table]
   ID                                INTEGER not null            
   TITLE                             VARCHAR(255) not null       
   DESCRIPTION                       VARCHAR(255)                
-  WRITERID                          INTEGER not null            
+  WRITERID                          BIGINT not null             
   PUBLICATIONDATE                   DATE                        
   PRICE                             DOUBLE(64, 0)               
   "UPDATE"                          CLOB                        

@@ -543,14 +543,14 @@
           "size": 255
         },
         {
-          "dataType": "INTEGER",
+          "dataType": "BIGINT",
           "decimalDigits": 0,
           "width": "",
           "name": "WRITERID",
           "ordinal": 4,
           "nullable": false,
-          "databaseSpecificType": "INTEGER",
-          "size": 32
+          "databaseSpecificType": "BIGINT",
+          "size": 64
         },
         {
           "dataType": "DATE",
@@ -649,14 +649,14 @@
       "name": "WRITERS",
       "columns": [
         {
-          "dataType": "INTEGER",
+          "dataType": "BIGINT",
           "decimalDigits": 0,
           "width": "",
           "name": "ID",
           "ordinal": 1,
           "nullable": false,
-          "databaseSpecificType": "INTEGER",
-          "size": 32
+          "databaseSpecificType": "BIGINT",
+          "size": 64
         },
         {
           "dataType": "VARCHAR",

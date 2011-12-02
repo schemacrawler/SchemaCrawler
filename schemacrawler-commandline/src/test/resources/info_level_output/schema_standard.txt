@@ -148,7 +148,7 @@ PUBLIC.FOR_LINT.PUBLICATIONS                                     [table]
   ID                                INTEGER not null            
   TITLE                             VARCHAR(255) not null       
   DESCRIPTION                       VARCHAR(255)                
-  WRITERID                          INTEGER not null            
+  WRITERID                          BIGINT not null             
   PUBLICATIONDATE                   DATE                        
   PRICE                             DOUBLE(64, 0)               
   "UPDATE"                          CLOB                        
@@ -172,7 +172,7 @@ SYS_IDX_10072                                         [non-unique index]
 
 PUBLIC.FOR_LINT.WRITERS                                          [table]
 ------------------------------------------------------------------------
-  ID                                INTEGER not null            
+  ID                                BIGINT not null             
   FIRSTNAME                         VARCHAR(20) not null        
   LASTNAME                          VARCHAR(20) not null        
   ADDRESS1                          VARCHAR(255)                

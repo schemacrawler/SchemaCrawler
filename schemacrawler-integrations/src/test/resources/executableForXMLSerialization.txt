@@ -7862,7 +7862,7 @@ generate schema diagrams.</schemaCrawlerAbout>
                           </entry>
                           <entry>
                             <string>SQL_DATA_TYPE</string>
-                            <int>4</int>
+                            <int>25</int>
                           </entry>
                           <entry>
                             <string>SQL_DATETIME_SUB</string>
@@ -7871,9 +7871,9 @@ generate schema diagrams.</schemaCrawlerAbout>
                         </attributeMap>
                         <schema class="schema" reference="854"/>
                         <parent class="table" reference="940"/>
-                        <type class="columnDataType" reference="215"/>
+                        <type class="columnDataType" reference="184"/>
                         <ordinalPosition>4</ordinalPosition>
-                        <size>32</size>
+                        <size>64</size>
                         <decimalDigits>0</decimalDigits>
                         <nullable>false</nullable>
                         <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
@@ -7924,7 +7924,7 @@ generate schema diagrams.</schemaCrawlerAbout>
                             </entry>
                             <entry>
                               <string>SQL_DATA_TYPE</string>
-                              <int>4</int>
+                              <int>25</int>
                             </entry>
                             <entry>
                               <string>SQL_DATETIME_SUB</string>
@@ -9880,9 +9880,9 @@ generate schema diagrams.</schemaCrawlerAbout>
                             </privileges>
                             <sortIndex>0</sortIndex>
                           </parent>
-                          <type class="columnDataType" reference="215"/>
+                          <type class="columnDataType" reference="184"/>
                           <ordinalPosition>1</ordinalPosition>
-                          <size>32</size>
+                          <size>64</size>
                           <decimalDigits>0</decimalDigits>
                           <nullable>false</nullable>
                           <isPartOfPrimaryKey>true</isPartOfPrimaryKey>

@@ -123,7 +123,7 @@ PUBLIC.FOR_LINT.PUBLICATIONS                                     [table]
 5   PUBLICATIONDATE                   DATE                        
 2   TITLE                             VARCHAR(255) not null       
 7   "UPDATE"                          CLOB                        
-4   WRITERID                          INTEGER not null            
+4   WRITERID                          BIGINT not null             
 
 PK_PUBLICATIONS                                            [primary key]
 1   ID                                ascending                   
@@ -154,7 +154,7 @@ PUBLIC.FOR_LINT.WRITERS                                          [table]
 2   FIRSTNAME                         VARCHAR(20) not null        
 16  HOMEEMAIL11                       VARCHAR(10)                 
 17  HOMEEMAIL12                       VARCHAR(10)                 
-1   ID                                INTEGER not null            
+1   ID                                BIGINT not null             
 3   LASTNAME                          VARCHAR(20) not null        
 10  PHONE1                            VARCHAR(10)                 
 11  PHONE2                            VARCHAR(15)                 

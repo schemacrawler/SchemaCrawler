@@ -13,30 +13,99 @@
           <a href="http://en.wikipedia.org/wiki/Lint_(software)">lint</a>
           your database to find potential issues. SchemaCrawler Lint can be run using the
           <code>-command=lint</code>
-          command-line option.
+          command-line option. A lint report will be produced in any specified format - either text,
+          CSV, XHTML or JSON.
         </p>
+        <p>SchemaCrawler Lint is a separate jar, and contains both the framework for doing database
+          schema lints, as well as some checks for common database schema design issues. You can
+          extend this by creating your own jar that contains lint checks.</p>
+      </subsection>
+      <subsection name="SchemaCrawler Lint Reports">
+        <p>
+          SchemaCrawler Lint can produce reports in
+          <a href="lint-report-examples/lint_report.txt">text</a>
+          ,
+          <a href="lint-report-examples/lint_report.html">XHTML</a>
+          or
+          <a href="lint-report-examples/lint_report.json">JSON</a>
+          format. (Click on the links for example reports.)
+        </p>
+      </subsection>
+      <subsection name="Lint Checks">
+        <p>SchemaCrawler Lint has a number of lint checks built-in. These are prioritized as
+          critical, high, medium and low. The results are shown on the lint report. The checks are:</p>
         <ul>
-          <li>Tables with incrementing column names, for example, a table with column names like contact1, contact2 and
-            so on can indicate de-normalization. SchemaCrawler Lint will flag such tables with a lint message.</li>
-          <li>SchemaCrawler Lint will flag tables with just a single column with a lint message, since this could
-            indicate a schema design smell.</li>
-          <li>SchemaCrawler Lint will flag tables with no indices with a lint message.</li>
-          <li>Tables where the default value is 'NULL' instead of NULL may indicate a error when creating a table.
-            SchemaCrawler Lint will flag such tables with a lint message.</li>
-          <li>SchemaCrawler Lint will flag tables that have nullable columns in a unique index, with a lint message.
+          <li>
+            <p>Tables with incrementing column names, for example, a table with column names like
+              CONTACT1, CONTACT2 and so on can indicate de-normalization.</p>
+            <p>Additionally, SchemaCrawler Lint will check that the data-types of all incrementing
+              columns are the same, and that no numbers are skipped.</p>
           </li>
-          <li>SchemaCrawler Lint will flag tables that have space in table or column names, or names that are reserved
-            words in the ANSI SQL standard, with a lint message.
+          <li>
+            <p>Tables with no columns at all, or just a single column could indicate a
+              schema design
+              smell.</p>
+          </li>
+          <li>
+            <p>Tables with no indices.</p>
+          </li>
+          <li>
+            <p>Tables where the default value is 'NULL' instead of NULL may indicate a error when
+              creating a table.</p>
+          </li>
+          <li>
+            <p>Tables that have nullable columns in a unique index.</p>
+          </li>
+          <li>
+            <p>Tables that have spaces in table or column names, or
+              names that are reserved words in
+              the ANSI SQL standard.</p>
+          </li>
+          <li>
+            <p>Tables that have too many large objects (CLOBs or BLOBs), since these could result in
+              additional reads when returning query
+              results.</p>
+          </li>
+          <li>
+            <p>Tables foreign key and primary key have different data types.</p>
+          </li>
+          <li>
+            <p>Columns in different tables, that have the same name but have different data types.</p>
+          </li>
+          <li>
+            <p>Cyclical relationships between tables, which could cause issues with deletes and
+              inserts.</p>
+          </li>
+          <li>
+            <p>Tables with redundant indices. A redundant index is one where the sequence of columns
+              is the same as the first few columns of another
+              index. For example, the index
+              "INDEX_B(COL1)" is not needed when you have another index, "INDEX_A(COL1, COL2)".</p>
           </li>
         </ul>
-        <p>SchemaCrawler Lint also analyzes the database for weak associations. Weak associations are inferred
-          associations between tables, similar to forign keys, even if there is no
-          foreign key defined in the database
-          between the tables. Ruby on Rails table schemes are supported, as well as
-          other simple naming conventions.
-          Table name prefixes are automatically detected. Weak associations are output
-          in the graphs as a dotted line,
-          and are also output in the text formats.</p>
+      </subsection>
+      <subsection name="Lint Extensions">
+        <p>SchemaCrawler Lint is very easily extended for custom database schema checks. The main
+          districution has example code. In order to add
+          your own lint checks,</p>
+        <ul>
+          <li>
+            Create a class that extends
+            <code>schemacrawler.tools.lint.Linter</code>
+            - it is easiest to extend
+            <code>schemacrawler.tools.lint.BaseLinter</code>
+            , since you get convenient
+            <code>addLint</code>
+            methods
+          </li>
+          <li>
+            Package your code in a jar file, and make sure that the jar has a text file called
+            <code>META-INF\services\schemacrawler.tools.lint.Linter</code>
+            , which contains the classnames of your linter classes
+          </li>
+          <li>Drop your jar file in the SchemaCrawler lib directory, and create a SchemaCrawler Lint
+            report</li>
+        </ul>
       </subsection>
     </section>
   </body>
