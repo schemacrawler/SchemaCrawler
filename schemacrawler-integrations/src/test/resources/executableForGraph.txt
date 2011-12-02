@@ -253,7 +253,7 @@ digraph SchemaCrawler_Diagram {
         <tr>
           <td port="writerid_1c21d0e5.start" align="left">WRITERID</td>
           <td> </td>
-          <td port="writerid_1c21d0e5.end" align="right">INTEGER</td>
+          <td port="writerid_1c21d0e5.end" align="right">BIGINT</td>
         </tr>
       </table>
     >];
@@ -321,7 +321,7 @@ digraph SchemaCrawler_Diagram {
         <tr>
           <td port="id_3033cfb9.start" align="left"><font face="Helvetica-BoldOblique">ID</font></td>
           <td> </td>
-          <td port="id_3033cfb9.end" align="right">INTEGER</td>
+          <td port="id_3033cfb9.end" align="right">BIGINT</td>
         </tr>
         <tr>
           <td port="lastname_8d949a3f.start" align="left">LASTNAME</td>

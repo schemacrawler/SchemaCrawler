@@ -64,7 +64,7 @@ SELECT ID,FIRSTNAME,LASTNAME FROM BOOKS.AUTHORS
 
 PUBLIC.FOR_LINT.WRITERS                                          [table]
 ------------------------------------------------------------------------
-  ID                                INTEGER not null            
+  ID                                BIGINT not null             
   FIRSTNAME                         VARCHAR(20) not null        
   LASTNAME                          VARCHAR(20) not null        
   ADDRESS1                          VARCHAR(255)                
