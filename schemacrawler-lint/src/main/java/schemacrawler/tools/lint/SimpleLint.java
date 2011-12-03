@@ -79,8 +79,6 @@ public final class SimpleLint<V extends Serializable>
 
   /**
    * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.lint.Lint#compareTo(schemacrawler.tools.lint.SimpleLint)
    */
   @Override
   public final int compareTo(final Lint<?> lint)

@@ -124,9 +124,7 @@
       <question> Can SchemaCrawler be used with Maven? </question>
       <answer>
         <p>Yes SchemaCrawler can be used in a Maven project as an API, or to generate Maven reports in your projects. In
-          order to use SchemaCrawler in your Maven projects, add a repositories pointing to the location of the
-          Sonatype
-          Nexus public repository in your pom.xml. Then, add a dependency to SchemaCrawler in your pom.xml.
+          order to use SchemaCrawler in your Maven projects, simply add a dependency to SchemaCrawler in your pom.xml.
         </p>
         <p>
           <i>

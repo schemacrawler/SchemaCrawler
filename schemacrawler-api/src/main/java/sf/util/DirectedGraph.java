@@ -126,9 +126,6 @@ public class DirectedGraph<T extends Comparable<? super T>>
 
   /**
    * Vertex in a graph.
-   * 
-   * @param <T>
-   *        Type of node object
    */
   public class Vertex
   {

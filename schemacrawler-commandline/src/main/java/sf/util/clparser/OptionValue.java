@@ -100,11 +100,6 @@ public final class OptionValue<T>
     return option.getShortForm();
   }
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see Option#getValue()
-   */
   public T getValue()
   {
     final T returnValue;
@@ -141,21 +136,11 @@ public final class OptionValue<T>
     return option.hasShortForm();
   }
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see Option#isFound()
-   */
   public boolean isFound()
   {
     return value != null;
   }
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see java.lang.Object#toString()
-   */
   @Override
   public String toString()
   {
