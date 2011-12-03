@@ -83,30 +83,7 @@
     </section>
     <section name="Using SchemaCrawler in Your Projects">
       <subsection name="Maven Projects">
-        <p>In order to use SchemaCrawler in your Maven projects, add a repositories pointing to the location of the
-          Sonatype Nexus public repository in your pom.xml.
-        </p>
-        <source><![CDATA[
-<repositories>
-  ...
-  <repository>
-    <id>sonatype-nexus</id>
-    <name>Sonatype Nexus</name>
-    <url>http://oss.sonatype.org/content/groups/public</url>
-    <releases>
-      <enabled>true</enabled>
-      <updatePolicy>daily</updatePolicy>
-      <checksumPolicy>fail</checksumPolicy>
-    </releases>
-    <snapshots>
-      <enabled>true</enabled>
-      <updatePolicy>always</updatePolicy>
-      <checksumPolicy>fail</checksumPolicy>
-    </snapshots>
-  </repository>
-</repositories>
-				]]></source>
-        <p>Then, add a dependency to SchemaCrawler in your pom.xml.</p>
+        <p>In order to use SchemaCrawler in your Maven projects, add a dependency to SchemaCrawler in your pom.xml.</p>
         <source><![CDATA[
 <dependencies>
   ...

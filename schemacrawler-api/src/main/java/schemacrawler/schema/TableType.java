@@ -31,37 +31,13 @@ import java.util.Locale;
 public enum TableType
 {
 
-  /**
-   * Unknown
-   */
   unknown,
-  /**
-   * System table
-   */
   system_table,
-  /**
-   * Global temporary
-   */
   global_temporary,
-  /**
-   * Local temporary
-   */
   local_temporary,
-  /**
-   * Table
-   */
   table,
-  /**
-   * View
-   */
   view,
-  /**
-   * Alias
-   */
   alias,
-  /**
-   * Synonym
-   */
   synonym, ;
 
   /**
