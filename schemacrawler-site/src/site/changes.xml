@@ -9,6 +9,9 @@
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Added SchemaCrawler Lint as a separate report, with extensible code.
       ]]></action>
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Fixed issue with constraints with the same name in different schemas.
+      ]]></action>
     </release>
     <release version="8.8" date="2011-11-05">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
