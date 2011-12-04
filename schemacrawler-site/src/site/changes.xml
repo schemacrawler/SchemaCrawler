@@ -5,6 +5,11 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+    <release version="8.9" date="2011-12-03">
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added SchemaCrawler Lint as a separate report, with extensible code.
+      ]]></action>
+    </release>
     <release version="8.8" date="2011-11-05">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Added JSON and TSV output formats.
