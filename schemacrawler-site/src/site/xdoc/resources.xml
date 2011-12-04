@@ -6,9 +6,50 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+    <section name="Documentation">
+      <subsection name="SchemaCrawler Whitepapers and Documentation">
+        <p>To read more about SchemaCrawler, you can read:</p>
+        <ul>
+          <li>
+            IT journalist Lee Schlesinger's blog on
+            <a href="http://www.schlesinger.us/?p=650">
+              SchemaCrawler
+            </a>
+          </li>
+          <li>
+            <a href="http://www.devx.com/Java/Article/32443">
+              Java API Makes Database Metadata as Easily Accessible as
+              POJOs
+            </a>
+            for an introduction to the SchemaCrawler API. (This article may
+            refer to an older release
+            of the
+            SchemaCrawler API, but the
+            concepts are the same.)
+          </li>
+          <li>
+            The SchemaCrawler API
+            <a href="apidocs/index.html">javadocs
+            </a>
+            .
+          </li>
+        </ul>
+      </subsection>
+      <subsection name="SchemaCrawler Slides">
+        <div style="width:425px" id="__ss_8267188">
+          <strong style="display:block;margin:12px 0 4px">
+            <a href="http://www.slideshare.net/sualeh/schemacrawler" title="SchemaCrawler" target="_blank">SchemaCrawler
+            </a>
+          </strong>
+          <iframe src="http://www.slideshare.net/slideshow/embed_code/8267188" width="425"
+            height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+        </div>
+      </subsection>
+    </section>
     <section name="Presentations">
       <subsection name="Sualeh's Presentation at NEJUG">
-        <iframe width="560" height="345" src="http://www.youtube.com/embed/zYPfOzImuTk" frameborder="0"></iframe>
+        <iframe width="560" height="345" src="http://www.youtube.com/embed/zYPfOzImuTk"
+          frameborder="0"></iframe>
       </subsection>
     </section>
     <section name="Tutorials">
@@ -16,7 +57,8 @@
         <p>
           Fred Forester's tutorial on using SchemaCrawler to explore an unknown schema.
         </p>
-        <iframe width="560" height="345" src="http://www.youtube.com/embed/iWwDGjTW05c" frameborder="0"></iframe>
+        <iframe width="560" height="345" src="http://www.youtube.com/embed/iWwDGjTW05c"
+          frameborder="0"></iframe>
       </subsection>
     </section>
   </body>

@@ -104,7 +104,7 @@
     <faq id="supported-os">
       <question> What operating systems does SchemaCrawler work with?  </question>
       <answer>
-        <p> SchemaCrawler works with any operating system that supports J2SE 5 and above. </p>
+        <p> SchemaCrawler works with any operating system that supports J2SE 6 and above. </p>
       </answer>
     </faq>
     <faq id="ant">
