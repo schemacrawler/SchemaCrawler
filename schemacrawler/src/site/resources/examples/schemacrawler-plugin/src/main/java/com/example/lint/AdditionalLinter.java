@@ -2,17 +2,11 @@ package com.example.lint;
 
 
 import schemacrawler.schema.Table;
-import schemacrawler.tools.analysis.lint.BaseLinter;
+import schemacrawler.tools.lint.BaseLinter;
 
 public class AdditionalLinter
   extends BaseLinter
 {
-  
-  @Override
-  public String convertLintValueToString(final Object value)
-  {
-    return value.toString();
-  }
 
   @Override
   public String getDescription()
