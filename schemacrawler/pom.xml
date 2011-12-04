@@ -144,8 +144,8 @@
               <javadoc>target/schemacrawler-${project.version}-javadoc.jar</javadoc>
               <repositoryLayout>default</repositoryLayout>
               <groupId>net.sourceforge.schemacrawler</groupId>
-              <artifactId>schemacrawler-integrations</artifactId>
-              <packaging>maven-plugin</packaging>
+              <artifactId>schemacrawler</artifactId>
+              <packaging>jar</packaging>
               <version>${project.version}</version>
               <createChecksum>true</createChecksum>
             </configuration>
