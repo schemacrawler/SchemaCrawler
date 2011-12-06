@@ -78,70 +78,67 @@
   <target name="make-binary-distribution">
 
     <property name="distribution.staging.dir"
-              location="${distribution.target}/_distribution" />
+              location="${distribution.target}/schemacrawler-${SchemaCrawler.version}-distrib" />
     <delete dir="${distribution.staging.dir}" />
+    <mkdir dir="${distribution.staging.dir}" />
 
-  	<!-- 1. CREATE STAGING FOR EXAMPLES -->
-
-    <mkdir dir="${distribution.staging.dir}/examples" />
+  	<!-- 1. STAGE FOR EXAMPLES -->
 
     <!-- Copy licenses -->
     <copy file="lgpl-3.0.txt"
-          tofile="${distribution.staging.dir}/examples/LICENSE.txt" />
+          tofile="${distribution.staging.dir}/LICENSE.txt" />
+
+    <!-- Stage examples -->
+    <mkdir dir="${distribution.target}/site/examples" />
+    <move includeEmptyDirs="true" todir="${distribution.staging.dir}">
+      <fileset dir="${distribution.target}/site/examples" />
+    </move>
+    <copy file="${SchemaCrawler.home}/schemacrawler-test/src/main/java/ApiExample.java"
+          todir="${distribution.staging.dir}/api" />
+    <copy file="${SchemaCrawler.home}/schemacrawler-test/src/main/java/ApiExample.java"
+          todir="${distribution.staging.dir}/maven-project/src/main/java" />
 
     <!-- Copy config files -->
-    <copy todir="${distribution.staging.dir}/examples">
+    <copy todir="${distribution.staging.dir}/ant-task">
       <fileset dir="${SchemaCrawler.home}/schemacrawler-site/src/site/resources/config">
         <include name="*config*.properties" />
       </fileset>
+    </copy>
+    <copy todir="${distribution.staging.dir}/chain">
+      <fileset dir="${SchemaCrawler.home}/schemacrawler-site/src/site/resources/config">
+        <include name="*config*.properties" />
+      </fileset>
+    </copy>
+    <copy todir="${distribution.staging.dir}/commandline">
+      <fileset dir="${SchemaCrawler.home}/schemacrawler-site/src/site/resources/config">
+        <include name="*config*.properties" />
+      </fileset>
+    </copy>  
+    <copy todir="${distribution.staging.dir}/db-specific-query">
+      <fileset dir="${SchemaCrawler.home}/schemacrawler-site/src/site/resources/config">
+        <include name="*config*.properties" />
+      </fileset>
+    </copy> 
+    <copy todir="${distribution.staging.dir}/dump">
+      <fileset dir="${SchemaCrawler.home}/schemacrawler-site/src/site/resources/config">
+        <include name="*config*.properties" />
+      </fileset>
+    </copy> 
+  	
+    <copy todir="${distribution.staging.dir}/spring">
       <fileset dir="${SchemaCrawler.home}/schemacrawler-integrations/src/test/resources">
         <include name="*.xml" />
       </fileset>
     </copy>
-
-    <!-- Stage examples -->
-    <mkdir dir="${distribution.target}/site/examples" />
-    <copy includeEmptyDirs="true" todir="${distribution.staging.dir}/examples">
-      <fileset dir="${distribution.target}/site/examples" />
-    </copy>
-    <copy file="${SchemaCrawler.home}/schemacrawler-test/src/main/java/ApiExample.java"
-          todir="${distribution.staging.dir}/examples/api" />
-    <copy file="${SchemaCrawler.home}/schemacrawler-test/src/main/java/ApiExample.java"
-          todir="${distribution.staging.dir}/examples/maven-project/src/main/java" />
-
+  	
     <!-- Unzip the SchemaCrawler distribution for HyperSQL, for use in the examples -->
     <unzip
       src="${distribution.target}/schemacrawler-hsqldb-${SchemaCrawler.version}-distrib.zip"
-      dest="${distribution.staging.dir}/examples" />
-    <move file="${distribution.staging.dir}/examples/schemacrawler-hsqldb-${SchemaCrawler.version}"
-          tofile="${distribution.staging.dir}/examples/_schemacrawler" />
+      dest="${distribution.staging.dir}" />
+    <move file="${distribution.staging.dir}/schemacrawler-hsqldb-${SchemaCrawler.version}"
+          tofile="${distribution.staging.dir}/_schemacrawler" />
 
-  	<!-- 2. CREATE STAGING FOR NON-SPECIFIC SchemaCrawler DISTRIBUTION -->
-
-    <!-- Copy super jar and lint -->
-    <copy file="${schemacrawler.distribution.jar}"
-          todir="${distribution.staging.dir}/schemacrawler/lib" />
-    <copy file="${schemacrawler.lint.jar}"
-          todir="${distribution.staging.dir}/schemacrawler/lib" />
-    	
-    <!-- Copy license and readme -->
-    <copy file="lgpl-3.0.txt"
-          tofile="${distribution.staging.dir}/schemacrawler/LICENSE.txt" />
-    <copy file="${SchemaCrawler.home}/schemacrawler/README.txt"
-          tofile="${distribution.staging.dir}/schemacrawler/README.txt" />
-
-    <!-- Create shortcuts -->
-    <filter token="version" value="${SchemaCrawler.version}" />
-    <filter token="package" value="schemacrawler" />
-    <copy todir="${distribution.staging.dir}/schemacrawler" filtering="true">
-      <fileset dir="${distribution.assembly}">
-        <include name="*.cmd" />
-        <include name="*.sh" />
-        <include name="*.wsf" />
-      </fileset>
-    </copy>
-
-  	<!-- 3. CREATE BINARY DISTRIBUTION FROM THE STAGED DIRECTORIES -->
+  	<!-- 2. CREATE BINARY DISTRIBUTION FROM THE STAGED EXAMPLES -->
 
     <!-- Create zip file for distribution -->
     <property name="distribution.zip.prefix"
