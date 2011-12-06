@@ -1,1 +1,2 @@
-@java -classpath ..\_schemacrawler\lib\schemacrawler-8.9.jar;..\_schemacrawler\lib\schemacrawler-lint-8.9.jar;..\_schemacrawler\lib\hsqldb-2.2.6.jar schemacrawler.Main %*
+@echo off
+..\_schemacrawler\sc.cmd -database=schemacrawler -user=sa -password= %*

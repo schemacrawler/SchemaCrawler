@@ -21,9 +21,9 @@
           </li>
           <li>
             To find tables with certain column names, run
-            <span class="code">sc.cmd -c hsqldb -infolevel=standard -command=lint</span>
+            <span class="code">sc.cmd -infolevel=standard -command=lint</span>
             (or
-            <span class="code">sc.sh -c hsqldb -infolevel=standard -command=lint</span>
+            <span class="code">sc.sh -infolevel=standard -command=lint</span>
             on Unix)
           </li>
         </ol>

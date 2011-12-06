@@ -21,13 +21,6 @@
             path.
           </li>
           <li>
-            Copy the
-            <span class="code">context.xml</span>
-            file into the
-            <span class="code">spring</span>
-            example directory.
-          </li>
-          <li>
             Start the database server by running
             StartDatabaseServer script from the distribution
             directory.
