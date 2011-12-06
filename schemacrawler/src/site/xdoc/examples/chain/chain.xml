@@ -18,14 +18,6 @@
             Make sure that the Java executable is on your path. (J2SE
             6 or better is required.)
           </li>
-          <li>
-            Copy the
-            <span class="code">schemacrawler.config.properties
-            </span>
-            file into the
-            <span class="code">chain</span>
-            example directory.
-          </li>
           <li>Start the database server by running
             StartDatabaseServer script from the
             distribution directory.

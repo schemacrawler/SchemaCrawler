@@ -103,27 +103,22 @@
       <fileset dir="${SchemaCrawler.home}/schemacrawler-site/src/site/resources/config">
         <include name="*config*.properties" />
       </fileset>
-    </copy>
-    <copy todir="${distribution.staging.dir}/chain">
-      <fileset dir="${SchemaCrawler.home}/schemacrawler-site/src/site/resources/config">
-        <include name="*config*.properties" />
-      </fileset>
-    </copy>
-    <copy todir="${distribution.staging.dir}/commandline">
-      <fileset dir="${SchemaCrawler.home}/schemacrawler-site/src/site/resources/config">
-        <include name="*config*.properties" />
-      </fileset>
-    </copy>  
+    </copy> 	
     <copy todir="${distribution.staging.dir}/db-specific-query">
       <fileset dir="${SchemaCrawler.home}/schemacrawler-site/src/site/resources/config">
         <include name="*config*.properties" />
       </fileset>
-    </copy> 
-    <copy todir="${distribution.staging.dir}/dump">
+    </copy>
+    <copy todir="${distribution.staging.dir}/user-defined-query">
       <fileset dir="${SchemaCrawler.home}/schemacrawler-site/src/site/resources/config">
         <include name="*config*.properties" />
       </fileset>
-    </copy> 
+    </copy>
+    <copy todir="${distribution.staging.dir}/velocity">
+      <fileset dir="${SchemaCrawler.home}/schemacrawler-site/src/site/resources/config">
+        <include name="*config*.properties" />
+      </fileset>
+    </copy>
   	
     <copy todir="${distribution.staging.dir}/spring">
       <fileset dir="${SchemaCrawler.home}/schemacrawler-integrations/src/test/resources">

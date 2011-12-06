@@ -1,1 +1,2 @@
-@java -classpath ..\_schemacrawler\lib\schemacrawler-8.9.jar;..\_schemacrawler\lib\hsqldb-2.2.6.jar schemacrawler.Main -g schemacrawler.config.properties -c hsqldb -infolevel=standard -command script -infolevel=maximum -sorttables=false -outputformat %1
+@echo off
+..\_schemacrawler\sc.cmd -database=schemacrawler -user=sa -password= -infolevel=standard -command script -infolevel=maximum -sorttables=false -outputformat %1

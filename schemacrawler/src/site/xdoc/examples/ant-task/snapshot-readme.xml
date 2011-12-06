@@ -6,7 +6,7 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-    <section name="SchemaCrawler - snapshot Example">
+    <section name="SchemaCrawler - Snapshot Example">
       <subsection name="Description">
         <p>The snapshot example demonstrates the use of the
           &lt;schemacrawler&gt; macro that comes bundled with SchemaCrawler.
@@ -17,13 +17,6 @@
           <li>Install
             <a href="http://ant.apache.org/">ant</a>, and make sure that ant is on your
             path.
-          </li>
-          <li>Copy the
-            <span class="code">schemacrawler.config.properties</span>
-            into
-            the
-            <span class="code">ant-task</span>
-            example directory.
           </li>
           <li>Start the database server by running the
             <span class="code">StartDatabaseServer</span>
