@@ -222,6 +222,7 @@
 
   <target name="make-database-distributions">
 
+	<create-db-distribution database="generic" />
   	<create-db-distribution database="db2" />
     <create-db-distribution database="derby" />
     <create-db-distribution database="hsqldb" />

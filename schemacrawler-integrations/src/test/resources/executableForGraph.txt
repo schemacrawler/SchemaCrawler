@@ -23,7 +23,7 @@ digraph SchemaCrawler_Diagram {
 	authors_dba8a1ff [label=<
       <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
         <tr>
-          <td colspan="2" bgcolor="#96C1FA" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC.BOOKS.AUTHORS</font></td>
+          <td colspan="2" bgcolor="#96C1FA" align="left"><b>PUBLIC.BOOKS.AUTHORS</b></td>
           <td bgcolor="#96C1FA" align="right">[table]</td>
         </tr>
         <tr>
@@ -52,7 +52,7 @@ digraph SchemaCrawler_Diagram {
           <td port="firstname_212547ec.end" align="right">VARCHAR(20)</td>
         </tr>
         <tr>
-          <td port="id_ecfc5f6a.start" align="left"><font face="Helvetica-BoldOblique">ID</font></td>
+          <td port="id_ecfc5f6a.start" align="left"><b><i>ID</i></b></td>
           <td> </td>
           <td port="id_ecfc5f6a.end" align="right">INTEGER</td>
         </tr>
@@ -76,7 +76,7 @@ digraph SchemaCrawler_Diagram {
 	bookauthors_aa4376 [label=<
       <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
         <tr>
-          <td colspan="2" bgcolor="#96C1FA" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC.BOOKS.BOOKAUTHORS</font></td>
+          <td colspan="2" bgcolor="#96C1FA" align="left"><b>PUBLIC.BOOKS.BOOKAUTHORS</b></td>
           <td bgcolor="#96C1FA" align="right">[table]</td>
         </tr>
         <tr>
@@ -99,7 +99,7 @@ digraph SchemaCrawler_Diagram {
 	authorslist_b29d331d [label=<
       <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
         <tr>
-          <td colspan="2" bgcolor="#96C1FA" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC.BOOKS.AUTHORSLIST</font></td>
+          <td colspan="2" bgcolor="#96C1FA" align="left"><b>PUBLIC.BOOKS.AUTHORSLIST</b></td>
           <td bgcolor="#96C1FA" align="right">[view]</td>
         </tr>
         <tr>
@@ -122,7 +122,7 @@ digraph SchemaCrawler_Diagram {
 	books_afd2ba21 [label=<
       <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
         <tr>
-          <td colspan="2" bgcolor="#96C1FA" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC.BOOKS.BOOKS</font></td>
+          <td colspan="2" bgcolor="#96C1FA" align="left"><b>PUBLIC.BOOKS.BOOKS</b></td>
           <td bgcolor="#96C1FA" align="right">[table]</td>
         </tr>
         <tr>
@@ -131,7 +131,7 @@ digraph SchemaCrawler_Diagram {
           <td port="description_f1e45f8f.end" align="right">VARCHAR(255)</td>
         </tr>
         <tr>
-          <td port="id_bb8abc08.start" align="left"><font face="Helvetica-BoldOblique">ID</font></td>
+          <td port="id_bb8abc08.start" align="left"><b><i>ID</i></b></td>
           <td> </td>
           <td port="id_bb8abc08.end" align="right">INTEGER</td>
         </tr>
@@ -160,7 +160,7 @@ digraph SchemaCrawler_Diagram {
 	globalcounts_2ab3635a [label=<
       <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
         <tr>
-          <td colspan="2" bgcolor="#96C1FA" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC.BOOKS."Global Counts"</font></td>
+          <td colspan="2" bgcolor="#96C1FA" align="left"><b>PUBLIC.BOOKS."Global Counts"</b></td>
           <td bgcolor="#96C1FA" align="right">[table]</td>
         </tr>
         <tr>
@@ -173,11 +173,11 @@ digraph SchemaCrawler_Diagram {
 	publishers_b8da20c0 [label=<
       <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
         <tr>
-          <td colspan="2" bgcolor="#96C1FA" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC.BOOKS.PUBLISHERS</font></td>
+          <td colspan="2" bgcolor="#96C1FA" align="left"><b>PUBLIC.BOOKS.PUBLISHERS</b></td>
           <td bgcolor="#96C1FA" align="right">[table]</td>
         </tr>
         <tr>
-          <td port="id_6fc9dd09.start" align="left"><font face="Helvetica-BoldOblique">ID</font></td>
+          <td port="id_6fc9dd09.start" align="left"><b><i>ID</i></b></td>
           <td> </td>
           <td port="id_6fc9dd09.end" align="right">INTEGER</td>
         </tr>
@@ -191,7 +191,7 @@ digraph SchemaCrawler_Diagram {
 	globalcounts_986b8a53 [label=<
       <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
         <tr>
-          <td colspan="2" bgcolor="#DEFA96" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC.FOR_LINT."Global Counts"</font></td>
+          <td colspan="2" bgcolor="#DEFA96" align="left"><b>PUBLIC.FOR_LINT."Global Counts"</b></td>
           <td bgcolor="#DEFA96" align="right">[table]</td>
         </tr>
         <tr>
@@ -204,7 +204,7 @@ digraph SchemaCrawler_Diagram {
 	no_columns_1899a78f [label=<
       <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
         <tr>
-          <td colspan="2" bgcolor="#DEFA96" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC.FOR_LINT.No_Columns</font></td>
+          <td colspan="2" bgcolor="#DEFA96" align="left"><b>PUBLIC.FOR_LINT.No_Columns</b></td>
           <td bgcolor="#DEFA96" align="right">[table]</td>
         </tr>
       </table>
@@ -212,7 +212,7 @@ digraph SchemaCrawler_Diagram {
 	publications_949377f7 [label=<
       <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
         <tr>
-          <td colspan="2" bgcolor="#DEFA96" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC.FOR_LINT.PUBLICATIONS</font></td>
+          <td colspan="2" bgcolor="#DEFA96" align="left"><b>PUBLIC.FOR_LINT.PUBLICATIONS</b></td>
           <td bgcolor="#DEFA96" align="right">[table]</td>
         </tr>
         <tr>
@@ -221,7 +221,7 @@ digraph SchemaCrawler_Diagram {
           <td port="description_d3f90c65.end" align="right">VARCHAR(255)</td>
         </tr>
         <tr>
-          <td port="id_f5162672.start" align="left"><font face="Helvetica-BoldOblique">ID</font></td>
+          <td port="id_f5162672.start" align="left"><b><i>ID</i></b></td>
           <td> </td>
           <td port="id_f5162672.end" align="right">INTEGER</td>
         </tr>
@@ -260,7 +260,7 @@ digraph SchemaCrawler_Diagram {
 	writers_bf84ac10 [label=<
       <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
         <tr>
-          <td colspan="2" bgcolor="#DEFA96" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC.FOR_LINT.WRITERS</font></td>
+          <td colspan="2" bgcolor="#DEFA96" align="left"><b>PUBLIC.FOR_LINT.WRITERS</b></td>
           <td bgcolor="#DEFA96" align="right">[table]</td>
         </tr>
         <tr>
@@ -319,7 +319,7 @@ digraph SchemaCrawler_Diagram {
           <td port="homeemail12_906ae000.end" align="right">VARCHAR(10)</td>
         </tr>
         <tr>
-          <td port="id_3033cfb9.start" align="left"><font face="Helvetica-BoldOblique">ID</font></td>
+          <td port="id_3033cfb9.start" align="left"><b><i>ID</i></b></td>
           <td> </td>
           <td port="id_3033cfb9.end" align="right">BIGINT</td>
         </tr>
@@ -358,7 +358,7 @@ digraph SchemaCrawler_Diagram {
 	regions_bc895c48 [label=<
       <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
         <tr>
-          <td colspan="2" bgcolor="#F996FA" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC."PUBLISHER SALES".REGIONS</font></td>
+          <td colspan="2" bgcolor="#F996FA" align="left"><b>PUBLIC."PUBLISHER SALES".REGIONS</b></td>
           <td bgcolor="#F996FA" align="right">[table]</td>
         </tr>
         <tr>
@@ -367,12 +367,12 @@ digraph SchemaCrawler_Diagram {
           <td port="city_2c74db51.end" align="right">VARCHAR(50)</td>
         </tr>
         <tr>
-          <td port="country_7d0587d0.start" align="left"><font face="Helvetica-BoldOblique">COUNTRY</font></td>
+          <td port="country_7d0587d0.start" align="left"><b><i>COUNTRY</i></b></td>
           <td> </td>
           <td port="country_7d0587d0.end" align="right">VARCHAR(50)</td>
         </tr>
         <tr>
-          <td port="postalcode_9b2bfe9e.start" align="left"><font face="Helvetica-BoldOblique">POSTALCODE</font></td>
+          <td port="postalcode_9b2bfe9e.start" align="left"><b><i>POSTALCODE</i></b></td>
           <td> </td>
           <td port="postalcode_9b2bfe9e.end" align="right">VARCHAR(10)</td>
         </tr>
@@ -386,7 +386,7 @@ digraph SchemaCrawler_Diagram {
 	sales_20be6f95 [label=<
       <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
         <tr>
-          <td colspan="2" bgcolor="#F996FA" align="left"><font face="Helvetica-Bold" point-size="9">PUBLIC."PUBLISHER SALES".SALES</font></td>
+          <td colspan="2" bgcolor="#F996FA" align="left"><b>PUBLIC."PUBLISHER SALES".SALES</b></td>
           <td bgcolor="#F996FA" align="right">[table]</td>
         </tr>
         <tr>
