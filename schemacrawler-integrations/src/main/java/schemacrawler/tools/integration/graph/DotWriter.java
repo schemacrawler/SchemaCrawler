@@ -270,12 +270,9 @@ final class DotWriter
       .append(Utility.NEWLINE);
     buffer.append("        <tr>").append(Utility.NEWLINE);
 
-    buffer
-      .append("          <td colspan=\"2\" bgcolor=\"")
-      .append(tableNameBgColor)
-      .append("\" align=\"left\"><font face=\"Helvetica-Bold\" point-size=\"9\">")
-      .append(table.getFullName()).append("</font></td>")
-      .append(Utility.NEWLINE);
+    buffer.append("          <td colspan=\"2\" bgcolor=\"")
+      .append(tableNameBgColor).append("\" align=\"left\"><b>")
+      .append(table.getFullName()).append("</b></td>").append(Utility.NEWLINE);
     buffer.append("          <td bgcolor=\"").append(tableNameBgColor)
       .append("\" align=\"right\">")
       .append(table instanceof View? "[view]": "[table]").append("</td>")
@@ -288,12 +285,12 @@ final class DotWriter
         .append(".start\" align=\"left\">");
       if (column.isPartOfPrimaryKey())
       {
-        buffer.append("<font face=\"Helvetica-BoldOblique\">");
+        buffer.append("<b><i>");
       }
       buffer.append(column.getName());
       if (column.isPartOfPrimaryKey())
       {
-        buffer.append("</font>");
+        buffer.append("</i></b>");
       }
       buffer.append("</td>").append(Utility.NEWLINE);
       buffer.append("          <td> </td>").append(Utility.NEWLINE);
