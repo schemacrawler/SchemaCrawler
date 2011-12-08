@@ -21,7 +21,7 @@
             download-licenses,
             make-super-jar,
             make-database-distributions,
-            make-binary-distribution,
+            make-examples,
             make-source-distribution,
             make-website-distribution,
             cleanup-distribution
@@ -75,7 +75,7 @@
   </target>
 
 
-  <target name="make-binary-distribution">
+  <target name="make-examples">
 
     <property name="examples.stem"
               value="schemacrawler-${SchemaCrawler.version}-examples" />
@@ -214,15 +214,15 @@
 
   <target name="make-database-distributions">
 
-	<create-db-distribution database="generic" />
-  	<create-db-distribution database="db2" />
-    <create-db-distribution database="derby" />
-    <create-db-distribution database="hsqldb" />
-    <create-db-distribution database="mysql" />
-    <create-db-distribution database="oracle" />
-    <create-db-distribution database="postgresql" />
-    <create-db-distribution database="sqlserver" />
-    <create-db-distribution database="sqlite" />
+	<create-db-distribution database="generic" license="lgpl-3.0" />
+  	<create-db-distribution database="db2" license="lgpl-3.0" />
+    <create-db-distribution database="derby" license="gpl-3.0" />
+    <create-db-distribution database="hsqldb" license="gpl-3.0" />
+    <create-db-distribution database="mysql" license="gpl-3.0" />
+    <create-db-distribution database="oracle" license="lgpl-3.0" />
+    <create-db-distribution database="postgresql" license="gpl-3.0" />
+    <create-db-distribution database="sqlserver" license="gpl-3.0" />
+    <create-db-distribution database="sqlite" license="gpl-3.0" />
 
   </target>
 
@@ -241,7 +241,9 @@
 
 
   <macrodef name="create-db-distribution">
+  	
     <attribute name="database" />
+  	<attribute name="license" />
 
     <sequential>
 
@@ -272,7 +274,7 @@
         </fileset>
       </copy>
 
-      <copy file="gpl-3.0.txt"
+      <copy file="@{license}.txt"
             tofile="${distribution.target}/@{database}-distrib/LICENSE.txt" />
 
       <zip destfile="${distribution.target}/schemacrawler-@{database}-${SchemaCrawler.version}-distrib.zip"
