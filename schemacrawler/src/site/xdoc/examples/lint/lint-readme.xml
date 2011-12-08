@@ -20,7 +20,7 @@
             example.
           </li>
           <li>
-            To find tables with certain column names, run
+            To find schema design issues, run
             <span class="code">sc.cmd -infolevel=standard -command=lint</span>
             (or
             <span class="code">sc.sh -infolevel=standard -command=lint</span>

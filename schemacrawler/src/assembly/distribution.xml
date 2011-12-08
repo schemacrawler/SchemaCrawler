@@ -77,50 +77,52 @@
 
   <target name="make-binary-distribution">
 
-    <property name="distribution.staging.dir"
-              location="${distribution.target}/schemacrawler-${SchemaCrawler.version}-distrib" />
-    <delete dir="${distribution.staging.dir}" />
-    <mkdir dir="${distribution.staging.dir}" />
+    <property name="examples.stem"
+              value="schemacrawler-${SchemaCrawler.version}-examples" />
+    <property name="examples.staging.dir"
+              location="${distribution.target}/${examples.stem}" />
+    <delete dir="${examples.staging.dir}" />
+    <mkdir dir="${examples.staging.dir}" />
 
   	<!-- 1. STAGE FOR EXAMPLES -->
 
     <!-- Copy licenses -->
     <copy file="lgpl-3.0.txt"
-          tofile="${distribution.staging.dir}/LICENSE.txt" />
+          tofile="${examples.staging.dir}/LICENSE.txt" />
 
     <!-- Stage examples -->
     <mkdir dir="${distribution.target}/site/examples" />
-    <move includeEmptyDirs="true" todir="${distribution.staging.dir}">
+    <move includeEmptyDirs="true" todir="${examples.staging.dir}">
       <fileset dir="${distribution.target}/site/examples" />
     </move>
     <copy file="${SchemaCrawler.home}/schemacrawler-test/src/main/java/ApiExample.java"
-          todir="${distribution.staging.dir}/api" />
+          todir="${examples.staging.dir}/api" />
     <copy file="${SchemaCrawler.home}/schemacrawler-test/src/main/java/ApiExample.java"
-          todir="${distribution.staging.dir}/maven-project/src/main/java" />
+          todir="${examples.staging.dir}/maven-project/src/main/java" />
 
     <!-- Copy config files -->
-    <copy todir="${distribution.staging.dir}/ant-task">
+    <copy todir="${examples.staging.dir}/ant-task">
       <fileset dir="${SchemaCrawler.home}/schemacrawler-site/src/site/resources/config">
         <include name="*config*.properties" />
       </fileset>
     </copy> 	
-    <copy todir="${distribution.staging.dir}/db-specific-query">
+    <copy todir="${examples.staging.dir}/db-specific-query">
       <fileset dir="${SchemaCrawler.home}/schemacrawler-site/src/site/resources/config">
         <include name="*config*.properties" />
       </fileset>
     </copy>
-    <copy todir="${distribution.staging.dir}/user-defined-query">
+    <copy todir="${examples.staging.dir}/user-defined-query">
       <fileset dir="${SchemaCrawler.home}/schemacrawler-site/src/site/resources/config">
         <include name="*config*.properties" />
       </fileset>
     </copy>
-    <copy todir="${distribution.staging.dir}/velocity">
+    <copy todir="${examples.staging.dir}/velocity">
       <fileset dir="${SchemaCrawler.home}/schemacrawler-site/src/site/resources/config">
         <include name="*config*.properties" />
       </fileset>
     </copy>
   	
-    <copy todir="${distribution.staging.dir}/spring">
+    <copy todir="${examples.staging.dir}/spring">
       <fileset dir="${SchemaCrawler.home}/schemacrawler-integrations/src/test/resources">
         <include name="*.xml" />
       </fileset>
@@ -129,19 +131,17 @@
     <!-- Unzip the SchemaCrawler distribution for HyperSQL, for use in the examples -->
     <unzip
       src="${distribution.target}/schemacrawler-hsqldb-${SchemaCrawler.version}-distrib.zip"
-      dest="${distribution.staging.dir}" />
-    <move file="${distribution.staging.dir}/schemacrawler-hsqldb-${SchemaCrawler.version}"
-          tofile="${distribution.staging.dir}/_schemacrawler" />
+      dest="${examples.staging.dir}" />
+    <move file="${examples.staging.dir}/schemacrawler-hsqldb-${SchemaCrawler.version}"
+          tofile="${examples.staging.dir}/_schemacrawler" />
 
   	<!-- 2. CREATE BINARY DISTRIBUTION FROM THE STAGED EXAMPLES -->
 
     <!-- Create zip file for distribution -->
-    <property name="distribution.zip.prefix"
-              value="schemacrawler-${SchemaCrawler.version}-distrib" />
-    <delete file="${distribution.target}/${distribution.zip.prefix}.zip" />
-    <zip destfile="${distribution.target}/${distribution.zip.prefix}.zip">
-      <zipfileset dir="${distribution.staging.dir}"
-                  prefix="${distribution.zip.prefix}"
+    <delete file="${distribution.target}/${examples.stem}.zip" />
+    <zip destfile="${distribution.target}/${examples.stem}.zip">
+      <zipfileset dir="${examples.staging.dir}"
+                  prefix="${examples.stem}"
                   defaultexcludes="yes" />
     </zip>
 
