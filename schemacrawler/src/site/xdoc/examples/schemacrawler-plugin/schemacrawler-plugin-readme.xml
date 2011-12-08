@@ -11,37 +11,74 @@
         <p>The SchemaCrawler plugin example demonstrates how to extend SchemaCrawler in two ways -
           one to add a new command, and the other to create a new custom linter.
         </p>
+        <p>
+          The Maven project in this example has a new SchemaCrawler command, and a custom linter.</p>
+        <ul>
+          <li>
+            The new SchemaCrawler command is created by implmenting CommandProvider. The command
+            provider registration is in the
+            <code>META-INF/services/schemacrawler.tools.executable.CommandProvider</code>
+            file.
+          </li>
+          <li>
+            To create the new lint, we have followed the steps in
+            <a href="lint.html">
+              SchemaCrawler Lint - Lint Extensions.
+            </a>
+          </li>
+        </ul>
       </subsection>
       <subsection name="How to Run">
         <ol>
           <li>
-            The Maven project in this example has a new SchemaCrawler command, and a custom linter.
-            <ol>
-              <li>
-                The new SchemaCrawler command is created by implmenting CommandProvider. The command
-                provider registration is in the
-                <code>META-INF/services/schemacrawler.tools.executable.CommandProvider</code>
-                file.
-              </li>
-              <li>
-                To create the new lint, we have followed the steps in
-                <a href="lint.html">
-                  SchemaCrawler Lint - Lint Extensions.
-                </a>
-              </li>
-            </ol>
-          </li>
-          <li>
             Make sure that Maven is on your path.
           </li>
           <li>
-            Run
-            <span class="code">mvn package</span> to build the SchemaCrawler plugin jar.
+            Start a command shell in the
+            <em>schemacrawler-plugin</em>
+            example directory.
           </li>
           <li>
-            See the output produced in the
-            <span class="code">target/site</span>
-            directory.
+            Run
+            <span class="code">mvn package</span>
+            to build the SchemaCrawler plugin jar,
+            <code>.\target\schemacrawler-plugin-test-1.0-SNAPSHOT.jar</code>
+            .
+          </li>
+          <li>
+            Copy the SchemaCrawler plugin jar,
+            <code>schemacrawler-plugin\target\schemacrawler-plugin-test-1.0-SNAPSHOT.jar</code>
+            to the SchemaCrawler
+            <code>lib</code>
+            folder,
+            <code>_schemacrawler\lib</code>
+            where it will be added to the classpath automatically.
+          </li>
+          <li>
+            Follow the instructions in the
+            <code>commandline</code>
+            example.
+          </li>
+          <li>
+            To run the custom linter, along with the standard linters, run
+            <span class="code">sc.cmd -infolevel=standard -command=lint</span>
+            (or
+            <span class="code">sc.sh -infolevel=standard -command=lint</span>
+            on Unix)
+          </li>
+          <li>
+            Run
+            <span class="code">sc.cmd -help</span>
+            (or
+            <span class="code">sc.sh -help</span>
+            on Unix). This will show you the newly added command, <em>additional</em>, in the command line options.
+          </li>
+          <li>
+            To use the newly added command, run
+            <span class="code">sc.cmd -infolevel=standard -command=additional</span>
+            (or
+            <span class="code">sc.sh -infolevel=standard -command=additional</span>
+            on Unix)
           </li>
         </ol>
       </subsection>
