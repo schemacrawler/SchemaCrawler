@@ -18,14 +18,14 @@
       </subsection>
       <subsection name="Examples">
         <p>
-          The first thing to try after downloading the SchemaCrawler
-          distribution is the examples.
+          The first thing to try is the SchemaCrawler examples.
           Several examples on
           how to use
           SchemaCrawler on the command line, as an ant task or Maven
           plugin,
           as
-          an API, how to script your
+          an API, how to script
+          your
           database using JavaScript, how to use
           the
           <a href="http://velocity.apache.org/">Apache Velocity
@@ -33,9 +33,9 @@
           (templating) integration and how to create database diagrams with
           <a href="http://www.graphviz.org/">Graphviz
           </a>
-          are provided in the
-          <code>_distrib/examples</code>
-          directory.
+          are provided with the
+          <a href="https://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20Examples/">SchemaCrawler examples</a>
+          download.
         </p>
       </subsection>
       <subsection name="How-tos">

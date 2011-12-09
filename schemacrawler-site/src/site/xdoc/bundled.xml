@@ -8,18 +8,29 @@
   <body>
     <section name="Bundled Distributions">
       <subsection name="Bundled Distributions">
-        <p>SchemaCrawler supports almost any database that has a JDBC driver, but for convenience is bundled with drivers
-          for some commonly used RDBMS systems. The bundled distributions of SchemaCrawler are ready to use for a given
+        <p>SchemaCrawler supports almost any database that has a JDBC driver, but for convenience is
+          bundled with drivers
+          for some commonly used RDBMS systems. The bundled distributions of
+          SchemaCrawler are ready to use for a given
           RDBMS system. Most come with
-          open-source JDBC drivers bundled in, so not further downloads are required. The
+          open-source JDBC
+          drivers bundled in, so not further downloads are required. The
           bundled distributions of
           SchemaCrawler
           are:
         </p>
         <ul>
           <li>
-            [
-            <a href="http://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20-%20DB2/">download</a>
+            <img src="http://www.gnu.org/graphics/lgplv3-88x31.png" alt="LGPL" /> [
+            <a
+              href="http://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20-%20Generic%20Database/">download</a>
+            ]
+            SchemaCrawler for any RDBMS system that has a JDBC driver. The JDBC driver needs to be
+            downloaded separately. 
+          </li>
+          <li>
+            <img src="http://www.gnu.org/graphics/lgplv3-88x31.png" alt="LGPL" /> [
+            <a href="http://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20-%20IBM%20DB2/">download</a>
             ]
             SchemaCrawler for
             <a href="http://www.ibm.com/software/data/db2/">IBM DB2</a>
@@ -28,16 +39,18 @@
             needs to be downloaded separately)
           </li>
           <li>
-            [
-            <a href="http://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20-%20Apache%20Derby/">download</a>
+            <img src="http://www.gnu.org/graphics/gplv3-88x31.png" alt="GPL" /> [
+            <a
+              href="http://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20-%20Apache%20Derby/">download</a>
             ]
             SchemaCrawler for
             <a href="http://db.apache.org/derby/">Apache Derby</a>
             (which can also be used with JavaDB)
           </li>
           <li>
-            [
-            <a href="http://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20-%20Microsoft%20SQL%20Server/">download</a>
+            <img src="http://www.gnu.org/graphics/gplv3-88x31.png" alt="GPL" /> [
+            <a
+              href="http://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20-%20Microsoft%20SQL%20Server/">download</a>
             ]
             SchemaCrawler for
             <a href="http://www.microsoft.com/sqlserver/">Microsoft SQL Server,</a>
@@ -45,7 +58,7 @@
             <a href="http://jtds.sourceforge.net/">jTDS JDBC driver</a>
           </li>
           <li>
-            [
+            <img src="http://www.gnu.org/graphics/gplv3-88x31.png" alt="GPL" /> [
             <a href="http://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20-%20MySQL/">download</a>
             ]
             SchemaCrawler for
@@ -54,7 +67,7 @@
             <a href="http://dev.mysql.com/downloads/connector/j/">MySQL Connector/J JDBC driver</a>
           </li>
           <li>
-            [
+            <img src="http://www.gnu.org/graphics/lgplv3-88x31.png" alt="LGPL" /> [
             <a href="http://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20-%20Oracle/">download</a>
             ]
             SchemaCrawler for
@@ -64,7 +77,7 @@
             needs to be downloaded separately)
           </li>
           <li>
-            [
+            <img src="http://www.gnu.org/graphics/gplv3-88x31.png" alt="GPL" /> [
             <a href="http://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20-%20PostgreSQL/">download</a>
             ]
             SchemaCrawler for
@@ -73,7 +86,7 @@
             <a href="http://jdbc.postgresql.org/">PostgreSQL JDBC driver</a>
           </li>
           <li>
-            [
+            <img src="http://www.gnu.org/graphics/gplv3-88x31.png" alt="GPL" /> [
             <a href="http://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20-%20SQLite/">download</a>
             ]
             SchemaCrawler for
@@ -85,31 +98,48 @@
       </subsection>
       <subsection name="How To">
         <p>
-          If you download a bundled distribution of SchemaCrawler, you do not need to
-          download the main distribution.
-          Simply ensure that you have Java installed, and unzip the distribution, and you
-          are ready to use SchemaCrawler.
-          A typical command line for SchemaCrawler for Microsoft SQL Server looks like:
+          Ensure that you have Java 6 or better installed, and unzip the distribution,
+          and you are
+          ready to use SchemaCrawler. A typical command line for SchemaCrawler for
+          Microsoft SQL
+          Server looks like:
           <br />
-          <code>-host=localhost -port=1433 -database=schemacrawler -schemas=schemacrawler.dbo -user=schemacrawler
+          <code>-host=localhost -port=1433 -database=schemacrawler -schemas=schemacrawler.dbo
+            -user=schemacrawler
             -password=schemacrawler
           </code>
         </p>
-        <p>The host defaults to localhost, and port defaults to the standard port for the database system that you are
-          using, so the -host and -port command-line switches are optional. You should always use the -schemas
-          command-line switch for databases that support it. The value for the -schemas switch is a regular expression
-          that determines which schemas SchemaCrawler will work with. The "schema" is database-dependent - for example,
-          on Microsoft SQL Server, typically schemas look like "database_name.user", but for Oracle, typically, schemas
-          look like "USER".
+        <p>The host defaults to localhost, and port defaults to the standard port for the database
+          system that you are
+          using, so the -host and -port command-line switches are optional. You
+          should always use the -schemas
+          command-line switch for databases that support it. The value
+          for the -schemas switch is a regular expression
+          that determines which schemas SchemaCrawler
+          will work with. The "schema" is database-dependent - for example,
+          on Microsoft SQL Server,
+          typically schemas look like "database_name.user", but for Oracle, typically, schemas
+          look
+          like "USER".
         </p>
       </subsection>
       <subsection name="License">
         <p>
+          <img src="http://www.gnu.org/graphics/lgplv3-88x31.png" alt="LGPL" />
+          SchemaCrawler is free, and licensed under the
+          <a href="http://www.gnu.org/licenses/lgpl-3.0.txt">GNU Lesser General Public License (LGPL)</a>
+          for distributions that do not include a JDBC driver.
+          <a href="http://sourceforge.net/donate/index.php?group_id=148383">Donations</a>
+          are welcome.
+        </p>
+        <p>
           <img src="http://www.gnu.org/graphics/gplv3-88x31.png" alt="GPL" />
-          Unlike the SchemaCrawler main distribution, the bundled distributions are distributed under the
+          SchemaCrawler distributions that are bundled with the JDBC driver are distributed
+          under the
           <a href="http://www.gnu.org/licenses/gpl-3.0.txt">GNU General Public License (GPL) license.</a>
-          The JDBC drivers that are packaged with these SchemaCrawler distributions are in their binary form, and retain
-          their original license.
+          The JDBC drivers are packaged with these SchemaCrawler distributions in their
+          binary form,
+          and retain their original license.
         </p>
       </subsection>
     </section>

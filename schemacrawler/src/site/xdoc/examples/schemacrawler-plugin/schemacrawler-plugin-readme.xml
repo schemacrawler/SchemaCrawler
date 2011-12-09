@@ -15,14 +15,12 @@
           The Maven project in this example has a new SchemaCrawler command, and a custom linter.</p>
         <ul>
           <li>
-            The new SchemaCrawler command is created by implmenting CommandProvider. The command
-            provider registration is in the
-            <code>META-INF/services/schemacrawler.tools.executable.CommandProvider</code>
-            file.
+            A new SchemaCrawler command is in the
+            <a href="http://schemacrawler.sourceforge.net/how-to.html#add_new_command">How-to Guide.</a>
           </li>
           <li>
             To create the new lint, we have followed the steps in
-            <a href="lint.html">
+            <a href="http://schemacrawler.sourceforge.net/lint.html">
               SchemaCrawler Lint - Lint Extensions.
             </a>
           </li>
@@ -71,7 +69,9 @@
             <span class="code">sc.cmd -help</span>
             (or
             <span class="code">sc.sh -help</span>
-            on Unix). This will show you the newly added command, <em>additional</em>, in the command line options.
+            on Unix). This will show you the newly added command,
+            <em>additional</em>
+            , in the command line options.
           </li>
           <li>
             To use the newly added command, run
