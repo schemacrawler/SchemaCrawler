@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <faqs xmlns="http://maven.apache.org/FML/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/FML/1.0 http://maven.apache.org/xsd/fml-1.0.xsd" title="SchemaCrawler - How-to">
+  xsi:schemaLocation="http://maven.apache.org/FML/1.0 http://maven.apache.org/xsd/fml-1.0.xsd"
+  title="SchemaCrawler - How-to">
   <part id="command-line">
     <title>How to Use the SchemaCrawler Command-line</title>
     <faq id="excluded-tables">
@@ -17,11 +18,15 @@
                 </ul>
               </td>
               <td valign="top">
-                <p>This is the most usual way to launch SchemaCrawler from the command-line. This launch offer a number
-                  of connection options, including by JDBC driver and URL, and by a connection defined in a properties
-                  configuration file. There are options to load configuration from properties files.
+                <p>This is the most usual way to launch SchemaCrawler from the command-line. This
+                  launch offer a number
+                  of connection options, including by JDBC driver and URL, and
+                  by a connection defined in a properties
+                  configuration file. There are options to
+                  load configuration from properties files.
                 </p>
-                <p>JDBC drivers and other external libraries must be available on the classpath for this application to
+                <p>JDBC drivers and other external libraries must be available on the classpath for
+                  this application to
                   function.
                 </p>
                 <p>For help, use the -h command-line switch.</p>
@@ -41,11 +46,15 @@
                 </ul>
               </td>
               <td valign="top">
-                <p>These are the various "bundled" distributions. A simplified command line is made available, and the
-                  JDBC driver and URL are known for each database version. Typically no additional drivers downloads are
-                  required, except for Oracle and IBM DB2.
+                <p>These are the various "bundled" distributions. A simplified command line is made
+                  available, and the
+                  JDBC driver and URL are known for each database version.
+                  Typically no additional drivers downloads are
+                  required, except for Oracle and IBM
+                  DB2.
                 </p>
-                <p>JDBC drivers and other external libraries must be available on the classpath for this application to
+                <p>JDBC drivers and other external libraries must be available on the classpath for
+                  this application to
                   function.
                 </p>
                 <p>For help, use the -h command-line switch.</p>
@@ -61,10 +70,12 @@
                 <p>
                   An alternate to
                   <code>schemacrawler.Main,</code>
-                  where configuration, including configuration of the SchemaCrawler command is done by means of a Spring
+                  where configuration, including configuration of the SchemaCrawler command is done
+                  by means of a Spring
                   Framework application context file.
                 </p>
-                <p>JDBC drivers, Spring Framework libraries, and other external libraries must be available on the
+                <p>JDBC drivers, Spring Framework libraries, and other external libraries must be
+                  available on the
                   classpath for this application to function.
                 </p>
                 <p>For help, use the -h command-line switch.</p>
@@ -77,8 +88,10 @@
                 </ul>
               </td>
               <td valign="top">
-                <p>The launcher is designed to conveniently load all external jars from a given folder. Typically used
-                  from within the Unix shell scripts provided by SchemaCrawler.
+                <p>The launcher is designed to conveniently load all external jars from a given
+                  folder. Typically used
+                  from within the Unix shell scripts provided by
+                  SchemaCrawler.
                 </p>
               </td>
             </tr>
@@ -89,10 +102,13 @@
                 </ul>
               </td>
               <td valign="top">
-                <p>Started the test database server, with a test schema, and test data. This is used for examples. Any
-                  schema or data modifications will be restored when the server is restarted.
+                <p>Started the test database server, with a test schema, and test data. This is used
+                  for examples. Any
+                  schema or data modifications will be restored when the server is
+                  restarted.
                 </p>
-                <p>JDBC drivers for HyperSQL 2.2.6, and other external libraries must be available on the
+                <p>JDBC drivers for HyperSQL 2.2.6, and other external libraries must be available
+                  on the
                   classpath for
                   this application to function.
                 </p>
@@ -124,12 +140,14 @@
       <answer>
         <p>
           Change the configuration for the SchemaCrawler the table or column
-          include and exclude patterns in the
+          include and exclude
+          patterns in the
           <code>schemacrawler.config.properties </code>
           file. The include or exclude specification is a
           <a href="http://java.sun.com/j2se/1.5.0/docs/api/java/util/regex/Pattern.html"> Java regular expression </a>
           . The include pattern is evaluated first, and the exclusions are
-          made from the included tables or columns
+          made from the included
+          tables or columns
           list.
         </p>
         <p>
@@ -158,7 +176,8 @@
       <answer>
         <p>
           The option in the configuration can be overridden by the
-          -procedures= command-line option. Further,
+          -procedures= command-line option.
+          Further,
           see the
           <a href="faq.html#commands">details on the command-line options.</a>
         </p>
@@ -193,9 +212,11 @@
           in the
           <code>schemacrawler.config.properties </code>
           file. This setting will show standard data types across different
-          database systems. On the other hand, if you
+          database systems. On the
+          other hand, if you
           want to see the real database specific data types, change the setting
-          to a value of true.
+          to
+          a value of true.
         </p>
       </answer>
     </faq>
@@ -206,13 +227,15 @@
       <answer>
         <p>
           When columns are added into a table, they can change the column
-          ordinal number. This can mess up the diffs.
+          ordinal number. This can
+          mess up the diffs.
           Change the configuration for the SchemaCrawler
           <code>schemacrawler.format.show_ordinal_numbers=false </code>
           in the
           <code>schemacrawler.config.properties </code>
           file. You can combine this setting with the setting to sort columns
-          alphabetically to produce diff friendly
+          alphabetically to
+          produce diff friendly
           output.
         </p>
       </answer>
@@ -224,8 +247,10 @@
       <answer>
         <p>
           If primary key, foreign key and index names are not explicitly
-          provided while creating a schema, most database
-          system assign default names. These names can show up as spurious diffs in
+          provided while creating a
+          schema, most database
+          system assign default names. These names can show up as spurious
+          diffs in
           SchemaCrawler output. Change the
           configuration for the following properties in your
           <code>schemacrawler.config.properties </code>
@@ -249,14 +274,17 @@ schemacrawler.format.hide_constraint_names=false
       <answer>
         <p>
           When SchemaCrawler is used with J2SE 6 and above, it has built-in
-          support to be used with JavaScript scripts.
+          support to be used with
+          JavaScript scripts.
           Write your JavaScript file, assuming that a "database" variable
           containing the database schema will be
           available.
-          A "connection" variable will also be available, and you will be able
+          A "connection" variable will also be
+          available, and you will be able
           to execute SQL against your
           database.
-          Run SchemaCrawler with the command line options -
+          Run SchemaCrawler with
+          the command line options -
           <code>-command script -outputformat &lt;your script file&gt;</code>
           . See the example in the
           <code>examples\javascript</code>
@@ -273,7 +301,8 @@ schemacrawler.format.hide_constraint_names=false
           SchemaCrawler integrates with
           <a href="http://velocity.apache.org/">Apache Velocity</a>
           to allow for templated ouput. Put Velocity on your classpath, and
-          create your template, and run SchemaCrawler
+          create your template, and
+          run SchemaCrawler
           with the command line options -
           <code>-command script -outputformat &lt;your script file&gt;</code>
           .
@@ -292,7 +321,8 @@ schemacrawler.format.hide_constraint_names=false
         <p>
           SchemaCrawler integrates with
           <a href="http://www.graphviz.org/">Graphviz</a>
-          to produce graph images. Install Graphviz, and run SchemaCrawler with the correct command line options -
+          to produce graph images. Install Graphviz, and run SchemaCrawler with the correct command
+          line options -
           for
           example,
           <code>-command graph -outputformat png -outputfile=graph.png</code>
@@ -318,7 +348,8 @@ schemacrawler.format.hide_constraint_names=false
             POJOs
           </a>
           for an introduction to the SchemaCrawler API. (This article may
-          refer to an older release of the SchemaCrawler
+          refer to an older release
+          of the SchemaCrawler
           API, but the concepts are the same.) You can also browse the
           <a href="apidocs/index.html">javadocs</a>
           .
@@ -360,7 +391,9 @@ for (final Schema schema: database.getSchemas())
         How to use SchemaCrawler in a Maven Project
       </question>
       <answer>
-        <p>In order to use SchemaCrawler in your Maven projects, add a dependency to SchemaCrawler in your pom.xml.</p>
+        <p>In order to use SchemaCrawler in your Maven projects, add a dependency to SchemaCrawler
+          in your pom.xml.
+        </p>
         <source><![CDATA[
 <dependencies>
   ...
@@ -387,7 +420,8 @@ for (final Schema schema: database.getSchemas())
           </i>
         </p>
         <p> In addition to the ant task parameters mentioned in the example,
-          you may find the following parameters
+          you may find the
+          following parameters
           useful.
         </p>
         <ul>
@@ -413,7 +447,8 @@ for (final Schema schema: database.getSchemas())
             datasource
             <br />
             Datasource defined in the configuration (either the datasource, or the
-            connection properties
+            connection
+            properties
             should be
             provided - if both sets are provided, the datasource is ignored)
           </li>
@@ -530,18 +565,53 @@ for (final Schema schema: database.getSchemas())
       </question>
       <answer>
         <p>
-          <i>
-            Tables are sorted in alphabetical order by default. If you turn
-            alphabetical sorting off, the tables
-            will be
-            displayed in "create" order - that is, tables with no
-            foreign-key dependencies will be displayed first. The
-            "drop" order is
-            the reverse of the "create" order. Use the following command-line
-            arguments to obtain tables
-            in "create" order:
-            <code>-command=list -sorttables=false -procedures=</code>
-          </i>
+          Tables are sorted in alphabetical order by default. If you turn
+          alphabetical sorting off,
+          the tables
+          will be
+          displayed in "create" order - that is, tables with no
+          foreign-key
+          dependencies will be displayed first. The
+          "drop" order is
+          the reverse of the "create" order.
+          Use the following command-line
+          arguments to obtain tables
+          in "create" order:
+          <code>-command=list -sorttables=false -procedures=</code>
+        </p>
+      </answer>
+    </faq>
+    <faq id="add_new_command">
+      <question>
+        How to extend SchemaCrawler by adding a new command
+      </question>
+      <answer>
+        <p>
+          A new SchemaCrawler command is created by implementing CommandProvider. The command
+          provider registration is in the
+          <code>META-INF/services/schemacrawler.tools.executable.CommandProvider</code>
+          file. Package the code files that you write, and the command proider registration file
+          into a jar file, and put the jar into the SchemaCrawler
+          <code>lib</code>
+          folder, where it will be
+          picked up automatically.
+        </p>
+        <p>
+          See the
+          <code>schemacrawler-plugin</code>
+          example that is provided in the examples download.
+        </p>
+      </answer>
+    </faq>
+    <faq id="add_new_lint">
+      <question>
+        How to extend SchemaCrawler by adding a new linter
+      </question>
+      <answer>
+        <p>
+          See
+          <a href="lint.html">SchemaCrawler Lint</a>
+          for details.
         </p>
       </answer>
     </faq>
