@@ -5,10 +5,16 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-    <release version="8.9" date="2011-12-03">
+    <release version="8.9" date="2011-12-08">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
-        Added SchemaCrawler Lint as a separate report, with extensible code.
+        Added SchemaCrawler Lint as a separate report, with ability to add custom linters.
       ]]></action>
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added additional SchemaCrawler linters.
+      ]]></action>      
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added ability to extend SchemaCrawler with custom command.
+      ]]></action>      
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Fixed issue with constraints with the same name in different schemas.
       ]]></action>
