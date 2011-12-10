@@ -18,15 +18,23 @@
         <p>
           SchemaCrawler is also a database schema discovery and comprehension, and schema
           documentation tool. You can
-          search for database schema objects using regular expressions,
+          <a href="schemacrawler_grep.html">search for database schema objects</a>
+          using regular expressions,
           and output the schema and data in a readable
-          text format. The output is designed to be
+          text format, and
+          find potential design issues with
+          <a href="lint.html">lint</a>
+          . The output is designed to be
           <a href="http://en.wikipedia.org/wiki/Diff">diff-ed</a>
           against other database schemas.
         </p>
-        <p>SchemaCrawler supports almost any database that has a JDBC driver, but for convenience is
-          bundled with drivers for some commonly used RDBMS systems. SchemaCrawler works with any
-          operating system that supports Java.</p>
+        <p>
+          SchemaCrawler supports almost any database that has a JDBC driver, but for convenience is
+          <a href="bundled.html">bundled with drivers</a>
+          for some commonly used RDBMS systems. SchemaCrawler works with any
+          operating system that
+          supports Java.
+        </p>
       </subsection>
       <subsection name="SchemaCrawler API">
         <p>
@@ -113,6 +121,7 @@
           </li>
         </ul>
         <p>
+          <img src="http://www.gnu.org/graphics/lgplv3-88x31.png" alt="LGPL" />
           SchemaCrawler is free and open-source API available under the LGPL license.
           SchemaCrawler
           is written in Java,
@@ -172,7 +181,7 @@ for (final Schema schema: database.getSchemas())
         </p>
         <p>
           SchemaCrawler has
-          <a href="http://en.wikipedia.org/wiki/Grep">grep</a>
+          <a href="schemacrawler_grep.html">grep</a>
           functionality that allows you to
           search for table and column names using regular
           expressions.

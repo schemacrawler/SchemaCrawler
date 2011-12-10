@@ -26,8 +26,8 @@
           configuration file. Some examples are provided in the
           <code>schemacrawler.config.properties</code>
           file in the
-          <code>_distrib</code>
-          folder of the download.
+          <a href="https://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20Examples/">SchemaCrawler examples</a>
+          download.
         </p>
         <p>
           For example, if you had defined a connection called
