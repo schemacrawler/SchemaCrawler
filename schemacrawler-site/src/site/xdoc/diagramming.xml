@@ -19,8 +19,9 @@
         </p>
         <p>
           For more details, see the
-          <a href="how-to.html#diagrams">how-to</a>
-          .
+          <a href="how-to.html#diagrams">how-to</a>,   and the diagram example in the
+          <a href="https://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20Examples/">SchemaCrawler examples</a>
+          download.
         </p>
         <p><img src="images/diagram.png" width="100%" alt="SchemaCrawler database diagram" /></p>
       </subsection>

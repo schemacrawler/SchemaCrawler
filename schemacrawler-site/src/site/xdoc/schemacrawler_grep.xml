@@ -21,9 +21,9 @@
           to find all tables that have a CUSTOMER_ID column, for example.
         </p>
         <p>
-          For more details, see the
-          <a href="faq.html#whats-schemacrawler-grep">FAQ</a>
-          .
+          For more details, see grep example in the
+          <a href="https://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20Examples/">SchemaCrawler examples</a>
+          download.
         </p>
       </subsection>
     </section>

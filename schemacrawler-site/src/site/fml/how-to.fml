@@ -308,8 +308,8 @@ schemacrawler.format.hide_constraint_names=false
           .
           <code>-command velocity -outputformat &lt;your Velocity template&gt;</code>
           . See the Velocity example in the
-          <code>_distrib\velocity</code>
-          directory for more details.
+          <a href="https://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20Examples/">SchemaCrawler examples</a>
+          download.
         </p>
       </answer>
     </faq>
@@ -327,8 +327,8 @@ schemacrawler.format.hide_constraint_names=false
           example,
           <code>-command graph -outputformat png -outputfile=graph.png</code>
           . See the diagram example in the
-          <code>_distrib\diagram</code>
-          directory for more details.
+          <a href="https://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20Examples/">SchemaCrawler examples</a>
+          download.
           An example of a SchemaCrawler database diagram:
         </p>
         <img src="images/diagram.png" width="100%" alt="SchemaCrawler database diagram" />
@@ -356,9 +356,9 @@ schemacrawler.format.hide_constraint_names=false
         </p>
         <p>
           <i>
-            See the example in the
-            <code>_distrib\examples\api</code>
-            directory.
+            See the api example in the
+          <a href="https://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20Examples/">SchemaCrawler examples</a>
+          download.
           </i>
         </p>
         <p>
@@ -415,8 +415,8 @@ for (final Schema schema: database.getSchemas())
         <p>
           <i>
             See the example in the
-            <code>_distrib\examples\ant-task</code>
-            directory.
+          <a href="https://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20Examples/">SchemaCrawler examples</a>
+          download.
           </i>
         </p>
         <p> In addition to the ant task parameters mentioned in the example,
