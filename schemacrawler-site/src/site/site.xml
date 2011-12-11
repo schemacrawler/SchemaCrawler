@@ -28,6 +28,7 @@
   <body>
     <head>
       <link rel="meta" title="DOAP" href="doap_schemacrawler-all.rdf" type="application/rdf+xml" />
+	  <link rel="shortcut icon" href="http://schemacrawler.sourceforge.net/favicon.ico" />
       <script type="text/javascript">
         var _gaq = _gaq || [];
         _gaq.push(['_setAccount', 'UA-22913512-1']);
