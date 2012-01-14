@@ -24,16 +24,10 @@ import schemacrawler.schema.Index;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
 import schemacrawler.tools.lint.BaseLinter;
-import schemacrawler.tools.lint.LintSeverity;
 
 public class LinterTableWithNoIndices
   extends BaseLinter
 {
-
-  protected LinterTableWithNoIndices()
-  {
-    setLintSeverity(LintSeverity.low);
-  }
 
   @Override
   public String getDescription()
