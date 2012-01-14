@@ -204,7 +204,16 @@ public final class SchemaCrawler
     }
     catch (final SQLException e)
     {
-      throw new SchemaCrawlerException("Exception retrieving procedures", e);
+      if (e instanceof SchemaCrawlerSQLException)
+      {
+        final Throwable cause = e.getCause();
+        throw new SchemaCrawlerException(e.getMessage() + ": "
+                                         + cause.getMessage(), cause);
+      }
+      else
+      {
+        throw new SchemaCrawlerException("Exception retrieving procedures", e);
+      }
     }
   }
 
@@ -338,7 +347,9 @@ public final class SchemaCrawler
     {
       if (e instanceof SchemaCrawlerSQLException)
       {
-        throw new SchemaCrawlerException(e.getMessage(), e.getCause());
+        final Throwable cause = e.getCause();
+        throw new SchemaCrawlerException(e.getMessage() + ": "
+                                         + cause.getMessage(), cause);
       }
       else
       {
