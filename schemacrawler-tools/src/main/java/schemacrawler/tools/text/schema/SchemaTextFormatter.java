@@ -468,7 +468,8 @@ final class SchemaTextFormatter
         }
 
         final String ruleString;
-        if (updateRule == deleteRule)
+        if (updateRule == deleteRule
+            && updateRule != ForeignKeyUpdateRule.unknown)
         {
           ruleString = ", with " + deleteRule.toString();
         }

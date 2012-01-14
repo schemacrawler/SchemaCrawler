@@ -38,6 +38,7 @@ import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 
 /**
@@ -335,7 +336,14 @@ public final class SchemaCrawler
     }
     catch (final SQLException e)
     {
-      throw new SchemaCrawlerException("Exception retrieving tables", e);
+      if (e instanceof SchemaCrawlerSQLException)
+      {
+        throw new SchemaCrawlerException(e.getMessage(), e.getCause());
+      }
+      else
+      {
+        throw new SchemaCrawlerException("Exception retrieving tables", e);
+      }
     }
 
   }

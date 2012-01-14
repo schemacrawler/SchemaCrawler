@@ -1,0 +1,195 @@
+
+
+
+System Information
+========================================================================
+
+
+
+SchemaCrawler Information
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
+
+product name                          SchemaCrawler
+product version                       8.9
+
+
+Database Information
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
+
+database product name                 SQLite
+database product version              3.6.22
+database user name                    null
+
+
+JDBC Driver Information
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
+
+driver name                           SQLiteJDBC
+driver version                        native
+driver class name                     org.sqlite.JDBC
+url                                   jdbc:sqlite:C:\Users\SUALEH~1\AppData\Local\Temp\SchemaCrawler8410618209458125689.dat
+is JDBC compliant                     false
+
+
+
+Data Types
+========================================================================
+
+
+BLOB                                                         [data type]
+  based on                          BLOB                        
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+INTEGER                                                      [data type]
+  based on                          INTEGER                     
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+NULL                                                         [data type]
+  based on                          NULL                        
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+REAL                                                         [data type]
+  based on                          REAL                        
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+TEXT                                                         [data type]
+  based on                          VARCHAR                     
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+FLOAT                                                        [data type]
+  based on                          FLOAT                       
+  not user defined
+  defined with 
+  not nullable
+  not auto-incrementable
+  unknown
+
+VARCHAR(255)                                                 [data type]
+  based on                          VARCHAR                     
+  not user defined
+  defined with 
+  not nullable
+  not auto-incrementable
+  unknown
+
+
+
+Tables
+========================================================================
+
+
+CUSTOMER                                                         [table]
+------------------------------------------------------------------------
+  ID                                INTEGER not null            
+  FIRSTNAME                         VARCHAR(255)(2000000000)    
+  LASTNAME                          VARCHAR(255)(2000000000)    
+  STREET                            VARCHAR(255)(2000000000)    
+  CITY                              VARCHAR(255)(2000000000)    
+
+                                                           [primary key]
+  ID                                ascending                   
+
+<unknown>                                                  [foreign key]
+  ID --> INVOICE.CUSTOMERID                                     
+
+
+CUSTOMERLIST                                                      [view]
+------------------------------------------------------------------------
+  ID                                INTEGER                     
+  FIRSTNAME                         VARCHAR(255)(2000000000)    
+  LASTNAME                          VARCHAR(255)(2000000000)    
+
+
+INVOICE                                                          [table]
+------------------------------------------------------------------------
+  ID                                INTEGER not null            
+  CUSTOMERID                        INTEGER                     
+  TOTAL                             FLOAT(2000000000, 10)       
+
+                                                           [primary key]
+  ID                                ascending                   
+
+<unknown>                                                  [foreign key]
+  ID --> ITEM.INVOICEID                                         
+  PRODUCT.ID --> ITEM.PRODUCTID                                 
+
+INDEX_INVOICE_CUSTOMER                                [non-unique index]
+  CUSTOMERID                        unknown                     
+
+
+ITEM                                                             [table]
+------------------------------------------------------------------------
+  INVOICEID                         INTEGER not null            
+  ITEM                              INTEGER not null            
+  PRODUCTID                         INTEGER                     
+  QUANTITY                          INTEGER                     
+  COST                              FLOAT(2000000000, 10)       
+
+                                                           [primary key]
+  INVOICEID                         ascending                   
+  ITEM                              ascending                   
+
+<unknown>                                                  [foreign key]
+  INVOICE.ID --> INVOICEID                                      
+  PRODUCT.ID --> PRODUCTID                                      
+
+INDEX_ITEM_INVOICE                                    [non-unique index]
+  INVOICEID                         unknown                     
+
+INDEX_ITEM_PRODUCT                                    [non-unique index]
+  PRODUCTID                         unknown                     
+
+sqlite_autoindex_ITEM_1                                   [unique index]
+  INVOICEID                         unknown                     
+  ITEM                              unknown                     
+
+
+PRODUCT                                                          [table]
+------------------------------------------------------------------------
+  ID                                INTEGER not null            
+  NAME                              VARCHAR(255)(2000000000)    
+  PRICE                             FLOAT(2000000000, 10)       
+
+                                                           [primary key]
+  ID                                ascending                   
+
+<unknown>                                                  [foreign key]
+  INVOICE.ID --> ITEM.INVOICEID                                 
+  ID --> ITEM.PRODUCTID                                         
+
+
+SUPPLIER                                                         [table]
+------------------------------------------------------------------------
+  SUPPLIER_ID                       INTEGER                     
+  SUPPLIER_NAME                     VARCHAR(255)(2000000000)    
+
+INDEX_B_SUPPLIER                                      [non-unique index]
+  SUPPLIER_ID                       unknown                     
+  SUPPLIER_NAME                     unknown                     
+
+INDEX_A_SUPPLIER                                      [non-unique index]
+  SUPPLIER_NAME                     unknown                     
+  SUPPLIER_ID                       unknown                     
+
+
+

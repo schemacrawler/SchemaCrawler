@@ -148,16 +148,34 @@ final class TableRetriever
     MetadataResultSet results;
 
     final DatabaseMetaData metaData = getMetaData();
+    try
+    {
+      results = new MetadataResultSet(metaData.getImportedKeys(unquotedName(table
+                                                                 .getSchema()
+                                                                 .getCatalogName()),
+                                                               unquotedName(table
+                                                                 .getSchema()
+                                                                 .getSchemaName()),
+                                                               unquotedName(table
+                                                                 .getName())));
+      createForeignKeys(results, foreignKeys);
 
-    results = new MetadataResultSet(metaData.getImportedKeys(unquotedName(table
-      .getSchema().getCatalogName()), unquotedName(table.getSchema()
-      .getSchemaName()), unquotedName(table.getName())));
-    createForeignKeys(results, foreignKeys);
-
-    results = new MetadataResultSet(metaData.getExportedKeys(unquotedName(table
-      .getSchema().getCatalogName()), unquotedName(table.getSchema()
-      .getSchemaName()), unquotedName(table.getName())));
-    createForeignKeys(results, foreignKeys);
+      results = new MetadataResultSet(metaData.getExportedKeys(unquotedName(table
+                                                                 .getSchema()
+                                                                 .getCatalogName()),
+                                                               unquotedName(table
+                                                                 .getSchema()
+                                                                 .getSchemaName()),
+                                                               unquotedName(table
+                                                                 .getName())));
+      createForeignKeys(results, foreignKeys);
+    }
+    catch (final SQLException e)
+    {
+      throw new SchemaCrawlerSQLException("Could not retrieve forign keys for table "
+                                              + table,
+                                          e);
+    }
   }
 
   void retrieveIndices(final MutableTable table, final boolean unique)
