@@ -8,7 +8,7 @@
   </parent>
   <groupId>net.sourceforge.schemacrawler</groupId>
   <artifactId>schemacrawler-test</artifactId>
-  <packaging>pom</packaging>
+  <packaging>jar</packaging>
   <name>SchemaCrawler Test</name>
   <dependencies>
     <dependency>
