@@ -88,7 +88,7 @@ public final class TestUtility
     {
       contentEquals = contentEquals(new InputStreamReader(referenceStream),
                                     new FileReader(testOutputFile),
-                                    "url                                   jdbc:hsqldb");
+                                    "url                                   jdbc:");
     }
 
     final boolean isOutputValid;
