@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<xs:schema id="schemacrawler-linter-configs" xmlns=""
+	xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="schemacrawler-linter-configs">
+		<xs:complexType>
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:element name="linter-config">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="severity" type="xs:string"
+								minOccurs="0" maxOccurs="1" />
+							<xs:element name="config" minOccurs="0" maxOccurs="1">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="property" nillable="true"
+											minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:simpleContent>
+													<xs:extension base="xs:string">
+														<xs:attribute name="name" type="xs:string" />
+													</xs:extension>
+												</xs:simpleContent>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="id" type="xs:string" />
+					</xs:complexType>
+				</xs:element>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

@@ -1,0 +1,17 @@
+<schemacrawler-linter-configs>
+	<linter id="linter.Linter1">
+		<severity>medium</severity>
+		<config>
+			<property name="exclude">.*</property>
+			<property name="other">something else</property>
+		</config>
+	</linter>
+	<linter id="linter.Linter2">
+		<config>
+			<property name="exclude">.*</property>
+		</config>
+	</linter>
+	<linter id="linter.Linter3">
+		<severity>high</severity>
+	</linter>
+</schemacrawler-linter-configs>
