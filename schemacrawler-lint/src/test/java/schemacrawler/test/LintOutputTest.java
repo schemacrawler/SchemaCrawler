@@ -134,8 +134,7 @@ public class LintOutputTest
         outputOptions.setNoHeader(false);
         outputOptions.setNoFooter(false);
 
-        final Config config = Config.load(LintOutputTest.class
-          .getResourceAsStream("/hsqldb.INFORMATION_SCHEMA.config.properties"));
+        final Config config = Config.loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
         final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
         schemaCrawlerOptions
           .setSchemaInclusionRule(new InclusionRule(".*FOR_LINT",
@@ -183,8 +182,7 @@ public class LintOutputTest
     outputOptions.setNoHeader(false);
     outputOptions.setNoFooter(false);
 
-    final Config config = Config.load(LintOutputTest.class
-      .getResourceAsStream("/hsqldb.INFORMATION_SCHEMA.config.properties"));
+    final Config config = Config.loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
     schemaCrawlerOptions
       .setSchemaInclusionRule(new InclusionRule(".*FOR_LINT",
@@ -228,8 +226,7 @@ public class LintOutputTest
     outputOptions.setNoHeader(false);
     outputOptions.setNoFooter(false);
 
-    final Config config = Config.load(LintOutputTest.class
-      .getResourceAsStream("/hsqldb.INFORMATION_SCHEMA.config.properties"));
+    final Config config = Config.loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
     schemaCrawlerOptions
       .setSchemaInclusionRule(new InclusionRule(".*FOR_LINT",
