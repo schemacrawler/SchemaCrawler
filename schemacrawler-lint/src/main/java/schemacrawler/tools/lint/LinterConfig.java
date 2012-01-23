@@ -75,7 +75,7 @@ public class LinterConfig
   {
     if (config != null)
     {
-      config.putAll(config);
+      config.putAll(config2);
     }
   }
 
