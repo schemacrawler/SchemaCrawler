@@ -27,6 +27,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -39,11 +41,15 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import sf.util.Utility;
 
 public class LinterConfigs
   implements Iterable<LinterConfig>
 {
+
+  private static final Logger LOGGER = Logger.getLogger(LinterConfig.class
+    .getName());
 
   private static Element getSubElement(final Element element,
                                        final String tagName)
@@ -104,8 +110,11 @@ public class LinterConfigs
       {
         final Element propertyElement = (Element) propertiesList.item(i);
         final String name = propertyElement.getAttribute("name");
-        final String value = propertyElement.getNodeValue();
-        config.put(name, value);
+        final String value = propertyElement.getFirstChild().getNodeValue();
+        if (!Utility.isBlank(name))
+        {
+          config.put(name, value);
+        }
       }
     }
 
@@ -149,12 +158,21 @@ public class LinterConfigs
     final String severityValue = getTextValue(linterElement, "severity");
     if (!Utility.isBlank(severityValue))
     {
-      final LintSeverity severity = LintSeverity.valueOf(severityValue);
-      linterConfig.setSeverity(severity);
+      try
+      {
+        final LintSeverity severity = LintSeverity.valueOf(severityValue);
+        linterConfig.setSeverity(severity);
+      }
+      catch (final Exception e)
+      {
+        LOGGER.log(Level.CONFIG, String
+          .format("Could not set a severity of %s for linter %s",
+                  severityValue,
+                  linterId));
+      }
     }
 
-    final Config config = parseConfig(getSubElement(linterElement,
-                                                    "configuration"));
+    final Config config = parseConfig(getSubElement(linterElement, "config"));
     linterConfig.putAll(config);
 
     return linterConfig;
@@ -198,14 +216,23 @@ public class LinterConfigs
   }
 
   public void parse(final Reader reader)
-    throws ParserConfigurationException, SAXException, IOException
+    throws SchemaCrawlerException
   {
     if (reader == null)
     {
       throw new IllegalArgumentException("No input provided");
     }
 
-    final Document document = parseXml(new InputSource(reader));
+    final Document document;
+    try
+    {
+      document = parseXml(new InputSource(reader));
+    }
+    catch (final Exception e)
+    {
+      throw new SchemaCrawlerException("Could not parse XML", e);
+    }
+
     final List<LinterConfig> linterConfigs = parseDocument(document);
     for (final LinterConfig linterConfig: linterConfigs)
     {
