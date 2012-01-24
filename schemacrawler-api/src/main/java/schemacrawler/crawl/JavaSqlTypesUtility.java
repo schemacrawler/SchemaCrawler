@@ -21,7 +21,6 @@
 package schemacrawler.crawl;
 
 
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -122,7 +121,8 @@ public final class JavaSqlTypesUtility
   {
     final Map<String, JavaSqlTypeGroup> javaSqlTypeGroupsMap = readJavaSqlTypesGroupsMap();
     final Map<String, String> javaSqlTypesClassNames = readJavaSqlTypesClassNameMap();
-    final Map<String, String> javaSqlTypesProperties = readPropertiesResource("/java.sql.Types.properties");
+    final Map<String, String> javaSqlTypesProperties = Config
+      .loadResource("/java.sql.Types.properties");
 
     final List<JavaSqlType> javaSqlTypes = new ArrayList<JavaSqlType>();
 
@@ -152,13 +152,14 @@ public final class JavaSqlTypesUtility
 
   private static Map<String, String> readJavaSqlTypesClassNameMap()
   {
-    return readPropertiesResource("/java.sql.Types.mappings.properties");
+    return Config.loadResource("/java.sql.Types.mappings.properties");
   }
 
   private static Map<String, JavaSqlTypeGroup> readJavaSqlTypesGroupsMap()
   {
     final Map<String, JavaSqlTypeGroup> javaSqlTypesGroupsMap = new HashMap<String, JavaSqlTypeGroup>();
-    final Map<String, String> javaSqlTypesGroups = readPropertiesResource("/java.sql.Types.groups.properties");
+    final Map<String, String> javaSqlTypesGroups = Config
+      .loadResource("/java.sql.Types.groups.properties");
     for (final Entry<String, String> javaSqlTypesGroupsEntry: javaSqlTypesGroups
       .entrySet())
     {
@@ -176,22 +177,6 @@ public final class JavaSqlTypesUtility
       }
     }
     return Collections.unmodifiableMap(javaSqlTypesGroupsMap);
-  }
-
-  private static Map<String, String> readPropertiesResource(final String resource)
-  {
-    final Map<String, String> properties;
-    final InputStream inputStream = JavaSqlTypesUtility.class
-      .getResourceAsStream(resource);
-    if (inputStream != null)
-    {
-      properties = Config.load(inputStream);
-    }
-    else
-    {
-      properties = new HashMap<String, String>();
-    }
-    return properties;
   }
 
   private JavaSqlTypesUtility()

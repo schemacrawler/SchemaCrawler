@@ -24,6 +24,7 @@ import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.options.ApplicationOptions;
 import schemacrawler.tools.options.HelpOptions;
 
@@ -41,7 +42,7 @@ public class SchemaCrawlerMain
 
   public static void main(final String[] args,
                           final HelpOptions helpOptions,
-                          final String configResource)
+                          final Config config)
     throws Exception
   {
     final CommandLine commandLine;
@@ -65,13 +66,11 @@ public class SchemaCrawlerMain
 
     if (showHelp)
     {
-      commandLine = new SchemaCrawlerHelpCommandLine(remainingArgs,
-                                                     helpOptions,
-                                                     configResource);
+      commandLine = new SchemaCrawlerHelpCommandLine(remainingArgs, helpOptions);
     }
     else
     {
-      commandLine = new SchemaCrawlerCommandLine(configResource, remainingArgs);
+      commandLine = new SchemaCrawlerCommandLine(config, remainingArgs);
     }
     commandLine.execute();
   }

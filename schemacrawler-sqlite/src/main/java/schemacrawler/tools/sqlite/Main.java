@@ -21,6 +21,7 @@
 package schemacrawler.tools.sqlite;
 
 
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.commandline.SchemaCrawlerMain;
 import schemacrawler.tools.options.BundledDriverHelpOptions;
 
@@ -45,7 +46,7 @@ public final class Main
         .main(args,
               new BundledDriverHelpOptions("SchemaCrawler for SQLite",
                                            "/help/Connections.sqlite.txt"),
-              "/schemacrawler-sqlite.config.properties");
+              Config.loadResource("/schemacrawler-sqlite.config.properties"));
     }
     catch (final Exception e)
     {

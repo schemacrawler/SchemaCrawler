@@ -21,6 +21,7 @@
 package schemacrawler.tools.mysql;
 
 
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.commandline.SchemaCrawlerMain;
 import schemacrawler.tools.options.BundledDriverHelpOptions;
 
@@ -45,7 +46,7 @@ public final class Main
         .main(args,
               new BundledDriverHelpOptions("SchemaCrawler for MySQL",
                                            "/help/Connections.mysql.txt"),
-              "/schemacrawler-mysql.config.properties");
+              Config.loadResource("/schemacrawler-mysql.config.properties"));
     }
     catch (final Exception e)
     {

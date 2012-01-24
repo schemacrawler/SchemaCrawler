@@ -21,6 +21,7 @@
 package schemacrawler.tools.oracle;
 
 
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.commandline.SchemaCrawlerMain;
 import schemacrawler.tools.options.BundledDriverHelpOptions;
 
@@ -46,7 +47,7 @@ public final class Main
         .main(args,
               new BundledDriverHelpOptions("SchemaCrawler for Oracle",
                                            "/help/Connections.oracle.txt"),
-              "/schemacrawler-oracle.config.properties");
+              Config.loadResource("/schemacrawler-oracle.config.properties"));
     }
     catch (final Exception e)
     {
