@@ -21,6 +21,7 @@
 package schemacrawler.tools.derby;
 
 
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.commandline.SchemaCrawlerMain;
 import schemacrawler.tools.options.BundledDriverHelpOptions;
 
@@ -45,7 +46,7 @@ public final class Main
         .main(args,
               new BundledDriverHelpOptions("SchemaCrawler for Apache Derby",
                                            "/help/Connections.derby.txt"),
-              "/schemacrawler-derby.config.properties");
+              Config.loadResource("/schemacrawler-derby.config.properties"));
     }
     catch (final Exception e)
     {

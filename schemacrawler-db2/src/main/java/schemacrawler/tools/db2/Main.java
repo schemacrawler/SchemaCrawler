@@ -21,6 +21,7 @@
 package schemacrawler.tools.db2;
 
 
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.commandline.SchemaCrawlerMain;
 import schemacrawler.tools.options.BundledDriverHelpOptions;
 
@@ -45,7 +46,7 @@ public final class Main
         .main(args,
               new BundledDriverHelpOptions("SchemaCrawler for IBM DB2",
                                            "/help/Connections.db2.txt"),
-              "/schemacrawler-db2.config.properties");
+              Config.loadResource("/schemacrawler-db2.config.properties"));
     }
     catch (final Exception e)
     {

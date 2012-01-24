@@ -21,6 +21,7 @@
 package schemacrawler.tools.hsqldb;
 
 
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.commandline.SchemaCrawlerMain;
 import schemacrawler.tools.options.BundledDriverHelpOptions;
 
@@ -45,7 +46,7 @@ public final class Main
         .main(args,
               new BundledDriverHelpOptions("SchemaCrawler for HyperSQL",
                                            "/help/Connections.hsqldb.txt"),
-              "/schemacrawler-hsqldb.config.properties");
+              Config.loadResource("/schemacrawler-hsqldb.config.properties"));
     }
     catch (final Exception e)
     {

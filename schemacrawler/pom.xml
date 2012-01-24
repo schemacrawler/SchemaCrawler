@@ -7,7 +7,6 @@
     <artifactId>schemacrawler-all</artifactId>
     <version>8-10</version>
   </parent>
-  <groupId>net.sourceforge.schemacrawler</groupId>
   <artifactId>schemacrawler</artifactId>
   <packaging>pom</packaging>
   <name>SchemaCrawler Distribution</name>

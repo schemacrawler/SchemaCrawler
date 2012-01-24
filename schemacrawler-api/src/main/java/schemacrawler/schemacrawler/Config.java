@@ -21,12 +21,14 @@
 package schemacrawler.schemacrawler;
 
 
-import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -59,13 +61,26 @@ public final class Config
    *        Configuration stream.
    * @return Configuration properties.
    */
-  public static Config load(final InputStream configStream)
+  public static Config loadResource(final String resource)
   {
     Properties configProperties = new Properties();
-    if (configStream != null)
+
+    final InputStream stream;
+    if (!Utility.isBlank(resource))
     {
-      configProperties = loadProperties(configProperties, configStream);
+      stream = Config.class.getResourceAsStream(resource);
     }
+    else
+    {
+      stream = null;
+    }
+
+    if (stream != null)
+    {
+      configProperties = loadProperties(configProperties,
+                                        new InputStreamReader(stream));
+    }
+
     return new Config(configProperties);
   }
 
@@ -108,8 +123,7 @@ public final class Config
   {
     try
     {
-      final InputStream propertiesStream = new BufferedInputStream(new FileInputStream(propertiesFile));
-      loadProperties(properties, propertiesStream);
+      loadProperties(properties, new FileReader(propertiesFile));
     }
     catch (final FileNotFoundException e)
     {
@@ -125,17 +139,22 @@ public final class Config
    * 
    * @param properties
    *        Properties object.
-   * @param propertiesStream
+   * @param reader
    *        Properties data stream.
    * @return Properties
    */
   private static Properties loadProperties(final Properties properties,
-                                           final InputStream propertiesStream)
+                                           final Reader reader)
   {
+    if (properties == null || reader == null)
+    {
+      LOGGER.log(Level.WARNING, "No properties provided");
+    }
+
     try
     {
-      properties.load(propertiesStream);
-      propertiesStream.close();
+      properties.load(new BufferedReader(reader));
+      reader.close();
     }
     catch (final IOException e)
     {
@@ -145,9 +164,9 @@ public final class Config
     {
       try
       {
-        if (propertiesStream != null)
+        if (reader != null)
         {
-          propertiesStream.close();
+          reader.close();
         }
       }
       catch (final IOException e)
@@ -216,9 +235,10 @@ public final class Config
    *        Property name
    * @return Integer value
    */
-  public int getIntegerValue(final String propertyName)
+  public int getIntegerValue(final String propertyName, final int defaultValue)
   {
-    return Integer.parseInt(getStringValue(propertyName, null));
+    return Integer.parseInt(getStringValue(propertyName,
+                                           String.valueOf(defaultValue)));
   }
 
   /**

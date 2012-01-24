@@ -139,8 +139,8 @@ public class SchemaCrawlerOutputTest
         outputOptions.setNoHeader(false);
         outputOptions.setNoFooter(false);
 
-        final Config config = Config.load(SchemaCrawlerOutputTest.class
-          .getResourceAsStream("/hsqldb.INFORMATION_SCHEMA.config.properties"));
+        final Config config = Config
+          .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
         final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
         schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
 
@@ -194,8 +194,8 @@ public class SchemaCrawlerOutputTest
         outputOptions.setNoHeader(false);
         outputOptions.setNoFooter(false);
 
-        final Config config = Config.load(SchemaCrawlerOutputTest.class
-          .getResourceAsStream("/hsqldb.INFORMATION_SCHEMA.config.properties"));
+        final Config config = Config
+          .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
         final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
         schemaCrawlerOptions.setSchemaInfoLevel(infoLevel.getSchemaInfoLevel());
 
@@ -243,8 +243,8 @@ public class SchemaCrawlerOutputTest
       outputOptions.setNoHeader(false);
       outputOptions.setNoFooter(false);
 
-      final Config config = Config.load(SchemaCrawlerOutputTest.class
-        .getResourceAsStream("/hsqldb.INFORMATION_SCHEMA.config.properties"));
+      final Config config = Config
+        .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
       schemaCrawlerOptions.setSchemaInfoLevel(infoLevel.getSchemaInfoLevel());
 

@@ -31,7 +31,6 @@ import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputOptions;
 import sf.util.ObjectToString;
-import sf.util.Utility;
 
 /**
  * Utility for parsing the SchemaCrawler command line.
@@ -64,19 +63,18 @@ public final class SchemaCrawlerCommandLine
    * 
    * @param args
    *        Command line arguments.
-   * @param configResource
-   *        Config resource.
+   * @param config
+   *        Configuration settings.
    * @throws SchemaCrawlerException
    *         On an exception
    */
-  public SchemaCrawlerCommandLine(final String configResource,
-                                  final String... args)
+  public SchemaCrawlerCommandLine(final Config config, final String... args)
     throws SchemaCrawlerException
   {
-    this(configResource, null, args);
+    this(config, null, args);
   }
 
-  private SchemaCrawlerCommandLine(final String configResource,
+  private SchemaCrawlerCommandLine(final Config config,
                                    final ConnectionOptions connectionOptions,
                                    final String... args)
     throws SchemaCrawlerException
@@ -100,31 +98,27 @@ public final class SchemaCrawlerCommandLine
     remainingArgs = outputOptionsParser.parse(remainingArgs);
     outputOptions = outputOptionsParser.getOptions();
 
-    final boolean hasConfigResource = !Utility.isBlank(configResource);
-    if (hasConfigResource)
+    final boolean isBundledWithDriver = config != null;
+    if (isBundledWithDriver)
     {
-      config = Config.load(SchemaCrawlerCommandLine.class
-        .getResourceAsStream(configResource));
+      this.config = config;
     }
     else
     {
-      if (remainingArgs.length > 0)
-      {
-        final ConfigParser configParser = new ConfigParser();
-        remainingArgs = configParser.parse(remainingArgs);
-        config = configParser.getOptions();
-      }
-      else
-      {
-        config = new Config();
-      }
+      this.config = new Config();
+    }
+    if (remainingArgs.length > 0)
+    {
+      final ConfigParser configParser = new ConfigParser();
+      remainingArgs = configParser.parse(remainingArgs);
+      config.putAll(configParser.getOptions());
     }
 
     if (connectionOptions != null)
     {
       this.connectionOptions = connectionOptions;
     }
-    else if (hasConfigResource)
+    else if (isBundledWithDriver)
     {
       final BaseDatabaseConnectionOptionsParser bundledDriverConnectionOptionsParser = new BundledDriverConnectionOptionsParser(config);
       remainingArgs = bundledDriverConnectionOptionsParser.parse(remainingArgs);

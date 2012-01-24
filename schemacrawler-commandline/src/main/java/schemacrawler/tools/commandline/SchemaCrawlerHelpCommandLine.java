@@ -46,7 +46,6 @@ final class SchemaCrawlerHelpCommandLine
     System.out.println(helpText);
   }
 
-  private final boolean hideConfig;
   private final String command;
 
   private final HelpOptions helpOptions;
@@ -65,8 +64,7 @@ final class SchemaCrawlerHelpCommandLine
    *         On an exception
    */
   SchemaCrawlerHelpCommandLine(final String[] args,
-                               final HelpOptions helpOptions,
-                               final String configResource)
+                               final HelpOptions helpOptions)
     throws SchemaCrawlerException
   {
     if (args == null)
@@ -79,8 +77,6 @@ final class SchemaCrawlerHelpCommandLine
       throw new SchemaCrawlerException("No help options provided");
     }
     this.helpOptions = helpOptions;
-
-    hideConfig = !Utility.isBlank(configResource);
 
     String command = null;
     if (args.length != 0)
@@ -116,10 +112,7 @@ final class SchemaCrawlerHelpCommandLine
 
     showHelp(helpOptions.getResourceConnections());
     showHelp("/help/SchemaCrawlerOptions.txt");
-    if (!hideConfig)
-    {
-      showHelp("/help/Config.txt");
-    }
+    showHelp("/help/Config.txt");
     showHelp("/help/ApplicationOptions.txt");
     if (command == null)
     {
