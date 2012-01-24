@@ -23,7 +23,7 @@ package schemacrawler.tools.db2;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.commandline.SchemaCrawlerMain;
-import schemacrawler.tools.options.BundledDriverHelpOptions;
+import schemacrawler.tools.options.HelpOptions;
 
 /**
  * Main class that takes arguments for a database for crawling a schema.
@@ -43,10 +43,9 @@ public final class Main
     try
     {
       SchemaCrawlerMain
-        .main(args,
-              new BundledDriverHelpOptions("SchemaCrawler for IBM DB2",
-                                           "/help/Connections.db2.txt"),
-              Config.loadResource("/schemacrawler-db2.config.properties"));
+        .main(args, new HelpOptions("SchemaCrawler for IBM DB2",
+                                    "/help/Connections.db2.txt"), Config
+          .loadResource("/schemacrawler-db2.config.properties"));
     }
     catch (final Exception e)
     {

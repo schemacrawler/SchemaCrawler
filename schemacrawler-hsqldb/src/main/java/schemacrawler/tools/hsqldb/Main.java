@@ -23,7 +23,7 @@ package schemacrawler.tools.hsqldb;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.commandline.SchemaCrawlerMain;
-import schemacrawler.tools.options.BundledDriverHelpOptions;
+import schemacrawler.tools.options.HelpOptions;
 
 /**
  * Main class that takes arguments for a database for crawling a schema.
@@ -43,10 +43,9 @@ public final class Main
     try
     {
       SchemaCrawlerMain
-        .main(args,
-              new BundledDriverHelpOptions("SchemaCrawler for HyperSQL",
-                                           "/help/Connections.hsqldb.txt"),
-              Config.loadResource("/schemacrawler-hsqldb.config.properties"));
+        .main(args, new HelpOptions("SchemaCrawler for HyperSQL",
+                                    "/help/Connections.hsqldb.txt"), Config
+          .loadResource("/schemacrawler-hsqldb.config.properties"));
     }
     catch (final Exception e)
     {
