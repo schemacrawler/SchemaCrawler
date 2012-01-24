@@ -28,6 +28,7 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseExecutable;
 import schemacrawler.tools.lint.LintedDatabase;
+import schemacrawler.tools.lint.LinterConfigs;
 import schemacrawler.tools.options.OutputFormat;
 
 public class LintExecutable
@@ -66,7 +67,7 @@ public class LintExecutable
   protected void executeOn(final Database db, final Connection connection)
     throws Exception
   {
-    final LintedDatabase database = new LintedDatabase(db);
+    final LintedDatabase database = new LintedDatabase(db, new LinterConfigs());
 
     final LintFormatter formatter = getSchemaTraversalHandler();
 

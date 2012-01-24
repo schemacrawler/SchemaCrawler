@@ -40,7 +40,7 @@ public class LinterForeignKeyWithNoIndices
 
   public LinterForeignKeyWithNoIndices()
   {
-    setLintSeverity(LintSeverity.low);
+    setSeverity(LintSeverity.low);
   }
 
   @Override

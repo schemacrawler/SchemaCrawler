@@ -36,7 +36,7 @@ public class LinterTooManyLobs
 
   public LinterTooManyLobs()
   {
-    setLintSeverity(LintSeverity.low);
+    setSeverity(LintSeverity.low);
   }
 
   @Override

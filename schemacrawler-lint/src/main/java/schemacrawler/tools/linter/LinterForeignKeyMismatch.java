@@ -37,7 +37,7 @@ public class LinterForeignKeyMismatch
 
   public LinterForeignKeyMismatch()
   {
-    setLintSeverity(LintSeverity.high);
+    setSeverity(LintSeverity.high);
   }
 
   @Override

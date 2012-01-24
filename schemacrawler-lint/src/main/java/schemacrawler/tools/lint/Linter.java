@@ -26,13 +26,15 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 public interface Linter
 {
 
+  void config(LinterConfig linterConfig);
+
   String getDescription();
 
   String getId();
 
   LintCollector getLintCollector();
 
-  LintSeverity getLintSeverity();
+  LintSeverity getSeverity();
 
   String getSummary();
 
@@ -41,6 +43,6 @@ public interface Linter
 
   void setLintCollector(LintCollector lintCollector);
 
-  void setLintSeverity(LintSeverity severity);
+  void setSeverity(LintSeverity severity);
 
 }
