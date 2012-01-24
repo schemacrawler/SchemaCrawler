@@ -31,44 +31,33 @@ public class LinterConfig
 
   private static final long serialVersionUID = 83079182550531365L;
 
-  private final String linterId;
+  private final String id;
   private LintSeverity severity;
   private final Config config;
 
-  public LinterConfig(final String linterId)
+  public LinterConfig(final String id)
   {
-    if (Utility.isBlank(linterId))
+    if (Utility.isBlank(id))
     {
       throw new IllegalArgumentException("No linter id provided");
     }
-    this.linterId = linterId;
+    this.id = id;
     config = new Config();
   }
 
-  public boolean getBooleanValue(final String propertyName)
+  public Config getConfig()
   {
-    return config.getBooleanValue(propertyName);
+    return config;
   }
 
-  public int getIntegerValue(final String propertyName, final int defaultValue)
+  public String getId()
   {
-    return config.getIntegerValue(propertyName, defaultValue);
-  }
-
-  public String getLinterId()
-  {
-    return linterId;
+    return id;
   }
 
   public LintSeverity getSeverity()
   {
     return severity;
-  }
-
-  public String getStringValue(final String propertyName,
-                               final String defaultValue)
-  {
-    return config.getStringValue(propertyName, defaultValue);
   }
 
   public void putAll(final Config config2)
@@ -77,11 +66,6 @@ public class LinterConfig
     {
       config.putAll(config2);
     }
-  }
-
-  public void setConfigValue(final String propertyName, final String value)
-  {
-    config.put(propertyName, value);
   }
 
   public void setSeverity(final LintSeverity severity)

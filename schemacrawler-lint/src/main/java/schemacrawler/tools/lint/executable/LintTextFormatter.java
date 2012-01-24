@@ -22,6 +22,8 @@ package schemacrawler.tools.lint.executable;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import schemacrawler.schema.Table;
@@ -118,7 +120,9 @@ final class LintTextFormatter
     {
       multiMap.add(lint.getSeverity(), lint);
     }
-    for (final LintSeverity severity: LintSeverity.values())
+    final List<LintSeverity> severities = Arrays.asList(LintSeverity.values());
+    Collections.reverse(severities);
+    for (final LintSeverity severity: severities)
     {
       if (!multiMap.containsKey(severity))
       {

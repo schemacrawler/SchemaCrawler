@@ -28,6 +28,7 @@ import schemacrawler.schema.Database;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.Config;
 
 public abstract class BaseLinter
   implements Linter
@@ -37,9 +38,20 @@ public abstract class BaseLinter
     .getName());
 
   private LintCollector collector;
+
   private LintSeverity severity = LintSeverity.medium;
 
   private Database database;
+
+  @Override
+  public void config(final LinterConfig linterConfig)
+  {
+    if (linterConfig != null)
+    {
+      setSeverity(linterConfig.getSeverity());
+      config(linterConfig.getConfig());
+    }
+  }
 
   @Override
   public String getId()
@@ -54,7 +66,7 @@ public abstract class BaseLinter
   }
 
   @Override
-  public final LintSeverity getLintSeverity()
+  public final LintSeverity getSeverity()
   {
     return severity;
   }
@@ -85,10 +97,10 @@ public abstract class BaseLinter
   public void setLintCollector(final LintCollector lintCollector)
   {
     collector = lintCollector;
-  };
+  }
 
   @Override
-  public final void setLintSeverity(final LintSeverity severity)
+  public final void setSeverity(final LintSeverity severity)
   {
     if (severity != null)
     {
@@ -109,7 +121,7 @@ public abstract class BaseLinter
       final Lint<V> lint = newLint(namedObject.getFullName(), message, value);
       collector.addLint(namedObject, lint);
     }
-  }
+  };
 
   protected <V extends Serializable> void addLint(final String message,
                                                   final V value)
@@ -118,6 +130,11 @@ public abstract class BaseLinter
     {
       addLint(database, message, value);
     }
+  }
+
+  protected void config(final Config config)
+  {
+
   }
 
   protected void end()
@@ -134,11 +151,7 @@ public abstract class BaseLinter
                                                    final String message,
                                                    final V value)
   {
-    return new SimpleLint<V>(getId(),
-                             objectName,
-                             getLintSeverity(),
-                             message,
-                             value);
+    return new SimpleLint<V>(getId(), objectName, getSeverity(), message, value);
   }
 
 }

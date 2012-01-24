@@ -42,7 +42,7 @@ public class LinterRedundantIndices
 
   public LinterRedundantIndices()
   {
-    setLintSeverity(LintSeverity.high);
+    setSeverity(LintSeverity.high);
   }
 
   @Override

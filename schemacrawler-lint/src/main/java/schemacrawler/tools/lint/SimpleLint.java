@@ -95,6 +95,7 @@ public final class SimpleLint<V extends Serializable>
       return compareTo;
     }
     compareTo = severity.compareTo(lint.getSeverity());
+    compareTo *= -1; // Reverse
     if (compareTo != 0)
     {
       return compareTo;

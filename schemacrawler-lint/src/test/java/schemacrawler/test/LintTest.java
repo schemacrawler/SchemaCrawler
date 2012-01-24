@@ -40,6 +40,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.lint.Lint;
 import schemacrawler.tools.lint.LintCollector;
 import schemacrawler.tools.lint.LintedDatabase;
+import schemacrawler.tools.lint.LinterConfigs;
 import schemacrawler.utility.TestDatabase;
 
 public class LintTest
@@ -81,7 +82,7 @@ public class LintTest
                  4,
                  database.getSchema("PUBLIC.FOR_LINT").getTables().length);
 
-    final LintedDatabase lintedDatabase = new LintedDatabase(database);
+    final LintedDatabase lintedDatabase = new LintedDatabase(database, new LinterConfigs());
     final LintCollector lintCollector = lintedDatabase.getCollector();
     assertEquals(24, lintCollector.size());
 

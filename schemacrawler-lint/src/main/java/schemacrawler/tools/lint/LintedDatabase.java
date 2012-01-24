@@ -46,7 +46,8 @@ public final class LintedDatabase
   private final Database database;
   private final LintCollector collector;
 
-  public LintedDatabase(final Database database)
+  public LintedDatabase(final Database database,
+                        final LinterConfigs linterConfigs)
     throws SchemaCrawlerException
   {
     if (database == null)
@@ -62,7 +63,8 @@ public final class LintedDatabase
       LOGGER.log(Level.FINE,
                  String.format("Linting with ", linter.getClass().getName()));
       linter.setLintCollector(collector);
-      if (linter.getLintSeverity() != LintSeverity.off)
+      linter.config(linterConfigs.get(linter.getId()));
+      if (linter.getSeverity() != LintSeverity.off)
       {
         linter.lint(database);
       }

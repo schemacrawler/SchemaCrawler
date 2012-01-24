@@ -236,7 +236,7 @@ public class LinterConfigs
     final List<LinterConfig> linterConfigs = parseDocument(document);
     for (final LinterConfig linterConfig: linterConfigs)
     {
-      linterConfigsMap.put(linterConfig.getLinterId(), linterConfig);
+      linterConfigsMap.put(linterConfig.getId(), linterConfig);
     }
   }
 
