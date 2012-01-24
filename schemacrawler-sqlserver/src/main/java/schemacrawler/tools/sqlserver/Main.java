@@ -23,7 +23,7 @@ package schemacrawler.tools.sqlserver;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.commandline.SchemaCrawlerMain;
-import schemacrawler.tools.options.BundledDriverHelpOptions;
+import schemacrawler.tools.options.HelpOptions;
 
 /**
  * Main class that takes arguments for a database for crawling a schema.
@@ -43,10 +43,9 @@ public final class Main
     try
     {
       SchemaCrawlerMain
-        .main(args,
-              new BundledDriverHelpOptions("SchemaCrawler for Microsoft SQL Server",
-                                           "/help/Connections.sqlserver.txt"),
-              Config.loadResource("/schemacrawler-sqlserver.config.properties"));
+        .main(args, new HelpOptions("SchemaCrawler for Microsoft SQL Server",
+                                    "/help/Connections.sqlserver.txt"), Config
+          .loadResource("/schemacrawler-sqlserver.config.properties"));
     }
     catch (final Exception e)
     {

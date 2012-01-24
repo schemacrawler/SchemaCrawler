@@ -30,11 +30,18 @@ public class HelpOptions
   private static final long serialVersionUID = -2497570007150087268L;
 
   private final String title;
-  private String resourceConnections = "/help/Connections.txt";
+  private final String resourceConnections;
 
   public HelpOptions(final String title)
   {
     this.title = title;
+    resourceConnections = "/help/Connections.txt";
+  }
+
+  public HelpOptions(final String title, final String resourceConnections)
+  {
+    this.title = title;
+    this.resourceConnections = resourceConnections;
   }
 
   public String getResourceConnections()
@@ -45,11 +52,6 @@ public class HelpOptions
   public String getTitle()
   {
     return title;
-  }
-
-  void setResourceConnections(final String resourceConnections)
-  {
-    this.resourceConnections = resourceConnections;
   }
 
 }
