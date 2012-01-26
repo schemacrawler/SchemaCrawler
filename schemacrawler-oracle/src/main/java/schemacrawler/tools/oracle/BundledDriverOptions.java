@@ -20,26 +20,18 @@
 package schemacrawler.tools.oracle;
 
 
-import schemacrawler.schemacrawler.Config;
-import schemacrawler.tools.options.HelpOptions;
 
 public final class BundledDriverOptions
-  implements schemacrawler.tools.options.BundledDriverOptions
+  extends schemacrawler.tools.options.BundledDriverOptions
 {
 
   private static final long serialVersionUID = -8607886464063312321L;
 
-  @Override
-  public Config getConfig()
+  public BundledDriverOptions()
   {
-    return Config.loadResource("/schemacrawler-oracle.config.properties");
-  }
-
-  @Override
-  public HelpOptions getHelpOptions()
-  {
-    return new HelpOptions("SchemaCrawler for Oracle",
-                           "/help/Connections.oracle.txt");
+    super("SchemaCrawler for Oracle",
+          "/help/Connections.oracle.txt",
+          "/schemacrawler-oracle.config.properties");
   }
 
 }

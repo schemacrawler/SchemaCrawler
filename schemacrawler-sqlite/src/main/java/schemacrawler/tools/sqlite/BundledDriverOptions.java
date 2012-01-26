@@ -20,26 +20,18 @@
 package schemacrawler.tools.sqlite;
 
 
-import schemacrawler.schemacrawler.Config;
-import schemacrawler.tools.options.HelpOptions;
 
 public final class BundledDriverOptions
-  implements schemacrawler.tools.options.BundledDriverOptions
+  extends schemacrawler.tools.options.BundledDriverOptions
 {
 
   private static final long serialVersionUID = 7181719520243423090L;
 
-  @Override
-  public Config getConfig()
+  public BundledDriverOptions()
   {
-    return Config.loadResource("/schemacrawler-sqlite.config.properties");
-  }
-
-  @Override
-  public HelpOptions getHelpOptions()
-  {
-    return new HelpOptions("SchemaCrawler for SQLite",
-                           "/help/Connections.sqlite.txt");
+    super("SchemaCrawler for SQLite",
+          "/help/Connections.sqlite.txt",
+          "/schemacrawler-sqlite.config.properties");
   }
 
 }

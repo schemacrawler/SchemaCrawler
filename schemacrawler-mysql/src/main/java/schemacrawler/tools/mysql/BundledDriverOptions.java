@@ -20,26 +20,18 @@
 package schemacrawler.tools.mysql;
 
 
-import schemacrawler.schemacrawler.Config;
-import schemacrawler.tools.options.HelpOptions;
 
 public final class BundledDriverOptions
-  implements schemacrawler.tools.options.BundledDriverOptions
+  extends schemacrawler.tools.options.BundledDriverOptions
 {
 
   private static final long serialVersionUID = -7803359491065121373L;
 
-  @Override
-  public Config getConfig()
+  public BundledDriverOptions()
   {
-    return Config.loadResource("/schemacrawler-mysql.config.properties");
-  }
-
-  @Override
-  public HelpOptions getHelpOptions()
-  {
-    return new HelpOptions("SchemaCrawler for MySQL",
-                           "/help/Connections.mysql.txt");
+    super("SchemaCrawler for MySQL",
+          "/help/Connections.mysql.txt",
+          "/schemacrawler-mysql.config.properties");
   }
 
 }

@@ -1,6 +1,8 @@
 package schemacrawler.integration.test;
 
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
 import java.io.File;
@@ -10,8 +12,13 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import schemacrawler.schema.Database;
+import schemacrawler.schema.Schema;
+import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.TestUtility;
+import schemacrawler.tools.hsqldb.BundledDriverOptions;
+import schemacrawler.tools.options.InfoLevel;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.utility.SchemaCrawlerUtility;
 import schemacrawler.utility.TestDatabase;
@@ -68,34 +75,23 @@ public class TestBundledDistributions
   public void testHsqldbWithConnection()
     throws Exception
   {
-    final OutputFormat outputFormat = OutputFormat.text;
-    final String referenceFile = "hsqldb.main" + "." + outputFormat.name();
-    final File testOutputFile = File.createTempFile("schemacrawler."
-                                                        + referenceFile + ".",
-                                                    ".test");
-    testOutputFile.delete();
 
-    SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+    final SchemaCrawlerOptions schemaCrawlerOptions = new BundledDriverOptions()
+      .getSchemaCrawlerOptions(InfoLevel.maximum);
+    final Database database = SchemaCrawlerUtility.getDatabase(testDatabase
+      .getConnection(), schemaCrawlerOptions);
+    assertNotNull(database);
 
-    SchemaCrawlerUtility.getDatabase(testDatabase.getConnection(),
-                                     schemaCrawlerOptions);
+    assertEquals(6, database.getSchemas().length);
+    final Schema schema = database.getSchema("PUBLIC.BOOKS");
+    assertNotNull(schema);
 
-    schemacrawler.tools.hsqldb.Main.main(new String[] {
-        "-database=schemacrawler",
-        "-user=sa",
-        "-password=",
-        "-command=details,dump,count",
-        "-infolevel=standard",
-        "-outputfile=" + testOutputFile
-    });
+    assertEquals(6, schema.getTables().length);
+    final Table table = schema.getTable("AUTHORS");
+    assertNotNull(table);
 
-    final List<String> failures = TestUtility.compareOutput(referenceFile,
-                                                            testOutputFile,
-                                                            outputFormat);
-    if (failures.size() > 0)
-    {
-      fail(failures.toString());
-    }
+    assertEquals(1, table.getTriggers().length);
+    assertNotNull(table.getTrigger("TRG_AUTHORS"));
 
   }
 
