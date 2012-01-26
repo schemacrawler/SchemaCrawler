@@ -615,5 +615,22 @@ for (final Schema schema: database.getSchemas())
         </p>
       </answer>
     </faq>
+    <faq id="use_bundled_driver_configs">
+      <question>
+        How to use configuration settings from SchemaCrawler distributions with bundled drivers
+      </question>
+      <answer>
+        <p>
+         <a href="">SchemaCrawler distributions with bundled drivers</a> have extended configurations that obtain
+         extended database metadata, such as triggers. You can use code similar to that below to use this 
+         extended configuration programatically.
+         <source><![CDATA[
+SchemaCrawlerOptions schemaCrawlerOptions = new schemacrawler.tools.hsqldb.BundledDriverOptions()
+  .getSchemaCrawlerOptions(InfoLevel.maximum);
+Database database = SchemaCrawlerUtility.getDatabase(connection, schemaCrawlerOptions);         
+         ]]></source>
+        </p>
+      </answer>
+    </faq>    
   </part>
 </faqs>
