@@ -21,9 +21,7 @@
 package schemacrawler.tools.oracle;
 
 
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.commandline.SchemaCrawlerMain;
-import schemacrawler.tools.options.HelpOptions;
 
 /**
  * Main class that takes arguments for a database for crawling a schema.
@@ -43,10 +41,7 @@ public final class Main
     System.setProperty("oracle.jdbc.Trace", "true");
     try
     {
-      SchemaCrawlerMain
-        .main(args, new HelpOptions("SchemaCrawler for Oracle",
-                                    "/help/Connections.oracle.txt"), Config
-          .loadResource("/schemacrawler-oracle.config.properties"));
+      SchemaCrawlerMain.main(args, new BundledDriverOptions());
     }
     catch (final Exception e)
     {

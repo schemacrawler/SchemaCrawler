@@ -17,40 +17,29 @@
  * Boston, MA 02111-1307, USA.
  *
  */
+package schemacrawler.tools.oracle;
 
-package schemacrawler.tools.sqlserver;
 
+import schemacrawler.schemacrawler.Config;
+import schemacrawler.tools.options.HelpOptions;
 
-import schemacrawler.tools.commandline.SchemaCrawlerMain;
-
-/**
- * Main class that takes arguments for a database for crawling a schema.
- */
-public final class Main
+public final class BundledDriverOptions
+  implements schemacrawler.tools.options.BundledDriverOptions
 {
 
-  /**
-   * Get connection parameters, and creates a connection, and crawls the
-   * schema.
-   * 
-   * @param args
-   *        Arguments passed into the program from the command line.
-   */
-  public static void main(final String[] args)
+  private static final long serialVersionUID = -8607886464063312321L;
+
+  @Override
+  public Config getConfig()
   {
-    try
-    {
-      SchemaCrawlerMain.main(args, new BundledDriverOptions());
-    }
-    catch (final Exception e)
-    {
-      e.printStackTrace();
-    }
+    return Config.loadResource("/schemacrawler-oracle.config.properties");
   }
 
-  private Main()
+  @Override
+  public HelpOptions getHelpOptions()
   {
-    // Prevent instantiation
+    return new HelpOptions("SchemaCrawler for Oracle",
+                           "/help/Connections.oracle.txt");
   }
 
 }
