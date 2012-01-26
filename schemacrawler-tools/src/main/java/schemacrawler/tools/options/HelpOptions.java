@@ -21,9 +21,10 @@
 package schemacrawler.tools.options;
 
 
+import schemacrawler.Version;
 import schemacrawler.schemacrawler.Options;
 
-public class HelpOptions
+public final class HelpOptions
   implements Options
 {
 
@@ -32,10 +33,9 @@ public class HelpOptions
   private final String title;
   private final String resourceConnections;
 
-  public HelpOptions(final String title)
+  public HelpOptions()
   {
-    this.title = title;
-    resourceConnections = "/help/Connections.txt";
+    this(Version.getProductName(), "/help/Connections.txt");
   }
 
   public HelpOptions(final String title, final String resourceConnections)

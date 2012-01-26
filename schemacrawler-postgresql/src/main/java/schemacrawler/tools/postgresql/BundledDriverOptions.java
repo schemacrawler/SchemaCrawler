@@ -17,40 +17,29 @@
  * Boston, MA 02111-1307, USA.
  *
  */
+package schemacrawler.tools.postgresql;
 
-package schemacrawler.tools.sqlserver;
 
+import schemacrawler.schemacrawler.Config;
+import schemacrawler.tools.options.HelpOptions;
 
-import schemacrawler.tools.commandline.SchemaCrawlerMain;
-
-/**
- * Main class that takes arguments for a database for crawling a schema.
- */
-public final class Main
+public final class BundledDriverOptions
+  implements schemacrawler.tools.options.BundledDriverOptions
 {
 
-  /**
-   * Get connection parameters, and creates a connection, and crawls the
-   * schema.
-   * 
-   * @param args
-   *        Arguments passed into the program from the command line.
-   */
-  public static void main(final String[] args)
+  private static final long serialVersionUID = 5722302374017415049L;
+
+  @Override
+  public Config getConfig()
   {
-    try
-    {
-      SchemaCrawlerMain.main(args, new BundledDriverOptions());
-    }
-    catch (final Exception e)
-    {
-      e.printStackTrace();
-    }
+    return Config.loadResource("/schemacrawler-postgresql.config.properties");
   }
 
-  private Main()
+  @Override
+  public HelpOptions getHelpOptions()
   {
-    // Prevent instantiation
+    return new HelpOptions("SchemaCrawler for PostgreSQL",
+                           "/help/Connections.postgresql.txt");
   }
 
 }

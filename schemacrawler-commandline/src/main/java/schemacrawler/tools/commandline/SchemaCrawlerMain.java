@@ -26,6 +26,7 @@ import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.options.ApplicationOptions;
+import schemacrawler.tools.options.BundledDriverOptions;
 import schemacrawler.tools.options.HelpOptions;
 
 public class SchemaCrawlerMain
@@ -37,14 +38,35 @@ public class SchemaCrawlerMain
   public static void main(final String[] args)
     throws Exception
   {
-    main(args, new HelpOptions(""), null);
+    main(args, new BundledDriverOptions()
+    {
+
+      private static final long serialVersionUID = 1942688259236688174L;
+
+      @Override
+      public Config getConfig()
+      {
+        return null;
+      }
+
+      @Override
+      public HelpOptions getHelpOptions()
+      {
+        return new HelpOptions();
+      }
+
+    });
   }
 
   public static void main(final String[] args,
-                          final HelpOptions helpOptions,
-                          final Config config)
+                          final BundledDriverOptions bundledDriverOptions)
     throws Exception
   {
+    if (bundledDriverOptions == null)
+    {
+      throw new IllegalArgumentException("No bundled driver options provided");
+    }
+
     final CommandLine commandLine;
     final boolean showHelp;
     final ApplicationOptions applicationOptions;
@@ -66,11 +88,14 @@ public class SchemaCrawlerMain
 
     if (showHelp)
     {
-      commandLine = new SchemaCrawlerHelpCommandLine(remainingArgs, helpOptions);
+      commandLine = new SchemaCrawlerHelpCommandLine(remainingArgs,
+                                                     bundledDriverOptions
+                                                       .getHelpOptions());
     }
     else
     {
-      commandLine = new SchemaCrawlerCommandLine(config, remainingArgs);
+      commandLine = new SchemaCrawlerCommandLine(bundledDriverOptions.getConfig(),
+                                                 remainingArgs);
     }
     commandLine.execute();
   }
