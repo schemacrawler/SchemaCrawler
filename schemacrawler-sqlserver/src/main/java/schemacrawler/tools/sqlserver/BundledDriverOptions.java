@@ -20,26 +20,18 @@
 package schemacrawler.tools.sqlserver;
 
 
-import schemacrawler.schemacrawler.Config;
-import schemacrawler.tools.options.HelpOptions;
 
 public final class BundledDriverOptions
-  implements schemacrawler.tools.options.BundledDriverOptions
+  extends schemacrawler.tools.options.BundledDriverOptions
 {
 
   private static final long serialVersionUID = -7476413718092201219L;
 
-  @Override
-  public Config getConfig()
+  public BundledDriverOptions()
   {
-    return Config.loadResource("/schemacrawler-sqlserver.config.properties");
-  }
-
-  @Override
-  public HelpOptions getHelpOptions()
-  {
-    return new HelpOptions("SchemaCrawler for Microsoft SQL Server",
-                           "/help/Connections.sqlserver.txt");
+    super("SchemaCrawler for Microsoft SQL Server",
+          "/help/Connections.sqlserver.txt",
+          "/schemacrawler-sqlserver.config.properties");
   }
 
 }

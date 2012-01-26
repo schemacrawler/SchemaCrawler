@@ -20,26 +20,18 @@
 package schemacrawler.tools.db2;
 
 
-import schemacrawler.schemacrawler.Config;
-import schemacrawler.tools.options.HelpOptions;
 
 public final class BundledDriverOptions
-  implements schemacrawler.tools.options.BundledDriverOptions
+  extends schemacrawler.tools.options.BundledDriverOptions
 {
 
   private static final long serialVersionUID = 788422181303398180L;
 
-  @Override
-  public Config getConfig()
+  public BundledDriverOptions()
   {
-    return Config.loadResource("/schemacrawler-db2.config.properties");
-  }
-
-  @Override
-  public HelpOptions getHelpOptions()
-  {
-    return new HelpOptions("SchemaCrawler for IBM DB2",
-                           "/help/Connections.db2.txt");
+    super("SchemaCrawler for IBM DB2",
+          "/help/Connections.db2.txt",
+          "/schemacrawler-db2.config.properties");
   }
 
 }

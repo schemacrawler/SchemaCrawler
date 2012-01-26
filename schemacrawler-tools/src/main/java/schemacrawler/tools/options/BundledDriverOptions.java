@@ -22,13 +22,45 @@ package schemacrawler.tools.options;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.Options;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
-public interface BundledDriverOptions
-  extends Options
+public abstract class BundledDriverOptions
+  implements Options
 {
 
-  Config getConfig();
+  private static final long serialVersionUID = 2160456864554076419L;
 
-  HelpOptions getHelpOptions();
+  private final String title;
+  private final String resourceConnections;
+  private final String configResource;
+
+  protected BundledDriverOptions(final String title,
+                                 final String resourceConnections,
+                                 final String configResource)
+  {
+    this.title = title;
+    this.resourceConnections = resourceConnections;
+    this.configResource = configResource;
+  }
+
+  public final Config getConfig()
+  {
+    return Config.loadResource(configResource);
+  }
+
+  public final HelpOptions getHelpOptions()
+  {
+    return new HelpOptions(title, resourceConnections);
+  }
+
+  public final SchemaCrawlerOptions getSchemaCrawlerOptions(final InfoLevel infoLevel)
+  {
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(getConfig());
+    if (infoLevel != null)
+    {
+      schemaCrawlerOptions.setSchemaInfoLevel(infoLevel.getSchemaInfoLevel());
+    }
+    return schemaCrawlerOptions;
+  }
 
 }

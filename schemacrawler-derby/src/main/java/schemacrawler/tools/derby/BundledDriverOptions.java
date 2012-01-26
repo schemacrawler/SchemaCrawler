@@ -20,26 +20,18 @@
 package schemacrawler.tools.derby;
 
 
-import schemacrawler.schemacrawler.Config;
-import schemacrawler.tools.options.HelpOptions;
 
 public final class BundledDriverOptions
-  implements schemacrawler.tools.options.BundledDriverOptions
+  extends schemacrawler.tools.options.BundledDriverOptions
 {
 
   private static final long serialVersionUID = 4987749348963852650L;
 
-  @Override
-  public Config getConfig()
+  public BundledDriverOptions()
   {
-    return Config.loadResource("/schemacrawler-derby.config.properties");
-  }
-
-  @Override
-  public HelpOptions getHelpOptions()
-  {
-    return new HelpOptions("SchemaCrawler for Apache Derby",
-                           "/help/Connections.derby.txt");
+    super("SchemaCrawler for Apache Derby",
+          "/help/Connections.derby.txt",
+          "/schemacrawler-derby.config.properties");
   }
 
 }

@@ -38,24 +38,7 @@ public class SchemaCrawlerMain
   public static void main(final String[] args)
     throws Exception
   {
-    main(args, new BundledDriverOptions()
-    {
-
-      private static final long serialVersionUID = 1942688259236688174L;
-
-      @Override
-      public Config getConfig()
-      {
-        return null;
-      }
-
-      @Override
-      public HelpOptions getHelpOptions()
-      {
-        return new HelpOptions();
-      }
-
-    });
+    main(args, new HelpOptions(), null);
   }
 
   public static void main(final String[] args,
@@ -66,7 +49,16 @@ public class SchemaCrawlerMain
     {
       throw new IllegalArgumentException("No bundled driver options provided");
     }
+    main(args,
+         bundledDriverOptions.getHelpOptions(),
+         bundledDriverOptions.getConfig());
+  }
 
+  public static void main(final String[] args,
+                          final HelpOptions helpOptions,
+                          final Config config)
+    throws Exception
+  {
     final CommandLine commandLine;
     final boolean showHelp;
     final ApplicationOptions applicationOptions;
@@ -88,14 +80,11 @@ public class SchemaCrawlerMain
 
     if (showHelp)
     {
-      commandLine = new SchemaCrawlerHelpCommandLine(remainingArgs,
-                                                     bundledDriverOptions
-                                                       .getHelpOptions());
+      commandLine = new SchemaCrawlerHelpCommandLine(remainingArgs, helpOptions);
     }
     else
     {
-      commandLine = new SchemaCrawlerCommandLine(bundledDriverOptions.getConfig(),
-                                                 remainingArgs);
+      commandLine = new SchemaCrawlerCommandLine(config, remainingArgs);
     }
     commandLine.execute();
   }

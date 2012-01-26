@@ -20,26 +20,18 @@
 package schemacrawler.tools.postgresql;
 
 
-import schemacrawler.schemacrawler.Config;
-import schemacrawler.tools.options.HelpOptions;
 
 public final class BundledDriverOptions
-  implements schemacrawler.tools.options.BundledDriverOptions
+  extends schemacrawler.tools.options.BundledDriverOptions
 {
 
   private static final long serialVersionUID = 5722302374017415049L;
 
-  @Override
-  public Config getConfig()
+  public BundledDriverOptions()
   {
-    return Config.loadResource("/schemacrawler-postgresql.config.properties");
-  }
-
-  @Override
-  public HelpOptions getHelpOptions()
-  {
-    return new HelpOptions("SchemaCrawler for PostgreSQL",
-                           "/help/Connections.postgresql.txt");
+    super("SchemaCrawler for PostgreSQL",
+          "/help/Connections.postgresql.txt",
+          "/schemacrawler-postgresql.config.properties");
   }
 
 }

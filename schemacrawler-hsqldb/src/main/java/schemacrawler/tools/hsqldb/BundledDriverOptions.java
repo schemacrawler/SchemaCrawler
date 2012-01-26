@@ -20,26 +20,18 @@
 package schemacrawler.tools.hsqldb;
 
 
-import schemacrawler.schemacrawler.Config;
-import schemacrawler.tools.options.HelpOptions;
 
 public final class BundledDriverOptions
-  implements schemacrawler.tools.options.BundledDriverOptions
+  extends schemacrawler.tools.options.BundledDriverOptions
 {
 
   private static final long serialVersionUID = -5375420328749193859L;
 
-  @Override
-  public Config getConfig()
+  public BundledDriverOptions()
   {
-    return Config.loadResource("/schemacrawler-hsqldb.config.properties");
-  }
-
-  @Override
-  public HelpOptions getHelpOptions()
-  {
-    return new HelpOptions("SchemaCrawler for HyperSQL",
-                           "/help/Connections.hsqldb.txt");
+    super("SchemaCrawler for HyperSQL",
+          "/help/Connections.hsqldb.txt",
+          "/schemacrawler-hsqldb.config.properties");
   }
 
 }
