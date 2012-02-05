@@ -44,6 +44,13 @@ column with same name but different data types  ID [INTEGER, BIGINT]
 cycles in table relationships         
 
 
+PUBLIC.FOR_LINT.EXTRA_PK                                         [table]
+------------------------------------------------------------------------
+
+                                                          [lint, medium]
+useless surrogate key                 PK_EXTRA_PK
+
+
 PUBLIC.FOR_LINT."Global Counts"                                  [table]
 ------------------------------------------------------------------------
 

@@ -188,6 +188,29 @@ digraph SchemaCrawler_Diagram {
         </tr>
       </table>
     >];
+	extra_pk_334890da [label=<
+      <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
+        <tr>
+          <td colspan="2" bgcolor="#DEFA96" align="left"><b>PUBLIC.FOR_LINT.EXTRA_PK</b></td>
+          <td bgcolor="#DEFA96" align="right">[table]</td>
+        </tr>
+        <tr>
+          <td port="id_e9913eaf.start" align="left"><b><i>ID</i></b></td>
+          <td> </td>
+          <td port="id_e9913eaf.end" align="right">INTEGER</td>
+        </tr>
+        <tr>
+          <td port="publicationid_d4d93213.start" align="left">PUBLICATIONID</td>
+          <td> </td>
+          <td port="publicationid_d4d93213.end" align="right">INTEGER</td>
+        </tr>
+        <tr>
+          <td port="writerid_b8c70762.start" align="left">WRITERID</td>
+          <td> </td>
+          <td port="writerid_b8c70762.end" align="right">BIGINT</td>
+        </tr>
+      </table>
+    >];
 	globalcounts_986b8a53 [label=<
       <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
         <tr>
@@ -418,8 +441,10 @@ digraph SchemaCrawler_Diagram {
     >];
 	authors_dba8a1ff:"id_ecfc5f6a.start":w -> bookauthors_aa4376:"authorid_19681b5e.end":e [label=<FK_Z_AUTHOR>, style=solid, arrowhead=crowodot, arrowtail=teetee];
 	books_afd2ba21:"id_bb8abc08.start":w -> bookauthors_aa4376:"bookid_931bd73c.end":e [label=<FK_Y_BOOK>, style=solid, arrowhead=crowodot, arrowtail=teetee];
+	publications_949377f7:"id_f5162672.start":w -> extra_pk_334890da:"publicationid_d4d93213.end":e [label=<FK_PUBLICATION_JOIN>, style=solid, arrowhead=crowodot, arrowtail=teetee];
 	publications_949377f7:"id_f5162672.start":w -> writers_bf84ac10:"publication_id_b1bcb5cc.end":e [label=<FK_WRITERS_PUBLICATION>, style=solid, arrowhead=crowodot, arrowtail=teetee];
 	writers_bf84ac10:"id_3033cfb9.start":w -> publications_949377f7:"writerid_1c21d0e5.end":e [label=<FK_PUBLICATIONS_WRITER>, style=solid, arrowhead=crowodot, arrowtail=teetee];
+	writers_bf84ac10:"id_3033cfb9.start":w -> extra_pk_334890da:"writerid_b8c70762.end":e [label=<FK_WRITER_JOIN>, style=solid, arrowhead=crowodot, arrowtail=teetee];
 	regions_bc895c48:"postalcode_9b2bfe9e.start":w -> sales_20be6f95:"postalcode_738bc931.end":e [label=<FK_SALES_REGIONS>, style=solid, arrowhead=crowodot, arrowtail=teetee];
 	regions_bc895c48:"country_7d0587d0.start":w -> sales_20be6f95:"country_890cfe1d.end":e [label=<FK_SALES_REGIONS>, style=solid, arrowhead=crowodot, arrowtail=teetee];
 	publishers_b8da20c0:"id_6fc9dd09.start":w -> books_afd2ba21:"publisherid_3413fbaa.end":e [style=dashed, arrowhead=crowodot, arrowtail=teetee];

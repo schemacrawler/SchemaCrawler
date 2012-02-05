@@ -32,6 +32,11 @@
       "type": "table"
     },
     {
+      "name": "EXTRA_PK",
+      "fullName": "PUBLIC.FOR_LINT.EXTRA_PK",
+      "type": "table"
+    },
+    {
       "name": "\"Global Counts\"",
       "fullName": "PUBLIC.FOR_LINT.\"Global Counts\"",
       "type": "table"

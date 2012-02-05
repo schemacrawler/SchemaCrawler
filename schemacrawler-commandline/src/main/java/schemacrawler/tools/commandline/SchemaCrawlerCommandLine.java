@@ -74,7 +74,7 @@ public final class SchemaCrawlerCommandLine
     this(config, null, args);
   }
 
-  private SchemaCrawlerCommandLine(final Config config2,
+  private SchemaCrawlerCommandLine(final Config providedConfig,
                                    final ConnectionOptions connectionOptions,
                                    final String... args)
     throws SchemaCrawlerException
@@ -98,10 +98,10 @@ public final class SchemaCrawlerCommandLine
     remainingArgs = outputOptionsParser.parse(remainingArgs);
     outputOptions = outputOptionsParser.getOptions();
 
-    final boolean isBundledWithDriver = config2 != null;
+    final boolean isBundledWithDriver = providedConfig != null;
     if (isBundledWithDriver)
     {
-      this.config = config2;
+      this.config = providedConfig;
     }
     else
     {

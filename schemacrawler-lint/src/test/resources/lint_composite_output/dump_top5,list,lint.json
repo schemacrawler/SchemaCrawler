@@ -18,6 +18,15 @@
   },
   "data": [
     {
+      "title": "PUBLIC.FOR_LINT.EXTRA_PK",
+      "columnNames": [
+        "ID",
+        "WRITERID",
+        "PUBLICATIONID"
+      ],
+      "rows": []
+    },
+    {
       "title": "PUBLIC.FOR_LINT.\"Global Counts\"",
       "columnNames": ["Global Count"],
       "rows": []
@@ -62,6 +71,11 @@
 },
 {"tables": [
     {
+      "name": "EXTRA_PK",
+      "fullName": "PUBLIC.FOR_LINT.EXTRA_PK",
+      "type": "table"
+    },
+    {
       "name": "\"Global Counts\"",
       "fullName": "PUBLIC.FOR_LINT.\"Global Counts\"",
       "type": "table"
@@ -79,6 +93,17 @@
   ]},
 {
   "table_lints": [
+    {
+      "name": "EXTRA_PK",
+      "lints": [{
+        "id": "schemacrawler.tools.linter.LinterUselessSurrogateKey",
+        "description": "useless surrogate key",
+        "value": "PK_EXTRA_PK",
+        "severity": "medium"
+      }],
+      "fullName": "PUBLIC.FOR_LINT.EXTRA_PK",
+      "type": "table"
+    },
     {
       "name": "\"Global Counts\"",
       "lints": [

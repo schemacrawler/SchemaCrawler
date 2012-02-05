@@ -38,6 +38,10 @@ o--> PUBLISHERS
      o--> ID
      o--> PUBLISHER
 PUBLIC.FOR_LINT
+o--> EXTRA_PK
+     o--> ID
+     o--> PUBLICATIONID
+     o--> WRITERID
 o--> "Global Counts"
      o--> "Global Count"
 o--> No_Columns

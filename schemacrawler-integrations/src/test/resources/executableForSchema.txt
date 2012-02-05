@@ -105,6 +105,31 @@ SYS_IDX_PK_PUBLISHERS_10031                               [unique index]
 1   ID                                ascending                   
 
 
+PUBLIC.FOR_LINT.EXTRA_PK                                         [table]
+------------------------------------------------------------------------
+1   ID                                INTEGER not null            
+3   PUBLICATIONID                     INTEGER not null            
+2   WRITERID                          BIGINT not null             
+
+PK_EXTRA_PK                                                [primary key]
+1   ID                                ascending                   
+
+FK_PUBLICATION_JOIN                        [foreign key, with no action]
+ 1  PUBLIC.FOR_LINT.PUBLICATIONS.ID --> PUBLICATIONID                              
+
+FK_WRITER_JOIN                             [foreign key, with no action]
+ 1  PUBLIC.FOR_LINT.WRITERS.ID --> WRITERID                              
+
+SYS_IDX_10080                                         [non-unique index]
+2   WRITERID                          ascending                   
+
+SYS_IDX_10082                                         [non-unique index]
+3   PUBLICATIONID                     ascending                   
+
+SYS_IDX_PK_EXTRA_PK_10079                                 [unique index]
+1   ID                                ascending                   
+
+
 PUBLIC.FOR_LINT."Global Counts"                                  [table]
 ------------------------------------------------------------------------
 1   "Global Count"                    INTEGER                     
@@ -127,6 +152,9 @@ PUBLIC.FOR_LINT.PUBLICATIONS                                     [table]
 
 PK_PUBLICATIONS                                            [primary key]
 1   ID                                ascending                   
+
+FK_PUBLICATION_JOIN                        [foreign key, with no action]
+ 1  ID --> PUBLIC.FOR_LINT.EXTRA_PK.PUBLICATIONID                              
 
 FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
  1  PUBLIC.FOR_LINT.WRITERS.ID --> WRITERID                              
@@ -168,6 +196,9 @@ PK_WRITERS                                                 [primary key]
 FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
  1  ID --> PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID                              
 
+FK_WRITER_JOIN                             [foreign key, with no action]
+ 1  ID --> PUBLIC.FOR_LINT.EXTRA_PK.WRITERID                              
+
 FK_WRITERS_PUBLICATION                     [foreign key, with no action]
  1  PUBLIC.FOR_LINT.PUBLICATIONS.ID --> PUBLICATION_ID                              
 
@@ -189,7 +220,7 @@ IDX_U_WRITERS                                             [unique index]
 12  EMAIL1                            ascending                   
 9   COUNTRY                           ascending                   
 
-SYS_IDX_10076                                         [non-unique index]
+SYS_IDX_10084                                         [non-unique index]
 18  PUBLICATION_ID                    ascending                   
 
 SYS_IDX_PK_WRITERS_10067                                  [unique index]

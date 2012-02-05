@@ -63,7 +63,12 @@ public final class LintedDatabase
       LOGGER.log(Level.FINE,
                  String.format("Linting with ", linter.getClass().getName()));
       linter.setLintCollector(collector);
-      linter.config(linterConfigs.get(linter.getId()));
+      // Configure linter
+      if (linterConfigs != null)
+      {
+        linter.config(linterConfigs.get(linter.getId()));
+      }
+      // Do linting
       if (linter.getSeverity() != LintSeverity.off)
       {
         linter.lint(database);

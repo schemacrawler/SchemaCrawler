@@ -97,6 +97,9 @@ PUBLIC.FOR_LINT.PUBLICATIONS                                     [table]
 PK_PUBLICATIONS                                            [primary key]
   ID                                ascending                   
 
+FK_PUBLICATION_JOIN                        [foreign key, with no action]
+  ID --> PUBLIC.FOR_LINT.EXTRA_PK.PUBLICATIONID                              
+
 FK_WRITERS_PUBLICATION                     [foreign key, with no action]
   ID --> PUBLIC.FOR_LINT.WRITERS.PUBLICATION_ID                              
 

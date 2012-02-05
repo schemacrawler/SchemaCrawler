@@ -2693,6 +2693,203 @@ hr {
 
 <table>
 	<tr>
+		<td colspan='2' class='name underscore'>PUBLIC.FOR_LINT.EXTRA_PK</td>
+		<td class='description underscore'>[table]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>ID</td>
+		<td class='type'>INTEGER not null</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>WRITERID</td>
+		<td class='type'>BIGINT not null</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>PUBLICATIONID</td>
+		<td class='type'>INTEGER not null</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>PK_EXTRA_PK</td>
+		<td class='description'>[primary key]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>ID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>FK_PUBLICATION_JOIN</td>
+		<td class='description'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>PUBLIC.FOR_LINT.PUBLICATIONS.ID &#8594; PUBLICATIONID</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>FK_WRITER_JOIN</td>
+		<td class='description'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>PUBLIC.FOR_LINT.WRITERS.ID &#8594; WRITERID</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_IDX_PK_EXTRA_PK_10079</td>
+		<td class='description'>[unique index]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>ID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_IDX_10082</td>
+		<td class='description'>[non-unique index]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>PUBLICATIONID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_IDX_10080</td>
+		<td class='description'>[non-unique index]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>WRITERID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10076</td>
+		<td class='description'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>FOR_LINT.EXTRA_PK.ID IS NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10077</td>
+		<td class='description'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>FOR_LINT.EXTRA_PK.WRITERID IS NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10078</td>
+		<td class='description'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>FOR_LINT.EXTRA_PK.PUBLICATIONID IS NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>DELETE</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>INSERT</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>REFERENCES</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SELECT</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>TRIGGER</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>UPDATE</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+</table>
+<p></p>
+
+<table>
+	<tr>
 		<td colspan='2' class='name underscore'>PUBLIC.FOR_LINT.&quot;Global Counts&quot;</td>
 		<td class='description underscore'>[table]</td>
 	</tr>
@@ -2832,6 +3029,18 @@ hr {
 		<td class='ordinal'></td>
 		<td class='subname'>ID</td>
 		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>FK_PUBLICATION_JOIN</td>
+		<td class='description'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>ID &#8594; PUBLIC.FOR_LINT.EXTRA_PK.PUBLICATIONID</td>
+		<td class='type'></td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
@@ -3109,6 +3318,18 @@ hr {
 		<td colspan='4'></td>
 	</tr>
 	<tr>
+		<td colspan='2' class='name'>FK_WRITER_JOIN</td>
+		<td class='description'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>ID &#8594; PUBLIC.FOR_LINT.EXTRA_PK.WRITERID</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
 		<td colspan='2' class='name'>FK_PUBLICATIONS_WRITER</td>
 		<td class='description'>[foreign key, with no action]</td>
 	</tr>
@@ -3133,7 +3354,7 @@ hr {
 		<td colspan='4'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_10076</td>
+		<td colspan='2' class='name'>SYS_IDX_10084</td>
 		<td class='description'>[non-unique index]</td>
 	</tr>
 	<tr>
@@ -3989,6 +4210,10 @@ hr {
 		<td class='description'>20 rows</td>
 	</tr>
 	<tr>
+		<td colspan='2' class='name'>PUBLIC.FOR_LINT.EXTRA_PK</td>
+		<td class='description'>empty</td>
+	</tr>
+	<tr>
 		<td colspan='2' class='name'>PUBLIC.FOR_LINT.&quot;Global Counts&quot;</td>
 		<td class='description'>empty</td>
 	</tr>
@@ -4742,6 +4967,17 @@ hr {
 	<tr>
 		<td>20</td>
 		<td>Cooper Chapman</td>
+	</tr>
+</table>
+<p></p>
+
+<table>
+  <caption>PUBLIC.FOR_LINT.EXTRA_PK</caption>
+
+	<tr>
+		<td class='name'>ID</td>
+		<td class='name'>WRITERID</td>
+		<td class='name'>PUBLICATIONID</td>
 	</tr>
 </table>
 <p></p>

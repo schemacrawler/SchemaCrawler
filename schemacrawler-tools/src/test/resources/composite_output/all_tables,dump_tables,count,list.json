@@ -1462,6 +1462,21 @@
       [
         "PUBLIC",
         "FOR_LINT",
+        "EXTRA_PK",
+        "TABLE",
+        "<null>",
+        "<null>",
+        "<null>",
+        "<null>",
+        "<null>",
+        "<null>",
+        "MEMORY",
+        "false",
+        "<null>"
+      ],
+      [
+        "PUBLIC",
+        "FOR_LINT",
         "Global Counts",
         "TABLE",
         "<null>",
@@ -2271,6 +2286,15 @@
       ]
     },
     {
+      "title": "PUBLIC.FOR_LINT.EXTRA_PK",
+      "columnNames": [
+        "ID",
+        "WRITERID",
+        "PUBLICATIONID"
+      ],
+      "rows": []
+    },
+    {
       "title": "PUBLIC.FOR_LINT.\"Global Counts\"",
       "columnNames": ["Global Count"],
       "rows": []
@@ -2623,6 +2647,10 @@
       "value": 20
     },
     {
+      "title": "PUBLIC.FOR_LINT.EXTRA_PK",
+      "value": 0
+    },
+    {
       "title": "PUBLIC.FOR_LINT.\"Global Counts\"",
       "value": 0
     },
@@ -2674,6 +2702,11 @@
     {
       "name": "PUBLISHERS",
       "fullName": "PUBLIC.BOOKS.PUBLISHERS",
+      "type": "table"
+    },
+    {
+      "name": "EXTRA_PK",
+      "fullName": "PUBLIC.FOR_LINT.EXTRA_PK",
       "type": "table"
     },
     {
