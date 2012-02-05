@@ -36,6 +36,7 @@ Tables
 ========================================================================
 
 
+PUBLIC.FOR_LINT.EXTRA_PK                                         [table]
 PUBLIC.FOR_LINT."Global Counts"                                  [table]
 PUBLIC.FOR_LINT.PUBLICATIONS                                     [table]
 PUBLIC.FOR_LINT.WRITERS                                          [table]
@@ -49,6 +50,7 @@ Row Count
 
 Row Count
 ------------------------------------------------------------------------
+PUBLIC.FOR_LINT.EXTRA_PK                                           empty
 PUBLIC.FOR_LINT."Global Counts"                                    empty
 PUBLIC.FOR_LINT.PUBLICATIONS                                       empty
 PUBLIC.FOR_LINT.WRITERS                                            empty
@@ -66,6 +68,13 @@ Lints
                                                           [lint, medium]
 column with same name but different data types  ID [INTEGER, BIGINT]
 cycles in table relationships         
+
+
+PUBLIC.FOR_LINT.EXTRA_PK                                         [table]
+------------------------------------------------------------------------
+
+                                                          [lint, medium]
+useless surrogate key                 PK_EXTRA_PK
 
 
 PUBLIC.FOR_LINT."Global Counts"                                  [table]

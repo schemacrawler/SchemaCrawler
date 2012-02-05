@@ -141,6 +141,12 @@ ID	PUBLISHER
 
 
 
+PUBLIC.FOR_LINT.EXTRA_PK
+------------------------------------------------------------------------
+ID	WRITERID	PUBLICATIONID
+
+
+
 PUBLIC.FOR_LINT."Global Counts"
 ------------------------------------------------------------------------
 Global Count

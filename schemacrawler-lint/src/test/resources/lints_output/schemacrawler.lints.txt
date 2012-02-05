@@ -2,6 +2,7 @@
 [PUBLIC.FOR_LINT."Global Counts"] spaces in name, or reserved word: "Global Counts"
 [PUBLIC.FOR_LINT."Global Counts"] spaces in name, or reserved word: "Global Count"
 [PUBLIC.FOR_LINT."Global Counts"] single column
+[PUBLIC.FOR_LINT.EXTRA_PK] useless surrogate key: PK_EXTRA_PK
 [PUBLIC.FOR_LINT.No_Columns] no indices
 [PUBLIC.FOR_LINT.No_Columns] single column
 [PUBLIC.FOR_LINT.PUBLICATIONS] spaces in name, or reserved word: "UPDATE"

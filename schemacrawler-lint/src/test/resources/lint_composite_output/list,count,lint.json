@@ -2,6 +2,11 @@
 {
   "tables": [
     {
+      "name": "EXTRA_PK",
+      "fullName": "PUBLIC.FOR_LINT.EXTRA_PK",
+      "type": "table"
+    },
+    {
       "name": "\"Global Counts\"",
       "fullName": "PUBLIC.FOR_LINT.\"Global Counts\"",
       "type": "table"
@@ -38,6 +43,10 @@
   "description": "Row Count",
   "data": [
     {
+      "title": "PUBLIC.FOR_LINT.EXTRA_PK",
+      "value": 0
+    },
+    {
       "title": "PUBLIC.FOR_LINT.\"Global Counts\"",
       "value": 0
     },
@@ -53,6 +62,17 @@
 },
 {
   "table_lints": [
+    {
+      "name": "EXTRA_PK",
+      "lints": [{
+        "id": "schemacrawler.tools.linter.LinterUselessSurrogateKey",
+        "description": "useless surrogate key",
+        "value": "PK_EXTRA_PK",
+        "severity": "medium"
+      }],
+      "fullName": "PUBLIC.FOR_LINT.EXTRA_PK",
+      "type": "table"
+    },
     {
       "name": "\"Global Counts\"",
       "lints": [

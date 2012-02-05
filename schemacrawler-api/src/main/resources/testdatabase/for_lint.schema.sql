@@ -50,6 +50,17 @@ CREATE TABLE "No_Columns"
 )
 ;
 
+CREATE TABLE EXTRA_PK
+(
+  Id INTEGER NOT NULL,
+  WriterId BIGINT NOT NULL,
+  PublicationId INTEGER NOT NULL,
+  CONSTRAINT PK_EXTRA_PK PRIMARY KEY (Id),
+  CONSTRAINT FK_Writer_Join FOREIGN KEY (WriterId) REFERENCES Writers (Id),
+  CONSTRAINT FK_Publication_Join FOREIGN KEY (PublicationId) REFERENCES Publications (Id)
+)
+;
+
 ALTER TABLE Writers ADD CONSTRAINT FK_Writers_Publication FOREIGN KEY (Publication_Id) REFERENCES Publications (Id);
 
 -- Indices

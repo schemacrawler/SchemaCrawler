@@ -79,13 +79,13 @@ public class SchemaCrawlerTest
   {
 
     final int[] tableCounts = {
-        6, 4, 0, 0, 2, 0
+        6, 5, 0, 0, 2, 0
     };
     final int[][] checkConstraintCounts = {
         {
             4, 0, 2, 3, 0, 1, 0
         }, {
-            0, 0, 3, 6,
+            3, 0, 0, 3, 6,
         }, {}, {}, {
             4, 2
         }, {}
@@ -112,6 +112,9 @@ public class SchemaCrawlerTest
             {}
         },
         {
+            {
+                "SYS_CT_10076", "SYS_CT_10077", "SYS_CT_10078"
+            },
             {},
             {},
             {

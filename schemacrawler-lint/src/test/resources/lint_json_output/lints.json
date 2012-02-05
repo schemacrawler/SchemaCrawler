@@ -2,6 +2,17 @@
 {
   "table_lints": [
     {
+      "name": "EXTRA_PK",
+      "lints": [{
+        "id": "schemacrawler.tools.linter.LinterUselessSurrogateKey",
+        "description": "useless surrogate key",
+        "value": "PK_EXTRA_PK",
+        "severity": "medium"
+      }],
+      "fullName": "PUBLIC.FOR_LINT.EXTRA_PK",
+      "type": "table"
+    },
+    {
       "name": "\"Global Counts\"",
       "lints": [
         {

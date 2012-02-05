@@ -463,6 +463,101 @@
       "type": "table"
     },
     {
+      "foreignKeys": [
+        {
+          "updateRule": "no action",
+          "columnPairs": [{
+            "pkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.ID",
+            "fkColumn": "PUBLIC.FOR_LINT.EXTRA_PK.PUBLICATIONID"
+          }],
+          "deleteRule": "no action",
+          "name": "FK_PUBLICATION_JOIN"
+        },
+        {
+          "updateRule": "no action",
+          "columnPairs": [{
+            "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
+            "fkColumn": "PUBLIC.FOR_LINT.EXTRA_PK.WRITERID"
+          }],
+          "deleteRule": "no action",
+          "name": "FK_WRITER_JOIN"
+        }
+      ],
+      "primaryKey": {
+        "unique": true,
+        "name": "PK_EXTRA_PK",
+        "columns": {
+          "sortSequence": "ascending",
+          "name": "ID",
+          "ordinal": 1
+        }
+      },
+      "name": "EXTRA_PK",
+      "columns": [
+        {
+          "dataType": "INTEGER",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "ID",
+          "ordinal": 1,
+          "nullable": false,
+          "databaseSpecificType": "INTEGER",
+          "size": 32
+        },
+        {
+          "dataType": "BIGINT",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "WRITERID",
+          "ordinal": 2,
+          "nullable": false,
+          "databaseSpecificType": "BIGINT",
+          "size": 64
+        },
+        {
+          "dataType": "INTEGER",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "PUBLICATIONID",
+          "ordinal": 3,
+          "nullable": false,
+          "databaseSpecificType": "INTEGER",
+          "size": 32
+        }
+      ],
+      "indices": [
+        {
+          "unique": true,
+          "name": "SYS_IDX_PK_EXTRA_PK_10079",
+          "columns": {
+            "sortSequence": "ascending",
+            "name": "ID",
+            "ordinal": 1
+          }
+        },
+        {
+          "unique": false,
+          "name": "SYS_IDX_10082",
+          "columns": {
+            "sortSequence": "ascending",
+            "name": "PUBLICATIONID",
+            "ordinal": 3
+          }
+        },
+        {
+          "unique": false,
+          "name": "SYS_IDX_10080",
+          "columns": {
+            "sortSequence": "ascending",
+            "name": "WRITERID",
+            "ordinal": 2
+          }
+        }
+      ],
+      "fullName": "PUBLIC.FOR_LINT.EXTRA_PK",
+      "type": "table"
+    },
+    {
       "foreignKeys": [],
       "primaryKey": {},
       "name": "\"Global Counts\"",
@@ -482,6 +577,15 @@
     },
     {
       "foreignKeys": [
+        {
+          "updateRule": "no action",
+          "columnPairs": [{
+            "pkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.ID",
+            "fkColumn": "PUBLIC.FOR_LINT.EXTRA_PK.PUBLICATIONID"
+          }],
+          "deleteRule": "no action",
+          "name": "FK_PUBLICATION_JOIN"
+        },
         {
           "updateRule": "no action",
           "columnPairs": [{
@@ -626,6 +730,15 @@
           }],
           "deleteRule": "no action",
           "name": "FK_WRITERS_PUBLICATION"
+        },
+        {
+          "updateRule": "no action",
+          "columnPairs": [{
+            "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
+            "fkColumn": "PUBLIC.FOR_LINT.EXTRA_PK.WRITERID"
+          }],
+          "deleteRule": "no action",
+          "name": "FK_WRITER_JOIN"
         },
         {
           "updateRule": "no action",
@@ -841,7 +954,7 @@
         },
         {
           "unique": false,
-          "name": "SYS_IDX_10076",
+          "name": "SYS_IDX_10084",
           "columns": {
             "sortSequence": "ascending",
             "name": "PUBLICATION_ID",
