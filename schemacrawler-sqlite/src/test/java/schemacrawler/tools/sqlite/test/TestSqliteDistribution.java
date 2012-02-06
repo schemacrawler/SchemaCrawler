@@ -8,7 +8,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import schemacrawler.test.TestUtility;
+import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.options.OutputFormat;
 
 public class TestSqliteDistribution

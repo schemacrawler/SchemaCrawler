@@ -24,8 +24,14 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 import java.util.logging.Level;
@@ -48,6 +54,7 @@ import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
+import schemacrawler.test.utility.TestUtility;
 import schemacrawler.utility.TestDatabase;
 import sf.util.Utility;
 
@@ -56,6 +63,8 @@ public class SchemaCrawlerTest
 
   private static final Logger LOGGER = Logger.getLogger(SchemaCrawlerTest.class
     .getName());
+
+  private static final String METADATA_OUTPUT = "metadata/";
 
   private static TestDatabase testDatabase = new TestDatabase();
 
@@ -579,6 +588,15 @@ public class SchemaCrawlerTest
             "TABLE", "TABLE",
         }, {},
     };
+
+    final String referenceFile = "tables.txt";
+    final File testOutputFile = File.createTempFile("schemacrawler."
+                                                        + referenceFile + ".",
+                                                    ".test");
+    testOutputFile.delete();
+
+    PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(testOutputFile)));
+
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.standard());
     schemaCrawlerOptions
@@ -587,29 +605,27 @@ public class SchemaCrawlerTest
 
     final Database database = testDatabase.getDatabase(schemaCrawlerOptions);
     final Schema[] schemas = database.getSchemas();
-    assertEquals("Schema count does not match",
-                 schemaNames.length,
-                 schemas.length);
+    assertEquals("Schema count does not match", 5, schemas.length);
     for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++)
     {
       final Schema schema = schemas[schemaIdx];
-      assertEquals("Schema name does not match",
-                   "PUBLIC." + schemaNames[schemaIdx],
-                   schema.getName());
       final Table[] tables = schema.getTables();
       for (int tableIdx = 0; tableIdx < tables.length; tableIdx++)
       {
         final Table table = tables[tableIdx];
-        assertEquals("Table name does not match",
-                     tableNames[schemaIdx][tableIdx],
-                     table.getName());
-        assertEquals("Full table name does not match",
-                     schema.getName() + "." + tableNames[schemaIdx][tableIdx],
-                     table.getFullName());
-        assertEquals("Table type does not match",
-                     tableTypes[schemaIdx][tableIdx],
-                     table.getType().toString().toUpperCase(Locale.ENGLISH));
+        writer.println(String.format("%s [%s]", table.getFullName(), table
+          .getType().toString().toUpperCase(Locale.ENGLISH)));
       }
+    }
+
+    writer.flush();
+    writer.close();
+
+    final List<String> failures = TestUtility
+      .compareOutput(METADATA_OUTPUT + referenceFile, testOutputFile);
+    if (failures.size() > 0)
+    {
+      fail(failures.toString());
     }
   }
 

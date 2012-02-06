@@ -30,7 +30,7 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import schemacrawler.test.TestUtility;
+import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.integration.spring.Main;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.utility.TestDatabase;
