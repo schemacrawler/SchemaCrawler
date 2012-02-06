@@ -32,9 +32,9 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import schemacrawler.test.utility.TestDatabase;
 import schemacrawler.tools.integration.spring.Main;
 import schemacrawler.tools.options.OutputFormat;
-import schemacrawler.utility.TestDatabase;
 
 public class SpringIntegrationCommandLineTest
 {

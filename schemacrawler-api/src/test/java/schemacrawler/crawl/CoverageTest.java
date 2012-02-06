@@ -28,7 +28,7 @@ import org.junit.Test;
 
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.utility.TestDatabase;
+import schemacrawler.test.utility.TestDatabase;
 
 public class CoverageTest
 {

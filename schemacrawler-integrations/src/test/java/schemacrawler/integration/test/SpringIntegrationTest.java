@@ -36,9 +36,9 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.test.utility.TestDatabase;
 import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.executable.Executable;
-import schemacrawler.utility.TestDatabase;
 
 public class SpringIntegrationTest
 {

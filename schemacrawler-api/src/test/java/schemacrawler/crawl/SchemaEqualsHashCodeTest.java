@@ -19,8 +19,8 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
+import schemacrawler.test.utility.TestDatabase;
 import schemacrawler.util.ObjectEqualsHashCode;
-import schemacrawler.utility.TestDatabase;
 
 @Ignore("Slow test")
 public class SchemaEqualsHashCodeTest

@@ -54,8 +54,8 @@ import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
+import schemacrawler.test.utility.TestDatabase;
 import schemacrawler.test.utility.TestUtility;
-import schemacrawler.utility.TestDatabase;
 import sf.util.Utility;
 
 public class SchemaCrawlerTest
@@ -557,37 +557,6 @@ public class SchemaCrawlerTest
   public void tables()
     throws Exception
   {
-
-    final String[] schemaNames = {
-        "BOOKS",
-        "INFORMATION_SCHEMA",
-        "PUBLIC",
-        "\"PUBLISHER SALES\"",
-        "SYSTEM_LOBS"
-    };
-    final String[][] tableNames = {
-        {
-            "AUTHORS",
-            "AUTHORSLIST",
-            "BOOKAUTHORS",
-            "BOOKS",
-            "\"Global Counts\"",
-            "PUBLISHERS",
-        },
-        {},
-        {},
-        {
-            "REGIONS", "SALES",
-        },
-        {},
-    };
-    final String[][] tableTypes = {
-        {
-            "TABLE", "VIEW", "TABLE", "TABLE", "TABLE", "TABLE",
-        }, {}, {}, {
-            "TABLE", "TABLE",
-        }, {},
-    };
 
     final String referenceFile = "tables.txt";
     final File testOutputFile = File.createTempFile("schemacrawler."

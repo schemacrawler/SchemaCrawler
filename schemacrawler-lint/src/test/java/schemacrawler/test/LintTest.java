@@ -37,12 +37,12 @@ import org.junit.Test;
 import schemacrawler.schema.Database;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.test.utility.TestDatabase;
 import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.lint.Lint;
 import schemacrawler.tools.lint.LintCollector;
 import schemacrawler.tools.lint.LintedDatabase;
 import schemacrawler.tools.lint.LinterConfigs;
-import schemacrawler.utility.TestDatabase;
 
 public class LintTest
 {

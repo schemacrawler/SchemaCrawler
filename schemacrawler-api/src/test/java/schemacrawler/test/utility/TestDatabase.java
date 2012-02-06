@@ -18,7 +18,7 @@
  *
  */
 
-package schemacrawler.utility;
+package schemacrawler.test.utility;
 
 
 import java.io.File;
@@ -36,6 +36,7 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.DatabaseConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.utility.SchemaCrawlerUtility;
 import sf.util.Utility;
 
 /**

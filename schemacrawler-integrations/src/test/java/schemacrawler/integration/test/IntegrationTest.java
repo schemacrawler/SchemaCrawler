@@ -34,6 +34,7 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import schemacrawler.test.utility.TestDatabase;
 import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.commandline.SchemaCrawlerCommandLine;
 import schemacrawler.tools.executable.Executable;
@@ -42,7 +43,6 @@ import schemacrawler.tools.integration.graph.GraphExecutable;
 import schemacrawler.tools.integration.scripting.ScriptExecutable;
 import schemacrawler.tools.integration.velocity.VelocityRenderer;
 import schemacrawler.tools.options.OutputOptions;
-import schemacrawler.utility.TestDatabase;
 
 public class IntegrationTest
 {

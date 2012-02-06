@@ -32,7 +32,7 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
-import schemacrawler.utility.TestDatabase;
+import schemacrawler.test.utility.TestDatabase;
 
 public class SortingTest
 {
