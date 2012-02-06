@@ -106,19 +106,19 @@ FK_WRITERS_PUBLICATION                     [foreign key, with no action]
 FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
   PUBLIC.FOR_LINT.WRITERS.ID --> WRITERID                              
 
-SYS_IDX_PK_PUBLICATIONS_10071                             [unique index]
+SYS_IDX_PK_PUBLICATIONS_10072                             [unique index]
   ID                                ascending                   
 
-SYS_IDX_10072                                         [non-unique index]
+SYS_IDX_10073                                         [non-unique index]
   WRITERID                          ascending                   
 
-SYS_CT_10068                                          [check constraint]
+SYS_CT_10069                                          [check constraint]
 FOR_LINT.PUBLICATIONS.ID IS NOT NULL
 
-SYS_CT_10069                                          [check constraint]
+SYS_CT_10070                                          [check constraint]
 FOR_LINT.PUBLICATIONS.TITLE IS NOT NULL
 
-SYS_CT_10070                                          [check constraint]
+SYS_CT_10071                                          [check constraint]
 FOR_LINT.PUBLICATIONS.WRITERID IS NOT NULL
 
 

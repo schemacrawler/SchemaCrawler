@@ -43,6 +43,8 @@ public final class InformationSchemaViews
   private static final String KEY_INFORMATION_SCHEMA_TABLE_CONSTRAINTS = "select.INFORMATION_SCHEMA.TABLE_CONSTRAINTS";
   private static final String KEY_INFORMATION_SCHEMA_ROUTINES = "select.INFORMATION_SCHEMA.ROUTINES";
   private static final String KEY_INFORMATION_SCHEMA_CHECK_CONSTRAINTS = "select.INFORMATION_SCHEMA.CHECK_CONSTRAINTS";
+  private static final String KEY_ADDITIONAL_TABLE_ATTRIBUTES = "select.ADDITIONAL_TABLE_ATTRIBUTES";
+  private static final String KEY_ADDITIONAL_COLUMN_ATTRIBUTES = "select.ADDITIONAL_COLUMN_ATTRIBUTES";
 
   private final Map<String, String> informationSchemaQueries;
 
@@ -88,6 +90,28 @@ public final class InformationSchemaViews
         }
       }
     }
+  }
+
+  /**
+   * Gets the additional attributes SQL for columns, from the additional
+   * configuration.
+   * 
+   * @return Additional attributes SQL for columns.
+   */
+  public String getAdditionalColumnAttributes()
+  {
+    return informationSchemaQueries.get(KEY_ADDITIONAL_COLUMN_ATTRIBUTES);
+  }
+
+  /**
+   * Gets the additional attributes SQL for tables, from the additional
+   * configuration.
+   * 
+   * @return Additional attributes SQL for tables.
+   */
+  public String getAdditionalTableAttributes()
+  {
+    return informationSchemaQueries.get(KEY_ADDITIONAL_TABLE_ATTRIBUTES);
   }
 
   /**
@@ -144,6 +168,18 @@ public final class InformationSchemaViews
     return informationSchemaQueries.get(KEY_INFORMATION_SCHEMA_VIEWS);
   }
 
+  public boolean hasAdditionalColumnAttributesSql()
+  {
+    return informationSchemaQueries
+      .containsKey(KEY_ADDITIONAL_COLUMN_ATTRIBUTES);
+  }
+
+  public boolean hasAdditionalTableAttributesSql()
+  {
+    return informationSchemaQueries
+      .containsKey(KEY_ADDITIONAL_TABLE_ATTRIBUTES);
+  }
+
   public boolean hasCheckConstraintsSql()
   {
     return informationSchemaQueries
@@ -174,8 +210,29 @@ public final class InformationSchemaViews
   }
 
   /**
-   * Sets the table check constraints SQL from the additional
-   * configuration.
+   * Sets the additional attributes SQL for columns.
+   * 
+   * @param sql
+   *        Additional attributes SQL for columns.
+   */
+  public void setAdditionalColumnAttributesSql(final String sql)
+  {
+    informationSchemaQueries.put(KEY_ADDITIONAL_COLUMN_ATTRIBUTES, sql);
+  }
+
+  /**
+   * Sets the additional attributes SQL for tables.
+   * 
+   * @param sql
+   *        Additional attributes SQL for tables.
+   */
+  public void setAdditionalTableAttributesSql(final String sql)
+  {
+    informationSchemaQueries.put(KEY_ADDITIONAL_TABLE_ATTRIBUTES, sql);
+  }
+
+  /**
+   * Sets the table check constraints SQL.
    * 
    * @param sql
    *        Table check constraints SQL.
@@ -186,11 +243,10 @@ public final class InformationSchemaViews
   }
 
   /**
-   * Sets the procedure definitions SQL from the additional
-   * configuration.
+   * Sets the procedure definitions SQL.
    * 
    * @param sql
-   *        Procedure defnitions SQL.
+   *        Procedure definitions SQL.
    */
   public void setRoutinesSql(final String sql)
   {
@@ -198,7 +254,7 @@ public final class InformationSchemaViews
   }
 
   /**
-   * Sets the table constraints SQL from the additional configuration.
+   * Sets the table constraints SQL.
    * 
    * @param sql
    *        Table constraints SQL.
@@ -209,10 +265,10 @@ public final class InformationSchemaViews
   }
 
   /**
-   * Sets the trigger definitions SQL from the additional configuration.
+   * Sets the trigger definitions SQL.
    * 
    * @param sql
-   *        Trigger defnitions SQL.
+   *        Trigger definitions SQL.
    */
   public void setTriggersSql(final String sql)
   {
@@ -220,7 +276,7 @@ public final class InformationSchemaViews
   }
 
   /**
-   * Sets the view definitions SQL from the additional configuration.
+   * Sets the view definitions SQL.
    * 
    * @param sql
    *        View defnitions SQL.

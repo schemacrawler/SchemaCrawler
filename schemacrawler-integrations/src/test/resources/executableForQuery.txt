@@ -8,6 +8,7 @@ Query
 select.tables
 ------------------------------------------------------------------------
 TABLE_CAT	TABLE_SCHEM	TABLE_NAME	TABLE_TYPE	REMARKS	TYPE_CAT	TYPE_SCHEM	TYPE_NAME	SELF_REFERENCING_COL_NAME	REF_GENERATION	HSQLDB_TYPE	READ_ONLY	COMMIT_ACTION
+PUBLIC	FOR_LINT	TEMP1	GLOBAL TEMPORARY	<null>	<null>	<null>	<null>	<null>	<null>	MEMORY	false	DELETE
 PUBLIC	INFORMATION_SCHEMA	ADMINISTRABLE_ROLE_AUTHORIZATIONS	SYSTEM TABLE	<null>	<null>	<null>	<null>	<null>	<null>	MEMORY	true	<null>
 PUBLIC	INFORMATION_SCHEMA	APPLICABLE_ROLES	SYSTEM TABLE	<null>	<null>	<null>	<null>	<null>	<null>	MEMORY	true	<null>
 PUBLIC	INFORMATION_SCHEMA	ASSERTIONS	SYSTEM TABLE	<null>	<null>	<null>	<null>	<null>	<null>	MEMORY	true	<null>

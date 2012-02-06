@@ -109,7 +109,9 @@ public class SchemaCrawlerTextCommandsOutputTest
   {
     final String queryCommand = "all_tables";
     final Config config = new Config();
-    config.put(queryCommand, "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_TABLES");
+    config
+      .put(queryCommand,
+           "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_TABLES ORDER BY TABLE_SCHEM, TABLE_NAME");
 
     textOutputTest(queryCommand, config);
   }

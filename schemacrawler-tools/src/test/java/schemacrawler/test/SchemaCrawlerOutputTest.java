@@ -104,8 +104,9 @@ public class SchemaCrawlerOutputTest
   {
     final String queryCommand1 = "all_tables";
     final Config queriesConfig = new Config();
-    queriesConfig.put(queryCommand1,
-                      "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_TABLES");
+    queriesConfig
+      .put(queryCommand1,
+           "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_TABLES ORDER BY TABLE_SCHEM, TABLE_NAME");
     final String queryCommand2 = "dump_tables";
     queriesConfig
       .put(queryCommand2,

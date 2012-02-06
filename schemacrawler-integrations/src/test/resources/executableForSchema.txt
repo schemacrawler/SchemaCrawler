@@ -120,13 +120,13 @@ FK_PUBLICATION_JOIN                        [foreign key, with no action]
 FK_WRITER_JOIN                             [foreign key, with no action]
  1  PUBLIC.FOR_LINT.WRITERS.ID --> WRITERID                              
 
-SYS_IDX_10080                                         [non-unique index]
+SYS_IDX_10081                                         [non-unique index]
 2   WRITERID                          ascending                   
 
-SYS_IDX_10082                                         [non-unique index]
+SYS_IDX_10083                                         [non-unique index]
 3   PUBLICATIONID                     ascending                   
 
-SYS_IDX_PK_EXTRA_PK_10079                                 [unique index]
+SYS_IDX_PK_EXTRA_PK_10080                                 [unique index]
 1   ID                                ascending                   
 
 
@@ -162,10 +162,10 @@ FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
 FK_WRITERS_PUBLICATION                     [foreign key, with no action]
  1  ID --> PUBLIC.FOR_LINT.WRITERS.PUBLICATION_ID                              
 
-SYS_IDX_10072                                         [non-unique index]
+SYS_IDX_10073                                         [non-unique index]
 4   WRITERID                          ascending                   
 
-SYS_IDX_PK_PUBLICATIONS_10071                             [unique index]
+SYS_IDX_PK_PUBLICATIONS_10072                             [unique index]
 1   ID                                ascending                   
 
 
@@ -220,10 +220,10 @@ IDX_U_WRITERS                                             [unique index]
 12  EMAIL1                            ascending                   
 9   COUNTRY                           ascending                   
 
-SYS_IDX_10084                                         [non-unique index]
+SYS_IDX_10085                                         [non-unique index]
 18  PUBLICATION_ID                    ascending                   
 
-SYS_IDX_PK_WRITERS_10067                                  [unique index]
+SYS_IDX_PK_WRITERS_10068                                  [unique index]
 1   ID                                ascending                   
 
 
@@ -242,7 +242,7 @@ FK_SALES_REGIONS                           [foreign key, with no action]
  1  POSTALCODE --> PUBLIC."PUBLISHER SALES".SALES.POSTALCODE                              
  2  COUNTRY --> PUBLIC."PUBLISHER SALES".SALES.COUNTRY                              
 
-SYS_IDX_PK_CUSTOMERS_10056                                [unique index]
+SYS_IDX_PK_CUSTOMERS_10057                                [unique index]
 3   POSTALCODE                        ascending                   
 4   COUNTRY                           ascending                   
 
@@ -259,7 +259,7 @@ FK_SALES_REGIONS                           [foreign key, with no action]
  1  PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE --> POSTALCODE                              
  2  PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY --> COUNTRY                              
 
-SYS_IDX_10060                                         [non-unique index]
+SYS_IDX_10061                                         [non-unique index]
 1   POSTALCODE                        ascending                   
 2   COUNTRY                           ascending                   
 
