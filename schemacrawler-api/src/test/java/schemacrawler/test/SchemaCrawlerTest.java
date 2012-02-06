@@ -113,29 +113,29 @@ public class SchemaCrawlerTest
         },
         {
             {
-                "SYS_CT_10076", "SYS_CT_10077", "SYS_CT_10078"
+                "SYS_CT_10077", "SYS_CT_10078", "SYS_CT_10079"
             },
             {},
             {},
             {
-                "SYS_CT_10068", "SYS_CT_10069", "SYS_CT_10070",
+                "SYS_CT_10069", "SYS_CT_10070", "SYS_CT_10071",
             },
             {
                 "CHECK_UPPERCASE_STATE",
-                "SYS_CT_10062",
                 "SYS_CT_10063",
                 "SYS_CT_10064",
                 "SYS_CT_10065",
                 "SYS_CT_10066",
+                "SYS_CT_10067",
             },
         },
         {},
         {},
         {
             {
-                "SYS_CT_10052", "SYS_CT_10053", "SYS_CT_10054", "SYS_CT_10055"
+                "SYS_CT_10053", "SYS_CT_10054", "SYS_CT_10055", "SYS_CT_10056"
             }, {
-                "SYS_CT_10057", "SYS_CT_10058"
+                "SYS_CT_10058", "SYS_CT_10059"
             }
         },
         {}

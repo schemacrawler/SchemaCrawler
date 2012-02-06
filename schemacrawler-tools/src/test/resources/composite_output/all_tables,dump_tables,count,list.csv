@@ -40,6 +40,18 @@ Query
 all_tables
 ------------------------------------------------------------------------
 TABLE_CAT,TABLE_SCHEM,TABLE_NAME,TABLE_TYPE,REMARKS,TYPE_CAT,TYPE_SCHEM,TYPE_NAME,SELF_REFERENCING_COL_NAME,REF_GENERATION,HSQLDB_TYPE,READ_ONLY,COMMIT_ACTION
+PUBLIC,BOOKS,AUTHORS,TABLE,Contact details for book authors,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
+PUBLIC,BOOKS,AUTHORSLIST,VIEW,<null>,<null>,<null>,<null>,<null>,<null>,<null>,false,<null>
+PUBLIC,BOOKS,BOOKAUTHORS,TABLE,"Relationship between books and their authors, along with the latest updated information",<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
+PUBLIC,BOOKS,BOOKS,TABLE,Details for published books,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
+PUBLIC,BOOKS,Global Counts,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
+PUBLIC,BOOKS,PUBLISHERS,TABLE,List of book publishers,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
+PUBLIC,FOR_LINT,EXTRA_PK,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
+PUBLIC,FOR_LINT,Global Counts,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
+PUBLIC,FOR_LINT,No_Columns,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
+PUBLIC,FOR_LINT,PUBLICATIONS,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
+PUBLIC,FOR_LINT,TEMP1,GLOBAL TEMPORARY,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false,DELETE
+PUBLIC,FOR_LINT,WRITERS,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
 PUBLIC,INFORMATION_SCHEMA,ADMINISTRABLE_ROLE_AUTHORIZATIONS,SYSTEM TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,true,<null>
 PUBLIC,INFORMATION_SCHEMA,APPLICABLE_ROLES,SYSTEM TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,true,<null>
 PUBLIC,INFORMATION_SCHEMA,ASSERTIONS,SYSTEM TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,true,<null>
@@ -127,22 +139,11 @@ PUBLIC,INFORMATION_SCHEMA,VIEWS,SYSTEM TABLE,the view descriptors of the accessi
 PUBLIC,INFORMATION_SCHEMA,VIEW_COLUMN_USAGE,SYSTEM TABLE,one row for each column of a table that is explicitly or implicitly referenced in the <query expression> of the view being described.,<null>,<null>,<null>,<null>,<null>,MEMORY,true,<null>
 PUBLIC,INFORMATION_SCHEMA,VIEW_ROUTINE_USAGE,SYSTEM TABLE,"one row for each SQL-invoked routine identified as the subject routine of either a <routine invocation>, a <method reference>, a <method invocation>, or a <static method invocation> contained in a <view definition>",<null>,<null>,<null>,<null>,<null>,MEMORY,true,<null>
 PUBLIC,INFORMATION_SCHEMA,VIEW_TABLE_USAGE,SYSTEM TABLE,one row for each table identified by a <table name> simply contained in a <table reference> that is contained in the <query expression> of a view,<null>,<null>,<null>,<null>,<null>,MEMORY,true,<null>
+PUBLIC,PUBLISHER SALES,REGIONS,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
+PUBLIC,PUBLISHER SALES,SALES,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
 PUBLIC,SYSTEM_LOBS,BLOCKS,SYSTEM TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
 PUBLIC,SYSTEM_LOBS,LOBS,SYSTEM TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
 PUBLIC,SYSTEM_LOBS,LOB_IDS,SYSTEM TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
-PUBLIC,BOOKS,AUTHORS,TABLE,Contact details for book authors,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
-PUBLIC,BOOKS,BOOKAUTHORS,TABLE,"Relationship between books and their authors, along with the latest updated information",<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
-PUBLIC,BOOKS,BOOKS,TABLE,Details for published books,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
-PUBLIC,BOOKS,Global Counts,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
-PUBLIC,BOOKS,PUBLISHERS,TABLE,List of book publishers,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
-PUBLIC,FOR_LINT,EXTRA_PK,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
-PUBLIC,FOR_LINT,Global Counts,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
-PUBLIC,FOR_LINT,No_Columns,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
-PUBLIC,FOR_LINT,PUBLICATIONS,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
-PUBLIC,FOR_LINT,WRITERS,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
-PUBLIC,PUBLISHER SALES,REGIONS,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
-PUBLIC,PUBLISHER SALES,SALES,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false,<null>
-PUBLIC,BOOKS,AUTHORSLIST,VIEW,<null>,<null>,<null>,<null>,<null>,<null>,<null>,false,<null>
 
 
 

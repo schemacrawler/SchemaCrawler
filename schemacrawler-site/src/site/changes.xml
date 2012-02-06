@@ -5,17 +5,16 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-    <release version="8.10" date="2012-01-26">
-      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
-        Changed copyright notice on source code.
-      ]]></action>
+    <release version="8.11" date="2012-02-07">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
-        Added ability to use configuration from bundled versions of SchemaCrawler, so that 
-        triggers, and extended metadata are available.
+        Added ability to configure SchemaCrawler linters.
       ]]></action>      
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
-        Started to add teh ability to configure SchemaCrawler linters.
-      ]]></action>  
+        Added a new lint for useless surrogate keys.
+      ]]></action> 
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added ability to tag tables and columns with additional metadata attributes from SQL queries.
+      ]]></action>       
     </release>  
     <release version="8.9" date="2011-12-08">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[

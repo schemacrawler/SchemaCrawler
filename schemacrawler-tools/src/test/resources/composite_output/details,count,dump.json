@@ -903,15 +903,15 @@
       "constraints": [
         {
           "definition": "FOR_LINT.EXTRA_PK.ID IS NOT NULL",
-          "name": "SYS_CT_10076"
-        },
-        {
-          "definition": "FOR_LINT.EXTRA_PK.WRITERID IS NOT NULL",
           "name": "SYS_CT_10077"
         },
         {
-          "definition": "FOR_LINT.EXTRA_PK.PUBLICATIONID IS NOT NULL",
+          "definition": "FOR_LINT.EXTRA_PK.WRITERID IS NOT NULL",
           "name": "SYS_CT_10078"
+        },
+        {
+          "definition": "FOR_LINT.EXTRA_PK.PUBLICATIONID IS NOT NULL",
+          "name": "SYS_CT_10079"
         }
       ],
       "columns": [
@@ -1002,7 +1002,7 @@
       "indices": [
         {
           "unique": true,
-          "name": "SYS_IDX_PK_EXTRA_PK_10079",
+          "name": "SYS_IDX_PK_EXTRA_PK_10080",
           "columns": {
             "sortSequence": "ascending",
             "name": "ID",
@@ -1011,7 +1011,7 @@
         },
         {
           "unique": false,
-          "name": "SYS_IDX_10082",
+          "name": "SYS_IDX_10083",
           "columns": {
             "sortSequence": "ascending",
             "name": "PUBLICATIONID",
@@ -1020,7 +1020,7 @@
         },
         {
           "unique": false,
-          "name": "SYS_IDX_10080",
+          "name": "SYS_IDX_10081",
           "columns": {
             "sortSequence": "ascending",
             "name": "WRITERID",
@@ -1149,15 +1149,15 @@
       "constraints": [
         {
           "definition": "FOR_LINT.PUBLICATIONS.ID IS NOT NULL",
-          "name": "SYS_CT_10068"
-        },
-        {
-          "definition": "FOR_LINT.PUBLICATIONS.TITLE IS NOT NULL",
           "name": "SYS_CT_10069"
         },
         {
-          "definition": "FOR_LINT.PUBLICATIONS.WRITERID IS NOT NULL",
+          "definition": "FOR_LINT.PUBLICATIONS.TITLE IS NOT NULL",
           "name": "SYS_CT_10070"
+        },
+        {
+          "definition": "FOR_LINT.PUBLICATIONS.WRITERID IS NOT NULL",
+          "name": "SYS_CT_10071"
         }
       ],
       "columns": [
@@ -1303,7 +1303,7 @@
       "indices": [
         {
           "unique": true,
-          "name": "SYS_IDX_PK_PUBLICATIONS_10071",
+          "name": "SYS_IDX_PK_PUBLICATIONS_10072",
           "columns": {
             "sortSequence": "ascending",
             "name": "ID",
@@ -1312,7 +1312,7 @@
         },
         {
           "unique": false,
-          "name": "SYS_IDX_10072",
+          "name": "SYS_IDX_10073",
           "columns": {
             "sortSequence": "ascending",
             "name": "WRITERID",
@@ -1373,23 +1373,23 @@
         },
         {
           "definition": "FOR_LINT.WRITERS.ID IS NOT NULL",
-          "name": "SYS_CT_10062"
-        },
-        {
-          "definition": "FOR_LINT.WRITERS.FIRSTNAME IS NOT NULL",
           "name": "SYS_CT_10063"
         },
         {
-          "definition": "FOR_LINT.WRITERS.LASTNAME IS NOT NULL",
+          "definition": "FOR_LINT.WRITERS.FIRSTNAME IS NOT NULL",
           "name": "SYS_CT_10064"
         },
         {
-          "definition": "FOR_LINT.WRITERS.ADDRESS2 IS NOT NULL",
+          "definition": "FOR_LINT.WRITERS.LASTNAME IS NOT NULL",
           "name": "SYS_CT_10065"
         },
         {
-          "definition": "FOR_LINT.WRITERS.PUBLICATION_ID IS NOT NULL",
+          "definition": "FOR_LINT.WRITERS.ADDRESS2 IS NOT NULL",
           "name": "SYS_CT_10066"
+        },
+        {
+          "definition": "FOR_LINT.WRITERS.PUBLICATION_ID IS NOT NULL",
+          "name": "SYS_CT_10067"
         }
       ],
       "columns": [
@@ -1645,7 +1645,7 @@
       "indices": [
         {
           "unique": true,
-          "name": "SYS_IDX_PK_WRITERS_10067",
+          "name": "SYS_IDX_PK_WRITERS_10068",
           "columns": {
             "sortSequence": "ascending",
             "name": "ID",
@@ -1654,7 +1654,7 @@
         },
         {
           "unique": false,
-          "name": "SYS_IDX_10084",
+          "name": "SYS_IDX_10085",
           "columns": {
             "sortSequence": "ascending",
             "name": "PUBLICATION_ID",
@@ -1778,19 +1778,19 @@
       "constraints": [
         {
           "definition": "\"PUBLISHER SALES\".REGIONS.CITY IS NOT NULL",
-          "name": "SYS_CT_10052"
-        },
-        {
-          "definition": "\"PUBLISHER SALES\".REGIONS.STATE IS NOT NULL",
           "name": "SYS_CT_10053"
         },
         {
-          "definition": "\"PUBLISHER SALES\".REGIONS.POSTALCODE IS NOT NULL",
+          "definition": "\"PUBLISHER SALES\".REGIONS.STATE IS NOT NULL",
           "name": "SYS_CT_10054"
         },
         {
-          "definition": "\"PUBLISHER SALES\".REGIONS.COUNTRY IS NOT NULL",
+          "definition": "\"PUBLISHER SALES\".REGIONS.POSTALCODE IS NOT NULL",
           "name": "SYS_CT_10055"
+        },
+        {
+          "definition": "\"PUBLISHER SALES\".REGIONS.COUNTRY IS NOT NULL",
+          "name": "SYS_CT_10056"
         }
       ],
       "columns": [
@@ -1891,7 +1891,7 @@
       ],
       "indices": [{
         "unique": true,
-        "name": "SYS_IDX_PK_CUSTOMERS_10056",
+        "name": "SYS_IDX_PK_CUSTOMERS_10057",
         "columns": [
           {
             "sortSequence": "ascending",
@@ -1935,11 +1935,11 @@
       "constraints": [
         {
           "definition": "\"PUBLISHER SALES\".SALES.POSTALCODE IS NOT NULL",
-          "name": "SYS_CT_10057"
+          "name": "SYS_CT_10058"
         },
         {
           "definition": "\"PUBLISHER SALES\".SALES.COUNTRY IS NOT NULL",
-          "name": "SYS_CT_10058"
+          "name": "SYS_CT_10059"
         }
       ],
       "columns": [
@@ -2051,7 +2051,7 @@
       ],
       "indices": [{
         "unique": false,
-        "name": "SYS_IDX_10060",
+        "name": "SYS_IDX_10061",
         "columns": [
           {
             "sortSequence": "ascending",

@@ -528,7 +528,7 @@
       "indices": [
         {
           "unique": true,
-          "name": "SYS_IDX_PK_EXTRA_PK_10079",
+          "name": "SYS_IDX_PK_EXTRA_PK_10080",
           "columns": {
             "sortSequence": "ascending",
             "name": "ID",
@@ -537,7 +537,7 @@
         },
         {
           "unique": false,
-          "name": "SYS_IDX_10082",
+          "name": "SYS_IDX_10083",
           "columns": {
             "sortSequence": "ascending",
             "name": "PUBLICATIONID",
@@ -546,7 +546,7 @@
         },
         {
           "unique": false,
-          "name": "SYS_IDX_10080",
+          "name": "SYS_IDX_10081",
           "columns": {
             "sortSequence": "ascending",
             "name": "WRITERID",
@@ -700,7 +700,7 @@
       "indices": [
         {
           "unique": true,
-          "name": "SYS_IDX_PK_PUBLICATIONS_10071",
+          "name": "SYS_IDX_PK_PUBLICATIONS_10072",
           "columns": {
             "sortSequence": "ascending",
             "name": "ID",
@@ -709,7 +709,7 @@
         },
         {
           "unique": false,
-          "name": "SYS_IDX_10072",
+          "name": "SYS_IDX_10073",
           "columns": {
             "sortSequence": "ascending",
             "name": "WRITERID",
@@ -945,7 +945,7 @@
       "indices": [
         {
           "unique": true,
-          "name": "SYS_IDX_PK_WRITERS_10067",
+          "name": "SYS_IDX_PK_WRITERS_10068",
           "columns": {
             "sortSequence": "ascending",
             "name": "ID",
@@ -954,7 +954,7 @@
         },
         {
           "unique": false,
-          "name": "SYS_IDX_10084",
+          "name": "SYS_IDX_10085",
           "columns": {
             "sortSequence": "ascending",
             "name": "PUBLICATION_ID",
@@ -1116,7 +1116,7 @@
       ],
       "indices": [{
         "unique": true,
-        "name": "SYS_IDX_PK_CUSTOMERS_10056",
+        "name": "SYS_IDX_PK_CUSTOMERS_10057",
         "columns": [
           {
             "sortSequence": "ascending",
@@ -1205,7 +1205,7 @@
       ],
       "indices": [{
         "unique": false,
-        "name": "SYS_IDX_10060",
+        "name": "SYS_IDX_10061",
         "columns": [
           {
             "sortSequence": "ascending",

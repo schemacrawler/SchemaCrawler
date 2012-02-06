@@ -56,11 +56,13 @@ public final class SchemaInfoLevel
   public static SchemaInfoLevel maximum()
   {
     final SchemaInfoLevel maximum = detailed();
+    maximum.setRetrieveTriggerInformation(true);
     maximum.setRetrieveAdditionalDatabaseInfo(true);
     maximum.setRetrieveAdditionalJdbcDriverInfo(true);
     maximum.setRetrieveTablePrivileges(true);
     maximum.setRetrieveTableColumnPrivileges(true);
-    maximum.setRetrieveTriggerInformation(true);
+    maximum.setRetrieveAdditionalTableAttributes(true);
+    maximum.setRetrieveAdditionalColumnAttributes(true);
     maximum.setTag("maximum");
     return maximum;
   }
@@ -120,10 +122,17 @@ public final class SchemaInfoLevel
   private boolean retrieveTableColumnPrivileges;
   private boolean retrieveTriggerInformation;
   private boolean retrieveTableColumns;
+  private boolean retrieveAdditionalTableAttributes;
+  private boolean retrieveAdditionalColumnAttributes;
 
   public String getTag()
   {
     return tag;
+  }
+
+  public boolean isRetrieveAdditionalColumnAttributes()
+  {
+    return retrieveAdditionalColumnAttributes;
   }
 
   public boolean isRetrieveAdditionalDatabaseInfo()
@@ -139,6 +148,11 @@ public final class SchemaInfoLevel
   public boolean isRetrieveAdditionalSchemaCrawlerInfo()
   {
     return retrieveAdditionalSchemaCrawlerInfo;
+  }
+
+  public boolean isRetrieveAdditionalTableAttributes()
+  {
+    return retrieveAdditionalTableAttributes;
   }
 
   public boolean isRetrieveCheckConstraintInformation()
@@ -226,6 +240,11 @@ public final class SchemaInfoLevel
     return retrieveViewInformation;
   }
 
+  public void setRetrieveAdditionalColumnAttributes(final boolean retrieveAdditionalColumnAttributes)
+  {
+    this.retrieveAdditionalColumnAttributes = retrieveAdditionalColumnAttributes;
+  }
+
   public void setRetrieveAdditionalDatabaseInfo(final boolean retrieveAdditionalDatabaseInfo)
   {
     this.retrieveAdditionalDatabaseInfo = retrieveAdditionalDatabaseInfo;
@@ -239,6 +258,11 @@ public final class SchemaInfoLevel
   public void setRetrieveAdditionalSchemaCrawlerInfo(final boolean retrieveAdditionalSchemaCrawlerInfo)
   {
     this.retrieveAdditionalSchemaCrawlerInfo = retrieveAdditionalSchemaCrawlerInfo;
+  }
+
+  public void setRetrieveAdditionalTableAttributes(final boolean retrieveAdditionalTableAttributes)
+  {
+    this.retrieveAdditionalTableAttributes = retrieveAdditionalTableAttributes;
   }
 
   public void setRetrieveCheckConstraintInformation(final boolean retrieveCheckConstraintInformation)
