@@ -16,7 +16,7 @@ import schemacrawler.schema.Database;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.test.TestUtility;
+import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.hsqldb.BundledDriverOptions;
 import schemacrawler.tools.options.InfoLevel;
 import schemacrawler.tools.options.OutputFormat;
