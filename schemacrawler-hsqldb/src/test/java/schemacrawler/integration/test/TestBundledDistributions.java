@@ -17,11 +17,11 @@ import schemacrawler.schema.Database;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.test.utility.TestDatabase;
 import schemacrawler.tools.hsqldb.BundledDriverOptions;
 import schemacrawler.tools.options.InfoLevel;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.utility.SchemaCrawlerUtility;
-import schemacrawler.utility.TestDatabase;
 
 public class TestBundledDistributions
 {

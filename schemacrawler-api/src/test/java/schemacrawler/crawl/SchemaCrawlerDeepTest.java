@@ -36,7 +36,7 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.utility.TestDatabase;
+import schemacrawler.test.utility.TestDatabase;
 
 public class SchemaCrawlerDeepTest
 {

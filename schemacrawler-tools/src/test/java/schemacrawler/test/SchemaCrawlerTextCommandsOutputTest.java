@@ -34,12 +34,12 @@ import org.junit.Test;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.test.utility.LocalEntityResolver;
+import schemacrawler.test.utility.TestDatabase;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
-import schemacrawler.utility.TestDatabase;
 
 public class SchemaCrawlerTextCommandsOutputTest
 {

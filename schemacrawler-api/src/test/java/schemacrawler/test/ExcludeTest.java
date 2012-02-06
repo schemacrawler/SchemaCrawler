@@ -33,7 +33,7 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.utility.TestDatabase;
+import schemacrawler.test.utility.TestDatabase;
 
 public class ExcludeTest
 {

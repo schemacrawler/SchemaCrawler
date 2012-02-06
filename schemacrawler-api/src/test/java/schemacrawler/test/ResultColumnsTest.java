@@ -33,8 +33,8 @@ import org.junit.Test;
 
 import schemacrawler.schema.ResultsColumn;
 import schemacrawler.schema.ResultsColumns;
+import schemacrawler.test.utility.TestDatabase;
 import schemacrawler.utility.SchemaCrawlerUtility;
-import schemacrawler.utility.TestDatabase;
 
 public class ResultColumnsTest
 {

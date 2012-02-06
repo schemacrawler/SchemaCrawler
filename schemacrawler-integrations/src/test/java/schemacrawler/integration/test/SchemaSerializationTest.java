@@ -42,8 +42,8 @@ import schemacrawler.schema.Database;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
+import schemacrawler.test.utility.TestDatabase;
 import schemacrawler.tools.integration.serialization.XmlDatabase;
-import schemacrawler.utility.TestDatabase;
 
 public class SchemaSerializationTest
 {
