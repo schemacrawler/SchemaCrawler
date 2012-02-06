@@ -32,10 +32,10 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
-import java.util.logging.Level;
+import java.util.SortedMap;
+import java.util.TreeMap;
 import java.util.logging.Logger;
 
 import org.junit.AfterClass;
@@ -430,7 +430,8 @@ public class SchemaCrawlerTest
         writer.println(String.format("o--> %s [%s]",
                                      table.getFullName(),
                                      table.getType()));
-        final Map<String, Object> tableAttributes = table.getAttributes();
+        final SortedMap<String, Object> tableAttributes = new TreeMap<String, Object>(table
+          .getAttributes());
         for (final Entry<String, Object> tableAttribute: tableAttributes
           .entrySet())
         {
@@ -444,7 +445,8 @@ public class SchemaCrawlerTest
           writer.println(String.format("   o--> %s [%s]",
                                        column.getFullName(),
                                        column.getType()));
-          final Map<String, Object> columnAttributes = column.getAttributes();
+          final SortedMap<String, Object> columnAttributes = new TreeMap<String, Object>(column
+            .getAttributes());
           for (final Entry<String, Object> columnAttribute: columnAttributes
             .entrySet())
           {

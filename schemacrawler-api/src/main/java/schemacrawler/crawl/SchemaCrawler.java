@@ -290,9 +290,17 @@ public final class SchemaCrawler
       {
         retrieverExtra.retrieveViewInformation();
       }
+      if (infoLevel.isRetrieveAdditionalTableAttributes())
+      {
+        retrieverExtra.retrieveAdditionalTableAttributes();
+      }
       if (infoLevel.isRetrieveTablePrivileges())
       {
         retrieverExtra.retrieveTablePrivileges();
+      }
+      if (infoLevel.isRetrieveAdditionalColumnAttributes())
+      {
+        retrieverExtra.retrieveAdditionalColumnAttributes();
       }
       if (infoLevel.isRetrieveTableColumnPrivileges())
       {
