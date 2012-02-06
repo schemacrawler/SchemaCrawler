@@ -22,10 +22,10 @@ package schemacrawler.test;
 
 
 import static org.junit.Assert.fail;
+import static schemacrawler.test.utility.TestUtility.compareOutput;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,15 +33,11 @@ import org.custommonkey.xmlunit.XMLUnit;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.xml.sax.EntityResolver;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.test.utility.LocalEntityResolver;
-import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
@@ -112,9 +108,9 @@ public class SchemaCrawlerXmlOutputTest
     executable.setOutputOptions(outputOptions);
     executable.execute(testDatabase.getConnection());
 
-    failures.addAll(TestUtility.compareOutput(XML_OUTPUT + referenceFile,
-                                              testOutputFile,
-                                              OutputFormat.html));
+    failures.addAll(compareOutput(XML_OUTPUT + referenceFile,
+                                             testOutputFile,
+                                             OutputFormat.html.name()));
   }
 
 }

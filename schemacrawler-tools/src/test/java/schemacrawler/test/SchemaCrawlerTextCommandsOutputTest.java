@@ -22,6 +22,7 @@ package schemacrawler.test;
 
 
 import static org.junit.Assert.fail;
+import static schemacrawler.test.utility.TestUtility.compareOutput;
 
 import java.io.File;
 import java.util.List;
@@ -33,7 +34,6 @@ import org.junit.Test;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.test.utility.LocalEntityResolver;
-import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
@@ -130,10 +130,12 @@ public class SchemaCrawlerTextCommandsOutputTest
     executable.setOutputOptions(outputOptions);
     executable.execute(testDatabase.getConnection());
 
-    final List<String> failures = TestUtility
-      .compareOutput(COMMAND_OUTPUT + referenceFile,
-                     testOutputFile,
-                     outputOptions.getOutputFormat());
+    final List<String> failures = compareOutput(COMMAND_OUTPUT
+                                                               + referenceFile,
+                                                           testOutputFile,
+                                                           outputOptions
+                                                             .getOutputFormat()
+                                                             .name());
     if (failures.size() > 0)
     {
       fail(failures.toString());

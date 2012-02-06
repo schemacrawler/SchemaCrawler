@@ -22,10 +22,9 @@ package schemacrawler.test;
 
 
 import static org.junit.Assert.fail;
+import static schemacrawler.test.utility.TestUtility.compareOutput;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
@@ -34,9 +33,6 @@ import org.custommonkey.xmlunit.XMLUnit;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.xml.sax.EntityResolver;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.DatabaseConnectionOptions;
@@ -44,7 +40,6 @@ import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.test.utility.LocalEntityResolver;
-import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.InfoLevel;
@@ -129,10 +124,10 @@ public class LintOutputTest
         executable.setAdditionalConfiguration(queriesConfig);
         executable.execute(connectionOptions.getConnection());
 
-        failures.addAll(TestUtility.compareOutput(COMPOSITE_OUTPUT
+        failures.addAll(compareOutput(COMPOSITE_OUTPUT
                                                       + referenceFile,
                                                   testOutputFile,
-                                                  outputFormat));
+                                                  outputFormat.name()));
       }
     }
     if (failures.size() > 0)
@@ -176,9 +171,9 @@ public class LintOutputTest
     executable.setOutputOptions(outputOptions);
     executable.execute(connectionOptions.getConnection());
 
-    failures.addAll(TestUtility.compareOutput(JSON_OUTPUT + referenceFile,
+    failures.addAll(compareOutput(JSON_OUTPUT + referenceFile,
                                               testOutputFile,
-                                              outputOptions.getOutputFormat()));
+                                              outputOptions.getOutputFormat().name()));
 
     if (failures.size() > 0)
     {
@@ -220,9 +215,9 @@ public class LintOutputTest
     executable.setOutputOptions(outputOptions);
     executable.execute(connectionOptions.getConnection());
 
-    failures.addAll(TestUtility.compareOutput(TEXT_OUTPUT + referenceFile,
+    failures.addAll(compareOutput(TEXT_OUTPUT + referenceFile,
                                               testOutputFile,
-                                              outputOptions.getOutputFormat()));
+                                              outputOptions.getOutputFormat().name()));
 
     if (failures.size() > 0)
     {
