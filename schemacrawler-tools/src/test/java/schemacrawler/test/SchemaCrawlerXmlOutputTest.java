@@ -50,29 +50,6 @@ import schemacrawler.utility.TestDatabase;
 public class SchemaCrawlerXmlOutputTest
 {
 
-  private static class LocalEntityResolver
-    implements EntityResolver
-  {
-
-    @Override
-    public InputSource resolveEntity(final String publicId,
-                                     final String systemId)
-      throws SAXException, IOException
-    {
-      final String localResource = "/xhtml1"
-                                   + systemId.substring(systemId
-                                     .lastIndexOf('/'));
-      final InputStream entityStream = LocalEntityResolver.class
-        .getResourceAsStream(localResource);
-      if (entityStream == null)
-      {
-        throw new IOException("Could not load " + localResource);
-      }
-      return new InputSource(entityStream);
-    }
-
-  }
-
   private static final String XML_OUTPUT = "xml_output/";
 
   private static TestDatabase testDatabase = new TestDatabase();

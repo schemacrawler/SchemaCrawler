@@ -24,17 +24,12 @@ package schemacrawler.test;
 import static org.junit.Assert.fail;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
 import org.custommonkey.xmlunit.XMLUnit;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.xml.sax.EntityResolver;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
@@ -46,29 +41,6 @@ import schemacrawler.utility.TestDatabase;
 
 public class SchemaCrawlerTextCommandsOutputTest
 {
-
-  private static class LocalEntityResolver
-    implements EntityResolver
-  {
-
-    @Override
-    public InputSource resolveEntity(final String publicId,
-                                     final String systemId)
-      throws SAXException, IOException
-    {
-      final String localResource = "/xhtml1"
-                                   + systemId.substring(systemId
-                                     .lastIndexOf('/'));
-      final InputStream entityStream = LocalEntityResolver.class
-        .getResourceAsStream(localResource);
-      if (entityStream == null)
-      {
-        throw new IOException("Could not load " + localResource);
-      }
-      return new InputSource(entityStream);
-    }
-
-  }
 
   private static final String COMMAND_OUTPUT = "command_output/";
 

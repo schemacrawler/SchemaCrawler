@@ -55,29 +55,6 @@ import schemacrawler.utility.TestDatabase;
 public class LintOutputTest
 {
 
-  private static class LocalEntityResolver
-    implements EntityResolver
-  {
-
-    @Override
-    public InputSource resolveEntity(final String publicId,
-                                     final String systemId)
-      throws SAXException, IOException
-    {
-      final String localResource = "/xhtml1"
-                                   + systemId.substring(systemId
-                                     .lastIndexOf('/'));
-      final InputStream entityStream = LocalEntityResolver.class
-        .getResourceAsStream(localResource);
-      if (entityStream == null)
-      {
-        throw new IOException("Could not load " + localResource);
-      }
-      return new InputSource(entityStream);
-    }
-
-  }
-
   private static final String TEXT_OUTPUT = "lint_text_output/";
   private static final String COMPOSITE_OUTPUT = "lint_composite_output/";
   private static final String JSON_OUTPUT = "lint_json_output/";

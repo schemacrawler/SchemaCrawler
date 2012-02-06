@@ -24,8 +24,6 @@ package schemacrawler.test;
 import static org.junit.Assert.fail;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
@@ -34,9 +32,6 @@ import org.custommonkey.xmlunit.XMLUnit;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.xml.sax.EntityResolver;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.DatabaseConnectionOptions;
@@ -53,29 +48,6 @@ import schemacrawler.utility.TestDatabase;
 
 public class SchemaCrawlerOutputTest
 {
-
-  private static class LocalEntityResolver
-    implements EntityResolver
-  {
-
-    @Override
-    public InputSource resolveEntity(final String publicId,
-                                     final String systemId)
-      throws SAXException, IOException
-    {
-      final String localResource = "/xhtml1"
-                                   + systemId.substring(systemId
-                                     .lastIndexOf('/'));
-      final InputStream entityStream = LocalEntityResolver.class
-        .getResourceAsStream(localResource);
-      if (entityStream == null)
-      {
-        throw new IOException("Could not load " + localResource);
-      }
-      return new InputSource(entityStream);
-    }
-
-  }
 
   private static final String INFO_LEVEL_OUTPUT = "info_level_output/";
   private static final String COMPOSITE_OUTPUT = "composite_output/";
