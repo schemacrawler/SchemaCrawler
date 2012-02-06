@@ -3239,7 +3239,7 @@
     }
   ],
   "schemaCrawlerInfo": {
-    "productVersion": "8.10",
+    "productVersion": "8.11",
     "productName": "SchemaCrawler"
   },
   "jdbcDriverInfo": {
