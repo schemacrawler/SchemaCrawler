@@ -73,6 +73,8 @@ public final class InformationSchemaViews
           KEY_INFORMATION_SCHEMA_TABLE_CONSTRAINTS,
           KEY_INFORMATION_SCHEMA_ROUTINES,
           KEY_INFORMATION_SCHEMA_CHECK_CONSTRAINTS,
+          KEY_ADDITIONAL_TABLE_ATTRIBUTES,
+          KEY_ADDITIONAL_COLUMN_ATTRIBUTES
       };
       for (final String key: keys)
       {
