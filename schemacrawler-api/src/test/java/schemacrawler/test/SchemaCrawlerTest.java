@@ -32,7 +32,8 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -50,6 +51,7 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schema.View;
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -208,163 +210,6 @@ public class SchemaCrawlerTest
     assertNull(table.getColumn(""));
     assertNull(table.getColumn("NO_COLUMN"));
     assertNotNull(table.getColumn("ID"));
-  }
-
-  @Test
-  public void columns()
-    throws Exception
-  {
-    final String[] schemaNames = {
-        "BOOKS",
-        "INFORMATION_SCHEMA",
-        "PUBLIC",
-        "\"PUBLISHER SALES\"",
-        "SYSTEM_LOBS"
-    };
-    final int[] tableCounts = {
-        6, 0, 0, 2, 0,
-    };
-    final String[][][] columnNames = {
-        {
-            {
-                "AUTHORS.ID",
-                "AUTHORS.FIRSTNAME",
-                "AUTHORS.LASTNAME",
-                "AUTHORS.ADDRESS1",
-                "AUTHORS.ADDRESS2",
-                "AUTHORS.CITY",
-                "AUTHORS.STATE",
-                "AUTHORS.POSTALCODE",
-                "AUTHORS.COUNTRY",
-            },
-            {
-                "AUTHORSLIST.ID",
-                "AUTHORSLIST.FIRSTNAME",
-                "AUTHORSLIST.LASTNAME",
-            },
-            {
-                "BOOKAUTHORS.BOOKID",
-                "BOOKAUTHORS.AUTHORID",
-                "BOOKAUTHORS.\"UPDATE\"",
-            },
-            {
-                "BOOKS.ID",
-                "BOOKS.TITLE",
-                "BOOKS.DESCRIPTION",
-                "BOOKS.PUBLISHERID",
-                "BOOKS.PUBLICATIONDATE",
-                "BOOKS.PRICE",
-            },
-            {
-              "\"Global Counts\".\"Global Count\"",
-            },
-            {
-                "PUBLISHERS.ID", "PUBLISHERS.PUBLISHER",
-            },
-        },
-        {},
-        {},
-        {
-            {
-                "REGIONS.CITY",
-                "REGIONS.STATE",
-                "REGIONS.POSTALCODE",
-                "REGIONS.COUNTRY",
-            },
-            {
-                "SALES.POSTALCODE",
-                "SALES.COUNTRY",
-                "SALES.BOOKID",
-                "SALES.PERIODENDDATE",
-                "SALES.TOTALAMOUNT",
-            },
-        },
-        {},
-    };
-    final String[][][] columnDataTypes = {
-        {
-
-            {
-                "INTEGER",
-                "VARCHAR",
-                "VARCHAR",
-                "VARCHAR",
-                "VARCHAR",
-                "VARCHAR",
-                "VARCHAR",
-                "VARCHAR",
-                "VARCHAR",
-            },
-            {
-                "INTEGER", "VARCHAR", "VARCHAR",
-            },
-            {
-                "INTEGER", "INTEGER", "CLOB",
-            },
-            {
-                "INTEGER", "VARCHAR", "VARCHAR", "INTEGER", "DATE", "DOUBLE"
-            },
-            {
-              "INTEGER",
-            },
-            {
-                "INTEGER", "VARCHAR",
-            },
-        },
-        {},
-        {},
-        {
-            {
-                "VARCHAR", "VARCHAR", "VARCHAR", "VARCHAR"
-            }, {
-                "VARCHAR", "VARCHAR", "INTEGER", "DATE", "DOUBLE",
-            },
-        },
-        {},
-    };
-
-    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions
-      .setSchemaInclusionRule(new InclusionRule(InclusionRule.ALL,
-                                                ".*\\.FOR_LINT"));
-
-    final Database database = testDatabase.getDatabase(schemaCrawlerOptions);
-    final Schema[] schemas = database.getSchemas();
-    assertEquals("Schema count does not match",
-                 schemaNames.length,
-                 schemas.length);
-    for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++)
-    {
-      final Schema schema = schemas[schemaIdx];
-      assertEquals("Schema name does not match",
-                   "PUBLIC." + schemaNames[schemaIdx],
-                   schema.getName());
-      final Table[] tables = schema.getTables();
-      assertEquals("Table count does not match, for schema " + schema,
-                   tableCounts[schemaIdx],
-                   tables.length);
-      for (int tableIdx = 0; tableIdx < tables.length; tableIdx++)
-      {
-        final Table table = tables[tableIdx];
-        final Column[] columns = table.getColumns();
-        final String[] columnsNamesForTable = columnNames[schemaIdx][tableIdx];
-        for (int columnIdx = 0; columnIdx < columns.length; columnIdx++)
-        {
-          final Column column = columns[columnIdx];
-          LOGGER.log(Level.FINE, column.toString());
-          assertEquals("Column full name does not match for column " + column,
-                       "PUBLIC." + schemaNames[schemaIdx] + "."
-                           + columnsNamesForTable[columnIdx],
-                       column.getFullName());
-          assertEquals("Column type does not match for column " + column,
-                       columnDataTypes[schemaIdx][tableIdx][columnIdx],
-                       column.getType().getDatabaseSpecificTypeName());
-          assertEquals("Column JDBC type does not match",
-                       columnDataTypes[schemaIdx][tableIdx][columnIdx],
-                       column.getType().getTypeName());
-        }
-      }
-    }
   }
 
   @Test
@@ -564,10 +409,12 @@ public class SchemaCrawlerTest
                                                     ".test");
     testOutputFile.delete();
 
-    PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(testOutputFile)));
+    final PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(testOutputFile)));
 
-    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.standard());
+    final Config config = Config
+      .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
+    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
     schemaCrawlerOptions
       .setSchemaInclusionRule(new InclusionRule(InclusionRule.ALL,
                                                 ".*\\.FOR_LINT"));
@@ -575,15 +422,37 @@ public class SchemaCrawlerTest
     final Database database = testDatabase.getDatabase(schemaCrawlerOptions);
     final Schema[] schemas = database.getSchemas();
     assertEquals("Schema count does not match", 5, schemas.length);
-    for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++)
+    for (final Schema schema: schemas)
     {
-      final Schema schema = schemas[schemaIdx];
       final Table[] tables = schema.getTables();
-      for (int tableIdx = 0; tableIdx < tables.length; tableIdx++)
+      for (final Table table: tables)
       {
-        final Table table = tables[tableIdx];
-        writer.println(String.format("%s [%s]", table.getFullName(), table
-          .getType().toString().toUpperCase(Locale.ENGLISH)));
+        writer.println(String.format("o--> %s [%s]",
+                                     table.getFullName(),
+                                     table.getType()));
+        final Map<String, Object> tableAttributes = table.getAttributes();
+        for (final Entry<String, Object> tableAttribute: tableAttributes
+          .entrySet())
+        {
+          writer.println(String.format("      ~ %s=%s",
+                                       tableAttribute.getKey(),
+                                       tableAttribute.getValue()));
+        }
+        final Column[] columns = table.getColumns();
+        for (Column column: columns)
+        {
+          writer.println(String.format("   o--> %s [%s]",
+                                       column.getFullName(),
+                                       column.getType()));
+          final Map<String, Object> columnAttributes = column.getAttributes();
+          for (final Entry<String, Object> columnAttribute: columnAttributes
+            .entrySet())
+          {
+            writer.println(String.format("          ~ %s=%s",
+                                         columnAttribute.getKey(),
+                                         columnAttribute.getValue()));
+          }
+        }
       }
     }
 
