@@ -2,13 +2,14 @@ package schemacrawler.tools.sqlite.test;
 
 
 import static org.junit.Assert.fail;
+import static schemacrawler.test.utility.TestUtility.compareOutput;
+import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
 
 import java.io.File;
 import java.util.List;
 
 import org.junit.Test;
 
-import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.options.OutputFormat;
 
 public class TestSqliteDistribution
@@ -25,7 +26,7 @@ public class TestSqliteDistribution
                                                     ".test");
     testOutputFile.delete();
 
-    final File sqliteDbFile = TestUtility.copyResourceToTempFile("/sc.db");
+    final File sqliteDbFile = copyResourceToTempFile("/sc.db");
     schemacrawler.tools.sqlite.Main.main(new String[] {
         "-database=" + sqliteDbFile.getAbsolutePath(),
         "-command=details",
@@ -33,9 +34,9 @@ public class TestSqliteDistribution
         "-outputfile=" + testOutputFile
     });
 
-    final List<String> failures = TestUtility.compareOutput(referenceFile,
-                                                            testOutputFile,
-                                                            outputFormat);
+    final List<String> failures = compareOutput(referenceFile,
+                                                           testOutputFile,
+                                                           outputFormat.name());
     if (failures.size() > 0)
     {
       fail(failures.toString());

@@ -57,6 +57,14 @@ public final class TestUtility
                                            final File testOutputFile)
     throws Exception
   {
+    return compareOutput(referenceFile, testOutputFile, null);
+  }
+
+  public static List<String> compareOutput(final String referenceFile,
+                                           final File testOutputFile,
+                                           final String outputFormat)
+    throws Exception
+  {
 
     if (testOutputFile == null || !testOutputFile.exists()
         || !testOutputFile.isFile() || !testOutputFile.canRead()
@@ -81,6 +89,15 @@ public final class TestUtility
       contentEquals = contentEquals(new InputStreamReader(referenceStream),
                                     new FileReader(testOutputFile),
                                     "url                                   jdbc:");
+    }
+
+    if ("html".equals(outputFormat))
+    {
+      validateHTML(testOutputFile, failures);
+    }
+    else if ("json".equals(outputFormat))
+    {
+      validateJSON(testOutputFile, failures);
     }
 
     if (!contentEquals)
@@ -127,63 +144,6 @@ public final class TestUtility
     final InputStream resourceStream = Utility.class
       .getResourceAsStream(resource);
     return writeToTempFile(resourceStream);
-  }
-
-  public static boolean validateHTML(final File testOutputFile,
-                                     final List<String> failures)
-    throws FileNotFoundException, SAXException, IOException
-  {
-    final boolean isOutputValid;
-    final Reader reader = new BufferedReader(new FileReader(testOutputFile));
-    final Validator validator = new Validator(reader);
-    isOutputValid = validator.isValid();
-    if (!isOutputValid)
-    {
-      failures.add(validator.toString());
-    }
-    reader.close();
-    return isOutputValid;
-  }
-
-  public static boolean validateJSON(final File testOutputFile,
-                                     final List<String> failures)
-  {
-    final boolean isOutputValid;
-    try
-    {
-      final Reader reader = new BufferedReader(new FileReader(testOutputFile));
-      final JsonReader jsonReader = new JsonReader(reader);
-      final JsonElement jsonElement = new JsonParser().parse(jsonReader);
-      if (jsonReader.peek() != JsonToken.END_DOCUMENT)
-      {
-        failures.add("JSON document was not fully consumed.");
-      }
-      jsonReader.close();
-      final int size;
-      if (jsonElement.isJsonObject())
-      {
-        size = jsonElement.getAsJsonObject().entrySet().size();
-      }
-      else if (jsonElement.isJsonArray())
-      {
-        size = jsonElement.getAsJsonArray().size();
-      }
-      else
-      {
-        size = 0;
-      }
-
-      if (size == 0)
-      {
-        failures.add("Invalid JSON string");
-      }
-    }
-    catch (final Exception e)
-    {
-      failures.add(e.getMessage());
-    }
-    isOutputValid = failures.size() == 0;
-    return isOutputValid;
   }
 
   private static boolean contentEquals(final Reader expectedInputReader,
@@ -265,6 +225,62 @@ public final class TestUtility
     {
       dest.write(buffer);
     }
+  }
+
+  private static boolean validateHTML(final File testOutputFile,
+                                      final List<String> failures)
+    throws FileNotFoundException, SAXException, IOException
+  {
+    final boolean isOutputValid;
+    final Reader reader = new BufferedReader(new FileReader(testOutputFile));
+    final Validator validator = new Validator(reader);
+    isOutputValid = validator.isValid();
+    if (!isOutputValid)
+    {
+      failures.add(validator.toString());
+    }
+    reader.close();
+    return isOutputValid;
+  }
+
+  private static boolean validateJSON(final File testOutputFile,
+                                      final List<String> failures)
+    throws FileNotFoundException, SAXException, IOException
+  {
+    try
+    {
+      final Reader reader = new BufferedReader(new FileReader(testOutputFile));
+      final JsonReader jsonReader = new JsonReader(reader);
+      final JsonElement jsonElement = new JsonParser().parse(jsonReader);
+      if (jsonReader.peek() != JsonToken.END_DOCUMENT)
+      {
+        failures.add("JSON document was not fully consumed.");
+      }
+      jsonReader.close();
+      final int size;
+      if (jsonElement.isJsonObject())
+      {
+        size = jsonElement.getAsJsonObject().entrySet().size();
+      }
+      else if (jsonElement.isJsonArray())
+      {
+        size = jsonElement.getAsJsonArray().size();
+      }
+      else
+      {
+        size = 0;
+      }
+
+      if (size == 0)
+      {
+        failures.add("Invalid JSON string");
+      }
+    }
+    catch (final Exception e)
+    {
+      failures.add(e.getMessage());
+    }
+    return failures.isEmpty();
   }
 
   private static File writeToTempFile(final InputStream resourceStream)

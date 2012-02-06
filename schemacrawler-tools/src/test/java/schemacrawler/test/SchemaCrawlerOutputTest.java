@@ -22,6 +22,7 @@ package schemacrawler.test;
 
 
 import static org.junit.Assert.fail;
+import static schemacrawler.test.utility.TestUtility.compareOutput;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -38,7 +39,6 @@ import schemacrawler.schemacrawler.DatabaseConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.test.utility.LocalEntityResolver;
-import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.InfoLevel;
@@ -128,10 +128,10 @@ public class SchemaCrawlerOutputTest
         executable.setAdditionalConfiguration(queriesConfig);
         executable.execute(connectionOptions.getConnection());
 
-        failures.addAll(TestUtility.compareOutput(COMPOSITE_OUTPUT
-                                                      + referenceFile,
-                                                  testOutputFile,
-                                                  outputFormat));
+        failures.addAll(compareOutput(COMPOSITE_OUTPUT
+                                                     + referenceFile,
+                                                 testOutputFile,
+                                                 outputFormat.name()));
       }
     }
     if (failures.size() > 0)
@@ -183,11 +183,11 @@ public class SchemaCrawlerOutputTest
         executable.setOutputOptions(outputOptions);
         executable.execute(connectionOptions.getConnection());
 
-        failures.addAll(TestUtility.compareOutput(INFO_LEVEL_OUTPUT
-                                                      + referenceFile,
-                                                  testOutputFile,
-                                                  outputOptions
-                                                    .getOutputFormat()));
+        failures.addAll(compareOutput(INFO_LEVEL_OUTPUT
+                                                     + referenceFile,
+                                                 testOutputFile,
+                                                 outputOptions
+                                                   .getOutputFormat().name()));
       }
     }
     if (failures.size() > 0)
@@ -232,10 +232,10 @@ public class SchemaCrawlerOutputTest
       executable.setOutputOptions(outputOptions);
       executable.execute(connectionOptions.getConnection());
 
-      failures.addAll(TestUtility
-        .compareOutput(JSON_OUTPUT + referenceFile,
-                       testOutputFile,
-                       outputOptions.getOutputFormat()));
+      failures.addAll(compareOutput(JSON_OUTPUT + referenceFile,
+                                               testOutputFile,
+                                               outputOptions.getOutputFormat()
+                                                 .name()));
     }
     if (failures.size() > 0)
     {

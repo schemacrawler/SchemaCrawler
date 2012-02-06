@@ -4,6 +4,7 @@ package schemacrawler.integration.test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
+import static schemacrawler.test.utility.TestUtility.compareOutput;
 
 import java.io.File;
 import java.util.List;
@@ -16,7 +17,6 @@ import schemacrawler.schema.Database;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.hsqldb.BundledDriverOptions;
 import schemacrawler.tools.options.InfoLevel;
 import schemacrawler.tools.options.OutputFormat;
@@ -61,9 +61,9 @@ public class TestBundledDistributions
         "-outputfile=" + testOutputFile
     });
 
-    final List<String> failures = TestUtility.compareOutput(referenceFile,
-                                                            testOutputFile,
-                                                            outputFormat);
+    final List<String> failures = compareOutput(referenceFile,
+                                                           testOutputFile,
+                                                           outputFormat.name());
     if (failures.size() > 0)
     {
       fail(failures.toString());

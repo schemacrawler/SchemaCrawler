@@ -2,6 +2,8 @@ package schemacrawler.test;
 
 
 import static org.junit.Assert.fail;
+import static schemacrawler.test.utility.TestUtility.compareOutput;
+import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -17,7 +19,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import schemacrawler.Main;
-import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.options.InfoLevel;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
@@ -51,8 +52,7 @@ public class SchemaCrawlerCommandLineToolsTest
   {
     final List<String> failures = new ArrayList<String>();
 
-    final File additionalProperties = TestUtility
-      .copyResourceToTempFile("/hsqldb.INFORMATION_SCHEMA.config.properties");
+    final File additionalProperties = copyResourceToTempFile("/hsqldb.INFORMATION_SCHEMA.config.properties");
 
     for (final InfoLevel infoLevel: InfoLevel.values())
     {
@@ -86,10 +86,9 @@ public class SchemaCrawlerCommandLineToolsTest
             "-outputfile=" + testOutputFile.getAbsolutePath(),
         });
 
-        failures.addAll(TestUtility.compareOutput(INFO_LEVEL_OUTPUT
-                                                      + referenceFile,
-                                                  testOutputFile,
-                                                  outputFormat));
+        failures.addAll(compareOutput(INFO_LEVEL_OUTPUT + referenceFile,
+                                      testOutputFile,
+                                      outputFormat.name()));
       }
     }
     if (failures.size() > 0)
@@ -136,7 +135,7 @@ public class SchemaCrawlerCommandLineToolsTest
         .createTempFile("hsqldb.INFORMATION_SCHEMA.config", ".properties");
       final Writer writer = new BufferedWriter(new FileWriter(additionalProperties));
       final Properties properties = new Properties();
-      properties.load(SchemaCrawlerOutputTest.class
+      properties.load(this.getClass()
         .getResourceAsStream("/hsqldb.INFORMATION_SCHEMA.config.properties"));
       properties.store(writer, this.getClass().getName());
 
@@ -164,9 +163,9 @@ public class SchemaCrawlerCommandLineToolsTest
 
       Main.main(args.toArray(new String[args.size()]));
 
-      failures.addAll(TestUtility.compareOutput(GREP_OUTPUT + referenceFile,
-                                                testOutputFile,
-                                                outputFormat));
+      failures.addAll(compareOutput(GREP_OUTPUT + referenceFile,
+                                    testOutputFile,
+                                    outputFormat.name()));
     }
 
     if (failures.size() > 0)
