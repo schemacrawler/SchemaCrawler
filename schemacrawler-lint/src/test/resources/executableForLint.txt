@@ -1,0 +1,128 @@
+
+
+
+System Information
+========================================================================
+
+
+
+SchemaCrawler Information
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
+
+product name                          SchemaCrawler
+product version                       8.11
+
+
+Database Information
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
+
+database product name                 HSQL Database Engine
+database product version              2.2.6
+database user name                    SA
+
+
+JDBC Driver Information
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
+
+driver name                           HSQL Database Engine Driver
+driver version                        2.2.6
+driver class name                     org.hsqldb.jdbc.JDBCDriver
+url                                   jdbc:hsqldb:mem:schemacrawler
+is JDBC compliant                     true
+
+
+
+Lints
+========================================================================
+
+
+                                                              [database]
+------------------------------------------------------------------------
+
+                                                          [lint, medium]
+column with same name but different data types  ID [INTEGER, BIGINT]
+cycles in table relationships         
+
+
+PUBLIC.BOOKS.AUTHORS                                             [table]
+------------------------------------------------------------------------
+
+                                                          [lint, medium]
+incrementing columns                  ADDRESS1, ADDRESS2
+
+
+PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
+------------------------------------------------------------------------
+
+                                                            [lint, high]
+redundant index                       SYS_IDX_10043
+                                                          [lint, medium]
+spaces in name, or reserved word      "UPDATE"
+
+
+PUBLIC.BOOKS."Global Counts"                                     [table]
+------------------------------------------------------------------------
+
+                                                          [lint, medium]
+no indices                            
+spaces in name, or reserved word      "Global Counts"
+spaces in name, or reserved word      "Global Count"
+single column                         
+
+
+PUBLIC.FOR_LINT.EXTRA_PK                                         [table]
+------------------------------------------------------------------------
+
+                                                          [lint, medium]
+useless surrogate key                 PK_EXTRA_PK
+
+
+PUBLIC.FOR_LINT."Global Counts"                                  [table]
+------------------------------------------------------------------------
+
+                                                          [lint, medium]
+no indices                            
+spaces in name, or reserved word      "Global Counts"
+spaces in name, or reserved word      "Global Count"
+single column                         
+
+
+PUBLIC.FOR_LINT.No_Columns                                       [table]
+------------------------------------------------------------------------
+
+                                                          [lint, medium]
+no indices                            
+single column                         
+
+
+PUBLIC.FOR_LINT.PUBLICATIONS                                     [table]
+------------------------------------------------------------------------
+
+                                                          [lint, medium]
+spaces in name, or reserved word      "UPDATE"
+                                                             [lint, low]
+too many binary objects               PRESS_RELEASE, "UPDATE"
+
+
+PUBLIC.FOR_LINT.WRITERS                                          [table]
+------------------------------------------------------------------------
+
+                                                            [lint, high]
+foreign key and primary key have different data types  FK_WRITERS_PUBLICATION
+redundant index                       IDX_A1_WRITERS
+                                                          [lint, medium]
+unique index with nullable columns    IDX_U_WRITERS
+column where NULL may be intended     ADDRESS2
+column where NULL may be intended     COUNTRY
+incrementing columns                  PHONE1, PHONE2
+incrementing columns                  FAX, FAX3
+incrementing columns                  EMAIL1, EMAIL2
+incrementing columns                  ADDRESS1, ADDRESS2
+incrementing columns                  HOMEEMAIL11, HOMEEMAIL12
+incrementing columns are not consecutive  FAX, FAX3
+incrementing columns don't have the same data-type  PHONE1, PHONE2
+incrementing columns don't have the same data-type  FAX, FAX3
+incrementing columns don't have the same data-type  EMAIL1, EMAIL2
+
+
+
