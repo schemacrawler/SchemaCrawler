@@ -41,7 +41,9 @@ public class LintExecutable
 
   private static final Logger LOGGER = Logger.getLogger(LintExecutable.class
     .getName());
+  
   public static final String COMMAND = "lint";
+  private static final String CONFIG_LINTER_CONFIGS_FILE = "schemacrawer.linter_configs.file";
 
   private LintOptions lintOptions;
 
@@ -134,7 +136,7 @@ public class LintExecutable
     try
     {
       linterConfigsFile = System
-        .getProperty("schemacrawer.linter_configs.file");
+        .getProperty(CONFIG_LINTER_CONFIGS_FILE);
       if (!Utility.isBlank(linterConfigsFile))
       {
         linterConfigs.parse(new FileReader(linterConfigsFile));

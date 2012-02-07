@@ -24,9 +24,11 @@ package schemacrawler.test;
 import static org.junit.Assert.fail;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -43,6 +45,8 @@ public class LintExecutableTest
 
   private static TestDatabase testDatabase = new TestDatabase();
 
+  private static final String CONFIG_LINTER_CONFIGS_FILE = "schemacrawer.linter_configs.file";
+
   @AfterClass
   public static void afterAllTests()
   {
@@ -57,6 +61,12 @@ public class LintExecutableTest
     testDatabase.startMemoryDatabase();
   }
 
+  @Before
+  public void before()
+  {
+    System.getProperties().remove(CONFIG_LINTER_CONFIGS_FILE);
+  }
+
   @Test
   public void commandlineLintReport()
     throws Exception
@@ -64,6 +74,17 @@ public class LintExecutableTest
     executeCommandlineAndCheckForOutputFile("lint",
                                             OutputFormat.text.name(),
                                             "executableForLint");
+  }
+
+  @Test
+  public void commandlineLintReportWithConfig()
+    throws Exception
+  {
+    useLinterConfigFile();
+
+    executeCommandlineAndCheckForOutputFile("lint",
+                                            OutputFormat.text.name(),
+                                            "executableForLintWithConfig");
   }
 
   @Test
@@ -75,11 +96,23 @@ public class LintExecutableTest
                                            "executableForLint");
   }
 
+  @Test
+  public void executableLintReportWithConfig()
+    throws Exception
+  {
+    useLinterConfigFile();
+
+    executeExecutableAndCheckForOutputFile(new LintExecutable(),
+                                           OutputFormat.text.name(),
+                                           "executableForLintWithConfig");
+  }
+
   private void executeCommandlineAndCheckForOutputFile(final String command,
                                                        final String outputFormatValue,
                                                        final String referenceFileName)
     throws Exception
   {
+
     final File testOutputFile = File.createTempFile("schemacrawler." + command
                                                     + ".", ".test");
     testOutputFile.delete();
@@ -130,6 +163,14 @@ public class LintExecutableTest
     {
       fail(failures.toString());
     }
+  }
+
+  private void useLinterConfigFile()
+    throws IOException
+  {
+    final File file = TestUtility
+      .copyResourceToTempFile("/schemacrawler-linter-configs-off.xml");
+    System.setProperty(CONFIG_LINTER_CONFIGS_FILE, file.getAbsolutePath());
   }
 
 }
