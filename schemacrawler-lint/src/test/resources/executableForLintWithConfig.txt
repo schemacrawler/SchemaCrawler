@@ -1,0 +1,60 @@
+
+
+
+System Information
+========================================================================
+
+
+
+SchemaCrawler Information
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
+
+product name                          SchemaCrawler
+product version                       8.11
+
+
+Database Information
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
+
+database product name                 HSQL Database Engine
+database product version              2.2.6
+database user name                    SA
+
+
+JDBC Driver Information
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
+
+driver name                           HSQL Database Engine Driver
+driver version                        2.2.6
+driver class name                     org.hsqldb.jdbc.JDBCDriver
+url                                   jdbc:hsqldb:mem:schemacrawler
+is JDBC compliant                     true
+
+
+
+Lints
+========================================================================
+
+
+PUBLIC.BOOKS."Global Counts"                                     [table]
+------------------------------------------------------------------------
+
+                                                          [lint, medium]
+single column                         
+
+
+PUBLIC.FOR_LINT."Global Counts"                                  [table]
+------------------------------------------------------------------------
+
+                                                          [lint, medium]
+single column                         
+
+
+PUBLIC.FOR_LINT.No_Columns                                       [table]
+------------------------------------------------------------------------
+
+                                                          [lint, medium]
+single column                         
+
+
+
