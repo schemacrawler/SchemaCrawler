@@ -16,7 +16,7 @@
         Added ability to tag tables and columns with additional metadata attributes from SQL queries.
       ]]></action>       
     </release>
-    <release version="8-10" date="2011-12-08">
+    <release version="8.10" date="2011-12-08">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Added SchemaCrawler Lint as a separate report, with ability to add custom linters.
       ]]></action>
