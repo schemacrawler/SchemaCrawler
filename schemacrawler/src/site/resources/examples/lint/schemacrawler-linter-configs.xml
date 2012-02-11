@@ -1,0 +1,67 @@
+<schemacrawler-linter-configs>
+	<linter id="schemacrawler.tools.linter.LinterForeignKeyMismatch">
+		<severity>low</severity>
+		<config>
+		</config>
+	</linter>
+	<linter id="schemacrawler.tools.linter.LinterForeignKeyWithNoIndices">
+		<severity>low</severity>
+		<config>
+		</config>
+	</linter>
+	<linter id="schemacrawler.tools.linter.LinterNullColumnsInIndex">
+		<severity>low</severity>
+		<config>
+		</config>
+	</linter>
+	<linter id="schemacrawler.tools.linter.LinterNullIntendedColumns">
+		<severity>low</severity>
+		<config>
+		</config>
+	</linter>
+	<linter id="schemacrawler.tools.linter.LinterRedundantIndices">
+		<severity>low</severity>
+		<config>
+		</config>
+	</linter>
+	<linter id="schemacrawler.tools.linter.LinterTableCycles">
+		<severity>low</severity>
+		<config>
+		</config>
+	</linter>
+	<linter id="schemacrawler.tools.linter.LinterTableWithIncrementingColumns">
+		<severity>low</severity>
+		<config>
+		</config>
+	</linter>
+	<linter id="schemacrawler.tools.linter.LinterTableWithNoIndices">
+		<severity>low</severity>
+		<config>
+		</config>
+	</linter>
+	<linter id="schemacrawler.tools.linter.LinterTableWithQuotedNames">
+		<severity>low</severity>
+		<config>
+		</config>
+	</linter>
+	<linter id="schemacrawler.tools.linter.LinterTableWithSingleColumn">
+		<!-- <severity>low</severity> -->
+		<config>
+		</config>
+	</linter>
+	<linter id="schemacrawler.tools.linter.LinterTooManyLobs">
+		<severity>low</severity>
+		<config>
+		</config>
+	</linter>
+	<linter id="schemacrawler.tools.linter.LinterColumnTypes">
+		<severity>low</severity>
+		<config>
+		</config>
+	</linter>
+	<linter id="schemacrawler.tools.linter.LinterUselessSurrogateKey">
+		<severity>low</severity>
+		<config>
+		</config>
+	</linter>
+</schemacrawler-linter-configs>
