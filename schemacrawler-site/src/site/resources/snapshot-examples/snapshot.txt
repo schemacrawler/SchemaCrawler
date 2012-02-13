@@ -699,6 +699,58 @@ UPDATE                                                       [privilege]
 List of book publishers
 
 
+PUBLIC.FOR_LINT.EXTRA_PK                                         [table]
+------------------------------------------------------------------------
+  ID                                INTEGER not null            
+  WRITERID                          BIGINT not null             
+  PUBLICATIONID                     INTEGER not null            
+
+PK_EXTRA_PK                                                [primary key]
+  ID                                ascending                   
+
+FK_PUBLICATION_JOIN                        [foreign key, with no action]
+  PUBLIC.FOR_LINT.PUBLICATIONS.ID --> PUBLICATIONID                              
+
+FK_WRITER_JOIN                             [foreign key, with no action]
+  PUBLIC.FOR_LINT.WRITERS.ID --> WRITERID                              
+
+SYS_IDX_PK_EXTRA_PK_10080                                 [unique index]
+  ID                                ascending                   
+
+SYS_IDX_10083                                         [non-unique index]
+  PUBLICATIONID                     ascending                   
+
+SYS_IDX_10081                                         [non-unique index]
+  WRITERID                          ascending                   
+
+SYS_CT_10077                                          [check constraint]
+FOR_LINT.EXTRA_PK.ID IS NOT NULL
+
+SYS_CT_10078                                          [check constraint]
+FOR_LINT.EXTRA_PK.WRITERID IS NOT NULL
+
+SYS_CT_10079                                          [check constraint]
+FOR_LINT.EXTRA_PK.PUBLICATIONID IS NOT NULL
+
+DELETE                                                       [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+INSERT                                                       [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+REFERENCES                                                   [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+SELECT                                                       [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+TRIGGER                                                      [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+UPDATE                                                       [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+
 PUBLIC.FOR_LINT."Global Counts"                                  [table]
 ------------------------------------------------------------------------
   "Global Count"                    INTEGER                     
@@ -749,7 +801,7 @@ PUBLIC.FOR_LINT.PUBLICATIONS                                     [table]
   ID                                INTEGER not null            
   TITLE                             VARCHAR(255) not null       
   DESCRIPTION                       VARCHAR(255)                
-  WRITERID                          INTEGER not null            
+  WRITERID                          BIGINT not null             
   PUBLICATIONDATE                   DATE                        
   PRICE                             DOUBLE(64, 0)               
   "UPDATE"                          CLOB                        
@@ -758,25 +810,28 @@ PUBLIC.FOR_LINT.PUBLICATIONS                                     [table]
 PK_PUBLICATIONS                                            [primary key]
   ID                                ascending                   
 
+FK_PUBLICATION_JOIN                        [foreign key, with no action]
+  ID --> PUBLIC.FOR_LINT.EXTRA_PK.PUBLICATIONID                              
+
 FK_WRITERS_PUBLICATION                     [foreign key, with no action]
   ID --> PUBLIC.FOR_LINT.WRITERS.PUBLICATION_ID                              
 
 FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
   PUBLIC.FOR_LINT.WRITERS.ID --> WRITERID                              
 
-SYS_IDX_PK_PUBLICATIONS_10071                             [unique index]
+SYS_IDX_PK_PUBLICATIONS_10072                             [unique index]
   ID                                ascending                   
 
-SYS_IDX_10072                                         [non-unique index]
+SYS_IDX_10073                                         [non-unique index]
   WRITERID                          ascending                   
 
-SYS_CT_10068                                          [check constraint]
+SYS_CT_10069                                          [check constraint]
 FOR_LINT.PUBLICATIONS.ID IS NOT NULL
 
-SYS_CT_10069                                          [check constraint]
+SYS_CT_10070                                          [check constraint]
 FOR_LINT.PUBLICATIONS.TITLE IS NOT NULL
 
-SYS_CT_10070                                          [check constraint]
+SYS_CT_10071                                          [check constraint]
 FOR_LINT.PUBLICATIONS.WRITERID IS NOT NULL
 
 DELETE                                                       [privilege]
@@ -800,7 +855,7 @@ UPDATE                                                       [privilege]
 
 PUBLIC.FOR_LINT.WRITERS                                          [table]
 ------------------------------------------------------------------------
-  ID                                INTEGER not null            
+  ID                                BIGINT not null             
   FIRSTNAME                         VARCHAR(20) not null        
   LASTNAME                          VARCHAR(20) not null        
   ADDRESS1                          VARCHAR(255)                
@@ -825,13 +880,16 @@ PK_WRITERS                                                 [primary key]
 FK_WRITERS_PUBLICATION                     [foreign key, with no action]
   PUBLIC.FOR_LINT.PUBLICATIONS.ID --> PUBLICATION_ID                              
 
+FK_WRITER_JOIN                             [foreign key, with no action]
+  ID --> PUBLIC.FOR_LINT.EXTRA_PK.WRITERID                              
+
 FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
   ID --> PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID                              
 
-SYS_IDX_PK_WRITERS_10067                                  [unique index]
+SYS_IDX_PK_WRITERS_10068                                  [unique index]
   ID                                ascending                   
 
-SYS_IDX_10076                                         [non-unique index]
+SYS_IDX_10085                                         [non-unique index]
   PUBLICATION_ID                    ascending                   
 
 IDX_A1_WRITERS                                        [non-unique index]
@@ -855,19 +913,19 @@ IDX_A_WRITERS                                         [non-unique index]
 CHECK_UPPERCASE_STATE                                 [check constraint]
 FOR_LINT.WRITERS.STATE=UPPER(FOR_LINT.WRITERS.STATE)
 
-SYS_CT_10062                                          [check constraint]
+SYS_CT_10063                                          [check constraint]
 FOR_LINT.WRITERS.ID IS NOT NULL
 
-SYS_CT_10063                                          [check constraint]
+SYS_CT_10064                                          [check constraint]
 FOR_LINT.WRITERS.FIRSTNAME IS NOT NULL
 
-SYS_CT_10064                                          [check constraint]
+SYS_CT_10065                                          [check constraint]
 FOR_LINT.WRITERS.LASTNAME IS NOT NULL
 
-SYS_CT_10065                                          [check constraint]
+SYS_CT_10066                                          [check constraint]
 FOR_LINT.WRITERS.ADDRESS2 IS NOT NULL
 
-SYS_CT_10066                                          [check constraint]
+SYS_CT_10067                                          [check constraint]
 FOR_LINT.WRITERS.PUBLICATION_ID IS NOT NULL
 
 DELETE                                                       [privilege]
@@ -904,20 +962,20 @@ FK_SALES_REGIONS                           [foreign key, with no action]
   POSTALCODE --> PUBLIC."PUBLISHER SALES".SALES.POSTALCODE                              
   COUNTRY --> PUBLIC."PUBLISHER SALES".SALES.COUNTRY                              
 
-SYS_IDX_PK_CUSTOMERS_10056                                [unique index]
+SYS_IDX_PK_CUSTOMERS_10057                                [unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
 
-SYS_CT_10052                                          [check constraint]
+SYS_CT_10053                                          [check constraint]
 "PUBLISHER SALES".REGIONS.CITY IS NOT NULL
 
-SYS_CT_10053                                          [check constraint]
+SYS_CT_10054                                          [check constraint]
 "PUBLISHER SALES".REGIONS.STATE IS NOT NULL
 
-SYS_CT_10054                                          [check constraint]
+SYS_CT_10055                                          [check constraint]
 "PUBLISHER SALES".REGIONS.POSTALCODE IS NOT NULL
 
-SYS_CT_10055                                          [check constraint]
+SYS_CT_10056                                          [check constraint]
 "PUBLISHER SALES".REGIONS.COUNTRY IS NOT NULL
 
 DELETE                                                       [privilege]
@@ -954,14 +1012,14 @@ FK_SALES_REGIONS                           [foreign key, with no action]
                                                       [weak association]
   PUBLIC.BOOKS.BOOKS.ID --> BOOKID                              
 
-SYS_IDX_10060                                         [non-unique index]
+SYS_IDX_10061                                         [non-unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
 
-SYS_CT_10057                                          [check constraint]
+SYS_CT_10058                                          [check constraint]
 "PUBLISHER SALES".SALES.POSTALCODE IS NOT NULL
 
-SYS_CT_10058                                          [check constraint]
+SYS_CT_10059                                          [check constraint]
 "PUBLISHER SALES".SALES.COUNTRY IS NOT NULL
 
 DELETE                                                       [privilege]
@@ -1079,6 +1137,7 @@ PUBLIC.BOOKS.BOOKAUTHORS                                         20 rows
 PUBLIC.BOOKS.BOOKS                                               20 rows
 PUBLIC.BOOKS."Global Counts"                                       empty
 PUBLIC.BOOKS.PUBLISHERS                                          20 rows
+PUBLIC.FOR_LINT.EXTRA_PK                                           empty
 PUBLIC.FOR_LINT."Global Counts"                                    empty
 PUBLIC.FOR_LINT.PUBLICATIONS                                       empty
 PUBLIC.FOR_LINT.WRITERS                                            empty
@@ -1226,6 +1285,12 @@ ID	PUBLISHER
 18	Neville Cardenas
 19	Allistair Gilbert
 20	Cooper Chapman
+
+
+
+PUBLIC.FOR_LINT.EXTRA_PK
+------------------------------------------------------------------------
+ID	WRITERID	PUBLICATIONID
 
 
 
