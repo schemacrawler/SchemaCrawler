@@ -121,7 +121,11 @@
         <include name="*config*.properties" />
       </fileset>
     </copy>
-  	
+    <copy todir="${examples.staging.dir}/lint">
+      <fileset dir="${SchemaCrawler.home}/schemacrawler-site/src/site/resources">
+        <include name="schemacrawler-linter-configs.xml" />
+      </fileset>
+    </copy>   	
     <copy todir="${examples.staging.dir}/spring">
       <fileset dir="${SchemaCrawler.home}/schemacrawler-integrations/src/test/resources">
         <include name="*.xml" />

@@ -1,39 +1,56 @@
 <!DOCTYPE document PUBLIC "-//Apache Software Foundation//DTD XDOC 1.0//EN"
   "http://maven.apache.org/dtd/xdoc_1_0.dtd">
 <document>
-  <properties>
-    <title>SchemaCrawler - Lint Example</title>
-    <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
-  </properties>
-  <body>
-    <section name="SchemaCrawler - Lint Example">
-      <subsection name="Description">
-        <p>SchemaCrawler looks for potential database design issues. Follow
-          the steps below to run SchemaCrawler Lint.
-        </p>
-      </subsection>
-      <subsection name="How to Run">
-        <ol>
-          <li>
-            Follow the instructions in the
-            <code>commandline</code>
-            example.
-          </li>
-          <li>
-            To find schema design issues, run
-            <span class="code">sc.cmd -infolevel=standard -command=lint</span>
-            (or
-            <span class="code">sc.sh -infolevel=standard -command=lint</span>
-            on Unix)
-          </li>
-        </ol>
-      </subsection>
-      <subsection name="How to Experiment">
-        <ol>
-          <li>Create the SchemaCrawler Lint report in XHTML and JSON formats.</li>
-          <li>Try creating your own database lints in a new jar.</li>
-        </ol>
-      </subsection>
-    </section>
-  </body>
+	<properties>
+		<title>SchemaCrawler - Lint Example</title>
+		<author email="sualeh@hotmail.com">Sualeh Fatehi</author>
+	</properties>
+	<body>
+		<section name="SchemaCrawler - Lint Example">
+			<subsection name="Description">
+				<p>SchemaCrawler looks for potential database design issues. Follow
+					the steps below to run SchemaCrawler Lint.
+				</p>
+			</subsection>
+			<subsection name="How to Run">
+				<ol>
+					<li>
+						Follow the instructions in the
+						<code>commandline</code>
+						example.
+					</li>
+					<li>
+						To find schema design issues, run
+						<span class="code">sc.cmd -infolevel=standard -command=lint</span>
+						(or
+						<span class="code">sc.sh -infolevel=standard -command=lint</span>
+						on Unix)
+					</li>
+				</ol>
+			</subsection>
+			<subsection name="How to Experiment">
+				<ol>
+					<li>Create the SchemaCrawler Lint report in XHTML and JSON formats.
+					</li>
+					<li>
+						<p>Create a customized SchemaCrawler Lint report using a linter
+							configuration file.</p>
+						<p>
+							To find schema design issues, run
+							<span class="code">sc.cmd -Dschemacrawer.linter_configs.file=schemacrawler-linter-configs.xml -infolevel=standard -command=lint</span>
+							(or
+							<span class="code">sc.sh -Dschemacrawer.linter_configs.file=schemacrawler-linter-configs.xml -infolevel=standard -command=lint</span>
+							on Unix)
+						</p>
+					</li>
+					<li>
+						Try creating your own database lints in a new jar -
+						see
+						<a href="http://schemacrawler.sourceforge.net/lint.html">SchemaCrawler Lint</a>
+						.
+					</li>
+				</ol>
+			</subsection>
+		</section>
+	</body>
 </document>

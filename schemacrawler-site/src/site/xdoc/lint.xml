@@ -35,6 +35,10 @@
           <a href="lint-report-examples/lint_report.json">JSON</a>
           format. (Click on the links for example reports.)
         </p>
+        <p>SchemaCrawler linters can be configured (both severity, and thresholds) using an <a href="schemacrawler-linter-configs.xml">XML configuration file.</a>
+        You can provide a system property, <code>schemacrawer.linter_configs.file</code>, pointing to the path of the SchemaCrawler linter XML configuration file. On the
+        command-line, you can use <code>-Dschemacrawer.linter_configs.file=[path]</code>.
+        </p>
       </subsection>
       <subsection name="Lint Checks">
         <p>SchemaCrawler Lint has a number of lint checks built-in. These are prioritized as
@@ -86,6 +90,9 @@
               is the same as the first few columns of another
               index. For example, the index
               "INDEX_B(COL1)" is not needed when you have another index, "INDEX_A(COL1, COL2)".</p>
+          </li>
+          <li>
+            <p>Relationship tables with just foreign keys and no attributes, but still have a primary key.</p>
           </li>
         </ul>
       </subsection>

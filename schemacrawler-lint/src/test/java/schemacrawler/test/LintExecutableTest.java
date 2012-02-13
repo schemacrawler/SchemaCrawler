@@ -50,6 +50,7 @@ public class LintExecutableTest
   @AfterClass
   public static void afterAllTests()
   {
+    removeLinterConfig();
     testDatabase.shutdownDatabase();
   }
 
@@ -61,10 +62,15 @@ public class LintExecutableTest
     testDatabase.startMemoryDatabase();
   }
 
+  private static void removeLinterConfig()
+  {
+    System.getProperties().remove(CONFIG_LINTER_CONFIGS_FILE);
+  }
+
   @Before
   public void before()
   {
-    System.getProperties().remove(CONFIG_LINTER_CONFIGS_FILE);
+    removeLinterConfig();
   }
 
   @Test

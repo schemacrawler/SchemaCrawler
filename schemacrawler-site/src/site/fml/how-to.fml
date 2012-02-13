@@ -603,7 +603,19 @@ for (final Schema schema: database.getSchemas())
         </p>
       </answer>
     </faq>
-    <faq id="add_new_lint">
+    <faq id="configure_linter">
+      <question>
+        How to configure SchemaCrawler linters
+      </question>
+      <answer>
+        <p>
+          See
+          <a href="lint.html">SchemaCrawler Lint</a>
+          for details.
+        </p>
+      </answer>
+    </faq>    
+    <faq id="add_new_linter">
       <question>
         How to extend SchemaCrawler by adding a new linter
       </question>

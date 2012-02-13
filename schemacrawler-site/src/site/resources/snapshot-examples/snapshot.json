@@ -870,6 +870,171 @@
     },
     {
       "weakAssociations": [],
+      "foreignKeys": [
+        {
+          "updateRule": "no action",
+          "columnPairs": [{
+            "pkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.ID",
+            "fkColumn": "PUBLIC.FOR_LINT.EXTRA_PK.PUBLICATIONID"
+          }],
+          "deleteRule": "no action",
+          "name": "FK_PUBLICATION_JOIN"
+        },
+        {
+          "updateRule": "no action",
+          "columnPairs": [{
+            "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
+            "fkColumn": "PUBLIC.FOR_LINT.EXTRA_PK.WRITERID"
+          }],
+          "deleteRule": "no action",
+          "name": "FK_WRITER_JOIN"
+        }
+      ],
+      "primaryKey": {
+        "unique": true,
+        "name": "PK_EXTRA_PK",
+        "columns": {
+          "sortSequence": "ascending",
+          "name": "ID",
+          "ordinal": 1
+        }
+      },
+      "name": "EXTRA_PK",
+      "constraints": [
+        {
+          "definition": "FOR_LINT.EXTRA_PK.ID IS NOT NULL",
+          "name": "SYS_CT_10077"
+        },
+        {
+          "definition": "FOR_LINT.EXTRA_PK.WRITERID IS NOT NULL",
+          "name": "SYS_CT_10078"
+        },
+        {
+          "definition": "FOR_LINT.EXTRA_PK.PUBLICATIONID IS NOT NULL",
+          "name": "SYS_CT_10079"
+        }
+      ],
+      "columns": [
+        {
+          "dataType": "INTEGER",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "ID",
+          "ordinal": 1,
+          "remarks": "",
+          "nullable": false,
+          "databaseSpecificType": "INTEGER",
+          "size": 32
+        },
+        {
+          "dataType": "BIGINT",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "WRITERID",
+          "ordinal": 2,
+          "remarks": "",
+          "nullable": false,
+          "databaseSpecificType": "BIGINT",
+          "size": 64
+        },
+        {
+          "dataType": "INTEGER",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "PUBLICATIONID",
+          "ordinal": 3,
+          "remarks": "",
+          "nullable": false,
+          "databaseSpecificType": "INTEGER",
+          "size": 32
+        }
+      ],
+      "privileges": [
+        {
+          "name": "DELETE",
+          "grants": {
+            "grantable": true,
+            "grantor": "_SYSTEM",
+            "grantee": "DBA"
+          }
+        },
+        {
+          "name": "INSERT",
+          "grants": {
+            "grantable": true,
+            "grantor": "_SYSTEM",
+            "grantee": "DBA"
+          }
+        },
+        {
+          "name": "REFERENCES",
+          "grants": {
+            "grantable": true,
+            "grantor": "_SYSTEM",
+            "grantee": "DBA"
+          }
+        },
+        {
+          "name": "SELECT",
+          "grants": {
+            "grantable": true,
+            "grantor": "_SYSTEM",
+            "grantee": "DBA"
+          }
+        },
+        {
+          "name": "TRIGGER",
+          "grants": {
+            "grantable": true,
+            "grantor": "_SYSTEM",
+            "grantee": "DBA"
+          }
+        },
+        {
+          "name": "UPDATE",
+          "grants": {
+            "grantable": true,
+            "grantor": "_SYSTEM",
+            "grantee": "DBA"
+          }
+        }
+      ],
+      "indices": [
+        {
+          "unique": true,
+          "name": "SYS_IDX_PK_EXTRA_PK_10080",
+          "columns": {
+            "sortSequence": "ascending",
+            "name": "ID",
+            "ordinal": 1
+          }
+        },
+        {
+          "unique": false,
+          "name": "SYS_IDX_10083",
+          "columns": {
+            "sortSequence": "ascending",
+            "name": "PUBLICATIONID",
+            "ordinal": 3
+          }
+        },
+        {
+          "unique": false,
+          "name": "SYS_IDX_10081",
+          "columns": {
+            "sortSequence": "ascending",
+            "name": "WRITERID",
+            "ordinal": 2
+          }
+        }
+      ],
+      "remarks": "",
+      "triggers": [],
+      "fullName": "PUBLIC.FOR_LINT.EXTRA_PK",
+      "type": "table"
+    },
+    {
+      "weakAssociations": [],
       "foreignKeys": [],
       "primaryKey": {},
       "name": "\"Global Counts\"",
@@ -1009,6 +1174,15 @@
           "updateRule": "no action",
           "columnPairs": [{
             "pkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.ID",
+            "fkColumn": "PUBLIC.FOR_LINT.EXTRA_PK.PUBLICATIONID"
+          }],
+          "deleteRule": "no action",
+          "name": "FK_PUBLICATION_JOIN"
+        },
+        {
+          "updateRule": "no action",
+          "columnPairs": [{
+            "pkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.ID",
             "fkColumn": "PUBLIC.FOR_LINT.WRITERS.PUBLICATION_ID"
           }],
           "deleteRule": "no action",
@@ -1037,15 +1211,15 @@
       "constraints": [
         {
           "definition": "FOR_LINT.PUBLICATIONS.ID IS NOT NULL",
-          "name": "SYS_CT_10068"
-        },
-        {
-          "definition": "FOR_LINT.PUBLICATIONS.TITLE IS NOT NULL",
           "name": "SYS_CT_10069"
         },
         {
-          "definition": "FOR_LINT.PUBLICATIONS.WRITERID IS NOT NULL",
+          "definition": "FOR_LINT.PUBLICATIONS.TITLE IS NOT NULL",
           "name": "SYS_CT_10070"
+        },
+        {
+          "definition": "FOR_LINT.PUBLICATIONS.WRITERID IS NOT NULL",
+          "name": "SYS_CT_10071"
         }
       ],
       "columns": [
@@ -1083,15 +1257,15 @@
           "size": 255
         },
         {
-          "dataType": "INTEGER",
+          "dataType": "BIGINT",
           "decimalDigits": 0,
           "width": "",
           "name": "WRITERID",
           "ordinal": 4,
           "remarks": "",
           "nullable": false,
-          "databaseSpecificType": "INTEGER",
-          "size": 32
+          "databaseSpecificType": "BIGINT",
+          "size": 64
         },
         {
           "dataType": "DATE",
@@ -1191,7 +1365,7 @@
       "indices": [
         {
           "unique": true,
-          "name": "SYS_IDX_PK_PUBLICATIONS_10071",
+          "name": "SYS_IDX_PK_PUBLICATIONS_10072",
           "columns": {
             "sortSequence": "ascending",
             "name": "ID",
@@ -1200,7 +1374,7 @@
         },
         {
           "unique": false,
-          "name": "SYS_IDX_10072",
+          "name": "SYS_IDX_10073",
           "columns": {
             "sortSequence": "ascending",
             "name": "WRITERID",
@@ -1229,6 +1403,15 @@
           "updateRule": "no action",
           "columnPairs": [{
             "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
+            "fkColumn": "PUBLIC.FOR_LINT.EXTRA_PK.WRITERID"
+          }],
+          "deleteRule": "no action",
+          "name": "FK_WRITER_JOIN"
+        },
+        {
+          "updateRule": "no action",
+          "columnPairs": [{
+            "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
             "fkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID"
           }],
           "deleteRule": "no action",
@@ -1252,36 +1435,36 @@
         },
         {
           "definition": "FOR_LINT.WRITERS.ID IS NOT NULL",
-          "name": "SYS_CT_10062"
-        },
-        {
-          "definition": "FOR_LINT.WRITERS.FIRSTNAME IS NOT NULL",
           "name": "SYS_CT_10063"
         },
         {
-          "definition": "FOR_LINT.WRITERS.LASTNAME IS NOT NULL",
+          "definition": "FOR_LINT.WRITERS.FIRSTNAME IS NOT NULL",
           "name": "SYS_CT_10064"
         },
         {
-          "definition": "FOR_LINT.WRITERS.ADDRESS2 IS NOT NULL",
+          "definition": "FOR_LINT.WRITERS.LASTNAME IS NOT NULL",
           "name": "SYS_CT_10065"
         },
         {
-          "definition": "FOR_LINT.WRITERS.PUBLICATION_ID IS NOT NULL",
+          "definition": "FOR_LINT.WRITERS.ADDRESS2 IS NOT NULL",
           "name": "SYS_CT_10066"
+        },
+        {
+          "definition": "FOR_LINT.WRITERS.PUBLICATION_ID IS NOT NULL",
+          "name": "SYS_CT_10067"
         }
       ],
       "columns": [
         {
-          "dataType": "INTEGER",
+          "dataType": "BIGINT",
           "decimalDigits": 0,
           "width": "",
           "name": "ID",
           "ordinal": 1,
           "remarks": "",
           "nullable": false,
-          "databaseSpecificType": "INTEGER",
-          "size": 32
+          "databaseSpecificType": "BIGINT",
+          "size": 64
         },
         {
           "dataType": "VARCHAR",
@@ -1524,7 +1707,7 @@
       "indices": [
         {
           "unique": true,
-          "name": "SYS_IDX_PK_WRITERS_10067",
+          "name": "SYS_IDX_PK_WRITERS_10068",
           "columns": {
             "sortSequence": "ascending",
             "name": "ID",
@@ -1533,7 +1716,7 @@
         },
         {
           "unique": false,
-          "name": "SYS_IDX_10076",
+          "name": "SYS_IDX_10085",
           "columns": {
             "sortSequence": "ascending",
             "name": "PUBLICATION_ID",
@@ -1657,19 +1840,19 @@
       "constraints": [
         {
           "definition": "\"PUBLISHER SALES\".REGIONS.CITY IS NOT NULL",
-          "name": "SYS_CT_10052"
-        },
-        {
-          "definition": "\"PUBLISHER SALES\".REGIONS.STATE IS NOT NULL",
           "name": "SYS_CT_10053"
         },
         {
-          "definition": "\"PUBLISHER SALES\".REGIONS.POSTALCODE IS NOT NULL",
+          "definition": "\"PUBLISHER SALES\".REGIONS.STATE IS NOT NULL",
           "name": "SYS_CT_10054"
         },
         {
-          "definition": "\"PUBLISHER SALES\".REGIONS.COUNTRY IS NOT NULL",
+          "definition": "\"PUBLISHER SALES\".REGIONS.POSTALCODE IS NOT NULL",
           "name": "SYS_CT_10055"
+        },
+        {
+          "definition": "\"PUBLISHER SALES\".REGIONS.COUNTRY IS NOT NULL",
+          "name": "SYS_CT_10056"
         }
       ],
       "columns": [
@@ -1770,7 +1953,7 @@
       ],
       "indices": [{
         "unique": true,
-        "name": "SYS_IDX_PK_CUSTOMERS_10056",
+        "name": "SYS_IDX_PK_CUSTOMERS_10057",
         "columns": [
           {
             "sortSequence": "ascending",
@@ -1814,11 +1997,11 @@
       "constraints": [
         {
           "definition": "\"PUBLISHER SALES\".SALES.POSTALCODE IS NOT NULL",
-          "name": "SYS_CT_10057"
+          "name": "SYS_CT_10058"
         },
         {
           "definition": "\"PUBLISHER SALES\".SALES.COUNTRY IS NOT NULL",
-          "name": "SYS_CT_10058"
+          "name": "SYS_CT_10059"
         }
       ],
       "columns": [
@@ -1930,7 +2113,7 @@
       ],
       "indices": [{
         "unique": false,
-        "name": "SYS_IDX_10060",
+        "name": "SYS_IDX_10061",
         "columns": [
           {
             "sortSequence": "ascending",
@@ -3412,6 +3595,10 @@
       "value": 20
     },
     {
+      "title": "PUBLIC.FOR_LINT.EXTRA_PK",
+      "value": 0
+    },
+    {
       "title": "PUBLIC.FOR_LINT.\"Global Counts\"",
       "value": 0
     },
@@ -4158,6 +4345,15 @@
           "Cooper Chapman"
         ]
       ]
+    },
+    {
+      "title": "PUBLIC.FOR_LINT.EXTRA_PK",
+      "columnNames": [
+        "ID",
+        "WRITERID",
+        "PUBLICATIONID"
+      ],
+      "rows": []
     },
     {
       "title": "PUBLIC.FOR_LINT.\"Global Counts\"",
