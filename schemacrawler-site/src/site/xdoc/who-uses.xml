@@ -102,7 +102,23 @@
           </li>
         </ul>
       </subsection>
-
+      <subsection name="Other Users">
+        <p>SchemaCrawler used in different scenarios.</p>
+        <ul>
+          <li>
+            How <a href="http://dba.stackexchange.com/search?q=schemacrawler">database administrators</a>
+            use SchemaCrawler.
+          </li>
+          <li>
+            How <a href="http://serverfault.com/search?q=schemacrawler">system administrators</a>
+            use SchemaCrawler.
+          </li>
+          <li>
+            How <a href="http://stackoverflow.com/search?q=schemacrawler">programmers</a>
+            use SchemaCrawler.
+          </li>
+        </ul>
+      </subsection>
     </section>
   </body>
 </document>
