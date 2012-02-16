@@ -11,6 +11,8 @@
             value="${distribution.target}/schemacrawler-${SchemaCrawler.version}-sources.jar" />
   <property name="schemacrawler.distribution.javadoc.jar"
             value="${distribution.target}/schemacrawler-${SchemaCrawler.version}-javadoc.jar" />
+  <property name="schemacrawler.api-tests.jar"
+  	        value="${SchemaCrawler.home}/schemacrawler-api/target/schemacrawler-api-${SchemaCrawler.version}-tests.jar" />	
   <property name="schemacrawler.lint.jar"
             value="${SchemaCrawler.home}/schemacrawler-lint/target/schemacrawler-lint-${SchemaCrawler.version}.jar" />
   <available file="gpl-3.0.txt" property="available.gpl-3.0.txt"/>
@@ -138,7 +140,9 @@
       dest="${examples.staging.dir}" />
     <move file="${examples.staging.dir}/schemacrawler-hsqldb-${SchemaCrawler.version}"
           tofile="${examples.staging.dir}/_schemacrawler" />
-
+    <copy file="${schemacrawler.api-tests.jar}"
+          todir="${examples.staging.dir}/_schemacrawler/lib" />
+  	
   	<!-- 2. CREATE BINARY DISTRIBUTION FROM THE STAGED EXAMPLES -->
 
     <!-- Create zip file for distribution -->
