@@ -8,3 +8,11 @@
 #wrapper {
     background-image: none;
 }
+
+#navcolumn li {
+    font-size: normal;
+}
+
+#navcolumn h5 {
+    font-size: normal;
+}
