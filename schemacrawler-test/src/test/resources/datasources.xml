@@ -99,24 +99,6 @@
     </property>
   </bean>
 
-  <bean id="SQLite.properties" class="schemacrawler.schemacrawler.Config" factory-method="loadResource">
-    <constructor-arg value="/schemacrawler-sqlite.config.properties" />
-  </bean>
-
-  <bean id="SQLite" class="schemacrawler.schemacrawler.DatabaseConfigConnectionOptions" scope="singleton">
-    <constructor-arg type="java.util.Map" ref="SQLite.properties" />
-    <property name="database">
-      <value>C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-sqlite\src\test\resources\sc.db
-      </value>
-    </property>
-    <property name="user">
-      <value>schemacrawler</value>
-    </property>
-    <property name="password">
-      <value>schemacrawler</value>
-    </property>
-  </bean>
-
   <bean id="Derby.properties" class="schemacrawler.schemacrawler.Config" factory-method="loadResource">
     <constructor-arg value="/schemacrawler-derby.config.properties" />
   </bean>

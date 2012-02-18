@@ -108,18 +108,6 @@ public class SchemaCrawlerSystemTest
       messages.add(message);
     }
 
-    message = tablesAndCounts("HyperSQL", "PUBLIC.BOOKS", "\"");
-    if (message != null)
-    {
-      messages.add(message);
-    }
-
-    // message = tablesAndCounts("SQLite", null, "\"");
-    // if (message != null)
-    // {
-    // messages.add(message);
-    // }
-
     if (!messages.isEmpty())
     {
       final String error = ObjectToString.toString(messages);
@@ -150,12 +138,7 @@ public class SchemaCrawlerSystemTest
     dataSourceName = "PostgreSQL";
     schema = retrieveSchema(dataSourceName, "unknown");
     assertNull(dataSourceName, schema);
-
-    // // SQLite does not support catalogs or schemas, so rules are
-    // ignored
-    // dataSourceName = "SQLite";
-    // schema = retrieveSchema(dataSourceName, "unknown");
-    // assertNotNull(dataSourceName, schema);
+    
   }
 
   private void counts(final String dataSourceName, final Schema schema)

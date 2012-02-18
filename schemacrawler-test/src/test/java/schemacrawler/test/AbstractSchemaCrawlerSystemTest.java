@@ -49,8 +49,7 @@ public abstract class AbstractSchemaCrawlerSystemTest
       "IBM_DB2",
       "MySQL",
       "PostgreSQL",
-      "Derby",
-      "SQLite",
+      // "Derby",
   };
 
   @Test
