@@ -9,7 +9,7 @@
     </constructor-arg>
   </bean>
 
-  <bean id="MicrosoftSQLServer.properties" class="schemacrawler.test.ConfigLoader" factory-method="configFromResource">
+  <bean id="MicrosoftSQLServer.properties" class="schemacrawler.schemacrawler.Config" factory-method="loadResource">
     <constructor-arg value="/schemacrawler-sqlserver.config.properties" />
   </bean>
 
@@ -27,7 +27,7 @@
     </property>
   </bean>
 
-  <bean id="Oracle.properties" class="schemacrawler.test.ConfigLoader" factory-method="configFromResource">
+  <bean id="Oracle.properties" class="schemacrawler.schemacrawler.Config" factory-method="loadResource">
     <constructor-arg value="/schemacrawler-oracle.config.properties" />
   </bean>
 
@@ -45,7 +45,7 @@
     </property>
   </bean>
 
-  <bean id="IBM_DB2.properties" class="schemacrawler.test.ConfigLoader" factory-method="configFromResource">
+  <bean id="IBM_DB2.properties" class="schemacrawler.schemacrawler.Config" factory-method="loadResource">
     <constructor-arg value="/schemacrawler-db2.config.properties" />
   </bean>
 
@@ -63,7 +63,7 @@
     </property>
   </bean>
 
-  <bean id="MySQL.properties" class="schemacrawler.test.ConfigLoader" factory-method="configFromResource">
+  <bean id="MySQL.properties" class="schemacrawler.schemacrawler.Config" factory-method="loadResource">
     <constructor-arg value="/schemacrawler-mysql.config.properties" />
   </bean>
 
@@ -81,7 +81,7 @@
     </property>
   </bean>
 
-  <bean id="PostgreSQL.properties" class="schemacrawler.test.ConfigLoader" factory-method="configFromResource">
+  <bean id="PostgreSQL.properties" class="schemacrawler.schemacrawler.Config" factory-method="loadResource">
     <constructor-arg value="/schemacrawler-postgresql.config.properties" />
   </bean>
 
@@ -99,7 +99,7 @@
     </property>
   </bean>
 
-  <bean id="SQLite.properties" class="schemacrawler.test.ConfigLoader" factory-method="configFromResource">
+  <bean id="SQLite.properties" class="schemacrawler.schemacrawler.Config" factory-method="loadResource">
     <constructor-arg value="/schemacrawler-sqlite.config.properties" />
   </bean>
 
@@ -117,7 +117,7 @@
     </property>
   </bean>
 
-  <bean id="Derby.properties" class="schemacrawler.test.ConfigLoader" factory-method="configFromResource">
+  <bean id="Derby.properties" class="schemacrawler.schemacrawler.Config" factory-method="loadResource">
     <constructor-arg value="/schemacrawler-derby.config.properties" />
   </bean>
 
@@ -135,7 +135,7 @@
     </property>
   </bean>
 
-  <bean id="HyperSQL.properties" class="schemacrawler.test.ConfigLoader" factory-method="configFromResource">
+  <bean id="HyperSQL.properties" class="schemacrawler.schemacrawler.Config" factory-method="loadResource">
     <constructor-arg value="/schemacrawler-hsqldb.config.properties" />
   </bean>
 
