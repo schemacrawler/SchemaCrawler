@@ -2658,11 +2658,6 @@ idx_a_authors                                         [non-unique index]
   postalcode                        ascending                   
   country                           ascending                   
 
-                                                                  [lint]
-  incrementing columns
-address1, address2
-
-
 
 books.authorslist                                                 [view]
 ------------------------------------------------------------------------
@@ -2687,10 +2682,6 @@ uidx_bookauthors                                          [unique index]
   bookid                            ascending                   
   authorid                          ascending                   
 
-                                                                  [lint]
-  spaces in names, or reserved words
-"UPDATE"
-
 
 books.books                                                      [table]
 ------------------------------------------------------------------------
@@ -2714,12 +2705,6 @@ fk_y_book                                  [foreign key, with no action]
 books."Global Counts"                                            [table]
 ------------------------------------------------------------------------
   "Global Count"                    int4                        
-
-                                                                  [lint]
-  no indices
-  single column
-  spaces in names, or reserved words
-"Global Counts", "Global Count"
 
 
 books.publishers                                                 [table]

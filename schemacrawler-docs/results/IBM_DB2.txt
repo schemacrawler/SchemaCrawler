@@ -478,11 +478,6 @@ TRG_AUTHORS                             [trigger, after delete, per row]
                                                                [remarks]
 Contact details for book authors
 
-                                                                  [lint]
-  incrementing columns
-ADDRESS1, ADDRESS2
-
-
 
 BOOKS.AUTHORSLIST                                                 [view]
 ------------------------------------------------------------------------
@@ -567,10 +562,6 @@ UPDATE                                                       [privilege]
 
                                                                [remarks]
 Relationship between books and their authors, along with the latest updated information
-
-                                                                  [lint]
-  spaces in names, or reserved words
-"UPDATE"
 
 
 BOOKS.BOOKS                                                      [table]
@@ -684,12 +675,6 @@ UPDATE                                                       [privilege]
   SYSIBM --> SYSTEM (grantable)                                 
   SYSTEM --> BOOKS (grantable)                                  
   SYSTEM --> DB2ADMIN (grantable)                               
-
-                                                                  [lint]
-  no indices
-  single column
-  spaces in names, or reserved words
-"Global Counts", "Global Count"
 
 
 BOOKS.PUBLISHERS                                                 [table]

@@ -729,11 +729,6 @@ IDX_A_Authors                                         [non-unique index]
 CHECK_UPPERCASE_State                                 [check constraint]
 ([State]=upper([State]))
 
-                                                                  [lint]
-  incrementing columns
-Address1, Address2
-
-
 
 Books.dbo.AuthorsList                                             [view]
 ------------------------------------------------------------------------
@@ -762,10 +757,6 @@ UIDX_BookAuthors                                          [unique index]
   BookId                            ascending                   
   AuthorId                          ascending                   
 
-                                                                  [lint]
-  spaces in names, or reserved words
-"UPDATE"
-
 
 Books.dbo.Books                                                  [table]
 ------------------------------------------------------------------------
@@ -789,12 +780,6 @@ FK_Y_Book                                   [foreign key, with restrict]
 Books.dbo."Global Counts"                                        [table]
 ------------------------------------------------------------------------
   "Global Count"                    int                         
-
-                                                                  [lint]
-  no indices
-  single column
-  spaces in names, or reserved words
-"Global Counts", "Global Count"
 
 
 Books.dbo.Publishers                                             [table]

@@ -185,7 +185,7 @@ JDBC Driver Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
 driver name                           Oracle JDBC driver
-driver version                        11.2.0.2.0
+driver version                        11.2.0.3.0
 driver class name                     oracle.jdbc.OracleDriver
 url                                   jdbc:oracle:thin:@192.168.62.133:1521:XE
 is JDBC compliant                     true
@@ -324,6 +324,11 @@ OCISvcCtxHandle                                        [driver property]
   not required
   value                             0                           
 
+oracle.jdbc.calculateChecksum                          [driver property]
+  
+  not required
+  value                             false                       
+
 oracle.jdbc.commitOption                               [driver property]
   
   not required
@@ -364,10 +369,10 @@ oracle.jdbc.enableReadDataInLocator                    [driver property]
   not required
   value                             true                        
 
-oracle.jdbc.getObjectReturnsXMLType                    [driver property]
+oracle.jdbc.enableTempLobRefCnt                        [driver property]
   
   not required
-  value                             false                       
+  value                             true                        
 
 oracle.jdbc.implicitStatementCacheSize                 [driver property]
   
@@ -498,6 +503,11 @@ oracle.net.encryption_types_client                     [driver property]
   
   not required
   value                             null                        
+
+oracle.net.keepAlive                                   [driver property]
+  
+  not required
+  value                             false                       
 
 oracle.net.kerberos5_cc_name                           [driver property]
   
@@ -871,11 +881,6 @@ TRG_AUTHORS                             [trigger, after insert, per row]
 	UPDATE Authors SET FIRSTNAME = 'John' WHERE FIRSTNAME = 'John';
 END;
 
-                                                                  [lint]
-  incrementing columns
-ADDRESS1, ADDRESS2
-
-
 
 BOOKS.AUTHORSLIST                                                 [view]
 ------------------------------------------------------------------------
@@ -910,10 +915,6 @@ SYS_C007274                                           [check constraint]
 SYS_C007275                                           [check constraint]
 "AUTHORID" IS NOT NULL
 
-                                                                  [lint]
-  spaces in names, or reserved words
-"UPDATE"
-
 
 BOOKS.BOOKS                                                      [table]
 ------------------------------------------------------------------------
@@ -946,12 +947,6 @@ SYS_C007272                                           [check constraint]
 BOOKS."Global Counts"                                            [table]
 ------------------------------------------------------------------------
   "Global Count"                    NUMBER                      
-
-                                                                  [lint]
-  no indices
-  single column
-  spaces in names, or reserved words
-"Global Counts", "Global Count"
 
 
 BOOKS.PUBLISHERS                                                 [table]

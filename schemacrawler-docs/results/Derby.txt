@@ -185,7 +185,7 @@ JDBC Driver Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
 driver name                           Apache Derby Network Client JDBC Driver
-driver version                        10.8.1.2 - (1095077)
+driver version                        10.8.2.2 - (1181258)
 driver class name                     org.apache.derby.jdbc.ClientDriver40
 url                                   jdbc:derby://192.168.62.133:1527/books
 is JDBC compliant                     true
@@ -423,11 +423,6 @@ IDX_A_AUTHORS                                         [non-unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
 
-                                                                  [lint]
-  incrementing columns
-ADDRESS1, ADDRESS2
-
-
 
 BOOKS.AUTHORSLIST                                                 [view]
 ------------------------------------------------------------------------
@@ -458,10 +453,6 @@ UIDX_BOOKAUTHORS                                          [unique index]
   BOOKID                            ascending                   
   AUTHORID                          ascending                   
 
-                                                                  [lint]
-  spaces in names, or reserved words
-"UPDATE"
-
 
 BOOKS.BOOKS                                                      [table]
 ------------------------------------------------------------------------
@@ -488,12 +479,6 @@ SQL110828153855260                                        [unique index]
 BOOKS."Global Counts"                                            [table]
 ------------------------------------------------------------------------
   "Global Count"                    INTEGER                     
-
-                                                                  [lint]
-  no indices
-  single column
-  spaces in names, or reserved words
-"Global Counts", "Global Count"
 
 
 BOOKS.PUBLISHERS                                                 [table]
