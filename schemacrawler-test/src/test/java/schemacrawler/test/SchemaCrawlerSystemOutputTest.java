@@ -80,18 +80,6 @@ public class SchemaCrawlerSystemOutputTest
     {
       messages.add(message);
     }
-    
-    message = output("HyperSQL", "PUBLIC.BOOKS");
-    if (message != null)
-    {
-      messages.add(message);
-    }
-
-    // message = tablesAndCounts("SQLite", null, "\"");
-    // if (message != null)
-    // {
-    // messages.add(message);
-    // }
 
     if (!messages.isEmpty())
     {
