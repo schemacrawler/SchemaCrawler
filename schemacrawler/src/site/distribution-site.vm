@@ -296,44 +296,46 @@
     #end
     <meta http-equiv="Content-Type" content="text/html; charset=${outputEncoding}" />
     <style>
-     body
-    	{font-size:10.0pt;
-    	font-family:"Trebuchet MS";}
-     p
-    	{
-    	font-size:10.0pt;
-    	font-family:"Trebuchet MS";}
-	  .code {
-      	font-size: 9.0pt;
-      	font-family: monospace;
-      }
-    h1
-    	{
-      	font-size: 12.0pt;
-      	font-family: "Trebuchet MS";
-      	color: navy;
-      	text-shadow: Silver;
-      }
-    h2
-    	{
-	font-size: 10.0pt;
-	font-family: "Trebuchet MS";
-	color: green;
-	text-shadow: Silver;
+body
+{
+    font-family: "Trebuchet MS";
+    font-size: 1em;
 }
-    h3
-    	{
-    	font-size:10.0pt;
-    	font-family:"Trebuchet MS";
-    	color:maroon;}
-    a:link
-    	{font-family:"Trebuchet MS";
-    	color:blue;
-    	text-decoration:underline;}
-    a:visited
-    	{font-family:"Trebuchet MS";
-    	color:blue;
-    	text-decoration:underline;}
+.code
+{
+    font-family: monospace;
+    font-size: 0.9em;
+}
+h1
+{
+    color: navy;
+    font-size: 1.5em;
+    text-shadow: Silver;
+}
+h2
+{
+    color: green;
+    font-size: 1.4em;
+    text-shadow: Silver;
+}
+h3
+{
+    color: maroon;
+    font-size: 1em;
+}
+a:link
+{
+    color: blue;
+    text-decoration: underline;
+}
+a:visited
+{
+    color: blue;
+    text-decoration: underline;
+}
+hr {
+    height: 1px;
+}
     </style>
   </head>
   <body class="composite">
@@ -347,9 +349,6 @@
     </div>
     <div id="footer">
       <div class="xright">&#169;#copyright()#publishDate( "bottom" $decoration.publishDate $decoration.version )</div>
-      <div class="clear">
-        <hr/>
-      </div>
     </div>
   </body>
 </html>
