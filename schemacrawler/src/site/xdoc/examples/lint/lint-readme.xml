@@ -16,7 +16,9 @@
 				<ol>
 					<li>
 						Follow the instructions in the
-						<code>commandline</code>
+						<a href="../commandline/commandline-readme.html">
+							<code>commandline</code>
+						</a>
 						example.
 					</li>
 					<li>
@@ -34,12 +36,28 @@
 					</li>
 					<li>
 						<p>Create a customized SchemaCrawler Lint report using a linter
-							configuration file.</p>
+							configuration file.
+						</p>
+						<p>
+							Start a command shell in the
+							<em>lint</em>
+							example directory.
+						</p>
 						<p>
 							To find schema design issues, run
-							<span class="code">sc.cmd -Dschemacrawer.linter_configs.file=schemacrawler-linter-configs.xml -infolevel=standard -command=lint</span>
+							<span class="code">java
+								-Dschemacrawer.linter_configs.file=schemacrawler-linter-configs.xml
+								-cp
+								..\_schemacrawler\lib\hsqldb-2.2.6.jar;..\_schemacrawler\lib\schemacrawler-8.11.jar;..\_schemacrawler\lib\schemacrawler-hsqldb-8.11.jar;..\_schemacrawler\lib\schemacrawler-lint-8.11.jar
+								schemacrawler.tools.hsqldb.Main -database=schemacrawler -user=sa
+								-password= -infolevel=standard -command=lint</span>
 							(or
-							<span class="code">sc.sh -Dschemacrawer.linter_configs.file=schemacrawler-linter-configs.xml -infolevel=standard -command=lint</span>
+							<span class="code">java
+								-Dschemacrawer.linter_configs.file=schemacrawler-linter-configs.xml
+								-cp
+								../_schemacrawler/lib/hsqldb-2.2.6.jar:../_schemacrawler/lib/schemacrawler-8.11.jar:../_schemacrawler/lib/schemacrawler-hsqldb-8.11.jar:../_schemacrawler/lib/schemacrawler-lint-8.11.jar
+								schemacrawler.tools.hsqldb.Main -database=schemacrawler -user=sa
+								-password= -infolevel=standard -command=lint</span>
 							on Unix)
 						</p>
 					</li>
