@@ -185,7 +185,7 @@ JDBC Driver Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
 driver name                           MySQL-AB JDBC Driver
-driver version                        mysql-connector-java-5.1.17 ( Revision: ${bzr.revision-id} )
+driver version                        mysql-connector-java-5.1.18 ( Revision: tonci.grgin@oracle.com-20110930151701-jfj14ddfq48ifkfq )
 driver class name                     com.mysql.jdbc.Driver
 url                                   jdbc:mysql://192.168.62.133:3306/books
 is JDBC compliant                     false
@@ -215,7 +215,7 @@ allowUrlInLocalInfile                                  [driver property]
   value                             false                       
 
 alwaysSendSetIsolation                                 [driver property]
-  Should the driver always communicate with the database when Connection.setTransactionIsolation() is called? If set to false, the driver will only communicate with the database when the requested transaction isolation is different than the whichever is newer, the last value that was set via Connection.setTransactionIsolation(), or the value that was read from the server when the connection was established.
+  Should the driver always communicate with the database when Connection.setTransactionIsolation() is called? If set to false, the driver will only communicate with the database when the requested transaction isolation is different than the whichever is newer, the last value that was set via Connection.setTransactionIsolation(), or the value that was read from the server when the connection was established.  Note that useLocalSessionState=true will force the same behavior as alwaysSendSetIsolation=false, regardless of how alwaysSendSetIsolation is set.
   not required; choices [true, false, yes, no]
   value                             true                        
 
@@ -870,7 +870,7 @@ tcpRcvBuf                                              [driver property]
   value                             0                           
 
 tcpSndBuf                                              [driver property]
-  If connecting using TCP/IP, shuold the driver set SO_SND_BUF to the given value? The default value of '0', means use the platform default value for this property)
+  If connecting using TCP/IP, should the driver set SO_SND_BUF to the given value? The default value of '0', means use the platform default value for this property)
   not required
   value                             0                           
 
@@ -1469,11 +1469,6 @@ IDX_A_Authors                                         [non-unique index]
   PostalCode                        ascending                   
   Country                           ascending                   
 
-                                                                  [lint]
-  incrementing columns
-Address1, Address2
-
-
 
 books.authorslist                                                 [view]
 ------------------------------------------------------------------------
@@ -1501,10 +1496,6 @@ UIDX_BookAuthors                                          [unique index]
   BookId                            ascending                   
   AuthorId                          ascending                   
 
-                                                                  [lint]
-  spaces in names, or reserved words
-`UPDATE`
-
 
 books.books                                                      [table]
 ------------------------------------------------------------------------
@@ -1528,12 +1519,6 @@ FK_Y_Book                                  [foreign key, with no action]
 books.`global counts`                                            [table]
 ------------------------------------------------------------------------
   `Global Count`                    INT                         
-
-                                                                  [lint]
-  no indices
-  single column
-  spaces in names, or reserved words
-`global counts`, `Global Count`
 
 
 books.publishers                                                 [table]
@@ -1564,10 +1549,6 @@ mysql.columns_priv                                               [table]
   `User`                            ascending                   
   Table_name                        ascending                   
   Column_name                       ascending                   
-
-                                                                  [lint]
-  spaces in names, or reserved words
-`User`, `Timestamp`
 
 
 mysql.db                                                         [table]
@@ -1602,10 +1583,6 @@ mysql.db                                                         [table]
 
 `User`                                                [non-unique index]
   `User`                            ascending                   
-
-                                                                  [lint]
-  spaces in names, or reserved words
-`User`
 
 
 mysql.event                                                      [table]
@@ -1658,9 +1635,6 @@ mysql.general_log                                                [table]
   command_type                      VARCHAR(64) not null        
   argument                          MEDIUMTEXT(16777215) not null
 
-                                                                  [lint]
-  no indices
-
 
 mysql.help_category                                              [table]
 ------------------------------------------------------------------------
@@ -1671,6 +1645,9 @@ mysql.help_category                                              [table]
 
 `PRIMARY`                                                  [primary key]
   help_category_id                  ascending                   
+
+                                                      [weak association]
+  help_category_id --> mysql.help_topic.help_category_id                              
 
 name                                                      [unique index]
   name                              ascending                   
@@ -1683,6 +1660,9 @@ mysql.help_keyword                                               [table]
 
 `PRIMARY`                                                  [primary key]
   help_keyword_id                   ascending                   
+
+                                                      [weak association]
+  help_keyword_id --> mysql.help_relation.help_keyword_id                              
 
 name                                                      [unique index]
   name                              ascending                   
@@ -1717,10 +1697,10 @@ mysql.help_topic                                                 [table]
   help_topic_id                     ascending                   
 
                                                       [weak association]
-  help_topic_id --> mysql.help_relation.help_topic_id                              
+  mysql.help_category.help_category_id --> help_category_id                              
 
                                                       [weak association]
-  mysql.help_category.help_category_id --> help_category_id                              
+  help_topic_id --> mysql.help_relation.help_topic_id                              
 
 name                                                      [unique index]
   name                              ascending                   
@@ -1805,10 +1785,6 @@ mysql.proc                                                       [table]
   name                              ascending                   
   type                              ascending                   
 
-                                                                  [lint]
-  spaces in names, or reserved words
-`language`, `returns`
-
 
 mysql.procs_priv                                                 [table]
 ------------------------------------------------------------------------
@@ -1831,10 +1807,6 @@ mysql.procs_priv                                                 [table]
 Grantor                                               [non-unique index]
   Grantor                           ascending                   
 
-                                                                  [lint]
-  spaces in names, or reserved words
-`User`, `Timestamp`
-
 
 mysql.proxies_priv                                               [table]
 ------------------------------------------------------------------------
@@ -1854,10 +1826,6 @@ mysql.proxies_priv                                               [table]
 
 Grantor                                               [non-unique index]
   Grantor                           ascending                   
-
-                                                                  [lint]
-  spaces in names, or reserved words
-`User`, `Timestamp`
 
 
 mysql.servers                                                    [table]
@@ -1890,9 +1858,6 @@ mysql.slow_log                                                   [table]
   server_id                         INT UNSIGNED not null       
   sql_text                          MEDIUMTEXT(16777215) not null
 
-                                                                  [lint]
-  no indices
-
 
 mysql.tables_priv                                                [table]
 ------------------------------------------------------------------------
@@ -1914,10 +1879,6 @@ mysql.tables_priv                                                [table]
 Grantor                                               [non-unique index]
   Grantor                           ascending                   
 
-                                                                  [lint]
-  spaces in names, or reserved words
-`User`, `Timestamp`
-
 
 mysql.time_zone                                                  [table]
 ------------------------------------------------------------------------
@@ -1926,6 +1887,15 @@ mysql.time_zone                                                  [table]
 
 `PRIMARY`                                                  [primary key]
   Time_zone_id                      ascending                   
+
+                                                      [weak association]
+  Time_zone_id --> mysql.time_zone_transition.Time_zone_id                              
+
+                                                      [weak association]
+  Time_zone_id --> mysql.time_zone_transition_type.Time_zone_id                              
+
+                                                      [weak association]
+  Time_zone_id --> mysql.time_zone_name.Time_zone_id                              
 
 
 mysql.time_zone_leap_second                                      [table]
@@ -2028,18 +1998,11 @@ mysql.`user`                                                     [table]
   Host                              ascending                   
   `User`                            ascending                   
 
-                                                                  [lint]
-  spaces in names, or reserved words
-`user`, `User`
-
 
 performance_schema.cond_instances                                [table]
 ------------------------------------------------------------------------
   NAME                              VARCHAR(128) not null       
   OBJECT_INSTANCE_BEGIN             BIGINT not null             
-
-                                                                  [lint]
-  no indices
 
 
 performance_schema.events_waits_current                          [table]
@@ -2061,9 +2024,6 @@ performance_schema.events_waits_current                          [table]
   NUMBER_OF_BYTES                   BIGINT UNSIGNED             
   FLAGS                             INT UNSIGNED                
 
-                                                                  [lint]
-  no indices
-
 
 performance_schema.events_waits_history                          [table]
 ------------------------------------------------------------------------
@@ -2083,9 +2043,6 @@ performance_schema.events_waits_history                          [table]
   OPERATION                         VARCHAR(16) not null        
   NUMBER_OF_BYTES                   BIGINT UNSIGNED             
   FLAGS                             INT UNSIGNED                
-
-                                                                  [lint]
-  no indices
 
 
 performance_schema.events_waits_history_long                     [table]
@@ -2107,9 +2064,6 @@ performance_schema.events_waits_history_long                     [table]
   NUMBER_OF_BYTES                   BIGINT UNSIGNED             
   FLAGS                             INT UNSIGNED                
 
-                                                                  [lint]
-  no indices
-
 
 performance_schema.events_waits_summary_by_instance              [table]
 ------------------------------------------------------------------------
@@ -2120,9 +2074,6 @@ performance_schema.events_waits_summary_by_instance              [table]
   MIN_TIMER_WAIT                    BIGINT UNSIGNED not null    
   AVG_TIMER_WAIT                    BIGINT UNSIGNED not null    
   MAX_TIMER_WAIT                    BIGINT UNSIGNED not null    
-
-                                                                  [lint]
-  no indices
 
 
 performance_schema.events_waits_summary_by_thread_by_event_name  [table]
@@ -2135,9 +2086,6 @@ performance_schema.events_waits_summary_by_thread_by_event_name  [table]
   AVG_TIMER_WAIT                    BIGINT UNSIGNED not null    
   MAX_TIMER_WAIT                    BIGINT UNSIGNED not null    
 
-                                                                  [lint]
-  no indices
-
 
 performance_schema.events_waits_summary_global_by_event_name     [table]
 ------------------------------------------------------------------------
@@ -2148,18 +2096,12 @@ performance_schema.events_waits_summary_global_by_event_name     [table]
   AVG_TIMER_WAIT                    BIGINT UNSIGNED not null    
   MAX_TIMER_WAIT                    BIGINT UNSIGNED not null    
 
-                                                                  [lint]
-  no indices
-
 
 performance_schema.file_instances                                [table]
 ------------------------------------------------------------------------
   FILE_NAME                         VARCHAR(512) not null       
   EVENT_NAME                        VARCHAR(128) not null       
   OPEN_COUNT                        INT UNSIGNED not null       
-
-                                                                  [lint]
-  no indices
 
 
 performance_schema.file_summary_by_event_name                    [table]
@@ -2169,9 +2111,6 @@ performance_schema.file_summary_by_event_name                    [table]
   COUNT_WRITE                       BIGINT UNSIGNED not null    
   SUM_NUMBER_OF_BYTES_READ          BIGINT UNSIGNED not null    
   SUM_NUMBER_OF_BYTES_WRITE         BIGINT UNSIGNED not null    
-
-                                                                  [lint]
-  no indices
 
 
 performance_schema.file_summary_by_instance                      [table]
@@ -2183,18 +2122,12 @@ performance_schema.file_summary_by_instance                      [table]
   SUM_NUMBER_OF_BYTES_READ          BIGINT UNSIGNED not null    
   SUM_NUMBER_OF_BYTES_WRITE         BIGINT UNSIGNED not null    
 
-                                                                  [lint]
-  no indices
-
 
 performance_schema.mutex_instances                               [table]
 ------------------------------------------------------------------------
   NAME                              VARCHAR(128) not null       
   OBJECT_INSTANCE_BEGIN             BIGINT not null             
   LOCKED_BY_THREAD_ID               INT                         
-
-                                                                  [lint]
-  no indices
 
 
 performance_schema.performance_timers                            [table]
@@ -2204,9 +2137,6 @@ performance_schema.performance_timers                            [table]
   TIMER_RESOLUTION                  BIGINT                      
   TIMER_OVERHEAD                    BIGINT                      
 
-                                                                  [lint]
-  no indices
-
 
 performance_schema.rwlock_instances                              [table]
 ------------------------------------------------------------------------
@@ -2215,17 +2145,11 @@ performance_schema.rwlock_instances                              [table]
   WRITE_LOCKED_BY_THREAD_ID         INT                         
   READ_LOCKED_BY_COUNT              INT UNSIGNED not null       
 
-                                                                  [lint]
-  no indices
-
 
 performance_schema.setup_consumers                               [table]
 ------------------------------------------------------------------------
   NAME                              VARCHAR(64) not null        
   ENABLED                           ENUM(4) not null            
-
-                                                                  [lint]
-  no indices
 
 
 performance_schema.setup_instruments                             [table]
@@ -2234,17 +2158,11 @@ performance_schema.setup_instruments                             [table]
   ENABLED                           ENUM(4) not null            
   TIMED                             ENUM(4) not null            
 
-                                                                  [lint]
-  no indices
-
 
 performance_schema.setup_timers                                  [table]
 ------------------------------------------------------------------------
   NAME                              VARCHAR(64) not null        
   TIMER_NAME                        ENUM(11) not null           
-
-                                                                  [lint]
-  no indices
 
 
 performance_schema.threads                                       [table]
@@ -2252,9 +2170,6 @@ performance_schema.threads                                       [table]
   THREAD_ID                         INT not null                
   PROCESSLIST_ID                    INT                         
   NAME                              VARCHAR(128) not null       
-
-                                                                  [lint]
-  no indices
 
 
 
