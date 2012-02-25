@@ -2,7 +2,6 @@ package schemacrawler.tools.text.base;
 
 
 import java.io.PrintWriter;
-import java.io.Writer;
 
 import schemacrawler.schemacrawler.Options;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -26,8 +25,7 @@ public abstract class BaseFormatter<O extends Options>
 
   protected BaseFormatter(final O options,
                           final boolean printVerboseDatabaseInfo,
-                          final OutputOptions outputOptions,
-                          final Writer writer)
+                          final OutputOptions outputOptions)
     throws SchemaCrawlerException
   {
     if (options == null)
@@ -55,14 +53,7 @@ public abstract class BaseFormatter<O extends Options>
       formattingHelper = new PlainTextFormattingHelper(outputFormat);
     }
 
-    if (writer == null)
-    {
-      out = new PrintWriter(new OutputWriter(outputOptions));
-    }
-    else
-    {
-      out = new PrintWriter(new OutputWriter(writer));
-    }
+    out = new PrintWriter(new OutputWriter(outputOptions), true);
   }
 
 }

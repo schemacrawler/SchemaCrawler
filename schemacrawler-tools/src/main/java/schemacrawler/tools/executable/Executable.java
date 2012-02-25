@@ -1,7 +1,6 @@
 package schemacrawler.tools.executable;
 
 
-import java.io.Writer;
 import java.sql.Connection;
 
 import schemacrawler.schemacrawler.Config;
@@ -30,14 +29,10 @@ public interface Executable
 
   SchemaCrawlerOptions getSchemaCrawlerOptions();
 
-  Writer getWriter();
-
   void setAdditionalConfiguration(Config config);
 
   void setOutputOptions(OutputOptions outputOptions);
 
   void setSchemaCrawlerOptions(SchemaCrawlerOptions schemaCrawlerOptions);
-
-  void setWriter(Writer writer);
 
 }

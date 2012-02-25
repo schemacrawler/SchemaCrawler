@@ -117,15 +117,13 @@ public final class SchemaTextExecutable
     {
       formatter = new SchemaJsonFormatter(schemaTextDetailType,
                                           schemaTextOptions,
-                                          outputOptions,
-                                          writer);
+                                          outputOptions);
     }
     else
     {
       formatter = new SchemaTextFormatter(schemaTextDetailType,
                                           schemaTextOptions,
-                                          outputOptions,
-                                          writer);
+                                          outputOptions);
     }
 
     return formatter;

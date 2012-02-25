@@ -51,7 +51,6 @@ public abstract class BaseExecutable
   protected final String command;
   protected SchemaCrawlerOptions schemaCrawlerOptions;
   protected OutputOptions outputOptions;
-  protected Writer writer;
   protected Config additionalConfiguration;
 
   protected BaseExecutable(final String command)
@@ -125,11 +124,6 @@ public abstract class BaseExecutable
     return schemaCrawlerOptions;
   }
 
-  public Writer getWriter()
-  {
-    return writer;
-  }
-
   @Override
   public final void setAdditionalConfiguration(final Config additionalConfiguration)
   {
@@ -163,11 +157,6 @@ public abstract class BaseExecutable
   public final void setSchemaCrawlerOptions(final SchemaCrawlerOptions schemaCrawlerOptions)
   {
     this.schemaCrawlerOptions = schemaCrawlerOptions;
-  }
-
-  public void setWriter(final Writer writer)
-  {
-    this.writer = writer;
   }
 
   /**

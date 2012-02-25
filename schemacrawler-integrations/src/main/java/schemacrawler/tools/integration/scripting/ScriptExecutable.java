@@ -153,17 +153,7 @@ public final class ScriptExecutable
     }
 
     final ScriptEngine scriptEngine = scriptEngineFactory.getScriptEngine();
-
-    final Writer writer;
-    if (this.writer == null)
-    {
-      writer = new PrintWriter(new OutputWriter(outputOptions));
-    }
-    else
-    {
-      writer = new PrintWriter(new OutputWriter(this.writer));
-    }
-
+    final Writer writer = new PrintWriter(new OutputWriter(outputOptions), true);
     // Set up the context
     scriptEngine.getContext().setWriter(writer);
     scriptEngine.put("database", database);

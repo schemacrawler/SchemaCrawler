@@ -123,23 +123,26 @@ public class SchemaCrawlerTextCommandsOutputTest
                                                         + referenceFile + ".",
                                                     ".test");
     testOutputFile.delete();
+    assertTrue(!testOutputFile.exists());
 
     final File dummyOutputFile = new File(System.getProperty("java.io.tmpdir"),
                                           "dummy.txt");
     dummyOutputFile.delete();
     assertTrue(!dummyOutputFile.exists());
 
+    final FileWriter writer = new FileWriter(testOutputFile);
     final OutputOptions outputOptions = new OutputOptions(OutputFormat.text.name(),
                                                           dummyOutputFile);
+    outputOptions.setWriter(writer);
     outputOptions.setNoInfo(true);
     outputOptions.setNoHeader(true);
     outputOptions.setNoFooter(true);
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
     executable.setOutputOptions(outputOptions);
-    executable.setWriter(new FileWriter(testOutputFile));
     executable.execute(testDatabase.getConnection());
 
+    writer.close();
     assertTrue(!dummyOutputFile.exists());
 
     final List<String> failures = compareOutput(COMMAND_OUTPUT + referenceFile,

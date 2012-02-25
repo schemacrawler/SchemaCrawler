@@ -22,10 +22,9 @@ package schemacrawler.tools.options;
 
 
 import java.io.File;
-import java.util.logging.Logger;
+import java.io.Writer;
 
 import schemacrawler.schemacrawler.Options;
-import sf.util.Utility;
 
 /**
  * Contains output options.
@@ -38,14 +37,10 @@ public final class OutputOptions
 
   private static final long serialVersionUID = 7018337388923813055L;
 
-  private static final Logger LOGGER = Logger.getLogger(OutputOptions.class
-    .getName());
-
   private String outputFormatValue;
   private File outputFile;
-
+  private Writer writer;
   private boolean appendOutput;
-
   private boolean noHeader;
   private boolean noFooter;
   private boolean noInfo;
@@ -55,7 +50,20 @@ public final class OutputOptions
    */
   public OutputOptions()
   {
-    this(OutputFormat.text.name(), null);
+    this(OutputFormat.text.name());
+  }
+
+  /**
+   * Output options, given the type and the output to the console.
+   * 
+   * @param outputFormatValue
+   *        Type of output, which is dependent on the executor
+   */
+  public OutputOptions(final String outputFormatValue)
+  {
+    this.outputFormatValue = outputFormatValue;
+    outputFile = null;
+    writer = null;
   }
 
   /**
@@ -70,6 +78,22 @@ public final class OutputOptions
   {
     this.outputFormatValue = outputFormatValue;
     this.outputFile = outputFile;
+    writer = null;
+  }
+
+  /**
+   * Output options, given the type and the output filename.
+   * 
+   * @param outputFormatValue
+   *        Type of output, which is dependent on the executor
+   * @param outputFile
+   *        Output file
+   */
+  public OutputOptions(final String outputFormatValue, final Writer writer)
+  {
+    this.outputFormatValue = outputFormatValue;
+    outputFile = null;
+    this.writer = writer;
   }
 
   /**
@@ -82,11 +106,10 @@ public final class OutputOptions
     final OutputOptions outputOptions = new OutputOptions();
 
     outputOptions.outputFormatValue = outputFormatValue;
-
     outputOptions.outputFile = outputFile;
+    outputOptions.writer = writer;
 
     outputOptions.appendOutput = appendOutput;
-
     outputOptions.noHeader = noHeader;
     outputOptions.noFooter = noFooter;
     outputOptions.noInfo = noInfo;
@@ -133,6 +156,11 @@ public final class OutputOptions
     return outputFormatValue;
   }
 
+  public Writer getWriter()
+  {
+    return writer;
+  }
+
   /**
    * Whether the output gets appended.
    * 
@@ -141,6 +169,11 @@ public final class OutputOptions
   public boolean isAppendOutput()
   {
     return appendOutput;
+  }
+
+  public boolean isConsoleOutput()
+  {
+    return outputFile == null && writer == null;
   }
 
   /**
@@ -225,10 +258,6 @@ public final class OutputOptions
    */
   public void setOutputFileName(final String outputFileName)
   {
-    if (Utility.isBlank(outputFileName))
-    {
-      throw new IllegalArgumentException("Cannot set null output file name");
-    }
     outputFile = new File(outputFileName);
   }
 
@@ -245,6 +274,11 @@ public final class OutputOptions
       throw new IllegalArgumentException("Cannot use null value in a setter");
     }
     this.outputFormatValue = outputFormatValue;
+  }
+
+  public void setWriter(final Writer writer)
+  {
+    this.writer = writer;
   }
 
 }

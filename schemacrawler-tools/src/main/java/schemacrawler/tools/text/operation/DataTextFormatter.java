@@ -21,7 +21,6 @@
 package schemacrawler.tools.text.operation;
 
 
-import java.io.Writer;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -58,11 +57,10 @@ final class DataTextFormatter
    */
   DataTextFormatter(final Operation operation,
                     final OperationOptions options,
-                    final OutputOptions outputOptions,
-                    final Writer writer)
+                    final OutputOptions outputOptions)
     throws SchemaCrawlerException
   {
-    super(options, /* printVerboseDatabaseInfo */false, outputOptions, writer);
+    super(options, /* printVerboseDatabaseInfo */false, outputOptions);
     this.operation = operation;
   }
 

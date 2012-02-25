@@ -68,7 +68,6 @@ public class SchemaCrawlerExecutable
         }
       }
       executable.setOutputOptions(executableOutputOptions);
-      executable.setWriter(writer);
 
       ((BaseExecutable) executable).executeOn(database, connection);
     }
