@@ -17,7 +17,7 @@ Database Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
 database product name                 HSQL Database Engine
-database product version              2.2.6
+database product version              2.2.8
 database user name                    SA
 
 
@@ -185,7 +185,7 @@ JDBC Driver Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
 driver name                           HSQL Database Engine Driver
-driver version                        2.2.6
+driver version                        2.2.8
 driver class name                     org.hsqldb.jdbc.JDBCDriver
 url                                   jdbc:hsqldb:hsql://localhost:9001/schemacrawler
 is JDBC compliant                     true
