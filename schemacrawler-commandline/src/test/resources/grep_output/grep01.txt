@@ -20,20 +20,26 @@ PK_BOOKS                                                   [primary key]
 FK_Y_BOOK                                  [foreign key, with no action]
   ID --> PUBLIC.BOOKS.BOOKAUTHORS.BOOKID                              
 
-SYS_IDX_PK_BOOKS_10039                                    [unique index]
+SYS_IDX_PK_BOOKS_10034                                    [unique index]
   ID                                ascending                   
 
-SYS_CT_10036                                          [check constraint]
+SYS_CT_10031                                          [check constraint]
 BOOKS.BOOKS.ID IS NOT NULL
 
-SYS_CT_10037                                          [check constraint]
+SYS_CT_10032                                          [check constraint]
 BOOKS.BOOKS.TITLE IS NOT NULL
 
-SYS_CT_10038                                          [check constraint]
+SYS_CT_10033                                          [check constraint]
 BOOKS.BOOKS.PUBLISHERID IS NOT NULL
 
                                                                [remarks]
 Details for published books
+  ID                                Unique (internal) id for book
+  TITLE                             Book title                  
+  DESCRIPTION                       Book description            
+  PUBLISHERID                       Foreign key to the book publisher
+  PUBLICATIONDATE                   Book publication date       
+  PRICE                             Current price for the book  
 
 
 PUBLIC.FOR_LINT.PUBLICATIONS                                     [table]
@@ -59,19 +65,19 @@ FK_WRITERS_PUBLICATION                     [foreign key, with no action]
 FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
   PUBLIC.FOR_LINT.WRITERS.ID --> WRITERID                              
 
-SYS_IDX_PK_PUBLICATIONS_10072                             [unique index]
+SYS_IDX_PK_PUBLICATIONS_10064                             [unique index]
   ID                                ascending                   
 
-SYS_IDX_10073                                         [non-unique index]
+SYS_IDX_10065                                         [non-unique index]
   WRITERID                          ascending                   
 
-SYS_CT_10069                                          [check constraint]
+SYS_CT_10061                                          [check constraint]
 FOR_LINT.PUBLICATIONS.ID IS NOT NULL
 
-SYS_CT_10070                                          [check constraint]
+SYS_CT_10062                                          [check constraint]
 FOR_LINT.PUBLICATIONS.TITLE IS NOT NULL
 
-SYS_CT_10071                                          [check constraint]
+SYS_CT_10063                                          [check constraint]
 FOR_LINT.PUBLICATIONS.WRITERID IS NOT NULL
 
 

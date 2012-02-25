@@ -5,7 +5,7 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-    <release version="8.11" date="2012-02-15">
+    <release version="8.12" date="2012-02-15">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Added ability to configure SchemaCrawler linters.
       ]]></action>      
