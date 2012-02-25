@@ -21,7 +21,6 @@
 package schemacrawler.tools.text.operation;
 
 
-import java.io.Writer;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -57,7 +56,6 @@ final class OperationHandler
                    final Query query,
                    final OperationOptions options,
                    final OutputOptions outputOptions,
-                   final Writer writer,
                    final Connection connection)
     throws SchemaCrawlerException
   {
@@ -83,15 +81,13 @@ final class OperationHandler
     {
       dataFormatter = new DataJsonFormatter(operation,
                                             options,
-                                            outputOptions,
-                                            writer);
+                                            outputOptions);
     }
     else
     {
       dataFormatter = new DataTextFormatter(operation,
                                             options,
-                                            outputOptions,
-                                            writer);
+                                            outputOptions);
     }
   }
 

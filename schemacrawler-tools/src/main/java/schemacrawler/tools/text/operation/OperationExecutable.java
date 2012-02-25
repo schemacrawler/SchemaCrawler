@@ -130,7 +130,6 @@ public final class OperationExecutable
                                    query,
                                    operationOptions,
                                    outputOptions,
-                                   writer,
                                    connection);
 
     return handler;

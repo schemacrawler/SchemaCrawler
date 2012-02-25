@@ -20,11 +20,10 @@
 package schemacrawler.tools.options;
 
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -39,36 +38,13 @@ public final class OutputWriter
     .getName());
 
   private final Writer writer;
-  private final File outputFile;
-  private final boolean isConsoleOutput;
   private boolean isClosed;
+  private boolean isFileOutput;
 
   public OutputWriter(final OutputOptions outputOptions)
     throws SchemaCrawlerException
   {
-    if (outputOptions != null)
-    {
-      outputFile = outputOptions.getOutputFile();
-    }
-    else
-    {
-      outputFile = null;
-    }
-    isConsoleOutput = outputFile == null;
-
     writer = openOutputWriter(outputOptions);
-  }
-
-  public OutputWriter(final Writer writer)
-  {
-    outputFile = null;
-    isConsoleOutput = false;
-    if (writer == null)
-    {
-      throw new IllegalArgumentException("No output writer provided");
-    }
-    this.writer = writer;
-    LOGGER.log(Level.INFO, "Streaming output to writer");
   }
 
   @Override
@@ -106,7 +82,7 @@ public final class OutputWriter
       writer.flush();
     }
 
-    if (!isConsoleOutput)
+    if (isFileOutput)
     {
       if (writer != null)
       {
@@ -117,14 +93,10 @@ public final class OutputWriter
     else
     {
       LOGGER.log(Level.INFO,
-                 "Not closing output writer, since output is to console");
+                 "Not closing output writer, since output is not to a file");
     }
-  }
 
-  @Override
-  public boolean equals(final Object obj)
-  {
-    return writer.equals(obj);
+    isClosed = true;
   }
 
   @Override
@@ -132,20 +104,7 @@ public final class OutputWriter
     throws IOException
   {
     checkOpen();
-
     writer.flush();
-  }
-
-  @Override
-  public int hashCode()
-  {
-    return writer.hashCode();
-  }
-
-  @Override
-  public String toString()
-  {
-    return writer.toString();
   }
 
   @Override
@@ -153,7 +112,6 @@ public final class OutputWriter
     throws IOException
   {
     checkOpen();
-
     writer.write(cbuf);
   }
 
@@ -162,7 +120,6 @@ public final class OutputWriter
     throws IOException
   {
     checkOpen();
-
     writer.write(cbuf, off, len);
   }
 
@@ -171,7 +128,6 @@ public final class OutputWriter
     throws IOException
   {
     checkOpen();
-
     writer.write(c);
   }
 
@@ -180,7 +136,6 @@ public final class OutputWriter
     throws IOException
   {
     checkOpen();
-
     writer.write(str);
   }
 
@@ -189,8 +144,18 @@ public final class OutputWriter
     throws IOException
   {
     checkOpen();
-
     writer.write(str, off, len);
+  }
+
+  @Override
+  protected void finalize()
+    throws Throwable
+  {
+    super.finalize();
+    if (!isClosed)
+    {
+      throw new IllegalStateException("Output writer was not closed");
+    }
   }
 
   private void checkOpen()
@@ -215,18 +180,21 @@ public final class OutputWriter
     try
     {
       final Writer writer;
-      if (outputFile == null)
+      if (outputOptions == null || outputOptions.isConsoleOutput())
       {
-        writer = new PrintWriter(System.out, /* autoFlush */true);
+        writer = new OutputStreamWriter(System.out);
         LOGGER.log(Level.INFO, "Opened output writer to console");
+      }
+      else if (outputOptions.getWriter() != null)
+      {
+        writer = outputOptions.getWriter();
+        LOGGER.log(Level.INFO, "Output to provided writer");
       }
       else
       {
-        final FileWriter fileWriter = new FileWriter(outputFile,
-                                                     outputOptions
-                                                       .isAppendOutput());
-        writer = new PrintWriter(new BufferedWriter(fileWriter), /* autoFlush */
-        true);
+        isFileOutput = true;
+        final File outputFile = outputOptions.getOutputFile();
+        writer = new FileWriter(outputFile, outputOptions.isAppendOutput());
         LOGGER.log(Level.INFO,
                    "Opened output writer to file, "
                        + outputFile.getAbsolutePath());

@@ -113,11 +113,11 @@ public class LintExecutable
     final OutputFormat outputFormat = outputOptions.getOutputFormat();
     if (outputFormat == OutputFormat.json)
     {
-      formatter = new LintJsonFormatter(lintOptions, outputOptions, writer);
+      formatter = new LintJsonFormatter(lintOptions, outputOptions);
     }
     else
     {
-      formatter = new LintTextFormatter(lintOptions, outputOptions, writer);
+      formatter = new LintTextFormatter(lintOptions, outputOptions);
     }
 
     return formatter;

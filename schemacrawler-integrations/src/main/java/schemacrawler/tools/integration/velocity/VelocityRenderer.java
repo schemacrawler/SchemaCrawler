@@ -126,16 +126,7 @@ public final class VelocityRenderer
     final Context context = new VelocityContext();
     context.put("database", database);
 
-    final Writer writer;
-    if (this.writer == null)
-    {
-      writer = new PrintWriter(new OutputWriter(outputOptions));
-    }
-    else
-    {
-      writer = new PrintWriter(new OutputWriter(this.writer));
-    }
-
+    final Writer writer = new PrintWriter(new OutputWriter(outputOptions), true);
     // Evaluate the template
     final Template template = ve.getTemplate(templateLocation);
     template.merge(context, writer);
