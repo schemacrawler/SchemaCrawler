@@ -21,6 +21,7 @@
 package schemacrawler.tools.text.base;
 
 
+import java.io.Writer;
 import java.util.Arrays;
 import java.util.Map.Entry;
 import java.util.SortedMap;
@@ -56,10 +57,11 @@ public abstract class BaseJsonFormatter<O extends Options>
 
   protected BaseJsonFormatter(final O options,
                               final boolean printVerboseDatabaseInfo,
-                              final OutputOptions outputOptions)
+                              final OutputOptions outputOptions,
+                              final Writer writer)
     throws SchemaCrawlerException
   {
-    super(options, printVerboseDatabaseInfo, outputOptions);
+    super(options, printVerboseDatabaseInfo, outputOptions, writer);
     jsonRoot = new JSONObject();
   }
 

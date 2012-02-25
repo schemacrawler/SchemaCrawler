@@ -21,6 +21,7 @@
 package schemacrawler.tools.lint.executable;
 
 
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -42,10 +43,12 @@ final class LintTextFormatter
   implements LintFormatter
 {
 
-  LintTextFormatter(final LintOptions options, final OutputOptions outputOptions)
+  LintTextFormatter(final LintOptions options,
+                    final OutputOptions outputOptions,
+                    final Writer writer)
     throws SchemaCrawlerException
   {
-    super(options, false, outputOptions);
+    super(options, false, outputOptions, writer);
   }
 
   @Override

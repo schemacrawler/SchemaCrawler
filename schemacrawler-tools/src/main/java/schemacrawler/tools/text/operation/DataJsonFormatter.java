@@ -21,6 +21,7 @@
 package schemacrawler.tools.text.operation;
 
 
+import java.io.Writer;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -59,10 +60,11 @@ final class DataJsonFormatter
    */
   DataJsonFormatter(final Operation operation,
                     final OperationOptions options,
-                    final OutputOptions outputOptions)
+                    final OutputOptions outputOptions,
+                    final Writer writer)
     throws SchemaCrawlerException
   {
-    super(options, /* printVerboseDatabaseInfo */false, outputOptions);
+    super(options, /* printVerboseDatabaseInfo */false, outputOptions, writer);
     this.operation = operation;
 
     jsonDataArray = new JSONArray();

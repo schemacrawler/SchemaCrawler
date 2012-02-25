@@ -154,7 +154,15 @@ public final class ScriptExecutable
 
     final ScriptEngine scriptEngine = scriptEngineFactory.getScriptEngine();
 
-    final Writer writer = new PrintWriter(new OutputWriter(outputOptions));
+    final Writer writer;
+    if (this.writer == null)
+    {
+      writer = new PrintWriter(new OutputWriter(outputOptions));
+    }
+    else
+    {
+      writer = new PrintWriter(new OutputWriter(this.writer));
+    }
 
     // Set up the context
     scriptEngine.getContext().setWriter(writer);
