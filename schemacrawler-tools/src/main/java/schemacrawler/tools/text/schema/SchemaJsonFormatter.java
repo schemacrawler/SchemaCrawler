@@ -21,6 +21,7 @@
 package schemacrawler.tools.text.schema;
 
 
+import java.io.Writer;
 import java.util.logging.Level;
 
 import schemacrawler.schema.CheckConstraint;
@@ -78,12 +79,14 @@ final class SchemaJsonFormatter
    */
   SchemaJsonFormatter(final SchemaTextDetailType schemaTextDetailType,
                       final SchemaTextOptions options,
-                      final OutputOptions outputOptions)
+                      final OutputOptions outputOptions,
+                      final Writer writer)
     throws SchemaCrawlerException
   {
     super(options,
           schemaTextDetailType == SchemaTextDetailType.details,
-          outputOptions);
+          outputOptions,
+          writer);
     isVerbose = schemaTextDetailType
       .isGreaterThanOrEqualTo(SchemaTextDetailType.details);
     isNotList = schemaTextDetailType != SchemaTextDetailType.list;

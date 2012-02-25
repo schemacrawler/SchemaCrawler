@@ -21,10 +21,12 @@
 package schemacrawler.test;
 
 
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.util.List;
 
 import org.custommonkey.xmlunit.XMLUnit;
@@ -110,6 +112,46 @@ public class SchemaCrawlerTextCommandsOutputTest
     textOutputTest(SchemaTextDetailType.list.name(), new Config());
   }
 
+  @Test
+  public void streamedOutput()
+    throws Exception
+  {
+    final String command = SchemaTextDetailType.list.name();
+
+    final String referenceFile = command + ".txt";
+    final File testOutputFile = File.createTempFile("schemacrawler."
+                                                        + referenceFile + ".",
+                                                    ".test");
+    testOutputFile.delete();
+
+    final File dummyOutputFile = new File(System.getProperty("java.io.tmpdir"),
+                                          "dummy.txt");
+    dummyOutputFile.delete();
+    assertTrue(!dummyOutputFile.exists());
+
+    final OutputOptions outputOptions = new OutputOptions(OutputFormat.text.name(),
+                                                          dummyOutputFile);
+    outputOptions.setNoInfo(true);
+    outputOptions.setNoHeader(true);
+    outputOptions.setNoFooter(true);
+
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
+    executable.setOutputOptions(outputOptions);
+    executable.setWriter(new FileWriter(testOutputFile));
+    executable.execute(testDatabase.getConnection());
+
+    assertTrue(!dummyOutputFile.exists());
+
+    final List<String> failures = compareOutput(COMMAND_OUTPUT + referenceFile,
+                                                testOutputFile,
+                                                outputOptions.getOutputFormat()
+                                                  .name());
+    if (failures.size() > 0)
+    {
+      fail(failures.toString());
+    }
+  }
+
   private void textOutputTest(final String command, final Config config)
     throws Exception
   {
@@ -130,16 +172,13 @@ public class SchemaCrawlerTextCommandsOutputTest
     executable.setOutputOptions(outputOptions);
     executable.execute(testDatabase.getConnection());
 
-    final List<String> failures = compareOutput(COMMAND_OUTPUT
-                                                               + referenceFile,
-                                                           testOutputFile,
-                                                           outputOptions
-                                                             .getOutputFormat()
-                                                             .name());
+    final List<String> failures = compareOutput(COMMAND_OUTPUT + referenceFile,
+                                                testOutputFile,
+                                                outputOptions.getOutputFormat()
+                                                  .name());
     if (failures.size() > 0)
     {
       fail(failures.toString());
     }
   }
-
 }

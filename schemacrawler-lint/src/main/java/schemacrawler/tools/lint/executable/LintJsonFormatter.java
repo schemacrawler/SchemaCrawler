@@ -21,6 +21,7 @@
 package schemacrawler.tools.lint.executable;
 
 
+import java.io.Writer;
 import java.util.logging.Level;
 
 import schemacrawler.schema.Table;
@@ -39,10 +40,12 @@ final class LintJsonFormatter
   implements LintFormatter
 {
 
-  LintJsonFormatter(final LintOptions options, final OutputOptions outputOptions)
+  LintJsonFormatter(final LintOptions options,
+                    final OutputOptions outputOptions,
+                    final Writer writer)
     throws SchemaCrawlerException
   {
-    super(options, false, outputOptions);
+    super(options, false, outputOptions, writer);
   }
 
   @Override

@@ -40,6 +40,8 @@ public final class OutputWriter
 
   private final Writer writer;
   private final File outputFile;
+  private final boolean isConsoleOutput;
+  private boolean isClosed;
 
   public OutputWriter(final OutputOptions outputOptions)
     throws SchemaCrawlerException
@@ -52,14 +54,28 @@ public final class OutputWriter
     {
       outputFile = null;
     }
+    isConsoleOutput = outputFile == null;
 
     writer = openOutputWriter(outputOptions);
+  }
+
+  public OutputWriter(final Writer writer)
+  {
+    outputFile = null;
+    isConsoleOutput = false;
+    if (writer == null)
+    {
+      throw new IllegalArgumentException("No output writer provided");
+    }
+    this.writer = writer;
+    LOGGER.log(Level.INFO, "Streaming output to writer");
   }
 
   @Override
   public Writer append(final char c)
     throws IOException
   {
+    checkOpen();
     return writer.append(c);
   }
 
@@ -67,6 +83,7 @@ public final class OutputWriter
   public Writer append(final CharSequence csq)
     throws IOException
   {
+    checkOpen();
     return writer.append(csq);
   }
 
@@ -74,6 +91,7 @@ public final class OutputWriter
   public Writer append(final CharSequence csq, final int start, final int end)
     throws IOException
   {
+    checkOpen();
     return writer.append(csq, start, end);
   }
 
@@ -81,19 +99,19 @@ public final class OutputWriter
   public void close()
     throws IOException
   {
+    checkOpen();
+
     if (writer != null)
     {
       writer.flush();
     }
 
-    if (outputFile != null)
+    if (!isConsoleOutput)
     {
       if (writer != null)
       {
         writer.close();
-        LOGGER.log(Level.INFO,
-                   "Closed output writer to file, "
-                       + outputFile.getAbsolutePath());
+        LOGGER.log(Level.INFO, "Closed output writer");
       }
     }
     else
@@ -113,6 +131,8 @@ public final class OutputWriter
   public void flush()
     throws IOException
   {
+    checkOpen();
+
     writer.flush();
   }
 
@@ -132,6 +152,8 @@ public final class OutputWriter
   public void write(final char[] cbuf)
     throws IOException
   {
+    checkOpen();
+
     writer.write(cbuf);
   }
 
@@ -139,6 +161,8 @@ public final class OutputWriter
   public void write(final char[] cbuf, final int off, final int len)
     throws IOException
   {
+    checkOpen();
+
     writer.write(cbuf, off, len);
   }
 
@@ -146,6 +170,8 @@ public final class OutputWriter
   public void write(final int c)
     throws IOException
   {
+    checkOpen();
+
     writer.write(c);
   }
 
@@ -153,6 +179,8 @@ public final class OutputWriter
   public void write(final String str)
     throws IOException
   {
+    checkOpen();
+
     writer.write(str);
   }
 
@@ -160,7 +188,18 @@ public final class OutputWriter
   public void write(final String str, final int off, final int len)
     throws IOException
   {
+    checkOpen();
+
     writer.write(str, off, len);
+  }
+
+  private void checkOpen()
+    throws IllegalAccessError
+  {
+    if (isClosed)
+    {
+      throw new IllegalAccessError("Writer has already been closed");
+    }
   }
 
   /**
