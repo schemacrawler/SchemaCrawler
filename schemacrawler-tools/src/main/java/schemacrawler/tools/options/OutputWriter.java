@@ -51,7 +51,7 @@ public final class OutputWriter
   public Writer append(final char c)
     throws IOException
   {
-    checkOpen();
+    ensureOpen();
     return writer.append(c);
   }
 
@@ -59,7 +59,7 @@ public final class OutputWriter
   public Writer append(final CharSequence csq)
     throws IOException
   {
-    checkOpen();
+    ensureOpen();
     return writer.append(csq);
   }
 
@@ -67,7 +67,7 @@ public final class OutputWriter
   public Writer append(final CharSequence csq, final int start, final int end)
     throws IOException
   {
-    checkOpen();
+    ensureOpen();
     return writer.append(csq, start, end);
   }
 
@@ -75,7 +75,7 @@ public final class OutputWriter
   public void close()
     throws IOException
   {
-    checkOpen();
+    ensureOpen();
 
     if (writer != null)
     {
@@ -103,7 +103,7 @@ public final class OutputWriter
   public void flush()
     throws IOException
   {
-    checkOpen();
+    ensureOpen();
     writer.flush();
   }
 
@@ -111,7 +111,7 @@ public final class OutputWriter
   public void write(final char[] cbuf)
     throws IOException
   {
-    checkOpen();
+    ensureOpen();
     writer.write(cbuf);
   }
 
@@ -119,7 +119,7 @@ public final class OutputWriter
   public void write(final char[] cbuf, final int off, final int len)
     throws IOException
   {
-    checkOpen();
+    ensureOpen();
     writer.write(cbuf, off, len);
   }
 
@@ -127,7 +127,7 @@ public final class OutputWriter
   public void write(final int c)
     throws IOException
   {
-    checkOpen();
+    ensureOpen();
     writer.write(c);
   }
 
@@ -135,7 +135,7 @@ public final class OutputWriter
   public void write(final String str)
     throws IOException
   {
-    checkOpen();
+    ensureOpen();
     writer.write(str);
   }
 
@@ -143,7 +143,7 @@ public final class OutputWriter
   public void write(final String str, final int off, final int len)
     throws IOException
   {
-    checkOpen();
+    ensureOpen();
     writer.write(str, off, len);
   }
 
@@ -158,12 +158,15 @@ public final class OutputWriter
     }
   }
 
-  private void checkOpen()
-    throws IllegalAccessError
+  /**
+   * Checks to make sure that the stream has not been closed.
+   */
+  private void ensureOpen()
+    throws IOException
   {
     if (isClosed)
     {
-      throw new IllegalAccessError("Writer has already been closed");
+      throw new IOException("Writer has already been closed");
     }
   }
 
