@@ -30,11 +30,11 @@
 
     Function LocateJava
       '  Find JRE (in order to find java.exe)
-      '  1 In .\jre directory (JRE Installed with application)
+      '  1 In .\jre directory (JRE installed with application)
       '  2 In JAVA_HOME environment variable
       '  3 In the registry
       '  4 Assume java.exe in current directory or PATH
-
+	  
       Set WScriptShell = WScript.CreateObject("WScript.Shell")
       Set FileSystemObject = CreateObject("Scripting.FileSystemObject")
 
@@ -43,16 +43,23 @@
       Dim Java
 
       FoundJava = False
-      JavaHome = ".\jre"
-      Java = JavaHome + "\bin\java.exe"
-      FoundJava  = FileSystemObject.FileExists(Java)
-
+	  
+	  If Not FoundJava Then
+	    JavaHome = ".\jre"
+	    Java = JavaHome + "\bin\java.exe"
+		FoundJava  = FileSystemObject.FileExists(Java)
+      End If
+	  
       If Not FoundJava Then
         Dim JreVersion
         Dim JavaHomeKey
+		
+		On Error Resume Next			  
         JreVersion = WScriptShell.RegRead("HKLM\SOFTWARE\JavaSoft\Java Runtime Environment\CurrentVersion")
         JavaHomeKey = "HKLM\SOFTWARE\JavaSoft\Java Runtime Environment\" + JreVersion + "\JavaHome"
-        JavaHome = WScriptShell.RegRead(JavaHomeKey)
+        JavaHome = WScriptShell.RegRead(JavaHomeKey)		
+		On Error GoTo 0
+			  
         Java = JavaHome + "\bin\java.exe"
         FoundJava  = FileSystemObject.FileExists(Java)
       End If
@@ -67,7 +74,7 @@
         JavaHome = ""
         Java = "java"
       End If
-
+	  
       LocateJava = """" & Java & """"
 
     End Function
