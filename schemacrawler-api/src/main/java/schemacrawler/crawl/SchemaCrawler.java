@@ -27,15 +27,8 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.schema.Column;
 import schemacrawler.schema.Database;
-import schemacrawler.schema.Procedure;
-import schemacrawler.schema.ProcedureColumn;
 import schemacrawler.schema.ResultsColumns;
-import schemacrawler.schema.Table;
-import schemacrawler.schema.Trigger;
-import schemacrawler.schema.View;
-import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
@@ -183,12 +176,13 @@ public final class SchemaCrawler
           retriever.retrieveProcedureColumns(procedure, options
             .getProcedureColumnInclusionRule());
         }
-        if (!grepMatch(options, procedure))
-        {
-          ((MutableSchema) procedure.getSchema()).removeProcedure(procedure);
-          allProcedures.remove(procedure);
-        }
       }
+
+      // Filter the list of procedures based on grep criteria, and
+      // parent-child relationships
+      final ProcedureFilter procedureFiter = new ProcedureFilter(options,
+                                                                 allProcedures);
+      procedureFiter.filter();
 
       if (infoLevel.isRetrieveProcedureInformation())
       {
@@ -271,12 +265,12 @@ public final class SchemaCrawler
         {
           retriever.retrieveColumns(table, options.getColumnInclusionRule());
         }
-        if (!grepMatch(options, table))
-        {
-          ((MutableSchema) table.getSchema()).removeTable(table);
-          allTables.remove(table);
-        }
       }
+
+      // Filter the list of tables based on grep criteria, and
+      // parent-child relationships
+      final TableFilter tableFiter = new TableFilter(options, allTables);
+      tableFiter.filter();
 
       if (infoLevel.isRetrieveCheckConstraintInformation())
       {
@@ -365,166 +359,6 @@ public final class SchemaCrawler
       }
     }
 
-  }
-
-  /**
-   * Special case for "grep" like functionality. Handle procedure if a
-   * procedure column inclusion rule is found, and at least one column
-   * matches the rule.
-   * 
-   * @param options
-   *        Options
-   * @param procedure
-   *        Procedure to check
-   * @return Whether the column should be included
-   */
-  private static boolean grepMatch(final SchemaCrawlerOptions options,
-                                   final Procedure procedure)
-  {
-    final boolean invertMatch = options.isGrepInvertMatch();
-    final boolean checkIncludeForColumns = options.isGrepProcedureColumns();
-    final boolean checkIncludeForDefinitions = options.isGrepDefinitions();
-
-    final InclusionRule grepProcedureColumnInclusionRule = options
-      .getGrepProcedureColumnInclusionRule();
-    final InclusionRule grepDefinitionInclusionRule = options
-      .getGrepDefinitionInclusionRule();
-
-    if (!checkIncludeForColumns && !checkIncludeForDefinitions)
-    {
-      return true;
-    }
-
-    boolean includeForColumns = false;
-    boolean includeForDefinitions = false;
-    final ProcedureColumn[] columns = procedure.getColumns();
-    for (final ProcedureColumn column: columns)
-    {
-      if (checkIncludeForColumns)
-      {
-        if (grepProcedureColumnInclusionRule.include(column.getFullName()))
-        {
-          includeForColumns = true;
-          break;
-        }
-      }
-    }
-    // Additional include checks for definitions
-    if (checkIncludeForDefinitions)
-    {
-      if (grepDefinitionInclusionRule.include(procedure.getRemarks()))
-      {
-        includeForDefinitions = true;
-      }
-      if (grepDefinitionInclusionRule.include(procedure.getDefinition()))
-      {
-        includeForDefinitions = true;
-      }
-    }
-
-    boolean include = includeForColumns || includeForDefinitions;
-    if (invertMatch)
-    {
-      include = !include;
-    }
-
-    if (!include)
-    {
-      LOGGER.log(Level.FINE, "Removing procedure " + procedure
-                             + " since it does not match the grep pattern");
-    }
-
-    return include;
-  }
-
-  /**
-   * Special case for "grep" like functionality. Handle table if a table
-   * column inclusion rule is found, and at least one column matches the
-   * rule.
-   * 
-   * @param options
-   *        Options
-   * @param table
-   *        Table to check
-   * @return Whether the column should be included
-   */
-  private static boolean grepMatch(final SchemaCrawlerOptions options,
-                                   final Table table)
-  {
-    final boolean invertMatch = options.isGrepInvertMatch();
-    final boolean checkIncludeForColumns = options.isGrepColumns();
-    final boolean checkIncludeForDefinitions = options.isGrepDefinitions();
-
-    final InclusionRule grepColumnInclusionRule = options
-      .getGrepColumnInclusionRule();
-    final InclusionRule grepDefinitionInclusionRule = options
-      .getGrepDefinitionInclusionRule();
-
-    if (!checkIncludeForColumns && !checkIncludeForDefinitions)
-    {
-      return true;
-    }
-
-    boolean includeForColumns = false;
-    boolean includeForDefinitions = false;
-    final Column[] columns = table.getColumns();
-    for (final Column column: columns)
-    {
-      if (checkIncludeForColumns)
-      {
-        if (grepColumnInclusionRule.include(column.getFullName()))
-        {
-          includeForColumns = true;
-          break;
-        }
-      }
-      if (checkIncludeForDefinitions)
-      {
-        if (grepDefinitionInclusionRule.include(column.getRemarks()))
-        {
-          includeForDefinitions = true;
-          break;
-        }
-      }
-    }
-    // Additional include checks for definitions
-    if (checkIncludeForDefinitions)
-    {
-      if (grepDefinitionInclusionRule.include(table.getRemarks()))
-      {
-        includeForDefinitions = true;
-      }
-      if (table instanceof View)
-      {
-        if (grepDefinitionInclusionRule.include(((View) table).getDefinition()))
-        {
-          includeForDefinitions = true;
-        }
-      }
-      for (final Trigger trigger: table.getTriggers())
-      {
-        if (grepDefinitionInclusionRule.include(trigger.getActionStatement()))
-        {
-          includeForDefinitions = true;
-          break;
-        }
-      }
-    }
-
-    boolean include = checkIncludeForColumns && includeForColumns
-                      || checkIncludeForDefinitions && includeForDefinitions;
-    if (invertMatch)
-    {
-      include = !include;
-    }
-
-    if (!include)
-    {
-      LOGGER.log(Level.FINE, "Removing table " + table
-                             + " since it does not match the grep pattern");
-    }
-
-    return include;
   }
 
   private final Connection connection;
