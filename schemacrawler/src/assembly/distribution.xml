@@ -103,11 +103,6 @@
           todir="${examples.staging.dir}/maven-project/src/main/java" />
 
     <!-- Copy config files -->
-    <copy todir="${examples.staging.dir}/ant-task">
-      <fileset dir="${SchemaCrawler.home}/schemacrawler-site/src/site/resources/config">
-        <include name="*config*.properties" />
-      </fileset>
-    </copy> 	
     <copy todir="${examples.staging.dir}/db-specific-query">
       <fileset dir="${SchemaCrawler.home}/schemacrawler-site/src/site/resources/config">
         <include name="*config*.properties" />
