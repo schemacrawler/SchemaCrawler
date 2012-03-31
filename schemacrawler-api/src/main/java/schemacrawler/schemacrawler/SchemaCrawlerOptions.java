@@ -85,13 +85,15 @@ public final class SchemaCrawlerOptions
   private InclusionRule grepProcedureColumnInclusionRule;
   private InclusionRule grepDefinitionInclusionRule;
   private boolean grepInvertMatch;
+  private int childTableFilterDepth;
+  private int parentTableFilterDepth;
 
   private boolean isAlphabeticalSortForTables;
   private boolean isAlphabeticalSortForTableColumns;
   private boolean isAlphabeticalSortForForeignKeys;
   private boolean isAlphabeticalSortForIndexes;
-
   private boolean isAlphabeticalSortForProcedureColumns;
+
   private SchemaInfoLevel schemaInfoLevel;
   private InformationSchemaViews informationSchemaViews;
 
@@ -203,6 +205,11 @@ public final class SchemaCrawlerOptions
 
   }
 
+  public int getChildTableFilterDepth()
+  {
+    return childTableFilterDepth;
+  }
+
   /**
    * Gets the column inclusion rule.
    * 
@@ -251,6 +258,11 @@ public final class SchemaCrawlerOptions
   public InformationSchemaViews getInformationSchemaViews()
   {
     return informationSchemaViews;
+  }
+
+  public int getParentTableFilterDepth()
+  {
+    return parentTableFilterDepth;
   }
 
   /**
@@ -462,6 +474,11 @@ public final class SchemaCrawlerOptions
     isAlphabeticalSortForTables = alphabeticalSort;
   }
 
+  public void setChildTableFilterDepth(final int childTableFilterDepth)
+  {
+    this.childTableFilterDepth = childTableFilterDepth;
+  }
+
   /**
    * Sets the column inclusion rule.
    * 
@@ -537,6 +554,11 @@ public final class SchemaCrawlerOptions
     {
       this.informationSchemaViews = informationSchemaViews;
     }
+  }
+
+  public void setParentTableFilterDepth(final int parentTableFilterDepth)
+  {
+    this.parentTableFilterDepth = parentTableFilterDepth;
   }
 
   /**
