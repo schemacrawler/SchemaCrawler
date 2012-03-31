@@ -2,14 +2,14 @@
   "http://maven.apache.org/dtd/xdoc_1_0.dtd">
 <document>
   <properties>
-    <title>SchemaCrawler - snapshot Example</title>
+    <title>SchemaCrawler - ant Task Example</title>
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-    <section name="SchemaCrawler - Snapshot Example">
+    <section name="SchemaCrawler - ant Task Example">
       <subsection name="Description">
-        <p>The snapshot example demonstrates the use of the
-          &lt;schemacrawler&gt; macro that comes bundled with SchemaCrawler.
+        <p>The ant task example demonstrates the use of the
+          &lt;schemacrawler&gt; ant macro that comes bundled with SchemaCrawler.
         </p>
       </subsection>
       <subsection name="How to Run">
@@ -24,10 +24,7 @@
             distribution directory.
           </li>
           <li>Run
-            <span class="code">snapshot.cmd</span>
-            (or
-            <span class="code">snapshot.sh</span>
-            on Unix).
+            <span class="code">ant</span>
           </li>
           <li>See the output produced in the
             <span class="code">snapshot.txt</span>
@@ -37,9 +34,6 @@
       </subsection>
       <subsection name="How to Experiment">
         <ol>
-          <li>Try modifying the schemacrawler.config.properties with regular
-            expressions, logging, and so on.
-          </li>
           <li>Try using different SchemaCrawler commands. (For a complete list of
             SchemaCrawler commands, run
             <span class="code">java -jar
