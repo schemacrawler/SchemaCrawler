@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
-<project name="Snapshot" default="snapshot">
+<project name="ant_task_example" default="ant_task_example">
 
-  <description>Snapshot - An Example Using the SchemaCrawler Ant Macro</description>
+  <description>SchemaCrawler - ant Task Example</description>
 
   <!-- Step 1.
        Define the ant tasks (macros) that come with SchemaCrawler
@@ -22,7 +22,7 @@
   <!-- Step 3.
        Define an ant task that uses the <schemacrawler> macro
   -->
-  <target name="snapshot">
+  <target name="ant_task_example">
 
     <property name="outputfile" location="./snapshot.txt"/>
 
@@ -32,13 +32,13 @@
       schemacrawler-classpath="schemacrawler-classpath"
       user="sa"
       password=""
-    	driver="org.hsqldb.jdbcDriver"
+      driver="org.hsqldb.jdbcDriver"
       url="jdbc:hsqldb:hsql://localhost:9001/schemacrawler"
-    	infolevel="lint"
+      infolevel="maximum"
       command="details,count"
       outputfile="${outputfile}"/>
 
-    <echo message="Snapshot in ${outputfile}"/>
+    <echo message="SchemaCrawler output is in ${outputfile}"/>
 
   </target>
 
