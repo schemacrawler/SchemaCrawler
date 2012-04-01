@@ -31,12 +31,13 @@ public class TestSqliteDistribution
         "-database=" + sqliteDbFile.getAbsolutePath(),
         "-command=details",
         "-infolevel=standard",
+        "-loglevel=ALL",
         "-outputfile=" + testOutputFile
     });
 
     final List<String> failures = compareOutput(referenceFile,
-                                                           testOutputFile,
-                                                           outputFormat.name());
+                                                testOutputFile,
+                                                outputFormat.name());
     if (failures.size() > 0)
     {
       fail(failures.toString());
