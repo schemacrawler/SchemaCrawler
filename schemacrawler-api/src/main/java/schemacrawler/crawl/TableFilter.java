@@ -81,14 +81,14 @@ class TableFilter
                                                                       childTableFilterDepth,
                                                                       greppedTables);
     final int parentTableFilterDepth = options.getParentTableFilterDepth();
-    final Collection<MutableTable> prentTables = includeRelatedTables(TableRelationshipType.parent,
-                                                                      parentTableFilterDepth,
-                                                                      greppedTables);
+    final Collection<MutableTable> parentTables = includeRelatedTables(TableRelationshipType.parent,
+                                                                       parentTableFilterDepth,
+                                                                       greppedTables);
 
     final Set<MutableTable> filteredTables = new HashSet<MutableTable>();
     filteredTables.addAll(greppedTables);
     filteredTables.addAll(childTables);
-    filteredTables.addAll(prentTables);
+    filteredTables.addAll(parentTables);
     return filteredTables;
   }
 
@@ -191,11 +191,11 @@ class TableFilter
     {
       for (final MutableTable table: greppedTables)
       {
-        final Table[] childTables = table
+        final Table[] relatedTables = table
           .getRelatedTables(tableRelationshipType);
-        for (final Table childTable: childTables)
+        for (final Table relatedTable: relatedTables)
         {
-          includedTables.add((MutableTable) childTable);
+          includedTables.add((MutableTable) relatedTable);
         }
       }
     }
