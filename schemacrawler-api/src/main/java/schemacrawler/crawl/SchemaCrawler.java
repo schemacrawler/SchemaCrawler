@@ -267,40 +267,6 @@ public final class SchemaCrawler
         }
       }
 
-      // Filter the list of tables based on grep criteria, and
-      // parent-child relationships
-      final TableFilter tableFiter = new TableFilter(options, allTables);
-      tableFiter.filter();
-
-      if (infoLevel.isRetrieveCheckConstraintInformation())
-      {
-        retrieverExtra.retrieveCheckConstraintInformation();
-      }
-      if (infoLevel.isRetrieveTriggerInformation())
-      {
-        retrieverExtra.retrieveTriggerInformation();
-      }
-      if (infoLevel.isRetrieveViewInformation())
-      {
-        retrieverExtra.retrieveViewInformation();
-      }
-      if (infoLevel.isRetrieveAdditionalTableAttributes())
-      {
-        retrieverExtra.retrieveAdditionalTableAttributes();
-      }
-      if (infoLevel.isRetrieveTablePrivileges())
-      {
-        retrieverExtra.retrieveTablePrivileges();
-      }
-      if (infoLevel.isRetrieveAdditionalColumnAttributes())
-      {
-        retrieverExtra.retrieveAdditionalColumnAttributes();
-      }
-      if (infoLevel.isRetrieveTableColumnPrivileges())
-      {
-        retrieverExtra.retrieveTableColumnPrivileges();
-      }
-
       final NamedObjectSort tablesSort = NamedObjectSort
         .getNamedObjectSort(options.isAlphabeticalSortForTables());
       if (tablesSort == NamedObjectSort.natural
@@ -310,6 +276,7 @@ public final class SchemaCrawler
           .log(Level.WARNING,
                "Foreign-keys are not being retrieved, so tables cannot be sorted using the natural sort order");
       }
+
       for (final MutableTable table: allTables)
       {
         final boolean isView = table instanceof MutableView;
@@ -344,6 +311,41 @@ public final class SchemaCrawler
       allTables.setSortOrder(tablesSort);
       final TablesGraph tablesGraph = new TablesGraph(allTables);
       tablesGraph.setTablesSortIndices();
+
+      // Filter the list of tables based on grep criteria, and
+      // parent-child relationships
+      final TableFilter tableFiter = new TableFilter(options, allTables);
+      tableFiter.filter();
+
+      if (infoLevel.isRetrieveCheckConstraintInformation())
+      {
+        retrieverExtra.retrieveCheckConstraintInformation();
+      }
+      if (infoLevel.isRetrieveTriggerInformation())
+      {
+        retrieverExtra.retrieveTriggerInformation();
+      }
+      if (infoLevel.isRetrieveViewInformation())
+      {
+        retrieverExtra.retrieveViewInformation();
+      }
+      if (infoLevel.isRetrieveAdditionalTableAttributes())
+      {
+        retrieverExtra.retrieveAdditionalTableAttributes();
+      }
+      if (infoLevel.isRetrieveTablePrivileges())
+      {
+        retrieverExtra.retrieveTablePrivileges();
+      }
+      if (infoLevel.isRetrieveAdditionalColumnAttributes())
+      {
+        retrieverExtra.retrieveAdditionalColumnAttributes();
+      }
+      if (infoLevel.isRetrieveTableColumnPrivileges())
+      {
+        retrieverExtra.retrieveTableColumnPrivileges();
+      }
+
     }
     catch (final SQLException e)
     {
