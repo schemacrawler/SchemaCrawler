@@ -312,11 +312,6 @@ public final class SchemaCrawler
       final TablesGraph tablesGraph = new TablesGraph(allTables);
       tablesGraph.setTablesSortIndices();
 
-      // Filter the list of tables based on grep criteria, and
-      // parent-child relationships
-      final TableFilter tableFiter = new TableFilter(options, allTables);
-      tableFiter.filter();
-
       if (infoLevel.isRetrieveCheckConstraintInformation())
       {
         retrieverExtra.retrieveCheckConstraintInformation();
@@ -345,6 +340,11 @@ public final class SchemaCrawler
       {
         retrieverExtra.retrieveTableColumnPrivileges();
       }
+
+      // Filter the list of tables based on grep criteria, and
+      // parent-child relationships
+      final TableFilter tableFiter = new TableFilter(options, allTables);
+      tableFiter.filter();
 
     }
     catch (final SQLException e)
