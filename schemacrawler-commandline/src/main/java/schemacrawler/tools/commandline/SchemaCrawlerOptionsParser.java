@@ -28,6 +28,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.tools.options.InfoLevel;
 import sf.util.clparser.BooleanOption;
+import sf.util.clparser.NumberOption;
 import sf.util.clparser.StringOption;
 
 /**
@@ -55,6 +56,8 @@ final class SchemaCrawlerOptionsParser
           new StringOption("grepinout", InclusionRule.NONE),
           new StringOption("grepdef", InclusionRule.NONE),
           new BooleanOption('v', "invert-match"),
+          new NumberOption("parents", 0),
+          new NumberOption("children", 0),
           new BooleanOption("sorttables"),
           new BooleanOption("sortcolumns"),
           new BooleanOption("sortinout"));
@@ -159,6 +162,26 @@ final class SchemaCrawlerOptionsParser
     else
     {
       options.setGrepDefinitionInclusionRule(null);
+    }
+
+    if (hasOptionValue("parents"))
+    {
+      final int parentTableFilterDepth = getIntegerValue("parents");
+      options.setParentTableFilterDepth(parentTableFilterDepth);
+    }
+    else
+    {
+      options.setParentTableFilterDepth(0);
+    }
+
+    if (hasOptionValue("children"))
+    {
+      final int childTableFilterDepth = getIntegerValue("children");
+      options.setChildTableFilterDepth(childTableFilterDepth);
+    }
+    else
+    {
+      options.setParentTableFilterDepth(0);
     }
 
     if (hasOptionValue("sorttables"))

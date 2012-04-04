@@ -92,3 +92,14 @@
     
 -v (short for -invert-match)        
   Optional, inverts the match, and shows non-matching tables and columns
+
+-parents=<depth of parent tables>
+  <depth of parent tables> is the number of generations of ancestors
+  for the tables selected by grep, and shown in the results
+  Optional, default is 0
+  
+-children=<depth of child tables>
+  <depth of child tables> is the number of generations of descendants
+  for the tables selected by grep, and shown in the results
+  Optional, default is 0
+    
