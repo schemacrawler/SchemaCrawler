@@ -187,9 +187,11 @@ class TableFilter
                                                         final Set<MutableTable> greppedTables)
   {
     final Set<MutableTable> includedTables = new HashSet<MutableTable>();
+    includedTables.addAll(greppedTables);
+
     for (int i = 0; i < depth; i++)
     {
-      for (final MutableTable table: greppedTables)
+      for (final MutableTable table: new HashSet<MutableTable>(includedTables))
       {
         final Table[] relatedTables = table
           .getRelatedTables(tableRelationshipType);
