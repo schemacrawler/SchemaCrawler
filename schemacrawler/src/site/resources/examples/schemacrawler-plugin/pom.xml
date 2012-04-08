@@ -34,7 +34,7 @@
 	</dependencies>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<schemacrawler.version>8.12</schemacrawler.version>
+		<schemacrawler.version>8.14</schemacrawler.version>
 		<skip.signing.artifacts>true</skip.signing.artifacts>
 	</properties>
 	<build>
