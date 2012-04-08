@@ -5,7 +5,7 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-    <release version="8.12" date="2012-02-25">
+    <release version="8.14" date="2012-02-25">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Added ability to stream SchemaCrawler output.
       ]]></action>       
