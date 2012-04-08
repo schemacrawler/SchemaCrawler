@@ -23,8 +23,8 @@ digraph SchemaCrawler_Diagram {
 	authors_dba8a1ff [label=<
       <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
         <tr>
-          <td colspan="2" bgcolor="#96C1FA" align="left"><b>PUBLIC.BOOKS.AUTHORS</b></td>
-          <td bgcolor="#96C1FA" align="right">[table]</td>
+          <td colspan="2" bgcolor="#96C2FA" align="left"><b>PUBLIC.BOOKS.AUTHORS</b></td>
+          <td bgcolor="#96C2FA" align="right">[table]</td>
         </tr>
         <tr>
           <td port="address1_d0f1f1ec.start" align="left">ADDRESS1</td>
@@ -76,8 +76,8 @@ digraph SchemaCrawler_Diagram {
 	bookauthors_aa4376 [label=<
       <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
         <tr>
-          <td colspan="2" bgcolor="#96C1FA" align="left"><b>PUBLIC.BOOKS.BOOKAUTHORS</b></td>
-          <td bgcolor="#96C1FA" align="right">[table]</td>
+          <td colspan="2" bgcolor="#96C2FA" align="left"><b>PUBLIC.BOOKS.BOOKAUTHORS</b></td>
+          <td bgcolor="#96C2FA" align="right">[table]</td>
         </tr>
         <tr>
           <td port="authorid_19681b5e.start" align="left">AUTHORID</td>
@@ -99,8 +99,8 @@ digraph SchemaCrawler_Diagram {
 	authorslist_b29d331d [label=<
       <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
         <tr>
-          <td colspan="2" bgcolor="#96C1FA" align="left"><b>PUBLIC.BOOKS.AUTHORSLIST</b></td>
-          <td bgcolor="#96C1FA" align="right">[view]</td>
+          <td colspan="2" bgcolor="#96C2FA" align="left"><b>PUBLIC.BOOKS.AUTHORSLIST</b></td>
+          <td bgcolor="#96C2FA" align="right">[view]</td>
         </tr>
         <tr>
           <td port="firstname_d3258b8a.start" align="left">FIRSTNAME</td>
@@ -122,8 +122,8 @@ digraph SchemaCrawler_Diagram {
 	books_afd2ba21 [label=<
       <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
         <tr>
-          <td colspan="2" bgcolor="#96C1FA" align="left"><b>PUBLIC.BOOKS.BOOKS</b></td>
-          <td bgcolor="#96C1FA" align="right">[table]</td>
+          <td colspan="2" bgcolor="#96C2FA" align="left"><b>PUBLIC.BOOKS.BOOKS</b></td>
+          <td bgcolor="#96C2FA" align="right">[table]</td>
         </tr>
         <tr>
           <td port="description_f1e45f8f.start" align="left">DESCRIPTION</td>
@@ -160,8 +160,8 @@ digraph SchemaCrawler_Diagram {
 	globalcounts_2ab3635a [label=<
       <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
         <tr>
-          <td colspan="2" bgcolor="#96C1FA" align="left"><b>PUBLIC.BOOKS."Global Counts"</b></td>
-          <td bgcolor="#96C1FA" align="right">[table]</td>
+          <td colspan="2" bgcolor="#96C2FA" align="left"><b>PUBLIC.BOOKS."Global Counts"</b></td>
+          <td bgcolor="#96C2FA" align="right">[table]</td>
         </tr>
         <tr>
           <td port="globalcount_22cfa042.start" align="left">"Global Count"</td>
@@ -173,8 +173,8 @@ digraph SchemaCrawler_Diagram {
 	publishers_b8da20c0 [label=<
       <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
         <tr>
-          <td colspan="2" bgcolor="#96C1FA" align="left"><b>PUBLIC.BOOKS.PUBLISHERS</b></td>
-          <td bgcolor="#96C1FA" align="right">[table]</td>
+          <td colspan="2" bgcolor="#96C2FA" align="left"><b>PUBLIC.BOOKS.PUBLISHERS</b></td>
+          <td bgcolor="#96C2FA" align="right">[table]</td>
         </tr>
         <tr>
           <td port="id_6fc9dd09.start" align="left"><b><i>ID</i></b></td>
@@ -191,8 +191,8 @@ digraph SchemaCrawler_Diagram {
 	extra_pk_334890da [label=<
       <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
         <tr>
-          <td colspan="2" bgcolor="#DEFA96" align="left"><b>PUBLIC.FOR_LINT.EXTRA_PK</b></td>
-          <td bgcolor="#DEFA96" align="right">[table]</td>
+          <td colspan="2" bgcolor="#BFFA96" align="left"><b>PUBLIC.FOR_LINT.EXTRA_PK</b></td>
+          <td bgcolor="#BFFA96" align="right">[table]</td>
         </tr>
         <tr>
           <td port="id_e9913eaf.start" align="left"><b><i>ID</i></b></td>
@@ -214,8 +214,8 @@ digraph SchemaCrawler_Diagram {
 	globalcounts_986b8a53 [label=<
       <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
         <tr>
-          <td colspan="2" bgcolor="#DEFA96" align="left"><b>PUBLIC.FOR_LINT."Global Counts"</b></td>
-          <td bgcolor="#DEFA96" align="right">[table]</td>
+          <td colspan="2" bgcolor="#BFFA96" align="left"><b>PUBLIC.FOR_LINT."Global Counts"</b></td>
+          <td bgcolor="#BFFA96" align="right">[table]</td>
         </tr>
         <tr>
           <td port="globalcount_9be78829.start" align="left">"Global Count"</td>
@@ -227,16 +227,16 @@ digraph SchemaCrawler_Diagram {
 	no_columns_1899a78f [label=<
       <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
         <tr>
-          <td colspan="2" bgcolor="#DEFA96" align="left"><b>PUBLIC.FOR_LINT.No_Columns</b></td>
-          <td bgcolor="#DEFA96" align="right">[table]</td>
+          <td colspan="2" bgcolor="#BFFA96" align="left"><b>PUBLIC.FOR_LINT.No_Columns</b></td>
+          <td bgcolor="#BFFA96" align="right">[table]</td>
         </tr>
       </table>
     >];
 	publications_949377f7 [label=<
       <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
         <tr>
-          <td colspan="2" bgcolor="#DEFA96" align="left"><b>PUBLIC.FOR_LINT.PUBLICATIONS</b></td>
-          <td bgcolor="#DEFA96" align="right">[table]</td>
+          <td colspan="2" bgcolor="#BFFA96" align="left"><b>PUBLIC.FOR_LINT.PUBLICATIONS</b></td>
+          <td bgcolor="#BFFA96" align="right">[table]</td>
         </tr>
         <tr>
           <td port="description_d3f90c65.start" align="left">DESCRIPTION</td>
@@ -283,8 +283,8 @@ digraph SchemaCrawler_Diagram {
 	writers_bf84ac10 [label=<
       <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
         <tr>
-          <td colspan="2" bgcolor="#DEFA96" align="left"><b>PUBLIC.FOR_LINT.WRITERS</b></td>
-          <td bgcolor="#DEFA96" align="right">[table]</td>
+          <td colspan="2" bgcolor="#BFFA96" align="left"><b>PUBLIC.FOR_LINT.WRITERS</b></td>
+          <td bgcolor="#BFFA96" align="right">[table]</td>
         </tr>
         <tr>
           <td port="address1_9be1aafb.start" align="left">ADDRESS1</td>
@@ -381,8 +381,8 @@ digraph SchemaCrawler_Diagram {
 	regions_bc895c48 [label=<
       <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
         <tr>
-          <td colspan="2" bgcolor="#F996FA" align="left"><b>PUBLIC."PUBLISHER SALES".REGIONS</b></td>
-          <td bgcolor="#F996FA" align="right">[table]</td>
+          <td colspan="2" bgcolor="#FA96E1" align="left"><b>PUBLIC."PUBLISHER SALES".REGIONS</b></td>
+          <td bgcolor="#FA96E1" align="right">[table]</td>
         </tr>
         <tr>
           <td port="city_2c74db51.start" align="left">CITY</td>
@@ -409,8 +409,8 @@ digraph SchemaCrawler_Diagram {
 	sales_20be6f95 [label=<
       <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
         <tr>
-          <td colspan="2" bgcolor="#F996FA" align="left"><b>PUBLIC."PUBLISHER SALES".SALES</b></td>
-          <td bgcolor="#F996FA" align="right">[table]</td>
+          <td colspan="2" bgcolor="#FA96E1" align="left"><b>PUBLIC."PUBLISHER SALES".SALES</b></td>
+          <td bgcolor="#FA96E1" align="right">[table]</td>
         </tr>
         <tr>
           <td port="bookid_3c829a3d.start" align="left">BOOKID</td>
