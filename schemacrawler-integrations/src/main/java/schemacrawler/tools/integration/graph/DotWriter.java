@@ -21,7 +21,6 @@
 package schemacrawler.tools.integration.graph;
 
 
-import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -47,25 +46,6 @@ import sf.util.Utility;
 
 final class DotWriter
 {
-
-  private static float random = 0.123456f;
-
-  private static String nextRandomHTMLPastelColorValue()
-  {
-    final float golden_ratio_conjugate = 0.618033988749895f;
-
-    float hue = random;
-    hue += golden_ratio_conjugate;
-    hue %= 1;
-    random = hue;
-
-    final float saturation = 0.4f;
-    final float luminance = 0.98f;
-
-    final Color color = Color.getHSBColor(hue, saturation, luminance);
-
-    return "#" + Integer.toHexString(color.getRGB()).substring(2).toUpperCase();
-  }
 
   private final PrintWriter out;
   private final Map<Schema, String> colorMap;
@@ -252,7 +232,7 @@ final class DotWriter
     final String tableNameBgColor;
     if (!colorMap.containsKey(schema))
     {
-      tableNameBgColor = nextRandomHTMLPastelColorValue();
+      tableNameBgColor = Utility.pastelColorHTMLValue(schema.getName());
       colorMap.put(schema, tableNameBgColor);
     }
     else
