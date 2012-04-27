@@ -43,6 +43,7 @@ public final class InformationSchemaViews
   private static final String KEY_INFORMATION_SCHEMA_TABLE_CONSTRAINTS = "select.INFORMATION_SCHEMA.TABLE_CONSTRAINTS";
   private static final String KEY_INFORMATION_SCHEMA_ROUTINES = "select.INFORMATION_SCHEMA.ROUTINES";
   private static final String KEY_INFORMATION_SCHEMA_CHECK_CONSTRAINTS = "select.INFORMATION_SCHEMA.CHECK_CONSTRAINTS";
+  private static final String KEY_INFORMATION_SCHEMA_SCHEMATA = "select.INFORMATION_SCHEMA.SCHEMATA";
   private static final String KEY_ADDITIONAL_TABLE_ATTRIBUTES = "select.ADDITIONAL_TABLE_ATTRIBUTES";
   private static final String KEY_ADDITIONAL_COLUMN_ATTRIBUTES = "select.ADDITIONAL_COLUMN_ATTRIBUTES";
 
@@ -73,6 +74,7 @@ public final class InformationSchemaViews
           KEY_INFORMATION_SCHEMA_TABLE_CONSTRAINTS,
           KEY_INFORMATION_SCHEMA_ROUTINES,
           KEY_INFORMATION_SCHEMA_CHECK_CONSTRAINTS,
+          KEY_INFORMATION_SCHEMA_SCHEMATA,
           KEY_ADDITIONAL_TABLE_ATTRIBUTES,
           KEY_ADDITIONAL_COLUMN_ATTRIBUTES
       };
@@ -100,7 +102,7 @@ public final class InformationSchemaViews
    * 
    * @return Additional attributes SQL for columns.
    */
-  public String getAdditionalColumnAttributes()
+  public String getAdditionalColumnAttributesSql()
   {
     return informationSchemaQueries.get(KEY_ADDITIONAL_COLUMN_ATTRIBUTES);
   }
@@ -111,7 +113,7 @@ public final class InformationSchemaViews
    * 
    * @return Additional attributes SQL for tables.
    */
-  public String getAdditionalTableAttributes()
+  public String getAdditionalTableAttributesSql()
   {
     return informationSchemaQueries.get(KEY_ADDITIONAL_TABLE_ATTRIBUTES);
   }
@@ -122,7 +124,7 @@ public final class InformationSchemaViews
    * 
    * @return Table check constraints SQL.
    */
-  public String getCheckConstraints()
+  public String getCheckConstraintsSql()
   {
     return informationSchemaQueries
       .get(KEY_INFORMATION_SCHEMA_CHECK_CONSTRAINTS);
@@ -134,9 +136,19 @@ public final class InformationSchemaViews
    * 
    * @return Procedure defnitions SQL.
    */
-  public String getRoutines()
+  public String getRoutinesSql()
   {
     return informationSchemaQueries.get(KEY_INFORMATION_SCHEMA_ROUTINES);
+  }
+
+  /**
+   * Gets the schemata SQL from the additional configuration.
+   * 
+   * @return Schemata SQL.
+   */
+  public String getSchemataSql()
+  {
+    return informationSchemaQueries.get(KEY_INFORMATION_SCHEMA_SCHEMATA);
   }
 
   /**
@@ -144,7 +156,7 @@ public final class InformationSchemaViews
    * 
    * @return Table constraints SQL.
    */
-  public String getTableConstraints()
+  public String getTableConstraintsSql()
   {
     return informationSchemaQueries
       .get(KEY_INFORMATION_SCHEMA_TABLE_CONSTRAINTS);
@@ -155,7 +167,7 @@ public final class InformationSchemaViews
    * 
    * @return Trigger defnitions SQL.
    */
-  public String getTriggers()
+  public String getTriggersSql()
   {
     return informationSchemaQueries.get(KEY_INFORMATION_SCHEMA_TRIGGERS);
   }
@@ -165,7 +177,7 @@ public final class InformationSchemaViews
    * 
    * @return View defnitions SQL.
    */
-  public String getViews()
+  public String getViewsSql()
   {
     return informationSchemaQueries.get(KEY_INFORMATION_SCHEMA_VIEWS);
   }
@@ -192,6 +204,12 @@ public final class InformationSchemaViews
   {
     return informationSchemaQueries
       .containsKey(KEY_INFORMATION_SCHEMA_ROUTINES);
+  }
+
+  public boolean hasSchemataSql()
+  {
+    return informationSchemaQueries
+      .containsKey(KEY_INFORMATION_SCHEMA_SCHEMATA);
   }
 
   public boolean hasTableConstraintsSql()
@@ -253,6 +271,17 @@ public final class InformationSchemaViews
   public void setRoutinesSql(final String sql)
   {
     informationSchemaQueries.put(KEY_INFORMATION_SCHEMA_ROUTINES, sql);
+  }
+
+  /**
+   * Sets the schemata SQL.
+   * 
+   * @param sql
+   *        Schemata SQL.
+   */
+  public void setSchemataSql(final String sql)
+  {
+    informationSchemaQueries.put(KEY_INFORMATION_SCHEMA_SCHEMATA, sql);
   }
 
   /**
