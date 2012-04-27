@@ -76,7 +76,7 @@ final class TableExRetriever
       return;
     }
     final String columnAttributesSql = informationSchemaViews
-      .getAdditionalColumnAttributes();
+      .getAdditionalColumnAttributesSql();
 
     final Connection connection = getDatabaseConnection();
     final Statement statement = connection.createStatement();
@@ -157,7 +157,7 @@ final class TableExRetriever
       return;
     }
     final String tableAttributesSql = informationSchemaViews
-      .getAdditionalTableAttributes();
+      .getAdditionalTableAttributesSql();
 
     final Connection connection = getDatabaseConnection();
     final Statement statement = connection.createStatement();
@@ -225,7 +225,7 @@ final class TableExRetriever
                  "Trigger definition SQL statement was not provided");
       return;
     }
-    final String triggerInformationSql = informationSchemaViews.getTriggers();
+    final String triggerInformationSql = informationSchemaViews.getTriggersSql();
 
     final Connection connection = getDatabaseConnection();
     final Statement statement = connection.createStatement();
@@ -328,7 +328,7 @@ final class TableExRetriever
       return;
     }
     final String tableConstraintsInformationSql = informationSchemaViews
-      .getTableConstraints();
+      .getTableConstraintsSql();
 
     final Connection connection = getDatabaseConnection();
     Statement statement = null;
@@ -409,7 +409,7 @@ final class TableExRetriever
       return;
     }
     final String checkConstraintInformationSql = informationSchemaViews
-      .getCheckConstraints();
+      .getCheckConstraintsSql();
 
     // Get check constraint definitions
     statement = null;
@@ -543,7 +543,7 @@ final class TableExRetriever
                  "Trigger definition SQL statement was not provided");
       return;
     }
-    final String triggerInformationSql = informationSchemaViews.getTriggers();
+    final String triggerInformationSql = informationSchemaViews.getTriggersSql();
 
     final Connection connection = getDatabaseConnection();
     final Statement statement = connection.createStatement();
@@ -642,7 +642,7 @@ final class TableExRetriever
       LOGGER.log(Level.FINE, "Views SQL statement was not provided");
       return;
     }
-    final String viewInformationSql = informationSchemaViews.getViews();
+    final String viewInformationSql = informationSchemaViews.getViewsSql();
 
     final Connection connection = getDatabaseConnection();
     final Statement statement = connection.createStatement();

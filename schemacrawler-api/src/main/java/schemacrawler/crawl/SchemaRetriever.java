@@ -21,7 +21,9 @@
 package schemacrawler.crawl;
 
 
+import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -30,6 +32,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.InclusionRule;
+import schemacrawler.schemacrawler.InformationSchemaViews;
 
 final class SchemaRetriever
   extends AbstractRetriever
@@ -64,7 +67,14 @@ final class SchemaRetriever
   void retrieveSchemas(final InclusionRule schemaInclusionRule)
     throws SQLException
   {
-    final Set<SchemaReference> schemaRefs = retrieveAllSchemas();
+    final Set<SchemaReference> schemaRefs;
+
+    // Prefer to retrieve schemas from the INFORMATION_SCHEMA views
+    schemaRefs = retrieveAllSchemasFromInformationSchemaViews();
+    if (schemaRefs.isEmpty())
+    {
+      schemaRefs.addAll(retrieveAllSchemas());
+    }
 
     // Filter out schemas
     for (final Iterator<SchemaReference> iterator = schemaRefs.iterator(); iterator
@@ -190,6 +200,52 @@ final class SchemaRetriever
         schemaRefs.add(new SchemaReference(catalogName, null));
       }
     }
+    return schemaRefs;
+  }
+
+  private Set<SchemaReference> retrieveAllSchemasFromInformationSchemaViews()
+    throws SQLException
+  {
+    final Set<SchemaReference> schemaRefs = new HashSet<SchemaReference>();
+
+    final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
+      .getInformationSchemaViews();
+    if (!informationSchemaViews.hasSchemataSql())
+    {
+      LOGGER.log(Level.FINE, "Schemata SQL statement was not provided");
+      return schemaRefs;
+    }
+    final String schemataSql = informationSchemaViews.getSchemataSql();
+
+    final Connection connection = getDatabaseConnection();
+    final Statement statement = connection.createStatement();
+    MetadataResultSet results = null;
+    try
+    {
+      results = new MetadataResultSet(statement.executeQuery(schemataSql));
+      while (results.next())
+      {
+        final String catalogName = quotedName(results.getString("CATALOG_NAME"));
+        final String schemaName = quotedName(results.getString("SCHEMA_NAME"));
+        LOGGER.log(Level.FINER, String.format("Retrieving schema: %s --> %s",
+                                              catalogName,
+                                              schemaName));
+        schemaRefs.add(new SchemaReference(catalogName, schemaName));
+      }
+    }
+    catch (final Exception e)
+    {
+      LOGGER.log(Level.WARNING, "Could not retrieve schemas", e);
+    }
+    finally
+    {
+      if (results != null)
+      {
+        results.close();
+      }
+      statement.close();
+    }
+
     return schemaRefs;
   }
 
