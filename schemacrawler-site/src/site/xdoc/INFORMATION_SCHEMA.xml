@@ -60,6 +60,26 @@ hsqldb.select.INFORMATION_SCHEMA.VIEWS=\
 ]]>
         </source>
 			</subsection>
+			<subsection name="INFORMATION_SCHEMA.SCHEMATA">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Column name</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>CATALOG_NAME</td>
+                            <td>The name of the catalog.</td>
+                        </tr>
+                        <tr>
+                            <td>SCHEMA_NAME</td>
+                            <td>The name of the schema.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </subsection>
 			<subsection name="INFORMATION_SCHEMA.VIEWS">
 				<table>
 					<thead>
