@@ -512,7 +512,7 @@ final class TableRetriever
                                              final String columnName)
   {
     final boolean supportsCatalogs = getRetrieverConnection()
-      .getDatabaseSystemParameters().isSupportsCatalogs();
+      .isSupportsCatalogs();
     MutableColumn column = null;
     final MutableSchema schema = lookupSchema(supportsCatalogs? catalogName
                                                               : null,

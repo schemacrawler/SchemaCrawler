@@ -97,6 +97,11 @@ public final class SchemaCrawlerOptions
   private SchemaInfoLevel schemaInfoLevel;
   private InformationSchemaViews informationSchemaViews;
 
+  private boolean hasOverrideForSupportsSchemas;
+  private boolean isSupportsSchemasOverride;
+  private boolean hasOverrideForSupportsCatalogs;
+  private boolean isSupportsCatalogOverride;
+
   /**
    * Default options.
    */
@@ -344,6 +349,16 @@ public final class SchemaCrawlerOptions
     return tableTypesCopy;
   }
 
+  public boolean hasOverrideForSupportsCatalogs()
+  {
+    return hasOverrideForSupportsCatalogs;
+  }
+
+  public boolean hasOverrideForSupportsSchemas()
+  {
+    return hasOverrideForSupportsSchemas;
+  }
+
   /**
    * Whether foreign keys are alphabetically sorted.
    * 
@@ -417,6 +432,16 @@ public final class SchemaCrawlerOptions
   public boolean isGrepProcedureColumns()
   {
     return grepProcedureColumnInclusionRule != null;
+  }
+
+  public boolean isSupportsCatalogOverride()
+  {
+    return isSupportsCatalogOverride;
+  }
+
+  public boolean isSupportsSchemasOverride()
+  {
+    return isSupportsSchemasOverride;
   }
 
   /**
@@ -616,6 +641,18 @@ public final class SchemaCrawlerOptions
   public void setSchemaInfoLevel(final SchemaInfoLevel schemaInfoLevel)
   {
     this.schemaInfoLevel = schemaInfoLevel;
+  }
+
+  public void setSupportsCatalogOverride(final boolean isSupportsCatalogOverride)
+  {
+    hasOverrideForSupportsCatalogs = true;
+    this.isSupportsCatalogOverride = isSupportsCatalogOverride;
+  }
+
+  public void setSupportsSchemasOverride(final boolean isSupportsSchemasOverride)
+  {
+    hasOverrideForSupportsSchemas = true;
+    this.isSupportsSchemasOverride = isSupportsSchemasOverride;
   }
 
   /**
