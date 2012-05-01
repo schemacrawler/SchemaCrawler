@@ -24,9 +24,18 @@ package schemacrawler.crawl;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import sf.util.Utility;
 
 /**
  * A connection for the retriever. Wraps a live database connection.
@@ -36,9 +45,15 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 final class RetrieverConnection
 {
 
+  private static final Logger LOGGER = Logger
+    .getLogger(RetrieverConnection.class.getName());
+
   private final Connection connection;
   private final DatabaseMetaData metaData;
-  private final DatabaseSystemParameters dbSystemParameters;
+  private final boolean supportsCatalogs;
+  private final boolean supportsSchemas;
+  private final String identifierQuoteString;
+  private final List<String> reservedWords;
   private final InformationSchemaViews informationSchemaViews;
 
   RetrieverConnection(final Connection connection,
@@ -60,9 +75,56 @@ final class RetrieverConnection
     }
     this.connection = connection;
     metaData = connection.getMetaData();
-    dbSystemParameters = new DatabaseSystemParameters(connection);
 
     informationSchemaViews = schemaCrawlerOptions.getInformationSchemaViews();
+
+    if (schemaCrawlerOptions.hasOverrideForSupportsCatalogs())
+    {
+      supportsCatalogs = schemaCrawlerOptions.isSupportsCatalogOverride();
+    }
+    else
+    {
+      supportsCatalogs = metaData.supportsCatalogsInTableDefinitions();
+    }
+    LOGGER.log(Level.CONFIG, String
+      .format("Database %s catalogs", supportsCatalogs? "supports"
+                                                      : "does not support"));
+
+    if (schemaCrawlerOptions.hasOverrideForSupportsSchemas())
+    {
+      supportsSchemas = schemaCrawlerOptions.isSupportsCatalogOverride();
+    }
+    else
+    {
+      supportsSchemas = metaData.supportsSchemasInTableDefinitions();
+    }
+    LOGGER
+      .log(Level.CONFIG, String.format("Database %s schemas",
+                                       supportsSchemas? "supports"
+                                                      : "does not support"));
+
+    final String identifierQuoteString = metaData.getIdentifierQuoteString();
+    if (Utility.isBlank(identifierQuoteString))
+    {
+      this.identifierQuoteString = "";
+    }
+    else
+    {
+      this.identifierQuoteString = identifierQuoteString;
+    }
+
+    final Set<String> rawReservedWords = new HashSet<String>();
+    rawReservedWords
+      .addAll(Arrays.asList(metaData.getSQLKeywords().split(",")));
+    rawReservedWords.addAll(Arrays.asList(Utility
+      .readResourceFully("/sql2003_reserved_words.txt").split("\r\n")));
+    final List<String> reservedWordsList = new ArrayList<String>();
+    for (final String reservedWord: rawReservedWords)
+    {
+      reservedWordsList.add(reservedWord.trim().toUpperCase());
+    }
+    Collections.sort(reservedWordsList);
+    reservedWords = Collections.unmodifiableList(reservedWordsList);
   }
 
   Connection getConnection()
@@ -70,9 +132,9 @@ final class RetrieverConnection
     return connection;
   }
 
-  DatabaseSystemParameters getDatabaseSystemParameters()
+  String getIdentifierQuoteString()
   {
-    return dbSystemParameters;
+    return identifierQuoteString;
   }
 
   /**
@@ -88,6 +150,38 @@ final class RetrieverConnection
   DatabaseMetaData getMetaData()
   {
     return metaData;
+  }
+
+  List<String> getReservedWords()
+  {
+    return reservedWords;
+  }
+
+  boolean isSupportsCatalogs()
+  {
+    return supportsCatalogs;
+  }
+
+  boolean isSupportsSchemas()
+  {
+    return supportsSchemas;
+  }
+
+  boolean needsToBeQuoted(final String name)
+  {
+    final boolean needsToBeQuoted;
+    if (name != null
+        && identifierQuoteString != null
+        && (Utility.containsWhitespace(name) || reservedWords.contains(name
+          .toUpperCase())))
+    {
+      needsToBeQuoted = true;
+    }
+    else
+    {
+      needsToBeQuoted = false;
+    }
+    return needsToBeQuoted;
   }
 
 }

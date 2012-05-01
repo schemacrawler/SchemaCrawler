@@ -110,8 +110,7 @@ abstract class AbstractRetriever
       return false;
     }
 
-    final boolean supportsCatalogs = retrieverConnection
-      .getDatabaseSystemParameters().isSupportsCatalogs();
+    final boolean supportsCatalogs = retrieverConnection.isSupportsCatalogs();
 
     boolean belongsToCatalog = true;
     boolean belongsToSchema = true;
@@ -239,13 +238,12 @@ abstract class AbstractRetriever
   String quotedName(final String name)
   {
     final String quotedName;
-    final DatabaseSystemParameters dbSystemParameters = getRetrieverConnection()
-      .getDatabaseSystemParameters();
-    if (dbSystemParameters != null && !Utility.isBlank(name))
+    final RetrieverConnection retrieverConnection = getRetrieverConnection();
+    if (retrieverConnection != null && !Utility.isBlank(name))
     {
-      final String identifierQuoteString = dbSystemParameters
+      final String identifierQuoteString = retrieverConnection
         .getIdentifierQuoteString();
-      if (dbSystemParameters.needsToBeQuoted(name))
+      if (retrieverConnection.needsToBeQuoted(name))
       {
         quotedName = identifierQuoteString + name + identifierQuoteString;
       }
@@ -264,11 +262,10 @@ abstract class AbstractRetriever
   String unquotedName(final String name)
   {
     final String unquotedName;
-    final DatabaseSystemParameters dbSystemParameters = getRetrieverConnection()
-      .getDatabaseSystemParameters();
-    if (dbSystemParameters != null && !Utility.isBlank(name))
+    final RetrieverConnection retrieverConnection = getRetrieverConnection();
+    if (retrieverConnection != null && !Utility.isBlank(name))
     {
-      final String identifierQuoteString = dbSystemParameters
+      final String identifierQuoteString = retrieverConnection
         .getIdentifierQuoteString();
       if (name.startsWith(identifierQuoteString)
           && name.endsWith(identifierQuoteString))
