@@ -226,6 +226,7 @@
     <create-db-distribution database="postgresql" license="gpl-3.0" />
     <create-db-distribution database="sqlserver" license="gpl-3.0" />
     <create-db-distribution database="sqlite" license="gpl-3.0" />
+  	<create-db-distribution database="sybaseiq" license="lgpl-3.0" />
 
   </target>
 

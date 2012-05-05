@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<project
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>net.sourceforge.schemacrawler</groupId>
+		<artifactId>schemacrawler-all</artifactId>
+		<version>8.15</version>
+	</parent>
+	<artifactId>schemacrawler-sybaseiq</artifactId>
+	<packaging>jar</packaging>
+	<name>SchemaCrawler for Sybase IQ</name>
+	<licenses>
+		<license>
+			<name>GNU General Public License</name>
+			<url>http://www.gnu.org/copyleft/gpl.html</url>
+		</license>
+	</licenses>
+	<dependencies>
+		<dependency>
+			<groupId>net.sourceforge.schemacrawler</groupId>
+			<artifactId>schemacrawler-integrations</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sybase.jdbcx</groupId>
+			<artifactId>jconn4</artifactId>
+			<version>7.07</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>2.3.2</version>
+        <configuration>
+          <archive>
+            <index>true</index>
+            <manifest>
+              <mainClass>schemacrawler.tools.sybaseiq.Main</mainClass>
+              <addClasspath>true</addClasspath>
+            </manifest>
+            <manifestEntries>
+              <Project>${project.name}, ${project.version}</Project>
+              <Author>Sualeh Fatehi, sualeh@hotmail.com</Author>
+            </manifestEntries>
+          </archive>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>2.2.1</version>
+        <executions>
+          <execution>
+            <id>assembly</id>
+            <phase>package</phase>
+            <goals>
+              <goal>attached</goal>
+            </goals>
+            <configuration>
+              <descriptors>
+                <descriptor>src/assembly/distrib-zip.xml</descriptor>
+              </descriptors>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <version>2.7</version>
+        <configuration>
+          <skip>false</skip>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
