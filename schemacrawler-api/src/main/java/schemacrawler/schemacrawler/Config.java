@@ -54,6 +54,31 @@ public final class Config
   private static final Logger LOGGER = Logger.getLogger(Config.class.getName());
 
   /**
+   * Loads the SchemaCrawler configuration, and override configuration,
+   * from properties files.
+   * 
+   * @param configFilenames
+   *        Configuration file name.
+   * @return Configuration properties.
+   */
+  public static Config load(final String... configFilenames)
+  {
+    Properties configProperties = new Properties();
+    if (configFilenames != null)
+    {
+      for (final String configFilename: configFilenames)
+      {
+        if (!Utility.isBlank(configFilename))
+        {
+          configProperties = loadProperties(configProperties,
+                                            new File(configFilename));
+        }
+      }
+    }
+    return new Config(configProperties);
+  }
+
+  /**
    * Loads the SchemaCrawler configuration, from a properties file
    * stream.
    * 
@@ -81,31 +106,6 @@ public final class Config
                                         new InputStreamReader(stream));
     }
 
-    return new Config(configProperties);
-  }
-
-  /**
-   * Loads the SchemaCrawler configuration, and override configuration,
-   * from properties files.
-   * 
-   * @param configFilenames
-   *        Configuration file name.
-   * @return Configuration properties.
-   */
-  public static Config load(final String... configFilenames)
-  {
-    Properties configProperties = new Properties();
-    if (configFilenames != null)
-    {
-      for (final String configFilename: configFilenames)
-      {
-        if (!Utility.isBlank(configFilename))
-        {
-          configProperties = loadProperties(configProperties,
-                                            new File(configFilename));
-        }
-      }
-    }
     return new Config(configProperties);
   }
 
@@ -259,6 +259,18 @@ public final class Config
       value = defaultValue;
     }
     return value;
+  }
+
+  /**
+   * Checks if a value is available.
+   * 
+   * @param propertyName
+   *        Property name
+   * @return True if a value ia available.
+   */
+  public boolean hasValue(final String propertyName)
+  {
+    return super.containsKey(propertyName);
   }
 
   @Override

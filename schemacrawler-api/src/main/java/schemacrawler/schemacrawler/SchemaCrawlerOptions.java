@@ -64,6 +64,9 @@ public final class SchemaCrawlerOptions
   private static final String SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS = "schemacrawler.sort_alphabetically.table_foreignkeys";
   private static final String SC_SORT_ALPHABETICALLY_TABLE_COLUMNS = "schemacrawler.sort_alphabetically.table_columns";
 
+  private static final String SC_SUPPORTS_SCHEMAS_OVERRIDE = "schemacrawler.supports_schemas.override";
+  private static final String SC_SUPPORTS_CATALOG_OVERRIDE = "schemacrawler.supports_catalog.override";
+
   private static TableType[] copyTableTypes(final TableType[] tableTypes)
   {
     final TableType[] tableTypesCopy = new TableType[tableTypes.length];
@@ -207,6 +210,17 @@ public final class SchemaCrawlerOptions
       .getBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_INDEXES);
     isAlphabeticalSortForProcedureColumns = configProperties
       .getBooleanValue(SC_SORT_ALPHABETICALLY_PROCEDURE_COLUMNS);
+
+    if (configProperties.hasValue(SC_SUPPORTS_SCHEMAS_OVERRIDE))
+    {
+      setSupportsSchemasOverride(configProperties
+        .getBooleanValue(SC_SUPPORTS_SCHEMAS_OVERRIDE));
+    }
+    if (configProperties.hasValue(SC_SUPPORTS_CATALOG_OVERRIDE))
+    {
+      setSupportsCatalogOverride(configProperties
+        .getBooleanValue(SC_SUPPORTS_CATALOG_OVERRIDE));
+    }
 
   }
 
@@ -643,14 +657,38 @@ public final class SchemaCrawlerOptions
     this.schemaInfoLevel = schemaInfoLevel;
   }
 
+  /**
+   * Overrides the JDBC driver provided information about whether the
+   * database supports catalogs. Cannot be unset.
+   * 
+   * @param isSupportsCatalogOverride
+   *        Value for the override
+   */
   public void setSupportsCatalogOverride(final boolean isSupportsCatalogOverride)
   {
+    if (hasOverrideForSupportsCatalogs)
+    {
+      throw new IllegalAccessError("Cannot reset or unset override for catalog support");
+    }
+
     hasOverrideForSupportsCatalogs = true;
     this.isSupportsCatalogOverride = isSupportsCatalogOverride;
   }
 
+  /**
+   * Overrides the JDBC driver provided information about whether the
+   * database supports schema. Cannot be unset.
+   * 
+   * @param isSupportsSchemasOverride
+   *        Value for the override
+   */
   public void setSupportsSchemasOverride(final boolean isSupportsSchemasOverride)
   {
+    if (hasOverrideForSupportsSchemas)
+    {
+      throw new IllegalAccessError("Cannot reset or unset override for schema support");
+    }
+
     hasOverrideForSupportsSchemas = true;
     this.isSupportsSchemasOverride = isSupportsSchemasOverride;
   }
