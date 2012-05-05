@@ -5,6 +5,11 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+    <release version="8.15" date="2012-05-05">
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added distribution for Sybase IQ.
+      ]]></action>       
+    </release>    
     <release version="8.14" date="2012-04-08">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Added new command-line switch to show parent and child tables, in addition to those
