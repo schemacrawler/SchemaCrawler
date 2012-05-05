@@ -19,14 +19,18 @@
  */
 package schemacrawler.tools.sybaseiq;
 
-public final class BundledDriverOptions extends
-		schemacrawler.tools.options.BundledDriverOptions {
 
-	private static final long serialVersionUID = 788422181303398180L;
+public final class BundledDriverOptions
+  extends schemacrawler.tools.options.BundledDriverOptions
+{
 
-	public BundledDriverOptions() {
-		super("SchemaCrawler for Sybase IQ", "/help/Connections.sybaseiq.txt",
-				"/schemacrawler-sybaseiq.config.properties");
-	}
+  private static final long serialVersionUID = 788422181303398180L;
+
+  public BundledDriverOptions()
+  {
+    super("SchemaCrawler for Sybase IQ",
+          "/help/Connections.sybaseiq.txt",
+          "/schemacrawler-sybaseiq.config.properties");
+  }
 
 }
