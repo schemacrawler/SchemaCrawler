@@ -22,6 +22,7 @@ package schemacrawler.tools.traversal;
 
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Procedure;
+import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
@@ -44,6 +45,15 @@ public interface SchemaTraversalHandler
   /**
    * Provides information on the database schema.
    * 
+   * @param synonym
+   *        Synonym metadata.
+   */
+  void handle(final Synonym synonym)
+    throws SchemaCrawlerException;
+
+  /**
+   * Provides information on the database schema.
+   * 
    * @param table
    *        Table metadata.
    */
@@ -60,6 +70,12 @@ public interface SchemaTraversalHandler
     throws SchemaCrawlerException;
 
   void handleProceduresStart()
+    throws SchemaCrawlerException;
+
+  void handleSynonymsEnd()
+    throws SchemaCrawlerException;
+
+  void handleSynonymsStart()
     throws SchemaCrawlerException;
 
   void handleTablesEnd()

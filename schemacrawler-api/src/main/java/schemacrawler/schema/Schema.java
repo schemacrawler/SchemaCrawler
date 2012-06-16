@@ -77,6 +77,22 @@ public interface Schema
   String getSchemaName();
 
   /**
+   * Gets the synonym by name.
+   * 
+   * @param name
+   *        Name
+   * @return Synonym.
+   */
+  Synonym getSynonym(String name);
+
+  /**
+   * Gets the synonyms.
+   * 
+   * @return Synonyms
+   */
+  Synonym[] getSynonyms();
+
+  /**
    * Gets a table by name.
    * 
    * @param name

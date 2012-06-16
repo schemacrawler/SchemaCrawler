@@ -40,6 +40,7 @@ import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Privilege.Grant;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.ProcedureColumn;
+import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schema.View;
@@ -146,6 +147,48 @@ final class SchemaTextFormatter
       if (isVerbose)
       {
         printDefinition("remarks", "", procedure.getRemarks());
+      }
+
+      out.println(formattingHelper.createObjectEnd());
+    }
+
+    out.flush();
+
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handle(schemacrawler.schema.Synonym)
+   */
+  @Override
+  public void handle(final Synonym synonym)
+  {
+    final boolean underscore = isNotList;
+    final String nameRow = formattingHelper
+      .createNameRow(synonym.getFullName(), "[synonym]", underscore);
+
+    if (isNotList)
+    {
+      out.print(formattingHelper.createObjectStart(""));
+    }
+
+    out.println(nameRow);
+
+    if (isNotList)
+    {
+      out.println(formattingHelper.createDetailRow("",
+                                                   synonym.getName()
+                                                       + formattingHelper
+                                                         .createArrow()
+                                                       + synonym
+                                                         .getReferencedObject()
+                                                         .getFullName(),
+                                                   ""));
+
+      if (isVerbose)
+      {
+        printDefinition("remarks", "", synonym.getRemarks());
       }
 
       out.println(formattingHelper.createObjectEnd());
@@ -289,6 +332,39 @@ final class SchemaTextFormatter
   {
     out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
                                               "Procedures"));
+
+    if (isList)
+    {
+      out.print(formattingHelper.createObjectStart(""));
+    }
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handleSynonymsEnd()
+   */
+  @Override
+  public void handleSynonymsEnd()
+    throws SchemaCrawlerException
+  {
+    if (isList)
+    {
+      out.print(formattingHelper.createObjectEnd());
+    }
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handleSynonymsStart()
+   */
+  @Override
+  public void handleSynonymsStart()
+    throws SchemaCrawlerException
+  {
+    out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
+                                              "Synonyms"));
 
     if (isList)
     {

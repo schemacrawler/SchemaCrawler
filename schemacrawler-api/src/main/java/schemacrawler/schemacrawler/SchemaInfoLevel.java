@@ -57,6 +57,7 @@ public final class SchemaInfoLevel
   {
     final SchemaInfoLevel maximum = detailed();
     maximum.setRetrieveTriggerInformation(true);
+    maximum.setRetrieveSynonymInformation(true);
     maximum.setRetrieveAdditionalDatabaseInfo(true);
     maximum.setRetrieveAdditionalJdbcDriverInfo(true);
     maximum.setRetrieveTablePrivileges(true);
@@ -121,6 +122,7 @@ public final class SchemaInfoLevel
   private boolean retrieveTablePrivileges;
   private boolean retrieveTableColumnPrivileges;
   private boolean retrieveTriggerInformation;
+  private boolean retrieveSynonymInformation;
   private boolean retrieveTableColumns;
   private boolean retrieveAdditionalTableAttributes;
   private boolean retrieveAdditionalColumnAttributes;
@@ -203,6 +205,11 @@ public final class SchemaInfoLevel
   public boolean isRetrieveSchemaCrawlerInfo()
   {
     return retrieveSchemaCrawlerInfo;
+  }
+
+  public boolean isRetrieveSynonymInformation()
+  {
+    return retrieveSynonymInformation;
   }
 
   public boolean isRetrieveTableColumnPrivileges()
@@ -313,6 +320,11 @@ public final class SchemaInfoLevel
   public void setRetrieveSchemaCrawlerInfo(final boolean retrieveSchemaCrawlerInfo)
   {
     this.retrieveSchemaCrawlerInfo = retrieveSchemaCrawlerInfo;
+  }
+
+  public void setRetrieveSynonymInformation(final boolean retrieveSynonymInformation)
+  {
+    this.retrieveSynonymInformation = retrieveSynonymInformation;
   }
 
   public void setRetrieveTableColumnPrivileges(final boolean retrieveTableColumnPrivileges)

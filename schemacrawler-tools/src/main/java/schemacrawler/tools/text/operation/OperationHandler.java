@@ -79,15 +79,11 @@ final class OperationHandler
     final OutputFormat outputFormat = outputOptions.getOutputFormat();
     if (outputFormat == OutputFormat.json)
     {
-      dataFormatter = new DataJsonFormatter(operation,
-                                            options,
-                                            outputOptions);
+      dataFormatter = new DataJsonFormatter(operation, options, outputOptions);
     }
     else
     {
-      dataFormatter = new DataTextFormatter(operation,
-                                            options,
-                                            outputOptions);
+      dataFormatter = new DataTextFormatter(operation, options, outputOptions);
     }
   }
 
