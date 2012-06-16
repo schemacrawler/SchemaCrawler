@@ -44,6 +44,7 @@ public final class InformationSchemaViews
   private static final String KEY_INFORMATION_SCHEMA_ROUTINES = "select.INFORMATION_SCHEMA.ROUTINES";
   private static final String KEY_INFORMATION_SCHEMA_CHECK_CONSTRAINTS = "select.INFORMATION_SCHEMA.CHECK_CONSTRAINTS";
   private static final String KEY_INFORMATION_SCHEMA_SCHEMATA = "select.INFORMATION_SCHEMA.SCHEMATA";
+  private static final String KEY_INFORMATION_SCHEMA_SYNONYMS = "select.INFORMATION_SCHEMA.SYNONYMS";
   private static final String KEY_ADDITIONAL_TABLE_ATTRIBUTES = "select.ADDITIONAL_TABLE_ATTRIBUTES";
   private static final String KEY_ADDITIONAL_COLUMN_ATTRIBUTES = "select.ADDITIONAL_COLUMN_ATTRIBUTES";
 
@@ -75,6 +76,7 @@ public final class InformationSchemaViews
           KEY_INFORMATION_SCHEMA_ROUTINES,
           KEY_INFORMATION_SCHEMA_CHECK_CONSTRAINTS,
           KEY_INFORMATION_SCHEMA_SCHEMATA,
+          KEY_INFORMATION_SCHEMA_SYNONYMS,
           KEY_ADDITIONAL_TABLE_ATTRIBUTES,
           KEY_ADDITIONAL_COLUMN_ATTRIBUTES
       };
@@ -152,6 +154,16 @@ public final class InformationSchemaViews
   }
 
   /**
+   * Gets the synonyms SQL from the additional configuration.
+   * 
+   * @return Synonyms SQL.
+   */
+  public String getSynonymsSql()
+  {
+    return informationSchemaQueries.get(KEY_INFORMATION_SCHEMA_SYNONYMS);
+  }
+
+  /**
    * Gets the table constraints SQL from the additional configuration.
    * 
    * @return Table constraints SQL.
@@ -210,6 +222,12 @@ public final class InformationSchemaViews
   {
     return informationSchemaQueries
       .containsKey(KEY_INFORMATION_SCHEMA_SCHEMATA);
+  }
+
+  public boolean hasSynonymsSql()
+  {
+    return informationSchemaQueries
+      .containsKey(KEY_INFORMATION_SCHEMA_SYNONYMS);
   }
 
   public boolean hasTableConstraintsSql()
@@ -282,6 +300,17 @@ public final class InformationSchemaViews
   public void setSchemataSql(final String sql)
   {
     informationSchemaQueries.put(KEY_INFORMATION_SCHEMA_SCHEMATA, sql);
+  }
+
+  /**
+   * Sets the synonym SQL.
+   * 
+   * @param sql
+   *        Synonym SQL.
+   */
+  public void setSynonymSql(final String sql)
+  {
+    informationSchemaQueries.put(KEY_INFORMATION_SCHEMA_SYNONYMS, sql);
   }
 
   /**

@@ -28,6 +28,7 @@ import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Database;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Schema;
+import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
@@ -76,6 +77,7 @@ public class SchemaTraverser
     final List<ColumnDataType> columnDataTypes = new ArrayList<ColumnDataType>();
     final List<Table> tables = new ArrayList<Table>();
     final List<Procedure> procedures = new ArrayList<Procedure>();
+    final List<Synonym> synonyms = new ArrayList<Synonym>();
 
     columnDataTypes.addAll(Arrays.asList(database.getSystemColumnDataTypes()));
     for (final Schema schema: database.getSchemas())
@@ -83,6 +85,7 @@ public class SchemaTraverser
       columnDataTypes.addAll(Arrays.asList(schema.getColumnDataTypes()));
       tables.addAll(Arrays.asList(schema.getTables()));
       procedures.addAll(Arrays.asList(schema.getProcedures()));
+      synonyms.addAll(Arrays.asList(schema.getSynonyms()));
     }
 
     if (!columnDataTypes.isEmpty())
@@ -113,6 +116,16 @@ public class SchemaTraverser
         handler.handle(procedure);
       }
       handler.handleProceduresEnd();
+    }
+
+    if (!synonyms.isEmpty())
+    {
+      handler.handleSynonymsStart();
+      for (final Synonym synonym: synonyms)
+      {
+        handler.handle(synonym);
+      }
+      handler.handleSynonymsEnd();
     }
 
     handler.end();

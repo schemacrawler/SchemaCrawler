@@ -24,6 +24,7 @@ package schemacrawler.crawl;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Schema;
+import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
 
 /**
@@ -36,12 +37,13 @@ class MutableSchema
   implements Schema
 {
 
-  private static final long serialVersionUID = 3258128063743931187L;
+  private static final long serialVersionUID = 2309958458323938501L;
 
   private final SchemaReference schemaRef;
   private final ColumnDataTypes columnDataTypes = new ColumnDataTypes();
   private final NamedObjectList<MutableTable> tables = new NamedObjectList<MutableTable>();
   private final NamedObjectList<MutableProcedure> procedures = new NamedObjectList<MutableProcedure>();
+  private final NamedObjectList<MutableSynonym> synonyms = new NamedObjectList<MutableSynonym>();
 
   MutableSchema()
   {
@@ -135,6 +137,28 @@ class MutableSchema
   /**
    * {@inheritDoc}
    * 
+   * @see schemacrawler.schema.Schema#getProcedure(java.lang.String)
+   */
+  @Override
+  public MutableSynonym getSynonym(final String name)
+  {
+    return synonyms.lookup(this, name);
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.Schema#getProcedures()
+   */
+  @Override
+  public Synonym[] getSynonyms()
+  {
+    return synonyms.values().toArray(new Synonym[synonyms.size()]);
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
    * @see schemacrawler.schema.Schema#getTable(java.lang.String)
    */
   @Override
@@ -167,6 +191,11 @@ class MutableSchema
     procedures.add(procedure);
   }
 
+  void addSynonym(final MutableSynonym synonym)
+  {
+    synonyms.add(synonym);
+  }
+
   void addTable(final MutableTable table)
   {
     tables.add(table);
@@ -180,6 +209,11 @@ class MutableSchema
   void removeProcedure(final Procedure procedure)
   {
     procedures.remove(procedure);
+  }
+
+  void removeSynonym(final Synonym synonym)
+  {
+    synonyms.remove(synonym);
   }
 
   void removeTable(final Table table)

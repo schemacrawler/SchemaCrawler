@@ -32,6 +32,7 @@ import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Database;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Schema;
+import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
 
 /**
@@ -177,6 +178,19 @@ final class MutableDatabase
       }
     }
     return procedures;
+  }
+
+  NamedObjectList<MutableSynonym> getAllSynonyms()
+  {
+    final NamedObjectList<MutableSynonym> synonyms = new NamedObjectList<MutableSynonym>();
+    for (final Schema schema: getSchemas())
+    {
+      for (final Synonym synonym: schema.getSynonyms())
+      {
+        synonyms.add((MutableSynonym) synonym);
+      }
+    }
+    return synonyms;
   }
 
   NamedObjectList<MutableTable> getAllTables()

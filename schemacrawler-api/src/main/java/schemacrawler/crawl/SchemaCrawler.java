@@ -230,6 +230,42 @@ public final class SchemaCrawler
     }
   }
 
+  private static void crawlSynonyms(final MutableDatabase database,
+                                    final RetrieverConnection retrieverConnection,
+                                    final SchemaCrawlerOptions options)
+    throws SchemaCrawlerException
+  {
+    final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
+    final boolean retrieveSynonyms = infoLevel.isRetrieveSynonymInformation();
+    if (!retrieveSynonyms)
+    {
+      return;
+    }
+
+    final SynonymExRetriever retrieverExtra;
+    try
+    {
+      retrieverExtra = new SynonymExRetriever(retrieverConnection, database);
+      retrieverExtra.retrieveSynonymInformation();
+
+      // FIXME filter the list. Note that it is already filtered for the
+      // schema.
+    }
+    catch (final SQLException e)
+    {
+      if (e instanceof SchemaCrawlerSQLException)
+      {
+        final Throwable cause = e.getCause();
+        throw new SchemaCrawlerException(e.getMessage() + ": "
+                                         + cause.getMessage(), cause);
+      }
+      else
+      {
+        throw new SchemaCrawlerException("Exception retrieving schemas", e);
+      }
+    }
+  }
+
   private static void crawlTables(final MutableDatabase database,
                                   final RetrieverConnection retrieverConnection,
                                   final SchemaCrawlerOptions options)
@@ -413,6 +449,7 @@ public final class SchemaCrawler
       crawlColumnDataTypes(database, retrieverConnection, schemaCrawlerOptions);
       crawlTables(database, retrieverConnection, schemaCrawlerOptions);
       crawlProcedures(database, retrieverConnection, schemaCrawlerOptions);
+      crawlSynonyms(database, retrieverConnection, schemaCrawlerOptions);
 
       return database;
     }

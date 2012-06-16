@@ -382,6 +382,50 @@ hsqldb.select.INFORMATION_SCHEMA.VIEWS=\
 					</tbody>
 				</table>
 			</subsection>
+            <subsection name="INFORMATION_SCHEMA.EXT_SYNONYMS">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Column name</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>SYNONYM_CATALOG</td>
+                            <td>
+                                The name of the catalog containing the synonym.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>SYNONYM_SCHEMA</td>
+                            <td>
+                                The name of the schema containing the synonym.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>SYNONYM_NAME</td>
+                            <td>The name of the synonym.</td>
+                        </tr>
+                        <tr>
+                            <td>REFERENCED_OBJECT_CATALOG</td>
+                            <td>
+                                The name of the catalog containing the referenced object.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>REFERENCED_OBJECT_SCHEMA</td>
+                            <td>
+                                The name of the schema containing the referenced object.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>REFERENCED_OBJECT_NAME</td>
+                            <td>The name of the referenced object.</td>
+                        </tr>                        
+                    </tbody>
+                </table>
+            </subsection>			
 			<subsection name="Additional Metadata in SchemaCrawler Output">
 				<p>
 					SchemaCrawler saves any additional metadata from the

@@ -39,6 +39,7 @@ import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Privilege.Grant;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.ProcedureColumn;
+import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schema.View;
@@ -172,6 +173,39 @@ final class SchemaJsonFormatter
   /**
    * Provides information on the database schema.
    * 
+   * @param synonym
+   *        Synonym metadata.
+   */
+  @Override
+  public void handle(final Synonym synonym)
+  {
+    try
+    {
+      final JSONObject jsonSynonym = new JSONObject();
+      jsonRoot.accumulate("synonyms", jsonSynonym);
+
+      jsonSynonym.put("name", synonym.getName());
+      jsonSynonym.put("fullName", synonym.getFullName());
+      jsonSynonym.put("referencedObject", synonym.getReferencedObject());
+
+      if (isNotList)
+      {
+        if (isVerbose)
+        {
+          jsonSynonym.put("remarks", synonym.getRemarks());
+        }
+      }
+    }
+    catch (final JSONException e)
+    {
+      LOGGER.log(Level.FINER, "Error outputting Synonym: " + e.getMessage(), e);
+    }
+
+  }
+
+  /**
+   * Provides information on the database schema.
+   * 
    * @param table
    *        Table metadata.
    */
@@ -285,6 +319,18 @@ final class SchemaJsonFormatter
 
   @Override
   public void handleProceduresStart()
+    throws SchemaCrawlerException
+  {
+  }
+
+  @Override
+  public void handleSynonymsEnd()
+    throws SchemaCrawlerException
+  {
+  }
+
+  @Override
+  public void handleSynonymsStart()
     throws SchemaCrawlerException
   {
   }

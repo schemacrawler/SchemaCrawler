@@ -225,7 +225,8 @@ final class TableExRetriever
                  "Trigger definition SQL statement was not provided");
       return;
     }
-    final String triggerInformationSql = informationSchemaViews.getTriggersSql();
+    final String triggerInformationSql = informationSchemaViews
+      .getTriggersSql();
 
     final Connection connection = getDatabaseConnection();
     final Statement statement = connection.createStatement();
@@ -543,7 +544,8 @@ final class TableExRetriever
                  "Trigger definition SQL statement was not provided");
       return;
     }
-    final String triggerInformationSql = informationSchemaViews.getTriggersSql();
+    final String triggerInformationSql = informationSchemaViews
+      .getTriggersSql();
 
     final Connection connection = getDatabaseConnection();
     final Statement statement = connection.createStatement();
