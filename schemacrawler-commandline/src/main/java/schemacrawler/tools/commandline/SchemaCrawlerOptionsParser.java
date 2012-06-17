@@ -50,6 +50,7 @@ final class SchemaCrawlerOptionsParser
                            SchemaCrawlerOptions.DEFAULT_TABLE_TYPES),
           new StringOption("tables", InclusionRule.ALL),
           new StringOption("excludecolumns", InclusionRule.NONE),
+          new StringOption("synonyms", InclusionRule.ALL),
           new StringOption("procedures", InclusionRule.ALL),
           new StringOption("excludeinout", InclusionRule.NONE),
           new StringOption("grepcolumns", InclusionRule.NONE),
@@ -123,6 +124,13 @@ final class SchemaCrawlerOptionsParser
       final InclusionRule procedureColumnInclusionRule = new InclusionRule(InclusionRule.ALL,
                                                                            getStringValue("excludeinout"));
       options.setProcedureColumnInclusionRule(procedureColumnInclusionRule);
+    }
+
+    if (hasOptionValue("synonyms"))
+    {
+      final InclusionRule synonymInclusionRule = new InclusionRule(getStringValue("synonyms"),
+                                                                   InclusionRule.NONE);
+      options.setSynonymInclusionRule(synonymInclusionRule);
     }
 
     if (hasOptionValue("v"))

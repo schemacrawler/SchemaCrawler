@@ -246,10 +246,8 @@ public final class SchemaCrawler
     try
     {
       retrieverExtra = new SynonymExRetriever(retrieverConnection, database);
-      retrieverExtra.retrieveSynonymInformation();
-
-      // FIXME filter the list. Note that it is already filtered for the
-      // schema.
+      retrieverExtra.retrieveSynonymInformation(options
+        .getSynonymInclusionRule());
     }
     catch (final SQLException e)
     {

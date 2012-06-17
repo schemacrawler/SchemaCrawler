@@ -28,6 +28,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schema.DatabaseObject;
+import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import sf.util.Utility;
 
@@ -54,12 +55,20 @@ final class SynonymExRetriever
   /**
    * Retrieves the synonym definitions from the database.
    * 
+   * @param synonymInclusionRule
+   *        Rule for including synonyms
    * @throws SQLException
    *         On a SQL exception
    */
-  void retrieveSynonymInformation()
+  void retrieveSynonymInformation(final InclusionRule synonymInclusionRule)
     throws SQLException
   {
+    if (synonymInclusionRule == null
+        || synonymInclusionRule.equals(InclusionRule.EXCLUDE_ALL))
+    {
+      return;
+    }
+
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
       .getInformationSchemaViews();
     if (!informationSchemaViews.hasSynonymsSql())
@@ -148,7 +157,11 @@ final class SynonymExRetriever
         final MutableSynonym synonym = new MutableSynonym(schema, synonymName);
         synonym.setReferencedObject(referencedObject);
 
-        schema.addSynonym(synonym);
+        if (synonymInclusionRule.include(synonym.getFullName()))
+        {
+          schema.addSynonym(synonym);
+        }
+
       }
     }
     finally

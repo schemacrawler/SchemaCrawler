@@ -84,23 +84,25 @@ public final class SchemaCrawlerOptions
   private InclusionRule procedureInclusionRule;
   private InclusionRule procedureColumnInclusionRule;
 
+  private InclusionRule synonymInclusionRule;
+
   private InclusionRule grepColumnInclusionRule;
   private InclusionRule grepProcedureColumnInclusionRule;
   private InclusionRule grepDefinitionInclusionRule;
   private boolean grepInvertMatch;
   private int childTableFilterDepth;
   private int parentTableFilterDepth;
-
   private boolean isAlphabeticalSortForTables;
+
   private boolean isAlphabeticalSortForTableColumns;
   private boolean isAlphabeticalSortForForeignKeys;
   private boolean isAlphabeticalSortForIndexes;
   private boolean isAlphabeticalSortForProcedureColumns;
-
   private SchemaInfoLevel schemaInfoLevel;
-  private InformationSchemaViews informationSchemaViews;
 
+  private InformationSchemaViews informationSchemaViews;
   private boolean hasOverrideForSupportsSchemas;
+
   private boolean isSupportsSchemasOverride;
   private boolean hasOverrideForSupportsCatalogs;
   private boolean isSupportsCatalogOverride;
@@ -330,6 +332,16 @@ public final class SchemaCrawlerOptions
     {
       return schemaInfoLevel;
     }
+  }
+
+  /**
+   * Gets the synonym inclusion rule.
+   * 
+   * @return Synonym inclusion rule.
+   */
+  public InclusionRule getSynonymInclusionRule()
+  {
+    return synonymInclusionRule;
   }
 
   /**
@@ -691,6 +703,21 @@ public final class SchemaCrawlerOptions
 
     hasOverrideForSupportsSchemas = true;
     this.isSupportsSchemasOverride = isSupportsSchemasOverride;
+  }
+
+  /**
+   * Sets the synonym inclusion rule.
+   * 
+   * @param synonymInclusionRule
+   *        Synonym inclusion rule
+   */
+  public void setSynonymInclusionRule(final InclusionRule synonymInclusionRule)
+  {
+    if (synonymInclusionRule == null)
+    {
+      throw new IllegalArgumentException("Cannot use null value in a setter");
+    }
+    this.synonymInclusionRule = synonymInclusionRule;
   }
 
   /**
