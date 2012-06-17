@@ -68,7 +68,16 @@
   matches parameters named @p1 or @p2 in any procedure 
   Parameters that match the pattern are not displayed
   Optional, default is to show all parameters
-        
+
+-synonyms=<regular-expression>
+  <regular-expression> is a regular expression to match fully qualified synonym 
+  names, in the form "CATALOGNAME.SCHEMANAME.SYNONYMNAME" - for example, 
+  -synonyms=.*\.C.*|.*\.P.*
+  matches any synonyms whose names start with C or P
+  Synonyms that do not match the pattern are not displayed
+  Use -synonyms= to omit synonyms
+  Optional, defaults to showing all synonyms
+          
 --- Grep Options ---
     
 -grepcolumns=<regular-expression>
