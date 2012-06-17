@@ -10,7 +10,7 @@
 <stringAttribute key="org.eclipse.jdt.launching.CLASSPATH_PROVIDER" value="org.eclipse.m2e.launchconfig.classpathProvider"/>
 <stringAttribute key="org.eclipse.jdt.launching.JRE_CONTAINER" value="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="schemacrawler.tools.db2.Main"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-host=192.168.152.133&#13;&#10;-port=50000&#13;&#10;-database=SAMPLE&#13;&#10;&quot;-schemas=\&quot;SUALEH FATEHI\&quot;&quot;&#13;&#10;&quot;-user=SUALEH FATEHI&quot;&#13;&#10;-password=&#13;&#10;-urlx=securityMechanism=4&#13;&#10;-infolevel=maximum&#13;&#10;-command=details &#13;&#10;-loglevel=WARNING"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-host=192.168.111.128&#13;&#10;-port=50000&#13;&#10;-database=SAMPLE&#13;&#10;-schemas=BOOKS&#13;&#10;-user=db2admin&#13;&#10;-password=sualeh&#13;&#10;--urlx=securityMechanism=4&#13;&#10;-infolevel=maximum&#13;&#10;-command=details &#13;&#10;-loglevel=WARNING"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="SchemaCrawler for IBM DB2"/>
 <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.m2e.launchconfig.sourcepathProvider"/>
 <stringAttribute key="org.eclipse.jdt.launching.WORKING_DIRECTORY" value="${workspace_loc:SchemaCrawler - 2 - Tools/target}"/>
