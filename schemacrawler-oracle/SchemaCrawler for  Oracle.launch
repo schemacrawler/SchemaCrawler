@@ -10,7 +10,7 @@
 <stringAttribute key="org.eclipse.jdt.launching.CLASSPATH_PROVIDER" value="org.eclipse.m2e.launchconfig.classpathProvider"/>
 <stringAttribute key="org.eclipse.jdt.launching.JRE_CONTAINER" value="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="schemacrawler.tools.oracle.Main"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-host=192.168.62.133&#13;&#10;-port=1521&#13;&#10;-database=XE&#13;&#10;-schemas=BOOKS&#13;&#10;-user=books&#13;&#10;-password=books&#13;&#10;-tables=.*\.(?!BIN\$).*&#13;&#10;-infolevel=maximum&#13;&#10;-command=details &#13;&#10;-loglevel=CONFIG"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-host=192.168.111.128&#13;&#10;-port=1521&#13;&#10;-database=&#13;&#10;-schemas=BOOKS&#13;&#10;-user=books&#13;&#10;-password=books&#13;&#10;-tables=.*\.(?!BIN\$).*&#13;&#10;-infolevel=maximum&#13;&#10;-command=details &#13;&#10;--loglevel=CONFIG"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="SchemaCrawler for Oracle"/>
 <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.m2e.launchconfig.sourcepathProvider"/>
 <stringAttribute key="org.eclipse.jdt.launching.WORKING_DIRECTORY" value="${workspace_loc:SchemaCrawler - 2 - Tools/target}"/>
