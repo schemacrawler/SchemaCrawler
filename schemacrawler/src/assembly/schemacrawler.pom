@@ -6,7 +6,7 @@
   <groupId>net.sourceforge.schemacrawler</groupId>
   <artifactId>schemacrawler</artifactId>
   <packaging>jar</packaging>
-  <version>8.15</version>
+  <version>8.16</version>
   <name>SchemaCrawler</name>
   <description>SchemaCrawler is a command-line tool to output your database schema and data in a readable form. The
     output is designed to be diff-ed with previous versions of your database schema. SchemaCrawler is also an API that
