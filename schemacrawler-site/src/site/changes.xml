@@ -5,6 +5,12 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+    <release version="8.16" date="2012-06-20">
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added support for synonyms. Synonyms are shown in SchemaCrawler output for IBM DB2, 
+        Oracle, and Microsoft SQL Server, as well as available for extension in other databases.
+      ]]></action>       
+    </release>   
     <release version="8.15" date="2012-05-05">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Added distribution for Sybase IQ.
