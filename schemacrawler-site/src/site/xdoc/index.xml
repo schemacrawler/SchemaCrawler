@@ -1,145 +1,151 @@
 <!DOCTYPE document PUBLIC "-//Apache Software Foundation//DTD XDOC 1.0//EN"
   "http://maven.apache.org/dtd/xdoc_1_0.dtd">
 <document>
-  <properties>
-    <title>SchemaCrawler</title>
-    <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
-  </properties>
-  <body>
-    <section name="About SchemaCrawler">
-      <subsection name="SchemaCrawler">
-        <p>
-          SchemaCrawler is an open-source Java API that makes working with database
-          metadata as easy
-          as working with
-          plain old Java
-          objects.
-        </p>
-        <p>
-          SchemaCrawler is also a database schema discovery and comprehension, and schema
-          documentation tool. You can
-          <a href="schemacrawler_grep.html">search for database schema objects</a>
-          using regular expressions,
-          and output the schema and data in a readable
-          text format, and
-          find potential design issues with
-          <a href="lint.html">lint</a>
-          . The output is designed to be
-          <a href="http://en.wikipedia.org/wiki/Diff">diff-ed</a>
-          against other database schemas.
-        </p>
-        <p>
-          SchemaCrawler supports almost any database that has a JDBC driver, but for convenience is
-          <a href="bundled.html">bundled with drivers</a>
-          for some commonly used RDBMS systems. SchemaCrawler works with any
-          operating system that
-          supports Java.
-        </p>
-      </subsection>
-      <subsection name="SchemaCrawler API">
-        <p>
-          Java programmers need to access database metadata
-        </p>
-        <ul>
-          <li>in order to dynamically generate SQL statements</li>
-          <li>when programmatically determining the capabilities of a given
-            RDBMS
-          </li>
-          <li>when finding the names and types of tables and columns in the
-            database
-          </li>
-        </ul>
-        <p>
-          Programmers can obtain database metadata using JDBC, but with the
-          raw JDBC API database
-          metadata is returned
-          as
-          result sets, not Java objects. Also, programmers are still
-          responsible
-          for managing resources, mapping into
-          object structures, and handling exceptions.
-          This makes using the JDBC API
-          very cumbersome when it comes to
-          metadata. Furthermore, the
-          JDBC API is not very consistent. For example, to
-          find the type of a table, you
-          would
-          look at
-          the
-          <code>TABLE_TYPE</code>
-          , which has a string value, but for procedures,
-          <code>PROCEDURE_TYPE</code>
-          is an integer. An
-          another example, is the
-          <code>getCatalogs()</code>
-          call, which returns a result set with exactly one column, in
-          contrast to
-          <code>getStringFunctions()</code>
-          which returns a string containing the list of function names,
-          separated by commas.
-        </p>
-        <p>
-          SchemaCrawler attempts to solve some of these problems by providing an API that
-          is
-          consistent and usable.
-          Database metadata is provided in the form of plain old Java objects
-          (POJOs). Some examples of the consistency
-          and usability of the SchemaCrawler API are that:
-        </p>
-        <ul>
-          <li>
-            <code>Table</code>
-            is an object that has a collection of
-            <code>Column</code>
-            objects, without requiring you to make additional calls
-          </li>
-          <li>
-            There is a
-            <code>getType()</code>
-            method, whether on a
-            <code>Column</code>
-            object, a
-            <code>Table</code>
-            object, or a
-            <code>Procedure</code>
-            object, which helps with consistency, and ease of use
-          </li>
-          <li>
-            Lists are always Java lists -
-            <code>java.util.List</code>
-          </li>
-          <li>You don't worry about database resources or exception handling
-          </li>
-          <li>
-            You can use standard Java programming idioms - for example, you
-            can access the
-            <code>Table</code>
-            object from a
-            <code>Column</code>
-            object using
-            <code>getParent()</code>
-          </li>
-        </ul>
-        <p>
-          <img src="http://www.gnu.org/graphics/lgplv3-88x31.png" alt="LGPL" />
-          SchemaCrawler is free and open-source API available under the LGPL license.
-          SchemaCrawler
-          is written in Java,
-          making it operating system agnostic. Since it leverages JDBC, it is
-          also
-          database independent. It deliberately
-          doesn't have any RDBMS-specific code.
-          SchemaCrawler allows you to compare
-          structures between two different
-          database servers, or
-          even two different database systems, from different
-          vendors.
-        </p>
+	<properties>
+		<title>SchemaCrawler</title>
+		<author email="sualeh@hotmail.com">Sualeh Fatehi</author>
+	</properties>
+	<body>
+		<section name="About SchemaCrawler">
+			<subsection name="SchemaCrawler">
+				<p>
+					SchemaCrawler is an open-source Java API that makes working with database
+					metadata as easy
+					as working with
+					plain old Java
+					objects.
+				</p>
+				<p>
+					SchemaCrawler is also a database schema discovery and
+					comprehension, and schema
+					documentation tool. You can
+					<a href="schemacrawler_grep.html">search for database schema objects</a>
+					using regular expressions,
+					and output the schema and data in a readable
+					text format, and
+					find potential design issues with
+					<a href="lint.html">lint</a>
+					. The output is designed to be
+					<a href="http://en.wikipedia.org/wiki/Diff">diff-ed</a>
+					against other database schemas.
+				</p>
+				<p>
+					SchemaCrawler supports almost any database that has a JDBC driver,
+					but for convenience is
+					<a href="bundled.html">bundled with drivers</a>
+					for some commonly used RDBMS systems. SchemaCrawler works with any
+					operating system that
+					supports Java.
+				</p>
+			</subsection>
+			<subsection name="SchemaCrawler API">
+				<p>
+					Java programmers need to access database metadata
+				</p>
+				<ul>
+					<li>in order to dynamically generate SQL statements</li>
+					<li>when programmatically determining the capabilities of a given
+						RDBMS
+					</li>
+					<li>when finding the names and types of tables and columns in the
+						database
+					</li>
+				</ul>
+				<p>
+					Programmers can obtain database metadata using JDBC, but with the
+					raw JDBC API database
+					metadata is returned
+					as
+					result sets, not Java objects. Also, programmers are still
+					responsible
+					for managing resources, mapping into
+					object structures, and handling exceptions.
+					This makes using the JDBC API
+					very cumbersome when it comes to
+					metadata. Furthermore, the
+					JDBC API is not very consistent. For example, to
+					find the type of a table, you
+					would
+					look at
+					the
+					<code>TABLE_TYPE</code>
+					, which has a string value, but for procedures,
+					<code>PROCEDURE_TYPE</code>
+					is an integer. An
+					another example, is the
+					<code>getCatalogs()</code>
+					call, which returns a result set with exactly one column, in
+					contrast to
+					<code>getStringFunctions()</code>
+					which returns a string containing the list of function names,
+					separated by commas.
+				</p>
+				<p>
+					SchemaCrawler attempts to solve some of these problems by providing an API that
+					is
+					consistent and usable.
+					Database metadata is provided in the form of plain old Java objects
+					(POJOs). Some examples of the consistency
+					and usability of the SchemaCrawler API are that:
+				</p>
+				<ul>
+					<li>
+						<code>Table</code>
+						is an object that has a collection of
+						<code>Column</code>
+						objects, without requiring you to make additional calls
+					</li>
+					<li>
+						There is a
+						<code>getType()</code>
+						method, whether on a
+						<code>Column</code>
+						object, a
+						<code>Table</code>
+						object, or a
+						<code>Procedure</code>
+						object, which helps with consistency, and ease of use
+					</li>
+					<li>
+						Lists are always Java lists -
+						<code>java.util.List</code>
+					</li>
+					<li>You don't worry about database resources or exception handling
+					</li>
+					<li>
+						You can use standard Java programming idioms - for example, you
+						can access the
+						<code>Table</code>
+						object from a
+						<code>Column</code>
+						object using
+						<code>getParent()</code>
+					</li>
+				</ul>
+				<p>SchemaCrawler goes beyond what is available using JDBC, and can
+					provide information on database triggers and database synonyms as
+					well.</p>
+				<p>
+					<img src="http://www.gnu.org/graphics/lgplv3-88x31.png" alt="LGPL" />
+					SchemaCrawler is free and open-source API available under the LGPL
+					license.
+					SchemaCrawler
+					is written in Java,
+					making it operating system agnostic. Since it leverages JDBC, it is
+					also
+					database independent. It deliberately
+					doesn't have any RDBMS-specific code.
+					SchemaCrawler allows you to compare
+					structures between two different
+					database servers, or
+					even two different database systems, from different
+					vendors.
+				</p>
 
-        <p>The sample code below demonstrates just how easy it is to use
-          SchemaCrawler:
-        </p>
-        <source><![CDATA[
+				<p>The sample code below demonstrates just how easy it is to use
+					SchemaCrawler:
+				</p>
+				<source><![CDATA[
 final SchemaCrawlerOptions options = new SchemaCrawlerOptions();
 // Set what details are required in the schema - this affects the
 // time taken to crawl the schema
@@ -159,87 +165,90 @@ for (final Schema schema: database.getSchemas())
   }
 }
     ]]></source>
-      </subsection>
-      <subsection name="SchemaCrawler Command Line">
-        <p>
-          SchemaCrawler comes with a set of command line tools that allow
-          database metadata to be
-          output as
-          <a href="snapshot-examples/snapshot.txt">plain text,</a>
-          <a href="snapshot-examples/snapshot.csv">comma-separated text (CSV),</a>
-          <a href="snapshot-examples/snapshot.html">XHTML,</a>
-          or
-          <a href="snapshot-examples/snapshot.json">JavaScript object notation (JSON).</a>
-          The XHTML output is a combination of valid XML (that can be
-          manipulated by XML tools or
-          XSLT), and HTML that
-          can be viewed in a browser.
-          All formats are designed to be easy to
-          <a href="http://en.wikipedia.org/wiki/Diff">diff</a>
-          , or find differences with other schemas that may
-          have been output in the same format.
-        </p>
-        <p>
-          SchemaCrawler has
-          <a href="schemacrawler_grep.html">grep</a>
-          functionality that allows you to
-          search for table and column names using regular
-          expressions.
-          SchemaCrawler is
-          capable of creating
-          entity-relationship diagrams in
-          <a href="http://www.graphviz.org/doc/info/lang.html ">DOT format,</a>
-          which
-          <a href="http://www.graphviz.org/">GraphViz</a>
-          can convert into schema diagrams. SchemaCrawler has powerful scripting ability, using
-          JavaScript. A live
-          connection is provided to the JavaScript context to allow you to select
-          from or even modify your database.
-          Examples are provided for all of these with the
-          <a href="http://sourceforge.net/projects/schemacrawler/files/">download</a>
-          .
-        </p>
-        <p>
-          SchemaCrawler is integrated with, and allows you to write templates to generate SQL
-          scripts or any other text
-          output, using templating engines, such as
-          <a href="http://velocity.apache.org/">Apache Velocity</a>
-          or
-          <a href="http://freemarker.org/">&lt;FreeMarker&gt;</a>
-          . However, you will need to download Apache Velocity or &lt;FreeMarker&gt;
-          separately,
-          since these are not part
-          of the
-          SchemaCrawler download.
-        </p>
-      </subsection>
-      <subsection name="SchemaCrawler Website Content License">
-        <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">
-          <img alt="Creative Commons License" style="border-width:0"
-            src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" />
-        </a>
-        <br />
-        <span xmlns:dc="http://purl.org/dc/elements/1.1/" href="http://purl.org/dc/dcmitype/Text"
-          property="dc:title" rel="dc:type">SchemaCrawler Website
-        </span>
-        by
-        <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Sualeh
-          Fatehi
-        </span>
-        is licensed under a
-        <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-Share Alike
-          3.0
-          Unported License
-        </a>
-        .
-        <br />
-        Based on a work at
-        <a xmlns:dc="http://purl.org/dc/elements/1.1/" href="http://schemacrawler.sourceforge.net/"
-          rel="dc:source">
-          schemacrawler.sourceforge.net
-        </a>
-        .
-      </subsection>
-    </section>
-  </body>
+			</subsection>
+			<subsection name="SchemaCrawler Command Line">
+				<p>
+					SchemaCrawler comes with a set of command line tools that allow
+					database metadata to be
+					output as
+					<a href="snapshot-examples/snapshot.txt">plain text,</a>
+					<a href="snapshot-examples/snapshot.csv">comma-separated text (CSV),</a>
+					<a href="snapshot-examples/snapshot.html">XHTML,</a>
+					or
+					<a href="snapshot-examples/snapshot.json">JavaScript object notation (JSON).</a>
+					The XHTML output is a combination of valid XML (that can be
+					manipulated by XML tools or
+					XSLT), and HTML that
+					can be viewed in a browser.
+					All formats are designed to be easy to
+					<a href="http://en.wikipedia.org/wiki/Diff">diff</a>
+					, or find differences with other schemas that may
+					have been output in the same format.
+				</p>
+				<p>
+					SchemaCrawler has
+					<a href="schemacrawler_grep.html">grep</a>
+					functionality that allows you to
+					search for table and column names using regular
+					expressions.
+					SchemaCrawler is
+					capable of creating
+					entity-relationship diagrams in
+					<a href="http://www.graphviz.org/doc/info/lang.html ">DOT format,</a>
+					which
+					<a href="http://www.graphviz.org/">GraphViz</a>
+					can convert into schema diagrams. SchemaCrawler has powerful
+					scripting ability, using
+					JavaScript. A live
+					connection is provided to the JavaScript context to allow you to select
+					from or even modify your database.
+					Examples are provided for all of these with the
+					<a href="http://sourceforge.net/projects/schemacrawler/files/">download</a>
+					.
+				</p>
+				<p>
+					SchemaCrawler is integrated with, and allows you to write templates
+					to generate SQL
+					scripts or any other text
+					output, using templating engines, such as
+					<a href="http://velocity.apache.org/">Apache Velocity</a>
+					or
+					<a href="http://freemarker.org/">&lt;FreeMarker&gt;</a>
+					. However, you will need to download Apache Velocity or
+					&lt;FreeMarker&gt;
+					separately,
+					since these are not part
+					of the
+					SchemaCrawler download.
+				</p>
+			</subsection>
+			<subsection name="SchemaCrawler Website Content License">
+				<a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">
+					<img alt="Creative Commons License" style="border-width:0"
+						src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" />
+				</a>
+				<br />
+				<span xmlns:dc="http://purl.org/dc/elements/1.1/" href="http://purl.org/dc/dcmitype/Text"
+					property="dc:title" rel="dc:type">SchemaCrawler Website
+				</span>
+				by
+				<span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Sualeh
+					Fatehi
+				</span>
+				is licensed under a
+				<a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-Share Alike
+					3.0
+					Unported License
+				</a>
+				.
+				<br />
+				Based on a work at
+				<a xmlns:dc="http://purl.org/dc/elements/1.1/" href="http://schemacrawler.sourceforge.net/"
+					rel="dc:source">
+					schemacrawler.sourceforge.net
+				</a>
+				.
+			</subsection>
+		</section>
+	</body>
 </document>
