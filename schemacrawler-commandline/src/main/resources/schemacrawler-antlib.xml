@@ -79,6 +79,11 @@
       description="Regular expression to exclude procedure parameters"
       default=""/>
     <attribute
+      name="synonyms"
+      description="Regular expression to select synonyms"
+      default=".*"/>
+            
+    <attribute
       name="grepcolumns"
       description="Regular expression to grep columns"
       default=".*"/>
@@ -128,6 +133,7 @@
         <arg value="-excludecolumns=@{excludecolumns}"/>
         <arg value="-procedures=@{procedures}"/>
         <arg value="-excludeinout=@{excludeinout}"/>
+        <arg value="-synonyms=@{synonyms}"/>
         <arg value="-grepcolumns=@{grepcolumns}"/>
         <arg value="-grepinout=@{grepinout}"/>
         <arg value="-v=@{invert-match}"/>
