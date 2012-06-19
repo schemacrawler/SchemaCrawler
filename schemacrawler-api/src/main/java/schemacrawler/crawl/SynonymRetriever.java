@@ -38,14 +38,14 @@ import sf.util.Utility;
  * 
  * @author Matt Albrecht, Sualeh Fatehi
  */
-final class SynonymExRetriever
+final class SynonymRetriever
   extends AbstractRetriever
 {
 
   private static final Logger LOGGER = Logger
-    .getLogger(SynonymExRetriever.class.getName());
+    .getLogger(SynonymRetriever.class.getName());
 
-  SynonymExRetriever(final RetrieverConnection retrieverConnection,
+  SynonymRetriever(final RetrieverConnection retrieverConnection,
                      final MutableDatabase database)
     throws SQLException
   {

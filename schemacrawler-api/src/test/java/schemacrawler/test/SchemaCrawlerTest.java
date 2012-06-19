@@ -48,6 +48,7 @@ import schemacrawler.schema.Database;
 import schemacrawler.schema.EventManipulationType;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Schema;
+import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schema.View;
@@ -399,6 +400,85 @@ public class SchemaCrawlerTest
   }
 
   @Test
+  public void synonyms()
+    throws Exception
+  {
+    final String[] classes = {
+        "MutableTable", "MutableTable", "MutableTable", "", "", "",
+    };
+    final String[] synonymNames = {
+        "AUTHORS",
+        "BOOKAUTHORS",
+        "BOOKS",
+        "\"Global Counts\"",
+        "No_Columns",
+        "PUBLICATIONS",
+    };
+
+    final InformationSchemaViews informationSchemaViews = new InformationSchemaViews();
+    informationSchemaViews
+      .setSynonymSql("SELECT LIMIT 1 3                                  \n"
+                     + "  TABLE_CATALOG AS SYNONYM_CATALOG,             \n"
+                     + "  TABLE_SCHEMA AS SYNONYM_SCHEMA,               \n"
+                     + "  TABLE_NAME AS SYNONYM_NAME,                   \n"
+                     + "  TABLE_CATALOG AS REFERENCED_OBJECT_CATALOG,   \n"
+                     + "  TABLE_SCHEMA AS REFERENCED_OBJECT_SCHEMA,     \n"
+                     + "  TABLE_NAME AS REFERENCED_OBJECT_NAME          \n"
+                     + "FROM                                            \n"
+                     + "  INFORMATION_SCHEMA.TABLES                     \n"
+                     + "WHERE                                           \n"
+                     + "  TABLE_SCHEMA = 'BOOKS'                        \n"
+                     + "UNION                                           \n"
+                     + "SELECT LIMIT 1 3                                \n"
+                     + "  ROUTINE_CATALOG AS SYNONYM_CATALOG,           \n"
+                     + "  ROUTINE_SCHEMA AS SYNONYM_SCHEMA,             \n"
+                     + "  ROUTINE_NAME AS SYNONYM_NAME,                 \n"
+                     + "  ROUTINE_CATALOG AS REFERENCED_OBJECT_CATALOG, \n"
+                     + "  ROUTINE_SCHEMA AS REFERENCED_OBJECT_SCHEMA,   \n"
+                     + "  ROUTINE_NAME AS REFERENCED_OBJECT_NAME        \n"
+                     + "FROM                                            \n"
+                     + "  INFORMATION_SCHEMA.ROUTINES                   \n"
+                     + "WHERE                                           \n"
+                     + "  ROUTINE_SCHEMA = 'BOOKS'                      \n"
+                     + "UNION                                           \n"
+                     + "SELECT LIMIT 1 3                                \n"
+                     + "  'PUBLIC' AS SYNONYM_CATALOG,                  \n"
+                     + "  'BOOKS' AS SYNONYM_SCHEMA,                    \n"
+                     + "  TABLE_NAME AS SYNONYM_NAME,                   \n"
+                     + "  TABLE_CATALOG AS REFERENCED_OBJECT_CATALOG,   \n"
+                     + "  TABLE_SCHEMA AS REFERENCED_OBJECT_SCHEMA,     \n"
+                     + "  TABLE_NAME + '1' AS REFERENCED_OBJECT_NAME    \n"
+                     + "FROM                                            \n"
+                     + "  INFORMATION_SCHEMA.TABLES                     \n"
+                     + "WHERE                                           \n"
+                     + "  TABLE_SCHEMA != 'BOOKS'                       ");
+
+    final SchemaInfoLevel minimum = SchemaInfoLevel.minimum();
+    minimum.setRetrieveSynonymInformation(true);
+
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+    schemaCrawlerOptions.setSchemaInfoLevel(minimum);
+    schemaCrawlerOptions.setInformationSchemaViews(informationSchemaViews);
+    schemaCrawlerOptions.setSynonymInclusionRule(InclusionRule.INCLUDE_ALL);
+
+    final Database database = testDatabase.getDatabase(schemaCrawlerOptions);
+    final Schema schema = database.getSchema("PUBLIC.BOOKS");
+    assertNotNull("BOOKS Schema not found", schema);
+    final Synonym[] synonyms = schema.getSynonyms();
+    assertEquals("Synonym count does not match", 6, synonyms.length);
+    for (int i = 0; i < synonyms.length; i++)
+    {
+      final Synonym synonym = synonyms[i];
+      assertNotNull(synonym);
+      assertEquals("Wrong referenced object class - "
+                       + synonym.getReferencedObject().getClass(),
+                   classes[i],
+                   synonym.getReferencedObject().getClass().getSimpleName());
+      assertEquals("", synonymNames[i], synonym.getName());
+    }
+  }
+
+  @Test
   public void tables()
     throws Exception
   {
@@ -440,7 +520,7 @@ public class SchemaCrawlerTest
                                        tableAttribute.getValue()));
         }
         final Column[] columns = table.getColumns();
-        for (Column column: columns)
+        for (final Column column: columns)
         {
           writer.println(String.format("   o--> %s [%s]",
                                        column.getFullName(),
@@ -589,4 +669,5 @@ public class SchemaCrawlerTest
     assertFalse("View definition not found", view.getDefinition().trim()
       .equals(""));
   }
+
 }

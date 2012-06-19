@@ -242,10 +242,10 @@ public final class SchemaCrawler
       return;
     }
 
-    final SynonymExRetriever retrieverExtra;
+    final SynonymRetriever retrieverExtra;
     try
     {
-      retrieverExtra = new SynonymExRetriever(retrieverConnection, database);
+      retrieverExtra = new SynonymRetriever(retrieverConnection, database);
       retrieverExtra.retrieveSynonymInformation(options
         .getSynonymInclusionRule());
     }
