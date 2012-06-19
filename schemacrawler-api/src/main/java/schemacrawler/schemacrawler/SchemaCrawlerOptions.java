@@ -125,6 +125,8 @@ public final class SchemaCrawlerOptions
     procedureInclusionRule = InclusionRule.INCLUDE_ALL;
     procedureColumnInclusionRule = InclusionRule.INCLUDE_ALL;
 
+    synonymInclusionRule = InclusionRule.INCLUDE_ALL;
+
     isAlphabeticalSortForTables = true;
     isAlphabeticalSortForTableColumns = false;
     isAlphabeticalSortForForeignKeys = false;
