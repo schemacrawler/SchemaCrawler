@@ -5,6 +5,19 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+    <release version="8.17" date="2012-07-09">
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        JSON output supports all of the formatting options that the other text formats support.
+      ]]></action>       
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        A new method, getShortName(), get the unqualified name for columns and other dependent objects.
+      ]]></action>   
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        A new text format option, "schemacrawler.format.show_unqualified_names", 
+        shows the unqualified name in text output, 
+        for easier comparisons across different catalogs and schemas.
+      ]]></action>           
+    </release>  
     <release version="8.16" date="2012-06-20">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Added support for synonyms. Synonyms are shown in SchemaCrawler output for IBM DB2, 

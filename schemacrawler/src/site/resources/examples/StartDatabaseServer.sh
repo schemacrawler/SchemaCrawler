@@ -1,1 +1,1 @@
-java -cp _schemacrawler/lib/hsqldb-2.2.8.jar:_schemacrawler/lib/schemacrawler-8.16.jar:_schemacrawler/lib/schemacrawler-api-8.16-tests.jar schemacrawler.test.utility.TestDatabase
+java -cp _schemacrawler/lib/hsqldb-2.2.8.jar:_schemacrawler/lib/schemacrawler-8.17.jar:_schemacrawler/lib/schemacrawler-api-8.17-tests.jar schemacrawler.test.utility.TestDatabase
