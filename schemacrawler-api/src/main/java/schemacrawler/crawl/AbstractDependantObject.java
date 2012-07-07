@@ -40,6 +40,7 @@ abstract class AbstractDependantObject<P extends DatabaseObject>
 
   private final P parent;
   private transient String fullName;
+  private transient String shortName;
 
   private transient int hashCode;
 
@@ -107,6 +108,13 @@ abstract class AbstractDependantObject<P extends DatabaseObject>
     return parent;
   }
 
+  @Override
+  public final String getShortName()
+  {
+    buildShortName();
+    return shortName;
+  }
+
   /**
    * {@inheritDoc}
    * 
@@ -158,6 +166,25 @@ abstract class AbstractDependantObject<P extends DatabaseObject>
       result = prime * result + (parent == null? 0: parent.hashCode());
       result = prime * result + super.hashCode();
       hashCode = result;
+    }
+  }
+
+  private void buildShortName()
+  {
+    if (shortName == null)
+    {
+      final StringBuilder buffer = new StringBuilder();
+      final String parentName = parent.getName();
+      if (parent != null && !Utility.isBlank(parentName))
+      {
+        buffer.append(parentName).append('.');
+      }
+      final String quotedName = getName();
+      if (!Utility.isBlank(quotedName))
+      {
+        buffer.append(quotedName);
+      }
+      shortName = buffer.toString();
     }
   }
 
