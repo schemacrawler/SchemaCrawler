@@ -129,8 +129,17 @@ final class SchemaTextFormatter
   {
     final boolean underscore = isNotList;
     final String procedureTypeDetail = "procedure, " + procedure.getType();
-    final String nameRow = formattingHelper.createNameRow(procedure
-      .getFullName(), "[" + procedureTypeDetail + "]", underscore);
+    final String procedureName;
+    if (options.isShowUnqualifiedNames())
+    {
+      procedureName = procedure.getName();
+    }
+    else
+    {
+      procedureName = procedure.getFullName();
+    }
+    final String nameRow = formattingHelper
+      .createNameRow(procedureName, "[" + procedureTypeDetail + "]", underscore);
 
     if (isNotList)
     {
@@ -165,8 +174,18 @@ final class SchemaTextFormatter
   public void handle(final Synonym synonym)
   {
     final boolean underscore = isNotList;
-    final String nameRow = formattingHelper
-      .createNameRow(synonym.getFullName(), "[synonym]", underscore);
+    final String synonymName;
+    if (options.isShowUnqualifiedNames())
+    {
+      synonymName = synonym.getName();
+    }
+    else
+    {
+      synonymName = synonym.getFullName();
+    }
+    final String nameRow = formattingHelper.createNameRow(synonymName,
+                                                          "[synonym]",
+                                                          underscore);
 
     if (isNotList)
     {
@@ -207,7 +226,16 @@ final class SchemaTextFormatter
   public void handle(final Table table)
   {
     final boolean underscore = isNotList;
-    final String nameRow = formattingHelper.createNameRow(table.getFullName(),
+    final String tableName;
+    if (options.isShowUnqualifiedNames())
+    {
+      tableName = table.getName();
+    }
+    else
+    {
+      tableName = table.getFullName();
+    }
+    final String nameRow = formattingHelper.createNameRow(tableName,
                                                           "[" + table.getType()
                                                               + "]",
                                                           underscore);

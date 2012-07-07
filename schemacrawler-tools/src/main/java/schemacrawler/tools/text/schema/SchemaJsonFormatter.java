@@ -35,6 +35,7 @@ import schemacrawler.schema.ForeignKeyUpdateRule;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.IndexType;
+import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Privilege.Grant;
 import schemacrawler.schema.Procedure;
@@ -53,7 +54,7 @@ import schemacrawler.tools.text.utility.org.json.JSONObject;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
 
 /**
- * Text formatting of schema.
+ * JSON formatting of schema.
  * 
  * @author Sualeh Fatehi
  */
@@ -141,7 +142,10 @@ final class SchemaJsonFormatter
       jsonRoot.accumulate("procedures", jsonProcedure);
 
       jsonProcedure.put("name", procedure.getName());
-      jsonProcedure.put("fullName", procedure.getFullName());
+      if (!options.isShowUnqualifiedNames())
+      {
+        jsonProcedure.put("fullName", procedure.getFullName());
+      }
       jsonProcedure.put("type", procedure.getType());
 
       if (isNotList)
@@ -185,7 +189,10 @@ final class SchemaJsonFormatter
       jsonRoot.accumulate("synonyms", jsonSynonym);
 
       jsonSynonym.put("name", synonym.getName());
-      jsonSynonym.put("fullName", synonym.getFullName());
+      if (!options.isShowUnqualifiedNames())
+      {
+        jsonSynonym.put("fullName", synonym.getFullName());
+      }
       jsonSynonym.put("referencedObject", synonym.getReferencedObject());
 
       if (isNotList)
@@ -219,7 +226,10 @@ final class SchemaJsonFormatter
       jsonRoot.accumulate("tables", jsonTable);
 
       jsonTable.put("name", table.getName());
-      jsonTable.put("fullName", table.getFullName());
+      if (!options.isShowUnqualifiedNames())
+      {
+        jsonTable.put("fullName", table.getFullName());
+      }
       jsonTable.put("type", table.getType());
 
       if (isNotList)
@@ -257,12 +267,15 @@ final class SchemaJsonFormatter
             {
               final JSONObject jsonConsraint = new JSONObject();
               jsonTable.accumulate("constraints", jsonConsraint);
-              jsonConsraint.put("name", constraint.getName());
+              if (!options.isHideConstraintNames())
+              {
+                jsonConsraint.put("name", constraint.getName());
+              }
               jsonConsraint.put("definition", constraint.getDefinition());
             }
           }
 
-          for (final Privilege privilege: table.getPrivileges())
+          for (final Privilege<Table> privilege: table.getPrivileges())
           {
             if (privilege != null)
             {
@@ -388,7 +401,10 @@ final class SchemaJsonFormatter
         {
           final JSONObject jsonFk = new JSONObject();
           jsonFks.put(jsonFk);
-          jsonFk.put("name", foreignKey.getName());
+          if (!options.isHideForeignKeyNames())
+          {
+            jsonFk.put("name", foreignKey.getName());
+          }
 
           final ForeignKeyUpdateRule updateRule = foreignKey.getUpdateRule();
           if (updateRule != null && updateRule != ForeignKeyUpdateRule.unknown)
@@ -429,7 +445,15 @@ final class SchemaJsonFormatter
 
     try
     {
-      jsonIndex.put("name", index.getName());
+      if (index instanceof PrimaryKey && !options.isHidePrimaryKeyNames())
+      {
+        jsonIndex.put("name", index.getName());
+      }
+      else if (!options.isHideIndexNames())
+      {
+        jsonIndex.put("name", index.getName());
+      }
+
       final IndexType indexType = index.getType();
       if (indexType != IndexType.unknown && indexType != IndexType.other)
       {
@@ -462,7 +486,10 @@ final class SchemaJsonFormatter
         .getDatabaseSpecificTypeName());
       jsonColumn.put("width", column.getWidth());
       jsonColumn.put("type", column.getProcedureColumnType().toString());
-      jsonColumn.put("ordinal", column.getOrdinalPosition() + 1);
+      if (options.isShowOrdinalNumbers())
+      {
+        jsonColumn.put("ordinal", column.getOrdinalPosition() + 1);
+      }
     }
     catch (final JSONException e)
     {
@@ -497,7 +524,10 @@ final class SchemaJsonFormatter
         jsonColumn.put("nullable", column.isNullable());
       }
 
-      jsonColumn.put("ordinal", column.getOrdinalPosition());
+      if (options.isShowOrdinalNumbers())
+      {
+        jsonColumn.put("ordinal", column.getOrdinalPosition());
+      }
       if (isVerbose)
       {
         jsonColumn.put("remarks", column.getRemarks());
