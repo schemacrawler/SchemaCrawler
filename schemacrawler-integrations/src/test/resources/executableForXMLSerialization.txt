@@ -852,8 +852,8 @@
   </jdbcDriverInfo>
   <schemaCrawlerInfo id="180">
     <schemaCrawlerProductName>SchemaCrawler</schemaCrawlerProductName>
-    <schemaCrawlerVersion>8.16</schemaCrawlerVersion>
-    <schemaCrawlerAbout>SchemaCrawler 8.16&#xd;
+    <schemaCrawlerVersion>8.17</schemaCrawlerVersion>
+    <schemaCrawlerAbout>SchemaCrawler 8.17&#xd;
 Copyright (c) 2000-2012, Sualeh Fatehi.&#xd;
 SchemaCrawler is a platform (operating system and database) independent command-&#xd;
 line tool to output your database schema and data in a readable form. The output &#xd;

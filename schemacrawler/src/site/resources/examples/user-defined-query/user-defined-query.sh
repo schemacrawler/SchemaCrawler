@@ -1,1 +1,1 @@
-java -classpath ../_schemacrawler/lib/schemacrawler-8.16.jar:../_schemacrawler/lib/hsqldb-2.2.8.jar schemacrawler.Main -c hsqldb -infolevel=standard -command=tables.select -outputformat=csv
+java -classpath ../_schemacrawler/lib/schemacrawler-8.17.jar:../_schemacrawler/lib/hsqldb-2.2.8.jar schemacrawler.Main -c hsqldb -infolevel=standard -command=tables.select -outputformat=csv
