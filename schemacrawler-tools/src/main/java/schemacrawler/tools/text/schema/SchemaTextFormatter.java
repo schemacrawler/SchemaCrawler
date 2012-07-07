@@ -196,13 +196,20 @@ final class SchemaTextFormatter
 
     if (isNotList)
     {
+      final String referencedObjectName;
+      if (options.isShowUnqualifiedNames())
+      {
+        referencedObjectName = synonym.getReferencedObject().getName();
+      }
+      else
+      {
+        referencedObjectName = synonym.getReferencedObject().getFullName();
+      }
       out.println(formattingHelper.createDetailRow("",
                                                    synonym.getName()
                                                        + formattingHelper
                                                          .createArrow()
-                                                       + synonym
-                                                         .getReferencedObject()
-                                                         .getFullName(),
+                                                       + referencedObjectName,
                                                    ""));
 
       if (isVerbose)
@@ -453,7 +460,15 @@ final class SchemaTextFormatter
 
   private void printColumnDataType(final ColumnDataType columnDataType)
   {
-    final String databaseSpecificTypeName = columnDataType.getFullName();
+    final String databaseSpecificTypeName;
+    if (options.isShowUnqualifiedNames())
+    {
+      databaseSpecificTypeName = columnDataType.getName();
+    }
+    else
+    {
+      databaseSpecificTypeName = columnDataType.getFullName();
+    }
     final String typeName = columnDataType.getTypeName();
     final String userDefined = negate(columnDataType.isUserDefined(),
                                       "user defined");
@@ -496,6 +511,10 @@ final class SchemaTextFormatter
       {
         pkColumnName = pkColumn.getName();
       }
+      else if (options.isShowUnqualifiedNames())
+      {
+        pkColumnName = pkColumn.getShortName();
+      }
       else
       {
         pkColumnName = pkColumn.getFullName();
@@ -503,6 +522,10 @@ final class SchemaTextFormatter
       if (fkColumn.getParent().getName().equals(tableName))
       {
         fkColumnName = fkColumn.getName();
+      }
+      else if (options.isShowUnqualifiedNames())
+      {
+        fkColumnName = fkColumn.getShortName();
       }
       else
       {
@@ -648,10 +671,10 @@ final class SchemaTextFormatter
     }
   }
 
-  private void printPrivileges(final Privilege[] privileges)
+  private void printPrivileges(final Privilege<?>[] privileges)
   {
 
-    for (final Privilege privilege: privileges)
+    for (final Privilege<?> privilege: privileges)
     {
       if (privilege != null)
       {

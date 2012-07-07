@@ -2996,7 +2996,7 @@
       "createParameters": "",
       "basedOn": "",
       "nullable": false,
-      "databaseSpecificTypeName": "CHARACTER VARYING",
+      "databaseSpecificTypeName": "PUBLIC.BOOKS.CHARACTER VARYING",
       "searchable": "unknown"
     },
     {
@@ -3005,7 +3005,7 @@
       "createParameters": "",
       "basedOn": "",
       "nullable": false,
-      "databaseSpecificTypeName": "BIGINT ARRAY",
+      "databaseSpecificTypeName": "PUBLIC.SYSTEM_LOBS.BIGINT ARRAY",
       "searchable": "unknown"
     }
   ],

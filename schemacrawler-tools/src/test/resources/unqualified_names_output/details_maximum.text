@@ -414,7 +414,7 @@ VARCHAR_IGNORECASE                                           [data type]
   not auto-incrementable
   searchable
 
-PUBLIC.BOOKS.CHARACTER VARYING                               [data type]
+CHARACTER VARYING                                            [data type]
   based on                          VARCHAR                     
   not user defined
   defined with 
@@ -422,7 +422,7 @@ PUBLIC.BOOKS.CHARACTER VARYING                               [data type]
   not auto-incrementable
   unknown
 
-PUBLIC.SYSTEM_LOBS.BIGINT ARRAY                              [data type]
+BIGINT ARRAY                                                 [data type]
   based on                          ARRAY                       
   not user defined
   defined with 
@@ -452,7 +452,7 @@ PK_AUTHORS                                                 [primary key]
   ID                                ascending                   
 
 FK_Z_AUTHOR                                [foreign key, with no action]
-  ID --> PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID                              
+  ID --> BOOKAUTHORS.AUTHORID                                   
 
 SYS_IDX_PK_AUTHORS_10030                                  [unique index]
   ID                                ascending                   
@@ -539,10 +539,10 @@ BOOKAUTHORS                                                      [table]
   "UPDATE"                          CLOB                        
 
 FK_Z_AUTHOR                                [foreign key, with no action]
-  PUBLIC.BOOKS.AUTHORS.ID --> AUTHORID                              
+  AUTHORS.ID --> AUTHORID                                       
 
 FK_Y_BOOK                                  [foreign key, with no action]
-  PUBLIC.BOOKS.BOOKS.ID --> BOOKID                              
+  BOOKS.ID --> BOOKID                                           
 
 SYS_IDX_10040                                         [non-unique index]
   AUTHORID                          ascending                   
@@ -595,13 +595,13 @@ PK_BOOKS                                                   [primary key]
   ID                                ascending                   
 
 FK_Y_BOOK                                  [foreign key, with no action]
-  ID --> PUBLIC.BOOKS.BOOKAUTHORS.BOOKID                              
+  ID --> BOOKAUTHORS.BOOKID                                     
 
                                                       [weak association]
-  ID --> PUBLIC."PUBLISHER SALES".SALES.BOOKID                              
+  ID --> SALES.BOOKID                                           
 
                                                       [weak association]
-  PUBLIC.BOOKS.PUBLISHERS.ID --> PUBLISHERID                              
+  PUBLISHERS.ID --> PUBLISHERID                                 
 
 SYS_IDX_PK_BOOKS_10034                                    [unique index]
   ID                                ascending                   
@@ -675,7 +675,7 @@ PK_PUBLISHERS                                              [primary key]
   ID                                ascending                   
 
                                                       [weak association]
-  ID --> PUBLIC.BOOKS.BOOKS.PUBLISHERID                              
+  ID --> BOOKS.PUBLISHERID                                      
 
 SYS_IDX_PK_PUBLISHERS_10026                               [unique index]
   ID                                ascending                   
@@ -717,10 +717,10 @@ PK_EXTRA_PK                                                [primary key]
   ID                                ascending                   
 
 FK_PUBLICATION_JOIN                        [foreign key, with no action]
-  PUBLIC.FOR_LINT.PUBLICATIONS.ID --> PUBLICATIONID                              
+  PUBLICATIONS.ID --> PUBLICATIONID                              
 
 FK_WRITER_JOIN                             [foreign key, with no action]
-  PUBLIC.FOR_LINT.WRITERS.ID --> WRITERID                              
+  WRITERS.ID --> WRITERID                                       
 
 SYS_IDX_PK_EXTRA_PK_10072                                 [unique index]
   ID                                ascending                   
@@ -797,13 +797,13 @@ PK_PUBLICATIONS                                            [primary key]
   ID                                ascending                   
 
 FK_PUBLICATION_JOIN                        [foreign key, with no action]
-  ID --> PUBLIC.FOR_LINT.EXTRA_PK.PUBLICATIONID                              
+  ID --> EXTRA_PK.PUBLICATIONID                                 
 
 FK_WRITERS_PUBLICATION                     [foreign key, with no action]
-  ID --> PUBLIC.FOR_LINT.WRITERS.PUBLICATION_ID                              
+  ID --> WRITERS.PUBLICATION_ID                                 
 
 FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
-  PUBLIC.FOR_LINT.WRITERS.ID --> WRITERID                              
+  WRITERS.ID --> WRITERID                                       
 
 SYS_IDX_PK_PUBLICATIONS_10064                             [unique index]
   ID                                ascending                   
@@ -864,13 +864,13 @@ PK_WRITERS                                                 [primary key]
   ID                                ascending                   
 
 FK_WRITERS_PUBLICATION                     [foreign key, with no action]
-  PUBLIC.FOR_LINT.PUBLICATIONS.ID --> PUBLICATION_ID                              
+  PUBLICATIONS.ID --> PUBLICATION_ID                              
 
 FK_WRITER_JOIN                             [foreign key, with no action]
-  ID --> PUBLIC.FOR_LINT.EXTRA_PK.WRITERID                              
+  ID --> EXTRA_PK.WRITERID                                      
 
 FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
-  ID --> PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID                              
+  ID --> PUBLICATIONS.WRITERID                                  
 
 SYS_IDX_PK_WRITERS_10060                                  [unique index]
   ID                                ascending                   
@@ -945,8 +945,8 @@ PK_CUSTOMERS                                               [primary key]
   COUNTRY                           ascending                   
 
 FK_SALES_REGIONS                           [foreign key, with no action]
-  POSTALCODE --> PUBLIC."PUBLISHER SALES".SALES.POSTALCODE                              
-  COUNTRY --> PUBLIC."PUBLISHER SALES".SALES.COUNTRY                              
+  POSTALCODE --> SALES.POSTALCODE                               
+  COUNTRY --> SALES.COUNTRY                                     
 
 SYS_IDX_PK_CUSTOMERS_10049                                [unique index]
   POSTALCODE                        ascending                   
@@ -992,11 +992,11 @@ SALES                                                            [table]
   TOTALAMOUNT                       DOUBLE(64, 0)               
 
 FK_SALES_REGIONS                           [foreign key, with no action]
-  PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE --> POSTALCODE                              
-  PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY --> COUNTRY                              
+  REGIONS.POSTALCODE --> POSTALCODE                              
+  REGIONS.COUNTRY --> COUNTRY                                   
 
                                                       [weak association]
-  PUBLIC.BOOKS.BOOKS.ID --> BOOKID                              
+  BOOKS.ID --> BOOKID                                           
 
 SYS_IDX_10053                                         [non-unique index]
   POSTALCODE                        ascending                   

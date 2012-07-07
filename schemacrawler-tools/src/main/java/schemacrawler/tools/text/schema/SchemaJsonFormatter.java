@@ -102,8 +102,17 @@ final class SchemaJsonFormatter
         final JSONObject jsonColumnDataType = new JSONObject();
         jsonRoot.accumulate("columnDataypes", jsonColumnDataType);
 
+        final String databaseSpecificTypeName;
+        if (options.isShowUnqualifiedNames())
+        {
+          databaseSpecificTypeName = columnDataType.getName();
+        }
+        else
+        {
+          databaseSpecificTypeName = columnDataType.getFullName();
+        }
         jsonColumnDataType.put("databaseSpecificTypeName",
-                               columnDataType.getDatabaseSpecificTypeName());
+                               databaseSpecificTypeName);
         jsonColumnDataType
           .put("basedOn", columnDataType.getBaseType() == null? ""
                                                               : columnDataType
@@ -193,7 +202,16 @@ final class SchemaJsonFormatter
       {
         jsonSynonym.put("fullName", synonym.getFullName());
       }
-      jsonSynonym.put("referencedObject", synonym.getReferencedObject());
+      final String referencedObjectName;
+      if (options.isShowUnqualifiedNames())
+      {
+        referencedObjectName = synonym.getReferencedObject().getName();
+      }
+      else
+      {
+        referencedObjectName = synonym.getReferencedObject().getFullName();
+      }
+      jsonSynonym.put("referencedObject", referencedObjectName);
 
       if (isNotList)
       {
@@ -368,8 +386,29 @@ final class SchemaJsonFormatter
       try
       {
         final JSONObject jsonColumnPair = new JSONObject();
-        jsonColumnPair.put("pkColumn", columnPair.getPrimaryKeyColumn());
-        jsonColumnPair.put("fkColumn", columnPair.getForeignKeyColumn());
+
+        final String pkColumnName;
+        if (options.isShowUnqualifiedNames())
+        {
+          pkColumnName = columnPair.getPrimaryKeyColumn().getShortName();
+        }
+        else
+        {
+          pkColumnName = columnPair.getPrimaryKeyColumn().getFullName();
+        }
+        jsonColumnPair.put("pkColumn", pkColumnName);
+
+        final String fkColumnName;
+        if (options.isShowUnqualifiedNames())
+        {
+          fkColumnName = columnPair.getForeignKeyColumn().getShortName();
+        }
+        else
+        {
+          fkColumnName = columnPair.getForeignKeyColumn().getFullName();
+        }
+        jsonColumnPair.put("fkColumn", fkColumnName);
+
         if (columnPair instanceof ForeignKeyColumnMap
             && options.isShowOrdinalNumbers())
         {

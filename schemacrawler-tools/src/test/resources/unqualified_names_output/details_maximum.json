@@ -6,8 +6,8 @@
       "foreignKeys": [{
         "updateRule": "no action",
         "columnPairs": [{
-          "pkColumn": "PUBLIC.BOOKS.AUTHORS.ID",
-          "fkColumn": "PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID"
+          "pkColumn": "AUTHORS.ID",
+          "fkColumn": "BOOKAUTHORS.AUTHORID"
         }],
         "deleteRule": "no action",
         "name": "FK_Z_AUTHOR"
@@ -336,8 +336,8 @@
         {
           "updateRule": "no action",
           "columnPairs": [{
-            "pkColumn": "PUBLIC.BOOKS.AUTHORS.ID",
-            "fkColumn": "PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID"
+            "pkColumn": "AUTHORS.ID",
+            "fkColumn": "BOOKAUTHORS.AUTHORID"
           }],
           "deleteRule": "no action",
           "name": "FK_Z_AUTHOR"
@@ -345,8 +345,8 @@
         {
           "updateRule": "no action",
           "columnPairs": [{
-            "pkColumn": "PUBLIC.BOOKS.BOOKS.ID",
-            "fkColumn": "PUBLIC.BOOKS.BOOKAUTHORS.BOOKID"
+            "pkColumn": "BOOKS.ID",
+            "fkColumn": "BOOKAUTHORS.BOOKID"
           }],
           "deleteRule": "no action",
           "name": "FK_Y_BOOK"
@@ -485,19 +485,19 @@
     {
       "weakAssociations": [
         {
-          "pkColumn": "PUBLIC.BOOKS.BOOKS.ID",
-          "fkColumn": "PUBLIC.\"PUBLISHER SALES\".SALES.BOOKID"
+          "pkColumn": "BOOKS.ID",
+          "fkColumn": "SALES.BOOKID"
         },
         {
-          "pkColumn": "PUBLIC.BOOKS.PUBLISHERS.ID",
-          "fkColumn": "PUBLIC.BOOKS.BOOKS.PUBLISHERID"
+          "pkColumn": "PUBLISHERS.ID",
+          "fkColumn": "BOOKS.PUBLISHERID"
         }
       ],
       "foreignKeys": [{
         "updateRule": "no action",
         "columnPairs": [{
-          "pkColumn": "PUBLIC.BOOKS.BOOKS.ID",
-          "fkColumn": "PUBLIC.BOOKS.BOOKAUTHORS.BOOKID"
+          "pkColumn": "BOOKS.ID",
+          "fkColumn": "BOOKAUTHORS.BOOKID"
         }],
         "deleteRule": "no action",
         "name": "FK_Y_BOOK"
@@ -721,8 +721,8 @@
     },
     {
       "weakAssociations": [{
-        "pkColumn": "PUBLIC.BOOKS.PUBLISHERS.ID",
-        "fkColumn": "PUBLIC.BOOKS.BOOKS.PUBLISHERID"
+        "pkColumn": "PUBLISHERS.ID",
+        "fkColumn": "BOOKS.PUBLISHERID"
       }],
       "foreignKeys": [],
       "primaryKey": {
@@ -828,8 +828,8 @@
         {
           "updateRule": "no action",
           "columnPairs": [{
-            "pkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.ID",
-            "fkColumn": "PUBLIC.FOR_LINT.EXTRA_PK.PUBLICATIONID"
+            "pkColumn": "PUBLICATIONS.ID",
+            "fkColumn": "EXTRA_PK.PUBLICATIONID"
           }],
           "deleteRule": "no action",
           "name": "FK_PUBLICATION_JOIN"
@@ -837,8 +837,8 @@
         {
           "updateRule": "no action",
           "columnPairs": [{
-            "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
-            "fkColumn": "PUBLIC.FOR_LINT.EXTRA_PK.WRITERID"
+            "pkColumn": "WRITERS.ID",
+            "fkColumn": "EXTRA_PK.WRITERID"
           }],
           "deleteRule": "no action",
           "name": "FK_WRITER_JOIN"
@@ -1055,8 +1055,8 @@
         {
           "updateRule": "no action",
           "columnPairs": [{
-            "pkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.ID",
-            "fkColumn": "PUBLIC.FOR_LINT.EXTRA_PK.PUBLICATIONID"
+            "pkColumn": "PUBLICATIONS.ID",
+            "fkColumn": "EXTRA_PK.PUBLICATIONID"
           }],
           "deleteRule": "no action",
           "name": "FK_PUBLICATION_JOIN"
@@ -1064,8 +1064,8 @@
         {
           "updateRule": "no action",
           "columnPairs": [{
-            "pkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.ID",
-            "fkColumn": "PUBLIC.FOR_LINT.WRITERS.PUBLICATION_ID"
+            "pkColumn": "PUBLICATIONS.ID",
+            "fkColumn": "WRITERS.PUBLICATION_ID"
           }],
           "deleteRule": "no action",
           "name": "FK_WRITERS_PUBLICATION"
@@ -1073,8 +1073,8 @@
         {
           "updateRule": "no action",
           "columnPairs": [{
-            "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
-            "fkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID"
+            "pkColumn": "WRITERS.ID",
+            "fkColumn": "PUBLICATIONS.WRITERID"
           }],
           "deleteRule": "no action",
           "name": "FK_PUBLICATIONS_WRITER"
@@ -1263,8 +1263,8 @@
         {
           "updateRule": "no action",
           "columnPairs": [{
-            "pkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.ID",
-            "fkColumn": "PUBLIC.FOR_LINT.WRITERS.PUBLICATION_ID"
+            "pkColumn": "PUBLICATIONS.ID",
+            "fkColumn": "WRITERS.PUBLICATION_ID"
           }],
           "deleteRule": "no action",
           "name": "FK_WRITERS_PUBLICATION"
@@ -1272,8 +1272,8 @@
         {
           "updateRule": "no action",
           "columnPairs": [{
-            "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
-            "fkColumn": "PUBLIC.FOR_LINT.EXTRA_PK.WRITERID"
+            "pkColumn": "WRITERS.ID",
+            "fkColumn": "EXTRA_PK.WRITERID"
           }],
           "deleteRule": "no action",
           "name": "FK_WRITER_JOIN"
@@ -1281,8 +1281,8 @@
         {
           "updateRule": "no action",
           "columnPairs": [{
-            "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
-            "fkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID"
+            "pkColumn": "WRITERS.ID",
+            "fkColumn": "PUBLICATIONS.WRITERID"
           }],
           "deleteRule": "no action",
           "name": "FK_PUBLICATIONS_WRITER"
@@ -1647,12 +1647,12 @@
         "updateRule": "no action",
         "columnPairs": [
           {
-            "pkColumn": "PUBLIC.\"PUBLISHER SALES\".REGIONS.POSTALCODE",
-            "fkColumn": "PUBLIC.\"PUBLISHER SALES\".SALES.POSTALCODE"
+            "pkColumn": "REGIONS.POSTALCODE",
+            "fkColumn": "SALES.POSTALCODE"
           },
           {
-            "pkColumn": "PUBLIC.\"PUBLISHER SALES\".REGIONS.COUNTRY",
-            "fkColumn": "PUBLIC.\"PUBLISHER SALES\".SALES.COUNTRY"
+            "pkColumn": "REGIONS.COUNTRY",
+            "fkColumn": "SALES.COUNTRY"
           }
         ],
         "deleteRule": "no action",
@@ -1803,19 +1803,19 @@
     },
     {
       "weakAssociations": [{
-        "pkColumn": "PUBLIC.BOOKS.BOOKS.ID",
-        "fkColumn": "PUBLIC.\"PUBLISHER SALES\".SALES.BOOKID"
+        "pkColumn": "BOOKS.ID",
+        "fkColumn": "SALES.BOOKID"
       }],
       "foreignKeys": [{
         "updateRule": "no action",
         "columnPairs": [
           {
-            "pkColumn": "PUBLIC.\"PUBLISHER SALES\".REGIONS.POSTALCODE",
-            "fkColumn": "PUBLIC.\"PUBLISHER SALES\".SALES.POSTALCODE"
+            "pkColumn": "REGIONS.POSTALCODE",
+            "fkColumn": "SALES.POSTALCODE"
           },
           {
-            "pkColumn": "PUBLIC.\"PUBLISHER SALES\".REGIONS.COUNTRY",
-            "fkColumn": "PUBLIC.\"PUBLISHER SALES\".SALES.COUNTRY"
+            "pkColumn": "REGIONS.COUNTRY",
+            "fkColumn": "SALES.COUNTRY"
           }
         ],
         "deleteRule": "no action",

@@ -31,4 +31,6 @@ public interface DependantObject<P extends DatabaseObject>
   extends DatabaseObject, ContainedObject<P>
 {
 
+  String getShortName();
+
 }
