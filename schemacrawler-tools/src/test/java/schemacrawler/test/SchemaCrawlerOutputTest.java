@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
 import org.custommonkey.xmlunit.XMLUnit;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -53,7 +54,10 @@ public class SchemaCrawlerOutputTest
 
   private static final String INFO_LEVEL_OUTPUT = "info_level_output/";
   private static final String COMPOSITE_OUTPUT = "composite_output/";
+  private static final String ORDINAL_OUTPUT = "ordinal_output/";
   private static final String JSON_OUTPUT = "json_output/";
+  private static final String HIDE_CONSTRAINT_NAMES_OUTPUT = "hide_constraint_names_output/";
+  private static final String UNQUALIFIED_NAMES_OUTPUT = "unqualified_names_output/";
 
   private static TestDatabase testDatabase = new TestDatabase();
 
@@ -76,6 +80,9 @@ public class SchemaCrawlerOutputTest
   public void compareCompositeOutput()
     throws Exception
   {
+    FileUtils.deleteDirectory(new File("./target/unit_tests_results_output",
+                                       COMPOSITE_OUTPUT));
+
     final String queryCommand1 = "all_tables";
     final Config queriesConfig = new Config();
     queriesConfig
@@ -128,11 +135,74 @@ public class SchemaCrawlerOutputTest
         executable.setAdditionalConfiguration(queriesConfig);
         executable.execute(connectionOptions.getConnection());
 
-        failures.addAll(compareOutput(COMPOSITE_OUTPUT
-                                                     + referenceFile,
-                                                 testOutputFile,
-                                                 outputFormat.name()));
+        failures.addAll(compareOutput(COMPOSITE_OUTPUT + referenceFile,
+                                      testOutputFile,
+                                      outputFormat.name()));
       }
+    }
+    if (failures.size() > 0)
+    {
+      fail(failures.toString());
+    }
+  }
+
+  @Test
+  public void compareHideConstraintNamesOutput()
+    throws Exception
+  {
+
+    FileUtils.deleteDirectory(new File("./target/unit_tests_results_output",
+                                       HIDE_CONSTRAINT_NAMES_OUTPUT));
+
+    final List<String> failures = new ArrayList<String>();
+
+    final Config textOutputOptionsConfig = new Config();
+    textOutputOptionsConfig.put("schemacrawler.format.hide_primarykey_names",
+                                Boolean.TRUE.toString());
+    textOutputOptionsConfig.put("schemacrawler.format.hide_foreignkey_names",
+                                Boolean.TRUE.toString());
+    textOutputOptionsConfig.put("schemacrawler.format.hide_index_names",
+                                Boolean.TRUE.toString());
+    textOutputOptionsConfig.put("schemacrawler.format.hide_constraint_names",
+                                Boolean.TRUE.toString());
+
+    for (final OutputFormat outputFormat: EnumSet.complementOf(EnumSet
+      .of(OutputFormat.tsv)))
+    {
+      final String referenceFile = "details_maximum." + outputFormat.name();
+
+      final File testOutputFile = File
+        .createTempFile("schemacrawler." + referenceFile + ".", ".test");
+      testOutputFile.delete();
+
+      final OutputOptions outputOptions = new OutputOptions(outputFormat.name(),
+                                                            testOutputFile);
+      outputOptions.setNoInfo(false);
+      outputOptions.setNoHeader(false);
+      outputOptions.setNoFooter(false);
+
+      final Config config = Config
+        .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
+      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
+      schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
+
+      final DatabaseConnectionOptions connectionOptions = testDatabase
+        .getDatabaseConnectionOptions();
+
+      final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(SchemaTextDetailType.details
+                                                                             + ","
+                                                                             + Operation.count
+                                                                             + ","
+                                                                             + Operation.dump);
+      executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+      executable.setOutputOptions(outputOptions);
+      executable.setAdditionalConfiguration(textOutputOptionsConfig);
+      executable.execute(connectionOptions.getConnection());
+
+      failures.addAll(compareOutput(HIDE_CONSTRAINT_NAMES_OUTPUT
+                                        + referenceFile,
+                                    testOutputFile,
+                                    outputFormat.name()));
     }
     if (failures.size() > 0)
     {
@@ -144,6 +214,9 @@ public class SchemaCrawlerOutputTest
   public void compareInfoLevelOutput()
     throws Exception
   {
+    FileUtils.deleteDirectory(new File("./target/unit_tests_results_output",
+                                       INFO_LEVEL_OUTPUT));
+
     final List<String> failures = new ArrayList<String>();
     for (final InfoLevel infoLevel: InfoLevel.values())
     {
@@ -183,11 +256,9 @@ public class SchemaCrawlerOutputTest
         executable.setOutputOptions(outputOptions);
         executable.execute(connectionOptions.getConnection());
 
-        failures.addAll(compareOutput(INFO_LEVEL_OUTPUT
-                                                     + referenceFile,
-                                                 testOutputFile,
-                                                 outputOptions
-                                                   .getOutputFormat().name()));
+        failures.addAll(compareOutput(INFO_LEVEL_OUTPUT + referenceFile,
+                                      testOutputFile,
+                                      outputOptions.getOutputFormat().name()));
       }
     }
     if (failures.size() > 0)
@@ -200,6 +271,9 @@ public class SchemaCrawlerOutputTest
   public void compareJsonOutput()
     throws Exception
   {
+    FileUtils.deleteDirectory(new File("./target/unit_tests_results_output",
+                                       JSON_OUTPUT));
+
     final List<String> failures = new ArrayList<String>();
     final InfoLevel infoLevel = InfoLevel.maximum;
     for (final SchemaTextDetailType schemaTextDetailType: SchemaTextDetailType
@@ -233,9 +307,120 @@ public class SchemaCrawlerOutputTest
       executable.execute(connectionOptions.getConnection());
 
       failures.addAll(compareOutput(JSON_OUTPUT + referenceFile,
-                                               testOutputFile,
-                                               outputOptions.getOutputFormat()
-                                                 .name()));
+                                    testOutputFile,
+                                    outputOptions.getOutputFormat().name()));
+    }
+    if (failures.size() > 0)
+    {
+      fail(failures.toString());
+    }
+  }
+
+  @Test
+  public void compareOrdinalOutput()
+    throws Exception
+  {
+    FileUtils.deleteDirectory(new File("./target/unit_tests_results_output",
+                                       ORDINAL_OUTPUT));
+
+    final List<String> failures = new ArrayList<String>();
+
+    final Config textOutputOptionsConfig = new Config();
+    textOutputOptionsConfig.put("schemacrawler.format.show_ordinal_numbers",
+                                Boolean.TRUE.toString());
+
+    for (final OutputFormat outputFormat: EnumSet.complementOf(EnumSet
+      .of(OutputFormat.tsv)))
+    {
+      final String referenceFile = "details_maximum." + outputFormat.name();
+
+      final File testOutputFile = File
+        .createTempFile("schemacrawler." + referenceFile + ".", ".test");
+      testOutputFile.delete();
+
+      final OutputOptions outputOptions = new OutputOptions(outputFormat.name(),
+                                                            testOutputFile);
+      outputOptions.setNoInfo(false);
+      outputOptions.setNoHeader(false);
+      outputOptions.setNoFooter(false);
+
+      final Config config = Config
+        .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
+      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
+      schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
+
+      final DatabaseConnectionOptions connectionOptions = testDatabase
+        .getDatabaseConnectionOptions();
+
+      final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(SchemaTextDetailType.details
+                                                                             + ","
+                                                                             + Operation.count
+                                                                             + ","
+                                                                             + Operation.dump);
+      executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+      executable.setOutputOptions(outputOptions);
+      executable.setAdditionalConfiguration(textOutputOptionsConfig);
+      executable.execute(connectionOptions.getConnection());
+
+      failures.addAll(compareOutput(ORDINAL_OUTPUT + referenceFile,
+                                    testOutputFile,
+                                    outputFormat.name()));
+    }
+    if (failures.size() > 0)
+    {
+      fail(failures.toString());
+    }
+  }
+
+  @Test
+  public void compareUnqualifiedNamesOutput()
+    throws Exception
+  {
+    FileUtils.deleteDirectory(new File("./target/unit_tests_results_output",
+                                       UNQUALIFIED_NAMES_OUTPUT));
+
+    final List<String> failures = new ArrayList<String>();
+
+    final Config textOutputOptionsConfig = new Config();
+    textOutputOptionsConfig.put("schemacrawler.format.show_unqualified_names",
+                                Boolean.TRUE.toString());
+
+    for (final OutputFormat outputFormat: EnumSet.complementOf(EnumSet
+      .of(OutputFormat.tsv)))
+    {
+      final String referenceFile = "details_maximum." + outputFormat.name();
+
+      final File testOutputFile = File
+        .createTempFile("schemacrawler." + referenceFile + ".", ".test");
+      testOutputFile.delete();
+
+      final OutputOptions outputOptions = new OutputOptions(outputFormat.name(),
+                                                            testOutputFile);
+      outputOptions.setNoInfo(false);
+      outputOptions.setNoHeader(false);
+      outputOptions.setNoFooter(false);
+
+      final Config config = Config
+        .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
+      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
+      schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
+
+      final DatabaseConnectionOptions connectionOptions = testDatabase
+        .getDatabaseConnectionOptions();
+
+      final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(SchemaTextDetailType.details
+                                                                             + ","
+                                                                             + Operation.count
+                                                                             + ","
+                                                                             + Operation.dump);
+      executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+      executable.setOutputOptions(outputOptions);
+      executable.setAdditionalConfiguration(textOutputOptionsConfig);
+      executable.execute(connectionOptions.getConnection());
+
+      failures.addAll(compareOutput(UNQUALIFIED_NAMES_OUTPUT + referenceFile,
+                                    testOutputFile,
+                                    outputFormat.name()));
     }
     if (failures.size() > 0)
     {

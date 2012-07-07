@@ -9,12 +9,10 @@
           "pkColumn": "PUBLIC.BOOKS.AUTHORS.ID",
           "fkColumn": "PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID"
         }],
-        "deleteRule": "no action",
-        "name": "FK_Z_AUTHOR"
+        "deleteRule": "no action"
       }],
       "primaryKey": {
         "unique": true,
-        "name": "PK_AUTHORS",
         "columns": {
           "sortSequence": "ascending",
           "name": "ID"
@@ -22,22 +20,10 @@
       },
       "name": "AUTHORS",
       "constraints": [
-        {
-          "definition": "BOOKS.AUTHORS.STATE=UPPER(BOOKS.AUTHORS.STATE)",
-          "name": "CHECK_UPPERCASE_STATE"
-        },
-        {
-          "definition": "BOOKS.AUTHORS.ID IS NOT NULL",
-          "name": "SYS_CT_10027"
-        },
-        {
-          "definition": "BOOKS.AUTHORS.FIRSTNAME IS NOT NULL",
-          "name": "SYS_CT_10028"
-        },
-        {
-          "definition": "BOOKS.AUTHORS.LASTNAME IS NOT NULL",
-          "name": "SYS_CT_10029"
-        }
+        {"definition": "BOOKS.AUTHORS.STATE=UPPER(BOOKS.AUTHORS.STATE)"},
+        {"definition": "BOOKS.AUTHORS.ID IS NOT NULL"},
+        {"definition": "BOOKS.AUTHORS.FIRSTNAME IS NOT NULL"},
+        {"definition": "BOOKS.AUTHORS.LASTNAME IS NOT NULL"}
       ],
       "columns": [
         {
@@ -184,7 +170,6 @@
       "indices": [
         {
           "unique": true,
-          "name": "SYS_IDX_PK_AUTHORS_10030",
           "columns": {
             "sortSequence": "ascending",
             "name": "ID"
@@ -192,7 +177,6 @@
         },
         {
           "unique": false,
-          "name": "IDX_B_AUTHORS",
           "columns": [
             {
               "sortSequence": "ascending",
@@ -206,7 +190,6 @@
         },
         {
           "unique": false,
-          "name": "IDX_A_AUTHORS",
           "columns": [
             {
               "sortSequence": "ascending",
@@ -341,8 +324,7 @@
             "pkColumn": "PUBLIC.BOOKS.AUTHORS.ID",
             "fkColumn": "PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID"
           }],
-          "deleteRule": "no action",
-          "name": "FK_Z_AUTHOR"
+          "deleteRule": "no action"
         },
         {
           "updateRule": "no action",
@@ -350,21 +332,14 @@
             "pkColumn": "PUBLIC.BOOKS.BOOKS.ID",
             "fkColumn": "PUBLIC.BOOKS.BOOKAUTHORS.BOOKID"
           }],
-          "deleteRule": "no action",
-          "name": "FK_Y_BOOK"
+          "deleteRule": "no action"
         }
       ],
       "primaryKey": {},
       "name": "BOOKAUTHORS",
       "constraints": [
-        {
-          "definition": "BOOKS.BOOKAUTHORS.BOOKID IS NOT NULL",
-          "name": "SYS_CT_10035"
-        },
-        {
-          "definition": "BOOKS.BOOKAUTHORS.AUTHORID IS NOT NULL",
-          "name": "SYS_CT_10036"
-        }
+        {"definition": "BOOKS.BOOKAUTHORS.BOOKID IS NOT NULL"},
+        {"definition": "BOOKS.BOOKAUTHORS.AUTHORID IS NOT NULL"}
       ],
       "columns": [
         {
@@ -451,7 +426,6 @@
       "indices": [
         {
           "unique": false,
-          "name": "SYS_IDX_10040",
           "columns": {
             "sortSequence": "ascending",
             "name": "AUTHORID"
@@ -459,7 +433,6 @@
         },
         {
           "unique": false,
-          "name": "SYS_IDX_10038",
           "columns": {
             "sortSequence": "ascending",
             "name": "BOOKID"
@@ -467,7 +440,6 @@
         },
         {
           "unique": true,
-          "name": "UIDX_BOOKAUTHORS",
           "columns": [
             {
               "sortSequence": "ascending",
@@ -502,12 +474,10 @@
           "pkColumn": "PUBLIC.BOOKS.BOOKS.ID",
           "fkColumn": "PUBLIC.BOOKS.BOOKAUTHORS.BOOKID"
         }],
-        "deleteRule": "no action",
-        "name": "FK_Y_BOOK"
+        "deleteRule": "no action"
       }],
       "primaryKey": {
         "unique": true,
-        "name": "PK_BOOKS",
         "columns": {
           "sortSequence": "ascending",
           "name": "ID"
@@ -515,18 +485,9 @@
       },
       "name": "BOOKS",
       "constraints": [
-        {
-          "definition": "BOOKS.BOOKS.ID IS NOT NULL",
-          "name": "SYS_CT_10031"
-        },
-        {
-          "definition": "BOOKS.BOOKS.TITLE IS NOT NULL",
-          "name": "SYS_CT_10032"
-        },
-        {
-          "definition": "BOOKS.BOOKS.PUBLISHERID IS NOT NULL",
-          "name": "SYS_CT_10033"
-        }
+        {"definition": "BOOKS.BOOKS.ID IS NOT NULL"},
+        {"definition": "BOOKS.BOOKS.TITLE IS NOT NULL"},
+        {"definition": "BOOKS.BOOKS.PUBLISHERID IS NOT NULL"}
       ],
       "columns": [
         {
@@ -642,7 +603,6 @@
       ],
       "indices": [{
         "unique": true,
-        "name": "SYS_IDX_PK_BOOKS_10034",
         "columns": {
           "sortSequence": "ascending",
           "name": "ID"
@@ -732,17 +692,13 @@
       "foreignKeys": [],
       "primaryKey": {
         "unique": true,
-        "name": "PK_PUBLISHERS",
         "columns": {
           "sortSequence": "ascending",
           "name": "ID"
         }
       },
       "name": "PUBLISHERS",
-      "constraints": {
-        "definition": "BOOKS.PUBLISHERS.ID IS NOT NULL",
-        "name": "SYS_CT_10025"
-      },
+      "constraints": {"definition": "BOOKS.PUBLISHERS.ID IS NOT NULL"},
       "columns": [
         {
           "dataType": "INTEGER",
@@ -817,7 +773,6 @@
       ],
       "indices": [{
         "unique": true,
-        "name": "SYS_IDX_PK_PUBLISHERS_10026",
         "columns": {
           "sortSequence": "ascending",
           "name": "ID"
@@ -837,8 +792,7 @@
             "pkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.ID",
             "fkColumn": "PUBLIC.FOR_LINT.EXTRA_PK.PUBLICATIONID"
           }],
-          "deleteRule": "no action",
-          "name": "FK_PUBLICATION_JOIN"
+          "deleteRule": "no action"
         },
         {
           "updateRule": "no action",
@@ -846,13 +800,11 @@
             "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
             "fkColumn": "PUBLIC.FOR_LINT.EXTRA_PK.WRITERID"
           }],
-          "deleteRule": "no action",
-          "name": "FK_WRITER_JOIN"
+          "deleteRule": "no action"
         }
       ],
       "primaryKey": {
         "unique": true,
-        "name": "PK_EXTRA_PK",
         "columns": {
           "sortSequence": "ascending",
           "name": "ID"
@@ -860,18 +812,9 @@
       },
       "name": "EXTRA_PK",
       "constraints": [
-        {
-          "definition": "FOR_LINT.EXTRA_PK.ID IS NOT NULL",
-          "name": "SYS_CT_10069"
-        },
-        {
-          "definition": "FOR_LINT.EXTRA_PK.WRITERID IS NOT NULL",
-          "name": "SYS_CT_10070"
-        },
-        {
-          "definition": "FOR_LINT.EXTRA_PK.PUBLICATIONID IS NOT NULL",
-          "name": "SYS_CT_10071"
-        }
+        {"definition": "FOR_LINT.EXTRA_PK.ID IS NOT NULL"},
+        {"definition": "FOR_LINT.EXTRA_PK.WRITERID IS NOT NULL"},
+        {"definition": "FOR_LINT.EXTRA_PK.PUBLICATIONID IS NOT NULL"}
       ],
       "columns": [
         {
@@ -958,7 +901,6 @@
       "indices": [
         {
           "unique": true,
-          "name": "SYS_IDX_PK_EXTRA_PK_10072",
           "columns": {
             "sortSequence": "ascending",
             "name": "ID"
@@ -966,7 +908,6 @@
         },
         {
           "unique": false,
-          "name": "SYS_IDX_10075",
           "columns": {
             "sortSequence": "ascending",
             "name": "PUBLICATIONID"
@@ -974,7 +915,6 @@
         },
         {
           "unique": false,
-          "name": "SYS_IDX_10073",
           "columns": {
             "sortSequence": "ascending",
             "name": "WRITERID"
@@ -1066,8 +1006,7 @@
             "pkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.ID",
             "fkColumn": "PUBLIC.FOR_LINT.EXTRA_PK.PUBLICATIONID"
           }],
-          "deleteRule": "no action",
-          "name": "FK_PUBLICATION_JOIN"
+          "deleteRule": "no action"
         },
         {
           "updateRule": "no action",
@@ -1075,8 +1014,7 @@
             "pkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.ID",
             "fkColumn": "PUBLIC.FOR_LINT.WRITERS.PUBLICATION_ID"
           }],
-          "deleteRule": "no action",
-          "name": "FK_WRITERS_PUBLICATION"
+          "deleteRule": "no action"
         },
         {
           "updateRule": "no action",
@@ -1084,13 +1022,11 @@
             "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
             "fkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID"
           }],
-          "deleteRule": "no action",
-          "name": "FK_PUBLICATIONS_WRITER"
+          "deleteRule": "no action"
         }
       ],
       "primaryKey": {
         "unique": true,
-        "name": "PK_PUBLICATIONS",
         "columns": {
           "sortSequence": "ascending",
           "name": "ID"
@@ -1098,18 +1034,9 @@
       },
       "name": "PUBLICATIONS",
       "constraints": [
-        {
-          "definition": "FOR_LINT.PUBLICATIONS.ID IS NOT NULL",
-          "name": "SYS_CT_10061"
-        },
-        {
-          "definition": "FOR_LINT.PUBLICATIONS.TITLE IS NOT NULL",
-          "name": "SYS_CT_10062"
-        },
-        {
-          "definition": "FOR_LINT.PUBLICATIONS.WRITERID IS NOT NULL",
-          "name": "SYS_CT_10063"
-        }
+        {"definition": "FOR_LINT.PUBLICATIONS.ID IS NOT NULL"},
+        {"definition": "FOR_LINT.PUBLICATIONS.TITLE IS NOT NULL"},
+        {"definition": "FOR_LINT.PUBLICATIONS.WRITERID IS NOT NULL"}
       ],
       "columns": [
         {
@@ -1246,7 +1173,6 @@
       "indices": [
         {
           "unique": true,
-          "name": "SYS_IDX_PK_PUBLICATIONS_10064",
           "columns": {
             "sortSequence": "ascending",
             "name": "ID"
@@ -1254,7 +1180,6 @@
         },
         {
           "unique": false,
-          "name": "SYS_IDX_10065",
           "columns": {
             "sortSequence": "ascending",
             "name": "WRITERID"
@@ -1275,8 +1200,7 @@
             "pkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.ID",
             "fkColumn": "PUBLIC.FOR_LINT.WRITERS.PUBLICATION_ID"
           }],
-          "deleteRule": "no action",
-          "name": "FK_WRITERS_PUBLICATION"
+          "deleteRule": "no action"
         },
         {
           "updateRule": "no action",
@@ -1284,8 +1208,7 @@
             "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
             "fkColumn": "PUBLIC.FOR_LINT.EXTRA_PK.WRITERID"
           }],
-          "deleteRule": "no action",
-          "name": "FK_WRITER_JOIN"
+          "deleteRule": "no action"
         },
         {
           "updateRule": "no action",
@@ -1293,13 +1216,11 @@
             "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
             "fkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID"
           }],
-          "deleteRule": "no action",
-          "name": "FK_PUBLICATIONS_WRITER"
+          "deleteRule": "no action"
         }
       ],
       "primaryKey": {
         "unique": true,
-        "name": "PK_WRITERS",
         "columns": {
           "sortSequence": "ascending",
           "name": "ID"
@@ -1307,30 +1228,12 @@
       },
       "name": "WRITERS",
       "constraints": [
-        {
-          "definition": "FOR_LINT.WRITERS.STATE=UPPER(FOR_LINT.WRITERS.STATE)",
-          "name": "CHECK_UPPERCASE_STATE"
-        },
-        {
-          "definition": "FOR_LINT.WRITERS.ID IS NOT NULL",
-          "name": "SYS_CT_10055"
-        },
-        {
-          "definition": "FOR_LINT.WRITERS.FIRSTNAME IS NOT NULL",
-          "name": "SYS_CT_10056"
-        },
-        {
-          "definition": "FOR_LINT.WRITERS.LASTNAME IS NOT NULL",
-          "name": "SYS_CT_10057"
-        },
-        {
-          "definition": "FOR_LINT.WRITERS.ADDRESS2 IS NOT NULL",
-          "name": "SYS_CT_10058"
-        },
-        {
-          "definition": "FOR_LINT.WRITERS.PUBLICATION_ID IS NOT NULL",
-          "name": "SYS_CT_10059"
-        }
+        {"definition": "FOR_LINT.WRITERS.STATE=UPPER(FOR_LINT.WRITERS.STATE)"},
+        {"definition": "FOR_LINT.WRITERS.ID IS NOT NULL"},
+        {"definition": "FOR_LINT.WRITERS.FIRSTNAME IS NOT NULL"},
+        {"definition": "FOR_LINT.WRITERS.LASTNAME IS NOT NULL"},
+        {"definition": "FOR_LINT.WRITERS.ADDRESS2 IS NOT NULL"},
+        {"definition": "FOR_LINT.WRITERS.PUBLICATION_ID IS NOT NULL"}
       ],
       "columns": [
         {
@@ -1567,7 +1470,6 @@
       "indices": [
         {
           "unique": true,
-          "name": "SYS_IDX_PK_WRITERS_10060",
           "columns": {
             "sortSequence": "ascending",
             "name": "ID"
@@ -1575,7 +1477,6 @@
         },
         {
           "unique": false,
-          "name": "SYS_IDX_10077",
           "columns": {
             "sortSequence": "ascending",
             "name": "PUBLICATION_ID"
@@ -1583,7 +1484,6 @@
         },
         {
           "unique": false,
-          "name": "IDX_A1_WRITERS",
           "columns": [
             {
               "sortSequence": "ascending",
@@ -1597,7 +1497,6 @@
         },
         {
           "unique": true,
-          "name": "IDX_U_WRITERS",
           "columns": [
             {
               "sortSequence": "ascending",
@@ -1611,7 +1510,6 @@
         },
         {
           "unique": false,
-          "name": "IDX_B_WRITERS",
           "columns": [
             {
               "sortSequence": "ascending",
@@ -1625,7 +1523,6 @@
         },
         {
           "unique": false,
-          "name": "IDX_A_WRITERS",
           "columns": [
             {
               "sortSequence": "ascending",
@@ -1665,12 +1562,10 @@
             "fkColumn": "PUBLIC.\"PUBLISHER SALES\".SALES.COUNTRY"
           }
         ],
-        "deleteRule": "no action",
-        "name": "FK_SALES_REGIONS"
+        "deleteRule": "no action"
       }],
       "primaryKey": {
         "unique": true,
-        "name": "PK_CUSTOMERS",
         "columns": [
           {
             "sortSequence": "ascending",
@@ -1684,22 +1579,10 @@
       },
       "name": "REGIONS",
       "constraints": [
-        {
-          "definition": "\"PUBLISHER SALES\".REGIONS.CITY IS NOT NULL",
-          "name": "SYS_CT_10045"
-        },
-        {
-          "definition": "\"PUBLISHER SALES\".REGIONS.STATE IS NOT NULL",
-          "name": "SYS_CT_10046"
-        },
-        {
-          "definition": "\"PUBLISHER SALES\".REGIONS.POSTALCODE IS NOT NULL",
-          "name": "SYS_CT_10047"
-        },
-        {
-          "definition": "\"PUBLISHER SALES\".REGIONS.COUNTRY IS NOT NULL",
-          "name": "SYS_CT_10048"
-        }
+        {"definition": "\"PUBLISHER SALES\".REGIONS.CITY IS NOT NULL"},
+        {"definition": "\"PUBLISHER SALES\".REGIONS.STATE IS NOT NULL"},
+        {"definition": "\"PUBLISHER SALES\".REGIONS.POSTALCODE IS NOT NULL"},
+        {"definition": "\"PUBLISHER SALES\".REGIONS.COUNTRY IS NOT NULL"}
       ],
       "columns": [
         {
@@ -1795,7 +1678,6 @@
       ],
       "indices": [{
         "unique": true,
-        "name": "SYS_IDX_PK_CUSTOMERS_10049",
         "columns": [
           {
             "sortSequence": "ascending",
@@ -1829,20 +1711,13 @@
             "fkColumn": "PUBLIC.\"PUBLISHER SALES\".SALES.COUNTRY"
           }
         ],
-        "deleteRule": "no action",
-        "name": "FK_SALES_REGIONS"
+        "deleteRule": "no action"
       }],
       "primaryKey": {},
       "name": "SALES",
       "constraints": [
-        {
-          "definition": "\"PUBLISHER SALES\".SALES.POSTALCODE IS NOT NULL",
-          "name": "SYS_CT_10050"
-        },
-        {
-          "definition": "\"PUBLISHER SALES\".SALES.COUNTRY IS NOT NULL",
-          "name": "SYS_CT_10051"
-        }
+        {"definition": "\"PUBLISHER SALES\".SALES.POSTALCODE IS NOT NULL"},
+        {"definition": "\"PUBLISHER SALES\".SALES.COUNTRY IS NOT NULL"}
       ],
       "columns": [
         {
@@ -1948,7 +1823,6 @@
       ],
       "indices": [{
         "unique": false,
-        "name": "SYS_IDX_10053",
         "columns": [
           {
             "sortSequence": "ascending",

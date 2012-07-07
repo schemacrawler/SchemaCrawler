@@ -35,17 +35,16 @@ public class SchemaTextOptions
 
   private static final long serialVersionUID = -8133661515343358712L;
 
+  private static final String SHOW_UNQUALIFIED_NAMES = "schemacrawler.format.show_unqualified_names";
+  private static final String SHOW_ORDINAL_NUMBERS = "schemacrawler.format.show_ordinal_numbers";
+  private static final String SHOW_STANDARD_COLUMN_TYPE_NAMES = "schemacrawler.format.show_standard_column_type_names";
+
   private static final String HIDE_PRIMARY_KEY_NAMES = "schemacrawler.format.hide_primarykey_names";
   private static final String HIDE_FOREIGN_KEY_NAMES = "schemacrawler.format.hide_foreignkey_names";
   private static final String HIDE_INDEX_NAMES = "schemacrawler.format.hide_index_names";
   private static final String HIDE_CONSTRAINT_NAMES = "schemacrawler.format.hide_constraint_names";
-  private static final String SHOW_ORDINAL_NUMBERS = "schemacrawler.format.show_ordinal_numbers";
-  private static final String SHOW_STANDARD_COLUMN_TYPE_NAMES = "schemacrawler.format.show_standard_column_type_names";
-  /**
-   * Deprecated
-   */
-  private static final String SHOW_JDBC_COLUMN_TYPE_NAMES = "schemacrawler.format.show_jdbc_column_type_names";
 
+  private boolean showUnqualifiedNames;
   private boolean showStandardColumnTypeNames;
   private boolean showOrdinalNumbers;
 
@@ -59,7 +58,7 @@ public class SchemaTextOptions
    */
   public SchemaTextOptions()
   {
-    setDefaultValues();
+    // NOTE: All boolean options are false by default
   }
 
   /**
@@ -70,13 +69,11 @@ public class SchemaTextOptions
    */
   public SchemaTextOptions(final Config config)
   {
-    setDefaultValues();
     if (config != null)
     {
+      showUnqualifiedNames = config.getBooleanValue(SHOW_UNQUALIFIED_NAMES);
       showStandardColumnTypeNames = config
-        .getBooleanValue(SHOW_JDBC_COLUMN_TYPE_NAMES)
-                                    || config
-                                      .getBooleanValue(SHOW_STANDARD_COLUMN_TYPE_NAMES);
+        .getBooleanValue(SHOW_STANDARD_COLUMN_TYPE_NAMES);
       showOrdinalNumbers = config.getBooleanValue(SHOW_ORDINAL_NUMBERS);
 
       hideForeignKeyNames = config.getBooleanValue(HIDE_FOREIGN_KEY_NAMES);
@@ -146,6 +143,11 @@ public class SchemaTextOptions
     return showStandardColumnTypeNames;
   }
 
+  public boolean isShowUnqualifiedNames()
+  {
+    return showUnqualifiedNames;
+  }
+
   /**
    * Sets whether to hide constraint names.
    * 
@@ -212,15 +214,9 @@ public class SchemaTextOptions
     this.showStandardColumnTypeNames = showStandardColumnTypeNames;
   }
 
-  private void setDefaultValues()
+  public void setShowUnqualifiedNames(final boolean showUnqualifiedNames)
   {
-    showStandardColumnTypeNames = false;
-    showOrdinalNumbers = false;
-
-    hideForeignKeyNames = false;
-    hidePrimaryKeyNames = false;
-    hideIndexNames = false;
-    hideConstraintNames = false;
+    this.showUnqualifiedNames = showUnqualifiedNames;
   }
 
 }

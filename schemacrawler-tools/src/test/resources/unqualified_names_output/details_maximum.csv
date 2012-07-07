@@ -1,0 +1,1352 @@
+
+
+
+System Information
+========================================================================
+
+
+
+SchemaCrawler Information
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
+
+product name,SchemaCrawler
+product version,8.16
+
+
+Database Information
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
+
+database product name,HSQL Database Engine
+database product version,2.2.8
+database user name,SA
+
+
+Database Characteristics
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
+
+all procedures are callable,true
+all tables are selectable,true
+auto commit failure closes all result sets,false
+catalog separator,.
+catalog term,CATALOG
+catalogs,PUBLIC
+client info properties,"files_readonly, hsqldb.applog, hsqldb.cache_file_scale, hsqldb.cache_free_count, hsqldb.cache_rows, hsqldb.cache_size, hsqldb.default_table_type, hsqldb.defrag_limit, hsqldb.full_log_replay, hsqldb.inc_backup, hsqldb.lob_file_scale, hsqldb.lock_file, hsqldb.log_data, hsqldb.log_size, hsqldb.nio_data_file, hsqldb.nio_max_size, hsqldb.result_max_memory_rows, hsqldb.script_format, hsqldb.sqllog, hsqldb.temp_directory, hsqldb.tx, hsqldb.tx_conflict_rollback, hsqldb.tx_level, hsqldb.write_delay, hsqldb.write_delay_millis, jdbc.translate_tti_types, readonly, runtime.gc_interval, sql.avg_scale, sql.compare_in_locale, sql.concat_nulls, sql.convert_trunc, sql.double_nan, sql.enforce_names, sql.enforce_refs, sql.enforce_size, sql.enforce_tdc_delete, sql.enforce_tdc_update, sql.enforce_types, sql.identity_is_pk, sql.longvar_is_lob, sql.nulls_first, sql.ref_integrity, sql.syntax_db2, sql.syntax_mss, sql.syntax_mys, sql.syntax_ora, sql.syntax_pgs, sql.unique_nulls, textdb.all_quoted, textdb.cache_rows, textdb.cache_scale, textdb.cache_size, textdb.cache_size_scale, textdb.encoding, textdb.fs, textdb.ignore_first, textdb.lvs, textdb.quoted, textdb.vs"
+data definition causes transaction commit,true
+data definition ignored in transactions,false
+database major version,2
+database minor version,2
+default transaction isolation,2
+deletes are detected for TYPE_FORWARD_ONLY result sets,false
+deletes are detected for TYPE_SCROLL_INSENSITIVE result sets,false
+deletes are detected for TYPE_SCROLL_SENSITIVE result sets,false
+does max row size include blobs,true
+driver major version,2
+driver minor version,2
+extra name characters,""
+identifier quote string,""""
+inserts are detected for TYPE_FORWARD_ONLY result sets,false
+inserts are detected for TYPE_SCROLL_INSENSITIVE result sets,false
+inserts are detected for TYPE_SCROLL_SENSITIVE result sets,false
+is catalog at start,true
+is read only,false
+JDBC major version,4
+JDBC minor version,0
+locators update copy,false
+max binary literal length,0
+max catalog name length,128
+max char literal length,0
+max column name length,128
+max columns in group by,0
+max columns in index,0
+max columns in order by,0
+max columns in select,0
+max columns in table,0
+max connections,0
+max cursor name length,128
+max index length,0
+max procedure name length,128
+max row size,0
+max schema name length,128
+max statement length,0
+max statements,0
+max table name length,128
+max tables in select,0
+max user name length,128
+null plus non null is null,true
+nulls are sorted at end,false
+nulls are sorted at start,true
+nulls are sorted high,false
+nulls are sorted low,false
+numeric functions,"ABS, ACOS, ASIN, ATAN, ATAN2, BITAND, BITOR, BITXOR, CEILING, COS, COT, DEGREES, EXP, FLOOR, LOG, LOG10, MOD, PI, POWER, RADIANS, RAND, ROUND, ROUNDMAGIC, SIGN, SIN, SQRT, TAN, TRUNCATE"
+others inserts are visible for TYPE_FORWARD_ONLY result sets,false
+others inserts are visible for TYPE_SCROLL_INSENSITIVE result sets,false
+others inserts are visible for TYPE_SCROLL_SENSITIVE result sets,false
+others updates are visible for TYPE_FORWARD_ONLY result sets,false
+others updates are visible for TYPE_SCROLL_INSENSITIVE result sets,false
+others updates are visible for TYPE_SCROLL_SENSITIVE result sets,false
+own deletes are visible for TYPE_FORWARD_ONLY result sets,false
+own deletes are visible for TYPE_SCROLL_INSENSITIVE result sets,false
+own deletes are visible for TYPE_SCROLL_SENSITIVE result sets,false
+own inserts are visible for TYPE_FORWARD_ONLY result sets,false
+own inserts are visible for TYPE_SCROLL_INSENSITIVE result sets,false
+own inserts are visible for TYPE_SCROLL_SENSITIVE result sets,false
+own updates are visible for TYPE_FORWARD_ONLY result sets,false
+own updates are visible for TYPE_SCROLL_INSENSITIVE result sets,false
+own updates are visible for TYPE_SCROLL_SENSITIVE result sets,false
+procedure term,PROCEDURE
+result set holdability,1
+row id lifetime,ROWID_UNSUPPORTED
+schema term,SCHEMA
+schemas,"BOOKS, FOR_LINT, INFORMATION_SCHEMA, PUBLIC, PUBLISHER SALES, SYSTEM_LOBS"
+search string escape,\
+SQL keywords,""
+SQL state type,2
+stores lower case identifiers,false
+stores lower case quoted identifiers,false
+stores mixed case identifiers,false
+stores mixed case quoted identifiers,false
+stores upper case identifiers,true
+stores upper case quoted identifiers,false
+string functions,"ASCII, CHAR, CONCAT, DIFFERENCE, HEXTORAW, INSERT, LCASE, LEFT, LENGTH, LOCATE, LTRIM, RAWTOHEX, REPEAT, REPLACE, RIGHT, RTRIM, SOUNDEX, SPACE, SUBSTR, UCASE"
+supports alter table with add column,true
+supports alter table with drop column,true
+supports ANSI92 entry level SQL,true
+supports ANSI92 full SQL,true
+supports ANSI92 intermediate SQL,true
+supports batch updates,true
+supports catalogs in data manipulation,true
+supports catalogs in index definitions,true
+supports catalogs in privilege definitions,true
+supports catalogs in procedure calls,true
+supports catalogs in table definitions,true
+supports column aliasing,true
+supports convert,true
+supports core SQL grammar,true
+supports correlated subqueries,true
+supports data definition and data manipulation transactions,false
+supports data manipulation transactions only,true
+supports different table correlation names,true
+supports expressions in order by,true
+supports extended SQL grammar,true
+supports full outer joins,true
+supports get generated keys,true
+supports group by,true
+supports group by beyond select,true
+supports group by unrelated,true
+supports integrity enhancement facility,true
+supports like escape clause,true
+supports limited outer joins,true
+supports minimum SQL grammar,true
+supports mixed case identifiers,false
+supports mixed case quoted identifiers,true
+supports multiple open results,true
+supports multiple result sets,true
+supports multiple transactions,true
+supports named parameters,true
+supports non nullable columns,true
+supports open cursors across commit,true
+supports open cursors across rollback,false
+supports open statements across commit,true
+supports open statements across rollback,true
+supports order by unrelated,true
+supports outer joins,true
+supports positioned delete,true
+supports positioned update,true
+supports result set type for TYPE_FORWARD_ONLY result sets,true
+supports result set type for TYPE_SCROLL_INSENSITIVE result sets,true
+supports result set type for TYPE_SCROLL_SENSITIVE result sets,false
+supports savepoints,true
+supports schemas in data manipulation,true
+supports schemas in index definitions,true
+supports schemas in privilege definitions,true
+supports schemas in procedure calls,true
+supports schemas in table definitions,true
+supports select for update,true
+supports statement pooling,true
+supports stored functions using call syntax,true
+supports stored procedures,true
+supports subqueries in comparisons,true
+supports subqueries in exists,true
+supports subqueries in ins,true
+supports subqueries in quantifieds,true
+supports table correlation names,true
+supports transactions,true
+supports union,true
+supports union all,true
+system functions,"DATABASE, IFNULL, USER"
+table types,"GLOBAL TEMPORARY, SYSTEM TABLE, TABLE, VIEW"
+time date functions,"CURDATE, CURTIME, DATEDIFF, DAYNAME, DAYOFMONTH, DAYOFWEEK, DAYOFYEAR, HOUR, MINUTE, MONTH, MONTHNAME, NOW, QUARTER, SECOND, SECONDS_SINCE_MIDNIGHT, TIMESTAMPADD, TIMESTAMPDIFF, TO_CHAR, WEEK, YEAR"
+type info,"BIT, TINYINT, BIGINT, VARBINARY, BINARY, CHARACTER, NUMERIC, DECIMAL, INTEGER, SMALLINT, DOUBLE, FLOAT, REAL, NVARCHAR, VARCHAR, VARCHAR_IGNORECASE, BOOLEAN, DATE, TIME, TIMESTAMP, OTHER, BLOB, CLOB"
+uses local file per table,false
+uses local files,false
+
+
+JDBC Driver Information
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
+
+driver name,HSQL Database Engine Driver
+driver version,2.2.8
+driver class name,org.hsqldb.jdbc.JDBCDriver
+url,jdbc:hsqldb:mem:schemacrawler
+is JDBC compliant,true
+
+
+JDBC Driver Properties
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
+
+default_schema,[driver property]
+"",""
+"","not required; choices [true, false]"
+"",value,false
+
+get_column_name,[driver property]
+"",""
+"","not required; choices [true, false]"
+"",value,true
+
+ifexists,[driver property]
+"",""
+"","not required; choices [true, false]"
+"",value,false
+
+password,[driver property]
+"",""
+"",required
+"",value,null
+
+shutdown,[driver property]
+"",""
+"","not required; choices [true, false]"
+"",value,false
+
+user,[driver property]
+"",""
+"",required
+"",value,null
+
+
+
+Data Types
+========================================================================
+
+
+BIGINT,[data type]
+"",based on,BIGINT
+"",not user defined
+"",defined with no parameters
+"",nullable
+"",auto-incrementable
+"",searchable except with where .. like
+
+BINARY,[data type]
+"",based on,BINARY
+"",not user defined
+"",defined with LENGTH
+"",nullable
+"",not auto-incrementable
+"",searchable
+
+BIT,[data type]
+"",based on,BIT
+"",not user defined
+"",defined with LENGTH
+"",nullable
+"",not auto-incrementable
+"",searchable except with where .. like
+
+BLOB,[data type]
+"",based on,BLOB
+"",not user defined
+"",defined with LENGTH
+"",nullable
+"",not auto-incrementable
+"",not searchable
+
+BOOLEAN,[data type]
+"",based on,BOOLEAN
+"",not user defined
+"",defined with no parameters
+"",nullable
+"",not auto-incrementable
+"",searchable except with where .. like
+
+CHARACTER,[data type]
+"",based on,CHAR
+"",not user defined
+"",defined with LENGTH
+"",nullable
+"",not auto-incrementable
+"",searchable
+
+CLOB,[data type]
+"",based on,CLOB
+"",not user defined
+"",defined with LENGTH
+"",nullable
+"",not auto-incrementable
+"",not searchable
+
+DATE,[data type]
+"",based on,DATE
+"",not user defined
+"",defined with no parameters
+"",nullable
+"",not auto-incrementable
+"",searchable except with where .. like
+
+DECIMAL,[data type]
+"",based on,DECIMAL
+"",not user defined
+"","defined with PRECISION,SCALE"
+"",nullable
+"",auto-incrementable
+"",searchable except with where .. like
+
+DOUBLE,[data type]
+"",based on,DOUBLE
+"",not user defined
+"",defined with no parameters
+"",nullable
+"",not auto-incrementable
+"",searchable except with where .. like
+
+FLOAT,[data type]
+"",based on,DOUBLE
+"",not user defined
+"",defined with no parameters
+"",nullable
+"",not auto-incrementable
+"",searchable except with where .. like
+
+INTEGER,[data type]
+"",based on,INTEGER
+"",not user defined
+"",defined with no parameters
+"",nullable
+"",auto-incrementable
+"",searchable except with where .. like
+
+NUMERIC,[data type]
+"",based on,NUMERIC
+"",not user defined
+"","defined with PRECISION,SCALE"
+"",nullable
+"",auto-incrementable
+"",searchable except with where .. like
+
+NVARCHAR,[data type]
+"",based on,VARCHAR
+"",not user defined
+"",defined with LENGTH
+"",nullable
+"",not auto-incrementable
+"",searchable
+
+OTHER,[data type]
+"",based on,OTHER
+"",not user defined
+"",defined with no parameters
+"",nullable
+"",not auto-incrementable
+"",searchable except with where .. like
+
+REAL,[data type]
+"",based on,DOUBLE
+"",not user defined
+"",defined with no parameters
+"",nullable
+"",not auto-incrementable
+"",searchable except with where .. like
+
+SMALLINT,[data type]
+"",based on,SMALLINT
+"",not user defined
+"",defined with no parameters
+"",nullable
+"",auto-incrementable
+"",searchable except with where .. like
+
+TIME,[data type]
+"",based on,TIME
+"",not user defined
+"",defined with no parameters
+"",nullable
+"",not auto-incrementable
+"",searchable except with where .. like
+
+TIMESTAMP,[data type]
+"",based on,TIMESTAMP
+"",not user defined
+"",defined with no parameters
+"",nullable
+"",not auto-incrementable
+"",searchable except with where .. like
+
+TINYINT,[data type]
+"",based on,TINYINT
+"",not user defined
+"",defined with no parameters
+"",nullable
+"",auto-incrementable
+"",searchable except with where .. like
+
+VARBINARY,[data type]
+"",based on,VARBINARY
+"",not user defined
+"",defined with LENGTH
+"",nullable
+"",not auto-incrementable
+"",searchable
+
+VARCHAR,[data type]
+"",based on,VARCHAR
+"",not user defined
+"",defined with LENGTH
+"",nullable
+"",not auto-incrementable
+"",searchable
+
+VARCHAR_IGNORECASE,[data type]
+"",based on,VARCHAR
+"",not user defined
+"",defined with LENGTH
+"",nullable
+"",not auto-incrementable
+"",searchable
+
+PUBLIC.BOOKS.CHARACTER VARYING,[data type]
+"",based on,VARCHAR
+"",not user defined
+"",defined with 
+"",not nullable
+"",not auto-incrementable
+"",unknown
+
+PUBLIC.SYSTEM_LOBS.BIGINT ARRAY,[data type]
+"",based on,ARRAY
+"",not user defined
+"",defined with 
+"",not nullable
+"",not auto-incrementable
+"",unknown
+
+
+
+Tables
+========================================================================
+
+
+AUTHORS,[table]
+------------------------------------------------------------------------
+"",ID,INTEGER not null
+"",FIRSTNAME,VARCHAR(20) not null
+"",LASTNAME,VARCHAR(20) not null
+"",ADDRESS1,VARCHAR(255)
+"",ADDRESS2,VARCHAR(255)
+"",CITY,VARCHAR(50)
+"",STATE,VARCHAR(2)
+"",POSTALCODE,VARCHAR(10)
+"",COUNTRY,VARCHAR(50)
+""
+PK_AUTHORS,[primary key]
+"",ID,ascending
+""
+FK_Z_AUTHOR,"[foreign key, with no action]"
+"",ID --> PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID,""
+""
+SYS_IDX_PK_AUTHORS_10030,[unique index]
+"",ID,ascending
+""
+IDX_B_AUTHORS,[non-unique index]
+"",LASTNAME,ascending
+"",FIRSTNAME,ascending
+""
+IDX_A_AUTHORS,[non-unique index]
+"",CITY,ascending
+"",STATE,ascending
+"",POSTALCODE,ascending
+"",COUNTRY,ascending
+""
+CHECK_UPPERCASE_STATE,[check constraint]
+BOOKS.AUTHORS.STATE=UPPER(BOOKS.AUTHORS.STATE)
+""
+SYS_CT_10027,[check constraint]
+BOOKS.AUTHORS.ID IS NOT NULL
+""
+SYS_CT_10028,[check constraint]
+BOOKS.AUTHORS.FIRSTNAME IS NOT NULL
+""
+SYS_CT_10029,[check constraint]
+BOOKS.AUTHORS.LASTNAME IS NOT NULL
+""
+DELETE,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+INSERT,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+REFERENCES,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+SELECT,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+TRIGGER,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+UPDATE,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+TRG_AUTHORS,"[trigger, after delete, per row]"
+"",UPDATE BOOKS.PUBLISHERS SET PUBLISHER='Jacob'WHERE PUBLISHER='John'
+""
+"",[remarks]
+Contact details for book authors
+
+
+AUTHORSLIST,[view]
+------------------------------------------------------------------------
+"",ID,INTEGER
+"",FIRSTNAME,VARCHAR(20)
+"",LASTNAME,VARCHAR(20)
+""
+DELETE,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+INSERT,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+REFERENCES,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+SELECT,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+TRIGGER,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+UPDATE,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+"",[definition]
+"SELECT ID,FIRSTNAME,LASTNAME FROM BOOKS.AUTHORS"
+
+
+BOOKAUTHORS,[table]
+------------------------------------------------------------------------
+"",BOOKID,INTEGER not null
+"",AUTHORID,INTEGER not null
+"","""UPDATE""",CLOB
+""
+FK_Z_AUTHOR,"[foreign key, with no action]"
+"",PUBLIC.BOOKS.AUTHORS.ID --> AUTHORID,""
+""
+FK_Y_BOOK,"[foreign key, with no action]"
+"",PUBLIC.BOOKS.BOOKS.ID --> BOOKID,""
+""
+SYS_IDX_10040,[non-unique index]
+"",AUTHORID,ascending
+""
+SYS_IDX_10038,[non-unique index]
+"",BOOKID,ascending
+""
+UIDX_BOOKAUTHORS,[unique index]
+"",BOOKID,ascending
+"",AUTHORID,ascending
+""
+SYS_CT_10035,[check constraint]
+BOOKS.BOOKAUTHORS.BOOKID IS NOT NULL
+""
+SYS_CT_10036,[check constraint]
+BOOKS.BOOKAUTHORS.AUTHORID IS NOT NULL
+""
+DELETE,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+INSERT,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+REFERENCES,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+SELECT,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+TRIGGER,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+UPDATE,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+"",[remarks]
+"Relationship between books and their authors, along with the latest updated information"
+
+
+BOOKS,[table]
+------------------------------------------------------------------------
+"",ID,INTEGER not null
+"",TITLE,VARCHAR(255) not null
+"",DESCRIPTION,VARCHAR(255)
+"",PUBLISHERID,INTEGER not null
+"",PUBLICATIONDATE,DATE
+"",PRICE,"DOUBLE(64, 0)"
+""
+PK_BOOKS,[primary key]
+"",ID,ascending
+""
+FK_Y_BOOK,"[foreign key, with no action]"
+"",ID --> PUBLIC.BOOKS.BOOKAUTHORS.BOOKID,""
+""
+"",[weak association]
+"","ID --> PUBLIC.""PUBLISHER SALES"".SALES.BOOKID",""
+""
+"",[weak association]
+"",PUBLIC.BOOKS.PUBLISHERS.ID --> PUBLISHERID,""
+""
+SYS_IDX_PK_BOOKS_10034,[unique index]
+"",ID,ascending
+""
+SYS_CT_10031,[check constraint]
+BOOKS.BOOKS.ID IS NOT NULL
+""
+SYS_CT_10032,[check constraint]
+BOOKS.BOOKS.TITLE IS NOT NULL
+""
+SYS_CT_10033,[check constraint]
+BOOKS.BOOKS.PUBLISHERID IS NOT NULL
+""
+DELETE,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+INSERT,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+REFERENCES,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+SELECT,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+TRIGGER,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+UPDATE,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+"",[remarks]
+Details for published books
+"",ID,Unique (internal) id for book
+"",TITLE,Book title
+"",DESCRIPTION,Book description
+"",PUBLISHERID,Foreign key to the book publisher
+"",PUBLICATIONDATE,Book publication date
+"",PRICE,Current price for the book
+
+
+"""Global Counts""",[table]
+------------------------------------------------------------------------
+"","""Global Count""",INTEGER
+""
+DELETE,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+INSERT,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+REFERENCES,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+SELECT,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+TRIGGER,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+UPDATE,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+
+
+PUBLISHERS,[table]
+------------------------------------------------------------------------
+"",ID,INTEGER not null
+"",PUBLISHER,VARCHAR(255)
+""
+PK_PUBLISHERS,[primary key]
+"",ID,ascending
+""
+"",[weak association]
+"",ID --> PUBLIC.BOOKS.BOOKS.PUBLISHERID,""
+""
+SYS_IDX_PK_PUBLISHERS_10026,[unique index]
+"",ID,ascending
+""
+SYS_CT_10025,[check constraint]
+BOOKS.PUBLISHERS.ID IS NOT NULL
+""
+DELETE,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+INSERT,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+REFERENCES,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+SELECT,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+TRIGGER,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+UPDATE,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+"",[remarks]
+List of book publishers
+"",ID,Unique (internal) id for book publisher
+"",PUBLISHER,Name of book publisher
+
+
+EXTRA_PK,[table]
+------------------------------------------------------------------------
+"",ID,INTEGER not null
+"",WRITERID,BIGINT not null
+"",PUBLICATIONID,INTEGER not null
+""
+PK_EXTRA_PK,[primary key]
+"",ID,ascending
+""
+FK_PUBLICATION_JOIN,"[foreign key, with no action]"
+"",PUBLIC.FOR_LINT.PUBLICATIONS.ID --> PUBLICATIONID,""
+""
+FK_WRITER_JOIN,"[foreign key, with no action]"
+"",PUBLIC.FOR_LINT.WRITERS.ID --> WRITERID,""
+""
+SYS_IDX_PK_EXTRA_PK_10072,[unique index]
+"",ID,ascending
+""
+SYS_IDX_10075,[non-unique index]
+"",PUBLICATIONID,ascending
+""
+SYS_IDX_10073,[non-unique index]
+"",WRITERID,ascending
+""
+SYS_CT_10069,[check constraint]
+FOR_LINT.EXTRA_PK.ID IS NOT NULL
+""
+SYS_CT_10070,[check constraint]
+FOR_LINT.EXTRA_PK.WRITERID IS NOT NULL
+""
+SYS_CT_10071,[check constraint]
+FOR_LINT.EXTRA_PK.PUBLICATIONID IS NOT NULL
+""
+DELETE,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+INSERT,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+REFERENCES,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+SELECT,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+TRIGGER,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+UPDATE,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+
+
+"""Global Counts""",[table]
+------------------------------------------------------------------------
+"","""Global Count""",INTEGER
+""
+DELETE,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+INSERT,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+REFERENCES,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+SELECT,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+TRIGGER,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+UPDATE,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+
+
+PUBLICATIONS,[table]
+------------------------------------------------------------------------
+"",ID,INTEGER not null
+"",TITLE,VARCHAR(255) not null
+"",DESCRIPTION,VARCHAR(255)
+"",WRITERID,BIGINT not null
+"",PUBLICATIONDATE,DATE
+"",PRICE,"DOUBLE(64, 0)"
+"","""UPDATE""",CLOB
+"",PRESS_RELEASE,CLOB
+""
+PK_PUBLICATIONS,[primary key]
+"",ID,ascending
+""
+FK_PUBLICATION_JOIN,"[foreign key, with no action]"
+"",ID --> PUBLIC.FOR_LINT.EXTRA_PK.PUBLICATIONID,""
+""
+FK_WRITERS_PUBLICATION,"[foreign key, with no action]"
+"",ID --> PUBLIC.FOR_LINT.WRITERS.PUBLICATION_ID,""
+""
+FK_PUBLICATIONS_WRITER,"[foreign key, with no action]"
+"",PUBLIC.FOR_LINT.WRITERS.ID --> WRITERID,""
+""
+SYS_IDX_PK_PUBLICATIONS_10064,[unique index]
+"",ID,ascending
+""
+SYS_IDX_10065,[non-unique index]
+"",WRITERID,ascending
+""
+SYS_CT_10061,[check constraint]
+FOR_LINT.PUBLICATIONS.ID IS NOT NULL
+""
+SYS_CT_10062,[check constraint]
+FOR_LINT.PUBLICATIONS.TITLE IS NOT NULL
+""
+SYS_CT_10063,[check constraint]
+FOR_LINT.PUBLICATIONS.WRITERID IS NOT NULL
+""
+DELETE,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+INSERT,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+REFERENCES,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+SELECT,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+TRIGGER,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+UPDATE,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+
+
+WRITERS,[table]
+------------------------------------------------------------------------
+"",ID,BIGINT not null
+"",FIRSTNAME,VARCHAR(20) not null
+"",LASTNAME,VARCHAR(20) not null
+"",ADDRESS1,VARCHAR(255)
+"",ADDRESS2,VARCHAR(255) not null
+"",CITY,VARCHAR(50)
+"",STATE,VARCHAR(2)
+"",POSTALCODE,VARCHAR(10)
+"",COUNTRY,VARCHAR(50)
+"",PHONE1,VARCHAR(10)
+"",PHONE2,VARCHAR(15)
+"",EMAIL1,VARCHAR(10)
+"",EMAIL2,INTEGER
+"",FAX,VARCHAR(10)
+"",FAX3,INTEGER
+"",HOMEEMAIL11,VARCHAR(10)
+"",HOMEEMAIL12,VARCHAR(10)
+"",PUBLICATION_ID,BIGINT not null
+""
+PK_WRITERS,[primary key]
+"",ID,ascending
+""
+FK_WRITERS_PUBLICATION,"[foreign key, with no action]"
+"",PUBLIC.FOR_LINT.PUBLICATIONS.ID --> PUBLICATION_ID,""
+""
+FK_WRITER_JOIN,"[foreign key, with no action]"
+"",ID --> PUBLIC.FOR_LINT.EXTRA_PK.WRITERID,""
+""
+FK_PUBLICATIONS_WRITER,"[foreign key, with no action]"
+"",ID --> PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID,""
+""
+SYS_IDX_PK_WRITERS_10060,[unique index]
+"",ID,ascending
+""
+SYS_IDX_10077,[non-unique index]
+"",PUBLICATION_ID,ascending
+""
+IDX_A1_WRITERS,[non-unique index]
+"",CITY,ascending
+"",STATE,ascending
+""
+IDX_U_WRITERS,[unique index]
+"",EMAIL1,ascending
+"",COUNTRY,ascending
+""
+IDX_B_WRITERS,[non-unique index]
+"",LASTNAME,ascending
+"",FIRSTNAME,ascending
+""
+IDX_A_WRITERS,[non-unique index]
+"",CITY,ascending
+"",STATE,ascending
+"",POSTALCODE,ascending
+"",COUNTRY,ascending
+""
+CHECK_UPPERCASE_STATE,[check constraint]
+FOR_LINT.WRITERS.STATE=UPPER(FOR_LINT.WRITERS.STATE)
+""
+SYS_CT_10055,[check constraint]
+FOR_LINT.WRITERS.ID IS NOT NULL
+""
+SYS_CT_10056,[check constraint]
+FOR_LINT.WRITERS.FIRSTNAME IS NOT NULL
+""
+SYS_CT_10057,[check constraint]
+FOR_LINT.WRITERS.LASTNAME IS NOT NULL
+""
+SYS_CT_10058,[check constraint]
+FOR_LINT.WRITERS.ADDRESS2 IS NOT NULL
+""
+SYS_CT_10059,[check constraint]
+FOR_LINT.WRITERS.PUBLICATION_ID IS NOT NULL
+""
+DELETE,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+INSERT,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+REFERENCES,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+SELECT,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+TRIGGER,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+UPDATE,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+
+
+REGIONS,[table]
+------------------------------------------------------------------------
+"",CITY,VARCHAR(50) not null
+"",STATE,VARCHAR(2) not null
+"",POSTALCODE,VARCHAR(10) not null
+"",COUNTRY,VARCHAR(50) not null
+""
+PK_CUSTOMERS,[primary key]
+"",POSTALCODE,ascending
+"",COUNTRY,ascending
+""
+FK_SALES_REGIONS,"[foreign key, with no action]"
+"","POSTALCODE --> PUBLIC.""PUBLISHER SALES"".SALES.POSTALCODE",""
+"","COUNTRY --> PUBLIC.""PUBLISHER SALES"".SALES.COUNTRY",""
+""
+SYS_IDX_PK_CUSTOMERS_10049,[unique index]
+"",POSTALCODE,ascending
+"",COUNTRY,ascending
+""
+SYS_CT_10045,[check constraint]
+"""PUBLISHER SALES"".REGIONS.CITY IS NOT NULL"
+""
+SYS_CT_10046,[check constraint]
+"""PUBLISHER SALES"".REGIONS.STATE IS NOT NULL"
+""
+SYS_CT_10047,[check constraint]
+"""PUBLISHER SALES"".REGIONS.POSTALCODE IS NOT NULL"
+""
+SYS_CT_10048,[check constraint]
+"""PUBLISHER SALES"".REGIONS.COUNTRY IS NOT NULL"
+""
+DELETE,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+INSERT,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+REFERENCES,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+SELECT,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+TRIGGER,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+UPDATE,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+
+
+SALES,[table]
+------------------------------------------------------------------------
+"",POSTALCODE,VARCHAR(10) not null
+"",COUNTRY,VARCHAR(50) not null
+"",BOOKID,INTEGER
+"",PERIODENDDATE,DATE
+"",TOTALAMOUNT,"DOUBLE(64, 0)"
+""
+FK_SALES_REGIONS,"[foreign key, with no action]"
+"","PUBLIC.""PUBLISHER SALES"".REGIONS.POSTALCODE --> POSTALCODE",""
+"","PUBLIC.""PUBLISHER SALES"".REGIONS.COUNTRY --> COUNTRY",""
+""
+"",[weak association]
+"",PUBLIC.BOOKS.BOOKS.ID --> BOOKID,""
+""
+SYS_IDX_10053,[non-unique index]
+"",POSTALCODE,ascending
+"",COUNTRY,ascending
+""
+SYS_CT_10050,[check constraint]
+"""PUBLISHER SALES"".SALES.POSTALCODE IS NOT NULL"
+""
+SYS_CT_10051,[check constraint]
+"""PUBLISHER SALES"".SALES.COUNTRY IS NOT NULL"
+""
+DELETE,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+INSERT,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+REFERENCES,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+SELECT,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+TRIGGER,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+""
+UPDATE,[privilege]
+"",_SYSTEM --> DBA (grantable),""
+
+
+
+
+Procedures
+========================================================================
+
+
+NEW_PUBLISHER,"[procedure, no result]"
+------------------------------------------------------------------------
+"",PUBLISHER,"CHARACTER VARYING, out"
+""
+"",[definition]
+CREATE PROCEDURE BOOKS.NEW_PUBLISHER(OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10043 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = 'New Publisher'
+
+
+ALLOC_BLOCKS,"[procedure, no result]"
+------------------------------------------------------------------------
+"",B_COUNT,"INTEGER, in"
+"",B_OFFSET,"INTEGER, in"
+"",L_ID,"BIGINT, in"
+""
+"",[definition]
+"CREATE PROCEDURE SYSTEM_LOBS.ALLOC_BLOCKS(IN B_COUNT INTEGER,IN B_OFFSET INTEGER,IN L_ID BIGINT) SPECIFIC ALLOC_BLOCKS_10022 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE LOB_ADDR INT DEFAULT NULL;DECLARE REMAINING_COUNT INT DEFAULT 0;DECLARE BL_ADDR INT DEFAULT NULL;DECLARE TEMP_COUNT INT DEFAULT 0;DECLARE BL_OFFSET INT DEFAULT 0;SET REMAINING_COUNT=B_COUNT;SET BL_OFFSET=B_OFFSET;MAIN_LOOP:LOOP SET BL_ADDR=(SELECT BLOCK_ADDR FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_COUNT=REMAINING_COUNT AND TX_ID=0 FETCH 1 ROW ONLY);IF BL_ADDR IS NOT NULL THEN CALL CONVERT_BLOCK(BL_ADDR,REMAINING_COUNT,BL_OFFSET,L_ID);IF LOB_ADDR IS NULL THEN SET LOB_ADDR=BL_ADDR;END IF;LEAVE MAIN_LOOP;END IF;SET(BL_ADDR,TEMP_COUNT)=(SELECT BLOCK_ADDR,BLOCK_COUNT FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_COUNT<REMAINING_COUNT AND TX_ID=0 FETCH 1 ROW ONLY);IF BL_ADDR IS NOT NULL THEN CALL CONVERT_BLOCK(BL_ADDR,TEMP_COUNT,BL_OFFSET,L_ID);IF LOB_ADDR IS NULL THEN SET LOB_ADDR=BL_ADDR;END IF;SET REMAINING_COUNT=REMAINING_COUNT-TEMP_COUNT;SET BL_OFFSET=BL_OFFSET+TEMP_COUNT;SET BL_ADDR=NULL;SET TEMP_COUNT=0;ELSE CALL CREATE_EMPTY_BLOCK(BL_ADDR,REMAINING_COUNT);CALL CONVERT_BLOCK(BL_ADDR,REMAINING_COUNT,BL_OFFSET,L_ID);IF LOB_ADDR IS NULL THEN SET LOB_ADDR=BL_ADDR;END IF;LEAVE MAIN_LOOP;END IF;END LOOP MAIN_LOOP;END"
+
+
+CONVERT_BLOCK,"[procedure, no result]"
+------------------------------------------------------------------------
+"",B_ADDR,"INTEGER, in"
+"",B_COUNT,"INTEGER, in"
+"",B_OFFSET,"INTEGER, in"
+"",L_ID,"BIGINT, in"
+""
+"",[definition]
+"CREATE PROCEDURE SYSTEM_LOBS.CONVERT_BLOCK(IN B_ADDR INTEGER,IN B_COUNT INTEGER,IN B_OFFSET INTEGER,IN L_ID BIGINT) SPECIFIC CONVERT_BLOCK_10012 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DELETE FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_ADDR=B_ADDR;INSERT INTO SYSTEM_LOBS.LOBS VALUES(B_ADDR,B_COUNT,B_OFFSET,L_ID);END"
+
+
+CREATE_EMPTY_BLOCK,"[procedure, no result]"
+------------------------------------------------------------------------
+"",B_ADDR,"INTEGER, in/ out"
+"",B_COUNT,"INTEGER, in"
+""
+"",[definition]
+"CREATE PROCEDURE SYSTEM_LOBS.CREATE_EMPTY_BLOCK(INOUT B_ADDR INTEGER,IN B_COUNT INTEGER) SPECIFIC CREATE_EMPTY_BLOCK_10020 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE TEMP_COUNT INT DEFAULT NULL;DECLARE TEMP_ADDR INT DEFAULT NULL;SET(TEMP_ADDR,TEMP_COUNT)=(SELECT BLOCK_ADDR,BLOCK_COUNT FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_COUNT>B_COUNT AND TX_ID=0 FETCH 1 ROW ONLY);IF TEMP_ADDR IS NULL THEN SIGNAL SQLSTATE'45000';END IF;UPDATE SYSTEM_LOBS.BLOCKS SET BLOCK_COUNT=B_COUNT WHERE BLOCK_ADDR=TEMP_ADDR;INSERT INTO SYSTEM_LOBS.BLOCKS VALUES(TEMP_ADDR+B_COUNT,TEMP_COUNT-B_COUNT,0);SET B_ADDR=TEMP_ADDR;END"
+
+
+DELETE_BLOCKS,"[procedure, no result]"
+------------------------------------------------------------------------
+"",L_ID,"BIGINT, in"
+"",B_OFFSET,"INTEGER, in"
+"",B_LIMIT,"INTEGER, in"
+"",TX_ID,"BIGINT, in"
+""
+"",[definition]
+"CREATE PROCEDURE SYSTEM_LOBS.DELETE_BLOCKS(IN L_ID BIGINT,IN B_OFFSET INTEGER,IN B_LIMIT INTEGER,IN TX_ID BIGINT) SPECIFIC DELETE_BLOCKS_10019 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC INSERT INTO SYSTEM_LOBS.BLOCKS(SELECT BLOCK_ADDR,BLOCK_COUNT,TX_ID FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID AND BLOCK_OFFSET>=B_OFFSET AND BLOCK_OFFSET<B_LIMIT);DELETE FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID AND BLOCK_OFFSET>=B_OFFSET AND BLOCK_OFFSET<B_LIMIT;END"
+
+
+DELETE_LOB,"[procedure, no result]"
+------------------------------------------------------------------------
+"",L_ID,"BIGINT, in"
+"",TX_ID,"BIGINT, in"
+""
+"",[definition]
+"CREATE PROCEDURE SYSTEM_LOBS.DELETE_LOB(IN L_ID BIGINT,IN TX_ID BIGINT) SPECIFIC DELETE_LOB_10013 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC INSERT INTO SYSTEM_LOBS.BLOCKS(SELECT BLOCK_ADDR,BLOCK_COUNT,TX_ID FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID);DELETE FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID;DELETE FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_ID=L_ID;END"
+
+
+DELETE_UNUSED,"[procedure, no result]"
+------------------------------------------------------------------------
+"",L_IDS,"BIGINT ARRAY, in"
+""
+"",[definition]
+"CREATE PROCEDURE SYSTEM_LOBS.DELETE_UNUSED(IN L_IDS BIGINT ARRAY) SPECIFIC DELETE_UNUSED_10018 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE TABLE LIVE_IDS(TEMP_ID INT);DECLARE TABLE TEMP_IDS(TEMP_ID INT);DECLARE TEMP_COUNT INT DEFAULT 1;WHILE TEMP_COUNT<=CARDINALITY(L_IDS)DO INSERT INTO MODULE.LIVE_IDS VALUES L_IDS[TEMP_COUNT];SET TEMP_COUNT=TEMP_COUNT+1;END WHILE;SET TEMP_COUNT=0;REPEAT INSERT INTO MODULE.TEMP_IDS SELECT LOB_ID FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_USAGE_COUNT<1 AND LOB_ID NOT IN(SELECT TEMP_ID FROM MODULE.LIVE_IDS)LIMIT 1000;INSERT INTO SYSTEM_LOBS.BLOCKS(SELECT BLOCK_ADDR,BLOCK_COUNT,0 FROM SYSTEM_LOBS.LOBS WHERE LOB_ID IN(SELECT TEMP_ID FROM MODULE.TEMP_IDS));DELETE FROM SYSTEM_LOBS.LOBS WHERE LOB_ID IN(SELECT TEMP_ID FROM MODULE.TEMP_IDS);DELETE FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_ID IN(SELECT TEMP_ID FROM MODULE.TEMP_IDS);GET DIAGNOSTICS TEMP_COUNT=ROW_COUNT;DELETE FROM MODULE.TEMP_IDS;UNTIL TEMP_COUNT<1000 END REPEAT;END"
+
+
+DIVIDE_BLOCK,"[procedure, no result]"
+------------------------------------------------------------------------
+"",B_OFFSET,"INTEGER, in"
+"",L_ID,"BIGINT, in"
+""
+"",[definition]
+"CREATE PROCEDURE SYSTEM_LOBS.DIVIDE_BLOCK(IN B_OFFSET INTEGER,IN L_ID BIGINT) SPECIFIC DIVIDE_BLOCK_10021 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE BL_ADDR INT DEFAULT NULL;DECLARE BL_COUNT INT DEFAULT NULL;DECLARE BL_OFFSET INT DEFAULT NULL;SET(BL_ADDR,BL_COUNT,BL_OFFSET)=(SELECT BLOCK_ADDR,BLOCK_COUNT,BLOCK_OFFSET FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID AND B_OFFSET>BLOCK_OFFSET AND B_OFFSET<BLOCK_OFFSET+BLOCK_COUNT);IF BL_ADDR IS NULL THEN SIGNAL SQLSTATE'45000';END IF;DELETE FROM SYSTEM_LOBS.LOBS WHERE BLOCK_ADDR=BL_ADDR;INSERT INTO SYSTEM_LOBS.LOBS VALUES(BL_ADDR,B_OFFSET-BL_OFFSET,BL_OFFSET,L_ID);INSERT INTO SYSTEM_LOBS.LOBS VALUES(BL_ADDR+B_OFFSET-BL_OFFSET,BL_OFFSET+BL_COUNT-B_OFFSET,B_OFFSET,L_ID);END"
+
+
+
+
+Row Count
+========================================================================
+
+
+
+Row Count
+------------------------------------------------------------------------
+PUBLIC.BOOKS.AUTHORS,20 rows
+PUBLIC.BOOKS.AUTHORSLIST,20 rows
+PUBLIC.BOOKS.BOOKAUTHORS,20 rows
+PUBLIC.BOOKS.BOOKS,20 rows
+"PUBLIC.BOOKS.""Global Counts""",empty
+PUBLIC.BOOKS.PUBLISHERS,20 rows
+PUBLIC.FOR_LINT.EXTRA_PK,empty
+"PUBLIC.FOR_LINT.""Global Counts""",empty
+PUBLIC.FOR_LINT.PUBLICATIONS,empty
+PUBLIC.FOR_LINT.WRITERS,empty
+"PUBLIC.""PUBLISHER SALES"".REGIONS",20 rows
+"PUBLIC.""PUBLISHER SALES"".SALES",20 rows
+
+
+
+
+Dump
+========================================================================
+
+
+
+PUBLIC.BOOKS.AUTHORS
+------------------------------------------------------------------------
+ID,FIRSTNAME,LASTNAME,ADDRESS1,ADDRESS2,CITY,STATE,POSTALCODE,COUNTRY
+1,Oren,Shaffer,900-2273 Integer Avenue,"",Farmer City,MD,37032,Cook Islands
+2,Octavia,Burke,955-7635 Natoque St.,"",Kalispell,MS,66863,Cape Verde
+3,Aiko,Stafford,Ap #554-7132 Dictum Street,"",Kankakee,ID,59675,Brunei Darussalam
+4,Christine,Aguilar,Ap #698-4255 Sodales Av.,"",Riverton,MA,24828,Ghana
+5,Kenneth,Curry,"P.O. Box 305, 8335 Cras St.","",Somersworth,ME,36619,Kazakhstan
+6,Lillian,Nieves,"P.O. Box 827, 1923 Ornare Avenue","",Sierra Vista,MA,12684,Mali
+7,Damian,Donaldson,5047 Eu Rd.,"",LaGrange,UT,64681,Thailand
+8,Jordan,Woodward,Ap #486-6702 Iaculis Road,"",Glen Cove,OH,18011,Libyan Arab Jamahiriya
+9,Adele,Holmes,7585 Magna. Ave,"",Villa Park,ME,00619,Cayman Islands
+10,Jillian,Mckee,1185 Per Ave,"",Rapid City,LA,11671,New Caledonia
+11,Mikayla,Knight,Ap #375-6798 Auctor St.,"",Sault Ste. Marie,CO,26558,Lesotho
+12,Denise,Dominguez,324-4875 Vitae Av.,"",Hudson,SD,41933,Russian Federation
+13,Ira,Dunn,8869 Velit Rd.,"",Lincoln,IA,74182,Zambia
+14,Elvis,Blevins,Ap #629-9258 In St.,"",Abilene,WY,19269,Saint Vincent and The Grenadines
+15,Theodore,Gilliam,"6293 Enim, Ave","",Baltimore,UT,86549,Saudi Arabia
+16,Jared,White,"P.O. Box 806, 6212 Adipiscing, Road","",Thibodaux,KS,90172,China
+17,Melyssa,Willis,Ap #467-9359 Ipsum Rd.,"",Roanoke,OH,45706,Niger
+18,Hilary,Marks,Ap #361-1093 Vitae Street,"",Fort Lauderdale,ID,10855,Venezuela
+19,Frances,Ellis,Ap #458-4569 Sem. Ave,"",Durham,MS,50037,Gambia
+20,Lenore,Cooley,"P.O. Box 937, 3415 Nulla Ave","",Half Moon Bay,OR,51967,Canada
+
+
+
+PUBLIC.BOOKS.AUTHORSLIST
+------------------------------------------------------------------------
+ID,FIRSTNAME,LASTNAME
+1,Oren,Shaffer
+2,Octavia,Burke
+3,Aiko,Stafford
+4,Christine,Aguilar
+5,Kenneth,Curry
+6,Lillian,Nieves
+7,Damian,Donaldson
+8,Jordan,Woodward
+9,Adele,Holmes
+10,Jillian,Mckee
+11,Mikayla,Knight
+12,Denise,Dominguez
+13,Ira,Dunn
+14,Elvis,Blevins
+15,Theodore,Gilliam
+16,Jared,White
+17,Melyssa,Willis
+18,Hilary,Marks
+19,Frances,Ellis
+20,Lenore,Cooley
+
+
+
+PUBLIC.BOOKS.BOOKAUTHORS
+------------------------------------------------------------------------
+BOOKID,AUTHORID,UPDATE
+1,7,<binary>
+2,4,<null>
+2,6,<binary>
+3,1,<null>
+3,4,<binary>
+3,5,<null>
+3,6,<null>
+4,9,<null>
+5,5,<null>
+5,7,<null>
+6,1,<null>
+6,8,<null>
+7,8,<null>
+7,9,<null>
+8,6,<null>
+9,3,<null>
+9,6,<null>
+9,7,<null>
+10,1,<null>
+10,9,<null>
+
+
+
+PUBLIC.BOOKS.BOOKS
+------------------------------------------------------------------------
+ID,TITLE,DESCRIPTION,PUBLISHERID,PUBLICATIONDATE,PRICE
+1,Neque. In Ornare Sagittis,"Dis Parturient Montes, Nascetur Ridiculus Mus.",18,2000-10-27,69.99
+2,Duis Dignissim Tempor Arcu.,"Eu, Euismod Ac, Fermentum Vel,",20,2002-05-09,27.99
+3,"Lacinia Orci, Consectetuer Euismod Est","Sem Ut Cursus Luctus, Ipsum Leo Elementum Sem, Vitae Aliquam Eros Turpis Non Enim.",15,2006-04-14,37.99
+4,Vitae Sodales,"Rhoncus. Nullam Velit Dui, Semper Et, Lacinia Vitae, Sodales At,",1,2007-05-21,64.99
+5,Posuere Cubilia Curae Phasellus Ornare.,"Risus A Ultricies Adipiscing, Enim Mi Tempor Lorem, Eget Mollis Lectus Pede",7,2010-05-14,83.99
+6,Tincidunt Aliquam Arcu.,"Tristique Pellentesque, Tellus Sem Mollis Dui,",13,2009-07-17,31.99
+7,"Auctor Quis, Tristique","Vel, Faucibus Id, Libero. Donec Consectetuer Mauris Id Sapien. Cras Dolor Dolor, Tempus Non, Lacinia",7,1999-06-09,76.99
+8,Sem. Nulla Interdum. Curabitur,Turpis. Nulla Aliquet. Proin Velit. Sed Malesuada Augue Ut,7,2009-01-24,30.99
+9,Lobortis Ultrices. Vivamus Rhoncus.,"Est, Mollis Non, Cursus Non, Egestas A, Dui. Cras Pellentesque. Sed Dictum.",1,2004-06-25,69.99
+10,"Quisque Purus Sapien, Gravida",Et Ultrices Posuere Cubilia Curae Phasellus Ornare. Fusce Mollis. Duis Sit Amet Diam Eu Dolor Egestas Rhoncus.,19,2005-11-14,34.99
+11,Phasellus,Egestas. Duis Ac Arcu. Nunc Mauris.,5,2003-10-19,89.99
+12,Non Massa Non,"Est Mauris, Rhoncus Id, Mollis",5,2002-05-04,64.99
+13,Gravida Mauris Ut Mi. Duis,"Fusce Mollis. Duis Sit Amet Diam Eu Dolor Egestas Rhoncus. Proin Nisl Sem, Consequat Nec,",8,2005-08-03,25.99
+14,"Auctor Vitae,","Suspendisse Dui. Fusce Diam Nunc, Ullamcorper Eu, Euismod Ac, Fermentum Vel, Mauris. Integer Sem Elit, Pharetra",2,2009-02-09,84.99
+15,Ultrices Posuere Cubilia,"Elit, Pellentesque A, Facilisis Non, Bibendum Sed, Est. Nunc Laoreet Lectus Quis Massa. Mauris Vestibulum, Neque Sed",20,2001-08-28,77.99
+16,"Vitae, Aliquet Nec, Imperdiet",Cursus Purus. Nullam,6,2003-08-30,47.99
+17,"Parturient Montes, Nascetur Ridiculus","Ornare, Lectus Ante Dictum Mi, Ac Mattis Velit Justo Nec Ante. Maecenas Mi Felis, Adipiscing Fringilla, Porttitor Vulputate, Posuere Vulputate,",17,2005-06-24,36.99
+18,Lacus. Etiam Bibendum,Facilisi. Sed Neque. Sed,18,2008-01-28,63.99
+19,Luctus Lobortis.,"Rutrum. Fusce Dolor Quam, Elementum At, Egestas A, Scelerisque Sed, Sapien.",5,2006-08-23,67.99
+20,"Dui, In Sodales Elit Erat",Sociis Natoque Penatibus Et Magnis Dis Parturient,5,2002-09-29,43.99
+
+
+
+PUBLIC.BOOKS."Global Counts"
+------------------------------------------------------------------------
+Global Count
+
+
+
+PUBLIC.BOOKS.PUBLISHERS
+------------------------------------------------------------------------
+ID,PUBLISHER
+1,Dalton Lewis
+2,Macaulay Bryant
+3,Nash Fox
+4,Leonard Bradshaw
+5,Brendan Kramer
+6,Tobias Mosley
+7,Zachary Tate
+8,Derek Lee
+9,Neil Tyson
+10,Shad Robinson
+11,Justin Schroeder
+12,Leonard Atkinson
+13,Hyatt Caldwell
+14,Neil Fletcher
+15,Ferdinand Tucker
+16,Barrett Mclaughlin
+17,Hayden Potts
+18,Neville Cardenas
+19,Allistair Gilbert
+20,Cooper Chapman
+
+
+
+PUBLIC.FOR_LINT.EXTRA_PK
+------------------------------------------------------------------------
+ID,WRITERID,PUBLICATIONID
+
+
+
+PUBLIC.FOR_LINT."Global Counts"
+------------------------------------------------------------------------
+Global Count
+
+
+
+PUBLIC.FOR_LINT.PUBLICATIONS
+------------------------------------------------------------------------
+ID,TITLE,DESCRIPTION,WRITERID,PUBLICATIONDATE,PRICE,UPDATE,PRESS_RELEASE
+
+
+
+PUBLIC.FOR_LINT.WRITERS
+------------------------------------------------------------------------
+ID,FIRSTNAME,LASTNAME,ADDRESS1,ADDRESS2,CITY,STATE,POSTALCODE,COUNTRY,PHONE1,PHONE2,EMAIL1,EMAIL2,FAX,FAX3,HOMEEMAIL11,HOMEEMAIL12,PUBLICATION_ID
+
+
+
+PUBLIC."PUBLISHER SALES".REGIONS
+------------------------------------------------------------------------
+CITY,STATE,POSTALCODE,COUNTRY
+Arvada,KY,17131,USA
+Baltimore,AK,34702,USA
+Clairton,MA,42875,USA
+Del Rio,CA,24179,USA
+Duluth,ND,82539,USA
+Effingham,TX,44207,USA
+El Segundo,VA,13078,USA
+Fayetteville,MS,41233,USA
+Hopkinsville,IN,54618,USA
+Kent,OH,91624,USA
+Lake Forest,AK,26131,USA
+Marlborough,WV,88272,USA
+Martinsburg,KY,76672,USA
+Nashua,SC,27829,USA
+Ogdensburg,AZ,50786,USA
+San Juan,MD,30552,USA
+Tacoma,PA,70472,USA
+Warren,VA,42210,USA
+Watertown,SC,20239,USA
+Woburn,NV,27392,USA
+
+
+
+PUBLIC."PUBLISHER SALES".SALES
+------------------------------------------------------------------------
+POSTALCODE,COUNTRY,BOOKID,PERIODENDDATE,TOTALAMOUNT
+13078,USA,1,2001-07-18,18257.0
+13078,USA,1,2001-09-29,14895.0
+13078,USA,6,2003-12-28,6083.0
+13078,USA,6,2006-06-11,7840.0
+17131,USA,2,2002-04-30,17887.0
+17131,USA,2,2004-11-13,16317.0
+17131,USA,7,2000-03-08,6951.0
+17131,USA,7,2003-03-21,18431.0
+20239,USA,3,2004-08-28,18747.0
+20239,USA,3,2005-07-27,6712.0
+20239,USA,8,2008-03-29,11013.0
+20239,USA,8,2008-08-15,17514.0
+24179,USA,4,2005-12-24,11103.0
+24179,USA,4,2009-02-14,5885.0
+24179,USA,9,2000-05-16,13595.0
+24179,USA,9,2004-04-10,14069.0
+26131,USA,5,2001-12-02,14798.0
+26131,USA,5,2004-11-03,15348.0
+26131,USA,10,2000-09-20,14476.0
+26131,USA,10,2005-12-03,17069.0
+
+
+
