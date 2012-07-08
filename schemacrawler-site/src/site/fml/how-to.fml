@@ -264,6 +264,23 @@ schemacrawler.format.hide_constraint_names=false
 ]]></source>
       </answer>
     </faq>
+    <faq id="hide-schema-names">
+      <question>
+        How to hide catalog and schema names in text output
+      </question>
+      <answer>
+        <p>
+          Change the configuration for the SchemaCrawler
+          <code>schemacrawler.format.show_unqualified_names=true
+          </code>
+          in the
+          <code>schemacrawler.config.properties </code>
+          file. This setting will show unqualified names of database objects such as tables and prcodures. 
+          That is, the catalog and schema names will not be displayed. Use with care, especially if you have foreign keys
+          that reference tables in other schemas, or synonyms.
+        </p>
+      </answer>
+    </faq>    
   </part>
   <part id="integrations">
     <title>Integrations</title>
