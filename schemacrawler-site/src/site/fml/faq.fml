@@ -28,10 +28,10 @@
           SchemaCrawler can produce
           <a href="snapshot-examples/snapshot.txt">plain text,</a>
           <a href="snapshot-examples/snapshot.csv">comma-separated text (CSV),</a>
-          <a href="snapshot-examples/snapshot.html">XHTML,</a>
+          <a href="snapshot-examples/snapshot.html">HTML5,</a>
           or
           <a href="snapshot-examples/snapshot.json">JavaScript object notation (JSON).</a>
-          The XHTML output is a combination of valid XML (that can be manipulated by XML tools or XSLT), and HTML that
+          The HTML5 output is a combination of valid XML (that can be manipulated by XML tools or XSLT), and HTML that
           can be viewed in a browser. SchemaCrawler can produce output in the
           <a href="http://www.graphviz.org/doc/info/lang.html ">DOT format,</a>
           which

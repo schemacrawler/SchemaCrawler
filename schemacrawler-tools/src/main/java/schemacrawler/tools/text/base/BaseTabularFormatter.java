@@ -34,6 +34,7 @@ import schemacrawler.schema.SchemaCrawlerInfo;
 import schemacrawler.schemacrawler.Options;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.text.utility.Alignment;
 import schemacrawler.tools.text.utility.TextFormattingHelper.DocumentHeaderType;
 import sf.util.ObjectToString;
 
@@ -98,12 +99,14 @@ public abstract class BaseTabularFormatter<O extends Options>
 
     out.print(formattingHelper.createObjectStart(""));
     out.println(formattingHelper.createNameValueRow("database product name",
-                                                    dbInfo.getProductName()));
-    out
-      .println(formattingHelper.createNameValueRow("database product version",
-                                                   dbInfo.getProductVersion()));
+                                                    dbInfo.getProductName(),
+                                                    Alignment.left, 1));
+    out.println(formattingHelper.createNameValueRow("database product version",
+                                                    dbInfo.getProductVersion(),
+                                                    Alignment.left, 1));
     out.println(formattingHelper.createNameValueRow("database user name",
-                                                    dbInfo.getUserName()));
+                                                    dbInfo.getUserName(),
+                                                    Alignment.left, 1));
     out.print(formattingHelper.createObjectEnd());
 
     if (printVerboseDatabaseInfo && dbInfo.getProperties().length > 0)
@@ -120,7 +123,7 @@ public abstract class BaseTabularFormatter<O extends Options>
           value = "";
         }
         out.println(formattingHelper.createNameValueRow(name, ObjectToString
-          .toString(value)));
+          .toString(value), Alignment.left, 1));
       }
       out.print(formattingHelper.createObjectEnd());
     }
@@ -140,20 +143,23 @@ public abstract class BaseTabularFormatter<O extends Options>
                                               "JDBC Driver Information"));
 
     out.print(formattingHelper.createObjectStart(""));
-    out
-      .println(formattingHelper.createNameValueRow("driver name",
-                                                   driverInfo.getDriverName()));
+    out.println(formattingHelper.createNameValueRow("driver name",
+                                                    driverInfo.getDriverName(),
+                                                    Alignment.left, 1));
     out.println(formattingHelper.createNameValueRow("driver version",
                                                     driverInfo
-                                                      .getDriverVersion()));
+                                                      .getDriverVersion(),
+                                                    Alignment.left, 1));
     out.println(formattingHelper.createNameValueRow("driver class name",
                                                     driverInfo
-                                                      .getDriverClassName()));
+                                                      .getDriverClassName(),
+                                                    Alignment.left, 1));
     out.println(formattingHelper.createNameValueRow("url", driverInfo
-      .getConnectionUrl()));
+      .getConnectionUrl(), Alignment.left, 1));
     out.println(formattingHelper.createNameValueRow("is JDBC compliant",
                                                     Boolean.toString(driverInfo
-                                                      .isJdbcCompliant())));
+                                                      .isJdbcCompliant()),
+                                                    Alignment.left, 1));
     out.print(formattingHelper.createObjectEnd());
 
     final JdbcDriverProperty[] jdbcDriverProperties = driverInfo
@@ -187,10 +193,12 @@ public abstract class BaseTabularFormatter<O extends Options>
     out.print(formattingHelper.createObjectStart(""));
     out.println(formattingHelper
       .createNameValueRow("product name",
-                          schemaCrawlerInfo.getSchemaCrawlerProductName()));
+                          schemaCrawlerInfo.getSchemaCrawlerProductName(),
+                          Alignment.left, 1));
     out.println(formattingHelper
       .createNameValueRow("product version",
-                          schemaCrawlerInfo.getSchemaCrawlerVersion()));
+                          schemaCrawlerInfo.getSchemaCrawlerVersion(),
+                          Alignment.left, 1));
     out.print(formattingHelper.createObjectEnd());
 
     if (printVerboseDatabaseInfo)
@@ -206,7 +214,7 @@ public abstract class BaseTabularFormatter<O extends Options>
           .entrySet())
         {
           out.println(formattingHelper.createNameValueRow(systemProperty
-            .getKey(), systemProperty.getValue()));
+            .getKey(), systemProperty.getValue(), Alignment.left, 1));
         }
         out.print(formattingHelper.createObjectEnd());
       }

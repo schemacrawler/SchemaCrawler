@@ -14,7 +14,7 @@
           your database to find potential issues. SchemaCrawler Lint can be run using the
           <code>-command=lint</code>
           command-line option. A lint report will be produced in any specified format - either text,
-          CSV, XHTML or JSON.
+          CSV, HTML5 or JSON.
         </p>
         <p>SchemaCrawler Lint is a separate jar, and contains both the framework for doing database
           schema lints, as well as some checks for common database schema design issues. You can
@@ -30,7 +30,7 @@
           SchemaCrawler Lint can produce reports in
           <a href="lint-report-examples/lint_report.txt">text</a>
           ,
-          <a href="lint-report-examples/lint_report.html">XHTML</a>
+          <a href="lint-report-examples/lint_report.html">HTML5</a>
           or
           <a href="lint-report-examples/lint_report.json">JSON</a>
           format. (Click on the links for example reports.)

@@ -38,7 +38,7 @@
     text
       For text output (default)
     html
-      For XHTML output
+      For HTML5 output
     csv
       For comma-separated values output
     tsv

@@ -17,8 +17,7 @@
         "name": "PK_AUTHORS",
         "columns": {
           "sortSequence": "ascending",
-          "name": "ID",
-          "ordinal": 1
+          "name": "ID"
         }
       },
       "name": "AUTHORS",
@@ -46,7 +45,6 @@
           "decimalDigits": 0,
           "width": "",
           "name": "ID",
-          "ordinal": 1,
           "remarks": "",
           "nullable": false,
           "databaseSpecificType": "INTEGER",
@@ -57,7 +55,6 @@
           "decimalDigits": 0,
           "width": "(20)",
           "name": "FIRSTNAME",
-          "ordinal": 2,
           "remarks": "",
           "nullable": false,
           "databaseSpecificType": "VARCHAR",
@@ -68,7 +65,6 @@
           "decimalDigits": 0,
           "width": "(20)",
           "name": "LASTNAME",
-          "ordinal": 3,
           "remarks": "",
           "nullable": false,
           "databaseSpecificType": "VARCHAR",
@@ -79,7 +75,6 @@
           "decimalDigits": 0,
           "width": "(255)",
           "name": "ADDRESS1",
-          "ordinal": 4,
           "remarks": "",
           "nullable": true,
           "databaseSpecificType": "VARCHAR",
@@ -90,7 +85,6 @@
           "decimalDigits": 0,
           "width": "(255)",
           "name": "ADDRESS2",
-          "ordinal": 5,
           "remarks": "",
           "nullable": true,
           "databaseSpecificType": "VARCHAR",
@@ -101,7 +95,6 @@
           "decimalDigits": 0,
           "width": "(50)",
           "name": "CITY",
-          "ordinal": 6,
           "remarks": "",
           "nullable": true,
           "databaseSpecificType": "VARCHAR",
@@ -112,7 +105,6 @@
           "decimalDigits": 0,
           "width": "(2)",
           "name": "STATE",
-          "ordinal": 7,
           "remarks": "",
           "nullable": true,
           "databaseSpecificType": "VARCHAR",
@@ -123,7 +115,6 @@
           "decimalDigits": 0,
           "width": "(10)",
           "name": "POSTALCODE",
-          "ordinal": 8,
           "remarks": "",
           "nullable": true,
           "databaseSpecificType": "VARCHAR",
@@ -134,7 +125,6 @@
           "decimalDigits": 0,
           "width": "(50)",
           "name": "COUNTRY",
-          "ordinal": 9,
           "remarks": "",
           "nullable": true,
           "databaseSpecificType": "VARCHAR",
@@ -197,8 +187,7 @@
           "name": "SYS_IDX_PK_AUTHORS_10030",
           "columns": {
             "sortSequence": "ascending",
-            "name": "ID",
-            "ordinal": 1
+            "name": "ID"
           }
         },
         {
@@ -207,13 +196,11 @@
           "columns": [
             {
               "sortSequence": "ascending",
-              "name": "LASTNAME",
-              "ordinal": 3
+              "name": "LASTNAME"
             },
             {
               "sortSequence": "ascending",
-              "name": "FIRSTNAME",
-              "ordinal": 2
+              "name": "FIRSTNAME"
             }
           ]
         },
@@ -223,23 +210,19 @@
           "columns": [
             {
               "sortSequence": "ascending",
-              "name": "CITY",
-              "ordinal": 6
+              "name": "CITY"
             },
             {
               "sortSequence": "ascending",
-              "name": "STATE",
-              "ordinal": 7
+              "name": "STATE"
             },
             {
               "sortSequence": "ascending",
-              "name": "POSTALCODE",
-              "ordinal": 8
+              "name": "POSTALCODE"
             },
             {
               "sortSequence": "ascending",
-              "name": "COUNTRY",
-              "ordinal": 9
+              "name": "COUNTRY"
             }
           ]
         }
@@ -267,7 +250,6 @@
           "decimalDigits": 0,
           "width": "",
           "name": "ID",
-          "ordinal": 1,
           "remarks": "",
           "nullable": true,
           "databaseSpecificType": "INTEGER",
@@ -278,7 +260,6 @@
           "decimalDigits": 0,
           "width": "(20)",
           "name": "FIRSTNAME",
-          "ordinal": 2,
           "remarks": "",
           "nullable": true,
           "databaseSpecificType": "VARCHAR",
@@ -289,7 +270,6 @@
           "decimalDigits": 0,
           "width": "(20)",
           "name": "LASTNAME",
-          "ordinal": 3,
           "remarks": "",
           "nullable": true,
           "databaseSpecificType": "VARCHAR",
@@ -392,7 +372,6 @@
           "decimalDigits": 0,
           "width": "",
           "name": "BOOKID",
-          "ordinal": 1,
           "remarks": "",
           "nullable": false,
           "databaseSpecificType": "INTEGER",
@@ -403,7 +382,6 @@
           "decimalDigits": 0,
           "width": "",
           "name": "AUTHORID",
-          "ordinal": 2,
           "remarks": "",
           "nullable": false,
           "databaseSpecificType": "INTEGER",
@@ -414,7 +392,6 @@
           "decimalDigits": 0,
           "width": "",
           "name": "\"UPDATE\"",
-          "ordinal": 3,
           "remarks": "",
           "nullable": true,
           "databaseSpecificType": "CLOB",
@@ -477,8 +454,7 @@
           "name": "SYS_IDX_10040",
           "columns": {
             "sortSequence": "ascending",
-            "name": "AUTHORID",
-            "ordinal": 2
+            "name": "AUTHORID"
           }
         },
         {
@@ -486,8 +462,7 @@
           "name": "SYS_IDX_10038",
           "columns": {
             "sortSequence": "ascending",
-            "name": "BOOKID",
-            "ordinal": 1
+            "name": "BOOKID"
           }
         },
         {
@@ -496,13 +471,11 @@
           "columns": [
             {
               "sortSequence": "ascending",
-              "name": "BOOKID",
-              "ordinal": 1
+              "name": "BOOKID"
             },
             {
               "sortSequence": "ascending",
-              "name": "AUTHORID",
-              "ordinal": 2
+              "name": "AUTHORID"
             }
           ]
         }
@@ -537,8 +510,7 @@
         "name": "PK_BOOKS",
         "columns": {
           "sortSequence": "ascending",
-          "name": "ID",
-          "ordinal": 1
+          "name": "ID"
         }
       },
       "name": "BOOKS",
@@ -562,7 +534,6 @@
           "decimalDigits": 0,
           "width": "",
           "name": "ID",
-          "ordinal": 1,
           "remarks": "Unique (internal) id for book",
           "nullable": false,
           "databaseSpecificType": "INTEGER",
@@ -573,7 +544,6 @@
           "decimalDigits": 0,
           "width": "(255)",
           "name": "TITLE",
-          "ordinal": 2,
           "remarks": "Book title",
           "nullable": false,
           "databaseSpecificType": "VARCHAR",
@@ -584,7 +554,6 @@
           "decimalDigits": 0,
           "width": "(255)",
           "name": "DESCRIPTION",
-          "ordinal": 3,
           "remarks": "Book description",
           "nullable": true,
           "databaseSpecificType": "VARCHAR",
@@ -595,7 +564,6 @@
           "decimalDigits": 0,
           "width": "",
           "name": "PUBLISHERID",
-          "ordinal": 4,
           "remarks": "Foreign key to the book publisher",
           "nullable": false,
           "databaseSpecificType": "INTEGER",
@@ -606,7 +574,6 @@
           "decimalDigits": 0,
           "width": "",
           "name": "PUBLICATIONDATE",
-          "ordinal": 5,
           "remarks": "Book publication date",
           "nullable": true,
           "databaseSpecificType": "DATE",
@@ -617,7 +584,6 @@
           "decimalDigits": 0,
           "width": "(64, 0)",
           "name": "PRICE",
-          "ordinal": 6,
           "remarks": "Current price for the book",
           "nullable": true,
           "databaseSpecificType": "DOUBLE",
@@ -679,8 +645,7 @@
         "name": "SYS_IDX_PK_BOOKS_10034",
         "columns": {
           "sortSequence": "ascending",
-          "name": "ID",
-          "ordinal": 1
+          "name": "ID"
         }
       }],
       "remarks": "Details for published books",
@@ -698,7 +663,6 @@
         "decimalDigits": 0,
         "width": "",
         "name": "\"Global Count\"",
-        "ordinal": 1,
         "remarks": "",
         "nullable": true,
         "databaseSpecificType": "INTEGER",
@@ -771,8 +735,7 @@
         "name": "PK_PUBLISHERS",
         "columns": {
           "sortSequence": "ascending",
-          "name": "ID",
-          "ordinal": 1
+          "name": "ID"
         }
       },
       "name": "PUBLISHERS",
@@ -786,7 +749,6 @@
           "decimalDigits": 0,
           "width": "",
           "name": "ID",
-          "ordinal": 1,
           "remarks": "Unique (internal) id for book publisher",
           "nullable": false,
           "databaseSpecificType": "INTEGER",
@@ -797,7 +759,6 @@
           "decimalDigits": 0,
           "width": "(255)",
           "name": "PUBLISHER",
-          "ordinal": 2,
           "remarks": "Name of book publisher",
           "nullable": true,
           "databaseSpecificType": "VARCHAR",
@@ -859,8 +820,7 @@
         "name": "SYS_IDX_PK_PUBLISHERS_10026",
         "columns": {
           "sortSequence": "ascending",
-          "name": "ID",
-          "ordinal": 1
+          "name": "ID"
         }
       }],
       "remarks": "List of book publishers",
@@ -895,8 +855,7 @@
         "name": "PK_EXTRA_PK",
         "columns": {
           "sortSequence": "ascending",
-          "name": "ID",
-          "ordinal": 1
+          "name": "ID"
         }
       },
       "name": "EXTRA_PK",
@@ -920,7 +879,6 @@
           "decimalDigits": 0,
           "width": "",
           "name": "ID",
-          "ordinal": 1,
           "remarks": "",
           "nullable": false,
           "databaseSpecificType": "INTEGER",
@@ -931,7 +889,6 @@
           "decimalDigits": 0,
           "width": "",
           "name": "WRITERID",
-          "ordinal": 2,
           "remarks": "",
           "nullable": false,
           "databaseSpecificType": "BIGINT",
@@ -942,7 +899,6 @@
           "decimalDigits": 0,
           "width": "",
           "name": "PUBLICATIONID",
-          "ordinal": 3,
           "remarks": "",
           "nullable": false,
           "databaseSpecificType": "INTEGER",
@@ -1005,8 +961,7 @@
           "name": "SYS_IDX_PK_EXTRA_PK_10072",
           "columns": {
             "sortSequence": "ascending",
-            "name": "ID",
-            "ordinal": 1
+            "name": "ID"
           }
         },
         {
@@ -1014,8 +969,7 @@
           "name": "SYS_IDX_10075",
           "columns": {
             "sortSequence": "ascending",
-            "name": "PUBLICATIONID",
-            "ordinal": 3
+            "name": "PUBLICATIONID"
           }
         },
         {
@@ -1023,8 +977,7 @@
           "name": "SYS_IDX_10073",
           "columns": {
             "sortSequence": "ascending",
-            "name": "WRITERID",
-            "ordinal": 2
+            "name": "WRITERID"
           }
         }
       ],
@@ -1043,7 +996,6 @@
         "decimalDigits": 0,
         "width": "",
         "name": "\"Global Count\"",
-        "ordinal": 1,
         "remarks": "",
         "nullable": true,
         "databaseSpecificType": "INTEGER",
@@ -1203,8 +1155,7 @@
         "name": "PK_PUBLICATIONS",
         "columns": {
           "sortSequence": "ascending",
-          "name": "ID",
-          "ordinal": 1
+          "name": "ID"
         }
       },
       "name": "PUBLICATIONS",
@@ -1228,7 +1179,6 @@
           "decimalDigits": 0,
           "width": "",
           "name": "ID",
-          "ordinal": 1,
           "remarks": "",
           "nullable": false,
           "databaseSpecificType": "INTEGER",
@@ -1239,7 +1189,6 @@
           "decimalDigits": 0,
           "width": "(255)",
           "name": "TITLE",
-          "ordinal": 2,
           "remarks": "",
           "nullable": false,
           "databaseSpecificType": "VARCHAR",
@@ -1250,7 +1199,6 @@
           "decimalDigits": 0,
           "width": "(255)",
           "name": "DESCRIPTION",
-          "ordinal": 3,
           "remarks": "",
           "nullable": true,
           "databaseSpecificType": "VARCHAR",
@@ -1261,7 +1209,6 @@
           "decimalDigits": 0,
           "width": "",
           "name": "WRITERID",
-          "ordinal": 4,
           "remarks": "",
           "nullable": false,
           "databaseSpecificType": "BIGINT",
@@ -1272,7 +1219,6 @@
           "decimalDigits": 0,
           "width": "",
           "name": "PUBLICATIONDATE",
-          "ordinal": 5,
           "remarks": "",
           "nullable": true,
           "databaseSpecificType": "DATE",
@@ -1283,7 +1229,6 @@
           "decimalDigits": 0,
           "width": "(64, 0)",
           "name": "PRICE",
-          "ordinal": 6,
           "remarks": "",
           "nullable": true,
           "databaseSpecificType": "DOUBLE",
@@ -1294,7 +1239,6 @@
           "decimalDigits": 0,
           "width": "",
           "name": "\"UPDATE\"",
-          "ordinal": 7,
           "remarks": "",
           "nullable": true,
           "databaseSpecificType": "CLOB",
@@ -1305,7 +1249,6 @@
           "decimalDigits": 0,
           "width": "",
           "name": "PRESS_RELEASE",
-          "ordinal": 8,
           "remarks": "",
           "nullable": true,
           "databaseSpecificType": "CLOB",
@@ -1368,8 +1311,7 @@
           "name": "SYS_IDX_PK_PUBLICATIONS_10064",
           "columns": {
             "sortSequence": "ascending",
-            "name": "ID",
-            "ordinal": 1
+            "name": "ID"
           }
         },
         {
@@ -1377,8 +1319,7 @@
           "name": "SYS_IDX_10065",
           "columns": {
             "sortSequence": "ascending",
-            "name": "WRITERID",
-            "ordinal": 4
+            "name": "WRITERID"
           }
         }
       ],
@@ -1423,8 +1364,7 @@
         "name": "PK_WRITERS",
         "columns": {
           "sortSequence": "ascending",
-          "name": "ID",
-          "ordinal": 1
+          "name": "ID"
         }
       },
       "name": "WRITERS",
@@ -1460,7 +1400,6 @@
           "decimalDigits": 0,
           "width": "",
           "name": "ID",
-          "ordinal": 1,
           "remarks": "",
           "nullable": false,
           "databaseSpecificType": "BIGINT",
@@ -1471,7 +1410,6 @@
           "decimalDigits": 0,
           "width": "(20)",
           "name": "FIRSTNAME",
-          "ordinal": 2,
           "remarks": "",
           "nullable": false,
           "databaseSpecificType": "VARCHAR",
@@ -1482,7 +1420,6 @@
           "decimalDigits": 0,
           "width": "(20)",
           "name": "LASTNAME",
-          "ordinal": 3,
           "remarks": "",
           "nullable": false,
           "databaseSpecificType": "VARCHAR",
@@ -1493,7 +1430,6 @@
           "decimalDigits": 0,
           "width": "(255)",
           "name": "ADDRESS1",
-          "ordinal": 4,
           "remarks": "",
           "nullable": true,
           "databaseSpecificType": "VARCHAR",
@@ -1504,7 +1440,6 @@
           "decimalDigits": 0,
           "width": "(255)",
           "name": "ADDRESS2",
-          "ordinal": 5,
           "remarks": "",
           "nullable": false,
           "databaseSpecificType": "VARCHAR",
@@ -1515,7 +1450,6 @@
           "decimalDigits": 0,
           "width": "(50)",
           "name": "CITY",
-          "ordinal": 6,
           "remarks": "",
           "nullable": true,
           "databaseSpecificType": "VARCHAR",
@@ -1526,7 +1460,6 @@
           "decimalDigits": 0,
           "width": "(2)",
           "name": "STATE",
-          "ordinal": 7,
           "remarks": "",
           "nullable": true,
           "databaseSpecificType": "VARCHAR",
@@ -1537,7 +1470,6 @@
           "decimalDigits": 0,
           "width": "(10)",
           "name": "POSTALCODE",
-          "ordinal": 8,
           "remarks": "",
           "nullable": true,
           "databaseSpecificType": "VARCHAR",
@@ -1548,7 +1480,6 @@
           "decimalDigits": 0,
           "width": "(50)",
           "name": "COUNTRY",
-          "ordinal": 9,
           "remarks": "",
           "nullable": true,
           "databaseSpecificType": "VARCHAR",
@@ -1559,7 +1490,6 @@
           "decimalDigits": 0,
           "width": "(10)",
           "name": "PHONE1",
-          "ordinal": 10,
           "remarks": "",
           "nullable": true,
           "databaseSpecificType": "VARCHAR",
@@ -1570,7 +1500,6 @@
           "decimalDigits": 0,
           "width": "(15)",
           "name": "PHONE2",
-          "ordinal": 11,
           "remarks": "",
           "nullable": true,
           "databaseSpecificType": "VARCHAR",
@@ -1581,7 +1510,6 @@
           "decimalDigits": 0,
           "width": "(10)",
           "name": "EMAIL1",
-          "ordinal": 12,
           "remarks": "",
           "nullable": true,
           "databaseSpecificType": "VARCHAR",
@@ -1592,7 +1520,6 @@
           "decimalDigits": 0,
           "width": "",
           "name": "EMAIL2",
-          "ordinal": 13,
           "remarks": "",
           "nullable": true,
           "databaseSpecificType": "INTEGER",
@@ -1603,7 +1530,6 @@
           "decimalDigits": 0,
           "width": "(10)",
           "name": "FAX",
-          "ordinal": 14,
           "remarks": "",
           "nullable": true,
           "databaseSpecificType": "VARCHAR",
@@ -1614,7 +1540,6 @@
           "decimalDigits": 0,
           "width": "",
           "name": "FAX3",
-          "ordinal": 15,
           "remarks": "",
           "nullable": true,
           "databaseSpecificType": "INTEGER",
@@ -1625,7 +1550,6 @@
           "decimalDigits": 0,
           "width": "(10)",
           "name": "HOMEEMAIL11",
-          "ordinal": 16,
           "remarks": "",
           "nullable": true,
           "databaseSpecificType": "VARCHAR",
@@ -1636,7 +1560,6 @@
           "decimalDigits": 0,
           "width": "(10)",
           "name": "HOMEEMAIL12",
-          "ordinal": 17,
           "remarks": "",
           "nullable": true,
           "databaseSpecificType": "VARCHAR",
@@ -1647,7 +1570,6 @@
           "decimalDigits": 0,
           "width": "",
           "name": "PUBLICATION_ID",
-          "ordinal": 18,
           "remarks": "",
           "nullable": false,
           "databaseSpecificType": "BIGINT",
@@ -1710,8 +1632,7 @@
           "name": "SYS_IDX_PK_WRITERS_10060",
           "columns": {
             "sortSequence": "ascending",
-            "name": "ID",
-            "ordinal": 1
+            "name": "ID"
           }
         },
         {
@@ -1719,8 +1640,7 @@
           "name": "SYS_IDX_10077",
           "columns": {
             "sortSequence": "ascending",
-            "name": "PUBLICATION_ID",
-            "ordinal": 18
+            "name": "PUBLICATION_ID"
           }
         },
         {
@@ -1729,13 +1649,11 @@
           "columns": [
             {
               "sortSequence": "ascending",
-              "name": "CITY",
-              "ordinal": 6
+              "name": "CITY"
             },
             {
               "sortSequence": "ascending",
-              "name": "STATE",
-              "ordinal": 7
+              "name": "STATE"
             }
           ]
         },
@@ -1745,13 +1663,11 @@
           "columns": [
             {
               "sortSequence": "ascending",
-              "name": "EMAIL1",
-              "ordinal": 12
+              "name": "EMAIL1"
             },
             {
               "sortSequence": "ascending",
-              "name": "COUNTRY",
-              "ordinal": 9
+              "name": "COUNTRY"
             }
           ]
         },
@@ -1761,13 +1677,11 @@
           "columns": [
             {
               "sortSequence": "ascending",
-              "name": "LASTNAME",
-              "ordinal": 3
+              "name": "LASTNAME"
             },
             {
               "sortSequence": "ascending",
-              "name": "FIRSTNAME",
-              "ordinal": 2
+              "name": "FIRSTNAME"
             }
           ]
         },
@@ -1777,23 +1691,19 @@
           "columns": [
             {
               "sortSequence": "ascending",
-              "name": "CITY",
-              "ordinal": 6
+              "name": "CITY"
             },
             {
               "sortSequence": "ascending",
-              "name": "STATE",
-              "ordinal": 7
+              "name": "STATE"
             },
             {
               "sortSequence": "ascending",
-              "name": "POSTALCODE",
-              "ordinal": 8
+              "name": "POSTALCODE"
             },
             {
               "sortSequence": "ascending",
-              "name": "COUNTRY",
-              "ordinal": 9
+              "name": "COUNTRY"
             }
           ]
         }
@@ -1826,13 +1736,11 @@
         "columns": [
           {
             "sortSequence": "ascending",
-            "name": "POSTALCODE",
-            "ordinal": 3
+            "name": "POSTALCODE"
           },
           {
             "sortSequence": "ascending",
-            "name": "COUNTRY",
-            "ordinal": 4
+            "name": "COUNTRY"
           }
         ]
       },
@@ -1861,7 +1769,6 @@
           "decimalDigits": 0,
           "width": "(50)",
           "name": "CITY",
-          "ordinal": 1,
           "remarks": "",
           "nullable": false,
           "databaseSpecificType": "VARCHAR",
@@ -1872,7 +1779,6 @@
           "decimalDigits": 0,
           "width": "(2)",
           "name": "STATE",
-          "ordinal": 2,
           "remarks": "",
           "nullable": false,
           "databaseSpecificType": "VARCHAR",
@@ -1883,7 +1789,6 @@
           "decimalDigits": 0,
           "width": "(10)",
           "name": "POSTALCODE",
-          "ordinal": 3,
           "remarks": "",
           "nullable": false,
           "databaseSpecificType": "VARCHAR",
@@ -1894,7 +1799,6 @@
           "decimalDigits": 0,
           "width": "(50)",
           "name": "COUNTRY",
-          "ordinal": 4,
           "remarks": "",
           "nullable": false,
           "databaseSpecificType": "VARCHAR",
@@ -1957,13 +1861,11 @@
         "columns": [
           {
             "sortSequence": "ascending",
-            "name": "POSTALCODE",
-            "ordinal": 3
+            "name": "POSTALCODE"
           },
           {
             "sortSequence": "ascending",
-            "name": "COUNTRY",
-            "ordinal": 4
+            "name": "COUNTRY"
           }
         ]
       }],
@@ -2010,7 +1912,6 @@
           "decimalDigits": 0,
           "width": "(10)",
           "name": "POSTALCODE",
-          "ordinal": 1,
           "remarks": "",
           "nullable": false,
           "databaseSpecificType": "VARCHAR",
@@ -2021,7 +1922,6 @@
           "decimalDigits": 0,
           "width": "(50)",
           "name": "COUNTRY",
-          "ordinal": 2,
           "remarks": "",
           "nullable": false,
           "databaseSpecificType": "VARCHAR",
@@ -2032,7 +1932,6 @@
           "decimalDigits": 0,
           "width": "",
           "name": "BOOKID",
-          "ordinal": 3,
           "remarks": "",
           "nullable": true,
           "databaseSpecificType": "INTEGER",
@@ -2043,7 +1942,6 @@
           "decimalDigits": 0,
           "width": "",
           "name": "PERIODENDDATE",
-          "ordinal": 4,
           "remarks": "",
           "nullable": true,
           "databaseSpecificType": "DATE",
@@ -2054,7 +1952,6 @@
           "decimalDigits": 0,
           "width": "(64, 0)",
           "name": "TOTALAMOUNT",
-          "ordinal": 5,
           "remarks": "",
           "nullable": true,
           "databaseSpecificType": "DOUBLE",
@@ -2117,13 +2014,11 @@
         "columns": [
           {
             "sortSequence": "ascending",
-            "name": "POSTALCODE",
-            "ordinal": 1
+            "name": "POSTALCODE"
           },
           {
             "sortSequence": "ascending",
-            "name": "COUNTRY",
-            "ordinal": 2
+            "name": "COUNTRY"
           }
         ]
       }],
@@ -3289,7 +3184,7 @@
       "createParameters": "",
       "basedOn": "",
       "nullable": false,
-      "databaseSpecificTypeName": "CHARACTER VARYING",
+      "databaseSpecificTypeName": "PUBLIC.BOOKS.CHARACTER VARYING",
       "searchable": "unknown"
     },
     {
@@ -3298,7 +3193,7 @@
       "createParameters": "",
       "basedOn": "",
       "nullable": false,
-      "databaseSpecificTypeName": "BIGINT ARRAY",
+      "databaseSpecificTypeName": "PUBLIC.SYSTEM_LOBS.BIGINT ARRAY",
       "searchable": "unknown"
     }
   ],
@@ -3373,7 +3268,6 @@
       "parameters": [{
         "dataType": "VARCHAR",
         "width": "",
-        "ordinal": 1,
         "type": "out",
         "databaseSpecificType": "CHARACTER VARYING"
       }],
@@ -3388,21 +3282,18 @@
         {
           "dataType": "INTEGER",
           "width": "",
-          "ordinal": 1,
           "type": "in",
           "databaseSpecificType": "INTEGER"
         },
         {
           "dataType": "INTEGER",
           "width": "",
-          "ordinal": 2,
           "type": "in",
           "databaseSpecificType": "INTEGER"
         },
         {
           "dataType": "BIGINT",
           "width": "",
-          "ordinal": 3,
           "type": "in",
           "databaseSpecificType": "BIGINT"
         }
@@ -3418,28 +3309,24 @@
         {
           "dataType": "INTEGER",
           "width": "",
-          "ordinal": 1,
           "type": "in",
           "databaseSpecificType": "INTEGER"
         },
         {
           "dataType": "INTEGER",
           "width": "",
-          "ordinal": 2,
           "type": "in",
           "databaseSpecificType": "INTEGER"
         },
         {
           "dataType": "INTEGER",
           "width": "",
-          "ordinal": 3,
           "type": "in",
           "databaseSpecificType": "INTEGER"
         },
         {
           "dataType": "BIGINT",
           "width": "",
-          "ordinal": 4,
           "type": "in",
           "databaseSpecificType": "BIGINT"
         }
@@ -3455,14 +3342,12 @@
         {
           "dataType": "INTEGER",
           "width": "",
-          "ordinal": 1,
           "type": "in/ out",
           "databaseSpecificType": "INTEGER"
         },
         {
           "dataType": "INTEGER",
           "width": "",
-          "ordinal": 2,
           "type": "in",
           "databaseSpecificType": "INTEGER"
         }
@@ -3478,28 +3363,24 @@
         {
           "dataType": "BIGINT",
           "width": "",
-          "ordinal": 1,
           "type": "in",
           "databaseSpecificType": "BIGINT"
         },
         {
           "dataType": "INTEGER",
           "width": "",
-          "ordinal": 2,
           "type": "in",
           "databaseSpecificType": "INTEGER"
         },
         {
           "dataType": "INTEGER",
           "width": "",
-          "ordinal": 3,
           "type": "in",
           "databaseSpecificType": "INTEGER"
         },
         {
           "dataType": "BIGINT",
           "width": "",
-          "ordinal": 4,
           "type": "in",
           "databaseSpecificType": "BIGINT"
         }
@@ -3515,14 +3396,12 @@
         {
           "dataType": "BIGINT",
           "width": "",
-          "ordinal": 1,
           "type": "in",
           "databaseSpecificType": "BIGINT"
         },
         {
           "dataType": "BIGINT",
           "width": "",
-          "ordinal": 2,
           "type": "in",
           "databaseSpecificType": "BIGINT"
         }
@@ -3537,7 +3416,6 @@
       "parameters": [{
         "dataType": "ARRAY",
         "width": "",
-        "ordinal": 1,
         "type": "in",
         "databaseSpecificType": "BIGINT ARRAY"
       }],
@@ -3552,14 +3430,12 @@
         {
           "dataType": "INTEGER",
           "width": "",
-          "ordinal": 1,
           "type": "in",
           "databaseSpecificType": "INTEGER"
         },
         {
           "dataType": "BIGINT",
           "width": "",
-          "ordinal": 2,
           "type": "in",
           "databaseSpecificType": "BIGINT"
         }

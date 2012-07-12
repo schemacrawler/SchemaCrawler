@@ -32,7 +32,7 @@
 			</subsection>
 			<subsection name="How to Experiment">
 				<ol>
-					<li>Create the SchemaCrawler Lint report in XHTML and JSON formats.
+					<li>Create the SchemaCrawler Lint report in HTML5 and JSON formats.
 					</li>
 					<li>
 						<p>Create a customized SchemaCrawler Lint report using a linter

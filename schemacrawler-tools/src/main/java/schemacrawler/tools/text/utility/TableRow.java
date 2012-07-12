@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import schemacrawler.tools.options.OutputFormat;
-import schemacrawler.tools.text.utility.TableCell.Align;
 
 /**
  * Represents an HTML table row.
@@ -52,7 +51,7 @@ final class TableRow
   TableRow(final OutputFormat outputFormat, final int colSpan)
   {
     this(outputFormat);
-    cells.add(new TableCell("", 0, Align.left, colSpan, "", outputFormat));
+    cells.add(new TableCell("", 0, Alignment.left, colSpan, "", outputFormat));
   }
 
   /**

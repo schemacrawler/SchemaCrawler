@@ -173,10 +173,10 @@ for (final Schema schema: database.getSchemas())
 					output as
 					<a href="snapshot-examples/snapshot.txt">plain text,</a>
 					<a href="snapshot-examples/snapshot.csv">comma-separated text (CSV),</a>
-					<a href="snapshot-examples/snapshot.html">XHTML,</a>
+					<a href="snapshot-examples/snapshot.html">HTML5,</a>
 					or
 					<a href="snapshot-examples/snapshot.json">JavaScript object notation (JSON).</a>
-					The XHTML output is a combination of valid XML (that can be
+					The HTML5 output is a combination of valid XML (that can be
 					manipulated by XML tools or
 					XSLT), and HTML that
 					can be viewed in a browser.

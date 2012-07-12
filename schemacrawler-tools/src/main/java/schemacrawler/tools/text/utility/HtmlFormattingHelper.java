@@ -48,16 +48,14 @@ public final class HtmlFormattingHelper
     final String styleSheet = Utility
       .readResourceFully("/schemacrawler-output.css");
 
-    return ""
-           + "<?xml version='1.0' encoding='UTF-8'?>"
-           + Utility.NEWLINE
-           + "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">"
-           + Utility.NEWLINE + "<html xmlns='http://www.w3.org/1999/xhtml'>"
-           + Utility.NEWLINE + "<head>" + Utility.NEWLINE
+    return "<!DOCTYPE html>" + Utility.NEWLINE
+           + "<html xmlns='http://www.w3.org/1999/xhtml'>" + Utility.NEWLINE
+           + "<head>" + Utility.NEWLINE
            + "  <title>SchemaCrawler Output</title>" + Utility.NEWLINE
-           + "  <style type='text/css'>" + Utility.NEWLINE + styleSheet
-           + Utility.NEWLINE + "  </style>" + Utility.NEWLINE + "</head>"
-           + Utility.NEWLINE + "<body>" + Utility.NEWLINE;
+           + "  <meta charset=\"utf-8\"/>" + Utility.NEWLINE + "  <style>"
+           + Utility.NEWLINE + styleSheet + Utility.NEWLINE + "  </style>"
+           + Utility.NEWLINE + "</head>" + Utility.NEWLINE + "<body>"
+           + Utility.NEWLINE;
   }
 
   public HtmlFormattingHelper(final OutputFormat outputFormat)
@@ -98,7 +96,7 @@ public final class HtmlFormattingHelper
       final String headerTag;
       if (type == null)
       {
-        prefix = "<p>&nbsp;</p>";
+        prefix = "<p>&#160;</p>";
         headerTag = "h2";
       }
       else
@@ -106,11 +104,11 @@ public final class HtmlFormattingHelper
         switch (type)
         {
           case title:
-            prefix = "<p>&nbsp;</p>";
+            prefix = "<p>&#160;</p>";
             headerTag = "h1";
             break;
           case subTitle:
-            prefix = "<p>&nbsp;</p>";
+            prefix = "<p>&#160;</p>";
             headerTag = "h2";
             break;
           case section:
@@ -118,7 +116,7 @@ public final class HtmlFormattingHelper
             headerTag = "h3";
             break;
           default:
-            prefix = "<p>&nbsp;</p>";
+            prefix = "<p>&#160;</p>";
             headerTag = "h2";
             break;
         }
@@ -141,7 +139,7 @@ public final class HtmlFormattingHelper
   @Override
   public String createObjectEnd()
   {
-    return "</table>" + Utility.NEWLINE + "<p></p>" + Utility.NEWLINE;
+    return "</table>" + Utility.NEWLINE + "<p>&#160;</p>" + Utility.NEWLINE;
   }
 
   /**

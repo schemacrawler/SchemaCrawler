@@ -49,7 +49,7 @@ public interface TextFormattingHelper
    *        Definition
    * @return Row as a string
    */
-  String createDefinitionRow(final String definition);
+  String createDefinitionRow(String definition);
 
   /**
    * Creates a description row with a blank spacer cells.
@@ -58,7 +58,7 @@ public interface TextFormattingHelper
    *        Description
    * @return Row as a string
    */
-  String createDescriptionRow(final String description);
+  String createDescriptionRow(String description);
 
   /**
    * Creates a detail row, with four fields.
@@ -71,7 +71,7 @@ public interface TextFormattingHelper
    *        Type
    * @return Row as a string
    */
-  String createDetailRow(String ordinal, final String subName, final String type);
+  String createDetailRow(String ordinal, String subName, String type);
 
   /**
    * Document end.
@@ -116,9 +116,7 @@ public interface TextFormattingHelper
    *        Whether to underscore the name row
    * @return Row as a string
    */
-  String createNameRow(final String name,
-                       final String description,
-                       boolean underscore);
+  String createNameRow(String name, String description, boolean underscore);
 
   /**
    * Create a name and value row.
@@ -127,9 +125,12 @@ public interface TextFormattingHelper
    *        Name
    * @param value
    *        Value
+   * @param valueAlignment
+   *        TODO
+   * @param valueSpan TODO
    * @return Row as a string
    */
-  String createNameValueRow(final String name, final String value);
+  String createNameValueRow(String name, String value, Alignment valueAlignment, int valueSpan);
 
   /**
    * Database object end.
@@ -145,7 +146,7 @@ public interface TextFormattingHelper
    *        Object name
    * @return Database object start
    */
-  String createObjectStart(final String name);
+  String createObjectStart(String name);
 
   /**
    * Creates a row of data.
@@ -154,7 +155,7 @@ public interface TextFormattingHelper
    *        Column data
    * @return Row of data
    */
-  String createRow(final String[] columnData);
+  String createRow(String... columnData);
 
   /**
    * Creates a header row for data.
@@ -163,6 +164,6 @@ public interface TextFormattingHelper
    *        Column names
    * @return Header row for data
    */
-  String createRowHeader(final String[] columnNames);
+  String createRowHeader(String[] columnNames);
 
 }

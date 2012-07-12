@@ -9,26 +9,26 @@ System Information
 SchemaCrawler Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
-product name                          SchemaCrawler
-product version                       8.17
+product name                              SchemaCrawler                 
+product version                           8.17                          
 
 
 Database Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
-database product name                 SQLite
-database product version              3.6.22
-database user name                    null
+database product name                     SQLite                        
+database product version                  3.6.22                        
+database user name                        null                          
 
 
 JDBC Driver Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
-driver name                           SQLiteJDBC
-driver version                        native
-driver class name                     org.sqlite.JDBC
-url                                   jdbc:sqlite:C:\Users\SUALEH~1\AppData\Local\Temp\SchemaCrawler8410618209458125689.dat
-is JDBC compliant                     false
+driver name                               SQLiteJDBC                    
+driver version                            native                        
+driver class name                         org.sqlite.JDBC               
+url                                       jdbc:sqlite:C:\Users\SUALEH~1\AppData\Local\Temp\SchemaCrawler5626238110271711694.dat
+is JDBC compliant                         false                         
 
 
 

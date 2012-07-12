@@ -23,7 +23,6 @@ package schemacrawler.tools.text.utility;
 
 import static sf.util.Utility.NEWLINE;
 import schemacrawler.tools.options.OutputFormat;
-import schemacrawler.tools.text.utility.TableCell.Align;
 
 /**
  * Methods to format entire rows of output as HTML.
@@ -34,6 +33,8 @@ abstract class BaseTextFormattingHelper
   implements TextFormattingHelper
 {
 
+  private static final int LINE_WIDTH = 72;
+
   /**
    * System specific line separator character.
    */
@@ -42,7 +43,7 @@ abstract class BaseTextFormattingHelper
   static String separator(final String pattern)
   {
     final StringBuilder dashedSeparator = new StringBuilder();
-    for (int i = 0; i < 72 / pattern.length(); i++)
+    for (int i = 0; i < LINE_WIDTH / pattern.length(); i++)
     {
       dashedSeparator.append(pattern);
     }
@@ -62,7 +63,7 @@ abstract class BaseTextFormattingHelper
     final TableRow row = new TableRow(outputFormat);
     row.add(new TableCell(definition,
                           0,
-                          Align.left,
+                          Alignment.left,
                           3,
                           "definition",
                           outputFormat));
@@ -81,7 +82,7 @@ abstract class BaseTextFormattingHelper
     row.add(newTableCell("", "ordinal", outputFormat));
     row.add(new TableCell(description,
                           0,
-                          Align.left,
+                          Alignment.left,
                           2,
                           "definition",
                           outputFormat));
@@ -109,17 +110,25 @@ abstract class BaseTextFormattingHelper
     }
     else
     {
-      row
-        .add(new TableCell(ordinal, 2, Align.left, 1, "ordinal", outputFormat));
+      row.add(new TableCell(ordinal,
+                            2,
+                            Alignment.left,
+                            1,
+                            "ordinal",
+                            outputFormat));
     }
     row.add(new TableCell(subName,
                           subNameWidth,
-                          Align.left,
+                          Alignment.left,
                           1,
                           "subname",
                           outputFormat));
-    row
-      .add(new TableCell(type, typeWidth, Align.left, 1, "type", outputFormat));
+    row.add(new TableCell(type,
+                          typeWidth,
+                          Alignment.left,
+                          1,
+                          "type",
+                          outputFormat));
     return row.toString();
   }
 
@@ -131,7 +140,7 @@ abstract class BaseTextFormattingHelper
   @Override
   public String createEmptyRow()
   {
-    return new TableRow(outputFormat, 4).toString();
+    return new TableRow(outputFormat, 3).toString();
   }
 
   /**
@@ -165,16 +174,17 @@ abstract class BaseTextFormattingHelper
     final TableRow row = new TableRow(outputFormat);
     row.add(new TableCell(name,
                           nameWidth,
-                          Align.left,
+                          Alignment.left,
                           2,
                           "name" + (underscore? " underscore": ""),
                           outputFormat));
-    row.add(new TableCell(description,
-                          descriptionWidth,
-                          Align.right,
-                          1,
-                          "description" + (underscore? " underscore": ""),
-                          outputFormat));
+    row
+      .add(new TableCell(description,
+                         descriptionWidth,
+                         Alignment.right,
+                         1,
+                         "description right" + (underscore? " underscore": ""),
+                         outputFormat));
     nameRowString = row.toString();
 
     if (underscore && outputFormat != OutputFormat.html)
@@ -189,16 +199,36 @@ abstract class BaseTextFormattingHelper
    * {@inheritDoc}
    * 
    * @see TextFormattingHelper#createNameValueRow(java.lang.String,
-   *      java.lang.String)
+   *      java.lang.String, Alignment, int)
    */
   @Override
-  public String createNameValueRow(final String name, final String value)
+  public String createNameValueRow(final String name,
+                                   final String value,
+                                   final Alignment valueAlignment,
+                                   final int valueSpan)
   {
-    final int nameWidth = 36;
+    final int nameWidth = 40;
+    final int valueWidth = 70 - nameWidth;
+
+    final Alignment alignmentForValue = valueAlignment == null? Alignment.left
+                                                              : valueAlignment;
+    final String valueStyle = "property_value"
+                              + (alignmentForValue == Alignment.left? ""
+                                                                    : " right");
 
     final TableRow row = new TableRow(outputFormat);
-    row.add(new TableCell(name, nameWidth, Align.left, 1, "", outputFormat));
-    row.add(new TableCell(value, 0, Align.left, 2, "", outputFormat));
+    row.add(new TableCell(name,
+                          nameWidth,
+                          Alignment.left,
+                          1,
+                          "property_name",
+                          outputFormat));
+    row.add(new TableCell(value,
+                          valueWidth,
+                          alignmentForValue,
+                          valueSpan,
+                          valueStyle,
+                          outputFormat));
     return row.toString();
   }
 
@@ -209,7 +239,7 @@ abstract class BaseTextFormattingHelper
    *        Column data
    */
   @Override
-  public String createRow(final String[] columnData)
+  public String createRow(final String... columnData)
   {
     OutputFormat outputFormat = this.outputFormat;
     if (outputFormat == OutputFormat.text)
@@ -251,7 +281,7 @@ abstract class BaseTextFormattingHelper
                                  final String styleClass,
                                  final OutputFormat outputFormat)
   {
-    return new TableCell(text, 0, Align.left, 1, styleClass, outputFormat);
+    return new TableCell(text, 0, Alignment.left, 1, styleClass, outputFormat);
   }
 
 }

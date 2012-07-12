@@ -9,26 +9,26 @@ System Information
 SchemaCrawler Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
-product name                          SchemaCrawler
-product version                       8.17
+product name                              SchemaCrawler                 
+product version                           8.17                          
 
 
 Database Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
-database product name                 HSQL Database Engine
-database product version              2.2.8
-database user name                    SA
+database product name                     HSQL Database Engine          
+database product version                  2.2.8                         
+database user name                        SA                            
 
 
 JDBC Driver Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
-driver name                           HSQL Database Engine Driver
-driver version                        2.2.8
-driver class name                     org.hsqldb.jdbc.JDBCDriver
-url                                   jdbc:hsqldb:mem:schemacrawler
-is JDBC compliant                     true
+driver name                               HSQL Database Engine Driver   
+driver version                            2.2.8                         
+driver class name                         org.hsqldb.jdbc.JDBCDriver    
+url                                       jdbc:hsqldb:mem:schemacrawler 
+is JDBC compliant                         true                          
 
 
 
@@ -40,21 +40,21 @@ PUBLIC.BOOKS."Global Counts"                                     [table]
 ------------------------------------------------------------------------
 
                                                           [lint, medium]
-single column                         
+	single column	
 
 
 PUBLIC.FOR_LINT."Global Counts"                                  [table]
 ------------------------------------------------------------------------
 
                                                           [lint, medium]
-single column                         
+	single column	
 
 
 PUBLIC.FOR_LINT.No_Columns                                       [table]
 ------------------------------------------------------------------------
 
                                                           [lint, medium]
-single column                         
+	single column	
 
 
 
