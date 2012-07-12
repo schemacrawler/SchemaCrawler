@@ -74,7 +74,6 @@ final class SchemaTextFormatter
   }
 
   private final boolean isVerbose;
-  private final boolean isNotList;
   private final boolean isList;
 
   /**
@@ -99,7 +98,6 @@ final class SchemaTextFormatter
           outputOptions);
     isVerbose = schemaTextDetailType
       .isGreaterThanOrEqualTo(SchemaTextDetailType.details);
-    isNotList = schemaTextDetailType != SchemaTextDetailType.list;
     isList = schemaTextDetailType == SchemaTextDetailType.list;
   }
 
@@ -139,26 +137,20 @@ final class SchemaTextFormatter
       procedureName = procedure.getFullName();
     }
     final String procedureType = "[" + procedureTypeDetail + "]";
-    final String nameRow;
 
-    if (isNotList)
+    if (isList)
     {
-      out.print(formattingHelper.createObjectStart(""));
-      nameRow = formattingHelper.createNameRow(procedureName,
-                                               procedureType,
-                                               true);
+      out.println(formattingHelper.createNameValueRow(procedureName,
+                                                      procedureType,
+                                                      Alignment.right));
     }
     else
     {
-      nameRow = formattingHelper.createNameValueRow(procedureName,
-                                                    procedureType,
-                                                    Alignment.right);
-    }
+      out.print(formattingHelper.createObjectStart(""));
+      out.println(formattingHelper.createNameRow(procedureName,
+                                                 procedureType,
+                                                 true));
 
-    out.println(nameRow);
-
-    if (isNotList)
-    {
       printProcedureColumns(procedure.getColumns());
       printDefinition("definition", "", procedure.getDefinition());
 
@@ -192,24 +184,19 @@ final class SchemaTextFormatter
       synonymName = synonym.getFullName();
     }
     final String synonymType = "[synonym]";
-    final String nameRow;
 
-    if (isNotList)
+    if (isList)
     {
-      out.print(formattingHelper.createObjectStart(""));
-      nameRow = formattingHelper.createNameRow(synonymName, synonymType, true);
+      out.println(formattingHelper.createNameValueRow(synonymName,
+                                                      synonymType,
+                                                      Alignment.right));
     }
     else
     {
-      nameRow = formattingHelper.createNameValueRow(synonymName,
-                                                    synonymType,
-                                                    Alignment.right);
-    }
+      out.print(formattingHelper.createObjectStart(""));
+      out.println(formattingHelper
+        .createNameRow(synonymName, synonymType, true));
 
-    out.println(nameRow);
-
-    if (isNotList)
-    {
       final String referencedObjectName;
       if (options.isShowUnqualifiedNames())
       {
@@ -257,24 +244,17 @@ final class SchemaTextFormatter
     }
     final String tableType = "[" + table.getType() + "]";
 
-    final String nameRow;
-
-    if (isNotList)
+    if (isList)
     {
-      out.print(formattingHelper.createObjectStart(""));
-      nameRow = formattingHelper.createNameRow(tableName, tableType, true);
+      out.println(formattingHelper.createNameValueRow(tableName,
+                                                      tableType,
+                                                      Alignment.right));
     }
     else
     {
-      nameRow = formattingHelper.createNameValueRow(tableName,
-                                                    tableType,
-                                                    Alignment.right);
-    }
+      out.print(formattingHelper.createObjectStart(""));
+      out.println(formattingHelper.createNameRow(tableName, tableType, true));
 
-    out.println(nameRow);
-
-    if (isNotList)
-    {
       final Column[] columns = table.getColumns();
       printTableColumns(columns);
 
