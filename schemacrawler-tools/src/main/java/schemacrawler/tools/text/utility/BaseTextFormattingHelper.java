@@ -33,8 +33,6 @@ abstract class BaseTextFormattingHelper
   implements TextFormattingHelper
 {
 
-  private static final int LINE_WIDTH = 72;
-
   /**
    * System specific line separator character.
    */
@@ -42,8 +40,8 @@ abstract class BaseTextFormattingHelper
 
   static String separator(final String pattern)
   {
-    final StringBuilder dashedSeparator = new StringBuilder();
-    for (int i = 0; i < LINE_WIDTH / pattern.length(); i++)
+    final StringBuilder dashedSeparator = new StringBuilder(72);
+    for (int i = 0; i < 72 / pattern.length(); i++)
     {
       dashedSeparator.append(pattern);
     }
@@ -199,13 +197,12 @@ abstract class BaseTextFormattingHelper
    * {@inheritDoc}
    * 
    * @see TextFormattingHelper#createNameValueRow(java.lang.String,
-   *      java.lang.String, Alignment, int)
+   *      java.lang.String, Alignment)
    */
   @Override
   public String createNameValueRow(final String name,
                                    final String value,
-                                   final Alignment valueAlignment,
-                                   final int valueSpan)
+                                   final Alignment valueAlignment)
   {
     final int nameWidth = 40;
     final int valueWidth = 70 - nameWidth;
@@ -226,7 +223,7 @@ abstract class BaseTextFormattingHelper
     row.add(new TableCell(value,
                           valueWidth,
                           alignmentForValue,
-                          valueSpan,
+                          1,
                           valueStyle,
                           outputFormat));
     return row.toString();

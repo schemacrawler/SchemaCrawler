@@ -126,11 +126,10 @@ public interface TextFormattingHelper
    * @param value
    *        Value
    * @param valueAlignment
-   *        TODO
-   * @param valueSpan TODO
+   *        Alignment of the value
    * @return Row as a string
    */
-  String createNameValueRow(String name, String value, Alignment valueAlignment, int valueSpan);
+  String createNameValueRow(String name, String value, Alignment valueAlignment);
 
   /**
    * Database object end.
