@@ -37,6 +37,7 @@ import java.nio.channels.WritableByteChannel;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.custommonkey.xmlunit.Validator;
 import org.junit.Ignore;
@@ -88,12 +89,12 @@ public final class TestUtility
     {
       contentEquals = contentEquals(new InputStreamReader(referenceStream),
                                     new FileReader(testOutputFile),
-                                    "url                                   jdbc:");
+                                    Pattern.compile("url +jdbc:.*"));
     }
 
     if ("html".equals(outputFormat))
     {
-      validateHTML(testOutputFile, failures);
+      validateXHTML(testOutputFile, failures);
     }
     else if ("json".equals(outputFormat))
     {
@@ -148,7 +149,7 @@ public final class TestUtility
 
   private static boolean contentEquals(final Reader expectedInputReader,
                                        final Reader actualInputReader,
-                                       final String... ignoreLines)
+                                       final Pattern... ignoreLinePatterns)
     throws Exception
   {
     if (expectedInputReader == null || actualInputReader == null)
@@ -166,9 +167,9 @@ public final class TestUtility
         final String actualLine = actualBufferedReader.readLine();
 
         boolean ignore = false;
-        for (final String ignoreLine: ignoreLines)
+        for (final Pattern ignoreLinePattern: ignoreLinePatterns)
         {
-          if (expectedline.contains(ignoreLine))
+          if (ignoreLinePattern.matcher(expectedline).matches())
           {
             ignore = true;
             break;
@@ -227,22 +228,6 @@ public final class TestUtility
     }
   }
 
-  private static boolean validateHTML(final File testOutputFile,
-                                      final List<String> failures)
-    throws FileNotFoundException, SAXException, IOException
-  {
-    final boolean isOutputValid;
-    final Reader reader = new BufferedReader(new FileReader(testOutputFile));
-    final Validator validator = new Validator(reader);
-    isOutputValid = validator.isValid();
-    if (!isOutputValid)
-    {
-      failures.add(validator.toString());
-    }
-    reader.close();
-    return isOutputValid;
-  }
-
   private static boolean validateJSON(final File testOutputFile,
                                       final List<String> failures)
     throws FileNotFoundException, SAXException, IOException
@@ -281,6 +266,29 @@ public final class TestUtility
       failures.add(e.getMessage());
     }
     return failures.isEmpty();
+  }
+
+  private static boolean validateXHTML(final File testOutputFile,
+                                       final List<String> failures)
+    throws Exception
+  {
+    final DOCTYPEChanger xhtmlReader = new DOCTYPEChanger(new FileReader(testOutputFile));
+    xhtmlReader.setRootElement("html");
+    xhtmlReader
+      .setSystemIdentifier("http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd");
+    xhtmlReader.setPublicIdentifier("-//W3C//DTD XHTML 1.0 Strict//EN");
+    xhtmlReader.setReplace(true);
+
+    final boolean isOutputValid;
+    final Reader reader = new BufferedReader(xhtmlReader);
+    final Validator validator = new Validator(reader);
+    isOutputValid = validator.isValid();
+    if (!isOutputValid)
+    {
+      failures.add(validator.toString());
+    }
+    reader.close();
+    return isOutputValid;
   }
 
   private static File writeToTempFile(final InputStream resourceStream)

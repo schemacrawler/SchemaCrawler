@@ -283,8 +283,9 @@
   id          ID             #IMPLIED
   http-equiv  CDATA          #IMPLIED
   name        CDATA          #IMPLIED
-  content     CDATA          #REQUIRED
+  content     CDATA          #IMPLIED
   scheme      CDATA          #IMPLIED
+  charset     CDATA          #IMPLIED
   >
 
 <!--
@@ -318,7 +319,7 @@
 <!ATTLIST style
   %i18n;
   id          ID             #IMPLIED
-  type        %ContentType;  #REQUIRED
+  type        %ContentType;  #IMPLIED
   media       %MediaDesc;    #IMPLIED
   title       %Text;         #IMPLIED
   xml:space   (preserve)     #FIXED 'preserve'

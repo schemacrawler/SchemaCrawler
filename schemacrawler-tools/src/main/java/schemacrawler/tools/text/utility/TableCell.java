@@ -30,12 +30,6 @@ import schemacrawler.tools.options.OutputFormat;
 final class TableCell
 {
 
-  enum Align
-  {
-
-    left, right;
-  }
-
   /**
    * Enclose the value in quotes and escape the quote and comma
    * characters that are inside.
@@ -84,13 +78,13 @@ final class TableCell
   private final String styleClass;
   private final int colSpan;
   private final int characterWidth;
-  private final Align align;
+  private final Alignment align;
 
   private final String text;
 
   TableCell(final String text,
             final int characterWidth,
-            final Align align,
+            final Alignment align,
             final int colSpan,
             final String styleClass,
             final OutputFormat outputFormat)
@@ -164,7 +158,7 @@ final class TableCell
     {
       if (characterWidth > 0)
       {
-        if (align == Align.right)
+        if (align == Alignment.right)
         {
           return String.format("%" + characterWidth + "s", text);
         }

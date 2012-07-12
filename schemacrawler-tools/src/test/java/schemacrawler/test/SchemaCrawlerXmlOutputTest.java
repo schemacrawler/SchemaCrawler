@@ -85,6 +85,20 @@ public class SchemaCrawlerXmlOutputTest
     }
   }
 
+  @Test
+  public void validCountXMLOutput()
+    throws Exception
+  {
+    final List<String> failures = new ArrayList<String>();
+
+    checkValidXmlOutput(SchemaTextDetailType.details.name(), failures);
+
+    if (failures.size() > 0)
+    {
+      fail(failures.toString());
+    }
+  }
+
   private void checkValidXmlOutput(final String command,
                                    final List<String> failures)
     throws IOException, Exception, SchemaCrawlerException
@@ -109,8 +123,8 @@ public class SchemaCrawlerXmlOutputTest
     executable.execute(testDatabase.getConnection());
 
     failures.addAll(compareOutput(XML_OUTPUT + referenceFile,
-                                             testOutputFile,
-                                             OutputFormat.html.name()));
+                                  testOutputFile,
+                                  OutputFormat.html.name()));
   }
 
 }

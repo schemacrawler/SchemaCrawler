@@ -29,6 +29,7 @@ import java.util.List;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.BaseTabularFormatter;
+import schemacrawler.tools.text.utility.Alignment;
 import schemacrawler.tools.text.utility.TextFormattingHelper.DocumentHeaderType;
 import schemacrawler.tools.traversal.DataTraversalHandler;
 
@@ -187,7 +188,9 @@ final class DataTextFormatter
     }
     final String message = getMessage(aggregate);
     //
-    out.println(formattingHelper.createNameRow(title, message, false));
+    out.println(formattingHelper.createNameValueRow(title,
+                                                    message,
+                                                    Alignment.right, 1));
   }
 
   private void iterateRows(final DataResultSet dataRows)

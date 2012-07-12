@@ -7,6 +7,9 @@
   <body>
     <release version="8.17" date="2012-07-09">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        The HTML output format outputs valid HTML5 and CSS3, as valid XML.
+      ]]></action>     
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         JSON output supports all of the formatting options that the other text formats support.
       ]]></action>       
       <action dev="Sualeh Fatehi" type="add"><![CDATA[

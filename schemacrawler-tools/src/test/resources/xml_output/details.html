@@ -1,12 +1,12 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html>
 <html xmlns='http://www.w3.org/1999/xhtml'>
 <head>
   <title>SchemaCrawler Output</title>
-  <style type='text/css'>
+  <meta charset="utf-8"/>
+  <style>
 .underscore {
-	color: #950007;
-	border-bottom: 2px solid #BBBBBB;
+	color: Maroon;
+	border-bottom: 2px solid rgb(190, 190, 190);
 }
 
 .name {
@@ -14,8 +14,19 @@
 	width: 150px;
 }
 
-.description {
+.property_name {
+	width: 350px;
+}
+
+.property_value {
+	width: 250px;
+}
+
+.right {
 	text-align: right;
+}
+
+.description {
 	width: 450px;
 }
 
@@ -32,26 +43,26 @@
 }
 
 .definition {
-	width: 580px;
-	white-space: pre;
+	white-space: pre-line;
 }
 
 h2 {
-  color: #174188;
+	color: Navy;
 }
 
 h3 {
-  color: #3E8400;
+	color: DarkGreen;
 }
 
 body,p,pre,table,th,td,caption {
 	text-align: left;
-	font-family: Trebuchet MS;
-	font-size: 8pt;
+	font-family: 'Trebuchet MS';
+	font-size: 0.9em;
+	line-height: 1.2em;
 }
 
 table,th,td {
-	border: 1px solid #EBEBEB;
+	border: 1px solid rgb(220, 220, 220);
 	border-collapse: collapse;
 	vertical-align: top;
 	padding: 2px;
@@ -68,12 +79,11 @@ caption {
 hr {
 	height: 1px;
 }
-
   </style>
 </head>
 <body>
 
-<p>&nbsp;</p>
+<p>&#160;</p>
 <h2>System Information</h2>
 
 
@@ -81,272 +91,272 @@ hr {
 
 <table>
 	<tr>
-		<td>product name</td>
-		<td colspan='2'>SchemaCrawler</td>
+		<td class='property_name'>product name</td>
+		<td class='property_value'>SchemaCrawler</td>
 	</tr>
 	<tr>
-		<td>product version</td>
-		<td colspan='2'>8.17</td>
+		<td class='property_name'>product version</td>
+		<td class='property_value'>8.17</td>
 	</tr>
 </table>
-<p></p>
+<p>&#160;</p>
 
 <h3>Database Information</h3>
 
 <table>
 	<tr>
-		<td>database product name</td>
-		<td colspan='2'>HSQL Database Engine</td>
+		<td class='property_name'>database product name</td>
+		<td class='property_value'>HSQL Database Engine</td>
 	</tr>
 	<tr>
-		<td>database product version</td>
-		<td colspan='2'>2.2.8</td>
+		<td class='property_name'>database product version</td>
+		<td class='property_value'>2.2.8</td>
 	</tr>
 	<tr>
-		<td>database user name</td>
-		<td colspan='2'>SA</td>
+		<td class='property_name'>database user name</td>
+		<td class='property_value'>SA</td>
 	</tr>
 </table>
-<p></p>
+<p>&#160;</p>
 
 <h3>JDBC Driver Information</h3>
 
 <table>
 	<tr>
-		<td>driver name</td>
-		<td colspan='2'>HSQL Database Engine Driver</td>
+		<td class='property_name'>driver name</td>
+		<td class='property_value'>HSQL Database Engine Driver</td>
 	</tr>
 	<tr>
-		<td>driver version</td>
-		<td colspan='2'>2.2.8</td>
+		<td class='property_name'>driver version</td>
+		<td class='property_value'>2.2.8</td>
 	</tr>
 	<tr>
-		<td>driver class name</td>
-		<td colspan='2'>org.hsqldb.jdbc.JDBCDriver</td>
+		<td class='property_name'>driver class name</td>
+		<td class='property_value'>org.hsqldb.jdbc.JDBCDriver</td>
 	</tr>
 	<tr>
-		<td>url</td>
-		<td colspan='2'>jdbc:hsqldb:mem:schemacrawler</td>
+		<td class='property_name'>url</td>
+		<td class='property_value'>jdbc:hsqldb:mem:schemacrawler</td>
 	</tr>
 	<tr>
-		<td>is JDBC compliant</td>
-		<td colspan='2'>true</td>
+		<td class='property_name'>is JDBC compliant</td>
+		<td class='property_value'>true</td>
 	</tr>
 </table>
-<p></p>
-<p>&nbsp;</p>
+<p>&#160;</p>
+<p>&#160;</p>
 <h2>Tables</h2>
 
 <table>
 	<tr>
 		<td colspan='2' class='name underscore'>PUBLIC.BOOKS.AUTHORS</td>
-		<td class='description underscore'>[table]</td>
+		<td class='description right underscore'>[table]</td>
 	</tr>
 	<tr>
-		<td colspan='4'></td>
+		<td colspan='3'></td>
 	</tr>
 	<tr>
 		<td colspan='2' class='name'></td>
-		<td class='description'>[remarks]</td>
+		<td class='description right'>[remarks]</td>
 	</tr>
 	<tr>
 		<td colspan='3' class='definition'>Contact details for book authors</td>
 	</tr>
 </table>
-<p></p>
+<p>&#160;</p>
 
 <table>
 	<tr>
 		<td colspan='2' class='name underscore'>PUBLIC.BOOKS.AUTHORSLIST</td>
-		<td class='description underscore'>[view]</td>
+		<td class='description right underscore'>[view]</td>
 	</tr>
 </table>
-<p></p>
+<p>&#160;</p>
 
 <table>
 	<tr>
 		<td colspan='2' class='name underscore'>PUBLIC.BOOKS.BOOKAUTHORS</td>
-		<td class='description underscore'>[table]</td>
+		<td class='description right underscore'>[table]</td>
 	</tr>
 	<tr>
-		<td colspan='4'></td>
+		<td colspan='3'></td>
 	</tr>
 	<tr>
 		<td colspan='2' class='name'></td>
-		<td class='description'>[remarks]</td>
+		<td class='description right'>[remarks]</td>
 	</tr>
 	<tr>
 		<td colspan='3' class='definition'>Relationship between books and their authors, along with the latest updated information</td>
 	</tr>
 </table>
-<p></p>
+<p>&#160;</p>
 
 <table>
 	<tr>
 		<td colspan='2' class='name underscore'>PUBLIC.BOOKS.BOOKS</td>
-		<td class='description underscore'>[table]</td>
+		<td class='description right underscore'>[table]</td>
 	</tr>
 	<tr>
-		<td colspan='4'></td>
+		<td colspan='3'></td>
 	</tr>
 	<tr>
 		<td colspan='2' class='name'></td>
-		<td class='description'>[remarks]</td>
+		<td class='description right'>[remarks]</td>
 	</tr>
 	<tr>
 		<td colspan='3' class='definition'>Details for published books</td>
 	</tr>
 </table>
-<p></p>
+<p>&#160;</p>
 
 <table>
 	<tr>
 		<td colspan='2' class='name underscore'>PUBLIC.BOOKS.&quot;Global Counts&quot;</td>
-		<td class='description underscore'>[table]</td>
+		<td class='description right underscore'>[table]</td>
 	</tr>
 </table>
-<p></p>
+<p>&#160;</p>
 
 <table>
 	<tr>
 		<td colspan='2' class='name underscore'>PUBLIC.BOOKS.PUBLISHERS</td>
-		<td class='description underscore'>[table]</td>
+		<td class='description right underscore'>[table]</td>
 	</tr>
 	<tr>
-		<td colspan='4'></td>
+		<td colspan='3'></td>
 	</tr>
 	<tr>
 		<td colspan='2' class='name'></td>
-		<td class='description'>[remarks]</td>
+		<td class='description right'>[remarks]</td>
 	</tr>
 	<tr>
 		<td colspan='3' class='definition'>List of book publishers</td>
 	</tr>
 </table>
-<p></p>
+<p>&#160;</p>
 
 <table>
 	<tr>
 		<td colspan='2' class='name underscore'>PUBLIC.FOR_LINT.EXTRA_PK</td>
-		<td class='description underscore'>[table]</td>
+		<td class='description right underscore'>[table]</td>
 	</tr>
 </table>
-<p></p>
+<p>&#160;</p>
 
 <table>
 	<tr>
 		<td colspan='2' class='name underscore'>PUBLIC.FOR_LINT.&quot;Global Counts&quot;</td>
-		<td class='description underscore'>[table]</td>
+		<td class='description right underscore'>[table]</td>
 	</tr>
 </table>
-<p></p>
+<p>&#160;</p>
 
 <table>
 	<tr>
 		<td colspan='2' class='name underscore'>PUBLIC.FOR_LINT.No_Columns</td>
-		<td class='description underscore'>[table]</td>
+		<td class='description right underscore'>[table]</td>
 	</tr>
 </table>
-<p></p>
+<p>&#160;</p>
 
 <table>
 	<tr>
 		<td colspan='2' class='name underscore'>PUBLIC.FOR_LINT.PUBLICATIONS</td>
-		<td class='description underscore'>[table]</td>
+		<td class='description right underscore'>[table]</td>
 	</tr>
 </table>
-<p></p>
+<p>&#160;</p>
 
 <table>
 	<tr>
 		<td colspan='2' class='name underscore'>PUBLIC.FOR_LINT.WRITERS</td>
-		<td class='description underscore'>[table]</td>
+		<td class='description right underscore'>[table]</td>
 	</tr>
 </table>
-<p></p>
+<p>&#160;</p>
 
 <table>
 	<tr>
 		<td colspan='2' class='name underscore'>PUBLIC.&quot;PUBLISHER SALES&quot;.REGIONS</td>
-		<td class='description underscore'>[table]</td>
+		<td class='description right underscore'>[table]</td>
 	</tr>
 </table>
-<p></p>
+<p>&#160;</p>
 
 <table>
 	<tr>
 		<td colspan='2' class='name underscore'>PUBLIC.&quot;PUBLISHER SALES&quot;.SALES</td>
-		<td class='description underscore'>[table]</td>
+		<td class='description right underscore'>[table]</td>
 	</tr>
 </table>
-<p></p>
+<p>&#160;</p>
 
-<p>&nbsp;</p>
+<p>&#160;</p>
 <h2>Procedures</h2>
 
 <table>
 	<tr>
 		<td colspan='2' class='name underscore'>PUBLIC.BOOKS.NEW_PUBLISHER</td>
-		<td class='description underscore'>[procedure, no result]</td>
+		<td class='description right underscore'>[procedure, no result]</td>
 	</tr>
 </table>
-<p></p>
+<p>&#160;</p>
 
 <table>
 	<tr>
 		<td colspan='2' class='name underscore'>PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS</td>
-		<td class='description underscore'>[procedure, no result]</td>
+		<td class='description right underscore'>[procedure, no result]</td>
 	</tr>
 </table>
-<p></p>
+<p>&#160;</p>
 
 <table>
 	<tr>
 		<td colspan='2' class='name underscore'>PUBLIC.SYSTEM_LOBS.CONVERT_BLOCK</td>
-		<td class='description underscore'>[procedure, no result]</td>
+		<td class='description right underscore'>[procedure, no result]</td>
 	</tr>
 </table>
-<p></p>
+<p>&#160;</p>
 
 <table>
 	<tr>
 		<td colspan='2' class='name underscore'>PUBLIC.SYSTEM_LOBS.CREATE_EMPTY_BLOCK</td>
-		<td class='description underscore'>[procedure, no result]</td>
+		<td class='description right underscore'>[procedure, no result]</td>
 	</tr>
 </table>
-<p></p>
+<p>&#160;</p>
 
 <table>
 	<tr>
 		<td colspan='2' class='name underscore'>PUBLIC.SYSTEM_LOBS.DELETE_BLOCKS</td>
-		<td class='description underscore'>[procedure, no result]</td>
+		<td class='description right underscore'>[procedure, no result]</td>
 	</tr>
 </table>
-<p></p>
+<p>&#160;</p>
 
 <table>
 	<tr>
 		<td colspan='2' class='name underscore'>PUBLIC.SYSTEM_LOBS.DELETE_LOB</td>
-		<td class='description underscore'>[procedure, no result]</td>
+		<td class='description right underscore'>[procedure, no result]</td>
 	</tr>
 </table>
-<p></p>
+<p>&#160;</p>
 
 <table>
 	<tr>
 		<td colspan='2' class='name underscore'>PUBLIC.SYSTEM_LOBS.DELETE_UNUSED</td>
-		<td class='description underscore'>[procedure, no result]</td>
+		<td class='description right underscore'>[procedure, no result]</td>
 	</tr>
 </table>
-<p></p>
+<p>&#160;</p>
 
 <table>
 	<tr>
 		<td colspan='2' class='name underscore'>PUBLIC.SYSTEM_LOBS.DIVIDE_BLOCK</td>
-		<td class='description underscore'>[procedure, no result]</td>
+		<td class='description right underscore'>[procedure, no result]</td>
 	</tr>
 </table>
-<p></p>
+<p>&#160;</p>
 
 </body>
 </html>

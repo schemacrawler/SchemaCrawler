@@ -34,6 +34,7 @@ import schemacrawler.tools.lint.LintedDatabase;
 import schemacrawler.tools.lint.SimpleLintCollector;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.BaseTabularFormatter;
+import schemacrawler.tools.text.utility.Alignment;
 import schemacrawler.tools.text.utility.TextFormattingHelper.DocumentHeaderType;
 import sf.util.Multimap;
 
@@ -42,8 +43,7 @@ final class LintTextFormatter
   implements LintFormatter
 {
 
-  LintTextFormatter(final LintOptions options,
-                    final OutputOptions outputOptions)
+  LintTextFormatter(final LintOptions options, final OutputOptions outputOptions)
     throws SchemaCrawlerException
   {
     super(options, false, outputOptions);
@@ -140,16 +140,14 @@ final class LintTextFormatter
         {
           if ((Boolean) lintValue)
           {
-            out.println(formattingHelper.createNameValueRow(lint.getMessage(),
-                                                            ""));
+            out.println(formattingHelper.createRow("", lint.getMessage(), ""));
           }
         }
         else
         {
-          out
-            .println(formattingHelper.createNameValueRow(lint.getMessage(),
-                                                         lint
-                                                           .getValueAsString()));
+          out.println(formattingHelper.createRow("",
+                                                 lint.getMessage(),
+                                                 lint.getValueAsString()));
         }
       }
     }
