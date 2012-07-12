@@ -190,7 +190,7 @@ final class DataTextFormatter
     //
     out.println(formattingHelper.createNameValueRow(title,
                                                     message,
-                                                    Alignment.right, 1));
+                                                    Alignment.right));
   }
 
   private void iterateRows(final DataResultSet dataRows)
