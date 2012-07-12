@@ -48,6 +48,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.analysis.associations.SimpleWeakAssociationsCollector;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.BaseTabularFormatter;
+import schemacrawler.tools.text.utility.Alignment;
 import schemacrawler.tools.text.utility.TextFormattingHelper.DocumentHeaderType;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
 import sf.util.Utility;
@@ -127,7 +128,6 @@ final class SchemaTextFormatter
   @Override
   public void handle(final Procedure procedure)
   {
-    final boolean underscore = isNotList;
     final String procedureTypeDetail = "procedure, " + procedure.getType();
     final String procedureName;
     if (options.isShowUnqualifiedNames())
@@ -138,12 +138,21 @@ final class SchemaTextFormatter
     {
       procedureName = procedure.getFullName();
     }
-    final String nameRow = formattingHelper
-      .createNameRow(procedureName, "[" + procedureTypeDetail + "]", underscore);
+    final String procedureType = "[" + procedureTypeDetail + "]";
+    final String nameRow;
 
     if (isNotList)
     {
       out.print(formattingHelper.createObjectStart(""));
+      nameRow = formattingHelper.createNameRow(procedureName,
+                                               procedureType,
+                                               true);
+    }
+    else
+    {
+      nameRow = formattingHelper.createNameValueRow(procedureName,
+                                                    procedureType,
+                                                    Alignment.right);
     }
 
     out.println(nameRow);
@@ -173,7 +182,6 @@ final class SchemaTextFormatter
   @Override
   public void handle(final Synonym synonym)
   {
-    final boolean underscore = isNotList;
     final String synonymName;
     if (options.isShowUnqualifiedNames())
     {
@@ -183,13 +191,19 @@ final class SchemaTextFormatter
     {
       synonymName = synonym.getFullName();
     }
-    final String nameRow = formattingHelper.createNameRow(synonymName,
-                                                          "[synonym]",
-                                                          underscore);
+    final String synonymType = "[synonym]";
+    final String nameRow;
 
     if (isNotList)
     {
       out.print(formattingHelper.createObjectStart(""));
+      nameRow = formattingHelper.createNameRow(synonymName, synonymType, true);
+    }
+    else
+    {
+      nameRow = formattingHelper.createNameValueRow(synonymName,
+                                                    synonymType,
+                                                    Alignment.right);
     }
 
     out.println(nameRow);
@@ -232,7 +246,6 @@ final class SchemaTextFormatter
   @Override
   public void handle(final Table table)
   {
-    final boolean underscore = isNotList;
     final String tableName;
     if (options.isShowUnqualifiedNames())
     {
@@ -242,14 +255,20 @@ final class SchemaTextFormatter
     {
       tableName = table.getFullName();
     }
-    final String nameRow = formattingHelper.createNameRow(tableName,
-                                                          "[" + table.getType()
-                                                              + "]",
-                                                          underscore);
+    final String tableType = "[" + table.getType() + "]";
+
+    final String nameRow;
 
     if (isNotList)
     {
       out.print(formattingHelper.createObjectStart(""));
+      nameRow = formattingHelper.createNameRow(tableName, tableType, true);
+    }
+    else
+    {
+      nameRow = formattingHelper.createNameValueRow(tableName,
+                                                    tableType,
+                                                    Alignment.right);
     }
 
     out.println(nameRow);
