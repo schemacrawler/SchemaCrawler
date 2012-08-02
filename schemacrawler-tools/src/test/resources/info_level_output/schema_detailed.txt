@@ -152,13 +152,13 @@ FK_PUBLICATION_JOIN                        [foreign key, with no action]
 FK_WRITER_JOIN                             [foreign key, with no action]
   PUBLIC.FOR_LINT.WRITERS.ID --> WRITERID                              
 
-SYS_IDX_PK_EXTRA_PK_10072                                 [unique index]
+SYS_IDX_PK_EXTRA_PK_10073                                 [unique index]
   ID                                ascending                   
 
-SYS_IDX_10075                                         [non-unique index]
+SYS_IDX_10076                                         [non-unique index]
   PUBLICATIONID                     ascending                   
 
-SYS_IDX_10073                                         [non-unique index]
+SYS_IDX_10074                                         [non-unique index]
   WRITERID                          ascending                   
 
 
@@ -190,10 +190,10 @@ FK_WRITERS_PUBLICATION                     [foreign key, with no action]
 FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
   PUBLIC.FOR_LINT.WRITERS.ID --> WRITERID                              
 
-SYS_IDX_PK_PUBLICATIONS_10064                             [unique index]
+SYS_IDX_PK_PUBLICATIONS_10065                             [unique index]
   ID                                ascending                   
 
-SYS_IDX_10065                                         [non-unique index]
+SYS_IDX_10066                                         [non-unique index]
   WRITERID                          ascending                   
 
 
@@ -230,10 +230,10 @@ FK_WRITER_JOIN                             [foreign key, with no action]
 FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
   ID --> PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID                              
 
-SYS_IDX_PK_WRITERS_10060                                  [unique index]
+SYS_IDX_PK_WRITERS_10061                                  [unique index]
   ID                                ascending                   
 
-SYS_IDX_10077                                         [non-unique index]
+SYS_IDX_10078                                         [non-unique index]
   PUBLICATION_ID                    ascending                   
 
 IDX_A1_WRITERS                                        [non-unique index]
@@ -270,7 +270,7 @@ FK_SALES_REGIONS                           [foreign key, with no action]
   POSTALCODE --> PUBLIC."PUBLISHER SALES".SALES.POSTALCODE                              
   COUNTRY --> PUBLIC."PUBLISHER SALES".SALES.COUNTRY                              
 
-SYS_IDX_PK_CUSTOMERS_10049                                [unique index]
+SYS_IDX_PK_CUSTOMERS_10050                                [unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
 
@@ -287,7 +287,7 @@ FK_SALES_REGIONS                           [foreign key, with no action]
   PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE --> POSTALCODE                              
   PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY --> COUNTRY                              
 
-SYS_IDX_10053                                         [non-unique index]
+SYS_IDX_10054                                         [non-unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
 
@@ -304,6 +304,15 @@ PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
 
                                                             [definition]
 CREATE PROCEDURE BOOKS.NEW_PUBLISHER(OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10043 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = 'New Publisher'
+
+
+PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
+------------------------------------------------------------------------
+  NEWPUBLISHER                      CHARACTER VARYING, in       
+  PUBLISHER                         CHARACTER VARYING, out      
+
+                                                            [definition]
+CREATE PROCEDURE BOOKS.NEW_PUBLISHER(IN NEWPUBLISHER VARCHAR(50),OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10044 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = NEWPUBLISHER
 
 
 PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS                   [procedure, no result]

@@ -4025,6 +4025,44 @@ hr {
 
 <table>
 	<tr>
+		<td colspan='2' class='name underscore'>PUBLIC.BOOKS.NEW_PUBLISHER</td>
+		<td class='description right underscore'>[procedure, no result]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>NEWPUBLISHER</td>
+		<td class='type'>CHARACTER VARYING, in</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>PUBLISHER</td>
+		<td class='type'>CHARACTER VARYING, out</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[definition]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>CREATE PROCEDURE BOOKS.NEW_PUBLISHER(IN NEWPUBLISHER VARCHAR(50),OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10044 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = NEWPUBLISHER</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[specific name]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>NEW_PUBLISHER_10044</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<table>
+	<tr>
 		<td colspan='2' class='name underscore'>PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS</td>
 		<td class='description right underscore'>[procedure, no result]</td>
 	</tr>

@@ -484,7 +484,7 @@
       "indices": [
         {
           "unique": true,
-          "name": "SYS_IDX_PK_EXTRA_PK_10072",
+          "name": "SYS_IDX_PK_EXTRA_PK_10073",
           "columns": {
             "sortSequence": "ascending",
             "name": "ID"
@@ -492,7 +492,7 @@
         },
         {
           "unique": false,
-          "name": "SYS_IDX_10075",
+          "name": "SYS_IDX_10076",
           "columns": {
             "sortSequence": "ascending",
             "name": "PUBLICATIONID"
@@ -500,7 +500,7 @@
         },
         {
           "unique": false,
-          "name": "SYS_IDX_10073",
+          "name": "SYS_IDX_10074",
           "columns": {
             "sortSequence": "ascending",
             "name": "WRITERID"
@@ -643,7 +643,7 @@
       "indices": [
         {
           "unique": true,
-          "name": "SYS_IDX_PK_PUBLICATIONS_10064",
+          "name": "SYS_IDX_PK_PUBLICATIONS_10065",
           "columns": {
             "sortSequence": "ascending",
             "name": "ID"
@@ -651,7 +651,7 @@
         },
         {
           "unique": false,
-          "name": "SYS_IDX_10065",
+          "name": "SYS_IDX_10066",
           "columns": {
             "sortSequence": "ascending",
             "name": "WRITERID"
@@ -867,7 +867,7 @@
       "indices": [
         {
           "unique": true,
-          "name": "SYS_IDX_PK_WRITERS_10060",
+          "name": "SYS_IDX_PK_WRITERS_10061",
           "columns": {
             "sortSequence": "ascending",
             "name": "ID"
@@ -875,7 +875,7 @@
         },
         {
           "unique": false,
-          "name": "SYS_IDX_10077",
+          "name": "SYS_IDX_10078",
           "columns": {
             "sortSequence": "ascending",
             "name": "PUBLICATION_ID"
@@ -1020,7 +1020,7 @@
       ],
       "indices": [{
         "unique": true,
-        "name": "SYS_IDX_PK_CUSTOMERS_10049",
+        "name": "SYS_IDX_PK_CUSTOMERS_10050",
         "columns": [
           {
             "sortSequence": "ascending",
@@ -1102,7 +1102,7 @@
       ],
       "indices": [{
         "unique": false,
-        "name": "SYS_IDX_10053",
+        "name": "SYS_IDX_10054",
         "columns": [
           {
             "sortSequence": "ascending",
@@ -1144,6 +1144,27 @@
         "type": "out",
         "databaseSpecificType": "CHARACTER VARYING"
       }],
+      "fullName": "PUBLIC.BOOKS.NEW_PUBLISHER",
+      "type": "procedure",
+      "returnType": "no result"
+    },
+    {
+      "definition": "CREATE PROCEDURE BOOKS.NEW_PUBLISHER(IN NEWPUBLISHER VARCHAR(50),OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10044 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = NEWPUBLISHER",
+      "name": "NEW_PUBLISHER",
+      "parameters": [
+        {
+          "dataType": "VARCHAR",
+          "width": "",
+          "type": "in",
+          "databaseSpecificType": "CHARACTER VARYING"
+        },
+        {
+          "dataType": "VARCHAR",
+          "width": "",
+          "type": "out",
+          "databaseSpecificType": "CHARACTER VARYING"
+        }
+      ],
       "fullName": "PUBLIC.BOOKS.NEW_PUBLISHER",
       "type": "procedure",
       "returnType": "no result"
