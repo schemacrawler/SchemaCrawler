@@ -5,7 +5,7 @@
       "weakAssociations": [],
       "foreignKeys": [{
         "updateRule": "no action",
-        "columnPairs": [{
+        "columnReferences": [{
           "pkColumn": "PUBLIC.BOOKS.AUTHORS.ID",
           "fkColumn": "PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID"
         }],
@@ -337,7 +337,7 @@
       "foreignKeys": [
         {
           "updateRule": "no action",
-          "columnPairs": [{
+          "columnReferences": [{
             "pkColumn": "PUBLIC.BOOKS.AUTHORS.ID",
             "fkColumn": "PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID"
           }],
@@ -346,7 +346,7 @@
         },
         {
           "updateRule": "no action",
-          "columnPairs": [{
+          "columnReferences": [{
             "pkColumn": "PUBLIC.BOOKS.BOOKS.ID",
             "fkColumn": "PUBLIC.BOOKS.BOOKAUTHORS.BOOKID"
           }],
@@ -498,7 +498,7 @@
       ],
       "foreignKeys": [{
         "updateRule": "no action",
-        "columnPairs": [{
+        "columnReferences": [{
           "pkColumn": "PUBLIC.BOOKS.BOOKS.ID",
           "fkColumn": "PUBLIC.BOOKS.BOOKAUTHORS.BOOKID"
         }],
@@ -833,7 +833,7 @@
       "foreignKeys": [
         {
           "updateRule": "no action",
-          "columnPairs": [{
+          "columnReferences": [{
             "pkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.ID",
             "fkColumn": "PUBLIC.FOR_LINT.EXTRA_PK.PUBLICATIONID"
           }],
@@ -842,7 +842,7 @@
         },
         {
           "updateRule": "no action",
-          "columnPairs": [{
+          "columnReferences": [{
             "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
             "fkColumn": "PUBLIC.FOR_LINT.EXTRA_PK.WRITERID"
           }],
@@ -1062,7 +1062,7 @@
       "foreignKeys": [
         {
           "updateRule": "no action",
-          "columnPairs": [{
+          "columnReferences": [{
             "pkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.ID",
             "fkColumn": "PUBLIC.FOR_LINT.EXTRA_PK.PUBLICATIONID"
           }],
@@ -1071,7 +1071,7 @@
         },
         {
           "updateRule": "no action",
-          "columnPairs": [{
+          "columnReferences": [{
             "pkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.ID",
             "fkColumn": "PUBLIC.FOR_LINT.WRITERS.PUBLICATION_ID"
           }],
@@ -1080,7 +1080,7 @@
         },
         {
           "updateRule": "no action",
-          "columnPairs": [{
+          "columnReferences": [{
             "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
             "fkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID"
           }],
@@ -1271,7 +1271,7 @@
       "foreignKeys": [
         {
           "updateRule": "no action",
-          "columnPairs": [{
+          "columnReferences": [{
             "pkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.ID",
             "fkColumn": "PUBLIC.FOR_LINT.WRITERS.PUBLICATION_ID"
           }],
@@ -1280,7 +1280,7 @@
         },
         {
           "updateRule": "no action",
-          "columnPairs": [{
+          "columnReferences": [{
             "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
             "fkColumn": "PUBLIC.FOR_LINT.EXTRA_PK.WRITERID"
           }],
@@ -1289,7 +1289,7 @@
         },
         {
           "updateRule": "no action",
-          "columnPairs": [{
+          "columnReferences": [{
             "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
             "fkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID"
           }],
@@ -1655,7 +1655,7 @@
       "weakAssociations": [],
       "foreignKeys": [{
         "updateRule": "no action",
-        "columnPairs": [
+        "columnReferences": [
           {
             "pkColumn": "PUBLIC.\"PUBLISHER SALES\".REGIONS.POSTALCODE",
             "fkColumn": "PUBLIC.\"PUBLISHER SALES\".SALES.POSTALCODE"
@@ -1819,7 +1819,7 @@
       }],
       "foreignKeys": [{
         "updateRule": "no action",
-        "columnPairs": [
+        "columnReferences": [
           {
             "pkColumn": "PUBLIC.\"PUBLISHER SALES\".REGIONS.POSTALCODE",
             "fkColumn": "PUBLIC.\"PUBLISHER SALES\".SALES.POSTALCODE"
@@ -3146,8 +3146,8 @@
         "description": "",
         "name": "default_schema",
         "choices": [
-          "true",
-          "false"
+          "false",
+          "true"
         ],
         "value": "false",
         "required": false
@@ -3156,8 +3156,8 @@
         "description": "",
         "name": "get_column_name",
         "choices": [
-          "true",
-          "false"
+          "false",
+          "true"
         ],
         "value": "true",
         "required": false
@@ -3166,8 +3166,8 @@
         "description": "",
         "name": "ifexists",
         "choices": [
-          "true",
-          "false"
+          "false",
+          "true"
         ],
         "value": "false",
         "required": false
@@ -3181,8 +3181,8 @@
         "description": "",
         "name": "shutdown",
         "choices": [
-          "true",
-          "false"
+          "false",
+          "true"
         ],
         "value": "false",
         "required": false
@@ -3198,7 +3198,7 @@
     "driverName": "HSQL Database Engine Driver",
     "url": "jdbc:hsqldb:mem:schemacrawler"
   },
-  "procedures": [
+  "routines": [
     {
       "definition": "CREATE PROCEDURE BOOKS.NEW_PUBLISHER(OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10043 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = 'New Publisher'",
       "name": "NEW_PUBLISHER",
@@ -3210,7 +3210,9 @@
         "databaseSpecificType": "CHARACTER VARYING"
       }],
       "fullName": "PUBLIC.BOOKS.NEW_PUBLISHER",
-      "type": "no result"
+      "type": "procedure",
+      "specificName": "NEW_PUBLISHER_10043",
+      "returnType": "no result"
     },
     {
       "definition": "CREATE PROCEDURE SYSTEM_LOBS.ALLOC_BLOCKS(IN B_COUNT INTEGER,IN B_OFFSET INTEGER,IN L_ID BIGINT) SPECIFIC ALLOC_BLOCKS_10022 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE LOB_ADDR INT DEFAULT NULL;DECLARE REMAINING_COUNT INT DEFAULT 0;DECLARE BL_ADDR INT DEFAULT NULL;DECLARE TEMP_COUNT INT DEFAULT 0;DECLARE BL_OFFSET INT DEFAULT 0;SET REMAINING_COUNT=B_COUNT;SET BL_OFFSET=B_OFFSET;MAIN_LOOP:LOOP SET BL_ADDR=(SELECT BLOCK_ADDR FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_COUNT=REMAINING_COUNT AND TX_ID=0 FETCH 1 ROW ONLY);IF BL_ADDR IS NOT NULL THEN CALL CONVERT_BLOCK(BL_ADDR,REMAINING_COUNT,BL_OFFSET,L_ID);IF LOB_ADDR IS NULL THEN SET LOB_ADDR=BL_ADDR;END IF;LEAVE MAIN_LOOP;END IF;SET(BL_ADDR,TEMP_COUNT)=(SELECT BLOCK_ADDR,BLOCK_COUNT FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_COUNT<REMAINING_COUNT AND TX_ID=0 FETCH 1 ROW ONLY);IF BL_ADDR IS NOT NULL THEN CALL CONVERT_BLOCK(BL_ADDR,TEMP_COUNT,BL_OFFSET,L_ID);IF LOB_ADDR IS NULL THEN SET LOB_ADDR=BL_ADDR;END IF;SET REMAINING_COUNT=REMAINING_COUNT-TEMP_COUNT;SET BL_OFFSET=BL_OFFSET+TEMP_COUNT;SET BL_ADDR=NULL;SET TEMP_COUNT=0;ELSE CALL CREATE_EMPTY_BLOCK(BL_ADDR,REMAINING_COUNT);CALL CONVERT_BLOCK(BL_ADDR,REMAINING_COUNT,BL_OFFSET,L_ID);IF LOB_ADDR IS NULL THEN SET LOB_ADDR=BL_ADDR;END IF;LEAVE MAIN_LOOP;END IF;END LOOP MAIN_LOOP;END",
@@ -3237,7 +3239,9 @@
         }
       ],
       "fullName": "PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS",
-      "type": "no result"
+      "type": "procedure",
+      "specificName": "ALLOC_BLOCKS_10022",
+      "returnType": "no result"
     },
     {
       "definition": "CREATE PROCEDURE SYSTEM_LOBS.CONVERT_BLOCK(IN B_ADDR INTEGER,IN B_COUNT INTEGER,IN B_OFFSET INTEGER,IN L_ID BIGINT) SPECIFIC CONVERT_BLOCK_10012 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DELETE FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_ADDR=B_ADDR;INSERT INTO SYSTEM_LOBS.LOBS VALUES(B_ADDR,B_COUNT,B_OFFSET,L_ID);END",
@@ -3270,7 +3274,9 @@
         }
       ],
       "fullName": "PUBLIC.SYSTEM_LOBS.CONVERT_BLOCK",
-      "type": "no result"
+      "type": "procedure",
+      "specificName": "CONVERT_BLOCK_10012",
+      "returnType": "no result"
     },
     {
       "definition": "CREATE PROCEDURE SYSTEM_LOBS.CREATE_EMPTY_BLOCK(INOUT B_ADDR INTEGER,IN B_COUNT INTEGER) SPECIFIC CREATE_EMPTY_BLOCK_10020 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE TEMP_COUNT INT DEFAULT NULL;DECLARE TEMP_ADDR INT DEFAULT NULL;SET(TEMP_ADDR,TEMP_COUNT)=(SELECT BLOCK_ADDR,BLOCK_COUNT FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_COUNT>B_COUNT AND TX_ID=0 FETCH 1 ROW ONLY);IF TEMP_ADDR IS NULL THEN SIGNAL SQLSTATE'45000';END IF;UPDATE SYSTEM_LOBS.BLOCKS SET BLOCK_COUNT=B_COUNT WHERE BLOCK_ADDR=TEMP_ADDR;INSERT INTO SYSTEM_LOBS.BLOCKS VALUES(TEMP_ADDR+B_COUNT,TEMP_COUNT-B_COUNT,0);SET B_ADDR=TEMP_ADDR;END",
@@ -3291,7 +3297,9 @@
         }
       ],
       "fullName": "PUBLIC.SYSTEM_LOBS.CREATE_EMPTY_BLOCK",
-      "type": "no result"
+      "type": "procedure",
+      "specificName": "CREATE_EMPTY_BLOCK_10020",
+      "returnType": "no result"
     },
     {
       "definition": "CREATE PROCEDURE SYSTEM_LOBS.DELETE_BLOCKS(IN L_ID BIGINT,IN B_OFFSET INTEGER,IN B_LIMIT INTEGER,IN TX_ID BIGINT) SPECIFIC DELETE_BLOCKS_10019 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC INSERT INTO SYSTEM_LOBS.BLOCKS(SELECT BLOCK_ADDR,BLOCK_COUNT,TX_ID FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID AND BLOCK_OFFSET>=B_OFFSET AND BLOCK_OFFSET<B_LIMIT);DELETE FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID AND BLOCK_OFFSET>=B_OFFSET AND BLOCK_OFFSET<B_LIMIT;END",
@@ -3324,7 +3332,9 @@
         }
       ],
       "fullName": "PUBLIC.SYSTEM_LOBS.DELETE_BLOCKS",
-      "type": "no result"
+      "type": "procedure",
+      "specificName": "DELETE_BLOCKS_10019",
+      "returnType": "no result"
     },
     {
       "definition": "CREATE PROCEDURE SYSTEM_LOBS.DELETE_LOB(IN L_ID BIGINT,IN TX_ID BIGINT) SPECIFIC DELETE_LOB_10013 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC INSERT INTO SYSTEM_LOBS.BLOCKS(SELECT BLOCK_ADDR,BLOCK_COUNT,TX_ID FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID);DELETE FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID;DELETE FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_ID=L_ID;END",
@@ -3345,7 +3355,9 @@
         }
       ],
       "fullName": "PUBLIC.SYSTEM_LOBS.DELETE_LOB",
-      "type": "no result"
+      "type": "procedure",
+      "specificName": "DELETE_LOB_10013",
+      "returnType": "no result"
     },
     {
       "definition": "CREATE PROCEDURE SYSTEM_LOBS.DELETE_UNUSED(IN L_IDS BIGINT ARRAY) SPECIFIC DELETE_UNUSED_10018 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE TABLE LIVE_IDS(TEMP_ID INT);DECLARE TABLE TEMP_IDS(TEMP_ID INT);DECLARE TEMP_COUNT INT DEFAULT 1;WHILE TEMP_COUNT<=CARDINALITY(L_IDS)DO INSERT INTO MODULE.LIVE_IDS VALUES L_IDS[TEMP_COUNT];SET TEMP_COUNT=TEMP_COUNT+1;END WHILE;SET TEMP_COUNT=0;REPEAT INSERT INTO MODULE.TEMP_IDS SELECT LOB_ID FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_USAGE_COUNT<1 AND LOB_ID NOT IN(SELECT TEMP_ID FROM MODULE.LIVE_IDS)LIMIT 1000;INSERT INTO SYSTEM_LOBS.BLOCKS(SELECT BLOCK_ADDR,BLOCK_COUNT,0 FROM SYSTEM_LOBS.LOBS WHERE LOB_ID IN(SELECT TEMP_ID FROM MODULE.TEMP_IDS));DELETE FROM SYSTEM_LOBS.LOBS WHERE LOB_ID IN(SELECT TEMP_ID FROM MODULE.TEMP_IDS);DELETE FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_ID IN(SELECT TEMP_ID FROM MODULE.TEMP_IDS);GET DIAGNOSTICS TEMP_COUNT=ROW_COUNT;DELETE FROM MODULE.TEMP_IDS;UNTIL TEMP_COUNT<1000 END REPEAT;END",
@@ -3358,7 +3370,9 @@
         "databaseSpecificType": "BIGINT ARRAY"
       }],
       "fullName": "PUBLIC.SYSTEM_LOBS.DELETE_UNUSED",
-      "type": "no result"
+      "type": "procedure",
+      "specificName": "DELETE_UNUSED_10018",
+      "returnType": "no result"
     },
     {
       "definition": "CREATE PROCEDURE SYSTEM_LOBS.DIVIDE_BLOCK(IN B_OFFSET INTEGER,IN L_ID BIGINT) SPECIFIC DIVIDE_BLOCK_10021 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE BL_ADDR INT DEFAULT NULL;DECLARE BL_COUNT INT DEFAULT NULL;DECLARE BL_OFFSET INT DEFAULT NULL;SET(BL_ADDR,BL_COUNT,BL_OFFSET)=(SELECT BLOCK_ADDR,BLOCK_COUNT,BLOCK_OFFSET FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID AND B_OFFSET>BLOCK_OFFSET AND B_OFFSET<BLOCK_OFFSET+BLOCK_COUNT);IF BL_ADDR IS NULL THEN SIGNAL SQLSTATE'45000';END IF;DELETE FROM SYSTEM_LOBS.LOBS WHERE BLOCK_ADDR=BL_ADDR;INSERT INTO SYSTEM_LOBS.LOBS VALUES(BL_ADDR,B_OFFSET-BL_OFFSET,BL_OFFSET,L_ID);INSERT INTO SYSTEM_LOBS.LOBS VALUES(BL_ADDR+B_OFFSET-BL_OFFSET,BL_OFFSET+BL_COUNT-B_OFFSET,B_OFFSET,L_ID);END",
@@ -3379,7 +3393,9 @@
         }
       ],
       "fullName": "PUBLIC.SYSTEM_LOBS.DIVIDE_BLOCK",
-      "type": "no result"
+      "type": "procedure",
+      "specificName": "DIVIDE_BLOCK_10021",
+      "returnType": "no result"
     }
   ]
 },

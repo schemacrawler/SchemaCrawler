@@ -20,6 +20,8 @@
 package schemacrawler.tools.linter;
 
 
+import java.util.Collection;
+
 import schemacrawler.schema.Index;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
@@ -46,8 +48,8 @@ public class LinterTableWithNoIndices
   {
     if (table != null && !(table instanceof View))
     {
-      final Index[] indices = table.getIndices();
-      if (table.getPrimaryKey() == null && indices.length == 0)
+      final Collection<Index> indices = table.getIndices();
+      if (table.getPrimaryKey() == null && indices.isEmpty())
       {
         addLint(table, getSummary(), true);
       }

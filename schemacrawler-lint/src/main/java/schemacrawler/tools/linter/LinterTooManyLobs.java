@@ -68,7 +68,7 @@ public class LinterTooManyLobs
     }
   }
 
-  private List<Column> findLobColumns(final Column[] columns)
+  private List<Column> findLobColumns(final List<Column> columns)
   {
     final List<Column> lobColumns = new ArrayList<Column>();
     for (final Column column: columns)

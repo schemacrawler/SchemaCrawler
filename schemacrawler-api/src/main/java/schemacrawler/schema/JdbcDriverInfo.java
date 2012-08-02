@@ -22,6 +22,7 @@ package schemacrawler.schema;
 
 
 import java.io.Serializable;
+import java.util.Collection;
 
 /**
  * JDBC driver information.
@@ -58,7 +59,7 @@ public interface JdbcDriverInfo
    * 
    * @return JDBC driver properties
    */
-  JdbcDriverProperty[] getDriverProperties();
+  Collection<JdbcDriverProperty> getDriverProperties();
 
   /**
    * Gets the JDBC driver version.

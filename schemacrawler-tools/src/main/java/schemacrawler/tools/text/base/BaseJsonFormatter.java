@@ -21,7 +21,7 @@
 package schemacrawler.tools.text.base;
 
 
-import java.util.Arrays;
+import java.util.Collection;
 import java.util.Map.Entry;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -115,7 +115,7 @@ public abstract class BaseJsonFormatter<O extends Options>
       jsonDbInfo.put("databaseProductVersion", dbInfo.getProductVersion());
       jsonDbInfo.put("databaseUserName", dbInfo.getUserName());
 
-      if (printVerboseDatabaseInfo && dbInfo.getProperties().length > 0)
+      if (printVerboseDatabaseInfo && dbInfo.getProperties().size() > 0)
       {
         final JSONArray jsonDbProperties = new JSONArray();
         jsonDbInfo.put("databaseProperties", jsonDbProperties);
@@ -159,9 +159,9 @@ public abstract class BaseJsonFormatter<O extends Options>
       jsonDriverInfo.put("isJDBCCompliant",
                          Boolean.toString(driverInfo.isJdbcCompliant()));
 
-      final JdbcDriverProperty[] jdbcDriverProperties = driverInfo
+      final Collection<JdbcDriverProperty> jdbcDriverProperties = driverInfo
         .getDriverProperties();
-      if (printVerboseDatabaseInfo && jdbcDriverProperties.length > 0)
+      if (printVerboseDatabaseInfo && jdbcDriverProperties.size() > 0)
       {
         final JSONArray jsonJdbcDriverProperties = new JSONArray();
         jsonDriverInfo.put("jdbcDriverProperties", jsonJdbcDriverProperties);
@@ -241,10 +241,10 @@ public abstract class BaseJsonFormatter<O extends Options>
 
     try
     {
-      final String[] choices = driverProperty.getChoices();
-      if (choices != null && choices.length > 0)
+      final Collection<String> choices = driverProperty.getChoices();
+      if (choices != null && choices.size() > 0)
       {
-        jsonDriverProperty.put("choices", Arrays.asList(choices));
+        jsonDriverProperty.put("choices", choices);
       }
       final String value = driverProperty.getValue();
 

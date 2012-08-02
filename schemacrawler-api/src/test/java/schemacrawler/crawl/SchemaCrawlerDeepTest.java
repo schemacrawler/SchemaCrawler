@@ -29,6 +29,7 @@ import org.junit.Test;
 
 import schemacrawler.schema.CheckConstraint;
 import schemacrawler.schema.Column;
+import schemacrawler.schema.Database;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.Privilege;
@@ -64,24 +65,28 @@ public class SchemaCrawlerDeepTest
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
 
+    final Database database = testDatabase.getDatabase(schemaCrawlerOptions);
+
     final Schema systemSchema = testDatabase.getSchema(schemaCrawlerOptions,
                                                        "PUBLIC.SYSTEM_LOBS");
     assertNotNull("Could not obtain schema", systemSchema);
-    assertTrue("Should not find any tables",
-               systemSchema.getTables().length == 0);
-    assertEquals("Could not find any procedures",
+    assertTrue("Should not find any tables", database.getTables(systemSchema)
+      .size() == 0);
+    assertEquals("Could not find any routines",
                  7,
-                 systemSchema.getProcedures().length);
+                 database.getRoutines(systemSchema).size());
 
     final Schema schema = testDatabase.getSchema(schemaCrawlerOptions,
                                                  "PUBLIC.BOOKS");
     assertNotNull("Could not obtain schema", schema);
-    assertEquals("Could not find any tables", 6, schema.getTables().length);
-    assertEquals("Wrong number of procedures", 1, schema.getProcedures().length);
+    assertEquals("Could not find any tables", 6, database.getTables(schema)
+      .size());
+    assertEquals("Wrong number of routines", 2, database.getRoutines(schema)
+      .size());
 
     // Try negative test
-    final Table table0 = schema.getTables()[0];
-    assertTrue("Could not find any columns", table0.getColumns().length > 0);
+    final Table table0 = (Table) database.getTables(schema).toArray()[0];
+    assertTrue("Could not find any columns", table0.getColumns().size() > 0);
 
     final MutableTable table1 = new MutableTable(table0.getSchema(),
                                                  "Test Table 1");

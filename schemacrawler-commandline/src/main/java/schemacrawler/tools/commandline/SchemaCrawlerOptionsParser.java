@@ -51,7 +51,7 @@ final class SchemaCrawlerOptionsParser
           new StringOption("tables", InclusionRule.ALL),
           new StringOption("excludecolumns", InclusionRule.NONE),
           new StringOption("synonyms", InclusionRule.ALL),
-          new StringOption("procedures", InclusionRule.ALL),
+          new StringOption("routines", InclusionRule.ALL),
           new StringOption("excludeinout", InclusionRule.NONE),
           new StringOption("grepcolumns", InclusionRule.NONE),
           new StringOption("grepinout", InclusionRule.NONE),
@@ -113,17 +113,17 @@ final class SchemaCrawlerOptionsParser
       options.setColumnInclusionRule(columnInclusionRule);
     }
 
-    if (hasOptionValue("procedures"))
+    if (hasOptionValue("routines"))
     {
-      final InclusionRule procedureInclusionRule = new InclusionRule(getStringValue("procedures"),
-                                                                     InclusionRule.NONE);
-      options.setProcedureInclusionRule(procedureInclusionRule);
+      final InclusionRule routineInclusionRule = new InclusionRule(getStringValue("routines"),
+                                                                   InclusionRule.NONE);
+      options.setRoutineInclusionRule(routineInclusionRule);
     }
     if (hasOptionValue("excludeinout"))
     {
-      final InclusionRule procedureColumnInclusionRule = new InclusionRule(InclusionRule.ALL,
-                                                                           getStringValue("excludeinout"));
-      options.setProcedureColumnInclusionRule(procedureColumnInclusionRule);
+      final InclusionRule routineColumnInclusionRule = new InclusionRule(InclusionRule.ALL,
+                                                                         getStringValue("excludeinout"));
+      options.setRoutineColumnInclusionRule(routineColumnInclusionRule);
     }
 
     if (hasOptionValue("synonyms"))
@@ -151,14 +151,13 @@ final class SchemaCrawlerOptionsParser
 
     if (hasOptionValue("grepinout"))
     {
-      final InclusionRule grepProcedureColumnInclusionRule = new InclusionRule(getStringValue("grepinout"),
-                                                                               InclusionRule.NONE);
-      options
-        .setGrepProcedureColumnInclusionRule(grepProcedureColumnInclusionRule);
+      final InclusionRule grepRoutineColumnInclusionRule = new InclusionRule(getStringValue("grepinout"),
+                                                                             InclusionRule.NONE);
+      options.setGrepRoutineColumnInclusionRule(grepRoutineColumnInclusionRule);
     }
     else
     {
-      options.setGrepProcedureColumnInclusionRule(null);
+      options.setGrepRoutineColumnInclusionRule(null);
     }
 
     if (hasOptionValue("grepdef"))
@@ -190,21 +189,6 @@ final class SchemaCrawlerOptionsParser
     else
     {
       options.setParentTableFilterDepth(0);
-    }
-
-    if (hasOptionValue("sorttables"))
-    {
-      options.setAlphabeticalSortForTables(getBooleanValue("sorttables"));
-    }
-    if (hasOptionValue("sortcolumns"))
-    {
-      options
-        .setAlphabeticalSortForTableColumns(getBooleanValue("sortcolumns"));
-    }
-    if (hasOptionValue("sortinout"))
-    {
-      options
-        .setAlphabeticalSortForProcedureColumns(getBooleanValue("sortinout"));
     }
 
     return options;

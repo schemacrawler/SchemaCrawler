@@ -21,6 +21,9 @@
 package schemacrawler.schema;
 
 
+import java.util.Collection;
+import java.util.List;
+
 /**
  * Represents a table in the database.
  * 
@@ -35,7 +38,7 @@ public interface Table
    * 
    * @return Check constraints for the table
    */
-  CheckConstraint[] getCheckConstraints();
+  Collection<CheckConstraint> getCheckConstraints();
 
   /**
    * Gets a column by name.
@@ -51,7 +54,7 @@ public interface Table
    * 
    * @return Columns of the table
    */
-  Column[] getColumns();
+  List<Column> getColumns();
 
   /**
    * Gets a comma-separated list of columns.
@@ -66,7 +69,7 @@ public interface Table
    * 
    * @return Exported foreign keys of the table.
    */
-  ForeignKey[] getExportedForeignKeys();
+  Collection<ForeignKey> getExportedForeignKeys();
 
   /**
    * Gets a foreign key by name.
@@ -83,7 +86,7 @@ public interface Table
    * 
    * @return Foreign keys of the table.
    */
-  ForeignKey[] getForeignKeys();
+  Collection<ForeignKey> getForeignKeys();
 
   /**
    * Gets the list of imported foreign keys. That is, only those that
@@ -91,7 +94,7 @@ public interface Table
    * 
    * @return Imported foreign keys of the table.
    */
-  ForeignKey[] getImportedForeignKeys();
+  Collection<ForeignKey> getImportedForeignKeys();
 
   /**
    * Gets an index by name.
@@ -107,7 +110,7 @@ public interface Table
    * 
    * @return Indices of the table.
    */
-  Index[] getIndices();
+  Collection<Index> getIndices();
 
   /**
    * Gets the primary key.
@@ -130,7 +133,7 @@ public interface Table
    * 
    * @return Privileges for the table.
    */
-  Privilege<Table>[] getPrivileges();
+  Collection<Privilege<Table>> getPrivileges();
 
   /**
    * Gets the tables related to this one, based on the specified
@@ -142,7 +145,7 @@ public interface Table
    *        Table relationship type
    * @return Related tables.
    */
-  Table[] getRelatedTables(final TableRelationshipType tableRelationshipType);
+  Collection<Table> getRelatedTables(final TableRelationshipType tableRelationshipType);
 
   /**
    * Gets a trigger by name.
@@ -158,7 +161,7 @@ public interface Table
    * 
    * @return Triggers for the table.
    */
-  Trigger[] getTriggers();
+  Collection<Trigger> getTriggers();
 
   /**
    * Gets the table type.

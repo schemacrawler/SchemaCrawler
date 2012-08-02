@@ -50,13 +50,6 @@ public final class SchemaCrawlerCommandLine
   private final OutputOptions outputOptions;
   private final ConnectionOptions connectionOptions;
 
-  public SchemaCrawlerCommandLine(final ConnectionOptions connectionOptions,
-                                  final String... args)
-    throws SchemaCrawlerException
-  {
-    this(null, connectionOptions, args);
-  }
-
   /**
    * Loads objects from command line options. Optionally loads the
    * config from the classpath.
@@ -72,6 +65,13 @@ public final class SchemaCrawlerCommandLine
     throws SchemaCrawlerException
   {
     this(config, null, args);
+  }
+
+  public SchemaCrawlerCommandLine(final ConnectionOptions connectionOptions,
+                                  final String... args)
+    throws SchemaCrawlerException
+  {
+    this(null, connectionOptions, args);
   }
 
   private SchemaCrawlerCommandLine(final Config providedConfig,
@@ -101,17 +101,24 @@ public final class SchemaCrawlerCommandLine
     final boolean isBundledWithDriver = providedConfig != null;
     if (isBundledWithDriver)
     {
-      this.config = providedConfig;
+      config = providedConfig;
     }
     else
     {
-      this.config = new Config();
+      config = new Config();
     }
     if (remainingArgs.length > 0)
     {
       final ConfigParser configParser = new ConfigParser();
       remainingArgs = configParser.parse(remainingArgs);
       config.putAll(configParser.getOptions());
+    }
+
+    if (remainingArgs.length > 0)
+    {
+      final AdditionalConfigParser additionalConfigParser = new AdditionalConfigParser();
+      remainingArgs = additionalConfigParser.parse(remainingArgs);
+      config.putAll(additionalConfigParser.getOptions());
     }
 
     if (connectionOptions != null)
@@ -129,15 +136,7 @@ public final class SchemaCrawlerCommandLine
     {
       final CommandLineConnectionOptionsParser commandLineConnectionOptionsParser = new CommandLineConnectionOptionsParser(config);
       remainingArgs = commandLineConnectionOptionsParser.parse(remainingArgs);
-      ConnectionOptions parsedConnectionOptions = commandLineConnectionOptionsParser
-        .getOptions();
-      if (parsedConnectionOptions == null)
-      {
-        final ConfigConnectionOptionsParser configConnectionOptionsParser = new ConfigConnectionOptionsParser(config);
-        remainingArgs = configConnectionOptionsParser.parse(remainingArgs);
-        parsedConnectionOptions = configConnectionOptionsParser.getOptions();
-      }
-      this.connectionOptions = parsedConnectionOptions;
+      this.connectionOptions = commandLineConnectionOptionsParser.getOptions();
     }
 
     final SchemaCrawlerOptionsParser schemaCrawlerOptionsParser = new SchemaCrawlerOptionsParser(config);

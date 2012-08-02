@@ -17,34 +17,50 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-
 package schemacrawler.schema;
 
 
-import java.io.Serializable;
+import java.util.List;
 
-/**
- * Represents a single column mapping from a primary key column to a
- * foreign key column.
- * 
- * @author Sualeh Fatehi
- */
-public interface ColumnMap
-  extends Serializable
+public interface Routine
+  extends DatabaseObject
 {
 
   /**
-   * Gets the foreign key column.
+   * Gets a column by name.
    * 
-   * @return Foreign key column
+   * @param name
+   *        Name
+   * @return Column of the routine
    */
-  Column getForeignKeyColumn();
+  RoutineColumn<? extends Routine> getColumn(String name);
 
   /**
-   * Gets the primary key column.
+   * Gets the list of columns in ordinal order.
    * 
-   * @return Primary key column
+   * @return Columns of the routine
    */
-  Column getPrimaryKeyColumn();
+  List<? extends RoutineColumn<? extends Routine>> getColumns();
+
+  /**
+   * Gets the routine type.
+   * 
+   * @return Routine type
+   */
+  RoutineType getType();
+
+  /**
+   * Gets the routine type.
+   * 
+   * @return Routine type
+   */
+  RoutineReturnType getReturnType();
+
+  /**
+   * The name which uniquely identifies this routine within its schema.
+   * 
+   * @return Specific name.
+   */
+  String getSpecificName();
 
 }

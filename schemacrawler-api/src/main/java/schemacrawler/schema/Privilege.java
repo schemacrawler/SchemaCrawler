@@ -22,6 +22,7 @@ package schemacrawler.schema;
 
 
 import java.io.Serializable;
+import java.util.Collection;
 
 /**
  * Represents a privilege of a table or column.
@@ -33,7 +34,7 @@ public interface Privilege<P extends DatabaseObject>
 {
 
   public interface Grant
-    extends Serializable
+    extends Serializable, Comparable<Grant>
   {
 
     /**
@@ -59,6 +60,6 @@ public interface Privilege<P extends DatabaseObject>
 
   }
 
-  Grant[] getGrants();
+  Collection<Grant> getGrants();
 
 }

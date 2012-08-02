@@ -157,8 +157,6 @@ public class LintExecutableTest
     final OutputOptions outputOptions = new OutputOptions(outputFormatValue,
                                                           testOutputFile);
 
-    executable.getSchemaCrawlerOptions()
-      .setAlphabeticalSortForTableColumns(true);
     executable.setOutputOptions(outputOptions);
     executable.execute(testDatabase.getConnection());
 

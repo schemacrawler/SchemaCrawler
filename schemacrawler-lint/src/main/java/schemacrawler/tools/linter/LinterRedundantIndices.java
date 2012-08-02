@@ -23,6 +23,7 @@ package schemacrawler.tools.linter;
 import static schemacrawler.tools.lint.LintUtility.columns;
 import static schemacrawler.tools.lint.LintUtility.listStartsWith;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -62,8 +63,8 @@ public class LinterRedundantIndices
   {
     if (table != null && !(table instanceof View))
     {
-      final Index[] indices = table.getIndices();
-      if (indices.length > 0)
+      final Collection<Index> indices = table.getIndices();
+      if (indices.size() > 0)
       {
         final Set<Index> redundantIndices = findRedundantIndices(indices);
         for (final Index index: redundantIndices)
@@ -74,10 +75,11 @@ public class LinterRedundantIndices
     }
   }
 
-  private Set<Index> findRedundantIndices(final Index[] indices)
+  private Set<Index> findRedundantIndices(final Collection<Index> indices)
   {
     final Set<Index> redundantIndices = new HashSet<Index>();
-    final Map<Index, List<String>> indexColumns = new HashMap<Index, List<String>>(indices.length);
+    final Map<Index, List<String>> indexColumns = new HashMap<Index, List<String>>(indices
+      .size());
     for (final Index index: indices)
     {
       indexColumns.put(index, columns(index));

@@ -34,6 +34,7 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
@@ -119,6 +120,11 @@ public class SchemaCrawlerXmlOutputTest
     final SchemaCrawlerOptions options = executable.getSchemaCrawlerOptions();
     options.setSchemaInfoLevel(SchemaInfoLevel.minimum());
 
+    Config additionalConfiguration = new Config();
+    additionalConfiguration.put("schemacrawler.format.sort_alphabetically.tables",
+                                Boolean.TRUE.toString());
+
+    executable.setAdditionalConfiguration(additionalConfiguration);
     executable.setOutputOptions(outputOptions);
     executable.execute(testDatabase.getConnection());
 

@@ -22,6 +22,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableType;
 
@@ -44,7 +45,7 @@ public class NamedObjectTest
     final MutableDatabase database = new MutableDatabase("DATABASE");
     for (final String schemaName: schemaNames)
     {
-      final MutableSchema schema = database.addSchema("CATALOG", schemaName);
+      final Schema schema = database.addSchema("CATALOG", schemaName);
       for (final String tableName: tableNames)
       {
         table = new MutableTable(schema, tableName);

@@ -35,6 +35,7 @@ import schemacrawler.schema.CheckOptionType;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ConditionTimingType;
 import schemacrawler.schema.EventManipulationType;
+import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 
@@ -195,106 +196,6 @@ final class TableExRetriever
       LOGGER.log(Level.WARNING,
                  "Could not retrieve additional table attributes",
                  e);
-    }
-    finally
-    {
-      if (results != null)
-      {
-        results.close();
-      }
-      statement.close();
-    }
-
-  }
-
-  /**
-   * Retrieves a trigger information from the database, in the
-   * INFORMATION_SCHEMA format.
-   * 
-   * @throws SQLException
-   *         On a SQL exception
-   */
-  void retrieveAdditionalTableInformation()
-    throws SQLException
-  {
-    final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
-      .getInformationSchemaViews();
-    if (!informationSchemaViews.hasTriggerSql())
-    {
-      LOGGER.log(Level.FINE,
-                 "Trigger definition SQL statement was not provided");
-      return;
-    }
-    final String triggerInformationSql = informationSchemaViews
-      .getTriggersSql();
-
-    final Connection connection = getDatabaseConnection();
-    final Statement statement = connection.createStatement();
-    MetadataResultSet results = null;
-    try
-    {
-      results = new MetadataResultSet(statement.executeQuery(triggerInformationSql));
-
-      while (results.next())
-      {
-        final String catalogName = quotedName(results
-          .getString("TRIGGER_CATALOG"));
-        final String schemaName = quotedName(results
-          .getString("TRIGGER_SCHEMA"));
-        final String triggerName = quotedName(results.getString("TRIGGER_NAME"));
-        LOGGER.log(Level.FINER, "Retrieving trigger: " + triggerName);
-
-        // "EVENT_OBJECT_CATALOG", "EVENT_OBJECT_SCHEMA"
-        final String tableName = results.getString("EVENT_OBJECT_TABLE");
-
-        final MutableTable table = lookupTable(catalogName,
-                                               schemaName,
-                                               tableName);
-        if (table == null)
-        {
-          LOGGER.log(Level.FINE, String.format("Cannot find table, %s.%s.%s",
-                                               catalogName,
-                                               schemaName,
-                                               tableName));
-          continue;
-        }
-
-        final EventManipulationType eventManipulationType = results
-          .getEnum("EVENT_MANIPULATION", EventManipulationType.unknown);
-        final int actionOrder = results.getInt("ACTION_ORDER", 0);
-        final String actionCondition = results.getString("ACTION_CONDITION");
-        final String actionStatement = results.getString("ACTION_STATEMENT");
-        final ActionOrientationType actionOrientation = results
-          .getEnum("ACTION_ORIENTATION", ActionOrientationType.unknown);
-        String conditionTimingString = results.getString("ACTION_TIMING");
-        if (conditionTimingString == null)
-        {
-          conditionTimingString = results.getString("CONDITION_TIMING");
-        }
-        final ConditionTimingType conditionTiming = ConditionTimingType
-          .valueOfFromValue(conditionTimingString);
-
-        MutableTrigger trigger = table.lookupTrigger(triggerName);
-        if (trigger == null)
-        {
-          trigger = new MutableTrigger(table, triggerName);
-        }
-        trigger.setEventManipulationType(eventManipulationType);
-        trigger.setActionOrder(actionOrder);
-        trigger.appendActionCondition(actionCondition);
-        trigger.appendActionStatement(actionStatement);
-        trigger.setActionOrientation(actionOrientation);
-        trigger.setConditionTiming(conditionTiming);
-
-        trigger.addAttributes(results.getAttributes());
-        // Add trigger to the table
-        table.addTrigger(trigger);
-
-      }
-    }
-    catch (final Exception e)
-    {
-      LOGGER.log(Level.WARNING, "Could not retrieve trigger information", e);
     }
     finally
     {

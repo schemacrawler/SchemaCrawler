@@ -21,9 +21,11 @@
 package schemacrawler.crawl;
 
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import schemacrawler.schema.DatabaseInfo;
@@ -70,11 +72,10 @@ final class MutableDatabaseInfo
    * {@inheritDoc}
    */
   @Override
-  public DatabaseProperty[] getProperties()
+  public Collection<DatabaseProperty> getProperties()
   {
-    final DatabaseProperty[] properties = databaseProperties
-      .toArray(new DatabaseProperty[databaseProperties.size()]);
-    Arrays.sort(properties);
+    final List<DatabaseProperty> properties = new ArrayList<DatabaseProperty>(databaseProperties);
+    Collections.sort(properties);
     return properties;
   }
 

@@ -25,7 +25,7 @@ import java.util.Collections;
 import java.util.List;
 
 import schemacrawler.schema.ForeignKey;
-import schemacrawler.schema.ForeignKeyColumnMap;
+import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexColumn;
 
@@ -55,10 +55,10 @@ public class LintUtility
     }
 
     final List<String> columnNames = new ArrayList<String>();
-    final ForeignKeyColumnMap[] columnPairs = foreignKey.getColumnPairs();
-    for (final ForeignKeyColumnMap columnPair: columnPairs)
+    for (final ForeignKeyColumnReference columnReference: foreignKey
+      .getColumnReferences())
     {
-      columnNames.add(columnPair.getForeignKeyColumn().getFullName());
+      columnNames.add(columnReference.getForeignKeyColumn().getFullName());
     }
     return columnNames;
   }

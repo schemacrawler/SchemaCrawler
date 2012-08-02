@@ -449,10 +449,10 @@ for (final Schema schema: database.getSchemas())
             schemacrawler.config.properties)
           </li>
           <li>
-            config-override
+            additional-config
             <br />
-            Path to the configuration override file (default value -
-            schemacrawler.config.override.properties)
+            Path to the additional configuration file (default value -
+            schemacrawler.additional.config.properties)
           </li>
           <li>
             schemacrawler-classpath

@@ -33,10 +33,7 @@ class ExecutableCommandProvider
   @Override
   public String getHelpResource()
   {
-    final String helpResource = "/help/"
-                                + executableClassName
-                                  .substring(executableClassName
-                                    .lastIndexOf('.') + 1) + ".txt";
+    final String helpResource = "/help/DefaultExecutable.txt";
     return helpResource;
   }
 

@@ -21,17 +21,21 @@
 package schemacrawler.tools.text.schema;
 
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 
 import schemacrawler.schema.ActionOrientationType;
 import schemacrawler.schema.CheckConstraint;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
-import schemacrawler.schema.ColumnMap;
+import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.ConditionTimingType;
 import schemacrawler.schema.EventManipulationType;
 import schemacrawler.schema.ForeignKey;
-import schemacrawler.schema.ForeignKeyColumnMap;
+import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.ForeignKeyUpdateRule;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexColumn;
@@ -39,7 +43,8 @@ import schemacrawler.schema.IndexType;
 import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Privilege.Grant;
 import schemacrawler.schema.Procedure;
-import schemacrawler.schema.ProcedureColumn;
+import schemacrawler.schema.Routine;
+import schemacrawler.schema.RoutineColumn;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.Trigger;
@@ -51,6 +56,7 @@ import schemacrawler.tools.text.base.BaseTabularFormatter;
 import schemacrawler.tools.text.utility.Alignment;
 import schemacrawler.tools.text.utility.TextFormattingHelper.DocumentHeaderType;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
+import schemacrawler.utility.NamedObjectSort;
 import sf.util.Utility;
 
 /**
@@ -121,42 +127,47 @@ final class SchemaTextFormatter
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handle(schemacrawler.schema.Procedure)
+   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handle(Routine)
    */
   @Override
-  public void handle(final Procedure procedure)
+  public void handle(final Routine routine)
   {
-    final String procedureTypeDetail = "procedure, " + procedure.getType();
-    final String procedureName;
+    final String routineTypeDetail = String.format("%s, %s",
+                                                   routine.getType(),
+                                                   routine.getReturnType());
+    final String routineName;
     if (options.isShowUnqualifiedNames())
     {
-      procedureName = procedure.getName();
+      routineName = routine.getName();
     }
     else
     {
-      procedureName = procedure.getFullName();
+      routineName = routine.getFullName();
     }
-    final String procedureType = "[" + procedureTypeDetail + "]";
+    final String routineType = "[" + routineTypeDetail + "]";
 
     if (isList)
     {
-      out.println(formattingHelper.createNameValueRow(procedureName,
-                                                      procedureType,
+      out.println(formattingHelper.createNameValueRow(routineName,
+                                                      routineType,
                                                       Alignment.right));
     }
     else
     {
       out.print(formattingHelper.createObjectStart(""));
-      out.println(formattingHelper.createNameRow(procedureName,
-                                                 procedureType,
-                                                 true));
+      out.println(formattingHelper
+        .createNameRow(routineName, routineType, true));
 
-      printProcedureColumns(procedure.getColumns());
-      printDefinition("definition", "", procedure.getDefinition());
+      printRoutineColumns(routine.getColumns());
+      if (routine instanceof Procedure)
+      {
+        printDefinition("definition", "", ((Procedure) routine).getDefinition());
+      }
 
       if (isVerbose)
       {
-        printDefinition("remarks", "", procedure.getRemarks());
+        printDefinition("specific name", "", routine.getSpecificName());
+        printDefinition("remarks", "", routine.getRemarks());
       }
 
       out.println(formattingHelper.createObjectEnd());
@@ -255,7 +266,7 @@ final class SchemaTextFormatter
       out.print(formattingHelper.createObjectStart(""));
       out.println(formattingHelper.createNameRow(tableName, tableType, true));
 
-      final Column[] columns = table.getColumns();
+      final List<Column> columns = table.getColumns();
       printTableColumns(columns);
 
       printPrimaryKey(table.getPrimaryKey());
@@ -343,10 +354,10 @@ final class SchemaTextFormatter
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handleProceduresEnd()
+   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handleRoutinesEnd()
    */
   @Override
-  public void handleProceduresEnd()
+  public void handleRoutinesEnd()
     throws SchemaCrawlerException
   {
     if (isList)
@@ -358,14 +369,14 @@ final class SchemaTextFormatter
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handleProceduresStart()
+   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handleRoutinesStart()
    */
   @Override
-  public void handleProceduresStart()
+  public void handleRoutinesStart()
     throws SchemaCrawlerException
   {
     out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
-                                              "Procedures"));
+                                              "Routines"));
 
     if (isList)
     {
@@ -439,7 +450,7 @@ final class SchemaTextFormatter
     }
   }
 
-  private void printCheckConstraints(final CheckConstraint[] constraints)
+  private void printCheckConstraints(final Collection<CheckConstraint> constraints)
   {
     for (final CheckConstraint constraint: constraints)
     {
@@ -495,17 +506,17 @@ final class SchemaTextFormatter
       .getSearchable().toString()));
   }
 
-  private void printColumnPairs(final String tableName,
-                                final ColumnMap... columnPairs)
+  private void printColumnReferences(final String tableName,
+                                     final ColumnReference... columnReferences)
   {
-    for (final ColumnMap columnPair: columnPairs)
+    for (final ColumnReference columnReference: columnReferences)
     {
       final Column pkColumn;
       final Column fkColumn;
       final String pkColumnName;
       final String fkColumnName;
-      pkColumn = columnPair.getPrimaryKeyColumn();
-      fkColumn = columnPair.getForeignKeyColumn();
+      pkColumn = columnReference.getPrimaryKeyColumn();
+      fkColumn = columnReference.getForeignKeyColumn();
       if (pkColumn.getParent().getName().equals(tableName))
       {
         pkColumnName = pkColumn.getName();
@@ -531,10 +542,10 @@ final class SchemaTextFormatter
         fkColumnName = fkColumn.getFullName();
       }
       String keySequenceString = "";
-      if (columnPair instanceof ForeignKeyColumnMap
+      if (columnReference instanceof ForeignKeyColumnReference
           && options.isShowOrdinalNumbers())
       {
-        final int keySequence = ((ForeignKeyColumnMap) columnPair)
+        final int keySequence = ((ForeignKeyColumnReference) columnReference)
           .getKeySequence();
         keySequenceString = String.format("%2d", keySequence);
       }
@@ -571,8 +582,12 @@ final class SchemaTextFormatter
   }
 
   private void printForeignKeys(final String tableName,
-                                final ForeignKey[] foreignKeys)
+                                final Collection<ForeignKey> foreignKeysCollection)
   {
+    final List<ForeignKey> foreignKeys = new ArrayList<ForeignKey>(foreignKeysCollection);
+    Collections.sort(foreignKeys, NamedObjectSort.getNamedObjectSort(options
+      .isAlphabeticalSortForForeignKeys()));
+
     for (final ForeignKey foreignKey: foreignKeys)
     {
       if (foreignKey != null)
@@ -613,14 +628,18 @@ final class SchemaTextFormatter
         }
         final String fkDetails = "[foreign key" + ruleString + "]";
         out.println(formattingHelper.createNameRow(fkName, fkDetails, false));
-        final ForeignKeyColumnMap[] columnPairs = foreignKey.getColumnPairs();
-        printColumnPairs(tableName, columnPairs);
+        printColumnReferences(tableName, foreignKey.getColumnReferences()
+          .toArray(new ColumnReference[0]));
       }
     }
   }
 
-  private void printIndices(final Index[] indices)
+  private void printIndices(final Collection<Index> indicesCollection)
   {
+    final List<Index> indices = new ArrayList<Index>(indicesCollection);
+    Collections.sort(indices, NamedObjectSort.getNamedObjectSort(options
+      .isAlphabeticalSortForIndexes()));
+
     for (final Index index: indices)
     {
       if (index != null)
@@ -670,10 +689,10 @@ final class SchemaTextFormatter
     }
   }
 
-  private void printPrivileges(final Privilege<?>[] privileges)
+  private void printPrivileges(final Collection<Privilege<Table>> privileges)
   {
 
-    for (final Privilege<?> privilege: privileges)
+    for (final Privilege<Table> privilege: privileges)
     {
       if (privilege != null)
       {
@@ -693,9 +712,12 @@ final class SchemaTextFormatter
     }
   }
 
-  private void printProcedureColumns(final ProcedureColumn[] columns)
+  private void printRoutineColumns(final List<? extends RoutineColumn<?>> columns)
   {
-    for (final ProcedureColumn column: columns)
+    Collections.sort(columns, NamedObjectSort.getNamedObjectSort(options
+      .isAlphabeticalSortForRoutineColumns()));
+
+    for (final RoutineColumn<?> column: columns)
     {
       final String columnTypeName;
       if (options.isShowStandardColumnTypeNames())
@@ -708,10 +730,9 @@ final class SchemaTextFormatter
       }
       final StringBuilder columnType = new StringBuilder();
       columnType.append(columnTypeName).append(column.getWidth());
-      if (column.getProcedureColumnType() != null)
+      if (column.getColumnType() != null)
       {
-        columnType.append(", ").append(column.getProcedureColumnType()
-          .toString());
+        columnType.append(", ").append(column.getColumnType().toString());
       }
 
       String ordinalNumberString = "";
@@ -725,8 +746,11 @@ final class SchemaTextFormatter
     }
   }
 
-  private void printTableColumns(final Column[] columns)
+  private void printTableColumns(final List<? extends Column> columns)
   {
+    Collections.sort(columns, NamedObjectSort.getNamedObjectSort(options
+      .isAlphabeticalSortForTableColumns()));
+
     for (final Column column: columns)
     {
       final String columnName = column.getName();
@@ -759,7 +783,7 @@ final class SchemaTextFormatter
     }
   }
 
-  private void printTriggers(final Trigger[] triggers)
+  private void printTriggers(final Collection<Trigger> triggers)
   {
     for (final Trigger trigger: triggers)
     {
@@ -809,15 +833,15 @@ final class SchemaTextFormatter
   private void printWeakAssociations(final Table table)
   {
     final String tableName = table.getName();
-    final ColumnMap[] weakAssociations = SimpleWeakAssociationsCollector
+    final List<ColumnReference> weakAssociations = SimpleWeakAssociationsCollector
       .getWeakAssociations(table);
-    for (final ColumnMap weakAssociation: weakAssociations)
+    for (final ColumnReference weakAssociation: weakAssociations)
     {
       out.println(formattingHelper.createEmptyRow());
       out.println(formattingHelper.createNameRow("",
                                                  "[weak association]",
                                                  false));
-      printColumnPairs(tableName, weakAssociation);
+      printColumnReferences(tableName, weakAssociation);
     }
   }
 

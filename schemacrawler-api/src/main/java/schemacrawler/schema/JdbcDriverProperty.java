@@ -21,13 +21,15 @@
 package schemacrawler.schema;
 
 
+import java.util.Collection;
+
 /**
  * Represents a JDBC driver property, and it's value.
  * 
  * @author sfatehi
  */
 public interface JdbcDriverProperty
-  extends Property, Comparable<JdbcDriverProperty>
+  extends Property
 {
 
   /**
@@ -37,7 +39,7 @@ public interface JdbcDriverProperty
    * 
    * @return Available choices for the value of a property
    */
-  String[] getChoices();
+  Collection<String> getChoices();
 
   /**
    * Gets the the current value of the property, based on a combination

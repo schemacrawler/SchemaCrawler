@@ -21,13 +21,15 @@
 package schemacrawler.schema;
 
 
+import java.util.List;
+
 /**
  * Represents a database procedure.
  * 
  * @author Sualeh Fatehi
  */
 public interface Procedure
-  extends DatabaseObject
+  extends Routine
 {
 
   /**
@@ -37,6 +39,7 @@ public interface Procedure
    *        Name
    * @return Column of the procedure
    */
+  @Override
   ProcedureColumn getColumn(String name);
 
   /**
@@ -44,7 +47,8 @@ public interface Procedure
    * 
    * @return Columns of the procedure
    */
-  ProcedureColumn[] getColumns();
+  @Override
+  List<ProcedureColumn> getColumns();
 
   /**
    * Gets the definition.
@@ -65,6 +69,7 @@ public interface Procedure
    * 
    * @return Procedure type
    */
-  ProcedureType getType();
+  @Override
+  ProcedureReturnType getReturnType();
 
 }

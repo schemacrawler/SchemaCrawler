@@ -21,12 +21,15 @@
 package schemacrawler.crawl;
 
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Table;
 
 /**
- * Represents a column in a database table or procedure. Created from
+ * Represents a column in a database table or routine. Created from
  * metadata returned by a JDBC call.
  * 
  * @author Sualeh Fatehi
@@ -77,9 +80,9 @@ class MutableColumn
    * @see Column#getPrivileges()
    */
   @Override
-  public Privilege<Column>[] getPrivileges()
+  public Collection<Privilege<Column>> getPrivileges()
   {
-    return privileges.values().toArray(new Privilege[privileges.size()]);
+    return new ArrayList<Privilege<Column>>(privileges.values());
   }
 
   /**

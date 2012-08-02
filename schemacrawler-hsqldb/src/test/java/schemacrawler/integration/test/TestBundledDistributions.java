@@ -7,7 +7,9 @@ import static org.junit.Assert.fail;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.util.List;
+import java.util.Properties;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -45,6 +47,17 @@ public class TestBundledDistributions
   public void testHsqldbMain()
     throws Exception
   {
+
+    final File testConfigFile = File.createTempFile("schemacrawler.test.",
+                                                    ".properties");
+    final FileWriter writer = new FileWriter(testConfigFile);
+    final Properties properties = new Properties();
+    properties
+      .setProperty("hsqldb.tables",
+                   "SELECT TABLE_CAT, TABLE_SCHEM, TABLE_NAME, TABLE_TYPE, REMARKS FROM INFORMATION_SCHEMA.SYSTEM_TABLES");
+    properties.store(writer, "testHsqldbMain");
+    writer.close();
+
     final OutputFormat outputFormat = OutputFormat.text;
     final String referenceFile = "hsqldb.main" + "." + outputFormat.name();
     final File testOutputFile = File.createTempFile("schemacrawler."
@@ -56,17 +69,24 @@ public class TestBundledDistributions
         "-database=schemacrawler",
         "-user=sa",
         "-password=",
-        "-command=details,dump,count",
+        "-g",
+        testConfigFile.getAbsolutePath(),
+        "-command=details,dump,count,hsqldb.tables",
         "-infolevel=standard",
         "-outputfile=" + testOutputFile
     });
 
     final List<String> failures = compareOutput(referenceFile,
-                                                           testOutputFile,
-                                                           outputFormat.name());
+                                                testOutputFile,
+                                                outputFormat.name());
     if (failures.size() > 0)
     {
       fail(failures.toString());
+    }
+    else
+    {
+      testConfigFile.delete();
+      testOutputFile.delete();
     }
 
   }
@@ -82,15 +102,15 @@ public class TestBundledDistributions
       .getConnection(), schemaCrawlerOptions);
     assertNotNull(database);
 
-    assertEquals(6, database.getSchemas().length);
+    assertEquals(6, database.getSchemas().size());
     final Schema schema = database.getSchema("PUBLIC.BOOKS");
     assertNotNull(schema);
 
-    assertEquals(6, schema.getTables().length);
-    final Table table = schema.getTable("AUTHORS");
+    assertEquals(6, database.getTables(schema).size());
+    final Table table = database.getTable(schema, "AUTHORS");
     assertNotNull(table);
 
-    assertEquals(1, table.getTriggers().length);
+    assertEquals(1, table.getTriggers().size());
     assertNotNull(table.getTrigger("TRG_AUTHORS"));
 
   }

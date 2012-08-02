@@ -22,7 +22,8 @@ package schemacrawler.crawl;
 
 
 import schemacrawler.schema.Column;
-import schemacrawler.schema.ForeignKeyColumnMap;
+import schemacrawler.schema.ColumnReference;
+import schemacrawler.schema.ForeignKeyColumnReference;
 
 /**
  * Represents a single column mapping from a primary key column to a
@@ -30,8 +31,8 @@ import schemacrawler.schema.ForeignKeyColumnMap;
  * 
  * @author Sualeh Fatehi
  */
-final class MutableForeignKeyColumnMap
-  implements ForeignKeyColumnMap
+final class MutableForeignKeyColumnReference
+  implements ForeignKeyColumnReference
 {
 
   private static final long serialVersionUID = 3689073962672273464L;
@@ -44,12 +45,18 @@ final class MutableForeignKeyColumnMap
    * {@inheritDoc}
    */
   @Override
-  public int compareTo(final ForeignKeyColumnMap other)
+  public int compareTo(final ColumnReference other1)
   {
-    if (other == null)
+    if (other1 == null)
     {
       return -1;
     }
+    if (!(other1 instanceof ForeignKeyColumnReference))
+    {
+      return -1;
+    }
+
+    final ForeignKeyColumnReference other = (ForeignKeyColumnReference) other1;
 
     int comparison = 0;
 
@@ -76,7 +83,7 @@ final class MutableForeignKeyColumnMap
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schema.ForeignKeyColumnMap#getForeignKeyColumn()
+   * @see schemacrawler.schema.ForeignKeyColumnReference#getForeignKeyColumn()
    */
   @Override
   public Column getForeignKeyColumn()
@@ -87,7 +94,7 @@ final class MutableForeignKeyColumnMap
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schema.ForeignKeyColumnMap#getKeySequence()
+   * @see schemacrawler.schema.ForeignKeyColumnReference#getKeySequence()
    */
   @Override
   public int getKeySequence()
@@ -98,7 +105,7 @@ final class MutableForeignKeyColumnMap
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schema.ForeignKeyColumnMap#getPrimaryKeyColumn()
+   * @see schemacrawler.schema.ForeignKeyColumnReference#getPrimaryKeyColumn()
    */
   @Override
   public Column getPrimaryKeyColumn()

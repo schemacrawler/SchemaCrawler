@@ -38,6 +38,7 @@ public class ApplicationOptions
 
   private Level applicationLogLevel;
   private boolean showHelp;
+  private boolean showVersionOnly;
 
   /**
    * Sets the application-wide log level.
@@ -80,6 +81,11 @@ public class ApplicationOptions
     return showHelp;
   }
 
+  public boolean isShowVersionOnly()
+  {
+    return showVersionOnly;
+  }
+
   public void setApplicationLogLevel(final Level applicationLogLevel)
   {
     this.applicationLogLevel = applicationLogLevel;
@@ -88,6 +94,11 @@ public class ApplicationOptions
   public void setShowHelp(final boolean showHelp)
   {
     this.showHelp = showHelp;
+  }
+
+  public void setShowVersionOnly(final boolean showVersionOnly)
+  {
+    this.showVersionOnly = showVersionOnly;
   }
 
 }

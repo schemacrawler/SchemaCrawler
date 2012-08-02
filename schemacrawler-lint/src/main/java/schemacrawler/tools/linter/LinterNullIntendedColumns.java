@@ -60,7 +60,7 @@ public class LinterNullIntendedColumns
     }
   }
 
-  private List<Column> findNullDefaultValueMayBeIntendedColumns(final Column[] columns)
+  private List<Column> findNullDefaultValueMayBeIntendedColumns(final List<Column> columns)
   {
     final List<Column> nullDefaultValueMayBeIntendedColumns = new ArrayList<Column>();
     for (final Column column: columns)

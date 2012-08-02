@@ -41,7 +41,7 @@ final class OutputOptionsParser
   OutputOptionsParser()
   {
     super(new StringOption("outputformat", OutputFormat.text.toString()),
-          new StringOption("outputfile", ""),
+          new StringOption('o', "outputfile", ""),
           new BooleanOption("noinfo"));
   }
 

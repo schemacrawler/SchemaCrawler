@@ -21,8 +21,10 @@
 package schemacrawler.schema;
 
 
+import java.util.Collection;
+
 /**
- * Represents a column in a database table or procedure.
+ * Represents a column in a database table or routine.
  * 
  * @author Sualeh Fatehi
  */
@@ -51,7 +53,7 @@ public interface Column
    * 
    * @return Privileges for the table
    */
-  Privilege<Column>[] getPrivileges();
+  Collection<Privilege<Column>> getPrivileges();
 
   /**
    * Referenced column if this column is part of a foreign key, null

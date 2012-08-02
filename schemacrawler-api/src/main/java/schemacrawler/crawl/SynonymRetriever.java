@@ -28,6 +28,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schema.DatabaseObject;
+import schemacrawler.schema.Schema;
+import schemacrawler.schema.SchemaReference;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import sf.util.Utility;
@@ -42,11 +44,11 @@ final class SynonymRetriever
   extends AbstractRetriever
 {
 
-  private static final Logger LOGGER = Logger
-    .getLogger(SynonymRetriever.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(SynonymRetriever.class
+    .getName());
 
   SynonymRetriever(final RetrieverConnection retrieverConnection,
-                     final MutableDatabase database)
+                   final MutableDatabase database)
     throws SQLException
   {
     super(retrieverConnection, database);
@@ -119,34 +121,27 @@ final class SynonymRetriever
           continue;
         }
 
-        final MutableSchema schema = lookupSchema(catalogName, schemaName);
-        if (schema == null)
-        {
-          LOGGER.log(Level.FINE, String.format("Cannot find schema, %s.%s",
-                                               catalogName,
-                                               schemaName));
-          continue;
-        }
-
+        final Schema schema = new SchemaReference(catalogName, schemaName);
         final MutableTable referencedTable = lookupTable(referencedObjectCatalogName,
                                                          referencedObjectSchemaName,
                                                          referencedObjectName);
-        final MutableProcedure referencedProcedure = lookupProcedure(referencedObjectCatalogName,
-                                                                     referencedObjectSchemaName,
-                                                                     referencedObjectName);
+        final MutableRoutine referencedRoutine = lookupRoutine(referencedObjectCatalogName,
+                                                               referencedObjectSchemaName,
+                                                               referencedObjectName,
+                                                               referencedObjectName);
         final DatabaseObject referencedObject;
         if (referencedTable != null)
         {
           referencedObject = referencedTable;
         }
-        else if (referencedProcedure != null)
+        else if (referencedRoutine != null)
         {
-          referencedObject = referencedProcedure;
+          referencedObject = referencedRoutine;
         }
         else
         {
-          referencedObject = new AbstractDatabaseObject(new MutableSchema(new SchemaReference(referencedObjectCatalogName,
-                                                                                              referencedObjectSchemaName)),
+          referencedObject = new AbstractDatabaseObject(new SchemaReference(referencedObjectCatalogName,
+                                                                            referencedObjectSchemaName),
             referencedObjectName)
           {
 
@@ -159,7 +154,7 @@ final class SynonymRetriever
 
         if (synonymInclusionRule.include(synonym.getFullName()))
         {
-          schema.addSynonym(synonym);
+          database.addSynonym(synonym);
         }
 
       }

@@ -21,7 +21,7 @@ package schemacrawler.schema;
 
 
 public interface DatabaseProperty
-  extends Property, Comparable<DatabaseProperty>
+  extends Property
 {
 
 }

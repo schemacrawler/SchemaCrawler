@@ -8,9 +8,9 @@
       description="Path to the configuration file"
       default="schemacrawler.config.properties"/>
     <attribute
-      name="config-override"
-      description="Path to the configuration override file"
-      default="schemacrawler.config.override.properties"/>
+      name="additional-config"
+      description="Path to the additional configuration file"
+      default="schemacrawler.additional.config.properties"/>
 
     <attribute
       name="schemacrawler-classpath"
@@ -121,7 +121,7 @@
           <path refid="@{schemacrawler-classpath}"/>
         </classpath>
         <arg value="-g=@{config}"/>
-        <arg value="-p=@{config-override}"/>
+        <arg value="-p=@{additional-config}"/>
         <arg value="-c=@{datasource}"/>
         <arg value="-driver=@{driver}"/>
         <arg value="-url=@{url}"/>

@@ -27,21 +27,15 @@ package schemacrawler.schema;
  * @author Sualeh Fatehi
  */
 public interface ProcedureColumn
-  extends BaseColumn<Procedure>
+  extends RoutineColumn<Procedure>
 {
-
-  /**
-   * Gets the number of decimal digits precision for the column.
-   * 
-   * @return The number of decimal digits precision for the column.
-   */
-  int getPrecision();
 
   /**
    * Gets the procedure type.
    * 
    * @return Procedure type.
    */
-  ProcedureColumnType getProcedureColumnType();
+  @Override
+  ProcedureColumnType getColumnType();
 
 }

@@ -1,6 +1,8 @@
 package schemacrawler.crawl;
 
 
+import java.util.Collection;
+
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Index;
@@ -127,7 +129,7 @@ final class MutableIndexColumn
    * @see schemacrawler.schema.Column#getPrivileges()
    */
   @Override
-  public Privilege<Column>[] getPrivileges()
+  public Collection<Privilege<Column>> getPrivileges()
   {
     return column.getPrivileges();
   }

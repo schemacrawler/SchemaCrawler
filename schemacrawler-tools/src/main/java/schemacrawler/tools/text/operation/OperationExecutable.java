@@ -22,6 +22,7 @@ package schemacrawler.tools.text.operation;
 
 
 import java.sql.Connection;
+import java.util.Collection;
 
 import schemacrawler.schema.Database;
 import schemacrawler.schema.Schema;
@@ -77,7 +78,7 @@ public final class OperationExecutable
 
     for (final Schema schema: database.getSchemas())
     {
-      final Table[] tables = schema.getTables();
+      final Collection<Table> tables = database.getTables(schema);
       for (final Table table: tables)
       {
         handler.handle(table);

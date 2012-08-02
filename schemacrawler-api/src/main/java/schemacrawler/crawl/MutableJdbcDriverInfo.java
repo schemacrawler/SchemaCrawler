@@ -21,8 +21,11 @@
 package schemacrawler.crawl;
 
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import schemacrawler.schema.JdbcDriverInfo;
@@ -88,11 +91,10 @@ final class MutableJdbcDriverInfo
    * @see schemacrawler.schema.JdbcDriverInfo#getDriverProperties()
    */
   @Override
-  public JdbcDriverProperty[] getDriverProperties()
+  public Collection<JdbcDriverProperty> getDriverProperties()
   {
-    final JdbcDriverProperty[] properties = jdbcDriverProperties
-      .toArray(new JdbcDriverProperty[jdbcDriverProperties.size()]);
-    Arrays.sort(properties);
+    final List<JdbcDriverProperty> properties = new ArrayList<JdbcDriverProperty>(jdbcDriverProperties);
+    Collections.sort(properties);
     return properties;
   }
 

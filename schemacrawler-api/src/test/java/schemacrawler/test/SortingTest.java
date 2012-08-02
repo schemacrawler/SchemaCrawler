@@ -21,11 +21,14 @@ package schemacrawler.test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.util.Arrays;
+
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import schemacrawler.schema.Column;
+import schemacrawler.schema.Database;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.Schema;
@@ -33,6 +36,7 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.test.utility.TestDatabase;
+import schemacrawler.utility.NamedObjectSort;
 
 public class SortingTest
 {
@@ -125,17 +129,19 @@ public class SortingTest
     throws Exception
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setAlphabeticalSortForTableColumns(sortAlphabetically);
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
+    final Database database = testDatabase.getDatabase(schemaCrawlerOptions);
     final Schema schema = testDatabase.getSchema(schemaCrawlerOptions,
                                                  "PUBLIC.BOOKS");
     assertNotNull("Schema not found", schema);
 
-    final Table table = schema.getTable(tableName);
+    final Table table = database.getTable(schema, tableName);
     assertNotNull("Table " + tableName + " not found", table);
     if (table.getName().equals(tableName))
     {
-      final Column[] columns = table.getColumns();
+      final Column[] columns = table.getColumns().toArray(new Column[0]);
+      Arrays.sort(columns,
+                  NamedObjectSort.getNamedObjectSort(sortAlphabetically));
       assertEquals("Column count does not match",
                    expectedValues.length,
                    columns.length);
@@ -156,19 +162,22 @@ public class SortingTest
     throws Exception
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setAlphabeticalSortForForeignKeys(sortAlphabetically);
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
+    final Database database = testDatabase.getDatabase(schemaCrawlerOptions);
     final Schema schema = testDatabase.getSchema(schemaCrawlerOptions,
                                                  "PUBLIC.BOOKS");
     assertNotNull("Schema not found", schema);
 
-    final Table[] tables = schema.getTables();
+    final Table[] tables = database.getTables(schema).toArray(new Table[0]);
     assertEquals("Table count does not match", 6, tables.length);
     for (final Table table: tables)
     {
       if (table.getName().equals(tableName))
       {
-        final ForeignKey[] foreignKeys = table.getForeignKeys();
+        final ForeignKey[] foreignKeys = table.getForeignKeys()
+          .toArray(new ForeignKey[0]);
+        Arrays.sort(foreignKeys,
+                    NamedObjectSort.getNamedObjectSort(sortAlphabetically));
         assertEquals("Foreign key count does not match",
                      expectedValues.length,
                      foreignKeys.length);
@@ -189,19 +198,21 @@ public class SortingTest
     throws Exception
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setAlphabeticalSortForIndexes(sortAlphabetically);
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
+    final Database database = testDatabase.getDatabase(schemaCrawlerOptions);
     final Schema schema = testDatabase.getSchema(schemaCrawlerOptions,
                                                  "PUBLIC.BOOKS");
     assertNotNull("Schema not found", schema);
 
-    final Table[] tables = schema.getTables();
+    final Table[] tables = database.getTables(schema).toArray(new Table[0]);
     assertEquals("Table count does not match", 6, tables.length);
     for (final Table table: tables)
     {
       if (table.getName().equals(tableName))
       {
-        final Index[] indices = table.getIndices();
+        final Index[] indices = table.getIndices().toArray(new Index[0]);
+        Arrays.sort(indices,
+                    NamedObjectSort.getNamedObjectSort(sortAlphabetically));
         assertEquals("Index count does not match for table " + table,
                      expectedValues.length,
                      indices.length);

@@ -219,7 +219,7 @@
       {
         "id": "schemacrawler.tools.linter.LinterColumnTypes",
         "description": "column with same name but different data types",
-        "value": "ID [INTEGER, BIGINT]",
+        "value": "ID [BIGINT, INTEGER]",
         "severity": "medium"
       },
       {

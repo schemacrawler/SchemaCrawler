@@ -28,7 +28,8 @@ import java.util.logging.Logger;
 /**
  * An enumeration wrapper around JDBC procedure types.
  */
-public enum ProcedureType
+public enum ProcedureReturnType
+  implements RoutineReturnType
 {
 
   /**
@@ -44,7 +45,7 @@ public enum ProcedureType
    */
   returnsResult(DatabaseMetaData.procedureReturnsResult, "returns result");
 
-  private static final Logger LOGGER = Logger.getLogger(ProcedureType.class
+  private static final Logger LOGGER = Logger.getLogger(ProcedureReturnType.class
     .getName());
 
   /**
@@ -54,9 +55,9 @@ public enum ProcedureType
    *        Id of the integer
    * @return ForeignKeyDeferrability
    */
-  public static ProcedureType valueOf(final int id)
+  public static ProcedureReturnType valueOf(final int id)
   {
-    for (final ProcedureType type: ProcedureType.values())
+    for (final ProcedureReturnType type: ProcedureReturnType.values())
     {
       if (type.getId() == id)
       {
@@ -70,7 +71,7 @@ public enum ProcedureType
   private final int id;
   private final String text;
 
-  private ProcedureType(final int id, final String text)
+  private ProcedureReturnType(final int id, final String text)
   {
     this.id = id;
     this.text = text;

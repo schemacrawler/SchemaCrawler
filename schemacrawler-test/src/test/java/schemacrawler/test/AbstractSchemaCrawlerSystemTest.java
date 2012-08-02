@@ -121,41 +121,6 @@ public abstract class AbstractSchemaCrawlerSystemTest
     }
   }
 
-  protected Schema retrieveSchema(final String dataSourceName,
-                                  final String schemaInclusion)
-    throws Exception
-  {
-    final SchemaCrawlerOptions schemaCrawlerOptions = createOptions(dataSourceName,
-                                                                    schemaInclusion);
-    final Database database = retrieveDatabase(dataSourceName,
-                                               schemaCrawlerOptions);
 
-    final Schema[] schemas = database.getSchemas();
-    final Schema schema;
-    if (schemas == null || schemas.length == 0)
-    {
-      schema = null;
-    }
-    else if (schemas.length == 1)
-    {
-      schema = schemas[0];
-    }
-    else
-    {
-      final Pattern schemaPattern = Pattern.compile(".*books",
-                                                    Pattern.CASE_INSENSITIVE);
-      Schema scSchema = null;
-      for (final Schema currSchema: schemas)
-      {
-        if (schemaPattern.matcher(currSchema.getFullName()).matches())
-        {
-          scSchema = currSchema;
-          break;
-        }
-      }
-      schema = scSchema;
-    }
-    return schema;
-  }
 
 }

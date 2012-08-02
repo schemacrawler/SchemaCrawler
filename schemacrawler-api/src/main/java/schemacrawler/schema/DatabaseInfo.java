@@ -22,6 +22,7 @@ package schemacrawler.schema;
 
 
 import java.io.Serializable;
+import java.util.Collection;
 
 /**
  * Database and connection information.
@@ -51,7 +52,7 @@ public interface DatabaseInfo
    * 
    * @return Database properties
    */
-  DatabaseProperty[] getProperties();
+  Collection<DatabaseProperty> getProperties();
 
   /**
    * Gets the user name as known to this database.

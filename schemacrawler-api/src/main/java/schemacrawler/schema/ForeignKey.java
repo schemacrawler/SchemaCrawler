@@ -21,6 +21,8 @@
 package schemacrawler.schema;
 
 
+import java.util.List;
+
 /**
  * Represents a foreign-key mapping to a primary key in another table.
  * 
@@ -35,7 +37,7 @@ public interface ForeignKey
    * 
    * @return Column pairs
    */
-  ForeignKeyColumnMap[] getColumnPairs();
+  List<ForeignKeyColumnReference> getColumnReferences();
 
   /**
    * Gets the deferrability.

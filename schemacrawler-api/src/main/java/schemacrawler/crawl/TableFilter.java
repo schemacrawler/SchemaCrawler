@@ -57,7 +57,6 @@ class TableFilter
     {
       if (!filteredTables.contains(table))
       {
-        ((MutableSchema) table.getSchema()).removeTable(table);
         allTables.remove(table);
       }
     }
@@ -122,8 +121,7 @@ class TableFilter
 
     boolean includeForColumns = false;
     boolean includeForDefinitions = false;
-    final Column[] columns = table.getColumns();
-    for (final Column column: columns)
+    for (final Column column: table.getColumns())
     {
       if (checkIncludeForColumns)
       {
@@ -193,9 +191,8 @@ class TableFilter
     {
       for (final MutableTable table: new HashSet<MutableTable>(includedTables))
       {
-        final Table[] relatedTables = table
-          .getRelatedTables(tableRelationshipType);
-        for (final Table relatedTable: relatedTables)
+        for (final Table relatedTable: table
+          .getRelatedTables(tableRelationshipType))
         {
           includedTables.add((MutableTable) relatedTable);
         }

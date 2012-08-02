@@ -25,7 +25,7 @@ import java.util.List;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ForeignKey;
-import schemacrawler.schema.ForeignKeyColumnMap;
+import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
 import schemacrawler.tools.lint.BaseLinter;
@@ -72,14 +72,13 @@ public class LinterForeignKeyMismatch
     final List<ForeignKey> mismatchedForeignKeys = new ArrayList<ForeignKey>();
     if (table != null && !(table instanceof View))
     {
-      final ForeignKey[] importedForeignKeys = table.getImportedForeignKeys();
-      for (final ForeignKey foreignKey: importedForeignKeys)
+      for (final ForeignKey foreignKey: table.getImportedForeignKeys())
       {
-        final ForeignKeyColumnMap[] columnPairs = foreignKey.getColumnPairs();
-        for (final ForeignKeyColumnMap columnPair: columnPairs)
+        for (final ForeignKeyColumnReference columnReference: foreignKey
+          .getColumnReferences())
         {
-          final Column pkColumn = columnPair.getPrimaryKeyColumn();
-          final Column fkColumn = columnPair.getForeignKeyColumn();
+          final Column pkColumn = columnReference.getPrimaryKeyColumn();
+          final Column fkColumn = columnReference.getForeignKeyColumn();
           if (!pkColumn.getType().equals(fkColumn.getType())
               || pkColumn.getSize() != fkColumn.getSize())
           {

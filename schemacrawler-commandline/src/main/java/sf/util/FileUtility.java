@@ -30,16 +30,6 @@ import java.io.File;
 public final class FileUtility
 {
 
-  public static File changeFileExtension(final File file, final String ext)
-  {
-    final String oldExt = getFileExtension(file);
-    final String oldFileName = file.getName();
-    final String newFileName = oldFileName.substring(0, oldFileName
-      .lastIndexOf(oldExt) - 1)
-                               + ext;
-    return new File(file.getParentFile(), newFileName);
-  }
-
   public static String getFileExtension(final File file)
   {
     final String ext;

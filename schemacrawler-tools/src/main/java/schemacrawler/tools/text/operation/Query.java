@@ -23,6 +23,7 @@ package schemacrawler.tools.text.operation;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -46,11 +47,11 @@ final class Query
 
   private static String getOrderByColumnsListAsString(final Table table)
   {
-    final Column[] columnsArray = table.getColumns();
+    final List<Column> columns = table.getColumns();
     final StringBuilder buffer = new StringBuilder();
-    for (int i = 0; i < columnsArray.length; i++)
+    for (int i = 0; i < columns.size(); i++)
     {
-      final Column column = columnsArray[i];
+      final Column column = columns.get(i);
       final JavaSqlTypeGroup javaSqlTypeGroup = JavaSqlTypesUtility
         .lookupSqlDataType(column.getType().getType()).getJavaSqlTypeGroup();
       if (javaSqlTypeGroup != JavaSqlTypeGroup.large_object)

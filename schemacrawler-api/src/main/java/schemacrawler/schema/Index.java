@@ -21,6 +21,8 @@
 package schemacrawler.schema;
 
 
+import java.util.List;
+
 /**
  * Represents an index on a database table.
  * 
@@ -44,7 +46,7 @@ public interface Index
    * 
    * @return Columns of the table.
    */
-  IndexColumn[] getColumns();
+  List<IndexColumn> getColumns();
 
   /**
    * Gets the pages. When the index type is statistic, then this is the

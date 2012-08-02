@@ -30,8 +30,8 @@ import org.junit.Test;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Database;
-import schemacrawler.schema.Procedure;
 import schemacrawler.schema.ProcedureColumn;
+import schemacrawler.schema.Routine;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.InclusionRule;
@@ -61,6 +61,81 @@ public class SchemaCrawlerGrepTest
   }
 
   @Test
+  public void grepColumns()
+    throws Exception
+  {
+    final String[] schemaNames = {
+        "BOOKS",
+        "FOR_LINT",
+        "INFORMATION_SCHEMA",
+        "PUBLIC",
+        "\"PUBLISHER SALES\"",
+        "SYSTEM_LOBS"
+    };
+    final int[] tableCounts = {
+        1, 0, 0, 0, 1, 0
+    };
+    final String[][][] columnNames = {
+        {
+          {
+              "BOOKAUTHORS.BOOKID",
+              "BOOKAUTHORS.AUTHORID",
+              "BOOKAUTHORS.\"UPDATE\"",
+          },
+        },
+        {},
+        {},
+        {},
+        {
+          {
+              "SALES.POSTALCODE",
+              "SALES.COUNTRY",
+              "SALES.BOOKID",
+              "SALES.PERIODENDDATE",
+              "SALES.TOTALAMOUNT",
+          },
+        },
+        {},
+    };
+
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+    schemaCrawlerOptions
+      .setGrepColumnInclusionRule(new InclusionRule(".*\\..*\\.BOOKID", ""));
+
+    final Database database = testDatabase.getDatabase(schemaCrawlerOptions);
+    final Schema[] schemas = (Schema[]) database.getSchemas()
+      .toArray(new Schema[0]);
+    assertEquals("Schema count does not match", 6, schemas.length);
+    for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++)
+    {
+      final Schema schema = schemas[schemaIdx];
+      assertEquals("Schema name does not match",
+                   "PUBLIC." + schemaNames[schemaIdx],
+                   schema.getFullName());
+      final Table[] tables = (Table[]) database.getTables(schema)
+        .toArray(new Table[0]);
+      assertEquals("Table count does not match for schema " + schema,
+                   tableCounts[schemaIdx],
+                   tables.length);
+      for (int tableIdx = 0; tableIdx < tables.length; tableIdx++)
+      {
+        final Table table = tables[tableIdx];
+        final Column[] columns = table.getColumns().toArray(new Column[0]);
+        final String[] columnsNamesForTable = columnNames[schemaIdx][tableIdx];
+        for (int columnIdx = 0; columnIdx < columns.length; columnIdx++)
+        {
+          final Column column = columns[columnIdx];
+          LOGGER.log(Level.FINE, column.toString());
+          assertEquals("Column full name does not match",
+                       "PUBLIC." + schemaNames[schemaIdx] + "."
+                           + columnsNamesForTable[columnIdx],
+                       column.getFullName());
+        }
+      }
+    }
+  }
+
+  @Test
   public void grepColumnsAndIncludeChildTables()
     throws Exception
   {
@@ -76,20 +151,20 @@ public class SchemaCrawlerGrepTest
     database = testDatabase.getDatabase(schemaCrawlerOptions);
     schema = database.getSchema("PUBLIC.BOOKS");
     assertNotNull("Schema PUBLIC.BOOKS not found", schema);
-    assertEquals(1, schema.getTables().length);
-    table = schema.getTable("BOOKAUTHORS");
+    assertEquals(1, database.getTables(schema).size());
+    table = database.getTable(schema, "BOOKAUTHORS");
     assertNotNull("Table BOOKAUTHORS not found", table);
 
     schemaCrawlerOptions.setParentTableFilterDepth(1);
     database = testDatabase.getDatabase(schemaCrawlerOptions);
     schema = database.getSchema("PUBLIC.BOOKS");
     assertNotNull("Schema PUBLIC.BOOKS not found", schema);
-    assertEquals(3, schema.getTables().length);
-    table = schema.getTable("BOOKAUTHORS");
+    assertEquals(3, database.getTables(schema).size());
+    table = database.getTable(schema, "BOOKAUTHORS");
     assertNotNull("Table BOOKAUTHORS not found", table);
-    table = schema.getTable("BOOKS");
+    table = database.getTable(schema, "BOOKS");
     assertNotNull("Table BOOKS not found", table);
-    table = schema.getTable("AUTHORS");
+    table = database.getTable(schema, "AUTHORS");
     assertNotNull("Table AUTHORS not found", table);
 
   }
@@ -150,22 +225,24 @@ public class SchemaCrawlerGrepTest
       .setGrepDefinitionInclusionRule(new InclusionRule(".*book author.*", ""));
 
     final Database database = testDatabase.getDatabase(schemaCrawlerOptions);
-    final Schema[] schemas = database.getSchemas();
+    final Schema[] schemas = (Schema[]) database.getSchemas()
+      .toArray(new Schema[0]);
     assertEquals("Schema count does not match", 6, schemas.length);
     for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++)
     {
       final Schema schema = schemas[schemaIdx];
       assertEquals("Schema name does not match",
                    "PUBLIC." + schemaNames[schemaIdx],
-                   schema.getName());
-      final Table[] tables = schema.getTables();
+                   schema.getFullName());
+      final Table[] tables = (Table[]) database.getTables(schema)
+        .toArray(new Table[0]);
       assertEquals("Table count does not match for schema " + schema,
                    tableCounts[schemaIdx],
                    tables.length);
       for (int tableIdx = 0; tableIdx < tables.length; tableIdx++)
       {
         final Table table = tables[tableIdx];
-        final Column[] columns = table.getColumns();
+        final Column[] columns = table.getColumns().toArray(new Column[0]);
         final String[] columnsNamesForTable = columnNames[schemaIdx][tableIdx];
         for (int columnIdx = 0; columnIdx < columns.length; columnIdx++)
         {
@@ -220,22 +297,23 @@ public class SchemaCrawlerGrepTest
       .setGrepDefinitionInclusionRule(new InclusionRule(".*book author.*", ""));
 
     final Database database = testDatabase.getDatabase(schemaCrawlerOptions);
-    final Schema[] schemas = database.getSchemas();
+    final Schema[] schemas = (Schema[]) database.getSchemas()
+      .toArray(new Schema[0]);
     assertEquals("Schema count does not match", 6, schemas.length);
     for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++)
     {
       final Schema schema = schemas[schemaIdx];
       assertEquals("Schema name does not match",
                    "PUBLIC." + schemaNames[schemaIdx],
-                   schema.getName());
-      final Table[] tables = schema.getTables();
+                   schema.getFullName());
+      final Table[] tables = database.getTables(schema).toArray(new Table[0]);
       assertEquals("Table count does not match for schema " + schema,
                    tableCounts[schemaIdx],
                    tables.length);
       for (int tableIdx = 0; tableIdx < tables.length; tableIdx++)
       {
         final Table table = tables[tableIdx];
-        final Column[] columns = table.getColumns();
+        final Column[] columns = table.getColumns().toArray(new Column[0]);
         final String[] columnsNamesForTable = columnNames[schemaIdx][tableIdx];
         for (int columnIdx = 0; columnIdx < columns.length; columnIdx++)
         {
@@ -262,7 +340,7 @@ public class SchemaCrawlerGrepTest
         "\"PUBLISHER SALES\"",
         "SYSTEM_LOBS"
     };
-    final int[] procedureCounts = {
+    final int[] routineCounts = {
         0, 0, 0, 0, 0, 3
     };
     final String[][][] columnNames = {
@@ -291,106 +369,36 @@ public class SchemaCrawlerGrepTest
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions
-      .setGrepProcedureColumnInclusionRule(new InclusionRule(".*\\.B_COUNT", ""));
+      .setGrepRoutineColumnInclusionRule(new InclusionRule(".*\\.B_COUNT", ""));
 
     final Database database = testDatabase.getDatabase(schemaCrawlerOptions);
-    final Schema[] schemas = database.getSchemas();
+    final Schema[] schemas = (Schema[]) database.getSchemas()
+      .toArray(new Schema[0]);
     assertEquals("Schema count does not match", 6, schemas.length);
     for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++)
     {
       final Schema schema = schemas[schemaIdx];
       assertEquals("Schema name does not match",
                    "PUBLIC." + schemaNames[schemaIdx],
-                   schema.getName());
-      final Procedure[] procedures = schema.getProcedures();
-      assertEquals("Procedure count does not match for schema " + schema,
-                   procedureCounts[schemaIdx],
-                   procedures.length);
-      for (int procedureIdx = 0; procedureIdx < procedures.length; procedureIdx++)
+                   schema.getFullName());
+      final Routine[] routines = database.getRoutines(schema)
+        .toArray(new Routine[0]);
+      assertEquals("Routine count does not match for schema " + schema,
+                   routineCounts[schemaIdx],
+                   routines.length);
+      for (int routineIdx = 0; routineIdx < routines.length; routineIdx++)
       {
-        final Procedure procedure = procedures[procedureIdx];
-        final ProcedureColumn[] columns = procedure.getColumns();
-        final String[] columnsNamesForProcedure = columnNames[schemaIdx][procedureIdx];
+        final Routine routine = routines[routineIdx];
+        final ProcedureColumn[] columns = routine.getColumns()
+          .toArray(new ProcedureColumn[0]);
+        final String[] columnsNamesForProcedure = columnNames[schemaIdx][routineIdx];
         for (int columnIdx = 0; columnIdx < columns.length; columnIdx++)
         {
           final ProcedureColumn column = columns[columnIdx];
           LOGGER.log(Level.FINE, column.toString());
-          assertEquals("Procedure column full name does not match",
+          assertEquals("Routine column full name does not match",
                        "PUBLIC." + schemaNames[schemaIdx] + "."
                            + columnsNamesForProcedure[columnIdx],
-                       column.getFullName());
-        }
-      }
-    }
-  }
-
-  @Test
-  public void grepColumns()
-    throws Exception
-  {
-    final String[] schemaNames = {
-        "BOOKS",
-        "FOR_LINT",
-        "INFORMATION_SCHEMA",
-        "PUBLIC",
-        "\"PUBLISHER SALES\"",
-        "SYSTEM_LOBS"
-    };
-    final int[] tableCounts = {
-        1, 0, 0, 0, 1, 0
-    };
-    final String[][][] columnNames = {
-        {
-          {
-              "BOOKAUTHORS.BOOKID",
-              "BOOKAUTHORS.AUTHORID",
-              "BOOKAUTHORS.\"UPDATE\"",
-          },
-        },
-        {},
-        {},
-        {},
-        {
-          {
-              "SALES.POSTALCODE",
-              "SALES.COUNTRY",
-              "SALES.BOOKID",
-              "SALES.PERIODENDDATE",
-              "SALES.TOTALAMOUNT",
-          },
-        },
-        {},
-    };
-
-    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions
-      .setGrepColumnInclusionRule(new InclusionRule(".*\\..*\\.BOOKID", ""));
-
-    final Database database = testDatabase.getDatabase(schemaCrawlerOptions);
-    final Schema[] schemas = database.getSchemas();
-    assertEquals("Schema count does not match", 6, schemas.length);
-    for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++)
-    {
-      final Schema schema = schemas[schemaIdx];
-      assertEquals("Schema name does not match",
-                   "PUBLIC." + schemaNames[schemaIdx],
-                   schema.getName());
-      final Table[] tables = schema.getTables();
-      assertEquals("Table count does not match for schema " + schema,
-                   tableCounts[schemaIdx],
-                   tables.length);
-      for (int tableIdx = 0; tableIdx < tables.length; tableIdx++)
-      {
-        final Table table = tables[tableIdx];
-        final Column[] columns = table.getColumns();
-        final String[] columnsNamesForTable = columnNames[schemaIdx][tableIdx];
-        for (int columnIdx = 0; columnIdx < columns.length; columnIdx++)
-        {
-          final Column column = columns[columnIdx];
-          LOGGER.log(Level.FINE, column.toString());
-          assertEquals("Column full name does not match",
-                       "PUBLIC." + schemaNames[schemaIdx] + "."
-                           + columnsNamesForTable[columnIdx],
                        column.getFullName());
         }
       }

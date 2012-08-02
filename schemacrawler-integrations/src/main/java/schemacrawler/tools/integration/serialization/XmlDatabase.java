@@ -31,13 +31,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Database;
-import schemacrawler.schema.DatabaseInfo;
-import schemacrawler.schema.JdbcDriverInfo;
-import schemacrawler.schema.NamedObject;
-import schemacrawler.schema.Schema;
-import schemacrawler.schema.SchemaCrawlerInfo;
+import schemacrawler.schemacrawler.BaseDatabaseDecorator;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
 import com.thoughtworks.xstream.XStream;
@@ -53,6 +48,7 @@ import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
  * @author sfatehi
  */
 public final class XmlDatabase
+  extends BaseDatabaseDecorator
   implements SerializableDatabase
 {
 
@@ -127,7 +123,7 @@ public final class XmlDatabase
           "database",
           "databaseProperty",
           "foreignKey",
-          "foreignKeyColumnMap",
+          "foreignKeyColumnReference",
           "index",
           "indexColumn",
           "jdbcDriverProperty",
@@ -137,7 +133,6 @@ public final class XmlDatabase
           "procedureColumn",
           "resultsColumn",
           "resultsColumns",
-          "schema",
           "table",
           "trigger",
           "view",
@@ -151,8 +146,8 @@ public final class XmlDatabase
       }
       xStream.alias("grant", Class
         .forName("schemacrawler.crawl.MutablePrivilege$PrivilegeGrant"));
-      xStream.alias("schemaReference",
-                    Class.forName("schemacrawler.crawl.SchemaReference"));
+      xStream.alias("schema",
+                    Class.forName("schemacrawler.schema.SchemaReference"));
 
       return xStream;
     }
@@ -162,182 +157,15 @@ public final class XmlDatabase
     }
   }
 
-  private final Database database;
-
   public XmlDatabase(final Database database)
   {
-    if (database == null)
-    {
-      throw new IllegalArgumentException("No database provided");
-    }
-    this.database = database;
+    super(database);
   }
 
   public XmlDatabase(final Reader reader)
     throws SchemaCrawlerException
   {
     this((Database) newXStream().fromXML(reader));
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see java.lang.Comparable#compareTo(java.lang.Object)
-   */
-  @Override
-  public int compareTo(final NamedObject o)
-  {
-    return database.compareTo(o);
-  }
-
-  @Override
-  public boolean equals(final Object obj)
-  {
-    return database.equals(obj);
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.NamedObject#getAttribute(java.lang.String)
-   */
-  @Override
-  public Object getAttribute(final String name)
-  {
-    return database.getAttribute(name);
-  }
-
-  @Override
-  public <T> T getAttribute(final String name, final T defaultValue)
-  {
-    return database.getAttribute(name, defaultValue);
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.NamedObject#getAttributes()
-   */
-  @Override
-  public Map<String, Object> getAttributes()
-  {
-    return database.getAttributes();
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.Database#getDatabaseInfo()
-   */
-  @Override
-  public DatabaseInfo getDatabaseInfo()
-  {
-    return database.getDatabaseInfo();
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.NamedObject#getFullName()
-   */
-  @Override
-  public String getFullName()
-  {
-    return database.getFullName();
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.Database#getJdbcDriverInfo()
-   */
-  @Override
-  public JdbcDriverInfo getJdbcDriverInfo()
-  {
-    return database.getJdbcDriverInfo();
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.NamedObject#getName()
-   */
-  @Override
-  public String getName()
-  {
-    return database.getName();
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.NamedObject#getRemarks()
-   */
-  @Override
-  public String getRemarks()
-  {
-    return database.getRemarks();
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.Database#getSchema(java.lang.String)
-   */
-  @Override
-  public Schema getSchema(final String schemaName)
-  {
-    return database.getSchema(schemaName);
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.Database#getSchemaCrawlerInfo()
-   */
-  @Override
-  public SchemaCrawlerInfo getSchemaCrawlerInfo()
-  {
-    return database.getSchemaCrawlerInfo();
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.Database#getSchemas()
-   */
-  @Override
-  public Schema[] getSchemas()
-  {
-    return database.getSchemas();
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.Database#getSystemColumnDataType(java.lang.String)
-   */
-  @Override
-  public ColumnDataType getSystemColumnDataType(final String name)
-  {
-    return database.getSystemColumnDataType(name);
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.Database#getSystemColumnDataTypes()
-   */
-  @Override
-  public ColumnDataType[] getSystemColumnDataTypes()
-  {
-    return database.getSystemColumnDataTypes();
-  }
-
-  @Override
-  public int hashCode()
-  {
-    return database.hashCode();
   }
 
   /**
@@ -365,18 +193,6 @@ public final class XmlDatabase
     {
       throw new SchemaCrawlerException("Could not write XML", e);
     }
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.NamedObject#setAttribute(java.lang.String,
-   *      java.lang.Object)
-   */
-  @Override
-  public void setAttribute(final String name, final Object value)
-  {
-    database.setAttribute(name, value);
   }
 
 }

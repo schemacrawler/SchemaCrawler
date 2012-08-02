@@ -24,12 +24,11 @@ package schemacrawler.tools.integration.graph;
 import java.io.File;
 import java.sql.Connection;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import schemacrawler.schema.ColumnMap;
+import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.Database;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
@@ -84,14 +83,14 @@ public final class GraphExecutable
     }
 
     final List<Table> tables = new ArrayList<Table>();
-    final Set<ColumnMap> weakAssociations = new HashSet<ColumnMap>();
+    final Set<ColumnReference> weakAssociations = new HashSet<ColumnReference>();
     for (final Schema schema: database.getSchemas())
     {
-      for (final Table table: schema.getTables())
+      for (final Table table: database.getTables(schema))
       {
         tables.add(table);
-        weakAssociations.addAll(Arrays.asList(SimpleWeakAssociationsCollector
-          .getWeakAssociations(table)));
+        weakAssociations.addAll(SimpleWeakAssociationsCollector
+          .getWeakAssociations(table));
       }
     }
 

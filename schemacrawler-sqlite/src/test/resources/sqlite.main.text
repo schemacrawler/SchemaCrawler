@@ -27,7 +27,7 @@ JDBC Driver Information
 driver name                               SQLiteJDBC                    
 driver version                            native                        
 driver class name                         org.sqlite.JDBC               
-url                                       jdbc:sqlite:C:\Users\SUALEH~1\AppData\Local\Temp\SchemaCrawler5626238110271711694.dat
+url                                       jdbc:sqlite:C:\Users\SUALEH~1\AppData\Local\Temp\SchemaCrawler122233303093568581.dat
 is JDBC compliant                         false                         
 
 
@@ -43,6 +43,14 @@ BLOB                                                         [data type]
   nullable
   not auto-incrementable
   searchable
+
+FLOAT                                                        [data type]
+  based on                          FLOAT                       
+  not user defined
+  defined with 
+  not nullable
+  not auto-incrementable
+  unknown
 
 INTEGER                                                      [data type]
   based on                          INTEGER                     
@@ -76,14 +84,6 @@ TEXT                                                         [data type]
   not auto-incrementable
   searchable
 
-FLOAT                                                        [data type]
-  based on                          FLOAT                       
-  not user defined
-  defined with 
-  not nullable
-  not auto-incrementable
-  unknown
-
 VARCHAR(255)                                                 [data type]
   based on                          VARCHAR                     
   not user defined
@@ -113,11 +113,32 @@ CUSTOMER                                                         [table]
   ID --> INVOICE.CUSTOMERID                                     
 
 
-CUSTOMERLIST                                                      [view]
+PRODUCT                                                          [table]
 ------------------------------------------------------------------------
-  ID                                INTEGER                     
-  FIRSTNAME                         VARCHAR(255)(2000000000)    
-  LASTNAME                          VARCHAR(255)(2000000000)    
+  ID                                INTEGER not null            
+  NAME                              VARCHAR(255)(2000000000)    
+  PRICE                             FLOAT(2000000000, 10)       
+
+                                                           [primary key]
+  ID                                ascending                   
+
+<unknown>                                                  [foreign key]
+  INVOICE.ID --> ITEM.INVOICEID                                 
+  ID --> ITEM.PRODUCTID                                         
+
+
+SUPPLIER                                                         [table]
+------------------------------------------------------------------------
+  SUPPLIER_ID                       INTEGER                     
+  SUPPLIER_NAME                     VARCHAR(255)(2000000000)    
+
+INDEX_B_SUPPLIER                                      [non-unique index]
+  SUPPLIER_ID                       unknown                     
+  SUPPLIER_NAME                     unknown                     
+
+INDEX_A_SUPPLIER                                      [non-unique index]
+  SUPPLIER_NAME                     unknown                     
+  SUPPLIER_ID                       unknown                     
 
 
 INVOICE                                                          [table]
@@ -164,32 +185,11 @@ sqlite_autoindex_ITEM_1                                   [unique index]
   ITEM                              unknown                     
 
 
-PRODUCT                                                          [table]
+CUSTOMERLIST                                                      [view]
 ------------------------------------------------------------------------
-  ID                                INTEGER not null            
-  NAME                              VARCHAR(255)(2000000000)    
-  PRICE                             FLOAT(2000000000, 10)       
-
-                                                           [primary key]
-  ID                                ascending                   
-
-<unknown>                                                  [foreign key]
-  INVOICE.ID --> ITEM.INVOICEID                                 
-  ID --> ITEM.PRODUCTID                                         
-
-
-SUPPLIER                                                         [table]
-------------------------------------------------------------------------
-  SUPPLIER_ID                       INTEGER                     
-  SUPPLIER_NAME                     VARCHAR(255)(2000000000)    
-
-INDEX_B_SUPPLIER                                      [non-unique index]
-  SUPPLIER_ID                       unknown                     
-  SUPPLIER_NAME                     unknown                     
-
-INDEX_A_SUPPLIER                                      [non-unique index]
-  SUPPLIER_NAME                     unknown                     
-  SUPPLIER_ID                       unknown                     
+  ID                                INTEGER                     
+  FIRSTNAME                         VARCHAR(255)(2000000000)    
+  LASTNAME                          VARCHAR(255)(2000000000)    
 
 
 

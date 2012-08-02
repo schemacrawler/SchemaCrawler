@@ -40,6 +40,7 @@ import java.util.logging.Logger;
 
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Schema;
+import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.SearchableType;
 
 final class DatabaseInfoRetriever
@@ -326,7 +327,7 @@ final class DatabaseInfoRetriever
   void retrieveSystemColumnDataTypes()
     throws SQLException
   {
-    final Schema systemSchema = new MutableSchema();
+    final Schema systemSchema = new SchemaReference();
 
     final MetadataResultSet results = new MetadataResultSet(getMetaData()
       .getTypeInfo());
@@ -380,7 +381,7 @@ final class DatabaseInfoRetriever
 
         columnDataType.addAttributes(results.getAttributes());
 
-        database.addSystemColumnDataType(columnDataType);
+        database.addColumnDataType(columnDataType);
       }
     }
     finally
@@ -408,16 +409,9 @@ final class DatabaseInfoRetriever
         final String remarks = results.getString("REMARKS");
         final short baseTypeValue = results.getShort("BASE_TYPE", (short) 0);
 
-        final MutableSchema schema = lookupSchema(catalogName, schemaName);
-        if (schema == null)
-        {
-          LOGGER.log(Level.FINE, String.format("Cannot find schema, %s.%s",
-                                               catalogName,
-                                               schemaName));
-          continue;
-        }
-        final ColumnDataType baseType = lookupColumnDataTypeByType(schema,
-                                                                   baseTypeValue);
+        final Schema schema = new SchemaReference(catalogName, schemaName);
+        final ColumnDataType baseType = database
+          .lookupColumnDataTypeByType(baseTypeValue);
         final MutableColumnDataType columnDataType = new MutableColumnDataType(schema,
                                                                                typeName);
         columnDataType.setUserDefined(true);
@@ -427,7 +421,7 @@ final class DatabaseInfoRetriever
 
         columnDataType.addAttributes(results.getAttributes());
 
-        schema.addColumnDataType(columnDataType);
+        database.addColumnDataType(columnDataType);
       }
     }
     finally

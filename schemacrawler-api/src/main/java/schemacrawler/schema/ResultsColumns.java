@@ -21,6 +21,8 @@
 package schemacrawler.schema;
 
 
+import java.util.List;
+
 /**
  * Represents a result set, a result of a query.
  * 
@@ -44,7 +46,7 @@ public interface ResultsColumns
    * 
    * @return Columns of the table.
    */
-  ResultsColumn[] getColumns();
+  List<ResultsColumn> getColumns();
 
   /**
    * Gets a comma-separated list of columns.

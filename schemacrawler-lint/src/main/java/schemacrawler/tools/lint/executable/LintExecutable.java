@@ -22,6 +22,7 @@ package schemacrawler.tools.lint.executable;
 
 import java.io.FileReader;
 import java.sql.Connection;
+import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -41,7 +42,7 @@ public class LintExecutable
 
   private static final Logger LOGGER = Logger.getLogger(LintExecutable.class
     .getName());
-  
+
   public static final String COMMAND = "lint";
   private static final String CONFIG_LINTER_CONFIGS_FILE = "schemacrawer.linter_configs.file";
 
@@ -92,7 +93,7 @@ public class LintExecutable
     formatter.handle(database);
     for (final Schema schema: database.getSchemas())
     {
-      final Table[] tables = schema.getTables();
+      final Collection<Table> tables = database.getTables(schema);
       for (final Table table: tables)
       {
         formatter.handle(table);
@@ -135,8 +136,7 @@ public class LintExecutable
     String linterConfigsFile = null;
     try
     {
-      linterConfigsFile = System
-        .getProperty(CONFIG_LINTER_CONFIGS_FILE);
+      linterConfigsFile = System.getProperty(CONFIG_LINTER_CONFIGS_FILE);
       if (!Utility.isBlank(linterConfigsFile))
       {
         linterConfigs.parse(new FileReader(linterConfigsFile));

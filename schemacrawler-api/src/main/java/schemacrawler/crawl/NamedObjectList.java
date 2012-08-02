@@ -53,7 +53,7 @@ class NamedObjectList<N extends NamedObject>
     }
     else
     {
-      key = namedObject.getFullName();
+      key = namedObject.getLookupKey();
     }
     return key;
   }
@@ -94,7 +94,6 @@ class NamedObjectList<N extends NamedObject>
     return key;
   }
 
-  private NamedObjectSort sort = NamedObjectSort.natural;
   private final Map<String, N> objects = new HashMap<String, N>();
 
   /**
@@ -162,11 +161,6 @@ class NamedObjectList<N extends NamedObject>
     }
   }
 
-  void setSortOrder(final NamedObjectSort sort)
-  {
-    this.sort = sort;
-  }
-
   /**
    * Returns the number of elements in this list.
    * 
@@ -185,7 +179,7 @@ class NamedObjectList<N extends NamedObject>
   List<N> values()
   {
     final List<N> all = new ArrayList<N>(objects.values());
-    Collections.sort(all, sort);
+    Collections.sort(all);
     return all;
   }
 

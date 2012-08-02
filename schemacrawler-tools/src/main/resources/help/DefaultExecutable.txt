@@ -1,6 +1,6 @@
 --- Command ---
 
--command=<command>
+-c=<command> (short for -command=<command>)
   Where <command> is a comma-separated list of:
     list
       Shows only table, view and procedure names  
@@ -26,6 +26,23 @@
       substituted
   Optional, default is schema
 
+--- Sort Options ---
+
+-sorttables=<boolean>
+  Sort tables alphabetically
+  <boolean> can be true or false
+  Optional, defaults to true
+  
+-sortcolumns=<boolean>
+  Sort columns in a table alphabetically
+  <boolean> can be true or false
+  Optional, defaults to false
+
+-sortinout=<boolean>
+  Sort parameters in a stored procedure alphabetically
+  <boolean> can be true or false
+  Optional, defaults to false
+
 --- Output Options ---
 
 -noinfo=<boolean>
@@ -47,7 +64,7 @@
       For JavaScript Object Notation output            
   Optional, defaults to text    
       
--outputfile=<outputfile>
+-o=<outputfile> (short for -outputfile=<outputfile>)
   <outputfile> is the path to the output file
   Optional, defaults to the console (stdout)
   

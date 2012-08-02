@@ -23,6 +23,9 @@ package schemacrawler.crawl;
 
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -30,6 +33,8 @@ import schemacrawler.schema.ForeignKeyDeferrability;
 import schemacrawler.schema.ForeignKeyUpdateRule;
 import schemacrawler.schema.IndexColumnSortSequence;
 import schemacrawler.schema.IndexType;
+import schemacrawler.schema.Schema;
+import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.TableType;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
@@ -48,6 +53,32 @@ final class TableRetriever
   private static final Logger LOGGER = Logger.getLogger(TableRetriever.class
     .getName());
 
+  /**
+   * Converts an array of table types to an array of their corresponding
+   * string values.
+   * 
+   * @param tableTypes
+   *        Array of table types
+   * @return Array of string table types
+   */
+  private static String[] toStrings(final TableType[] tableTypes)
+  {
+    if (tableTypes == null || tableTypes.length == 0)
+    {
+      return new String[0];
+    }
+
+    final List<String> tableTypeStrings = new ArrayList<String>(tableTypes.length);
+    for (final TableType tableType: tableTypes)
+    {
+      if (tableType != null)
+      {
+        tableTypeStrings.add(tableType.toString().toUpperCase(Locale.ENGLISH));
+      }
+    }
+    return tableTypeStrings.toArray(new String[tableTypeStrings.size()]);
+  }
+
   TableRetriever(final RetrieverConnection retrieverConnection,
                  final MutableDatabase database)
     throws SQLException
@@ -64,7 +95,7 @@ final class TableRetriever
     {
       results = new MetadataResultSet(getMetaData()
         .getColumns(unquotedName(table.getSchema().getCatalogName()),
-                    unquotedName(table.getSchema().getSchemaName()),
+                    unquotedName(table.getSchema().getName()),
                     unquotedName(table.getName()),
                     null));
 
@@ -107,8 +138,9 @@ final class TableRetriever
           final String remarks = results.getString("REMARKS");
 
           column.setOrdinalPosition(ordinalPosition);
-          column.setType(lookupOrCreateColumnDataType((MutableSchema) table
-            .getSchema(), dataType, typeName));
+          column.setType(lookupOrCreateColumnDataType(table.getSchema(),
+                                                      dataType,
+                                                      typeName));
           column.setSize(size);
           column.setDecimalDigits(decimalDigits);
           column.setRemarks(remarks);
@@ -155,7 +187,7 @@ final class TableRetriever
                                                                  .getCatalogName()),
                                                                unquotedName(table
                                                                  .getSchema()
-                                                                 .getSchemaName()),
+                                                                 .getName()),
                                                                unquotedName(table
                                                                  .getName())));
       createForeignKeys(results, foreignKeys);
@@ -165,7 +197,7 @@ final class TableRetriever
                                                                  .getCatalogName()),
                                                                unquotedName(table
                                                                  .getSchema()
-                                                                 .getSchemaName()),
+                                                                 .getName()),
                                                                unquotedName(table
                                                                  .getName())));
       createForeignKeys(results, foreignKeys);
@@ -219,7 +251,7 @@ final class TableRetriever
     {
       results = new MetadataResultSet(getMetaData()
         .getPrimaryKeys(unquotedName(table.getSchema().getCatalogName()),
-                        unquotedName(table.getSchema().getSchemaName()),
+                        unquotedName(table.getSchema().getName()),
                         unquotedName(table.getName())));
 
       MutablePrimaryKey primaryKey;
@@ -288,7 +320,7 @@ final class TableRetriever
         .getTables(unquotedName(catalogName),
                    unquotedName(schemaName),
                    tableNamePattern,
-                   TableType.toStrings(tableTypes)));
+                   toStrings(tableTypes)));
 
       while (results.next())
       {
@@ -301,14 +333,7 @@ final class TableRetriever
                                                     TableType.unknown);
         final String remarks = results.getString("REMARKS");
 
-        final MutableSchema schema = lookupSchema(catalogName, schemaName);
-        if (schema == null)
-        {
-          LOGGER.log(Level.FINE, String.format("Cannot find schema, %s.%s",
-                                               catalogName,
-                                               schemaName));
-          continue;
-        }
+        final Schema schema = new SchemaReference(catalogName, schemaName);
 
         final MutableTable table;
         if (tableType == TableType.view)
@@ -324,7 +349,7 @@ final class TableRetriever
           table.setType(tableType);
           table.setRemarks(remarks);
 
-          schema.addTable(table);
+          database.addTable(table);
         }
       }
     }
@@ -396,7 +421,7 @@ final class TableRetriever
         // Make a direct connection between the two columns
         if (pkColumn != null && fkColumn != null)
         {
-          foreignKey.addColumnPair(keySequence, pkColumn, fkColumn);
+          foreignKey.addColumnReference(keySequence, pkColumn, fkColumn);
           foreignKey.setUpdateRule(ForeignKeyUpdateRule.valueOf(updateRule));
           foreignKey.setDeleteRule(ForeignKeyUpdateRule.valueOf(deleteRule));
           foreignKey.setDeferrability(ForeignKeyDeferrability
@@ -514,12 +539,14 @@ final class TableRetriever
     final boolean supportsCatalogs = getRetrieverConnection()
       .isSupportsCatalogs();
     MutableColumn column = null;
-    final MutableSchema schema = lookupSchema(supportsCatalogs? catalogName
+    final Schema schema = new SchemaReference(supportsCatalogs? catalogName
                                                               : null,
                                               schemaName);
     if (schema != null)
     {
-      MutableTable table = schema.getTable(tableName);
+      MutableTable table = database.getTable(new SchemaReference(catalogName,
+                                                                 schemaName),
+                                             tableName);
       if (table != null)
       {
         column = table.getColumn(columnName);
@@ -551,7 +578,7 @@ final class TableRetriever
     {
       results = new MetadataResultSet(getMetaData()
         .getIndexInfo(unquotedName(table.getSchema().getCatalogName()),
-                      unquotedName(table.getSchema().getSchemaName()),
+                      unquotedName(table.getSchema().getName()),
                       unquotedName(table.getName()),
                       unique,
                       true/* approximate */));

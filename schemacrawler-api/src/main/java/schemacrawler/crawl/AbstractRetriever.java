@@ -30,6 +30,8 @@ import java.util.Collection;
 import java.util.List;
 
 import schemacrawler.schema.DatabaseObject;
+import schemacrawler.schema.Schema;
+import schemacrawler.schema.SchemaReference;
 import sf.util.Utility;
 
 /**
@@ -124,7 +126,7 @@ abstract class AbstractRetriever
         belongsToCatalog = false;
       }
     }
-    final String dbObjectSchemaName = dbObject.getSchema().getSchemaName();
+    final String dbObjectSchemaName = dbObject.getSchema().getName();
     if (schemaName != null
         && !unquotedName(schemaName).equals(unquotedName(dbObjectSchemaName)))
     {
@@ -148,22 +150,9 @@ abstract class AbstractRetriever
     return retrieverConnection;
   }
 
-  Collection<SchemaReference> getSchemaNames()
+  Collection<Schema> getSchemas()
   {
-    return database.getSchemaNames();
-  }
-
-  MutableColumnDataType lookupColumnDataTypeByType(final MutableSchema schema,
-                                                   final int type)
-  {
-    MutableColumnDataType columnDataType = schema
-      .lookupColumnDataTypeByType(type);
-    if (columnDataType == null)
-    {
-      columnDataType = database.getSystemColumnDataTypesList()
-        .lookupColumnDataTypeByType(type);
-    }
-    return columnDataType;
+    return database.getSchemas();
   }
 
   /**
@@ -178,12 +167,12 @@ abstract class AbstractRetriever
    *        Database specific type name
    * @return Column data type
    */
-  MutableColumnDataType lookupOrCreateColumnDataType(final MutableSchema schema,
+  MutableColumnDataType lookupOrCreateColumnDataType(final Schema schema,
                                                      final int javaSqlType,
                                                      final String databaseSpecificTypeName)
   {
-    MutableColumnDataType columnDataType = schema
-      .getColumnDataType(databaseSpecificTypeName);
+    MutableColumnDataType columnDataType = database
+      .getColumnDataType(schema, databaseSpecificTypeName);
     if (columnDataType == null)
     {
       columnDataType = database
@@ -197,29 +186,34 @@ abstract class AbstractRetriever
       // Set the Java SQL type code, but no mapped Java class is
       // available, so use the defaults
       columnDataType.setType(javaSqlType, null);
-      schema.addColumnDataType(columnDataType);
+      database.addColumnDataType(columnDataType);
     }
     return columnDataType;
   }
 
-  MutableProcedure lookupProcedure(final String catalogName,
-                                   final String schemaName,
-                                   final String procedureName)
+  MutableRoutine lookupRoutine(final String catalogName,
+                               final String schemaName,
+                               final String routineName,
+                               final String specificName)
   {
-    MutableProcedure procedure = null;
-    final MutableSchema schema = lookupSchema(catalogName, schemaName);
+    MutableRoutine routine = null;
+    final Schema schema = new SchemaReference(catalogName, schemaName);
     if (schema != null)
     {
-      procedure = schema.getProcedure(procedureName);
+      final String routineLookupName;
+      if (!Utility.isBlank(specificName))
+      {
+        routineLookupName = specificName;
+      }
+      else
+      {
+        routineLookupName = routineName;
+      }
+      routine = (MutableRoutine) database
+        .getRoutine(new SchemaReference(catalogName, schemaName),
+                    routineLookupName);
     }
-    return procedure;
-  }
-
-  MutableSchema lookupSchema(final String catalogName, final String schemaName)
-  {
-    final SchemaReference schemaRef = new SchemaReference(catalogName,
-                                                          schemaName);
-    return database.getSchema(schemaRef);
+    return routine;
   }
 
   MutableTable lookupTable(final String catalogName,
@@ -227,10 +221,11 @@ abstract class AbstractRetriever
                            final String tableName)
   {
     MutableTable table = null;
-    final MutableSchema schema = lookupSchema(catalogName, schemaName);
+    final Schema schema = new SchemaReference(catalogName, schemaName);
     if (schema != null)
     {
-      table = schema.getTable(tableName);
+      table = database.getTable(new SchemaReference(catalogName, schemaName),
+                                tableName);
     }
     return table;
   }

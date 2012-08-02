@@ -20,6 +20,7 @@ package schemacrawler.test;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -34,6 +35,7 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.TestDatabase;
+import schemacrawler.utility.NamedObjectSort;
 
 public class ExcludeTest
 {
@@ -179,7 +181,8 @@ public class ExcludeTest
                                                 ".*\\..*\\.ID"));
 
     final Database database = testDatabase.getDatabase(schemaCrawlerOptions);
-    final Schema[] schemas = database.getSchemas();
+    final Schema[] schemas = (Schema[]) database.getSchemas()
+      .toArray(new Schema[0]);
     assertEquals("Schema count does not match",
                  schemaNames.length,
                  schemas.length);
@@ -188,15 +191,17 @@ public class ExcludeTest
       final Schema schema = schemas[schemaIdx];
       assertEquals("Schema name does not match",
                    "PUBLIC." + schemaNames[schemaIdx],
-                   schema.getName());
-      final Table[] tables = schema.getTables();
+                   schema.getFullName());
+      final Table[] tables = (Table[]) database.getTables(schema)
+        .toArray(new Table[0]);
+      Arrays.sort(tables, NamedObjectSort.alphabetical);
       assertEquals("Table count does not match, for schema " + schema,
                    tableCounts[schemaIdx],
                    tables.length);
       for (int tableIdx = 0; tableIdx < tables.length; tableIdx++)
       {
         final Table table = tables[tableIdx];
-        final Column[] columns = table.getColumns();
+        final Column[] columns = table.getColumns().toArray(new Column[0]);
         final String[] columnsNamesForTable = columnNames[schemaIdx][tableIdx];
         for (int columnIdx = 0; columnIdx < columns.length; columnIdx++)
         {

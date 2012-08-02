@@ -150,9 +150,9 @@ public class LinterTableWithIncrementingColumns
 
   }
 
-  private Multimap<String, IncrementingColumn> findIncrementingColumns(final Column[] columns)
+  private Multimap<String, IncrementingColumn> findIncrementingColumns(final List<Column> columns)
   {
-    if (columns == null || columns.length <= 1)
+    if (columns == null || columns.size() <= 1)
     {
       return new Multimap<String, IncrementingColumn>();
     }

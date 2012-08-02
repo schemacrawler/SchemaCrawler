@@ -32,19 +32,19 @@ import schemacrawler.schemacrawler.InformationSchemaViews;
 
 /**
  * A retriever that uses database metadata to get the extended details
- * about the database procedures.
+ * about the database routines.
  * 
  * @author Sualeh Fatehi
  */
-final class ProcedureExRetriever
+final class RoutineExRetriever
   extends AbstractRetriever
 {
 
   private static final Logger LOGGER = Logger
-    .getLogger(ProcedureExRetriever.class.getName());
+    .getLogger(RoutineExRetriever.class.getName());
 
-  ProcedureExRetriever(final RetrieverConnection retrieverConnection,
-                       final MutableDatabase database)
+  RoutineExRetriever(final RetrieverConnection retrieverConnection,
+                     final MutableDatabase database)
     throws SQLException
   {
     super(retrieverConnection, database);
@@ -93,10 +93,13 @@ final class ProcedureExRetriever
           .getString("ROUTINE_SCHEMA"));
         final String procedureName = quotedName(results
           .getString("ROUTINE_NAME"));
+        final String specificName = quotedName(results
+          .getString("SPECIFIC_NAME"));
 
-        final MutableProcedure procedure = lookupProcedure(catalogName,
-                                                           schemaName,
-                                                           procedureName);
+        final MutableProcedure procedure = (MutableProcedure) lookupRoutine(catalogName,
+                                                                            schemaName,
+                                                                            procedureName,
+                                                                            specificName);
         if (procedure != null)
         {
           LOGGER.log(Level.FINER, "Retrieving procedure information: "

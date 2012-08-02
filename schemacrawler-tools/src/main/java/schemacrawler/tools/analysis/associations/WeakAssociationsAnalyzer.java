@@ -35,9 +35,9 @@ import java.util.logging.Logger;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
-import schemacrawler.schema.ColumnMap;
+import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.ForeignKey;
-import schemacrawler.schema.ForeignKeyColumnMap;
+import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Table;
 import sf.util.Multimap;
@@ -77,7 +77,7 @@ final class WeakAssociationsAnalyzer
                  "Table matches map:" + ObjectToString.toString(tableMatchMap));
     }
 
-    final Map<String, ForeignKeyColumnMap> fkColumnsMap = mapForeignKeyColumns(tables);
+    final Map<String, ForeignKeyColumnReference> fkColumnsMap = mapForeignKeyColumns(tables);
 
     findWeakAssociations(tables, tableMatchMap, fkColumnsMap);
   }
@@ -90,7 +90,8 @@ final class WeakAssociationsAnalyzer
                              pkColumn.getFullName()));
     if (collector != null)
     {
-      final ColumnMap weakAssociation = new WeakAssociation(pkColumn, fkColumn);
+      final ColumnReference weakAssociation = new WeakAssociation(pkColumn,
+                                                                  fkColumn);
       collector.addWeakAssociation(weakAssociation);
     }
   }
@@ -215,7 +216,7 @@ final class WeakAssociationsAnalyzer
 
   private void findWeakAssociations(final List<Table> tables,
                                     final Multimap<String, Table> tableMatchMap,
-                                    final Map<String, ForeignKeyColumnMap> fkColumnsMap)
+                                    final Map<String, ForeignKeyColumnReference> fkColumnsMap)
   {
     for (final Table table: tables)
     {
@@ -235,12 +236,11 @@ final class WeakAssociationsAnalyzer
                 && !fkColumn.getParent().equals(matchedTable))
             {
               // Check if the table association is already expressed as
-              // a
-              // foreign key
-              final ForeignKeyColumnMap fkColumnMap = fkColumnsMap.get(fkColumn
-                .getFullName());
-              if (fkColumnMap == null
-                  || !fkColumnMap.getPrimaryKeyColumn().getParent()
+              // a foreign key
+              final ForeignKeyColumnReference fkColumnReference = fkColumnsMap
+                .get(fkColumn.getFullName());
+              if (fkColumnReference == null
+                  || !fkColumnReference.getPrimaryKeyColumn().getParent()
                     .equals(matchedTable))
               {
                 // Ensure that we associate to the primary key
@@ -269,9 +269,9 @@ final class WeakAssociationsAnalyzer
     final Map<String, Column> matchMap = new HashMap<String, Column>();
 
     final PrimaryKey primaryKey = table.getPrimaryKey();
-    if (primaryKey != null && primaryKey.getColumns().length == 1)
+    if (primaryKey != null && primaryKey.getColumns().size() == 1)
     {
-      matchMap.put("id", primaryKey.getColumns()[0]);
+      matchMap.put("id", primaryKey.getColumns().get(0));
     }
 
     for (final Column column: table.getColumns())
@@ -293,14 +293,14 @@ final class WeakAssociationsAnalyzer
     return matchMap;
   }
 
-  private Map<String, ForeignKeyColumnMap> mapForeignKeyColumns(final List<Table> tables)
+  private Map<String, ForeignKeyColumnReference> mapForeignKeyColumns(final List<Table> tables)
   {
-    final Map<String, ForeignKeyColumnMap> fkColumnsMap = new HashMap<String, ForeignKeyColumnMap>();
+    final Map<String, ForeignKeyColumnReference> fkColumnsMap = new HashMap<String, ForeignKeyColumnReference>();
     for (final Table table: tables)
     {
       for (final ForeignKey fk: table.getForeignKeys())
       {
-        for (final ForeignKeyColumnMap fkMap: fk.getColumnPairs())
+        for (final ForeignKeyColumnReference fkMap: fk.getColumnReferences())
         {
           fkColumnsMap.put(fkMap.getForeignKeyColumn().getFullName(), fkMap);
         }

@@ -23,7 +23,9 @@ import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.junit.Test;
 
@@ -55,12 +57,12 @@ public class SchemaCrawlerSystemTest
                                                                       ".*");
       final SchemaInfoLevel infoLevel = SchemaInfoLevel.minimum();
       infoLevel.setRetrieveTables(false);
-      infoLevel.setRetrieveProcedures(false);
+      infoLevel.setRetrieveRoutines(false);
       schemaCrawlerOptions.setSchemaInfoLevel(infoLevel);
 
       final Database database = retrieveDatabase(dataSource,
                                                  schemaCrawlerOptions);
-      final Schema[] schemas = database.getSchemas();
+      final Schema[] schemas = (Schema[]) database.getSchemas().toArray();
       assertEquals("Incorrect number of schemas for " + dataSource + ": "
                    + Arrays.toString(schemas), schemaCounts[i], schemas.length);
     }
@@ -138,10 +140,12 @@ public class SchemaCrawlerSystemTest
     dataSourceName = "PostgreSQL";
     schema = retrieveSchema(dataSourceName, "unknown");
     assertNull(dataSourceName, schema);
-    
+
   }
 
-  private void counts(final String dataSourceName, final Schema schema)
+  private void counts(final String dataSourceName,
+                      final Schema schema,
+                      Database database)
     throws Exception
   {
 
@@ -153,7 +157,7 @@ public class SchemaCrawlerSystemTest
         1, 0, 2, 1, 0, 0
     };
 
-    final Table[] tables = schema.getTables();
+    final Table[] tables = database.getTables(schema).toArray(new Table[0]);
     assertEquals(dataSourceName + " table count does not match",
                  tableColumnCounts.length,
                  tables.length);
@@ -164,18 +168,19 @@ public class SchemaCrawlerSystemTest
                                  dataSourceName,
                                  table.getFullName()),
                    tableColumnCounts[tableIdx],
-                   table.getColumns().length);
+                   table.getColumns().size());
       assertEquals(String.format("%s table %s foreign key count does not match",
                                  dataSourceName,
                                  table.getFullName()),
                    fkCounts[tableIdx],
-                   table.getForeignKeys().length);
+                   table.getForeignKeys().size());
     }
   }
 
   private void tables(final String dataSourceName,
                       final Schema schema,
-                      final String quote)
+                      final String quote,
+                      Database database)
     throws Exception
   {
     if (schema == null)
@@ -195,7 +200,7 @@ public class SchemaCrawlerSystemTest
         "TABLE", "VIEW", "TABLE", "TABLE", "TABLE", "TABLE"
     };
 
-    final Table[] tables = schema.getTables();
+    final Table[] tables = database.getTables(schema).toArray(new Table[0]);
     assertEquals(dataSourceName + " table count does not match - "
                      + ObjectToString.toString(tables),
                  tableNames.length,
@@ -218,10 +223,11 @@ public class SchemaCrawlerSystemTest
   {
     try
     {
-      Schema schema;
-      schema = retrieveSchema(dataSourceName, schemaInclusion);
-      tables(dataSourceName, schema, quote);
-      counts(dataSourceName, schema);
+      final Database database = retrieveDatabase(dataSourceName,
+                                                 schemaInclusion);
+      Schema schema = retrieveSchema(schemaInclusion, database);
+      tables(dataSourceName, schema, quote, database);
+      counts(dataSourceName, schema, database);
       return null;
     }
     catch (final Exception e)
@@ -229,6 +235,57 @@ public class SchemaCrawlerSystemTest
       e.printStackTrace();
       return e.getMessage();
     }
+  }
+
+  private Schema retrieveSchema(final String dataSourceName,
+                                final String schemaInclusion)
+    throws Exception
+  {
+    Database database = retrieveDatabase(dataSourceName, schemaInclusion);
+    return retrieveSchema(schemaInclusion, database);
+  }
+
+  private Schema retrieveSchema(final String schemaInclusion, Database database)
+    throws Exception
+  {
+
+    final Schema[] schemas = (Schema[]) database.getSchemas().toArray();
+    final Schema schema;
+    if (schemas == null || schemas.length == 0)
+    {
+      schema = null;
+    }
+    else if (schemas.length == 1)
+    {
+      schema = schemas[0];
+    }
+    else
+    {
+      final Pattern schemaPattern = Pattern.compile(".*books",
+                                                    Pattern.CASE_INSENSITIVE);
+      Schema scSchema = null;
+      for (final Schema currSchema: schemas)
+      {
+        if (schemaPattern.matcher(currSchema.getFullName()).matches())
+        {
+          scSchema = currSchema;
+          break;
+        }
+      }
+      schema = scSchema;
+    }
+    return schema;
+  }
+
+  private Database retrieveDatabase(final String dataSourceName,
+                                    final String schemaInclusion)
+    throws Exception
+  {
+    final SchemaCrawlerOptions schemaCrawlerOptions = createOptions(dataSourceName,
+                                                                    schemaInclusion);
+    final Database database = retrieveDatabase(dataSourceName,
+                                               schemaCrawlerOptions);
+    return database;
   }
 
 }

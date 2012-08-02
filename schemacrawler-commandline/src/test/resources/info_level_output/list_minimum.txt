@@ -37,7 +37,6 @@ Tables
 
 
 PUBLIC.BOOKS.AUTHORS                                             [table]
-PUBLIC.BOOKS.AUTHORSLIST                                          [view]
 PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
 PUBLIC.BOOKS.BOOKS                                               [table]
 PUBLIC.BOOKS."Global Counts"                                     [table]
@@ -49,10 +48,11 @@ PUBLIC.FOR_LINT.PUBLICATIONS                                     [table]
 PUBLIC.FOR_LINT.WRITERS                                          [table]
 PUBLIC."PUBLISHER SALES".REGIONS                                 [table]
 PUBLIC."PUBLISHER SALES".SALES                                   [table]
+PUBLIC.BOOKS.AUTHORSLIST                                          [view]
 
 
 
-Procedures
+Routines
 ========================================================================
 
 

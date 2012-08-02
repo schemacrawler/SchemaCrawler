@@ -24,14 +24,17 @@ package schemacrawler.crawl;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Database;
 import schemacrawler.schema.Procedure;
+import schemacrawler.schema.Routine;
 import schemacrawler.schema.Schema;
+import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
 
@@ -51,8 +54,11 @@ final class MutableDatabase
   private final MutableDatabaseInfo databaseInfo;
   private final MutableJdbcDriverInfo jdbcDriverInfo;
   private final MutableSchemaCrawlerInfo schemaCrawlerInfo;
-  private final ColumnDataTypes systemColumnDataTypes = new ColumnDataTypes();
-  private final Map<SchemaReference, MutableSchema> schemaRefsCache;
+  private final Set<Schema> schemas;
+  private final ColumnDataTypes columnDataTypes = new ColumnDataTypes();
+  private final NamedObjectList<MutableTable> tables = new NamedObjectList<MutableTable>();
+  private final NamedObjectList<MutableRoutine> routines = new NamedObjectList<MutableRoutine>();
+  private final NamedObjectList<MutableSynonym> synonyms = new NamedObjectList<MutableSynonym>();
 
   MutableDatabase(final String name)
   {
@@ -60,7 +66,51 @@ final class MutableDatabase
     databaseInfo = new MutableDatabaseInfo();
     jdbcDriverInfo = new MutableJdbcDriverInfo();
     schemaCrawlerInfo = new MutableSchemaCrawlerInfo();
-    schemaRefsCache = new HashMap<SchemaReference, MutableSchema>();
+    schemas = new HashSet<Schema>();
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.Schema#getColumnDataType(java.lang.String)
+   */
+  @Override
+  public MutableColumnDataType getColumnDataType(final Schema schema,
+                                                 final String name)
+  {
+    return columnDataTypes.lookup(schema, name);
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.Database#getSystemColumnDataTypes()
+   */
+  @Override
+  public Collection<ColumnDataType> getColumnDataTypes()
+  {
+    return new ArrayList<ColumnDataType>(columnDataTypes.values());
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.Database#getSystemColumnDataTypes()
+   */
+  @Override
+  public Collection<ColumnDataType> getColumnDataTypes(final Schema schema)
+  {
+    final Collection<ColumnDataType> values = getColumnDataTypes();
+    for (final Iterator<ColumnDataType> iterator = values.iterator(); iterator
+      .hasNext();)
+    {
+      final ColumnDataType mutableColumnDataType = iterator.next();
+      if (!mutableColumnDataType.getSchema().equals(schema))
+      {
+        iterator.remove();
+      }
+    }
+    return values;
   }
 
   @Override
@@ -82,18 +132,60 @@ final class MutableDatabase
 
   /**
    * {@inheritDoc}
+   */
+  @Override
+  public Routine getRoutine(final Schema schema, final String name)
+  {
+    return routines.lookup(schema, name);
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.Schema#getRoutines()
+   */
+  @Override
+  public Collection<Routine> getRoutines()
+  {
+    final List<MutableRoutine> values = routines.values();
+    return new ArrayList<Routine>(values);
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.Schema#getRoutines()
+   */
+  @Override
+  public Collection<Routine> getRoutines(final Schema schema)
+  {
+    final List<Routine> values = new ArrayList<Routine>(routines.values());
+    for (final Iterator<Routine> iterator = values.iterator(); iterator
+      .hasNext();)
+    {
+      final Routine routine = iterator.next();
+      if (!routine.getSchema().equals(schema))
+      {
+        iterator.remove();
+      }
+    }
+    return values;
+  }
+
+  /**
+   * {@inheritDoc}
    * 
    * @see schemacrawler.schema.Database#getSchema(java.lang.String)
    */
   @Override
-  public MutableSchema getSchema(final String name)
+  public Schema getSchema(final String name)
   {
-    final Collection<SchemaReference> schemaRefs = getSchemaNames();
-    for (final SchemaReference schemaRef: schemaRefs)
+    final Collection<Schema> schemas = getSchemaNames();
+    for (final Schema schema: schemas)
     {
-      if (schemaRef.getFullName().equals(name))
+      if (schema.getFullName().equals(name))
       {
-        return schemaRefsCache.get(schemaRef);
+        return schema;
       }
     }
     return null;
@@ -116,12 +208,52 @@ final class MutableDatabase
    * @see schemacrawler.schema.Database#getSchemas()
    */
   @Override
-  public Schema[] getSchemas()
+  public Collection<Schema> getSchemas()
   {
-    final List<MutableSchema> schemas = new ArrayList<MutableSchema>(schemaRefsCache
-      .values());
+    final List<Schema> schemas = new ArrayList<Schema>(this.schemas);
     Collections.sort(schemas);
-    return schemas.toArray(new Schema[schemas.size()]);
+    return schemas;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public MutableSynonym getSynonym(final Schema schemaRef, final String name)
+  {
+    return synonyms.lookup(schemaRef, name);
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.Schema#getRoutines()
+   */
+  @Override
+  public Collection<Synonym> getSynonyms()
+  {
+    return new ArrayList<Synonym>(synonyms.values());
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.Schema#getRoutines()
+   */
+  @Override
+  public Collection<Synonym> getSynonyms(final Schema schemaRef)
+  {
+    final Collection<Synonym> values = getSynonyms();
+    for (final Iterator<Synonym> iterator = values.iterator(); iterator
+      .hasNext();)
+    {
+      final Synonym mutableSynonym = iterator.next();
+      if (!mutableSynonym.getSchema().equals(schemaRef))
+      {
+        iterator.remove();
+      }
+    }
+    return values;
   }
 
   /**
@@ -132,7 +264,7 @@ final class MutableDatabase
   @Override
   public MutableColumnDataType getSystemColumnDataType(final String name)
   {
-    return systemColumnDataTypes.lookup(name);
+    return getColumnDataType(new SchemaReference(), name);
   }
 
   /**
@@ -141,84 +273,126 @@ final class MutableDatabase
    * @see schemacrawler.schema.Database#getSystemColumnDataTypes()
    */
   @Override
-  public ColumnDataType[] getSystemColumnDataTypes()
+  public Collection<ColumnDataType> getSystemColumnDataTypes()
   {
-    return systemColumnDataTypes.values()
-      .toArray(new ColumnDataType[systemColumnDataTypes.size()]);
+    return getColumnDataTypes(new SchemaReference());
   }
 
-  MutableSchema addSchema(final SchemaReference schemaRef)
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.Schema#getTable(java.lang.String)
+   */
+  @Override
+  public MutableTable getTable(final Schema schemaRef, final String name)
   {
-    final MutableSchema schema = new MutableSchema(schemaRef);
-    schemaRefsCache.put(schemaRef, schema);
+    return tables.lookup(schemaRef, name);
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.Schema#getTables()
+   */
+  @Override
+  public Collection<Table> getTables()
+  {
+    final List<Table> values = new ArrayList<Table>(tables.values());
+    return values;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.Schema#getTables()
+   */
+  @Override
+  public Collection<Table> getTables(final Schema schema)
+  {
+    final Collection<Table> values = getTables();
+    for (final Iterator<Table> iterator = values.iterator(); iterator.hasNext();)
+    {
+      final Table mutableTable = iterator.next();
+      if (!mutableTable.getSchema().equals(schema))
+      {
+        iterator.remove();
+      }
+    }
+    return values;
+  }
+
+  void addColumnDataType(final MutableColumnDataType columnDataType)
+  {
+    if (columnDataType != null)
+    {
+      columnDataTypes.add(columnDataType);
+    }
+  }
+
+  void addProcedure(final MutableProcedure procedure)
+  {
+    routines.add(procedure);
+  }
+
+  Schema addSchema(final Schema schema)
+  {
+    schemas.add(schema);
     return schema;
   }
 
-  MutableSchema addSchema(final String catalogName, final String schemaName)
+  Schema addSchema(final String catalogName, final String schemaName)
   {
     return addSchema(new SchemaReference(catalogName, schemaName));
   }
 
-  void addSystemColumnDataType(final MutableColumnDataType columnDataType)
+  void addSynonym(final MutableSynonym synonym)
   {
-    if (columnDataType != null)
-    {
-      systemColumnDataTypes.add(columnDataType);
-    }
+    synonyms.add(synonym);
   }
 
-  NamedObjectList<MutableProcedure> getAllProcedures()
+  void addTable(final MutableTable table)
   {
-    final NamedObjectList<MutableProcedure> procedures = new NamedObjectList<MutableProcedure>();
-    for (final Schema schema: getSchemas())
-    {
-      for (final Procedure procedure: schema.getProcedures())
-      {
-        procedures.add((MutableProcedure) procedure);
-      }
-    }
-    return procedures;
+    tables.add(table);
+  }
+
+  NamedObjectList<MutableRoutine> getAllRoutines()
+  {
+    return routines;
   }
 
   NamedObjectList<MutableSynonym> getAllSynonyms()
   {
-    final NamedObjectList<MutableSynonym> synonyms = new NamedObjectList<MutableSynonym>();
-    for (final Schema schema: getSchemas())
-    {
-      for (final Synonym synonym: schema.getSynonyms())
-      {
-        synonyms.add((MutableSynonym) synonym);
-      }
-    }
     return synonyms;
   }
 
   NamedObjectList<MutableTable> getAllTables()
   {
-    final NamedObjectList<MutableTable> tables = new NamedObjectList<MutableTable>();
-    for (final Schema schema: getSchemas())
-    {
-      for (final Table table: schema.getTables())
-      {
-        tables.add((MutableTable) table);
-      }
-    }
     return tables;
   }
 
-  MutableSchema getSchema(final SchemaReference schemaRef)
+  Collection<Schema> getSchemaNames()
   {
-    return schemaRefsCache.get(schemaRef);
+    return schemas;
   }
 
-  Collection<SchemaReference> getSchemaNames()
+  MutableColumnDataType lookupColumnDataTypeByType(final int type)
   {
-    return schemaRefsCache.keySet();
+    return columnDataTypes.lookupColumnDataTypeByType(type);
   }
 
-  ColumnDataTypes getSystemColumnDataTypesList()
+  void removeProcedure(final Procedure procedure)
   {
-    return systemColumnDataTypes;
+    routines.remove(procedure);
+  }
+
+  void removeSynonym(final Synonym synonym)
+  {
+    synonyms.remove(synonym);
+  }
+
+  void removeTable(final Table table)
+  {
+    tables.remove(table);
   }
 
 }

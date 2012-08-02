@@ -1,6 +1,6 @@
 --- Command ---
 
--command=velocity
+-c=velocity (short for -command=velocity)
   Processes a Velocity template
   
 --- Output Options ---
@@ -9,6 +9,6 @@
 	Where <outputformat> is the file path or class path to the Velocity 
 	template
 
--outputfile=<outputfile>
+-o=<outputfile> (short for -outputfile=<outputfile>)
 	Optional 
 	<outputfile> is the path to the output file
