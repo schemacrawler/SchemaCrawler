@@ -20,6 +20,8 @@
 package schemacrawler.crawl;
 
 
+import schemacrawler.schema.SchemaReference;
+
 class ColumnDataTypes
   extends NamedObjectList<MutableColumnDataType>
 {
@@ -28,13 +30,17 @@ class ColumnDataTypes
 
   MutableColumnDataType lookupColumnDataTypeByType(final int type)
   {
+    final SchemaReference systemSchema = new SchemaReference();
     MutableColumnDataType columnDataType = null;
     for (final MutableColumnDataType currentColumnDataType: this)
     {
       if (type == currentColumnDataType.getType())
       {
         columnDataType = currentColumnDataType;
-        break;
+        if (columnDataType.getSchema().equals(systemSchema))
+        {
+          break;
+        }
       }
     }
     return columnDataType;

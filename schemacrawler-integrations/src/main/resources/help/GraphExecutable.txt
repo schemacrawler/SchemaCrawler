@@ -1,6 +1,6 @@
 --- Command ---
 
--command=graph
+-c=graph (short for -command=graph)
   Creates a database diagram using GraphViz
   
 --- Output Options ---
@@ -9,5 +9,5 @@
 	Where <outputformat> is one of bmp, dot, eps, gif, jpg, png, ps2, tiff.
 	If Graphviz dot is not found, then a dot file is produced.
 
--outputfile=<outputfile>
+-o=<outputfile> (short for -outputfile=<outputfile>)
 	<outputfile> is the path to the graph output file

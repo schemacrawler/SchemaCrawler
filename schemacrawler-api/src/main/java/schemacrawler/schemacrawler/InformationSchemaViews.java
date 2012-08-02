@@ -133,10 +133,9 @@ public final class InformationSchemaViews
   }
 
   /**
-   * Gets the procedure definitions SQL from the additional
-   * configuration.
+   * Gets the routine definitions SQL from the additional configuration.
    * 
-   * @return Procedure defnitions SQL.
+   * @return Routine defnitions SQL.
    */
   public String getRoutinesSql()
   {

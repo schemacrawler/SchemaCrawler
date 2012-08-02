@@ -21,7 +21,7 @@
 package schemacrawler.tools.text.base;
 
 
-import java.util.Arrays;
+import java.util.Collection;
 import java.util.Map.Entry;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -109,7 +109,7 @@ public abstract class BaseTabularFormatter<O extends Options>
                                                     Alignment.left));
     out.print(formattingHelper.createObjectEnd());
 
-    if (printVerboseDatabaseInfo && dbInfo.getProperties().length > 0)
+    if (printVerboseDatabaseInfo && dbInfo.getProperties().size() > 0)
     {
       out.println(formattingHelper.createHeader(DocumentHeaderType.section,
                                                 "Database Characteristics"));
@@ -162,9 +162,9 @@ public abstract class BaseTabularFormatter<O extends Options>
                                                     Alignment.left));
     out.print(formattingHelper.createObjectEnd());
 
-    final JdbcDriverProperty[] jdbcDriverProperties = driverInfo
+    final Collection<JdbcDriverProperty> jdbcDriverProperties = driverInfo
       .getDriverProperties();
-    if (printVerboseDatabaseInfo && jdbcDriverProperties.length > 0)
+    if (printVerboseDatabaseInfo && jdbcDriverProperties.size() > 0)
     {
       out.println(formattingHelper.createHeader(DocumentHeaderType.section,
                                                 "JDBC Driver Properties"));
@@ -245,15 +245,13 @@ public abstract class BaseTabularFormatter<O extends Options>
 
   private void printJdbcDriverProperty(final JdbcDriverProperty driverProperty)
   {
-    final String choices = Arrays.asList(driverProperty.getChoices())
-      .toString();
     final String required = (driverProperty.isRequired()? "": "not ")
                             + "required";
     String details = required;
     if (driverProperty.getChoices() != null
-        && driverProperty.getChoices().length > 0)
+        && driverProperty.getChoices().size() > 0)
     {
-      details = details + "; choices " + choices;
+      details = details + "; choices " + driverProperty.getChoices();
     }
     final String value = driverProperty.getValue();
 

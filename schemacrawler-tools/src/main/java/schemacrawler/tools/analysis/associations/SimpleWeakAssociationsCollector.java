@@ -20,43 +20,44 @@
 package schemacrawler.tools.analysis.associations;
 
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
-import schemacrawler.schema.ColumnMap;
+import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.Table;
 
 public class SimpleWeakAssociationsCollector
   implements WeakAssociationsCollector
 {
 
-  public static final ColumnMap[] getWeakAssociations(final Table table)
+  public static final List<ColumnReference> getWeakAssociations(final Table table)
   {
     if (table == null)
     {
       return null;
     }
 
-    final Set<ColumnMap> weakAssociations = table
-      .getAttribute(WEAK_ASSOCIATIONS_KEY, new HashSet<ColumnMap>());
-    final ColumnMap[] tableWeakAssociations = weakAssociations
-      .toArray(new ColumnMap[weakAssociations.size()]);
-    Arrays.sort(tableWeakAssociations);
-    return tableWeakAssociations;
+    final Set<ColumnReference> weakAssociations = table
+      .getAttribute(WEAK_ASSOCIATIONS_KEY, new HashSet<ColumnReference>());
+    final List<ColumnReference> weakAssociationsList = new ArrayList<ColumnReference>(weakAssociations);
+    Collections.sort(weakAssociationsList);
+    return weakAssociationsList;
   }
 
-  private final Set<ColumnMap> weakAssociations;
+  private final Set<ColumnReference> weakAssociations;
 
   public SimpleWeakAssociationsCollector()
   {
-    weakAssociations = new HashSet<ColumnMap>();
+    weakAssociations = new HashSet<ColumnReference>();
   }
 
   @Override
-  public void addWeakAssociation(final ColumnMap weakAssociation)
+  public void addWeakAssociation(final ColumnReference weakAssociation)
   {
     if (weakAssociation != null)
     {
@@ -82,7 +83,7 @@ public class SimpleWeakAssociationsCollector
   }
 
   @Override
-  public Iterator<ColumnMap> iterator()
+  public Iterator<ColumnReference> iterator()
   {
     return weakAssociations.iterator();
   }
@@ -94,20 +95,21 @@ public class SimpleWeakAssociationsCollector
   }
 
   @Override
-  public ColumnMap[] toArray()
+  public ColumnReference[] toArray()
   {
-    return weakAssociations.toArray(new ColumnMap[weakAssociations.size()]);
+    return weakAssociations
+      .toArray(new ColumnReference[weakAssociations.size()]);
   }
 
   private void addWeakAssociation(final Table table,
-                                  final ColumnMap weakAssociation)
+                                  final ColumnReference weakAssociation)
   {
     if (table != null && weakAssociation != null)
     {
       weakAssociations.add(weakAssociation);
 
-      final Collection<ColumnMap> tableWeakAssociations = table
-        .getAttribute(WEAK_ASSOCIATIONS_KEY, new HashSet<ColumnMap>());
+      final Collection<ColumnReference> tableWeakAssociations = table
+        .getAttribute(WEAK_ASSOCIATIONS_KEY, new HashSet<ColumnReference>());
       tableWeakAssociations.add(weakAssociation);
       table.setAttribute(WEAK_ASSOCIATIONS_KEY, tableWeakAssociations);
     }

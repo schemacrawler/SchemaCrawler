@@ -82,8 +82,7 @@ public class LinterForeignKeyWithNoIndices
         indexColumnsList.add(indexColumns);
       }
 
-      final ForeignKey[] importedForeignKeys = table.getImportedForeignKeys();
-      for (final ForeignKey foreignKey: importedForeignKeys)
+      for (final ForeignKey foreignKey: table.getImportedForeignKeys())
       {
         final List<String> foreignKeyColumns = foreignKeyColumns(foreignKey);
         boolean hasIndex = false;

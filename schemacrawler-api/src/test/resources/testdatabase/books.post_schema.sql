@@ -32,6 +32,10 @@ CREATE PROCEDURE New_Publisher(OUT Publisher VARCHAR(50))
   SET Publisher = 'New Publisher'
 ;
   
+CREATE PROCEDURE New_Publisher(IN NewPublisher VARCHAR(50), OUT Publisher VARCHAR(50))
+  SET Publisher = NewPublisher
+;
+
 -- Triggers
 CREATE TRIGGER TRG_Authors AFTER DELETE ON Authors FOR EACH ROW UPDATE Publishers SET Publisher = 'Jacob' WHERE Publisher = 'John'
 ;

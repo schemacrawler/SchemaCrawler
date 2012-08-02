@@ -57,7 +57,7 @@ final class DataResultSet
   private static final String BINARY = "<binary>";
 
   private final ResultSet rows;
-  private final ResultsColumn[] resultsColumns;
+  private final List<ResultsColumn> resultsColumns;
   private final boolean showLobs;
 
   public DataResultSet(final ResultSet rows, final boolean showLobs)
@@ -82,11 +82,11 @@ final class DataResultSet
 
   public String[] getColumnNames()
   {
-    final int columnCount = resultsColumns.length;
+    final int columnCount = resultsColumns.size();
     final String[] columnNames = new String[columnCount];
     for (int i = 0; i < columnCount; i++)
     {
-      columnNames[i] = resultsColumns[i].getName();
+      columnNames[i] = resultsColumns.get(i).getName();
     }
     return columnNames;
   }
@@ -100,7 +100,7 @@ final class DataResultSet
   public List<String> row()
     throws SQLException
   {
-    final int columnCount = resultsColumns.length;
+    final int columnCount = resultsColumns.size();
     final List<String> currentRow = new ArrayList<String>(columnCount);
     for (int i = 0; i < columnCount; i++)
     {
@@ -113,13 +113,13 @@ final class DataResultSet
 
   public int width()
   {
-    return resultsColumns.length;
+    return resultsColumns.size();
   }
 
   private String convertColumnDataToString(final int i)
     throws SQLException
   {
-    final int javaSqlType = resultsColumns[i].getType().getType();
+    final int javaSqlType = resultsColumns.get(i).getType().getType();
     String columnDataString;
     if (javaSqlType == Types.CLOB)
     {

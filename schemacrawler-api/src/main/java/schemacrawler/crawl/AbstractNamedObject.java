@@ -26,6 +26,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import schemacrawler.schema.NamedObject;
+import schemacrawler.utility.NamedObjectSort;
 import sf.util.Utility;
 
 /**
@@ -40,6 +41,7 @@ abstract class AbstractNamedObject
   private static final long serialVersionUID = -1486322887991472729L;
 
   private final String name;
+
   private String remarks;
   private final Map<String, Object> attributeMap = new HashMap<String, Object>();
 
@@ -152,6 +154,12 @@ abstract class AbstractNamedObject
   public String getFullName()
   {
     return name;
+  }
+
+  @Override
+  public String getLookupKey()
+  {
+    return getFullName();
   }
 
   /**

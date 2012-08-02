@@ -22,8 +22,14 @@ package schemacrawler.crawl;
 
 
 import java.sql.DriverPropertyInfo;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 import schemacrawler.schema.JdbcDriverProperty;
+import schemacrawler.schema.Property;
 
 /**
  * Represents a JDBC driver property, and it's value. Created from
@@ -40,18 +46,27 @@ final class MutableJdbcDriverProperty
 
   private final String description;
   private final boolean required;
-  private final String[] choices;
+  private final List<String> choices;
 
   MutableJdbcDriverProperty(final DriverPropertyInfo driverPropertyInfo)
   {
     super(driverPropertyInfo.name, driverPropertyInfo.value);
     description = driverPropertyInfo.description;
     required = driverPropertyInfo.required;
-    choices = driverPropertyInfo.choices;
+
+    if (driverPropertyInfo.choices == null)
+    {
+      choices = Collections.emptyList();
+    }
+    else
+    {
+      choices = Arrays.asList(driverPropertyInfo.choices);
+      Collections.sort(choices);
+    }
   }
 
   @Override
-  public int compareTo(final JdbcDriverProperty otherProperty)
+  public int compareTo(final Property otherProperty)
   {
     if (otherProperty == null)
     {
@@ -70,16 +85,9 @@ final class MutableJdbcDriverProperty
    * @see schemacrawler.schema.JdbcDriverProperty#getChoices()
    */
   @Override
-  public String[] getChoices()
+  public Collection<String> getChoices()
   {
-    if (choices != null)
-    {
-      return choices;
-    }
-    else
-    {
-      return new String[0];
-    }
+    return new ArrayList<String>(choices);
   }
 
   /**

@@ -29,6 +29,7 @@ import java.util.logging.Logger;
  * An enumeration wrapper around procedure column types.
  */
 public enum ProcedureColumnType
+  implements RoutineColumnType
 {
 
   /**

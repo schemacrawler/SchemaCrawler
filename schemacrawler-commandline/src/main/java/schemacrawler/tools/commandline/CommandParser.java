@@ -37,7 +37,7 @@ final class CommandParser
 
   CommandParser()
   {
-    super(new StringOption("command", null));
+    super(new StringOption('c', "command", null));
   }
 
   @Override

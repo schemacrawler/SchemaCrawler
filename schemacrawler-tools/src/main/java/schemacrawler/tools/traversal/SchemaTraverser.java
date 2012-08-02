@@ -20,14 +20,11 @@
 package schemacrawler.tools.traversal;
 
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.Collection;
 
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Database;
-import schemacrawler.schema.Procedure;
-import schemacrawler.schema.Schema;
+import schemacrawler.schema.Routine;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -74,19 +71,11 @@ public class SchemaTraverser
     handler.handle(database.getJdbcDriverInfo());
     handler.handleInfoEnd();
 
-    final List<ColumnDataType> columnDataTypes = new ArrayList<ColumnDataType>();
-    final List<Table> tables = new ArrayList<Table>();
-    final List<Procedure> procedures = new ArrayList<Procedure>();
-    final List<Synonym> synonyms = new ArrayList<Synonym>();
-
-    columnDataTypes.addAll(Arrays.asList(database.getSystemColumnDataTypes()));
-    for (final Schema schema: database.getSchemas())
-    {
-      columnDataTypes.addAll(Arrays.asList(schema.getColumnDataTypes()));
-      tables.addAll(Arrays.asList(schema.getTables()));
-      procedures.addAll(Arrays.asList(schema.getProcedures()));
-      synonyms.addAll(Arrays.asList(schema.getSynonyms()));
-    }
+    final Collection<ColumnDataType> columnDataTypes = database
+      .getColumnDataTypes();
+    final Collection<Table> tables = database.getTables();
+    final Collection<Routine> routines = database.getRoutines();
+    final Collection<Synonym> synonyms = database.getSynonyms();
 
     if (!columnDataTypes.isEmpty())
     {
@@ -108,14 +97,14 @@ public class SchemaTraverser
       handler.handleTablesEnd();
     }
 
-    if (!procedures.isEmpty())
+    if (!routines.isEmpty())
     {
-      handler.handleProceduresStart();
-      for (final Procedure procedure: procedures)
+      handler.handleRoutinesStart();
+      for (final Routine routine: routines)
       {
-        handler.handle(procedure);
+        handler.handle(routine);
       }
-      handler.handleProceduresEnd();
+      handler.handleRoutinesEnd();
     }
 
     if (!synonyms.isEmpty())

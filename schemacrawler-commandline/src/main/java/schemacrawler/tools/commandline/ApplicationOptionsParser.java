@@ -40,7 +40,8 @@ public final class ApplicationOptionsParser
   {
     super(new StringOption("loglevel", "OFF"),
           new BooleanOption('?', "help"),
-          new BooleanOption('h', "-help"));
+          new BooleanOption('h', "-help"),
+          new BooleanOption('V', "-version"));
   }
 
   @Override
@@ -59,6 +60,11 @@ public final class ApplicationOptionsParser
     if (getBooleanValue("?") || getBooleanValue("h"))
     {
       options.setShowHelp(true);
+    }
+    if (getBooleanValue("V") || getBooleanValue("-version"))
+    {
+      options.setShowHelp(true);
+      options.setShowVersionOnly(true);
     }
 
     return options;

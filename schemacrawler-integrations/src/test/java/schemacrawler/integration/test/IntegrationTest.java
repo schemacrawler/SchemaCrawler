@@ -111,8 +111,6 @@ public class IntegrationTest
     testOutputFile.delete();
     final OutputOptions outputOptions = new OutputOptions("png", testOutputFile);
 
-    executable.getSchemaCrawlerOptions()
-      .setAlphabeticalSortForTableColumns(true);
     executable.setOutputOptions(outputOptions);
     executable.execute(testDatabase.getConnection());
 
@@ -184,8 +182,6 @@ public class IntegrationTest
     final OutputOptions outputOptions = new OutputOptions(outputFormatValue,
                                                           testOutputFile);
 
-    executable.getSchemaCrawlerOptions()
-      .setAlphabeticalSortForTableColumns(true);
     executable.setOutputOptions(outputOptions);
     executable.execute(testDatabase.getConnection());
 

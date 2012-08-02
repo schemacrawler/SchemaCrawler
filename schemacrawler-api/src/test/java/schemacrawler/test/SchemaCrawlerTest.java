@@ -18,7 +18,6 @@
 package schemacrawler.test;
 
 
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -36,7 +35,6 @@ import java.util.Map.Entry;
 import java.util.Random;
 import java.util.SortedMap;
 import java.util.TreeMap;
-import java.util.logging.Logger;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -47,6 +45,7 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.Database;
 import schemacrawler.schema.EventManipulationType;
 import schemacrawler.schema.Procedure;
+import schemacrawler.schema.Routine;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
@@ -59,13 +58,11 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.test.utility.TestDatabase;
 import schemacrawler.test.utility.TestUtility;
+import schemacrawler.utility.NamedObjectSort;
 import sf.util.Utility;
 
 public class SchemaCrawlerTest
 {
-
-  private static final Logger LOGGER = Logger.getLogger(SchemaCrawlerTest.class
-    .getName());
 
   private static final String METADATA_OUTPUT = "metadata/";
 
@@ -125,29 +122,29 @@ public class SchemaCrawlerTest
         },
         {
             {
-                "SYS_CT_10069", "SYS_CT_10070", "SYS_CT_10071"
+                "SYS_CT_10070", "SYS_CT_10071", "SYS_CT_10072"
             },
             {},
             {},
             {
-                "SYS_CT_10061", "SYS_CT_10062", "SYS_CT_10063",
+                "SYS_CT_10062", "SYS_CT_10063", "SYS_CT_10064",
             },
             {
                 "CHECK_UPPERCASE_STATE",
-                "SYS_CT_10055",
                 "SYS_CT_10056",
                 "SYS_CT_10057",
                 "SYS_CT_10058",
                 "SYS_CT_10059",
+                "SYS_CT_10060",
             },
         },
         {},
         {},
         {
             {
-                "SYS_CT_10045", "SYS_CT_10046", "SYS_CT_10047", "SYS_CT_10048"
+                "SYS_CT_10046", "SYS_CT_10047", "SYS_CT_10048", "SYS_CT_10049"
             }, {
-                "SYS_CT_10050", "SYS_CT_10051"
+                "SYS_CT_10051", "SYS_CT_10052"
             }
         },
         {}
@@ -164,19 +161,21 @@ public class SchemaCrawlerTest
     schemaCrawlerOptions.setInformationSchemaViews(informationSchemaViews);
 
     final Database database = testDatabase.getDatabase(schemaCrawlerOptions);
-    final Schema[] schemas = database.getSchemas();
+    final Schema[] schemas = (Schema[]) database.getSchemas()
+      .toArray(new Schema[0]);
     assertEquals("Schema count does not match", 6, schemas.length);
     for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++)
     {
       final Schema schema = schemas[schemaIdx];
-      final Table[] tables = schema.getTables();
+      final Table[] tables = database.getTables(schema).toArray(new Table[0]);
       assertEquals("Table count does not match",
                    tableCounts[schemaIdx],
                    tables.length);
       for (int tableIdx = 0; tableIdx < tables.length; tableIdx++)
       {
         final Table table = tables[tableIdx];
-        final CheckConstraint[] checkConstraints = table.getCheckConstraints();
+        final CheckConstraint[] checkConstraints = table.getCheckConstraints()
+          .toArray(new CheckConstraint[0]);
         assertEquals(String.format("Table [%d][%d] %s check constraints count does not match",
                                    schemaIdx,
                                    tableIdx,
@@ -205,7 +204,7 @@ public class SchemaCrawlerTest
     assertNotNull(database);
     final Schema schema = database.getSchema("PUBLIC.BOOKS");
     assertNotNull(schema);
-    final Table table = schema.getTable("AUTHORS");
+    final Table table = database.getTable(schema, "AUTHORS");
     assertNotNull(table);
     assertNull(table.getColumn(null));
     assertNull(table.getColumn(""));
@@ -285,15 +284,17 @@ public class SchemaCrawlerTest
                                                 ".*\\.FOR_LINT"));
 
     final Database database = testDatabase.getDatabase(schemaCrawlerOptions);
-    final Schema[] schemas = database.getSchemas();
+    final Schema[] schemas = (Schema[]) database.getSchemas()
+      .toArray(new Schema[0]);
     assertEquals("Schema count does not match", 5, schemas.length);
     for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++)
     {
       final Schema schema = schemas[schemaIdx];
-      final Table[] tables = schema.getTables();
+      final Table[] tables = database.getTables(schema).toArray(new Table[0]);
       assertEquals("Table count does not match",
                    tableCounts[schemaIdx],
                    tables.length);
+      Arrays.sort(tables, NamedObjectSort.alphabetical);
       for (int tableIdx = 0; tableIdx < tables.length; tableIdx++)
       {
         final Table table = tables[tableIdx];
@@ -302,49 +303,49 @@ public class SchemaCrawlerTest
                                    tableIdx,
                                    table.getFullName()),
                      tableColumnCounts[schemaIdx][tableIdx],
-                     table.getColumns().length);
+                     table.getColumns().size());
         assertEquals(String.format("Table [%d][%d] %s check constraints count does not match",
                                    schemaIdx,
                                    tableIdx,
                                    table.getFullName()),
                      checkConstraints[schemaIdx][tableIdx],
-                     table.getCheckConstraints().length);
+                     table.getCheckConstraints().size());
         assertEquals(String.format("Table [%d][%d] %s index count does not match",
                                    schemaIdx,
                                    tableIdx,
                                    table.getFullName()),
                      indexCounts[schemaIdx][tableIdx],
-                     table.getIndices().length);
+                     table.getIndices().size());
         assertEquals(String.format("Table [%d][%d] %s foreign key count does not match",
                                    schemaIdx,
                                    tableIdx,
                                    table.getFullName()),
                      fkCounts[schemaIdx][tableIdx],
-                     table.getForeignKeys().length);
+                     table.getForeignKeys().size());
         assertEquals(String.format("Table [%d][%d] %s exported foreign key count does not match",
                                    schemaIdx,
                                    tableIdx,
                                    table.getFullName()),
                      exportedFkCounts[schemaIdx][tableIdx],
-                     table.getExportedForeignKeys().length);
+                     table.getExportedForeignKeys().size());
         assertEquals(String.format("Table [%d][%d] %s imported foreign key count does not match",
                                    schemaIdx,
                                    tableIdx,
                                    table.getFullName()),
                      importedFkCounts[schemaIdx][tableIdx],
-                     table.getImportedForeignKeys().length);
+                     table.getImportedForeignKeys().size());
         assertEquals(String.format("Table [%d][%d] %s privileges count does not match",
                                    schemaIdx,
                                    tableIdx,
                                    table.getFullName()),
                      tablePrivilegesCounts[schemaIdx][tableIdx],
-                     table.getPrivileges().length);
+                     table.getPrivileges().size());
       }
     }
   }
 
   @Test
-  public void procedureDefinitions()
+  public void routineDefinitions()
     throws Exception
   {
 
@@ -356,14 +357,16 @@ public class SchemaCrawlerTest
     schemaCrawlerOptions.setInformationSchemaViews(informationSchemaViews);
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
 
+    final Database database = testDatabase.getDatabase(schemaCrawlerOptions);
     final Schema schema = testDatabase.getSchema(schemaCrawlerOptions,
                                                  "PUBLIC.BOOKS");
-    final Procedure[] procedures = schema.getProcedures();
-    assertEquals("Wrong number of procedures", 1, procedures.length);
-    for (final Procedure procedure: procedures)
+    final Routine[] routines = database.getRoutines(schema)
+      .toArray(new Routine[0]);
+    assertEquals("Wrong number of routines", 2, routines.length);
+    for (final Routine routine: routines)
     {
-      assertFalse("Procedure definition not found, for " + procedure,
-                  Utility.isBlank(procedure.getDefinition()));
+      assertFalse("Routine definition not found, for " + routine,
+                  Utility.isBlank(((Procedure) routine).getDefinition()));
     }
   }
 
@@ -374,27 +377,30 @@ public class SchemaCrawlerTest
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.detailed());
+    final Database database = testDatabase.getDatabase(schemaCrawlerOptions);
     final Schema schema1 = testDatabase.getSchema(schemaCrawlerOptions,
                                                   "PUBLIC.BOOKS");
-    assertTrue("Could not find any tables", schema1.getTables().length > 0);
-    assertEquals("Wrong number of procedures",
-                 1,
-                 schema1.getProcedures().length);
+    assertTrue("Could not find any tables",
+               database.getTables(schema1).size() > 0);
+    assertEquals("Wrong number of routines", 2, database.getRoutines(schema1)
+      .size());
 
     final Schema schema2 = testDatabase.getSchema(schemaCrawlerOptions,
                                                   "PUBLIC.BOOKS");
 
     assertEquals("Schema not not match", schema1, schema2);
-    assertArrayEquals("Tables do not match",
-                      schema1.getTables(),
-                      schema2.getTables());
-    assertArrayEquals("Procedures do not match",
-                      schema1.getProcedures(),
-                      schema2.getProcedures());
+    assertEquals("Tables do not match",
+                 database.getTables(schema1),
+                 database.getTables(schema2));
+    assertEquals("Routines do not match",
+                 database.getRoutines(schema1),
+                 database.getRoutines(schema2));
 
     // Try negative test
-    final Table table1 = schema1.getTables()[0];
-    final Table table2 = schema1.getTables()[1];
+    final Table table1 = (Table) database.getTables(schema1)
+      .toArray(new Table[0])[0];
+    final Table table2 = (Table) database.getTables(schema1)
+      .toArray(new Table[0])[1];
     assertFalse("Tables should not be equal", table1.equals(table2));
 
   }
@@ -464,7 +470,8 @@ public class SchemaCrawlerTest
     final Database database = testDatabase.getDatabase(schemaCrawlerOptions);
     final Schema schema = database.getSchema("PUBLIC.BOOKS");
     assertNotNull("BOOKS Schema not found", schema);
-    final Synonym[] synonyms = schema.getSynonyms();
+    final Synonym[] synonyms = database.getSynonyms(schema)
+      .toArray(new Synonym[0]);
     assertEquals("Synonym count does not match", 6, synonyms.length);
     for (int i = 0; i < synonyms.length; i++)
     {
@@ -500,11 +507,13 @@ public class SchemaCrawlerTest
                                                 ".*\\.FOR_LINT"));
 
     final Database database = testDatabase.getDatabase(schemaCrawlerOptions);
-    final Schema[] schemas = database.getSchemas();
+    final Schema[] schemas = (Schema[]) database.getSchemas()
+      .toArray(new Schema[0]);
     assertEquals("Schema count does not match", 5, schemas.length);
     for (final Schema schema: schemas)
     {
-      final Table[] tables = schema.getTables();
+      final Table[] tables = database.getTables(schema).toArray(new Table[0]);
+      Arrays.sort(tables, NamedObjectSort.alphabetical);
       for (final Table table: tables)
       {
         writer.println(String.format("o--> %s [%s]",
@@ -519,7 +528,7 @@ public class SchemaCrawlerTest
                                        tableAttribute.getKey(),
                                        tableAttribute.getValue()));
         }
-        final Column[] columns = table.getColumns();
+        final Column[] columns = table.getColumns().toArray(new Column[0]);
         for (final Column column: columns)
         {
           writer.println(String.format("   o--> %s [%s]",
@@ -565,13 +574,13 @@ public class SchemaCrawlerTest
     final Random rnd = new Random();
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setAlphabeticalSortForTables(false);
     schemaCrawlerOptions
       .setSchemaInclusionRule(new InclusionRule(InclusionRule.ALL,
                                                 ".*\\.FOR_LINT"));
 
     final Database database = testDatabase.getDatabase(schemaCrawlerOptions);
-    final Schema[] schemas = database.getSchemas();
+    final Schema[] schemas = (Schema[]) database.getSchemas()
+      .toArray(new Schema[0]);
     assertEquals("Schema count does not match", 5, schemas.length);
     final Schema schema = schemas[0];
 
@@ -582,14 +591,14 @@ public class SchemaCrawlerTest
       {
         final String tableName2 = tableNames[j];
         assertEquals(tableName1 + " <--> " + tableName2,
-                     Math.signum(schema.getTable(tableName1).compareTo(schema
-                       .getTable(tableName2))),
+                     Math.signum(database.getTable(schema, tableName1)
+                       .compareTo(database.getTable(schema, tableName2))),
                      Math.signum(i - j),
                      1e-100);
       }
     }
 
-    final Table[] tables = schema.getTables();
+    final Table[] tables = database.getTables(schema).toArray(new Table[0]);
     for (int i = 0; i < 10; i++)
     {
       for (int tableIdx = 0; tableIdx < tables.length; tableIdx++)
@@ -626,14 +635,14 @@ public class SchemaCrawlerTest
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setInformationSchemaViews(informationSchemaViews);
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
+    final Database database = testDatabase.getDatabase(schemaCrawlerOptions);
     final Schema schema = testDatabase.getSchema(schemaCrawlerOptions,
                                                  "PUBLIC.BOOKS");
-    final Table[] tables = schema.getTables();
+    final Table[] tables = database.getTables(schema).toArray(new Table[0]);
     boolean foundTrigger = false;
     for (final Table table: tables)
     {
-      final Trigger[] triggers = table.getTriggers();
-      for (final Trigger trigger: triggers)
+      for (final Trigger trigger: table.getTriggers())
       {
         foundTrigger = true;
         assertEquals("Triggers full name does not match",
@@ -660,14 +669,14 @@ public class SchemaCrawlerTest
     schemaCrawlerOptions.setInformationSchemaViews(informationSchemaViews);
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
 
+    final Database database = testDatabase.getDatabase(schemaCrawlerOptions);
     final Schema schema = testDatabase.getSchema(schemaCrawlerOptions,
                                                  "PUBLIC.BOOKS");
     assertNotNull("Schema not found", schema);
-    final View view = (View) schema.getTable("AUTHORSLIST");
+    final View view = (View) database.getTable(schema, "AUTHORSLIST");
     assertNotNull("View not found", view);
     assertNotNull("View definition not found", view.getDefinition());
     assertFalse("View definition not found", view.getDefinition().trim()
       .equals(""));
   }
-
 }

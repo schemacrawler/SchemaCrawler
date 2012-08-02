@@ -40,7 +40,7 @@ Lints
 ------------------------------------------------------------------------
 
                                                           [lint, medium]
-	column with same name but different data types	ID [INTEGER, BIGINT]
+	column with same name but different data types	ID [BIGINT, INTEGER]
 	cycles in table relationships	
 
 
@@ -101,7 +101,7 @@ PUBLIC.FOR_LINT.PUBLICATIONS                                     [table]
                                                           [lint, medium]
 	spaces in name, or reserved word	"UPDATE"
                                                              [lint, low]
-	too many binary objects	PRESS_RELEASE, "UPDATE"
+	too many binary objects	"UPDATE", PRESS_RELEASE
 
 
 PUBLIC.FOR_LINT.WRITERS                                          [table]

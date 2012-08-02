@@ -28,6 +28,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import schemacrawler.schema.DatabaseProperty;
+import schemacrawler.schema.Property;
 
 class MutableDatabaseProperty
   extends MutableProperty
@@ -60,7 +61,7 @@ class MutableDatabaseProperty
   }
 
   @Override
-  public int compareTo(final DatabaseProperty otherDbProperty)
+  public int compareTo(final Property otherDbProperty)
   {
     if (otherDbProperty == null)
     {

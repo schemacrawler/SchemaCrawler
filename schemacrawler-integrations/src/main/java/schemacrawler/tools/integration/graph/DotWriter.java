@@ -30,7 +30,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import schemacrawler.schema.Column;
-import schemacrawler.schema.ColumnMap;
+import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.JdbcDriverInfo;
@@ -84,7 +84,7 @@ final class DotWriter
   }
 
   public void print(final Collection<Table> tables,
-                    final Collection<ColumnMap> weakAssociations)
+                    final Collection<ColumnReference> weakAssociations)
   {
     if (tables != null)
     {
@@ -95,14 +95,14 @@ final class DotWriter
         // Print foreign keys
         for (final ForeignKey foreignKey: table.getForeignKeys())
         {
-          final ColumnMap[] columnPairs = foreignKey.getColumnPairs();
-          for (final ColumnMap columnMap: columnPairs)
+          for (final ColumnReference columnReference: foreignKey
+            .getColumnReferences())
           {
-            if (table.equals(columnMap.getPrimaryKeyColumn().getParent()))
+            if (table.equals(columnReference.getPrimaryKeyColumn().getParent()))
             {
-              out.write(printColumnAssociation(foreignKey.getName(),
-                                               columnMap,
-                                               tables));
+              out.write(printColumnReference(foreignKey.getName(),
+                                             columnReference,
+                                             tables));
             }
           }
         }
@@ -112,9 +112,9 @@ final class DotWriter
     }
 
     out.write(Utility.NEWLINE);
-    for (final ColumnMap columnMap: weakAssociations)
+    for (final ColumnReference weakAssociation: weakAssociations)
     {
-      out.write(printColumnAssociation("", columnMap, tables));
+      out.write(printColumnReference("", weakAssociation, tables));
     }
     out.write(Utility.NEWLINE);
   }
@@ -232,7 +232,7 @@ final class DotWriter
     final String tableNameBgColor;
     if (!colorMap.containsKey(schema))
     {
-      tableNameBgColor = Utility.pastelColorHTMLValue(schema.getName());
+      tableNameBgColor = Utility.pastelColorHTMLValue(schema.getFullName());
       colorMap.put(schema, tableNameBgColor);
     }
     else
@@ -288,12 +288,12 @@ final class DotWriter
     out.write(buffer.toString());
   }
 
-  private String printColumnAssociation(final String associationName,
-                                        final ColumnMap columnMap,
-                                        final Collection<Table> tables)
+  private String printColumnReference(final String associationName,
+                                      final ColumnReference columnReference,
+                                      final Collection<Table> tables)
   {
-    final Column primaryKeyColumn = columnMap.getPrimaryKeyColumn();
-    final Column foreignKeyColumn = columnMap.getForeignKeyColumn();
+    final Column primaryKeyColumn = columnReference.getPrimaryKeyColumn();
+    final Column foreignKeyColumn = columnReference.getForeignKeyColumn();
 
     final String[] pkPortIds = getPortIds(primaryKeyColumn, tables);
     final String[] fkPortIds = getPortIds(foreignKeyColumn, tables);

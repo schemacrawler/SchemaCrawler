@@ -81,7 +81,7 @@ Lints
 ------------------------------------------------------------------------
 
                                                           [lint, medium]
-	column with same name but different data types	ID [INTEGER, BIGINT]
+	column with same name but different data types	ID [BIGINT, INTEGER]
 	cycles in table relationships	
 
 

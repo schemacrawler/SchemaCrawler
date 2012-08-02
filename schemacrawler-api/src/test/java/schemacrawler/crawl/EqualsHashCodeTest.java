@@ -24,6 +24,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import schemacrawler.schema.SchemaReference;
 import schemacrawler.schemacrawler.InclusionRule;
 
 @Ignore("Slow test")

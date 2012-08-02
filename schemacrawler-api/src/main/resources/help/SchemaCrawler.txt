@@ -1,8 +1,9 @@
 SchemaCrawler 8.17
 Copyright (c) 2000-2012, Sualeh Fatehi.
-SchemaCrawler is a platform (operating system and database) independent command-
-line tool to output your database schema and data in a readable form. The output 
-is designed to be diff-ed with previous versions of your database schema. 
-SchemaCrawler has powerful grep  functionality that allows you to search for 
-table and column names using regular expressions. SchemaCrawler can also 
-generate schema diagrams.
+
+SchemaCrawler is a database schema discovery and comprehension tool. 
+You can search for database schema objects using regular expressions, 
+and output the schema and data in a readable text format. You can find 
+potential schema design issues with lint. The output serves for 
+database documentation is designed to be diff-ed against other database 
+schemas. SchemaCrawler also generates schema diagrams.

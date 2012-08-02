@@ -43,10 +43,6 @@ PUBLIC.BOOKS.AUTHORS                                             [table]
 Contact details for book authors
 
 
-PUBLIC.BOOKS.AUTHORSLIST                                          [view]
-------------------------------------------------------------------------
-
-
 PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
 ------------------------------------------------------------------------
 
@@ -100,42 +96,70 @@ PUBLIC."PUBLISHER SALES".SALES                                   [table]
 ------------------------------------------------------------------------
 
 
+PUBLIC.BOOKS.AUTHORSLIST                                          [view]
+------------------------------------------------------------------------
 
 
-Procedures
+
+
+Routines
 ========================================================================
 
 
 PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
 ------------------------------------------------------------------------
 
+                                                         [specific name]
+NEW_PUBLISHER_10043
+
 
 PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS                   [procedure, no result]
 ------------------------------------------------------------------------
+
+                                                         [specific name]
+ALLOC_BLOCKS_10022
 
 
 PUBLIC.SYSTEM_LOBS.CONVERT_BLOCK                  [procedure, no result]
 ------------------------------------------------------------------------
 
+                                                         [specific name]
+CONVERT_BLOCK_10012
+
 
 PUBLIC.SYSTEM_LOBS.CREATE_EMPTY_BLOCK             [procedure, no result]
 ------------------------------------------------------------------------
+
+                                                         [specific name]
+CREATE_EMPTY_BLOCK_10020
 
 
 PUBLIC.SYSTEM_LOBS.DELETE_BLOCKS                  [procedure, no result]
 ------------------------------------------------------------------------
 
+                                                         [specific name]
+DELETE_BLOCKS_10019
+
 
 PUBLIC.SYSTEM_LOBS.DELETE_LOB                     [procedure, no result]
 ------------------------------------------------------------------------
+
+                                                         [specific name]
+DELETE_LOB_10013
 
 
 PUBLIC.SYSTEM_LOBS.DELETE_UNUSED                  [procedure, no result]
 ------------------------------------------------------------------------
 
+                                                         [specific name]
+DELETE_UNUSED_10018
+
 
 PUBLIC.SYSTEM_LOBS.DIVIDE_BLOCK                   [procedure, no result]
 ------------------------------------------------------------------------
+
+                                                         [specific name]
+DIVIDE_BLOCK_10021
 
 
 

@@ -22,15 +22,12 @@ package schemacrawler.tools.executable;
 
 
 import java.sql.Connection;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Database;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.tools.options.OutputOptions;
 import sf.util.ObjectToString;
 import sf.util.Utility;
@@ -43,9 +40,6 @@ import sf.util.Utility;
 public abstract class BaseExecutable
   implements Executable
 {
-
-  private static final Logger LOGGER = Logger.getLogger(BaseExecutable.class
-    .getName());
 
   protected final String command;
   protected SchemaCrawlerOptions schemaCrawlerOptions;
@@ -77,7 +71,6 @@ public abstract class BaseExecutable
     {
       throw new SchemaCrawlerException("No connection provided");
     }
-    adjustSchemaInfoLevel();
 
     final SchemaCrawler crawler = new SchemaCrawler(connection);
     final Database database = crawler.crawl(schemaCrawlerOptions);
@@ -171,27 +164,5 @@ public abstract class BaseExecutable
 
   protected abstract void executeOn(Database database, Connection connection)
     throws Exception;
-
-  /**
-   * Initializes the executable before execution.
-   */
-  private void adjustSchemaInfoLevel()
-  {
-    final SchemaInfoLevel infoLevel = schemaCrawlerOptions.getSchemaInfoLevel();
-    if (!schemaCrawlerOptions.isAlphabeticalSortForTables()
-        && !infoLevel.isRetrieveForeignKeys())
-    {
-      infoLevel.setRetrieveTableColumns(true);
-      infoLevel.setRetrieveForeignKeys(true);
-      LOGGER
-        .log(Level.WARNING,
-             "Adjusted schema info level to retrieve foreign-keys, so tables can be sorted using the natural sort order");
-    }
-
-    if (LOGGER.isLoggable(Level.CONFIG))
-    {
-      LOGGER.log(Level.CONFIG, toString());
-    }
-  }
 
 }

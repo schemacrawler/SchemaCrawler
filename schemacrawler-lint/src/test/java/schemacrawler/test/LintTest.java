@@ -35,6 +35,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import schemacrawler.schema.Database;
+import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.TestDatabase;
@@ -77,12 +78,13 @@ public class LintTest
 
     final Database database = testDatabase.getDatabase(schemaCrawlerOptions);
     assertNotNull(database);
-    assertEquals(1, database.getSchemas().length);
+    assertEquals(1, database.getSchemas().size());
+    final Schema schema = database.getSchema("PUBLIC.FOR_LINT");
     assertNotNull("FOR_LINT schema not found",
-                  database.getSchema("PUBLIC.FOR_LINT"));
+                  schema);
     assertEquals("FOR_LINT tables not found",
                  5,
-                 database.getSchema("PUBLIC.FOR_LINT").getTables().length);
+                 database.getTables(schema).size());
 
     final LintedDatabase lintedDatabase = new LintedDatabase(database,
                                                              new LinterConfigs());

@@ -21,8 +21,9 @@
 package schemacrawler.crawl;
 
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import schemacrawler.schema.ResultsColumn;
 import schemacrawler.schema.ResultsColumns;
@@ -63,9 +64,9 @@ class MutableResultsColumns
    * @see schemacrawler.schema.ResultsColumns#getColumns()
    */
   @Override
-  public ResultsColumn[] getColumns()
+  public List<ResultsColumn> getColumns()
   {
-    return columns.values().toArray(new ResultsColumn[columns.size()]);
+    return new ArrayList<ResultsColumn>(columns.values());
   }
 
   /**
@@ -77,17 +78,17 @@ class MutableResultsColumns
   public String getColumnsListAsString()
   {
     String columnsList = "";
-    final ResultsColumn[] columnsArray = getColumns();
-    if (columnsArray != null && columnsArray.length > 0)
+    final List<ResultsColumn> columns = getColumns();
+    if (columns != null && columns.size() > 0)
     {
       final StringBuilder buffer = new StringBuilder();
-      for (int i = 0; i < columnsArray.length; i++)
+      for (int i = 0; i < columns.size(); i++)
       {
         if (i > 0)
         {
           buffer.append(", ");
         }
-        final ResultsColumn column = columnsArray[i];
+        final ResultsColumn column = columns.get(i);
         buffer.append(column.getFullName());
       }
       columnsList = buffer.toString();
@@ -98,7 +99,7 @@ class MutableResultsColumns
   @Override
   public Iterator<ResultsColumn> iterator()
   {
-    return Arrays.asList(getColumns()).iterator();
+    return getColumns().iterator();
   }
 
   void addColumn(final MutableResultsColumn column)

@@ -21,15 +21,18 @@
 package schemacrawler.crawl;
 
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ForeignKey;
-import schemacrawler.schema.ForeignKeyColumnMap;
+import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.ForeignKeyDeferrability;
 import schemacrawler.schema.ForeignKeyUpdateRule;
 import schemacrawler.schema.NamedObject;
+import schemacrawler.utility.CompareUtility;
 
 /**
  * Represents a foreign-key mapping to a primary key in another table.
@@ -43,7 +46,7 @@ class MutableForeignKey
 
   private static final long serialVersionUID = 4121411795974895671L;
 
-  private final SortedSet<MutableForeignKeyColumnMap> columnPairs = new TreeSet<MutableForeignKeyColumnMap>();
+  private final SortedSet<MutableForeignKeyColumnReference> columnReferences = new TreeSet<MutableForeignKeyColumnReference>();
   private ForeignKeyUpdateRule updateRule;
   private ForeignKeyUpdateRule deleteRule;
   private ForeignKeyDeferrability deferrability;
@@ -75,44 +78,23 @@ class MutableForeignKey
     }
 
     final ForeignKey other = (ForeignKey) obj;
-    int comparison = 0;
-    final ForeignKeyColumnMap[] thisColumnPairs = getColumnPairs();
-    final ForeignKeyColumnMap[] otherColumnPairs = other.getColumnPairs();
+    final List<ForeignKeyColumnReference> thisColumnReferences = getColumnReferences();
+    final List<ForeignKeyColumnReference> otherColumnReferences = other
+      .getColumnReferences();
 
-    if (comparison == 0)
-    {
-      comparison = thisColumnPairs.length - otherColumnPairs.length;
-    }
-
-    if (comparison == 0)
-    {
-      for (int i = 0; i < thisColumnPairs.length; i++)
-      {
-        final ForeignKeyColumnMap thisColumnPair = thisColumnPairs[i];
-        final ForeignKeyColumnMap otherColumnPair = otherColumnPairs[i];
-        if (comparison == 0)
-        {
-          comparison = thisColumnPair.compareTo(otherColumnPair);
-        }
-        else
-        {
-          break;
-        }
-      }
-    }
-
-    return comparison;
+    return CompareUtility.compareLists(thisColumnReferences,
+                                       otherColumnReferences);
   }
 
   /**
    * {@inheritDoc}
    * 
-   * @see ForeignKey#getColumnPairs()
+   * @see ForeignKey#getColumnReferences()
    */
   @Override
-  public ForeignKeyColumnMap[] getColumnPairs()
+  public List<ForeignKeyColumnReference> getColumnReferences()
   {
-    return columnPairs.toArray(new ForeignKeyColumnMap[columnPairs.size()]);
+    return new ArrayList<ForeignKeyColumnReference>(columnReferences);
   }
 
   /**
@@ -148,15 +130,15 @@ class MutableForeignKey
     return updateRule;
   }
 
-  void addColumnPair(final int keySequence,
-                     final Column pkColumn,
-                     final Column fkColumn)
+  void addColumnReference(final int keySequence,
+                          final Column pkColumn,
+                          final Column fkColumn)
   {
-    final MutableForeignKeyColumnMap fkColumnPair = new MutableForeignKeyColumnMap();
-    fkColumnPair.setKeySequence(keySequence);
-    fkColumnPair.setPrimaryKeyColumn(pkColumn);
-    fkColumnPair.setForeignKeyColumn(fkColumn);
-    columnPairs.add(fkColumnPair);
+    final MutableForeignKeyColumnReference fkColumnReference = new MutableForeignKeyColumnReference();
+    fkColumnReference.setKeySequence(keySequence);
+    fkColumnReference.setPrimaryKeyColumn(pkColumn);
+    fkColumnReference.setForeignKeyColumn(fkColumn);
+    columnReferences.add(fkColumnReference);
   }
 
   final void setDeferrability(final ForeignKeyDeferrability deferrability)

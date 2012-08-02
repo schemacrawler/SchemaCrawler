@@ -521,7 +521,7 @@ SYS_IDX_10053                                         [non-unique index]
 
 
 
-Procedures
+Routines
 ========================================================================
 
 
@@ -529,12 +529,18 @@ PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
 ------------------------------------------------------------------------
   PUBLISHER                         CHARACTER VARYING, out      
 
+                                                         [specific name]
+NEW_PUBLISHER_10043
+
 
 PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS                   [procedure, no result]
 ------------------------------------------------------------------------
   B_COUNT                           INTEGER, in                 
   B_OFFSET                          INTEGER, in                 
   L_ID                              BIGINT, in                  
+
+                                                         [specific name]
+ALLOC_BLOCKS_10022
 
 
 PUBLIC.SYSTEM_LOBS.CONVERT_BLOCK                  [procedure, no result]
@@ -544,11 +550,17 @@ PUBLIC.SYSTEM_LOBS.CONVERT_BLOCK                  [procedure, no result]
   B_OFFSET                          INTEGER, in                 
   L_ID                              BIGINT, in                  
 
+                                                         [specific name]
+CONVERT_BLOCK_10012
+
 
 PUBLIC.SYSTEM_LOBS.CREATE_EMPTY_BLOCK             [procedure, no result]
 ------------------------------------------------------------------------
   B_ADDR                            INTEGER, in/ out            
   B_COUNT                           INTEGER, in                 
+
+                                                         [specific name]
+CREATE_EMPTY_BLOCK_10020
 
 
 PUBLIC.SYSTEM_LOBS.DELETE_BLOCKS                  [procedure, no result]
@@ -558,22 +570,34 @@ PUBLIC.SYSTEM_LOBS.DELETE_BLOCKS                  [procedure, no result]
   B_LIMIT                           INTEGER, in                 
   TX_ID                             BIGINT, in                  
 
+                                                         [specific name]
+DELETE_BLOCKS_10019
+
 
 PUBLIC.SYSTEM_LOBS.DELETE_LOB                     [procedure, no result]
 ------------------------------------------------------------------------
   L_ID                              BIGINT, in                  
   TX_ID                             BIGINT, in                  
 
+                                                         [specific name]
+DELETE_LOB_10013
+
 
 PUBLIC.SYSTEM_LOBS.DELETE_UNUSED                  [procedure, no result]
 ------------------------------------------------------------------------
   L_IDS                             BIGINT ARRAY, in            
+
+                                                         [specific name]
+DELETE_UNUSED_10018
 
 
 PUBLIC.SYSTEM_LOBS.DIVIDE_BLOCK                   [procedure, no result]
 ------------------------------------------------------------------------
   B_OFFSET                          INTEGER, in                 
   L_ID                              BIGINT, in                  
+
+                                                         [specific name]
+DIVIDE_BLOCK_10021
 
 
 

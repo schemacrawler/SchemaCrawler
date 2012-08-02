@@ -41,7 +41,7 @@ public final class SchemaInfoLevel
   {
     final SchemaInfoLevel verbose = standard();
     verbose.setRetrieveUserDefinedColumnDataTypes(true);
-    verbose.setRetrieveProcedureInformation(true);
+    verbose.setRetrieveRoutineInformation(true);
     verbose.setRetrieveCheckConstraintInformation(true);
     verbose.setRetrieveViewInformation(true);
     verbose.setTag("verbose");
@@ -80,7 +80,7 @@ public final class SchemaInfoLevel
     minimum.setRetrieveDatabaseInfo(true);
     minimum.setRetrieveJdbcDriverInfo(true);
     minimum.setRetrieveTables(true);
-    minimum.setRetrieveProcedures(true);
+    minimum.setRetrieveRoutines(true);
     minimum.setTag("minimum");
     return minimum;
   }
@@ -94,7 +94,7 @@ public final class SchemaInfoLevel
   {
     final SchemaInfoLevel standard = minimum();
     standard.setRetrieveColumnDataTypes(true);
-    standard.setRetrieveProcedureColumns(true);
+    standard.setRetrieveRoutineColumns(true);
     standard.setRetrieveTableColumns(true);
     standard.setRetrieveForeignKeys(true);
     standard.setRetrieveIndices(true);
@@ -107,14 +107,14 @@ public final class SchemaInfoLevel
   private boolean retrieveJdbcDriverInfo = true;
   private boolean retrieveDatabaseInfo = true;
   private boolean retrieveTables;
-  private boolean retrieveProcedures;
+  private boolean retrieveRoutines;
   private boolean retrieveColumnDataTypes;
   private boolean retrieveAdditionalSchemaCrawlerInfo;
   private boolean retrieveAdditionalDatabaseInfo;
   private boolean retrieveAdditionalJdbcDriverInfo;
   private boolean retrieveUserDefinedColumnDataTypes;
-  private boolean retrieveProcedureColumns;
-  private boolean retrieveProcedureInformation;
+  private boolean retrieveRoutineColumns;
+  private boolean retrieveRoutineInformation;
   private boolean retrieveCheckConstraintInformation;
   private boolean retrieveViewInformation;
   private boolean retrieveForeignKeys;
@@ -187,19 +187,19 @@ public final class SchemaInfoLevel
     return retrieveJdbcDriverInfo;
   }
 
-  public boolean isRetrieveProcedureColumns()
+  public boolean isRetrieveRoutineColumns()
   {
-    return retrieveProcedureColumns;
+    return retrieveRoutineColumns;
   }
 
-  public boolean isRetrieveProcedureInformation()
+  public boolean isRetrieveRoutineInformation()
   {
-    return retrieveProcedureInformation;
+    return retrieveRoutineInformation;
   }
 
-  public boolean isRetrieveProcedures()
+  public boolean isRetrieveRoutines()
   {
-    return retrieveProcedures;
+    return retrieveRoutines;
   }
 
   public boolean isRetrieveSchemaCrawlerInfo()
@@ -302,19 +302,19 @@ public final class SchemaInfoLevel
     this.retrieveJdbcDriverInfo = retrieveJdbcDriverInfo;
   }
 
-  public void setRetrieveProcedureColumns(final boolean retrieveProcedureColumns)
+  public void setRetrieveRoutineColumns(final boolean retrieveRoutineColumns)
   {
-    this.retrieveProcedureColumns = retrieveProcedureColumns;
+    this.retrieveRoutineColumns = retrieveRoutineColumns;
   }
 
-  public void setRetrieveProcedureInformation(final boolean retrieveProcedureInformation)
+  public void setRetrieveRoutineInformation(final boolean retrieveRoutineInformation)
   {
-    this.retrieveProcedureInformation = retrieveProcedureInformation;
+    this.retrieveRoutineInformation = retrieveRoutineInformation;
   }
 
-  public void setRetrieveProcedures(final boolean retrieveProcedures)
+  public void setRetrieveRoutines(final boolean retrieveRoutines)
   {
-    this.retrieveProcedures = retrieveProcedures;
+    this.retrieveRoutines = retrieveRoutines;
   }
 
   public void setRetrieveSchemaCrawlerInfo(final boolean retrieveSchemaCrawlerInfo)

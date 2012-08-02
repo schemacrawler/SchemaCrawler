@@ -6,4 +6,7 @@
   Optional, default OFF
 
 -?, -h, -help, --help
-  Shows this help text
+  Shows SchemaCrawler help
+
+-V, --version
+  Shows the SchemaCrawler version number

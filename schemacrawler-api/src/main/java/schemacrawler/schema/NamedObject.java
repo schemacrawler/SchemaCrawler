@@ -89,4 +89,9 @@ public interface NamedObject
    */
   void setAttribute(String name, Object value);
 
+  /**
+   * A value guaranteed to be unique in the database for this object.
+   */
+  String getLookupKey();
+
 }

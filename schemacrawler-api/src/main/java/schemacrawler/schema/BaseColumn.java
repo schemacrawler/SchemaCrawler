@@ -22,7 +22,7 @@ package schemacrawler.schema;
 
 
 /**
- * Column for tables and procedures.
+ * Column for tables and routines.
  * 
  * @author Sualeh Fatehi
  */

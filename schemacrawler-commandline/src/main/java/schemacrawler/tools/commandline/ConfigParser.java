@@ -35,18 +35,14 @@ class ConfigParser
 
   ConfigParser()
   {
-    super(new StringOption('g', "configfile", "schemacrawler.config.properties"),
-          new StringOption('p',
-                           "configoverridefile",
-                           "schemacrawler.config.override.properties"));
+    super(new StringOption('g', "configfile", "schemacrawler.config.properties"));
   }
 
   @Override
   protected Config getOptions()
   {
     final String cfgFile = getStringValue("g");
-    final String cfgOverrideFile = getStringValue("p");
-    return Config.load(cfgFile, cfgOverrideFile);
+    return Config.load(cfgFile);
   }
 
 }

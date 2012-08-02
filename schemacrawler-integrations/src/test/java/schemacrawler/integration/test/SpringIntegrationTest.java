@@ -34,6 +34,7 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import schemacrawler.schema.Database;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.TestDatabase;
@@ -88,13 +89,13 @@ public class SpringIntegrationTest
     final SchemaCrawlerOptions schemaCrawlerOptions = (SchemaCrawlerOptions) appContext
       .getBean("schemaCrawlerOptions");
 
+    Database database = testDatabase.getDatabase(schemaCrawlerOptions);
     final Schema schema = testDatabase.getSchema(schemaCrawlerOptions,
                                                  "PUBLIC.BOOKS");
     assertNotNull("Could not obtain schema", schema);
 
-    assertEquals("Unexpected number of tables in the schema",
-                 6,
-                 schema.getTables().length);
+    assertEquals("Unexpected number of tables in the schema", 6, database
+      .getTables(schema).size());
   }
 
   private void executeAndCheckForOutputFile(final String executableName,

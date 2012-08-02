@@ -20,10 +20,10 @@
 package schemacrawler.tools.linter;
 
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map.Entry;
-import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
@@ -60,7 +60,7 @@ public class LinterColumnTypes
     for (final Entry<String, List<ColumnDataType>> entry: columnTypes
       .entrySet())
     {
-      final Set<ColumnDataType> currentColumnTypes = new HashSet<ColumnDataType>(entry
+      final SortedSet<ColumnDataType> currentColumnTypes = new TreeSet<ColumnDataType>(entry
         .getValue());
       if (currentColumnTypes.size() > 1)
       {

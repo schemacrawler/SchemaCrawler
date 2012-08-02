@@ -7,7 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schema.ForeignKey;
-import schemacrawler.schema.ForeignKeyColumnMap;
+import schemacrawler.schema.ForeignKeyColumnReference;
 import sf.util.DirectedGraph;
 import sf.util.GraphException;
 
@@ -28,14 +28,13 @@ final class TablesGraph
     for (final MutableTable table: tables)
     {
       addVertex(table);
-      final ForeignKey[] foreignKeys = table.getForeignKeys();
-      for (final ForeignKey foreignKey: foreignKeys)
+      for (final ForeignKey foreignKey: table.getForeignKeys())
       {
-        final ForeignKeyColumnMap[] columnPairs = foreignKey.getColumnPairs();
-        for (final ForeignKeyColumnMap columnPair: columnPairs)
+        for (final ForeignKeyColumnReference columnReference: foreignKey
+          .getColumnReferences())
         {
-          addDirectedEdge((MutableTable) columnPair.getPrimaryKeyColumn()
-            .getParent(), (MutableTable) columnPair.getForeignKeyColumn()
+          addDirectedEdge((MutableTable) columnReference.getPrimaryKeyColumn()
+            .getParent(), (MutableTable) columnReference.getForeignKeyColumn()
             .getParent());
         }
       }

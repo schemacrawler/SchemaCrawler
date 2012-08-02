@@ -26,6 +26,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
 import schemacrawler.schema.ResultsColumns;
+import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import sf.util.Utility;
 
@@ -77,9 +78,9 @@ final class ResultsRetriever
         tableName = "";
       }
 
-      final MutableSchema schema = database.addSchema(catalogName, schemaName);
+      final Schema schema = database.addSchema(catalogName, schemaName);
       final MutableTable table = new MutableTable(schema, tableName);
-      schema.addTable(table);
+      database.addTable(table);
 
       final String databaseSpecificTypeName = resultsMetaData
         .getColumnTypeName(i);

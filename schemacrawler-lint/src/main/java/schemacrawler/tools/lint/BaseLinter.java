@@ -83,7 +83,7 @@ public abstract class BaseLinter
     start();
     for (final Schema schema: database.getSchemas())
     {
-      for (final Table table: schema.getTables())
+      for (final Table table: database.getTables(schema))
       {
         lint(table);
       }

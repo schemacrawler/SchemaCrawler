@@ -28,10 +28,6 @@
   </bean>
 
   <bean id="schemaCrawlerOptions" class="schemacrawler.schemacrawler.SchemaCrawlerOptions">
-    <property name="alphabeticalSortForTableColumns" value="true" />
-    <property name="alphabeticalSortForProcedureColumns" value="true" />
-    <property name="alphabeticalSortForIndexes" value="true" />
-    <property name="alphabeticalSortForForeignKeys" value="true" />
     <property name="tableInclusionRule">
       <bean class="schemacrawler.schemacrawler.InclusionRule">
         <constructor-arg value=".*" />

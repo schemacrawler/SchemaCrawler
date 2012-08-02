@@ -44,6 +44,12 @@ public class SchemaTextOptions
   private static final String HIDE_INDEX_NAMES = "schemacrawler.format.hide_index_names";
   private static final String HIDE_CONSTRAINT_NAMES = "schemacrawler.format.hide_constraint_names";
 
+  private static final String SC_SORT_ALPHABETICALLY_TABLES = "schemacrawler.format.sort_alphabetically.tables";
+  private static final String SC_SORT_ALPHABETICALLY_TABLE_COLUMNS = "schemacrawler.format.sort_alphabetically.table_columns";
+  private static final String SC_SORT_ALPHABETICALLY_TABLE_INDEXES = "schemacrawler.format.sort_alphabetically.table_indices";
+  private static final String SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS = "schemacrawler.format.sort_alphabetically.table_foreignkeys";
+  private static final String SC_SORT_ALPHABETICALLY_ROUTINE_COLUMNS = "schemacrawler.format.sort_alphabetically.routine_columns";
+
   private boolean showUnqualifiedNames;
   private boolean showStandardColumnTypeNames;
   private boolean showOrdinalNumbers;
@@ -53,12 +59,24 @@ public class SchemaTextOptions
   private boolean hideIndexNames;
   private boolean hideConstraintNames;
 
+  private boolean isAlphabeticalSortForTables;
+  private boolean isAlphabeticalSortForTableColumns;
+  private boolean isAlphabeticalSortForForeignKeys;
+  private boolean isAlphabeticalSortForIndexes;
+  private boolean isAlphabeticalSortForRoutineColumns;
+
   /**
    * Creates the default SchemaTextOptions.
    */
   public SchemaTextOptions()
   {
-    // NOTE: All boolean options are false by default
+    // NOTE: Most boolean options are false by default
+
+    isAlphabeticalSortForTables = true;
+    isAlphabeticalSortForTableColumns = false;
+    isAlphabeticalSortForForeignKeys = false;
+    isAlphabeticalSortForIndexes = false;
+    isAlphabeticalSortForRoutineColumns = false;
   }
 
   /**
@@ -80,7 +98,43 @@ public class SchemaTextOptions
       hidePrimaryKeyNames = config.getBooleanValue(HIDE_PRIMARY_KEY_NAMES);
       hideIndexNames = config.getBooleanValue(HIDE_INDEX_NAMES);
       hideConstraintNames = config.getBooleanValue(HIDE_CONSTRAINT_NAMES);
+
+      isAlphabeticalSortForTables = Boolean.parseBoolean(config
+        .getStringValue(SC_SORT_ALPHABETICALLY_TABLES, "true"));
+      isAlphabeticalSortForTableColumns = config
+        .getBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_COLUMNS);
+      isAlphabeticalSortForForeignKeys = config
+        .getBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS);
+      isAlphabeticalSortForIndexes = config
+        .getBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_INDEXES);
+      isAlphabeticalSortForRoutineColumns = config
+        .getBooleanValue(SC_SORT_ALPHABETICALLY_ROUTINE_COLUMNS);
     }
+  }
+
+  public boolean isAlphabeticalSortForForeignKeys()
+  {
+    return isAlphabeticalSortForForeignKeys;
+  }
+
+  public boolean isAlphabeticalSortForIndexes()
+  {
+    return isAlphabeticalSortForIndexes;
+  }
+
+  public boolean isAlphabeticalSortForRoutineColumns()
+  {
+    return isAlphabeticalSortForRoutineColumns;
+  }
+
+  public boolean isAlphabeticalSortForTableColumns()
+  {
+    return isAlphabeticalSortForTableColumns;
+  }
+
+  public boolean isAlphabeticalSortForTables()
+  {
+    return isAlphabeticalSortForTables;
   }
 
   /**
@@ -146,6 +200,31 @@ public class SchemaTextOptions
   public boolean isShowUnqualifiedNames()
   {
     return showUnqualifiedNames;
+  }
+
+  public void setAlphabeticalSortForForeignKeys(final boolean isAlphabeticalSortForForeignKeys)
+  {
+    this.isAlphabeticalSortForForeignKeys = isAlphabeticalSortForForeignKeys;
+  }
+
+  public void setAlphabeticalSortForIndexes(final boolean isAlphabeticalSortForIndexes)
+  {
+    this.isAlphabeticalSortForIndexes = isAlphabeticalSortForIndexes;
+  }
+
+  public void setAlphabeticalSortForRoutineColumns(final boolean isAlphabeticalSortForRoutineColumns)
+  {
+    this.isAlphabeticalSortForRoutineColumns = isAlphabeticalSortForRoutineColumns;
+  }
+
+  public void setAlphabeticalSortForTableColumns(final boolean isAlphabeticalSortForTableColumns)
+  {
+    this.isAlphabeticalSortForTableColumns = isAlphabeticalSortForTableColumns;
+  }
+
+  public void setAlphabeticalSortForTables(final boolean isAlphabeticalSortForTables)
+  {
+    this.isAlphabeticalSortForTables = isAlphabeticalSortForTables;
   }
 
   /**

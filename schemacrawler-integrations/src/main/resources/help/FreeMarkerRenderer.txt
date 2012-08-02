@@ -1,6 +1,6 @@
 --- Command ---
 
--command=freemarker
+-c=freemarker (short for -command=freemarker)
   Processes a FreeMarker template
   
 --- Output Options ---
@@ -9,6 +9,6 @@
 	Where <outputformat> is the file path or class path to the FreeMarker 
 	template
 
--outputfile=<outputfile>
+-o=<outputfile> (short for -outputfile=<outputfile>)
 	Optional 
 	<outputfile> is the path to the output file

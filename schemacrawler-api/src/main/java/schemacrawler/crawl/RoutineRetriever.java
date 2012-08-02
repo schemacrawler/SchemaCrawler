@@ -27,9 +27,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schema.ProcedureColumnType;
-import schemacrawler.schema.ProcedureType;
+import schemacrawler.schema.ProcedureReturnType;
+import schemacrawler.schema.Schema;
+import schemacrawler.schema.SchemaReference;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
+import sf.util.Utility;
 
 /**
  * A retriever uses database metadata to get the details about the
@@ -37,15 +40,15 @@ import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
  * 
  * @author Sualeh Fatehi
  */
-final class ProcedureRetriever
+final class RoutineRetriever
   extends AbstractRetriever
 {
 
-  private static final Logger LOGGER = Logger
-    .getLogger(ProcedureRetriever.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(RoutineRetriever.class
+    .getName());
 
-  ProcedureRetriever(final RetrieverConnection retrieverConnection,
-                     final MutableDatabase database)
+  RoutineRetriever(final RetrieverConnection retrieverConnection,
+                   final MutableDatabase database)
     throws SQLException
   {
     super(retrieverConnection, database);
@@ -62,7 +65,7 @@ final class ProcedureRetriever
       results = new MetadataResultSet(getMetaData()
         .getProcedureColumns(unquotedName(procedure.getSchema()
                                .getCatalogName()),
-                             unquotedName(procedure.getSchema().getSchemaName()),
+                             unquotedName(procedure.getSchema().getName()),
                              unquotedName(procedure.getName()),
                              null));
 
@@ -75,6 +78,8 @@ final class ProcedureRetriever
         final String procedureName = quotedName(results
           .getString("PROCEDURE_NAME"));
         final String columnName = quotedName(results.getString("COLUMN_NAME"));
+        final String specificName = quotedName(results
+          .getString("SPECIFIC_NAME"));
 
         final MutableProcedureColumn column = new MutableProcedureColumn(procedure,
                                                                          columnName);
@@ -83,6 +88,12 @@ final class ProcedureRetriever
             && procedure.getName().equals(procedureName)
             && belongsToSchema(procedure, columnCatalogName, schemaName))
         {
+          if (!Utility.isBlank(specificName)
+              && !specificName.equals(procedure.getSpecificName()))
+          {
+            continue;
+          }
+
           LOGGER.log(Level.FINER, "Retrieving procedure column: " + columnName);
           final short columnType = results.getShort("COLUMN_TYPE", (short) 0);
           final int dataType = results.getInt("DATA_TYPE", 0);
@@ -96,8 +107,9 @@ final class ProcedureRetriever
           column.setOrdinalPosition(ordinalNumber++);
           column
             .setProcedureColumnType(ProcedureColumnType.valueOf(columnType));
-          column.setType(lookupOrCreateColumnDataType((MutableSchema) procedure
-            .getSchema(), dataType, typeName));
+          column.setType(lookupOrCreateColumnDataType(procedure.getSchema(),
+                                                      dataType,
+                                                      typeName));
           column.setSize(length);
           column.setPrecision(precision);
           column.setNullable(isNullable);
@@ -150,27 +162,22 @@ final class ProcedureRetriever
           .getString("PROCEDURE_NAME"));
         LOGGER.log(Level.FINER, "Retrieving procedure: " + procedureName);
         final short procedureType = results
-          .getShort("PROCEDURE_TYPE", (short) ProcedureType.unknown.getId());
+          .getShort("PROCEDURE_TYPE",
+                    (short) ProcedureReturnType.unknown.getId());
         final String remarks = results.getString("REMARKS");
+        final String specificName = results.getString("SPECIFIC_NAME");
 
-        final MutableSchema schema = lookupSchema(catalogName, schemaName);
-        if (schema == null)
-        {
-          LOGGER.log(Level.FINE, String.format("Cannot find schema, %s.%s",
-                                               catalogName,
-                                               schemaName));
-          continue;
-        }
-
+        final Schema schema = new SchemaReference(catalogName, schemaName);
         final MutableProcedure procedure = new MutableProcedure(schema,
                                                                 procedureName);
         if (procedureInclusionRule.include(procedure.getFullName()))
         {
-          procedure.setType(ProcedureType.valueOf(procedureType));
+          procedure.setType(ProcedureReturnType.valueOf(procedureType));
+          procedure.setSpecificName(specificName);
           procedure.setRemarks(remarks);
           procedure.addAttributes(results.getAttributes());
 
-          schema.addProcedure(procedure);
+          database.addProcedure(procedure);
         }
       }
     }

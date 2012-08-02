@@ -46,7 +46,8 @@ abstract class BaseDatabaseConnectionOptionsParser
 
   BaseDatabaseConnectionOptionsParser(final Config config)
   {
-    super(new StringOption("user", null), new StringOption("password", null));
+    super(new StringOption('u', "user", null), new StringOption("password",
+                                                                null));
     this.config = config;
   }
 

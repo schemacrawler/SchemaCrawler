@@ -16,18 +16,13 @@
 					objects.
 				</p>
 				<p>
-					SchemaCrawler is also a database schema discovery and
-					comprehension, and schema
-					documentation tool. You can
+					SchemaCrawler is a database schema discovery and comprehension tool. You can
 					<a href="schemacrawler_grep.html">search for database schema objects</a>
-					using regular expressions,
-					and output the schema and data in a readable
-					text format, and
-					find potential design issues with
-					<a href="lint.html">lint</a>
-					. The output is designed to be
-					<a href="http://en.wikipedia.org/wiki/Diff">diff-ed</a>
-					against other database schemas.
+					using regular expressions, and output the schema and data in a readable
+					text format. You can find potential schema design issues with
+					<a href="lint.html">lint.</a> The output serves for database documentation 
+					is designed to be <a href="http://en.wikipedia.org/wiki/Diff">diff-ed</a>
+					against other database schemas. SchemaCrawler also generates schema diagrams.
 				</p>
 				<p>
 					SchemaCrawler supports almost any database that has a JDBC driver,

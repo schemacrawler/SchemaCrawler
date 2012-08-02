@@ -27,6 +27,21 @@ digraph SchemaCrawler_Diagram {
           <td bgcolor="#96C2FA" align="right">[table]</td>
         </tr>
         <tr>
+          <td port="id_ecfc5f6a.start" align="left"><b><i>ID</i></b></td>
+          <td> </td>
+          <td port="id_ecfc5f6a.end" align="right">INTEGER</td>
+        </tr>
+        <tr>
+          <td port="firstname_212547ec.start" align="left">FIRSTNAME</td>
+          <td> </td>
+          <td port="firstname_212547ec.end" align="right">VARCHAR(20)</td>
+        </tr>
+        <tr>
+          <td port="lastname_c2a4e130.start" align="left">LASTNAME</td>
+          <td> </td>
+          <td port="lastname_c2a4e130.end" align="right">VARCHAR(20)</td>
+        </tr>
+        <tr>
           <td port="address1_d0f1f1ec.start" align="left">ADDRESS1</td>
           <td> </td>
           <td port="address1_d0f1f1ec.end" align="right">VARCHAR(255)</td>
@@ -42,24 +57,9 @@ digraph SchemaCrawler_Diagram {
           <td port="city_9f5f8ffa.end" align="right">VARCHAR(50)</td>
         </tr>
         <tr>
-          <td port="country_7bfb2687.start" align="left">COUNTRY</td>
+          <td port="state_4d789fc2.start" align="left">STATE</td>
           <td> </td>
-          <td port="country_7bfb2687.end" align="right">VARCHAR(50)</td>
-        </tr>
-        <tr>
-          <td port="firstname_212547ec.start" align="left">FIRSTNAME</td>
-          <td> </td>
-          <td port="firstname_212547ec.end" align="right">VARCHAR(20)</td>
-        </tr>
-        <tr>
-          <td port="id_ecfc5f6a.start" align="left"><b><i>ID</i></b></td>
-          <td> </td>
-          <td port="id_ecfc5f6a.end" align="right">INTEGER</td>
-        </tr>
-        <tr>
-          <td port="lastname_c2a4e130.start" align="left">LASTNAME</td>
-          <td> </td>
-          <td port="lastname_c2a4e130.end" align="right">VARCHAR(20)</td>
+          <td port="state_4d789fc2.end" align="right">VARCHAR(2)</td>
         </tr>
         <tr>
           <td port="postalcode_843cd087.start" align="left">POSTALCODE</td>
@@ -67,9 +67,9 @@ digraph SchemaCrawler_Diagram {
           <td port="postalcode_843cd087.end" align="right">VARCHAR(10)</td>
         </tr>
         <tr>
-          <td port="state_4d789fc2.start" align="left">STATE</td>
+          <td port="country_7bfb2687.start" align="left">COUNTRY</td>
           <td> </td>
-          <td port="state_4d789fc2.end" align="right">VARCHAR(2)</td>
+          <td port="country_7bfb2687.end" align="right">VARCHAR(50)</td>
         </tr>
       </table>
     >];
@@ -80,14 +80,14 @@ digraph SchemaCrawler_Diagram {
           <td bgcolor="#96C2FA" align="right">[table]</td>
         </tr>
         <tr>
-          <td port="authorid_19681b5e.start" align="left">AUTHORID</td>
-          <td> </td>
-          <td port="authorid_19681b5e.end" align="right">INTEGER</td>
-        </tr>
-        <tr>
           <td port="bookid_931bd73c.start" align="left">BOOKID</td>
           <td> </td>
           <td port="bookid_931bd73c.end" align="right">INTEGER</td>
+        </tr>
+        <tr>
+          <td port="authorid_19681b5e.start" align="left">AUTHORID</td>
+          <td> </td>
+          <td port="authorid_19681b5e.end" align="right">INTEGER</td>
         </tr>
         <tr>
           <td port="update_7e11958f.start" align="left">"UPDATE"</td>
@@ -103,14 +103,14 @@ digraph SchemaCrawler_Diagram {
           <td bgcolor="#96C2FA" align="right">[view]</td>
         </tr>
         <tr>
-          <td port="firstname_d3258b8a.start" align="left">FIRSTNAME</td>
-          <td> </td>
-          <td port="firstname_d3258b8a.end" align="right">VARCHAR(20)</td>
-        </tr>
-        <tr>
           <td port="id_837fd18c.start" align="left">ID</td>
           <td> </td>
           <td port="id_837fd18c.end" align="right">INTEGER</td>
+        </tr>
+        <tr>
+          <td port="firstname_d3258b8a.start" align="left">FIRSTNAME</td>
+          <td> </td>
+          <td port="firstname_d3258b8a.end" align="right">VARCHAR(20)</td>
         </tr>
         <tr>
           <td port="lastname_b7deb1d2.start" align="left">LASTNAME</td>
@@ -126,24 +126,19 @@ digraph SchemaCrawler_Diagram {
           <td bgcolor="#96C2FA" align="right">[table]</td>
         </tr>
         <tr>
-          <td port="description_f1e45f8f.start" align="left">DESCRIPTION</td>
-          <td> </td>
-          <td port="description_f1e45f8f.end" align="right">VARCHAR(255)</td>
-        </tr>
-        <tr>
           <td port="id_bb8abc08.start" align="left"><b><i>ID</i></b></td>
           <td> </td>
           <td port="id_bb8abc08.end" align="right">INTEGER</td>
         </tr>
         <tr>
-          <td port="price_7619831c.start" align="left">PRICE</td>
+          <td port="title_764df42b.start" align="left">TITLE</td>
           <td> </td>
-          <td port="price_7619831c.end" align="right">DOUBLE(64, 0)</td>
+          <td port="title_764df42b.end" align="right">VARCHAR(255)</td>
         </tr>
         <tr>
-          <td port="publicationdate_bf876ded.start" align="left">PUBLICATIONDATE</td>
+          <td port="description_f1e45f8f.start" align="left">DESCRIPTION</td>
           <td> </td>
-          <td port="publicationdate_bf876ded.end" align="right">DATE</td>
+          <td port="description_f1e45f8f.end" align="right">VARCHAR(255)</td>
         </tr>
         <tr>
           <td port="publisherid_3413fbaa.start" align="left">PUBLISHERID</td>
@@ -151,9 +146,14 @@ digraph SchemaCrawler_Diagram {
           <td port="publisherid_3413fbaa.end" align="right">INTEGER</td>
         </tr>
         <tr>
-          <td port="title_764df42b.start" align="left">TITLE</td>
+          <td port="publicationdate_bf876ded.start" align="left">PUBLICATIONDATE</td>
           <td> </td>
-          <td port="title_764df42b.end" align="right">VARCHAR(255)</td>
+          <td port="publicationdate_bf876ded.end" align="right">DATE</td>
+        </tr>
+        <tr>
+          <td port="price_7619831c.start" align="left">PRICE</td>
+          <td> </td>
+          <td port="price_7619831c.end" align="right">DOUBLE(64, 0)</td>
         </tr>
       </table>
     >];
@@ -200,14 +200,14 @@ digraph SchemaCrawler_Diagram {
           <td port="id_e9913eaf.end" align="right">INTEGER</td>
         </tr>
         <tr>
-          <td port="publicationid_d4d93213.start" align="left">PUBLICATIONID</td>
-          <td> </td>
-          <td port="publicationid_d4d93213.end" align="right">INTEGER</td>
-        </tr>
-        <tr>
           <td port="writerid_b8c70762.start" align="left">WRITERID</td>
           <td> </td>
           <td port="writerid_b8c70762.end" align="right">BIGINT</td>
+        </tr>
+        <tr>
+          <td port="publicationid_d4d93213.start" align="left">PUBLICATIONID</td>
+          <td> </td>
+          <td port="publicationid_d4d93213.end" align="right">INTEGER</td>
         </tr>
       </table>
     >];
@@ -239,29 +239,9 @@ digraph SchemaCrawler_Diagram {
           <td bgcolor="#BFFA96" align="right">[table]</td>
         </tr>
         <tr>
-          <td port="description_d3f90c65.start" align="left">DESCRIPTION</td>
-          <td> </td>
-          <td port="description_d3f90c65.end" align="right">VARCHAR(255)</td>
-        </tr>
-        <tr>
           <td port="id_f5162672.start" align="left"><b><i>ID</i></b></td>
           <td> </td>
           <td port="id_f5162672.end" align="right">INTEGER</td>
-        </tr>
-        <tr>
-          <td port="press_release_3e1e2a14.start" align="left">PRESS_RELEASE</td>
-          <td> </td>
-          <td port="press_release_3e1e2a14.end" align="right">CLOB</td>
-        </tr>
-        <tr>
-          <td port="price_fd0e0872.start" align="left">PRICE</td>
-          <td> </td>
-          <td port="price_fd0e0872.end" align="right">DOUBLE(64, 0)</td>
-        </tr>
-        <tr>
-          <td port="publicationdate_fb2dbfc3.start" align="left">PUBLICATIONDATE</td>
-          <td> </td>
-          <td port="publicationdate_fb2dbfc3.end" align="right">DATE</td>
         </tr>
         <tr>
           <td port="title_fd427981.start" align="left">TITLE</td>
@@ -269,14 +249,34 @@ digraph SchemaCrawler_Diagram {
           <td port="title_fd427981.end" align="right">VARCHAR(255)</td>
         </tr>
         <tr>
-          <td port="update_4444e22e.start" align="left">"UPDATE"</td>
+          <td port="description_d3f90c65.start" align="left">DESCRIPTION</td>
           <td> </td>
-          <td port="update_4444e22e.end" align="right">CLOB</td>
+          <td port="description_d3f90c65.end" align="right">VARCHAR(255)</td>
         </tr>
         <tr>
           <td port="writerid_1c21d0e5.start" align="left">WRITERID</td>
           <td> </td>
           <td port="writerid_1c21d0e5.end" align="right">BIGINT</td>
+        </tr>
+        <tr>
+          <td port="publicationdate_fb2dbfc3.start" align="left">PUBLICATIONDATE</td>
+          <td> </td>
+          <td port="publicationdate_fb2dbfc3.end" align="right">DATE</td>
+        </tr>
+        <tr>
+          <td port="price_fd0e0872.start" align="left">PRICE</td>
+          <td> </td>
+          <td port="price_fd0e0872.end" align="right">DOUBLE(64, 0)</td>
+        </tr>
+        <tr>
+          <td port="update_4444e22e.start" align="left">"UPDATE"</td>
+          <td> </td>
+          <td port="update_4444e22e.end" align="right">CLOB</td>
+        </tr>
+        <tr>
+          <td port="press_release_3e1e2a14.start" align="left">PRESS_RELEASE</td>
+          <td> </td>
+          <td port="press_release_3e1e2a14.end" align="right">CLOB</td>
         </tr>
       </table>
     >];
@@ -285,6 +285,21 @@ digraph SchemaCrawler_Diagram {
         <tr>
           <td colspan="2" bgcolor="#BFFA96" align="left"><b>PUBLIC.FOR_LINT.WRITERS</b></td>
           <td bgcolor="#BFFA96" align="right">[table]</td>
+        </tr>
+        <tr>
+          <td port="id_3033cfb9.start" align="left"><b><i>ID</i></b></td>
+          <td> </td>
+          <td port="id_3033cfb9.end" align="right">BIGINT</td>
+        </tr>
+        <tr>
+          <td port="firstname_b42cb0bd.start" align="left">FIRSTNAME</td>
+          <td> </td>
+          <td port="firstname_b42cb0bd.end" align="right">VARCHAR(20)</td>
+        </tr>
+        <tr>
+          <td port="lastname_8d949a3f.start" align="left">LASTNAME</td>
+          <td> </td>
+          <td port="lastname_8d949a3f.end" align="right">VARCHAR(20)</td>
         </tr>
         <tr>
           <td port="address1_9be1aafb.start" align="left">ADDRESS1</td>
@@ -302,9 +317,29 @@ digraph SchemaCrawler_Diagram {
           <td port="city_f27c2889.end" align="right">VARCHAR(50)</td>
         </tr>
         <tr>
+          <td port="state_5def1913.start" align="left">STATE</td>
+          <td> </td>
+          <td port="state_5def1913.end" align="right">VARCHAR(2)</td>
+        </tr>
+        <tr>
+          <td port="postalcode_522281d6.start" align="left">POSTALCODE</td>
+          <td> </td>
+          <td port="postalcode_522281d6.end" align="right">VARCHAR(10)</td>
+        </tr>
+        <tr>
           <td port="country_48b88f98.start" align="left">COUNTRY</td>
           <td> </td>
           <td port="country_48b88f98.end" align="right">VARCHAR(50)</td>
+        </tr>
+        <tr>
+          <td port="phone1_5a32ac41.start" align="left">PHONE1</td>
+          <td> </td>
+          <td port="phone1_5a32ac41.end" align="right">VARCHAR(10)</td>
+        </tr>
+        <tr>
+          <td port="phone2_5a32ac42.start" align="left">PHONE2</td>
+          <td> </td>
+          <td port="phone2_5a32ac42.end" align="right">VARCHAR(15)</td>
         </tr>
         <tr>
           <td port="email1_47ad63d3.start" align="left">EMAIL1</td>
@@ -327,11 +362,6 @@ digraph SchemaCrawler_Diagram {
           <td port="fax3_f27d67f4.end" align="right">INTEGER</td>
         </tr>
         <tr>
-          <td port="firstname_b42cb0bd.start" align="left">FIRSTNAME</td>
-          <td> </td>
-          <td port="firstname_b42cb0bd.end" align="right">VARCHAR(20)</td>
-        </tr>
-        <tr>
           <td port="homeemail11_906adfff.start" align="left">HOMEEMAIL11</td>
           <td> </td>
           <td port="homeemail11_906adfff.end" align="right">VARCHAR(10)</td>
@@ -342,39 +372,9 @@ digraph SchemaCrawler_Diagram {
           <td port="homeemail12_906ae000.end" align="right">VARCHAR(10)</td>
         </tr>
         <tr>
-          <td port="id_3033cfb9.start" align="left"><b><i>ID</i></b></td>
-          <td> </td>
-          <td port="id_3033cfb9.end" align="right">BIGINT</td>
-        </tr>
-        <tr>
-          <td port="lastname_8d949a3f.start" align="left">LASTNAME</td>
-          <td> </td>
-          <td port="lastname_8d949a3f.end" align="right">VARCHAR(20)</td>
-        </tr>
-        <tr>
-          <td port="phone1_5a32ac41.start" align="left">PHONE1</td>
-          <td> </td>
-          <td port="phone1_5a32ac41.end" align="right">VARCHAR(10)</td>
-        </tr>
-        <tr>
-          <td port="phone2_5a32ac42.start" align="left">PHONE2</td>
-          <td> </td>
-          <td port="phone2_5a32ac42.end" align="right">VARCHAR(15)</td>
-        </tr>
-        <tr>
-          <td port="postalcode_522281d6.start" align="left">POSTALCODE</td>
-          <td> </td>
-          <td port="postalcode_522281d6.end" align="right">VARCHAR(10)</td>
-        </tr>
-        <tr>
           <td port="publication_id_b1bcb5cc.start" align="left">PUBLICATION_ID</td>
           <td> </td>
           <td port="publication_id_b1bcb5cc.end" align="right">BIGINT</td>
-        </tr>
-        <tr>
-          <td port="state_5def1913.start" align="left">STATE</td>
-          <td> </td>
-          <td port="state_5def1913.end" align="right">VARCHAR(2)</td>
         </tr>
       </table>
     >];
@@ -390,9 +390,9 @@ digraph SchemaCrawler_Diagram {
           <td port="city_2c74db51.end" align="right">VARCHAR(50)</td>
         </tr>
         <tr>
-          <td port="country_7d0587d0.start" align="left"><b><i>COUNTRY</i></b></td>
+          <td port="state_630cbf4b.start" align="left">STATE</td>
           <td> </td>
-          <td port="country_7d0587d0.end" align="right">VARCHAR(50)</td>
+          <td port="state_630cbf4b.end" align="right">VARCHAR(2)</td>
         </tr>
         <tr>
           <td port="postalcode_9b2bfe9e.start" align="left"><b><i>POSTALCODE</i></b></td>
@@ -400,9 +400,9 @@ digraph SchemaCrawler_Diagram {
           <td port="postalcode_9b2bfe9e.end" align="right">VARCHAR(10)</td>
         </tr>
         <tr>
-          <td port="state_630cbf4b.start" align="left">STATE</td>
+          <td port="country_7d0587d0.start" align="left"><b><i>COUNTRY</i></b></td>
           <td> </td>
-          <td port="state_630cbf4b.end" align="right">VARCHAR(2)</td>
+          <td port="country_7d0587d0.end" align="right">VARCHAR(50)</td>
         </tr>
       </table>
     >];
@@ -413,9 +413,9 @@ digraph SchemaCrawler_Diagram {
           <td bgcolor="#FA96E1" align="right">[table]</td>
         </tr>
         <tr>
-          <td port="bookid_3c829a3d.start" align="left">BOOKID</td>
+          <td port="postalcode_738bc931.start" align="left">POSTALCODE</td>
           <td> </td>
-          <td port="bookid_3c829a3d.end" align="right">INTEGER</td>
+          <td port="postalcode_738bc931.end" align="right">VARCHAR(10)</td>
         </tr>
         <tr>
           <td port="country_890cfe1d.start" align="left">COUNTRY</td>
@@ -423,14 +423,14 @@ digraph SchemaCrawler_Diagram {
           <td port="country_890cfe1d.end" align="right">VARCHAR(50)</td>
         </tr>
         <tr>
+          <td port="bookid_3c829a3d.start" align="left">BOOKID</td>
+          <td> </td>
+          <td port="bookid_3c829a3d.end" align="right">INTEGER</td>
+        </tr>
+        <tr>
           <td port="periodenddate_1bd9ab6f.start" align="left">PERIODENDDATE</td>
           <td> </td>
           <td port="periodenddate_1bd9ab6f.end" align="right">DATE</td>
-        </tr>
-        <tr>
-          <td port="postalcode_738bc931.start" align="left">POSTALCODE</td>
-          <td> </td>
-          <td port="postalcode_738bc931.end" align="right">VARCHAR(10)</td>
         </tr>
         <tr>
           <td port="totalamount_63baaba3.start" align="left">TOTALAMOUNT</td>
@@ -443,8 +443,8 @@ digraph SchemaCrawler_Diagram {
 	books_afd2ba21:"id_bb8abc08.start":w -> bookauthors_aa4376:"bookid_931bd73c.end":e [label=<FK_Y_BOOK>, style=solid, arrowhead=crowodot, arrowtail=teetee];
 	publications_949377f7:"id_f5162672.start":w -> extra_pk_334890da:"publicationid_d4d93213.end":e [label=<FK_PUBLICATION_JOIN>, style=solid, arrowhead=crowodot, arrowtail=teetee];
 	publications_949377f7:"id_f5162672.start":w -> writers_bf84ac10:"publication_id_b1bcb5cc.end":e [label=<FK_WRITERS_PUBLICATION>, style=solid, arrowhead=crowodot, arrowtail=teetee];
-	writers_bf84ac10:"id_3033cfb9.start":w -> publications_949377f7:"writerid_1c21d0e5.end":e [label=<FK_PUBLICATIONS_WRITER>, style=solid, arrowhead=crowodot, arrowtail=teetee];
 	writers_bf84ac10:"id_3033cfb9.start":w -> extra_pk_334890da:"writerid_b8c70762.end":e [label=<FK_WRITER_JOIN>, style=solid, arrowhead=crowodot, arrowtail=teetee];
+	writers_bf84ac10:"id_3033cfb9.start":w -> publications_949377f7:"writerid_1c21d0e5.end":e [label=<FK_PUBLICATIONS_WRITER>, style=solid, arrowhead=crowodot, arrowtail=teetee];
 	regions_bc895c48:"postalcode_9b2bfe9e.start":w -> sales_20be6f95:"postalcode_738bc931.end":e [label=<FK_SALES_REGIONS>, style=solid, arrowhead=crowodot, arrowtail=teetee];
 	regions_bc895c48:"country_7d0587d0.start":w -> sales_20be6f95:"country_890cfe1d.end":e [label=<FK_SALES_REGIONS>, style=solid, arrowhead=crowodot, arrowtail=teetee];
 	publishers_b8da20c0:"id_6fc9dd09.start":w -> books_afd2ba21:"publisherid_3413fbaa.end":e [style=dashed, arrowhead=crowodot, arrowtail=teetee];

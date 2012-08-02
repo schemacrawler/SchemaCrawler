@@ -21,7 +21,7 @@ package schemacrawler.tools.analysis.associations;
 
 
 import schemacrawler.schema.Column;
-import schemacrawler.schema.ColumnMap;
+import schemacrawler.schema.ColumnReference;
 
 /**
  * Represents a single column mapping from a primary key column to a
@@ -30,7 +30,7 @@ import schemacrawler.schema.ColumnMap;
  * @author Sualeh Fatehi
  */
 public final class WeakAssociation
-  implements ColumnMap, Comparable<ColumnMap>
+  implements ColumnReference, Comparable<ColumnReference>
 {
 
   private static final long serialVersionUID = -4411771492159843382L;
@@ -45,7 +45,7 @@ public final class WeakAssociation
   }
 
   @Override
-  public int compareTo(final ColumnMap o)
+  public int compareTo(final ColumnReference o)
   {
     int compare = 0;
     if (compare == 0)
@@ -103,7 +103,7 @@ public final class WeakAssociation
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schema.ForeignKeyColumnMap#getForeignKeyColumn()
+   * @see schemacrawler.schema.ForeignKeyColumnReference#getForeignKeyColumn()
    */
   @Override
   public Column getForeignKeyColumn()
@@ -114,7 +114,7 @@ public final class WeakAssociation
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schema.ForeignKeyColumnMap#getPrimaryKeyColumn()
+   * @see schemacrawler.schema.ForeignKeyColumnReference#getPrimaryKeyColumn()
    */
   @Override
   public Column getPrimaryKeyColumn()

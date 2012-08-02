@@ -78,46 +78,54 @@
     "driverName": "HSQL Database Engine Driver",
     "url": "jdbc:hsqldb:mem:schemacrawler"
   },
-  "procedures": [
+  "routines": [
     {
       "name": "NEW_PUBLISHER",
       "fullName": "PUBLIC.BOOKS.NEW_PUBLISHER",
-      "type": "no result"
+      "type": "procedure",
+      "returnType": "no result"
     },
     {
       "name": "ALLOC_BLOCKS",
       "fullName": "PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS",
-      "type": "no result"
+      "type": "procedure",
+      "returnType": "no result"
     },
     {
       "name": "CONVERT_BLOCK",
       "fullName": "PUBLIC.SYSTEM_LOBS.CONVERT_BLOCK",
-      "type": "no result"
+      "type": "procedure",
+      "returnType": "no result"
     },
     {
       "name": "CREATE_EMPTY_BLOCK",
       "fullName": "PUBLIC.SYSTEM_LOBS.CREATE_EMPTY_BLOCK",
-      "type": "no result"
+      "type": "procedure",
+      "returnType": "no result"
     },
     {
       "name": "DELETE_BLOCKS",
       "fullName": "PUBLIC.SYSTEM_LOBS.DELETE_BLOCKS",
-      "type": "no result"
+      "type": "procedure",
+      "returnType": "no result"
     },
     {
       "name": "DELETE_LOB",
       "fullName": "PUBLIC.SYSTEM_LOBS.DELETE_LOB",
-      "type": "no result"
+      "type": "procedure",
+      "returnType": "no result"
     },
     {
       "name": "DELETE_UNUSED",
       "fullName": "PUBLIC.SYSTEM_LOBS.DELETE_UNUSED",
-      "type": "no result"
+      "type": "procedure",
+      "returnType": "no result"
     },
     {
       "name": "DIVIDE_BLOCK",
       "fullName": "PUBLIC.SYSTEM_LOBS.DIVIDE_BLOCK",
-      "type": "no result"
+      "type": "procedure",
+      "returnType": "no result"
     }
   ]
 }]

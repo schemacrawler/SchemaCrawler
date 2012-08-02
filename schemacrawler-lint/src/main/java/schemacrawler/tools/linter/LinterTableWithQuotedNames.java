@@ -64,7 +64,7 @@ public class LinterTableWithQuotedNames
     }
   }
 
-  private List<String> findColumnsWithQuotedNames(final Column[] columns)
+  private List<String> findColumnsWithQuotedNames(final List<Column> columns)
   {
     final List<String> columnsWithQuotedNames = new ArrayList<String>();
     for (final Column column: columns)

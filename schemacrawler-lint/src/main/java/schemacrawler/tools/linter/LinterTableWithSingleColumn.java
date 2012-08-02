@@ -20,6 +20,8 @@
 package schemacrawler.tools.linter;
 
 
+import java.util.List;
+
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
@@ -48,8 +50,8 @@ public class LinterTableWithSingleColumn
       throw new IllegalArgumentException("No table provided");
     }
 
-    final Column[] columns = table.getColumns();
-    if (columns.length <= 1)
+    final List<Column> columns = table.getColumns();
+    if (columns.size() <= 1)
     {
       addLint(table, getSummary(), true);
     }

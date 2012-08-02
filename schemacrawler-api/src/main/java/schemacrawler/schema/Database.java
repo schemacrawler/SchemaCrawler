@@ -21,6 +21,8 @@
 package schemacrawler.schema;
 
 
+import java.util.Collection;
+
 /**
  * Database and connection information.
  * 
@@ -30,9 +32,55 @@ public interface Database
   extends NamedObject
 {
 
+  /**
+   * Gets the column data types defined in the schema, by name.
+   * 
+   * @param name
+   *        Name
+   * @return Column data types
+   */
+  ColumnDataType getColumnDataType(Schema schema, String name);
+
+  /**
+   * Gets the column data types
+   * 
+   * @return Column data types
+   */
+  Collection<ColumnDataType> getColumnDataTypes();
+
+  /**
+   * Gets the column data types defined in the schema, by name.
+   * 
+   * @return Column data types
+   */
+  Collection<ColumnDataType> getColumnDataTypes(Schema schema);
+
   DatabaseInfo getDatabaseInfo();
 
   JdbcDriverInfo getJdbcDriverInfo();
+
+  /**
+   * Gets a routine by name.
+   * 
+   * @param name
+   *        Name
+   * @return Routine.
+   */
+  Routine getRoutine(Schema schema, String name);
+
+  /**
+   * Gets the routine.
+   * 
+   * @return Routines
+   */
+  Collection<Routine> getRoutines();
+
+  /**
+   * Gets the routine.
+   * 
+   * @return Routines
+   */
+  Collection<Routine> getRoutines(Schema schema);
 
   /**
    * Gets a schema by name.
@@ -50,7 +98,30 @@ public interface Database
    * 
    * @return Schemas
    */
-  Schema[] getSchemas();
+  Collection<Schema> getSchemas();
+
+  /**
+   * Gets the synonym by name.
+   * 
+   * @param name
+   *        Name
+   * @return Synonym.
+   */
+  Synonym getSynonym(Schema schema, String name);
+
+  /**
+   * Gets the synonyms.
+   * 
+   * @return Synonyms
+   */
+  Collection<Synonym> getSynonyms();
+
+  /**
+   * Gets the synonyms.
+   * 
+   * @return Synonyms
+   */
+  Collection<Synonym> getSynonyms(Schema schema);
 
   /**
    * Gets the column data types defined by the RDBMS system, by name.
@@ -66,6 +137,29 @@ public interface Database
    * 
    * @return Column data types
    */
-  ColumnDataType[] getSystemColumnDataTypes();
+  Collection<ColumnDataType> getSystemColumnDataTypes();
+
+  /**
+   * Gets a table by name.
+   * 
+   * @param name
+   *        Name
+   * @return Table.
+   */
+  Table getTable(Schema schema, String name);
+
+  /**
+   * Gets the tables.
+   * 
+   * @return Tables
+   */
+  Collection<Table> getTables();
+
+  /**
+   * Gets the tables.
+   * 
+   * @return Tables
+   */
+  Collection<Table> getTables(Schema schema);
 
 }

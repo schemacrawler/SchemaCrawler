@@ -22,38 +22,28 @@ package schemacrawler.tools.analysis.associations;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Database;
-import schemacrawler.schema.DatabaseInfo;
-import schemacrawler.schema.JdbcDriverInfo;
-import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Schema;
-import schemacrawler.schema.SchemaCrawlerInfo;
 import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.BaseDatabaseDecorator;
 
 public final class DatabaseWithAssociations
-  implements Database
+  extends BaseDatabaseDecorator
 {
 
   private static final long serialVersionUID = -3953296149824921463L;
 
-  private final Database database;
   private final WeakAssociationsCollector collector;
 
   public DatabaseWithAssociations(final Database database)
   {
-    if (database == null)
-    {
-      throw new IllegalArgumentException("No database provided");
-    }
-    this.database = database;
+    super(database);
 
     final List<Table> allTables = new ArrayList<Table>();
     for (final Schema schema: database.getSchemas())
     {
-      for (final Table table: schema.getTables())
+      for (final Table table: database.getTables(schema))
       {
         allTables.add(table);
       }
@@ -65,99 +55,9 @@ public final class DatabaseWithAssociations
 
   }
 
-  @Override
-  public int compareTo(final NamedObject o)
-  {
-    return database.compareTo(o);
-  }
-
-  @Override
-  public Object getAttribute(final String name)
-  {
-    return database.getAttribute(name);
-  }
-
-  @Override
-  public <T> T getAttribute(final String name, final T defaultValue)
-  {
-    return database.getAttribute(name, defaultValue);
-  }
-
-  @Override
-  public Map<String, Object> getAttributes()
-  {
-    return database.getAttributes();
-  }
-
   public WeakAssociationsCollector getCollector()
   {
     return collector;
-  }
-
-  @Override
-  public DatabaseInfo getDatabaseInfo()
-  {
-    return database.getDatabaseInfo();
-  }
-
-  @Override
-  public String getFullName()
-  {
-    return database.getFullName();
-  }
-
-  @Override
-  public JdbcDriverInfo getJdbcDriverInfo()
-  {
-    return database.getJdbcDriverInfo();
-  }
-
-  @Override
-  public String getName()
-  {
-    return database.getName();
-  }
-
-  @Override
-  public String getRemarks()
-  {
-    return database.getRemarks();
-  }
-
-  @Override
-  public Schema getSchema(final String name)
-  {
-    return database.getSchema(name);
-  }
-
-  @Override
-  public SchemaCrawlerInfo getSchemaCrawlerInfo()
-  {
-    return database.getSchemaCrawlerInfo();
-  }
-
-  @Override
-  public Schema[] getSchemas()
-  {
-    return database.getSchemas();
-  }
-
-  @Override
-  public ColumnDataType getSystemColumnDataType(final String name)
-  {
-    return database.getSystemColumnDataType(name);
-  }
-
-  @Override
-  public ColumnDataType[] getSystemColumnDataTypes()
-  {
-    return database.getSystemColumnDataTypes();
-  }
-
-  @Override
-  public void setAttribute(final String name, final Object value)
-  {
-    database.setAttribute(name, value);
   }
 
 }

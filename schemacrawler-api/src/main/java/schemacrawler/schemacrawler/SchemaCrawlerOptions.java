@@ -21,6 +21,10 @@
 package schemacrawler.schemacrawler;
 
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
 import schemacrawler.schema.TableType;
 
 /**
@@ -44,25 +48,19 @@ public final class SchemaCrawlerOptions
   private static final String SC_TABLE_PATTERN_EXCLUDE = "schemacrawler.table.pattern.exclude";
   private static final String SC_TABLE_PATTERN_INCLUDE = "schemacrawler.table.pattern.include";
 
-  private static final String SC_PROCEDURE_COLUMN_PATTERN_EXCLUDE = "schemacrawler.procedure.inout.pattern.exclude";
-  private static final String SC_PROCEDURE_COLUMN_PATTERN_INCLUDE = "schemacrawler.procedure.inout.pattern.include";
-  private static final String SC_PROCEDURE_PATTERN_EXCLUDE = "schemacrawler.procedure.pattern.exclude";
-  private static final String SC_PROCEDURE_PATTERN_INCLUDE = "schemacrawler.procedure.pattern.include";
+  private static final String SC_ROUTINE_COLUMN_PATTERN_EXCLUDE = "schemacrawler.routine.inout.pattern.exclude";
+  private static final String SC_ROUTINE_COLUMN_PATTERN_INCLUDE = "schemacrawler.routine.inout.pattern.include";
+  private static final String SC_ROUTINE_PATTERN_EXCLUDE = "schemacrawler.routine.pattern.exclude";
+  private static final String SC_ROUTINE_PATTERN_INCLUDE = "schemacrawler.routine.pattern.include";
 
   private static final String SC_GREP_COLUMN_PATTERN_EXCLUDE = "schemacrawler.grep.column.pattern.exclude";
   private static final String SC_GREP_COLUMN_PATTERN_INCLUDE = "schemacrawler.grep.column.pattern.include";
-  private static final String SC_GREP_PROCEDURE_COLUMN_PATTERN_EXCLUDE = "schemacrawler.grep.procedure.inout.pattern.exclude";
-  private static final String SC_GREP_PROCEDURE_COLUMN_PATTERN_INCLUDE = "schemacrawler.grep.procedure.inout.pattern.include";
+  private static final String SC_GREP_ROUTINE_COLUMN_PATTERN_EXCLUDE = "schemacrawler.grep.routine.inout.pattern.exclude";
+  private static final String SC_GREP_ROUTINE_COLUMN_PATTERN_INCLUDE = "schemacrawler.grep.routine.inout.pattern.include";
   private static final String SC_GREP_DEFINITION_PATTERN_EXCLUDE = "schemacrawler.grep.definition.pattern.exclude";
   private static final String SC_GREP_DEFINITION_PATTERN_INCLUDE = "schemacrawler.grep.definition.pattern.include";
 
   private static final String SC_GREP_INVERT_MATCH = "schemacrawler.grep.invert-match";
-
-  private static final String SC_SORT_ALPHABETICALLY_TABLES = "schemacrawler.sort_alphabetically.tables";
-  private static final String SC_SORT_ALPHABETICALLY_PROCEDURE_COLUMNS = "schemacrawler.sort_alphabetically.procedure_columns";
-  private static final String SC_SORT_ALPHABETICALLY_TABLE_INDEXES = "schemacrawler.sort_alphabetically.table_indices";
-  private static final String SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS = "schemacrawler.sort_alphabetically.table_foreignkeys";
-  private static final String SC_SORT_ALPHABETICALLY_TABLE_COLUMNS = "schemacrawler.sort_alphabetically.table_columns";
 
   private static final String SC_SUPPORTS_SCHEMAS_OVERRIDE = "schemacrawler.supports_schemas.override";
   private static final String SC_SUPPORTS_CATALOG_OVERRIDE = "schemacrawler.supports_catalog.override";
@@ -74,37 +72,56 @@ public final class SchemaCrawlerOptions
     return tableTypesCopy;
   }
 
-  private InclusionRule schemaInclusionRule;
-  private TableType[] tableTypes;
+  /**
+   * Converts an array of string table types to an array of their
+   * corresponding enumeration values.
+   * 
+   * @param tableTypeStrings
+   *        Array of string table types
+   * @return Array of table types
+   */
+  private static TableType[] valueOf(final String[] tableTypeStrings)
+  {
+    if (tableTypeStrings == null || tableTypeStrings.length == 0)
+    {
+      return new TableType[0];
+    }
 
+    final List<TableType> tableTypes = new ArrayList<TableType>(tableTypeStrings.length);
+    for (final String tableTypeString: tableTypeStrings)
+    {
+      tableTypes.add(TableType.valueOf(tableTypeString
+        .toLowerCase(Locale.ENGLISH)));
+    }
+    return tableTypes.toArray(new TableType[tableTypes.size()]);
+  }
+
+  private InclusionRule schemaInclusionRule;
+
+  private TableType[] tableTypes;
   private String tableNamePattern;
   private InclusionRule tableInclusionRule;
-  private InclusionRule columnInclusionRule;
 
-  private InclusionRule procedureInclusionRule;
-  private InclusionRule procedureColumnInclusionRule;
+  private InclusionRule columnInclusionRule;
+  private InclusionRule routineInclusionRule;
+
+  private InclusionRule routineColumnInclusionRule;
 
   private InclusionRule synonymInclusionRule;
-
   private InclusionRule grepColumnInclusionRule;
-  private InclusionRule grepProcedureColumnInclusionRule;
+  private InclusionRule grepRoutineColumnInclusionRule;
   private InclusionRule grepDefinitionInclusionRule;
   private boolean grepInvertMatch;
   private int childTableFilterDepth;
   private int parentTableFilterDepth;
-  private boolean isAlphabeticalSortForTables;
 
-  private boolean isAlphabeticalSortForTableColumns;
-  private boolean isAlphabeticalSortForForeignKeys;
-  private boolean isAlphabeticalSortForIndexes;
-  private boolean isAlphabeticalSortForProcedureColumns;
   private SchemaInfoLevel schemaInfoLevel;
-
   private InformationSchemaViews informationSchemaViews;
-  private boolean hasOverrideForSupportsSchemas;
 
+  private boolean hasOverrideForSupportsSchemas;
   private boolean isSupportsSchemasOverride;
   private boolean hasOverrideForSupportsCatalogs;
+
   private boolean isSupportsCatalogOverride;
 
   /**
@@ -122,16 +139,11 @@ public final class SchemaCrawlerOptions
     tableInclusionRule = InclusionRule.INCLUDE_ALL;
     columnInclusionRule = InclusionRule.INCLUDE_ALL;
 
-    procedureInclusionRule = InclusionRule.INCLUDE_ALL;
-    procedureColumnInclusionRule = InclusionRule.INCLUDE_ALL;
+    routineInclusionRule = InclusionRule.INCLUDE_ALL;
+    routineColumnInclusionRule = InclusionRule.INCLUDE_ALL;
 
     synonymInclusionRule = InclusionRule.INCLUDE_ALL;
 
-    isAlphabeticalSortForTables = true;
-    isAlphabeticalSortForTableColumns = false;
-    isAlphabeticalSortForForeignKeys = false;
-    isAlphabeticalSortForIndexes = false;
-    isAlphabeticalSortForProcedureColumns = false;
   }
 
   /**
@@ -172,17 +184,17 @@ public final class SchemaCrawlerOptions
                                               .getStringValue(SC_COLUMN_PATTERN_EXCLUDE,
                                                               InclusionRule.NONE));
 
-    procedureInclusionRule = new InclusionRule(configProperties.getStringValue(SC_PROCEDURE_PATTERN_INCLUDE,
-                                                                               InclusionRule.ALL),
-                                               configProperties
-                                                 .getStringValue(SC_PROCEDURE_PATTERN_EXCLUDE,
-                                                                 InclusionRule.NONE));
-    procedureColumnInclusionRule = new InclusionRule(configProperties
-                                                       .getStringValue(SC_PROCEDURE_COLUMN_PATTERN_INCLUDE,
-                                                                       InclusionRule.ALL),
-                                                     configProperties
-                                                       .getStringValue(SC_PROCEDURE_COLUMN_PATTERN_EXCLUDE,
-                                                                       InclusionRule.NONE));
+    routineInclusionRule = new InclusionRule(configProperties.getStringValue(SC_ROUTINE_PATTERN_INCLUDE,
+                                                                             InclusionRule.ALL),
+                                             configProperties
+                                               .getStringValue(SC_ROUTINE_PATTERN_EXCLUDE,
+                                                               InclusionRule.NONE));
+    routineColumnInclusionRule = new InclusionRule(configProperties
+                                                     .getStringValue(SC_ROUTINE_COLUMN_PATTERN_INCLUDE,
+                                                                     InclusionRule.ALL),
+                                                   configProperties
+                                                     .getStringValue(SC_ROUTINE_COLUMN_PATTERN_EXCLUDE,
+                                                                     InclusionRule.NONE));
 
     grepColumnInclusionRule = new InclusionRule(configProperties
                                                   .getStringValue(SC_GREP_COLUMN_PATTERN_INCLUDE,
@@ -190,12 +202,12 @@ public final class SchemaCrawlerOptions
                                                 configProperties
                                                   .getStringValue(SC_GREP_COLUMN_PATTERN_EXCLUDE,
                                                                   InclusionRule.NONE));
-    grepProcedureColumnInclusionRule = new InclusionRule(configProperties
-                                                           .getStringValue(SC_GREP_PROCEDURE_COLUMN_PATTERN_INCLUDE,
-                                                                           InclusionRule.ALL),
-                                                         configProperties
-                                                           .getStringValue(SC_GREP_PROCEDURE_COLUMN_PATTERN_EXCLUDE,
-                                                                           InclusionRule.NONE));
+    grepRoutineColumnInclusionRule = new InclusionRule(configProperties
+                                                         .getStringValue(SC_GREP_ROUTINE_COLUMN_PATTERN_INCLUDE,
+                                                                         InclusionRule.ALL),
+                                                       configProperties
+                                                         .getStringValue(SC_GREP_ROUTINE_COLUMN_PATTERN_EXCLUDE,
+                                                                         InclusionRule.NONE));
     grepDefinitionInclusionRule = new InclusionRule(configProperties
                                                       .getStringValue(SC_GREP_DEFINITION_PATTERN_INCLUDE,
                                                                       InclusionRule.ALL),
@@ -203,17 +215,6 @@ public final class SchemaCrawlerOptions
                                                       .getStringValue(SC_GREP_DEFINITION_PATTERN_EXCLUDE,
                                                                       InclusionRule.NONE));
     grepInvertMatch = configProperties.getBooleanValue(SC_GREP_INVERT_MATCH);
-
-    isAlphabeticalSortForTables = Boolean.parseBoolean(configProperties
-      .getStringValue(SC_SORT_ALPHABETICALLY_TABLES, "true"));
-    isAlphabeticalSortForTableColumns = configProperties
-      .getBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_COLUMNS);
-    isAlphabeticalSortForForeignKeys = configProperties
-      .getBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS);
-    isAlphabeticalSortForIndexes = configProperties
-      .getBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_INDEXES);
-    isAlphabeticalSortForProcedureColumns = configProperties
-      .getBooleanValue(SC_SORT_ALPHABETICALLY_PROCEDURE_COLUMNS);
 
     if (configProperties.hasValue(SC_SUPPORTS_SCHEMAS_OVERRIDE))
     {
@@ -264,13 +265,13 @@ public final class SchemaCrawlerOptions
   }
 
   /**
-   * Gets the procedure column rule for grep.
+   * Gets the routine column rule for grep.
    * 
-   * @return Procedure column rule for grep.
+   * @return Routine column rule for grep.
    */
-  public InclusionRule getGrepProcedureColumnInclusionRule()
+  public InclusionRule getGrepRoutineColumnInclusionRule()
   {
-    return grepProcedureColumnInclusionRule;
+    return grepRoutineColumnInclusionRule;
   }
 
   /**
@@ -289,23 +290,23 @@ public final class SchemaCrawlerOptions
   }
 
   /**
-   * Gets the procedure column rule.
+   * Gets the routine column rule.
    * 
-   * @return Procedure column rule.
+   * @return Routine column rule.
    */
-  public InclusionRule getProcedureColumnInclusionRule()
+  public InclusionRule getRoutineColumnInclusionRule()
   {
-    return procedureColumnInclusionRule;
+    return routineColumnInclusionRule;
   }
 
   /**
-   * Gets the procedure inclusion rule.
+   * Gets the routine inclusion rule.
    * 
-   * @return Procedure inclusion rule.
+   * @return Routine inclusion rule.
    */
-  public InclusionRule getProcedureInclusionRule()
+  public InclusionRule getRoutineInclusionRule()
   {
-    return procedureInclusionRule;
+    return routineInclusionRule;
   }
 
   /**
@@ -387,56 +388,6 @@ public final class SchemaCrawlerOptions
     return hasOverrideForSupportsSchemas;
   }
 
-  /**
-   * Whether foreign keys are alphabetically sorted.
-   * 
-   * @return Whether foreign keys are alphabetically sorted
-   */
-  public boolean isAlphabeticalSortForForeignKeys()
-  {
-    return isAlphabeticalSortForForeignKeys;
-  }
-
-  /**
-   * Whether indexes are alphabetically sorted.
-   * 
-   * @return Whether indexes are alphabetically sorted
-   */
-  public boolean isAlphabeticalSortForIndexes()
-  {
-    return isAlphabeticalSortForIndexes;
-  }
-
-  /**
-   * Whether procedure columns are alphabetically sorted.
-   * 
-   * @return Whether procedure columns are alphabetically sorted
-   */
-  public boolean isAlphabeticalSortForProcedureColumns()
-  {
-    return isAlphabeticalSortForProcedureColumns;
-  }
-
-  /**
-   * Whether table columns are alphabetically sorted.
-   * 
-   * @return Whether table columns are alphabetically sorted
-   */
-  public boolean isAlphabeticalSortForTableColumns()
-  {
-    return isAlphabeticalSortForTableColumns;
-  }
-
-  /**
-   * Whether tables are alphabetically sorted.
-   * 
-   * @return Whether tables are alphabetically sorted
-   */
-  public boolean isAlphabeticalSortForTables()
-  {
-    return isAlphabeticalSortForTables;
-  }
-
   public boolean isGrepColumns()
   {
     return grepColumnInclusionRule != null;
@@ -457,9 +408,9 @@ public final class SchemaCrawlerOptions
     return grepInvertMatch;
   }
 
-  public boolean isGrepProcedureColumns()
+  public boolean isGrepRoutineColumns()
   {
-    return grepProcedureColumnInclusionRule != null;
+    return grepRoutineColumnInclusionRule != null;
   }
 
   public boolean isSupportsCatalogOverride()
@@ -470,61 +421,6 @@ public final class SchemaCrawlerOptions
   public boolean isSupportsSchemasOverride()
   {
     return isSupportsSchemasOverride;
-  }
-
-  /**
-   * Sets whether foreign keys should be alphabetically sorted.
-   * 
-   * @param alphabeticalSort
-   *        Alphabetical sort
-   */
-  public void setAlphabeticalSortForForeignKeys(final boolean alphabeticalSort)
-  {
-    isAlphabeticalSortForForeignKeys = alphabeticalSort;
-  }
-
-  /**
-   * Sets whether indexes should be alphabetically sorted.
-   * 
-   * @param alphabeticalSort
-   *        Alphabetical sort
-   */
-  public void setAlphabeticalSortForIndexes(final boolean alphabeticalSort)
-  {
-    isAlphabeticalSortForIndexes = alphabeticalSort;
-  }
-
-  /**
-   * Sets whether procedure columns should be alphabetically sorted.
-   * 
-   * @param alphabeticalSort
-   *        Alphabetical sort
-   */
-  public void setAlphabeticalSortForProcedureColumns(final boolean alphabeticalSort)
-  {
-    isAlphabeticalSortForProcedureColumns = alphabeticalSort;
-  }
-
-  /**
-   * Sets whether table columns should be alphabetically sorted.
-   * 
-   * @param alphabeticalSort
-   *        Alphabetical sort
-   */
-  public void setAlphabeticalSortForTableColumns(final boolean alphabeticalSort)
-  {
-    isAlphabeticalSortForTableColumns = alphabeticalSort;
-  }
-
-  /**
-   * Sets whether tables should be alphabetically sorted.
-   * 
-   * @param alphabeticalSort
-   *        Alphabetical sort
-   */
-  public void setAlphabeticalSortForTables(final boolean alphabeticalSort)
-  {
-    isAlphabeticalSortForTables = alphabeticalSort;
   }
 
   public void setChildTableFilterDepth(final int childTableFilterDepth)
@@ -581,14 +477,14 @@ public final class SchemaCrawlerOptions
   }
 
   /**
-   * Sets the procedure column inclusion rule for grep.
+   * Sets the routine column inclusion rule for grep.
    * 
-   * @param grepProcedureColumnInclusionRule
-   *        Procedure column inclusion rule for grep
+   * @param grepRoutineColumnInclusionRule
+   *        Routine column inclusion rule for grep
    */
-  public void setGrepProcedureColumnInclusionRule(final InclusionRule grepProcedureColumnInclusionRule)
+  public void setGrepRoutineColumnInclusionRule(final InclusionRule grepRoutineColumnInclusionRule)
   {
-    this.grepProcedureColumnInclusionRule = grepProcedureColumnInclusionRule;
+    this.grepRoutineColumnInclusionRule = grepRoutineColumnInclusionRule;
   }
 
   /**
@@ -615,33 +511,33 @@ public final class SchemaCrawlerOptions
   }
 
   /**
-   * Sets the procedure column inclusion rule.
+   * Sets the routine column inclusion rule.
    * 
-   * @param procedureColumnInclusionRule
-   *        Procedure column inclusion rule
+   * @param routineColumnInclusionRule
+   *        Routine column inclusion rule
    */
-  public void setProcedureColumnInclusionRule(final InclusionRule procedureColumnInclusionRule)
+  public void setRoutineColumnInclusionRule(final InclusionRule routineColumnInclusionRule)
   {
-    if (procedureColumnInclusionRule == null)
+    if (routineColumnInclusionRule == null)
     {
       throw new IllegalArgumentException("Cannot use null value in a setter");
     }
-    this.procedureColumnInclusionRule = procedureColumnInclusionRule;
+    this.routineColumnInclusionRule = routineColumnInclusionRule;
   }
 
   /**
-   * Sets the procedure inclusion rule.
+   * Sets the routine inclusion rule.
    * 
-   * @param procedureInclusionRule
-   *        Procedure inclusion rule
+   * @param routineInclusionRule
+   *        Routine inclusion rule
    */
-  public void setProcedureInclusionRule(final InclusionRule procedureInclusionRule)
+  public void setRoutineInclusionRule(final InclusionRule routineInclusionRule)
   {
-    if (procedureInclusionRule == null)
+    if (routineInclusionRule == null)
     {
       throw new IllegalArgumentException("Cannot use null value in a setter");
     }
-    this.procedureInclusionRule = procedureInclusionRule;
+    this.routineInclusionRule = routineInclusionRule;
   }
 
   /**
@@ -768,7 +664,7 @@ public final class SchemaCrawlerOptions
     {
       throw new IllegalArgumentException("Cannot use null value in a setter");
     }
-    tableTypes = TableType.valueOf(tableTypesString.split(","));
+    tableTypes = valueOf(tableTypesString.split(","));
   }
 
   /**

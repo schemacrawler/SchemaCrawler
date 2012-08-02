@@ -27,74 +27,74 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schema.Procedure;
-import schemacrawler.schema.ProcedureColumn;
+import schemacrawler.schema.Routine;
+import schemacrawler.schema.RoutineColumn;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
-class ProcedureFilter
+class RoutineFilter
 {
 
-  private static final Logger LOGGER = Logger.getLogger(ProcedureFilter.class
+  private static final Logger LOGGER = Logger.getLogger(RoutineFilter.class
     .getName());
 
   private final SchemaCrawlerOptions options;
-  private final NamedObjectList<MutableProcedure> allProcedures;
+  private final NamedObjectList<MutableRoutine> allRoutines;
 
-  public ProcedureFilter(final SchemaCrawlerOptions options,
-                         final NamedObjectList<MutableProcedure> allProcedures)
+  public RoutineFilter(final SchemaCrawlerOptions options,
+                       final NamedObjectList<MutableRoutine> allRoutines)
   {
     this.options = options;
-    this.allProcedures = allProcedures;
+    this.allRoutines = allRoutines;
   }
 
   public void filter()
   {
-    final Collection<MutableProcedure> filteredProcedures = doFilter();
-    for (final MutableProcedure procedure: allProcedures)
+    final Collection<MutableRoutine> filteredRoutines = doFilter();
+    for (final MutableRoutine routine: allRoutines)
     {
-      if (!filteredProcedures.contains(procedure))
+      if (!filteredRoutines.contains(routine))
       {
-        ((MutableSchema) procedure.getSchema()).removeProcedure(procedure);
-        allProcedures.remove(procedure);
+        allRoutines.remove(routine);
       }
     }
   }
 
-  private Collection<MutableProcedure> doFilter()
+  private Collection<MutableRoutine> doFilter()
   {
     // Filter for grep
-    final Set<MutableProcedure> greppedProcedures = new HashSet<MutableProcedure>();
-    for (final MutableProcedure procedure: allProcedures)
+    final Set<MutableRoutine> greppedRoutines = new HashSet<MutableRoutine>();
+    for (final MutableRoutine routine: allRoutines)
     {
-      if (grepMatch(options, procedure))
+      if (grepMatch(options, routine))
       {
-        greppedProcedures.add(procedure);
+        greppedRoutines.add(routine);
       }
     }
 
-    return greppedProcedures;
+    return greppedRoutines;
   }
 
   /**
-   * Special case for "grep" like functionality. Handle procedure if a
-   * procedure column inclusion rule is found, and at least one column
+   * Special case for "grep" like functionality. Handle routine if a
+   * routine column inclusion rule is found, and at least one column
    * matches the rule.
    * 
    * @param options
    *        Options
-   * @param procedure
-   *        Procedure to check
+   * @param routine
+   *        Routine to check
    * @return Whether the column should be included
    */
   private boolean grepMatch(final SchemaCrawlerOptions options,
-                            final Procedure procedure)
+                            final Routine routine)
   {
     final boolean invertMatch = options.isGrepInvertMatch();
-    final boolean checkIncludeForColumns = options.isGrepProcedureColumns();
+    final boolean checkIncludeForColumns = options.isGrepRoutineColumns();
     final boolean checkIncludeForDefinitions = options.isGrepDefinitions();
 
-    final InclusionRule grepProcedureColumnInclusionRule = options
-      .getGrepProcedureColumnInclusionRule();
+    final InclusionRule grepRoutineColumnInclusionRule = options
+      .getGrepRoutineColumnInclusionRule();
     final InclusionRule grepDefinitionInclusionRule = options
       .getGrepDefinitionInclusionRule();
 
@@ -105,12 +105,11 @@ class ProcedureFilter
 
     boolean includeForColumns = false;
     boolean includeForDefinitions = false;
-    final ProcedureColumn[] columns = procedure.getColumns();
-    for (final ProcedureColumn column: columns)
+    for (final RoutineColumn column: routine.getColumns())
     {
       if (checkIncludeForColumns)
       {
-        if (grepProcedureColumnInclusionRule.include(column.getFullName()))
+        if (grepRoutineColumnInclusionRule.include(column.getFullName()))
         {
           includeForColumns = true;
           break;
@@ -120,11 +119,13 @@ class ProcedureFilter
     // Additional include checks for definitions
     if (checkIncludeForDefinitions)
     {
-      if (grepDefinitionInclusionRule.include(procedure.getRemarks()))
+      if (grepDefinitionInclusionRule.include(routine.getRemarks()))
       {
         includeForDefinitions = true;
       }
-      if (grepDefinitionInclusionRule.include(procedure.getDefinition()))
+      if (routine instanceof Procedure
+          && grepDefinitionInclusionRule.include(((Procedure) routine)
+            .getDefinition()))
       {
         includeForDefinitions = true;
       }
@@ -138,7 +139,7 @@ class ProcedureFilter
 
     if (!include)
     {
-      LOGGER.log(Level.FINE, "Removing procedure " + procedure
+      LOGGER.log(Level.FINE, "Removing routine " + routine
                              + " since it does not match the grep pattern");
     }
 

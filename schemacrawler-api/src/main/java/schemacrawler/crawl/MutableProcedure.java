@@ -21,10 +21,14 @@
 package schemacrawler.crawl;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.ProcedureColumn;
-import schemacrawler.schema.ProcedureType;
+import schemacrawler.schema.ProcedureReturnType;
 import schemacrawler.schema.RoutineBodyType;
+import schemacrawler.schema.RoutineType;
 import schemacrawler.schema.Schema;
 
 /**
@@ -34,13 +38,13 @@ import schemacrawler.schema.Schema;
  * @author Sualeh Fatehi
  */
 final class MutableProcedure
-  extends AbstractDatabaseObject
+  extends MutableRoutine
   implements Procedure
 {
 
   private static final long serialVersionUID = 3906925686089134130L;
 
-  private ProcedureType procedureType;
+  private ProcedureReturnType procedureType;
   private final NamedObjectList<MutableProcedureColumn> columns = new NamedObjectList<MutableProcedureColumn>();
   private RoutineBodyType routineBodyType;
   private final StringBuilder definition;
@@ -49,7 +53,7 @@ final class MutableProcedure
   {
     super(schema, name);
     // Default values
-    procedureType = ProcedureType.unknown;
+    procedureType = ProcedureReturnType.unknown;
     routineBodyType = RoutineBodyType.unknown;
     definition = new StringBuilder();
   }
@@ -71,9 +75,9 @@ final class MutableProcedure
    * @see Procedure#getColumns()
    */
   @Override
-  public ProcedureColumn[] getColumns()
+  public List<ProcedureColumn> getColumns()
   {
-    return columns.values().toArray(new ProcedureColumn[columns.size()]);
+    return new ArrayList<ProcedureColumn>(columns.values());
   }
 
   /**
@@ -101,10 +105,10 @@ final class MutableProcedure
   /**
    * {@inheritDoc}
    * 
-   * @see Procedure#getType()
+   * @see Procedure#getReturnType()
    */
   @Override
-  public ProcedureType getType()
+  public ProcedureReturnType getReturnType()
   {
     return procedureType;
   }
@@ -122,23 +126,24 @@ final class MutableProcedure
     }
   }
 
-  void setColumnComparator(final NamedObjectSort comparator)
-  {
-    columns.setSortOrder(comparator);
-  }
-
   void setRoutineBodyType(final RoutineBodyType routineBodyType)
   {
     this.routineBodyType = routineBodyType;
   }
 
-  void setType(final ProcedureType type)
+  void setType(final ProcedureReturnType type)
   {
     if (type == null)
     {
       throw new IllegalArgumentException("Null procedure type");
     }
     procedureType = type;
+  }
+
+  @Override
+  public RoutineType getType()
+  {
+    return RoutineType.procedure;
   }
 
 }

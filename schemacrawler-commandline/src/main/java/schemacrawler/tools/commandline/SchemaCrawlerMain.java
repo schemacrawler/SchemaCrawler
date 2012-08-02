@@ -61,6 +61,7 @@ public class SchemaCrawlerMain
   {
     final CommandLine commandLine;
     final boolean showHelp;
+
     final ApplicationOptions applicationOptions;
     String[] remainingArgs = args;
     if (remainingArgs.length == 0)
@@ -80,7 +81,10 @@ public class SchemaCrawlerMain
 
     if (showHelp)
     {
-      commandLine = new SchemaCrawlerHelpCommandLine(remainingArgs, helpOptions);
+      final boolean showVersionOnly = applicationOptions.isShowVersionOnly();
+      commandLine = new SchemaCrawlerHelpCommandLine(remainingArgs,
+                                                     helpOptions,
+                                                     showVersionOnly);
     }
     else
     {

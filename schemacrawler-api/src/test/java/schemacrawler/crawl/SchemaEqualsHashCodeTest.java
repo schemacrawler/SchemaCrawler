@@ -4,17 +4,20 @@ package schemacrawler.crawl;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.util.List;
+
 import org.junit.Ignore;
 import org.junit.experimental.theories.DataPoint;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Database;
 import schemacrawler.schema.ForeignKey;
-import schemacrawler.schema.ForeignKeyColumnMap;
+import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Privilege.Grant;
 import schemacrawler.schema.Schema;
+import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -39,7 +42,7 @@ public class SchemaEqualsHashCodeTest
   @DataPoint
   public static Schema schemaNull = null;
   @DataPoint
-  public static Schema schemaEmpty = new MutableSchema();
+  public static Schema schemaEmpty = new SchemaReference();
 
   @DataPoint
   public static SchemaReference schemaRef;
@@ -58,8 +61,6 @@ public class SchemaEqualsHashCodeTest
   public static Table table;
   @DataPoint
   public static Table tableNull = null;
-  @DataPoint
-  public static Table tableEmpty = new MutableTable(schemaEmpty, "tableEmpty");
 
   @DataPoint
   public static ForeignKey foreignKey;
@@ -72,23 +73,18 @@ public class SchemaEqualsHashCodeTest
   public static PrimaryKey primaryKey;
   @DataPoint
   public static PrimaryKey primaryKeyNull = null;
-  @DataPoint
-  public static PrimaryKey primaryKeyEmpty = new MutablePrimaryKey(new MutableIndex(tableEmpty,
-                                                                                    "primaryKeyEmpty"));
+
   @DataPoint
   public static Column column;
   @DataPoint
   public static Column columnNull = null;
-  @DataPoint
-  public static Column columnEmpty = new MutableColumn(tableEmpty,
-                                                       "columnEmpty");
 
   @DataPoint
-  public static ForeignKeyColumnMap fkColumnPair;
+  public static ForeignKeyColumnReference fkColumnReference;
   @DataPoint
-  public static ForeignKeyColumnMap fkColumnPairNull = null;
+  public static ForeignKeyColumnReference fkColumnReferenceNull = null;
   @DataPoint
-  public static ForeignKeyColumnMap fkColumnPairEmpty = new MutableForeignKeyColumnMap();
+  public static ForeignKeyColumnReference fkColumnReferenceEmpty = new MutableForeignKeyColumnReference();
 
   @DataPoint
   public static JavaSqlType LONGNVARCHAR = JavaSqlTypesUtility
@@ -104,9 +100,6 @@ public class SchemaEqualsHashCodeTest
   public static Privilege privilege;
   @DataPoint
   public static Privilege privilegeNull = null;
-  @DataPoint
-  public static Privilege privilegeEmpty = new MutablePrivilege(tableEmpty,
-                                                                "privilegeEmpty");
 
   @DataPoint
   public static Grant grant;
@@ -135,6 +128,12 @@ public class SchemaEqualsHashCodeTest
     {
       return false;
     }
+
+    @Override
+    public int compareTo(Grant o)
+    {
+      return 0;
+    }
   };
 
   static
@@ -147,26 +146,30 @@ public class SchemaEqualsHashCodeTest
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
       schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
       database = testDatabase.getDatabase(schemaCrawlerOptions);
-      final Schema[] schemas = database.getSchemas();
+      final Schema[] schemas = (Schema[]) database.getSchemas().toArray();
       assertTrue("No schemas found", schemas.length > 0);
       schema = schemas[0];
-      final Table[] tables = schema.getTables();
+      final Table[] tables = database.getTables(schema).toArray(new Table[0]);
       assertTrue("No tables found", tables.length > 0);
       table = tables[0];
       primaryKey = table.getPrimaryKey();
-      final Column[] columns = table.getColumns();
+      final Column[] columns = table.getColumns().toArray(new Column[0]);
       assertTrue("No columns found", columns.length > 0);
       column = columns[0];
-      final ForeignKey[] foreignKeys = table.getForeignKeys();
+      final ForeignKey[] foreignKeys = table.getForeignKeys()
+        .toArray(new ForeignKey[0]);
       assertTrue("No foreign keys found", foreignKeys.length > 0);
       foreignKey = foreignKeys[0];
-      final ForeignKeyColumnMap[] fkColumnPairs = foreignKey.getColumnPairs();
-      assertTrue("No foreign keys column pairs found", fkColumnPairs.length > 0);
-      fkColumnPair = fkColumnPairs[0];
-      final Privilege[] privileges = table.getPrivileges();
+      final List<ForeignKeyColumnReference> fkColumnReferences = foreignKey
+        .getColumnReferences();
+      assertTrue("No foreign keys column references found",
+                 fkColumnReferences.size() > 0);
+      fkColumnReference = fkColumnReferences.get(0);
+      final Privilege<Table>[] privileges = table.getPrivileges()
+        .toArray(new Privilege[0]);
       assertTrue("No privileges found", privileges.length > 0);
       privilege = privileges[0];
-      final Grant[] grants = privilege.getGrants();
+      final Grant[] grants = (Grant[]) privilege.getGrants().toArray();
       assertTrue("No grants found", grants.length > 0);
       grant = grants[0];
     }

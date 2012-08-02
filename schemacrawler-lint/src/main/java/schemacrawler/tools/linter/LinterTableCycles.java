@@ -21,7 +21,7 @@ package schemacrawler.tools.linter;
 
 
 import schemacrawler.schema.ForeignKey;
-import schemacrawler.schema.ForeignKeyColumnMap;
+import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
 import sf.util.DirectedGraph;
@@ -76,14 +76,13 @@ public class LinterTableCycles
     }
 
     tablesGraph.addVertex(table);
-    final ForeignKey[] foreignKeys = table.getForeignKeys();
-    for (final ForeignKey foreignKey: foreignKeys)
+    for (final ForeignKey foreignKey: table.getForeignKeys())
     {
-      final ForeignKeyColumnMap[] columnPairs = foreignKey.getColumnPairs();
-      for (final ForeignKeyColumnMap columnPair: columnPairs)
+      for (final ForeignKeyColumnReference columnReference: foreignKey
+        .getColumnReferences())
       {
-        tablesGraph.addDirectedEdge(columnPair.getPrimaryKeyColumn()
-          .getParent(), columnPair.getForeignKeyColumn().getParent());
+        tablesGraph.addDirectedEdge(columnReference.getPrimaryKeyColumn()
+          .getParent(), columnReference.getForeignKeyColumn().getParent());
       }
     }
 

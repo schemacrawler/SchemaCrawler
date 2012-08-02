@@ -22,6 +22,7 @@ package schemacrawler.crawl;
 
 
 import schemacrawler.schema.DatabaseObject;
+import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Schema;
 import sf.util.Utility;
 
@@ -38,7 +39,6 @@ abstract class AbstractDatabaseObject
   private static final long serialVersionUID = 3099561832386790624L;
 
   private final Schema schema;
-
   private transient String fullName;
   private transient int hashCode;
 
@@ -46,6 +46,27 @@ abstract class AbstractDatabaseObject
   {
     super(name);
     this.schema = schema;
+  }
+
+  @Override
+  public int compareTo(final NamedObject obj)
+  {
+    if (obj == null)
+    {
+      return -1;
+    }
+
+    if (obj instanceof DatabaseObject)
+    {
+      final int compareTo = getSchema()
+        .compareTo(((DatabaseObject) obj).getSchema());
+      if (compareTo != 0)
+      {
+        return compareTo;
+      }
+    }
+
+    return super.compareTo(obj);
   }
 
   /**
@@ -95,11 +116,6 @@ abstract class AbstractDatabaseObject
     return fullName;
   }
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.DatabaseObject#getSchema()
-   */
   @Override
   public final Schema getSchema()
   {

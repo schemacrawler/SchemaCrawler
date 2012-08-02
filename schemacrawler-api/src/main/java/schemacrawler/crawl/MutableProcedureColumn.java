@@ -32,7 +32,7 @@ import schemacrawler.schema.ProcedureColumnType;
  * @author Sualeh Fatehi
  */
 final class MutableProcedureColumn
-  extends AbstractColumn<Procedure>
+  extends MutableRoutineColumn<Procedure>
   implements ProcedureColumn
 {
 
@@ -48,28 +48,12 @@ final class MutableProcedureColumn
   /**
    * {@inheritDoc}
    * 
-   * @see ProcedureColumn#getPrecision()
+   * @see ProcedureColumn#getColumnType()
    */
   @Override
-  public int getPrecision()
-  {
-    return getDecimalDigits();
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see ProcedureColumn#getProcedureColumnType()
-   */
-  @Override
-  public ProcedureColumnType getProcedureColumnType()
+  public ProcedureColumnType getColumnType()
   {
     return procedureColumnType;
-  }
-
-  void setPrecision(final int precision)
-  {
-    setDecimalDigits(precision);
   }
 
   void setProcedureColumnType(final ProcedureColumnType procedureColumnType)

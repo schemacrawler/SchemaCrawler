@@ -8,30 +8,30 @@
 -- jdbc compliant: true
 PUBLIC.BOOKS
 o--> AUTHORS
+     o--> ID
+     o--> FIRSTNAME
+     o--> LASTNAME
      o--> ADDRESS1
      o--> ADDRESS2
      o--> CITY
-     o--> COUNTRY
-     o--> FIRSTNAME
-     o--> ID
-     o--> LASTNAME
-     o--> POSTALCODE
      o--> STATE
+     o--> POSTALCODE
+     o--> COUNTRY
 o--> AUTHORSLIST
-     o--> FIRSTNAME
      o--> ID
+     o--> FIRSTNAME
      o--> LASTNAME
 o--> BOOKAUTHORS
-     o--> AUTHORID
      o--> BOOKID
+     o--> AUTHORID
      o--> "UPDATE"
 o--> BOOKS
-     o--> DESCRIPTION
      o--> ID
-     o--> PRICE
-     o--> PUBLICATIONDATE
-     o--> PUBLISHERID
      o--> TITLE
+     o--> DESCRIPTION
+     o--> PUBLISHERID
+     o--> PUBLICATIONDATE
+     o--> PRICE
 o--> "Global Counts"
      o--> "Global Count"
 o--> PUBLISHERS
@@ -40,51 +40,51 @@ o--> PUBLISHERS
 PUBLIC.FOR_LINT
 o--> EXTRA_PK
      o--> ID
-     o--> PUBLICATIONID
      o--> WRITERID
+     o--> PUBLICATIONID
 o--> "Global Counts"
      o--> "Global Count"
 o--> No_Columns
 o--> PUBLICATIONS
-     o--> DESCRIPTION
      o--> ID
-     o--> PRESS_RELEASE
-     o--> PRICE
-     o--> PUBLICATIONDATE
      o--> TITLE
-     o--> "UPDATE"
+     o--> DESCRIPTION
      o--> WRITERID
+     o--> PUBLICATIONDATE
+     o--> PRICE
+     o--> "UPDATE"
+     o--> PRESS_RELEASE
 o--> WRITERS
+     o--> ID
+     o--> FIRSTNAME
+     o--> LASTNAME
      o--> ADDRESS1
      o--> ADDRESS2
      o--> CITY
+     o--> STATE
+     o--> POSTALCODE
      o--> COUNTRY
+     o--> PHONE1
+     o--> PHONE2
      o--> EMAIL1
      o--> EMAIL2
      o--> FAX
      o--> FAX3
-     o--> FIRSTNAME
      o--> HOMEEMAIL11
      o--> HOMEEMAIL12
-     o--> ID
-     o--> LASTNAME
-     o--> PHONE1
-     o--> PHONE2
-     o--> POSTALCODE
      o--> PUBLICATION_ID
-     o--> STATE
 PUBLIC.INFORMATION_SCHEMA
 PUBLIC.PUBLIC
 PUBLIC."PUBLISHER SALES"
 o--> REGIONS
      o--> CITY
-     o--> COUNTRY
-     o--> POSTALCODE
      o--> STATE
-o--> SALES
-     o--> BOOKID
-     o--> COUNTRY
-     o--> PERIODENDDATE
      o--> POSTALCODE
+     o--> COUNTRY
+o--> SALES
+     o--> POSTALCODE
+     o--> COUNTRY
+     o--> BOOKID
+     o--> PERIODENDDATE
      o--> TOTALAMOUNT
 PUBLIC.SYSTEM_LOBS

@@ -18,7 +18,7 @@
  *
  */
 
-package schemacrawler.crawl;
+package schemacrawler.utility;
 
 
 import java.util.Comparator;
@@ -26,7 +26,7 @@ import java.util.Comparator;
 import schemacrawler.schema.NamedObject;
 import sf.util.Utility;
 
-enum NamedObjectSort
+public enum NamedObjectSort
   implements Comparator<NamedObject>
 {
 
@@ -57,7 +57,7 @@ enum NamedObjectSort
     }
   };
 
-  static NamedObjectSort getNamedObjectSort(final boolean alphabeticalSort)
+  public static NamedObjectSort getNamedObjectSort(final boolean alphabeticalSort)
   {
     if (alphabeticalSort)
     {

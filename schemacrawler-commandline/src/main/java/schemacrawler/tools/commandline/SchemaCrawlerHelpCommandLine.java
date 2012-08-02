@@ -47,7 +47,7 @@ final class SchemaCrawlerHelpCommandLine
   }
 
   private final String command;
-
+  private final boolean showVersionOnly;
   private final HelpOptions helpOptions;
 
   /**
@@ -64,7 +64,8 @@ final class SchemaCrawlerHelpCommandLine
    *         On an exception
    */
   SchemaCrawlerHelpCommandLine(final String[] args,
-                               final HelpOptions helpOptions)
+                               final HelpOptions helpOptions,
+                               final boolean showVersionOnly)
     throws SchemaCrawlerException
   {
     if (args == null)
@@ -77,6 +78,8 @@ final class SchemaCrawlerHelpCommandLine
       throw new SchemaCrawlerException("No help options provided");
     }
     this.helpOptions = helpOptions;
+
+    this.showVersionOnly = showVersionOnly;
 
     String command = null;
     if (args.length != 0)
@@ -109,6 +112,10 @@ final class SchemaCrawlerHelpCommandLine
     System.out.println(helpOptions.getTitle());
     showHelp("/help/SchemaCrawler.txt");
     System.out.println();
+    if (showVersionOnly)
+    {
+      System.exit(0);
+    }
 
     showHelp(helpOptions.getResourceConnections());
     showHelp("/help/SchemaCrawlerOptions.txt");

@@ -21,5 +21,5 @@
 [PUBLIC.FOR_LINT.WRITERS] incrementing columns don't have the same data-type: PHONE1, PHONE2
 [PUBLIC.FOR_LINT.WRITERS] incrementing columns don't have the same data-type: FAX, FAX3
 [PUBLIC.FOR_LINT.WRITERS] incrementing columns don't have the same data-type: EMAIL1, EMAIL2
-[database] column with same name but different data types: ID [INTEGER, BIGINT]
+[database] column with same name but different data types: ID [BIGINT, INTEGER]
 [database] cycles in table relationships

@@ -21,8 +21,11 @@
 package schemacrawler.crawl;
 
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import schemacrawler.schema.DatabaseObject;
@@ -40,7 +43,7 @@ final class MutablePrivilege<P extends DatabaseObject>
 {
 
   private final class PrivilegeGrant
-    implements Grant, Comparable<Grant>
+    implements Grant
   {
 
     private static final long serialVersionUID = 356151825191631484L;
@@ -178,11 +181,11 @@ final class MutablePrivilege<P extends DatabaseObject>
   }
 
   @Override
-  public Grant[] getGrants()
+  public Collection<Grant> getGrants()
   {
-    final Grant[] grantsArray = grants.toArray(new Grant[grants.size()]);
-    Arrays.sort(grantsArray);
-    return grantsArray;
+    final List<Grant> values = new ArrayList<Grant>(grants);
+    Collections.sort(values);
+    return values;
   }
 
   void addGrant(final String grantor,

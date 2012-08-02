@@ -29,12 +29,10 @@ public final class ApiExample
     // Set what details are required in the schema - this affects the
     // time taken to crawl the schema
     options.setSchemaInfoLevel(SchemaInfoLevel.standard());
-    options.setProcedureInclusionRule(new InclusionRule(InclusionRule.NONE,
+    options.setRoutineInclusionRule(new InclusionRule(InclusionRule.NONE,
                                                         InclusionRule.ALL));
     options.setSchemaInclusionRule(new InclusionRule("PUBLIC.BOOKS",
                                                      InclusionRule.NONE));
-    // Sorting options
-    options.setAlphabeticalSortForTableColumns(true);
 
     // Get the schema definition
     final Database database = SchemaCrawlerUtility.getDatabase(connection,
@@ -43,7 +41,7 @@ public final class ApiExample
     for (final Schema schema: database.getSchemas())
     {
       System.out.println(schema);
-      for (final Table table: schema.getTables())
+      for (final Table table: database.getTables(schema))
       {
         System.out.print("o--> " + table);
         if (table instanceof View)

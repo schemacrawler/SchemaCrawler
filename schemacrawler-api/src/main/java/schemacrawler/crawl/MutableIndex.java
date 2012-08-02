@@ -21,12 +21,15 @@
 package schemacrawler.crawl;
 
 
-import schemacrawler.schema.Column;
+import java.util.ArrayList;
+import java.util.List;
+
 import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.IndexType;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Table;
+import schemacrawler.utility.CompareUtility;
 
 /**
  * Represents an index on a database table.
@@ -70,36 +73,10 @@ class MutableIndex
     }
 
     final Index other = (Index) obj;
-    int comparison = 0;
-    final Column[] thisColumns = getColumns();
-    final Column[] otherColumns = other.getColumns();
+    final List<IndexColumn> thisColumns = getColumns();
+    final List<IndexColumn> otherColumns = other.getColumns();
 
-    if (comparison == 0)
-    {
-      comparison = thisColumns.length - otherColumns.length;
-    }
-    if (comparison == 0)
-    {
-      for (int i = 0; i < thisColumns.length; i++)
-      {
-        final Column thisColumn = thisColumns[i];
-        final Column otherColumn = otherColumns[i];
-        if (comparison == 0)
-        {
-          comparison = thisColumn.compareTo(otherColumn);
-        }
-        else
-        {
-          break;
-        }
-      }
-    }
-    if (comparison == 0)
-    {
-      comparison = super.compareTo(other);
-    }
-
-    return comparison;
+    return CompareUtility.compareLists(thisColumns, otherColumns);
   }
 
   /**
@@ -119,9 +96,9 @@ class MutableIndex
    * @see Index#getColumns()
    */
   @Override
-  public IndexColumn[] getColumns()
+  public List<IndexColumn> getColumns()
   {
-    return columns.values().toArray(new IndexColumn[columns.size()]);
+    return new ArrayList<IndexColumn>(columns.values());
   }
 
   /**

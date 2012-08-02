@@ -21,16 +21,18 @@
 package schemacrawler.tools.text.schema;
 
 
+import java.util.Collection;
+import java.util.List;
 import java.util.logging.Level;
 
 import schemacrawler.schema.CheckConstraint;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
-import schemacrawler.schema.ColumnMap;
+import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.ConditionTimingType;
 import schemacrawler.schema.EventManipulationType;
 import schemacrawler.schema.ForeignKey;
-import schemacrawler.schema.ForeignKeyColumnMap;
+import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.ForeignKeyUpdateRule;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexColumn;
@@ -39,7 +41,8 @@ import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Privilege.Grant;
 import schemacrawler.schema.Procedure;
-import schemacrawler.schema.ProcedureColumn;
+import schemacrawler.schema.Routine;
+import schemacrawler.schema.RoutineColumn;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.Trigger;
@@ -139,46 +142,48 @@ final class SchemaJsonFormatter
   /**
    * Provides information on the database schema.
    * 
-   * @param procedure
-   *        Procedure metadata.
+   * @param routine
+   *        Routine metadata.
    */
   @Override
-  public void handle(final Procedure procedure)
+  public void handle(final Routine routine)
   {
     try
     {
-      final JSONObject jsonProcedure = new JSONObject();
-      jsonRoot.accumulate("procedures", jsonProcedure);
+      final JSONObject jsonRoutine = new JSONObject();
+      jsonRoot.accumulate("routines", jsonRoutine);
 
-      jsonProcedure.put("name", procedure.getName());
+      jsonRoutine.put("name", routine.getName());
       if (!options.isShowUnqualifiedNames())
       {
-        jsonProcedure.put("fullName", procedure.getFullName());
+        jsonRoutine.put("fullName", routine.getFullName());
       }
-      jsonProcedure.put("type", procedure.getType());
+      jsonRoutine.put("type", routine.getType());
+      jsonRoutine.put("returnType", routine.getReturnType());
 
       if (isNotList)
       {
         final JSONArray jsonParameters = new JSONArray();
-        jsonProcedure.put("parameters", jsonParameters);
-        for (final ProcedureColumn column: procedure.getColumns())
+        jsonRoutine.put("parameters", jsonParameters);
+        for (final RoutineColumn<?> column: routine.getColumns())
         {
-          jsonParameters.put(handleProcedureColumn(column));
+          jsonParameters.put(handleRoutineColumn(column));
         }
-
-        jsonProcedure.put("definition", procedure.getDefinition());
+        if (routine instanceof Procedure)
+        {
+          jsonRoutine.put("definition", ((Procedure) routine).getDefinition());
+        }
 
         if (isVerbose)
         {
-          jsonProcedure.put("remarks", procedure.getRemarks());
+          jsonRoutine.put("specificName", routine.getSpecificName());
+          jsonRoutine.put("remarks", routine.getRemarks());
         }
       }
     }
     catch (final JSONException e)
     {
-      LOGGER.log(Level.FINER,
-                 "Error outputting Procedure: " + e.getMessage(),
-                 e);
+      LOGGER.log(Level.FINER, "Error outputting Routine: " + e.getMessage(), e);
     }
 
   }
@@ -264,10 +269,10 @@ final class SchemaJsonFormatter
 
         if (isVerbose)
         {
-          final ColumnMap[] weakAssociations = SimpleWeakAssociationsCollector
+          final List<ColumnReference> weakAssociations = SimpleWeakAssociationsCollector
             .getWeakAssociations(table);
-          jsonTable
-            .put("weakAssociations", handleColumnPairs(weakAssociations));
+          jsonTable.put("weakAssociations",
+                        handleColumnReferences(weakAssociations));
         }
 
         final JSONArray jsonIndices = new JSONArray();
@@ -312,8 +317,7 @@ final class SchemaJsonFormatter
             }
           }
 
-          final Trigger[] triggers = table.getTriggers();
-          jsonTable.put("triggers", handleTriggers(triggers));
+          jsonTable.put("triggers", handleTriggers(table.getTriggers()));
         }
         if (table instanceof View)
         {
@@ -343,13 +347,13 @@ final class SchemaJsonFormatter
   }
 
   @Override
-  public void handleProceduresEnd()
+  public void handleRoutinesEnd()
     throws SchemaCrawlerException
   {
   }
 
   @Override
-  public void handleProceduresStart()
+  public void handleRoutinesStart()
     throws SchemaCrawlerException
   {
   }
@@ -378,57 +382,57 @@ final class SchemaJsonFormatter
   {
   }
 
-  private JSONArray handleColumnPairs(final ColumnMap... columnPairs)
+  private JSONArray handleColumnReferences(final List<? extends ColumnReference> columnReferences)
   {
-    final JSONArray jsonColumnPairs = new JSONArray();
-    for (final ColumnMap columnPair: columnPairs)
+    final JSONArray jsonColumnReferences = new JSONArray();
+    for (final ColumnReference columnReference: columnReferences)
     {
       try
       {
-        final JSONObject jsonColumnPair = new JSONObject();
+        final JSONObject jsonColumnReference = new JSONObject();
 
         final String pkColumnName;
         if (options.isShowUnqualifiedNames())
         {
-          pkColumnName = columnPair.getPrimaryKeyColumn().getShortName();
+          pkColumnName = columnReference.getPrimaryKeyColumn().getShortName();
         }
         else
         {
-          pkColumnName = columnPair.getPrimaryKeyColumn().getFullName();
+          pkColumnName = columnReference.getPrimaryKeyColumn().getFullName();
         }
-        jsonColumnPair.put("pkColumn", pkColumnName);
+        jsonColumnReference.put("pkColumn", pkColumnName);
 
         final String fkColumnName;
         if (options.isShowUnqualifiedNames())
         {
-          fkColumnName = columnPair.getForeignKeyColumn().getShortName();
+          fkColumnName = columnReference.getForeignKeyColumn().getShortName();
         }
         else
         {
-          fkColumnName = columnPair.getForeignKeyColumn().getFullName();
+          fkColumnName = columnReference.getForeignKeyColumn().getFullName();
         }
-        jsonColumnPair.put("fkColumn", fkColumnName);
+        jsonColumnReference.put("fkColumn", fkColumnName);
 
-        if (columnPair instanceof ForeignKeyColumnMap
+        if (columnReference instanceof ForeignKeyColumnReference
             && options.isShowOrdinalNumbers())
         {
-          final int keySequence = ((ForeignKeyColumnMap) columnPair)
+          final int keySequence = ((ForeignKeyColumnReference) columnReference)
             .getKeySequence();
-          jsonColumnPair.put("keySequence", keySequence);
+          jsonColumnReference.put("keySequence", keySequence);
         }
-        jsonColumnPairs.put(jsonColumnPair);
+        jsonColumnReferences.put(jsonColumnReference);
       }
       catch (final JSONException e)
       {
         LOGGER.log(Level.FINER,
-                   "Error outputting ColumnMap: " + e.getMessage(),
+                   "Error outputting ColumnReference: " + e.getMessage(),
                    e);
       }
     }
-    return jsonColumnPairs;
+    return jsonColumnReferences;
   }
 
-  private JSONArray handleForeignKeys(final ForeignKey[] foreignKeys)
+  private JSONArray handleForeignKeys(final Collection<ForeignKey> foreignKeys)
   {
     final JSONArray jsonFks = new JSONArray();
 
@@ -457,8 +461,10 @@ final class SchemaJsonFormatter
             jsonFk.put("deleteRule", deleteRule.toString());
           }
 
-          final ForeignKeyColumnMap[] columnPairs = foreignKey.getColumnPairs();
-          jsonFk.put("columnPairs", handleColumnPairs(columnPairs));
+          final List<ForeignKeyColumnReference> columnReferences = foreignKey
+            .getColumnReferences();
+          jsonFk.put("columnReferences",
+                     handleColumnReferences(columnReferences));
         }
         catch (final JSONException e)
         {
@@ -500,8 +506,7 @@ final class SchemaJsonFormatter
       }
       jsonIndex.put("unique", index.isUnique());
 
-      final IndexColumn[] columns = index.getColumns();
-      for (final IndexColumn indexColumn: columns)
+      for (final IndexColumn indexColumn: index.getColumns())
       {
         jsonIndex.accumulate("columns", handleTableColumn(indexColumn));
       }
@@ -514,7 +519,7 @@ final class SchemaJsonFormatter
     return jsonIndex;
   }
 
-  private JSONObject handleProcedureColumn(final ProcedureColumn column)
+  private JSONObject handleRoutineColumn(final RoutineColumn column)
   {
     final JSONObject jsonColumn = new JSONObject();
 
@@ -524,7 +529,7 @@ final class SchemaJsonFormatter
       jsonColumn.put("databaseSpecificType", column.getType()
         .getDatabaseSpecificTypeName());
       jsonColumn.put("width", column.getWidth());
-      jsonColumn.put("type", column.getProcedureColumnType().toString());
+      jsonColumn.put("type", column.getColumnType().toString());
       if (options.isShowOrdinalNumbers())
       {
         jsonColumn.put("ordinal", column.getOrdinalPosition() + 1);
@@ -533,7 +538,7 @@ final class SchemaJsonFormatter
     catch (final JSONException e)
     {
       LOGGER.log(Level.FINER,
-                 "Error outputting ProcedureColumn: " + e.getMessage(),
+                 "Error outputting routine column: " + e.getMessage(),
                  e);
     }
 
@@ -580,7 +585,7 @@ final class SchemaJsonFormatter
     return jsonColumn;
   }
 
-  private JSONArray handleTriggers(final Trigger[] triggers)
+  private JSONArray handleTriggers(final Collection<Trigger> triggers)
   {
     final JSONArray jsonTriggers = new JSONArray();
     for (final Trigger trigger: triggers)
