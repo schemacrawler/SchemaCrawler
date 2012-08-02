@@ -856,15 +856,15 @@
       "constraints": [
         {
           "definition": "FOR_LINT.EXTRA_PK.ID IS NOT NULL",
-          "name": "SYS_CT_10069"
-        },
-        {
-          "definition": "FOR_LINT.EXTRA_PK.WRITERID IS NOT NULL",
           "name": "SYS_CT_10070"
         },
         {
-          "definition": "FOR_LINT.EXTRA_PK.PUBLICATIONID IS NOT NULL",
+          "definition": "FOR_LINT.EXTRA_PK.WRITERID IS NOT NULL",
           "name": "SYS_CT_10071"
+        },
+        {
+          "definition": "FOR_LINT.EXTRA_PK.PUBLICATIONID IS NOT NULL",
+          "name": "SYS_CT_10072"
         }
       ],
       "columns": [
@@ -952,7 +952,7 @@
       "indices": [
         {
           "unique": true,
-          "name": "SYS_IDX_PK_EXTRA_PK_10072",
+          "name": "SYS_IDX_PK_EXTRA_PK_10073",
           "columns": {
             "sortSequence": "ascending",
             "name": "ID"
@@ -960,7 +960,7 @@
         },
         {
           "unique": false,
-          "name": "SYS_IDX_10075",
+          "name": "SYS_IDX_10076",
           "columns": {
             "sortSequence": "ascending",
             "name": "PUBLICATIONID"
@@ -968,7 +968,7 @@
         },
         {
           "unique": false,
-          "name": "SYS_IDX_10073",
+          "name": "SYS_IDX_10074",
           "columns": {
             "sortSequence": "ascending",
             "name": "WRITERID"
@@ -1092,15 +1092,15 @@
       "constraints": [
         {
           "definition": "FOR_LINT.PUBLICATIONS.ID IS NOT NULL",
-          "name": "SYS_CT_10061"
-        },
-        {
-          "definition": "FOR_LINT.PUBLICATIONS.TITLE IS NOT NULL",
           "name": "SYS_CT_10062"
         },
         {
-          "definition": "FOR_LINT.PUBLICATIONS.WRITERID IS NOT NULL",
+          "definition": "FOR_LINT.PUBLICATIONS.TITLE IS NOT NULL",
           "name": "SYS_CT_10063"
+        },
+        {
+          "definition": "FOR_LINT.PUBLICATIONS.WRITERID IS NOT NULL",
+          "name": "SYS_CT_10064"
         }
       ],
       "columns": [
@@ -1238,7 +1238,7 @@
       "indices": [
         {
           "unique": true,
-          "name": "SYS_IDX_PK_PUBLICATIONS_10064",
+          "name": "SYS_IDX_PK_PUBLICATIONS_10065",
           "columns": {
             "sortSequence": "ascending",
             "name": "ID"
@@ -1246,7 +1246,7 @@
         },
         {
           "unique": false,
-          "name": "SYS_IDX_10065",
+          "name": "SYS_IDX_10066",
           "columns": {
             "sortSequence": "ascending",
             "name": "WRITERID"
@@ -1304,23 +1304,23 @@
         },
         {
           "definition": "FOR_LINT.WRITERS.ID IS NOT NULL",
-          "name": "SYS_CT_10055"
-        },
-        {
-          "definition": "FOR_LINT.WRITERS.FIRSTNAME IS NOT NULL",
           "name": "SYS_CT_10056"
         },
         {
-          "definition": "FOR_LINT.WRITERS.LASTNAME IS NOT NULL",
+          "definition": "FOR_LINT.WRITERS.FIRSTNAME IS NOT NULL",
           "name": "SYS_CT_10057"
         },
         {
-          "definition": "FOR_LINT.WRITERS.ADDRESS2 IS NOT NULL",
+          "definition": "FOR_LINT.WRITERS.LASTNAME IS NOT NULL",
           "name": "SYS_CT_10058"
         },
         {
-          "definition": "FOR_LINT.WRITERS.PUBLICATION_ID IS NOT NULL",
+          "definition": "FOR_LINT.WRITERS.ADDRESS2 IS NOT NULL",
           "name": "SYS_CT_10059"
+        },
+        {
+          "definition": "FOR_LINT.WRITERS.PUBLICATION_ID IS NOT NULL",
+          "name": "SYS_CT_10060"
         }
       ],
       "columns": [
@@ -1558,7 +1558,7 @@
       "indices": [
         {
           "unique": true,
-          "name": "SYS_IDX_PK_WRITERS_10060",
+          "name": "SYS_IDX_PK_WRITERS_10061",
           "columns": {
             "sortSequence": "ascending",
             "name": "ID"
@@ -1566,7 +1566,7 @@
         },
         {
           "unique": false,
-          "name": "SYS_IDX_10077",
+          "name": "SYS_IDX_10078",
           "columns": {
             "sortSequence": "ascending",
             "name": "PUBLICATION_ID"
@@ -1676,19 +1676,19 @@
       "constraints": [
         {
           "definition": "\"PUBLISHER SALES\".REGIONS.CITY IS NOT NULL",
-          "name": "SYS_CT_10045"
-        },
-        {
-          "definition": "\"PUBLISHER SALES\".REGIONS.STATE IS NOT NULL",
           "name": "SYS_CT_10046"
         },
         {
-          "definition": "\"PUBLISHER SALES\".REGIONS.POSTALCODE IS NOT NULL",
+          "definition": "\"PUBLISHER SALES\".REGIONS.STATE IS NOT NULL",
           "name": "SYS_CT_10047"
         },
         {
-          "definition": "\"PUBLISHER SALES\".REGIONS.COUNTRY IS NOT NULL",
+          "definition": "\"PUBLISHER SALES\".REGIONS.POSTALCODE IS NOT NULL",
           "name": "SYS_CT_10048"
+        },
+        {
+          "definition": "\"PUBLISHER SALES\".REGIONS.COUNTRY IS NOT NULL",
+          "name": "SYS_CT_10049"
         }
       ],
       "columns": [
@@ -1785,7 +1785,7 @@
       ],
       "indices": [{
         "unique": true,
-        "name": "SYS_IDX_PK_CUSTOMERS_10049",
+        "name": "SYS_IDX_PK_CUSTOMERS_10050",
         "columns": [
           {
             "sortSequence": "ascending",
@@ -1826,11 +1826,11 @@
       "constraints": [
         {
           "definition": "\"PUBLISHER SALES\".SALES.POSTALCODE IS NOT NULL",
-          "name": "SYS_CT_10050"
+          "name": "SYS_CT_10051"
         },
         {
           "definition": "\"PUBLISHER SALES\".SALES.COUNTRY IS NOT NULL",
-          "name": "SYS_CT_10051"
+          "name": "SYS_CT_10052"
         }
       ],
       "columns": [
@@ -1937,7 +1937,7 @@
       ],
       "indices": [{
         "unique": false,
-        "name": "SYS_IDX_10053",
+        "name": "SYS_IDX_10054",
         "columns": [
           {
             "sortSequence": "ascending",
@@ -3199,6 +3199,28 @@
       }],
       "type": "procedure",
       "specificName": "NEW_PUBLISHER_10043",
+      "returnType": "no result"
+    },
+    {
+      "definition": "CREATE PROCEDURE BOOKS.NEW_PUBLISHER(IN NEWPUBLISHER VARCHAR(50),OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10044 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = NEWPUBLISHER",
+      "name": "NEW_PUBLISHER",
+      "remarks": "",
+      "parameters": [
+        {
+          "dataType": "VARCHAR",
+          "width": "",
+          "type": "in",
+          "databaseSpecificType": "CHARACTER VARYING"
+        },
+        {
+          "dataType": "VARCHAR",
+          "width": "",
+          "type": "out",
+          "databaseSpecificType": "CHARACTER VARYING"
+        }
+      ],
+      "type": "procedure",
+      "specificName": "NEW_PUBLISHER_10044",
       "returnType": "no result"
     },
     {

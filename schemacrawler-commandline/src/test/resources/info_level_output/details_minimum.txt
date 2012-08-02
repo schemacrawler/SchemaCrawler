@@ -113,6 +113,13 @@ PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
 NEW_PUBLISHER_10043
 
 
+PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
+------------------------------------------------------------------------
+
+                                                         [specific name]
+NEW_PUBLISHER_10044
+
+
 PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS                   [procedure, no result]
 ------------------------------------------------------------------------
 

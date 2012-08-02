@@ -722,22 +722,22 @@ FK_PUBLICATION_JOIN,"[foreign key, with no action]"
 FK_WRITER_JOIN,"[foreign key, with no action]"
 "",WRITERS.ID --> WRITERID,""
 ""
-SYS_IDX_PK_EXTRA_PK_10072,[unique index]
+SYS_IDX_PK_EXTRA_PK_10073,[unique index]
 "",ID,ascending
 ""
-SYS_IDX_10075,[non-unique index]
+SYS_IDX_10076,[non-unique index]
 "",PUBLICATIONID,ascending
 ""
-SYS_IDX_10073,[non-unique index]
+SYS_IDX_10074,[non-unique index]
 "",WRITERID,ascending
 ""
-SYS_CT_10069,[check constraint]
+SYS_CT_10070,[check constraint]
 FOR_LINT.EXTRA_PK.ID IS NOT NULL
 ""
-SYS_CT_10070,[check constraint]
+SYS_CT_10071,[check constraint]
 FOR_LINT.EXTRA_PK.WRITERID IS NOT NULL
 ""
-SYS_CT_10071,[check constraint]
+SYS_CT_10072,[check constraint]
 FOR_LINT.EXTRA_PK.PUBLICATIONID IS NOT NULL
 ""
 DELETE,[privilege]
@@ -805,19 +805,19 @@ FK_WRITERS_PUBLICATION,"[foreign key, with no action]"
 FK_PUBLICATIONS_WRITER,"[foreign key, with no action]"
 "",WRITERS.ID --> WRITERID,""
 ""
-SYS_IDX_PK_PUBLICATIONS_10064,[unique index]
+SYS_IDX_PK_PUBLICATIONS_10065,[unique index]
 "",ID,ascending
 ""
-SYS_IDX_10065,[non-unique index]
+SYS_IDX_10066,[non-unique index]
 "",WRITERID,ascending
 ""
-SYS_CT_10061,[check constraint]
+SYS_CT_10062,[check constraint]
 FOR_LINT.PUBLICATIONS.ID IS NOT NULL
 ""
-SYS_CT_10062,[check constraint]
+SYS_CT_10063,[check constraint]
 FOR_LINT.PUBLICATIONS.TITLE IS NOT NULL
 ""
-SYS_CT_10063,[check constraint]
+SYS_CT_10064,[check constraint]
 FOR_LINT.PUBLICATIONS.WRITERID IS NOT NULL
 ""
 DELETE,[privilege]
@@ -872,10 +872,10 @@ FK_WRITER_JOIN,"[foreign key, with no action]"
 FK_PUBLICATIONS_WRITER,"[foreign key, with no action]"
 "",ID --> PUBLICATIONS.WRITERID,""
 ""
-SYS_IDX_PK_WRITERS_10060,[unique index]
+SYS_IDX_PK_WRITERS_10061,[unique index]
 "",ID,ascending
 ""
-SYS_IDX_10077,[non-unique index]
+SYS_IDX_10078,[non-unique index]
 "",PUBLICATION_ID,ascending
 ""
 IDX_A1_WRITERS,[non-unique index]
@@ -899,19 +899,19 @@ IDX_A_WRITERS,[non-unique index]
 CHECK_UPPERCASE_STATE,[check constraint]
 FOR_LINT.WRITERS.STATE=UPPER(FOR_LINT.WRITERS.STATE)
 ""
-SYS_CT_10055,[check constraint]
+SYS_CT_10056,[check constraint]
 FOR_LINT.WRITERS.ID IS NOT NULL
 ""
-SYS_CT_10056,[check constraint]
+SYS_CT_10057,[check constraint]
 FOR_LINT.WRITERS.FIRSTNAME IS NOT NULL
 ""
-SYS_CT_10057,[check constraint]
+SYS_CT_10058,[check constraint]
 FOR_LINT.WRITERS.LASTNAME IS NOT NULL
 ""
-SYS_CT_10058,[check constraint]
+SYS_CT_10059,[check constraint]
 FOR_LINT.WRITERS.ADDRESS2 IS NOT NULL
 ""
-SYS_CT_10059,[check constraint]
+SYS_CT_10060,[check constraint]
 FOR_LINT.WRITERS.PUBLICATION_ID IS NOT NULL
 ""
 DELETE,[privilege]
@@ -948,20 +948,20 @@ FK_SALES_REGIONS,"[foreign key, with no action]"
 "",POSTALCODE --> SALES.POSTALCODE,""
 "",COUNTRY --> SALES.COUNTRY,""
 ""
-SYS_IDX_PK_CUSTOMERS_10049,[unique index]
+SYS_IDX_PK_CUSTOMERS_10050,[unique index]
 "",POSTALCODE,ascending
 "",COUNTRY,ascending
 ""
-SYS_CT_10045,[check constraint]
+SYS_CT_10046,[check constraint]
 """PUBLISHER SALES"".REGIONS.CITY IS NOT NULL"
 ""
-SYS_CT_10046,[check constraint]
+SYS_CT_10047,[check constraint]
 """PUBLISHER SALES"".REGIONS.STATE IS NOT NULL"
 ""
-SYS_CT_10047,[check constraint]
+SYS_CT_10048,[check constraint]
 """PUBLISHER SALES"".REGIONS.POSTALCODE IS NOT NULL"
 ""
-SYS_CT_10048,[check constraint]
+SYS_CT_10049,[check constraint]
 """PUBLISHER SALES"".REGIONS.COUNTRY IS NOT NULL"
 ""
 DELETE,[privilege]
@@ -998,14 +998,14 @@ FK_SALES_REGIONS,"[foreign key, with no action]"
 "",[weak association]
 "",BOOKS.ID --> BOOKID,""
 ""
-SYS_IDX_10053,[non-unique index]
+SYS_IDX_10054,[non-unique index]
 "",POSTALCODE,ascending
 "",COUNTRY,ascending
 ""
-SYS_CT_10050,[check constraint]
+SYS_CT_10051,[check constraint]
 """PUBLISHER SALES"".SALES.POSTALCODE IS NOT NULL"
 ""
-SYS_CT_10051,[check constraint]
+SYS_CT_10052,[check constraint]
 """PUBLISHER SALES"".SALES.COUNTRY IS NOT NULL"
 ""
 DELETE,[privilege]
@@ -1042,6 +1042,18 @@ CREATE PROCEDURE BOOKS.NEW_PUBLISHER(OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUB
 ""
 "",[specific name]
 NEW_PUBLISHER_10043
+
+
+NEW_PUBLISHER,"[procedure, no result]"
+------------------------------------------------------------------------
+"",NEWPUBLISHER,"CHARACTER VARYING, in"
+"",PUBLISHER,"CHARACTER VARYING, out"
+""
+"",[definition]
+"CREATE PROCEDURE BOOKS.NEW_PUBLISHER(IN NEWPUBLISHER VARCHAR(50),OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10044 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = NEWPUBLISHER"
+""
+"",[specific name]
+NEW_PUBLISHER_10044
 
 
 ALLOC_BLOCKS,"[procedure, no result]"

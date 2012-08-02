@@ -2758,6 +2758,12 @@
       "returnType": "no result"
     },
     {
+      "name": "NEW_PUBLISHER",
+      "fullName": "PUBLIC.BOOKS.NEW_PUBLISHER",
+      "type": "procedure",
+      "returnType": "no result"
+    },
+    {
       "name": "ALLOC_BLOCKS",
       "fullName": "PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS",
       "type": "procedure",
