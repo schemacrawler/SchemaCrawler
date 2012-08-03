@@ -10,7 +10,7 @@ SchemaCrawler Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
 product name                              SchemaCrawler                 
-product version                           9.0                          
+product version                           9.0                           
 
 
 Database Information
@@ -27,7 +27,7 @@ JDBC Driver Information
 driver name                               SQLiteJDBC                    
 driver version                            native                        
 driver class name                         org.sqlite.JDBC               
-url                                       jdbc:sqlite:C:\Users\SUALEH~1\AppData\Local\Temp\SchemaCrawler122233303093568581.dat
+url                                       jdbc:sqlite:C:\DOCUME~1\sfatehi\LOCALS~1\Temp\SchemaCrawler7865674838259596440.dat
 is JDBC compliant                         false                         
 
 
