@@ -20,6 +20,7 @@
 package schemacrawler.tools.commandline;
 
 
+import java.sql.Connection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -169,7 +170,21 @@ public final class SchemaCrawlerCommandLine
     }
     if (connectionOptions != null)
     {
-      executable.execute(connectionOptions.getConnection());
+      Connection connection = null;
+      try
+      {
+        connection = connectionOptions.getConnection();
+        LOGGER.log(Level.INFO, "Made connection" + connection);
+        executable.execute(connection);
+      }
+      finally
+      {
+        if (connection != null)
+        {
+          connection.close();
+          LOGGER.log(Level.INFO, "Closed connection" + connection);
+        }
+      }
     }
     else
     {

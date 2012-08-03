@@ -108,8 +108,11 @@ abstract class BaseDatabaseConnectionOptions
     }
     try
     {
-      return DriverManager.getConnection(connectionUrl,
-                                         jdbcConnectionProperties);
+      LOGGER.log(Level.INFO, String
+        .format("Making connection to %s, with user %s", connectionUrl, user));
+      final Connection connection = DriverManager
+        .getConnection(connectionUrl, jdbcConnectionProperties);
+      return connection;
     }
     catch (final SQLException e)
     {

@@ -30,6 +30,7 @@ import java.sql.DriverManager;
 import java.sql.DriverPropertyInfo;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLFeatureNotSupportedException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -223,6 +224,14 @@ final class DatabaseInfoRetriever
         LOGGER.log(Level.FINE,
                    "Could not execute method, " + method,
                    e.getCause());
+      }
+      catch (final AbstractMethodError e)
+      {
+        LOGGER.log(Level.FINE, "JDBC driver does not support " + method, e);
+      }
+      catch (final SQLFeatureNotSupportedException e)
+      {
+        LOGGER.log(Level.FINE, "JDBC driver does not support " + method, e);
       }
     }
 
