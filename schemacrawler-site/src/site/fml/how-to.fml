@@ -169,14 +169,14 @@
         </p>
       </answer>
     </faq>
-    <faq id="excluded-procedures">
+    <faq id="excluded-routines">
       <question>
         How to exclude stored procedures from the output
       </question>
       <answer>
         <p>
           The option in the configuration can be overridden by the
-          -procedures= command-line option.
+          -routines= command-line option.
           Further,
           see the
           <a href="faq.html#commands">details on the command-line options.</a>
@@ -417,7 +417,7 @@ for (final Schema schema: database.getSchemas())
   <dependency>
     <groupId>net.sourceforge.schemacrawler</groupId>
     <artifactId>schemacrawler</artifactId>
-    <version>8.17</version>
+    <version>9.0</version>
   </dependency>
 </dependencies>
         ]]></source>
@@ -594,7 +594,7 @@ for (final Schema schema: database.getSchemas())
           Use the following command-line
           arguments to obtain tables
           in "create" order:
-          <code>-command=list -sorttables=false -procedures=</code>
+          <code>-command=list -sorttables=false -routines=</code>
         </p>
       </answer>
     </faq>

@@ -5,7 +5,7 @@
       "weakAssociations": [],
       "foreignKeys": [{
         "updateRule": "no action",
-        "columnPairs": [{
+        "columnReferences": [{
           "pkColumn": "PUBLIC.BOOKS.AUTHORS.ID",
           "fkColumn": "PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID"
         }],
@@ -313,7 +313,7 @@
       "foreignKeys": [
         {
           "updateRule": "no action",
-          "columnPairs": [{
+          "columnReferences": [{
             "pkColumn": "PUBLIC.BOOKS.AUTHORS.ID",
             "fkColumn": "PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID"
           }],
@@ -322,7 +322,7 @@
         },
         {
           "updateRule": "no action",
-          "columnPairs": [{
+          "columnReferences": [{
             "pkColumn": "PUBLIC.BOOKS.BOOKS.ID",
             "fkColumn": "PUBLIC.BOOKS.BOOKAUTHORS.BOOKID"
           }],
@@ -464,7 +464,7 @@
       ],
       "foreignKeys": [{
         "updateRule": "no action",
-        "columnPairs": [{
+        "columnReferences": [{
           "pkColumn": "PUBLIC.BOOKS.BOOKS.ID",
           "fkColumn": "PUBLIC.BOOKS.BOOKAUTHORS.BOOKID"
         }],
@@ -781,7 +781,7 @@
       "foreignKeys": [
         {
           "updateRule": "no action",
-          "columnPairs": [{
+          "columnReferences": [{
             "pkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.ID",
             "fkColumn": "PUBLIC.FOR_LINT.EXTRA_PK.PUBLICATIONID"
           }],
@@ -790,7 +790,7 @@
         },
         {
           "updateRule": "no action",
-          "columnPairs": [{
+          "columnReferences": [{
             "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
             "fkColumn": "PUBLIC.FOR_LINT.EXTRA_PK.WRITERID"
           }],
@@ -892,7 +892,7 @@
       "indices": [
         {
           "unique": true,
-          "name": "SYS_IDX_PK_EXTRA_PK_10072",
+          "name": "SYS_IDX_PK_EXTRA_PK_10075",
           "columns": {
             "sortSequence": "ascending",
             "name": "ID"
@@ -900,7 +900,7 @@
         },
         {
           "unique": false,
-          "name": "SYS_IDX_10075",
+          "name": "SYS_IDX_10078",
           "columns": {
             "sortSequence": "ascending",
             "name": "PUBLICATIONID"
@@ -908,7 +908,7 @@
         },
         {
           "unique": false,
-          "name": "SYS_IDX_10073",
+          "name": "SYS_IDX_10076",
           "columns": {
             "sortSequence": "ascending",
             "name": "WRITERID"
@@ -1058,7 +1058,7 @@
       "foreignKeys": [
         {
           "updateRule": "no action",
-          "columnPairs": [{
+          "columnReferences": [{
             "pkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.ID",
             "fkColumn": "PUBLIC.FOR_LINT.EXTRA_PK.PUBLICATIONID"
           }],
@@ -1067,7 +1067,7 @@
         },
         {
           "updateRule": "no action",
-          "columnPairs": [{
+          "columnReferences": [{
             "pkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.ID",
             "fkColumn": "PUBLIC.FOR_LINT.WRITERS.PUBLICATION_ID"
           }],
@@ -1076,7 +1076,7 @@
         },
         {
           "updateRule": "no action",
-          "columnPairs": [{
+          "columnReferences": [{
             "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
             "fkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID"
           }],
@@ -1228,7 +1228,7 @@
       "indices": [
         {
           "unique": true,
-          "name": "SYS_IDX_PK_PUBLICATIONS_10064",
+          "name": "SYS_IDX_PK_PUBLICATIONS_10067",
           "columns": {
             "sortSequence": "ascending",
             "name": "ID"
@@ -1236,7 +1236,7 @@
         },
         {
           "unique": false,
-          "name": "SYS_IDX_10065",
+          "name": "SYS_IDX_10068",
           "columns": {
             "sortSequence": "ascending",
             "name": "WRITERID"
@@ -1253,7 +1253,7 @@
       "foreignKeys": [
         {
           "updateRule": "no action",
-          "columnPairs": [{
+          "columnReferences": [{
             "pkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.ID",
             "fkColumn": "PUBLIC.FOR_LINT.WRITERS.PUBLICATION_ID"
           }],
@@ -1262,7 +1262,7 @@
         },
         {
           "updateRule": "no action",
-          "columnPairs": [{
+          "columnReferences": [{
             "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
             "fkColumn": "PUBLIC.FOR_LINT.EXTRA_PK.WRITERID"
           }],
@@ -1271,7 +1271,7 @@
         },
         {
           "updateRule": "no action",
-          "columnPairs": [{
+          "columnReferences": [{
             "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
             "fkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID"
           }],
@@ -1523,7 +1523,7 @@
       "indices": [
         {
           "unique": true,
-          "name": "SYS_IDX_PK_WRITERS_10060",
+          "name": "SYS_IDX_PK_WRITERS_10063",
           "columns": {
             "sortSequence": "ascending",
             "name": "ID"
@@ -1531,7 +1531,7 @@
         },
         {
           "unique": false,
-          "name": "SYS_IDX_10077",
+          "name": "SYS_IDX_10080",
           "columns": {
             "sortSequence": "ascending",
             "name": "PUBLICATION_ID"
@@ -1611,7 +1611,7 @@
       "weakAssociations": [],
       "foreignKeys": [{
         "updateRule": "no action",
-        "columnPairs": [
+        "columnReferences": [
           {
             "pkColumn": "PUBLIC.\"PUBLISHER SALES\".REGIONS.POSTALCODE",
             "fkColumn": "PUBLIC.\"PUBLISHER SALES\".SALES.POSTALCODE"
@@ -1733,7 +1733,7 @@
       ],
       "indices": [{
         "unique": true,
-        "name": "SYS_IDX_PK_CUSTOMERS_10049",
+        "name": "SYS_IDX_PK_CUSTOMERS_10052",
         "columns": [
           {
             "sortSequence": "ascending",
@@ -1757,7 +1757,7 @@
       }],
       "foreignKeys": [{
         "updateRule": "no action",
-        "columnPairs": [
+        "columnReferences": [
           {
             "pkColumn": "PUBLIC.\"PUBLISHER SALES\".REGIONS.POSTALCODE",
             "fkColumn": "PUBLIC.\"PUBLISHER SALES\".SALES.POSTALCODE"
@@ -1876,7 +1876,7 @@
       ],
       "indices": [{
         "unique": false,
-        "name": "SYS_IDX_10053",
+        "name": "SYS_IDX_10056",
         "columns": [
           {
             "sortSequence": "ascending",
@@ -3064,7 +3064,7 @@
     }
   ],
   "schemaCrawlerInfo": {
-    "productVersion": "8.17",
+    "productVersion": "9.0",
     "productName": "SchemaCrawler"
   },
   "jdbcDriverInfo": {
@@ -3074,8 +3074,8 @@
         "description": "",
         "name": "default_schema",
         "choices": [
-          "true",
-          "false"
+          "false",
+          "true"
         ],
         "value": "false",
         "required": false
@@ -3084,8 +3084,8 @@
         "description": "",
         "name": "get_column_name",
         "choices": [
-          "true",
-          "false"
+          "false",
+          "true"
         ],
         "value": "true",
         "required": false
@@ -3094,8 +3094,8 @@
         "description": "",
         "name": "ifexists",
         "choices": [
-          "true",
-          "false"
+          "false",
+          "true"
         ],
         "value": "false",
         "required": false
@@ -3109,8 +3109,8 @@
         "description": "",
         "name": "shutdown",
         "choices": [
-          "true",
-          "false"
+          "false",
+          "true"
         ],
         "value": "false",
         "required": false
@@ -3126,7 +3126,45 @@
     "driverName": "HSQL Database Engine Driver",
     "url": "jdbc:hsqldb:hsql://localhost:9001/schemacrawler"
   },
-  "procedures": [
+  "routines": [
+    {
+      "definition": "",
+      "name": "CUSTOMADD",
+      "remarks": "",
+      "parameters": [{
+        "dataType": "INTEGER",
+        "width": "",
+        "type": "in",
+        "databaseSpecificType": "INTEGER"
+      }],
+      "fullName": "PUBLIC.BOOKS.CUSTOMADD",
+      "type": "function",
+      "specificName": "CUSTOMADD_10046",
+      "returnType": "does not return a table"
+    },
+    {
+      "definition": "",
+      "name": "CUSTOMADD",
+      "remarks": "",
+      "parameters": [
+        {
+          "dataType": "INTEGER",
+          "width": "",
+          "type": "in",
+          "databaseSpecificType": "INTEGER"
+        },
+        {
+          "dataType": "INTEGER",
+          "width": "",
+          "type": "in",
+          "databaseSpecificType": "INTEGER"
+        }
+      ],
+      "fullName": "PUBLIC.BOOKS.CUSTOMADD",
+      "type": "function",
+      "specificName": "CUSTOMADD_10045",
+      "returnType": "does not return a table"
+    },
     {
       "definition": "",
       "name": "NEW_PUBLISHER",
@@ -3138,7 +3176,32 @@
         "databaseSpecificType": "CHARACTER VARYING"
       }],
       "fullName": "PUBLIC.BOOKS.NEW_PUBLISHER",
-      "type": "no result"
+      "type": "procedure",
+      "specificName": "NEW_PUBLISHER_10043",
+      "returnType": "no result"
+    },
+    {
+      "definition": "",
+      "name": "NEW_PUBLISHER",
+      "remarks": "",
+      "parameters": [
+        {
+          "dataType": "VARCHAR",
+          "width": "",
+          "type": "in",
+          "databaseSpecificType": "CHARACTER VARYING"
+        },
+        {
+          "dataType": "VARCHAR",
+          "width": "",
+          "type": "out",
+          "databaseSpecificType": "CHARACTER VARYING"
+        }
+      ],
+      "fullName": "PUBLIC.BOOKS.NEW_PUBLISHER",
+      "type": "procedure",
+      "specificName": "NEW_PUBLISHER_10044",
+      "returnType": "no result"
     },
     {
       "definition": "",
@@ -3165,7 +3228,9 @@
         }
       ],
       "fullName": "PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS",
-      "type": "no result"
+      "type": "procedure",
+      "specificName": "ALLOC_BLOCKS_10022",
+      "returnType": "no result"
     },
     {
       "definition": "",
@@ -3198,7 +3263,9 @@
         }
       ],
       "fullName": "PUBLIC.SYSTEM_LOBS.CONVERT_BLOCK",
-      "type": "no result"
+      "type": "procedure",
+      "specificName": "CONVERT_BLOCK_10012",
+      "returnType": "no result"
     },
     {
       "definition": "",
@@ -3219,7 +3286,9 @@
         }
       ],
       "fullName": "PUBLIC.SYSTEM_LOBS.CREATE_EMPTY_BLOCK",
-      "type": "no result"
+      "type": "procedure",
+      "specificName": "CREATE_EMPTY_BLOCK_10020",
+      "returnType": "no result"
     },
     {
       "definition": "",
@@ -3252,7 +3321,9 @@
         }
       ],
       "fullName": "PUBLIC.SYSTEM_LOBS.DELETE_BLOCKS",
-      "type": "no result"
+      "type": "procedure",
+      "specificName": "DELETE_BLOCKS_10019",
+      "returnType": "no result"
     },
     {
       "definition": "",
@@ -3273,7 +3344,9 @@
         }
       ],
       "fullName": "PUBLIC.SYSTEM_LOBS.DELETE_LOB",
-      "type": "no result"
+      "type": "procedure",
+      "specificName": "DELETE_LOB_10013",
+      "returnType": "no result"
     },
     {
       "definition": "",
@@ -3286,7 +3359,9 @@
         "databaseSpecificType": "BIGINT ARRAY"
       }],
       "fullName": "PUBLIC.SYSTEM_LOBS.DELETE_UNUSED",
-      "type": "no result"
+      "type": "procedure",
+      "specificName": "DELETE_UNUSED_10018",
+      "returnType": "no result"
     },
     {
       "definition": "",
@@ -3307,7 +3382,9 @@
         }
       ],
       "fullName": "PUBLIC.SYSTEM_LOBS.DIVIDE_BLOCK",
-      "type": "no result"
+      "type": "procedure",
+      "specificName": "DIVIDE_BLOCK_10021",
+      "returnType": "no result"
     }
   ]
 },

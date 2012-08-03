@@ -18,7 +18,7 @@
         {
           "id": "schemacrawler.tools.linter.LinterRedundantIndices",
           "description": "redundant index",
-          "value": "SYS_IDX_10043",
+          "value": "SYS_IDX_10038",
           "severity": "high"
         },
         {
@@ -60,6 +60,17 @@
         }
       ],
       "fullName": "PUBLIC.BOOKS.\"Global Counts\"",
+      "type": "table"
+    },
+    {
+      "name": "EXTRA_PK",
+      "lints": [{
+        "id": "schemacrawler.tools.linter.LinterUselessSurrogateKey",
+        "description": "useless surrogate key",
+        "value": "PK_EXTRA_PK",
+        "severity": "medium"
+      }],
+      "fullName": "PUBLIC.FOR_LINT.EXTRA_PK",
       "type": "table"
     },
     {
@@ -228,8 +239,22 @@
     "databaseUserName": "SA",
     "databaseProductVersion": "2.2.8"
   },
+  "database_lints": {"lints": [
+      {
+        "id": "schemacrawler.tools.linter.LinterColumnTypes",
+        "description": "column with same name but different data types",
+        "value": "ID [BIGINT, INTEGER]",
+        "severity": "medium"
+      },
+      {
+        "id": "schemacrawler.tools.linter.LinterTableCycles",
+        "description": "cycles in table relationships",
+        "value": "true",
+        "severity": "medium"
+      }
+    ]},
   "schemaCrawlerInfo": {
-    "productVersion": "8.17",
+    "productVersion": "9.0",
     "productName": "SchemaCrawler"
   },
   "jdbcDriverInfo": {

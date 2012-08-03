@@ -151,9 +151,8 @@ final class RoutineRetriever
     MetadataResultSet results = null;
     try
     {
-      results = new MetadataResultSet(getMetaData().getFunctions(catalogName,
-                                                                 schemaName,
-                                                                 "%"));
+      results = new MetadataResultSet(getMetaData()
+        .getFunctions(unquotedName(catalogName), unquotedName(schemaName), "%"));
 
       while (results.next())
       {
@@ -292,9 +291,8 @@ final class RoutineRetriever
     MetadataResultSet results = null;
     try
     {
-      results = new MetadataResultSet(getMetaData().getProcedures(catalogName,
-                                                                  schemaName,
-                                                                  "%"));
+      results = new MetadataResultSet(getMetaData()
+        .getProcedures(unquotedName(catalogName), unquotedName(schemaName), "%"));
 
       while (results.next())
       {

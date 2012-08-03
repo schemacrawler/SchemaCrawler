@@ -131,7 +131,7 @@
         <arg value="-infolevel=@{infolevel}"/>
         <arg value="-tables=@{tables}"/>
         <arg value="-excludecolumns=@{excludecolumns}"/>
-        <arg value="-procedures=@{procedures}"/>
+        <arg value="-routines=@{procedures}"/>
         <arg value="-excludeinout=@{excludeinout}"/>
         <arg value="-synonyms=@{synonyms}"/>
         <arg value="-grepcolumns=@{grepcolumns}"/>
