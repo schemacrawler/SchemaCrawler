@@ -174,7 +174,7 @@ public final class SchemaCrawlerCommandLine
       try
       {
         connection = connectionOptions.getConnection();
-        LOGGER.log(Level.INFO, "Made connection" + connection);
+        LOGGER.log(Level.INFO, "Made connection, " + connection);
         executable.execute(connection);
       }
       finally
@@ -182,7 +182,7 @@ public final class SchemaCrawlerCommandLine
         if (connection != null)
         {
           connection.close();
-          LOGGER.log(Level.INFO, "Closed connection" + connection);
+          LOGGER.log(Level.INFO, "Closed connection, " + connection);
         }
       }
     }
