@@ -467,6 +467,18 @@ IDX_A_AUTHORS                                         [non-unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
 
+CHECK_UPPERCASE_STATE                                 [check constraint]
+BOOKS.AUTHORS.STATE=UPPER(BOOKS.AUTHORS.STATE)
+
+SYS_CT_10027                                          [check constraint]
+BOOKS.AUTHORS.ID IS NOT NULL
+
+SYS_CT_10028                                          [check constraint]
+BOOKS.AUTHORS.FIRSTNAME IS NOT NULL
+
+SYS_CT_10029                                          [check constraint]
+BOOKS.AUTHORS.LASTNAME IS NOT NULL
+
 DELETE                                                       [privilege]
   _SYSTEM --> DBA (grantable)                                   
 
@@ -484,6 +496,9 @@ TRIGGER                                                      [privilege]
 
 UPDATE                                                       [privilege]
   _SYSTEM --> DBA (grantable)                                   
+
+TRG_AUTHORS                             [trigger, after delete, per row]
+  UPDATE BOOKS.PUBLISHERS SET PUBLISHER='Jacob'WHERE PUBLISHER='John'
 
                                                                [remarks]
 Contact details for book authors
@@ -513,6 +528,9 @@ TRIGGER                                                      [privilege]
 UPDATE                                                       [privilege]
   _SYSTEM --> DBA (grantable)                                   
 
+                                                            [definition]
+SELECT ID,FIRSTNAME,LASTNAME FROM BOOKS.AUTHORS
+
 
 PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
 ------------------------------------------------------------------------
@@ -535,6 +553,12 @@ SYS_IDX_10038                                         [non-unique index]
 UIDX_BOOKAUTHORS                                          [unique index]
   BOOKID                            ascending                   
   AUTHORID                          ascending                   
+
+SYS_CT_10035                                          [check constraint]
+BOOKS.BOOKAUTHORS.BOOKID IS NOT NULL
+
+SYS_CT_10036                                          [check constraint]
+BOOKS.BOOKAUTHORS.AUTHORID IS NOT NULL
 
 DELETE                                                       [privilege]
   _SYSTEM --> DBA (grantable)                                   
@@ -581,6 +605,15 @@ FK_Y_BOOK                                  [foreign key, with no action]
 
 SYS_IDX_PK_BOOKS_10034                                    [unique index]
   ID                                ascending                   
+
+SYS_CT_10031                                          [check constraint]
+BOOKS.BOOKS.ID IS NOT NULL
+
+SYS_CT_10032                                          [check constraint]
+BOOKS.BOOKS.TITLE IS NOT NULL
+
+SYS_CT_10033                                          [check constraint]
+BOOKS.BOOKS.PUBLISHERID IS NOT NULL
 
 DELETE                                                       [privilege]
   _SYSTEM --> DBA (grantable)                                   
@@ -647,6 +680,9 @@ PK_PUBLISHERS                                              [primary key]
 SYS_IDX_PK_PUBLISHERS_10026                               [unique index]
   ID                                ascending                   
 
+SYS_CT_10025                                          [check constraint]
+BOOKS.PUBLISHERS.ID IS NOT NULL
+
 DELETE                                                       [privilege]
   _SYSTEM --> DBA (grantable)                                   
 
@@ -694,6 +730,15 @@ SYS_IDX_10078                                         [non-unique index]
 
 SYS_IDX_10076                                         [non-unique index]
   WRITERID                          ascending                   
+
+SYS_CT_10072                                          [check constraint]
+FOR_LINT.EXTRA_PK.ID IS NOT NULL
+
+SYS_CT_10073                                          [check constraint]
+FOR_LINT.EXTRA_PK.WRITERID IS NOT NULL
+
+SYS_CT_10074                                          [check constraint]
+FOR_LINT.EXTRA_PK.PUBLICATIONID IS NOT NULL
 
 DELETE                                                       [privilege]
   _SYSTEM --> DBA (grantable)                                   
@@ -788,6 +833,15 @@ SYS_IDX_PK_PUBLICATIONS_10067                             [unique index]
 SYS_IDX_10068                                         [non-unique index]
   WRITERID                          ascending                   
 
+SYS_CT_10064                                          [check constraint]
+FOR_LINT.PUBLICATIONS.ID IS NOT NULL
+
+SYS_CT_10065                                          [check constraint]
+FOR_LINT.PUBLICATIONS.TITLE IS NOT NULL
+
+SYS_CT_10066                                          [check constraint]
+FOR_LINT.PUBLICATIONS.WRITERID IS NOT NULL
+
 DELETE                                                       [privilege]
   _SYSTEM --> DBA (grantable)                                   
 
@@ -864,6 +918,24 @@ IDX_A_WRITERS                                         [non-unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
 
+CHECK_UPPERCASE_STATE                                 [check constraint]
+FOR_LINT.WRITERS.STATE=UPPER(FOR_LINT.WRITERS.STATE)
+
+SYS_CT_10058                                          [check constraint]
+FOR_LINT.WRITERS.ID IS NOT NULL
+
+SYS_CT_10059                                          [check constraint]
+FOR_LINT.WRITERS.FIRSTNAME IS NOT NULL
+
+SYS_CT_10060                                          [check constraint]
+FOR_LINT.WRITERS.LASTNAME IS NOT NULL
+
+SYS_CT_10061                                          [check constraint]
+FOR_LINT.WRITERS.ADDRESS2 IS NOT NULL
+
+SYS_CT_10062                                          [check constraint]
+FOR_LINT.WRITERS.PUBLICATION_ID IS NOT NULL
+
 DELETE                                                       [privilege]
   _SYSTEM --> DBA (grantable)                                   
 
@@ -901,6 +973,18 @@ FK_SALES_REGIONS                           [foreign key, with no action]
 SYS_IDX_PK_CUSTOMERS_10052                                [unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
+
+SYS_CT_10048                                          [check constraint]
+"PUBLISHER SALES".REGIONS.CITY IS NOT NULL
+
+SYS_CT_10049                                          [check constraint]
+"PUBLISHER SALES".REGIONS.STATE IS NOT NULL
+
+SYS_CT_10050                                          [check constraint]
+"PUBLISHER SALES".REGIONS.POSTALCODE IS NOT NULL
+
+SYS_CT_10051                                          [check constraint]
+"PUBLISHER SALES".REGIONS.COUNTRY IS NOT NULL
 
 DELETE                                                       [privilege]
   _SYSTEM --> DBA (grantable)                                   
@@ -940,6 +1024,12 @@ SYS_IDX_10056                                         [non-unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
 
+SYS_CT_10053                                          [check constraint]
+"PUBLISHER SALES".SALES.POSTALCODE IS NOT NULL
+
+SYS_CT_10054                                          [check constraint]
+"PUBLISHER SALES".SALES.COUNTRY IS NOT NULL
+
 DELETE                                                       [privilege]
   _SYSTEM --> DBA (grantable)                                   
 
@@ -969,6 +1059,9 @@ PUBLIC.BOOKS.CUSTOMADD               [function, does not return a table]
 ------------------------------------------------------------------------
   ONE                               INTEGER, in                 
 
+                                                            [definition]
+CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10046 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN BOOKS.CUSTOMADD(ONE,1)
+
                                                          [specific name]
 CUSTOMADD_10046
 
@@ -978,6 +1071,9 @@ PUBLIC.BOOKS.CUSTOMADD               [function, does not return a table]
   ONE                               INTEGER, in                 
   TWO                               INTEGER, in                 
 
+                                                            [definition]
+CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER,IN TWO INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10045 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN ONE+TWO
+
                                                          [specific name]
 CUSTOMADD_10045
 
@@ -985,6 +1081,9 @@ CUSTOMADD_10045
 PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
 ------------------------------------------------------------------------
   PUBLISHER                         CHARACTER VARYING, out      
+
+                                                            [definition]
+CREATE PROCEDURE BOOKS.NEW_PUBLISHER(OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10043 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = 'New Publisher'
 
                                                          [specific name]
 NEW_PUBLISHER_10043
@@ -995,6 +1094,9 @@ PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
   NEWPUBLISHER                      CHARACTER VARYING, in       
   PUBLISHER                         CHARACTER VARYING, out      
 
+                                                            [definition]
+CREATE PROCEDURE BOOKS.NEW_PUBLISHER(IN NEWPUBLISHER VARCHAR(50),OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10044 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = NEWPUBLISHER
+
                                                          [specific name]
 NEW_PUBLISHER_10044
 
@@ -1004,6 +1106,9 @@ PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS                   [procedure, no result]
   B_COUNT                           INTEGER, in                 
   B_OFFSET                          INTEGER, in                 
   L_ID                              BIGINT, in                  
+
+                                                            [definition]
+CREATE PROCEDURE SYSTEM_LOBS.ALLOC_BLOCKS(IN B_COUNT INTEGER,IN B_OFFSET INTEGER,IN L_ID BIGINT) SPECIFIC ALLOC_BLOCKS_10022 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE LOB_ADDR INT DEFAULT NULL;DECLARE REMAINING_COUNT INT DEFAULT 0;DECLARE BL_ADDR INT DEFAULT NULL;DECLARE TEMP_COUNT INT DEFAULT 0;DECLARE BL_OFFSET INT DEFAULT 0;SET REMAINING_COUNT=B_COUNT;SET BL_OFFSET=B_OFFSET;MAIN_LOOP:LOOP SET BL_ADDR=(SELECT BLOCK_ADDR FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_COUNT=REMAINING_COUNT AND TX_ID=0 FETCH 1 ROW ONLY);IF BL_ADDR IS NOT NULL THEN CALL CONVERT_BLOCK(BL_ADDR,REMAINING_COUNT,BL_OFFSET,L_ID);IF LOB_ADDR IS NULL THEN SET LOB_ADDR=BL_ADDR;END IF;LEAVE MAIN_LOOP;END IF;SET(BL_ADDR,TEMP_COUNT)=(SELECT BLOCK_ADDR,BLOCK_COUNT FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_COUNT<REMAINING_COUNT AND TX_ID=0 FETCH 1 ROW ONLY);IF BL_ADDR IS NOT NULL THEN CALL CONVERT_BLOCK(BL_ADDR,TEMP_COUNT,BL_OFFSET,L_ID);IF LOB_ADDR IS NULL THEN SET LOB_ADDR=BL_ADDR;END IF;SET REMAINING_COUNT=REMAINING_COUNT-TEMP_COUNT;SET BL_OFFSET=BL_OFFSET+TEMP_COUNT;SET BL_ADDR=NULL;SET TEMP_COUNT=0;ELSE CALL CREATE_EMPTY_BLOCK(BL_ADDR,REMAINING_COUNT);CALL CONVERT_BLOCK(BL_ADDR,REMAINING_COUNT,BL_OFFSET,L_ID);IF LOB_ADDR IS NULL THEN SET LOB_ADDR=BL_ADDR;END IF;LEAVE MAIN_LOOP;END IF;END LOOP MAIN_LOOP;END
 
                                                          [specific name]
 ALLOC_BLOCKS_10022
@@ -1016,6 +1121,9 @@ PUBLIC.SYSTEM_LOBS.CONVERT_BLOCK                  [procedure, no result]
   B_OFFSET                          INTEGER, in                 
   L_ID                              BIGINT, in                  
 
+                                                            [definition]
+CREATE PROCEDURE SYSTEM_LOBS.CONVERT_BLOCK(IN B_ADDR INTEGER,IN B_COUNT INTEGER,IN B_OFFSET INTEGER,IN L_ID BIGINT) SPECIFIC CONVERT_BLOCK_10012 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DELETE FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_ADDR=B_ADDR;INSERT INTO SYSTEM_LOBS.LOBS VALUES(B_ADDR,B_COUNT,B_OFFSET,L_ID);END
+
                                                          [specific name]
 CONVERT_BLOCK_10012
 
@@ -1024,6 +1132,9 @@ PUBLIC.SYSTEM_LOBS.CREATE_EMPTY_BLOCK             [procedure, no result]
 ------------------------------------------------------------------------
   B_ADDR                            INTEGER, in/ out            
   B_COUNT                           INTEGER, in                 
+
+                                                            [definition]
+CREATE PROCEDURE SYSTEM_LOBS.CREATE_EMPTY_BLOCK(INOUT B_ADDR INTEGER,IN B_COUNT INTEGER) SPECIFIC CREATE_EMPTY_BLOCK_10020 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE TEMP_COUNT INT DEFAULT NULL;DECLARE TEMP_ADDR INT DEFAULT NULL;SET(TEMP_ADDR,TEMP_COUNT)=(SELECT BLOCK_ADDR,BLOCK_COUNT FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_COUNT>B_COUNT AND TX_ID=0 FETCH 1 ROW ONLY);IF TEMP_ADDR IS NULL THEN SIGNAL SQLSTATE'45000';END IF;UPDATE SYSTEM_LOBS.BLOCKS SET BLOCK_COUNT=B_COUNT WHERE BLOCK_ADDR=TEMP_ADDR;INSERT INTO SYSTEM_LOBS.BLOCKS VALUES(TEMP_ADDR+B_COUNT,TEMP_COUNT-B_COUNT,0);SET B_ADDR=TEMP_ADDR;END
 
                                                          [specific name]
 CREATE_EMPTY_BLOCK_10020
@@ -1036,6 +1147,9 @@ PUBLIC.SYSTEM_LOBS.DELETE_BLOCKS                  [procedure, no result]
   B_LIMIT                           INTEGER, in                 
   TX_ID                             BIGINT, in                  
 
+                                                            [definition]
+CREATE PROCEDURE SYSTEM_LOBS.DELETE_BLOCKS(IN L_ID BIGINT,IN B_OFFSET INTEGER,IN B_LIMIT INTEGER,IN TX_ID BIGINT) SPECIFIC DELETE_BLOCKS_10019 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC INSERT INTO SYSTEM_LOBS.BLOCKS(SELECT BLOCK_ADDR,BLOCK_COUNT,TX_ID FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID AND BLOCK_OFFSET>=B_OFFSET AND BLOCK_OFFSET<B_LIMIT);DELETE FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID AND BLOCK_OFFSET>=B_OFFSET AND BLOCK_OFFSET<B_LIMIT;END
+
                                                          [specific name]
 DELETE_BLOCKS_10019
 
@@ -1045,6 +1159,9 @@ PUBLIC.SYSTEM_LOBS.DELETE_LOB                     [procedure, no result]
   L_ID                              BIGINT, in                  
   TX_ID                             BIGINT, in                  
 
+                                                            [definition]
+CREATE PROCEDURE SYSTEM_LOBS.DELETE_LOB(IN L_ID BIGINT,IN TX_ID BIGINT) SPECIFIC DELETE_LOB_10013 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC INSERT INTO SYSTEM_LOBS.BLOCKS(SELECT BLOCK_ADDR,BLOCK_COUNT,TX_ID FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID);DELETE FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID;DELETE FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_ID=L_ID;END
+
                                                          [specific name]
 DELETE_LOB_10013
 
@@ -1052,6 +1169,9 @@ DELETE_LOB_10013
 PUBLIC.SYSTEM_LOBS.DELETE_UNUSED                  [procedure, no result]
 ------------------------------------------------------------------------
   L_IDS                             BIGINT ARRAY, in            
+
+                                                            [definition]
+CREATE PROCEDURE SYSTEM_LOBS.DELETE_UNUSED(IN L_IDS BIGINT ARRAY) SPECIFIC DELETE_UNUSED_10018 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE TABLE LIVE_IDS(TEMP_ID INT);DECLARE TABLE TEMP_IDS(TEMP_ID INT);DECLARE TEMP_COUNT INT DEFAULT 1;WHILE TEMP_COUNT<=CARDINALITY(L_IDS)DO INSERT INTO MODULE.LIVE_IDS VALUES L_IDS[TEMP_COUNT];SET TEMP_COUNT=TEMP_COUNT+1;END WHILE;SET TEMP_COUNT=0;REPEAT INSERT INTO MODULE.TEMP_IDS SELECT LOB_ID FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_USAGE_COUNT<1 AND LOB_ID NOT IN(SELECT TEMP_ID FROM MODULE.LIVE_IDS)LIMIT 1000;INSERT INTO SYSTEM_LOBS.BLOCKS(SELECT BLOCK_ADDR,BLOCK_COUNT,0 FROM SYSTEM_LOBS.LOBS WHERE LOB_ID IN(SELECT TEMP_ID FROM MODULE.TEMP_IDS));DELETE FROM SYSTEM_LOBS.LOBS WHERE LOB_ID IN(SELECT TEMP_ID FROM MODULE.TEMP_IDS);DELETE FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_ID IN(SELECT TEMP_ID FROM MODULE.TEMP_IDS);GET DIAGNOSTICS TEMP_COUNT=ROW_COUNT;DELETE FROM MODULE.TEMP_IDS;UNTIL TEMP_COUNT<1000 END REPEAT;END
 
                                                          [specific name]
 DELETE_UNUSED_10018
@@ -1061,6 +1181,9 @@ PUBLIC.SYSTEM_LOBS.DIVIDE_BLOCK                   [procedure, no result]
 ------------------------------------------------------------------------
   B_OFFSET                          INTEGER, in                 
   L_ID                              BIGINT, in                  
+
+                                                            [definition]
+CREATE PROCEDURE SYSTEM_LOBS.DIVIDE_BLOCK(IN B_OFFSET INTEGER,IN L_ID BIGINT) SPECIFIC DIVIDE_BLOCK_10021 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE BL_ADDR INT DEFAULT NULL;DECLARE BL_COUNT INT DEFAULT NULL;DECLARE BL_OFFSET INT DEFAULT NULL;SET(BL_ADDR,BL_COUNT,BL_OFFSET)=(SELECT BLOCK_ADDR,BLOCK_COUNT,BLOCK_OFFSET FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID AND B_OFFSET>BLOCK_OFFSET AND B_OFFSET<BLOCK_OFFSET+BLOCK_COUNT);IF BL_ADDR IS NULL THEN SIGNAL SQLSTATE'45000';END IF;DELETE FROM SYSTEM_LOBS.LOBS WHERE BLOCK_ADDR=BL_ADDR;INSERT INTO SYSTEM_LOBS.LOBS VALUES(BL_ADDR,B_OFFSET-BL_OFFSET,BL_OFFSET,L_ID);INSERT INTO SYSTEM_LOBS.LOBS VALUES(BL_ADDR+B_OFFSET-BL_OFFSET,BL_OFFSET+BL_COUNT-B_OFFSET,B_OFFSET,L_ID);END
 
                                                          [specific name]
 DIVIDE_BLOCK_10021
