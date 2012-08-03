@@ -43,11 +43,11 @@ public interface Routine
   List<? extends RoutineColumn<? extends Routine>> getColumns();
 
   /**
-   * Gets the routine type.
+   * Gets the definition.
    * 
-   * @return Routine type
+   * @return Definition
    */
-  RoutineType getType();
+  String getDefinition();
 
   /**
    * Gets the routine type.
@@ -57,10 +57,24 @@ public interface Routine
   RoutineReturnType getReturnType();
 
   /**
+   * Gets the type of the routine body.
+   * 
+   * @return Routine body type
+   */
+  RoutineBodyType getRoutineBodyType();
+
+  /**
    * The name which uniquely identifies this routine within its schema.
    * 
    * @return Specific name.
    */
   String getSpecificName();
+
+  /**
+   * Gets the routine type.
+   * 
+   * @return Routine type
+   */
+  RoutineType getType();
 
 }

@@ -152,13 +152,13 @@ FK_PUBLICATION_JOIN                        [foreign key, with no action]
 FK_WRITER_JOIN                             [foreign key, with no action]
   PUBLIC.FOR_LINT.WRITERS.ID --> WRITERID                              
 
-SYS_IDX_PK_EXTRA_PK_10073                                 [unique index]
+SYS_IDX_PK_EXTRA_PK_10075                                 [unique index]
   ID                                ascending                   
 
-SYS_IDX_10076                                         [non-unique index]
+SYS_IDX_10078                                         [non-unique index]
   PUBLICATIONID                     ascending                   
 
-SYS_IDX_10074                                         [non-unique index]
+SYS_IDX_10076                                         [non-unique index]
   WRITERID                          ascending                   
 
 
@@ -190,10 +190,10 @@ FK_WRITERS_PUBLICATION                     [foreign key, with no action]
 FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
   PUBLIC.FOR_LINT.WRITERS.ID --> WRITERID                              
 
-SYS_IDX_PK_PUBLICATIONS_10065                             [unique index]
+SYS_IDX_PK_PUBLICATIONS_10067                             [unique index]
   ID                                ascending                   
 
-SYS_IDX_10066                                         [non-unique index]
+SYS_IDX_10068                                         [non-unique index]
   WRITERID                          ascending                   
 
 
@@ -230,10 +230,10 @@ FK_WRITER_JOIN                             [foreign key, with no action]
 FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
   ID --> PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID                              
 
-SYS_IDX_PK_WRITERS_10061                                  [unique index]
+SYS_IDX_PK_WRITERS_10063                                  [unique index]
   ID                                ascending                   
 
-SYS_IDX_10078                                         [non-unique index]
+SYS_IDX_10080                                         [non-unique index]
   PUBLICATION_ID                    ascending                   
 
 IDX_A1_WRITERS                                        [non-unique index]
@@ -270,7 +270,7 @@ FK_SALES_REGIONS                           [foreign key, with no action]
   POSTALCODE --> PUBLIC."PUBLISHER SALES".SALES.POSTALCODE                              
   COUNTRY --> PUBLIC."PUBLISHER SALES".SALES.COUNTRY                              
 
-SYS_IDX_PK_CUSTOMERS_10050                                [unique index]
+SYS_IDX_PK_CUSTOMERS_10052                                [unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
 
@@ -287,7 +287,7 @@ FK_SALES_REGIONS                           [foreign key, with no action]
   PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE --> POSTALCODE                              
   PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY --> COUNTRY                              
 
-SYS_IDX_10054                                         [non-unique index]
+SYS_IDX_10056                                         [non-unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
 
@@ -296,6 +296,23 @@ SYS_IDX_10054                                         [non-unique index]
 
 Routines
 ========================================================================
+
+
+PUBLIC.BOOKS.CUSTOMADD               [function, does not return a table]
+------------------------------------------------------------------------
+  ONE                               INTEGER, in                 
+
+                                                            [definition]
+CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10046 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN BOOKS.CUSTOMADD(ONE,1)
+
+
+PUBLIC.BOOKS.CUSTOMADD               [function, does not return a table]
+------------------------------------------------------------------------
+  ONE                               INTEGER, in                 
+  TWO                               INTEGER, in                 
+
+                                                            [definition]
+CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER,IN TWO INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10045 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN ONE+TWO
 
 
 PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]

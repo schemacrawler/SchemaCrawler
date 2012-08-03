@@ -24,42 +24,45 @@ package schemacrawler.crawl;
 import java.util.ArrayList;
 import java.util.List;
 
-import schemacrawler.schema.Procedure;
-import schemacrawler.schema.ProcedureColumn;
-import schemacrawler.schema.ProcedureReturnType;
+import schemacrawler.schema.Function;
+import schemacrawler.schema.FunctionColumn;
+import schemacrawler.schema.FunctionReturnType;
+import schemacrawler.schema.RoutineBodyType;
 import schemacrawler.schema.RoutineType;
 import schemacrawler.schema.Schema;
 
 /**
- * Represents a database procedure. Created from metadata returned by a
+ * Represents a database function. Created from metadata returned by a
  * JDBC call.
  * 
  * @author Sualeh Fatehi
  */
-final class MutableProcedure
+final class MutableFunction
   extends MutableRoutine
-  implements Procedure
+  implements Function
 {
 
   private static final long serialVersionUID = 3906925686089134130L;
 
-  private ProcedureReturnType procedureType;
-  private final NamedObjectList<MutableProcedureColumn> columns = new NamedObjectList<MutableProcedureColumn>();
+  private FunctionReturnType functionType;
+  private final NamedObjectList<MutableFunctionColumn> columns = new NamedObjectList<MutableFunctionColumn>();
+  private RoutineBodyType routineBodyType;
 
-  MutableProcedure(final Schema schema, final String name)
+  MutableFunction(final Schema schema, final String name)
   {
     super(schema, name);
     // Default values
-    procedureType = ProcedureReturnType.unknown;
+    functionType = FunctionReturnType.unknown;
+    routineBodyType = RoutineBodyType.unknown;
   }
 
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schema.Procedure#getColumn(java.lang.String)
+   * @see schemacrawler.schema.Function#getColumn(java.lang.String)
    */
   @Override
-  public MutableProcedureColumn getColumn(final String name)
+  public MutableFunctionColumn getColumn(final String name)
   {
     return columns.lookup(this, name);
   }
@@ -67,43 +70,60 @@ final class MutableProcedure
   /**
    * {@inheritDoc}
    * 
-   * @see Procedure#getColumns()
+   * @see Function#getColumns()
    */
   @Override
-  public List<ProcedureColumn> getColumns()
+  public List<FunctionColumn> getColumns()
   {
-    return new ArrayList<ProcedureColumn>(columns.values());
+    return new ArrayList<FunctionColumn>(columns.values());
   }
 
   /**
    * {@inheritDoc}
    * 
-   * @see Procedure#getReturnType()
+   * @see Function#getReturnType()
    */
   @Override
-  public ProcedureReturnType getReturnType()
+  public FunctionReturnType getReturnType()
   {
-    return procedureType;
+    return functionType;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see Function#getRoutineBodyType()
+   */
+  @Override
+  public RoutineBodyType getRoutineBodyType()
+  {
+    return routineBodyType;
   }
 
   @Override
   public RoutineType getType()
   {
-    return RoutineType.procedure;
+    return RoutineType.function;
   }
 
-  void addColumn(final MutableProcedureColumn column)
+  void addColumn(final MutableFunctionColumn column)
   {
     columns.add(column);
   }
 
-  void setType(final ProcedureReturnType type)
+  @Override
+  void setRoutineBodyType(final RoutineBodyType routineBodyType)
+  {
+    this.routineBodyType = routineBodyType;
+  }
+
+  void setType(final FunctionReturnType type)
   {
     if (type == null)
     {
-      throw new IllegalArgumentException("Null procedure type");
+      throw new IllegalArgumentException("Null function type");
     }
-    procedureType = type;
+    functionType = type;
   }
 
 }

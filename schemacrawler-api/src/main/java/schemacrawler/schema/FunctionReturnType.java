@@ -26,27 +26,27 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * An enumeration wrapper around JDBC procedure types.
+ * An enumeration wrapper around JDBC function types.
  */
-public enum ProcedureReturnType
+public enum FunctionReturnType
   implements RoutineReturnType
 {
 
   /**
    * Result unknown.
    */
-  unknown(DatabaseMetaData.procedureResultUnknown, "result unknown"),
+  unknown(DatabaseMetaData.functionResultUnknown, "result unknown"),
   /**
-   * No result.
+   * Does not return a table.
    */
-  noResult(DatabaseMetaData.procedureNoResult, "no result"),
+  noTable(DatabaseMetaData.functionNoTable, "does not return a table"),
   /**
-   * Returns result.
+   * Returns a table.
    */
-  returnsResult(DatabaseMetaData.procedureReturnsResult, "returns result");
+  returnsTable(DatabaseMetaData.functionReturnsTable, "returns table");
 
   private static final Logger LOGGER = Logger
-    .getLogger(ProcedureReturnType.class.getName());
+    .getLogger(FunctionReturnType.class.getName());
 
   /**
    * Gets the enum value from the integer.
@@ -55,9 +55,9 @@ public enum ProcedureReturnType
    *        Id of the integer
    * @return ForeignKeyDeferrability
    */
-  public static ProcedureReturnType valueOf(final int id)
+  public static FunctionReturnType valueOf(final int id)
   {
-    for (final ProcedureReturnType type: ProcedureReturnType.values())
+    for (final FunctionReturnType type: FunctionReturnType.values())
     {
       if (type.getId() == id)
       {
@@ -71,7 +71,7 @@ public enum ProcedureReturnType
   private final int id;
   private final String text;
 
-  private ProcedureReturnType(final int id, final String text)
+  private FunctionReturnType(final int id, final String text)
   {
     this.id = id;
     this.text = text;

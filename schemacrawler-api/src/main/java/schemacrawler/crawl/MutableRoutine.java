@@ -21,7 +21,9 @@
 package schemacrawler.crawl;
 
 
+import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Routine;
+import schemacrawler.schema.RoutineBodyType;
 import schemacrawler.schema.Schema;
 import sf.util.Utility;
 
@@ -39,10 +41,25 @@ abstract class MutableRoutine
   private static final long serialVersionUID = 3906925686089134130L;
 
   private String specificName;
+  private RoutineBodyType routineBodyType;
+  private final StringBuilder definition;
 
   MutableRoutine(final Schema schema, final String name)
   {
     super(schema, name);
+    routineBodyType = RoutineBodyType.unknown;
+    definition = new StringBuilder();
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see Procedure#getDefinition()
+   */
+  @Override
+  public String getDefinition()
+  {
+    return definition.toString();
   }
 
   @Override
@@ -59,10 +76,34 @@ abstract class MutableRoutine
     }
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see Procedure#getRoutineBodyType()
+   */
+  @Override
+  public RoutineBodyType getRoutineBodyType()
+  {
+    return routineBodyType;
+  }
+
   @Override
   public String getSpecificName()
   {
     return specificName;
+  }
+
+  void appendDefinition(final String definition)
+  {
+    if (definition != null)
+    {
+      this.definition.append(definition);
+    }
+  }
+
+  void setRoutineBodyType(final RoutineBodyType routineBodyType)
+  {
+    this.routineBodyType = routineBodyType;
   }
 
   void setSpecificName(final String specificName)

@@ -2515,9 +2515,9 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                           <indices id="321">
                             <objects id="322">
                               <entry>
-                                <string>PUBLIC.&quot;PUBLISHER SALES&quot;.SALES.SYS_IDX_10054</string>
+                                <string>PUBLIC.&quot;PUBLISHER SALES&quot;.SALES.SYS_IDX_10056</string>
                                 <index id="323">
-                                  <name>SYS_IDX_10054</name>
+                                  <name>SYS_IDX_10056</name>
                                   <attributeMap id="324">
                                     <entry>
                                       <string>FILTER_CONDITION</string>
@@ -2587,9 +2587,9 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                           <checkConstraints id="331">
                             <objects id="332">
                               <entry>
-                                <string>PUBLIC.&quot;PUBLISHER SALES&quot;.SALES.SYS_CT_10051</string>
+                                <string>PUBLIC.&quot;PUBLISHER SALES&quot;.SALES.SYS_CT_10053</string>
                                 <checkConstraint id="333">
-                                  <name>SYS_CT_10051</name>
+                                  <name>SYS_CT_10053</name>
                                   <attributeMap id="334">
                                     <entry>
                                       <string>TABLE_CATALOG</string>
@@ -2608,9 +2608,9 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                 </checkConstraint>
                               </entry>
                               <entry>
-                                <string>PUBLIC.&quot;PUBLISHER SALES&quot;.SALES.SYS_CT_10052</string>
+                                <string>PUBLIC.&quot;PUBLISHER SALES&quot;.SALES.SYS_CT_10054</string>
                                 <checkConstraint id="335">
-                                  <name>SYS_CT_10052</name>
+                                  <name>SYS_CT_10054</name>
                                   <attributeMap id="336">
                                     <entry>
                                       <string>TABLE_CATALOG</string>
@@ -2772,9 +2772,9 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           <indices id="368">
             <objects id="369">
               <entry>
-                <string>PUBLIC.&quot;PUBLISHER SALES&quot;.REGIONS.SYS_IDX_PK_CUSTOMERS_10050</string>
+                <string>PUBLIC.&quot;PUBLISHER SALES&quot;.REGIONS.SYS_IDX_PK_CUSTOMERS_10052</string>
                 <index id="370">
-                  <name>SYS_IDX_PK_CUSTOMERS_10050</name>
+                  <name>SYS_IDX_PK_CUSTOMERS_10052</name>
                   <attributeMap id="371">
                     <entry>
                       <string>FILTER_CONDITION</string>
@@ -2844,9 +2844,9 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           <checkConstraints id="378">
             <objects id="379">
               <entry>
-                <string>PUBLIC.&quot;PUBLISHER SALES&quot;.REGIONS.SYS_CT_10046</string>
+                <string>PUBLIC.&quot;PUBLISHER SALES&quot;.REGIONS.SYS_CT_10048</string>
                 <checkConstraint id="380">
-                  <name>SYS_CT_10046</name>
+                  <name>SYS_CT_10048</name>
                   <attributeMap id="381">
                     <entry>
                       <string>TABLE_CATALOG</string>
@@ -2865,9 +2865,9 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                 </checkConstraint>
               </entry>
               <entry>
-                <string>PUBLIC.&quot;PUBLISHER SALES&quot;.REGIONS.SYS_CT_10047</string>
+                <string>PUBLIC.&quot;PUBLISHER SALES&quot;.REGIONS.SYS_CT_10049</string>
                 <checkConstraint id="382">
-                  <name>SYS_CT_10047</name>
+                  <name>SYS_CT_10049</name>
                   <attributeMap id="383">
                     <entry>
                       <string>TABLE_CATALOG</string>
@@ -2886,9 +2886,9 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                 </checkConstraint>
               </entry>
               <entry>
-                <string>PUBLIC.&quot;PUBLISHER SALES&quot;.REGIONS.SYS_CT_10048</string>
+                <string>PUBLIC.&quot;PUBLISHER SALES&quot;.REGIONS.SYS_CT_10050</string>
                 <checkConstraint id="384">
-                  <name>SYS_CT_10048</name>
+                  <name>SYS_CT_10050</name>
                   <attributeMap id="385">
                     <entry>
                       <string>TABLE_CATALOG</string>
@@ -2907,9 +2907,9 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                 </checkConstraint>
               </entry>
               <entry>
-                <string>PUBLIC.&quot;PUBLISHER SALES&quot;.REGIONS.SYS_CT_10049</string>
+                <string>PUBLIC.&quot;PUBLISHER SALES&quot;.REGIONS.SYS_CT_10051</string>
                 <checkConstraint id="386">
-                  <name>SYS_CT_10049</name>
+                  <name>SYS_CT_10051</name>
                   <attributeMap id="387">
                     <entry>
                       <string>TABLE_CATALOG</string>
@@ -9116,9 +9116,9 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                         </index>
                                       </entry>
                                       <entry>
-                                        <string>PUBLIC.FOR_LINT.WRITERS.SYS_IDX_10078</string>
+                                        <string>PUBLIC.FOR_LINT.WRITERS.SYS_IDX_10080</string>
                                         <index id="1101">
-                                          <name>SYS_IDX_10078</name>
+                                          <name>SYS_IDX_10080</name>
                                           <attributeMap id="1102">
                                             <entry>
                                               <string>FILTER_CONDITION</string>
@@ -9171,9 +9171,9 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                         </index>
                                       </entry>
                                       <entry>
-                                        <string>PUBLIC.FOR_LINT.WRITERS.SYS_IDX_PK_WRITERS_10061</string>
+                                        <string>PUBLIC.FOR_LINT.WRITERS.SYS_IDX_PK_WRITERS_10063</string>
                                         <index id="1107">
-                                          <name>SYS_IDX_PK_WRITERS_10061</name>
+                                          <name>SYS_IDX_PK_WRITERS_10063</name>
                                           <attributeMap id="1108">
                                             <entry>
                                               <string>FILTER_CONDITION</string>
@@ -9251,9 +9251,9 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                         </checkConstraint>
                                       </entry>
                                       <entry>
-                                        <string>PUBLIC.FOR_LINT.WRITERS.SYS_CT_10056</string>
+                                        <string>PUBLIC.FOR_LINT.WRITERS.SYS_CT_10058</string>
                                         <checkConstraint id="1117">
-                                          <name>SYS_CT_10056</name>
+                                          <name>SYS_CT_10058</name>
                                           <attributeMap id="1118">
                                             <entry>
                                               <string>TABLE_CATALOG</string>
@@ -9272,9 +9272,9 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                         </checkConstraint>
                                       </entry>
                                       <entry>
-                                        <string>PUBLIC.FOR_LINT.WRITERS.SYS_CT_10057</string>
+                                        <string>PUBLIC.FOR_LINT.WRITERS.SYS_CT_10059</string>
                                         <checkConstraint id="1119">
-                                          <name>SYS_CT_10057</name>
+                                          <name>SYS_CT_10059</name>
                                           <attributeMap id="1120">
                                             <entry>
                                               <string>TABLE_CATALOG</string>
@@ -9293,9 +9293,9 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                         </checkConstraint>
                                       </entry>
                                       <entry>
-                                        <string>PUBLIC.FOR_LINT.WRITERS.SYS_CT_10058</string>
+                                        <string>PUBLIC.FOR_LINT.WRITERS.SYS_CT_10060</string>
                                         <checkConstraint id="1121">
-                                          <name>SYS_CT_10058</name>
+                                          <name>SYS_CT_10060</name>
                                           <attributeMap id="1122">
                                             <entry>
                                               <string>TABLE_CATALOG</string>
@@ -9314,9 +9314,9 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                         </checkConstraint>
                                       </entry>
                                       <entry>
-                                        <string>PUBLIC.FOR_LINT.WRITERS.SYS_CT_10059</string>
+                                        <string>PUBLIC.FOR_LINT.WRITERS.SYS_CT_10061</string>
                                         <checkConstraint id="1123">
-                                          <name>SYS_CT_10059</name>
+                                          <name>SYS_CT_10061</name>
                                           <attributeMap id="1124">
                                             <entry>
                                               <string>TABLE_CATALOG</string>
@@ -9335,9 +9335,9 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                         </checkConstraint>
                                       </entry>
                                       <entry>
-                                        <string>PUBLIC.FOR_LINT.WRITERS.SYS_CT_10060</string>
+                                        <string>PUBLIC.FOR_LINT.WRITERS.SYS_CT_10062</string>
                                         <checkConstraint id="1125">
-                                          <name>SYS_CT_10060</name>
+                                          <name>SYS_CT_10062</name>
                                           <attributeMap id="1126">
                                             <entry>
                                               <string>TABLE_CATALOG</string>
@@ -9523,9 +9523,9 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                       <indices id="1165">
                         <objects id="1166">
                           <entry>
-                            <string>PUBLIC.FOR_LINT.PUBLICATIONS.SYS_IDX_10066</string>
+                            <string>PUBLIC.FOR_LINT.PUBLICATIONS.SYS_IDX_10068</string>
                             <index id="1167">
-                              <name>SYS_IDX_10066</name>
+                              <name>SYS_IDX_10068</name>
                               <attributeMap id="1168">
                                 <entry>
                                   <string>FILTER_CONDITION</string>
@@ -9578,9 +9578,9 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                             </index>
                           </entry>
                           <entry>
-                            <string>PUBLIC.FOR_LINT.PUBLICATIONS.SYS_IDX_PK_PUBLICATIONS_10065</string>
+                            <string>PUBLIC.FOR_LINT.PUBLICATIONS.SYS_IDX_PK_PUBLICATIONS_10067</string>
                             <index id="1173">
-                              <name>SYS_IDX_PK_PUBLICATIONS_10065</name>
+                              <name>SYS_IDX_PK_PUBLICATIONS_10067</name>
                               <attributeMap id="1174">
                                 <entry>
                                   <string>FILTER_CONDITION</string>
@@ -9637,9 +9637,9 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                       <checkConstraints id="1179">
                         <objects id="1180">
                           <entry>
-                            <string>PUBLIC.FOR_LINT.PUBLICATIONS.SYS_CT_10062</string>
+                            <string>PUBLIC.FOR_LINT.PUBLICATIONS.SYS_CT_10064</string>
                             <checkConstraint id="1181">
-                              <name>SYS_CT_10062</name>
+                              <name>SYS_CT_10064</name>
                               <attributeMap id="1182">
                                 <entry>
                                   <string>TABLE_CATALOG</string>
@@ -9658,9 +9658,9 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                             </checkConstraint>
                           </entry>
                           <entry>
-                            <string>PUBLIC.FOR_LINT.PUBLICATIONS.SYS_CT_10063</string>
+                            <string>PUBLIC.FOR_LINT.PUBLICATIONS.SYS_CT_10065</string>
                             <checkConstraint id="1183">
-                              <name>SYS_CT_10063</name>
+                              <name>SYS_CT_10065</name>
                               <attributeMap id="1184">
                                 <entry>
                                   <string>TABLE_CATALOG</string>
@@ -9679,9 +9679,9 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                             </checkConstraint>
                           </entry>
                           <entry>
-                            <string>PUBLIC.FOR_LINT.PUBLICATIONS.SYS_CT_10064</string>
+                            <string>PUBLIC.FOR_LINT.PUBLICATIONS.SYS_CT_10066</string>
                             <checkConstraint id="1185">
-                              <name>SYS_CT_10064</name>
+                              <name>SYS_CT_10066</name>
                               <attributeMap id="1186">
                                 <entry>
                                   <string>TABLE_CATALOG</string>
@@ -9849,9 +9849,9 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           <indices id="1221">
             <objects id="1222">
               <entry>
-                <string>PUBLIC.FOR_LINT.EXTRA_PK.SYS_IDX_10074</string>
+                <string>PUBLIC.FOR_LINT.EXTRA_PK.SYS_IDX_10076</string>
                 <index id="1223">
-                  <name>SYS_IDX_10074</name>
+                  <name>SYS_IDX_10076</name>
                   <attributeMap id="1224">
                     <entry>
                       <string>FILTER_CONDITION</string>
@@ -9904,9 +9904,9 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                 </index>
               </entry>
               <entry>
-                <string>PUBLIC.FOR_LINT.EXTRA_PK.SYS_IDX_10076</string>
+                <string>PUBLIC.FOR_LINT.EXTRA_PK.SYS_IDX_10078</string>
                 <index id="1229">
-                  <name>SYS_IDX_10076</name>
+                  <name>SYS_IDX_10078</name>
                   <attributeMap id="1230">
                     <entry>
                       <string>FILTER_CONDITION</string>
@@ -9959,9 +9959,9 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                 </index>
               </entry>
               <entry>
-                <string>PUBLIC.FOR_LINT.EXTRA_PK.SYS_IDX_PK_EXTRA_PK_10073</string>
+                <string>PUBLIC.FOR_LINT.EXTRA_PK.SYS_IDX_PK_EXTRA_PK_10075</string>
                 <index id="1235">
-                  <name>SYS_IDX_PK_EXTRA_PK_10073</name>
+                  <name>SYS_IDX_PK_EXTRA_PK_10075</name>
                   <attributeMap id="1236">
                     <entry>
                       <string>FILTER_CONDITION</string>
@@ -10018,9 +10018,9 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           <checkConstraints id="1241">
             <objects id="1242">
               <entry>
-                <string>PUBLIC.FOR_LINT.EXTRA_PK.SYS_CT_10070</string>
+                <string>PUBLIC.FOR_LINT.EXTRA_PK.SYS_CT_10072</string>
                 <checkConstraint id="1243">
-                  <name>SYS_CT_10070</name>
+                  <name>SYS_CT_10072</name>
                   <attributeMap id="1244">
                     <entry>
                       <string>TABLE_CATALOG</string>
@@ -10039,9 +10039,9 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                 </checkConstraint>
               </entry>
               <entry>
-                <string>PUBLIC.FOR_LINT.EXTRA_PK.SYS_CT_10071</string>
+                <string>PUBLIC.FOR_LINT.EXTRA_PK.SYS_CT_10073</string>
                 <checkConstraint id="1245">
-                  <name>SYS_CT_10071</name>
+                  <name>SYS_CT_10073</name>
                   <attributeMap id="1246">
                     <entry>
                       <string>TABLE_CATALOG</string>
@@ -10060,9 +10060,9 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                 </checkConstraint>
               </entry>
               <entry>
-                <string>PUBLIC.FOR_LINT.EXTRA_PK.SYS_CT_10072</string>
+                <string>PUBLIC.FOR_LINT.EXTRA_PK.SYS_CT_10074</string>
                 <checkConstraint id="1247">
-                  <name>SYS_CT_10072</name>
+                  <name>SYS_CT_10074</name>
                   <attributeMap id="1248">
                     <entry>
                       <string>TABLE_CATALOG</string>
@@ -10343,11 +10343,852 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
   <routines id="1317">
     <objects id="1318">
       <entry>
-        <string>PUBLIC.BOOKS.NEW_PUBLISHER_10043</string>
-        <procedure id="1319">
-          <name>NEW_PUBLISHER</name>
+        <string>PUBLIC.BOOKS.CUSTOMADD_10045</string>
+        <schemacrawler.crawl.MutableFunction id="1319">
+          <name>CUSTOMADD</name>
           <remarks></remarks>
           <attributeMap id="1320">
+            <entry>
+              <string>AS_LOCATOR</string>
+              <string>NO</string>
+            </entry>
+            <entry>
+              <string>CHARACTER_MAXIMUM_LENGTH</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>CHARACTER_OCTET_LENGTH</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>CHARACTER_SET_CATALOG</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>CHARACTER_SET_NAME</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>CHARACTER_SET_SCHEMA</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>COLLATION_CATALOG</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>COLLATION_NAME</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>COLLATION_SCHEMA</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>CREATED</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>DATA_TYPE</string>
+              <string>INTEGER</string>
+            </entry>
+            <entry>
+              <string>DATETIME_PRECISION</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>DECLARED_DATA_TYPE</string>
+              <string>INTEGER</string>
+            </entry>
+            <entry>
+              <string>DECLARED_NUMERIC_PRECISION</string>
+              <long>32</long>
+            </entry>
+            <entry>
+              <string>DECLARED_NUMERIC_SCALE</string>
+              <long>0</long>
+            </entry>
+            <entry>
+              <string>DTD_IDENTIFIER</string>
+              <string>INTEGER</string>
+            </entry>
+            <entry>
+              <string>EXTERNAL_LANGUAGE</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>EXTERNAL_NAME</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>FUNCTION_CAT</string>
+              <string>PUBLIC</string>
+            </entry>
+            <entry>
+              <string>FUNCTION_SCHEM</string>
+              <string>BOOKS</string>
+            </entry>
+            <entry>
+              <string>INTERVAL_PRECISION</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>INTERVAL_TYPE</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>IS_DETERMINISTIC</string>
+              <string>NO</string>
+            </entry>
+            <entry>
+              <string>IS_IMPLICITLY_INVOCABLE</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>IS_NULL_CALL</string>
+              <string>NO</string>
+            </entry>
+            <entry>
+              <string>IS_UDT_DEPENDENT</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>IS_USER_DEFINED_CAST</string>
+              <string>NO</string>
+            </entry>
+            <entry>
+              <string>LAST_ALTERED</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>MAXIMUM_CARDINALITY</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>MAX_DYNAMIC_RESULT_SETS</string>
+              <long>0</long>
+            </entry>
+            <entry>
+              <string>MODULE_CATALOG</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>MODULE_NAME</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>MODULE_SCHEMA</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>NEW_SAVEPOINT_LEVEL</string>
+              <string>YES</string>
+            </entry>
+            <entry>
+              <string>NUMERIC_PRECISION</string>
+              <long>32</long>
+            </entry>
+            <entry>
+              <string>NUMERIC_PRECISION_RADIX</string>
+              <long>2</long>
+            </entry>
+            <entry>
+              <string>NUMERIC_SCALE</string>
+              <long>0</long>
+            </entry>
+            <entry>
+              <string>PARAMETER_STYLE</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>RESULT_CAST_AS_LOCATOR</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>RESULT_CAST_CHARACTER_SET_NAME</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>RESULT_CAST_CHAR_MAX_LENGTH</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>RESULT_CAST_CHAR_OCTET_LENGTH</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>RESULT_CAST_CHAR_SET_CATALOG</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>RESULT_CAST_CHAR_SET_SCHEMA</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>RESULT_CAST_COLLATION_CATALOG</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>RESULT_CAST_COLLATION_NAME</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>RESULT_CAST_COLLATION_SCHEMA</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>RESULT_CAST_DATETIME_PRECISION</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>RESULT_CAST_DECLARED_NUMERIC_PRECISION</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>RESULT_CAST_DECLARED_NUMERIC_SCALE</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>RESULT_CAST_DTD_IDENTIFIER</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>RESULT_CAST_FROM_DATA_TYPE</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>RESULT_CAST_FROM_DECLARED_DATA_TYPE</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>RESULT_CAST_INTERVAL_PRECISION</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>RESULT_CAST_INTERVAL_TYPE</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>RESULT_CAST_MAX_CARDINALITY</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>RESULT_CAST_NUMERIC_PRECISION</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>RESULT_CAST_NUMERIC_RADIX</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>RESULT_CAST_NUMERIC_SCALE</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>RESULT_CAST_SCOPE_CATALOG</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>RESULT_CAST_SCOPE_NAME</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>RESULT_CAST_SCOPE_SCHEMA</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>RESULT_CAST_TYPE_UDT_CATALOG</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>RESULT_CAST_TYPE_UDT_NAME</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>RESULT_CAST_TYPE_UDT_SCHEMA</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>ROUTINE_TYPE</string>
+              <string>FUNCTION</string>
+            </entry>
+            <entry>
+              <string>SCHEMA_LEVEL_ROUTINE</string>
+              <string>YES</string>
+            </entry>
+            <entry>
+              <string>SCOPE_CATALOG</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>SCOPE_NAME</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>SCOPE_SCHEMA</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>SECURITY_TYPE</string>
+              <string>DEFINER</string>
+            </entry>
+            <entry>
+              <string>SPECIFIC_CATALOG</string>
+              <string>PUBLIC</string>
+            </entry>
+            <entry>
+              <string>SPECIFIC_SCHEMA</string>
+              <string>BOOKS</string>
+            </entry>
+            <entry>
+              <string>SQL_DATA_ACCESS</string>
+              <string>CONTAINS SQL</string>
+            </entry>
+            <entry>
+              <string>SQL_PATH</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>TO_SQL_SPECIFIC_CATALOG</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>TO_SQL_SPECIFIC_NAME</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>TO_SQL_SPECIFIC_SCHEMA</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>TYPE_UDT_CATALOG</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>TYPE_UDT_NAME</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>TYPE_UDT_SCHEMA</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>UDT_CATALOG</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>UDT_NAME</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>UDT_SCHEMA</string>
+              <null/>
+            </entry>
+          </attributeMap>
+          <schema class="schema" id="1321">
+            <catalogName>PUBLIC</catalogName>
+            <schemaName>BOOKS</schemaName>
+            <attributeMap id="1322"/>
+          </schema>
+          <specificName>CUSTOMADD_10045</specificName>
+          <routineBodyType defined-in="schemacrawler.crawl.MutableRoutine">unknown</routineBodyType>
+          <definition id="1323">CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER,IN TWO INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10045 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN ONE+TWO</definition>
+          <functionType>noTable</functionType>
+          <columns id="1324">
+            <objects id="1325">
+              <entry>
+                <string>PUBLIC.BOOKS.CUSTOMADD.ONE</string>
+                <schemacrawler.crawl.MutableFunctionColumn id="1326">
+                  <name>ONE</name>
+                  <remarks></remarks>
+                  <attributeMap id="1327">
+                    <entry>
+                      <string>CHAR_OCTET_LENGTH</string>
+                      <int>0</int>
+                    </entry>
+                    <entry>
+                      <string>COLUMN_GROUP</string>
+                      <int>0</int>
+                    </entry>
+                    <entry>
+                      <string>IS_NULLABLE</string>
+                      <string>YES</string>
+                    </entry>
+                    <entry>
+                      <string>ORDINAL_POSITION</string>
+                      <int>1</int>
+                    </entry>
+                    <entry>
+                      <string>RADIX</string>
+                      <long>2</long>
+                    </entry>
+                    <entry>
+                      <string>SCALE</string>
+                      <long>0</long>
+                    </entry>
+                  </attributeMap>
+                  <schema class="schema" reference="1321"/>
+                  <parent class="schemacrawler.crawl.MutableFunction" reference="1319"/>
+                  <type class="columnDataType" reference="225"/>
+                  <ordinalPosition>0</ordinalPosition>
+                  <size>0</size>
+                  <decimalDigits>32</decimalDigits>
+                  <nullable>true</nullable>
+                  <functionColumnType>in</functionColumnType>
+                </schemacrawler.crawl.MutableFunctionColumn>
+              </entry>
+              <entry>
+                <string>PUBLIC.BOOKS.CUSTOMADD.TWO</string>
+                <schemacrawler.crawl.MutableFunctionColumn id="1328">
+                  <name>TWO</name>
+                  <remarks></remarks>
+                  <attributeMap id="1329">
+                    <entry>
+                      <string>CHAR_OCTET_LENGTH</string>
+                      <int>0</int>
+                    </entry>
+                    <entry>
+                      <string>COLUMN_GROUP</string>
+                      <int>0</int>
+                    </entry>
+                    <entry>
+                      <string>IS_NULLABLE</string>
+                      <string>YES</string>
+                    </entry>
+                    <entry>
+                      <string>ORDINAL_POSITION</string>
+                      <int>2</int>
+                    </entry>
+                    <entry>
+                      <string>RADIX</string>
+                      <long>2</long>
+                    </entry>
+                    <entry>
+                      <string>SCALE</string>
+                      <long>0</long>
+                    </entry>
+                  </attributeMap>
+                  <schema class="schema" reference="1321"/>
+                  <parent class="schemacrawler.crawl.MutableFunction" reference="1319"/>
+                  <type class="columnDataType" reference="225"/>
+                  <ordinalPosition>1</ordinalPosition>
+                  <size>0</size>
+                  <decimalDigits>32</decimalDigits>
+                  <nullable>true</nullable>
+                  <functionColumnType>in</functionColumnType>
+                </schemacrawler.crawl.MutableFunctionColumn>
+              </entry>
+            </objects>
+          </columns>
+          <routineBodyType>sql</routineBodyType>
+        </schemacrawler.crawl.MutableFunction>
+      </entry>
+      <entry>
+        <string>PUBLIC.BOOKS.CUSTOMADD_10046</string>
+        <schemacrawler.crawl.MutableFunction id="1330">
+          <name>CUSTOMADD</name>
+          <remarks></remarks>
+          <attributeMap id="1331">
+            <entry>
+              <string>AS_LOCATOR</string>
+              <string>NO</string>
+            </entry>
+            <entry>
+              <string>CHARACTER_MAXIMUM_LENGTH</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>CHARACTER_OCTET_LENGTH</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>CHARACTER_SET_CATALOG</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>CHARACTER_SET_NAME</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>CHARACTER_SET_SCHEMA</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>COLLATION_CATALOG</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>COLLATION_NAME</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>COLLATION_SCHEMA</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>CREATED</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>DATA_TYPE</string>
+              <string>INTEGER</string>
+            </entry>
+            <entry>
+              <string>DATETIME_PRECISION</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>DECLARED_DATA_TYPE</string>
+              <string>INTEGER</string>
+            </entry>
+            <entry>
+              <string>DECLARED_NUMERIC_PRECISION</string>
+              <long>32</long>
+            </entry>
+            <entry>
+              <string>DECLARED_NUMERIC_SCALE</string>
+              <long>0</long>
+            </entry>
+            <entry>
+              <string>DTD_IDENTIFIER</string>
+              <string>INTEGER</string>
+            </entry>
+            <entry>
+              <string>EXTERNAL_LANGUAGE</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>EXTERNAL_NAME</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>FUNCTION_CAT</string>
+              <string>PUBLIC</string>
+            </entry>
+            <entry>
+              <string>FUNCTION_SCHEM</string>
+              <string>BOOKS</string>
+            </entry>
+            <entry>
+              <string>INTERVAL_PRECISION</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>INTERVAL_TYPE</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>IS_DETERMINISTIC</string>
+              <string>NO</string>
+            </entry>
+            <entry>
+              <string>IS_IMPLICITLY_INVOCABLE</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>IS_NULL_CALL</string>
+              <string>NO</string>
+            </entry>
+            <entry>
+              <string>IS_UDT_DEPENDENT</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>IS_USER_DEFINED_CAST</string>
+              <string>NO</string>
+            </entry>
+            <entry>
+              <string>LAST_ALTERED</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>MAXIMUM_CARDINALITY</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>MAX_DYNAMIC_RESULT_SETS</string>
+              <long>0</long>
+            </entry>
+            <entry>
+              <string>MODULE_CATALOG</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>MODULE_NAME</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>MODULE_SCHEMA</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>NEW_SAVEPOINT_LEVEL</string>
+              <string>YES</string>
+            </entry>
+            <entry>
+              <string>NUMERIC_PRECISION</string>
+              <long>32</long>
+            </entry>
+            <entry>
+              <string>NUMERIC_PRECISION_RADIX</string>
+              <long>2</long>
+            </entry>
+            <entry>
+              <string>NUMERIC_SCALE</string>
+              <long>0</long>
+            </entry>
+            <entry>
+              <string>PARAMETER_STYLE</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>RESULT_CAST_AS_LOCATOR</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>RESULT_CAST_CHARACTER_SET_NAME</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>RESULT_CAST_CHAR_MAX_LENGTH</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>RESULT_CAST_CHAR_OCTET_LENGTH</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>RESULT_CAST_CHAR_SET_CATALOG</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>RESULT_CAST_CHAR_SET_SCHEMA</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>RESULT_CAST_COLLATION_CATALOG</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>RESULT_CAST_COLLATION_NAME</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>RESULT_CAST_COLLATION_SCHEMA</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>RESULT_CAST_DATETIME_PRECISION</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>RESULT_CAST_DECLARED_NUMERIC_PRECISION</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>RESULT_CAST_DECLARED_NUMERIC_SCALE</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>RESULT_CAST_DTD_IDENTIFIER</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>RESULT_CAST_FROM_DATA_TYPE</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>RESULT_CAST_FROM_DECLARED_DATA_TYPE</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>RESULT_CAST_INTERVAL_PRECISION</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>RESULT_CAST_INTERVAL_TYPE</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>RESULT_CAST_MAX_CARDINALITY</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>RESULT_CAST_NUMERIC_PRECISION</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>RESULT_CAST_NUMERIC_RADIX</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>RESULT_CAST_NUMERIC_SCALE</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>RESULT_CAST_SCOPE_CATALOG</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>RESULT_CAST_SCOPE_NAME</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>RESULT_CAST_SCOPE_SCHEMA</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>RESULT_CAST_TYPE_UDT_CATALOG</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>RESULT_CAST_TYPE_UDT_NAME</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>RESULT_CAST_TYPE_UDT_SCHEMA</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>ROUTINE_TYPE</string>
+              <string>FUNCTION</string>
+            </entry>
+            <entry>
+              <string>SCHEMA_LEVEL_ROUTINE</string>
+              <string>YES</string>
+            </entry>
+            <entry>
+              <string>SCOPE_CATALOG</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>SCOPE_NAME</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>SCOPE_SCHEMA</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>SECURITY_TYPE</string>
+              <string>DEFINER</string>
+            </entry>
+            <entry>
+              <string>SPECIFIC_CATALOG</string>
+              <string>PUBLIC</string>
+            </entry>
+            <entry>
+              <string>SPECIFIC_SCHEMA</string>
+              <string>BOOKS</string>
+            </entry>
+            <entry>
+              <string>SQL_DATA_ACCESS</string>
+              <string>CONTAINS SQL</string>
+            </entry>
+            <entry>
+              <string>SQL_PATH</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>TO_SQL_SPECIFIC_CATALOG</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>TO_SQL_SPECIFIC_NAME</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>TO_SQL_SPECIFIC_SCHEMA</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>TYPE_UDT_CATALOG</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>TYPE_UDT_NAME</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>TYPE_UDT_SCHEMA</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>UDT_CATALOG</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>UDT_NAME</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>UDT_SCHEMA</string>
+              <null/>
+            </entry>
+          </attributeMap>
+          <schema class="schema" id="1332">
+            <catalogName>PUBLIC</catalogName>
+            <schemaName>BOOKS</schemaName>
+            <attributeMap id="1333"/>
+          </schema>
+          <specificName>CUSTOMADD_10046</specificName>
+          <routineBodyType defined-in="schemacrawler.crawl.MutableRoutine">unknown</routineBodyType>
+          <definition id="1334">CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10046 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN BOOKS.CUSTOMADD(ONE,1)</definition>
+          <functionType>noTable</functionType>
+          <columns id="1335">
+            <objects id="1336">
+              <entry>
+                <string>PUBLIC.BOOKS.CUSTOMADD.ONE</string>
+                <schemacrawler.crawl.MutableFunctionColumn id="1337">
+                  <name>ONE</name>
+                  <remarks></remarks>
+                  <attributeMap id="1338">
+                    <entry>
+                      <string>CHAR_OCTET_LENGTH</string>
+                      <int>0</int>
+                    </entry>
+                    <entry>
+                      <string>COLUMN_GROUP</string>
+                      <int>0</int>
+                    </entry>
+                    <entry>
+                      <string>IS_NULLABLE</string>
+                      <string>YES</string>
+                    </entry>
+                    <entry>
+                      <string>ORDINAL_POSITION</string>
+                      <int>1</int>
+                    </entry>
+                    <entry>
+                      <string>RADIX</string>
+                      <long>2</long>
+                    </entry>
+                    <entry>
+                      <string>SCALE</string>
+                      <long>0</long>
+                    </entry>
+                  </attributeMap>
+                  <schema class="schema" reference="1332"/>
+                  <parent class="schemacrawler.crawl.MutableFunction" reference="1330"/>
+                  <type class="columnDataType" reference="225"/>
+                  <ordinalPosition>0</ordinalPosition>
+                  <size>0</size>
+                  <decimalDigits>32</decimalDigits>
+                  <nullable>true</nullable>
+                  <functionColumnType>in</functionColumnType>
+                </schemacrawler.crawl.MutableFunctionColumn>
+              </entry>
+            </objects>
+          </columns>
+          <routineBodyType>sql</routineBodyType>
+        </schemacrawler.crawl.MutableFunction>
+      </entry>
+      <entry>
+        <string>PUBLIC.BOOKS.NEW_PUBLISHER_10043</string>
+        <procedure id="1339">
+          <name>NEW_PUBLISHER</name>
+          <remarks></remarks>
+          <attributeMap id="1340">
             <entry>
               <string>AS_LOCATOR</string>
               <null/>
@@ -10699,15 +11540,17 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           </attributeMap>
           <schema class="schema" reference="235"/>
           <specificName>NEW_PUBLISHER_10043</specificName>
+          <routineBodyType>sql</routineBodyType>
+          <definition id="1341">CREATE PROCEDURE BOOKS.NEW_PUBLISHER(OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10043 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = &apos;New Publisher&apos;</definition>
           <procedureType>noResult</procedureType>
-          <columns id="1321">
-            <objects id="1322">
+          <columns id="1342">
+            <objects id="1343">
               <entry>
                 <string>PUBLIC.BOOKS.NEW_PUBLISHER.PUBLISHER</string>
-                <procedureColumn id="1323">
+                <procedureColumn id="1344">
                   <name>PUBLISHER</name>
                   <remarks></remarks>
-                  <attributeMap id="1324">
+                  <attributeMap id="1345">
                     <entry>
                       <string>CHAR_OCTET_LENGTH</string>
                       <int>50</int>
@@ -10742,7 +11585,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                     </entry>
                   </attributeMap>
                   <schema class="schema" reference="235"/>
-                  <parent class="procedure" reference="1319"/>
+                  <parent class="procedure" reference="1339"/>
                   <type class="columnDataType" reference="233"/>
                   <ordinalPosition>0</ordinalPosition>
                   <size>0</size>
@@ -10753,16 +11596,14 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
               </entry>
             </objects>
           </columns>
-          <routineBodyType>sql</routineBodyType>
-          <definition id="1325">CREATE PROCEDURE BOOKS.NEW_PUBLISHER(OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10043 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = &apos;New Publisher&apos;</definition>
         </procedure>
       </entry>
       <entry>
         <string>PUBLIC.BOOKS.NEW_PUBLISHER_10044</string>
-        <procedure id="1326">
+        <procedure id="1346">
           <name>NEW_PUBLISHER</name>
           <remarks></remarks>
-          <attributeMap id="1327">
+          <attributeMap id="1347">
             <entry>
               <string>AS_LOCATOR</string>
               <null/>
@@ -11112,21 +11953,23 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
               <null/>
             </entry>
           </attributeMap>
-          <schema class="schema" id="1328">
+          <schema class="schema" id="1348">
             <catalogName>PUBLIC</catalogName>
             <schemaName>BOOKS</schemaName>
-            <attributeMap id="1329"/>
+            <attributeMap id="1349"/>
           </schema>
           <specificName>NEW_PUBLISHER_10044</specificName>
+          <routineBodyType>sql</routineBodyType>
+          <definition id="1350">CREATE PROCEDURE BOOKS.NEW_PUBLISHER(IN NEWPUBLISHER VARCHAR(50),OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10044 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = NEWPUBLISHER</definition>
           <procedureType>noResult</procedureType>
-          <columns id="1330">
-            <objects id="1331">
+          <columns id="1351">
+            <objects id="1352">
               <entry>
                 <string>PUBLIC.BOOKS.NEW_PUBLISHER.NEWPUBLISHER</string>
-                <procedureColumn id="1332">
+                <procedureColumn id="1353">
                   <name>NEWPUBLISHER</name>
                   <remarks></remarks>
-                  <attributeMap id="1333">
+                  <attributeMap id="1354">
                     <entry>
                       <string>CHAR_OCTET_LENGTH</string>
                       <int>50</int>
@@ -11160,8 +12003,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                       <null/>
                     </entry>
                   </attributeMap>
-                  <schema class="schema" reference="1328"/>
-                  <parent class="procedure" reference="1326"/>
+                  <schema class="schema" reference="1348"/>
+                  <parent class="procedure" reference="1346"/>
                   <type class="columnDataType" reference="233"/>
                   <ordinalPosition>0</ordinalPosition>
                   <size>0</size>
@@ -11172,10 +12015,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
               </entry>
               <entry>
                 <string>PUBLIC.BOOKS.NEW_PUBLISHER.PUBLISHER</string>
-                <procedureColumn id="1334">
+                <procedureColumn id="1355">
                   <name>PUBLISHER</name>
                   <remarks></remarks>
-                  <attributeMap id="1335">
+                  <attributeMap id="1356">
                     <entry>
                       <string>CHAR_OCTET_LENGTH</string>
                       <int>50</int>
@@ -11209,8 +12052,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                       <null/>
                     </entry>
                   </attributeMap>
-                  <schema class="schema" reference="1328"/>
-                  <parent class="procedure" reference="1326"/>
+                  <schema class="schema" reference="1348"/>
+                  <parent class="procedure" reference="1346"/>
                   <type class="columnDataType" reference="233"/>
                   <ordinalPosition>1</ordinalPosition>
                   <size>0</size>
@@ -11221,16 +12064,14 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
               </entry>
             </objects>
           </columns>
-          <routineBodyType>sql</routineBodyType>
-          <definition id="1336">CREATE PROCEDURE BOOKS.NEW_PUBLISHER(IN NEWPUBLISHER VARCHAR(50),OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10044 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = NEWPUBLISHER</definition>
         </procedure>
       </entry>
       <entry>
         <string>PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS_10022</string>
-        <procedure id="1337">
+        <procedure id="1357">
           <name>ALLOC_BLOCKS</name>
           <remarks></remarks>
-          <attributeMap id="1338">
+          <attributeMap id="1358">
             <entry>
               <string>AS_LOCATOR</string>
               <null/>
@@ -11580,21 +12421,23 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
               <null/>
             </entry>
           </attributeMap>
-          <schema class="schema" id="1339">
+          <schema class="schema" id="1359">
             <catalogName>PUBLIC</catalogName>
             <schemaName>SYSTEM_LOBS</schemaName>
-            <attributeMap id="1340"/>
+            <attributeMap id="1360"/>
           </schema>
           <specificName>ALLOC_BLOCKS_10022</specificName>
+          <routineBodyType>sql</routineBodyType>
+          <definition id="1361">CREATE PROCEDURE SYSTEM_LOBS.ALLOC_BLOCKS(IN B_COUNT INTEGER,IN B_OFFSET INTEGER,IN L_ID BIGINT) SPECIFIC ALLOC_BLOCKS_10022 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE LOB_ADDR INT DEFAULT NULL;DECLARE REMAINING_COUNT INT DEFAULT 0;DECLARE BL_ADDR INT DEFAULT NULL;DECLARE TEMP_COUNT INT DEFAULT 0;DECLARE BL_OFFSET INT DEFAULT 0;SET REMAINING_COUNT=B_COUNT;SET BL_OFFSET=B_OFFSET;MAIN_LOOP:LOOP SET BL_ADDR=(SELECT BLOCK_ADDR FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_COUNT=REMAINING_COUNT AND TX_ID=0 FETCH 1 ROW ONLY);IF BL_ADDR IS NOT NULL THEN CALL CONVERT_BLOCK(BL_ADDR,REMAINING_COUNT,BL_OFFSET,L_ID);IF LOB_ADDR IS NULL THEN SET LOB_ADDR=BL_ADDR;END IF;LEAVE MAIN_LOOP;END IF;SET(BL_ADDR,TEMP_COUNT)=(SELECT BLOCK_ADDR,BLOCK_COUNT FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_COUNT&lt;REMAINING_COUNT AND TX_ID=0 FETCH 1 ROW ONLY);IF BL_ADDR IS NOT NULL THEN CALL CONVERT_BLOCK(BL_ADDR,TEMP_COUNT,BL_OFFSET,L_ID);IF LOB_ADDR IS NULL THEN SET LOB_ADDR=BL_ADDR;END IF;SET REMAINING_COUNT=REMAINING_COUNT-TEMP_COUNT;SET BL_OFFSET=BL_OFFSET+TEMP_COUNT;SET BL_ADDR=NULL;SET TEMP_COUNT=0;ELSE CALL CREATE_EMPTY_BLOCK(BL_ADDR,REMAINING_COUNT);CALL CONVERT_BLOCK(BL_ADDR,REMAINING_COUNT,BL_OFFSET,L_ID);IF LOB_ADDR IS NULL THEN SET LOB_ADDR=BL_ADDR;END IF;LEAVE MAIN_LOOP;END IF;END LOOP MAIN_LOOP;END</definition>
           <procedureType>noResult</procedureType>
-          <columns id="1341">
-            <objects id="1342">
+          <columns id="1362">
+            <objects id="1363">
               <entry>
                 <string>PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS.B_COUNT</string>
-                <procedureColumn id="1343">
+                <procedureColumn id="1364">
                   <name>B_COUNT</name>
                   <remarks></remarks>
-                  <attributeMap id="1344">
+                  <attributeMap id="1365">
                     <entry>
                       <string>CHAR_OCTET_LENGTH</string>
                       <int>0</int>
@@ -11628,8 +12471,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                       <null/>
                     </entry>
                   </attributeMap>
-                  <schema class="schema" reference="1339"/>
-                  <parent class="procedure" reference="1337"/>
+                  <schema class="schema" reference="1359"/>
+                  <parent class="procedure" reference="1357"/>
                   <type class="columnDataType" reference="225"/>
                   <ordinalPosition>0</ordinalPosition>
                   <size>0</size>
@@ -11640,10 +12483,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
               </entry>
               <entry>
                 <string>PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS.B_OFFSET</string>
-                <procedureColumn id="1345">
+                <procedureColumn id="1366">
                   <name>B_OFFSET</name>
                   <remarks></remarks>
-                  <attributeMap id="1346">
+                  <attributeMap id="1367">
                     <entry>
                       <string>CHAR_OCTET_LENGTH</string>
                       <int>0</int>
@@ -11677,8 +12520,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                       <null/>
                     </entry>
                   </attributeMap>
-                  <schema class="schema" reference="1339"/>
-                  <parent class="procedure" reference="1337"/>
+                  <schema class="schema" reference="1359"/>
+                  <parent class="procedure" reference="1357"/>
                   <type class="columnDataType" reference="225"/>
                   <ordinalPosition>1</ordinalPosition>
                   <size>0</size>
@@ -11689,10 +12532,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
               </entry>
               <entry>
                 <string>PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS.L_ID</string>
-                <procedureColumn id="1347">
+                <procedureColumn id="1368">
                   <name>L_ID</name>
                   <remarks></remarks>
-                  <attributeMap id="1348">
+                  <attributeMap id="1369">
                     <entry>
                       <string>CHAR_OCTET_LENGTH</string>
                       <int>0</int>
@@ -11726,8 +12569,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                       <null/>
                     </entry>
                   </attributeMap>
-                  <schema class="schema" reference="1339"/>
-                  <parent class="procedure" reference="1337"/>
+                  <schema class="schema" reference="1359"/>
+                  <parent class="procedure" reference="1357"/>
                   <type class="columnDataType" reference="201"/>
                   <ordinalPosition>2</ordinalPosition>
                   <size>0</size>
@@ -11738,16 +12581,14 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
               </entry>
             </objects>
           </columns>
-          <routineBodyType>sql</routineBodyType>
-          <definition id="1349">CREATE PROCEDURE SYSTEM_LOBS.ALLOC_BLOCKS(IN B_COUNT INTEGER,IN B_OFFSET INTEGER,IN L_ID BIGINT) SPECIFIC ALLOC_BLOCKS_10022 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE LOB_ADDR INT DEFAULT NULL;DECLARE REMAINING_COUNT INT DEFAULT 0;DECLARE BL_ADDR INT DEFAULT NULL;DECLARE TEMP_COUNT INT DEFAULT 0;DECLARE BL_OFFSET INT DEFAULT 0;SET REMAINING_COUNT=B_COUNT;SET BL_OFFSET=B_OFFSET;MAIN_LOOP:LOOP SET BL_ADDR=(SELECT BLOCK_ADDR FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_COUNT=REMAINING_COUNT AND TX_ID=0 FETCH 1 ROW ONLY);IF BL_ADDR IS NOT NULL THEN CALL CONVERT_BLOCK(BL_ADDR,REMAINING_COUNT,BL_OFFSET,L_ID);IF LOB_ADDR IS NULL THEN SET LOB_ADDR=BL_ADDR;END IF;LEAVE MAIN_LOOP;END IF;SET(BL_ADDR,TEMP_COUNT)=(SELECT BLOCK_ADDR,BLOCK_COUNT FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_COUNT&lt;REMAINING_COUNT AND TX_ID=0 FETCH 1 ROW ONLY);IF BL_ADDR IS NOT NULL THEN CALL CONVERT_BLOCK(BL_ADDR,TEMP_COUNT,BL_OFFSET,L_ID);IF LOB_ADDR IS NULL THEN SET LOB_ADDR=BL_ADDR;END IF;SET REMAINING_COUNT=REMAINING_COUNT-TEMP_COUNT;SET BL_OFFSET=BL_OFFSET+TEMP_COUNT;SET BL_ADDR=NULL;SET TEMP_COUNT=0;ELSE CALL CREATE_EMPTY_BLOCK(BL_ADDR,REMAINING_COUNT);CALL CONVERT_BLOCK(BL_ADDR,REMAINING_COUNT,BL_OFFSET,L_ID);IF LOB_ADDR IS NULL THEN SET LOB_ADDR=BL_ADDR;END IF;LEAVE MAIN_LOOP;END IF;END LOOP MAIN_LOOP;END</definition>
         </procedure>
       </entry>
       <entry>
         <string>PUBLIC.SYSTEM_LOBS.CONVERT_BLOCK_10012</string>
-        <procedure id="1350">
+        <procedure id="1370">
           <name>CONVERT_BLOCK</name>
           <remarks></remarks>
-          <attributeMap id="1351">
+          <attributeMap id="1371">
             <entry>
               <string>AS_LOCATOR</string>
               <null/>
@@ -12097,21 +12938,23 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
               <null/>
             </entry>
           </attributeMap>
-          <schema class="schema" id="1352">
+          <schema class="schema" id="1372">
             <catalogName>PUBLIC</catalogName>
             <schemaName>SYSTEM_LOBS</schemaName>
-            <attributeMap id="1353"/>
+            <attributeMap id="1373"/>
           </schema>
           <specificName>CONVERT_BLOCK_10012</specificName>
+          <routineBodyType>sql</routineBodyType>
+          <definition id="1374">CREATE PROCEDURE SYSTEM_LOBS.CONVERT_BLOCK(IN B_ADDR INTEGER,IN B_COUNT INTEGER,IN B_OFFSET INTEGER,IN L_ID BIGINT) SPECIFIC CONVERT_BLOCK_10012 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DELETE FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_ADDR=B_ADDR;INSERT INTO SYSTEM_LOBS.LOBS VALUES(B_ADDR,B_COUNT,B_OFFSET,L_ID);END</definition>
           <procedureType>noResult</procedureType>
-          <columns id="1354">
-            <objects id="1355">
+          <columns id="1375">
+            <objects id="1376">
               <entry>
                 <string>PUBLIC.SYSTEM_LOBS.CONVERT_BLOCK.B_ADDR</string>
-                <procedureColumn id="1356">
+                <procedureColumn id="1377">
                   <name>B_ADDR</name>
                   <remarks></remarks>
-                  <attributeMap id="1357">
+                  <attributeMap id="1378">
                     <entry>
                       <string>CHAR_OCTET_LENGTH</string>
                       <int>0</int>
@@ -12145,8 +12988,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                       <null/>
                     </entry>
                   </attributeMap>
-                  <schema class="schema" reference="1352"/>
-                  <parent class="procedure" reference="1350"/>
+                  <schema class="schema" reference="1372"/>
+                  <parent class="procedure" reference="1370"/>
                   <type class="columnDataType" reference="225"/>
                   <ordinalPosition>0</ordinalPosition>
                   <size>0</size>
@@ -12157,10 +13000,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
               </entry>
               <entry>
                 <string>PUBLIC.SYSTEM_LOBS.CONVERT_BLOCK.B_COUNT</string>
-                <procedureColumn id="1358">
+                <procedureColumn id="1379">
                   <name>B_COUNT</name>
                   <remarks></remarks>
-                  <attributeMap id="1359">
+                  <attributeMap id="1380">
                     <entry>
                       <string>CHAR_OCTET_LENGTH</string>
                       <int>0</int>
@@ -12194,8 +13037,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                       <null/>
                     </entry>
                   </attributeMap>
-                  <schema class="schema" reference="1352"/>
-                  <parent class="procedure" reference="1350"/>
+                  <schema class="schema" reference="1372"/>
+                  <parent class="procedure" reference="1370"/>
                   <type class="columnDataType" reference="225"/>
                   <ordinalPosition>1</ordinalPosition>
                   <size>0</size>
@@ -12206,10 +13049,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
               </entry>
               <entry>
                 <string>PUBLIC.SYSTEM_LOBS.CONVERT_BLOCK.B_OFFSET</string>
-                <procedureColumn id="1360">
+                <procedureColumn id="1381">
                   <name>B_OFFSET</name>
                   <remarks></remarks>
-                  <attributeMap id="1361">
+                  <attributeMap id="1382">
                     <entry>
                       <string>CHAR_OCTET_LENGTH</string>
                       <int>0</int>
@@ -12243,8 +13086,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                       <null/>
                     </entry>
                   </attributeMap>
-                  <schema class="schema" reference="1352"/>
-                  <parent class="procedure" reference="1350"/>
+                  <schema class="schema" reference="1372"/>
+                  <parent class="procedure" reference="1370"/>
                   <type class="columnDataType" reference="225"/>
                   <ordinalPosition>2</ordinalPosition>
                   <size>0</size>
@@ -12255,10 +13098,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
               </entry>
               <entry>
                 <string>PUBLIC.SYSTEM_LOBS.CONVERT_BLOCK.L_ID</string>
-                <procedureColumn id="1362">
+                <procedureColumn id="1383">
                   <name>L_ID</name>
                   <remarks></remarks>
-                  <attributeMap id="1363">
+                  <attributeMap id="1384">
                     <entry>
                       <string>CHAR_OCTET_LENGTH</string>
                       <int>0</int>
@@ -12292,8 +13135,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                       <null/>
                     </entry>
                   </attributeMap>
-                  <schema class="schema" reference="1352"/>
-                  <parent class="procedure" reference="1350"/>
+                  <schema class="schema" reference="1372"/>
+                  <parent class="procedure" reference="1370"/>
                   <type class="columnDataType" reference="201"/>
                   <ordinalPosition>3</ordinalPosition>
                   <size>0</size>
@@ -12304,16 +13147,14 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
               </entry>
             </objects>
           </columns>
-          <routineBodyType>sql</routineBodyType>
-          <definition id="1364">CREATE PROCEDURE SYSTEM_LOBS.CONVERT_BLOCK(IN B_ADDR INTEGER,IN B_COUNT INTEGER,IN B_OFFSET INTEGER,IN L_ID BIGINT) SPECIFIC CONVERT_BLOCK_10012 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DELETE FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_ADDR=B_ADDR;INSERT INTO SYSTEM_LOBS.LOBS VALUES(B_ADDR,B_COUNT,B_OFFSET,L_ID);END</definition>
         </procedure>
       </entry>
       <entry>
         <string>PUBLIC.SYSTEM_LOBS.CREATE_EMPTY_BLOCK_10020</string>
-        <procedure id="1365">
+        <procedure id="1385">
           <name>CREATE_EMPTY_BLOCK</name>
           <remarks></remarks>
-          <attributeMap id="1366">
+          <attributeMap id="1386">
             <entry>
               <string>AS_LOCATOR</string>
               <null/>
@@ -12663,21 +13504,23 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
               <null/>
             </entry>
           </attributeMap>
-          <schema class="schema" id="1367">
+          <schema class="schema" id="1387">
             <catalogName>PUBLIC</catalogName>
             <schemaName>SYSTEM_LOBS</schemaName>
-            <attributeMap id="1368"/>
+            <attributeMap id="1388"/>
           </schema>
           <specificName>CREATE_EMPTY_BLOCK_10020</specificName>
+          <routineBodyType>sql</routineBodyType>
+          <definition id="1389">CREATE PROCEDURE SYSTEM_LOBS.CREATE_EMPTY_BLOCK(INOUT B_ADDR INTEGER,IN B_COUNT INTEGER) SPECIFIC CREATE_EMPTY_BLOCK_10020 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE TEMP_COUNT INT DEFAULT NULL;DECLARE TEMP_ADDR INT DEFAULT NULL;SET(TEMP_ADDR,TEMP_COUNT)=(SELECT BLOCK_ADDR,BLOCK_COUNT FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_COUNT&gt;B_COUNT AND TX_ID=0 FETCH 1 ROW ONLY);IF TEMP_ADDR IS NULL THEN SIGNAL SQLSTATE&apos;45000&apos;;END IF;UPDATE SYSTEM_LOBS.BLOCKS SET BLOCK_COUNT=B_COUNT WHERE BLOCK_ADDR=TEMP_ADDR;INSERT INTO SYSTEM_LOBS.BLOCKS VALUES(TEMP_ADDR+B_COUNT,TEMP_COUNT-B_COUNT,0);SET B_ADDR=TEMP_ADDR;END</definition>
           <procedureType>noResult</procedureType>
-          <columns id="1369">
-            <objects id="1370">
+          <columns id="1390">
+            <objects id="1391">
               <entry>
                 <string>PUBLIC.SYSTEM_LOBS.CREATE_EMPTY_BLOCK.B_ADDR</string>
-                <procedureColumn id="1371">
+                <procedureColumn id="1392">
                   <name>B_ADDR</name>
                   <remarks></remarks>
-                  <attributeMap id="1372">
+                  <attributeMap id="1393">
                     <entry>
                       <string>CHAR_OCTET_LENGTH</string>
                       <int>0</int>
@@ -12711,8 +13554,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                       <null/>
                     </entry>
                   </attributeMap>
-                  <schema class="schema" reference="1367"/>
-                  <parent class="procedure" reference="1365"/>
+                  <schema class="schema" reference="1387"/>
+                  <parent class="procedure" reference="1385"/>
                   <type class="columnDataType" reference="225"/>
                   <ordinalPosition>0</ordinalPosition>
                   <size>0</size>
@@ -12723,10 +13566,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
               </entry>
               <entry>
                 <string>PUBLIC.SYSTEM_LOBS.CREATE_EMPTY_BLOCK.B_COUNT</string>
-                <procedureColumn id="1373">
+                <procedureColumn id="1394">
                   <name>B_COUNT</name>
                   <remarks></remarks>
-                  <attributeMap id="1374">
+                  <attributeMap id="1395">
                     <entry>
                       <string>CHAR_OCTET_LENGTH</string>
                       <int>0</int>
@@ -12760,8 +13603,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                       <null/>
                     </entry>
                   </attributeMap>
-                  <schema class="schema" reference="1367"/>
-                  <parent class="procedure" reference="1365"/>
+                  <schema class="schema" reference="1387"/>
+                  <parent class="procedure" reference="1385"/>
                   <type class="columnDataType" reference="225"/>
                   <ordinalPosition>1</ordinalPosition>
                   <size>0</size>
@@ -12772,16 +13615,14 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
               </entry>
             </objects>
           </columns>
-          <routineBodyType>sql</routineBodyType>
-          <definition id="1375">CREATE PROCEDURE SYSTEM_LOBS.CREATE_EMPTY_BLOCK(INOUT B_ADDR INTEGER,IN B_COUNT INTEGER) SPECIFIC CREATE_EMPTY_BLOCK_10020 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE TEMP_COUNT INT DEFAULT NULL;DECLARE TEMP_ADDR INT DEFAULT NULL;SET(TEMP_ADDR,TEMP_COUNT)=(SELECT BLOCK_ADDR,BLOCK_COUNT FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_COUNT&gt;B_COUNT AND TX_ID=0 FETCH 1 ROW ONLY);IF TEMP_ADDR IS NULL THEN SIGNAL SQLSTATE&apos;45000&apos;;END IF;UPDATE SYSTEM_LOBS.BLOCKS SET BLOCK_COUNT=B_COUNT WHERE BLOCK_ADDR=TEMP_ADDR;INSERT INTO SYSTEM_LOBS.BLOCKS VALUES(TEMP_ADDR+B_COUNT,TEMP_COUNT-B_COUNT,0);SET B_ADDR=TEMP_ADDR;END</definition>
         </procedure>
       </entry>
       <entry>
         <string>PUBLIC.SYSTEM_LOBS.DELETE_BLOCKS_10019</string>
-        <procedure id="1376">
+        <procedure id="1396">
           <name>DELETE_BLOCKS</name>
           <remarks></remarks>
-          <attributeMap id="1377">
+          <attributeMap id="1397">
             <entry>
               <string>AS_LOCATOR</string>
               <null/>
@@ -13131,21 +13972,23 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
               <null/>
             </entry>
           </attributeMap>
-          <schema class="schema" id="1378">
+          <schema class="schema" id="1398">
             <catalogName>PUBLIC</catalogName>
             <schemaName>SYSTEM_LOBS</schemaName>
-            <attributeMap id="1379"/>
+            <attributeMap id="1399"/>
           </schema>
           <specificName>DELETE_BLOCKS_10019</specificName>
+          <routineBodyType>sql</routineBodyType>
+          <definition id="1400">CREATE PROCEDURE SYSTEM_LOBS.DELETE_BLOCKS(IN L_ID BIGINT,IN B_OFFSET INTEGER,IN B_LIMIT INTEGER,IN TX_ID BIGINT) SPECIFIC DELETE_BLOCKS_10019 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC INSERT INTO SYSTEM_LOBS.BLOCKS(SELECT BLOCK_ADDR,BLOCK_COUNT,TX_ID FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID AND BLOCK_OFFSET&gt;=B_OFFSET AND BLOCK_OFFSET&lt;B_LIMIT);DELETE FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID AND BLOCK_OFFSET&gt;=B_OFFSET AND BLOCK_OFFSET&lt;B_LIMIT;END</definition>
           <procedureType>noResult</procedureType>
-          <columns id="1380">
-            <objects id="1381">
+          <columns id="1401">
+            <objects id="1402">
               <entry>
                 <string>PUBLIC.SYSTEM_LOBS.DELETE_BLOCKS.B_LIMIT</string>
-                <procedureColumn id="1382">
+                <procedureColumn id="1403">
                   <name>B_LIMIT</name>
                   <remarks></remarks>
-                  <attributeMap id="1383">
+                  <attributeMap id="1404">
                     <entry>
                       <string>CHAR_OCTET_LENGTH</string>
                       <int>0</int>
@@ -13179,8 +14022,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                       <null/>
                     </entry>
                   </attributeMap>
-                  <schema class="schema" reference="1378"/>
-                  <parent class="procedure" reference="1376"/>
+                  <schema class="schema" reference="1398"/>
+                  <parent class="procedure" reference="1396"/>
                   <type class="columnDataType" reference="225"/>
                   <ordinalPosition>2</ordinalPosition>
                   <size>0</size>
@@ -13191,10 +14034,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
               </entry>
               <entry>
                 <string>PUBLIC.SYSTEM_LOBS.DELETE_BLOCKS.B_OFFSET</string>
-                <procedureColumn id="1384">
+                <procedureColumn id="1405">
                   <name>B_OFFSET</name>
                   <remarks></remarks>
-                  <attributeMap id="1385">
+                  <attributeMap id="1406">
                     <entry>
                       <string>CHAR_OCTET_LENGTH</string>
                       <int>0</int>
@@ -13228,8 +14071,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                       <null/>
                     </entry>
                   </attributeMap>
-                  <schema class="schema" reference="1378"/>
-                  <parent class="procedure" reference="1376"/>
+                  <schema class="schema" reference="1398"/>
+                  <parent class="procedure" reference="1396"/>
                   <type class="columnDataType" reference="225"/>
                   <ordinalPosition>1</ordinalPosition>
                   <size>0</size>
@@ -13240,10 +14083,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
               </entry>
               <entry>
                 <string>PUBLIC.SYSTEM_LOBS.DELETE_BLOCKS.L_ID</string>
-                <procedureColumn id="1386">
+                <procedureColumn id="1407">
                   <name>L_ID</name>
                   <remarks></remarks>
-                  <attributeMap id="1387">
+                  <attributeMap id="1408">
                     <entry>
                       <string>CHAR_OCTET_LENGTH</string>
                       <int>0</int>
@@ -13277,8 +14120,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                       <null/>
                     </entry>
                   </attributeMap>
-                  <schema class="schema" reference="1378"/>
-                  <parent class="procedure" reference="1376"/>
+                  <schema class="schema" reference="1398"/>
+                  <parent class="procedure" reference="1396"/>
                   <type class="columnDataType" reference="201"/>
                   <ordinalPosition>0</ordinalPosition>
                   <size>0</size>
@@ -13289,10 +14132,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
               </entry>
               <entry>
                 <string>PUBLIC.SYSTEM_LOBS.DELETE_BLOCKS.TX_ID</string>
-                <procedureColumn id="1388">
+                <procedureColumn id="1409">
                   <name>TX_ID</name>
                   <remarks></remarks>
-                  <attributeMap id="1389">
+                  <attributeMap id="1410">
                     <entry>
                       <string>CHAR_OCTET_LENGTH</string>
                       <int>0</int>
@@ -13326,8 +14169,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                       <null/>
                     </entry>
                   </attributeMap>
-                  <schema class="schema" reference="1378"/>
-                  <parent class="procedure" reference="1376"/>
+                  <schema class="schema" reference="1398"/>
+                  <parent class="procedure" reference="1396"/>
                   <type class="columnDataType" reference="201"/>
                   <ordinalPosition>3</ordinalPosition>
                   <size>0</size>
@@ -13338,16 +14181,14 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
               </entry>
             </objects>
           </columns>
-          <routineBodyType>sql</routineBodyType>
-          <definition id="1390">CREATE PROCEDURE SYSTEM_LOBS.DELETE_BLOCKS(IN L_ID BIGINT,IN B_OFFSET INTEGER,IN B_LIMIT INTEGER,IN TX_ID BIGINT) SPECIFIC DELETE_BLOCKS_10019 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC INSERT INTO SYSTEM_LOBS.BLOCKS(SELECT BLOCK_ADDR,BLOCK_COUNT,TX_ID FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID AND BLOCK_OFFSET&gt;=B_OFFSET AND BLOCK_OFFSET&lt;B_LIMIT);DELETE FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID AND BLOCK_OFFSET&gt;=B_OFFSET AND BLOCK_OFFSET&lt;B_LIMIT;END</definition>
         </procedure>
       </entry>
       <entry>
         <string>PUBLIC.SYSTEM_LOBS.DELETE_LOB_10013</string>
-        <procedure id="1391">
+        <procedure id="1411">
           <name>DELETE_LOB</name>
           <remarks></remarks>
-          <attributeMap id="1392">
+          <attributeMap id="1412">
             <entry>
               <string>AS_LOCATOR</string>
               <null/>
@@ -13697,21 +14538,23 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
               <null/>
             </entry>
           </attributeMap>
-          <schema class="schema" id="1393">
+          <schema class="schema" id="1413">
             <catalogName>PUBLIC</catalogName>
             <schemaName>SYSTEM_LOBS</schemaName>
-            <attributeMap id="1394"/>
+            <attributeMap id="1414"/>
           </schema>
           <specificName>DELETE_LOB_10013</specificName>
+          <routineBodyType>sql</routineBodyType>
+          <definition id="1415">CREATE PROCEDURE SYSTEM_LOBS.DELETE_LOB(IN L_ID BIGINT,IN TX_ID BIGINT) SPECIFIC DELETE_LOB_10013 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC INSERT INTO SYSTEM_LOBS.BLOCKS(SELECT BLOCK_ADDR,BLOCK_COUNT,TX_ID FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID);DELETE FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID;DELETE FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_ID=L_ID;END</definition>
           <procedureType>noResult</procedureType>
-          <columns id="1395">
-            <objects id="1396">
+          <columns id="1416">
+            <objects id="1417">
               <entry>
                 <string>PUBLIC.SYSTEM_LOBS.DELETE_LOB.L_ID</string>
-                <procedureColumn id="1397">
+                <procedureColumn id="1418">
                   <name>L_ID</name>
                   <remarks></remarks>
-                  <attributeMap id="1398">
+                  <attributeMap id="1419">
                     <entry>
                       <string>CHAR_OCTET_LENGTH</string>
                       <int>0</int>
@@ -13745,8 +14588,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                       <null/>
                     </entry>
                   </attributeMap>
-                  <schema class="schema" reference="1393"/>
-                  <parent class="procedure" reference="1391"/>
+                  <schema class="schema" reference="1413"/>
+                  <parent class="procedure" reference="1411"/>
                   <type class="columnDataType" reference="201"/>
                   <ordinalPosition>0</ordinalPosition>
                   <size>0</size>
@@ -13757,10 +14600,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
               </entry>
               <entry>
                 <string>PUBLIC.SYSTEM_LOBS.DELETE_LOB.TX_ID</string>
-                <procedureColumn id="1399">
+                <procedureColumn id="1420">
                   <name>TX_ID</name>
                   <remarks></remarks>
-                  <attributeMap id="1400">
+                  <attributeMap id="1421">
                     <entry>
                       <string>CHAR_OCTET_LENGTH</string>
                       <int>0</int>
@@ -13794,8 +14637,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                       <null/>
                     </entry>
                   </attributeMap>
-                  <schema class="schema" reference="1393"/>
-                  <parent class="procedure" reference="1391"/>
+                  <schema class="schema" reference="1413"/>
+                  <parent class="procedure" reference="1411"/>
                   <type class="columnDataType" reference="201"/>
                   <ordinalPosition>1</ordinalPosition>
                   <size>0</size>
@@ -13806,16 +14649,14 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
               </entry>
             </objects>
           </columns>
-          <routineBodyType>sql</routineBodyType>
-          <definition id="1401">CREATE PROCEDURE SYSTEM_LOBS.DELETE_LOB(IN L_ID BIGINT,IN TX_ID BIGINT) SPECIFIC DELETE_LOB_10013 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC INSERT INTO SYSTEM_LOBS.BLOCKS(SELECT BLOCK_ADDR,BLOCK_COUNT,TX_ID FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID);DELETE FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID;DELETE FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_ID=L_ID;END</definition>
         </procedure>
       </entry>
       <entry>
         <string>PUBLIC.SYSTEM_LOBS.DELETE_UNUSED_10018</string>
-        <procedure id="1402">
+        <procedure id="1422">
           <name>DELETE_UNUSED</name>
           <remarks></remarks>
-          <attributeMap id="1403">
+          <attributeMap id="1423">
             <entry>
               <string>AS_LOCATOR</string>
               <null/>
@@ -14167,15 +15008,17 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           </attributeMap>
           <schema class="schema" reference="239"/>
           <specificName>DELETE_UNUSED_10018</specificName>
+          <routineBodyType>sql</routineBodyType>
+          <definition id="1424">CREATE PROCEDURE SYSTEM_LOBS.DELETE_UNUSED(IN L_IDS BIGINT ARRAY) SPECIFIC DELETE_UNUSED_10018 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE TABLE LIVE_IDS(TEMP_ID INT);DECLARE TABLE TEMP_IDS(TEMP_ID INT);DECLARE TEMP_COUNT INT DEFAULT 1;WHILE TEMP_COUNT&lt;=CARDINALITY(L_IDS)DO INSERT INTO MODULE.LIVE_IDS VALUES L_IDS[TEMP_COUNT];SET TEMP_COUNT=TEMP_COUNT+1;END WHILE;SET TEMP_COUNT=0;REPEAT INSERT INTO MODULE.TEMP_IDS SELECT LOB_ID FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_USAGE_COUNT&lt;1 AND LOB_ID NOT IN(SELECT TEMP_ID FROM MODULE.LIVE_IDS)LIMIT 1000;INSERT INTO SYSTEM_LOBS.BLOCKS(SELECT BLOCK_ADDR,BLOCK_COUNT,0 FROM SYSTEM_LOBS.LOBS WHERE LOB_ID IN(SELECT TEMP_ID FROM MODULE.TEMP_IDS));DELETE FROM SYSTEM_LOBS.LOBS WHERE LOB_ID IN(SELECT TEMP_ID FROM MODULE.TEMP_IDS);DELETE FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_ID IN(SELECT TEMP_ID FROM MODULE.TEMP_IDS);GET DIAGNOSTICS TEMP_COUNT=ROW_COUNT;DELETE FROM MODULE.TEMP_IDS;UNTIL TEMP_COUNT&lt;1000 END REPEAT;END</definition>
           <procedureType>noResult</procedureType>
-          <columns id="1404">
-            <objects id="1405">
+          <columns id="1425">
+            <objects id="1426">
               <entry>
                 <string>PUBLIC.SYSTEM_LOBS.DELETE_UNUSED.L_IDS</string>
-                <procedureColumn id="1406">
+                <procedureColumn id="1427">
                   <name>L_IDS</name>
                   <remarks></remarks>
-                  <attributeMap id="1407">
+                  <attributeMap id="1428">
                     <entry>
                       <string>CHAR_OCTET_LENGTH</string>
                       <int>0</int>
@@ -14210,7 +15053,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                     </entry>
                   </attributeMap>
                   <schema class="schema" reference="239"/>
-                  <parent class="procedure" reference="1402"/>
+                  <parent class="procedure" reference="1422"/>
                   <type class="columnDataType" reference="237"/>
                   <ordinalPosition>0</ordinalPosition>
                   <size>0</size>
@@ -14221,16 +15064,14 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
               </entry>
             </objects>
           </columns>
-          <routineBodyType>sql</routineBodyType>
-          <definition id="1408">CREATE PROCEDURE SYSTEM_LOBS.DELETE_UNUSED(IN L_IDS BIGINT ARRAY) SPECIFIC DELETE_UNUSED_10018 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE TABLE LIVE_IDS(TEMP_ID INT);DECLARE TABLE TEMP_IDS(TEMP_ID INT);DECLARE TEMP_COUNT INT DEFAULT 1;WHILE TEMP_COUNT&lt;=CARDINALITY(L_IDS)DO INSERT INTO MODULE.LIVE_IDS VALUES L_IDS[TEMP_COUNT];SET TEMP_COUNT=TEMP_COUNT+1;END WHILE;SET TEMP_COUNT=0;REPEAT INSERT INTO MODULE.TEMP_IDS SELECT LOB_ID FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_USAGE_COUNT&lt;1 AND LOB_ID NOT IN(SELECT TEMP_ID FROM MODULE.LIVE_IDS)LIMIT 1000;INSERT INTO SYSTEM_LOBS.BLOCKS(SELECT BLOCK_ADDR,BLOCK_COUNT,0 FROM SYSTEM_LOBS.LOBS WHERE LOB_ID IN(SELECT TEMP_ID FROM MODULE.TEMP_IDS));DELETE FROM SYSTEM_LOBS.LOBS WHERE LOB_ID IN(SELECT TEMP_ID FROM MODULE.TEMP_IDS);DELETE FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_ID IN(SELECT TEMP_ID FROM MODULE.TEMP_IDS);GET DIAGNOSTICS TEMP_COUNT=ROW_COUNT;DELETE FROM MODULE.TEMP_IDS;UNTIL TEMP_COUNT&lt;1000 END REPEAT;END</definition>
         </procedure>
       </entry>
       <entry>
         <string>PUBLIC.SYSTEM_LOBS.DIVIDE_BLOCK_10021</string>
-        <procedure id="1409">
+        <procedure id="1429">
           <name>DIVIDE_BLOCK</name>
           <remarks></remarks>
-          <attributeMap id="1410">
+          <attributeMap id="1430">
             <entry>
               <string>AS_LOCATOR</string>
               <null/>
@@ -14580,21 +15421,23 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
               <null/>
             </entry>
           </attributeMap>
-          <schema class="schema" id="1411">
+          <schema class="schema" id="1431">
             <catalogName>PUBLIC</catalogName>
             <schemaName>SYSTEM_LOBS</schemaName>
-            <attributeMap id="1412"/>
+            <attributeMap id="1432"/>
           </schema>
           <specificName>DIVIDE_BLOCK_10021</specificName>
+          <routineBodyType>sql</routineBodyType>
+          <definition id="1433">CREATE PROCEDURE SYSTEM_LOBS.DIVIDE_BLOCK(IN B_OFFSET INTEGER,IN L_ID BIGINT) SPECIFIC DIVIDE_BLOCK_10021 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE BL_ADDR INT DEFAULT NULL;DECLARE BL_COUNT INT DEFAULT NULL;DECLARE BL_OFFSET INT DEFAULT NULL;SET(BL_ADDR,BL_COUNT,BL_OFFSET)=(SELECT BLOCK_ADDR,BLOCK_COUNT,BLOCK_OFFSET FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID AND B_OFFSET&gt;BLOCK_OFFSET AND B_OFFSET&lt;BLOCK_OFFSET+BLOCK_COUNT);IF BL_ADDR IS NULL THEN SIGNAL SQLSTATE&apos;45000&apos;;END IF;DELETE FROM SYSTEM_LOBS.LOBS WHERE BLOCK_ADDR=BL_ADDR;INSERT INTO SYSTEM_LOBS.LOBS VALUES(BL_ADDR,B_OFFSET-BL_OFFSET,BL_OFFSET,L_ID);INSERT INTO SYSTEM_LOBS.LOBS VALUES(BL_ADDR+B_OFFSET-BL_OFFSET,BL_OFFSET+BL_COUNT-B_OFFSET,B_OFFSET,L_ID);END</definition>
           <procedureType>noResult</procedureType>
-          <columns id="1413">
-            <objects id="1414">
+          <columns id="1434">
+            <objects id="1435">
               <entry>
                 <string>PUBLIC.SYSTEM_LOBS.DIVIDE_BLOCK.B_OFFSET</string>
-                <procedureColumn id="1415">
+                <procedureColumn id="1436">
                   <name>B_OFFSET</name>
                   <remarks></remarks>
-                  <attributeMap id="1416">
+                  <attributeMap id="1437">
                     <entry>
                       <string>CHAR_OCTET_LENGTH</string>
                       <int>0</int>
@@ -14628,8 +15471,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                       <null/>
                     </entry>
                   </attributeMap>
-                  <schema class="schema" reference="1411"/>
-                  <parent class="procedure" reference="1409"/>
+                  <schema class="schema" reference="1431"/>
+                  <parent class="procedure" reference="1429"/>
                   <type class="columnDataType" reference="225"/>
                   <ordinalPosition>0</ordinalPosition>
                   <size>0</size>
@@ -14640,10 +15483,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
               </entry>
               <entry>
                 <string>PUBLIC.SYSTEM_LOBS.DIVIDE_BLOCK.L_ID</string>
-                <procedureColumn id="1417">
+                <procedureColumn id="1438">
                   <name>L_ID</name>
                   <remarks></remarks>
-                  <attributeMap id="1418">
+                  <attributeMap id="1439">
                     <entry>
                       <string>CHAR_OCTET_LENGTH</string>
                       <int>0</int>
@@ -14677,8 +15520,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                       <null/>
                     </entry>
                   </attributeMap>
-                  <schema class="schema" reference="1411"/>
-                  <parent class="procedure" reference="1409"/>
+                  <schema class="schema" reference="1431"/>
+                  <parent class="procedure" reference="1429"/>
                   <type class="columnDataType" reference="201"/>
                   <ordinalPosition>1</ordinalPosition>
                   <size>0</size>
@@ -14689,13 +15532,11 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
               </entry>
             </objects>
           </columns>
-          <routineBodyType>sql</routineBodyType>
-          <definition id="1419">CREATE PROCEDURE SYSTEM_LOBS.DIVIDE_BLOCK(IN B_OFFSET INTEGER,IN L_ID BIGINT) SPECIFIC DIVIDE_BLOCK_10021 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE BL_ADDR INT DEFAULT NULL;DECLARE BL_COUNT INT DEFAULT NULL;DECLARE BL_OFFSET INT DEFAULT NULL;SET(BL_ADDR,BL_COUNT,BL_OFFSET)=(SELECT BLOCK_ADDR,BLOCK_COUNT,BLOCK_OFFSET FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID AND B_OFFSET&gt;BLOCK_OFFSET AND B_OFFSET&lt;BLOCK_OFFSET+BLOCK_COUNT);IF BL_ADDR IS NULL THEN SIGNAL SQLSTATE&apos;45000&apos;;END IF;DELETE FROM SYSTEM_LOBS.LOBS WHERE BLOCK_ADDR=BL_ADDR;INSERT INTO SYSTEM_LOBS.LOBS VALUES(BL_ADDR,B_OFFSET-BL_OFFSET,BL_OFFSET,L_ID);INSERT INTO SYSTEM_LOBS.LOBS VALUES(BL_ADDR+B_OFFSET-BL_OFFSET,BL_OFFSET+BL_COUNT-B_OFFSET,B_OFFSET,L_ID);END</definition>
         </procedure>
       </entry>
     </objects>
   </routines>
-  <synonyms id="1420">
-    <objects id="1421"/>
+  <synonyms id="1440">
+    <objects id="1441"/>
   </synonyms>
 </database>

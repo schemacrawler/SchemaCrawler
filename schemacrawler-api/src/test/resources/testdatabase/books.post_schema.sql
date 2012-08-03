@@ -36,6 +36,17 @@ CREATE PROCEDURE New_Publisher(IN NewPublisher VARCHAR(50), OUT Publisher VARCHA
   SET Publisher = NewPublisher
 ;
 
+-- Functions
+CREATE FUNCTION CustomAdd(One INT, Two INT)
+  RETURNS INT
+  RETURN One + Two
+;
+
+CREATE FUNCTION CustomAdd(One INT)
+  RETURNS INT
+  RETURN CustomAdd(One, 1)
+;
+
 -- Triggers
 CREATE TRIGGER TRG_Authors AFTER DELETE ON Authors FOR EACH ROW UPDATE Publishers SET Publisher = 'Jacob' WHERE Publisher = 'John'
 ;

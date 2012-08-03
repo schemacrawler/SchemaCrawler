@@ -66,6 +66,11 @@ public interface NamedObject
   String getFullName();
 
   /**
+   * A value guaranteed to be unique in the database for this object.
+   */
+  String getLookupKey();
+
+  /**
    * Getter for name of object.
    * 
    * @return Name of the object
@@ -88,10 +93,5 @@ public interface NamedObject
    *        Attribute value
    */
   void setAttribute(String name, Object value);
-
-  /**
-   * A value guaranteed to be unique in the database for this object.
-   */
-  String getLookupKey();
 
 }

@@ -26,27 +26,39 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * An enumeration wrapper around JDBC procedure types.
+ * An enumeration wrapper around procedure column types.
  */
-public enum ProcedureReturnType
-  implements RoutineReturnType
+public enum FunctionColumnType
+  implements RoutineColumnType
 {
 
   /**
-   * Result unknown.
+   * Unknown.
    */
-  unknown(DatabaseMetaData.procedureResultUnknown, "result unknown"),
+  unknown(DatabaseMetaData.functionColumnUnknown, "unknown"),
   /**
-   * No result.
+   * In.
    */
-  noResult(DatabaseMetaData.procedureNoResult, "no result"),
+  in(DatabaseMetaData.functionColumnIn, "in"),
   /**
-   * Returns result.
+   * In/ out.
    */
-  returnsResult(DatabaseMetaData.procedureReturnsResult, "returns result");
+  inOut(DatabaseMetaData.functionColumnInOut, "in/ out"),
+  /**
+   * Out.
+   */
+  out(DatabaseMetaData.functionColumnOut, "out"),
+  /**
+   * Return.
+   */
+  returnValue(DatabaseMetaData.functionColumnResult, "return"),
+  /**
+   * Return.
+   */
+  result(DatabaseMetaData.procedureColumnResult, "result");
 
   private static final Logger LOGGER = Logger
-    .getLogger(ProcedureReturnType.class.getName());
+    .getLogger(FunctionColumnType.class.getName());
 
   /**
    * Gets the enum value from the integer.
@@ -55,9 +67,9 @@ public enum ProcedureReturnType
    *        Id of the integer
    * @return ForeignKeyDeferrability
    */
-  public static ProcedureReturnType valueOf(final int id)
+  public static FunctionColumnType valueOf(final int id)
   {
-    for (final ProcedureReturnType type: ProcedureReturnType.values())
+    for (final FunctionColumnType type: FunctionColumnType.values())
     {
       if (type.getId() == id)
       {
@@ -71,7 +83,7 @@ public enum ProcedureReturnType
   private final int id;
   private final String text;
 
-  private ProcedureReturnType(final int id, final String text)
+  private FunctionColumnType(final int id, final String text)
   {
     this.id = id;
     this.text = text;

@@ -167,6 +167,9 @@ public final class SchemaCrawler
         retriever.retrieveProcedures(schema.getCatalogName(),
                                      schema.getName(),
                                      options.getRoutineInclusionRule());
+        retriever.retrieveFunctions(schema.getCatalogName(),
+                                    schema.getName(),
+                                    options.getRoutineInclusionRule());
       }
       final NamedObjectList<MutableRoutine> allRoutines = database
         .getAllRoutines();
@@ -174,9 +177,19 @@ public final class SchemaCrawler
       {
         if (infoLevel.isRetrieveRoutineColumns())
         {
-          retriever
-            .retrieveProcedureColumns((MutableProcedure) routine,
-                                      options.getRoutineColumnInclusionRule());
+          if (routine instanceof MutableProcedure)
+          {
+            retriever
+              .retrieveProcedureColumns((MutableProcedure) routine,
+                                        options.getRoutineColumnInclusionRule());
+          }
+
+          if (routine instanceof MutableFunction)
+          {
+            retriever
+              .retrieveFunctionColumns((MutableFunction) routine,
+                                       options.getRoutineColumnInclusionRule());
+          }
         }
       }
 
@@ -187,7 +200,7 @@ public final class SchemaCrawler
 
       if (infoLevel.isRetrieveRoutineInformation())
       {
-        retrieverExtra.retrieveProcedureInformation();
+        retrieverExtra.retrieveRoutineInformation();
       }
     }
     catch (final SQLException e)

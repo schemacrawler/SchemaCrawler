@@ -484,7 +484,7 @@
       "indices": [
         {
           "unique": true,
-          "name": "SYS_IDX_PK_EXTRA_PK_10073",
+          "name": "SYS_IDX_PK_EXTRA_PK_10075",
           "columns": {
             "sortSequence": "ascending",
             "name": "ID"
@@ -492,7 +492,7 @@
         },
         {
           "unique": false,
-          "name": "SYS_IDX_10076",
+          "name": "SYS_IDX_10078",
           "columns": {
             "sortSequence": "ascending",
             "name": "PUBLICATIONID"
@@ -500,7 +500,7 @@
         },
         {
           "unique": false,
-          "name": "SYS_IDX_10074",
+          "name": "SYS_IDX_10076",
           "columns": {
             "sortSequence": "ascending",
             "name": "WRITERID"
@@ -643,7 +643,7 @@
       "indices": [
         {
           "unique": true,
-          "name": "SYS_IDX_PK_PUBLICATIONS_10065",
+          "name": "SYS_IDX_PK_PUBLICATIONS_10067",
           "columns": {
             "sortSequence": "ascending",
             "name": "ID"
@@ -651,7 +651,7 @@
         },
         {
           "unique": false,
-          "name": "SYS_IDX_10066",
+          "name": "SYS_IDX_10068",
           "columns": {
             "sortSequence": "ascending",
             "name": "WRITERID"
@@ -867,7 +867,7 @@
       "indices": [
         {
           "unique": true,
-          "name": "SYS_IDX_PK_WRITERS_10061",
+          "name": "SYS_IDX_PK_WRITERS_10063",
           "columns": {
             "sortSequence": "ascending",
             "name": "ID"
@@ -875,7 +875,7 @@
         },
         {
           "unique": false,
-          "name": "SYS_IDX_10078",
+          "name": "SYS_IDX_10080",
           "columns": {
             "sortSequence": "ascending",
             "name": "PUBLICATION_ID"
@@ -1020,7 +1020,7 @@
       ],
       "indices": [{
         "unique": true,
-        "name": "SYS_IDX_PK_CUSTOMERS_10050",
+        "name": "SYS_IDX_PK_CUSTOMERS_10052",
         "columns": [
           {
             "sortSequence": "ascending",
@@ -1102,7 +1102,7 @@
       ],
       "indices": [{
         "unique": false,
-        "name": "SYS_IDX_10054",
+        "name": "SYS_IDX_10056",
         "columns": [
           {
             "sortSequence": "ascending",
@@ -1135,6 +1135,40 @@
     "url": "jdbc:hsqldb:mem:schemacrawler"
   },
   "routines": [
+    {
+      "definition": "CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10046 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN BOOKS.CUSTOMADD(ONE,1)",
+      "name": "CUSTOMADD",
+      "parameters": [{
+        "dataType": "INTEGER",
+        "width": "",
+        "type": "in",
+        "databaseSpecificType": "INTEGER"
+      }],
+      "fullName": "PUBLIC.BOOKS.CUSTOMADD",
+      "type": "function",
+      "returnType": "does not return a table"
+    },
+    {
+      "definition": "CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER,IN TWO INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10045 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN ONE+TWO",
+      "name": "CUSTOMADD",
+      "parameters": [
+        {
+          "dataType": "INTEGER",
+          "width": "",
+          "type": "in",
+          "databaseSpecificType": "INTEGER"
+        },
+        {
+          "dataType": "INTEGER",
+          "width": "",
+          "type": "in",
+          "databaseSpecificType": "INTEGER"
+        }
+      ],
+      "fullName": "PUBLIC.BOOKS.CUSTOMADD",
+      "type": "function",
+      "returnType": "does not return a table"
+    },
     {
       "definition": "CREATE PROCEDURE BOOKS.NEW_PUBLISHER(OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10043 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = 'New Publisher'",
       "name": "NEW_PUBLISHER",
