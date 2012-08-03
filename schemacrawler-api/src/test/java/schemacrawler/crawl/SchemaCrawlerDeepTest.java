@@ -81,7 +81,7 @@ public class SchemaCrawlerDeepTest
     assertNotNull("Could not obtain schema", schema);
     assertEquals("Could not find any tables", 6, database.getTables(schema)
       .size());
-    assertEquals("Wrong number of routines", 2, database.getRoutines(schema)
+    assertEquals("Wrong number of routines", 4, database.getRoutines(schema)
       .size());
 
     // Try negative test

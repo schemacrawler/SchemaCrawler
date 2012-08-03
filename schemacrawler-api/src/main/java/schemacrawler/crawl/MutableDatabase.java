@@ -329,9 +329,9 @@ final class MutableDatabase
     }
   }
 
-  void addProcedure(final MutableProcedure procedure)
+  void addRoutine(final MutableRoutine routine)
   {
-    routines.add(procedure);
+    routines.add(routine);
   }
 
   Schema addSchema(final Schema schema)

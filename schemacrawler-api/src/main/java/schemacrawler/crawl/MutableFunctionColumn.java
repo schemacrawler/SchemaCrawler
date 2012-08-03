@@ -18,44 +18,47 @@
  *
  */
 
-package schemacrawler.schema;
+package schemacrawler.crawl;
 
 
-import java.util.List;
+import schemacrawler.schema.Function;
+import schemacrawler.schema.FunctionColumn;
+import schemacrawler.schema.FunctionColumnType;
 
 /**
- * Represents a database procedure.
+ * Represents a column in a database function. Created from metadata
+ * returned by a JDBC call.
  * 
  * @author Sualeh Fatehi
  */
-public interface Procedure
-  extends Routine
+final class MutableFunctionColumn
+  extends MutableRoutineColumn<Function>
+  implements FunctionColumn
 {
 
-  /**
-   * Gets a column by name.
-   * 
-   * @param name
-   *        Name
-   * @return Column of the procedure
-   */
-  @Override
-  ProcedureColumn getColumn(String name);
+  private static final long serialVersionUID = 3546361725629772857L;
+
+  private FunctionColumnType functionColumnType;
+
+  MutableFunctionColumn(final Function parent, final String name)
+  {
+    super(parent, name);
+  }
 
   /**
-   * Gets the list of columns in ordinal order.
+   * {@inheritDoc}
    * 
-   * @return Columns of the procedure
+   * @see FunctionColumn#getColumnType()
    */
   @Override
-  List<ProcedureColumn> getColumns();
+  public FunctionColumnType getColumnType()
+  {
+    return functionColumnType;
+  }
 
-  /**
-   * Gets the procedure type.
-   * 
-   * @return Procedure type
-   */
-  @Override
-  ProcedureReturnType getReturnType();
+  void setFunctionColumnType(final FunctionColumnType functionColumnType)
+  {
+    this.functionColumnType = functionColumnType;
+  }
 
 }

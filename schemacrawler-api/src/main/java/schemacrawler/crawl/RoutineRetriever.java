@@ -26,6 +26,8 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import schemacrawler.schema.FunctionColumnType;
+import schemacrawler.schema.FunctionReturnType;
 import schemacrawler.schema.ProcedureColumnType;
 import schemacrawler.schema.ProcedureReturnType;
 import schemacrawler.schema.Schema;
@@ -52,6 +54,145 @@ final class RoutineRetriever
     throws SQLException
   {
     super(retrieverConnection, database);
+  }
+
+  void retrieveFunctionColumns(final MutableFunction function,
+                               final InclusionRule columnInclusionRule)
+    throws SQLException
+  {
+    MetadataResultSet results = null;
+    int ordinalNumber = 0;
+    try
+    {
+      results = new MetadataResultSet(getMetaData()
+        .getFunctionColumns(unquotedName(function.getSchema().getCatalogName()),
+                            unquotedName(function.getSchema().getName()),
+                            unquotedName(function.getName()),
+                            null));
+
+      while (results.next())
+      {
+        final String columnCatalogName = quotedName(results
+          .getString("FUNCTION_CAT"));
+        final String schemaName = quotedName(results
+          .getString("FUNCTION_SCHEM"));
+        final String functionName = quotedName(results
+          .getString("FUNCTION_NAME"));
+        final String columnName = quotedName(results.getString("COLUMN_NAME"));
+        final String specificName = quotedName(results
+          .getString("SPECIFIC_NAME"));
+
+        final MutableFunctionColumn column = new MutableFunctionColumn(function,
+                                                                       columnName);
+        final String columnFullName = column.getFullName();
+        if (columnInclusionRule.include(columnFullName)
+            && function.getName().equals(functionName)
+            && belongsToSchema(function, columnCatalogName, schemaName))
+        {
+          if (!Utility.isBlank(specificName)
+              && !specificName.equals(function.getSpecificName()))
+          {
+            continue;
+          }
+
+          LOGGER.log(Level.FINER, "Retrieving function column: " + columnName);
+          final short columnType = results.getShort("COLUMN_TYPE", (short) 0);
+          final int dataType = results.getInt("DATA_TYPE", 0);
+          final String typeName = results.getString("TYPE_NAME");
+          final int length = results.getInt("LENGTH", 0);
+          final int precision = results.getInt("PRECISION", 0);
+          final boolean isNullable = results
+            .getShort("NULLABLE",
+                      (short) DatabaseMetaData.functionNullableUnknown) == (short) DatabaseMetaData.functionNullable;
+          final String remarks = results.getString("REMARKS");
+          column.setOrdinalPosition(ordinalNumber++);
+          column.setFunctionColumnType(FunctionColumnType.valueOf(columnType));
+          column.setType(lookupOrCreateColumnDataType(function.getSchema(),
+                                                      dataType,
+                                                      typeName));
+          column.setSize(length);
+          column.setPrecision(precision);
+          column.setNullable(isNullable);
+          column.setRemarks(remarks);
+
+          column.addAttributes(results.getAttributes());
+
+          function.addColumn(column);
+        }
+      }
+    }
+    catch (final SQLException e)
+    {
+      throw new SchemaCrawlerSQLException("Could not retrieve columns for function "
+                                              + function,
+                                          e);
+    }
+    finally
+    {
+      if (results != null)
+      {
+        results.close();
+      }
+    }
+
+  }
+
+  void retrieveFunctions(final String catalogName,
+                         final String schemaName,
+                         final InclusionRule routineInclusionRule)
+    throws SQLException
+  {
+    if (routineInclusionRule == null
+        || routineInclusionRule.equals(InclusionRule.EXCLUDE_ALL))
+    {
+      return;
+    }
+
+    MetadataResultSet results = null;
+    try
+    {
+      results = new MetadataResultSet(getMetaData().getFunctions(catalogName,
+                                                                 schemaName,
+                                                                 "%"));
+
+      while (results.next())
+      {
+        // "FUNCTION_CAT", "FUNCTION_SCHEM"
+        final String functionName = quotedName(results
+          .getString("FUNCTION_NAME"));
+        LOGGER.log(Level.FINER, "Retrieving function: " + functionName);
+        final short functionType = results
+          .getShort("FUNCTION_TYPE", (short) FunctionReturnType.unknown.getId());
+        final String remarks = results.getString("REMARKS");
+        final String specificName = results.getString("SPECIFIC_NAME");
+
+        final Schema schema = new SchemaReference(catalogName, schemaName);
+        final MutableFunction function = new MutableFunction(schema,
+                                                             functionName);
+        if (routineInclusionRule.include(function.getFullName()))
+        {
+          function.setType(FunctionReturnType.valueOf(functionType));
+          function.setSpecificName(specificName);
+          function.setRemarks(remarks);
+          function.addAttributes(results.getAttributes());
+
+          database.addRoutine(function);
+        }
+      }
+    }
+    catch (final AbstractMethodError e)
+    {
+      LOGGER.log(Level.WARNING,
+                 "JDBC driver does not support retrieving functions",
+                 e);
+    }
+    finally
+    {
+      if (results != null)
+      {
+        results.close();
+      }
+    }
   }
 
   void retrieveProcedureColumns(final MutableProcedure procedure,
@@ -139,11 +280,11 @@ final class RoutineRetriever
 
   void retrieveProcedures(final String catalogName,
                           final String schemaName,
-                          final InclusionRule procedureInclusionRule)
+                          final InclusionRule routineInclusionRule)
     throws SQLException
   {
-    if (procedureInclusionRule == null
-        || procedureInclusionRule.equals(InclusionRule.EXCLUDE_ALL))
+    if (routineInclusionRule == null
+        || routineInclusionRule.equals(InclusionRule.EXCLUDE_ALL))
     {
       return;
     }
@@ -170,14 +311,14 @@ final class RoutineRetriever
         final Schema schema = new SchemaReference(catalogName, schemaName);
         final MutableProcedure procedure = new MutableProcedure(schema,
                                                                 procedureName);
-        if (procedureInclusionRule.include(procedure.getFullName()))
+        if (routineInclusionRule.include(procedure.getFullName()))
         {
           procedure.setType(ProcedureReturnType.valueOf(procedureType));
           procedure.setSpecificName(specificName);
           procedure.setRemarks(remarks);
           procedure.addAttributes(results.getAttributes());
 
-          database.addProcedure(procedure);
+          database.addRoutine(procedure);
         }
       }
     }

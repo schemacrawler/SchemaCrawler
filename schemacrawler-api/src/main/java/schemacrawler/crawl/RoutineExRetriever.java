@@ -51,12 +51,12 @@ final class RoutineExRetriever
   }
 
   /**
-   * Retrieves a procedure definitions from the database.
+   * Retrieves a routine definitions from the database.
    * 
    * @throws SQLException
    *         On a SQL exception
    */
-  void retrieveProcedureInformation()
+  void retrieveRoutineInformation()
     throws SQLException
   {
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
@@ -64,10 +64,10 @@ final class RoutineExRetriever
     if (!informationSchemaViews.hasRoutinesSql())
     {
       LOGGER.log(Level.FINE,
-                 "Procedure definition SQL statement was not provided");
+                 "Routine definition SQL statement was not provided");
       return;
     }
-    final String procedureDefinitionsSql = informationSchemaViews
+    final String routineDefinitionsSql = informationSchemaViews
       .getRoutinesSql();
 
     final Connection connection = getDatabaseConnection();
@@ -75,11 +75,11 @@ final class RoutineExRetriever
     MetadataResultSet results = null;
     try
     {
-      results = new MetadataResultSet(statement.executeQuery(procedureDefinitionsSql));
+      results = new MetadataResultSet(statement.executeQuery(routineDefinitionsSql));
     }
     catch (final SQLException e)
     {
-      LOGGER.log(Level.WARNING, "Could not retrieve procedure information", e);
+      LOGGER.log(Level.WARNING, "Could not retrieve routine information", e);
       return;
     }
 
@@ -91,27 +91,26 @@ final class RoutineExRetriever
           .getString("ROUTINE_CATALOG"));
         final String schemaName = quotedName(results
           .getString("ROUTINE_SCHEMA"));
-        final String procedureName = quotedName(results
-          .getString("ROUTINE_NAME"));
+        final String routineName = quotedName(results.getString("ROUTINE_NAME"));
         final String specificName = quotedName(results
           .getString("SPECIFIC_NAME"));
 
-        final MutableProcedure procedure = (MutableProcedure) lookupRoutine(catalogName,
-                                                                            schemaName,
-                                                                            procedureName,
-                                                                            specificName);
-        if (procedure != null)
+        final MutableRoutine routine = lookupRoutine(catalogName,
+                                                     schemaName,
+                                                     routineName,
+                                                     specificName);
+        if (routine != null)
         {
-          LOGGER.log(Level.FINER, "Retrieving procedure information: "
-                                  + procedureName);
+          LOGGER.log(Level.FINER, "Retrieving routine information: "
+                                  + routineName);
           final RoutineBodyType routineBodyType = results
             .getEnum("ROUTINE_BODY", RoutineBodyType.unknown);
           final String definition = results.getString("ROUTINE_DEFINITION");
 
-          procedure.setRoutineBodyType(routineBodyType);
-          procedure.appendDefinition(definition);
+          routine.setRoutineBodyType(routineBodyType);
+          routine.appendDefinition(definition);
 
-          procedure.addAttributes(results.getAttributes());
+          routine.addAttributes(results.getAttributes());
         }
       }
     }

@@ -42,7 +42,6 @@ import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.IndexType;
 import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Privilege.Grant;
-import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.RoutineColumn;
 import schemacrawler.schema.Synonym;
@@ -159,10 +158,7 @@ final class SchemaTextFormatter
         .createNameRow(routineName, routineType, true));
 
       printRoutineColumns(routine.getColumns());
-      if (routine instanceof Procedure)
-      {
-        printDefinition("definition", "", ((Procedure) routine).getDefinition());
-      }
+      printDefinition("definition", "", routine.getDefinition());
 
       if (isVerbose)
       {

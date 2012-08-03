@@ -3992,6 +3992,77 @@ hr {
 
 <table>
 	<tr>
+		<td colspan='2' class='name underscore'>PUBLIC.BOOKS.CUSTOMADD</td>
+		<td class='description right underscore'>[function, does not return a table]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>ONE</td>
+		<td class='type'>INTEGER, in</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[definition]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10046 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN BOOKS.CUSTOMADD(ONE,1)</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[specific name]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>CUSTOMADD_10046</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<table>
+	<tr>
+		<td colspan='2' class='name underscore'>PUBLIC.BOOKS.CUSTOMADD</td>
+		<td class='description right underscore'>[function, does not return a table]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>ONE</td>
+		<td class='type'>INTEGER, in</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>TWO</td>
+		<td class='type'>INTEGER, in</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[definition]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER,IN TWO INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10045 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN ONE+TWO</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[specific name]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>CUSTOMADD_10045</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<table>
+	<tr>
 		<td colspan='2' class='name underscore'>PUBLIC.BOOKS.NEW_PUBLISHER</td>
 		<td class='description right underscore'>[procedure, no result]</td>
 	</tr>

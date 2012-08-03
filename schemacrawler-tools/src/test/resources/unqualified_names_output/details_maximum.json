@@ -856,15 +856,15 @@
       "constraints": [
         {
           "definition": "FOR_LINT.EXTRA_PK.ID IS NOT NULL",
-          "name": "SYS_CT_10070"
+          "name": "SYS_CT_10072"
         },
         {
           "definition": "FOR_LINT.EXTRA_PK.WRITERID IS NOT NULL",
-          "name": "SYS_CT_10071"
+          "name": "SYS_CT_10073"
         },
         {
           "definition": "FOR_LINT.EXTRA_PK.PUBLICATIONID IS NOT NULL",
-          "name": "SYS_CT_10072"
+          "name": "SYS_CT_10074"
         }
       ],
       "columns": [
@@ -952,7 +952,7 @@
       "indices": [
         {
           "unique": true,
-          "name": "SYS_IDX_PK_EXTRA_PK_10073",
+          "name": "SYS_IDX_PK_EXTRA_PK_10075",
           "columns": {
             "sortSequence": "ascending",
             "name": "ID"
@@ -960,7 +960,7 @@
         },
         {
           "unique": false,
-          "name": "SYS_IDX_10076",
+          "name": "SYS_IDX_10078",
           "columns": {
             "sortSequence": "ascending",
             "name": "PUBLICATIONID"
@@ -968,7 +968,7 @@
         },
         {
           "unique": false,
-          "name": "SYS_IDX_10074",
+          "name": "SYS_IDX_10076",
           "columns": {
             "sortSequence": "ascending",
             "name": "WRITERID"
@@ -1092,15 +1092,15 @@
       "constraints": [
         {
           "definition": "FOR_LINT.PUBLICATIONS.ID IS NOT NULL",
-          "name": "SYS_CT_10062"
+          "name": "SYS_CT_10064"
         },
         {
           "definition": "FOR_LINT.PUBLICATIONS.TITLE IS NOT NULL",
-          "name": "SYS_CT_10063"
+          "name": "SYS_CT_10065"
         },
         {
           "definition": "FOR_LINT.PUBLICATIONS.WRITERID IS NOT NULL",
-          "name": "SYS_CT_10064"
+          "name": "SYS_CT_10066"
         }
       ],
       "columns": [
@@ -1238,7 +1238,7 @@
       "indices": [
         {
           "unique": true,
-          "name": "SYS_IDX_PK_PUBLICATIONS_10065",
+          "name": "SYS_IDX_PK_PUBLICATIONS_10067",
           "columns": {
             "sortSequence": "ascending",
             "name": "ID"
@@ -1246,7 +1246,7 @@
         },
         {
           "unique": false,
-          "name": "SYS_IDX_10066",
+          "name": "SYS_IDX_10068",
           "columns": {
             "sortSequence": "ascending",
             "name": "WRITERID"
@@ -1304,23 +1304,23 @@
         },
         {
           "definition": "FOR_LINT.WRITERS.ID IS NOT NULL",
-          "name": "SYS_CT_10056"
-        },
-        {
-          "definition": "FOR_LINT.WRITERS.FIRSTNAME IS NOT NULL",
-          "name": "SYS_CT_10057"
-        },
-        {
-          "definition": "FOR_LINT.WRITERS.LASTNAME IS NOT NULL",
           "name": "SYS_CT_10058"
         },
         {
-          "definition": "FOR_LINT.WRITERS.ADDRESS2 IS NOT NULL",
+          "definition": "FOR_LINT.WRITERS.FIRSTNAME IS NOT NULL",
           "name": "SYS_CT_10059"
         },
         {
-          "definition": "FOR_LINT.WRITERS.PUBLICATION_ID IS NOT NULL",
+          "definition": "FOR_LINT.WRITERS.LASTNAME IS NOT NULL",
           "name": "SYS_CT_10060"
+        },
+        {
+          "definition": "FOR_LINT.WRITERS.ADDRESS2 IS NOT NULL",
+          "name": "SYS_CT_10061"
+        },
+        {
+          "definition": "FOR_LINT.WRITERS.PUBLICATION_ID IS NOT NULL",
+          "name": "SYS_CT_10062"
         }
       ],
       "columns": [
@@ -1558,7 +1558,7 @@
       "indices": [
         {
           "unique": true,
-          "name": "SYS_IDX_PK_WRITERS_10061",
+          "name": "SYS_IDX_PK_WRITERS_10063",
           "columns": {
             "sortSequence": "ascending",
             "name": "ID"
@@ -1566,7 +1566,7 @@
         },
         {
           "unique": false,
-          "name": "SYS_IDX_10078",
+          "name": "SYS_IDX_10080",
           "columns": {
             "sortSequence": "ascending",
             "name": "PUBLICATION_ID"
@@ -1676,19 +1676,19 @@
       "constraints": [
         {
           "definition": "\"PUBLISHER SALES\".REGIONS.CITY IS NOT NULL",
-          "name": "SYS_CT_10046"
-        },
-        {
-          "definition": "\"PUBLISHER SALES\".REGIONS.STATE IS NOT NULL",
-          "name": "SYS_CT_10047"
-        },
-        {
-          "definition": "\"PUBLISHER SALES\".REGIONS.POSTALCODE IS NOT NULL",
           "name": "SYS_CT_10048"
         },
         {
-          "definition": "\"PUBLISHER SALES\".REGIONS.COUNTRY IS NOT NULL",
+          "definition": "\"PUBLISHER SALES\".REGIONS.STATE IS NOT NULL",
           "name": "SYS_CT_10049"
+        },
+        {
+          "definition": "\"PUBLISHER SALES\".REGIONS.POSTALCODE IS NOT NULL",
+          "name": "SYS_CT_10050"
+        },
+        {
+          "definition": "\"PUBLISHER SALES\".REGIONS.COUNTRY IS NOT NULL",
+          "name": "SYS_CT_10051"
         }
       ],
       "columns": [
@@ -1785,7 +1785,7 @@
       ],
       "indices": [{
         "unique": true,
-        "name": "SYS_IDX_PK_CUSTOMERS_10050",
+        "name": "SYS_IDX_PK_CUSTOMERS_10052",
         "columns": [
           {
             "sortSequence": "ascending",
@@ -1826,11 +1826,11 @@
       "constraints": [
         {
           "definition": "\"PUBLISHER SALES\".SALES.POSTALCODE IS NOT NULL",
-          "name": "SYS_CT_10051"
+          "name": "SYS_CT_10053"
         },
         {
           "definition": "\"PUBLISHER SALES\".SALES.COUNTRY IS NOT NULL",
-          "name": "SYS_CT_10052"
+          "name": "SYS_CT_10054"
         }
       ],
       "columns": [
@@ -1937,7 +1937,7 @@
       ],
       "indices": [{
         "unique": false,
-        "name": "SYS_IDX_10054",
+        "name": "SYS_IDX_10056",
         "columns": [
           {
             "sortSequence": "ascending",
@@ -3187,6 +3187,42 @@
     "url": "jdbc:hsqldb:mem:schemacrawler"
   },
   "routines": [
+    {
+      "definition": "CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10046 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN BOOKS.CUSTOMADD(ONE,1)",
+      "name": "CUSTOMADD",
+      "remarks": "",
+      "parameters": [{
+        "dataType": "INTEGER",
+        "width": "",
+        "type": "in",
+        "databaseSpecificType": "INTEGER"
+      }],
+      "type": "function",
+      "specificName": "CUSTOMADD_10046",
+      "returnType": "does not return a table"
+    },
+    {
+      "definition": "CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER,IN TWO INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10045 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN ONE+TWO",
+      "name": "CUSTOMADD",
+      "remarks": "",
+      "parameters": [
+        {
+          "dataType": "INTEGER",
+          "width": "",
+          "type": "in",
+          "databaseSpecificType": "INTEGER"
+        },
+        {
+          "dataType": "INTEGER",
+          "width": "",
+          "type": "in",
+          "databaseSpecificType": "INTEGER"
+        }
+      ],
+      "type": "function",
+      "specificName": "CUSTOMADD_10045",
+      "returnType": "does not return a table"
+    },
     {
       "definition": "CREATE PROCEDURE BOOKS.NEW_PUBLISHER(OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10043 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = 'New Publisher'",
       "name": "NEW_PUBLISHER",

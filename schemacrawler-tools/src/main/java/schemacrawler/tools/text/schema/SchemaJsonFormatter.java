@@ -40,7 +40,6 @@ import schemacrawler.schema.IndexType;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Privilege.Grant;
-import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.RoutineColumn;
 import schemacrawler.schema.Synonym;
@@ -169,10 +168,7 @@ final class SchemaJsonFormatter
         {
           jsonParameters.put(handleRoutineColumn(column));
         }
-        if (routine instanceof Procedure)
-        {
-          jsonRoutine.put("definition", ((Procedure) routine).getDefinition());
-        }
+        jsonRoutine.put("definition", routine.getDefinition());
 
         if (isVerbose)
         {

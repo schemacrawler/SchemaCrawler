@@ -106,6 +106,20 @@ Routines
 ========================================================================
 
 
+PUBLIC.BOOKS.CUSTOMADD               [function, does not return a table]
+------------------------------------------------------------------------
+
+                                                         [specific name]
+CUSTOMADD_10046
+
+
+PUBLIC.BOOKS.CUSTOMADD               [function, does not return a table]
+------------------------------------------------------------------------
+
+                                                         [specific name]
+CUSTOMADD_10045
+
+
 PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
 ------------------------------------------------------------------------
 

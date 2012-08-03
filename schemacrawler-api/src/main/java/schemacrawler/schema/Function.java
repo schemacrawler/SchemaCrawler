@@ -24,11 +24,11 @@ package schemacrawler.schema;
 import java.util.List;
 
 /**
- * Represents a database procedure.
+ * Represents a database function.
  * 
  * @author Sualeh Fatehi
  */
-public interface Procedure
+public interface Function
   extends Routine
 {
 
@@ -40,7 +40,7 @@ public interface Procedure
    * @return Column of the procedure
    */
   @Override
-  ProcedureColumn getColumn(String name);
+  FunctionColumn getColumn(String name);
 
   /**
    * Gets the list of columns in ordinal order.
@@ -48,7 +48,7 @@ public interface Procedure
    * @return Columns of the procedure
    */
   @Override
-  List<ProcedureColumn> getColumns();
+  List<FunctionColumn> getColumns();
 
   /**
    * Gets the procedure type.
@@ -56,6 +56,14 @@ public interface Procedure
    * @return Procedure type
    */
   @Override
-  ProcedureReturnType getReturnType();
+  FunctionReturnType getReturnType();
+
+  /**
+   * Gets the type of the routine body.
+   * 
+   * @return Routine body type
+   */
+  @Override
+  RoutineBodyType getRoutineBodyType();
 
 }

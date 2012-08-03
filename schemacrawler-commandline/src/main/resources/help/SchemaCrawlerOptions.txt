@@ -35,14 +35,15 @@
   Columns that match the pattern are not displayed
   Optional, default is to show all columns
       
--procedures=<regular-expression>
-  <regular-expression> is a regular expression to match fully qualified procedure 
-  names, in the form "CATALOGNAME.SCHEMANAME.PROCEDURENAME" - for example, 
-  -procedures=.*\.C.*|.*\.P.*
-  matches any procedures whose names start with C or P
-  Procedures that do not match the pattern are not displayed
-  Use -procedures= to omit procedures
-  Optional, defaults to showing all procedures
+-routines=<regular-expression>
+  <regular-expression> is a regular expression to match fully qualified  
+  stored procedure or function names, in the form 
+  "CATALOGNAME.SCHEMANAME.ROUTINENAME" - for example, 
+  -routines=.*\.C.*|.*\.P.*
+  matches any routines whose names start with C or P
+  Routines that do not match the pattern are not displayed
+  Use -routines= to omit routines
+  Optional, defaults to showing all routines
     
 -excludeinout=<regular-expression>
   <regular-expression> is a regular expression to match fully qualified 

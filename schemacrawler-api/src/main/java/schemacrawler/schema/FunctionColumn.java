@@ -21,41 +21,21 @@
 package schemacrawler.schema;
 
 
-import java.util.List;
-
 /**
- * Represents a database procedure.
+ * Represents a column in a database procedure.
  * 
  * @author Sualeh Fatehi
  */
-public interface Procedure
-  extends Routine
+public interface FunctionColumn
+  extends RoutineColumn<Function>
 {
 
   /**
-   * Gets a column by name.
+   * Gets the function column type.
    * 
-   * @param name
-   *        Name
-   * @return Column of the procedure
+   * @return Function column type.
    */
   @Override
-  ProcedureColumn getColumn(String name);
-
-  /**
-   * Gets the list of columns in ordinal order.
-   * 
-   * @return Columns of the procedure
-   */
-  @Override
-  List<ProcedureColumn> getColumns();
-
-  /**
-   * Gets the procedure type.
-   * 
-   * @return Procedure type
-   */
-  @Override
-  ProcedureReturnType getReturnType();
+  FunctionColumnType getColumnType();
 
 }

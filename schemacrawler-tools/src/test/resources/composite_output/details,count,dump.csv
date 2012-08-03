@@ -722,22 +722,22 @@ FK_PUBLICATION_JOIN,"[foreign key, with no action]"
 FK_WRITER_JOIN,"[foreign key, with no action]"
 "",PUBLIC.FOR_LINT.WRITERS.ID --> WRITERID,""
 ""
-SYS_IDX_PK_EXTRA_PK_10073,[unique index]
+SYS_IDX_PK_EXTRA_PK_10075,[unique index]
 "",ID,ascending
 ""
-SYS_IDX_10076,[non-unique index]
+SYS_IDX_10078,[non-unique index]
 "",PUBLICATIONID,ascending
 ""
-SYS_IDX_10074,[non-unique index]
+SYS_IDX_10076,[non-unique index]
 "",WRITERID,ascending
 ""
-SYS_CT_10070,[check constraint]
+SYS_CT_10072,[check constraint]
 FOR_LINT.EXTRA_PK.ID IS NOT NULL
 ""
-SYS_CT_10071,[check constraint]
+SYS_CT_10073,[check constraint]
 FOR_LINT.EXTRA_PK.WRITERID IS NOT NULL
 ""
-SYS_CT_10072,[check constraint]
+SYS_CT_10074,[check constraint]
 FOR_LINT.EXTRA_PK.PUBLICATIONID IS NOT NULL
 ""
 DELETE,[privilege]
@@ -805,19 +805,19 @@ FK_WRITERS_PUBLICATION,"[foreign key, with no action]"
 FK_PUBLICATIONS_WRITER,"[foreign key, with no action]"
 "",PUBLIC.FOR_LINT.WRITERS.ID --> WRITERID,""
 ""
-SYS_IDX_PK_PUBLICATIONS_10065,[unique index]
+SYS_IDX_PK_PUBLICATIONS_10067,[unique index]
 "",ID,ascending
 ""
-SYS_IDX_10066,[non-unique index]
+SYS_IDX_10068,[non-unique index]
 "",WRITERID,ascending
 ""
-SYS_CT_10062,[check constraint]
+SYS_CT_10064,[check constraint]
 FOR_LINT.PUBLICATIONS.ID IS NOT NULL
 ""
-SYS_CT_10063,[check constraint]
+SYS_CT_10065,[check constraint]
 FOR_LINT.PUBLICATIONS.TITLE IS NOT NULL
 ""
-SYS_CT_10064,[check constraint]
+SYS_CT_10066,[check constraint]
 FOR_LINT.PUBLICATIONS.WRITERID IS NOT NULL
 ""
 DELETE,[privilege]
@@ -872,10 +872,10 @@ FK_WRITER_JOIN,"[foreign key, with no action]"
 FK_PUBLICATIONS_WRITER,"[foreign key, with no action]"
 "",ID --> PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID,""
 ""
-SYS_IDX_PK_WRITERS_10061,[unique index]
+SYS_IDX_PK_WRITERS_10063,[unique index]
 "",ID,ascending
 ""
-SYS_IDX_10078,[non-unique index]
+SYS_IDX_10080,[non-unique index]
 "",PUBLICATION_ID,ascending
 ""
 IDX_A1_WRITERS,[non-unique index]
@@ -899,19 +899,19 @@ IDX_A_WRITERS,[non-unique index]
 CHECK_UPPERCASE_STATE,[check constraint]
 FOR_LINT.WRITERS.STATE=UPPER(FOR_LINT.WRITERS.STATE)
 ""
-SYS_CT_10056,[check constraint]
+SYS_CT_10058,[check constraint]
 FOR_LINT.WRITERS.ID IS NOT NULL
 ""
-SYS_CT_10057,[check constraint]
+SYS_CT_10059,[check constraint]
 FOR_LINT.WRITERS.FIRSTNAME IS NOT NULL
 ""
-SYS_CT_10058,[check constraint]
+SYS_CT_10060,[check constraint]
 FOR_LINT.WRITERS.LASTNAME IS NOT NULL
 ""
-SYS_CT_10059,[check constraint]
+SYS_CT_10061,[check constraint]
 FOR_LINT.WRITERS.ADDRESS2 IS NOT NULL
 ""
-SYS_CT_10060,[check constraint]
+SYS_CT_10062,[check constraint]
 FOR_LINT.WRITERS.PUBLICATION_ID IS NOT NULL
 ""
 DELETE,[privilege]
@@ -948,20 +948,20 @@ FK_SALES_REGIONS,"[foreign key, with no action]"
 "","POSTALCODE --> PUBLIC.""PUBLISHER SALES"".SALES.POSTALCODE",""
 "","COUNTRY --> PUBLIC.""PUBLISHER SALES"".SALES.COUNTRY",""
 ""
-SYS_IDX_PK_CUSTOMERS_10050,[unique index]
+SYS_IDX_PK_CUSTOMERS_10052,[unique index]
 "",POSTALCODE,ascending
 "",COUNTRY,ascending
 ""
-SYS_CT_10046,[check constraint]
+SYS_CT_10048,[check constraint]
 """PUBLISHER SALES"".REGIONS.CITY IS NOT NULL"
 ""
-SYS_CT_10047,[check constraint]
+SYS_CT_10049,[check constraint]
 """PUBLISHER SALES"".REGIONS.STATE IS NOT NULL"
 ""
-SYS_CT_10048,[check constraint]
+SYS_CT_10050,[check constraint]
 """PUBLISHER SALES"".REGIONS.POSTALCODE IS NOT NULL"
 ""
-SYS_CT_10049,[check constraint]
+SYS_CT_10051,[check constraint]
 """PUBLISHER SALES"".REGIONS.COUNTRY IS NOT NULL"
 ""
 DELETE,[privilege]
@@ -998,14 +998,14 @@ FK_SALES_REGIONS,"[foreign key, with no action]"
 "",[weak association]
 "",PUBLIC.BOOKS.BOOKS.ID --> BOOKID,""
 ""
-SYS_IDX_10054,[non-unique index]
+SYS_IDX_10056,[non-unique index]
 "",POSTALCODE,ascending
 "",COUNTRY,ascending
 ""
-SYS_CT_10051,[check constraint]
+SYS_CT_10053,[check constraint]
 """PUBLISHER SALES"".SALES.POSTALCODE IS NOT NULL"
 ""
-SYS_CT_10052,[check constraint]
+SYS_CT_10054,[check constraint]
 """PUBLISHER SALES"".SALES.COUNTRY IS NOT NULL"
 ""
 DELETE,[privilege]
@@ -1031,6 +1031,29 @@ UPDATE,[privilege]
 
 Routines
 ========================================================================
+
+
+PUBLIC.BOOKS.CUSTOMADD,"[function, does not return a table]"
+------------------------------------------------------------------------
+"",ONE,"INTEGER, in"
+""
+"",[definition]
+"CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10046 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN BOOKS.CUSTOMADD(ONE,1)"
+""
+"",[specific name]
+CUSTOMADD_10046
+
+
+PUBLIC.BOOKS.CUSTOMADD,"[function, does not return a table]"
+------------------------------------------------------------------------
+"",ONE,"INTEGER, in"
+"",TWO,"INTEGER, in"
+""
+"",[definition]
+"CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER,IN TWO INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10045 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN ONE+TWO"
+""
+"",[specific name]
+CUSTOMADD_10045
 
 
 PUBLIC.BOOKS.NEW_PUBLISHER,"[procedure, no result]"

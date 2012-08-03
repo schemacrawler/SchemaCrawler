@@ -44,7 +44,6 @@ import schemacrawler.schema.CheckConstraint;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Database;
 import schemacrawler.schema.EventManipulationType;
-import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Synonym;
@@ -122,29 +121,29 @@ public class SchemaCrawlerTest
         },
         {
             {
-                "SYS_CT_10070", "SYS_CT_10071", "SYS_CT_10072"
+                "SYS_CT_10072", "SYS_CT_10073", "SYS_CT_10074"
             },
             {},
             {},
             {
-                "SYS_CT_10062", "SYS_CT_10063", "SYS_CT_10064",
+                "SYS_CT_10064", "SYS_CT_10065", "SYS_CT_10066",
             },
             {
                 "CHECK_UPPERCASE_STATE",
-                "SYS_CT_10056",
-                "SYS_CT_10057",
                 "SYS_CT_10058",
                 "SYS_CT_10059",
                 "SYS_CT_10060",
+                "SYS_CT_10061",
+                "SYS_CT_10062",
             },
         },
         {},
         {},
         {
             {
-                "SYS_CT_10046", "SYS_CT_10047", "SYS_CT_10048", "SYS_CT_10049"
+                "SYS_CT_10048", "SYS_CT_10049", "SYS_CT_10050", "SYS_CT_10051"
             }, {
-                "SYS_CT_10051", "SYS_CT_10052"
+                "SYS_CT_10053", "SYS_CT_10054"
             }
         },
         {}
@@ -362,11 +361,11 @@ public class SchemaCrawlerTest
                                                  "PUBLIC.BOOKS");
     final Routine[] routines = database.getRoutines(schema)
       .toArray(new Routine[0]);
-    assertEquals("Wrong number of routines", 2, routines.length);
+    assertEquals("Wrong number of routines", 4, routines.length);
     for (final Routine routine: routines)
     {
       assertFalse("Routine definition not found, for " + routine,
-                  Utility.isBlank(((Procedure) routine).getDefinition()));
+                  Utility.isBlank(routine.getDefinition()));
     }
   }
 
@@ -382,7 +381,7 @@ public class SchemaCrawlerTest
                                                   "PUBLIC.BOOKS");
     assertTrue("Could not find any tables",
                database.getTables(schema1).size() > 0);
-    assertEquals("Wrong number of routines", 2, database.getRoutines(schema1)
+    assertEquals("Wrong number of routines", 4, database.getRoutines(schema1)
       .size());
 
     final Schema schema2 = testDatabase.getSchema(schemaCrawlerOptions,
