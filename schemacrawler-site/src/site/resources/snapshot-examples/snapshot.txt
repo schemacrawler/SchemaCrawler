@@ -10,7 +10,7 @@ SchemaCrawler Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
 product name                              SchemaCrawler                 
-product version                           8.17                          
+product version                           9.0                           
 
 
 Database Information
@@ -196,17 +196,17 @@ JDBC Driver Properties
 
 default_schema                                         [driver property]
   
-  not required; choices [true, false]
+  not required; choices [false, true]
   value                             false                       
 
 get_column_name                                        [driver property]
   
-  not required; choices [true, false]
+  not required; choices [false, true]
   value                             true                        
 
 ifexists                                               [driver property]
   
-  not required; choices [true, false]
+  not required; choices [false, true]
   value                             false                       
 
 password                                               [driver property]
@@ -216,7 +216,7 @@ password                                               [driver property]
 
 shutdown                                               [driver property]
   
-  not required; choices [true, false]
+  not required; choices [false, true]
   value                             false                       
 
 user                                                   [driver property]
@@ -686,13 +686,13 @@ FK_PUBLICATION_JOIN                        [foreign key, with no action]
 FK_WRITER_JOIN                             [foreign key, with no action]
   PUBLIC.FOR_LINT.WRITERS.ID --> WRITERID                              
 
-SYS_IDX_PK_EXTRA_PK_10072                                 [unique index]
+SYS_IDX_PK_EXTRA_PK_10075                                 [unique index]
   ID                                ascending                   
 
-SYS_IDX_10075                                         [non-unique index]
+SYS_IDX_10078                                         [non-unique index]
   PUBLICATIONID                     ascending                   
 
-SYS_IDX_10073                                         [non-unique index]
+SYS_IDX_10076                                         [non-unique index]
   WRITERID                          ascending                   
 
 DELETE                                                       [privilege]
@@ -782,10 +782,10 @@ FK_WRITERS_PUBLICATION                     [foreign key, with no action]
 FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
   PUBLIC.FOR_LINT.WRITERS.ID --> WRITERID                              
 
-SYS_IDX_PK_PUBLICATIONS_10064                             [unique index]
+SYS_IDX_PK_PUBLICATIONS_10067                             [unique index]
   ID                                ascending                   
 
-SYS_IDX_10065                                         [non-unique index]
+SYS_IDX_10068                                         [non-unique index]
   WRITERID                          ascending                   
 
 DELETE                                                       [privilege]
@@ -840,10 +840,10 @@ FK_WRITER_JOIN                             [foreign key, with no action]
 FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
   ID --> PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID                              
 
-SYS_IDX_PK_WRITERS_10060                                  [unique index]
+SYS_IDX_PK_WRITERS_10063                                  [unique index]
   ID                                ascending                   
 
-SYS_IDX_10077                                         [non-unique index]
+SYS_IDX_10080                                         [non-unique index]
   PUBLICATION_ID                    ascending                   
 
 IDX_A1_WRITERS                                        [non-unique index]
@@ -898,7 +898,7 @@ FK_SALES_REGIONS                           [foreign key, with no action]
   POSTALCODE --> PUBLIC."PUBLISHER SALES".SALES.POSTALCODE                              
   COUNTRY --> PUBLIC."PUBLISHER SALES".SALES.COUNTRY                              
 
-SYS_IDX_PK_CUSTOMERS_10049                                [unique index]
+SYS_IDX_PK_CUSTOMERS_10052                                [unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
 
@@ -936,7 +936,7 @@ FK_SALES_REGIONS                           [foreign key, with no action]
                                                       [weak association]
   PUBLIC.BOOKS.BOOKS.ID --> BOOKID                              
 
-SYS_IDX_10053                                         [non-unique index]
+SYS_IDX_10056                                         [non-unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
 
@@ -961,13 +961,42 @@ UPDATE                                                       [privilege]
 
 
 
-Procedures
+Routines
 ========================================================================
+
+
+PUBLIC.BOOKS.CUSTOMADD               [function, does not return a table]
+------------------------------------------------------------------------
+  ONE                               INTEGER, in                 
+
+                                                         [specific name]
+CUSTOMADD_10046
+
+
+PUBLIC.BOOKS.CUSTOMADD               [function, does not return a table]
+------------------------------------------------------------------------
+  ONE                               INTEGER, in                 
+  TWO                               INTEGER, in                 
+
+                                                         [specific name]
+CUSTOMADD_10045
 
 
 PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
 ------------------------------------------------------------------------
   PUBLISHER                         CHARACTER VARYING, out      
+
+                                                         [specific name]
+NEW_PUBLISHER_10043
+
+
+PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
+------------------------------------------------------------------------
+  NEWPUBLISHER                      CHARACTER VARYING, in       
+  PUBLISHER                         CHARACTER VARYING, out      
+
+                                                         [specific name]
+NEW_PUBLISHER_10044
 
 
 PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS                   [procedure, no result]
@@ -975,6 +1004,9 @@ PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS                   [procedure, no result]
   B_COUNT                           INTEGER, in                 
   B_OFFSET                          INTEGER, in                 
   L_ID                              BIGINT, in                  
+
+                                                         [specific name]
+ALLOC_BLOCKS_10022
 
 
 PUBLIC.SYSTEM_LOBS.CONVERT_BLOCK                  [procedure, no result]
@@ -984,11 +1016,17 @@ PUBLIC.SYSTEM_LOBS.CONVERT_BLOCK                  [procedure, no result]
   B_OFFSET                          INTEGER, in                 
   L_ID                              BIGINT, in                  
 
+                                                         [specific name]
+CONVERT_BLOCK_10012
+
 
 PUBLIC.SYSTEM_LOBS.CREATE_EMPTY_BLOCK             [procedure, no result]
 ------------------------------------------------------------------------
   B_ADDR                            INTEGER, in/ out            
   B_COUNT                           INTEGER, in                 
+
+                                                         [specific name]
+CREATE_EMPTY_BLOCK_10020
 
 
 PUBLIC.SYSTEM_LOBS.DELETE_BLOCKS                  [procedure, no result]
@@ -998,22 +1036,34 @@ PUBLIC.SYSTEM_LOBS.DELETE_BLOCKS                  [procedure, no result]
   B_LIMIT                           INTEGER, in                 
   TX_ID                             BIGINT, in                  
 
+                                                         [specific name]
+DELETE_BLOCKS_10019
+
 
 PUBLIC.SYSTEM_LOBS.DELETE_LOB                     [procedure, no result]
 ------------------------------------------------------------------------
   L_ID                              BIGINT, in                  
   TX_ID                             BIGINT, in                  
 
+                                                         [specific name]
+DELETE_LOB_10013
+
 
 PUBLIC.SYSTEM_LOBS.DELETE_UNUSED                  [procedure, no result]
 ------------------------------------------------------------------------
   L_IDS                             BIGINT ARRAY, in            
+
+                                                         [specific name]
+DELETE_UNUSED_10018
 
 
 PUBLIC.SYSTEM_LOBS.DIVIDE_BLOCK                   [procedure, no result]
 ------------------------------------------------------------------------
   B_OFFSET                          INTEGER, in                 
   L_ID                              BIGINT, in                  
+
+                                                         [specific name]
+DIVIDE_BLOCK_10021
 
 
 

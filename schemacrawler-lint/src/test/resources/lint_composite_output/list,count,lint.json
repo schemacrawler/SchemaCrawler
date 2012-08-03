@@ -28,7 +28,7 @@
     "databaseProductVersion": "2.2.8"
   },
   "schemaCrawlerInfo": {
-    "productVersion": "8.17",
+    "productVersion": "9.0",
     "productName": "SchemaCrawler"
   },
   "jdbcDriverInfo": {

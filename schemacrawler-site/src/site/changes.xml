@@ -5,7 +5,7 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-    <release version="8.17" date="2012-07-09">
+    <release version="9.0" date="2012-07-09">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         The HTML output format outputs valid HTML5 and CSS3, as valid XML.
       ]]></action>     
@@ -354,7 +354,7 @@
       <action dev="Sualeh Fatehi" type="update"><![CDATA[
         To allow for more control on table selection, the -tables command line parameter
         matches to the fully qualified table name, CATALOG.SCHEMA.TABLENAME.
-        Similarly for the -procedures command line parameter.
+        Similarly for the -routines command line parameter.
       ]]></action>
     </release>
     <release version="6.4" date="2009-05-10">

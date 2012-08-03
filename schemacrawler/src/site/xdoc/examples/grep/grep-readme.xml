@@ -23,9 +23,9 @@
           </li>
           <li>
             To find tables with certain column names, run
-            <span class="code">sc.cmd -infolevel=standard -command=schema -procedures= -grepcolumns=.*\.PUBLISHER</span>
+            <span class="code">sc.cmd -infolevel=standard -command=schema -routines= -grepcolumns=.*\.PUBLISHER</span>
             (or
-            <span class="code">sc.sh -infolevel=standard -command=schema -procedures= -grepcolumns=.*\.PUBLISHER</span>
+            <span class="code">sc.sh -infolevel=standard -command=schema -routines= -grepcolumns=.*\.PUBLISHER</span>
             on Unix)
           </li>
           <li>
