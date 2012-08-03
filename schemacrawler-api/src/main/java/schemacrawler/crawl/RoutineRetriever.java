@@ -23,6 +23,7 @@ package schemacrawler.crawl;
 
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
+import java.sql.SQLFeatureNotSupportedException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -121,6 +122,18 @@ final class RoutineRetriever
         }
       }
     }
+    catch (final AbstractMethodError e)
+    {
+      LOGGER.log(Level.WARNING,
+                 "JDBC driver does not support retrieving functions",
+                 e);
+    }
+    catch (final SQLFeatureNotSupportedException e)
+    {
+      LOGGER.log(Level.WARNING,
+                 "JDBC driver does not support retrieving functions",
+                 e);
+    }
     catch (final SQLException e)
     {
       throw new SchemaCrawlerSQLException("Could not retrieve columns for function "
@@ -180,6 +193,12 @@ final class RoutineRetriever
       }
     }
     catch (final AbstractMethodError e)
+    {
+      LOGGER.log(Level.WARNING,
+                 "JDBC driver does not support retrieving functions",
+                 e);
+    }
+    catch (final SQLFeatureNotSupportedException e)
     {
       LOGGER.log(Level.WARNING,
                  "JDBC driver does not support retrieving functions",

@@ -10,8 +10,8 @@
 <stringAttribute key="org.eclipse.jdt.launching.CLASSPATH_PROVIDER" value="org.eclipse.m2e.launchconfig.classpathProvider"/>
 <stringAttribute key="org.eclipse.jdt.launching.JRE_CONTAINER" value="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="schemacrawler.tools.sqlserver.Main"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-host=192.168.111.128&#13;&#10;-port=1433&#13;&#10;-database=&#13;&#10;--schemas=Books.dbo&#13;&#10;&quot;-schemas=Books\.dbo|\&quot;Publisher.Sales\&quot;\.dbo&quot;&#13;&#10;-user=sa&#13;&#10;-password=sualeh&#13;&#10;-infolevel=maximum&#13;&#10;--routines=&#13;&#10;-command=details&#13;&#10;--loglevel=ALL"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-host=192.168.111.128&#13;&#10;-port=1433&#13;&#10;-database=&#13;&#10;--schemas=Books.dbo&#13;&#10;&quot;-schemas=Books\.dbo|\&quot;Publisher.Sales\&quot;\.dbo&quot;&#13;&#10;-user=sa&#13;&#10;-password=sualeh&#13;&#10;-infolevel=maximum&#13;&#10;--routines=&#13;&#10;-command=details&#13;&#10;--loglevel=ALL&#13;&#10;-o sc_mssql.txt"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="SchemaCrawler for Microsoft SQL Server"/>
 <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.m2e.launchconfig.sourcepathProvider"/>
-<stringAttribute key="org.eclipse.jdt.launching.WORKING_DIRECTORY" value="${workspace_loc:SchemaCrawler - 2 - Tools/target}"/>
+<stringAttribute key="org.eclipse.jdt.launching.WORKING_DIRECTORY" value="${workspace_loc:SchemaCrawler - Documents}"/>
 </launchConfiguration>
