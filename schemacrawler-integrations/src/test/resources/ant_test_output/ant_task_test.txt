@@ -1,0 +1,373 @@
+
+
+Tables
+========================================================================
+
+
+PUBLIC.BOOKS.AUTHORS                                             [table]
+------------------------------------------------------------------------
+1   ID                                INTEGER not null            
+2   FIRSTNAME                         VARCHAR(20) not null        
+3   LASTNAME                          VARCHAR(20) not null        
+4   ADDRESS1                          VARCHAR(255)                
+5   ADDRESS2                          VARCHAR(255)                
+6   CITY                              VARCHAR(50)                 
+7   STATE                             VARCHAR(2)                  
+8   POSTALCODE                        VARCHAR(10)                 
+9   COUNTRY                           VARCHAR(50)                 
+
+PK_AUTHORS                                                 [primary key]
+1   ID                                ascending                   
+
+FK_Z_AUTHOR                                [foreign key, with no action]
+ 1  ID --> PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID                              
+
+SYS_IDX_PK_AUTHORS_10030                                  [unique index]
+1   ID                                ascending                   
+
+IDX_B_AUTHORS                                         [non-unique index]
+3   LASTNAME                          ascending                   
+2   FIRSTNAME                         ascending                   
+
+IDX_A_AUTHORS                                         [non-unique index]
+6   CITY                              ascending                   
+7   STATE                             ascending                   
+8   POSTALCODE                        ascending                   
+9   COUNTRY                           ascending                   
+
+
+PUBLIC.BOOKS.AUTHORSLIST                                          [view]
+------------------------------------------------------------------------
+1   ID                                INTEGER                     
+2   FIRSTNAME                         VARCHAR(20)                 
+3   LASTNAME                          VARCHAR(20)                 
+
+                                                            [definition]
+SELECT ID,FIRSTNAME,LASTNAME FROM BOOKS.AUTHORS
+
+
+PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
+------------------------------------------------------------------------
+1   BOOKID                            INTEGER not null            
+2   AUTHORID                          INTEGER not null            
+3   "UPDATE"                          CLOB                        
+
+FK_Z_AUTHOR                                [foreign key, with no action]
+ 1  PUBLIC.BOOKS.AUTHORS.ID --> AUTHORID                              
+
+FK_Y_BOOK                                  [foreign key, with no action]
+ 1  PUBLIC.BOOKS.BOOKS.ID --> BOOKID                              
+
+SYS_IDX_10040                                         [non-unique index]
+2   AUTHORID                          ascending                   
+
+SYS_IDX_10038                                         [non-unique index]
+1   BOOKID                            ascending                   
+
+UIDX_BOOKAUTHORS                                          [unique index]
+1   BOOKID                            ascending                   
+2   AUTHORID                          ascending                   
+
+
+PUBLIC.BOOKS.BOOKS                                               [table]
+------------------------------------------------------------------------
+1   ID                                INTEGER not null            
+2   TITLE                             VARCHAR(255) not null       
+3   DESCRIPTION                       VARCHAR(255)                
+4   PUBLISHERID                       INTEGER not null            
+5   PUBLICATIONDATE                   DATE                        
+6   PRICE                             DOUBLE(64, 0)               
+
+PK_BOOKS                                                   [primary key]
+1   ID                                ascending                   
+
+FK_Y_BOOK                                  [foreign key, with no action]
+ 1  ID --> PUBLIC.BOOKS.BOOKAUTHORS.BOOKID                              
+
+SYS_IDX_PK_BOOKS_10034                                    [unique index]
+1   ID                                ascending                   
+
+
+PUBLIC.BOOKS."Global Counts"                                     [table]
+------------------------------------------------------------------------
+1   "Global Count"                    INTEGER                     
+
+
+PUBLIC.BOOKS.PUBLISHERS                                          [table]
+------------------------------------------------------------------------
+1   ID                                INTEGER not null            
+2   PUBLISHER                         VARCHAR(255)                
+
+PK_PUBLISHERS                                              [primary key]
+1   ID                                ascending                   
+
+SYS_IDX_PK_PUBLISHERS_10026                               [unique index]
+1   ID                                ascending                   
+
+
+PUBLIC.FOR_LINT.EXTRA_PK                                         [table]
+------------------------------------------------------------------------
+1   ID                                INTEGER not null            
+2   WRITERID                          BIGINT not null             
+3   PUBLICATIONID                     INTEGER not null            
+
+PK_EXTRA_PK                                                [primary key]
+1   ID                                ascending                   
+
+FK_PUBLICATION_JOIN                        [foreign key, with no action]
+ 1  PUBLIC.FOR_LINT.PUBLICATIONS.ID --> PUBLICATIONID                              
+
+FK_WRITER_JOIN                             [foreign key, with no action]
+ 1  PUBLIC.FOR_LINT.WRITERS.ID --> WRITERID                              
+
+SYS_IDX_PK_EXTRA_PK_10075                                 [unique index]
+1   ID                                ascending                   
+
+SYS_IDX_10078                                         [non-unique index]
+3   PUBLICATIONID                     ascending                   
+
+SYS_IDX_10076                                         [non-unique index]
+2   WRITERID                          ascending                   
+
+
+PUBLIC.FOR_LINT."Global Counts"                                  [table]
+------------------------------------------------------------------------
+1   "Global Count"                    INTEGER                     
+
+
+PUBLIC.FOR_LINT.No_Columns                                       [table]
+------------------------------------------------------------------------
+
+
+PUBLIC.FOR_LINT.PUBLICATIONS                                     [table]
+------------------------------------------------------------------------
+1   ID                                INTEGER not null            
+2   TITLE                             VARCHAR(255) not null       
+3   DESCRIPTION                       VARCHAR(255)                
+4   WRITERID                          BIGINT not null             
+5   PUBLICATIONDATE                   DATE                        
+6   PRICE                             DOUBLE(64, 0)               
+7   "UPDATE"                          CLOB                        
+8   PRESS_RELEASE                     CLOB                        
+
+PK_PUBLICATIONS                                            [primary key]
+1   ID                                ascending                   
+
+FK_PUBLICATION_JOIN                        [foreign key, with no action]
+ 1  ID --> PUBLIC.FOR_LINT.EXTRA_PK.PUBLICATIONID                              
+
+FK_WRITERS_PUBLICATION                     [foreign key, with no action]
+ 1  ID --> PUBLIC.FOR_LINT.WRITERS.PUBLICATION_ID                              
+
+FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
+ 1  PUBLIC.FOR_LINT.WRITERS.ID --> WRITERID                              
+
+SYS_IDX_PK_PUBLICATIONS_10067                             [unique index]
+1   ID                                ascending                   
+
+SYS_IDX_10068                                         [non-unique index]
+4   WRITERID                          ascending                   
+
+
+PUBLIC.FOR_LINT.WRITERS                                          [table]
+------------------------------------------------------------------------
+1   ID                                BIGINT not null             
+2   FIRSTNAME                         VARCHAR(20) not null        
+3   LASTNAME                          VARCHAR(20) not null        
+4   ADDRESS1                          VARCHAR(255)                
+5   ADDRESS2                          VARCHAR(255) not null       
+6   CITY                              VARCHAR(50)                 
+7   STATE                             VARCHAR(2)                  
+8   POSTALCODE                        VARCHAR(10)                 
+9   COUNTRY                           VARCHAR(50)                 
+10  PHONE1                            VARCHAR(10)                 
+11  PHONE2                            VARCHAR(15)                 
+12  EMAIL1                            VARCHAR(10)                 
+13  EMAIL2                            INTEGER                     
+14  FAX                               VARCHAR(10)                 
+15  FAX3                              INTEGER                     
+16  HOMEEMAIL11                       VARCHAR(10)                 
+17  HOMEEMAIL12                       VARCHAR(10)                 
+18  PUBLICATION_ID                    BIGINT not null             
+
+PK_WRITERS                                                 [primary key]
+1   ID                                ascending                   
+
+FK_WRITERS_PUBLICATION                     [foreign key, with no action]
+ 1  PUBLIC.FOR_LINT.PUBLICATIONS.ID --> PUBLICATION_ID                              
+
+FK_WRITER_JOIN                             [foreign key, with no action]
+ 1  ID --> PUBLIC.FOR_LINT.EXTRA_PK.WRITERID                              
+
+FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
+ 1  ID --> PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID                              
+
+SYS_IDX_PK_WRITERS_10063                                  [unique index]
+1   ID                                ascending                   
+
+SYS_IDX_10080                                         [non-unique index]
+18  PUBLICATION_ID                    ascending                   
+
+IDX_A1_WRITERS                                        [non-unique index]
+6   CITY                              ascending                   
+7   STATE                             ascending                   
+
+IDX_U_WRITERS                                             [unique index]
+12  EMAIL1                            ascending                   
+9   COUNTRY                           ascending                   
+
+IDX_B_WRITERS                                         [non-unique index]
+3   LASTNAME                          ascending                   
+2   FIRSTNAME                         ascending                   
+
+IDX_A_WRITERS                                         [non-unique index]
+6   CITY                              ascending                   
+7   STATE                             ascending                   
+8   POSTALCODE                        ascending                   
+9   COUNTRY                           ascending                   
+
+
+PUBLIC."PUBLISHER SALES".REGIONS                                 [table]
+------------------------------------------------------------------------
+1   CITY                              VARCHAR(50) not null        
+2   STATE                             VARCHAR(2) not null         
+3   POSTALCODE                        VARCHAR(10) not null        
+4   COUNTRY                           VARCHAR(50) not null        
+
+PK_CUSTOMERS                                               [primary key]
+3   POSTALCODE                        ascending                   
+4   COUNTRY                           ascending                   
+
+FK_SALES_REGIONS                           [foreign key, with no action]
+ 1  POSTALCODE --> PUBLIC."PUBLISHER SALES".SALES.POSTALCODE                              
+ 2  COUNTRY --> PUBLIC."PUBLISHER SALES".SALES.COUNTRY                              
+
+SYS_IDX_PK_CUSTOMERS_10052                                [unique index]
+3   POSTALCODE                        ascending                   
+4   COUNTRY                           ascending                   
+
+
+PUBLIC."PUBLISHER SALES".SALES                                   [table]
+------------------------------------------------------------------------
+1   POSTALCODE                        VARCHAR(10) not null        
+2   COUNTRY                           VARCHAR(50) not null        
+3   BOOKID                            INTEGER                     
+4   PERIODENDDATE                     DATE                        
+5   TOTALAMOUNT                       DOUBLE(64, 0)               
+
+FK_SALES_REGIONS                           [foreign key, with no action]
+ 1  PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE --> POSTALCODE                              
+ 2  PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY --> COUNTRY                              
+
+SYS_IDX_10056                                         [non-unique index]
+1   POSTALCODE                        ascending                   
+2   COUNTRY                           ascending                   
+
+
+
+
+Routines
+========================================================================
+
+
+PUBLIC.BOOKS.CUSTOMADD               [function, does not return a table]
+------------------------------------------------------------------------
+1   ONE                               INTEGER, in                 
+
+                                                            [definition]
+CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10046 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN BOOKS.CUSTOMADD(ONE,1)
+
+
+PUBLIC.BOOKS.CUSTOMADD               [function, does not return a table]
+------------------------------------------------------------------------
+1   ONE                               INTEGER, in                 
+2   TWO                               INTEGER, in                 
+
+                                                            [definition]
+CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER,IN TWO INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10045 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN ONE+TWO
+
+
+PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
+------------------------------------------------------------------------
+1   PUBLISHER                         VARCHAR, out                
+
+                                                            [definition]
+CREATE PROCEDURE BOOKS.NEW_PUBLISHER(OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10043 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = 'New Publisher'
+
+
+PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
+------------------------------------------------------------------------
+1   NEWPUBLISHER                      VARCHAR, in                 
+2   PUBLISHER                         VARCHAR, out                
+
+                                                            [definition]
+CREATE PROCEDURE BOOKS.NEW_PUBLISHER(IN NEWPUBLISHER VARCHAR(50),OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10044 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = NEWPUBLISHER
+
+
+PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS                   [procedure, no result]
+------------------------------------------------------------------------
+1   B_COUNT                           INTEGER, in                 
+2   B_OFFSET                          INTEGER, in                 
+3   L_ID                              BIGINT, in                  
+
+                                                            [definition]
+CREATE PROCEDURE SYSTEM_LOBS.ALLOC_BLOCKS(IN B_COUNT INTEGER,IN B_OFFSET INTEGER,IN L_ID BIGINT) SPECIFIC ALLOC_BLOCKS_10022 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE LOB_ADDR INT DEFAULT NULL;DECLARE REMAINING_COUNT INT DEFAULT 0;DECLARE BL_ADDR INT DEFAULT NULL;DECLARE TEMP_COUNT INT DEFAULT 0;DECLARE BL_OFFSET INT DEFAULT 0;SET REMAINING_COUNT=B_COUNT;SET BL_OFFSET=B_OFFSET;MAIN_LOOP:LOOP SET BL_ADDR=(SELECT BLOCK_ADDR FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_COUNT=REMAINING_COUNT AND TX_ID=0 FETCH 1 ROW ONLY);IF BL_ADDR IS NOT NULL THEN CALL CONVERT_BLOCK(BL_ADDR,REMAINING_COUNT,BL_OFFSET,L_ID);IF LOB_ADDR IS NULL THEN SET LOB_ADDR=BL_ADDR;END IF;LEAVE MAIN_LOOP;END IF;SET(BL_ADDR,TEMP_COUNT)=(SELECT BLOCK_ADDR,BLOCK_COUNT FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_COUNT<REMAINING_COUNT AND TX_ID=0 FETCH 1 ROW ONLY);IF BL_ADDR IS NOT NULL THEN CALL CONVERT_BLOCK(BL_ADDR,TEMP_COUNT,BL_OFFSET,L_ID);IF LOB_ADDR IS NULL THEN SET LOB_ADDR=BL_ADDR;END IF;SET REMAINING_COUNT=REMAINING_COUNT-TEMP_COUNT;SET BL_OFFSET=BL_OFFSET+TEMP_COUNT;SET BL_ADDR=NULL;SET TEMP_COUNT=0;ELSE CALL CREATE_EMPTY_BLOCK(BL_ADDR,REMAINING_COUNT);CALL CONVERT_BLOCK(BL_ADDR,REMAINING_COUNT,BL_OFFSET,L_ID);IF LOB_ADDR IS NULL THEN SET LOB_ADDR=BL_ADDR;END IF;LEAVE MAIN_LOOP;END IF;END LOOP MAIN_LOOP;END
+
+
+PUBLIC.SYSTEM_LOBS.CONVERT_BLOCK                  [procedure, no result]
+------------------------------------------------------------------------
+1   B_ADDR                            INTEGER, in                 
+2   B_COUNT                           INTEGER, in                 
+3   B_OFFSET                          INTEGER, in                 
+4   L_ID                              BIGINT, in                  
+
+                                                            [definition]
+CREATE PROCEDURE SYSTEM_LOBS.CONVERT_BLOCK(IN B_ADDR INTEGER,IN B_COUNT INTEGER,IN B_OFFSET INTEGER,IN L_ID BIGINT) SPECIFIC CONVERT_BLOCK_10012 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DELETE FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_ADDR=B_ADDR;INSERT INTO SYSTEM_LOBS.LOBS VALUES(B_ADDR,B_COUNT,B_OFFSET,L_ID);END
+
+
+PUBLIC.SYSTEM_LOBS.CREATE_EMPTY_BLOCK             [procedure, no result]
+------------------------------------------------------------------------
+1   B_ADDR                            INTEGER, in/ out            
+2   B_COUNT                           INTEGER, in                 
+
+                                                            [definition]
+CREATE PROCEDURE SYSTEM_LOBS.CREATE_EMPTY_BLOCK(INOUT B_ADDR INTEGER,IN B_COUNT INTEGER) SPECIFIC CREATE_EMPTY_BLOCK_10020 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE TEMP_COUNT INT DEFAULT NULL;DECLARE TEMP_ADDR INT DEFAULT NULL;SET(TEMP_ADDR,TEMP_COUNT)=(SELECT BLOCK_ADDR,BLOCK_COUNT FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_COUNT>B_COUNT AND TX_ID=0 FETCH 1 ROW ONLY);IF TEMP_ADDR IS NULL THEN SIGNAL SQLSTATE'45000';END IF;UPDATE SYSTEM_LOBS.BLOCKS SET BLOCK_COUNT=B_COUNT WHERE BLOCK_ADDR=TEMP_ADDR;INSERT INTO SYSTEM_LOBS.BLOCKS VALUES(TEMP_ADDR+B_COUNT,TEMP_COUNT-B_COUNT,0);SET B_ADDR=TEMP_ADDR;END
+
+
+PUBLIC.SYSTEM_LOBS.DELETE_BLOCKS                  [procedure, no result]
+------------------------------------------------------------------------
+1   L_ID                              BIGINT, in                  
+2   B_OFFSET                          INTEGER, in                 
+3   B_LIMIT                           INTEGER, in                 
+4   TX_ID                             BIGINT, in                  
+
+                                                            [definition]
+CREATE PROCEDURE SYSTEM_LOBS.DELETE_BLOCKS(IN L_ID BIGINT,IN B_OFFSET INTEGER,IN B_LIMIT INTEGER,IN TX_ID BIGINT) SPECIFIC DELETE_BLOCKS_10019 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC INSERT INTO SYSTEM_LOBS.BLOCKS(SELECT BLOCK_ADDR,BLOCK_COUNT,TX_ID FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID AND BLOCK_OFFSET>=B_OFFSET AND BLOCK_OFFSET<B_LIMIT);DELETE FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID AND BLOCK_OFFSET>=B_OFFSET AND BLOCK_OFFSET<B_LIMIT;END
+
+
+PUBLIC.SYSTEM_LOBS.DELETE_LOB                     [procedure, no result]
+------------------------------------------------------------------------
+1   L_ID                              BIGINT, in                  
+2   TX_ID                             BIGINT, in                  
+
+                                                            [definition]
+CREATE PROCEDURE SYSTEM_LOBS.DELETE_LOB(IN L_ID BIGINT,IN TX_ID BIGINT) SPECIFIC DELETE_LOB_10013 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC INSERT INTO SYSTEM_LOBS.BLOCKS(SELECT BLOCK_ADDR,BLOCK_COUNT,TX_ID FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID);DELETE FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID;DELETE FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_ID=L_ID;END
+
+
+PUBLIC.SYSTEM_LOBS.DELETE_UNUSED                  [procedure, no result]
+------------------------------------------------------------------------
+1   L_IDS                             ARRAY, in                   
+
+                                                            [definition]
+CREATE PROCEDURE SYSTEM_LOBS.DELETE_UNUSED(IN L_IDS BIGINT ARRAY) SPECIFIC DELETE_UNUSED_10018 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE TABLE LIVE_IDS(TEMP_ID INT);DECLARE TABLE TEMP_IDS(TEMP_ID INT);DECLARE TEMP_COUNT INT DEFAULT 1;WHILE TEMP_COUNT<=CARDINALITY(L_IDS)DO INSERT INTO MODULE.LIVE_IDS VALUES L_IDS[TEMP_COUNT];SET TEMP_COUNT=TEMP_COUNT+1;END WHILE;SET TEMP_COUNT=0;REPEAT INSERT INTO MODULE.TEMP_IDS SELECT LOB_ID FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_USAGE_COUNT<1 AND LOB_ID NOT IN(SELECT TEMP_ID FROM MODULE.LIVE_IDS)LIMIT 1000;INSERT INTO SYSTEM_LOBS.BLOCKS(SELECT BLOCK_ADDR,BLOCK_COUNT,0 FROM SYSTEM_LOBS.LOBS WHERE LOB_ID IN(SELECT TEMP_ID FROM MODULE.TEMP_IDS));DELETE FROM SYSTEM_LOBS.LOBS WHERE LOB_ID IN(SELECT TEMP_ID FROM MODULE.TEMP_IDS);DELETE FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_ID IN(SELECT TEMP_ID FROM MODULE.TEMP_IDS);GET DIAGNOSTICS TEMP_COUNT=ROW_COUNT;DELETE FROM MODULE.TEMP_IDS;UNTIL TEMP_COUNT<1000 END REPEAT;END
+
+
+PUBLIC.SYSTEM_LOBS.DIVIDE_BLOCK                   [procedure, no result]
+------------------------------------------------------------------------
+1   B_OFFSET                          INTEGER, in                 
+2   L_ID                              BIGINT, in                  
+
+                                                            [definition]
+CREATE PROCEDURE SYSTEM_LOBS.DIVIDE_BLOCK(IN B_OFFSET INTEGER,IN L_ID BIGINT) SPECIFIC DIVIDE_BLOCK_10021 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE BL_ADDR INT DEFAULT NULL;DECLARE BL_COUNT INT DEFAULT NULL;DECLARE BL_OFFSET INT DEFAULT NULL;SET(BL_ADDR,BL_COUNT,BL_OFFSET)=(SELECT BLOCK_ADDR,BLOCK_COUNT,BLOCK_OFFSET FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID AND B_OFFSET>BLOCK_OFFSET AND B_OFFSET<BLOCK_OFFSET+BLOCK_COUNT);IF BL_ADDR IS NULL THEN SIGNAL SQLSTATE'45000';END IF;DELETE FROM SYSTEM_LOBS.LOBS WHERE BLOCK_ADDR=BL_ADDR;INSERT INTO SYSTEM_LOBS.LOBS VALUES(BL_ADDR,B_OFFSET-BL_OFFSET,BL_OFFSET,L_ID);INSERT INTO SYSTEM_LOBS.LOBS VALUES(BL_ADDR+B_OFFSET-BL_OFFSET,BL_OFFSET+BL_COUNT-B_OFFSET,B_OFFSET,L_ID);END
+
+
