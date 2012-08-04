@@ -94,10 +94,10 @@ public final class SchemaInfoLevel
   {
     final SchemaInfoLevel standard = minimum();
     standard.setRetrieveColumnDataTypes(true);
-    standard.setRetrieveRoutineColumns(true);
     standard.setRetrieveTableColumns(true);
     standard.setRetrieveForeignKeys(true);
     standard.setRetrieveIndices(true);
+    standard.setRetrieveRoutineColumns(true);
     standard.setTag("standard");
     return standard;
   }
