@@ -17,14 +17,6 @@
       description="SchemaCrawler jars, and database driver classpath"
       default="${schemacrawler-classpath}"/>
 
-    <!-- Either the datasource, or the connection properties should be
-      provided. If both sets are provided, the datasource is ignored. -->
-
-    <attribute
-      name="datasource"
-      description="Datasource defined in the configuration"
-      default=""/>
-
     <attribute
       name="driver"
       description="JDBC driver class name"
@@ -71,12 +63,12 @@
       description="Regular expression to exclude columns"
       default=""/>
     <attribute
-      name="procedures"
-      description="Regular expression to select procedures"
+      name="routines"
+      description="Regular expression to select routines"
       default=".*"/>
     <attribute
       name="excludeinout"
-      description="Regular expression to exclude procedure parameters"
+      description="Regular expression to exclude routine parameters"
       default=""/>
     <attribute
       name="synonyms"
@@ -89,7 +81,7 @@
       default=".*"/>
     <attribute
       name="grepinout"
-      description="Regular expression to grep procedure parameters"
+      description="Regular expression to grep routine parameters"
       default=".*"/>
     <attribute
       name="invert-match"
@@ -122,7 +114,6 @@
         </classpath>
         <arg value="-g=@{config}"/>
         <arg value="-p=@{additional-config}"/>
-        <arg value="-c=@{datasource}"/>
         <arg value="-driver=@{driver}"/>
         <arg value="-url=@{url}"/>
         <arg value="-user=@{user}"/>
@@ -131,7 +122,7 @@
         <arg value="-infolevel=@{infolevel}"/>
         <arg value="-tables=@{tables}"/>
         <arg value="-excludecolumns=@{excludecolumns}"/>
-        <arg value="-routines=@{procedures}"/>
+        <arg value="-routines=@{routines}"/>
         <arg value="-excludeinout=@{excludeinout}"/>
         <arg value="-synonyms=@{synonyms}"/>
         <arg value="-grepcolumns=@{grepcolumns}"/>

@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<project name="ant_task_test" default="ant_task_test">
+
+	<typedef resource="schemacrawler-antlib.xml" />
+
+	<path id="schemacrawler-classpath"/>
+
+	<target name="ant_task_test">
+
+		<delete file="${outputfile}" />
+		<schemacrawler 
+			schemacrawler-classpath="schemacrawler-classpath" 
+			user="sa" 
+			password="" 
+			driver="org.hsqldb.jdbcDriver" 
+			url="jdbc:hsqldb:hsql://localhost:9001/schemacrawler" 
+			infolevel="maximum" 
+			command="details,count" 
+			outputfile="${outputfile}" />
+
+	</target>
+
+</project>
