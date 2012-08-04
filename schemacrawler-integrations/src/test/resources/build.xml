@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<project name="ant_task_test" default="ant_task_test">
+
+	<typedef resource="schemacrawler-integrations-antlib.xml" />
+
+	<path id="schemacrawler-classpath"/>
+
+	<target name="ant_task_test">
+
+		<delete file="${outputfile}" />
+		<schemacrawler-spring 
+			schemacrawler-classpath="schemacrawler-classpath" 
+			context-file="${context-file}"
+			executable="${executable}"
+			datasource="${datasource}"
+		/>
+
+	</target>
+
+</project>

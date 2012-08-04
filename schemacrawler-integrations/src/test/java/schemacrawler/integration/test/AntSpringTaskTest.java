@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package schemacrawler.test;
+package schemacrawler.integration.test;
 
 
 import static schemacrawler.test.utility.TestUtility.compareOutput;
@@ -32,7 +32,7 @@ import schemacrawler.test.utility.TestDatabase;
 import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.options.OutputFormat;
 
-public class AntTaskTest
+public class AntSpringTaskTest
   extends BuildFileTest
 {
 
@@ -68,14 +68,16 @@ public class AntTaskTest
   {
 
     final String referenceFile = "ant_task_test.txt";
-    final File testOutputFile = File.createTempFile("schemacrawler."
-                                                        + referenceFile + ".",
-                                                    ".test");
+    final File testOutputFile = new File("scOutput.txt");
     testOutputFile.delete();
+
+    final File contextFile = TestUtility.copyResourceToTempFile("/context.xml");
 
     beforeAllTests();
 
-    setAntProjectProperty("outputfile", testOutputFile.getAbsolutePath());
+    setAntProjectProperty("context-file", contextFile.getAbsolutePath());
+    setAntProjectProperty("datasource", "datasource");
+    setAntProjectProperty("executable", "executableForSchema");
     executeTarget("ant_task_test");
 
     afterAllTests();

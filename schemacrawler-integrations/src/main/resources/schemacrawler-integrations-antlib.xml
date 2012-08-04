@@ -1,72 +1,43 @@
 <?xml version="1.0"?>
 <antlib>
 
-  <macrodef
-    name="schemacrawler-spring"
-  >
+	<macrodef name="schemacrawler-spring">
 
-    <!-- Attributes -->
-    <attribute
-      name="context-file"
-      default="schemacrawler.context.xml" />
-    <attribute
-      name="executable"
-      default="executable" />
-    <attribute
-      name="datasource"
-      default="datasource" />
+		<!-- Attributes -->
+		<attribute name="context-file" default="schemacrawler.context.xml" />
+		<attribute name="executable" default="executable" />
+		<attribute name="datasource" default="datasource" />
 
-    <attribute
-      name="schemacrawler-classpath"
-      default="${schemacrawler-classpath}" />
+		<attribute name="schemacrawler-classpath" default="${schemacrawler-classpath}" />
 
-    <attribute
-      name="loglevel"
-      description="Log level - may be one of: OFF, SEVERE, WARNING, INFO, CONFIG, FINE, FINER, FINEST, ALL"
-      default="SEVERE" />
+		<attribute name="loglevel"
+			description="Log level - may be one of: OFF, SEVERE, WARNING, INFO, CONFIG, FINE, FINER, FINEST, ALL"
+			default="SEVERE" />
 
-    <sequential>
+		<sequential>
 
-      <!-- Required properties: -->
-      <property
-        name="schemacrawler.dir"
-        value="${basedir}" />
+			<!-- Required properties: -->
+			<property name="schemacrawler.dir" value="${basedir}" />
 
-      <java
-        taskname="schemacrawler-spring"
-        classname="schemacrawler.tools.integration.spring.Main"
-        logerror="true"
-        failonerror="true"
-      >
-        <classpath>
-          <pathelement
-            path="${java.class.path}" />
-          <fileset
-            dir="${schemacrawler.dir}"
-          >
-            <include
-              name="*.jar" />
-          </fileset>
-          <path
-            refid="@{schemacrawler-classpath}" />
-        </classpath>
-        <arg
-          value="-context-file" />
-        <arg
-          value="@{context-file}" />
-        <arg
-          value="-executable" />
-        <arg
-          value="@{executable}" />
-        <arg
-          value="-datasource" />
-        <arg
-          value="@{datasource}" />
-        <arg
-          value="-loglevel=@{loglevel}" />
-      </java>
-    </sequential>
+			<java taskname="schemacrawler-spring" classname="schemacrawler.tools.integration.spring.Main"
+				logerror="true" failonerror="true">
+				<classpath>
+					<pathelement path="${java.class.path}" />
+					<fileset dir="${schemacrawler.dir}">
+						<include name="*.jar" />
+					</fileset>
+					<path refid="@{schemacrawler-classpath}" />
+				</classpath>
+				<arg value="-context-file" />
+				<arg value="@{context-file}" />
+				<arg value="-executable" />
+				<arg value="@{executable}" />
+				<arg value="-datasource" />
+				<arg value="@{datasource}" />
+				<arg value="-loglevel=@{loglevel}" />
+			</java>
+		</sequential>
 
-  </macrodef>
+	</macrodef>
 
 </antlib>
