@@ -9,9 +9,12 @@
     <section name="SchemaCrawler - User Defined Queries Example">
       <subsection name="Description">
         <p>SchemaCrawler has the capability to execute any arbitrary SQL,
-          per table. The
-          following variables are available to aid in the construction of queries -
-          ${tabletype}, ${table}, and ${columns}. This example demonstrates
+          per
+          table. The
+          following variables are available to aid in the construction
+          of queries -
+          ${tabletype}, ${table}, and ${columns}. This example
+          demonstrates
           how to
           execute arbitrary SQL, per table.
         </p>
@@ -46,6 +49,9 @@
       </subsection>
       <subsection name="How to Experiment">
         <ol>
+          <li>
+            Try generating different output formats, such as HTML or JSON.
+          </li>
           <li>
             Try modifying the
             <span class="code">schemacrawler.config.properties</span>
