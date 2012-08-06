@@ -29,12 +29,16 @@
       <subsection name="How to Run">
         <ol>
           <li>
-            Make sure that Maven is on your path.
+            Install
+            <a href="http://maven.apache.org/">
+              Maven,
+            </a>
+            and make sure that Maven is on your path
           </li>
           <li>
             Start a command shell in the
-            <em>schemacrawler-plugin</em>
-            example directory.
+            <span class="code">schemacrawler-plugin</span>
+            example directory
           </li>
           <li>
             Run

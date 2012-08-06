@@ -8,13 +8,16 @@
   <body>
     <section name="SchemaCrawler - Examples">
       <subsection name="Examples">
-        <p>This folder contains a number of examples, as well as a database server that has an
-          example schema and data. Each folder illustrates a SchemaCrawler capability.
+        <p>This folder contains a number of examples, as well as a database
+          server that has an
+          example schema and data. Each folder illustrates a
+          SchemaCrawler capability.
         </p>
       </subsection>
       <subsection name="Downloads">
         <p>
-          Download the most appropriate version of the SchemaCrawler binaries from the links on
+          Download the most appropriate version of the SchemaCrawler binaries
+          from the links on
           <a href="http://schemacrawler.sourceforge.net/bundled.html">Bundled Distributions.</a>
         </p>
       </subsection>

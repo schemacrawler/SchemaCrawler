@@ -8,7 +8,8 @@
   <body>
     <section name="SchemaCrawler - Velocity Example">
       <subsection name="Description">
-        <p>The command example demonstrates the integration of SchemaCrawler with Apache
+        <p>The command example demonstrates the integration of SchemaCrawler
+          with Apache
           Jakarta Velocity.
         </p>
       </subsection>
@@ -16,30 +17,40 @@
         <ol>
           <li>
             Install
-            <a href="http://ant.apache.org/">
-              ant,
-            </a>
-            and make sure that ant is on your path.
+            <a href="http://ant.apache.org/">ant,</a>
+            and make sure that ant is on your
+            path
           </li>
-          <li>Start the database server by running StartDatabaseServer script from the
-            distribution directory.
+          <li>
+            Make sure that
+            <span class="code">java</span>
+            is on your
+            <span class="code">PATH</span>
+          </li>
+          <li>
+            Start the database server by running the
+            <span class="code">StartDatabaseServer</span>
+            script from the
+            distribution directory
           </li>
           <li>
             Start a command shell in the
             <span class="code">velocity</span>
-            example directory.
+            example directory
           </li>
-          <li>Run
+          <li>
+            Run
             <span class="code">velocity.cmd</span>
             (or
             <span class="code">velocity.sh</span>
-            on Unix).
+            on Unix)
           </li>
         </ol>
       </subsection>
       <subsection name="How to Experiment">
         <ol>
-          <li>Try modifying the Velocity template,
+          <li>
+            Try modifying the Velocity template,
             <span class="code">tables.vm</span>
             to modify the output produced.
           </li>

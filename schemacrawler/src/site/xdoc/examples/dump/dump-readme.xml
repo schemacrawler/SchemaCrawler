@@ -8,39 +8,44 @@
   <body>
     <section name="SchemaCrawler - Dump Example">
       <subsection name="Description">
-        <p>The dump example shows how to dump the contents of a database in a diff-able
+        <p>The dump example shows how to dump the contents of a database in
+          a diff-able
           format.
         </p>
       </subsection>
       <subsection name="How to Run">
         <ol>
           <li>
-            Make sure that the Java executable is on your path.
+            Make sure that
+            <span class="code">java</span>
+            is on your
+            <span class="code">PATH</span>
           </li>
-          <li>Start the database server by running StartDatabaseServer script from the
-            distribution directory.
+          <li>
+            Start the database server by running the
+            <span class="code">StartDatabaseServer</span>
+            script from the
+            distribution directory
           </li>
-          <li>Start a command shell in the
+          <li>
+            Start a command shell in the
             <span class="code">dump</span>
-            example directory.
+            example directory
           </li>
           <li>
             Run
             <span class="code">dump.cmd</span>
             (or
             <span class="code">dump.sh</span>
-            on Unix).
+            on Unix)
           </li>
         </ol>
       </subsection>
       <subsection name="How to Experiment">
-        <ol type="1">
+        <ol>
           <li>
-            Try modifying the schemacrawler.config.properties with
+            Try using command-line filtering with
             regular expressions, logging, and so on.
-          </li>
-          <li>Redirect the output of SchemaCrawler into a file, by running
-            <span class="code">dump.cmd &gt; file.txt</span>.
           </li>
         </ol>
       </subsection>

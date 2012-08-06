@@ -61,13 +61,16 @@
     <delete file="${outputfile}"/>
 
     <schemacrawler
-      datasource="hsqldb"
       schemacrawler-classpath="schemacrawler-classpath"
-    	infolevel="standard"
+      user="sa"
+      password=""
+      driver="org.hsqldb.jdbcDriver"
+      url="jdbc:hsqldb:hsql://localhost:9001/schemacrawler"
+      infolevel="standard"
       command="velocity"
       outputformat="${velocity-template}"
       outputfile="${outputfile}"/>
-
+  	
     <echo message="Output is in ${outputfile}"/>
 
   </target>

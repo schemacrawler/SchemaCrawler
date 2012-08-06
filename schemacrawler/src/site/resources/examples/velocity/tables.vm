@@ -3,9 +3,9 @@ $database.databaseInfo
 $database.jdbcDriverInfo
 
 #foreach($schema in $database.schemas)
-SET SCHEMA $schema.name;
+SET SCHEMA $schema.fullName;
 
-#foreach($table in $schema.tables)
+#foreach($table in $database.getTables($schema))
 #if ($table.type == "table")
 CREATE TABLE $table.name
 (

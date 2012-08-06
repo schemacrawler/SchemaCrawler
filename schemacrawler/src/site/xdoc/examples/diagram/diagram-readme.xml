@@ -8,34 +8,44 @@
   <body>
     <section name="SchemaCrawler - Diagram Example">
       <subsection name="Description">
-        <p>The diagram example demonstrates the integration of SchemaCrawler with
+        <p>The diagram example demonstrates the integration of SchemaCrawler
+          with
           GraphViz.
         </p>
       </subsection>
       <subsection name="How to Run">
-        <ol type="1">
-          <li>Install
-            <a href="http://www.graphviz.org/">Graphviz</a>, and make sure that Graphviz is on your
-            path.
+        <ol>
+          <li>
+            Make sure that
+            <span class="code">java</span>
+            is on your
+            <span class="code">PATH</span>
           </li>
-          <li>Start the database server by running StartDatabaseServer script from the
-            distribution directory.
+          <li>
+            Start the database server by running the
+            <span class="code">StartDatabaseServer</span>
+            script from the
+            distribution directory
           </li>
-          <li>Start a command shell in the
+          <li>
+            Start a command shell in the
             <span class="code">diagram</span>
-            example directory.
+            example directory
           </li>
-          <li>Run
+          <li>
+            Run
             <span class="code">diagram.cmd</span>
             (or
             <span class="code">diagram.sh</span>
-            on Unix).
+            on Unix)
           </li>
         </ol>
       </subsection>
       <subsection name="How to Experiment">
         <ol>
-          <li>Try using include and exclude expressions in include and exclude certain tables.</li>
+          <li>Try using include and exclude expressions in include and
+            exclude certain tables.
+          </li>
         </ol>
       </subsection>
     </section>

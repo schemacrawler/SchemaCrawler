@@ -15,19 +15,23 @@
         </p>
       </subsection>
       <subsection name="How to Run">
-        <ol type="1">
+        <ol>
           <li>
-            Make sure that the Java executable is on your path. (J2SE
-            6 or better is required.)
+            Make sure that
+            <span class="code">java</span>
+            is on your
+            <span class="code">PATH</span>
           </li>
-          <li>Start the database server by running
-            StartDatabaseServer script from the
-            distribution directory.
+          <li>
+            Start the database server by running the
+            <span class="code">StartDatabaseServer</span>
+            script from the
+            distribution directory
           </li>
           <li>
             Start a command shell in the
             <span class="code">javascript</span>
-            example directory.
+            example directory
           </li>
           <li>
             Run
@@ -37,7 +41,7 @@
             <span class="code">javascript.sh tables.js
             </span>
             on
-            Unix).
+            Unix)
           </li>
         </ol>
       </subsection>
