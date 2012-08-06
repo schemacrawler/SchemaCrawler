@@ -9,7 +9,8 @@
     <section name="SchemaCrawler - Dump Example">
       <subsection name="Description">
         <p>The dump example shows how to dump the contents of a database in
-          a diff-able
+          a
+          diff-able
           format.
         </p>
       </subsection>
@@ -44,8 +45,9 @@
       <subsection name="How to Experiment">
         <ol>
           <li>
-            Try using command-line filtering with
-            regular expressions, logging, and so on.
+            Try using grep options to include certain tables. For example, try
+            using a command-line option of
+            <span class="code">-grepcolumns=.*\.AUTHOR.*</span>
           </li>
         </ol>
       </subsection>

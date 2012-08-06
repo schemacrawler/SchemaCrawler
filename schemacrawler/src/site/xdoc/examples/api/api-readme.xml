@@ -11,7 +11,8 @@
         <p>The API example demonstrates the use of the SchemaCrawler API to
           create a data
           source, and obtain database metadata. The
-          SchemaCrawler API is a much
+          SchemaCrawler
+          API is a much
           simpler
           alternative to using JDBC
           metadata.
@@ -44,16 +45,9 @@
       <subsection name="How to Experiment">
         <ol>
           <li>
-            Try modifying the
-            <span class="code">schemacrawler.config.properties</span>
-            with regular
-            expressions, logging, and so on.
-          </li>
-          <li>
             Try uncommenting the code block in
             <span class="code">ApiExample.java</span>
-            that
-            modifies the default options.
+            that modifies the default options.
           </li>
           <li>
             Read the

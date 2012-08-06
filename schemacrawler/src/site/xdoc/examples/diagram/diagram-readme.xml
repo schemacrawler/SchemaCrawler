@@ -43,8 +43,10 @@
       </subsection>
       <subsection name="How to Experiment">
         <ol>
-          <li>Try using include and exclude expressions in include and
-            exclude certain tables.
+          <li>
+            Try using grep options to include certain tables. For example, try
+            using a command-line option of
+            <span class="code">-grepcolumns=.*\.AUTHOR.*</span>
           </li>
         </ol>
       </subsection>

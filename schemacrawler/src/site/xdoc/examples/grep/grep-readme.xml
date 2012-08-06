@@ -29,7 +29,7 @@
             on Unix)
           </li>
           <li>
-            To find stored procedures with certain parameter names, run
+            To find routines with certain parameter names, run
             <span class="code">sc.cmd -infolevel=standard -command=schema -tables= -grepinout=.*\.B_OFFSET</span>
             (or
             <span class="code">sc.sh -infolevel=standard -command=schema -tables= -grepinout=.*\.B_OFFSET</span>
