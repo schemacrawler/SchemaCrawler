@@ -36,6 +36,9 @@ IDX_A_AUTHORS                                         [non-unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
 
+TRG_AUTHORS                             [trigger, after delete, per row]
+  UPDATE BOOKS.PUBLISHERS SET PUBLISHER='Jacob'WHERE PUBLISHER='John'
+
 CHECK_UPPERCASE_STATE                                 [check constraint]
 BOOKS.AUTHORS.STATE=UPPER(BOOKS.AUTHORS.STATE)
 

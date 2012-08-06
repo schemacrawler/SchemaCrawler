@@ -1833,6 +1833,17 @@ hr {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
+		<td colspan='2' class='name'>TRG_AUTHORS</td>
+		<td class='description right'>[trigger, after delete, per row]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>UPDATE BOOKS.PUBLISHERS SET PUBLISHER=&apos;Jacob&apos;WHERE PUBLISHER=&apos;John&apos;</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
 		<td colspan='2' class='name'></td>
 		<td class='description right'>[check constraint]</td>
 	</tr>
@@ -1945,17 +1956,6 @@ hr {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>TRG_AUTHORS</td>
-		<td class='description right'>[trigger, after delete, per row]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>UPDATE BOOKS.PUBLISHERS SET PUBLISHER=&apos;Jacob&apos;WHERE PUBLISHER=&apos;John&apos;</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
 		<td colspan='2' class='name'></td>
 		<td class='description right'>[remarks]</td>
 	</tr>
@@ -1984,6 +1984,16 @@ hr {
 		<td class='ordinal'></td>
 		<td class='subname'>LASTNAME</td>
 		<td class='type'>VARCHAR(20)</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[definition]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>SELECT ID,FIRSTNAME,LASTNAME FROM BOOKS.AUTHORS</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -2056,16 +2066,6 @@ hr {
 		<td class='ordinal'></td>
 		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
 		<td class='type'></td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description right'>[definition]</td>
-	</tr>
-	<tr>
-		<td colspan='3' class='definition'>SELECT ID,FIRSTNAME,LASTNAME FROM BOOKS.AUTHORS</td>
 	</tr>
 </table>
 <p>&#160;</p>

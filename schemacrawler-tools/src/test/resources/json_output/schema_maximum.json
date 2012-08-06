@@ -20,6 +20,24 @@
         }
       },
       "name": "AUTHORS",
+      "constraints": [
+        {
+          "definition": "BOOKS.AUTHORS.STATE=UPPER(BOOKS.AUTHORS.STATE)",
+          "name": "CHECK_UPPERCASE_STATE"
+        },
+        {
+          "definition": "BOOKS.AUTHORS.ID IS NOT NULL",
+          "name": "SYS_CT_10027"
+        },
+        {
+          "definition": "BOOKS.AUTHORS.FIRSTNAME IS NOT NULL",
+          "name": "SYS_CT_10028"
+        },
+        {
+          "definition": "BOOKS.AUTHORS.LASTNAME IS NOT NULL",
+          "name": "SYS_CT_10029"
+        }
+      ],
       "columns": [
         {
           "dataType": "INTEGER",
@@ -149,6 +167,13 @@
           ]
         }
       ],
+      "triggers": [{
+        "actionCondition": "",
+        "eventManipulationType": "delete",
+        "conditionTiming": "after",
+        "actionStatement": "UPDATE BOOKS.PUBLISHERS SET PUBLISHER='Jacob'WHERE PUBLISHER='John'",
+        "actionOrientation": "row"
+      }],
       "fullName": "PUBLIC.BOOKS.AUTHORS",
       "type": "table"
     },
@@ -187,6 +212,7 @@
         }
       ],
       "indices": [],
+      "triggers": [],
       "fullName": "PUBLIC.BOOKS.AUTHORSLIST",
       "type": "view"
     },
@@ -213,6 +239,16 @@
       ],
       "primaryKey": {},
       "name": "BOOKAUTHORS",
+      "constraints": [
+        {
+          "definition": "BOOKS.BOOKAUTHORS.BOOKID IS NOT NULL",
+          "name": "SYS_CT_10035"
+        },
+        {
+          "definition": "BOOKS.BOOKAUTHORS.AUTHORID IS NOT NULL",
+          "name": "SYS_CT_10036"
+        }
+      ],
       "columns": [
         {
           "dataType": "INTEGER",
@@ -274,6 +310,7 @@
           ]
         }
       ],
+      "triggers": [],
       "fullName": "PUBLIC.BOOKS.BOOKAUTHORS",
       "type": "table"
     },
@@ -296,6 +333,20 @@
         }
       },
       "name": "BOOKS",
+      "constraints": [
+        {
+          "definition": "BOOKS.BOOKS.ID IS NOT NULL",
+          "name": "SYS_CT_10031"
+        },
+        {
+          "definition": "BOOKS.BOOKS.TITLE IS NOT NULL",
+          "name": "SYS_CT_10032"
+        },
+        {
+          "definition": "BOOKS.BOOKS.PUBLISHERID IS NOT NULL",
+          "name": "SYS_CT_10033"
+        }
+      ],
       "columns": [
         {
           "dataType": "INTEGER",
@@ -360,6 +411,7 @@
           "name": "ID"
         }
       }],
+      "triggers": [],
       "fullName": "PUBLIC.BOOKS.BOOKS",
       "type": "table"
     },
@@ -377,6 +429,7 @@
         "size": 32
       }],
       "indices": [],
+      "triggers": [],
       "fullName": "PUBLIC.BOOKS.\"Global Counts\"",
       "type": "table"
     },
@@ -391,6 +444,10 @@
         }
       },
       "name": "PUBLISHERS",
+      "constraints": {
+        "definition": "BOOKS.PUBLISHERS.ID IS NOT NULL",
+        "name": "SYS_CT_10025"
+      },
       "columns": [
         {
           "dataType": "INTEGER",
@@ -419,6 +476,7 @@
           "name": "ID"
         }
       }],
+      "triggers": [],
       "fullName": "PUBLIC.BOOKS.PUBLISHERS",
       "type": "table"
     },
@@ -452,6 +510,20 @@
         }
       },
       "name": "EXTRA_PK",
+      "constraints": [
+        {
+          "definition": "FOR_LINT.EXTRA_PK.ID IS NOT NULL",
+          "name": "SYS_CT_10072"
+        },
+        {
+          "definition": "FOR_LINT.EXTRA_PK.WRITERID IS NOT NULL",
+          "name": "SYS_CT_10073"
+        },
+        {
+          "definition": "FOR_LINT.EXTRA_PK.PUBLICATIONID IS NOT NULL",
+          "name": "SYS_CT_10074"
+        }
+      ],
       "columns": [
         {
           "dataType": "INTEGER",
@@ -507,6 +579,7 @@
           }
         }
       ],
+      "triggers": [],
       "fullName": "PUBLIC.FOR_LINT.EXTRA_PK",
       "type": "table"
     },
@@ -524,6 +597,7 @@
         "size": 32
       }],
       "indices": [],
+      "triggers": [],
       "fullName": "PUBLIC.FOR_LINT.\"Global Counts\"",
       "type": "table"
     },
@@ -566,6 +640,20 @@
         }
       },
       "name": "PUBLICATIONS",
+      "constraints": [
+        {
+          "definition": "FOR_LINT.PUBLICATIONS.ID IS NOT NULL",
+          "name": "SYS_CT_10064"
+        },
+        {
+          "definition": "FOR_LINT.PUBLICATIONS.TITLE IS NOT NULL",
+          "name": "SYS_CT_10065"
+        },
+        {
+          "definition": "FOR_LINT.PUBLICATIONS.WRITERID IS NOT NULL",
+          "name": "SYS_CT_10066"
+        }
+      ],
       "columns": [
         {
           "dataType": "INTEGER",
@@ -658,6 +746,7 @@
           }
         }
       ],
+      "triggers": [],
       "fullName": "PUBLIC.FOR_LINT.PUBLICATIONS",
       "type": "table"
     },
@@ -700,6 +789,32 @@
         }
       },
       "name": "WRITERS",
+      "constraints": [
+        {
+          "definition": "FOR_LINT.WRITERS.STATE=UPPER(FOR_LINT.WRITERS.STATE)",
+          "name": "CHECK_UPPERCASE_STATE"
+        },
+        {
+          "definition": "FOR_LINT.WRITERS.ID IS NOT NULL",
+          "name": "SYS_CT_10058"
+        },
+        {
+          "definition": "FOR_LINT.WRITERS.FIRSTNAME IS NOT NULL",
+          "name": "SYS_CT_10059"
+        },
+        {
+          "definition": "FOR_LINT.WRITERS.LASTNAME IS NOT NULL",
+          "name": "SYS_CT_10060"
+        },
+        {
+          "definition": "FOR_LINT.WRITERS.ADDRESS2 IS NOT NULL",
+          "name": "SYS_CT_10061"
+        },
+        {
+          "definition": "FOR_LINT.WRITERS.PUBLICATION_ID IS NOT NULL",
+          "name": "SYS_CT_10062"
+        }
+      ],
       "columns": [
         {
           "dataType": "BIGINT",
@@ -946,6 +1061,7 @@
           ]
         }
       ],
+      "triggers": [],
       "fullName": "PUBLIC.FOR_LINT.WRITERS",
       "type": "table"
     },
@@ -980,6 +1096,24 @@
         ]
       },
       "name": "REGIONS",
+      "constraints": [
+        {
+          "definition": "\"PUBLISHER SALES\".REGIONS.CITY IS NOT NULL",
+          "name": "SYS_CT_10048"
+        },
+        {
+          "definition": "\"PUBLISHER SALES\".REGIONS.STATE IS NOT NULL",
+          "name": "SYS_CT_10049"
+        },
+        {
+          "definition": "\"PUBLISHER SALES\".REGIONS.POSTALCODE IS NOT NULL",
+          "name": "SYS_CT_10050"
+        },
+        {
+          "definition": "\"PUBLISHER SALES\".REGIONS.COUNTRY IS NOT NULL",
+          "name": "SYS_CT_10051"
+        }
+      ],
       "columns": [
         {
           "dataType": "VARCHAR",
@@ -1032,6 +1166,7 @@
           }
         ]
       }],
+      "triggers": [],
       "fullName": "PUBLIC.\"PUBLISHER SALES\".REGIONS",
       "type": "table"
     },
@@ -1053,6 +1188,16 @@
       }],
       "primaryKey": {},
       "name": "SALES",
+      "constraints": [
+        {
+          "definition": "\"PUBLISHER SALES\".SALES.POSTALCODE IS NOT NULL",
+          "name": "SYS_CT_10053"
+        },
+        {
+          "definition": "\"PUBLISHER SALES\".SALES.COUNTRY IS NOT NULL",
+          "name": "SYS_CT_10054"
+        }
+      ],
       "columns": [
         {
           "dataType": "VARCHAR",
@@ -1114,6 +1259,7 @@
           }
         ]
       }],
+      "triggers": [],
       "fullName": "PUBLIC.\"PUBLISHER SALES\".SALES",
       "type": "table"
     }

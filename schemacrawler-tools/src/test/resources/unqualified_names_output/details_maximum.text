@@ -467,6 +467,9 @@ IDX_A_AUTHORS                                         [non-unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
 
+TRG_AUTHORS                             [trigger, after delete, per row]
+  UPDATE BOOKS.PUBLISHERS SET PUBLISHER='Jacob'WHERE PUBLISHER='John'
+
 CHECK_UPPERCASE_STATE                                 [check constraint]
 BOOKS.AUTHORS.STATE=UPPER(BOOKS.AUTHORS.STATE)
 
@@ -497,9 +500,6 @@ TRIGGER                                                      [privilege]
 UPDATE                                                       [privilege]
   _SYSTEM --> DBA (grantable)                                   
 
-TRG_AUTHORS                             [trigger, after delete, per row]
-  UPDATE BOOKS.PUBLISHERS SET PUBLISHER='Jacob'WHERE PUBLISHER='John'
-
                                                                [remarks]
 Contact details for book authors
 
@@ -509,6 +509,9 @@ AUTHORSLIST                                                       [view]
   ID                                INTEGER                     
   FIRSTNAME                         VARCHAR(20)                 
   LASTNAME                          VARCHAR(20)                 
+
+                                                            [definition]
+SELECT ID,FIRSTNAME,LASTNAME FROM BOOKS.AUTHORS
 
 DELETE                                                       [privilege]
   _SYSTEM --> DBA (grantable)                                   
@@ -527,9 +530,6 @@ TRIGGER                                                      [privilege]
 
 UPDATE                                                       [privilege]
   _SYSTEM --> DBA (grantable)                                   
-
-                                                            [definition]
-SELECT ID,FIRSTNAME,LASTNAME FROM BOOKS.AUTHORS
 
 
 BOOKAUTHORS                                                      [table]

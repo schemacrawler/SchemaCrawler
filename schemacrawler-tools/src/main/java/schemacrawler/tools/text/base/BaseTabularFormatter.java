@@ -22,9 +22,6 @@ package schemacrawler.tools.text.base;
 
 
 import java.util.Collection;
-import java.util.Map.Entry;
-import java.util.SortedMap;
-import java.util.TreeMap;
 
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.DatabaseProperty;
@@ -200,25 +197,6 @@ public abstract class BaseTabularFormatter<O extends Options>
                           schemaCrawlerInfo.getSchemaCrawlerVersion(),
                           Alignment.left));
     out.print(formattingHelper.createObjectEnd());
-
-    if (printVerboseDatabaseInfo)
-    {
-      final SortedMap<String, String> systemProperties = new TreeMap<String, String>(schemaCrawlerInfo
-        .getSystemProperties());
-      if (!systemProperties.isEmpty())
-      {
-        out.println(formattingHelper.createHeader(DocumentHeaderType.section,
-                                                  "System Properties"));
-        out.print(formattingHelper.createObjectStart(""));
-        for (final Entry<String, String> systemProperty: systemProperties
-          .entrySet())
-        {
-          out.println(formattingHelper.createNameValueRow(systemProperty
-            .getKey(), systemProperty.getValue(), Alignment.left));
-        }
-        out.print(formattingHelper.createObjectEnd());
-      }
-    }
 
     out.flush();
   }
