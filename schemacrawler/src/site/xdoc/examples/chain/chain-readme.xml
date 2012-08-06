@@ -9,23 +9,28 @@
     <section name="SchemaCrawler - Chain Example">
       <subsection name="Description">
         <p>SchemaCrawler allows scripting with database
-          metadata, using JavaScript. This example shows how to "chain" or run multiple SchemaCrawler commands.
+          metadata, using JavaScript. This example shows how to "chain" or run
+          multiple SchemaCrawler commands.
         </p>
       </subsection>
       <subsection name="How to Run">
-        <ol type="1">
+        <ol>
           <li>
-            Make sure that the Java executable is on your path. (J2SE
-            6 or better is required.)
+            Make sure that
+            <span class="code">java</span>
+            is on your
+            <span class="code">PATH</span>
           </li>
-          <li>Start the database server by running
-            StartDatabaseServer script from the
-            distribution directory.
+          <li>
+            Start the database server by running the
+            <span class="code">StartDatabaseServer</span>
+            script from the
+            distribution directory
           </li>
           <li>
             Start a command shell in the
             <span class="code">chain</span>
-            example directory.
+            example directory
           </li>
           <li>
             Run
@@ -35,14 +40,17 @@
             <span class="code">chain.sh chain.js
             </span>
             on
-            Unix).
+            Unix)
           </li>
         </ol>
       </subsection>
       <subsection name="How to Experiment">
         <ol>
           <li>
-            Try modifying the JavaScript in the *.js files
+            Try modifying the JavaScript in the
+            <span class="code">chain.js
+            </span>
+            file
             to run different SchemaCrawler commands.
           </li>
         </ol>

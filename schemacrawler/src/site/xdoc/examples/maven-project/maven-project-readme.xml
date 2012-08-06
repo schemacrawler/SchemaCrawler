@@ -8,7 +8,8 @@
   <body>
     <section name="SchemaCrawler - Maven Project Example">
       <subsection name="Description">
-        <p>The SchemaCrawler Maven Project example demonstrates the use of the SchemaCrawler API
+        <p>The SchemaCrawler Maven Project example demonstrates the use of
+          the SchemaCrawler API
           in a Maven project.
         </p>
       </subsection>
@@ -19,22 +20,23 @@
             <a href="http://maven.apache.org/">
               Maven,
             </a>
-            and make sure that Maven is on your path.
+            and make sure that Maven is on your path
           </li>
           <li>
-            Run <span class="code">mvn package</span>
+            Run
+            <span class="code">mvn package</span>
           </li>
           <li>
-            See the output produced in the
-            <span class="code">target/site</span>
-            directory.
+            See the jar file produced in the
+            <span class="code">target</span>
+            directory
           </li>
         </ol>
       </subsection>
       <subsection name="How to Experiment">
         <ol>
-          <li>Try defining a new database connection, using your favorite database and
-            driver.
+          <li>Try defining a new database connection, using your favorite
+            database and driver.
           </li>
         </ol>
       </subsection>

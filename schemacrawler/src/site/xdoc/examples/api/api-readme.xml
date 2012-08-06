@@ -8,37 +8,59 @@
   <body>
     <section name="SchemaCrawler - API Example">
       <subsection name="Description">
-        <p>The API example demonstrates the use of the SchemaCrawler API to create a data
-          source, and obtain database metadata. The SchemaCrawler API is a much simpler
-          alternative to using JDBC metadata.
+        <p>The API example demonstrates the use of the SchemaCrawler API to
+          create a data
+          source, and obtain database metadata. The
+          SchemaCrawler API is a much
+          simpler
+          alternative to using JDBC
+          metadata.
         </p>
       </subsection>
       <subsection name="How to Run">
         <ol>
-          <li>Start the database server by running StartDatabaseServer script from the
-            distribution directory.
+          <li>
+            Make sure that
+            <span class="code">java</span>
+            is on your
+            <span class="code">PATH</span>
           </li>
-          <li>Make sure that java and javac are on your PATH.</li>
-          <li>Run
+          <li>
+            Start the database server by running the
+            <span class="code">StartDatabaseServer</span>
+            script from the
+            distribution directory
+          </li>
+          <li>
+            Run
             <span class="code">api.cmd</span>
             (or
             <span class="code">api.sh</span>
             on Unix) to compile and run the
-            program.
+            program
           </li>
         </ol>
       </subsection>
       <subsection name="How to Experiment">
         <ol>
-          <li>Try modifying the
+          <li>
+            Try modifying the
             <span class="code">schemacrawler.config.properties</span>
             with regular
             expressions, logging, and so on.
           </li>
-          <li>Try uncommenting the code block in
+          <li>
+            Try uncommenting the code block in
             <span class="code">ApiExample.java</span>
             that
-            modifies the default options .
+            modifies the default options.
+          </li>
+          <li>
+            Read the
+            <a href="http://schemacrawler.sourceforge.net/apidocs/index.html">SchemaCrawler javadoc,</a>
+            and edit
+            <span class="code">ApiExample.java</span>
+            to print more details.
           </li>
         </ol>
       </subsection>

@@ -17,32 +17,43 @@
       <subsection name="How to Run">
         <ol>
           <li>
-            Make sure that the Java executable is on your
-            path.
+            Install
+            <a href="http://ant.apache.org/">ant,</a>
+            and make sure that ant is on your
+            path
           </li>
           <li>
-            Start the database server by running
-            StartDatabaseServer script from the distribution
-            directory.
+            Make sure that
+            <span class="code">java</span>
+            is on your
+            <span class="code">PATH</span>
+          </li>
+          <li>
+            Start the database server by running the
+            <span class="code">StartDatabaseServer</span>
+            script from the
+            distribution directory
           </li>
           <li>
             Start a command shell in the
             <span class="code">spring</span>
-            example directory.
+            example directory
           </li>
           <li>
             Run
             <span class="code">spring.cmd</span>
             (or
             <span class="code">spring.sh</span>
-            on Unix) to see Spring integration.
+            on Unix) to see Spring integration
           </li>
         </ol>
       </subsection>
       <subsection name="How to Experiment">
-        <ol type="1">
+        <ol>
           <li>
-            Study the Spring beans in<code>context.xml</code>, and modify the ant task in
+            Study the Spring beans in
+            <code>context.xml</code>
+            , and modify the ant task in
             <code>spring.xml</code>
             to use different executable.
           </li>

@@ -9,37 +9,53 @@
     <section name="SchemaCrawler - ant Task Example">
       <subsection name="Description">
         <p>The ant task example demonstrates the use of the
-          &lt;schemacrawler&gt; ant macro that comes bundled with SchemaCrawler.
+          &lt;schemacrawler&gt; ant macro that comes bundled with
+          SchemaCrawler.
         </p>
       </subsection>
       <subsection name="How to Run">
         <ol>
-          <li>Install
-            <a href="http://ant.apache.org/">ant</a>, and make sure that ant is on your
-            path.
+          <li>
+            Install
+            <a href="http://ant.apache.org/">ant,</a>
+            and make sure that ant is on your
+            path
           </li>
-          <li>Start the database server by running the
+          <li>
+            Make sure that
+            <span class="code">java</span>
+            is on your
+            <span class="code">PATH</span>
+          </li>
+          <li>
+            Start the database server by running the
             <span class="code">StartDatabaseServer</span>
             script from the
-            distribution directory.
+            distribution directory
           </li>
-          <li>Run
+          <li>
+            Run
             <span class="code">ant</span>
           </li>
-          <li>See the output produced in the
+          <li>
+            See the output produced in the
             <span class="code">snapshot.txt</span>
-            file.
+            file
           </li>
         </ol>
       </subsection>
       <subsection name="How to Experiment">
         <ol>
-          <li>Try using different SchemaCrawler commands. (For a complete list of
-            SchemaCrawler commands, run
-            <span class="code">java -jar
-              &lt;schemacrawler-jar&gt;</span>.)
+          <li>
+            Edit
+            <span class="code">build.xml</span>
+            , and try using different SchemaCrawler commands.
           </li>
-          <li>Try defining a new database connection, using your favorite database and
+          <li>
+            Edit
+            <span class="code">build.xml</span>
+            , and try defining a new database connection, using your favorite
+            database and
             driver.
           </li>
         </ol>

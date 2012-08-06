@@ -54,7 +54,9 @@
                           context-file="context.xml"
                           executable="executableForSchema"
                           datasource="datasource" />
-
+  	
+    <echo message="Created output in scOutput.txt"/>
+  	
   </target>
 
 </project>

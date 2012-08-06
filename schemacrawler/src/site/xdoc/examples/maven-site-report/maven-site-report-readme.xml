@@ -10,10 +10,13 @@
       <subsection name="Description">
         <p>
           The
-          <a href="http://mvn-schemacrwlr.sourceforge.net/schemacrawler-maven-plugin/1.0/">
+          <a
+            href="http://mvn-schemacrwlr.sourceforge.net/schemacrawler-maven-plugin/1.0/"
+          >
             SchemaCrawler Maven Plugin
           </a>
-          is in a separate project. It can generate a SchemaCrawler report as part of your Maven-generated website.
+          is in a separate project. It can generate a SchemaCrawler report as
+          part of your Maven-generated website.
         </p>
       </subsection>
     </section>

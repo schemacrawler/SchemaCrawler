@@ -8,39 +8,54 @@
   <body>
     <section name="SchemaCrawler - User Defined Queries Example">
       <subsection name="Description">
-        <p>SchemaCrawler has the capability to execute any arbitrary SQL, per table. The
+        <p>SchemaCrawler has the capability to execute any arbitrary SQL,
+          per table. The
           following variables are available to aid in the construction of queries -
-          ${tabletype}, ${table}, and ${columns}. This example demonstrates how to
+          ${tabletype}, ${table}, and ${columns}. This example demonstrates
+          how to
           execute arbitrary SQL, per table.
         </p>
       </subsection>
       <subsection name="How to Run">
         <ol>
-          <li>Make sure that the Java executable is on your path.</li>
-          <li>Start the database server by running StartDatabaseServer script from the
-            distribution directory.
+          <li>
+            Make sure that
+            <span class="code">java</span>
+            is on your
+            <span class="code">PATH</span>
           </li>
-          <li>Start a command shell in the
+          <li>
+            Start the database server by running the
+            <span class="code">StartDatabaseServer</span>
+            script from the
+            distribution directory
+          </li>
+          <li>
+            Start a command shell in the
             <span class="code">user-defined-query</span>
-            example directory.
+            example directory
           </li>
-          <li>Run
+          <li>
+            Run
             <span class="code">user-defined-query.cmd</span>
             (or
             <span class="code">user-defined-query.sh</span>
-            on Unix).
+            on Unix)
           </li>
         </ol>
       </subsection>
       <subsection name="How to Experiment">
         <ol>
-          <li>Try modifying the
+          <li>
+            Try modifying the
             <span class="code">schemacrawler.config.properties</span>
             with
             different queries.
           </li>
-          <li>Redirect the output of SchemaCrawler into a file, by running
-            <span class="code">user-defined-query.cmd &gt; file.txt</span>.
+          <li>
+            Redirect the output of SchemaCrawler into a file, by running
+            <span class="code">user-defined-query.cmd &gt; file.txt</span>
+            .
           </li>
         </ol>
       </subsection>
