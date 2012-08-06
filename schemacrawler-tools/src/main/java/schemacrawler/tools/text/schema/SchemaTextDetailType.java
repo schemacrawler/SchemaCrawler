@@ -38,25 +38,6 @@ public enum SchemaTextDetailType
   /**
    * Maximum column detail, everything supported by SchemaCrawler.
    */
-  details, ;
-
-  /**
-   * Checks if this is greater than or equal to the provided info level.
-   * 
-   * @param schemaTextDetailType
-   *        SchemaTextDetailType to check against
-   * @return Yes if this is greater or equal to
-   */
-  boolean isGreaterThanOrEqualTo(final SchemaTextDetailType schemaTextDetailType)
-  {
-    if (schemaTextDetailType != null)
-    {
-      return ordinal() >= schemaTextDetailType.ordinal();
-    }
-    else
-    {
-      return false;
-    }
-  }
+  details
 
 }

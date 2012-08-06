@@ -39,13 +39,14 @@ public final class SchemaInfoLevel
    */
   public static SchemaInfoLevel detailed()
   {
-    final SchemaInfoLevel verbose = standard();
-    verbose.setRetrieveUserDefinedColumnDataTypes(true);
-    verbose.setRetrieveRoutineInformation(true);
-    verbose.setRetrieveCheckConstraintInformation(true);
-    verbose.setRetrieveViewInformation(true);
-    verbose.setTag("verbose");
-    return verbose;
+    final SchemaInfoLevel detailed = standard();
+    detailed.setRetrieveUserDefinedColumnDataTypes(true);
+    detailed.setRetrieveRoutineInformation(true);
+    detailed.setRetrieveCheckConstraintInformation(true);
+    detailed.setRetrieveTriggerInformation(true);
+    detailed.setRetrieveViewInformation(true);
+    detailed.setTag("verbose");
+    return detailed;
   }
 
   /**
@@ -56,7 +57,6 @@ public final class SchemaInfoLevel
   public static SchemaInfoLevel maximum()
   {
     final SchemaInfoLevel maximum = detailed();
-    maximum.setRetrieveTriggerInformation(true);
     maximum.setRetrieveSynonymInformation(true);
     maximum.setRetrieveAdditionalDatabaseInfo(true);
     maximum.setRetrieveAdditionalJdbcDriverInfo(true);

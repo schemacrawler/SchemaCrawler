@@ -67,6 +67,21 @@ IDX_A_AUTHORS                                         [non-unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
 
+TRG_AUTHORS                             [trigger, after delete, per row]
+  UPDATE BOOKS.PUBLISHERS SET PUBLISHER='Jacob'WHERE PUBLISHER='John'
+
+CHECK_UPPERCASE_STATE                                 [check constraint]
+BOOKS.AUTHORS.STATE=UPPER(BOOKS.AUTHORS.STATE)
+
+SYS_CT_10027                                          [check constraint]
+BOOKS.AUTHORS.ID IS NOT NULL
+
+SYS_CT_10028                                          [check constraint]
+BOOKS.AUTHORS.FIRSTNAME IS NOT NULL
+
+SYS_CT_10029                                          [check constraint]
+BOOKS.AUTHORS.LASTNAME IS NOT NULL
+
 
 PUBLIC.BOOKS.AUTHORSLIST                                          [view]
 ------------------------------------------------------------------------
@@ -100,6 +115,12 @@ UIDX_BOOKAUTHORS                                          [unique index]
   BOOKID                            ascending                   
   AUTHORID                          ascending                   
 
+SYS_CT_10035                                          [check constraint]
+BOOKS.BOOKAUTHORS.BOOKID IS NOT NULL
+
+SYS_CT_10036                                          [check constraint]
+BOOKS.BOOKAUTHORS.AUTHORID IS NOT NULL
+
 
 PUBLIC.BOOKS.BOOKS                                               [table]
 ------------------------------------------------------------------------
@@ -119,6 +140,15 @@ FK_Y_BOOK                                  [foreign key, with no action]
 SYS_IDX_PK_BOOKS_10034                                    [unique index]
   ID                                ascending                   
 
+SYS_CT_10031                                          [check constraint]
+BOOKS.BOOKS.ID IS NOT NULL
+
+SYS_CT_10032                                          [check constraint]
+BOOKS.BOOKS.TITLE IS NOT NULL
+
+SYS_CT_10033                                          [check constraint]
+BOOKS.BOOKS.PUBLISHERID IS NOT NULL
+
 
 PUBLIC.BOOKS."Global Counts"                                     [table]
 ------------------------------------------------------------------------
@@ -135,6 +165,9 @@ PK_PUBLISHERS                                              [primary key]
 
 SYS_IDX_PK_PUBLISHERS_10026                               [unique index]
   ID                                ascending                   
+
+SYS_CT_10025                                          [check constraint]
+BOOKS.PUBLISHERS.ID IS NOT NULL
 
 
 PUBLIC.FOR_LINT.EXTRA_PK                                         [table]
@@ -160,6 +193,15 @@ SYS_IDX_10078                                         [non-unique index]
 
 SYS_IDX_10076                                         [non-unique index]
   WRITERID                          ascending                   
+
+SYS_CT_10072                                          [check constraint]
+FOR_LINT.EXTRA_PK.ID IS NOT NULL
+
+SYS_CT_10073                                          [check constraint]
+FOR_LINT.EXTRA_PK.WRITERID IS NOT NULL
+
+SYS_CT_10074                                          [check constraint]
+FOR_LINT.EXTRA_PK.PUBLICATIONID IS NOT NULL
 
 
 PUBLIC.FOR_LINT."Global Counts"                                  [table]
@@ -195,6 +237,15 @@ SYS_IDX_PK_PUBLICATIONS_10067                             [unique index]
 
 SYS_IDX_10068                                         [non-unique index]
   WRITERID                          ascending                   
+
+SYS_CT_10064                                          [check constraint]
+FOR_LINT.PUBLICATIONS.ID IS NOT NULL
+
+SYS_CT_10065                                          [check constraint]
+FOR_LINT.PUBLICATIONS.TITLE IS NOT NULL
+
+SYS_CT_10066                                          [check constraint]
+FOR_LINT.PUBLICATIONS.WRITERID IS NOT NULL
 
 
 PUBLIC.FOR_LINT.WRITERS                                          [table]
@@ -254,6 +305,24 @@ IDX_A_WRITERS                                         [non-unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
 
+CHECK_UPPERCASE_STATE                                 [check constraint]
+FOR_LINT.WRITERS.STATE=UPPER(FOR_LINT.WRITERS.STATE)
+
+SYS_CT_10058                                          [check constraint]
+FOR_LINT.WRITERS.ID IS NOT NULL
+
+SYS_CT_10059                                          [check constraint]
+FOR_LINT.WRITERS.FIRSTNAME IS NOT NULL
+
+SYS_CT_10060                                          [check constraint]
+FOR_LINT.WRITERS.LASTNAME IS NOT NULL
+
+SYS_CT_10061                                          [check constraint]
+FOR_LINT.WRITERS.ADDRESS2 IS NOT NULL
+
+SYS_CT_10062                                          [check constraint]
+FOR_LINT.WRITERS.PUBLICATION_ID IS NOT NULL
+
 
 PUBLIC."PUBLISHER SALES".REGIONS                                 [table]
 ------------------------------------------------------------------------
@@ -274,6 +343,18 @@ SYS_IDX_PK_CUSTOMERS_10052                                [unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
 
+SYS_CT_10048                                          [check constraint]
+"PUBLISHER SALES".REGIONS.CITY IS NOT NULL
+
+SYS_CT_10049                                          [check constraint]
+"PUBLISHER SALES".REGIONS.STATE IS NOT NULL
+
+SYS_CT_10050                                          [check constraint]
+"PUBLISHER SALES".REGIONS.POSTALCODE IS NOT NULL
+
+SYS_CT_10051                                          [check constraint]
+"PUBLISHER SALES".REGIONS.COUNTRY IS NOT NULL
+
 
 PUBLIC."PUBLISHER SALES".SALES                                   [table]
 ------------------------------------------------------------------------
@@ -290,6 +371,12 @@ FK_SALES_REGIONS                           [foreign key, with no action]
 SYS_IDX_10056                                         [non-unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
+
+SYS_CT_10053                                          [check constraint]
+"PUBLISHER SALES".SALES.POSTALCODE IS NOT NULL
+
+SYS_CT_10054                                          [check constraint]
+"PUBLISHER SALES".SALES.COUNTRY IS NOT NULL
 
 
 

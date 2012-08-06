@@ -101,8 +101,7 @@ final class SchemaTextFormatter
     super(options,
           schemaTextDetailType == SchemaTextDetailType.details,
           outputOptions);
-    isVerbose = schemaTextDetailType
-      .isGreaterThanOrEqualTo(SchemaTextDetailType.details);
+    isVerbose = schemaTextDetailType == SchemaTextDetailType.details;
     isList = schemaTextDetailType == SchemaTextDetailType.list;
   }
 
@@ -272,19 +271,17 @@ final class SchemaTextFormatter
         printWeakAssociations(table);
       }
       printIndices(table.getIndices());
-      if (isVerbose)
-      {
-        printCheckConstraints(table.getCheckConstraints());
-        printPrivileges(table.getPrivileges());
-        printTriggers(table.getTriggers());
-      }
       if (table instanceof View)
       {
         final View view = (View) table;
         printDefinition("definition", "", view.getDefinition());
       }
+      printTriggers(table.getTriggers());
+      printCheckConstraints(table.getCheckConstraints());
       if (isVerbose)
       {
+        printPrivileges(table.getPrivileges());
+
         final String tableRemarks = table.getRemarks();
         boolean hasColumnRemarks = false;
         for (final Column column: columns)

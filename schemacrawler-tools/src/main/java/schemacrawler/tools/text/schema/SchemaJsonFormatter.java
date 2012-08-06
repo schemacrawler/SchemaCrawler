@@ -66,7 +66,7 @@ final class SchemaJsonFormatter
 {
 
   private final boolean isVerbose;
-  private final boolean isNotList;
+  private final boolean isList;
 
   /**
    * Text formatting of schema.
@@ -88,9 +88,8 @@ final class SchemaJsonFormatter
     super(options,
           schemaTextDetailType == SchemaTextDetailType.details,
           outputOptions);
-    isVerbose = schemaTextDetailType
-      .isGreaterThanOrEqualTo(SchemaTextDetailType.details);
-    isNotList = schemaTextDetailType != SchemaTextDetailType.list;
+    isVerbose = schemaTextDetailType == SchemaTextDetailType.details;
+    isList = schemaTextDetailType == SchemaTextDetailType.list;
   }
 
   @Override
@@ -160,7 +159,7 @@ final class SchemaJsonFormatter
       jsonRoutine.put("type", routine.getType());
       jsonRoutine.put("returnType", routine.getReturnType());
 
-      if (isNotList)
+      if (!isList)
       {
         final JSONArray jsonParameters = new JSONArray();
         jsonRoutine.put("parameters", jsonParameters);
@@ -214,12 +213,9 @@ final class SchemaJsonFormatter
       }
       jsonSynonym.put("referencedObject", referencedObjectName);
 
-      if (isNotList)
+      if (isVerbose)
       {
-        if (isVerbose)
-        {
-          jsonSynonym.put("remarks", synonym.getRemarks());
-        }
+        jsonSynonym.put("remarks", synonym.getRemarks());
       }
     }
     catch (final JSONException e)
@@ -251,7 +247,7 @@ final class SchemaJsonFormatter
       }
       jsonTable.put("type", table.getType());
 
-      if (isNotList)
+      if (!isList)
       {
         final JSONArray jsonColumns = new JSONArray();
         jsonTable.put("columns", jsonColumns);
@@ -278,22 +274,30 @@ final class SchemaJsonFormatter
           jsonIndices.put(handleIndex(index));
         }
 
+        if (table instanceof View)
+        {
+          final View view = (View) table;
+          jsonTable.put("definition", view.getDefinition());
+        }
+
+        jsonTable.put("triggers", handleTriggers(table.getTriggers()));
+
+        for (final CheckConstraint constraint: table.getCheckConstraints())
+        {
+          if (constraint != null)
+          {
+            final JSONObject jsonConsraint = new JSONObject();
+            jsonTable.accumulate("constraints", jsonConsraint);
+            if (!options.isHideConstraintNames())
+            {
+              jsonConsraint.put("name", constraint.getName());
+            }
+            jsonConsraint.put("definition", constraint.getDefinition());
+          }
+        }
+
         if (isVerbose)
         {
-          for (final CheckConstraint constraint: table.getCheckConstraints())
-          {
-            if (constraint != null)
-            {
-              final JSONObject jsonConsraint = new JSONObject();
-              jsonTable.accumulate("constraints", jsonConsraint);
-              if (!options.isHideConstraintNames())
-              {
-                jsonConsraint.put("name", constraint.getName());
-              }
-              jsonConsraint.put("definition", constraint.getDefinition());
-            }
-          }
-
           for (final Privilege<Table> privilege: table.getPrivileges())
           {
             if (privilege != null)
@@ -313,15 +317,6 @@ final class SchemaJsonFormatter
             }
           }
 
-          jsonTable.put("triggers", handleTriggers(table.getTriggers()));
-        }
-        if (table instanceof View)
-        {
-          final View view = (View) table;
-          jsonTable.put("definition", view.getDefinition());
-        }
-        if (isVerbose)
-        {
           jsonTable.put("remarks", table.getRemarks());
         }
       }
