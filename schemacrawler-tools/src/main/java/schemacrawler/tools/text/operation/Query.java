@@ -67,7 +67,6 @@ final class Query
   }
 
   private final String name;
-
   private final String query;
 
   /**
@@ -81,18 +80,21 @@ final class Query
    */
   Query(final String name, final String query)
   {
-    if (Utility.isBlank(name))
+    final boolean isNameProvided = !Utility.isBlank(name);
+    final boolean isQueryProvided = !Utility.isBlank(query);
+    if (isNameProvided && isQueryProvided)
     {
-      throw new IllegalArgumentException("No name provided for the query");
+      this.name = name;
+      this.query = query;
     }
-    this.name = name;
-
-    if (Utility.isBlank(query))
+    else if (isNameProvided && !isQueryProvided)
     {
-      throw new IllegalArgumentException("No SQL provided for query '" + name
-                                         + "'");
+      this.name = this.query = name;
     }
-    this.query = query;
+    else
+    {
+      throw new IllegalArgumentException("No SQL found for query");
+    }
   }
 
   /**
