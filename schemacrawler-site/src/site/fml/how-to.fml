@@ -162,16 +162,14 @@
       </question>
       <answer>
         <p>
-          Use the
-          -table_types command-line
-          option. Further, see the
+          Use the -table_types command-line option, without VIEW. For example, you can provide -table_type=TABLE. Further, see the
           <a href="faq.html#commands">details on the command-line options.</a>
         </p>
       </answer>
     </faq>
     <faq id="excluded-routines">
       <question>
-        How to exclude stored procedures from the output
+        How to exclude routines, that is, stored procedures and functions from the output
       </question>
       <answer>
         <p>
@@ -183,6 +181,17 @@
         </p>
       </answer>
     </faq>
+    <faq id="excluded-functions">
+      <question>
+        How to exclude database function from the output
+      </question>
+      <answer>
+        <p>
+          Use the -routine_types=FUNCTION command-line option. Further, see the
+          <a href="faq.html#commands">details on the command-line options.</a>
+        </p>
+      </answer>
+    </faq>    
   </part>
   <part id="diff-able-output">
     <title>Create diff-able Output</title>

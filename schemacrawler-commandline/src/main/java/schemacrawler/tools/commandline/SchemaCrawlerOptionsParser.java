@@ -51,6 +51,8 @@ final class SchemaCrawlerOptionsParser
           new StringOption("tables", InclusionRule.ALL),
           new StringOption("excludecolumns", InclusionRule.NONE),
           new StringOption("synonyms", InclusionRule.ALL),
+          new StringOption("routine_types",
+                           SchemaCrawlerOptions.DEFAULT_ROUTINE_TYPES),
           new StringOption("routines", InclusionRule.ALL),
           new StringOption("excludeinout", InclusionRule.NONE),
           new StringOption("grepcolumns", InclusionRule.NONE),
@@ -111,6 +113,11 @@ final class SchemaCrawlerOptionsParser
       final InclusionRule columnInclusionRule = new InclusionRule(InclusionRule.ALL,
                                                                   getStringValue("excludecolumns"));
       options.setColumnInclusionRule(columnInclusionRule);
+    }
+
+    if (hasOptionValue("routine_types"))
+    {
+      options.setRoutineTypes(getStringValue("routine_types"));
     }
 
     if (hasOptionValue("routines"))

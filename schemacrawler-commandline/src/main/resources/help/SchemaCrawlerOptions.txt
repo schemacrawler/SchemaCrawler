@@ -34,7 +34,12 @@
   matches columns named STREET or PRICE in any table
   Columns that match the pattern are not displayed
   Optional, default is to show all columns
-      
+
+-routine_types=<routine_types>
+  <routine_types> is a comma-separated list of routine types of 
+  PROCEDURE,FUNCTION
+  Optional, defaults to PROCEDURE,FUNCTION
+        
 -routines=<regular-expression>
   <regular-expression> is a regular expression to match fully qualified  
   stored procedure or function names, in the form 
