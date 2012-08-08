@@ -24,11 +24,14 @@ package schemacrawler.crawl;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schema.Database;
 import schemacrawler.schema.ResultsColumns;
+import schemacrawler.schema.RoutineType;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -162,14 +165,22 @@ public final class SchemaCrawler
     {
       retriever = new RoutineRetriever(retrieverConnection, database);
       retrieverExtra = new RoutineExRetriever(retrieverConnection, database);
+      final List<RoutineType> routineTypes = Arrays.asList(options
+        .getRoutineTypes());
       for (final Schema schema: retriever.getSchemas())
       {
-        retriever.retrieveProcedures(schema.getCatalogName(),
-                                     schema.getName(),
-                                     options.getRoutineInclusionRule());
-        retriever.retrieveFunctions(schema.getCatalogName(),
-                                    schema.getName(),
-                                    options.getRoutineInclusionRule());
+        if (routineTypes.contains(RoutineType.procedure))
+        {
+          retriever.retrieveProcedures(schema.getCatalogName(),
+                                       schema.getName(),
+                                       options.getRoutineInclusionRule());
+        }
+        if (routineTypes.contains(RoutineType.function))
+        {
+          retriever.retrieveFunctions(schema.getCatalogName(),
+                                      schema.getName(),
+                                      options.getRoutineInclusionRule());
+        }
       }
       final NamedObjectList<MutableRoutine> allRoutines = database
         .getAllRoutines();
@@ -177,14 +188,16 @@ public final class SchemaCrawler
       {
         if (infoLevel.isRetrieveRoutineColumns())
         {
-          if (routine instanceof MutableProcedure)
+          if (routine instanceof MutableProcedure
+              && routineTypes.contains(RoutineType.procedure))
           {
             retriever
               .retrieveProcedureColumns((MutableProcedure) routine,
                                         options.getRoutineColumnInclusionRule());
           }
 
-          if (routine instanceof MutableFunction)
+          if (routine instanceof MutableFunction
+              && routineTypes.contains(RoutineType.function))
           {
             retriever
               .retrieveFunctionColumns((MutableFunction) routine,

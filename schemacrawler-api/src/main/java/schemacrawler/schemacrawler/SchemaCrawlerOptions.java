@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import schemacrawler.schema.RoutineType;
 import schemacrawler.schema.TableType;
 
 /**
@@ -37,6 +38,7 @@ public final class SchemaCrawlerOptions
 {
 
   public static final String DEFAULT_TABLE_TYPES = "TABLE,VIEW";
+  public static final String DEFAULT_ROUTINE_TYPES = "PROCEDURE,FUNCTION";
 
   private static final long serialVersionUID = -3557794862382066029L;
 
@@ -65,35 +67,16 @@ public final class SchemaCrawlerOptions
   private static final String SC_SUPPORTS_SCHEMAS_OVERRIDE = "schemacrawler.supports_schemas.override";
   private static final String SC_SUPPORTS_CATALOG_OVERRIDE = "schemacrawler.supports_catalog.override";
 
-  private static TableType[] copyTableTypes(final TableType[] tableTypes)
+  private static <T extends Enum<T>> T[] cloneTypesArray(final T[] types)
   {
-    final TableType[] tableTypesCopy = new TableType[tableTypes.length];
-    System.arraycopy(tableTypes, 0, tableTypesCopy, 0, tableTypes.length);
-    return tableTypesCopy;
-  }
-
-  /**
-   * Converts an array of string table types to an array of their
-   * corresponding enumeration values.
-   * 
-   * @param tableTypeStrings
-   *        Array of string table types
-   * @return Array of table types
-   */
-  private static TableType[] valueOf(final String[] tableTypeStrings)
-  {
-    if (tableTypeStrings == null || tableTypeStrings.length == 0)
+    if (types != null)
     {
-      return new TableType[0];
+      return types.clone();
     }
-
-    final List<TableType> tableTypes = new ArrayList<TableType>(tableTypeStrings.length);
-    for (final String tableTypeString: tableTypeStrings)
+    else
     {
-      tableTypes.add(TableType.valueOf(tableTypeString
-        .toLowerCase(Locale.ENGLISH)));
+      return null;
     }
-    return tableTypes.toArray(new TableType[tableTypes.size()]);
   }
 
   private InclusionRule schemaInclusionRule;
@@ -101,10 +84,10 @@ public final class SchemaCrawlerOptions
   private TableType[] tableTypes;
   private String tableNamePattern;
   private InclusionRule tableInclusionRule;
-
   private InclusionRule columnInclusionRule;
-  private InclusionRule routineInclusionRule;
 
+  private RoutineType[] routineTypes;
+  private InclusionRule routineInclusionRule;
   private InclusionRule routineColumnInclusionRule;
 
   private InclusionRule synonymInclusionRule;
@@ -310,6 +293,16 @@ public final class SchemaCrawlerOptions
   }
 
   /**
+   * Get the routine types.
+   * 
+   * @return Routine types
+   */
+  public RoutineType[] getRoutineTypes()
+  {
+    return cloneTypesArray(routineTypes);
+  }
+
+  /**
    * Gets the schema inclusion rule.
    * 
    * @return Schema inclusion rule.
@@ -374,8 +367,7 @@ public final class SchemaCrawlerOptions
    */
   public TableType[] getTableTypes()
   {
-    final TableType[] tableTypesCopy = copyTableTypes(tableTypes);
-    return tableTypesCopy;
+    return cloneTypesArray(tableTypes);
   }
 
   public boolean hasOverrideForSupportsCatalogs()
@@ -541,6 +533,52 @@ public final class SchemaCrawlerOptions
   }
 
   /**
+   * Sets routine types from an array of routine types.
+   * 
+   * @param routineTypesArray
+   *        Array of routine types.
+   */
+  public void setRoutineTypes(final RoutineType[] routineTypesArray)
+  {
+    if (routineTypesArray == null)
+    {
+      throw new IllegalArgumentException("Cannot use null value in a setter");
+    }
+    routineTypes = cloneTypesArray(routineTypesArray);
+  }
+
+  /**
+   * Sets routine types from a comma-separated list of routine types.
+   * 
+   * @param routineTypesString
+   *        Comma-separated list of routine types.
+   */
+  public void setRoutineTypes(final String routineTypesString)
+  {
+    if (routineTypesString == null)
+    {
+      routineTypes = new RoutineType[0];
+      return;
+    }
+
+    final String[] routineTypeStrings = routineTypesString.split(",");
+    if (routineTypeStrings == null || routineTypeStrings.length == 0)
+    {
+      routineTypes = new RoutineType[0];
+      return;
+    }
+
+    final List<RoutineType> routineTypes1 = new ArrayList<RoutineType>(routineTypeStrings.length);
+    for (final String routineTypeString: routineTypeStrings)
+    {
+      routineTypes1.add(RoutineType.valueOf(routineTypeString
+        .toLowerCase(Locale.ENGLISH)));
+    }
+
+    routineTypes = routineTypes1.toArray(new RoutineType[routineTypes1.size()]);
+  }
+
+  /**
    * Sets the schema inclusion rule.
    * 
    * @param schemaInclusionRule
@@ -662,9 +700,25 @@ public final class SchemaCrawlerOptions
   {
     if (tableTypesString == null)
     {
-      throw new IllegalArgumentException("Cannot use null value in a setter");
+      tableTypes = new TableType[0];
+      return;
     }
-    tableTypes = valueOf(tableTypesString.split(","));
+
+    final String[] tableTypeStrings = tableTypesString.split(",");
+    if (tableTypeStrings == null || tableTypeStrings.length == 0)
+    {
+      tableTypes = new TableType[0];
+      return;
+    }
+
+    final List<TableType> tableTypes1 = new ArrayList<TableType>(tableTypeStrings.length);
+    for (final String tableTypeString: tableTypeStrings)
+    {
+      tableTypes1.add(TableType.valueOf(tableTypeString
+        .toLowerCase(Locale.ENGLISH)));
+    }
+
+    tableTypes = tableTypes1.toArray(new TableType[tableTypes1.size()]);
   }
 
   /**
@@ -679,21 +733,7 @@ public final class SchemaCrawlerOptions
     {
       throw new IllegalArgumentException("Cannot use null value in a setter");
     }
-    tableTypes = copyTableTypes(tableTypesArray);
-  }
-
-  /**
-   * Sets table types from a comma-separated list of table types. For
-   * example:
-   * TABLE,VIEW,SYSTEM_TABLE,GLOBAL_TEMPORARY,LOCAL_TEMPORARY,ALIAS
-   * ,SYNONYM
-   * 
-   * @param tableTypesString
-   *        Comma-separated list of table types.
-   */
-  public void setTableTypesString(final String tableTypesString)
-  {
-    setTableTypes(tableTypesString);
+    tableTypes = cloneTypesArray(tableTypesArray);
   }
 
 }
