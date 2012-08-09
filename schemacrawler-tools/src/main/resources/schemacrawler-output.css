@@ -55,6 +55,13 @@ body,p,pre,table,th,td,caption {
 	line-height: 1.2em;
 }
 
+body {
+	margin-top: 1em;
+	margin-right: 3em;
+	margin-bottom: 1em;
+	margin-left: 3em;
+}
+
 table,th,td {
 	border: 1px solid rgb(220, 220, 220);
 	border-collapse: collapse;

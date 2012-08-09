@@ -63,6 +63,11 @@
             <span class="code">user-defined-query.cmd &gt; file.txt</span>
             .
           </li>
+          <li>
+            Try running an arbitrary query, following the instructions in the
+            <a href="../commandline/commandline-readme.html"><code>commandline</code></a>
+            example.
+          </li>
         </ol>
       </subsection>
     </section>

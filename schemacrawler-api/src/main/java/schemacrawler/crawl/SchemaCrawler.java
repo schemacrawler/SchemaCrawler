@@ -24,8 +24,7 @@ package schemacrawler.crawl;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.List;
+import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -165,8 +164,7 @@ public final class SchemaCrawler
     {
       retriever = new RoutineRetriever(retrieverConnection, database);
       retrieverExtra = new RoutineExRetriever(retrieverConnection, database);
-      final List<RoutineType> routineTypes = Arrays.asList(options
-        .getRoutineTypes());
+      final Collection<RoutineType> routineTypes = options.getRoutineTypes();
       for (final Schema schema: retriever.getSchemas())
       {
         if (routineTypes.contains(RoutineType.procedure))

@@ -22,7 +22,7 @@
 					text format. You can find potential schema design issues with
 					<a href="lint.html">lint.</a> The output serves for database documentation 
 					is designed to be <a href="http://en.wikipedia.org/wiki/Diff">diff-ed</a>
-					against other database schemas. SchemaCrawler also generates schema diagrams.
+					against other database schemas. SchemaCrawler also generates <a href="diagramming.html">schema diagrams.</a>
 				</p>
 				<p>
 					SchemaCrawler supports almost any database that has a JDBC driver,
@@ -150,9 +150,9 @@ final Database database = SchemaCrawlerUtility.getDatabase(connection, options);
 for (final Schema schema: database.getSchemas())
 {
   System.out.println(schema);
-  for (final Table table: schema.getTables())
+  for (final Table table: database.getTables(schema))
   {
-    System.out.println("o--> " + table);
+    System.out.print("o--> " + table);
     for (final Column column: table.getColumns())
     {
       System.out.println("     o--> " + column);
@@ -192,7 +192,7 @@ for (final Schema schema: database.getSchemas())
 					<a href="http://www.graphviz.org/doc/info/lang.html ">DOT format,</a>
 					which
 					<a href="http://www.graphviz.org/">GraphViz</a>
-					can convert into schema diagrams. SchemaCrawler has powerful
+					can convert into <a href="diagramming.html">schema diagrams.</a> SchemaCrawler has powerful
 					scripting ability, using
 					JavaScript. A live
 					connection is provided to the JavaScript context to allow you to select
