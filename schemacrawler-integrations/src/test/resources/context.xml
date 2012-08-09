@@ -1,18 +1,16 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-  <!--
-    /* * * SchemaCrawler * http://sourceforge.net/projects/schemacrawler * Copyright (c) 2000-2012, Sualeh Fatehi. * *
-    This library is free software; you can redistribute it and/or modify it under the terms * of the GNU Lesser General
-    Public License as published by the Free Software Foundation; * either version 2.1 of the License, or (at your
-    option) any later version. * * This library is distributed in the hope that it will be useful, but WITHOUT ANY
-    WARRANTY; * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. * See the GNU
-    Lesser General Public License for more details. * * You should have received a copy of the GNU Lesser General Public
-    License along with this * library; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
-    * Boston, MA 02111-1307, USA. * */
-  -->
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+<beans
+  xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:util="http://www.springframework.org/schema/util"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd 
+http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd"
+>
 
-  <bean id="datasource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+  <bean
+    id="datasource"
+    class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+  >
     <property name="driverClassName">
       <value>org.hsqldb.jdbcDriver</value>
     </property>
@@ -27,7 +25,10 @@
     </property>
   </bean>
 
-  <bean id="schemaCrawlerOptions" class="schemacrawler.schemacrawler.SchemaCrawlerOptions">
+  <bean
+    id="schemaCrawlerOptions"
+    class="schemacrawler.schemacrawler.SchemaCrawlerOptions"
+  >
     <property name="tableInclusionRule">
       <bean class="schemacrawler.schemacrawler.InclusionRule">
         <constructor-arg value=".*" />
@@ -40,25 +41,50 @@
         <constructor-arg value="" />
       </bean>
     </property>
-    <property name="tableTypesString">
-      <value>TABLE,VIEW</value>
+    <property name="tableTypes">
+      <set>
+        <util:constant static-field="schemacrawler.schema.TableType.table" />
+        <util:constant static-field="schemacrawler.schema.TableType.view" />
+      </set>
     </property>
-    <property name="informationSchemaViews" ref="informationSchemaViews" />
+    <property
+      name="informationSchemaViews"
+      ref="informationSchemaViews" />
     <property name="schemaInfoLevel">
-      <bean factory-method="maximum" class="schemacrawler.schemacrawler.SchemaInfoLevel" />
+      <bean
+        factory-method="maximum"
+        class="schemacrawler.schemacrawler.SchemaInfoLevel" />
     </property>
   </bean>
 
-  <bean id="outputOptions" class="schemacrawler.tools.options.OutputOptions">
-    <property name="appendOutput" value="false" />
-    <property name="noFooter" value="true" />
-    <property name="noHeader" value="true" />
-    <property name="noInfo" value="true" />
-    <property name="outputFormatValue" value="text" />
-    <property name="outputFileName" value="scOutput.txt" />
+  <bean
+    id="outputOptions"
+    class="schemacrawler.tools.options.OutputOptions"
+  >
+    <property
+      name="appendOutput"
+      value="false" />
+    <property
+      name="noFooter"
+      value="true" />
+    <property
+      name="noHeader"
+      value="true" />
+    <property
+      name="noInfo"
+      value="true" />
+    <property
+      name="outputFormatValue"
+      value="text" />
+    <property
+      name="outputFileName"
+      value="scOutput.txt" />
   </bean>
 
-  <bean id="informationSchemaViews" class="schemacrawler.schemacrawler.InformationSchemaViews">
+  <bean
+    id="informationSchemaViews"
+    class="schemacrawler.schemacrawler.InformationSchemaViews"
+  >
     <property name="routinesSql">
       <value>
         <![CDATA[              
@@ -131,117 +157,202 @@
     </property>
   </bean>
 
-  <bean id="executableForSchema" class="schemacrawler.tools.text.schema.SchemaTextExecutable">
+  <bean
+    id="executableForSchema"
+    class="schemacrawler.tools.text.schema.SchemaTextExecutable"
+  >
     <constructor-arg value="schema" />
-    <property name="schemaCrawlerOptions" ref="schemaCrawlerOptions" />
+    <property
+      name="schemaCrawlerOptions"
+      ref="schemaCrawlerOptions" />
     <property name="schemaTextOptions">
       <bean class="schemacrawler.tools.text.schema.SchemaTextOptions">
-        <property name="showOrdinalNumbers" value="true" />
-        <property name="showStandardColumnTypeNames" value="true" />
-        <property name="hidePrimaryKeyNames" value="false" />
-        <property name="hideIndexNames" value="false" />
-        <property name="hideForeignKeyNames" value="false" />
-        <property name="hideConstraintNames" value="false" />
+        <property
+          name="showOrdinalNumbers"
+          value="true" />
+        <property
+          name="showStandardColumnTypeNames"
+          value="true" />
+        <property
+          name="hidePrimaryKeyNames"
+          value="false" />
+        <property
+          name="hideIndexNames"
+          value="false" />
+        <property
+          name="hideForeignKeyNames"
+          value="false" />
+        <property
+          name="hideConstraintNames"
+          value="false" />
       </bean>
     </property>
-    <property name="outputOptions" ref="outputOptions" />
+    <property
+      name="outputOptions"
+      ref="outputOptions" />
   </bean>
 
-  <bean id="executableForQuery" class="schemacrawler.tools.text.operation.OperationExecutable">
+  <bean
+    id="executableForQuery"
+    class="schemacrawler.tools.text.operation.OperationExecutable"
+  >
     <constructor-arg value="select.tables" />
-    <property name="schemaCrawlerOptions" ref="schemaCrawlerOptions" />
+    <property
+      name="schemaCrawlerOptions"
+      ref="schemaCrawlerOptions" />
     <property name="operationOptions">
       <bean class="schemacrawler.tools.text.operation.OperationOptions">
-        <property name="showLobs" value="true" />
-        <property name="mergeRows" value="true" />
+        <property
+          name="showLobs"
+          value="true" />
+        <property
+          name="mergeRows"
+          value="true" />
       </bean>
     </property>
     <property name="additionalConfiguration">
       <bean class="schemacrawler.schemacrawler.Config">
         <constructor-arg>
           <map>
-            <entry key="select.tables" value="SELECT * FROM INFORMATION_SCHEMA.SYSTEM_TABLES" />
+            <entry
+              key="select.tables"
+              value="SELECT * FROM INFORMATION_SCHEMA.SYSTEM_TABLES" />
           </map>
         </constructor-arg>
       </bean>
     </property>
-    <property name="outputOptions" ref="outputOptions" />
+    <property
+      name="outputOptions"
+      ref="outputOptions" />
   </bean>
 
-  <bean id="executableForQueryOver" class="schemacrawler.tools.text.operation.OperationExecutable">
+  <bean
+    id="executableForQueryOver"
+    class="schemacrawler.tools.text.operation.OperationExecutable"
+  >
     <constructor-arg value="select" />
-    <property name="schemaCrawlerOptions" ref="schemaCrawlerOptions" />
+    <property
+      name="schemaCrawlerOptions"
+      ref="schemaCrawlerOptions" />
     <property name="operationOptions">
       <bean class="schemacrawler.tools.text.operation.OperationOptions">
-        <property name="showLobs" value="true" />
+        <property
+          name="showLobs"
+          value="true" />
       </bean>
     </property>
     <property name="additionalConfiguration">
       <bean class="schemacrawler.schemacrawler.Config">
         <constructor-arg>
           <map>
-            <entry key="select" value="SELECT * FROM ${table}" />
+            <entry
+              key="select"
+              value="SELECT * FROM ${table}" />
           </map>
         </constructor-arg>
       </bean>
     </property>
-    <property name="outputOptions" ref="outputOptions" />
+    <property
+      name="outputOptions"
+      ref="outputOptions" />
   </bean>
 
-  <bean id="executableForCount" class="schemacrawler.tools.executable.SchemaCrawlerExecutable">
+  <bean
+    id="executableForCount"
+    class="schemacrawler.tools.executable.SchemaCrawlerExecutable"
+  >
     <constructor-arg value="count" />
-    <property name="schemaCrawlerOptions" ref="schemaCrawlerOptions" />
-    <property name="outputOptions" ref="outputOptions" />
+    <property
+      name="schemaCrawlerOptions"
+      ref="schemaCrawlerOptions" />
+    <property
+      name="outputOptions"
+      ref="outputOptions" />
   </bean>
 
-  <bean id="executableForGraph" class="schemacrawler.tools.executable.SchemaCrawlerExecutable">
+  <bean
+    id="executableForGraph"
+    class="schemacrawler.tools.executable.SchemaCrawlerExecutable"
+  >
     <constructor-arg value="graph" />
-    <property name="schemaCrawlerOptions" ref="schemaCrawlerOptions" />
+    <property
+      name="schemaCrawlerOptions"
+      ref="schemaCrawlerOptions" />
     <property name="outputOptions">
       <bean class="schemacrawler.tools.options.OutputOptions">
-        <property name="outputFormatValue" value="canon" />
+        <property
+          name="outputFormatValue"
+          value="canon" />
       </bean>
     </property>
   </bean>
 
-  <bean id="executableForVelocity" class="schemacrawler.tools.executable.SchemaCrawlerExecutable">
+  <bean
+    id="executableForVelocity"
+    class="schemacrawler.tools.executable.SchemaCrawlerExecutable"
+  >
     <constructor-arg value="velocity" />
-    <property name="schemaCrawlerOptions" ref="schemaCrawlerOptions" />
+    <property
+      name="schemaCrawlerOptions"
+      ref="schemaCrawlerOptions" />
     <property name="outputOptions">
       <bean class="schemacrawler.tools.options.OutputOptions">
-        <property name="outputFormatValue" value="plaintextschema.vm" />
+        <property
+          name="outputFormatValue"
+          value="plaintextschema.vm" />
       </bean>
     </property>
   </bean>
 
-  <bean id="executableForFreeMarker" class="schemacrawler.tools.executable.SchemaCrawlerExecutable">
+  <bean
+    id="executableForFreeMarker"
+    class="schemacrawler.tools.executable.SchemaCrawlerExecutable"
+  >
     <constructor-arg value="freemarker" />
-    <property name="schemaCrawlerOptions" ref="schemaCrawlerOptions" />
+    <property
+      name="schemaCrawlerOptions"
+      ref="schemaCrawlerOptions" />
     <property name="outputOptions">
       <bean class="schemacrawler.tools.options.OutputOptions">
-        <property name="outputFormatValue" value="plaintextschema.ftl" />
+        <property
+          name="outputFormatValue"
+          value="plaintextschema.ftl" />
       </bean>
     </property>
   </bean>
 
-  <bean id="executableForJavaScript" class="schemacrawler.tools.executable.SchemaCrawlerExecutable">
+  <bean
+    id="executableForJavaScript"
+    class="schemacrawler.tools.executable.SchemaCrawlerExecutable"
+  >
     <constructor-arg value="script" />
-    <property name="schemaCrawlerOptions" ref="schemaCrawlerOptions" />
+    <property
+      name="schemaCrawlerOptions"
+      ref="schemaCrawlerOptions" />
     <property name="outputOptions">
       <bean class="schemacrawler.tools.options.OutputOptions">
-        <property name="outputFormatValue" value="plaintextschema.js" />
+        <property
+          name="outputFormatValue"
+          value="plaintextschema.js" />
       </bean>
     </property>
   </bean>
 
-  <bean id="executableForXMLSerialization" class="schemacrawler.tools.executable.SchemaCrawlerExecutable">
+  <bean
+    id="executableForXMLSerialization"
+    class="schemacrawler.tools.executable.SchemaCrawlerExecutable"
+  >
     <constructor-arg value="serialize" />
-    <property name="schemaCrawlerOptions" ref="schemaCrawlerOptions" />
+    <property
+      name="schemaCrawlerOptions"
+      ref="schemaCrawlerOptions" />
     <property name="outputOptions">
       <bean class="schemacrawler.tools.options.OutputOptions">
-        <property name="outputFormatValue" value="xml" />
+        <property
+          name="outputFormatValue"
+          value="xml" />
       </bean>
     </property>
   </bean>
-  
+
 </beans>

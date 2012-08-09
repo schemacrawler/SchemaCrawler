@@ -36,7 +36,7 @@
           <a href="http://www.graphviz.org/doc/info/lang.html ">DOT format,</a>
           which
           <a href="http://www.graphviz.org/">GraphViz</a>
-          can convert into schema diagrams.
+          can convert into <a href="diagramming.html">schema diagrams.</a>
         </p>
       </answer>
     </faq>
@@ -221,7 +221,7 @@
         </p>
         <p>
           For more details, look at the
-          <a href="features/lint.html">SchemaCrawler Lint</a>
+          <a href="lint.html">SchemaCrawler Lint</a>
           page.
         </p>
       </answer>
@@ -245,7 +245,7 @@
         </p>
         <p>
           For more details, look at the
-          <a href="features/scripting.html">scripting</a>
+          <a href="scripting.html">scripting</a>
           page.
         </p>
         <p>

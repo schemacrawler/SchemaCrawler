@@ -24,6 +24,7 @@ package schemacrawler.crawl;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 import java.util.logging.Level;
@@ -61,14 +62,14 @@ final class TableRetriever
    *        Array of table types
    * @return Array of string table types
    */
-  private static String[] toStrings(final TableType[] tableTypes)
+  private static String[] toStrings(final Collection<TableType> tableTypes)
   {
-    if (tableTypes == null || tableTypes.length == 0)
+    if (tableTypes == null || tableTypes.isEmpty())
     {
       return new String[0];
     }
 
-    final List<String> tableTypeStrings = new ArrayList<String>(tableTypes.length);
+    final List<String> tableTypeStrings = new ArrayList<String>(tableTypes.size());
     for (final TableType tableType: tableTypes)
     {
       if (tableType != null)
@@ -303,7 +304,7 @@ final class TableRetriever
   void retrieveTables(final String catalogName,
                       final String schemaName,
                       final String tableNamePattern,
-                      final TableType[] tableTypes,
+                      final Collection<TableType> tableTypes,
                       final InclusionRule tableInclusionRule)
     throws SQLException
   {

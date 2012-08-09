@@ -21,8 +21,10 @@
 package schemacrawler.schemacrawler;
 
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Locale;
 
 import schemacrawler.schema.RoutineType;
@@ -67,26 +69,14 @@ public final class SchemaCrawlerOptions
   private static final String SC_SUPPORTS_SCHEMAS_OVERRIDE = "schemacrawler.supports_schemas.override";
   private static final String SC_SUPPORTS_CATALOG_OVERRIDE = "schemacrawler.supports_catalog.override";
 
-  private static <T extends Enum<T>> T[] cloneTypesArray(final T[] types)
-  {
-    if (types != null)
-    {
-      return types.clone();
-    }
-    else
-    {
-      return null;
-    }
-  }
-
   private InclusionRule schemaInclusionRule;
 
-  private TableType[] tableTypes;
+  private Collection<TableType> tableTypes;
   private String tableNamePattern;
   private InclusionRule tableInclusionRule;
   private InclusionRule columnInclusionRule;
 
-  private RoutineType[] routineTypes;
+  private Collection<RoutineType> routineTypes;
   private InclusionRule routineInclusionRule;
   private InclusionRule routineColumnInclusionRule;
 
@@ -116,12 +106,13 @@ public final class SchemaCrawlerOptions
 
     schemaInclusionRule = InclusionRule.INCLUDE_ALL;
 
-    tableTypes = new TableType[] {
-        TableType.table, TableType.view
-    };
+    tableTypes = new HashSet<TableType>(Arrays.asList(TableType.table,
+                                                      TableType.view));
     tableInclusionRule = InclusionRule.INCLUDE_ALL;
     columnInclusionRule = InclusionRule.INCLUDE_ALL;
 
+    routineTypes = new HashSet<RoutineType>(Arrays.asList(RoutineType.procedure,
+                                                          RoutineType.function));
     routineInclusionRule = InclusionRule.INCLUDE_ALL;
     routineColumnInclusionRule = InclusionRule.INCLUDE_ALL;
 
@@ -292,14 +283,9 @@ public final class SchemaCrawlerOptions
     return routineInclusionRule;
   }
 
-  /**
-   * Get the routine types.
-   * 
-   * @return Routine types
-   */
-  public RoutineType[] getRoutineTypes()
+  public Collection<RoutineType> getRoutineTypes()
   {
-    return cloneTypesArray(routineTypes);
+    return new HashSet<RoutineType>(routineTypes);
   }
 
   /**
@@ -360,14 +346,9 @@ public final class SchemaCrawlerOptions
     return tableNamePattern;
   }
 
-  /**
-   * Get the table types.
-   * 
-   * @return Table types
-   */
-  public TableType[] getTableTypes()
+  public Collection<TableType> getTableTypes()
   {
-    return cloneTypesArray(tableTypes);
+    return new HashSet<TableType>(tableTypes);
   }
 
   public boolean hasOverrideForSupportsCatalogs()
@@ -532,19 +513,16 @@ public final class SchemaCrawlerOptions
     this.routineInclusionRule = routineInclusionRule;
   }
 
-  /**
-   * Sets routine types from an array of routine types.
-   * 
-   * @param routineTypesArray
-   *        Array of routine types.
-   */
-  public void setRoutineTypes(final RoutineType[] routineTypesArray)
+  public void setRoutineTypes(final Collection<RoutineType> routineTypes)
   {
-    if (routineTypesArray == null)
+    if (routineTypes == null)
     {
-      throw new IllegalArgumentException("Cannot use null value in a setter");
+      this.routineTypes = Collections.emptySet();
     }
-    routineTypes = cloneTypesArray(routineTypesArray);
+    else
+    {
+      this.routineTypes = new HashSet<RoutineType>(routineTypes);
+    }
   }
 
   /**
@@ -555,27 +533,19 @@ public final class SchemaCrawlerOptions
    */
   public void setRoutineTypes(final String routineTypesString)
   {
-    if (routineTypesString == null)
+    routineTypes = new HashSet<RoutineType>();
+    if (routineTypesString != null)
     {
-      routineTypes = new RoutineType[0];
-      return;
+      final String[] routineTypeStrings = routineTypesString.split(",");
+      if (routineTypeStrings != null && routineTypeStrings.length > 0)
+      {
+        for (final String routineTypeString: routineTypeStrings)
+        {
+          routineTypes.add(RoutineType.valueOf(routineTypeString
+            .toLowerCase(Locale.ENGLISH)));
+        }
+      }
     }
-
-    final String[] routineTypeStrings = routineTypesString.split(",");
-    if (routineTypeStrings == null || routineTypeStrings.length == 0)
-    {
-      routineTypes = new RoutineType[0];
-      return;
-    }
-
-    final List<RoutineType> routineTypes1 = new ArrayList<RoutineType>(routineTypeStrings.length);
-    for (final String routineTypeString: routineTypeStrings)
-    {
-      routineTypes1.add(RoutineType.valueOf(routineTypeString
-        .toLowerCase(Locale.ENGLISH)));
-    }
-
-    routineTypes = routineTypes1.toArray(new RoutineType[routineTypes1.size()]);
   }
 
   /**
@@ -687,6 +657,18 @@ public final class SchemaCrawlerOptions
     this.tableNamePattern = tableNamePattern;
   }
 
+  public void setTableTypes(final Collection<TableType> tableTypes)
+  {
+    if (tableTypes == null)
+    {
+      this.tableTypes = Collections.emptySet();
+    }
+    else
+    {
+      this.tableTypes = new HashSet<TableType>(tableTypes);
+    }
+  }
+
   /**
    * Sets table types from a comma-separated list of table types. For
    * example:
@@ -698,42 +680,19 @@ public final class SchemaCrawlerOptions
    */
   public void setTableTypes(final String tableTypesString)
   {
-    if (tableTypesString == null)
+    tableTypes = new HashSet<TableType>();
+    if (tableTypesString != null)
     {
-      tableTypes = new TableType[0];
-      return;
+      final String[] tableTypeStrings = tableTypesString.split(",");
+      if (tableTypeStrings != null && tableTypeStrings.length > 0)
+      {
+        for (final String tableTypeString: tableTypeStrings)
+        {
+          tableTypes.add(TableType.valueOf(tableTypeString
+            .toLowerCase(Locale.ENGLISH)));
+        }
+      }
     }
-
-    final String[] tableTypeStrings = tableTypesString.split(",");
-    if (tableTypeStrings == null || tableTypeStrings.length == 0)
-    {
-      tableTypes = new TableType[0];
-      return;
-    }
-
-    final List<TableType> tableTypes1 = new ArrayList<TableType>(tableTypeStrings.length);
-    for (final String tableTypeString: tableTypeStrings)
-    {
-      tableTypes1.add(TableType.valueOf(tableTypeString
-        .toLowerCase(Locale.ENGLISH)));
-    }
-
-    tableTypes = tableTypes1.toArray(new TableType[tableTypes1.size()]);
-  }
-
-  /**
-   * Sets table types from an array of table types.
-   * 
-   * @param tableTypesArray
-   *        Array of table types.
-   */
-  public void setTableTypes(final TableType[] tableTypesArray)
-  {
-    if (tableTypesArray == null)
-    {
-      throw new IllegalArgumentException("Cannot use null value in a setter");
-    }
-    tableTypes = cloneTypesArray(tableTypesArray);
   }
 
 }

@@ -9,7 +9,8 @@
     <section name="SchemaCrawler - Commandline Example">
       <subsection name="Description">
         <p>The command example demonstrates the use of SchemaCrawler from
-          the shell command line.
+          the
+          shell command line.
         </p>
       </subsection>
       <subsection name="How to Run">
@@ -65,6 +66,11 @@
             example directory.
           </li>
           <li>Try using different SchemaCrawler command line options.</li>
+          <li>
+            Try running an arbitrary query, with a query command
+            <code>"-command=SELECT * FROM PUBLIC.BOOKS.AUTHORS"</code>
+            . (The quotes are required.)
+          </li>
           <li>
             Redirect the output of SchemaCrawler into a file, by running
             <span class="code">sc.cmd &gt; file.txt</span>

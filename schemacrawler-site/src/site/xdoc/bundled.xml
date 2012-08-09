@@ -2,11 +2,11 @@
   "http://maven.apache.org/dtd/xdoc_1_0.dtd">
 <document>
   <properties>
-    <title>SchemaCrawler - Bundled Distributions</title>
+    <title>SchemaCrawler - Database-specific Distributions</title>
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-    <section name="Bundled Distributions">
+    <section name="Database-specific Distributions">
       <subsection name="Bundled Distributions">
         <p>SchemaCrawler supports almost any database that has a JDBC driver, but for convenience is
           bundled with drivers
@@ -94,13 +94,23 @@
             with the
             <a href="http://www.xerial.org/trac/Xerial/wiki/SQLiteJDBC">Xerial SQLite JDBC driver</a>
           </li>
+          <li>
+            <img src="http://www.gnu.org/graphics/lgplv3-88x31.png" alt="LGPL" /> [
+            <a href="http://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20-%20Sybase%20IQ/">download</a>
+            ]
+            SchemaCrawler for
+            <a href="http://www.sybase.com/products/datawarehousing/sybaseiq">Sybase IQ</a>
+            (but the
+            <a href="http://www.sybase.com/products/allproductsa-z/softwaredeveloperkit/jconnect">Sybase IQ jConnect JDBC driver</a>
+            needs to be downloaded separately)
+          </li>          
         </ul>
       </subsection>
       <subsection name="How To">
         <p>
-          Ensure that you have Java 6 or better installed, and unzip the distribution,
+          Ensure that you have Java 6 or better installed, and download and unzip the bundled distribution,
           and you are
-          ready to use SchemaCrawler. A typical command line for SchemaCrawler for
+          ready to use SchemaCrawler. No additional downloads are required. A typical command line for SchemaCrawler for
           Microsoft SQL
           Server looks like:
           <br />
@@ -129,18 +139,20 @@
           SchemaCrawler is free, and licensed under the
           <a href="http://www.gnu.org/licenses/lgpl-3.0.txt">GNU Lesser General Public License (LGPL)</a>
           for distributions that do not include a JDBC driver.
-          <a href="http://sourceforge.net/donate/index.php?group_id=148383">Donations</a>
-          are welcome.
         </p>
         <p>
           <img src="http://www.gnu.org/graphics/gplv3-88x31.png" alt="GPL" />
-          SchemaCrawler distributions that are bundled with the JDBC driver are distributed
+          SchemaCrawler distributions that are bundled with the JDBC driver are also free, and are distributed
           under the
           <a href="http://www.gnu.org/licenses/gpl-3.0.txt">GNU General Public License (GPL) license.</a>
           The JDBC drivers are packaged with these SchemaCrawler distributions in their
           binary form,
           and retain their original license.
         </p>
+        <p>
+          <a href="http://sourceforge.net/donate/index.php?group_id=148383">Donations</a>
+          are welcome.
+        </p>        
       </subsection>
     </section>
   </body>
