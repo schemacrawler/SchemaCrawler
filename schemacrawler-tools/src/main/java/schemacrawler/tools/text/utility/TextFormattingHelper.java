@@ -163,6 +163,6 @@ public interface TextFormattingHelper
    *        Column names
    * @return Header row for data
    */
-  String createRowHeader(String[] columnNames);
+  String createRowHeader(String... columnNames);
 
 }

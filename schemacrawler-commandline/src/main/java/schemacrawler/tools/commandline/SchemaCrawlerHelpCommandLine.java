@@ -125,9 +125,8 @@ final class SchemaCrawlerHelpCommandLine
     {
       showHelp("/help/Command.txt");
       System.out.println("  Available commands are: ");
-      final String[] availableCommands = commandRegistry
-        .lookupAvailableCommands();
-      for (final String availableCommand: availableCommands)
+      for (final String availableCommand: commandRegistry
+        .lookupAvailableCommands())
       {
         System.out.println("  " + availableCommand);
       }

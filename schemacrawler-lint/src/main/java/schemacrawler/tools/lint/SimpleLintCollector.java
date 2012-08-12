@@ -21,7 +21,6 @@ package schemacrawler.tools.lint;
 
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
@@ -33,18 +32,17 @@ public class SimpleLintCollector
   implements LintCollector
 {
 
-  public static Lint<?>[] getLint(final NamedObject namedObject)
+  public static Collection<Lint<?>> getLint(final NamedObject namedObject)
   {
     if (namedObject == null)
     {
       return null;
     }
 
-    final Collection<Lint<?>> lints = namedObject
-      .getAttribute(LINT_KEY, new ArrayList<Lint<?>>());
-    final Lint<?>[] objectLints = lints.toArray(new Lint<?>[lints.size()]);
-    Arrays.sort(objectLints);
-    return objectLints;
+    final List<Lint<?>> lints = new ArrayList<Lint<?>>(namedObject
+      .getAttribute(LINT_KEY, new ArrayList<Lint<?>>()));
+    Collections.sort(lints);
+    return lints;
   }
 
   private final List<Lint<?>> lints;
@@ -107,17 +105,6 @@ public class SimpleLintCollector
   public int size()
   {
     return lints.size();
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.lint.LintCollector#toArray()
-   */
-  @Override
-  public Lint<?>[] toArray()
-  {
-    return lints.toArray(new Lint<?>[lints.size()]);
   }
 
 }

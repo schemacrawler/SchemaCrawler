@@ -21,6 +21,7 @@
 package schemacrawler.tools.lint.executable;
 
 
+import java.util.Collection;
 import java.util.logging.Level;
 
 import schemacrawler.schema.Table;
@@ -49,8 +50,8 @@ final class LintJsonFormatter
   public void handle(final LintedDatabase database)
     throws SchemaCrawlerException
   {
-    final Lint<?>[] lints = SimpleLintCollector.getLint(database);
-    if (lints != null && lints.length > 0)
+    Collection<Lint<?>> lints = SimpleLintCollector.getLint(database);
+    if (lints != null && !lints.isEmpty())
     {
       final JSONObject jsonDatabase = new JSONObject();
       try
@@ -76,8 +77,8 @@ final class LintJsonFormatter
   @Override
   public void handle(final Table table)
   {
-    final Lint<?>[] lints = SimpleLintCollector.getLint(table);
-    if (lints != null && lints.length > 0)
+    final Collection<Lint<?>> lints = SimpleLintCollector.getLint(table);
+    if (lints != null && !lints.isEmpty())
     {
       final JSONObject jsonTable = new JSONObject();
       try
@@ -108,10 +109,10 @@ final class LintJsonFormatter
   {
   }
 
-  private JSONArray handleLints(final Lint<?>[] lints)
+  private JSONArray handleLints(final Collection<Lint<?>> lints)
   {
     final JSONArray jsonLints = new JSONArray();
-    if (lints != null && lints.length > 0)
+    if (lints != null && !lints.isEmpty())
     {
       for (final Lint<?> lint: lints)
       {

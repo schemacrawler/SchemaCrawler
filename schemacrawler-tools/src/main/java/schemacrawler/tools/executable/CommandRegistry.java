@@ -23,14 +23,14 @@ package schemacrawler.tools.executable;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.ServiceLoader;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -130,12 +130,11 @@ public final class CommandRegistry
     return commandRegistry.containsKey(command);
   }
 
-  public String[] lookupAvailableCommands()
+  public Collection<String> lookupAvailableCommands()
   {
-    final Set<String> availableCommandsList = commandRegistry.keySet();
-    final String[] availableCommands = availableCommandsList
-      .toArray(new String[availableCommandsList.size()]);
-    Arrays.sort(availableCommands);
+    final List<String> availableCommands = new ArrayList<String>(commandRegistry
+      .keySet());
+    Collections.sort(availableCommands);
     return availableCommands;
   }
 

@@ -34,6 +34,8 @@ public class LinterTooManyLobs
   extends BaseLinter
 {
 
+  private static final int MAX_LOBS_IN_TABLE = 1;
+
   public LinterTooManyLobs()
   {
     setSeverity(LintSeverity.low);
@@ -59,18 +61,16 @@ public class LinterTooManyLobs
       throw new IllegalArgumentException("No table provided");
     }
 
-    final List<Column> lobColumns = findLobColumns(table.getColumns());
-    if (lobColumns.size() > 1)
+    final ArrayList<Column> lobColumns = findLobColumns(table.getColumns());
+    if (lobColumns.size() > MAX_LOBS_IN_TABLE)
     {
-      final Column[] columns = lobColumns
-        .toArray(new Column[lobColumns.size()]);
-      addLint(table, getSummary(), columns);
+      addLint(table, getSummary(), lobColumns);
     }
   }
 
-  private List<Column> findLobColumns(final List<Column> columns)
+  private ArrayList<Column> findLobColumns(final List<Column> columns)
   {
-    final List<Column> lobColumns = new ArrayList<Column>();
+    final ArrayList<Column> lobColumns = new ArrayList<Column>();
     for (final Column column: columns)
     {
       final JavaSqlTypeGroup javaSqlTypeGroup = JavaSqlTypesUtility

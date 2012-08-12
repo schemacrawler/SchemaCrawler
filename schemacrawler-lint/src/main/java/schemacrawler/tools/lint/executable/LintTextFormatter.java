@@ -23,6 +23,7 @@ package schemacrawler.tools.lint.executable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -52,8 +53,8 @@ final class LintTextFormatter
   public void handle(final LintedDatabase database)
     throws SchemaCrawlerException
   {
-    final Lint<?>[] lints = SimpleLintCollector.getLint(database);
-    if (lints != null && lints.length > 0)
+    final Collection<Lint<?>> lints = SimpleLintCollector.getLint(database);
+    if (lints != null && !lints.isEmpty())
     {
       out.print(formattingHelper.createObjectStart(""));
 
@@ -77,8 +78,8 @@ final class LintTextFormatter
   @Override
   public void handle(final Table table)
   {
-    final Lint<?>[] lints = SimpleLintCollector.getLint(table);
-    if (lints != null && lints.length > 0)
+    final Collection<Lint<?>> lints = SimpleLintCollector.getLint(table);
+    if (lints != null && !lints.isEmpty())
     {
       out.print(formattingHelper.createObjectStart(""));
       printTableName(table);
@@ -111,7 +112,7 @@ final class LintTextFormatter
                                               "Lints"));
   }
 
-  private void printLints(final Lint<?>[] lints)
+  private void printLints(final Collection<Lint<?>> lints)
   {
     out.println(formattingHelper.createEmptyRow());
 
