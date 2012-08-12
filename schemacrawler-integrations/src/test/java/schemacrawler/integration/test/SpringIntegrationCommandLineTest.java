@@ -74,8 +74,8 @@ public class SpringIntegrationCommandLineTest
     });
 
     failures.addAll(compareOutput(referenceFile,
-                                             testOutputFile,
-                                             outputFormat.name()));
+                                  testOutputFile,
+                                  outputFormat.name()));
     if (failures.size() > 0)
     {
       fail(failures.toString());

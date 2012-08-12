@@ -44,7 +44,6 @@ import schemacrawler.tools.lint.Lint;
 import schemacrawler.tools.lint.LintCollector;
 import schemacrawler.tools.lint.LintedDatabase;
 import schemacrawler.tools.lint.LinterConfigs;
-import schemacrawler.tools.lint.executable.LintExecutable;
 
 public class LintTest
 {
@@ -80,11 +79,9 @@ public class LintTest
     assertNotNull(database);
     assertEquals(1, database.getSchemas().size());
     final Schema schema = database.getSchema("PUBLIC.FOR_LINT");
-    assertNotNull("FOR_LINT schema not found",
-                  schema);
-    assertEquals("FOR_LINT tables not found",
-                 5,
-                 database.getTables(schema).size());
+    assertNotNull("FOR_LINT schema not found", schema);
+    assertEquals("FOR_LINT tables not found", 5, database.getTables(schema)
+      .size());
 
     final LintedDatabase lintedDatabase = new LintedDatabase(database,
                                                              new LinterConfigs());

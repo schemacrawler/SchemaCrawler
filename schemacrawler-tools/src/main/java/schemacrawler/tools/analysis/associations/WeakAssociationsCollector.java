@@ -34,10 +34,10 @@ public interface WeakAssociationsCollector
 
   void clear();
 
+  Collection<ColumnReference> getCollection();
+
   boolean isEmpty();
 
   int size();
-
-  Collection<ColumnReference> getCollection();
 
 }

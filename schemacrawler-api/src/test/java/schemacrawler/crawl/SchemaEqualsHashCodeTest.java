@@ -112,6 +112,12 @@ public class SchemaEqualsHashCodeTest
     private static final long serialVersionUID = 1440765929570312732L;
 
     @Override
+    public int compareTo(final Grant o)
+    {
+      return 0;
+    }
+
+    @Override
     public String getGrantee()
     {
       return "grantEmpty-Grantee";
@@ -127,12 +133,6 @@ public class SchemaEqualsHashCodeTest
     public boolean isGrantable()
     {
       return false;
-    }
-
-    @Override
-    public int compareTo(Grant o)
-    {
-      return 0;
     }
   };
 

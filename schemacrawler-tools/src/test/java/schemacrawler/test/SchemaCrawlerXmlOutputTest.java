@@ -69,15 +69,11 @@ public class SchemaCrawlerXmlOutputTest
   }
 
   @Test
-  public void validXMLOutput()
+  public void validCountXMLOutput()
     throws Exception
   {
     final List<String> failures = new ArrayList<String>();
 
-    checkValidXmlOutput(Operation.count.name(), failures);
-    checkValidXmlOutput(Operation.dump.name(), failures);
-    checkValidXmlOutput(SchemaTextDetailType.list.name(), failures);
-    checkValidXmlOutput(SchemaTextDetailType.schema.name(), failures);
     checkValidXmlOutput(SchemaTextDetailType.details.name(), failures);
 
     if (failures.size() > 0)
@@ -87,11 +83,15 @@ public class SchemaCrawlerXmlOutputTest
   }
 
   @Test
-  public void validCountXMLOutput()
+  public void validXMLOutput()
     throws Exception
   {
     final List<String> failures = new ArrayList<String>();
 
+    checkValidXmlOutput(Operation.count.name(), failures);
+    checkValidXmlOutput(Operation.dump.name(), failures);
+    checkValidXmlOutput(SchemaTextDetailType.list.name(), failures);
+    checkValidXmlOutput(SchemaTextDetailType.schema.name(), failures);
     checkValidXmlOutput(SchemaTextDetailType.details.name(), failures);
 
     if (failures.size() > 0)
@@ -120,9 +120,10 @@ public class SchemaCrawlerXmlOutputTest
     final SchemaCrawlerOptions options = executable.getSchemaCrawlerOptions();
     options.setSchemaInfoLevel(SchemaInfoLevel.minimum());
 
-    Config additionalConfiguration = new Config();
-    additionalConfiguration.put("schemacrawler.format.sort_alphabetically.tables",
-                                Boolean.TRUE.toString());
+    final Config additionalConfiguration = new Config();
+    additionalConfiguration
+      .put("schemacrawler.format.sort_alphabetically.tables",
+           Boolean.TRUE.toString());
 
     executable.setAdditionalConfiguration(additionalConfiguration);
     executable.setOutputOptions(outputOptions);

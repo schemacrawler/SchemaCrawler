@@ -56,7 +56,7 @@ public final class OptionValue<T>
     {
       return false;
     }
-    final OptionValue other = (OptionValue) obj;
+    final OptionValue<?> other = (OptionValue<?>) obj;
     if (option == null)
     {
       if (other.option != null)

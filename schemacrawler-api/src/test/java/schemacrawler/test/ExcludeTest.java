@@ -181,8 +181,7 @@ public class ExcludeTest
                                                 ".*\\..*\\.ID"));
 
     final Database database = testDatabase.getDatabase(schemaCrawlerOptions);
-    final Schema[] schemas = (Schema[]) database.getSchemas()
-      .toArray(new Schema[0]);
+    final Schema[] schemas = database.getSchemas().toArray(new Schema[0]);
     assertEquals("Schema count does not match",
                  schemaNames.length,
                  schemas.length);
@@ -192,8 +191,7 @@ public class ExcludeTest
       assertEquals("Schema name does not match",
                    "PUBLIC." + schemaNames[schemaIdx],
                    schema.getFullName());
-      final Table[] tables = (Table[]) database.getTables(schema)
-        .toArray(new Table[0]);
+      final Table[] tables = database.getTables(schema).toArray(new Table[0]);
       Arrays.sort(tables, NamedObjectSort.alphabetical);
       assertEquals("Table count does not match, for schema " + schema,
                    tableCounts[schemaIdx],

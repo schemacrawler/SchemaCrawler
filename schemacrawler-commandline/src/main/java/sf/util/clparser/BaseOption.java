@@ -76,7 +76,7 @@ public abstract class BaseOption<T>
     {
       return false;
     }
-    final BaseOption other = (BaseOption) obj;
+    final BaseOption<?> other = (BaseOption<?>) obj;
     if (defaultValue == null)
     {
       if (other.defaultValue != null)
