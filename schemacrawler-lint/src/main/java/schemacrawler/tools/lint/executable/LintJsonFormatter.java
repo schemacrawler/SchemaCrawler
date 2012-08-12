@@ -50,7 +50,7 @@ final class LintJsonFormatter
   public void handle(final LintedDatabase database)
     throws SchemaCrawlerException
   {
-    Collection<Lint<?>> lints = SimpleLintCollector.getLint(database);
+    final Collection<Lint<?>> lints = SimpleLintCollector.getLint(database);
     if (lints != null && !lints.isEmpty())
     {
       final JSONObject jsonDatabase = new JSONObject();

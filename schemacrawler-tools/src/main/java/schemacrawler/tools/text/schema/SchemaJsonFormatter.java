@@ -510,7 +510,7 @@ final class SchemaJsonFormatter
     return jsonIndex;
   }
 
-  private JSONObject handleRoutineColumn(final RoutineColumn column)
+  private JSONObject handleRoutineColumn(final RoutineColumn<?> column)
   {
     final JSONObject jsonColumn = new JSONObject();
 

@@ -160,8 +160,7 @@ public class SchemaCrawlerTest
     schemaCrawlerOptions.setInformationSchemaViews(informationSchemaViews);
 
     final Database database = testDatabase.getDatabase(schemaCrawlerOptions);
-    final Schema[] schemas = (Schema[]) database.getSchemas()
-      .toArray(new Schema[0]);
+    final Schema[] schemas = database.getSchemas().toArray(new Schema[0]);
     assertEquals("Schema count does not match", 6, schemas.length);
     for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++)
     {
@@ -283,8 +282,7 @@ public class SchemaCrawlerTest
                                                 ".*\\.FOR_LINT"));
 
     final Database database = testDatabase.getDatabase(schemaCrawlerOptions);
-    final Schema[] schemas = (Schema[]) database.getSchemas()
-      .toArray(new Schema[0]);
+    final Schema[] schemas = database.getSchemas().toArray(new Schema[0]);
     assertEquals("Schema count does not match", 5, schemas.length);
     for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++)
     {
@@ -396,10 +394,8 @@ public class SchemaCrawlerTest
                  database.getRoutines(schema2));
 
     // Try negative test
-    final Table table1 = (Table) database.getTables(schema1)
-      .toArray(new Table[0])[0];
-    final Table table2 = (Table) database.getTables(schema1)
-      .toArray(new Table[0])[1];
+    final Table table1 = database.getTables(schema1).toArray(new Table[0])[0];
+    final Table table2 = database.getTables(schema1).toArray(new Table[0])[1];
     assertFalse("Tables should not be equal", table1.equals(table2));
 
   }
@@ -494,8 +490,7 @@ public class SchemaCrawlerTest
                                                 ".*\\.FOR_LINT"));
 
     final Database database = testDatabase.getDatabase(schemaCrawlerOptions);
-    final Schema[] schemas = (Schema[]) database.getSchemas()
-      .toArray(new Schema[0]);
+    final Schema[] schemas = database.getSchemas().toArray(new Schema[0]);
     assertEquals("Schema count does not match", 5, schemas.length);
     for (final Schema schema: schemas)
     {
@@ -566,8 +561,7 @@ public class SchemaCrawlerTest
                                                 ".*\\.FOR_LINT"));
 
     final Database database = testDatabase.getDatabase(schemaCrawlerOptions);
-    final Schema[] schemas = (Schema[]) database.getSchemas()
-      .toArray(new Schema[0]);
+    final Schema[] schemas = database.getSchemas().toArray(new Schema[0]);
     assertEquals("Schema count does not match", 5, schemas.length);
     final Schema schema = schemas[0];
 

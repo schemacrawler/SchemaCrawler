@@ -91,7 +91,8 @@ public class ResultColumnsTest
     connection.close();
 
     assertNotNull("Could not obtain result columns", resultColumns);
-    final ResultsColumn[] columns = resultColumns.getColumns().toArray(new ResultsColumn[0]);
+    final ResultsColumn[] columns = resultColumns.getColumns()
+      .toArray(new ResultsColumn[0]);
     assertEquals("Column count does not match",
                  columnNames.length,
                  columns.length);

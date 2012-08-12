@@ -77,6 +77,12 @@ public class SimpleWeakAssociationsCollector
   }
 
   @Override
+  public Collection<ColumnReference> getCollection()
+  {
+    return new HashSet<ColumnReference>(weakAssociations);
+  }
+
+  @Override
   public boolean isEmpty()
   {
     return weakAssociations.isEmpty();
@@ -92,12 +98,6 @@ public class SimpleWeakAssociationsCollector
   public int size()
   {
     return weakAssociations.size();
-  }
-
-  @Override
-  public Collection<ColumnReference> getCollection()
-  {
-    return new HashSet<ColumnReference>(weakAssociations);
   }
 
   private void addWeakAssociation(final Table table,

@@ -89,7 +89,7 @@ public class SpringIntegrationTest
     final SchemaCrawlerOptions schemaCrawlerOptions = (SchemaCrawlerOptions) appContext
       .getBean("schemaCrawlerOptions");
 
-    Database database = testDatabase.getDatabase(schemaCrawlerOptions);
+    final Database database = testDatabase.getDatabase(schemaCrawlerOptions);
     final Schema schema = testDatabase.getSchema(schemaCrawlerOptions,
                                                  "PUBLIC.BOOKS");
     assertNotNull("Could not obtain schema", schema);

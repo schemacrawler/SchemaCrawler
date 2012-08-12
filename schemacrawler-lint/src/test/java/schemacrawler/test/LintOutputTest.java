@@ -108,7 +108,8 @@ public class LintOutputTest
         outputOptions.setNoHeader(false);
         outputOptions.setNoFooter(false);
 
-        final Config config = Config.loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
+        final Config config = Config
+          .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
         final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
         schemaCrawlerOptions
           .setSchemaInclusionRule(new InclusionRule(".*FOR_LINT",
@@ -124,10 +125,9 @@ public class LintOutputTest
         executable.setAdditionalConfiguration(queriesConfig);
         executable.execute(connectionOptions.getConnection());
 
-        failures.addAll(compareOutput(COMPOSITE_OUTPUT
-                                                      + referenceFile,
-                                                  testOutputFile,
-                                                  outputFormat.name()));
+        failures.addAll(compareOutput(COMPOSITE_OUTPUT + referenceFile,
+                                      testOutputFile,
+                                      outputFormat.name()));
       }
     }
     if (failures.size() > 0)
@@ -156,7 +156,8 @@ public class LintOutputTest
     outputOptions.setNoHeader(false);
     outputOptions.setNoFooter(false);
 
-    final Config config = Config.loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
+    final Config config = Config
+      .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
     schemaCrawlerOptions
       .setSchemaInclusionRule(new InclusionRule(".*FOR_LINT",
@@ -172,8 +173,8 @@ public class LintOutputTest
     executable.execute(connectionOptions.getConnection());
 
     failures.addAll(compareOutput(JSON_OUTPUT + referenceFile,
-                                              testOutputFile,
-                                              outputOptions.getOutputFormat().name()));
+                                  testOutputFile,
+                                  outputOptions.getOutputFormat().name()));
 
     if (failures.size() > 0)
     {
@@ -200,7 +201,8 @@ public class LintOutputTest
     outputOptions.setNoHeader(false);
     outputOptions.setNoFooter(false);
 
-    final Config config = Config.loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
+    final Config config = Config
+      .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
     schemaCrawlerOptions
       .setSchemaInclusionRule(new InclusionRule(".*FOR_LINT",
@@ -216,8 +218,8 @@ public class LintOutputTest
     executable.execute(connectionOptions.getConnection());
 
     failures.addAll(compareOutput(TEXT_OUTPUT + referenceFile,
-                                              testOutputFile,
-                                              outputOptions.getOutputFormat().name()));
+                                  testOutputFile,
+                                  outputOptions.getOutputFormat().name()));
 
     if (failures.size() > 0)
     {

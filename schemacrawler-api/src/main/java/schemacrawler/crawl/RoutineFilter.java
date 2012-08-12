@@ -105,7 +105,7 @@ class RoutineFilter
 
     boolean includeForColumns = false;
     boolean includeForDefinitions = false;
-    for (final RoutineColumn column: routine.getColumns())
+    for (final RoutineColumn<?> column: routine.getColumns())
     {
       if (checkIncludeForColumns)
       {
