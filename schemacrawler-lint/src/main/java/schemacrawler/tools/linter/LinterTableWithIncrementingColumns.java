@@ -20,7 +20,8 @@
 package schemacrawler.tools.linter;
 
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -45,9 +46,7 @@ public class LinterTableWithIncrementingColumns
     private final Integer columnIncrement;
     private final Column column;
 
-    IncrementingColumn(final String columnNameBase,
-                       final String columnIncrement,
-                       final Column column)
+    IncrementingColumn(final String columnIncrement, final Column column)
     {
       if (columnIncrement == null)
       {
@@ -107,13 +106,13 @@ public class LinterTableWithIncrementingColumns
 
     int minIncrement = Integer.MAX_VALUE;
     int maxIncrement = 0;
-    final Column[] incrementingColumns = new Column[incrementingColumnsList
-      .size()];
+    final ArrayList<Column> incrementingColumns = new ArrayList<Column>(incrementingColumnsList
+      .size());
     for (int i = 0; i < incrementingColumnsList.size(); i++)
     {
       final IncrementingColumn incrementingColumn = incrementingColumnsList
         .get(i);
-      incrementingColumns[i] = incrementingColumn.getColumn();
+      incrementingColumns.add(i, incrementingColumn.getColumn());
       if (incrementingColumn.getColumnIncrement() != null)
       {
         minIncrement = Math.min(minIncrement,
@@ -122,7 +121,7 @@ public class LinterTableWithIncrementingColumns
                                 incrementingColumn.getColumnIncrement());
       }
     }
-    Arrays.sort(incrementingColumns);
+    Collections.sort(incrementingColumns);
     addLint(table, getSummary(), incrementingColumns);
 
     // Check for increments that are not consecutive
@@ -134,12 +133,12 @@ public class LinterTableWithIncrementingColumns
     }
 
     // Check for consistent column data-types
-    final ColumnDataType columnDataType = incrementingColumns[0].getType();
-    final int columnSize = incrementingColumns[0].getSize();
-    for (int i = 1; i < incrementingColumns.length; i++)
+    final ColumnDataType columnDataType = incrementingColumns.get(0).getType();
+    final int columnSize = incrementingColumns.get(0).getSize();
+    for (int i = 1; i < incrementingColumns.size(); i++)
     {
-      if (!columnDataType.equals(incrementingColumns[1].getType())
-          || columnSize != incrementingColumns[1].getSize())
+      if (!columnDataType.equals(incrementingColumns.get(i).getType())
+          || columnSize != incrementingColumns.get(i).getSize())
       {
         addLint(table,
                 "incrementing columns don't have the same data-type",
@@ -157,7 +156,7 @@ public class LinterTableWithIncrementingColumns
       return new Multimap<String, IncrementingColumn>();
     }
 
-    final Pattern pattern = Pattern.compile("([^0-9]*)([0-9]+)");
+    final Pattern pattern = Pattern.compile("(.*[^0-9])([0-9]+)");
 
     final Map<String, Integer> incrementingColumnsMap = new HashMap<String, Integer>();
     for (final Column column: columns)
@@ -197,9 +196,8 @@ public class LinterTableWithIncrementingColumns
       final String columnName = Utility.convertForComparison(column.getName());
       if (incrementingColumnsMap.containsKey(columnName))
       {
-        incrementingColumns.add(columnName, new IncrementingColumn(columnName,
-                                                                   "0",
-                                                                   column));
+        incrementingColumns
+          .add(columnName, new IncrementingColumn("0", column));
       }
       final Matcher matcher = pattern.matcher(columnName);
       if (matcher.matches())
@@ -209,8 +207,7 @@ public class LinterTableWithIncrementingColumns
         if (incrementingColumnsMap.containsKey(columnNameBase))
         {
           incrementingColumns.add(columnNameBase,
-                                  new IncrementingColumn(columnNameBase,
-                                                         columnIncrement,
+                                  new IncrementingColumn(columnIncrement,
                                                          column));
         }
       }

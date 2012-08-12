@@ -36,6 +36,4 @@ public interface LintCollector
 
   int size();
 
-  Lint<?>[] toArray();
-
 }

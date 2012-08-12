@@ -59,8 +59,7 @@ public class ApplicationOptions
       if (logger != null)
       {
         logger.setLevel(null);
-        final Handler[] handlers = logger.getHandlers();
-        for (final Handler handler: handlers)
+        for (final Handler handler: logger.getHandlers())
         {
           handler.setLevel(applicationLogLevel);
         }

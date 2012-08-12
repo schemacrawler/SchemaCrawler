@@ -95,10 +95,9 @@ public class SimpleWeakAssociationsCollector
   }
 
   @Override
-  public ColumnReference[] toArray()
+  public Collection<ColumnReference> getCollection()
   {
-    return weakAssociations
-      .toArray(new ColumnReference[weakAssociations.size()]);
+    return new HashSet<ColumnReference>(weakAssociations);
   }
 
   private void addWeakAssociation(final Table table,

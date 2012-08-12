@@ -20,6 +20,8 @@
 package schemacrawler.tools.analysis.associations;
 
 
+import java.util.Collection;
+
 import schemacrawler.schema.ColumnReference;
 
 public interface WeakAssociationsCollector
@@ -36,6 +38,6 @@ public interface WeakAssociationsCollector
 
   int size();
 
-  ColumnReference[] toArray();
+  Collection<ColumnReference> getCollection();
 
 }

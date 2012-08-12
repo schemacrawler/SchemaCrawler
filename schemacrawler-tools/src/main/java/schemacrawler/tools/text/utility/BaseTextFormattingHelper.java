@@ -259,7 +259,7 @@ abstract class BaseTextFormattingHelper
    *        Column names
    */
   @Override
-  public String createRowHeader(final String[] columnNames)
+  public String createRowHeader(final String... columnNames)
   {
     OutputFormat outputFormat = this.outputFormat;
     if (outputFormat == OutputFormat.text)
