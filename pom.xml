@@ -54,7 +54,7 @@
     <module>schemacrawler-commandline</module>
     <module>schemacrawler-integrations</module>
     <module>schemacrawler-lint</module>
-	<module>schemacrawler-generic</module>
+    <module>schemacrawler-generic</module>
     <module>schemacrawler-db2</module>
     <module>schemacrawler-derby</module>
     <module>schemacrawler-hsqldb</module>
@@ -128,6 +128,17 @@
           </execution>
         </executions>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.12.2</version>
+        <configuration>
+          <forkMode>never</forkMode>
+          <parallel>both</parallel>
+          <threadCount>10</threadCount>
+          <runOrder>random</runOrder>
+        </configuration>        
+      </plugin>      
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
