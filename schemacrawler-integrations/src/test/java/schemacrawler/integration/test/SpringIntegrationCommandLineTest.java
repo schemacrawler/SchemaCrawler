@@ -28,32 +28,15 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
-import schemacrawler.test.utility.TestDatabase;
+import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.tools.integration.spring.Main;
 import schemacrawler.tools.options.OutputFormat;
 
 public class SpringIntegrationCommandLineTest
+  extends BaseDatabaseTest
 {
-
-  private static TestDatabase testDatabase = new TestDatabase();
-
-  @AfterClass
-  public static void afterAllTests()
-  {
-    testDatabase.shutdownDatabase();
-  }
-
-  @BeforeClass
-  public static void beforeAllTests()
-    throws Exception
-  {
-    TestDatabase.initializeApplicationLogging();
-    testDatabase.startDatabase(true);
-  }
 
   @Test
   public void springCommandLine()

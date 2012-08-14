@@ -29,20 +29,17 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 
-import org.custommonkey.xmlunit.XMLUnit;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.DatabaseConnectionOptions;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
-import schemacrawler.test.utility.LocalEntityResolver;
-import schemacrawler.test.utility.TestDatabase;
+import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import schemacrawler.tools.lint.executable.LintExecutable;
 import schemacrawler.tools.options.InfoLevel;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
@@ -50,28 +47,12 @@ import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 
 public class LintOutputTest
+  extends BaseDatabaseTest
 {
 
   private static final String TEXT_OUTPUT = "lint_text_output/";
   private static final String COMPOSITE_OUTPUT = "lint_composite_output/";
   private static final String JSON_OUTPUT = "lint_json_output/";
-
-  private static TestDatabase testDatabase = new TestDatabase();
-
-  @AfterClass
-  public static void afterAllTests()
-  {
-    testDatabase.shutdownDatabase();
-  }
-
-  @BeforeClass
-  public static void beforeAllTests()
-    throws Exception
-  {
-    TestDatabase.initializeApplicationLogging();
-    testDatabase.startMemoryDatabase();
-    XMLUnit.setControlEntityResolver(new LocalEntityResolver());
-  }
 
   @Test
   public void compareCompositeOutput()
@@ -116,14 +97,11 @@ public class LintOutputTest
                                                     InclusionRule.NONE));
         schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
 
-        final DatabaseConnectionOptions connectionOptions = testDatabase
-          .getDatabaseConnectionOptions();
-
-        final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
+        final Executable executable = new SchemaCrawlerExecutable(command);
         executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
         executable.setOutputOptions(outputOptions);
         executable.setAdditionalConfiguration(queriesConfig);
-        executable.execute(connectionOptions.getConnection());
+        executable.execute(getConnection());
 
         failures.addAll(compareOutput(COMPOSITE_OUTPUT + referenceFile,
                                       testOutputFile,
@@ -135,6 +113,7 @@ public class LintOutputTest
       fail(failures.toString());
     }
   }
+
 
   @Test
   public void compareJsonOutput()
@@ -164,13 +143,10 @@ public class LintOutputTest
                                                 InclusionRule.NONE));
     schemaCrawlerOptions.setSchemaInfoLevel(infoLevel.getSchemaInfoLevel());
 
-    final DatabaseConnectionOptions connectionOptions = testDatabase
-      .getDatabaseConnectionOptions();
-
     final Executable executable = new SchemaCrawlerExecutable("lint");
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setOutputOptions(outputOptions);
-    executable.execute(connectionOptions.getConnection());
+    executable.execute(getConnection());
 
     failures.addAll(compareOutput(JSON_OUTPUT + referenceFile,
                                   testOutputFile,
@@ -209,13 +185,10 @@ public class LintOutputTest
                                                 InclusionRule.NONE));
     schemaCrawlerOptions.setSchemaInfoLevel(infoLevel.getSchemaInfoLevel());
 
-    final DatabaseConnectionOptions connectionOptions = testDatabase
-      .getDatabaseConnectionOptions();
-
     final Executable executable = new SchemaCrawlerExecutable("lint");
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setOutputOptions(outputOptions);
-    executable.execute(connectionOptions.getConnection());
+    executable.execute(getConnection());
 
     failures.addAll(compareOutput(TEXT_OUTPUT + referenceFile,
                                   testOutputFile,

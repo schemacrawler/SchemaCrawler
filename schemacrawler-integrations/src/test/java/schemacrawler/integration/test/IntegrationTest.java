@@ -30,11 +30,9 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
-import schemacrawler.test.utility.TestDatabase;
+import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.commandline.SchemaCrawlerCommandLine;
 import schemacrawler.tools.executable.Executable;
@@ -45,23 +43,8 @@ import schemacrawler.tools.integration.velocity.VelocityRenderer;
 import schemacrawler.tools.options.OutputOptions;
 
 public class IntegrationTest
+  extends BaseDatabaseTest
 {
-
-  private static TestDatabase testDatabase = new TestDatabase();
-
-  @AfterClass
-  public static void afterAllTests()
-  {
-    testDatabase.shutdownDatabase();
-  }
-
-  @BeforeClass
-  public static void beforeAllTests()
-    throws Exception
-  {
-    TestDatabase.initializeApplicationLogging();
-    testDatabase.startMemoryDatabase();
-  }
 
   @Test
   public void commandlineFreeMarker()
@@ -112,7 +95,7 @@ public class IntegrationTest
     final OutputOptions outputOptions = new OutputOptions("png", testOutputFile);
 
     executable.setOutputOptions(outputOptions);
-    executable.execute(testDatabase.getConnection());
+    executable.execute(getConnection());
 
     assertTrue(testOutputFile.exists());
     assertTrue(testOutputFile.length() > 0);
@@ -148,8 +131,7 @@ public class IntegrationTest
                                                     + ".", ".test");
     testOutputFile.delete();
 
-    final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(testDatabase
-                                                                                .getDatabaseConnectionOptions(),
+    final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(getDatabaseConnectionOptions(),
                                                                               "-command="
                                                                                   + command,
                                                                               "-infolevel=standard",
@@ -183,7 +165,7 @@ public class IntegrationTest
                                                           testOutputFile);
 
     executable.setOutputOptions(outputOptions);
-    executable.execute(testDatabase.getConnection());
+    executable.execute(getConnection());
 
     final List<String> failures = TestUtility.compareOutput(referenceFileName
                                                                 + ".txt",

@@ -20,11 +20,8 @@ package schemacrawler.crawl;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import schemacrawler.schema.CheckConstraint;
@@ -34,29 +31,15 @@ import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Schema;
+import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.test.utility.TestDatabase;
+import schemacrawler.test.utility.BaseDatabaseTest;
 
 public class SchemaCrawlerDeepTest
+  extends BaseDatabaseTest
 {
-
-  private static TestDatabase testDatabase = new TestDatabase();
-
-  @AfterClass
-  public static void afterAllTests()
-  {
-    testDatabase.shutdownDatabase();
-  }
-
-  @BeforeClass
-  public static void beforeAllTests()
-    throws Exception
-  {
-    TestDatabase.initializeApplicationLogging();
-    testDatabase.startMemoryDatabase();
-  }
 
   @Test
   public void tableEquals()
@@ -65,20 +48,16 @@ public class SchemaCrawlerDeepTest
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
 
-    final Database database = testDatabase.getDatabase(schemaCrawlerOptions);
+    final Database database = getDatabase(schemaCrawlerOptions);
 
-    final Schema systemSchema = testDatabase.getSchema(schemaCrawlerOptions,
-                                                       "PUBLIC.SYSTEM_LOBS");
-    assertNotNull("Could not obtain schema", systemSchema);
+    final Schema systemSchema = new SchemaReference("PUBLIC", "SYSTEM_LOBS");
     assertTrue("Should not find any tables", database.getTables(systemSchema)
       .size() == 0);
     assertEquals("Could not find any routines",
                  7,
                  database.getRoutines(systemSchema).size());
 
-    final Schema schema = testDatabase.getSchema(schemaCrawlerOptions,
-                                                 "PUBLIC.BOOKS");
-    assertNotNull("Could not obtain schema", schema);
+    final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
     assertEquals("Could not find any tables", 6, database.getTables(schema)
       .size());
     assertEquals("Wrong number of routines", 4, database.getRoutines(schema)

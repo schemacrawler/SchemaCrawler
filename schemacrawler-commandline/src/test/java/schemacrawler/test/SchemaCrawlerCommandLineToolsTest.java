@@ -14,37 +14,20 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import schemacrawler.Main;
-import schemacrawler.test.utility.TestDatabase;
+import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.tools.options.InfoLevel;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 
 public class SchemaCrawlerCommandLineToolsTest
+  extends BaseDatabaseTest
 {
 
   private static final String INFO_LEVEL_OUTPUT = "info_level_output/";
   private static final String GREP_OUTPUT = "grep_output/";
-
-  private static TestDatabase testDb = new TestDatabase();
-
-  @AfterClass
-  public static void afterAllTests()
-  {
-    testDb.shutdownDatabase();
-  }
-
-  @BeforeClass
-  public static void beforeAllTests()
-    throws Exception
-  {
-    TestDatabase.initializeApplicationLogging();
-    testDb.startDatabase(true);
-  }
 
   @Test
   public void compareInfoLevelOutput()

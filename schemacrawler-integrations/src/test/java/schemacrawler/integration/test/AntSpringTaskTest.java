@@ -24,11 +24,9 @@ import java.util.List;
 
 import org.apache.tools.ant.BuildFileTest;
 import org.apache.tools.ant.Project;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
-import schemacrawler.test.utility.TestDatabase;
+import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.options.OutputFormat;
 
@@ -37,22 +35,6 @@ public class AntSpringTaskTest
 {
 
   private static final String ANT_TEST_OUTPUT = "ant_test_output/";
-
-  private static TestDatabase testDb = new TestDatabase();
-
-  @AfterClass
-  public static void afterAllTests()
-  {
-    testDb.shutdownDatabase();
-  }
-
-  @BeforeClass
-  public static void beforeAllTests()
-    throws Exception
-  {
-    TestDatabase.initializeApplicationLogging();
-    testDb.startDatabase(true);
-  }
 
   @Override
   public void setUp()
@@ -67,20 +49,18 @@ public class AntSpringTaskTest
     throws Exception
   {
 
+    BaseDatabaseTest.startDatabase();
+
     final String referenceFile = "ant_task_test.txt";
     final File testOutputFile = new File("scOutput.txt");
     testOutputFile.delete();
 
     final File contextFile = TestUtility.copyResourceToTempFile("/context.xml");
 
-    beforeAllTests();
-
     setAntProjectProperty("context-file", contextFile.getAbsolutePath());
     setAntProjectProperty("datasource", "datasource");
     setAntProjectProperty("executable", "executableForSchema");
     executeTarget("ant_task_test");
-
-    afterAllTests();
 
     // System.out.println(getFullLog());
     // System.out.println(getOutput());

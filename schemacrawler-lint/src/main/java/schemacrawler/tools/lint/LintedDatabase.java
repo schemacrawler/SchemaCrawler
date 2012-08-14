@@ -50,7 +50,7 @@ public final class LintedDatabase
     for (final Linter linter: lintLoaders)
     {
       LOGGER.log(Level.FINE,
-                 String.format("Linting with ", linter.getClass().getName()));
+                 String.format("Linting with %s", linter.getClass().getName()));
       linter.setLintCollector(collector);
       // Configure linter
       if (linterConfigs != null)

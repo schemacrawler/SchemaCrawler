@@ -14,7 +14,7 @@
     "driverClassName": "org.hsqldb.jdbc.JDBCDriver",
     "driverVersion": "2.2.8",
     "driverName": "HSQL Database Engine Driver",
-    "url": "jdbc:hsqldb:mem:schemacrawler"
+    "url": "jdbc:hsqldb:hsql://localhost/schemacrawler"
   },
   "data": [
     {

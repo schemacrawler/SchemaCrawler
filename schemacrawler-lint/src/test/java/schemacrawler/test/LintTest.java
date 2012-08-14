@@ -30,15 +30,13 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.List;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import schemacrawler.schema.Database;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.test.utility.TestDatabase;
+import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.lint.Lint;
 import schemacrawler.tools.lint.LintCollector;
@@ -46,25 +44,10 @@ import schemacrawler.tools.lint.LintedDatabase;
 import schemacrawler.tools.lint.LinterConfigs;
 
 public class LintTest
+  extends BaseDatabaseTest
 {
 
-  private static TestDatabase testDatabase = new TestDatabase();
-
   private static final String LINTS_OUTPUT = "lints_output/";
-
-  @AfterClass
-  public static void afterAllTests()
-  {
-    testDatabase.shutdownDatabase();
-  }
-
-  @BeforeClass
-  public static void beforeAllTests()
-    throws Exception
-  {
-    TestDatabase.initializeApplicationLogging();
-    testDatabase.startMemoryDatabase();
-  }
 
   @Test
   public void lints()
@@ -75,7 +58,7 @@ public class LintTest
       .setSchemaInclusionRule(new InclusionRule(".*FOR_LINT",
                                                 InclusionRule.NONE));
 
-    final Database database = testDatabase.getDatabase(schemaCrawlerOptions);
+    final Database database = getDatabase(schemaCrawlerOptions);
     assertNotNull(database);
     assertEquals(1, database.getSchemas().size());
     final Schema schema = database.getSchema("PUBLIC.FOR_LINT");

@@ -24,8 +24,6 @@ import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import schemacrawler.schema.Column;
@@ -34,30 +32,15 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.test.utility.TestDatabase;
+import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.utility.NamedObjectSort;
 
 public class ExcludeTest
+  extends BaseDatabaseTest
 {
 
   private static final Logger LOGGER = Logger.getLogger(ExcludeTest.class
     .getName());
-
-  private static TestDatabase testDatabase = new TestDatabase();
-
-  @AfterClass
-  public static void afterAllTests()
-  {
-    testDatabase.shutdownDatabase();
-  }
-
-  @BeforeClass
-  public static void beforeAllTests()
-    throws Exception
-  {
-    TestDatabase.initializeApplicationLogging();
-    testDatabase.startMemoryDatabase();
-  }
 
   @Test
   public void excludeColumns()
@@ -180,7 +163,7 @@ public class ExcludeTest
       .setColumnInclusionRule(new InclusionRule(InclusionRule.ALL,
                                                 ".*\\..*\\.ID"));
 
-    final Database database = testDatabase.getDatabase(schemaCrawlerOptions);
+    final Database database = getDatabase(schemaCrawlerOptions);
     final Schema[] schemas = database.getSchemas().toArray(new Schema[0]);
     assertEquals("Schema count does not match",
                  schemaNames.length,

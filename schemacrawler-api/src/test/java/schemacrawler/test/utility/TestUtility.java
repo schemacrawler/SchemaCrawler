@@ -40,7 +40,6 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import org.custommonkey.xmlunit.Validator;
-import org.junit.Ignore;
 import org.xml.sax.SAXException;
 
 import sf.util.Utility;
@@ -50,7 +49,6 @@ import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 
-@Ignore
 public final class TestUtility
 {
 

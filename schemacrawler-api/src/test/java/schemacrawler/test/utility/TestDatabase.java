@@ -24,6 +24,7 @@ package schemacrawler.test.utility;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Arrays;
@@ -31,12 +32,9 @@ import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.schema.Database;
-import schemacrawler.schema.Schema;
-import schemacrawler.schemacrawler.DatabaseConnectionOptions;
+import org.hsqldb.server.Server;
+
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.utility.SchemaCrawlerUtility;
 import sf.util.Utility;
 
 /**
@@ -47,17 +45,10 @@ import sf.util.Utility;
 public class TestDatabase
 {
 
-  private static final Level DEBUG_LOG_LEVEL = Level.OFF;
-
   private static final Logger LOGGER = Logger.getLogger(TestDatabase.class
     .getName());
 
   private static final String serverFileStem = "hsqldb.schemacrawler";
-
-  public static void initializeApplicationLogging()
-  {
-    Utility.setApplicationLogLevel(DEBUG_LOG_LEVEL);
-  }
 
   /**
    * Starts up a test database in server mode.
@@ -70,16 +61,17 @@ public class TestDatabase
   public static void main(final String[] args)
     throws Exception
   {
-    final TestDatabase testDatabase = new TestDatabase();
+    final TestDatabase testDatabase = new TestDatabase("jdbc:hsqldb:hsql://localhost/schemacrawler");
+    testDatabase.trace = true;
     Runtime.getRuntime().addShutdownHook(new Thread()
     {
       @Override
       public void run()
       {
-        testDatabase.shutdownDatabase();
+        testDatabase.stop();
       }
     });
-    testDatabase.startDatabase(false);
+    testDatabase.start();
   }
 
   /**
@@ -117,156 +109,27 @@ public class TestDatabase
     }
   }
 
-  /**
-   * Setup the schema.
-   * 
-   * @param dataSource
-   *        Datasource
-   * @param schemas
-   *        Schema names
-   */
-  private static void setupSchema(final DatabaseConnectionOptions dataSource,
-                                  final String... schemas)
+  private final String url;
+  private boolean trace ;
+
+  public TestDatabase(final String url)
   {
-    Connection connection = null;
-    Statement statement = null;
-    try
-    {
-      if (dataSource != null)
-      {
-        connection = dataSource.getConnection();
-        connection.setAutoCommit(true);
-        statement = connection.createStatement();
-        for (final String schema: schemas)
-        {
-          for (final String scriptType: new String[] {
-              "pre_schema", "schema", "post_schema", "data",
-          })
-          {
-            final String scriptResource = String
-              .format("/testdatabase/%s.%s.sql", schema, scriptType)
-              .toLowerCase(Locale.ENGLISH);
-            final String sqlScript = Utility.readResourceFully(scriptResource);
-            if (!Utility.isBlank(sqlScript))
-            {
-              for (final String sql: sqlScript.split(";"))
-              {
-                if (!Utility.isBlank(sql))
-                {
-                  statement.executeUpdate(sql);
-                }
-              }
-            }
-          }
-        }
-        connection.close();
-      }
-    }
-    catch (final SQLException e)
-    {
-      System.err.println(e.getMessage());
-      LOGGER.log(Level.WARNING, e.getMessage(), e);
-    }
-    finally
-    {
-      if (statement != null)
-      {
-        try
-        {
-          statement.close();
-        }
-        catch (final SQLException e)
-        {
-          LOGGER.log(Level.WARNING, "", e);
-        }
-      }
-      if (connection != null)
-      {
-        try
-        {
-          connection.close();
-        }
-        catch (final SQLException e)
-        {
-          LOGGER.log(Level.WARNING, "", e);
-        }
-      }
-    }
-  }
-
-  private final String[] schemas;
-
-  private DatabaseConnectionOptions connectionOptions;
-
-  public TestDatabase()
-  {
-    schemas = new String[] {
-        "books", "publisher sales", "for_lint",
-    };
-  }
-
-  /**
-   * Gets the connection.
-   * 
-   * @return Connection
-   * @throws SchemaCrawlerException
-   *         On an exception
-   */
-  public Connection getConnection()
-    throws SchemaCrawlerException
-  {
-    try
-    {
-      return connectionOptions.getConnection();
-    }
-    catch (final SQLException e)
-    {
-      throw new SchemaCrawlerException(e.getMessage(), e);
-    }
-  }
-
-  public Database getDatabase(final SchemaCrawlerOptions schemaCrawlerOptions)
-    throws SchemaCrawlerException
-  {
-    final Database database = SchemaCrawlerUtility
-      .getDatabase(getConnection(), schemaCrawlerOptions);
-    return database;
-  }
-
-  public DatabaseConnectionOptions getDatabaseConnectionOptions()
-  {
-    return connectionOptions;
-  }
-
-  public Schema getSchema(final SchemaCrawlerOptions schemaCrawlerOptions,
-                          final String schemaName)
-    throws SchemaCrawlerException, SQLException
-  {
-    final Database database = getDatabase(schemaCrawlerOptions);
-    final Schema schema = database.getSchema(schemaName);
-    return schema;
+    this.url = url;
   }
 
   /**
    * Shuts down the database server.
    */
-  public void shutdownDatabase()
+  public void stop()
   {
     Connection connection = null;
     Statement statement = null;
     try
     {
-      if (connectionOptions != null)
-      {
-        connection = connectionOptions.getConnection();
-        if (connection != null)
-        {
-          statement = connection.createStatement();
-          statement.execute("SHUTDOWN");
-          connection.close();
-        }
-        connectionOptions = null;
-      }
+      connection = getConnection();
+      statement = connection.createStatement();
+      statement.execute("SHUTDOWN");
+      connection.close();
       deleteServerFiles();
       LOGGER.log(Level.INFO, "SHUTDOWN database");
     }
@@ -307,55 +170,96 @@ public class TestDatabase
    * @throws SchemaCrawlerException
    *         On an exception
    */
-  public void startDatabase(final boolean silent)
-    throws SchemaCrawlerException
+  public void start()
+    throws Exception
   {
     LOGGER.log(Level.FINE, toString() + " - Setting up database");
     // Attempt to delete the database files
     deleteServerFiles();
     // Start the server
-    org.hsqldb.server.Server.main(new String[] {
-        "-database.0",
-        serverFileStem,
-        "-dbname.0",
-        "schemacrawler",
-        "-silent",
-        Boolean.toString(silent),
-        "-trace",
-        Boolean.toString(!silent),
-        "-no_system_exit",
-        "true"
-    });
-    createDatabase("jdbc:hsqldb:hsql://localhost/schemacrawler");
+    Server server = new Server();
+    server.setDatabaseName(0, "schemacrawler");
+    server.setDatabasePath(0, serverFileStem);
+    server.setSilent(!trace);
+    server.setTrace(trace);
+    server.setLogWriter(null);
+    server.setErrWriter(null);
+    server.start();
+
+    createDatabase();
   }
 
-  /**
-   * Create database in memory.
-   * 
-   * @throws SchemaCrawlerException
-   *         On an exception
-   */
-  public void startMemoryDatabase()
+  private void createDatabase()
     throws SchemaCrawlerException
   {
-    LOGGER.log(Level.FINE, toString() + " - Setting up in-memory database");
-    createDatabase("jdbc:hsqldb:mem:schemacrawler");
+    Connection connection = null;
+    Statement statement = null;
+    try
+    {
+      connection = getConnection();
+      connection.setAutoCommit(true);
+      statement = connection.createStatement();
+      for (final String schema: new String[] {
+          "books", "publisher sales", "for_lint",
+      })
+      {
+        for (final String scriptType: new String[] {
+            "pre_schema", "schema", "post_schema", "data",
+        })
+        {
+          final String scriptResource = String
+            .format("/testdatabase/%s.%s.sql", schema, scriptType)
+            .toLowerCase(Locale.ENGLISH);
+          final String sqlScript = Utility.readResourceFully(scriptResource);
+          if (!Utility.isBlank(sqlScript))
+          {
+            for (final String sql: sqlScript.split(";"))
+            {
+              if (!Utility.isBlank(sql))
+              {
+                statement.executeUpdate(sql);
+              }
+            }
+          }
+        }
+      }
+    }
+    catch (final SQLException e)
+    {
+      System.err.println(e.getMessage());
+      LOGGER.log(Level.WARNING, e.getMessage(), e);
+    }
+    finally
+    {
+      if (statement != null)
+      {
+        try
+        {
+          statement.close();
+        }
+        catch (final SQLException e)
+        {
+          LOGGER.log(Level.WARNING, "", e);
+        }
+      }
+      if (connection != null)
+      {
+        try
+        {
+          connection.close();
+        }
+        catch (final SQLException e)
+        {
+          LOGGER.log(Level.WARNING, "", e);
+        }
+      }
+    }
   }
 
-  private void createDatabase(final String url)
-    throws SchemaCrawlerException
+  private Connection getConnection()
+    throws SQLException
   {
-    makeDataSource(url);
-    setupSchema(connectionOptions, schemas);
-  }
-
-  private void makeDataSource(final String url)
-    throws SchemaCrawlerException
-  {
-    connectionOptions = new DatabaseConnectionOptions("org.hsqldb.jdbc.JDBCDriver",
-                                                      url);
-    connectionOptions.setUser("sa");
-    connectionOptions.setPassword("");
+    return DriverManager.getConnection(url, "SA", "");
   }
 
 }
