@@ -131,12 +131,12 @@ public class TestDatabase
     deleteServerFiles();
     // Start the server
     final Server server = new Server();
-    server.setDatabaseName(0, "schemacrawler");
-    server.setDatabasePath(0, serverFileStem);
     server.setSilent(!trace);
     server.setTrace(trace);
     server.setLogWriter(null);
     server.setErrWriter(null);
+    server.setDatabaseName(0, "schemacrawler");
+    server.setDatabasePath(0, serverFileStem);
     server.start();
 
     createDatabase();
