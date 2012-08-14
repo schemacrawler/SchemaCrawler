@@ -141,8 +141,9 @@
         <artifactId>maven-bundle-plugin</artifactId>
         <extensions>true</extensions>
         <configuration>
+          <excludeDependencies>true</excludeDependencies>
           <instructions>
-            <Export-Package>schemacrawler.*,sf.*</Export-Package>
+            <Export-Package>!schemacrawler.crawl.*,schemacrawler.*,sf.*</Export-Package>
             <Private-Package>schemacrawler.crawl.*</Private-Package>
           </instructions>
         </configuration>
