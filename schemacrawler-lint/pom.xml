@@ -10,7 +10,7 @@
     <version>9.0</version>
   </parent>
   <artifactId>schemacrawler-lint</artifactId>
-  <packaging>jar</packaging>
+  <packaging>bundle</packaging>
   <name>SchemaCrawler Lint</name>
   <dependencies>
     <dependency>

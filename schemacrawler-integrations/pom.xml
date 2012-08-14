@@ -8,7 +8,7 @@
     <version>9.0</version>
   </parent>
   <artifactId>schemacrawler-integrations</artifactId>
-  <packaging>jar</packaging>
+  <packaging>bundle</packaging>
   <name>SchemaCrawler Integrations</name>
   <dependencies>
     <dependency>
