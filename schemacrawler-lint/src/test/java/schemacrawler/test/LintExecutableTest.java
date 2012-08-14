@@ -39,7 +39,6 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 
-@Ignore
 public class LintExecutableTest
   extends BaseDatabaseTest
 {
