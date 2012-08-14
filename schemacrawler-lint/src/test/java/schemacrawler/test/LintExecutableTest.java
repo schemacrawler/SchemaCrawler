@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import schemacrawler.test.utility.BaseDatabaseTest;
@@ -38,6 +39,7 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 
+@Ignore
 public class LintExecutableTest
   extends BaseDatabaseTest
 {
