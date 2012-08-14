@@ -27,7 +27,7 @@ JDBC Driver Information
 driver name,HSQL Database Engine Driver
 driver version,2.2.8
 driver class name,org.hsqldb.jdbc.JDBCDriver
-url,jdbc:hsqldb:mem:schemacrawler
+url,jdbc:hsqldb:hsql://localhost/schemacrawler
 is JDBC compliant,true
 
 

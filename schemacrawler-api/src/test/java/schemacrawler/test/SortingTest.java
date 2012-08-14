@@ -23,8 +23,6 @@ import static org.junit.Assert.assertNotNull;
 
 import java.util.Arrays;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import schemacrawler.schema.Column;
@@ -32,31 +30,16 @@ import schemacrawler.schema.Database;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.Schema;
+import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
-import schemacrawler.test.utility.TestDatabase;
+import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.utility.NamedObjectSort;
 
 public class SortingTest
+  extends BaseDatabaseTest
 {
-
-  private static TestDatabase testDatabase = new TestDatabase();
-
-  @AfterClass
-  public static void afterAllTests()
-    throws Exception
-  {
-    testDatabase.shutdownDatabase();
-  }
-
-  @BeforeClass
-  public static void beforeAllTests()
-    throws Exception
-  {
-    TestDatabase.initializeApplicationLogging();
-    testDatabase.startMemoryDatabase();
-  }
 
   @Test
   public void columnSort()
@@ -130,9 +113,8 @@ public class SortingTest
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
-    final Database database = testDatabase.getDatabase(schemaCrawlerOptions);
-    final Schema schema = testDatabase.getSchema(schemaCrawlerOptions,
-                                                 "PUBLIC.BOOKS");
+    final Database database = getDatabase(schemaCrawlerOptions);
+    final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
     assertNotNull("Schema not found", schema);
 
     final Table table = database.getTable(schema, tableName);
@@ -163,9 +145,8 @@ public class SortingTest
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
-    final Database database = testDatabase.getDatabase(schemaCrawlerOptions);
-    final Schema schema = testDatabase.getSchema(schemaCrawlerOptions,
-                                                 "PUBLIC.BOOKS");
+    final Database database = getDatabase(schemaCrawlerOptions);
+    final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
     assertNotNull("Schema not found", schema);
 
     final Table[] tables = database.getTables(schema).toArray(new Table[0]);
@@ -199,11 +180,8 @@ public class SortingTest
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
-    final Database database = testDatabase.getDatabase(schemaCrawlerOptions);
-    final Schema schema = testDatabase.getSchema(schemaCrawlerOptions,
-                                                 "PUBLIC.BOOKS");
-    assertNotNull("Schema not found", schema);
-
+    final Database database = getDatabase(schemaCrawlerOptions);
+    final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
     final Table[] tables = database.getTables(schema).toArray(new Table[0]);
     assertEquals("Table count does not match", 6, tables.length);
     for (final Table table: tables)

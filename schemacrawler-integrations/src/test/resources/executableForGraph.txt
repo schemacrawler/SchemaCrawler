@@ -11,7 +11,7 @@ digraph SchemaCrawler_Diagram {
         </tr>
         <tr>
           <td align="right">JDBC Connection:</td>
-          <td align="left">jdbc:hsqldb:mem:schemacrawler</td>
+          <td align="left">jdbc:hsqldb:hsql://localhost/schemacrawler</td>
         </tr>
         <tr>
           <td align="right">JDBC Driver:</td>

@@ -27,40 +27,22 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
-import schemacrawler.test.utility.TestDatabase;
+import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.commandline.SchemaCrawlerCommandLine;
 import schemacrawler.tools.executable.Executable;
-import schemacrawler.tools.lint.executable.LintExecutable;
+import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 
 public class LintExecutableTest
+  extends BaseDatabaseTest
 {
 
-  private static TestDatabase testDatabase = new TestDatabase();
-
   private static final String CONFIG_LINTER_CONFIGS_FILE = "schemacrawer.linter_configs.file";
-
-  @AfterClass
-  public static void afterAllTests()
-  {
-    removeLinterConfig();
-    testDatabase.shutdownDatabase();
-  }
-
-  @BeforeClass
-  public static void beforeAllTests()
-    throws Exception
-  {
-    TestDatabase.initializeApplicationLogging();
-    testDatabase.startMemoryDatabase();
-  }
 
   private static void removeLinterConfig()
   {
@@ -77,8 +59,7 @@ public class LintExecutableTest
   public void commandlineLintReport()
     throws Exception
   {
-    executeCommandlineAndCheckForOutputFile("lint",
-                                            OutputFormat.text.name(),
+    executeCommandlineAndCheckForOutputFile(OutputFormat.text.name(),
                                             "executableForLint");
   }
 
@@ -88,17 +69,17 @@ public class LintExecutableTest
   {
     useLinterConfigFile();
 
-    executeCommandlineAndCheckForOutputFile("lint",
-                                            OutputFormat.text.name(),
+    executeCommandlineAndCheckForOutputFile(OutputFormat.text.name(),
                                             "executableForLintWithConfig");
+    
+    removeLinterConfig();
   }
 
   @Test
   public void executableLintReport()
     throws Exception
   {
-    executeExecutableAndCheckForOutputFile(new LintExecutable(),
-                                           OutputFormat.text.name(),
+    executeExecutableAndCheckForOutputFile(OutputFormat.text.name(),
                                            "executableForLint");
   }
 
@@ -108,25 +89,23 @@ public class LintExecutableTest
   {
     useLinterConfigFile();
 
-    executeExecutableAndCheckForOutputFile(new LintExecutable(),
-                                           OutputFormat.text.name(),
+    executeExecutableAndCheckForOutputFile(OutputFormat.text.name(),
                                            "executableForLintWithConfig");
+    
+    removeLinterConfig();
   }
 
-  private void executeCommandlineAndCheckForOutputFile(final String command,
-                                                       final String outputFormatValue,
+  private void executeCommandlineAndCheckForOutputFile(final String outputFormatValue,
                                                        final String referenceFileName)
     throws Exception
   {
 
-    final File testOutputFile = File.createTempFile("schemacrawler." + command
-                                                    + ".", ".test");
+    final File testOutputFile = File.createTempFile("schemacrawler.lint.",
+                                                    ".test");
     testOutputFile.delete();
 
-    final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(testDatabase
-                                                                                .getDatabaseConnectionOptions(),
-                                                                              "-command="
-                                                                                  + command,
+    final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(getDatabaseConnectionOptions(),
+                                                                              "-command=lint",
                                                                               "-infolevel=standard",
                                                                               "-sortcolumns=true",
                                                                               "-outputformat="
@@ -145,11 +124,11 @@ public class LintExecutableTest
     }
   }
 
-  private void executeExecutableAndCheckForOutputFile(final Executable executable,
-                                                      final String outputFormatValue,
+  private void executeExecutableAndCheckForOutputFile(final String outputFormatValue,
                                                       final String referenceFileName)
     throws Exception
   {
+    final Executable executable = new SchemaCrawlerExecutable("lint");
     final File testOutputFile = File.createTempFile("schemacrawler."
                                                     + executable.getCommand()
                                                     + ".", ".test");
@@ -158,7 +137,7 @@ public class LintExecutableTest
                                                           testOutputFile);
 
     executable.setOutputOptions(outputOptions);
-    executable.execute(testDatabase.getConnection());
+    executable.execute(getConnection());
 
     final List<String> failures = TestUtility.compareOutput(referenceFileName
                                                                 + ".txt",

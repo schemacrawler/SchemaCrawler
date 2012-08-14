@@ -29,17 +29,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.custommonkey.xmlunit.XMLUnit;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
-import schemacrawler.test.utility.LocalEntityResolver;
-import schemacrawler.test.utility.TestDatabase;
+import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
@@ -47,26 +43,10 @@ import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 
 public class SchemaCrawlerXmlOutputTest
+  extends BaseDatabaseTest
 {
 
   private static final String XML_OUTPUT = "xml_output/";
-
-  private static TestDatabase testDatabase = new TestDatabase();
-
-  @AfterClass
-  public static void afterAllTests()
-  {
-    testDatabase.shutdownDatabase();
-  }
-
-  @BeforeClass
-  public static void beforeAllTests()
-    throws Exception
-  {
-    TestDatabase.initializeApplicationLogging();
-    testDatabase.startMemoryDatabase();
-    XMLUnit.setControlEntityResolver(new LocalEntityResolver());
-  }
 
   @Test
   public void validCountXMLOutput()
@@ -127,7 +107,7 @@ public class SchemaCrawlerXmlOutputTest
 
     executable.setAdditionalConfiguration(additionalConfiguration);
     executable.setOutputOptions(outputOptions);
-    executable.execute(testDatabase.getConnection());
+    executable.execute(getConnection());
 
     failures.addAll(compareOutput(XML_OUTPUT + referenceFile,
                                   testOutputFile,

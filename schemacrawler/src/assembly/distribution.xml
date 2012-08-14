@@ -48,7 +48,7 @@
         <attribute name="Product" value="SchemaCrawler" />
         <attribute name="Version" value="${SchemaCrawler.version}" />
         <attribute name="Author" value="Sualeh Fatehi sualeh@hotmail.com" />
-        <attribute name="Copyright" value="(c) 2003-2011, Sualeh Fatehi" />
+        <attribute name="Copyright" value="(c) 2003-2012, Sualeh Fatehi" />
         <attribute name="Main-Class" value="schemacrawler.Main" />
       </manifest>
       <zipfileset dir="${SchemaCrawler.home}/schemacrawler-api/target/classes" />
@@ -82,8 +82,7 @@
     <property name="examples.stem"
               value="schemacrawler-${SchemaCrawler.version}-examples" />
     <property name="examples.staging.dir"
-              location="${distribution.target}/${examples.stem}" />
-    <delete dir="${examples.staging.dir}" />
+              location="${distribution.target}/site/examples" />
     <mkdir dir="${examples.staging.dir}" />
 
   	<!-- 1. STAGE FOR EXAMPLES -->
@@ -93,10 +92,6 @@
           tofile="${examples.staging.dir}/LICENSE.txt" />
 
     <!-- Stage examples -->
-    <mkdir dir="${distribution.target}/site/examples" />
-    <move includeEmptyDirs="true" todir="${examples.staging.dir}">
-      <fileset dir="${distribution.target}/site/examples" />
-    </move>
     <copy file="${SchemaCrawler.home}/schemacrawler-test/src/main/java/ApiExample.java"
           todir="${examples.staging.dir}/api" />
     <copy file="${SchemaCrawler.home}/schemacrawler-test/src/main/java/ApiExample.java"
@@ -206,7 +201,7 @@
                   prefix="${website.zip.prefix}/apidocs"
                   defaultexcludes="yes">
         <include name="**/*.*" />
-      </zipfileset>
+      </zipfileset> 	  
     </zip>
 	
 	<unzip 

@@ -11,37 +11,21 @@ import java.io.FileWriter;
 import java.util.List;
 import java.util.Properties;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import schemacrawler.schema.Database;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.test.utility.TestDatabase;
+import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.tools.hsqldb.BundledDriverOptions;
 import schemacrawler.tools.options.InfoLevel;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.utility.SchemaCrawlerUtility;
 
 public class TestBundledDistributions
+  extends BaseDatabaseTest
 {
-  private static TestDatabase testDatabase = new TestDatabase();
-
-  @AfterClass
-  public static void afterAllTests()
-  {
-    testDatabase.shutdownDatabase();
-  }
-
-  @BeforeClass
-  public static void beforeAllTests()
-    throws Exception
-  {
-    TestDatabase.initializeApplicationLogging();
-    testDatabase.startDatabase(true);
-  }
 
   @Test
   public void testHsqldbMain()
@@ -98,8 +82,8 @@ public class TestBundledDistributions
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new BundledDriverOptions()
       .getSchemaCrawlerOptions(InfoLevel.maximum);
-    final Database database = SchemaCrawlerUtility.getDatabase(testDatabase
-      .getConnection(), schemaCrawlerOptions);
+    final Database database = SchemaCrawlerUtility
+      .getDatabase(getConnection(), schemaCrawlerOptions);
     assertNotNull(database);
 
     assertEquals(6, database.getSchemas().size());

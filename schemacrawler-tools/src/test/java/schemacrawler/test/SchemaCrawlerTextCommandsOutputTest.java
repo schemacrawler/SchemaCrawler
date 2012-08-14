@@ -29,14 +29,10 @@ import java.io.File;
 import java.io.FileWriter;
 import java.util.List;
 
-import org.custommonkey.xmlunit.XMLUnit;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.test.utility.LocalEntityResolver;
-import schemacrawler.test.utility.TestDatabase;
+import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
@@ -44,26 +40,10 @@ import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 
 public class SchemaCrawlerTextCommandsOutputTest
+  extends BaseDatabaseTest
 {
 
   private static final String COMMAND_OUTPUT = "command_output/";
-
-  private static TestDatabase testDatabase = new TestDatabase();
-
-  @AfterClass
-  public static void afterAllTests()
-  {
-    testDatabase.shutdownDatabase();
-  }
-
-  @BeforeClass
-  public static void beforeAllTests()
-    throws Exception
-  {
-    TestDatabase.initializeApplicationLogging();
-    testDatabase.startMemoryDatabase();
-    XMLUnit.setControlEntityResolver(new LocalEntityResolver());
-  }
 
   @Test
   public void countOutput()
@@ -140,7 +120,7 @@ public class SchemaCrawlerTextCommandsOutputTest
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
     executable.setOutputOptions(outputOptions);
-    executable.execute(testDatabase.getConnection());
+    executable.execute(getConnection());
 
     writer.close();
     assertTrue(!dummyOutputFile.exists());
@@ -173,7 +153,7 @@ public class SchemaCrawlerTextCommandsOutputTest
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
     executable.setAdditionalConfiguration(config);
     executable.setOutputOptions(outputOptions);
-    executable.execute(testDatabase.getConnection());
+    executable.execute(getConnection());
 
     final List<String> failures = compareOutput(COMMAND_OUTPUT + referenceFile,
                                                 testOutputFile,

@@ -30,17 +30,12 @@ import java.util.EnumSet;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
-import org.custommonkey.xmlunit.XMLUnit;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.DatabaseConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
-import schemacrawler.test.utility.LocalEntityResolver;
-import schemacrawler.test.utility.TestDatabase;
+import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.InfoLevel;
@@ -50,6 +45,7 @@ import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 
 public class SchemaCrawlerOutputTest
+  extends BaseDatabaseTest
 {
 
   private static final String INFO_LEVEL_OUTPUT = "info_level_output/";
@@ -58,23 +54,6 @@ public class SchemaCrawlerOutputTest
   private static final String JSON_OUTPUT = "json_output/";
   private static final String HIDE_CONSTRAINT_NAMES_OUTPUT = "hide_constraint_names_output/";
   private static final String UNQUALIFIED_NAMES_OUTPUT = "unqualified_names_output/";
-
-  private static TestDatabase testDatabase = new TestDatabase();
-
-  @AfterClass
-  public static void afterAllTests()
-  {
-    testDatabase.shutdownDatabase();
-  }
-
-  @BeforeClass
-  public static void beforeAllTests()
-    throws Exception
-  {
-    TestDatabase.initializeApplicationLogging();
-    testDatabase.startMemoryDatabase();
-    XMLUnit.setControlEntityResolver(new LocalEntityResolver());
-  }
 
   @Test
   public void compareCompositeOutput()
@@ -126,14 +105,11 @@ public class SchemaCrawlerOutputTest
         final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
         schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
 
-        final DatabaseConnectionOptions connectionOptions = testDatabase
-          .getDatabaseConnectionOptions();
-
         final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
         executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
         executable.setOutputOptions(outputOptions);
         executable.setAdditionalConfiguration(queriesConfig);
-        executable.execute(connectionOptions.getConnection());
+        executable.execute(getConnection());
 
         failures.addAll(compareOutput(COMPOSITE_OUTPUT + referenceFile,
                                       testOutputFile,
@@ -186,9 +162,6 @@ public class SchemaCrawlerOutputTest
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
       schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
 
-      final DatabaseConnectionOptions connectionOptions = testDatabase
-        .getDatabaseConnectionOptions();
-
       final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(SchemaTextDetailType.details
                                                                              + ","
                                                                              + Operation.count
@@ -197,7 +170,7 @@ public class SchemaCrawlerOutputTest
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
       executable.setOutputOptions(outputOptions);
       executable.setAdditionalConfiguration(textOutputOptionsConfig);
-      executable.execute(connectionOptions.getConnection());
+      executable.execute(getConnection());
 
       failures.addAll(compareOutput(HIDE_CONSTRAINT_NAMES_OUTPUT
                                         + referenceFile,
@@ -247,14 +220,11 @@ public class SchemaCrawlerOutputTest
         final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
         schemaCrawlerOptions.setSchemaInfoLevel(infoLevel.getSchemaInfoLevel());
 
-        final DatabaseConnectionOptions connectionOptions = testDatabase
-          .getDatabaseConnectionOptions();
-
         final Executable executable = new SchemaCrawlerExecutable(schemaTextDetailType
           .name());
         executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
         executable.setOutputOptions(outputOptions);
-        executable.execute(connectionOptions.getConnection());
+        executable.execute(getConnection());
 
         failures.addAll(compareOutput(INFO_LEVEL_OUTPUT + referenceFile,
                                       testOutputFile,
@@ -297,14 +267,11 @@ public class SchemaCrawlerOutputTest
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
       schemaCrawlerOptions.setSchemaInfoLevel(infoLevel.getSchemaInfoLevel());
 
-      final DatabaseConnectionOptions connectionOptions = testDatabase
-        .getDatabaseConnectionOptions();
-
       final Executable executable = new SchemaCrawlerExecutable(schemaTextDetailType
         .name());
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
       executable.setOutputOptions(outputOptions);
-      executable.execute(connectionOptions.getConnection());
+      executable.execute(getConnection());
 
       failures.addAll(compareOutput(JSON_OUTPUT + referenceFile,
                                     testOutputFile,
@@ -349,9 +316,6 @@ public class SchemaCrawlerOutputTest
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
       schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
 
-      final DatabaseConnectionOptions connectionOptions = testDatabase
-        .getDatabaseConnectionOptions();
-
       final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(SchemaTextDetailType.details
                                                                              + ","
                                                                              + Operation.count
@@ -360,7 +324,7 @@ public class SchemaCrawlerOutputTest
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
       executable.setOutputOptions(outputOptions);
       executable.setAdditionalConfiguration(textOutputOptionsConfig);
-      executable.execute(connectionOptions.getConnection());
+      executable.execute(getConnection());
 
       failures.addAll(compareOutput(ORDINAL_OUTPUT + referenceFile,
                                     testOutputFile,
@@ -405,9 +369,6 @@ public class SchemaCrawlerOutputTest
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
       schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
 
-      final DatabaseConnectionOptions connectionOptions = testDatabase
-        .getDatabaseConnectionOptions();
-
       final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(SchemaTextDetailType.details
                                                                              + ","
                                                                              + Operation.count
@@ -416,7 +377,7 @@ public class SchemaCrawlerOutputTest
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
       executable.setOutputOptions(outputOptions);
       executable.setAdditionalConfiguration(textOutputOptionsConfig);
-      executable.execute(connectionOptions.getConnection());
+      executable.execute(getConnection());
 
       failures.addAll(compareOutput(UNQUALIFIED_NAMES_OUTPUT + referenceFile,
                                     testOutputFile,

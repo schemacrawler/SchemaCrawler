@@ -22,32 +22,15 @@ import static org.junit.Assert.assertEquals;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.test.utility.TestDatabase;
+import schemacrawler.test.utility.BaseDatabaseTest;
 
 public class CoverageTest
+  extends BaseDatabaseTest
 {
-
-  private static TestDatabase testDatabase = new TestDatabase();
-
-  @AfterClass
-  public static void afterAllTests()
-  {
-    testDatabase.shutdownDatabase();
-  }
-
-  @BeforeClass
-  public static void beforeAllTests()
-    throws Exception
-  {
-    TestDatabase.initializeApplicationLogging();
-    testDatabase.startMemoryDatabase();
-  }
 
   @Test
   public void namedObjectList()
@@ -87,7 +70,7 @@ public class CoverageTest
   public void retrieverConnectionClosed()
     throws SQLException, SchemaCrawlerException
   {
-    final Connection connection = testDatabase.getConnection();
+    final Connection connection = getConnection();
     connection.close();
     new RetrieverConnection(connection, null);
   }

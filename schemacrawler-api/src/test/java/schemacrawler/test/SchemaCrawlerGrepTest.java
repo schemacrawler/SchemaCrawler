@@ -24,8 +24,6 @@ import static org.junit.Assert.assertNotNull;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import schemacrawler.schema.Column;
@@ -36,29 +34,14 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.test.utility.TestDatabase;
+import schemacrawler.test.utility.BaseDatabaseTest;
 
 public class SchemaCrawlerGrepTest
+  extends BaseDatabaseTest
 {
 
   private static final Logger LOGGER = Logger
     .getLogger(SchemaCrawlerGrepTest.class.getName());
-
-  private static TestDatabase testDatabase = new TestDatabase();
-
-  @AfterClass
-  public static void afterAllTests()
-  {
-    testDatabase.shutdownDatabase();
-  }
-
-  @BeforeClass
-  public static void beforeAllTests()
-    throws Exception
-  {
-    TestDatabase.initializeApplicationLogging();
-    testDatabase.startMemoryDatabase();
-  }
 
   @Test
   public void grepColumns()
@@ -102,7 +85,7 @@ public class SchemaCrawlerGrepTest
     schemaCrawlerOptions
       .setGrepColumnInclusionRule(new InclusionRule(".*\\..*\\.BOOKID", ""));
 
-    final Database database = testDatabase.getDatabase(schemaCrawlerOptions);
+    final Database database = getDatabase(schemaCrawlerOptions);
     final Schema[] schemas = database.getSchemas().toArray(new Schema[0]);
     assertEquals("Schema count does not match", 6, schemas.length);
     for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++)
@@ -146,7 +129,7 @@ public class SchemaCrawlerGrepTest
     Schema schema;
     Table table;
 
-    database = testDatabase.getDatabase(schemaCrawlerOptions);
+    database = getDatabase(schemaCrawlerOptions);
     schema = database.getSchema("PUBLIC.BOOKS");
     assertNotNull("Schema PUBLIC.BOOKS not found", schema);
     assertEquals(1, database.getTables(schema).size());
@@ -154,7 +137,7 @@ public class SchemaCrawlerGrepTest
     assertNotNull("Table BOOKAUTHORS not found", table);
 
     schemaCrawlerOptions.setParentTableFilterDepth(1);
-    database = testDatabase.getDatabase(schemaCrawlerOptions);
+    database = getDatabase(schemaCrawlerOptions);
     schema = database.getSchema("PUBLIC.BOOKS");
     assertNotNull("Schema PUBLIC.BOOKS not found", schema);
     assertEquals(3, database.getTables(schema).size());
@@ -222,7 +205,7 @@ public class SchemaCrawlerGrepTest
     schemaCrawlerOptions
       .setGrepDefinitionInclusionRule(new InclusionRule(".*book author.*", ""));
 
-    final Database database = testDatabase.getDatabase(schemaCrawlerOptions);
+    final Database database = getDatabase(schemaCrawlerOptions);
     final Schema[] schemas = database.getSchemas().toArray(new Schema[0]);
     assertEquals("Schema count does not match", 6, schemas.length);
     for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++)
@@ -292,7 +275,7 @@ public class SchemaCrawlerGrepTest
     schemaCrawlerOptions
       .setGrepDefinitionInclusionRule(new InclusionRule(".*book author.*", ""));
 
-    final Database database = testDatabase.getDatabase(schemaCrawlerOptions);
+    final Database database = getDatabase(schemaCrawlerOptions);
     final Schema[] schemas = database.getSchemas().toArray(new Schema[0]);
     assertEquals("Schema count does not match", 6, schemas.length);
     for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++)
@@ -366,7 +349,7 @@ public class SchemaCrawlerGrepTest
     schemaCrawlerOptions
       .setGrepRoutineColumnInclusionRule(new InclusionRule(".*\\.B_COUNT", ""));
 
-    final Database database = testDatabase.getDatabase(schemaCrawlerOptions);
+    final Database database = getDatabase(schemaCrawlerOptions);
     final Schema[] schemas = database.getSchemas().toArray(new Schema[0]);
     assertEquals("Schema count does not match", 6, schemas.length);
     for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++)

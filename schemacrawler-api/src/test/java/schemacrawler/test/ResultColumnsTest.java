@@ -27,36 +27,19 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import schemacrawler.schema.ResultsColumn;
 import schemacrawler.schema.ResultsColumns;
-import schemacrawler.test.utility.TestDatabase;
+import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.utility.SchemaCrawlerUtility;
 
 public class ResultColumnsTest
+  extends BaseDatabaseTest
 {
 
   private static final Logger LOGGER = Logger.getLogger(ResultColumnsTest.class
     .getName());
-
-  private static TestDatabase testDatabase = new TestDatabase();
-
-  @AfterClass
-  public static void afterAllTests()
-  {
-    testDatabase.shutdownDatabase();
-  }
-
-  @BeforeClass
-  public static void beforeAllTests()
-    throws Exception
-  {
-    TestDatabase.initializeApplicationLogging();
-    testDatabase.startMemoryDatabase();
-  }
 
   @Test
   public void columns()
@@ -82,7 +65,7 @@ public class ResultColumnsTest
                        + " INNER JOIN PUBLIC.BOOKS.AUTHORS                                          "
                        + "   ON PUBLIC.BOOKS.AUTHORS.ID = PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID         ";
 
-    final Connection connection = testDatabase.getConnection();
+    final Connection connection = getConnection();
     final Statement statement = connection.createStatement();
     final ResultSet resultSet = statement.executeQuery(sql);
 

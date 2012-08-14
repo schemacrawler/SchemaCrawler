@@ -5,7 +5,40 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-    <release version="9.0" date="2012-07-09">
+    <release version="9.0" date="2012-08-12">
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        The API has changed from 8.x versions. All API calls return collections
+		instead of arrays. Schemas are not containers, but tags for database ojects.
+		Tables and routines (stored procedures and functions) are available directly
+		on the database, and there are new finders to search by schema.
+      ]]></action>  
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Support for database functions has been added. All references to stored procedures
+		in the code and documentation now refer to routines. Stored procedures and
+		functions are treated in the same way, as routines.
+      ]]></action> 	  
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        SchemaCrawler now allows queries to be specified on the command-line.
+		If a command is not recognized, or is not a named query, it is executed
+		as if it is a query.
+      ]]></action> 	
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        The output format includes trgger definitions as part of the schema, instead
+		of as the detailed schema output.
+      ]]></action> 	  
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Database connections have to be specified on the command-line, by
+		providing the driver class name and URL. Database connections can no longer
+		be defined in properties files.
+      ]]></action> 	  
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        There are new command-line options. -V, --version will print the SchemaCrawler 
+		version and exit. There are shorter and  more standard (Unix-like) synonyms 
+		-u (for -user), -c (for -command), and -o (for -output). The -procedures switch
+		has been renamed -routines.
+      ]]></action>  	  
+    </release>   
+    <release version="8.17" date="2012-07-12">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         The HTML output format outputs valid HTML5 and CSS3, as valid XML.
       ]]></action>     

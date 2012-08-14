@@ -810,7 +810,7 @@
     <driverName>HSQL Database Engine Driver</driverName>
     <driverClassName>org.hsqldb.jdbc.JDBCDriver</driverClassName>
     <driverVersion>2.2.8</driverVersion>
-    <connectionUrl>jdbc:hsqldb:mem:schemacrawler</connectionUrl>
+    <connectionUrl>jdbc:hsqldb:hsql://localhost/schemacrawler</connectionUrl>
     <jdbcCompliant>true</jdbcCompliant>
     <jdbcDriverProperties id="172">
       <jdbcDriverProperty id="173">
@@ -10720,11 +10720,11 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                     </entry>
                     <entry>
                       <string>RADIX</string>
-                      <long>2</long>
+                      <int>2</int>
                     </entry>
                     <entry>
                       <string>SCALE</string>
-                      <long>0</long>
+                      <int>0</int>
                     </entry>
                   </attributeMap>
                   <schema class="schema" reference="1321"/>
@@ -10761,11 +10761,11 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                     </entry>
                     <entry>
                       <string>RADIX</string>
-                      <long>2</long>
+                      <int>2</int>
                     </entry>
                     <entry>
                       <string>SCALE</string>
-                      <long>0</long>
+                      <int>0</int>
                     </entry>
                   </attributeMap>
                   <schema class="schema" reference="1321"/>
@@ -11161,11 +11161,11 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                     </entry>
                     <entry>
                       <string>RADIX</string>
-                      <long>2</long>
+                      <int>2</int>
                     </entry>
                     <entry>
                       <string>SCALE</string>
-                      <long>0</long>
+                      <int>0</int>
                     </entry>
                   </attributeMap>
                   <schema class="schema" reference="1332"/>
@@ -12456,11 +12456,11 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                     </entry>
                     <entry>
                       <string>RADIX</string>
-                      <long>2</long>
+                      <int>2</int>
                     </entry>
                     <entry>
                       <string>SCALE</string>
-                      <long>0</long>
+                      <int>0</int>
                     </entry>
                     <entry>
                       <string>SQL_DATA_TYPE</string>
@@ -12505,11 +12505,11 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                     </entry>
                     <entry>
                       <string>RADIX</string>
-                      <long>2</long>
+                      <int>2</int>
                     </entry>
                     <entry>
                       <string>SCALE</string>
-                      <long>0</long>
+                      <int>0</int>
                     </entry>
                     <entry>
                       <string>SQL_DATA_TYPE</string>
@@ -12554,11 +12554,11 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                     </entry>
                     <entry>
                       <string>RADIX</string>
-                      <long>2</long>
+                      <int>2</int>
                     </entry>
                     <entry>
                       <string>SCALE</string>
-                      <long>0</long>
+                      <int>0</int>
                     </entry>
                     <entry>
                       <string>SQL_DATA_TYPE</string>
@@ -12973,11 +12973,11 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                     </entry>
                     <entry>
                       <string>RADIX</string>
-                      <long>2</long>
+                      <int>2</int>
                     </entry>
                     <entry>
                       <string>SCALE</string>
-                      <long>0</long>
+                      <int>0</int>
                     </entry>
                     <entry>
                       <string>SQL_DATA_TYPE</string>
@@ -13022,11 +13022,11 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                     </entry>
                     <entry>
                       <string>RADIX</string>
-                      <long>2</long>
+                      <int>2</int>
                     </entry>
                     <entry>
                       <string>SCALE</string>
-                      <long>0</long>
+                      <int>0</int>
                     </entry>
                     <entry>
                       <string>SQL_DATA_TYPE</string>
@@ -13071,11 +13071,11 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                     </entry>
                     <entry>
                       <string>RADIX</string>
-                      <long>2</long>
+                      <int>2</int>
                     </entry>
                     <entry>
                       <string>SCALE</string>
-                      <long>0</long>
+                      <int>0</int>
                     </entry>
                     <entry>
                       <string>SQL_DATA_TYPE</string>
@@ -13120,11 +13120,11 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                     </entry>
                     <entry>
                       <string>RADIX</string>
-                      <long>2</long>
+                      <int>2</int>
                     </entry>
                     <entry>
                       <string>SCALE</string>
-                      <long>0</long>
+                      <int>0</int>
                     </entry>
                     <entry>
                       <string>SQL_DATA_TYPE</string>
@@ -13539,11 +13539,11 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                     </entry>
                     <entry>
                       <string>RADIX</string>
-                      <long>2</long>
+                      <int>2</int>
                     </entry>
                     <entry>
                       <string>SCALE</string>
-                      <long>0</long>
+                      <int>0</int>
                     </entry>
                     <entry>
                       <string>SQL_DATA_TYPE</string>
@@ -13588,11 +13588,11 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                     </entry>
                     <entry>
                       <string>RADIX</string>
-                      <long>2</long>
+                      <int>2</int>
                     </entry>
                     <entry>
                       <string>SCALE</string>
-                      <long>0</long>
+                      <int>0</int>
                     </entry>
                     <entry>
                       <string>SQL_DATA_TYPE</string>
@@ -14007,11 +14007,11 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                     </entry>
                     <entry>
                       <string>RADIX</string>
-                      <long>2</long>
+                      <int>2</int>
                     </entry>
                     <entry>
                       <string>SCALE</string>
-                      <long>0</long>
+                      <int>0</int>
                     </entry>
                     <entry>
                       <string>SQL_DATA_TYPE</string>
@@ -14056,11 +14056,11 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                     </entry>
                     <entry>
                       <string>RADIX</string>
-                      <long>2</long>
+                      <int>2</int>
                     </entry>
                     <entry>
                       <string>SCALE</string>
-                      <long>0</long>
+                      <int>0</int>
                     </entry>
                     <entry>
                       <string>SQL_DATA_TYPE</string>
@@ -14105,11 +14105,11 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                     </entry>
                     <entry>
                       <string>RADIX</string>
-                      <long>2</long>
+                      <int>2</int>
                     </entry>
                     <entry>
                       <string>SCALE</string>
-                      <long>0</long>
+                      <int>0</int>
                     </entry>
                     <entry>
                       <string>SQL_DATA_TYPE</string>
@@ -14154,11 +14154,11 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                     </entry>
                     <entry>
                       <string>RADIX</string>
-                      <long>2</long>
+                      <int>2</int>
                     </entry>
                     <entry>
                       <string>SCALE</string>
-                      <long>0</long>
+                      <int>0</int>
                     </entry>
                     <entry>
                       <string>SQL_DATA_TYPE</string>
@@ -14573,11 +14573,11 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                     </entry>
                     <entry>
                       <string>RADIX</string>
-                      <long>2</long>
+                      <int>2</int>
                     </entry>
                     <entry>
                       <string>SCALE</string>
-                      <long>0</long>
+                      <int>0</int>
                     </entry>
                     <entry>
                       <string>SQL_DATA_TYPE</string>
@@ -14622,11 +14622,11 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                     </entry>
                     <entry>
                       <string>RADIX</string>
-                      <long>2</long>
+                      <int>2</int>
                     </entry>
                     <entry>
                       <string>SCALE</string>
-                      <long>0</long>
+                      <int>0</int>
                     </entry>
                     <entry>
                       <string>SQL_DATA_TYPE</string>
@@ -15456,11 +15456,11 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                     </entry>
                     <entry>
                       <string>RADIX</string>
-                      <long>2</long>
+                      <int>2</int>
                     </entry>
                     <entry>
                       <string>SCALE</string>
-                      <long>0</long>
+                      <int>0</int>
                     </entry>
                     <entry>
                       <string>SQL_DATA_TYPE</string>
@@ -15505,11 +15505,11 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                     </entry>
                     <entry>
                       <string>RADIX</string>
-                      <long>2</long>
+                      <int>2</int>
                     </entry>
                     <entry>
                       <string>SCALE</string>
-                      <long>0</long>
+                      <int>0</int>
                     </entry>
                     <entry>
                       <string>SQL_DATA_TYPE</string>

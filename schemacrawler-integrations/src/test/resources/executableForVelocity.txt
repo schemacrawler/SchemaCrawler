@@ -4,7 +4,7 @@
 
 -- driver: HSQL Database Engine Driver 2.2.8
 -- driver class: org.hsqldb.jdbc.JDBCDriver
--- url: jdbc:hsqldb:mem:schemacrawler
+-- url: jdbc:hsqldb:hsql://localhost/schemacrawler
 -- jdbc compliant: true
 
 SET SCHEMA PUBLIC.BOOKS;
