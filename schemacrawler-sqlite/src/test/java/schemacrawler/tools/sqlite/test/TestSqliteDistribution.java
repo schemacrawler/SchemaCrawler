@@ -33,7 +33,6 @@ public class TestSqliteDistribution
         "-database=" + sqliteDbFile.getAbsolutePath(),
         "-command=details",
         "-infolevel=standard",
-        "-loglevel=ALL",
         "-outputfile=" + testOutputFile
     });
 
