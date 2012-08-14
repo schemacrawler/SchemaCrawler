@@ -110,11 +110,36 @@ public class TestDatabase
   }
 
   private final String url;
-  private boolean trace ;
+  private boolean trace;
 
   public TestDatabase(final String url)
   {
     this.url = url;
+  }
+
+  /**
+   * Load driver, and create database, schema and data.
+   * 
+   * @throws SchemaCrawlerException
+   *         On an exception
+   */
+  public void start()
+    throws Exception
+  {
+    LOGGER.log(Level.FINE, toString() + " - Setting up database");
+    // Attempt to delete the database files
+    deleteServerFiles();
+    // Start the server
+    final Server server = new Server();
+    server.setDatabaseName(0, "schemacrawler");
+    server.setDatabasePath(0, serverFileStem);
+    server.setSilent(!trace);
+    server.setTrace(trace);
+    server.setLogWriter(null);
+    server.setErrWriter(null);
+    server.start();
+
+    createDatabase();
   }
 
   /**
@@ -162,31 +187,6 @@ public class TestDatabase
         }
       }
     }
-  }
-
-  /**
-   * Load driver, and create database, schema and data.
-   * 
-   * @throws SchemaCrawlerException
-   *         On an exception
-   */
-  public void start()
-    throws Exception
-  {
-    LOGGER.log(Level.FINE, toString() + " - Setting up database");
-    // Attempt to delete the database files
-    deleteServerFiles();
-    // Start the server
-    Server server = new Server();
-    server.setDatabaseName(0, "schemacrawler");
-    server.setDatabasePath(0, serverFileStem);
-    server.setSilent(!trace);
-    server.setTrace(trace);
-    server.setLogWriter(null);
-    server.setErrWriter(null);
-    server.start();
-
-    createDatabase();
   }
 
   private void createDatabase()

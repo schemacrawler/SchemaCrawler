@@ -38,30 +38,19 @@ import sf.util.Utility;
 public abstract class BaseDatabaseTest
 {
 
-  private static DatabaseConnectionOptions connectionOptions;
-  private static TestDatabase testDatabase;
-  private static final String url = "jdbc:hsqldb:hsql://localhost/schemacrawler";
+  private final static DatabaseConnectionOptions connectionOptions;
 
   static
   {
-    Utility.setApplicationLogLevel(Level.OFF);
-    if (testDatabase == null)
-    {
-      try
-      {
-        connectionOptions = new DatabaseConnectionOptions("org.hsqldb.jdbc.JDBCDriver",
-                                                          url);
-        connectionOptions.setUser("sa");
-        connectionOptions.setPassword("");
+    connectionOptions = createConnectionOptions();
+    TestDatabaseUtility.initialize();
+  }
 
-        startDatabase();
-      }
-      catch (final Exception e)
-      {
-        e.printStackTrace();
-        System.exit(1);
-      }
-    }
+  @BeforeClass
+  public static void setApplicationLogLevel()
+    throws Exception
+  {
+    Utility.setApplicationLogLevel(Level.OFF);
   }
 
   @BeforeClass
@@ -71,19 +60,23 @@ public abstract class BaseDatabaseTest
     XMLUnit.setControlEntityResolver(new LocalEntityResolver());
   }
 
-  public static void startDatabase()
-    throws Exception
+  private static DatabaseConnectionOptions createConnectionOptions()
   {
-    testDatabase = new TestDatabase(url);
-    testDatabase.start();
-    Runtime.getRuntime().addShutdownHook(new Thread()
+    try
     {
-      @Override
-      public void run()
-      {
-        testDatabase.stop();
-      }
-    });
+      final DatabaseConnectionOptions connectionOptions = new DatabaseConnectionOptions("org.hsqldb.jdbc.JDBCDriver",
+                                                                                        TestDatabaseUtility.url);
+      connectionOptions.setUser("sa");
+      connectionOptions.setPassword("");
+
+      return connectionOptions;
+    }
+    catch (final SchemaCrawlerException e)
+    {
+      e.printStackTrace();
+      System.exit(1);
+      return null;
+    }
   }
 
   /**
@@ -93,7 +86,7 @@ public abstract class BaseDatabaseTest
    * @throws SchemaCrawlerException
    *         On an exception
    */
-  public Connection getConnection()
+  protected Connection getConnection()
     throws SchemaCrawlerException
   {
     try
@@ -106,7 +99,7 @@ public abstract class BaseDatabaseTest
     }
   }
 
-  public Database getDatabase(final SchemaCrawlerOptions schemaCrawlerOptions)
+  protected Database getDatabase(final SchemaCrawlerOptions schemaCrawlerOptions)
     throws SchemaCrawlerException
   {
     final Database database = SchemaCrawlerUtility
