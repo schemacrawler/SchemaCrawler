@@ -26,7 +26,7 @@ import org.apache.tools.ant.BuildFileTest;
 import org.apache.tools.ant.Project;
 import org.junit.Test;
 
-import schemacrawler.test.utility.BaseDatabaseTest;
+import schemacrawler.test.utility.TestDatabaseUtility;
 import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.options.OutputFormat;
 
@@ -49,7 +49,7 @@ public class AntTaskTest
     throws Exception
   {
 
-    BaseDatabaseTest.startDatabase();
+    TestDatabaseUtility.initialize();
 
     final String referenceFile = "ant_task_test.txt";
     final File testOutputFile = File.createTempFile("schemacrawler."
