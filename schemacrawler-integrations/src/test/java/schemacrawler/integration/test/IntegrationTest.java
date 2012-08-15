@@ -21,14 +21,10 @@
 package schemacrawler.integration.test;
 
 
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.List;
-
-import javax.imageio.ImageIO;
 
 import org.junit.Test;
 
@@ -37,8 +33,6 @@ import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.commandline.SchemaCrawlerCommandLine;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.integration.freemarker.FreeMarkerRenderer;
-import schemacrawler.tools.integration.graph.GraphExecutable;
-import schemacrawler.tools.integration.scripting.ScriptExecutable;
 import schemacrawler.tools.integration.velocity.VelocityRenderer;
 import schemacrawler.tools.options.OutputOptions;
 
@@ -80,37 +74,6 @@ public class IntegrationTest
     executeExecutableAndCheckForOutputFile(new FreeMarkerRenderer(),
                                            "plaintextschema.ftl",
                                            "executableForFreeMarker");
-  }
-
-  @Test
-  public void executableGraph()
-    throws Exception
-  {
-    final GraphExecutable executable = new GraphExecutable();
-
-    final File testOutputFile = File.createTempFile("schemacrawler."
-                                                    + executable.getCommand()
-                                                    + ".", ".png");
-    testOutputFile.delete();
-    final OutputOptions outputOptions = new OutputOptions("png", testOutputFile);
-
-    executable.setOutputOptions(outputOptions);
-    executable.execute(getConnection());
-
-    assertTrue(testOutputFile.exists());
-    assertTrue(testOutputFile.length() > 0);
-    final BufferedImage image = ImageIO.read(testOutputFile);
-    assertTrue(image.getHeight() > 0);
-    assertTrue(image.getWidth() > 0);
-  }
-
-  @Test
-  public void executableJavaScript()
-    throws Exception
-  {
-    executeExecutableAndCheckForOutputFile(new ScriptExecutable(),
-                                           "plaintextschema.js",
-                                           "executableForJavaScript");
   }
 
   @Test
