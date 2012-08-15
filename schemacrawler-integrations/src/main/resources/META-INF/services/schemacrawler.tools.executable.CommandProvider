@@ -1,5 +1,3 @@
 schemacrawler.tools.integration.freemarker.FreeMarkerCommandProvider
-schemacrawler.tools.integration.scripting.ScriptCommandProvider
 schemacrawler.tools.integration.velocity.VelocityCommandProvider
-schemacrawler.tools.integration.graph.GraphCommandProvider
 schemacrawler.tools.integration.serialization.SerializationCommandProvider
