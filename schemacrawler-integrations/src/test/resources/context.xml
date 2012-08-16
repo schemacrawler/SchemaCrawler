@@ -271,23 +271,6 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
   </bean>
 
   <bean
-    id="executableForGraph"
-    class="schemacrawler.tools.executable.SchemaCrawlerExecutable"
-  >
-    <constructor-arg value="graph" />
-    <property
-      name="schemaCrawlerOptions"
-      ref="schemaCrawlerOptions" />
-    <property name="outputOptions">
-      <bean class="schemacrawler.tools.options.OutputOptions">
-        <property
-          name="outputFormatValue"
-          value="canon" />
-      </bean>
-    </property>
-  </bean>
-
-  <bean
     id="executableForVelocity"
     class="schemacrawler.tools.executable.SchemaCrawlerExecutable"
   >
@@ -317,23 +300,6 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
         <property
           name="outputFormatValue"
           value="plaintextschema.ftl" />
-      </bean>
-    </property>
-  </bean>
-
-  <bean
-    id="executableForJavaScript"
-    class="schemacrawler.tools.executable.SchemaCrawlerExecutable"
-  >
-    <constructor-arg value="script" />
-    <property
-      name="schemaCrawlerOptions"
-      ref="schemaCrawlerOptions" />
-    <property name="outputOptions">
-      <bean class="schemacrawler.tools.options.OutputOptions">
-        <property
-          name="outputFormatValue"
-          value="plaintextschema.js" />
       </bean>
     </property>
   </bean>
