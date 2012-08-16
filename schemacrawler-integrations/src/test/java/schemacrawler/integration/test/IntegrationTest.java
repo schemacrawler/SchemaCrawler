@@ -50,15 +50,6 @@ public class IntegrationTest
   }
 
   @Test
-  public void commandlineJavaScript()
-    throws Exception
-  {
-    executeCommandlineAndCheckForOutputFile("script",
-                                            "plaintextschema.js",
-                                            "executableForJavaScript");
-  }
-
-  @Test
   public void commandlineVelocity()
     throws Exception
   {
