@@ -205,9 +205,6 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
         <property
           name="showLobs"
           value="true" />
-        <property
-          name="mergeRows"
-          value="true" />
       </bean>
     </property>
     <property name="additionalConfiguration">
