@@ -23,7 +23,6 @@ package schemacrawler.tools.text.operation;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -109,16 +108,7 @@ final class DataJsonFormatter
 
           jsonData.put("columnNames", new JSONArray(dataRows.getColumnNames()));
 
-          JSONArray jsonRows;
-          if (options.isMergeRows() && dataRows.width() > 1)
-          {
-            jsonRows = iterateRowsAndMerge(dataRows);
-          }
-          else
-          {
-            jsonRows = iterateRows(dataRows);
-          }
-
+          JSONArray jsonRows = iterateRows(dataRows);
           jsonData.put("rows", jsonRows);
         }
         catch (final SQLException e)
@@ -134,19 +124,6 @@ final class DataJsonFormatter
       throw new SchemaCrawlerException("Could not convert data to JSON", e);
     }
 
-  }
-
-  private JSONArray doHandleOneRow(final List<String> row,
-                                   final String lastColumnData)
-  {
-    if (row.isEmpty())
-    {
-      return new JSONArray();
-    }
-    final List<String> outputRow = new ArrayList<String>();
-    outputRow.addAll(row);
-    outputRow.add(lastColumnData);
-    return new JSONArray(outputRow);
   }
 
   /**
@@ -185,47 +162,6 @@ final class DataJsonFormatter
       final List<String> currentRow = dataRows.row();
       jsonRows.put(new JSONArray(currentRow));
     }
-    return jsonRows;
-  }
-
-  private JSONArray iterateRowsAndMerge(final DataResultSet dataRows)
-    throws SQLException
-  {
-    final JSONArray jsonRows = new JSONArray();
-    List<String> previousRow = new ArrayList<String>();
-    List<String> currentRow;
-    StringBuilder currentRowLastColumn = new StringBuilder();
-    while (dataRows.next())
-    {
-      currentRow = dataRows.row();
-      final String lastColumnDataString = currentRow
-        .remove(currentRow.size() - 1);
-
-      if (currentRow.equals(previousRow))
-      {
-        currentRowLastColumn.append(lastColumnDataString);
-      }
-      else
-      {
-        // At this point, we have a new row coming in, so dump the
-        // previous merged row out
-        final JSONArray jsonRow = doHandleOneRow(previousRow,
-                                                 currentRowLastColumn
-                                                   .toString());
-        jsonRows.put(jsonRow);
-        // reset
-        currentRowLastColumn = new StringBuilder();
-        // save the last column
-        currentRowLastColumn.append(lastColumnDataString);
-      }
-
-      previousRow = currentRow;
-    }
-    // Dump the last row out
-    final JSONArray jsonRow = doHandleOneRow(previousRow,
-                                             currentRowLastColumn.toString());
-    jsonRows.put(jsonRow);
-
     return jsonRows;
   }
 }

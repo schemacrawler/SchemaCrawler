@@ -23,7 +23,6 @@ package schemacrawler.tools.text.operation;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -113,14 +112,7 @@ final class DataTextFormatter
         out
           .println(formattingHelper.createRowHeader(dataRows.getColumnNames()));
 
-        if (options.isMergeRows() && dataRows.width() > 1)
-        {
-          iterateRowsAndMerge(dataRows);
-        }
-        else
-        {
-          iterateRows(dataRows);
-        }
+        iterateRows(dataRows);
       }
       catch (final SQLException e)
       {
@@ -130,21 +122,6 @@ final class DataTextFormatter
     }
 
     dataBlockCount++;
-  }
-
-  private void doHandleOneRow(final List<String> row,
-                              final String lastColumnData)
-  {
-    if (row.isEmpty())
-    {
-      return;
-    }
-    final List<String> outputRow = new ArrayList<String>();
-    // output
-    outputRow.addAll(row);
-    outputRow.add(lastColumnData);
-    final String[] columnData = outputRow.toArray(new String[outputRow.size()]);
-    out.println(formattingHelper.createRow(columnData));
   }
 
   private String getMessage(final double aggregate)
@@ -203,39 +180,6 @@ final class DataTextFormatter
         .size()]);
       out.println(formattingHelper.createRow(columnData));
     }
-  }
-
-  private void iterateRowsAndMerge(final DataResultSet dataRows)
-    throws SQLException
-  {
-    List<String> previousRow = new ArrayList<String>();
-    List<String> currentRow;
-    StringBuilder currentRowLastColumn = new StringBuilder();
-    while (dataRows.next())
-    {
-      currentRow = dataRows.row();
-      final String lastColumnDataString = currentRow
-        .remove(currentRow.size() - 1);
-
-      if (currentRow.equals(previousRow))
-      {
-        currentRowLastColumn.append(lastColumnDataString);
-      }
-      else
-      {
-        // At this point, we have a new row coming in, so dump the
-        // previous merged row out
-        doHandleOneRow(previousRow, currentRowLastColumn.toString());
-        // reset
-        currentRowLastColumn = new StringBuilder();
-        // save the last column
-        currentRowLastColumn.append(lastColumnDataString);
-      }
-
-      previousRow = currentRow;
-    }
-    // Dump the last row out
-    doHandleOneRow(previousRow, currentRowLastColumn.toString());
   }
 
   private void printHeader()

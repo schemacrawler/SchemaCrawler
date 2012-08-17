@@ -36,9 +36,6 @@ public final class OperationOptions
   private static final long serialVersionUID = -7977434852526746391L;
 
   private static final String SHOW_LOBS = "schemacrawler.data.show_lobs";
-  private static final String MERGE_ROWS = "schemacrawler.data.merge_rows";
-
-  private boolean mergeRows;
   private boolean showLobs;
 
   /**
@@ -59,24 +56,12 @@ public final class OperationOptions
   {
     if (config == null)
     {
-      mergeRows = false;
       showLobs = false;
     }
     else
     {
-      mergeRows = config.getBooleanValue(MERGE_ROWS);
       showLobs = config.getBooleanValue(SHOW_LOBS);
     }
-  }
-
-  /**
-   * Whether to merge similar rows.
-   * 
-   * @return Whether to merge similar rows.
-   */
-  public boolean isMergeRows()
-  {
-    return mergeRows;
   }
 
   /**
@@ -87,17 +72,6 @@ public final class OperationOptions
   public boolean isShowLobs()
   {
     return showLobs;
-  }
-
-  /**
-   * Whether to merge similar rows.
-   * 
-   * @param mergeRows
-   *        Whether to merge similar rows
-   */
-  public void setMergeRows(final boolean mergeRows)
-  {
-    this.mergeRows = mergeRows;
   }
 
   /**
