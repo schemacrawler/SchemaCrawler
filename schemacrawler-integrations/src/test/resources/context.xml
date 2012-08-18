@@ -77,7 +77,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
       name="outputFormatValue"
       value="text" />
     <property
-      name="outputFileName"
+      name="outputFile"
       value="scOutput.txt" />
   </bean>
 
