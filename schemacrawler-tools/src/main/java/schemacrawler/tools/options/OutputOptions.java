@@ -256,9 +256,9 @@ public final class OutputOptions
    * @param outputFileName
    *        Output file name.
    */
-  public void setOutputFileName(final String outputFileName)
+  public void setOutputFile(final File outputFile)
   {
-    outputFile = new File(outputFileName);
+    this.outputFile = outputFile;
   }
 
   /**

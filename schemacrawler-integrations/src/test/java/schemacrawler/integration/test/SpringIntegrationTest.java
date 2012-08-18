@@ -88,8 +88,7 @@ public class SpringIntegrationTest
                                                     ".test");
     testOutputFile.delete();
 
-    executable.getOutputOptions()
-      .setOutputFileName(testOutputFile.getAbsolutePath());
+    executable.getOutputOptions().setOutputFile(testOutputFile);
     executable.execute(getConnection());
 
     failures.addAll(TestUtility.compareOutput(executableName + ".txt",
