@@ -39,9 +39,6 @@ public final class SchemaCrawlerOptions
   implements Options
 {
 
-  public static final String DEFAULT_TABLE_TYPES = "TABLE,VIEW";
-  public static final String DEFAULT_ROUTINE_TYPES = "PROCEDURE,FUNCTION";
-
   private static final long serialVersionUID = -3557794862382066029L;
 
   private static final String SC_SCHEMA_PATTERN_EXCLUDE = "schemacrawler.schema.pattern.exclude";

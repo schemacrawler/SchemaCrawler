@@ -23,6 +23,7 @@ package schemacrawler.tools.commandline;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.text.schema.SchemaTextOptions;
 import sf.util.clparser.BooleanOption;
 import sf.util.clparser.StringOption;
 
@@ -40,6 +41,7 @@ final class AdditionalConfigParser
     super(new StringOption('p',
                            "additionalconfigfile",
                            "schemacrawler.additional.config.properties"),
+          new BooleanOption("noinfo"),
           new BooleanOption("sorttables"),
           new BooleanOption("sortcolumns"),
           new BooleanOption("sortinout"));
@@ -52,21 +54,25 @@ final class AdditionalConfigParser
     final String cfgFile = getStringValue("p");
     final Config config = Config.load(cfgFile);
 
-    if (hasOptionValue("sorttables"))
+    final SchemaTextOptions textOptions = new SchemaTextOptions();
+    if (getBooleanValue("noinfo"))
     {
-      config.put("schemacrawler.format.sort_alphabetically.tables",
-                 Boolean.TRUE.toString());
+      textOptions.setNoInfo(true);
     }
-    if (hasOptionValue("sortcolumns"))
+    if (getBooleanValue("sorttables"))
     {
-      config.put("schemacrawler.format.sort_alphabetically.table_columns",
-                 Boolean.TRUE.toString());
+      textOptions.setAlphabeticalSortForTables(false);
     }
-    if (hasOptionValue("sortinout"))
+    if (getBooleanValue("sortcolumns"))
     {
-      config.put("schemacrawler.format.sort_alphabetically.routine_columns",
-                 Boolean.TRUE.toString());
+      textOptions.setAlphabeticalSortForTableColumns(true);
     }
+    if (getBooleanValue("sortinout"))
+    {
+      textOptions.setAlphabeticalSortForRoutineColumns(true);
+    }
+
+    config.putAll(textOptions.toConfig());
 
     return config;
   }

@@ -40,19 +40,20 @@ final class SchemaCrawlerOptionsParser
   extends BaseOptionsParser<SchemaCrawlerOptions>
 {
 
+  private static final String DEFAULT_TABLE_TYPES = "TABLE,VIEW";
+  private static final String DEFAULT_ROUTINE_TYPES = "PROCEDURE,FUNCTION";
+
   private final SchemaCrawlerOptions options;
 
   SchemaCrawlerOptionsParser(final Config config)
   {
     super(new StringOption("infolevel", "standard"),
           new StringOption("schemas", InclusionRule.NONE),
-          new StringOption("table_types",
-                           SchemaCrawlerOptions.DEFAULT_TABLE_TYPES),
+          new StringOption("table_types", DEFAULT_TABLE_TYPES),
           new StringOption("tables", InclusionRule.ALL),
           new StringOption("excludecolumns", InclusionRule.NONE),
           new StringOption("synonyms", InclusionRule.ALL),
-          new StringOption("routine_types",
-                           SchemaCrawlerOptions.DEFAULT_ROUTINE_TYPES),
+          new StringOption("routine_types", DEFAULT_ROUTINE_TYPES),
           new StringOption("routines", InclusionRule.ALL),
           new StringOption("excludeinout", InclusionRule.NONE),
           new StringOption("grepcolumns", InclusionRule.NONE),

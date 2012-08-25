@@ -22,7 +22,7 @@ package schemacrawler.tools.text.operation;
 
 
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.Options;
+import schemacrawler.tools.text.base.BaseTextOptions;
 
 /**
  * Operator options.
@@ -30,13 +30,12 @@ import schemacrawler.schemacrawler.Options;
  * @author Sualeh Fatehi
  */
 public final class OperationOptions
-  implements Options
+  extends BaseTextOptions
 {
 
   private static final long serialVersionUID = -7977434852526746391L;
 
-  private static final String SHOW_LOBS = "schemacrawler.data.show_lobs";
-  private boolean showLobs;
+  private static final String SHOW_LOBS = "data.show_lobs";
 
   /**
    * Operator options, defaults.
@@ -54,14 +53,8 @@ public final class OperationOptions
    */
   public OperationOptions(final Config config)
   {
-    if (config == null)
-    {
-      showLobs = false;
-    }
-    else
-    {
-      showLobs = config.getBooleanValue(SHOW_LOBS);
-    }
+    super(config);
+    setShowLobs(getBooleanValue(config, SHOW_LOBS));
   }
 
   /**
@@ -71,7 +64,7 @@ public final class OperationOptions
    */
   public boolean isShowLobs()
   {
-    return showLobs;
+    return getBooleanValue(SHOW_LOBS);
   }
 
   /**
@@ -82,7 +75,7 @@ public final class OperationOptions
    */
   public void setShowLobs(final boolean showLobs)
   {
-    this.showLobs = showLobs;
+    setBooleanValue(SHOW_LOBS, showLobs);
   }
 
 }

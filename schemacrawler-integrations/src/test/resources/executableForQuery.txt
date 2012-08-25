@@ -1,5 +1,6 @@
 
 
+
 Query
 ========================================================================
 
@@ -112,5 +113,6 @@ PUBLIC	FOR_LINT	WRITERS	TABLE	<null>	<null>	<null>	<null>	<null>	<null>	MEMORY	f
 PUBLIC	PUBLISHER SALES	REGIONS	TABLE	<null>	<null>	<null>	<null>	<null>	<null>	MEMORY	false	<null>
 PUBLIC	PUBLISHER SALES	SALES	TABLE	<null>	<null>	<null>	<null>	<null>	<null>	MEMORY	false	<null>
 PUBLIC	BOOKS	AUTHORSLIST	VIEW	<null>	<null>	<null>	<null>	<null>	<null>	<null>	false	<null>
+
 
 

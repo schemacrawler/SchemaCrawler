@@ -28,7 +28,6 @@ import schemacrawler.schema.DatabaseProperty;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.JdbcDriverProperty;
 import schemacrawler.schema.SchemaCrawlerInfo;
-import schemacrawler.schemacrawler.Options;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.utility.Alignment;
@@ -40,7 +39,7 @@ import sf.util.ObjectToString;
  * 
  * @author Sualeh Fatehi
  */
-public abstract class BaseTabularFormatter<O extends Options>
+public abstract class BaseTabularFormatter<O extends BaseTextOptions>
   extends BaseFormatter<O>
 {
 
@@ -60,7 +59,7 @@ public abstract class BaseTabularFormatter<O extends Options>
   @Override
   public void begin()
   {
-    if (!outputOptions.isNoHeader())
+    if (!options.isNoHeader())
     {
       out.println(formattingHelper.createDocumentStart());
     }
@@ -75,7 +74,7 @@ public abstract class BaseTabularFormatter<O extends Options>
   public void end()
     throws SchemaCrawlerException
   {
-    if (!outputOptions.isNoFooter())
+    if (!options.isNoFooter())
     {
       out.println(formattingHelper.createDocumentEnd());
     }
@@ -86,7 +85,7 @@ public abstract class BaseTabularFormatter<O extends Options>
   @Override
   public final void handle(final DatabaseInfo dbInfo)
   {
-    if (outputOptions.isNoInfo() || dbInfo == null)
+    if (options.isNoInfo() || dbInfo == null)
     {
       return;
     }
@@ -131,7 +130,7 @@ public abstract class BaseTabularFormatter<O extends Options>
   @Override
   public void handle(final JdbcDriverInfo driverInfo)
   {
-    if (outputOptions.isNoInfo() || driverInfo == null)
+    if (options.isNoInfo() || driverInfo == null)
     {
       return;
     }
@@ -179,7 +178,7 @@ public abstract class BaseTabularFormatter<O extends Options>
   @Override
   public void handle(final SchemaCrawlerInfo schemaCrawlerInfo)
   {
-    if (outputOptions.isNoInfo() || schemaCrawlerInfo == null)
+    if (options.isNoInfo() || schemaCrawlerInfo == null)
     {
       return;
     }
@@ -212,7 +211,7 @@ public abstract class BaseTabularFormatter<O extends Options>
   public final void handleInfoStart()
     throws SchemaCrawlerException
   {
-    if (outputOptions.isNoInfo())
+    if (options.isNoInfo())
     {
       return;
     }

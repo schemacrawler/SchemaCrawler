@@ -206,6 +206,20 @@ public final class Config
   }
 
   /**
+   * Copies config into a map.
+   * 
+   * @param config
+   *        Config to copy
+   */
+  public Config(final Config config)
+  {
+    if (config != null)
+    {
+      putAll(config);
+    }
+  }
+
+  /**
    * Copies properties into a map.
    * 
    * @param properties
@@ -225,7 +239,14 @@ public final class Config
    */
   public boolean getBooleanValue(final String propertyName)
   {
-    return Boolean.parseBoolean(getStringValue(propertyName, "false"));
+    return getBooleanValue(propertyName, false);
+  }
+
+  public boolean getBooleanValue(final String propertyName,
+                                 final boolean defaultValue)
+  {
+    return Boolean.parseBoolean(getStringValue(propertyName,
+                                               Boolean.toString(defaultValue)));
   }
 
   /**

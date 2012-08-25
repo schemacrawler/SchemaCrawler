@@ -40,10 +40,6 @@ public final class OutputOptions
   private String outputFormatValue;
   private File outputFile;
   private Writer writer;
-  private boolean appendOutput;
-  private boolean noHeader;
-  private boolean noFooter;
-  private boolean noInfo;
 
   /**
    * Creates default OutputOptions.
@@ -97,27 +93,6 @@ public final class OutputOptions
   }
 
   /**
-   * Clone this object.
-   * 
-   * @return Clone
-   */
-  public OutputOptions duplicate()
-  {
-    final OutputOptions outputOptions = new OutputOptions();
-
-    outputOptions.outputFormatValue = outputFormatValue;
-    outputOptions.outputFile = outputFile;
-    outputOptions.writer = writer;
-
-    outputOptions.appendOutput = appendOutput;
-    outputOptions.noHeader = noHeader;
-    outputOptions.noFooter = noFooter;
-    outputOptions.noInfo = noInfo;
-
-    return outputOptions;
-  }
-
-  /**
    * Output file, which has previously been created.
    * 
    * @return Output file
@@ -161,93 +136,14 @@ public final class OutputOptions
     return writer;
   }
 
-  /**
-   * Whether the output gets appended.
-   * 
-   * @return Whether the output gets appended
-   */
-  public boolean isAppendOutput()
-  {
-    return appendOutput;
-  }
-
   public boolean isConsoleOutput()
   {
     return outputFile == null && writer == null;
   }
 
-  /**
-   * Whether to print footers.
-   * 
-   * @return Whether to print footers
-   */
-  public boolean isNoFooter()
+  public boolean isFileOutput()
   {
-    return noFooter;
-  }
-
-  /**
-   * Whether to print headers.
-   * 
-   * @return Whether to print headers
-   */
-  public boolean isNoHeader()
-  {
-    return noHeader;
-  }
-
-  /**
-   * Whether to print information.
-   * 
-   * @return Whether to print information
-   */
-  public boolean isNoInfo()
-  {
-    return noInfo;
-  }
-
-  /**
-   * Whether the output gets appended.
-   * 
-   * @param appendOutput
-   *        Whether the output gets appended
-   */
-  public void setAppendOutput(final boolean appendOutput)
-  {
-    this.appendOutput = appendOutput;
-  }
-
-  /**
-   * Whether to print footers.
-   * 
-   * @param noFooter
-   *        Whether to print footers
-   */
-  public void setNoFooter(final boolean noFooter)
-  {
-    this.noFooter = noFooter;
-  }
-
-  /**
-   * Whether to print headers.
-   * 
-   * @param noHeader
-   *        Whether to print headers
-   */
-  public void setNoHeader(final boolean noHeader)
-  {
-    this.noHeader = noHeader;
-  }
-
-  /**
-   * Whether to print information.
-   * 
-   * @param noInfo
-   *        Whether to print information
-   */
-  public void setNoInfo(final boolean noInfo)
-  {
-    this.noInfo = noInfo;
+    return outputFile != null && writer == null;
   }
 
   /**

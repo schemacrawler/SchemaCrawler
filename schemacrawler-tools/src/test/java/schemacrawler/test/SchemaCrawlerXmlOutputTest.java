@@ -31,7 +31,6 @@ import java.util.List;
 
 import org.junit.Test;
 
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
@@ -41,6 +40,7 @@ import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
+import schemacrawler.tools.text.schema.SchemaTextOptions;
 
 public class SchemaCrawlerXmlOutputTest
   extends BaseDatabaseTest
@@ -91,21 +91,19 @@ public class SchemaCrawlerXmlOutputTest
 
     final OutputOptions outputOptions = new OutputOptions(OutputFormat.html.name(),
                                                           testOutputFile);
-    outputOptions.setNoHeader(false);
-    outputOptions.setNoFooter(false);
-    outputOptions.setNoInfo(false);
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
 
     final SchemaCrawlerOptions options = executable.getSchemaCrawlerOptions();
     options.setSchemaInfoLevel(SchemaInfoLevel.minimum());
 
-    final Config additionalConfiguration = new Config();
-    additionalConfiguration
-      .put("schemacrawler.format.sort_alphabetically.tables",
-           Boolean.TRUE.toString());
+    final SchemaTextOptions textOptions = new SchemaTextOptions();
+    textOptions.setNoInfo(false);
+    textOptions.setNoHeader(false);
+    textOptions.setNoFooter(false);
+    textOptions.setAlphabeticalSortForTables(true);
 
-    executable.setAdditionalConfiguration(additionalConfiguration);
+    executable.setAdditionalConfiguration(textOptions.toConfig());
     executable.setOutputOptions(outputOptions);
     executable.execute(getConnection());
 

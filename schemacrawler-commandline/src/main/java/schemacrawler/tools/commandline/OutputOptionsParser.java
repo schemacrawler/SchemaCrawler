@@ -26,7 +26,6 @@ import java.io.File;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 import sf.util.Utility;
-import sf.util.clparser.BooleanOption;
 import sf.util.clparser.StringOption;
 
 /**
@@ -41,8 +40,7 @@ final class OutputOptionsParser
   OutputOptionsParser()
   {
     super(new StringOption("outputformat", OutputFormat.text.toString()),
-          new StringOption('o', "outputfile", ""),
-          new BooleanOption("noinfo"));
+          new StringOption('o', "outputfile", ""));
   }
 
   @Override
@@ -62,7 +60,6 @@ final class OutputOptionsParser
     }
     final OutputOptions outputOptions = new OutputOptions(outputFormatValue,
                                                           outputFile);
-    outputOptions.setNoInfo(getBooleanValue("noinfo"));
 
     return outputOptions;
   }
