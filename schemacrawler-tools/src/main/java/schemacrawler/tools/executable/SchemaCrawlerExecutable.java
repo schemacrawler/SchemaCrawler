@@ -14,28 +14,32 @@ public class SchemaCrawlerExecutable
   extends BaseExecutable
 {
 
+  private final List<Executable> executables;
+
   public SchemaCrawlerExecutable(final String commands)
+    throws SchemaCrawlerException
   {
     super(commands);
+
+    final Commands commandsList = new Commands(commands);
+    if (commandsList.isEmpty())
+    {
+      throw new SchemaCrawlerException("No command specified");
+    }
+
+    final CommandRegistry commandRegistry = new CommandRegistry();
+    executables = new ArrayList<Executable>();
+    for (final String command: commandsList)
+    {
+      final Executable executable = commandRegistry.newExecutable(command);
+      executables.add(executable);
+    }
   }
 
   @Override
   protected void executeOn(final Database database, final Connection connection)
     throws Exception
   {
-    final CommandRegistry commandRegistry = new CommandRegistry();
-    final Commands commands = new Commands(getCommand());
-    if (commands.isEmpty())
-    {
-      throw new SchemaCrawlerException("No command specified");
-    }
-    final List<Executable> executables = new ArrayList<Executable>();
-    for (final String command: commands)
-    {
-      final Executable executable = commandRegistry.newExecutable(command);
-      executables.add(executable);
-    }
-
     for (final Executable executable: executables)
     {
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
@@ -45,6 +49,7 @@ public class SchemaCrawlerExecutable
 
       final BaseTextOptions baseTextOptions = new BaseTextOptions(additionalConfiguration);
 
+      final Commands commands = new Commands(getCommand());
       if (commands.size() > 1)
       {
         if (commands.isFirstCommand(command))
