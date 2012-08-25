@@ -41,8 +41,10 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.InfoLevel;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.text.base.BaseTextOptions;
 import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
+import schemacrawler.tools.text.schema.SchemaTextOptions;
 
 public class SchemaCrawlerOutputTest
   extends BaseDatabaseTest
@@ -72,6 +74,12 @@ public class SchemaCrawlerOutputTest
       .put(queryCommand2,
            "SELECT ${orderbycolumns} FROM ${table} ORDER BY ${orderbycolumns}");
 
+    final BaseTextOptions baseTextOptions = new BaseTextOptions();
+    baseTextOptions.setNoInfo(false);
+    baseTextOptions.setNoHeader(false);
+    baseTextOptions.setNoFooter(false);
+    queriesConfig.putAll(baseTextOptions.toConfig());
+
     final String[] commands = new String[] {
         SchemaTextDetailType.details + "," + Operation.count + ","
             + Operation.dump,
@@ -96,9 +104,6 @@ public class SchemaCrawlerOutputTest
 
         final OutputOptions outputOptions = new OutputOptions(outputFormat.name(),
                                                               testOutputFile);
-        outputOptions.setNoInfo(false);
-        outputOptions.setNoHeader(false);
-        outputOptions.setNoFooter(false);
 
         final Config config = Config
           .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
@@ -132,15 +137,14 @@ public class SchemaCrawlerOutputTest
 
     final List<String> failures = new ArrayList<String>();
 
-    final Config textOutputOptionsConfig = new Config();
-    textOutputOptionsConfig.put("schemacrawler.format.hide_primarykey_names",
-                                Boolean.TRUE.toString());
-    textOutputOptionsConfig.put("schemacrawler.format.hide_foreignkey_names",
-                                Boolean.TRUE.toString());
-    textOutputOptionsConfig.put("schemacrawler.format.hide_index_names",
-                                Boolean.TRUE.toString());
-    textOutputOptionsConfig.put("schemacrawler.format.hide_constraint_names",
-                                Boolean.TRUE.toString());
+    final SchemaTextOptions textOptions = new SchemaTextOptions();
+    textOptions.setNoInfo(false);
+    textOptions.setNoHeader(false);
+    textOptions.setNoFooter(false);
+    textOptions.setHidePrimaryKeyNames(true);
+    textOptions.setHideForeignKeyNames(true);
+    textOptions.setHideIndexNames(true);
+    textOptions.setHideConstraintNames(true);
 
     for (final OutputFormat outputFormat: EnumSet.complementOf(EnumSet
       .of(OutputFormat.tsv)))
@@ -153,9 +157,6 @@ public class SchemaCrawlerOutputTest
 
       final OutputOptions outputOptions = new OutputOptions(outputFormat.name(),
                                                             testOutputFile);
-      outputOptions.setNoInfo(false);
-      outputOptions.setNoHeader(false);
-      outputOptions.setNoFooter(false);
 
       final Config config = Config
         .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
@@ -169,7 +170,7 @@ public class SchemaCrawlerOutputTest
                                                                              + Operation.dump);
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
       executable.setOutputOptions(outputOptions);
-      executable.setAdditionalConfiguration(textOutputOptionsConfig);
+      executable.setAdditionalConfiguration(textOptions.toConfig());
       executable.execute(getConnection());
 
       failures.addAll(compareOutput(HIDE_CONSTRAINT_NAMES_OUTPUT
@@ -211,9 +212,11 @@ public class SchemaCrawlerOutputTest
 
         final OutputOptions outputOptions = new OutputOptions(OutputFormat.text.name(),
                                                               testOutputFile);
-        outputOptions.setNoInfo(false);
-        outputOptions.setNoHeader(false);
-        outputOptions.setNoFooter(false);
+
+        final BaseTextOptions baseTextOptions = new BaseTextOptions();
+        baseTextOptions.setNoInfo(false);
+        baseTextOptions.setNoHeader(false);
+        baseTextOptions.setNoFooter(false);
 
         final Config config = Config
           .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
@@ -224,6 +227,7 @@ public class SchemaCrawlerOutputTest
           .name());
         executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
         executable.setOutputOptions(outputOptions);
+        executable.setAdditionalConfiguration(baseTextOptions.toConfig());
         executable.execute(getConnection());
 
         failures.addAll(compareOutput(INFO_LEVEL_OUTPUT + referenceFile,
@@ -258,9 +262,11 @@ public class SchemaCrawlerOutputTest
 
       final OutputOptions outputOptions = new OutputOptions(OutputFormat.json.name(),
                                                             testOutputFile);
-      outputOptions.setNoInfo(false);
-      outputOptions.setNoHeader(false);
-      outputOptions.setNoFooter(false);
+
+      final BaseTextOptions baseTextOptions = new BaseTextOptions();
+      baseTextOptions.setNoInfo(false);
+      baseTextOptions.setNoHeader(false);
+      baseTextOptions.setNoFooter(false);
 
       final Config config = Config
         .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
@@ -271,6 +277,7 @@ public class SchemaCrawlerOutputTest
         .name());
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
       executable.setOutputOptions(outputOptions);
+      executable.setAdditionalConfiguration(baseTextOptions.toConfig());
       executable.execute(getConnection());
 
       failures.addAll(compareOutput(JSON_OUTPUT + referenceFile,
@@ -292,9 +299,11 @@ public class SchemaCrawlerOutputTest
 
     final List<String> failures = new ArrayList<String>();
 
-    final Config textOutputOptionsConfig = new Config();
-    textOutputOptionsConfig.put("schemacrawler.format.show_ordinal_numbers",
-                                Boolean.TRUE.toString());
+    final SchemaTextOptions textOptions = new SchemaTextOptions();
+    textOptions.setNoInfo(false);
+    textOptions.setNoHeader(false);
+    textOptions.setNoFooter(false);
+    textOptions.setShowOrdinalNumbers(true);
 
     for (final OutputFormat outputFormat: EnumSet.complementOf(EnumSet
       .of(OutputFormat.tsv)))
@@ -307,9 +316,6 @@ public class SchemaCrawlerOutputTest
 
       final OutputOptions outputOptions = new OutputOptions(outputFormat.name(),
                                                             testOutputFile);
-      outputOptions.setNoInfo(false);
-      outputOptions.setNoHeader(false);
-      outputOptions.setNoFooter(false);
 
       final Config config = Config
         .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
@@ -323,7 +329,7 @@ public class SchemaCrawlerOutputTest
                                                                              + Operation.dump);
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
       executable.setOutputOptions(outputOptions);
-      executable.setAdditionalConfiguration(textOutputOptionsConfig);
+      executable.setAdditionalConfiguration(textOptions.toConfig());
       executable.execute(getConnection());
 
       failures.addAll(compareOutput(ORDINAL_OUTPUT + referenceFile,
@@ -345,9 +351,11 @@ public class SchemaCrawlerOutputTest
 
     final List<String> failures = new ArrayList<String>();
 
-    final Config textOutputOptionsConfig = new Config();
-    textOutputOptionsConfig.put("schemacrawler.format.show_unqualified_names",
-                                Boolean.TRUE.toString());
+    final SchemaTextOptions textOptions = new SchemaTextOptions();
+    textOptions.setNoInfo(false);
+    textOptions.setNoHeader(false);
+    textOptions.setNoFooter(false);
+    textOptions.setShowUnqualifiedNames(true);
 
     for (final OutputFormat outputFormat: EnumSet.complementOf(EnumSet
       .of(OutputFormat.tsv)))
@@ -360,9 +368,6 @@ public class SchemaCrawlerOutputTest
 
       final OutputOptions outputOptions = new OutputOptions(outputFormat.name(),
                                                             testOutputFile);
-      outputOptions.setNoInfo(false);
-      outputOptions.setNoHeader(false);
-      outputOptions.setNoFooter(false);
 
       final Config config = Config
         .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
@@ -376,7 +381,7 @@ public class SchemaCrawlerOutputTest
                                                                              + Operation.dump);
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
       executable.setOutputOptions(outputOptions);
-      executable.setAdditionalConfiguration(textOutputOptionsConfig);
+      executable.setAdditionalConfiguration(textOptions.toConfig());
       executable.execute(getConnection());
 
       failures.addAll(compareOutput(UNQUALIFIED_NAMES_OUTPUT + referenceFile,

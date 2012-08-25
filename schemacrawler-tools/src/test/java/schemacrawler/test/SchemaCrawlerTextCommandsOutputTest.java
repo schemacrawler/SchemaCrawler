@@ -36,6 +36,7 @@ import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.text.base.BaseTextOptions;
 import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 
@@ -114,12 +115,15 @@ public class SchemaCrawlerTextCommandsOutputTest
     final OutputOptions outputOptions = new OutputOptions(OutputFormat.text.name(),
                                                           dummyOutputFile);
     outputOptions.setWriter(writer);
-    outputOptions.setNoInfo(true);
-    outputOptions.setNoHeader(true);
-    outputOptions.setNoFooter(true);
+
+    final BaseTextOptions baseTextOptions = new BaseTextOptions();
+    baseTextOptions.setNoInfo(true);
+    baseTextOptions.setNoHeader(true);
+    baseTextOptions.setNoFooter(true);
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
     executable.setOutputOptions(outputOptions);
+    executable.setAdditionalConfiguration(baseTextOptions.toConfig());
     executable.execute(getConnection());
 
     writer.close();
@@ -146,9 +150,12 @@ public class SchemaCrawlerTextCommandsOutputTest
 
     final OutputOptions outputOptions = new OutputOptions(OutputFormat.text.name(),
                                                           testOutputFile);
-    outputOptions.setNoInfo(true);
-    outputOptions.setNoHeader(true);
-    outputOptions.setNoFooter(true);
+
+    final BaseTextOptions baseTextOptions = new BaseTextOptions();
+    baseTextOptions.setNoInfo(true);
+    baseTextOptions.setNoHeader(true);
+    baseTextOptions.setNoFooter(true);
+    config.putAll(baseTextOptions.toConfig());
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
     executable.setAdditionalConfiguration(config);

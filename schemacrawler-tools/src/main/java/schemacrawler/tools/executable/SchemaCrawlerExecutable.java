@@ -6,8 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import schemacrawler.schema.Database;
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.text.base.BaseTextOptions;
 
 public class SchemaCrawlerExecutable
   extends BaseExecutable
@@ -38,36 +39,45 @@ public class SchemaCrawlerExecutable
     for (final Executable executable: executables)
     {
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-      executable.setAdditionalConfiguration(additionalConfiguration);
+      executable.setOutputOptions(outputOptions);
 
       final String command = executable.getCommand();
-      final OutputOptions executableOutputOptions = outputOptions.duplicate();
+
+      final BaseTextOptions baseTextOptions = new BaseTextOptions(additionalConfiguration);
+
       if (commands.size() > 1)
       {
         if (commands.isFirstCommand(command))
         {
           // First command - no footer
-          executableOutputOptions.setNoFooter(true);
+          baseTextOptions.setNoFooter(true);
         }
         else if (commands.isLastCommand(command))
         {
           // Last command - no header, or info
-          executableOutputOptions.setNoHeader(true);
-          executableOutputOptions.setNoInfo(true);
+          baseTextOptions.setNoHeader(true);
+          baseTextOptions.setNoInfo(true);
 
-          executableOutputOptions.setAppendOutput(true);
+          baseTextOptions.setAppendOutput(true);
         }
         else
         {
           // Middle command - no header, footer, or info
-          executableOutputOptions.setNoHeader(true);
-          executableOutputOptions.setNoInfo(true);
-          executableOutputOptions.setNoFooter(true);
+          baseTextOptions.setNoHeader(true);
+          baseTextOptions.setNoInfo(true);
+          baseTextOptions.setNoFooter(true);
 
-          executableOutputOptions.setAppendOutput(true);
+          baseTextOptions.setAppendOutput(true);
         }
       }
-      executable.setOutputOptions(executableOutputOptions);
+
+      Config executableAdditionalConfig = new Config();
+      if (additionalConfiguration != null)
+      {
+        executableAdditionalConfig.putAll(additionalConfiguration);
+      }
+      executableAdditionalConfig.putAll(baseTextOptions.toConfig());
+      executable.setAdditionalConfiguration(executableAdditionalConfig);
 
       ((BaseExecutable) executable).executeOn(database, connection);
     }

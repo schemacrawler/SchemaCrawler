@@ -3,7 +3,6 @@ package schemacrawler.tools.text.base;
 
 import java.io.PrintWriter;
 
-import schemacrawler.schemacrawler.Options;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
@@ -13,7 +12,7 @@ import schemacrawler.tools.text.utility.PlainTextFormattingHelper;
 import schemacrawler.tools.text.utility.TextFormattingHelper;
 import schemacrawler.tools.traversal.TraversalHandler;
 
-public abstract class BaseFormatter<O extends Options>
+public abstract class BaseFormatter<O extends BaseTextOptions>
   implements TraversalHandler
 {
 
@@ -39,7 +38,7 @@ public abstract class BaseFormatter<O extends Options>
 
     this.options = options;
 
-    this.printVerboseDatabaseInfo = !outputOptions.isNoInfo()
+    this.printVerboseDatabaseInfo = !options.isNoInfo()
                                     && printVerboseDatabaseInfo;
 
     this.outputOptions = outputOptions;
@@ -53,7 +52,8 @@ public abstract class BaseFormatter<O extends Options>
       formattingHelper = new PlainTextFormattingHelper(outputFormat);
     }
 
-    out = new PrintWriter(new OutputWriter(outputOptions), true);
+    out = new PrintWriter(new OutputWriter(outputOptions,
+                                           options.isAppendOutput()), true);
   }
 
 }

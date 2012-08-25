@@ -85,10 +85,7 @@ public class LintOutputTest
 
         final OutputOptions outputOptions = new OutputOptions(outputFormat.name(),
                                                               testOutputFile);
-        outputOptions.setNoInfo(false);
-        outputOptions.setNoHeader(false);
-        outputOptions.setNoFooter(false);
-
+        
         final Config config = Config
           .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
         final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
@@ -131,9 +128,6 @@ public class LintOutputTest
 
     final OutputOptions outputOptions = new OutputOptions(OutputFormat.json.name(),
                                                           testOutputFile);
-    outputOptions.setNoInfo(false);
-    outputOptions.setNoHeader(false);
-    outputOptions.setNoFooter(false);
 
     final Config config = Config
       .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
@@ -173,9 +167,6 @@ public class LintOutputTest
 
     final OutputOptions outputOptions = new OutputOptions(OutputFormat.text.name(),
                                                           testOutputFile);
-    outputOptions.setNoInfo(false);
-    outputOptions.setNoHeader(false);
-    outputOptions.setNoFooter(false);
 
     final Config config = Config
       .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");

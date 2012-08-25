@@ -44,7 +44,14 @@ public final class OutputWriter
   public OutputWriter(final OutputOptions outputOptions)
     throws SchemaCrawlerException
   {
-    writer = openOutputWriter(outputOptions);
+    this(outputOptions, false);
+  }
+
+  public OutputWriter(final OutputOptions outputOptions,
+                      final boolean appendOutput)
+    throws SchemaCrawlerException
+  {
+    writer = openOutputWriter(outputOptions, appendOutput);
   }
 
   @Override
@@ -177,7 +184,8 @@ public final class OutputWriter
    * @throws SchemaCrawlerException
    *         On an exception
    */
-  private Writer openOutputWriter(final OutputOptions outputOptions)
+  private Writer openOutputWriter(final OutputOptions outputOptions,
+                                  final boolean appendOutput)
     throws SchemaCrawlerException
   {
     try
@@ -188,19 +196,19 @@ public final class OutputWriter
         writer = new OutputStreamWriter(System.out);
         LOGGER.log(Level.INFO, "Opened output writer to console");
       }
-      else if (outputOptions.getWriter() != null)
-      {
-        writer = outputOptions.getWriter();
-        LOGGER.log(Level.INFO, "Output to provided writer");
-      }
-      else
+      else if (outputOptions.isFileOutput())
       {
         isFileOutput = true;
         final File outputFile = outputOptions.getOutputFile();
-        writer = new FileWriter(outputFile, outputOptions.isAppendOutput());
+        writer = new FileWriter(outputFile, appendOutput);
         LOGGER.log(Level.INFO,
                    "Opened output writer to file, "
                        + outputFile.getAbsolutePath());
+      }
+      else
+      {
+        writer = outputOptions.getWriter();
+        LOGGER.log(Level.INFO, "Output to provided writer");
       }
       return writer;
     }

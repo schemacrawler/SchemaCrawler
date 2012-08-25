@@ -22,7 +22,7 @@ package schemacrawler.tools.text.schema;
 
 
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.Options;
+import schemacrawler.tools.text.base.BaseTextOptions;
 
 /**
  * Options.
@@ -30,53 +30,32 @@ import schemacrawler.schemacrawler.Options;
  * @author Sualeh Fatehi
  */
 public class SchemaTextOptions
-  implements Options
+  extends BaseTextOptions
 {
 
   private static final long serialVersionUID = -8133661515343358712L;
 
-  private static final String SHOW_UNQUALIFIED_NAMES = "schemacrawler.format.show_unqualified_names";
-  private static final String SHOW_ORDINAL_NUMBERS = "schemacrawler.format.show_ordinal_numbers";
-  private static final String SHOW_STANDARD_COLUMN_TYPE_NAMES = "schemacrawler.format.show_standard_column_type_names";
+  private static final String SHOW_UNQUALIFIED_NAMES = "show_unqualified_names";
+  private static final String SHOW_ORDINAL_NUMBERS = "show_ordinal_numbers";
+  private static final String SHOW_STANDARD_COLUMN_TYPE_NAMES = "show_standard_column_type_names";
 
-  private static final String HIDE_PRIMARY_KEY_NAMES = "schemacrawler.format.hide_primarykey_names";
-  private static final String HIDE_FOREIGN_KEY_NAMES = "schemacrawler.format.hide_foreignkey_names";
-  private static final String HIDE_INDEX_NAMES = "schemacrawler.format.hide_index_names";
-  private static final String HIDE_CONSTRAINT_NAMES = "schemacrawler.format.hide_constraint_names";
+  private static final String HIDE_PRIMARY_KEY_NAMES = "hide_primarykey_names";
+  private static final String HIDE_FOREIGN_KEY_NAMES = "hide_foreignkey_names";
+  private static final String HIDE_INDEX_NAMES = "hide_index_names";
+  private static final String HIDE_CONSTRAINT_NAMES = "hide_constraint_names";
 
-  private static final String SC_SORT_ALPHABETICALLY_TABLES = "schemacrawler.format.sort_alphabetically.tables";
-  private static final String SC_SORT_ALPHABETICALLY_TABLE_COLUMNS = "schemacrawler.format.sort_alphabetically.table_columns";
-  private static final String SC_SORT_ALPHABETICALLY_TABLE_INDEXES = "schemacrawler.format.sort_alphabetically.table_indices";
-  private static final String SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS = "schemacrawler.format.sort_alphabetically.table_foreignkeys";
-  private static final String SC_SORT_ALPHABETICALLY_ROUTINE_COLUMNS = "schemacrawler.format.sort_alphabetically.routine_columns";
-
-  private boolean showUnqualifiedNames;
-  private boolean showStandardColumnTypeNames;
-  private boolean showOrdinalNumbers;
-
-  private boolean hidePrimaryKeyNames;
-  private boolean hideForeignKeyNames;
-  private boolean hideIndexNames;
-  private boolean hideConstraintNames;
-
-  private boolean isAlphabeticalSortForTables;
-  private boolean isAlphabeticalSortForTableColumns;
-  private boolean isAlphabeticalSortForForeignKeys;
-  private boolean isAlphabeticalSortForIndexes;
-  private boolean isAlphabeticalSortForRoutineColumns;
+  private static final String SC_SORT_ALPHABETICALLY_TABLES = "sort_alphabetically.tables";
+  private static final String SC_SORT_ALPHABETICALLY_TABLE_COLUMNS = "sort_alphabetically.table_columns";
+  private static final String SC_SORT_ALPHABETICALLY_TABLE_INDEXES = "sort_alphabetically.table_indices";
+  private static final String SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS = "sort_alphabetically.table_foreignkeys";
+  private static final String SC_SORT_ALPHABETICALLY_ROUTINE_COLUMNS = "sort_alphabetically.routine_columns";
 
   /**
    * Creates the default SchemaTextOptions.
    */
   public SchemaTextOptions()
   {
-    // NOTE: Most boolean options are false by default
-
-    isAlphabeticalSortForTables = true;
-    isAlphabeticalSortForTableColumns = false;
-    isAlphabeticalSortForForeignKeys = false;
-    isAlphabeticalSortForIndexes = false;
-    isAlphabeticalSortForRoutineColumns = false;
+    this(null);
   }
 
   /**
@@ -87,54 +66,54 @@ public class SchemaTextOptions
    */
   public SchemaTextOptions(final Config config)
   {
-    if (config != null)
-    {
-      showUnqualifiedNames = config.getBooleanValue(SHOW_UNQUALIFIED_NAMES);
-      showStandardColumnTypeNames = config
-        .getBooleanValue(SHOW_STANDARD_COLUMN_TYPE_NAMES);
-      showOrdinalNumbers = config.getBooleanValue(SHOW_ORDINAL_NUMBERS);
+    super(config);
 
-      hideForeignKeyNames = config.getBooleanValue(HIDE_FOREIGN_KEY_NAMES);
-      hidePrimaryKeyNames = config.getBooleanValue(HIDE_PRIMARY_KEY_NAMES);
-      hideIndexNames = config.getBooleanValue(HIDE_INDEX_NAMES);
-      hideConstraintNames = config.getBooleanValue(HIDE_CONSTRAINT_NAMES);
+    setShowUnqualifiedNames(getBooleanValue(config, SHOW_UNQUALIFIED_NAMES));
+    setShowStandardColumnTypeNames(getBooleanValue(config,
+                                                   SHOW_STANDARD_COLUMN_TYPE_NAMES));
+    setShowOrdinalNumbers(getBooleanValue(config, SHOW_ORDINAL_NUMBERS));
 
-      isAlphabeticalSortForTables = Boolean.parseBoolean(config
-        .getStringValue(SC_SORT_ALPHABETICALLY_TABLES, "true"));
-      isAlphabeticalSortForTableColumns = config
-        .getBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_COLUMNS);
-      isAlphabeticalSortForForeignKeys = config
-        .getBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS);
-      isAlphabeticalSortForIndexes = config
-        .getBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_INDEXES);
-      isAlphabeticalSortForRoutineColumns = config
-        .getBooleanValue(SC_SORT_ALPHABETICALLY_ROUTINE_COLUMNS);
-    }
+    setHideForeignKeyNames(getBooleanValue(config, HIDE_FOREIGN_KEY_NAMES));
+    setHidePrimaryKeyNames(getBooleanValue(config, HIDE_PRIMARY_KEY_NAMES));
+    setHideIndexNames(getBooleanValue(config, HIDE_INDEX_NAMES));
+    setHideConstraintNames(getBooleanValue(config, HIDE_CONSTRAINT_NAMES));
+
+    setAlphabeticalSortForTables(getBooleanValue(config,
+                                                 SC_SORT_ALPHABETICALLY_TABLES,
+                                                 true));
+    setAlphabeticalSortForTableColumns(getBooleanValue(config,
+                                                       SC_SORT_ALPHABETICALLY_TABLE_COLUMNS));
+    setAlphabeticalSortForForeignKeys(getBooleanValue(config,
+                                                      SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS));
+    setAlphabeticalSortForIndexes(getBooleanValue(config,
+                                                  SC_SORT_ALPHABETICALLY_TABLE_INDEXES));
+    setAlphabeticalSortForRoutineColumns(getBooleanValue(config,
+                                                         SC_SORT_ALPHABETICALLY_ROUTINE_COLUMNS));
   }
 
   public boolean isAlphabeticalSortForForeignKeys()
   {
-    return isAlphabeticalSortForForeignKeys;
+    return getBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS);
   }
 
   public boolean isAlphabeticalSortForIndexes()
   {
-    return isAlphabeticalSortForIndexes;
+    return getBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_INDEXES);
   }
 
   public boolean isAlphabeticalSortForRoutineColumns()
   {
-    return isAlphabeticalSortForRoutineColumns;
+    return getBooleanValue(SC_SORT_ALPHABETICALLY_ROUTINE_COLUMNS);
   }
 
   public boolean isAlphabeticalSortForTableColumns()
   {
-    return isAlphabeticalSortForTableColumns;
+    return getBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_COLUMNS);
   }
 
   public boolean isAlphabeticalSortForTables()
   {
-    return isAlphabeticalSortForTables;
+    return getBooleanValue(SC_SORT_ALPHABETICALLY_TABLES);
   }
 
   /**
@@ -144,7 +123,7 @@ public class SchemaTextOptions
    */
   public boolean isHideConstraintNames()
   {
-    return hideConstraintNames;
+    return getBooleanValue(HIDE_CONSTRAINT_NAMES);
   }
 
   /**
@@ -154,7 +133,7 @@ public class SchemaTextOptions
    */
   public boolean isHideForeignKeyNames()
   {
-    return hideForeignKeyNames;
+    return getBooleanValue(HIDE_FOREIGN_KEY_NAMES);
   }
 
   /**
@@ -164,7 +143,7 @@ public class SchemaTextOptions
    */
   public boolean isHideIndexNames()
   {
-    return hideIndexNames;
+    return getBooleanValue(HIDE_INDEX_NAMES);
   }
 
   /**
@@ -174,7 +153,7 @@ public class SchemaTextOptions
    */
   public boolean isHidePrimaryKeyNames()
   {
-    return hidePrimaryKeyNames;
+    return getBooleanValue(HIDE_PRIMARY_KEY_NAMES);
   }
 
   /**
@@ -184,7 +163,7 @@ public class SchemaTextOptions
    */
   public boolean isShowOrdinalNumbers()
   {
-    return showOrdinalNumbers;
+    return getBooleanValue(SHOW_ORDINAL_NUMBERS);
   }
 
   /**
@@ -194,37 +173,41 @@ public class SchemaTextOptions
    */
   public boolean isShowStandardColumnTypeNames()
   {
-    return showStandardColumnTypeNames;
+    return getBooleanValue(SHOW_STANDARD_COLUMN_TYPE_NAMES);
   }
 
   public boolean isShowUnqualifiedNames()
   {
-    return showUnqualifiedNames;
+    return getBooleanValue(SHOW_UNQUALIFIED_NAMES);
   }
 
   public void setAlphabeticalSortForForeignKeys(final boolean isAlphabeticalSortForForeignKeys)
   {
-    this.isAlphabeticalSortForForeignKeys = isAlphabeticalSortForForeignKeys;
+    setBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS,
+                    isAlphabeticalSortForForeignKeys);
   }
 
   public void setAlphabeticalSortForIndexes(final boolean isAlphabeticalSortForIndexes)
   {
-    this.isAlphabeticalSortForIndexes = isAlphabeticalSortForIndexes;
+    setBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_INDEXES,
+                    isAlphabeticalSortForIndexes);
   }
 
   public void setAlphabeticalSortForRoutineColumns(final boolean isAlphabeticalSortForRoutineColumns)
   {
-    this.isAlphabeticalSortForRoutineColumns = isAlphabeticalSortForRoutineColumns;
+    setBooleanValue(SC_SORT_ALPHABETICALLY_ROUTINE_COLUMNS,
+                    isAlphabeticalSortForRoutineColumns);
   }
 
   public void setAlphabeticalSortForTableColumns(final boolean isAlphabeticalSortForTableColumns)
   {
-    this.isAlphabeticalSortForTableColumns = isAlphabeticalSortForTableColumns;
+    setBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_COLUMNS,
+                    isAlphabeticalSortForTableColumns);
   }
 
   public void setAlphabeticalSortForTables(final boolean isAlphabeticalSortForTables)
   {
-    this.isAlphabeticalSortForTables = isAlphabeticalSortForTables;
+    setBooleanValue(SC_SORT_ALPHABETICALLY_TABLES, isAlphabeticalSortForTables);
   }
 
   /**
@@ -235,7 +218,7 @@ public class SchemaTextOptions
    */
   public void setHideConstraintNames(final boolean hideConstraintNames)
   {
-    this.hideConstraintNames = hideConstraintNames;
+    setBooleanValue(HIDE_CONSTRAINT_NAMES, hideConstraintNames);
   }
 
   /**
@@ -246,7 +229,7 @@ public class SchemaTextOptions
    */
   public void setHideForeignKeyNames(final boolean hideForeignKeyNames)
   {
-    this.hideForeignKeyNames = hideForeignKeyNames;
+    setBooleanValue(HIDE_FOREIGN_KEY_NAMES, hideForeignKeyNames);
   }
 
   /**
@@ -257,7 +240,7 @@ public class SchemaTextOptions
    */
   public void setHideIndexNames(final boolean hideIndexNames)
   {
-    this.hideIndexNames = hideIndexNames;
+    setBooleanValue(HIDE_INDEX_NAMES, hideIndexNames);
   }
 
   /**
@@ -268,7 +251,7 @@ public class SchemaTextOptions
    */
   public void setHidePrimaryKeyNames(final boolean hidePrimaryKeyNames)
   {
-    this.hidePrimaryKeyNames = hidePrimaryKeyNames;
+    setBooleanValue(HIDE_PRIMARY_KEY_NAMES, hidePrimaryKeyNames);
   }
 
   /**
@@ -279,7 +262,7 @@ public class SchemaTextOptions
    */
   public void setShowOrdinalNumbers(final boolean showOrdinalNumbers)
   {
-    this.showOrdinalNumbers = showOrdinalNumbers;
+    setBooleanValue(SHOW_ORDINAL_NUMBERS, showOrdinalNumbers);
   }
 
   /**
@@ -290,12 +273,13 @@ public class SchemaTextOptions
    */
   public void setShowStandardColumnTypeNames(final boolean showStandardColumnTypeNames)
   {
-    this.showStandardColumnTypeNames = showStandardColumnTypeNames;
+    setBooleanValue(SHOW_STANDARD_COLUMN_TYPE_NAMES,
+                    showStandardColumnTypeNames);
   }
 
   public void setShowUnqualifiedNames(final boolean showUnqualifiedNames)
   {
-    this.showUnqualifiedNames = showUnqualifiedNames;
+    setBooleanValue(SHOW_UNQUALIFIED_NAMES, showUnqualifiedNames);
   }
 
 }

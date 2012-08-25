@@ -33,7 +33,6 @@ import schemacrawler.schema.DatabaseProperty;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.JdbcDriverProperty;
 import schemacrawler.schema.SchemaCrawlerInfo;
-import schemacrawler.schemacrawler.Options;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.utility.org.json.JSONArray;
@@ -45,7 +44,7 @@ import schemacrawler.tools.text.utility.org.json.JSONObject;
  * 
  * @author Sualeh Fatehi
  */
-public abstract class BaseJsonFormatter<O extends Options>
+public abstract class BaseJsonFormatter<O extends BaseTextOptions>
   extends BaseFormatter<O>
 {
 
@@ -67,7 +66,7 @@ public abstract class BaseJsonFormatter<O extends Options>
   public void begin()
     throws SchemaCrawlerException
   {
-    if (!outputOptions.isNoHeader())
+    if (!options.isNoHeader())
     {
       out.println("[");
     }
@@ -81,7 +80,7 @@ public abstract class BaseJsonFormatter<O extends Options>
     {
       jsonRoot.write(out, 2);
 
-      if (outputOptions.isNoFooter())
+      if (options.isNoFooter())
       {
         out.println(",");
       }
@@ -101,7 +100,7 @@ public abstract class BaseJsonFormatter<O extends Options>
   @Override
   public void handle(final DatabaseInfo dbInfo)
   {
-    if (outputOptions.isNoInfo() || dbInfo == null)
+    if (options.isNoInfo() || dbInfo == null)
     {
       return;
     }
@@ -142,7 +141,7 @@ public abstract class BaseJsonFormatter<O extends Options>
   @Override
   public void handle(final JdbcDriverInfo driverInfo)
   {
-    if (outputOptions.isNoInfo() || driverInfo == null)
+    if (options.isNoInfo() || driverInfo == null)
     {
       return;
     }
@@ -183,7 +182,7 @@ public abstract class BaseJsonFormatter<O extends Options>
   @Override
   public void handle(final SchemaCrawlerInfo schemaCrawlerInfo)
   {
-    if (outputOptions.isNoInfo() || schemaCrawlerInfo == null)
+    if (options.isNoInfo() || schemaCrawlerInfo == null)
     {
       return;
     }

@@ -62,18 +62,6 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
     class="schemacrawler.tools.options.OutputOptions"
   >
     <property
-      name="appendOutput"
-      value="false" />
-    <property
-      name="noFooter"
-      value="true" />
-    <property
-      name="noHeader"
-      value="true" />
-    <property
-      name="noInfo"
-      value="true" />
-    <property
       name="outputFormatValue"
       value="text" />
     <property
@@ -185,6 +173,9 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
         <property
           name="hideConstraintNames"
           value="false" />
+        <property
+          name="noInfo"
+          value="true" />           
       </bean>
     </property>
     <property
@@ -204,6 +195,9 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
       <bean class="schemacrawler.tools.text.operation.OperationOptions">
         <property
           name="showLobs"
+          value="true" />
+                  <property
+          name="noInfo"
           value="true" />
       </bean>
     </property>
@@ -236,6 +230,9 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
         <property
           name="showLobs"
           value="true" />
+        <property
+          name="noInfo"
+          value="true" />          
       </bean>
     </property>
     <property name="additionalConfiguration">
@@ -256,7 +253,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 
   <bean
     id="executableForCount"
-    class="schemacrawler.tools.executable.SchemaCrawlerExecutable"
+    class="schemacrawler.tools.text.operation.OperationExecutable"
   >
     <constructor-arg value="count" />
     <property
@@ -265,6 +262,13 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
     <property
       name="outputOptions"
       ref="outputOptions" />
+    <property name="operationOptions">
+      <bean class="schemacrawler.tools.text.operation.OperationOptions">
+        <property
+          name="noInfo"
+          value="true" />          
+      </bean>
+    </property>      
   </bean>
 
   <bean
