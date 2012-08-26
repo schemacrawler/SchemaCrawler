@@ -10,7 +10,7 @@ import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.text.base.BaseTextOptions;
 
-public class SchemaCrawlerExecutable
+public final class SchemaCrawlerExecutable
   extends BaseExecutable
 {
 

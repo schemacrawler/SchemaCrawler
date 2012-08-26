@@ -1,0 +1,93 @@
+
+
+
+System Information
+========================================================================
+
+
+
+SchemaCrawler Information
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
+
+product name                              SchemaCrawler                 
+product version                           9.0                           
+
+
+Database Information
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
+
+database product name                     HSQL Database Engine          
+database product version                  2.2.8                         
+database user name                        SA                            
+
+
+JDBC Driver Information
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
+
+driver name                               HSQL Database Engine Driver   
+driver version                            2.2.8                         
+driver class name                         org.hsqldb.jdbc.JDBCDriver    
+url                                       jdbc:hsqldb:hsql://localhost/schemacrawler
+is JDBC compliant                         true                          
+
+
+
+Row Count
+========================================================================
+
+
+
+Row Count
+------------------------------------------------------------------------
+PUBLIC.BOOKS.AUTHORS                                             20 rows
+PUBLIC.BOOKS.AUTHORSLIST                                         20 rows
+PUBLIC.BOOKS.BOOKAUTHORS                                         20 rows
+PUBLIC.BOOKS.BOOKS                                               20 rows
+PUBLIC.BOOKS."Global Counts"                                       empty
+PUBLIC.BOOKS.PUBLISHERS                                          20 rows
+PUBLIC.FOR_LINT.EXTRA_PK                                           empty
+PUBLIC.FOR_LINT."Global Counts"                                    empty
+PUBLIC.FOR_LINT.PUBLICATIONS                                       empty
+PUBLIC.FOR_LINT.WRITERS                                            empty
+PUBLIC."PUBLISHER SALES".REGIONS                                 20 rows
+PUBLIC."PUBLISHER SALES".SALES                                   20 rows
+
+
+
+
+Tables
+========================================================================
+
+
+PUBLIC.BOOKS.AUTHORS                                             [table]
+PUBLIC.BOOKS.AUTHORSLIST                                          [view]
+PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
+PUBLIC.BOOKS.BOOKS                                               [table]
+PUBLIC.BOOKS."Global Counts"                                     [table]
+PUBLIC.BOOKS.PUBLISHERS                                          [table]
+PUBLIC.FOR_LINT.EXTRA_PK                                         [table]
+PUBLIC.FOR_LINT."Global Counts"                                  [table]
+PUBLIC.FOR_LINT.No_Columns                                       [table]
+PUBLIC.FOR_LINT.PUBLICATIONS                                     [table]
+PUBLIC.FOR_LINT.WRITERS                                          [table]
+PUBLIC."PUBLISHER SALES".REGIONS                                 [table]
+PUBLIC."PUBLISHER SALES".SALES                                   [table]
+
+
+
+Routines
+========================================================================
+
+
+PUBLIC.BOOKS.CUSTOMADD                    [function, does not return a table]
+PUBLIC.BOOKS.CUSTOMADD                    [function, does not return a table]
+PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
+PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
+PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS                   [procedure, no result]
+PUBLIC.SYSTEM_LOBS.CONVERT_BLOCK                  [procedure, no result]
+PUBLIC.SYSTEM_LOBS.CREATE_EMPTY_BLOCK             [procedure, no result]
+PUBLIC.SYSTEM_LOBS.DELETE_BLOCKS                  [procedure, no result]
+PUBLIC.SYSTEM_LOBS.DELETE_LOB                     [procedure, no result]
+PUBLIC.SYSTEM_LOBS.DELETE_UNUSED                  [procedure, no result]
+PUBLIC.SYSTEM_LOBS.DIVIDE_BLOCK                   [procedure, no result]
+
