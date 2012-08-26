@@ -40,6 +40,7 @@ import javax.script.ScriptEngineManager;
 import schemacrawler.schema.Database;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseExecutable;
+import schemacrawler.tools.executable.CommandChainExecutable;
 import schemacrawler.tools.options.OutputWriter;
 import sf.util.FileUtility;
 import sf.util.ObjectToString;
@@ -56,6 +57,7 @@ public final class ScriptExecutable
 
   private static final Logger LOGGER = Logger.getLogger(ScriptExecutable.class
     .getName());
+
   static final String COMMAND = "script";
 
   public ScriptExecutable()
@@ -72,10 +74,7 @@ public final class ScriptExecutable
     throws Exception
   {
 
-    final CommandsChain chain = new CommandsChain(schemaCrawlerOptions,
-                                                  additionalConfiguration,
-                                                  database,
-                                                  connection);
+    final CommandChainExecutable chain = new CommandChainExecutable();
 
     final String scriptFileName = outputOptions.getOutputFormatValue();
     if (Utility.isBlank(scriptFileName))

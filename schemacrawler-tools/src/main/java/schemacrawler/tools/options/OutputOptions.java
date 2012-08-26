@@ -25,6 +25,7 @@ import java.io.File;
 import java.io.Writer;
 
 import schemacrawler.schemacrawler.Options;
+import sf.util.ObjectToString;
 
 /**
  * Contains output options.
@@ -38,6 +39,7 @@ public final class OutputOptions
   private static final long serialVersionUID = 7018337388923813055L;
 
   private String outputFormatValue;
+
   private File outputFile;
   private Writer writer;
 
@@ -175,6 +177,12 @@ public final class OutputOptions
   public void setWriter(final Writer writer)
   {
     this.writer = writer;
+  }
+
+  @Override
+  public String toString()
+  {
+    return ObjectToString.toString(this);
   }
 
 }
