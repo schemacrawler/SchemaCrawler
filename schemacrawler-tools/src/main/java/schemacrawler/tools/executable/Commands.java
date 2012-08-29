@@ -39,6 +39,11 @@ final class Commands
     return commands.toString();
   }
 
+  boolean hasMultipleCommands()
+  {
+    return commands.size() > 1;
+  }
+
   boolean isEmpty()
   {
     return commands.isEmpty();
@@ -46,7 +51,7 @@ final class Commands
 
   boolean isFirstCommand(final String command)
   {
-    if (command != null)
+    if (command != null && !isEmpty())
     {
       final String firstCommand = commands.get(0);
       return firstCommand.equals(command);
@@ -59,7 +64,7 @@ final class Commands
 
   boolean isLastCommand(final String command)
   {
-    if (command != null)
+    if (command != null && !isEmpty())
     {
       final String lastCommand = commands.get(commands.size() - 1);
       return lastCommand.equals(command);
@@ -68,11 +73,6 @@ final class Commands
     {
       return false;
     }
-  }
-
-  int size()
-  {
-    return commands.size();
   }
 
 }

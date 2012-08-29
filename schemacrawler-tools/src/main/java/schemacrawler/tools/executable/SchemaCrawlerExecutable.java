@@ -2,89 +2,89 @@ package schemacrawler.tools.executable;
 
 
 import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import schemacrawler.schema.Database;
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.text.base.BaseTextOptions;
+import schemacrawler.tools.text.operation.OperationExecutable;
 
+/**
+ * Wrapper executable for any SchemaCrawler command. Looks up the
+ * command registry, and instantiates the registered executable for the
+ * command. If the command is not a known command,
+ * SchemaCrawlerExecutable will check if it is a query configured in the
+ * properties. If not, it will assume that a query is specified on the
+ * command line, and execute that.
+ * 
+ * @author Sualeh Fatehi
+ */
 public final class SchemaCrawlerExecutable
   extends BaseExecutable
 {
 
-  private final List<Executable> executables;
+  private static final Logger LOGGER = Logger
+    .getLogger(SchemaCrawlerExecutable.class.getName());
 
-  public SchemaCrawlerExecutable(final String commands)
+  public SchemaCrawlerExecutable(final String command)
     throws SchemaCrawlerException
   {
-    super(commands);
-
-    final Commands commandsList = new Commands(commands);
-    if (commandsList.isEmpty())
-    {
-      throw new SchemaCrawlerException("No command specified");
-    }
-
-    final CommandRegistry commandRegistry = new CommandRegistry();
-    executables = new ArrayList<Executable>();
-    for (final String command: commandsList)
-    {
-      final Executable executable = commandRegistry.newExecutable(command);
-      executables.add(executable);
-    }
+    super(command);
   }
 
   @Override
   protected void executeOn(final Database database, final Connection connection)
     throws Exception
   {
-    for (final Executable executable: executables)
+    final Commands commands = new Commands(getCommand());
+    if (commands.isEmpty())
     {
-      executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-      executable.setOutputOptions(outputOptions);
-
-      final String command = executable.getCommand();
-
-      final BaseTextOptions baseTextOptions = new BaseTextOptions(additionalConfiguration);
-
-      final Commands commands = new Commands(getCommand());
-      if (commands.size() > 1)
-      {
-        if (commands.isFirstCommand(command))
-        {
-          // First command - no footer
-          baseTextOptions.setNoFooter(true);
-        }
-        else if (commands.isLastCommand(command))
-        {
-          // Last command - no header, or info
-          baseTextOptions.setNoHeader(true);
-          baseTextOptions.setNoInfo(true);
-
-          baseTextOptions.setAppendOutput(true);
-        }
-        else
-        {
-          // Middle command - no header, footer, or info
-          baseTextOptions.setNoHeader(true);
-          baseTextOptions.setNoInfo(true);
-          baseTextOptions.setNoFooter(true);
-
-          baseTextOptions.setAppendOutput(true);
-        }
-      }
-
-      Config executableAdditionalConfig = new Config();
-      if (additionalConfiguration != null)
-      {
-        executableAdditionalConfig.putAll(additionalConfiguration);
-      }
-      executableAdditionalConfig.putAll(baseTextOptions.toConfig());
-      executable.setAdditionalConfiguration(executableAdditionalConfig);
-
-      ((BaseExecutable) executable).executeOn(database, connection);
+      throw new SchemaCrawlerException("No command specified");
     }
+
+    BaseExecutable executable = null;
+    final CommandRegistry commandRegistry = new CommandRegistry();
+
+    for (final String command: commands)
+    {
+      final boolean isCommand = commandRegistry.hasCommand(command);
+      final boolean isConfiguredQuery = additionalConfiguration != null
+                                        && additionalConfiguration
+                                          .containsKey(command);
+      // If the command is a direct query
+      if (!isCommand && !isConfiguredQuery)
+      {
+        LOGGER.log(Level.INFO,
+                   String.format("Executing as a query, %s", getCommand()));
+        executable = new OperationExecutable(getCommand());
+        break;
+      }
+    }
+
+    if (executable == null)
+    {
+      if (commands.hasMultipleCommands())
+      {
+        LOGGER.log(Level.INFO, String
+          .format("Executing commands [%s] in sequence", commands));
+        executable = new CommandDaisyChainExecutable(getCommand());
+      }
+      else
+      {
+        executable = (BaseExecutable) commandRegistry
+          .newExecutable(getCommand());
+        LOGGER.log(Level.INFO, String
+          .format("Executing command \"%s\" using executable %s",
+                  getCommand(),
+                  executable.getClass().getName()));
+      }
+    }
+
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    executable.setAdditionalConfiguration(additionalConfiguration);
+    executable.setOutputOptions(outputOptions);
+
+    executable.executeOn(database, connection);
   }
+
 }
