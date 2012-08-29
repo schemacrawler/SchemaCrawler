@@ -28,6 +28,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.List;
 
+
 import org.junit.Test;
 
 import schemacrawler.test.utility.BaseDatabaseTest;
@@ -42,21 +43,15 @@ public class SchemaCrawlerExecutableChainTest
 {
 
   @Test
-  public void executableJavaScript()
+  public void chainJavaScript()
     throws Exception
   {
-    executeChain(new ScriptExecutable(), "chain.js");
-  }
-
-  private void executeChain(final Executable executable,
-                            final String outputFormatValue)
-    throws Exception
-  {
+    final Executable executable = new ScriptExecutable();
     final File testOutputFile = File.createTempFile("schemacrawler."
                                                     + executable.getCommand()
                                                     + ".", ".test");
     testOutputFile.delete();
-    final OutputOptions outputOptions = new OutputOptions(outputFormatValue,
+    final OutputOptions outputOptions = new OutputOptions("chain.js",
                                                           testOutputFile);
 
     executable.setOutputOptions(outputOptions);
@@ -71,6 +66,8 @@ public class SchemaCrawlerExecutableChainTest
     {
       fail(failures.toString());
     }
+
+    checkDiagramFile(new File("schema.png"));
   }
 
 }
