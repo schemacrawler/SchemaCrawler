@@ -21,9 +21,16 @@
 package schemacrawler.test.utility;
 
 
+import static org.junit.Assert.assertTrue;
+
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
+
+import javax.imageio.ImageIO;
 
 import org.custommonkey.xmlunit.XMLUnit;
 import org.junit.BeforeClass;
@@ -77,6 +84,18 @@ public abstract class BaseDatabaseTest
       System.exit(1);
       return null;
     }
+  }
+
+  protected static void checkDiagramFile(final File diagramFile)
+    throws IOException
+  {
+    assertTrue(diagramFile.exists());
+    assertTrue(diagramFile.length() > 0);
+    final BufferedImage image = ImageIO.read(diagramFile);
+    assertTrue(image.getHeight() > 0);
+    assertTrue(image.getWidth() > 0);
+
+    diagramFile.delete();
   }
 
   /**

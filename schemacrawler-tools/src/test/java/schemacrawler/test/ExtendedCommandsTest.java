@@ -21,14 +21,10 @@
 package schemacrawler.test;
 
 
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.List;
-
-import javax.imageio.ImageIO;
 
 import org.junit.Test;
 
@@ -39,7 +35,7 @@ import schemacrawler.tools.integration.graph.GraphExecutable;
 import schemacrawler.tools.integration.scripting.ScriptExecutable;
 import schemacrawler.tools.options.OutputOptions;
 
-public class IntegrationTest
+public class ExtendedCommandsTest
   extends BaseDatabaseTest
 {
 
@@ -58,11 +54,7 @@ public class IntegrationTest
     executable.setOutputOptions(outputOptions);
     executable.execute(getConnection());
 
-    assertTrue(testOutputFile.exists());
-    assertTrue(testOutputFile.length() > 0);
-    final BufferedImage image = ImageIO.read(testOutputFile);
-    assertTrue(image.getHeight() > 0);
-    assertTrue(image.getWidth() > 0);
+    checkDiagramFile(testOutputFile);
   }
 
   @Test
