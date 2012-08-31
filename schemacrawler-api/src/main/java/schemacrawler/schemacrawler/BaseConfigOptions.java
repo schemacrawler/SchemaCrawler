@@ -40,6 +40,11 @@ public abstract class BaseConfigOptions
     this.prefix = prefix;
   }
 
+  public Config toConfig()
+  {
+    return new Config(config);
+  }
+
   @Override
   public String toString()
   {
@@ -121,10 +126,5 @@ public abstract class BaseConfigOptions
   protected void setStringValue(final String propertyName, final String value)
   {
     config.put(prefix + propertyName, value);
-  }
-
-  public Config toConfig()
-  {
-    return new Config(config);
   }
 }

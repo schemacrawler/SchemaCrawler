@@ -67,6 +67,18 @@ public abstract class BaseDatabaseTest
     XMLUnit.setControlEntityResolver(new LocalEntityResolver());
   }
 
+  protected static void checkDiagramFile(final File diagramFile)
+    throws IOException
+  {
+    assertTrue(diagramFile.exists());
+    assertTrue(diagramFile.length() > 0);
+    final BufferedImage image = ImageIO.read(diagramFile);
+    assertTrue(image.getHeight() > 0);
+    assertTrue(image.getWidth() > 0);
+
+    diagramFile.delete();
+  }
+
   private static DatabaseConnectionOptions createConnectionOptions()
   {
     try
@@ -84,18 +96,6 @@ public abstract class BaseDatabaseTest
       System.exit(1);
       return null;
     }
-  }
-
-  protected static void checkDiagramFile(final File diagramFile)
-    throws IOException
-  {
-    assertTrue(diagramFile.exists());
-    assertTrue(diagramFile.length() > 0);
-    final BufferedImage image = ImageIO.read(diagramFile);
-    assertTrue(image.getHeight() > 0);
-    assertTrue(image.getWidth() > 0);
-
-    diagramFile.delete();
   }
 
   /**

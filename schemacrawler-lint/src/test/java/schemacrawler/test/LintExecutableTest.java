@@ -71,7 +71,7 @@ public class LintExecutableTest
 
     executeCommandlineAndCheckForOutputFile(OutputFormat.text.name(),
                                             "executableForLintWithConfig");
-    
+
     removeLinterConfig();
   }
 
@@ -91,7 +91,7 @@ public class LintExecutableTest
 
     executeExecutableAndCheckForOutputFile(OutputFormat.text.name(),
                                            "executableForLintWithConfig");
-    
+
     removeLinterConfig();
   }
 
