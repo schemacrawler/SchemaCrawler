@@ -28,7 +28,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.List;
 
-
 import org.junit.Test;
 
 import schemacrawler.test.utility.BaseDatabaseTest;

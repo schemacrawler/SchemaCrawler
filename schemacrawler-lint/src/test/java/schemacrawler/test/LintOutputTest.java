@@ -29,7 +29,6 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import schemacrawler.schemacrawler.Config;
@@ -39,7 +38,6 @@ import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import schemacrawler.tools.lint.executable.LintExecutable;
 import schemacrawler.tools.options.InfoLevel;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
@@ -85,7 +83,7 @@ public class LintOutputTest
 
         final OutputOptions outputOptions = new OutputOptions(outputFormat.name(),
                                                               testOutputFile);
-        
+
         final Config config = Config
           .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
         final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
@@ -110,7 +108,6 @@ public class LintOutputTest
       fail(failures.toString());
     }
   }
-
 
   @Test
   public void compareJsonOutput()

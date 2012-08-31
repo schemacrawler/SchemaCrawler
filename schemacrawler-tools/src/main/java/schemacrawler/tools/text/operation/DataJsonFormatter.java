@@ -108,7 +108,7 @@ final class DataJsonFormatter
 
           jsonData.put("columnNames", new JSONArray(dataRows.getColumnNames()));
 
-          JSONArray jsonRows = iterateRows(dataRows);
+          final JSONArray jsonRows = iterateRows(dataRows);
           jsonData.put("rows", jsonRows);
         }
         catch (final SQLException e)
