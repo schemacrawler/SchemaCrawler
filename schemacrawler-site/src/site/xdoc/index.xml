@@ -22,7 +22,9 @@
 					text format. You can find potential schema design issues with
 					<a href="lint.html">lint.</a> The output serves for database documentation 
 					is designed to be <a href="http://en.wikipedia.org/wiki/Diff">diff-ed</a>
-					against other database schemas. SchemaCrawler also generates <a href="diagramming.html">schema diagrams.</a>
+					against other database schemas. SchemaCrawler also generates 
+					<a href="diagramming.html">schema diagrams.</a> SchemaCrawler has a good mix
+					useful features for data governance.
 				</p>
 				<p>
 					SchemaCrawler supports almost any database that has a JDBC driver,
