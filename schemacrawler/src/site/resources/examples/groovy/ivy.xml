@@ -3,12 +3,12 @@
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:noNamespaceSchemaLocation=
                    "http://ant.apache.org/ivy/schemas/ivy.xsd">
-	<info organisation="schemacrawler" module="schemacrawler-velocity" />
+	<info organisation="schemacrawler" module="schemacrawler-groovy" />
 	<dependencies>
-		<dependency org="org.apache.velocity" name="velocity" rev="1.7" />
+		<dependency org="org.codehaus.groovy" name="groovy-all" rev="2.0.2" />
 		
         <exclude type="sources" ext="jar"/>
         <exclude type="test" ext="jar"/>
-        <exclude type="javadoc" ext="jar"/>		
+        <exclude type="javadoc" ext="jar"/>
 	</dependencies>
 </ivy-module>

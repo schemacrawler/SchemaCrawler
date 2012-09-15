@@ -17,6 +17,9 @@
 		<exclude org="com.bea.wlplatform"/>
 		<exclude org="jotm"/>
 		<exclude org="ant"/>
-		<exclude type="sources"/>
+		
+        <exclude type="sources" ext="jar"/>
+        <exclude type="test" ext="jar"/>
+        <exclude type="javadoc" ext="jar"/>
 	</dependencies>
 </ivy-module>
