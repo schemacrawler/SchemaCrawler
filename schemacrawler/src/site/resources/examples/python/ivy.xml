@@ -3,12 +3,12 @@
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:noNamespaceSchemaLocation=
                    "http://ant.apache.org/ivy/schemas/ivy.xsd">
-	<info organisation="schemacrawler" module="schemacrawler-velocity" />
+	<info organisation="schemacrawler" module="schemacrawler-python" />
 	<dependencies>
-		<dependency org="org.apache.velocity" name="velocity" rev="1.7" />
-		
+		<dependency org="org.python" name="jython-standalone" rev="2.5.3"/>
+
         <exclude type="sources" ext="jar"/>
         <exclude type="test" ext="jar"/>
-        <exclude type="javadoc" ext="jar"/>		
+        <exclude type="javadoc" ext="jar"/>
 	</dependencies>
 </ivy-module>
