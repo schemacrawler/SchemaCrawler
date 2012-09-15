@@ -47,6 +47,15 @@ public class ExtendedCommandsTest
                                            "executableForGroovy");
   }
 
+  @Test
+  public void executablePython()
+    throws Exception
+  {
+    executeExecutableAndCheckForOutputFile(new ScriptExecutable(),
+                                           "plaintextschema.py",
+                                           "executableForGroovy");
+  }
+
   private void executeExecutableAndCheckForOutputFile(final Executable executable,
                                                       final String outputFormatValue,
                                                       final String referenceFileName)
