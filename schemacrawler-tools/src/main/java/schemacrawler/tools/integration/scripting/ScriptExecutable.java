@@ -33,6 +33,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.script.Compilable;
+import javax.script.CompiledScript;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineFactory;
 import javax.script.ScriptEngineManager;
@@ -153,15 +155,32 @@ public final class ScriptExecutable
 
     final ScriptEngine scriptEngine = scriptEngineFactory.getScriptEngine();
     final Writer writer = new PrintWriter(new OutputWriter(outputOptions), true);
-    // Set up the context
-    scriptEngine.getContext().setWriter(writer);
-    scriptEngine.put("database", database);
-    scriptEngine.put("connection", connection);
-    scriptEngine.put("chain", chain);
 
-    // Evaluate the script
-    scriptEngine.eval(reader);
+    try
+    {
+      // Set up the context
+      scriptEngine.getContext().setWriter(writer);
+      scriptEngine.put("database", database);
+      scriptEngine.put("connection", connection);
+      scriptEngine.put("chain", chain);
 
-    writer.close();
+      // Evaluate the script
+      if (scriptEngine instanceof Compilable)
+      {
+        final CompiledScript script = ((Compilable) scriptEngine)
+          .compile(reader);
+        script.eval();
+      }
+      else
+      {
+        scriptEngine.eval(reader);
+      }
+    }
+    finally
+    {
+      writer.close();
+    }
+
   }
+
 }
