@@ -15,12 +15,14 @@
   	        value="${SchemaCrawler.home}/schemacrawler-api/target/schemacrawler-api-${SchemaCrawler.version}-tests.jar" />	
   <property name="schemacrawler.lint.jar"
             value="${SchemaCrawler.home}/schemacrawler-lint/target/schemacrawler-lint-${SchemaCrawler.version}.jar" />
+			
   <available file="gpl-3.0.txt" property="available.gpl-3.0.txt"/>
   <available file="lgpl-3.0.txt" property="available.lgpl-3.0.txt"/>
+  <available file="bnd-1.50.0.jar" property="available.bnd.jar"/>
 
   <target name="make-distribution"
           depends="
-            download-licenses,
+            download-tools,
             make-super-jar,
             make-database-distributions,
             make-examples,
@@ -31,7 +33,7 @@
           description="Package all sub-project jars into the distributable jar" />
 
 
-  <target name="download-licenses" depends="download-gpl,download-lgpl"/>
+  <target name="download-tools" depends="download-gpl,download-lgpl,download-bnd-tool"/>
   
   <target name="download-gpl" unless="available.gpl-3.0.txt">
     <get src="http://www.gnu.org/licenses/gpl-3.0.txt" dest="gpl-3.0.txt" usetimestamp="true" />    
@@ -39,10 +41,14 @@
 
   <target name="download-lgpl" unless="available.lgpl-3.0.txt">
     <get src="http://www.gnu.org/licenses/lgpl-3.0.txt" dest="lgpl-3.0.txt" usetimestamp="true" />
+  </target>
+  
+  <target name="download-bnd-tool" unless="available.bnd.jar">
+    <get src="http://repo1.maven.org/maven2/biz/aQute/bnd/1.50.0/bnd-1.50.0.jar" dest="bnd-1.50.0.jar" usetimestamp="true" />    
   </target>  
 
   <target name="make-super-jar">
-
+	  
     <jar destfile="${schemacrawler.distribution.jar}" index="true">
       <manifest>
         <attribute name="Product" value="SchemaCrawler" />
@@ -57,6 +63,19 @@
       <zipfileset dir="${SchemaCrawler.home}/schemacrawler-integrations/target/classes" />
     </jar>
 
+    <taskdef 
+		resource="aQute/bnd/ant/taskdef.properties"
+		classpath="bnd-1.50.0.jar"/> 	
+    <copy file="${distribution.assembly}/schemacrawler.bnd"
+          tofile="./schemacrawler-${SchemaCrawler.version}.bnd" />	
+    <bndwrap output="${distribution.target}">
+        <fileset dir="${distribution.target}" includes="*.jar" />
+    </bndwrap>
+    <move overwrite="true" todir="${distribution.target}" >
+        <fileset dir="${distribution.target}" includes="*.bar" />
+        <mapper type="glob" from="*.bar" to="*.jar" />
+    </move>
+	  
     <jar destfile="${schemacrawler.distribution.sources.jar}" index="true">
       <manifest>
         <attribute name="Product" value="SchemaCrawler" />

@@ -9,7 +9,7 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>schemacrawler-commandline</artifactId>
-  <packaging>bundle</packaging>
+  <packaging>jar</packaging>
   <name>SchemaCrawler Commandline</name>
   <dependencies>
     <dependency>
