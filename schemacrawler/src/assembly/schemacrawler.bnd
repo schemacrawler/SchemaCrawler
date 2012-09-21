@@ -1,0 +1,11 @@
+Bundle-ManifestVersion=1
+version=9.0
+Bundle-Version=${version}
+Bundle-Name=SchemaCrawler
+Bundle-SymbolicName=net.sourceforge.schemacrawler
+Built-By=Sualeh Fatehi
+Bundle-Description=SchemaCrawler is an open-source Java API that makes working with database metadata as easy as working with plain old Java objects. SchemaCrawler is also a database schema discovery and comprehension tool. You can search for database schema objects using regular expressions, and output the schema and data in a readable text format. You can find potential schema design issues with lint. The output serves for database documentation is designed to be diff-ed against other database schemas. SchemaCrawler can generate schema diagrams.
+Bundle-License: http://www.gnu.org/copyleft/lesser.txt 
+Export-Package=!schemacrawler.crawl.*,schemacrawler.*,sf.*;version=${version}
+Import-Package=*;resolution:=optional
+Private-Package=schemacrawler.crawl.*
