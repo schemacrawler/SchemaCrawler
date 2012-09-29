@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<project name="Ruby Integration"
+         default="ruby">
+
+  <description>SchemaCrawler integration with Ruby.</description>
+
+  <target name="dependencies_download">
+
+    <!--
+      Set up Apache Ivy to download dependencies
+    -->
+    <property name="ivy.install.version" value="2.2.0" />
+    <property name="ivy.jar.dir" location=".." />
+    <property name="ivy.jar.file" location="${ivy.jar.dir}/ivy.jar" />
+    <get src="http://repo1.maven.org/maven2/org/apache/ivy/ivy/${ivy.install.version}/ivy-${ivy.install.version}.jar"
+         dest="${ivy.jar.file}"
+         usetimestamp="true" />
+    <path id="ivy.lib.path">
+      <fileset dir="${ivy.jar.dir}" includes="*.jar" />
+    </path>
+    <taskdef resource="org/apache/ivy/ant/antlib.xml"
+             classpathref="ivy.lib.path" />
+
+    <!-- Download dependencies -->
+    <retrieve />
+
+  </target>
+
+  <target name="ruby" depends="dependencies_download"/>
+
+</project>

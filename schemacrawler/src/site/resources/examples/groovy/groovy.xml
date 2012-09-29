@@ -58,7 +58,7 @@
       url="jdbc:hsqldb:hsql://localhost:9001/schemacrawler"
       infolevel="maximum"
       command="script"
-	  outputformat="plaintextschema.groovy"
+	  outputformat="tables.groovy"
       outputfile="GroovyOutput.txt"/>
   	
     <echo message="Created output in GroovyOutput.txt"/>
