@@ -26,43 +26,6 @@
 
   </target>
 
-
-  <target name="python" depends="dependencies_download">
-
-    <!-- Step 1.
-      Define the ant tasks (macros) that come with SchemaCrawler
-    -->
-    <typedef resource="schemacrawler-antlib.xml"
-             classpath="../_schemacrawler/lib/schemacrawler-9.0.jar" />
-
-    <!-- Step 2.
-      Define the classpath to the database driver, and Python
-    -->
-    <path id="schemacrawler-classpath">
-      <fileset dir="../_schemacrawler/lib">
-        <include name="*.jar" />
-      </fileset>
-      <fileset dir="./lib">
-        <include name="*.jar" />
-      </fileset>
-    </path>
-
-    <!-- Step 3.
-      Use an ant task that uses the <schemacrawler> macro
-    -->
-    <schemacrawler
-      schemacrawler-classpath="schemacrawler-classpath"
-      user="sa"
-      password=""
-      driver="org.hsqldb.jdbcDriver"
-      url="jdbc:hsqldb:hsql://localhost:9001/schemacrawler"
-      infolevel="maximum"
-      command="script"
-	  outputformat="tables.py"
-      outputfile="PythonOutput.txt"/>
-  	
-    <echo message="Created output in PythonOutput.txt"/>
-  	
-  </target>
-
+  <target name="python" depends="dependencies_download"/>
+  
 </project>

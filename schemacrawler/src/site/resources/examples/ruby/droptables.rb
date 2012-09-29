@@ -1,7 +1,6 @@
 puts "WARNING: DROPPING ALL TABLES. RESTART THE DATABASE SERVER TO GET THEM BACK"
 
 statement = $connection.createStatement()
-tables = $database.tables
 for table in $database.tables
 	begin
 		sql = "DROP " + table.type.toString().upcase + " " + table.fullName
