@@ -84,17 +84,20 @@
 
       Set WScriptShell = WScript.CreateObject("WScript.Shell")
       Set FileSystemObject = CreateObject("Scripting.FileSystemObject")
-      Set LibFolder = FileSystemObject.GetFolder(LibPath)
-      Set JarFiles = LibFolder.Files
-
       CreateLibClasspath = ""
-      CreateLibClasspath = CreateLibClasspath & WScriptShell.Environment("User").Item("CLASSPATH") + ";"
-      For Each JarFile In JarFiles
-        If FileSystemObject.GetExtensionName(JarFile) = "jar" Then
-          CreateLibClasspath = CreateLibClasspath + FileSystemObject.GetAbsolutePathName(JarFile) + ";"
-        End If
-      Next
+      
+      If  FileSystemObject.FolderExists(LibPath) Then 	  
+        Set LibFolder = FileSystemObject.GetFolder(LibPath)
+        Set JarFiles = LibFolder.Files
 
+        CreateLibClasspath = CreateLibClasspath & WScriptShell.Environment("User").Item("CLASSPATH") + ";"
+        For Each JarFile In JarFiles
+          If FileSystemObject.GetExtensionName(JarFile) = "jar" Then
+            CreateLibClasspath = CreateLibClasspath + FileSystemObject.GetAbsolutePathName(JarFile) + ";"
+          End If
+        Next
+      End If
+      
       CreateLibClasspath = """" + CreateLibClasspath + """"
 
     End Function
