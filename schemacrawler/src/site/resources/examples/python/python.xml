@@ -58,7 +58,7 @@
       url="jdbc:hsqldb:hsql://localhost:9001/schemacrawler"
       infolevel="maximum"
       command="script"
-	  outputformat="plaintextschema.py"
+	  outputformat="tables.py"
       outputfile="PythonOutput.txt"/>
   	
     <echo message="Created output in PythonOutput.txt"/>

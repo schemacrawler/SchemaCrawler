@@ -141,7 +141,7 @@
     Java = LocateJava()
 
     Dim LibClasspath
-    LibClasspath = CreateLibClasspath(Replace(WScript.ScriptFullName, WScript.ScriptName, "") & "lib")
+    LibClasspath = CreateLibClasspath(Replace(WScript.ScriptFullName, WScript.ScriptName, "") & "lib") + ";" + CreateLibClasspath("lib")
 
     Dim CommandLine
     CommandLine = Java & " -classpath " & LibClasspath & " " & CommandLineArguments()
