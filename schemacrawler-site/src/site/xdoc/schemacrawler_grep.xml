@@ -16,7 +16,7 @@
           tool.
         </p>
         <p>
-          The SchemaCrawler command-line allows filtering tables, columns, and procedures based on regular expressions,
+          The SchemaCrawler command-line allows filtering tables, views, columns, stored procedure and function based on regular expressions,
           in addition to the grep functionality. This can be useful, say, when you want to search through your schema
           to find all tables that have a CUSTOMER_ID column, for example.
         </p>

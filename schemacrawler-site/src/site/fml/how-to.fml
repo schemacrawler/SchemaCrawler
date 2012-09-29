@@ -638,7 +638,7 @@ for (final Schema schema: database.getSchemas())
     <title>Advanced SchemaCrawler Usage</title>
     <faq id="definitions">
       <question>
-        How to get view and procedure definitions
+        How to get trigger, view, stored procedure and function definitions
       </question>
       <answer>
         <p>

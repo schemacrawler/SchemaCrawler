@@ -12,7 +12,7 @@
           SchemaCrawler is a command-line tool that allows you to generate database diagrams, using
           <a href="http://www.graphviz.org/">Graphviz</a>
           .
-          You can filter out tables, columns, and procedures based on regular expressions,
+          You can filter out tables, views, columns, stored procedure and functions based on regular expressions,
           using the
           <a href="faq.html#whats-schemacrawler-grep">grep</a>
           functionality.

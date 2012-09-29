@@ -9,7 +9,7 @@
 		<section name="INFORMATION_SCHEMA Views">
 			<subsection name="Enhancing SchemaCrawler Output">
 				<p>
-					SchemaCrawler can display view and procedure definitions,
+					SchemaCrawler can display view, stored procedure and function definitions,
 					trigger
 					information, and check constraints by using data from
 					the
@@ -22,7 +22,7 @@
 					columns that match the
 					INFORMATION_SCHEMA views, then SchemaCrawler
 					can use the data
-					to obtain view and procedure definitions, trigger
+					to obtain view, stored procedure and function definitions, trigger
 					information,
 					and check constraints. The INFORMATION_SCHEMA views
 					currently
