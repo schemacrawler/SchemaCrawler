@@ -196,8 +196,8 @@ for (final Schema schema: database.getSchemas())
 					<a href="http://www.graphviz.org/">GraphViz</a>
 					can convert into <a href="diagramming.html">schema diagrams.</a> SchemaCrawler has powerful
 					scripting ability, using
-					JavaScript. A live
-					connection is provided to the JavaScript context to allow you to select
+					JavaScript, Groovy, Ruby or Python. A live
+					connection is provided to the script context to allow you to select
 					from or even modify your database.
 					Examples are provided for all of these with the
 					<a href="http://sourceforge.net/projects/schemacrawler/files/">download</a>
