@@ -54,11 +54,10 @@
         <p>
           SchemaCrawler can produce listings, and standard, or verbose details of your schema. The list schema option
           gives you
-          just table, view, and procedure names. The standard schema option gives you the column names and
+          just table, view, stored procedure and function names. The standard schema option gives you the column names and
           primary keys.
           The verbose schema option will give you details of data types, indices, primary and foreign keys,
-          view and
-          procedure definitions. The SchemaCrawler command can be combined with an
+          view, stored procedure and function definitions. The SchemaCrawler command can be combined with an
           <i>infolevel</i>
           , which determines the level of detail of schema metadata obtained. The maximum infolevel will give you
           privileges, triggers definitions, and check constraints. Each successive option takes
@@ -151,7 +150,7 @@
         <p>
           SchemaCrawler can generate entity-relationship database diagrams using
           <a href="http://www.graphviz.org/">Graphviz</a>
-          . You can filter out tables, columns, and procedures based on regular expressions,
+          . You can filter out tables, columns, stored procedure and functions based on regular expressions,
           using the
           <a href="#whats-schemacrawler-grep">grep</a>
           functionality.
