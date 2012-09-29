@@ -1,1 +1,1 @@
-@cscript //NOLOGO "%~dp0jlaunch.wsf" @package@.Main %*
+java -classpath lib/* @package@.Main %*
