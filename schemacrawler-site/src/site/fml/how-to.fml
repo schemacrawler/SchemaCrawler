@@ -103,22 +103,6 @@
             <tr>
               <td valign="top">
                 <ul>
-                  <li>schemacrawler.LauncherMain</li>
-                </ul>
-              </td>
-              <td valign="top">
-                <p>The launcher is designed to conveniently load all external
-                  jars from a given
-                  folder. Typically used
-                  from within the Unix
-                  shell scripts provided by
-                  SchemaCrawler.
-                </p>
-              </td>
-            </tr>
-            <tr>
-              <td valign="top">
-                <ul>
                   <li>schemacrawler.utility.TestDatabase</li>
                 </ul>
               </td>

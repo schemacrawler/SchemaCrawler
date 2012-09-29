@@ -1,1 +1,1 @@
-../_schemacrawler/sc.sh -database=schemacrawler -user=sa -password= -infolevel=standard -command=hsqldb.tables $*
+java -classpath ../_schemacrawler/lib/*:lib/* schemacrawler.tools.hsqldb.Main -database=schemacrawler -user=sa -password= -infolevel=standard -command=hsqldb.tables $*

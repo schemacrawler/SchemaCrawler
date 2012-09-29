@@ -161,7 +161,14 @@
                   prefix="${examples.stem}"
                   defaultexcludes="yes" />
     </zip>
-
+    
+    <move 
+      todir="${distribution.target}/${examples.stem}">
+        <fileset dir="${examples.staging.dir}">
+          <include name="**/*" />
+        </fileset>    	
+    </move>
+  	
   </target>
 
 
@@ -287,8 +294,7 @@
         <fileset dir="${distribution.assembly}">
           <include name="*.cmd" />
           <include name="*.sh" />
-          <include name="*.wsf" />
-        	<include name="*.txt" />
+          <include name="*.txt" />
         </fileset>
       </copy>
 
