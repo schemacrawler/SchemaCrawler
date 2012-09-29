@@ -48,7 +48,7 @@
               <span class="code">java
                 -Dschemacrawer.linter_configs.file=schemacrawler-linter-configs.xml
                 -cp
-                ..\_schemacrawler\lib\hsqldb-2.2.8.jar;..\_schemacrawler\lib\schemacrawler-9.0.jar;..\_schemacrawler\lib\schemacrawler-hsqldb-9.0.jar;..\_schemacrawler\lib\schemacrawler-lint-9.0.jar
+                ..\_schemacrawler\lib\hsqldb-2.2.8.jar;..\_schemacrawler\lib\schemacrawler-9.1.jar;..\_schemacrawler\lib\schemacrawler-hsqldb-9.1.jar;..\_schemacrawler\lib\schemacrawler-lint-9.1.jar
                 schemacrawler.tools.hsqldb.Main -database=schemacrawler -user=sa
                 -password= -infolevel=standard -command=lint
               </span>
@@ -56,7 +56,7 @@
               <span class="code">java
                 -Dschemacrawer.linter_configs.file=schemacrawler-linter-configs.xml
                 -cp
-                ../_schemacrawler/lib/hsqldb-2.2.8.jar:../_schemacrawler/lib/schemacrawler-9.0.jar:../_schemacrawler/lib/schemacrawler-hsqldb-9.0.jar:../_schemacrawler/lib/schemacrawler-lint-9.0.jar
+                ../_schemacrawler/lib/hsqldb-2.2.8.jar:../_schemacrawler/lib/schemacrawler-9.1.jar:../_schemacrawler/lib/schemacrawler-hsqldb-9.1.jar:../_schemacrawler/lib/schemacrawler-lint-9.1.jar
                 schemacrawler.tools.hsqldb.Main -database=schemacrawler -user=sa
                 -password= -infolevel=standard -command=lint
               </span>

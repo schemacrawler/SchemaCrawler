@@ -5,6 +5,11 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+    <release version="9.1" date="2012-09-30">
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added examples for Groovy, Ruby and Python scripting.
+      ]]></action>       
+    </release>   
     <release version="9.0" date="2012-09-08">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         The API has changed from 8.x versions. All API calls return collections
