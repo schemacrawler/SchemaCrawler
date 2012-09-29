@@ -2,7 +2,7 @@
   "http://maven.apache.org/dtd/xdoc_1_0.dtd">
 <document>
   <properties>
-    <title>SchemaCrawler - python Integration Example</title>
+    <title>SchemaCrawler - Python Integration Example</title>
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
@@ -42,15 +42,35 @@
           </li>
           <li>
             Run
-            <span class="code">python.cmd</span>
+            <span class="code">python_setup.cmd</span>
             (or
-            <span class="code">python.sh</span>
-            on Unix) to use Python integration
+            <span class="code">python_setup.sh</span>
+            on Unix) to download and setup Python scripting support
           </li>
+          <li>
+            Run
+            <span class="code">python.cmd tables.py
+            </span>
+            (or
+            <span class="code">python.sh tables.py
+            </span>
+            on
+            Unix)
+          </li>          
         </ol>
       </subsection>
       <subsection name="How to Experiment">
         <ol>
+          <li>
+            Run
+            <span class="code">python.cmd droptables.py
+            </span>
+            (or
+            <span class="code">python.sh droptables.py
+            </span>
+            on
+            Unix). (In order to restore the database, restart the database server.)
+          </li>        
           <li>
             Try modifying the Python in the *.py files
             to do different things. You also have access to a live database connection.

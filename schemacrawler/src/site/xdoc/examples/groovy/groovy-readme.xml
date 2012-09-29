@@ -42,15 +42,35 @@
           </li>
           <li>
             Run
-            <span class="code">groovy.cmd</span>
+            <span class="code">groovy_setup.cmd</span>
             (or
-            <span class="code">groovy.sh</span>
-            on Unix) to use Groovy integration
+            <span class="code">groovy_setup.sh</span>
+            on Unix) to download and setup Groovy scripting support
           </li>
+          <li>
+            Run
+            <span class="code">groovy.cmd tables.groovy
+            </span>
+            (or
+            <span class="code">groovy.sh tables.groovy
+            </span>
+            on
+            Unix)
+          </li>          
         </ol>
       </subsection>
       <subsection name="How to Experiment">
         <ol>
+          <li>
+            Run
+            <span class="code">groovy.cmd droptables.groovy
+            </span>
+            (or
+            <span class="code">groovy.sh droptables.groovy
+            </span>
+            on
+            Unix). (In order to restore the database, restart the database server.)
+          </li>        
           <li>
             Try modifying the Groovy in the *.groovy files
             to do different things. You also have access to a live database connection.
