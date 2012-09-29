@@ -28,51 +28,6 @@
 
   </target>
 
-  <!-- Step 4.
-    Define an ant task that uses the <schemacrawler-velocity> macro
-  -->
-  <target name="velocity" depends="dependencies_download">
-
-    <!-- Step 1.
-      Define the ant tasks (macros) that come with SchemaCrawler
-    -->
-    <typedef resource="schemacrawler-antlib.xml"
-             classpath="../_schemacrawler/lib/schemacrawler-9.0.jar" />
-
-    <!-- Step 2.
-      Define the classpath to the database driver, and Apache Velocity
-    -->
-    <path id="schemacrawler-classpath">
-      <fileset dir="../_schemacrawler/lib">
-        <include name="*.jar" />
-      </fileset>
-      <fileset dir="./lib">
-        <include name="*.jar" />
-      </fileset>
-    </path>
-
-    <property
-      name="velocity-template"
-      location="tables.vm"/>
-    <property
-      name="outputfile"
-      location="table-script-by-velocity.sql"/>
-
-    <delete file="${outputfile}"/>
-
-    <schemacrawler
-      schemacrawler-classpath="schemacrawler-classpath"
-      user="sa"
-      password=""
-      driver="org.hsqldb.jdbcDriver"
-      url="jdbc:hsqldb:hsql://localhost:9001/schemacrawler"
-      infolevel="standard"
-      command="velocity"
-      outputformat="${velocity-template}"
-      outputfile="${outputfile}"/>
-  	
-    <echo message="Output is in ${outputfile}"/>
-
-  </target>
+  <target name="velocity" depends="dependencies_download" />
 
 </project>
