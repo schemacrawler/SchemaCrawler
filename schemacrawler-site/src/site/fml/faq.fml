@@ -112,7 +112,9 @@
         <p>Yes, SchemaCrawler comes with a full-featured ant task.</p>
         <p>
           <i>
-            See the example in the
+            For more details, see scripting example in the
+          <a href="https://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20Examples/">SchemaCrawler examples</a>
+          download, in the
             <code>examples\ant-task</code>
             directory.
           </i>
@@ -127,7 +129,9 @@
         </p>
         <p>
           <i>
-            See the example in the
+            For more details, see scripting example in the
+          <a href="https://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20Examples/">SchemaCrawler examples</a>
+          download, in the
             <code>examples\maven-project</code>
             directory.
           </i>
@@ -236,11 +240,12 @@
         </p>
       </answer>
     </faq>
-    <faq id="javascript">
+    <faq id="scripting">
       <question> Can SchemaCrawler be used with scripting languages? </question>
       <answer>
         <p> When SchemaCrawler is used with J2SE 6 and above, it has built-in support to be used with JavaScript
-          scripts.
+          scripts. SchemaCrawler can be integrated with any other scripting language, for example, Groovy,
+          Ruby, Python, and more.
         </p>
         <p>
           For more details, look at the
@@ -248,10 +253,12 @@
           page.
         </p>
         <p>
-          <i>
-            See the example in the
-            <code>examples\javascript</code>
-            directory.
+          <i>For more details, see scripting example in the
+          <a href="https://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20Examples/">SchemaCrawler examples</a>
+          download, in the
+            <code>examples\javascript</code>, <code>examples\groovy</code>, 
+            <code>examples\ruby</code> and <code>examples\python</code>
+            directories.
           </i>
         </p>
       </answer>
@@ -271,7 +278,9 @@
         </p>
         <p>
           <i>
-            See the example in the
+            For more details, see scripting example in the
+          <a href="https://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20Examples/">SchemaCrawler examples</a>
+          download, in the
             <code>examples\api</code>
             directory.
           </i>
@@ -285,14 +294,18 @@
           SchemaCrawler can be integrated with other programs, but this requires some Java programming. SchemaCrawler is
           designed to be used programmatically with the
           <a href="http://www.springframework.org/">Spring Framework</a>
-          . Examples are provided in the
+          . For more details, see scripting example in the
+          <a href="https://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20Examples/">SchemaCrawler examples</a>
+          download, in the
           <code>examples\spring</code>
           directory.
         </p>
         <p>
           SchemaCrawler comes pre-built with integration with
           <a href="http://velocity.apache.org/">Apache Velocity.</a>
-          This allows you to specify your own templates for formatting the schema. Examples are provided in the
+          This allows you to specify your own templates for formatting the schema. For more details, see scripting example in the
+          <a href="https://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20Examples/">SchemaCrawler examples</a>
+          download, in the
           <code>examples\velocity</code>
           directory.
         </p>
