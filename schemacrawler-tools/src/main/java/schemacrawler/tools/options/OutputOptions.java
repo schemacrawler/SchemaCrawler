@@ -39,7 +39,6 @@ public final class OutputOptions
   private static final long serialVersionUID = 7018337388923813055L;
 
   private String outputFormatValue;
-
   private File outputFile;
   private Writer writer;
 
