@@ -88,16 +88,15 @@ class MutableTable
       return -1;
     }
 
-    final MutableTable other = (MutableTable) obj;
     int comparison = 0;
 
-    if (comparison == 0)
+    if (comparison == 0 && obj instanceof MutableTable)
     {
-      comparison = sortIndex - other.sortIndex;
+      comparison = sortIndex - ((MutableTable) obj).sortIndex;
     }
     if (comparison == 0)
     {
-      comparison = super.compareTo(other);
+      comparison = super.compareTo(obj);
     }
 
     return comparison;
