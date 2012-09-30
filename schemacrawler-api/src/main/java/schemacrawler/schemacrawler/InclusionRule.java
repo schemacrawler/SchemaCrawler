@@ -60,6 +60,11 @@ public final class InclusionRule
   /** Exclude all. */
   public static InclusionRule EXCLUDE_ALL = new InclusionRule(NONE, NONE);
 
+  public InclusionRule(final Pattern patternInclude)
+  {
+    this(patternInclude, null);
+  }
+
   /**
    * Set include and exclude patterns.
    * 
@@ -90,6 +95,11 @@ public final class InclusionRule
     }
   }
 
+  public InclusionRule(final String patternInclude)
+  {
+    this(patternInclude, null);
+  }
+
   /**
    * Set include and exclude patterns.
    * 
@@ -101,7 +111,7 @@ public final class InclusionRule
   public InclusionRule(final String patternInclude, final String patternExclude)
   {
     this(patternInclude == null? null: Pattern.compile(patternInclude),
-         patternInclude == null? null: Pattern.compile(patternExclude));
+         patternExclude == null? null: Pattern.compile(patternExclude));
   }
 
   @Override
