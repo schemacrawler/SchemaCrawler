@@ -71,8 +71,23 @@ public final class InclusionRule
   public InclusionRule(final Pattern patternInclude,
                        final Pattern patternExclude)
   {
-    this.patternInclude = patternInclude;
-    this.patternExclude = patternExclude;
+    if (patternInclude == null)
+    {
+      this.patternInclude = Pattern.compile(NONE);
+    }
+    else
+    {
+      this.patternInclude = patternInclude;
+    }
+
+    if (patternExclude == null)
+    {
+      this.patternExclude = Pattern.compile(NONE);
+    }
+    else
+    {
+      this.patternExclude = patternExclude;
+    }
   }
 
   /**
@@ -85,7 +100,8 @@ public final class InclusionRule
    */
   public InclusionRule(final String patternInclude, final String patternExclude)
   {
-    this(Pattern.compile(patternInclude), Pattern.compile(patternExclude));
+    this(patternInclude == null? null: Pattern.compile(patternInclude),
+         patternInclude == null? null: Pattern.compile(patternExclude));
   }
 
   @Override
