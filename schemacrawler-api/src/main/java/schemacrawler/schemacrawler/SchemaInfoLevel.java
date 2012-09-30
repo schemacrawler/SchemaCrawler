@@ -45,7 +45,7 @@ public final class SchemaInfoLevel
     detailed.setRetrieveCheckConstraintInformation(true);
     detailed.setRetrieveTriggerInformation(true);
     detailed.setRetrieveViewInformation(true);
-    detailed.setTag("verbose");
+    detailed.setTag("detailed");
     return detailed;
   }
 
