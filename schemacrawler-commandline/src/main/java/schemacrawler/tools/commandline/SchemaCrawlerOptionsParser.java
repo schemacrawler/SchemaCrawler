@@ -61,10 +61,7 @@ final class SchemaCrawlerOptionsParser
           new StringOption("grepdef", InclusionRule.NONE),
           new BooleanOption('v', "invert-match"),
           new NumberOption("parents", 0),
-          new NumberOption("children", 0),
-          new BooleanOption("sorttables"),
-          new BooleanOption("sortcolumns"),
-          new BooleanOption("sortinout"));
+          new NumberOption("children", 0));
     options = new SchemaCrawlerOptions(config);
   }
 
