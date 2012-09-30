@@ -30,12 +30,14 @@ import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import schemacrawler.schema.Column;
 import schemacrawler.schema.ForeignKeyDeferrability;
 import schemacrawler.schema.ForeignKeyUpdateRule;
 import schemacrawler.schema.IndexColumnSortSequence;
 import schemacrawler.schema.IndexType;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaReference;
+import schemacrawler.schema.Table;
 import schemacrawler.schema.TableType;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
@@ -411,14 +413,14 @@ final class TableRetriever
         final int deferrability = results
           .getInt("DEFERRABILITY", ForeignKeyDeferrability.unknown.getId());
 
-        final MutableColumn pkColumn = lookupOrCreateColumn(pkTableCatalogName,
-                                                            pkTableSchemaName,
-                                                            pkTableName,
-                                                            pkColumnName);
-        final MutableColumn fkColumn = lookupOrCreateColumn(fkTableCatalogName,
-                                                            fkTableSchemaName,
-                                                            fkTableName,
-                                                            fkColumnName);
+        final Column pkColumn = lookupOrCreateColumn(pkTableCatalogName,
+                                                     pkTableSchemaName,
+                                                     pkTableName,
+                                                     pkColumnName);
+        final Column fkColumn = lookupOrCreateColumn(fkTableCatalogName,
+                                                     fkTableSchemaName,
+                                                     fkTableName,
+                                                     fkColumnName);
         // Make a direct connection between the two columns
         if (pkColumn != null && fkColumn != null)
         {
@@ -429,9 +431,25 @@ final class TableRetriever
             .valueOf(deferrability));
           foreignKey.addAttributes(results.getAttributes());
 
-          fkColumn.setReferencedColumn(pkColumn);
-          ((MutableTable) pkColumn.getParent()).addForeignKey(foreignKey);
-          ((MutableTable) fkColumn.getParent()).addForeignKey(foreignKey);
+          if (fkColumn instanceof MutableColumn)
+          {
+            ((MutableColumn) fkColumn).setReferencedColumn(pkColumn);
+            ((MutableTable) fkColumn.getParent()).addForeignKey(foreignKey);
+          }
+          else if (fkColumn instanceof ColumnReference)
+          {
+            ((ColumnReference) fkColumn).setReferencedColumn(pkColumn);
+            ((TableReference) fkColumn.getParent()).addForeignKey(foreignKey);
+          }
+
+          if (pkColumn instanceof MutableColumn)
+          {
+            ((MutableTable) pkColumn.getParent()).addForeignKey(foreignKey);
+          }
+          else if (pkColumn instanceof ColumnReference)
+          {
+            ((TableReference) pkColumn.getParent()).addForeignKey(foreignKey);
+          }
         }
       }
     }
@@ -532,22 +550,22 @@ final class TableRetriever
    * found, they are created, and added to the schema. This is prevent
    * foreign key relationships from having a null pointer.
    */
-  private MutableColumn lookupOrCreateColumn(final String catalogName,
-                                             final String schemaName,
-                                             final String tableName,
-                                             final String columnName)
+  private Column lookupOrCreateColumn(final String catalogName,
+                                      final String schemaName,
+                                      final String tableName,
+                                      final String columnName)
   {
     final boolean supportsCatalogs = getRetrieverConnection()
       .isSupportsCatalogs();
-    MutableColumn column = null;
+    Column column = null;
     final Schema schema = new SchemaReference(supportsCatalogs? catalogName
                                                               : null,
                                               schemaName);
     if (schema != null)
     {
-      MutableTable table = database.getTable(new SchemaReference(catalogName,
-                                                                 schemaName),
-                                             tableName);
+      Table table = database.getTable(new SchemaReference(catalogName,
+                                                          schemaName),
+                                      tableName);
       if (table != null)
       {
         column = table.getColumn(columnName);
@@ -555,15 +573,15 @@ final class TableRetriever
 
       if (column == null)
       {
-        // Create the table, but do not add it to the schema
-        table = new MutableTable(schema, tableName);
-        column = new MutableColumn(table, columnName);
-        table.addColumn(column);
+        // Create the table and column, but do not add it to the schema
+        table = new TableReference(schema, tableName);
+        column = new ColumnReference(table, columnName);
+        ((TableReference) table).addColumn(column);
 
         LOGGER
           .log(Level.FINER,
                String
-                 .format("Creating new column that is referenced by a foreign key: %s",
+                 .format("Creating column reference for a column that is referenced by a foreign key: %s",
                          column.getFullName()));
       }
     }

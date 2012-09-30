@@ -21,12 +21,15 @@ package schemacrawler.test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.Collection;
 import java.util.List;
 
 import org.junit.Test;
 
+import schemacrawler.crawl.NotLoadedException;
+import schemacrawler.schema.Column;
 import schemacrawler.schema.Database;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnReference;
@@ -60,17 +63,10 @@ public class SchemaCrawlerReferenceTest
           .getColumnReferences();
         for (final ForeignKeyColumnReference fkColumnRef: fkColumnRefs)
         {
-          final Table pkTable = fkColumnRef.getPrimaryKeyColumn().getParent();
-          assertTrue("Primary key table references do not match - "
-                         + pkTable.getName(),
-                     pkTable == database.getTable(pkTable.getSchema(),
-                                                  pkTable.getName()));
-
-          final Table fkTable = fkColumnRef.getForeignKeyColumn().getParent();
-          assertTrue("Foreign key table references do not match - "
-                         + fkTable.getName(),
-                     fkTable == database.getTable(fkTable.getSchema(),
-                                                  fkTable.getName()));
+          assertReferencedColumnExists(database,
+                                       fkColumnRef.getPrimaryKeyColumn());
+          assertReferencedColumnExists(database,
+                                       fkColumnRef.getForeignKeyColumn());
 
           fkReferenceCount++;
         }
@@ -81,13 +77,15 @@ public class SchemaCrawlerReferenceTest
   }
 
   @Test
-  public void fkReferencesForGreppedTables()
+  public void fkReferencesForGreppedAndFilteredTables1()
     throws Exception
   {
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions
-      .setGrepColumnInclusionRule(new InclusionRule(".*\\.BOOKAUTHORS\\..*", ""));
+      .setTableInclusionRule(new InclusionRule(".*\\.BOOKAUTHORS"));
+    schemaCrawlerOptions
+      .setGrepColumnInclusionRule(new InclusionRule(".*\\.BOOKAUTHORS\\..*"));
 
     int fkReferenceCount = 0;
     final Database database = getDatabase(schemaCrawlerOptions);
@@ -101,16 +99,11 @@ public class SchemaCrawlerReferenceTest
           .getColumnReferences();
         for (final ForeignKeyColumnReference fkColumnRef: fkColumnRefs)
         {
-          final Table pkTable = fkColumnRef.getPrimaryKeyColumn().getParent();
-          assertNull("Primary key table table should not be in the database - "
-                         + pkTable.getName(),
-                     database.getTable(pkTable.getSchema(), pkTable.getName()));
-
-          final Table fkTable = fkColumnRef.getForeignKeyColumn().getParent();
-          assertTrue("Foreign key table references do not match - "
-                         + fkTable.getName(),
-                     fkTable == database.getTable(fkTable.getSchema(),
-                                                  fkTable.getName()));
+          assertReferencedColumnDoesNotExist(database,
+                                             fkColumnRef.getPrimaryKeyColumn(),
+                                             true);
+          assertReferencedColumnExists(database,
+                                       fkColumnRef.getForeignKeyColumn());
 
           fkReferenceCount++;
         }
@@ -118,6 +111,158 @@ public class SchemaCrawlerReferenceTest
     }
 
     assertEquals(2, fkReferenceCount);
+  }
+
+  @Test
+  public void fkReferencesForGreppedAndFilteredTables2()
+    throws Exception
+  {
+
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+    schemaCrawlerOptions
+      .setTableInclusionRule(new InclusionRule(".*\\.AUTHORS"));
+    schemaCrawlerOptions
+      .setGrepColumnInclusionRule(new InclusionRule(".*\\.AUTHORS\\..*"));
+
+    int fkReferenceCount = 0;
+    final Database database = getDatabase(schemaCrawlerOptions);
+    final Collection<Table> tables = database.getTables();
+    for (final Table table: tables)
+    {
+      final Collection<ForeignKey> foreignKeys = table.getForeignKeys();
+      for (final ForeignKey foreignKey: foreignKeys)
+      {
+        final List<ForeignKeyColumnReference> fkColumnRefs = foreignKey
+          .getColumnReferences();
+        for (final ForeignKeyColumnReference fkColumnRef: fkColumnRefs)
+        {
+          assertReferencedColumnExists(database,
+                                       fkColumnRef.getPrimaryKeyColumn());
+          assertReferencedColumnDoesNotExist(database,
+                                             fkColumnRef.getForeignKeyColumn(),
+                                             true);
+
+          fkReferenceCount++;
+        }
+      }
+    }
+
+    assertEquals(1, fkReferenceCount);
+  }
+
+  @Test
+  public void fkReferencesForGreppedTables1()
+    throws Exception
+  {
+
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+    schemaCrawlerOptions
+      .setGrepColumnInclusionRule(new InclusionRule(".*\\.BOOKAUTHORS\\..*"));
+
+    int fkReferenceCount = 0;
+    final Database database = getDatabase(schemaCrawlerOptions);
+    final Collection<Table> tables = database.getTables();
+    for (final Table table: tables)
+    {
+      final Collection<ForeignKey> foreignKeys = table.getForeignKeys();
+      for (final ForeignKey foreignKey: foreignKeys)
+      {
+        final List<ForeignKeyColumnReference> fkColumnRefs = foreignKey
+          .getColumnReferences();
+        for (final ForeignKeyColumnReference fkColumnRef: fkColumnRefs)
+        {
+          assertReferencedColumnDoesNotExist(database,
+                                             fkColumnRef.getPrimaryKeyColumn(),
+                                             false);
+          assertReferencedColumnExists(database,
+                                       fkColumnRef.getForeignKeyColumn());
+
+          fkReferenceCount++;
+        }
+      }
+    }
+
+    assertEquals(2, fkReferenceCount);
+  }
+
+  @Test
+  public void fkReferencesForGreppedTables2()
+    throws Exception
+  {
+
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+    schemaCrawlerOptions
+      .setGrepColumnInclusionRule(new InclusionRule(".*\\.AUTHORS\\..*"));
+
+    int fkReferenceCount = 0;
+    final Database database = getDatabase(schemaCrawlerOptions);
+    final Collection<Table> tables = database.getTables();
+    for (final Table table: tables)
+    {
+      final Collection<ForeignKey> foreignKeys = table.getForeignKeys();
+      for (final ForeignKey foreignKey: foreignKeys)
+      {
+        final List<ForeignKeyColumnReference> fkColumnRefs = foreignKey
+          .getColumnReferences();
+        for (final ForeignKeyColumnReference fkColumnRef: fkColumnRefs)
+        {
+          assertReferencedColumnExists(database,
+                                       fkColumnRef.getPrimaryKeyColumn());
+          assertReferencedColumnDoesNotExist(database,
+                                             fkColumnRef.getForeignKeyColumn(),
+                                             false);
+
+          fkReferenceCount++;
+        }
+      }
+    }
+
+    assertEquals(1, fkReferenceCount);
+  }
+
+  private void assertReferencedColumnDoesNotExist(final Database database,
+                                                  final Column column,
+                                                  final boolean assertDataNotLoaded)
+  {
+    final Table table = column.getParent();
+    assertNull("Primary key table table should not be in the database - "
+                   + table.getName(),
+               database.getTable(table.getSchema(), table.getName()));
+    assertTrue("Column references do not match",
+               column == table.getColumn(column.getName()));
+
+    if (assertDataNotLoaded)
+    {
+      try
+      {
+        table.getType();
+        fail("An exception should be thrown indicating that this table was not loaded from the database");
+      }
+      catch (final NotLoadedException e)
+      {
+        // Expected exception
+      }
+      try
+      {
+        column.getType();
+        fail("An exception should be thrown indicating that this table was not loaded from the database");
+      }
+      catch (final NotLoadedException e)
+      {
+        // Expected exception
+      }
+    }
+  }
+
+  private void assertReferencedColumnExists(final Database database,
+                                            final Column column)
+  {
+    assertTrue(column != null);
+    final Table table = column.getParent();
+    assertTrue("Table references do not match - " + table.getName(),
+               table == database.getTable(table.getSchema(), table.getName()));
+    assertTrue("Column references do not match",
+               column == table.getColumn(column.getName()));
   }
 
 }
