@@ -2354,7 +2354,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                   <nullable>false</nullable>
                                   <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                                   <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
-                                  <referencedColumn reference="269"/>
+                                  <referencedColumn class="column" reference="269"/>
                                   <privileges id="309">
                                     <objects id="310"/>
                                   </privileges>
@@ -2748,7 +2748,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                         <nullable>false</nullable>
                         <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                         <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
-                        <referencedColumn reference="275"/>
+                        <referencedColumn class="column" reference="275"/>
                         <privileges id="365">
                           <objects id="366"/>
                         </privileges>
@@ -4132,7 +4132,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                   <nullable>false</nullable>
                                   <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                                   <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
-                                  <referencedColumn id="528">
+                                  <referencedColumn class="column" id="528">
                                     <name>ID</name>
                                     <remarks>Unique (internal) id for book</remarks>
                                     <attributeMap id="529">
@@ -5215,7 +5215,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                         <nullable>false</nullable>
                         <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                         <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
-                        <referencedColumn reference="470"/>
+                        <referencedColumn class="column" reference="470"/>
                         <privileges id="674">
                           <objects id="675"/>
                         </privileges>
@@ -6829,7 +6829,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   <nullable>false</nullable>
                   <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                   <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
-                  <referencedColumn id="923">
+                  <referencedColumn class="column" id="923">
                     <name>ID</name>
                     <remarks></remarks>
                     <attributeMap id="924">
@@ -7404,7 +7404,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                               <nullable>false</nullable>
                               <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                               <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
-                              <referencedColumn id="963">
+                              <referencedColumn class="column" id="963">
                                 <name>ID</name>
                                 <remarks></remarks>
                                 <attributeMap id="964">
@@ -8602,7 +8602,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                           <nullable>false</nullable>
                                           <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                                           <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
-                                          <referencedColumn reference="923"/>
+                                          <referencedColumn class="column" reference="923"/>
                                           <privileges id="1039">
                                             <objects id="1040"/>
                                           </privileges>
@@ -8799,7 +8799,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                                 <nullable>false</nullable>
                                                 <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                                                 <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
-                                                <referencedColumn reference="963"/>
+                                                <referencedColumn class="column" reference="963"/>
                                                 <privileges id="1061">
                                                   <objects id="1062"/>
                                                 </privileges>

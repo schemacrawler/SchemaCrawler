@@ -27,7 +27,7 @@ final class TablesGraph
       return;
     }
 
-    for (final MutableTable table: tables)
+    for (final Table table: tables)
     {
       addVertex(table);
       for (final ForeignKey foreignKey: table.getForeignKeys())
