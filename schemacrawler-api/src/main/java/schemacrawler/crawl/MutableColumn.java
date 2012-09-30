@@ -44,7 +44,7 @@ class MutableColumn
   private String defaultValue;
   private boolean isPartOfPrimaryKey;
   private boolean isPartOfUniqueIndex;
-  private MutableColumn referencedColumn;
+  private Column referencedColumn;
   private final NamedObjectList<MutablePrivilege<Column>> privileges = new NamedObjectList<MutablePrivilege<Column>>();
 
   MutableColumn(final Table parent, final String name)
@@ -149,7 +149,7 @@ class MutableColumn
     isPartOfUniqueIndex = partOfUniqueIndex;
   }
 
-  void setReferencedColumn(final MutableColumn referencedColumn)
+  void setReferencedColumn(final Column referencedColumn)
   {
     this.referencedColumn = referencedColumn;
   }

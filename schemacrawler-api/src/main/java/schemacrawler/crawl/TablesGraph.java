@@ -8,11 +8,13 @@ import java.util.logging.Logger;
 
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnReference;
+import schemacrawler.schema.Table;
+import schemacrawler.schema.View;
 import sf.util.DirectedGraph;
 import sf.util.GraphException;
 
 final class TablesGraph
-  extends DirectedGraph<MutableTable>
+  extends DirectedGraph<Table>
 {
 
   private static final Logger LOGGER = Logger.getLogger(TablesGraph.class
@@ -33,9 +35,8 @@ final class TablesGraph
         for (final ForeignKeyColumnReference columnReference: foreignKey
           .getColumnReferences())
         {
-          addDirectedEdge((MutableTable) columnReference.getPrimaryKeyColumn()
-            .getParent(), (MutableTable) columnReference.getForeignKeyColumn()
-            .getParent());
+          addDirectedEdge(columnReference.getPrimaryKeyColumn().getParent(),
+                          columnReference.getForeignKeyColumn().getParent());
         }
       }
     }
@@ -49,25 +50,28 @@ final class TablesGraph
   {
     try
     {
-      final List<MutableTable> sortedTables = topologicalSort();
-      final List<MutableView> sortedViews = new ArrayList<MutableView>();
+      final List<Table> sortedTables = topologicalSort();
+      final List<View> sortedViews = new ArrayList<View>();
       int sortIndex = 0;
-      for (final MutableTable table: sortedTables)
+      for (final Table table: sortedTables)
       {
-        if (table instanceof MutableView)
+        if (table instanceof View)
         {
-          sortedViews.add((MutableView) table);
+          sortedViews.add((View) table);
         }
-        else
+        else if (table instanceof MutableTable)
         {
-          table.setSortIndex(sortIndex);
+          ((MutableTable) table).setSortIndex(sortIndex);
           sortIndex++;
         }
       }
-      for (final MutableView view: sortedViews)
+      for (final View view: sortedViews)
       {
-        view.setSortIndex(sortIndex);
-        sortIndex++;
+        if (view instanceof MutableView)
+        {
+          ((MutableView) view).setSortIndex(sortIndex);
+          sortIndex++;
+        }
       }
     }
     catch (final GraphException e)
