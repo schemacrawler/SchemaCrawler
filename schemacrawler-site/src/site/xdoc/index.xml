@@ -16,15 +16,18 @@
 					objects.
 				</p>
 				<p>
-					SchemaCrawler is a database schema discovery and comprehension tool. You can
+					SchemaCrawler is a database schema discovery and comprehension tool. 
+					SchemaCrawler has a good mix
+                    useful features for data governance. You can
 					<a href="schemacrawler_grep.html">search for database schema objects</a>
 					using regular expressions, and output the schema and data in a readable
-					text format. You can find potential schema design issues with
-					<a href="lint.html">lint.</a> The output serves for database documentation 
+					text format. The output serves for database documentation, and 
 					is designed to be <a href="http://en.wikipedia.org/wiki/Diff">diff-ed</a>
 					against other database schemas. SchemaCrawler also generates 
-					<a href="diagramming.html">schema diagrams.</a> SchemaCrawler has a good mix
-					useful features for data governance.
+					<a href="diagramming.html">schema diagrams.</a> You can <a href="scripting.html">execute scripts</a>
+					in any standard scripting language against your database.					
+					You can find potential schema design issues with
+                    <a href="lint.html">lint.</a> 
 				</p>
 				<p>
 					SchemaCrawler supports almost any database that has a JDBC driver,
@@ -32,7 +35,7 @@
 					<a href="bundled.html">bundled with drivers</a>
 					for some commonly used RDBMS systems. SchemaCrawler works with any
 					operating system that
-					supports Java.
+					supports Java 6 or better.
 				</p>
 			</subsection>
 			<subsection name="SchemaCrawler API">
