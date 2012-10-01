@@ -20,24 +20,29 @@
 			</subsection>
 			<subsection name="Examples">
 				<p>
-					The first thing to try is the SchemaCrawler examples.
+					The first thing to try is the <a
+                        href="https://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20Examples/">SchemaCrawler examples</a>.
 					Several
 					examples on
 					how to use
-					SchemaCrawler on the command line, as an ant
-					task or Maven
+					SchemaCrawler on the command line, as an <a href="http://ant.apache.org/">ant</a>
+					task or <a href="http://maven.apache.org/">Maven</a>
 					plugin,
 					as
 					an API, how to script
 					your
 					database using
-					JavaScript, Groovy, Ruby or Python, how to use
-					the
-					<a href="http://velocity.apache.org/">Apache Velocity
-					</a>
-					(templating) integration and how to create database diagrams with
-					<a href="http://www.graphviz.org/">Graphviz
-					</a>
+					JavaScript, <a href="http://groovy.codehaus.org/">Groovy,</a> 
+					<a href="http://www.ruby-lang.org/en/">Ruby</a> or <a href="http://www.python.org/">Python,</a> 
+					how to create database diagrams with
+					<a href="http://www.graphviz.org/">Graphviz,
+					</a> how to integrate with the
+                    <a href="http://www.springsource.org/spring-framework">Spring Framework,
+                    </a> and how to use
+                    the
+                    <a href="http://velocity.apache.org/">Apache Velocity
+                    </a>
+                    (templating) integration 
 					are provided with the
 					<a
 						href="https://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20Examples/">SchemaCrawler examples</a>
@@ -71,6 +76,11 @@
   </dependency>
 </dependencies>
         ]]></source>
+        <subsection name="OSGi">
+        </subsection>
+                <p>The SchemaCrawler jar file is bundled as an <a href="http://en.wikipedia.org/wiki/OSGi#Bundles">OSGi bundle</a>, 
+                and can be deployed into your OSGi Service Platform and your OSGi Bundle Repository.
+                </p>        
 			</subsection>
 		</section>
 		<section name="Building From the Source Code">
