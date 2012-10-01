@@ -76,8 +76,8 @@
   </dependency>
 </dependencies>
         ]]></source>
-        <subsection name="OSGi">
         </subsection>
+        <subsection name="OSGi">
                 <p>The SchemaCrawler jar file is bundled as an <a href="http://en.wikipedia.org/wiki/OSGi#Bundles">OSGi bundle</a>, 
                 and can be deployed into your OSGi Service Platform and your OSGi Bundle Repository.
                 </p>        
@@ -127,16 +127,16 @@
 					DB2 and Oracle. Download
 					the
 					<a href="http://www-306.ibm.com/software/data/db2/express/download.html">IBM DB2 JDBC
-						drivers
+						drivers,
 					</a>
-					, place them in the schemacrawler-db2 source directory, and install
+					 place them in the schemacrawler-db2 source directory, and install
 					them into your local
 					Maven repository
 					using the provided install
 					command. Similarly, download the
 					<a
-						href="http://www.oracle.com/technetwork/database/enterprise-edition/jdbc-112010-090769.html">Oracle JDBC drivers</a>
-					, put them into the schemacrawler-oracle source directory, and
+						href="http://www.oracle.com/technetwork/database/enterprise-edition/jdbc-112010-090769.html">Oracle JDBC drivers,</a>
+					 put them into the schemacrawler-oracle source directory, and
 					install them locally.
 				</p>
 			</subsection>
