@@ -1,5 +1,7 @@
 puts $database.schemaCrawlerInfo
+puts ''
 puts $database.databaseInfo
+puts ''
 puts $database.jdbcDriverInfo
 
 for table in $database.tables
