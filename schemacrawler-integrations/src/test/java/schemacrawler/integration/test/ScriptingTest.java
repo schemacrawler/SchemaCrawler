@@ -34,7 +34,7 @@ import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.integration.scripting.ScriptExecutable;
 import schemacrawler.tools.options.OutputOptions;
 
-public class ExtendedCommandsTest
+public class ScriptingTest
   extends BaseDatabaseTest
 {
 
@@ -44,7 +44,7 @@ public class ExtendedCommandsTest
   {
     executeExecutableAndCheckForOutputFile(new ScriptExecutable(),
                                            "plaintextschema.groovy",
-                                           "executableForGroovy");
+                                           "script_output.txt");
   }
 
   @Test
@@ -53,7 +53,16 @@ public class ExtendedCommandsTest
   {
     executeExecutableAndCheckForOutputFile(new ScriptExecutable(),
                                            "plaintextschema.py",
-                                           "executableForGroovy");
+                                           "script_output.txt");
+  }
+
+  @Test
+  public void executableRuby()
+    throws Exception
+  {
+    executeExecutableAndCheckForOutputFile(new ScriptExecutable(),
+                                           "plaintextschema.rb",
+                                           "script_output.txt");
   }
 
   private void executeExecutableAndCheckForOutputFile(final Executable executable,
@@ -71,8 +80,7 @@ public class ExtendedCommandsTest
     executable.setOutputOptions(outputOptions);
     executable.execute(getConnection());
 
-    final List<String> failures = TestUtility.compareOutput(referenceFileName
-                                                                + ".txt",
+    final List<String> failures = TestUtility.compareOutput(referenceFileName,
                                                             testOutputFile);
     if (failures.size() > 0)
     {
