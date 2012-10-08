@@ -30,7 +30,7 @@ import java.util.List;
  * @author Sualeh Fatehi
  */
 public interface Table
-  extends DatabaseObject
+  extends DatabaseObject, TypedObject<TableType>
 {
 
   /**
@@ -162,12 +162,5 @@ public interface Table
    * @return Triggers for the table.
    */
   Collection<Trigger> getTriggers();
-
-  /**
-   * Gets the table type.
-   * 
-   * @return Table type.
-   */
-  TableType getType();
 
 }
