@@ -29,7 +29,7 @@ import java.util.List;
  * @author Sualeh Fatehi
  */
 public interface Index
-  extends DependantObject<Table>
+  extends DependantObject<Table>, TypedObject<IndexType>
 {
 
   /**
@@ -56,13 +56,6 @@ public interface Index
    * @return Pages
    */
   int getPages();
-
-  /**
-   * Gets the index type.
-   * 
-   * @return Index type
-   */
-  IndexType getType();
 
   /**
    * If the index is unique.

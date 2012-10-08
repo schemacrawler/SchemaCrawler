@@ -27,7 +27,7 @@ package schemacrawler.schema;
  * @author Sualeh Fatehi
  */
 public interface BaseColumn<P extends DatabaseObject>
-  extends DependantObject<P>
+  extends DependantObject<P>, TypedObject<ColumnDataType>
 {
 
   /**
@@ -52,13 +52,6 @@ public interface BaseColumn<P extends DatabaseObject>
    * @return Column size
    */
   int getSize();
-
-  /**
-   * Get the data type of column.
-   * 
-   * @return Column data type
-   */
-  ColumnDataType getType();
 
   /**
    * Gets the width of the column, if the column width is required.
