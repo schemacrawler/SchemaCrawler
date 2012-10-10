@@ -276,7 +276,7 @@ final class DotWriter
       buffer.append("          <td> </td>").append(Utility.NEWLINE);
       buffer.append("          <td port=\"").append(nodeId(column))
         .append(".end\" align=\"right\">");
-      buffer.append(column.getType().getDatabaseSpecificTypeName())
+      buffer.append(column.getColumnDataType().getDatabaseSpecificTypeName())
         .append(column.getWidth());
       buffer.append("</td>").append(Utility.NEWLINE);
       buffer.append("        </tr>").append(Utility.NEWLINE);

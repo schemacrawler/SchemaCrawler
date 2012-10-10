@@ -27,7 +27,7 @@ package schemacrawler.schema;
  * @author Sualeh Fatehi
  */
 public interface BaseColumn<P extends DatabaseObject>
-  extends DependantObject<P>, TypedObject<ColumnDataType>
+  extends DependantObject<P>
 {
 
   /**
@@ -68,5 +68,12 @@ public interface BaseColumn<P extends DatabaseObject>
    * @return Whether the column is nullable
    */
   boolean isNullable();
+
+  /**
+   * Gets the column data type.
+   * 
+   * @return Column data type
+   */
+  ColumnDataType getColumnDataType();
 
 }

@@ -516,8 +516,8 @@ final class SchemaJsonFormatter
 
     try
     {
-      jsonColumn.put("dataType", column.getType().getTypeName());
-      jsonColumn.put("databaseSpecificType", column.getType()
+      jsonColumn.put("dataType", column.getColumnDataType().getTypeName());
+      jsonColumn.put("databaseSpecificType", column.getColumnDataType()
         .getDatabaseSpecificTypeName());
       jsonColumn.put("width", column.getWidth());
       jsonColumn.put("type", column.getColumnType().toString());
@@ -550,8 +550,8 @@ final class SchemaJsonFormatter
       }
       else
       {
-        jsonColumn.put("dataType", column.getType().getTypeName());
-        jsonColumn.put("databaseSpecificType", column.getType()
+        jsonColumn.put("dataType", column.getColumnDataType().getTypeName());
+        jsonColumn.put("databaseSpecificType", column.getColumnDataType()
           .getDatabaseSpecificTypeName());
         jsonColumn.put("width", column.getWidth());
         jsonColumn.put("size", column.getSize());

@@ -88,10 +88,10 @@ public class ResultColumnsTest
                    column.getFullName());
       assertEquals("Column type does not match",
                    columnDataTypes[columnIdx],
-                   column.getType().getDatabaseSpecificTypeName());
+                   column.getColumnDataType().getDatabaseSpecificTypeName());
       assertEquals("Column JDBC type does not match",
                    columnDataTypes[columnIdx],
-                   column.getType().getTypeName());
+                   column.getColumnDataType().getTypeName());
     }
 
     resultSet.close();
