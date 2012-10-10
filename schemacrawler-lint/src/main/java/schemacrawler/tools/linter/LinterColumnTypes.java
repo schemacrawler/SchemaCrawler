@@ -88,7 +88,7 @@ public class LinterColumnTypes
 
     for (final Column column: table.getColumns())
     {
-      columnTypes.add(column.getName(), column.getType());
+      columnTypes.add(column.getName(), column.getColumnDataType());
     }
   }
 

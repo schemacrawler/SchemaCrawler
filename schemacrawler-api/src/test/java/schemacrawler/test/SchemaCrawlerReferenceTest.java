@@ -244,7 +244,7 @@ public class SchemaCrawlerReferenceTest
       }
       try
       {
-        column.getType();
+        column.getColumnDataType();
         fail("An exception should be thrown indicating that this table was not loaded from the database");
       }
       catch (final NotLoadedException e)

@@ -168,9 +168,9 @@ final class MutableIndexColumn
   }
 
   @Override
-  public ColumnDataType getType()
+  public ColumnDataType getColumnDataType()
   {
-    return column.getType();
+    return column.getColumnDataType();
   }
 
   /**

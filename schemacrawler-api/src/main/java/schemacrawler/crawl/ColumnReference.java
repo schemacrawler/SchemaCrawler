@@ -84,7 +84,7 @@ final class ColumnReference
   }
 
   @Override
-  public ColumnDataType getType()
+  public ColumnDataType getColumnDataType()
   {
     throw new NotLoadedException();
   }

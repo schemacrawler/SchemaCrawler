@@ -119,7 +119,7 @@ final class DataResultSet
   private String convertColumnDataToString(final int i)
     throws SQLException
   {
-    final int javaSqlType = resultsColumns.get(i).getType().getType();
+    final int javaSqlType = resultsColumns.get(i).getColumnDataType().getType();
     String columnDataString;
     if (javaSqlType == Types.CLOB)
     {

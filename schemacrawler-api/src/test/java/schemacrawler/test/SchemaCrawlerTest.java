@@ -496,7 +496,7 @@ public class SchemaCrawlerTest
         {
           writer.println(String.format("   o--> %s [%s]",
                                        column.getFullName(),
-                                       column.getType()));
+                                       column.getColumnDataType()));
           final SortedMap<String, Object> columnAttributes = new TreeMap<String, Object>(column
             .getAttributes());
           for (final Entry<String, Object> columnAttribute: columnAttributes

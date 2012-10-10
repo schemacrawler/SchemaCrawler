@@ -113,10 +113,10 @@ abstract class AbstractColumn<P extends DatabaseObject>
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schema.BaseColumn#getType()
+   * @see schemacrawler.schema.BaseColumn#getColumnDataType()
    */
   @Override
-  public final ColumnDataType getType()
+  public final ColumnDataType getColumnDataType()
   {
     return type;
   }
@@ -130,7 +130,7 @@ abstract class AbstractColumn<P extends DatabaseObject>
   public final String getWidth()
   {
 
-    final ColumnDataType columnDataType = getType();
+    final ColumnDataType columnDataType = getColumnDataType();
     if (columnDataType == null)
     {
       return "";

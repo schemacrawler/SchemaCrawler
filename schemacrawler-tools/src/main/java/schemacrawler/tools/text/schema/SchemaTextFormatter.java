@@ -715,11 +715,11 @@ final class SchemaTextFormatter
       final String columnTypeName;
       if (options.isShowStandardColumnTypeNames())
       {
-        columnTypeName = column.getType().getTypeName();
+        columnTypeName = column.getColumnDataType().getTypeName();
       }
       else
       {
-        columnTypeName = column.getType().getDatabaseSpecificTypeName();
+        columnTypeName = column.getColumnDataType().getDatabaseSpecificTypeName();
       }
       final StringBuilder columnType = new StringBuilder();
       columnType.append(columnTypeName).append(column.getWidth());
@@ -755,10 +755,10 @@ final class SchemaTextFormatter
       }
       else
       {
-        String columnTypeName = column.getType().getDatabaseSpecificTypeName();
+        String columnTypeName = column.getColumnDataType().getDatabaseSpecificTypeName();
         if (options.isShowStandardColumnTypeNames())
         {
-          columnTypeName = column.getType().getTypeName();
+          columnTypeName = column.getColumnDataType().getTypeName();
         }
         final String columnType = columnTypeName + column.getWidth();
         final String nullable = column.isNullable()? "": " not null";

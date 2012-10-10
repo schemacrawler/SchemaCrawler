@@ -194,10 +194,10 @@ public class ExcludeTest
                        column.getFullName());
           assertEquals("Column type does not match for column " + column,
                        columnDataTypes[schemaIdx][tableIdx][columnIdx],
-                       column.getType().getDatabaseSpecificTypeName());
+                       column.getColumnDataType().getDatabaseSpecificTypeName());
           assertEquals("Column JDBC type does not match",
                        columnDataTypes[schemaIdx][tableIdx][columnIdx],
-                       column.getType().getTypeName());
+                       column.getColumnDataType().getTypeName());
         }
       }
     }

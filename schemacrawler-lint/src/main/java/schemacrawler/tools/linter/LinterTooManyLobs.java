@@ -74,7 +74,7 @@ public class LinterTooManyLobs
     for (final Column column: columns)
     {
       final JavaSqlTypeGroup javaSqlTypeGroup = JavaSqlTypesUtility
-        .lookupSqlDataType(column.getType().getType()).getJavaSqlTypeGroup();
+        .lookupSqlDataType(column.getColumnDataType().getType()).getJavaSqlTypeGroup();
       if (javaSqlTypeGroup == JavaSqlTypeGroup.large_object)
       {
         lobColumns.add(column);
