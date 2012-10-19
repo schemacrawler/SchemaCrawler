@@ -6,14 +6,14 @@ $database.jdbcDriverInfo
 SET SCHEMA $schema.fullName;
 
 #foreach($table in $database.getTables($schema))
-#if ($table.type == "table")
+#if ($table.tableType == "table")
 CREATE TABLE $table.name
 (
 #foreach($column in $table.columns)
 #if($velocityCount > 1)
 ,
 #end
-  $column.name $column.type#if(!$column.isNullable()) NOT NULL#end
+  $column.name $column.columnDataType#if(!$column.isNullable()) NOT NULL#end
 #end
 
 );

@@ -87,7 +87,7 @@ final class LintJsonFormatter
 
         jsonTable.put("name", table.getName());
         jsonTable.put("fullName", table.getFullName());
-        jsonTable.put("type", table.getType());
+        jsonTable.put("type", table.getTableType());
 
         final JSONArray jsonLints = handleLints(lints);
         jsonTable.put("lints", jsonLints);

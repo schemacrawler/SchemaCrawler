@@ -49,7 +49,7 @@ public class NamedObjectTest
       for (final String tableName: tableNames)
       {
         table = new MutableTable(schema, tableName);
-        table.setType(TableType.table);
+        table.setTableType(TableType.table);
         tables.add(table);
       }
     }

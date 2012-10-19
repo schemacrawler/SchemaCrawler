@@ -156,7 +156,7 @@ final class LintTextFormatter
   private void printTableName(final Table table)
   {
     final String nameRow = formattingHelper.createNameRow(table.getFullName(),
-                                                          "[" + table.getType()
+                                                          "[" + table.getTableType()
                                                               + "]",
                                                           true);
     out.println(nameRow);

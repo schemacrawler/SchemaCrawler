@@ -31,6 +31,13 @@ public interface BaseColumn<P extends DatabaseObject>
 {
 
   /**
+   * Gets the column data type.
+   * 
+   * @return Column data type
+   */
+  ColumnDataType getColumnDataType();
+
+  /**
    * Get the number of fractional digits.
    * 
    * @return Number of fractional digits
@@ -68,12 +75,5 @@ public interface BaseColumn<P extends DatabaseObject>
    * @return Whether the column is nullable
    */
   boolean isNullable();
-
-  /**
-   * Gets the column data type.
-   * 
-   * @return Column data type
-   */
-  ColumnDataType getColumnDataType();
 
 }

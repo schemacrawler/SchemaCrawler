@@ -45,7 +45,7 @@ class MutableIndex
 
   private final NamedObjectList<MutableIndexColumn> columns = new NamedObjectList<MutableIndexColumn>();
   private boolean isUnique;
-  private IndexType type;
+  private IndexType indexType;
   private int cardinality;
   private int pages;
 
@@ -53,7 +53,7 @@ class MutableIndex
   {
     super(parent, name);
     // Default values
-    type = IndexType.unknown;
+    indexType = IndexType.unknown;
   }
 
   /**
@@ -104,23 +104,23 @@ class MutableIndex
   /**
    * {@inheritDoc}
    * 
+   * @see Index#getIndexType()
+   */
+  @Override
+  public final IndexType getIndexType()
+  {
+    return indexType;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
    * @see Index#getPages()
    */
   @Override
   public final int getPages()
   {
     return pages;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see Index#getType()
-   */
-  @Override
-  public final IndexType getType()
-  {
-    return type;
   }
 
   /**
@@ -144,14 +144,18 @@ class MutableIndex
     this.cardinality = cardinality;
   }
 
+  final void setIndexType(final IndexType indexType)
+  {
+    if (indexType == null)
+    {
+      throw new IllegalArgumentException("Null index type");
+    }
+    this.indexType = indexType;
+  }
+
   final void setPages(final int pages)
   {
     this.pages = pages;
-  }
-
-  final void setType(final IndexType type)
-  {
-    this.type = type;
   }
 
   final void setUnique(final boolean unique)

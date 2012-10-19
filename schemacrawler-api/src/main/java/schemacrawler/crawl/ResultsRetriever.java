@@ -97,7 +97,7 @@ final class ResultsRetriever
       final MutableResultsColumn column = new MutableResultsColumn(table,
                                                                    columnName);
       column.setOrdinalPosition(i);
-      column.setType(columnDataType);
+      column.setColumnDataType(columnDataType);
 
       column.setLabel(resultsMetaData.getColumnLabel(i));
       column.setDisplaySize(resultsMetaData.getColumnDisplaySize(i));

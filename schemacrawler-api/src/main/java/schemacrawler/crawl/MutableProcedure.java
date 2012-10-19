@@ -43,14 +43,14 @@ final class MutableProcedure
 
   private static final long serialVersionUID = 3906925686089134130L;
 
-  private ProcedureReturnType procedureType;
+  private ProcedureReturnType returnType;
   private final NamedObjectList<MutableProcedureColumn> columns = new NamedObjectList<MutableProcedureColumn>();
 
   MutableProcedure(final Schema schema, final String name)
   {
     super(schema, name);
     // Default values
-    procedureType = ProcedureReturnType.unknown;
+    returnType = ProcedureReturnType.unknown;
   }
 
   /**
@@ -83,11 +83,11 @@ final class MutableProcedure
   @Override
   public ProcedureReturnType getReturnType()
   {
-    return procedureType;
+    return returnType;
   }
 
   @Override
-  public RoutineType getType()
+  public RoutineType getRoutineType()
   {
     return RoutineType.procedure;
   }
@@ -97,13 +97,13 @@ final class MutableProcedure
     columns.add(column);
   }
 
-  void setType(final ProcedureReturnType type)
+  void setReturnType(final ProcedureReturnType returnType)
   {
-    if (type == null)
+    if (returnType == null)
     {
-      throw new IllegalArgumentException("Null procedure type");
+      throw new IllegalArgumentException("Null procedure return type");
     }
-    procedureType = type;
+    this.returnType = returnType;
   }
 
 }

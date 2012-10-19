@@ -40,7 +40,7 @@ abstract class AbstractColumn<P extends DatabaseObject>
 
   private static final long serialVersionUID = -8492662324895309485L;
 
-  private ColumnDataType type;
+  private ColumnDataType columnDataType;
   private int ordinalPosition;
   private int size;
   private int decimalDigits;
@@ -80,6 +80,17 @@ abstract class AbstractColumn<P extends DatabaseObject>
   /**
    * {@inheritDoc}
    * 
+   * @see schemacrawler.schema.BaseColumn#getColumnDataType()
+   */
+  @Override
+  public final ColumnDataType getColumnDataType()
+  {
+    return columnDataType;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
    * @see schemacrawler.schema.BaseColumn#getDecimalDigits()
    */
   @Override
@@ -108,17 +119,6 @@ abstract class AbstractColumn<P extends DatabaseObject>
   public final int getSize()
   {
     return size;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.BaseColumn#getColumnDataType()
-   */
-  @Override
-  public final ColumnDataType getColumnDataType()
-  {
-    return type;
   }
 
   /**
@@ -173,6 +173,11 @@ abstract class AbstractColumn<P extends DatabaseObject>
     return nullable;
   }
 
+  void setColumnDataType(final ColumnDataType columnDataType)
+  {
+    this.columnDataType = columnDataType;
+  }
+
   final void setDecimalDigits(final int decimalDigits)
   {
     this.decimalDigits = decimalDigits;
@@ -197,11 +202,6 @@ abstract class AbstractColumn<P extends DatabaseObject>
   final void setSize(final int size)
   {
     this.size = size;
-  }
-
-  void setType(final ColumnDataType type)
-  {
-    this.type = type;
   }
 
 }

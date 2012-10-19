@@ -131,7 +131,7 @@ final class SchemaTextFormatter
   public void handle(final Routine routine)
   {
     final String routineTypeDetail = String.format("%s, %s",
-                                                   routine.getType(),
+                                                   routine.getRoutineType(),
                                                    routine.getReturnType());
     final String routineName;
     if (options.isShowUnqualifiedNames())
@@ -248,7 +248,7 @@ final class SchemaTextFormatter
     {
       tableName = table.getFullName();
     }
-    final String tableType = "[" + table.getType() + "]";
+    final String tableType = "[" + table.getTableType() + "]";
 
     if (isList)
     {
@@ -644,7 +644,7 @@ final class SchemaTextFormatter
         {
           indexName = index.getName();
         }
-        final IndexType indexType = index.getType();
+        final IndexType indexType = index.getIndexType();
         String indexTypeString = "";
         if (indexType != IndexType.unknown && indexType != IndexType.other)
         {

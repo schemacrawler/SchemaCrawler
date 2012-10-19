@@ -42,6 +42,12 @@ final class ColumnReference
   }
 
   @Override
+  public ColumnDataType getColumnDataType()
+  {
+    throw new NotLoadedException();
+  }
+
+  @Override
   public int getDecimalDigits()
   {
     throw new NotLoadedException();
@@ -79,12 +85,6 @@ final class ColumnReference
 
   @Override
   public int getSize()
-  {
-    throw new NotLoadedException();
-  }
-
-  @Override
-  public ColumnDataType getColumnDataType()
   {
     throw new NotLoadedException();
   }
