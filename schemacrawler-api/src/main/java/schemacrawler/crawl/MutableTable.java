@@ -62,7 +62,7 @@ class MutableTable
 
   private static final long serialVersionUID = 3257290248802284852L;
 
-  private TableType type = TableType.unknown; // Default value
+  private TableType tableType = TableType.unknown; // Default value
   private MutablePrimaryKey primaryKey;
   private final NamedObjectList<MutableColumn> columns = new NamedObjectList<MutableColumn>();
   private final NamedObjectList<MutableForeignKey> foreignKeys = new NamedObjectList<MutableForeignKey>();
@@ -301,6 +301,17 @@ class MutableTable
   /**
    * {@inheritDoc}
    * 
+   * @see Table#getTableType()
+   */
+  @Override
+  public TableType getTableType()
+  {
+    return tableType;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
    * @see schemacrawler.schema.Table#getTrigger(java.lang.String)
    */
   @Override
@@ -318,17 +329,6 @@ class MutableTable
   public Collection<Trigger> getTriggers()
   {
     return new ArrayList<Trigger>(triggers.values());
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see Table#getType()
-   */
-  @Override
-  public TableType getType()
-  {
-    return type;
   }
 
   void addCheckConstraint(final MutableCheckConstraint checkConstraint)
@@ -421,13 +421,13 @@ class MutableTable
     this.sortIndex = sortIndex;
   }
 
-  void setType(final TableType type)
+  void setTableType(final TableType tableType)
   {
-    if (type == null)
+    if (tableType == null)
     {
       throw new IllegalArgumentException("Null table type");
     }
-    this.type = type;
+    this.tableType = tableType;
   }
 
   private Collection<ForeignKey> getForeignKeys(final TableAssociationType tableAssociationType)

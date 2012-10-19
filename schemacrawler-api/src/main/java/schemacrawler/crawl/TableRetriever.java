@@ -141,9 +141,8 @@ final class TableRetriever
           final String remarks = results.getString("REMARKS");
 
           column.setOrdinalPosition(ordinalPosition);
-          column.setType(lookupOrCreateColumnDataType(table.getSchema(),
-                                                      dataType,
-                                                      typeName));
+          column.setColumnDataType(lookupOrCreateColumnDataType(table
+            .getSchema(), dataType, typeName));
           column.setSize(size);
           column.setDecimalDigits(decimalDigits);
           column.setRemarks(remarks);
@@ -349,7 +348,7 @@ final class TableRetriever
         }
         if (tableInclusionRule.include(table.getFullName()))
         {
-          table.setType(tableType);
+          table.setTableType(tableType);
           table.setRemarks(remarks);
 
           database.addTable(table);
@@ -509,7 +508,7 @@ final class TableRetriever
           //
           index.addColumn(indexColumn);
           index.setUnique(uniqueIndex);
-          index.setType(IndexType.valueOf(type));
+          index.setIndexType(IndexType.valueOf(type));
           index.setCardinality(cardinality);
           index.setPages(pages);
           index.addAttributes(results.getAttributes());

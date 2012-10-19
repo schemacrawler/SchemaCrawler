@@ -71,10 +71,10 @@ class MutableView
   /**
    * {@inheritDoc}
    * 
-   * @see View#getType()
+   * @see View#getTableType()
    */
   @Override
-  public TableType getType()
+  public TableType getTableType()
   {
     return TableType.view;
   }
@@ -102,7 +102,7 @@ class MutableView
   }
 
   @Override
-  void setType(final TableType type)
+  void setTableType(final TableType type)
   {
     if (type != TableType.view)
     {

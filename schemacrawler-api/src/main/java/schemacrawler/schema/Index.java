@@ -29,7 +29,7 @@ import java.util.List;
  * @author Sualeh Fatehi
  */
 public interface Index
-  extends DependantObject<Table>, TypedObject<IndexType>
+  extends DependantObject<Table>
 {
 
   /**
@@ -47,6 +47,13 @@ public interface Index
    * @return Columns of the table.
    */
   List<IndexColumn> getColumns();
+
+  /**
+   * Gets the index type.
+   * 
+   * @return Index type.
+   */
+  IndexType getIndexType();
 
   /**
    * Gets the pages. When the index type is statistic, then this is the

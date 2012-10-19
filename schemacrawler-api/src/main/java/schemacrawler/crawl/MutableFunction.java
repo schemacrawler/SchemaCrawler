@@ -44,7 +44,7 @@ final class MutableFunction
 
   private static final long serialVersionUID = 3906925686089134130L;
 
-  private FunctionReturnType functionType;
+  private FunctionReturnType returnType;
   private final NamedObjectList<MutableFunctionColumn> columns = new NamedObjectList<MutableFunctionColumn>();
   private RoutineBodyType routineBodyType;
 
@@ -52,7 +52,7 @@ final class MutableFunction
   {
     super(schema, name);
     // Default values
-    functionType = FunctionReturnType.unknown;
+    returnType = FunctionReturnType.unknown;
     routineBodyType = RoutineBodyType.unknown;
   }
 
@@ -86,7 +86,7 @@ final class MutableFunction
   @Override
   public FunctionReturnType getReturnType()
   {
-    return functionType;
+    return returnType;
   }
 
   /**
@@ -101,7 +101,7 @@ final class MutableFunction
   }
 
   @Override
-  public RoutineType getType()
+  public RoutineType getRoutineType()
   {
     return RoutineType.function;
   }
@@ -111,19 +111,19 @@ final class MutableFunction
     columns.add(column);
   }
 
+  void setReturnType(final FunctionReturnType returnType)
+  {
+    if (returnType == null)
+    {
+      throw new IllegalArgumentException("Null function return type");
+    }
+    this.returnType = returnType;
+  }
+
   @Override
   void setRoutineBodyType(final RoutineBodyType routineBodyType)
   {
     this.routineBodyType = routineBodyType;
-  }
-
-  void setType(final FunctionReturnType type)
-  {
-    if (type == null)
-    {
-      throw new IllegalArgumentException("Null function type");
-    }
-    functionType = type;
   }
 
 }

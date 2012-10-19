@@ -156,7 +156,7 @@ final class SchemaJsonFormatter
       {
         jsonRoutine.put("fullName", routine.getFullName());
       }
-      jsonRoutine.put("type", routine.getType());
+      jsonRoutine.put("type", routine.getRoutineType());
       jsonRoutine.put("returnType", routine.getReturnType());
 
       if (!isList)
@@ -245,7 +245,7 @@ final class SchemaJsonFormatter
       {
         jsonTable.put("fullName", table.getFullName());
       }
-      jsonTable.put("type", table.getType());
+      jsonTable.put("type", table.getTableType());
 
       if (!isList)
       {
@@ -490,7 +490,7 @@ final class SchemaJsonFormatter
         jsonIndex.put("name", index.getName());
       }
 
-      final IndexType indexType = index.getType();
+      final IndexType indexType = index.getIndexType();
       if (indexType != IndexType.unknown && indexType != IndexType.other)
       {
         jsonIndex.put("type", indexType.toString());

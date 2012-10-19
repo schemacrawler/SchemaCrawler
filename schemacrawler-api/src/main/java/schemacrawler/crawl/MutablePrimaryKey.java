@@ -50,7 +50,7 @@ class MutablePrimaryKey
     setCardinality(index.getCardinality());
     setPages(index.getPages());
     setRemarks(index.getRemarks());
-    setType(index.getType());
+    setIndexType(index.getIndexType());
     setUnique(index.isUnique());
     // Copy columns
     for (final IndexColumn column: index.getColumns())

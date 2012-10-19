@@ -108,9 +108,8 @@ final class RoutineRetriever
           final String remarks = results.getString("REMARKS");
           column.setOrdinalPosition(ordinalNumber++);
           column.setFunctionColumnType(FunctionColumnType.valueOf(columnType));
-          column.setType(lookupOrCreateColumnDataType(function.getSchema(),
-                                                      dataType,
-                                                      typeName));
+          column.setColumnDataType(lookupOrCreateColumnDataType(function
+            .getSchema(), dataType, typeName));
           column.setSize(length);
           column.setPrecision(precision);
           column.setNullable(isNullable);
@@ -183,7 +182,7 @@ final class RoutineRetriever
                                                              functionName);
         if (routineInclusionRule.include(function.getFullName()))
         {
-          function.setType(FunctionReturnType.valueOf(functionType));
+          function.setReturnType(FunctionReturnType.valueOf(functionType));
           function.setSpecificName(specificName);
           function.setRemarks(remarks);
           function.addAttributes(results.getAttributes());
@@ -266,9 +265,8 @@ final class RoutineRetriever
           column.setOrdinalPosition(ordinalNumber++);
           column
             .setProcedureColumnType(ProcedureColumnType.valueOf(columnType));
-          column.setType(lookupOrCreateColumnDataType(procedure.getSchema(),
-                                                      dataType,
-                                                      typeName));
+          column.setColumnDataType(lookupOrCreateColumnDataType(procedure
+            .getSchema(), dataType, typeName));
           column.setSize(length);
           column.setPrecision(precision);
           column.setNullable(isNullable);
@@ -330,7 +328,7 @@ final class RoutineRetriever
                                                                 procedureName);
         if (routineInclusionRule.include(procedure.getFullName()))
         {
-          procedure.setType(ProcedureReturnType.valueOf(procedureType));
+          procedure.setReturnType(ProcedureReturnType.valueOf(procedureType));
           procedure.setSpecificName(specificName);
           procedure.setRemarks(remarks);
           procedure.addAttributes(results.getAttributes());

@@ -57,6 +57,12 @@ final class MutableIndexColumn
     return comparison;
   }
 
+  @Override
+  public ColumnDataType getColumnDataType()
+  {
+    return column.getColumnDataType();
+  }
+
   /**
    * {@inheritDoc}
    * 
@@ -165,12 +171,6 @@ final class MutableIndexColumn
   public IndexColumnSortSequence getSortSequence()
   {
     return sortSequence;
-  }
-
-  @Override
-  public ColumnDataType getColumnDataType()
-  {
-    return column.getColumnDataType();
   }
 
   /**

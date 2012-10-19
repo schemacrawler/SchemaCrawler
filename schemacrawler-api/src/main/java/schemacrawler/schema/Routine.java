@@ -23,7 +23,7 @@ package schemacrawler.schema;
 import java.util.List;
 
 public interface Routine
-  extends DatabaseObject, TypedObject<RoutineType>
+  extends DatabaseObject
 {
 
   /**
@@ -62,6 +62,13 @@ public interface Routine
    * @return Routine body type
    */
   RoutineBodyType getRoutineBodyType();
+
+  /**
+   * Gets the routine type.
+   * 
+   * @return Routine type.
+   */
+  RoutineType getRoutineType();
 
   /**
    * The name which uniquely identifies this routine within its schema.

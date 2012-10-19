@@ -481,7 +481,7 @@ public class SchemaCrawlerTest
       {
         writer.println(String.format("o--> %s [%s]",
                                      table.getFullName(),
-                                     table.getType()));
+                                     table.getTableType()));
         final SortedMap<String, Object> tableAttributes = new TreeMap<String, Object>(table
           .getAttributes());
         for (final Entry<String, Object> tableAttribute: tableAttributes

@@ -167,6 +167,12 @@ final class TableReference
   }
 
   @Override
+  public TableType getTableType()
+  {
+    throw new NotLoadedException();
+  }
+
+  @Override
   public Trigger getTrigger(final String name)
   {
     throw new NotLoadedException();
@@ -174,12 +180,6 @@ final class TableReference
 
   @Override
   public Collection<Trigger> getTriggers()
-  {
-    throw new NotLoadedException();
-  }
-
-  @Override
-  public TableType getType()
   {
     throw new NotLoadedException();
   }

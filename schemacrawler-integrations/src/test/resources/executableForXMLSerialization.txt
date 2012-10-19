@@ -1820,7 +1820,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
             <schemaName>&quot;PUBLISHER SALES&quot;</schemaName>
             <attributeMap id="262"/>
           </schema>
-          <type>table</type>
+          <tableType>table</tableType>
           <primaryKey id="263">
             <name>PK_CUSTOMERS</name>
             <attributeMap id="264"/>
@@ -1890,7 +1890,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                       </attributeMap>
                       <schema class="schema" reference="261"/>
                       <parent class="table" reference="259"/>
-                      <type class="columnDataType" reference="253"/>
+                      <columnDataType class="columnDataType" reference="253"/>
                       <ordinalPosition>4</ordinalPosition>
                       <size>50</size>
                       <decimalDigits>0</decimalDigits>
@@ -1968,7 +1968,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                       </attributeMap>
                       <schema class="schema" reference="261"/>
                       <parent class="table" reference="259"/>
-                      <type class="columnDataType" reference="253"/>
+                      <columnDataType class="columnDataType" reference="253"/>
                       <ordinalPosition>3</ordinalPosition>
                       <size>10</size>
                       <decimalDigits>0</decimalDigits>
@@ -1987,7 +1987,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
               </objects>
             </columns>
             <isUnique>false</isUnique>
-            <type>unknown</type>
+            <indexType>unknown</indexType>
             <cardinality>0</cardinality>
             <pages>0</pages>
           </primaryKey>
@@ -2050,7 +2050,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   </attributeMap>
                   <schema class="schema" reference="261"/>
                   <parent class="table" reference="259"/>
-                  <type class="columnDataType" reference="253"/>
+                  <columnDataType class="columnDataType" reference="253"/>
                   <ordinalPosition>1</ordinalPosition>
                   <size>50</size>
                   <decimalDigits>0</decimalDigits>
@@ -2127,7 +2127,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   </attributeMap>
                   <schema class="schema" reference="261"/>
                   <parent class="table" reference="259"/>
-                  <type class="columnDataType" reference="253"/>
+                  <columnDataType class="columnDataType" reference="253"/>
                   <ordinalPosition>2</ordinalPosition>
                   <size>2</size>
                   <decimalDigits>0</decimalDigits>
@@ -2218,7 +2218,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                           <remarks></remarks>
                           <attributeMap id="300"/>
                           <schema class="schema" reference="297"/>
-                          <type>table</type>
+                          <tableType>table</tableType>
                           <columns id="301">
                             <objects id="302">
                               <entry>
@@ -2278,7 +2278,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                   </attributeMap>
                                   <schema class="schema" reference="297"/>
                                   <parent class="table" reference="299"/>
-                                  <type class="columnDataType" reference="225"/>
+                                  <columnDataType class="columnDataType" reference="225"/>
                                   <ordinalPosition>3</ordinalPosition>
                                   <size>32</size>
                                   <decimalDigits>0</decimalDigits>
@@ -2347,7 +2347,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                   </attributeMap>
                                   <schema class="schema" reference="297"/>
                                   <parent class="table" reference="299"/>
-                                  <type class="columnDataType" reference="253"/>
+                                  <columnDataType class="columnDataType" reference="253"/>
                                   <ordinalPosition>2</ordinalPosition>
                                   <size>50</size>
                                   <decimalDigits>0</decimalDigits>
@@ -2417,7 +2417,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                   </attributeMap>
                                   <schema class="schema" reference="297"/>
                                   <parent class="table" reference="299"/>
-                                  <type class="columnDataType" reference="217"/>
+                                  <columnDataType class="columnDataType" reference="217"/>
                                   <ordinalPosition>4</ordinalPosition>
                                   <size>10</size>
                                   <decimalDigits>0</decimalDigits>
@@ -2490,7 +2490,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                   </attributeMap>
                                   <schema class="schema" reference="297"/>
                                   <parent class="table" reference="299"/>
-                                  <type class="columnDataType" reference="221"/>
+                                  <columnDataType class="columnDataType" reference="221"/>
                                   <ordinalPosition>5</ordinalPosition>
                                   <size>64</size>
                                   <decimalDigits>0</decimalDigits>
@@ -2577,7 +2577,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                     </objects>
                                   </columns>
                                   <isUnique>false</isUnique>
-                                  <type>other</type>
+                                  <indexType>other</indexType>
                                   <cardinality>0</cardinality>
                                   <pages>0</pages>
                                 </index>
@@ -2741,7 +2741,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                           </privileges>
                           <sortIndex>0</sortIndex>
                         </parent>
-                        <type class="columnDataType" reference="253"/>
+                        <columnDataType class="columnDataType" reference="253"/>
                         <ordinalPosition>1</ordinalPosition>
                         <size>10</size>
                         <decimalDigits>0</decimalDigits>
@@ -2834,7 +2834,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                     </objects>
                   </columns>
                   <isUnique>true</isUnique>
-                  <type>other</type>
+                  <indexType>other</indexType>
                   <cardinality>0</cardinality>
                   <pages>0</pages>
                 </index>
@@ -3056,7 +3056,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
             <schemaName>BOOKS</schemaName>
             <attributeMap id="419"/>
           </schema>
-          <type>table</type>
+          <tableType>table</tableType>
           <columns id="420">
             <objects id="421">
               <entry>
@@ -3116,7 +3116,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   </attributeMap>
                   <schema class="schema" reference="418"/>
                   <parent class="table" reference="416"/>
-                  <type class="columnDataType" reference="225"/>
+                  <columnDataType class="columnDataType" reference="225"/>
                   <ordinalPosition>1</ordinalPosition>
                   <size>32</size>
                   <decimalDigits>0</decimalDigits>
@@ -3262,7 +3262,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
             <schemaName>BOOKS</schemaName>
             <attributeMap id="463"/>
           </schema>
-          <type>table</type>
+          <tableType>table</tableType>
           <primaryKey id="464">
             <name>PK_AUTHORS</name>
             <attributeMap id="465"/>
@@ -3332,7 +3332,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                       </attributeMap>
                       <schema class="schema" reference="462"/>
                       <parent class="table" reference="460"/>
-                      <type class="columnDataType" reference="225"/>
+                      <columnDataType class="columnDataType" reference="225"/>
                       <ordinalPosition>1</ordinalPosition>
                       <size>32</size>
                       <decimalDigits>0</decimalDigits>
@@ -3351,7 +3351,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
               </objects>
             </columns>
             <isUnique>false</isUnique>
-            <type>unknown</type>
+            <indexType>unknown</indexType>
             <cardinality>0</cardinality>
             <pages>0</pages>
           </primaryKey>
@@ -3414,7 +3414,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   </attributeMap>
                   <schema class="schema" reference="462"/>
                   <parent class="table" reference="460"/>
-                  <type class="columnDataType" reference="253"/>
+                  <columnDataType class="columnDataType" reference="253"/>
                   <ordinalPosition>4</ordinalPosition>
                   <size>255</size>
                   <decimalDigits>0</decimalDigits>
@@ -3483,7 +3483,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   </attributeMap>
                   <schema class="schema" reference="462"/>
                   <parent class="table" reference="460"/>
-                  <type class="columnDataType" reference="253"/>
+                  <columnDataType class="columnDataType" reference="253"/>
                   <ordinalPosition>5</ordinalPosition>
                   <size>255</size>
                   <decimalDigits>0</decimalDigits>
@@ -3552,7 +3552,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   </attributeMap>
                   <schema class="schema" reference="462"/>
                   <parent class="table" reference="460"/>
-                  <type class="columnDataType" reference="253"/>
+                  <columnDataType class="columnDataType" reference="253"/>
                   <ordinalPosition>6</ordinalPosition>
                   <size>50</size>
                   <decimalDigits>0</decimalDigits>
@@ -3621,7 +3621,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   </attributeMap>
                   <schema class="schema" reference="462"/>
                   <parent class="table" reference="460"/>
-                  <type class="columnDataType" reference="253"/>
+                  <columnDataType class="columnDataType" reference="253"/>
                   <ordinalPosition>9</ordinalPosition>
                   <size>50</size>
                   <decimalDigits>0</decimalDigits>
@@ -3690,7 +3690,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   </attributeMap>
                   <schema class="schema" reference="462"/>
                   <parent class="table" reference="460"/>
-                  <type class="columnDataType" reference="253"/>
+                  <columnDataType class="columnDataType" reference="253"/>
                   <ordinalPosition>2</ordinalPosition>
                   <size>20</size>
                   <decimalDigits>0</decimalDigits>
@@ -3763,7 +3763,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   </attributeMap>
                   <schema class="schema" reference="462"/>
                   <parent class="table" reference="460"/>
-                  <type class="columnDataType" reference="253"/>
+                  <columnDataType class="columnDataType" reference="253"/>
                   <ordinalPosition>3</ordinalPosition>
                   <size>20</size>
                   <decimalDigits>0</decimalDigits>
@@ -3832,7 +3832,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   </attributeMap>
                   <schema class="schema" reference="462"/>
                   <parent class="table" reference="460"/>
-                  <type class="columnDataType" reference="253"/>
+                  <columnDataType class="columnDataType" reference="253"/>
                   <ordinalPosition>8</ordinalPosition>
                   <size>10</size>
                   <decimalDigits>0</decimalDigits>
@@ -3901,7 +3901,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   </attributeMap>
                   <schema class="schema" reference="462"/>
                   <parent class="table" reference="460"/>
-                  <type class="columnDataType" reference="253"/>
+                  <columnDataType class="columnDataType" reference="253"/>
                   <ordinalPosition>7</ordinalPosition>
                   <size>2</size>
                   <decimalDigits>0</decimalDigits>
@@ -3992,7 +3992,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                           <remarks>Relationship between books and their authors, along with the latest updated information</remarks>
                           <attributeMap id="519"/>
                           <schema class="schema" reference="516"/>
-                          <type>table</type>
+                          <tableType>table</tableType>
                           <columns id="520">
                             <objects id="521">
                               <entry>
@@ -4052,7 +4052,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                   </attributeMap>
                                   <schema class="schema" reference="516"/>
                                   <parent class="table" reference="518"/>
-                                  <type class="columnDataType" reference="215"/>
+                                  <columnDataType class="columnDataType" reference="215"/>
                                   <ordinalPosition>3</ordinalPosition>
                                   <size>16777216</size>
                                   <decimalDigits>0</decimalDigits>
@@ -4125,7 +4125,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                   </attributeMap>
                                   <schema class="schema" reference="516"/>
                                   <parent class="table" reference="518"/>
-                                  <type class="columnDataType" reference="225"/>
+                                  <columnDataType class="columnDataType" reference="225"/>
                                   <ordinalPosition>1</ordinalPosition>
                                   <size>32</size>
                                   <decimalDigits>0</decimalDigits>
@@ -4195,7 +4195,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                       <remarks>Details for published books</remarks>
                                       <attributeMap id="533"/>
                                       <schema class="schema" reference="530"/>
-                                      <type>table</type>
+                                      <tableType>table</tableType>
                                       <primaryKey id="534">
                                         <name>PK_BOOKS</name>
                                         <attributeMap id="535"/>
@@ -4219,7 +4219,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                           </objects>
                                         </columns>
                                         <isUnique>false</isUnique>
-                                        <type>unknown</type>
+                                        <indexType>unknown</indexType>
                                         <cardinality>0</cardinality>
                                         <pages>0</pages>
                                       </primaryKey>
@@ -4282,7 +4282,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                               </attributeMap>
                                               <schema class="schema" reference="530"/>
                                               <parent class="table" reference="532"/>
-                                              <type class="columnDataType" reference="253"/>
+                                              <columnDataType class="columnDataType" reference="253"/>
                                               <ordinalPosition>3</ordinalPosition>
                                               <size>255</size>
                                               <decimalDigits>0</decimalDigits>
@@ -4355,7 +4355,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                               </attributeMap>
                                               <schema class="schema" reference="530"/>
                                               <parent class="table" reference="532"/>
-                                              <type class="columnDataType" reference="221"/>
+                                              <columnDataType class="columnDataType" reference="221"/>
                                               <ordinalPosition>6</ordinalPosition>
                                               <size>64</size>
                                               <decimalDigits>0</decimalDigits>
@@ -4424,7 +4424,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                               </attributeMap>
                                               <schema class="schema" reference="530"/>
                                               <parent class="table" reference="532"/>
-                                              <type class="columnDataType" reference="217"/>
+                                              <columnDataType class="columnDataType" reference="217"/>
                                               <ordinalPosition>5</ordinalPosition>
                                               <size>10</size>
                                               <decimalDigits>0</decimalDigits>
@@ -4493,7 +4493,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                               </attributeMap>
                                               <schema class="schema" reference="530"/>
                                               <parent class="table" reference="532"/>
-                                              <type class="columnDataType" reference="225"/>
+                                              <columnDataType class="columnDataType" reference="225"/>
                                               <ordinalPosition>4</ordinalPosition>
                                               <size>32</size>
                                               <decimalDigits>0</decimalDigits>
@@ -4562,7 +4562,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                               </attributeMap>
                                               <schema class="schema" reference="530"/>
                                               <parent class="table" reference="532"/>
-                                              <type class="columnDataType" reference="253"/>
+                                              <columnDataType class="columnDataType" reference="253"/>
                                               <ordinalPosition>2</ordinalPosition>
                                               <size>255</size>
                                               <decimalDigits>0</decimalDigits>
@@ -4654,7 +4654,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                                 </objects>
                                               </columns>
                                               <isUnique>true</isUnique>
-                                              <type>other</type>
+                                              <indexType>other</indexType>
                                               <cardinality>0</cardinality>
                                               <pages>0</pages>
                                             </index>
@@ -4839,7 +4839,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                       </privileges>
                                       <sortIndex>0</sortIndex>
                                     </parent>
-                                    <type class="columnDataType" reference="225"/>
+                                    <columnDataType class="columnDataType" reference="225"/>
                                     <ordinalPosition>1</ordinalPosition>
                                     <size>32</size>
                                     <decimalDigits>0</decimalDigits>
@@ -4921,7 +4921,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                     </objects>
                                   </columns>
                                   <isUnique>false</isUnique>
-                                  <type>other</type>
+                                  <indexType>other</indexType>
                                   <cardinality>0</cardinality>
                                   <pages>0</pages>
                                 </index>
@@ -4976,7 +4976,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                     </objects>
                                   </columns>
                                   <isUnique>false</isUnique>
-                                  <type>other</type>
+                                  <indexType>other</indexType>
                                   <cardinality>0</cardinality>
                                   <pages>0</pages>
                                 </index>
@@ -5044,7 +5044,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                     </objects>
                                   </columns>
                                   <isUnique>true</isUnique>
-                                  <type>other</type>
+                                  <indexType>other</indexType>
                                   <cardinality>0</cardinality>
                                   <pages>0</pages>
                                 </index>
@@ -5208,7 +5208,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                           </privileges>
                           <sortIndex>0</sortIndex>
                         </parent>
-                        <type class="columnDataType" reference="225"/>
+                        <columnDataType class="columnDataType" reference="225"/>
                         <ordinalPosition>2</ordinalPosition>
                         <size>32</size>
                         <decimalDigits>0</decimalDigits>
@@ -5322,7 +5322,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                     </objects>
                   </columns>
                   <isUnique>false</isUnique>
-                  <type>other</type>
+                  <indexType>other</indexType>
                   <cardinality>0</cardinality>
                   <pages>0</pages>
                 </index>
@@ -5390,7 +5390,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                     </objects>
                   </columns>
                   <isUnique>false</isUnique>
-                  <type>other</type>
+                  <indexType>other</indexType>
                   <cardinality>0</cardinality>
                   <pages>0</pages>
                 </index>
@@ -5445,7 +5445,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                     </objects>
                   </columns>
                   <isUnique>true</isUnique>
-                  <type>other</type>
+                  <indexType>other</indexType>
                   <cardinality>0</cardinality>
                   <pages>0</pages>
                 </index>
@@ -5725,7 +5725,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
             <schemaName>BOOKS</schemaName>
             <attributeMap id="749"/>
           </schema>
-          <type>unknown</type>
+          <tableType>unknown</tableType>
           <columns id="750">
             <objects id="751">
               <entry>
@@ -5785,7 +5785,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   </attributeMap>
                   <schema class="schema" reference="748"/>
                   <parent class="view" reference="746"/>
-                  <type class="columnDataType" reference="253"/>
+                  <columnDataType class="columnDataType" reference="253"/>
                   <ordinalPosition>2</ordinalPosition>
                   <size>20</size>
                   <decimalDigits>0</decimalDigits>
@@ -5854,7 +5854,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   </attributeMap>
                   <schema class="schema" reference="748"/>
                   <parent class="view" reference="746"/>
-                  <type class="columnDataType" reference="225"/>
+                  <columnDataType class="columnDataType" reference="225"/>
                   <ordinalPosition>1</ordinalPosition>
                   <size>32</size>
                   <decimalDigits>0</decimalDigits>
@@ -5923,7 +5923,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   </attributeMap>
                   <schema class="schema" reference="748"/>
                   <parent class="view" reference="746"/>
-                  <type class="columnDataType" reference="253"/>
+                  <columnDataType class="columnDataType" reference="253"/>
                   <ordinalPosition>3</ordinalPosition>
                   <size>20</size>
                   <decimalDigits>0</decimalDigits>
@@ -6080,7 +6080,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
             <schemaName>BOOKS</schemaName>
             <attributeMap id="802"/>
           </schema>
-          <type>table</type>
+          <tableType>table</tableType>
           <primaryKey id="803">
             <name>PK_PUBLISHERS</name>
             <attributeMap id="804"/>
@@ -6150,7 +6150,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                       </attributeMap>
                       <schema class="schema" reference="801"/>
                       <parent class="table" reference="799"/>
-                      <type class="columnDataType" reference="225"/>
+                      <columnDataType class="columnDataType" reference="225"/>
                       <ordinalPosition>1</ordinalPosition>
                       <size>32</size>
                       <decimalDigits>0</decimalDigits>
@@ -6169,7 +6169,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
               </objects>
             </columns>
             <isUnique>false</isUnique>
-            <type>unknown</type>
+            <indexType>unknown</indexType>
             <cardinality>0</cardinality>
             <pages>0</pages>
           </primaryKey>
@@ -6236,7 +6236,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   </attributeMap>
                   <schema class="schema" reference="801"/>
                   <parent class="table" reference="799"/>
-                  <type class="columnDataType" reference="253"/>
+                  <columnDataType class="columnDataType" reference="253"/>
                   <ordinalPosition>2</ordinalPosition>
                   <size>255</size>
                   <decimalDigits>0</decimalDigits>
@@ -6305,7 +6305,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                     </objects>
                   </columns>
                   <isUnique>true</isUnique>
-                  <type>other</type>
+                  <indexType>other</indexType>
                   <cardinality>0</cardinality>
                   <pages>0</pages>
                 </index>
@@ -6460,7 +6460,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
             <schemaName>FOR_LINT</schemaName>
             <attributeMap id="864"/>
           </schema>
-          <type>table</type>
+          <tableType>table</tableType>
           <columns id="865">
             <objects id="866">
               <entry>
@@ -6520,7 +6520,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   </attributeMap>
                   <schema class="schema" reference="863"/>
                   <parent class="table" reference="861"/>
-                  <type class="columnDataType" reference="225"/>
+                  <columnDataType class="columnDataType" reference="225"/>
                   <ordinalPosition>1</ordinalPosition>
                   <size>32</size>
                   <decimalDigits>0</decimalDigits>
@@ -6666,7 +6666,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
             <schemaName>FOR_LINT</schemaName>
             <attributeMap id="908"/>
           </schema>
-          <type>table</type>
+          <tableType>table</tableType>
           <primaryKey id="909">
             <name>PK_EXTRA_PK</name>
             <attributeMap id="910"/>
@@ -6736,7 +6736,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                       </attributeMap>
                       <schema class="schema" reference="907"/>
                       <parent class="table" reference="905"/>
-                      <type class="columnDataType" reference="225"/>
+                      <columnDataType class="columnDataType" reference="225"/>
                       <ordinalPosition>1</ordinalPosition>
                       <size>32</size>
                       <decimalDigits>0</decimalDigits>
@@ -6755,7 +6755,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
               </objects>
             </columns>
             <isUnique>false</isUnique>
-            <type>unknown</type>
+            <indexType>unknown</indexType>
             <cardinality>0</cardinality>
             <pages>0</pages>
           </primaryKey>
@@ -6822,7 +6822,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   </attributeMap>
                   <schema class="schema" reference="907"/>
                   <parent class="table" reference="905"/>
-                  <type class="columnDataType" reference="225"/>
+                  <columnDataType class="columnDataType" reference="225"/>
                   <ordinalPosition>3</ordinalPosition>
                   <size>32</size>
                   <decimalDigits>0</decimalDigits>
@@ -6892,7 +6892,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                       <remarks></remarks>
                       <attributeMap id="928"/>
                       <schema class="schema" reference="925"/>
-                      <type>table</type>
+                      <tableType>table</tableType>
                       <primaryKey id="929">
                         <name>PK_PUBLICATIONS</name>
                         <attributeMap id="930"/>
@@ -6916,7 +6916,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                           </objects>
                         </columns>
                         <isUnique>false</isUnique>
-                        <type>unknown</type>
+                        <indexType>unknown</indexType>
                         <cardinality>0</cardinality>
                         <pages>0</pages>
                       </primaryKey>
@@ -6979,7 +6979,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                               </attributeMap>
                               <schema class="schema" reference="925"/>
                               <parent class="table" reference="927"/>
-                              <type class="columnDataType" reference="215"/>
+                              <columnDataType class="columnDataType" reference="215"/>
                               <ordinalPosition>7</ordinalPosition>
                               <size>16777216</size>
                               <decimalDigits>0</decimalDigits>
@@ -7048,7 +7048,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                               </attributeMap>
                               <schema class="schema" reference="925"/>
                               <parent class="table" reference="927"/>
-                              <type class="columnDataType" reference="253"/>
+                              <columnDataType class="columnDataType" reference="253"/>
                               <ordinalPosition>3</ordinalPosition>
                               <size>255</size>
                               <decimalDigits>0</decimalDigits>
@@ -7121,7 +7121,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                               </attributeMap>
                               <schema class="schema" reference="925"/>
                               <parent class="table" reference="927"/>
-                              <type class="columnDataType" reference="215"/>
+                              <columnDataType class="columnDataType" reference="215"/>
                               <ordinalPosition>8</ordinalPosition>
                               <size>16777216</size>
                               <decimalDigits>0</decimalDigits>
@@ -7190,7 +7190,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                               </attributeMap>
                               <schema class="schema" reference="925"/>
                               <parent class="table" reference="927"/>
-                              <type class="columnDataType" reference="221"/>
+                              <columnDataType class="columnDataType" reference="221"/>
                               <ordinalPosition>6</ordinalPosition>
                               <size>64</size>
                               <decimalDigits>0</decimalDigits>
@@ -7259,7 +7259,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                               </attributeMap>
                               <schema class="schema" reference="925"/>
                               <parent class="table" reference="927"/>
-                              <type class="columnDataType" reference="217"/>
+                              <columnDataType class="columnDataType" reference="217"/>
                               <ordinalPosition>5</ordinalPosition>
                               <size>10</size>
                               <decimalDigits>0</decimalDigits>
@@ -7328,7 +7328,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                               </attributeMap>
                               <schema class="schema" reference="925"/>
                               <parent class="table" reference="927"/>
-                              <type class="columnDataType" reference="253"/>
+                              <columnDataType class="columnDataType" reference="253"/>
                               <ordinalPosition>2</ordinalPosition>
                               <size>255</size>
                               <decimalDigits>0</decimalDigits>
@@ -7397,7 +7397,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                               </attributeMap>
                               <schema class="schema" reference="925"/>
                               <parent class="table" reference="927"/>
-                              <type class="columnDataType" reference="201"/>
+                              <columnDataType class="columnDataType" reference="201"/>
                               <ordinalPosition>4</ordinalPosition>
                               <size>64</size>
                               <decimalDigits>0</decimalDigits>
@@ -7467,7 +7467,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                   <remarks></remarks>
                                   <attributeMap id="968"/>
                                   <schema class="schema" reference="965"/>
-                                  <type>table</type>
+                                  <tableType>table</tableType>
                                   <primaryKey id="969">
                                     <name>PK_WRITERS</name>
                                     <attributeMap id="970"/>
@@ -7491,7 +7491,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                       </objects>
                                     </columns>
                                     <isUnique>false</isUnique>
-                                    <type>unknown</type>
+                                    <indexType>unknown</indexType>
                                     <cardinality>0</cardinality>
                                     <pages>0</pages>
                                   </primaryKey>
@@ -7554,7 +7554,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                           </attributeMap>
                                           <schema class="schema" reference="965"/>
                                           <parent class="table" reference="967"/>
-                                          <type class="columnDataType" reference="253"/>
+                                          <columnDataType class="columnDataType" reference="253"/>
                                           <ordinalPosition>4</ordinalPosition>
                                           <size>255</size>
                                           <decimalDigits>0</decimalDigits>
@@ -7623,7 +7623,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                           </attributeMap>
                                           <schema class="schema" reference="965"/>
                                           <parent class="table" reference="967"/>
-                                          <type class="columnDataType" reference="253"/>
+                                          <columnDataType class="columnDataType" reference="253"/>
                                           <ordinalPosition>5</ordinalPosition>
                                           <size>255</size>
                                           <decimalDigits>0</decimalDigits>
@@ -7693,7 +7693,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                           </attributeMap>
                                           <schema class="schema" reference="965"/>
                                           <parent class="table" reference="967"/>
-                                          <type class="columnDataType" reference="253"/>
+                                          <columnDataType class="columnDataType" reference="253"/>
                                           <ordinalPosition>6</ordinalPosition>
                                           <size>50</size>
                                           <decimalDigits>0</decimalDigits>
@@ -7762,7 +7762,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                           </attributeMap>
                                           <schema class="schema" reference="965"/>
                                           <parent class="table" reference="967"/>
-                                          <type class="columnDataType" reference="253"/>
+                                          <columnDataType class="columnDataType" reference="253"/>
                                           <ordinalPosition>9</ordinalPosition>
                                           <size>50</size>
                                           <decimalDigits>0</decimalDigits>
@@ -7832,7 +7832,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                           </attributeMap>
                                           <schema class="schema" reference="965"/>
                                           <parent class="table" reference="967"/>
-                                          <type class="columnDataType" reference="253"/>
+                                          <columnDataType class="columnDataType" reference="253"/>
                                           <ordinalPosition>12</ordinalPosition>
                                           <size>10</size>
                                           <decimalDigits>0</decimalDigits>
@@ -7901,7 +7901,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                           </attributeMap>
                                           <schema class="schema" reference="965"/>
                                           <parent class="table" reference="967"/>
-                                          <type class="columnDataType" reference="225"/>
+                                          <columnDataType class="columnDataType" reference="225"/>
                                           <ordinalPosition>13</ordinalPosition>
                                           <size>32</size>
                                           <decimalDigits>0</decimalDigits>
@@ -7970,7 +7970,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                           </attributeMap>
                                           <schema class="schema" reference="965"/>
                                           <parent class="table" reference="967"/>
-                                          <type class="columnDataType" reference="253"/>
+                                          <columnDataType class="columnDataType" reference="253"/>
                                           <ordinalPosition>14</ordinalPosition>
                                           <size>10</size>
                                           <decimalDigits>0</decimalDigits>
@@ -8039,7 +8039,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                           </attributeMap>
                                           <schema class="schema" reference="965"/>
                                           <parent class="table" reference="967"/>
-                                          <type class="columnDataType" reference="225"/>
+                                          <columnDataType class="columnDataType" reference="225"/>
                                           <ordinalPosition>15</ordinalPosition>
                                           <size>32</size>
                                           <decimalDigits>0</decimalDigits>
@@ -8108,7 +8108,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                           </attributeMap>
                                           <schema class="schema" reference="965"/>
                                           <parent class="table" reference="967"/>
-                                          <type class="columnDataType" reference="253"/>
+                                          <columnDataType class="columnDataType" reference="253"/>
                                           <ordinalPosition>2</ordinalPosition>
                                           <size>20</size>
                                           <decimalDigits>0</decimalDigits>
@@ -8177,7 +8177,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                           </attributeMap>
                                           <schema class="schema" reference="965"/>
                                           <parent class="table" reference="967"/>
-                                          <type class="columnDataType" reference="253"/>
+                                          <columnDataType class="columnDataType" reference="253"/>
                                           <ordinalPosition>16</ordinalPosition>
                                           <size>10</size>
                                           <decimalDigits>0</decimalDigits>
@@ -8246,7 +8246,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                           </attributeMap>
                                           <schema class="schema" reference="965"/>
                                           <parent class="table" reference="967"/>
-                                          <type class="columnDataType" reference="253"/>
+                                          <columnDataType class="columnDataType" reference="253"/>
                                           <ordinalPosition>17</ordinalPosition>
                                           <size>10</size>
                                           <decimalDigits>0</decimalDigits>
@@ -8319,7 +8319,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                           </attributeMap>
                                           <schema class="schema" reference="965"/>
                                           <parent class="table" reference="967"/>
-                                          <type class="columnDataType" reference="253"/>
+                                          <columnDataType class="columnDataType" reference="253"/>
                                           <ordinalPosition>3</ordinalPosition>
                                           <size>20</size>
                                           <decimalDigits>0</decimalDigits>
@@ -8388,7 +8388,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                           </attributeMap>
                                           <schema class="schema" reference="965"/>
                                           <parent class="table" reference="967"/>
-                                          <type class="columnDataType" reference="253"/>
+                                          <columnDataType class="columnDataType" reference="253"/>
                                           <ordinalPosition>10</ordinalPosition>
                                           <size>10</size>
                                           <decimalDigits>0</decimalDigits>
@@ -8457,7 +8457,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                           </attributeMap>
                                           <schema class="schema" reference="965"/>
                                           <parent class="table" reference="967"/>
-                                          <type class="columnDataType" reference="253"/>
+                                          <columnDataType class="columnDataType" reference="253"/>
                                           <ordinalPosition>11</ordinalPosition>
                                           <size>15</size>
                                           <decimalDigits>0</decimalDigits>
@@ -8526,7 +8526,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                           </attributeMap>
                                           <schema class="schema" reference="965"/>
                                           <parent class="table" reference="967"/>
-                                          <type class="columnDataType" reference="253"/>
+                                          <columnDataType class="columnDataType" reference="253"/>
                                           <ordinalPosition>8</ordinalPosition>
                                           <size>10</size>
                                           <decimalDigits>0</decimalDigits>
@@ -8595,7 +8595,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                           </attributeMap>
                                           <schema class="schema" reference="965"/>
                                           <parent class="table" reference="967"/>
-                                          <type class="columnDataType" reference="201"/>
+                                          <columnDataType class="columnDataType" reference="201"/>
                                           <ordinalPosition>18</ordinalPosition>
                                           <size>64</size>
                                           <decimalDigits>0</decimalDigits>
@@ -8665,7 +8665,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                           </attributeMap>
                                           <schema class="schema" reference="965"/>
                                           <parent class="table" reference="967"/>
-                                          <type class="columnDataType" reference="253"/>
+                                          <columnDataType class="columnDataType" reference="253"/>
                                           <ordinalPosition>7</ordinalPosition>
                                           <size>2</size>
                                           <decimalDigits>0</decimalDigits>
@@ -8792,7 +8792,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                                 </attributeMap>
                                                 <schema class="schema" reference="907"/>
                                                 <parent class="table" reference="905"/>
-                                                <type class="columnDataType" reference="201"/>
+                                                <columnDataType class="columnDataType" reference="201"/>
                                                 <ordinalPosition>2</ordinalPosition>
                                                 <size>64</size>
                                                 <decimalDigits>0</decimalDigits>
@@ -8880,7 +8880,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                             </objects>
                                           </columns>
                                           <isUnique>false</isUnique>
-                                          <type>other</type>
+                                          <indexType>other</indexType>
                                           <cardinality>0</cardinality>
                                           <pages>0</pages>
                                         </index>
@@ -8974,7 +8974,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                             </objects>
                                           </columns>
                                           <isUnique>false</isUnique>
-                                          <type>other</type>
+                                          <indexType>other</indexType>
                                           <cardinality>0</cardinality>
                                           <pages>0</pages>
                                         </index>
@@ -9042,7 +9042,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                             </objects>
                                           </columns>
                                           <isUnique>false</isUnique>
-                                          <type>other</type>
+                                          <indexType>other</indexType>
                                           <cardinality>0</cardinality>
                                           <pages>0</pages>
                                         </index>
@@ -9110,7 +9110,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                             </objects>
                                           </columns>
                                           <isUnique>true</isUnique>
-                                          <type>other</type>
+                                          <indexType>other</indexType>
                                           <cardinality>0</cardinality>
                                           <pages>0</pages>
                                         </index>
@@ -9165,7 +9165,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                             </objects>
                                           </columns>
                                           <isUnique>false</isUnique>
-                                          <type>other</type>
+                                          <indexType>other</indexType>
                                           <cardinality>0</cardinality>
                                           <pages>0</pages>
                                         </index>
@@ -9220,7 +9220,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                             </objects>
                                           </columns>
                                           <isUnique>true</isUnique>
-                                          <type>other</type>
+                                          <indexType>other</indexType>
                                           <cardinality>0</cardinality>
                                           <pages>0</pages>
                                         </index>
@@ -9468,7 +9468,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                   </privileges>
                                   <sortIndex>0</sortIndex>
                                 </parent>
-                                <type class="columnDataType" reference="201"/>
+                                <columnDataType class="columnDataType" reference="201"/>
                                 <ordinalPosition>1</ordinalPosition>
                                 <size>64</size>
                                 <decimalDigits>0</decimalDigits>
@@ -9572,7 +9572,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                 </objects>
                               </columns>
                               <isUnique>false</isUnique>
-                              <type>other</type>
+                              <indexType>other</indexType>
                               <cardinality>0</cardinality>
                               <pages>0</pages>
                             </index>
@@ -9627,7 +9627,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                 </objects>
                               </columns>
                               <isUnique>true</isUnique>
-                              <type>other</type>
+                              <indexType>other</indexType>
                               <cardinality>0</cardinality>
                               <pages>0</pages>
                             </index>
@@ -9812,7 +9812,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                       </privileges>
                       <sortIndex>0</sortIndex>
                     </parent>
-                    <type class="columnDataType" reference="225"/>
+                    <columnDataType class="columnDataType" reference="225"/>
                     <ordinalPosition>1</ordinalPosition>
                     <size>32</size>
                     <decimalDigits>0</decimalDigits>
@@ -9898,7 +9898,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                     </objects>
                   </columns>
                   <isUnique>false</isUnique>
-                  <type>other</type>
+                  <indexType>other</indexType>
                   <cardinality>0</cardinality>
                   <pages>0</pages>
                 </index>
@@ -9953,7 +9953,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                     </objects>
                   </columns>
                   <isUnique>false</isUnique>
-                  <type>other</type>
+                  <indexType>other</indexType>
                   <cardinality>0</cardinality>
                   <pages>0</pages>
                 </index>
@@ -10008,7 +10008,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                     </objects>
                   </columns>
                   <isUnique>true</isUnique>
-                  <type>other</type>
+                  <indexType>other</indexType>
                   <cardinality>0</cardinality>
                   <pages>0</pages>
                 </index>
@@ -10205,7 +10205,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
             <schemaName>FOR_LINT</schemaName>
             <attributeMap id="1280"/>
           </schema>
-          <type>table</type>
+          <tableType>table</tableType>
           <columns id="1281">
             <objects id="1282"/>
           </columns>
@@ -10693,7 +10693,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           <specificName>CUSTOMADD_10045</specificName>
           <routineBodyType defined-in="schemacrawler.crawl.MutableRoutine">unknown</routineBodyType>
           <definition id="1323">CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER,IN TWO INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10045 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN ONE+TWO</definition>
-          <functionType>noTable</functionType>
+          <returnType>noTable</returnType>
           <columns id="1324">
             <objects id="1325">
               <entry>
@@ -10729,7 +10729,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   </attributeMap>
                   <schema class="schema" reference="1321"/>
                   <parent class="schemacrawler.crawl.MutableFunction" reference="1319"/>
-                  <type class="columnDataType" reference="225"/>
+                  <columnDataType class="columnDataType" reference="225"/>
                   <ordinalPosition>0</ordinalPosition>
                   <size>0</size>
                   <decimalDigits>32</decimalDigits>
@@ -10770,7 +10770,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   </attributeMap>
                   <schema class="schema" reference="1321"/>
                   <parent class="schemacrawler.crawl.MutableFunction" reference="1319"/>
-                  <type class="columnDataType" reference="225"/>
+                  <columnDataType class="columnDataType" reference="225"/>
                   <ordinalPosition>1</ordinalPosition>
                   <size>0</size>
                   <decimalDigits>32</decimalDigits>
@@ -11134,7 +11134,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           <specificName>CUSTOMADD_10046</specificName>
           <routineBodyType defined-in="schemacrawler.crawl.MutableRoutine">unknown</routineBodyType>
           <definition id="1334">CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10046 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN BOOKS.CUSTOMADD(ONE,1)</definition>
-          <functionType>noTable</functionType>
+          <returnType>noTable</returnType>
           <columns id="1335">
             <objects id="1336">
               <entry>
@@ -11170,7 +11170,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   </attributeMap>
                   <schema class="schema" reference="1332"/>
                   <parent class="schemacrawler.crawl.MutableFunction" reference="1330"/>
-                  <type class="columnDataType" reference="225"/>
+                  <columnDataType class="columnDataType" reference="225"/>
                   <ordinalPosition>0</ordinalPosition>
                   <size>0</size>
                   <decimalDigits>32</decimalDigits>
@@ -11542,7 +11542,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           <specificName>NEW_PUBLISHER_10043</specificName>
           <routineBodyType>sql</routineBodyType>
           <definition id="1341">CREATE PROCEDURE BOOKS.NEW_PUBLISHER(OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10043 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = &apos;New Publisher&apos;</definition>
-          <procedureType>noResult</procedureType>
+          <returnType>noResult</returnType>
           <columns id="1342">
             <objects id="1343">
               <entry>
@@ -11586,7 +11586,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   </attributeMap>
                   <schema class="schema" reference="235"/>
                   <parent class="procedure" reference="1339"/>
-                  <type class="columnDataType" reference="233"/>
+                  <columnDataType class="columnDataType" reference="233"/>
                   <ordinalPosition>0</ordinalPosition>
                   <size>0</size>
                   <decimalDigits>50</decimalDigits>
@@ -11961,7 +11961,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           <specificName>NEW_PUBLISHER_10044</specificName>
           <routineBodyType>sql</routineBodyType>
           <definition id="1350">CREATE PROCEDURE BOOKS.NEW_PUBLISHER(IN NEWPUBLISHER VARCHAR(50),OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10044 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = NEWPUBLISHER</definition>
-          <procedureType>noResult</procedureType>
+          <returnType>noResult</returnType>
           <columns id="1351">
             <objects id="1352">
               <entry>
@@ -12005,7 +12005,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   </attributeMap>
                   <schema class="schema" reference="1348"/>
                   <parent class="procedure" reference="1346"/>
-                  <type class="columnDataType" reference="233"/>
+                  <columnDataType class="columnDataType" reference="233"/>
                   <ordinalPosition>0</ordinalPosition>
                   <size>0</size>
                   <decimalDigits>50</decimalDigits>
@@ -12054,7 +12054,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   </attributeMap>
                   <schema class="schema" reference="1348"/>
                   <parent class="procedure" reference="1346"/>
-                  <type class="columnDataType" reference="233"/>
+                  <columnDataType class="columnDataType" reference="233"/>
                   <ordinalPosition>1</ordinalPosition>
                   <size>0</size>
                   <decimalDigits>50</decimalDigits>
@@ -12429,7 +12429,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           <specificName>ALLOC_BLOCKS_10022</specificName>
           <routineBodyType>sql</routineBodyType>
           <definition id="1361">CREATE PROCEDURE SYSTEM_LOBS.ALLOC_BLOCKS(IN B_COUNT INTEGER,IN B_OFFSET INTEGER,IN L_ID BIGINT) SPECIFIC ALLOC_BLOCKS_10022 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE LOB_ADDR INT DEFAULT NULL;DECLARE REMAINING_COUNT INT DEFAULT 0;DECLARE BL_ADDR INT DEFAULT NULL;DECLARE TEMP_COUNT INT DEFAULT 0;DECLARE BL_OFFSET INT DEFAULT 0;SET REMAINING_COUNT=B_COUNT;SET BL_OFFSET=B_OFFSET;MAIN_LOOP:LOOP SET BL_ADDR=(SELECT BLOCK_ADDR FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_COUNT=REMAINING_COUNT AND TX_ID=0 FETCH 1 ROW ONLY);IF BL_ADDR IS NOT NULL THEN CALL CONVERT_BLOCK(BL_ADDR,REMAINING_COUNT,BL_OFFSET,L_ID);IF LOB_ADDR IS NULL THEN SET LOB_ADDR=BL_ADDR;END IF;LEAVE MAIN_LOOP;END IF;SET(BL_ADDR,TEMP_COUNT)=(SELECT BLOCK_ADDR,BLOCK_COUNT FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_COUNT&lt;REMAINING_COUNT AND TX_ID=0 FETCH 1 ROW ONLY);IF BL_ADDR IS NOT NULL THEN CALL CONVERT_BLOCK(BL_ADDR,TEMP_COUNT,BL_OFFSET,L_ID);IF LOB_ADDR IS NULL THEN SET LOB_ADDR=BL_ADDR;END IF;SET REMAINING_COUNT=REMAINING_COUNT-TEMP_COUNT;SET BL_OFFSET=BL_OFFSET+TEMP_COUNT;SET BL_ADDR=NULL;SET TEMP_COUNT=0;ELSE CALL CREATE_EMPTY_BLOCK(BL_ADDR,REMAINING_COUNT);CALL CONVERT_BLOCK(BL_ADDR,REMAINING_COUNT,BL_OFFSET,L_ID);IF LOB_ADDR IS NULL THEN SET LOB_ADDR=BL_ADDR;END IF;LEAVE MAIN_LOOP;END IF;END LOOP MAIN_LOOP;END</definition>
-          <procedureType>noResult</procedureType>
+          <returnType>noResult</returnType>
           <columns id="1362">
             <objects id="1363">
               <entry>
@@ -12473,7 +12473,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   </attributeMap>
                   <schema class="schema" reference="1359"/>
                   <parent class="procedure" reference="1357"/>
-                  <type class="columnDataType" reference="225"/>
+                  <columnDataType class="columnDataType" reference="225"/>
                   <ordinalPosition>0</ordinalPosition>
                   <size>0</size>
                   <decimalDigits>32</decimalDigits>
@@ -12522,7 +12522,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   </attributeMap>
                   <schema class="schema" reference="1359"/>
                   <parent class="procedure" reference="1357"/>
-                  <type class="columnDataType" reference="225"/>
+                  <columnDataType class="columnDataType" reference="225"/>
                   <ordinalPosition>1</ordinalPosition>
                   <size>0</size>
                   <decimalDigits>32</decimalDigits>
@@ -12571,7 +12571,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   </attributeMap>
                   <schema class="schema" reference="1359"/>
                   <parent class="procedure" reference="1357"/>
-                  <type class="columnDataType" reference="201"/>
+                  <columnDataType class="columnDataType" reference="201"/>
                   <ordinalPosition>2</ordinalPosition>
                   <size>0</size>
                   <decimalDigits>64</decimalDigits>
@@ -12946,7 +12946,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           <specificName>CONVERT_BLOCK_10012</specificName>
           <routineBodyType>sql</routineBodyType>
           <definition id="1374">CREATE PROCEDURE SYSTEM_LOBS.CONVERT_BLOCK(IN B_ADDR INTEGER,IN B_COUNT INTEGER,IN B_OFFSET INTEGER,IN L_ID BIGINT) SPECIFIC CONVERT_BLOCK_10012 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DELETE FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_ADDR=B_ADDR;INSERT INTO SYSTEM_LOBS.LOBS VALUES(B_ADDR,B_COUNT,B_OFFSET,L_ID);END</definition>
-          <procedureType>noResult</procedureType>
+          <returnType>noResult</returnType>
           <columns id="1375">
             <objects id="1376">
               <entry>
@@ -12990,7 +12990,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   </attributeMap>
                   <schema class="schema" reference="1372"/>
                   <parent class="procedure" reference="1370"/>
-                  <type class="columnDataType" reference="225"/>
+                  <columnDataType class="columnDataType" reference="225"/>
                   <ordinalPosition>0</ordinalPosition>
                   <size>0</size>
                   <decimalDigits>32</decimalDigits>
@@ -13039,7 +13039,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   </attributeMap>
                   <schema class="schema" reference="1372"/>
                   <parent class="procedure" reference="1370"/>
-                  <type class="columnDataType" reference="225"/>
+                  <columnDataType class="columnDataType" reference="225"/>
                   <ordinalPosition>1</ordinalPosition>
                   <size>0</size>
                   <decimalDigits>32</decimalDigits>
@@ -13088,7 +13088,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   </attributeMap>
                   <schema class="schema" reference="1372"/>
                   <parent class="procedure" reference="1370"/>
-                  <type class="columnDataType" reference="225"/>
+                  <columnDataType class="columnDataType" reference="225"/>
                   <ordinalPosition>2</ordinalPosition>
                   <size>0</size>
                   <decimalDigits>32</decimalDigits>
@@ -13137,7 +13137,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   </attributeMap>
                   <schema class="schema" reference="1372"/>
                   <parent class="procedure" reference="1370"/>
-                  <type class="columnDataType" reference="201"/>
+                  <columnDataType class="columnDataType" reference="201"/>
                   <ordinalPosition>3</ordinalPosition>
                   <size>0</size>
                   <decimalDigits>64</decimalDigits>
@@ -13512,7 +13512,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           <specificName>CREATE_EMPTY_BLOCK_10020</specificName>
           <routineBodyType>sql</routineBodyType>
           <definition id="1389">CREATE PROCEDURE SYSTEM_LOBS.CREATE_EMPTY_BLOCK(INOUT B_ADDR INTEGER,IN B_COUNT INTEGER) SPECIFIC CREATE_EMPTY_BLOCK_10020 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE TEMP_COUNT INT DEFAULT NULL;DECLARE TEMP_ADDR INT DEFAULT NULL;SET(TEMP_ADDR,TEMP_COUNT)=(SELECT BLOCK_ADDR,BLOCK_COUNT FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_COUNT&gt;B_COUNT AND TX_ID=0 FETCH 1 ROW ONLY);IF TEMP_ADDR IS NULL THEN SIGNAL SQLSTATE&apos;45000&apos;;END IF;UPDATE SYSTEM_LOBS.BLOCKS SET BLOCK_COUNT=B_COUNT WHERE BLOCK_ADDR=TEMP_ADDR;INSERT INTO SYSTEM_LOBS.BLOCKS VALUES(TEMP_ADDR+B_COUNT,TEMP_COUNT-B_COUNT,0);SET B_ADDR=TEMP_ADDR;END</definition>
-          <procedureType>noResult</procedureType>
+          <returnType>noResult</returnType>
           <columns id="1390">
             <objects id="1391">
               <entry>
@@ -13556,7 +13556,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   </attributeMap>
                   <schema class="schema" reference="1387"/>
                   <parent class="procedure" reference="1385"/>
-                  <type class="columnDataType" reference="225"/>
+                  <columnDataType class="columnDataType" reference="225"/>
                   <ordinalPosition>0</ordinalPosition>
                   <size>0</size>
                   <decimalDigits>32</decimalDigits>
@@ -13605,7 +13605,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   </attributeMap>
                   <schema class="schema" reference="1387"/>
                   <parent class="procedure" reference="1385"/>
-                  <type class="columnDataType" reference="225"/>
+                  <columnDataType class="columnDataType" reference="225"/>
                   <ordinalPosition>1</ordinalPosition>
                   <size>0</size>
                   <decimalDigits>32</decimalDigits>
@@ -13980,7 +13980,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           <specificName>DELETE_BLOCKS_10019</specificName>
           <routineBodyType>sql</routineBodyType>
           <definition id="1400">CREATE PROCEDURE SYSTEM_LOBS.DELETE_BLOCKS(IN L_ID BIGINT,IN B_OFFSET INTEGER,IN B_LIMIT INTEGER,IN TX_ID BIGINT) SPECIFIC DELETE_BLOCKS_10019 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC INSERT INTO SYSTEM_LOBS.BLOCKS(SELECT BLOCK_ADDR,BLOCK_COUNT,TX_ID FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID AND BLOCK_OFFSET&gt;=B_OFFSET AND BLOCK_OFFSET&lt;B_LIMIT);DELETE FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID AND BLOCK_OFFSET&gt;=B_OFFSET AND BLOCK_OFFSET&lt;B_LIMIT;END</definition>
-          <procedureType>noResult</procedureType>
+          <returnType>noResult</returnType>
           <columns id="1401">
             <objects id="1402">
               <entry>
@@ -14024,7 +14024,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   </attributeMap>
                   <schema class="schema" reference="1398"/>
                   <parent class="procedure" reference="1396"/>
-                  <type class="columnDataType" reference="225"/>
+                  <columnDataType class="columnDataType" reference="225"/>
                   <ordinalPosition>2</ordinalPosition>
                   <size>0</size>
                   <decimalDigits>32</decimalDigits>
@@ -14073,7 +14073,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   </attributeMap>
                   <schema class="schema" reference="1398"/>
                   <parent class="procedure" reference="1396"/>
-                  <type class="columnDataType" reference="225"/>
+                  <columnDataType class="columnDataType" reference="225"/>
                   <ordinalPosition>1</ordinalPosition>
                   <size>0</size>
                   <decimalDigits>32</decimalDigits>
@@ -14122,7 +14122,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   </attributeMap>
                   <schema class="schema" reference="1398"/>
                   <parent class="procedure" reference="1396"/>
-                  <type class="columnDataType" reference="201"/>
+                  <columnDataType class="columnDataType" reference="201"/>
                   <ordinalPosition>0</ordinalPosition>
                   <size>0</size>
                   <decimalDigits>64</decimalDigits>
@@ -14171,7 +14171,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   </attributeMap>
                   <schema class="schema" reference="1398"/>
                   <parent class="procedure" reference="1396"/>
-                  <type class="columnDataType" reference="201"/>
+                  <columnDataType class="columnDataType" reference="201"/>
                   <ordinalPosition>3</ordinalPosition>
                   <size>0</size>
                   <decimalDigits>64</decimalDigits>
@@ -14546,7 +14546,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           <specificName>DELETE_LOB_10013</specificName>
           <routineBodyType>sql</routineBodyType>
           <definition id="1415">CREATE PROCEDURE SYSTEM_LOBS.DELETE_LOB(IN L_ID BIGINT,IN TX_ID BIGINT) SPECIFIC DELETE_LOB_10013 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC INSERT INTO SYSTEM_LOBS.BLOCKS(SELECT BLOCK_ADDR,BLOCK_COUNT,TX_ID FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID);DELETE FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID;DELETE FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_ID=L_ID;END</definition>
-          <procedureType>noResult</procedureType>
+          <returnType>noResult</returnType>
           <columns id="1416">
             <objects id="1417">
               <entry>
@@ -14590,7 +14590,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   </attributeMap>
                   <schema class="schema" reference="1413"/>
                   <parent class="procedure" reference="1411"/>
-                  <type class="columnDataType" reference="201"/>
+                  <columnDataType class="columnDataType" reference="201"/>
                   <ordinalPosition>0</ordinalPosition>
                   <size>0</size>
                   <decimalDigits>64</decimalDigits>
@@ -14639,7 +14639,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   </attributeMap>
                   <schema class="schema" reference="1413"/>
                   <parent class="procedure" reference="1411"/>
-                  <type class="columnDataType" reference="201"/>
+                  <columnDataType class="columnDataType" reference="201"/>
                   <ordinalPosition>1</ordinalPosition>
                   <size>0</size>
                   <decimalDigits>64</decimalDigits>
@@ -15010,7 +15010,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           <specificName>DELETE_UNUSED_10018</specificName>
           <routineBodyType>sql</routineBodyType>
           <definition id="1424">CREATE PROCEDURE SYSTEM_LOBS.DELETE_UNUSED(IN L_IDS BIGINT ARRAY) SPECIFIC DELETE_UNUSED_10018 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE TABLE LIVE_IDS(TEMP_ID INT);DECLARE TABLE TEMP_IDS(TEMP_ID INT);DECLARE TEMP_COUNT INT DEFAULT 1;WHILE TEMP_COUNT&lt;=CARDINALITY(L_IDS)DO INSERT INTO MODULE.LIVE_IDS VALUES L_IDS[TEMP_COUNT];SET TEMP_COUNT=TEMP_COUNT+1;END WHILE;SET TEMP_COUNT=0;REPEAT INSERT INTO MODULE.TEMP_IDS SELECT LOB_ID FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_USAGE_COUNT&lt;1 AND LOB_ID NOT IN(SELECT TEMP_ID FROM MODULE.LIVE_IDS)LIMIT 1000;INSERT INTO SYSTEM_LOBS.BLOCKS(SELECT BLOCK_ADDR,BLOCK_COUNT,0 FROM SYSTEM_LOBS.LOBS WHERE LOB_ID IN(SELECT TEMP_ID FROM MODULE.TEMP_IDS));DELETE FROM SYSTEM_LOBS.LOBS WHERE LOB_ID IN(SELECT TEMP_ID FROM MODULE.TEMP_IDS);DELETE FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_ID IN(SELECT TEMP_ID FROM MODULE.TEMP_IDS);GET DIAGNOSTICS TEMP_COUNT=ROW_COUNT;DELETE FROM MODULE.TEMP_IDS;UNTIL TEMP_COUNT&lt;1000 END REPEAT;END</definition>
-          <procedureType>noResult</procedureType>
+          <returnType>noResult</returnType>
           <columns id="1425">
             <objects id="1426">
               <entry>
@@ -15054,7 +15054,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   </attributeMap>
                   <schema class="schema" reference="239"/>
                   <parent class="procedure" reference="1422"/>
-                  <type class="columnDataType" reference="237"/>
+                  <columnDataType class="columnDataType" reference="237"/>
                   <ordinalPosition>0</ordinalPosition>
                   <size>0</size>
                   <decimalDigits>0</decimalDigits>
@@ -15429,7 +15429,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           <specificName>DIVIDE_BLOCK_10021</specificName>
           <routineBodyType>sql</routineBodyType>
           <definition id="1433">CREATE PROCEDURE SYSTEM_LOBS.DIVIDE_BLOCK(IN B_OFFSET INTEGER,IN L_ID BIGINT) SPECIFIC DIVIDE_BLOCK_10021 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE BL_ADDR INT DEFAULT NULL;DECLARE BL_COUNT INT DEFAULT NULL;DECLARE BL_OFFSET INT DEFAULT NULL;SET(BL_ADDR,BL_COUNT,BL_OFFSET)=(SELECT BLOCK_ADDR,BLOCK_COUNT,BLOCK_OFFSET FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID AND B_OFFSET&gt;BLOCK_OFFSET AND B_OFFSET&lt;BLOCK_OFFSET+BLOCK_COUNT);IF BL_ADDR IS NULL THEN SIGNAL SQLSTATE&apos;45000&apos;;END IF;DELETE FROM SYSTEM_LOBS.LOBS WHERE BLOCK_ADDR=BL_ADDR;INSERT INTO SYSTEM_LOBS.LOBS VALUES(BL_ADDR,B_OFFSET-BL_OFFSET,BL_OFFSET,L_ID);INSERT INTO SYSTEM_LOBS.LOBS VALUES(BL_ADDR+B_OFFSET-BL_OFFSET,BL_OFFSET+BL_COUNT-B_OFFSET,B_OFFSET,L_ID);END</definition>
-          <procedureType>noResult</procedureType>
+          <returnType>noResult</returnType>
           <columns id="1434">
             <objects id="1435">
               <entry>
@@ -15473,7 +15473,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   </attributeMap>
                   <schema class="schema" reference="1431"/>
                   <parent class="procedure" reference="1429"/>
-                  <type class="columnDataType" reference="225"/>
+                  <columnDataType class="columnDataType" reference="225"/>
                   <ordinalPosition>0</ordinalPosition>
                   <size>0</size>
                   <decimalDigits>32</decimalDigits>
@@ -15522,7 +15522,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   </attributeMap>
                   <schema class="schema" reference="1431"/>
                   <parent class="procedure" reference="1429"/>
-                  <type class="columnDataType" reference="201"/>
+                  <columnDataType class="columnDataType" reference="201"/>
                   <ordinalPosition>1</ordinalPosition>
                   <size>0</size>
                   <decimalDigits>64</decimalDigits>
