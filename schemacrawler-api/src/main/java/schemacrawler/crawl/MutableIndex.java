@@ -126,6 +126,17 @@ class MutableIndex
   /**
    * {@inheritDoc}
    * 
+   * @see schemacrawler.schema.TypedObject#getType()
+   */
+  @Override
+  public final IndexType getType()
+  {
+    return getIndexType();
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
    * @see Index#isUnique()
    */
   @Override

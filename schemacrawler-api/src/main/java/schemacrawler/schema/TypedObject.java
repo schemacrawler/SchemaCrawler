@@ -5,9 +5,9 @@ public interface TypedObject<T>
 {
 
   /**
-   * Gets the type.
+   * Gets the type of the object. Synonym for another getter method.
    * 
-   * @return Type
+   * @return Type of the object
    */
   T getType();
 

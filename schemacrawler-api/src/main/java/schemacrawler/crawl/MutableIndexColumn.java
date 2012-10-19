@@ -176,6 +176,17 @@ final class MutableIndexColumn
   /**
    * {@inheritDoc}
    * 
+   * @see schemacrawler.schema.TypedObject#getType()
+   */
+  @Override
+  public ColumnDataType getType()
+  {
+    return column.getType();
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
    * @see schemacrawler.schema.BaseColumn#getWidth()
    */
   @Override
