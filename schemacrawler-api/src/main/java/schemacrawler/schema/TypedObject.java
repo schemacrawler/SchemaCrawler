@@ -9,6 +9,7 @@ public interface TypedObject<T>
    * 
    * @return Type of the object
    */
+  @Deprecated
   T getType();
 
 }
