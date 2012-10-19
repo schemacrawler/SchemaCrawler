@@ -96,15 +96,8 @@
 						objects, without requiring you to make additional calls
 					</li>
 					<li>
-						There is a
-						<code>getType()</code>
-						method, whether on a
-						<code>Column</code>
-						object, a
-						<code>Table</code>
-						object, or a
-						<code>Routine</code>
-						object, which helps with consistency, and ease of use
+						Booleans are Java booleans, not an integer, a string, or null versus not-null,
+						and enumerated values are Java enums, not integers
 					</li>
 					<li>
 						Lists are always Java lists -
