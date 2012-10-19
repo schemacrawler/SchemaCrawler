@@ -184,6 +184,12 @@ final class TableReference
     throw new NotLoadedException();
   }
 
+  @Override
+  public TableType getType()
+  {
+    throw new NotLoadedException();
+  }
+
   void addColumn(final Column column)
   {
     this.column = column;

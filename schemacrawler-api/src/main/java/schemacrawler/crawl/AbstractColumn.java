@@ -124,6 +124,17 @@ abstract class AbstractColumn<P extends DatabaseObject>
   /**
    * {@inheritDoc}
    * 
+   * @see schemacrawler.schema.TypedObject#getType()
+   */
+  @Override
+  public final ColumnDataType getType()
+  {
+    return getColumnDataType();
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
    * @see schemacrawler.schema.BaseColumn#getWidth()
    */
   @Override

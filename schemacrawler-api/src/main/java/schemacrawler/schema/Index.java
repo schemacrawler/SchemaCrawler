@@ -29,7 +29,7 @@ import java.util.List;
  * @author Sualeh Fatehi
  */
 public interface Index
-  extends DependantObject<Table>
+  extends DependantObject<Table>, TypedObject<IndexType>
 {
 
   /**

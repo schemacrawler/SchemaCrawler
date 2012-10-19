@@ -90,6 +90,12 @@ final class ColumnReference
   }
 
   @Override
+  public ColumnDataType getType()
+  {
+    throw new NotLoadedException();
+  }
+
+  @Override
   public String getWidth()
   {
     throw new NotLoadedException();

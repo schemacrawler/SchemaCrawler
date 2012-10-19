@@ -24,6 +24,7 @@ package schemacrawler.crawl;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.RoutineBodyType;
+import schemacrawler.schema.RoutineType;
 import schemacrawler.schema.Schema;
 import sf.util.Utility;
 
@@ -91,6 +92,17 @@ abstract class MutableRoutine
   public String getSpecificName()
   {
     return specificName;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.TypedObject#getType()
+   */
+  @Override
+  public final RoutineType getType()
+  {
+    return getRoutineType();
   }
 
   void appendDefinition(final String definition)

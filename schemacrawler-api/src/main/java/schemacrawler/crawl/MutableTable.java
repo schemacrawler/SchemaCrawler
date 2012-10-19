@@ -331,6 +331,17 @@ class MutableTable
     return new ArrayList<Trigger>(triggers.values());
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.TypedObject#getType()
+   */
+  @Override
+  public final TableType getType()
+  {
+    return getTableType();
+  }
+
   void addCheckConstraint(final MutableCheckConstraint checkConstraint)
   {
     checkConstraints.add(checkConstraint);
