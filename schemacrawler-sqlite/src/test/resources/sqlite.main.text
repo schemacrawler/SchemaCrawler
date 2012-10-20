@@ -17,7 +17,7 @@ Database Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
 database product name                     SQLite                        
-database product version                  3.6.22                        
+database product version                  3.7.8                         
 database user name                        null                          
 
 
@@ -27,7 +27,7 @@ JDBC Driver Information
 driver name                               SQLiteJDBC                    
 driver version                            native                        
 driver class name                         org.sqlite.JDBC               
-url                                       jdbc:sqlite:C:\DOCUME~1\sfatehi\LOCALS~1\Temp\SchemaCrawler7865674838259596440.dat
+url                                       jdbc:sqlite:C:\Users\SUALEH~1\AppData\Local\Temp\SchemaCrawler6276649750479990590.dat
 is JDBC compliant                         false                         
 
 
@@ -106,11 +106,12 @@ CUSTOMER                                                         [table]
   STREET                            VARCHAR(255)(2000000000)    
   CITY                              VARCHAR(255)(2000000000)    
 
-                                                           [primary key]
+PK_CUSTOMER                                                [primary key]
   ID                                ascending                   
 
-<unknown>                                                  [foreign key]
+<unknown>                                  [foreign key, with no action]
   ID --> INVOICE.CUSTOMERID                                     
+  INVOICE.ID --> ITEM.INVOICEID                                 
 
 
 PRODUCT                                                          [table]
@@ -119,11 +120,10 @@ PRODUCT                                                          [table]
   NAME                              VARCHAR(255)(2000000000)    
   PRICE                             FLOAT(2000000000, 10)       
 
-                                                           [primary key]
+PK_PRODUCT                                                 [primary key]
   ID                                ascending                   
 
-<unknown>                                                  [foreign key]
-  INVOICE.ID --> ITEM.INVOICEID                                 
+<unknown>                                  [foreign key, with no action]
   ID --> ITEM.PRODUCTID                                         
 
 
@@ -150,7 +150,7 @@ INVOICE                                                          [table]
                                                            [primary key]
   ID                                ascending                   
 
-<unknown>                                                  [foreign key]
+<unknown>                                  [foreign key, with no action]
   ID --> ITEM.INVOICEID                                         
   PRODUCT.ID --> ITEM.PRODUCTID                                 
 
@@ -166,12 +166,11 @@ ITEM                                                             [table]
   QUANTITY                          INTEGER                     
   COST                              FLOAT(2000000000, 10)       
 
-                                                           [primary key]
+PK_ITEM                                                    [primary key]
   INVOICEID                         ascending                   
   ITEM                              ascending                   
 
-<unknown>                                                  [foreign key]
-  INVOICE.ID --> INVOICEID                                      
+<unknown>                                  [foreign key, with no action]
   PRODUCT.ID --> PRODUCTID                                      
 
 INDEX_ITEM_INVOICE                                    [non-unique index]
