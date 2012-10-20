@@ -1,1 +1,1 @@
-java -classpath lib/* @package@.Main %*
+java -classpath lib/*;. @package@.Main %*
