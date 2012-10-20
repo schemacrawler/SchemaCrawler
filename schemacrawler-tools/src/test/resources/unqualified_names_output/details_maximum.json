@@ -28,15 +28,15 @@
         },
         {
           "definition": "BOOKS.AUTHORS.ID IS NOT NULL",
-          "name": "SYS_CT_10027"
+          "name": "SYS_CT_10068"
         },
         {
           "definition": "BOOKS.AUTHORS.FIRSTNAME IS NOT NULL",
-          "name": "SYS_CT_10028"
+          "name": "SYS_CT_10069"
         },
         {
           "definition": "BOOKS.AUTHORS.LASTNAME IS NOT NULL",
-          "name": "SYS_CT_10029"
+          "name": "SYS_CT_10070"
         }
       ],
       "columns": [
@@ -184,7 +184,7 @@
       "indices": [
         {
           "unique": true,
-          "name": "SYS_IDX_PK_AUTHORS_10030",
+          "name": "SYS_IDX_PK_AUTHORS_10071",
           "columns": {
             "sortSequence": "ascending",
             "name": "ID"
@@ -357,11 +357,11 @@
       "constraints": [
         {
           "definition": "BOOKS.BOOKAUTHORS.BOOKID IS NOT NULL",
-          "name": "SYS_CT_10035"
+          "name": "SYS_CT_10083"
         },
         {
           "definition": "BOOKS.BOOKAUTHORS.AUTHORID IS NOT NULL",
-          "name": "SYS_CT_10036"
+          "name": "SYS_CT_10084"
         }
       ],
       "columns": [
@@ -449,7 +449,7 @@
       "indices": [
         {
           "unique": false,
-          "name": "SYS_IDX_10040",
+          "name": "SYS_IDX_10090",
           "columns": {
             "sortSequence": "ascending",
             "name": "AUTHORID"
@@ -457,7 +457,7 @@
         },
         {
           "unique": false,
-          "name": "SYS_IDX_10038",
+          "name": "SYS_IDX_10088",
           "columns": {
             "sortSequence": "ascending",
             "name": "BOOKID"
@@ -514,15 +514,15 @@
       "constraints": [
         {
           "definition": "BOOKS.BOOKS.ID IS NOT NULL",
-          "name": "SYS_CT_10031"
+          "name": "SYS_CT_10076"
         },
         {
           "definition": "BOOKS.BOOKS.TITLE IS NOT NULL",
-          "name": "SYS_CT_10032"
+          "name": "SYS_CT_10077"
         },
         {
           "definition": "BOOKS.BOOKS.PUBLISHERID IS NOT NULL",
-          "name": "SYS_CT_10033"
+          "name": "SYS_CT_10078"
         }
       ],
       "columns": [
@@ -639,7 +639,7 @@
       ],
       "indices": [{
         "unique": true,
-        "name": "SYS_IDX_PK_BOOKS_10034",
+        "name": "SYS_IDX_PK_BOOKS_10079",
         "columns": {
           "sortSequence": "ascending",
           "name": "ID"
@@ -736,7 +736,7 @@
       "name": "PUBLISHERS",
       "constraints": {
         "definition": "BOOKS.PUBLISHERS.ID IS NOT NULL",
-        "name": "SYS_CT_10025"
+        "name": "SYS_CT_10065"
       },
       "columns": [
         {
@@ -812,7 +812,7 @@
       ],
       "indices": [{
         "unique": true,
-        "name": "SYS_IDX_PK_PUBLISHERS_10026",
+        "name": "SYS_IDX_PK_PUBLISHERS_10066",
         "columns": {
           "sortSequence": "ascending",
           "name": "ID"
@@ -856,15 +856,15 @@
       "constraints": [
         {
           "definition": "FOR_LINT.EXTRA_PK.ID IS NOT NULL",
-          "name": "SYS_CT_10072"
+          "name": "SYS_CT_10144"
         },
         {
           "definition": "FOR_LINT.EXTRA_PK.WRITERID IS NOT NULL",
-          "name": "SYS_CT_10073"
+          "name": "SYS_CT_10145"
         },
         {
           "definition": "FOR_LINT.EXTRA_PK.PUBLICATIONID IS NOT NULL",
-          "name": "SYS_CT_10074"
+          "name": "SYS_CT_10146"
         }
       ],
       "columns": [
@@ -952,7 +952,7 @@
       "indices": [
         {
           "unique": true,
-          "name": "SYS_IDX_PK_EXTRA_PK_10075",
+          "name": "SYS_IDX_PK_EXTRA_PK_10147",
           "columns": {
             "sortSequence": "ascending",
             "name": "ID"
@@ -960,7 +960,7 @@
         },
         {
           "unique": false,
-          "name": "SYS_IDX_10078",
+          "name": "SYS_IDX_10153",
           "columns": {
             "sortSequence": "ascending",
             "name": "PUBLICATIONID"
@@ -968,7 +968,7 @@
         },
         {
           "unique": false,
-          "name": "SYS_IDX_10076",
+          "name": "SYS_IDX_10151",
           "columns": {
             "sortSequence": "ascending",
             "name": "WRITERID"
@@ -1092,15 +1092,15 @@
       "constraints": [
         {
           "definition": "FOR_LINT.PUBLICATIONS.ID IS NOT NULL",
-          "name": "SYS_CT_10064"
+          "name": "SYS_CT_10133"
         },
         {
           "definition": "FOR_LINT.PUBLICATIONS.TITLE IS NOT NULL",
-          "name": "SYS_CT_10065"
+          "name": "SYS_CT_10134"
         },
         {
           "definition": "FOR_LINT.PUBLICATIONS.WRITERID IS NOT NULL",
-          "name": "SYS_CT_10066"
+          "name": "SYS_CT_10135"
         }
       ],
       "columns": [
@@ -1238,7 +1238,7 @@
       "indices": [
         {
           "unique": true,
-          "name": "SYS_IDX_PK_PUBLICATIONS_10067",
+          "name": "SYS_IDX_PK_PUBLICATIONS_10136",
           "columns": {
             "sortSequence": "ascending",
             "name": "ID"
@@ -1246,7 +1246,7 @@
         },
         {
           "unique": false,
-          "name": "SYS_IDX_10068",
+          "name": "SYS_IDX_10140",
           "columns": {
             "sortSequence": "ascending",
             "name": "WRITERID"
@@ -1304,23 +1304,23 @@
         },
         {
           "definition": "FOR_LINT.WRITERS.ID IS NOT NULL",
-          "name": "SYS_CT_10058"
+          "name": "SYS_CT_10121"
         },
         {
           "definition": "FOR_LINT.WRITERS.FIRSTNAME IS NOT NULL",
-          "name": "SYS_CT_10059"
+          "name": "SYS_CT_10122"
         },
         {
           "definition": "FOR_LINT.WRITERS.LASTNAME IS NOT NULL",
-          "name": "SYS_CT_10060"
+          "name": "SYS_CT_10123"
         },
         {
           "definition": "FOR_LINT.WRITERS.ADDRESS2 IS NOT NULL",
-          "name": "SYS_CT_10061"
+          "name": "SYS_CT_10124"
         },
         {
           "definition": "FOR_LINT.WRITERS.PUBLICATION_ID IS NOT NULL",
-          "name": "SYS_CT_10062"
+          "name": "SYS_CT_10125"
         }
       ],
       "columns": [
@@ -1558,7 +1558,7 @@
       "indices": [
         {
           "unique": true,
-          "name": "SYS_IDX_PK_WRITERS_10063",
+          "name": "SYS_IDX_PK_WRITERS_10126",
           "columns": {
             "sortSequence": "ascending",
             "name": "ID"
@@ -1566,7 +1566,7 @@
         },
         {
           "unique": false,
-          "name": "SYS_IDX_10080",
+          "name": "SYS_IDX_10155",
           "columns": {
             "sortSequence": "ascending",
             "name": "PUBLICATION_ID"
@@ -1676,19 +1676,19 @@
       "constraints": [
         {
           "definition": "\"PUBLISHER SALES\".REGIONS.CITY IS NOT NULL",
-          "name": "SYS_CT_10048"
+          "name": "SYS_CT_10105"
         },
         {
           "definition": "\"PUBLISHER SALES\".REGIONS.STATE IS NOT NULL",
-          "name": "SYS_CT_10049"
+          "name": "SYS_CT_10106"
         },
         {
           "definition": "\"PUBLISHER SALES\".REGIONS.POSTALCODE IS NOT NULL",
-          "name": "SYS_CT_10050"
+          "name": "SYS_CT_10107"
         },
         {
           "definition": "\"PUBLISHER SALES\".REGIONS.COUNTRY IS NOT NULL",
-          "name": "SYS_CT_10051"
+          "name": "SYS_CT_10108"
         }
       ],
       "columns": [
@@ -1785,7 +1785,7 @@
       ],
       "indices": [{
         "unique": true,
-        "name": "SYS_IDX_PK_CUSTOMERS_10052",
+        "name": "SYS_IDX_PK_CUSTOMERS_10109",
         "columns": [
           {
             "sortSequence": "ascending",
@@ -1826,11 +1826,11 @@
       "constraints": [
         {
           "definition": "\"PUBLISHER SALES\".SALES.POSTALCODE IS NOT NULL",
-          "name": "SYS_CT_10053"
+          "name": "SYS_CT_10114"
         },
         {
           "definition": "\"PUBLISHER SALES\".SALES.COUNTRY IS NOT NULL",
-          "name": "SYS_CT_10054"
+          "name": "SYS_CT_10115"
         }
       ],
       "columns": [
@@ -1937,7 +1937,7 @@
       ],
       "indices": [{
         "unique": false,
-        "name": "SYS_IDX_10056",
+        "name": "SYS_IDX_10119",
         "columns": [
           {
             "sortSequence": "ascending",
@@ -2033,6 +2033,7 @@
           "sql.longvar_is_lob",
           "sql.nulls_first",
           "sql.ref_integrity",
+          "sql.regular_names",
           "sql.syntax_db2",
           "sql.syntax_mss",
           "sql.syntax_mys",
@@ -2906,7 +2907,7 @@
     ],
     "databaseProductName": "HSQL Database Engine",
     "databaseUserName": "SA",
-    "databaseProductVersion": "2.2.8"
+    "databaseProductVersion": "2.2.9"
   },
   "columnDataypes": [
     {
@@ -3182,27 +3183,13 @@
       }
     ],
     "driverClassName": "org.hsqldb.jdbc.JDBCDriver",
-    "driverVersion": "2.2.8",
+    "driverVersion": "2.2.9",
     "driverName": "HSQL Database Engine Driver",
     "url": "jdbc:hsqldb:hsql://localhost/schemacrawler"
   },
   "routines": [
     {
-      "definition": "CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10046 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN BOOKS.CUSTOMADD(ONE,1)",
-      "name": "CUSTOMADD",
-      "remarks": "",
-      "parameters": [{
-        "dataType": "INTEGER",
-        "width": "",
-        "type": "in",
-        "databaseSpecificType": "INTEGER"
-      }],
-      "type": "function",
-      "specificName": "CUSTOMADD_10046",
-      "returnType": "does not return a table"
-    },
-    {
-      "definition": "CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER,IN TWO INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10045 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN ONE+TWO",
+      "definition": "CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER,IN TWO INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10102 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN ONE+TWO",
       "name": "CUSTOMADD",
       "remarks": "",
       "parameters": [
@@ -3220,11 +3207,25 @@
         }
       ],
       "type": "function",
-      "specificName": "CUSTOMADD_10045",
+      "specificName": "CUSTOMADD_10102",
       "returnType": "does not return a table"
     },
     {
-      "definition": "CREATE PROCEDURE BOOKS.NEW_PUBLISHER(OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10043 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = 'New Publisher'",
+      "definition": "CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10103 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN BOOKS.CUSTOMADD(ONE,1)",
+      "name": "CUSTOMADD",
+      "remarks": "",
+      "parameters": [{
+        "dataType": "INTEGER",
+        "width": "",
+        "type": "in",
+        "databaseSpecificType": "INTEGER"
+      }],
+      "type": "function",
+      "specificName": "CUSTOMADD_10103",
+      "returnType": "does not return a table"
+    },
+    {
+      "definition": "CREATE PROCEDURE BOOKS.NEW_PUBLISHER(OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10100 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = 'New Publisher'",
       "name": "NEW_PUBLISHER",
       "remarks": "",
       "parameters": [{
@@ -3234,11 +3235,11 @@
         "databaseSpecificType": "CHARACTER VARYING"
       }],
       "type": "procedure",
-      "specificName": "NEW_PUBLISHER_10043",
+      "specificName": "NEW_PUBLISHER_10100",
       "returnType": "no result"
     },
     {
-      "definition": "CREATE PROCEDURE BOOKS.NEW_PUBLISHER(IN NEWPUBLISHER VARCHAR(50),OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10044 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = NEWPUBLISHER",
+      "definition": "CREATE PROCEDURE BOOKS.NEW_PUBLISHER(IN NEWPUBLISHER VARCHAR(50),OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10101 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = NEWPUBLISHER",
       "name": "NEW_PUBLISHER",
       "remarks": "",
       "parameters": [
@@ -3256,11 +3257,11 @@
         }
       ],
       "type": "procedure",
-      "specificName": "NEW_PUBLISHER_10044",
+      "specificName": "NEW_PUBLISHER_10101",
       "returnType": "no result"
     },
     {
-      "definition": "CREATE PROCEDURE SYSTEM_LOBS.ALLOC_BLOCKS(IN B_COUNT INTEGER,IN B_OFFSET INTEGER,IN L_ID BIGINT) SPECIFIC ALLOC_BLOCKS_10022 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE LOB_ADDR INT DEFAULT NULL;DECLARE REMAINING_COUNT INT DEFAULT 0;DECLARE BL_ADDR INT DEFAULT NULL;DECLARE TEMP_COUNT INT DEFAULT 0;DECLARE BL_OFFSET INT DEFAULT 0;SET REMAINING_COUNT=B_COUNT;SET BL_OFFSET=B_OFFSET;MAIN_LOOP:LOOP SET BL_ADDR=(SELECT BLOCK_ADDR FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_COUNT=REMAINING_COUNT AND TX_ID=0 FETCH 1 ROW ONLY);IF BL_ADDR IS NOT NULL THEN CALL CONVERT_BLOCK(BL_ADDR,REMAINING_COUNT,BL_OFFSET,L_ID);IF LOB_ADDR IS NULL THEN SET LOB_ADDR=BL_ADDR;END IF;LEAVE MAIN_LOOP;END IF;SET(BL_ADDR,TEMP_COUNT)=(SELECT BLOCK_ADDR,BLOCK_COUNT FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_COUNT<REMAINING_COUNT AND TX_ID=0 FETCH 1 ROW ONLY);IF BL_ADDR IS NOT NULL THEN CALL CONVERT_BLOCK(BL_ADDR,TEMP_COUNT,BL_OFFSET,L_ID);IF LOB_ADDR IS NULL THEN SET LOB_ADDR=BL_ADDR;END IF;SET REMAINING_COUNT=REMAINING_COUNT-TEMP_COUNT;SET BL_OFFSET=BL_OFFSET+TEMP_COUNT;SET BL_ADDR=NULL;SET TEMP_COUNT=0;ELSE CALL CREATE_EMPTY_BLOCK(BL_ADDR,REMAINING_COUNT);CALL CONVERT_BLOCK(BL_ADDR,REMAINING_COUNT,BL_OFFSET,L_ID);IF LOB_ADDR IS NULL THEN SET LOB_ADDR=BL_ADDR;END IF;LEAVE MAIN_LOOP;END IF;END LOOP MAIN_LOOP;END",
+      "definition": "CREATE PROCEDURE SYSTEM_LOBS.ALLOC_BLOCKS(IN B_COUNT INTEGER,IN B_OFFSET INTEGER,IN L_ID BIGINT) SPECIFIC ALLOC_BLOCKS_10057 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE LOB_ADDR INT DEFAULT NULL;DECLARE REMAINING_COUNT INT DEFAULT 0;DECLARE BL_ADDR INT DEFAULT NULL;DECLARE TEMP_COUNT INT DEFAULT 0;DECLARE BL_OFFSET INT DEFAULT 0;SET REMAINING_COUNT=B_COUNT;SET BL_OFFSET=B_OFFSET;MAIN_LOOP:LOOP SET BL_ADDR=(SELECT BLOCK_ADDR FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_COUNT=REMAINING_COUNT AND TX_ID=0 FETCH 1 ROW ONLY);IF BL_ADDR IS NOT NULL THEN CALL CONVERT_BLOCK(BL_ADDR,REMAINING_COUNT,BL_OFFSET,L_ID);IF LOB_ADDR IS NULL THEN SET LOB_ADDR=BL_ADDR;END IF;LEAVE MAIN_LOOP;END IF;SET(BL_ADDR,TEMP_COUNT)=(SELECT BLOCK_ADDR,BLOCK_COUNT FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_COUNT<REMAINING_COUNT AND TX_ID=0 FETCH 1 ROW ONLY);IF BL_ADDR IS NOT NULL THEN CALL CONVERT_BLOCK(BL_ADDR,TEMP_COUNT,BL_OFFSET,L_ID);IF LOB_ADDR IS NULL THEN SET LOB_ADDR=BL_ADDR;END IF;SET REMAINING_COUNT=REMAINING_COUNT-TEMP_COUNT;SET BL_OFFSET=BL_OFFSET+TEMP_COUNT;SET BL_ADDR=NULL;SET TEMP_COUNT=0;ELSE CALL CREATE_EMPTY_BLOCK(BL_ADDR,REMAINING_COUNT);CALL CONVERT_BLOCK(BL_ADDR,REMAINING_COUNT,BL_OFFSET,L_ID);IF LOB_ADDR IS NULL THEN SET LOB_ADDR=BL_ADDR;END IF;LEAVE MAIN_LOOP;END IF;END LOOP MAIN_LOOP;END",
       "name": "ALLOC_BLOCKS",
       "remarks": "",
       "parameters": [
@@ -3284,11 +3285,11 @@
         }
       ],
       "type": "procedure",
-      "specificName": "ALLOC_BLOCKS_10022",
+      "specificName": "ALLOC_BLOCKS_10057",
       "returnType": "no result"
     },
     {
-      "definition": "CREATE PROCEDURE SYSTEM_LOBS.CONVERT_BLOCK(IN B_ADDR INTEGER,IN B_COUNT INTEGER,IN B_OFFSET INTEGER,IN L_ID BIGINT) SPECIFIC CONVERT_BLOCK_10012 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DELETE FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_ADDR=B_ADDR;INSERT INTO SYSTEM_LOBS.LOBS VALUES(B_ADDR,B_COUNT,B_OFFSET,L_ID);END",
+      "definition": "CREATE PROCEDURE SYSTEM_LOBS.CONVERT_BLOCK(IN B_ADDR INTEGER,IN B_COUNT INTEGER,IN B_OFFSET INTEGER,IN L_ID BIGINT) SPECIFIC CONVERT_BLOCK_10019 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DELETE FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_ADDR=B_ADDR;INSERT INTO SYSTEM_LOBS.LOBS VALUES(B_ADDR,B_COUNT,B_OFFSET,L_ID);END",
       "name": "CONVERT_BLOCK",
       "remarks": "",
       "parameters": [
@@ -3318,11 +3319,11 @@
         }
       ],
       "type": "procedure",
-      "specificName": "CONVERT_BLOCK_10012",
+      "specificName": "CONVERT_BLOCK_10019",
       "returnType": "no result"
     },
     {
-      "definition": "CREATE PROCEDURE SYSTEM_LOBS.CREATE_EMPTY_BLOCK(INOUT B_ADDR INTEGER,IN B_COUNT INTEGER) SPECIFIC CREATE_EMPTY_BLOCK_10020 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE TEMP_COUNT INT DEFAULT NULL;DECLARE TEMP_ADDR INT DEFAULT NULL;SET(TEMP_ADDR,TEMP_COUNT)=(SELECT BLOCK_ADDR,BLOCK_COUNT FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_COUNT>B_COUNT AND TX_ID=0 FETCH 1 ROW ONLY);IF TEMP_ADDR IS NULL THEN SIGNAL SQLSTATE'45000';END IF;UPDATE SYSTEM_LOBS.BLOCKS SET BLOCK_COUNT=B_COUNT WHERE BLOCK_ADDR=TEMP_ADDR;INSERT INTO SYSTEM_LOBS.BLOCKS VALUES(TEMP_ADDR+B_COUNT,TEMP_COUNT-B_COUNT,0);SET B_ADDR=TEMP_ADDR;END",
+      "definition": "CREATE PROCEDURE SYSTEM_LOBS.CREATE_EMPTY_BLOCK(INOUT B_ADDR INTEGER,IN B_COUNT INTEGER) SPECIFIC CREATE_EMPTY_BLOCK_10049 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE TEMP_COUNT INT DEFAULT NULL;DECLARE TEMP_ADDR INT DEFAULT NULL;SET(TEMP_ADDR,TEMP_COUNT)=(SELECT BLOCK_ADDR,BLOCK_COUNT FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_COUNT>B_COUNT AND TX_ID=0 FETCH 1 ROW ONLY);IF TEMP_ADDR IS NULL THEN SIGNAL SQLSTATE'45000';END IF;UPDATE SYSTEM_LOBS.BLOCKS SET BLOCK_COUNT=B_COUNT WHERE BLOCK_ADDR=TEMP_ADDR;INSERT INTO SYSTEM_LOBS.BLOCKS VALUES(TEMP_ADDR+B_COUNT,TEMP_COUNT-B_COUNT,0);SET B_ADDR=TEMP_ADDR;END",
       "name": "CREATE_EMPTY_BLOCK",
       "remarks": "",
       "parameters": [
@@ -3340,11 +3341,11 @@
         }
       ],
       "type": "procedure",
-      "specificName": "CREATE_EMPTY_BLOCK_10020",
+      "specificName": "CREATE_EMPTY_BLOCK_10049",
       "returnType": "no result"
     },
     {
-      "definition": "CREATE PROCEDURE SYSTEM_LOBS.DELETE_BLOCKS(IN L_ID BIGINT,IN B_OFFSET INTEGER,IN B_LIMIT INTEGER,IN TX_ID BIGINT) SPECIFIC DELETE_BLOCKS_10019 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC INSERT INTO SYSTEM_LOBS.BLOCKS(SELECT BLOCK_ADDR,BLOCK_COUNT,TX_ID FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID AND BLOCK_OFFSET>=B_OFFSET AND BLOCK_OFFSET<B_LIMIT);DELETE FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID AND BLOCK_OFFSET>=B_OFFSET AND BLOCK_OFFSET<B_LIMIT;END",
+      "definition": "CREATE PROCEDURE SYSTEM_LOBS.DELETE_BLOCKS(IN L_ID BIGINT,IN B_OFFSET INTEGER,IN B_LIMIT INTEGER,IN TX_ID BIGINT) SPECIFIC DELETE_BLOCKS_10046 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC INSERT INTO SYSTEM_LOBS.BLOCKS(SELECT BLOCK_ADDR,BLOCK_COUNT,TX_ID FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID AND BLOCK_OFFSET>=B_OFFSET AND BLOCK_OFFSET<B_LIMIT);DELETE FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID AND BLOCK_OFFSET>=B_OFFSET AND BLOCK_OFFSET<B_LIMIT;END",
       "name": "DELETE_BLOCKS",
       "remarks": "",
       "parameters": [
@@ -3374,11 +3375,11 @@
         }
       ],
       "type": "procedure",
-      "specificName": "DELETE_BLOCKS_10019",
+      "specificName": "DELETE_BLOCKS_10046",
       "returnType": "no result"
     },
     {
-      "definition": "CREATE PROCEDURE SYSTEM_LOBS.DELETE_LOB(IN L_ID BIGINT,IN TX_ID BIGINT) SPECIFIC DELETE_LOB_10013 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC INSERT INTO SYSTEM_LOBS.BLOCKS(SELECT BLOCK_ADDR,BLOCK_COUNT,TX_ID FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID);DELETE FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID;DELETE FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_ID=L_ID;END",
+      "definition": "CREATE PROCEDURE SYSTEM_LOBS.DELETE_LOB(IN L_ID BIGINT,IN TX_ID BIGINT) SPECIFIC DELETE_LOB_10021 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC INSERT INTO SYSTEM_LOBS.BLOCKS(SELECT BLOCK_ADDR,BLOCK_COUNT,TX_ID FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID);DELETE FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID;DELETE FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_ID=L_ID;END",
       "name": "DELETE_LOB",
       "remarks": "",
       "parameters": [
@@ -3396,11 +3397,11 @@
         }
       ],
       "type": "procedure",
-      "specificName": "DELETE_LOB_10013",
+      "specificName": "DELETE_LOB_10021",
       "returnType": "no result"
     },
     {
-      "definition": "CREATE PROCEDURE SYSTEM_LOBS.DELETE_UNUSED(IN L_IDS BIGINT ARRAY) SPECIFIC DELETE_UNUSED_10018 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE TABLE LIVE_IDS(TEMP_ID INT);DECLARE TABLE TEMP_IDS(TEMP_ID INT);DECLARE TEMP_COUNT INT DEFAULT 1;WHILE TEMP_COUNT<=CARDINALITY(L_IDS)DO INSERT INTO MODULE.LIVE_IDS VALUES L_IDS[TEMP_COUNT];SET TEMP_COUNT=TEMP_COUNT+1;END WHILE;SET TEMP_COUNT=0;REPEAT INSERT INTO MODULE.TEMP_IDS SELECT LOB_ID FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_USAGE_COUNT<1 AND LOB_ID NOT IN(SELECT TEMP_ID FROM MODULE.LIVE_IDS)LIMIT 1000;INSERT INTO SYSTEM_LOBS.BLOCKS(SELECT BLOCK_ADDR,BLOCK_COUNT,0 FROM SYSTEM_LOBS.LOBS WHERE LOB_ID IN(SELECT TEMP_ID FROM MODULE.TEMP_IDS));DELETE FROM SYSTEM_LOBS.LOBS WHERE LOB_ID IN(SELECT TEMP_ID FROM MODULE.TEMP_IDS);DELETE FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_ID IN(SELECT TEMP_ID FROM MODULE.TEMP_IDS);GET DIAGNOSTICS TEMP_COUNT=ROW_COUNT;DELETE FROM MODULE.TEMP_IDS;UNTIL TEMP_COUNT<1000 END REPEAT;END",
+      "definition": "CREATE PROCEDURE SYSTEM_LOBS.DELETE_UNUSED(IN L_IDS BIGINT ARRAY) SPECIFIC DELETE_UNUSED_10034 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE TABLE LIVE_IDS(TEMP_ID INT);DECLARE TABLE TEMP_IDS(TEMP_ID INT);DECLARE TEMP_COUNT INT DEFAULT 1;WHILE TEMP_COUNT<=CARDINALITY(L_IDS)DO INSERT INTO MODULE.LIVE_IDS VALUES L_IDS[TEMP_COUNT];SET TEMP_COUNT=TEMP_COUNT+1;END WHILE;SET TEMP_COUNT=0;REPEAT INSERT INTO MODULE.TEMP_IDS SELECT LOB_ID FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_USAGE_COUNT<1 AND LOB_ID NOT IN(SELECT TEMP_ID FROM MODULE.LIVE_IDS)LIMIT 1000;INSERT INTO SYSTEM_LOBS.BLOCKS(SELECT BLOCK_ADDR,BLOCK_COUNT,0 FROM SYSTEM_LOBS.LOBS WHERE LOB_ID IN(SELECT TEMP_ID FROM MODULE.TEMP_IDS));DELETE FROM SYSTEM_LOBS.LOBS WHERE LOB_ID IN(SELECT TEMP_ID FROM MODULE.TEMP_IDS);DELETE FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_ID IN(SELECT TEMP_ID FROM MODULE.TEMP_IDS);GET DIAGNOSTICS TEMP_COUNT=ROW_COUNT;DELETE FROM MODULE.TEMP_IDS;UNTIL TEMP_COUNT<1000 END REPEAT;END",
       "name": "DELETE_UNUSED",
       "remarks": "",
       "parameters": [{
@@ -3410,11 +3411,25 @@
         "databaseSpecificType": "BIGINT ARRAY"
       }],
       "type": "procedure",
-      "specificName": "DELETE_UNUSED_10018",
+      "specificName": "DELETE_UNUSED_10034",
       "returnType": "no result"
     },
     {
-      "definition": "CREATE PROCEDURE SYSTEM_LOBS.DIVIDE_BLOCK(IN B_OFFSET INTEGER,IN L_ID BIGINT) SPECIFIC DIVIDE_BLOCK_10021 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE BL_ADDR INT DEFAULT NULL;DECLARE BL_COUNT INT DEFAULT NULL;DECLARE BL_OFFSET INT DEFAULT NULL;SET(BL_ADDR,BL_COUNT,BL_OFFSET)=(SELECT BLOCK_ADDR,BLOCK_COUNT,BLOCK_OFFSET FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID AND B_OFFSET>BLOCK_OFFSET AND B_OFFSET<BLOCK_OFFSET+BLOCK_COUNT);IF BL_ADDR IS NULL THEN SIGNAL SQLSTATE'45000';END IF;DELETE FROM SYSTEM_LOBS.LOBS WHERE BLOCK_ADDR=BL_ADDR;INSERT INTO SYSTEM_LOBS.LOBS VALUES(BL_ADDR,B_OFFSET-BL_OFFSET,BL_OFFSET,L_ID);INSERT INTO SYSTEM_LOBS.LOBS VALUES(BL_ADDR+B_OFFSET-BL_OFFSET,BL_OFFSET+BL_COUNT-B_OFFSET,B_OFFSET,L_ID);END",
+      "definition": "CREATE PROCEDURE SYSTEM_LOBS.DELETE_UNUSED_LOBS(IN LIMIT_ID BIGINT) SPECIFIC DELETE_UNUSED_LOBS_10044 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE TABLE TEMP_IDS(TEMP_ID INT);DECLARE TEMP_COUNT INT DEFAULT 0;REPEAT INSERT INTO MODULE.TEMP_IDS SELECT LOB_ID FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_USAGE_COUNT=0 AND LOB_ID<LIMIT_ID LIMIT 1000;INSERT INTO SYSTEM_LOBS.BLOCKS(SELECT BLOCK_ADDR,BLOCK_COUNT,0 FROM SYSTEM_LOBS.LOBS WHERE LOB_ID IN(SELECT TEMP_ID FROM MODULE.TEMP_IDS));DELETE FROM SYSTEM_LOBS.LOBS WHERE LOB_ID IN(SELECT TEMP_ID FROM MODULE.TEMP_IDS);DELETE FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_ID IN(SELECT TEMP_ID FROM MODULE.TEMP_IDS);GET DIAGNOSTICS TEMP_COUNT=ROW_COUNT;DELETE FROM MODULE.TEMP_IDS;UNTIL TEMP_COUNT<1000 END REPEAT;END",
+      "name": "DELETE_UNUSED_LOBS",
+      "remarks": "",
+      "parameters": [{
+        "dataType": "BIGINT",
+        "width": "",
+        "type": "in",
+        "databaseSpecificType": "BIGINT"
+      }],
+      "type": "procedure",
+      "specificName": "DELETE_UNUSED_LOBS_10044",
+      "returnType": "no result"
+    },
+    {
+      "definition": "CREATE PROCEDURE SYSTEM_LOBS.DIVIDE_BLOCK(IN B_OFFSET INTEGER,IN L_ID BIGINT) SPECIFIC DIVIDE_BLOCK_10052 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE BL_ADDR INT DEFAULT NULL;DECLARE BL_COUNT INT DEFAULT NULL;DECLARE BL_OFFSET INT DEFAULT NULL;SET(BL_ADDR,BL_COUNT,BL_OFFSET)=(SELECT BLOCK_ADDR,BLOCK_COUNT,BLOCK_OFFSET FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID AND B_OFFSET>BLOCK_OFFSET AND B_OFFSET<BLOCK_OFFSET+BLOCK_COUNT);IF BL_ADDR IS NULL THEN SIGNAL SQLSTATE'45000';END IF;DELETE FROM SYSTEM_LOBS.LOBS WHERE BLOCK_ADDR=BL_ADDR;INSERT INTO SYSTEM_LOBS.LOBS VALUES(BL_ADDR,B_OFFSET-BL_OFFSET,BL_OFFSET,L_ID);INSERT INTO SYSTEM_LOBS.LOBS VALUES(BL_ADDR+B_OFFSET-BL_OFFSET,BL_OFFSET+BL_COUNT-B_OFFSET,B_OFFSET,L_ID);END",
       "name": "DIVIDE_BLOCK",
       "remarks": "",
       "parameters": [
@@ -3432,7 +3447,7 @@
         }
       ],
       "type": "procedure",
-      "specificName": "DIVIDE_BLOCK_10021",
+      "specificName": "DIVIDE_BLOCK_10052",
       "returnType": "no result"
     }
   ]

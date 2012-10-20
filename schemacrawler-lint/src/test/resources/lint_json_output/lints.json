@@ -157,7 +157,7 @@
   "databaseInfo": {
     "databaseProductName": "HSQL Database Engine",
     "databaseUserName": "SA",
-    "databaseProductVersion": "2.2.8"
+    "databaseProductVersion": "2.2.9"
   },
   "database_lints": {"lints": [
       {
@@ -180,7 +180,7 @@
   "jdbcDriverInfo": {
     "isJDBCCompliant": "true",
     "driverClassName": "org.hsqldb.jdbc.JDBCDriver",
-    "driverVersion": "2.2.8",
+    "driverVersion": "2.2.9",
     "driverName": "HSQL Database Engine Driver",
     "url": "jdbc:hsqldb:hsql://localhost/schemacrawler"
   }

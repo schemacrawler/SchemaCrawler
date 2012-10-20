@@ -86,48 +86,48 @@ public class SchemaCrawlerTest
         {
             {
                 "CHECK_UPPERCASE_STATE",
-                "SYS_CT_10027",
-                "SYS_CT_10028",
-                "SYS_CT_10029"
+                "SYS_CT_10068",
+                "SYS_CT_10069",
+                "SYS_CT_10070"
             },
             {},
             {
-                "SYS_CT_10035", "SYS_CT_10036"
+                "SYS_CT_10083", "SYS_CT_10084"
             },
             {
-                "SYS_CT_10031", "SYS_CT_10032", "SYS_CT_10033"
+                "SYS_CT_10076", "SYS_CT_10077", "SYS_CT_10078"
             },
             {},
             {
-              "SYS_CT_10025"
+              "SYS_CT_10065"
             },
             {}
         },
         {
             {
-                "SYS_CT_10072", "SYS_CT_10073", "SYS_CT_10074"
+                "SYS_CT_10144", "SYS_CT_10145", "SYS_CT_10146"
             },
             {},
             {},
             {
-                "SYS_CT_10064", "SYS_CT_10065", "SYS_CT_10066",
+                "SYS_CT_10133", "SYS_CT_10134", "SYS_CT_10135",
             },
             {
                 "CHECK_UPPERCASE_STATE",
-                "SYS_CT_10058",
-                "SYS_CT_10059",
-                "SYS_CT_10060",
-                "SYS_CT_10061",
-                "SYS_CT_10062",
+                "SYS_CT_10121",
+                "SYS_CT_10122",
+                "SYS_CT_10123",
+                "SYS_CT_10124",
+                "SYS_CT_10125",
             },
         },
         {},
         {},
         {
             {
-                "SYS_CT_10048", "SYS_CT_10049", "SYS_CT_10050", "SYS_CT_10051"
+                "SYS_CT_10105", "SYS_CT_10106", "SYS_CT_10107", "SYS_CT_10108"
             }, {
-                "SYS_CT_10053", "SYS_CT_10054"
+                "SYS_CT_10114", "SYS_CT_10115"
             }
         },
         {}

@@ -2980,7 +2980,7 @@
     ],
     "databaseProductName": "HSQL Database Engine",
     "databaseUserName": "SA",
-    "databaseProductVersion": "2.2.8"
+    "databaseProductVersion": "2.2.9"
   },
   "columnDataypes": [
     {
@@ -3256,7 +3256,7 @@
       }
     ],
     "driverClassName": "org.hsqldb.jdbc.JDBCDriver",
-    "driverVersion": "2.2.8",
+    "driverVersion": "2.2.9",
     "driverName": "HSQL Database Engine Driver",
     "url": "jdbc:hsqldb:hsql://localhost:9001/schemacrawler"
   },

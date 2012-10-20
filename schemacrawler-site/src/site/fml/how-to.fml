@@ -114,7 +114,7 @@
                   modifications will be restored when the server is
                   restarted.
                 </p>
-                <p>JDBC drivers for HyperSQL 2.2.8, and other external libraries
+                <p>JDBC drivers for HyperSQL 2.2.9, and other external libraries
                   must be available
                   on the
                   classpath for

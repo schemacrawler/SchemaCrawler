@@ -17,7 +17,7 @@ Database Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
 database product name                     HSQL Database Engine          
-database product version                  2.2.8                         
+database product version                  2.2.9                         
 database user name                        SA                            
 
 
@@ -25,7 +25,7 @@ JDBC Driver Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
 driver name                               HSQL Database Engine Driver   
-driver version                            2.2.8                         
+driver version                            2.2.9                         
 driver class name                         org.hsqldb.jdbc.JDBCDriver    
 url                                       jdbc:hsqldb:hsql://localhost/schemacrawler
 is JDBC compliant                         true                          
@@ -131,6 +131,10 @@ PUBLIC.SYSTEM_LOBS.DELETE_LOB                     [procedure, no result]
 
 
 PUBLIC.SYSTEM_LOBS.DELETE_UNUSED                  [procedure, no result]
+------------------------------------------------------------------------
+
+
+PUBLIC.SYSTEM_LOBS.DELETE_UNUSED_LOBS             [procedure, no result]
 ------------------------------------------------------------------------
 
 
