@@ -5,7 +5,7 @@
 	<parent>
 		<artifactId>schemacrawler-all</artifactId>
 		<groupId>net.sourceforge.schemacrawler</groupId>
-		<version>9.1</version>
+		<version>9.2</version>
 	</parent>
 	<artifactId>schemacrawler-integrations</artifactId>
 	<packaging>jar</packaging>
