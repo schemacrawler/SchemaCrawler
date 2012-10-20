@@ -65,7 +65,7 @@
   "databaseInfo": {
     "databaseProductName": "HSQL Database Engine",
     "databaseUserName": "SA",
-    "databaseProductVersion": "2.2.8"
+    "databaseProductVersion": "2.2.9"
   },
   "schemaCrawlerInfo": {
     "productVersion": "9.2",
@@ -74,7 +74,7 @@
   "jdbcDriverInfo": {
     "isJDBCCompliant": "true",
     "driverClassName": "org.hsqldb.jdbc.JDBCDriver",
-    "driverVersion": "2.2.8",
+    "driverVersion": "2.2.9",
     "driverName": "HSQL Database Engine Driver",
     "url": "jdbc:hsqldb:hsql://localhost/schemacrawler"
   },
@@ -136,6 +136,12 @@
     {
       "name": "DELETE_UNUSED",
       "fullName": "PUBLIC.SYSTEM_LOBS.DELETE_UNUSED",
+      "type": "procedure",
+      "returnType": "no result"
+    },
+    {
+      "name": "DELETE_UNUSED_LOBS",
+      "fullName": "PUBLIC.SYSTEM_LOBS.DELETE_UNUSED_LOBS",
       "type": "procedure",
       "returnType": "no result"
     },

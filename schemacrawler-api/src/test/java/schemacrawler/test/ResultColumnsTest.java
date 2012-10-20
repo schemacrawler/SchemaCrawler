@@ -47,7 +47,7 @@ public class ResultColumnsTest
   {
 
     final String[] columnNames = {
-        "BOOKS.BOOKS.TITLE", "C2", "BOOKS.BOOKS.PRICE",
+        "PUBLIC.BOOKS.BOOKS.TITLE", "C2", "PUBLIC.BOOKS.BOOKS.PRICE",
     };
     final String[] columnDataTypes = {
         "VARCHAR", "VARCHAR", "DOUBLE",

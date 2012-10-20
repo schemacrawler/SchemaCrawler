@@ -54,7 +54,7 @@ public class SchemaCrawlerDeepTest
     assertTrue("Should not find any tables", database.getTables(systemSchema)
       .size() == 0);
     assertEquals("Could not find any routines",
-                 7,
+                 8,
                  database.getRoutines(systemSchema).size());
 
     final Schema schema = new SchemaReference("PUBLIC", "BOOKS");

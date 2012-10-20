@@ -17,7 +17,7 @@ Database Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
 database product name                     HSQL Database Engine          
-database product version                  2.2.8                         
+database product version                  2.2.9                         
 database user name                        SA                            
 
 
@@ -30,7 +30,7 @@ auto commit failure closes all result sets  false
 catalog separator                         .                             
 catalog term                              CATALOG                       
 catalogs                                  PUBLIC                        
-client info properties                    files_readonly, hsqldb.applog, hsqldb.cache_file_scale, hsqldb.cache_free_count, hsqldb.cache_rows, hsqldb.cache_size, hsqldb.default_table_type, hsqldb.defrag_limit, hsqldb.full_log_replay, hsqldb.inc_backup, hsqldb.lob_file_scale, hsqldb.lock_file, hsqldb.log_data, hsqldb.log_size, hsqldb.nio_data_file, hsqldb.nio_max_size, hsqldb.result_max_memory_rows, hsqldb.script_format, hsqldb.sqllog, hsqldb.temp_directory, hsqldb.tx, hsqldb.tx_conflict_rollback, hsqldb.tx_level, hsqldb.write_delay, hsqldb.write_delay_millis, jdbc.translate_tti_types, readonly, runtime.gc_interval, sql.avg_scale, sql.compare_in_locale, sql.concat_nulls, sql.convert_trunc, sql.double_nan, sql.enforce_names, sql.enforce_refs, sql.enforce_size, sql.enforce_tdc_delete, sql.enforce_tdc_update, sql.enforce_types, sql.identity_is_pk, sql.longvar_is_lob, sql.nulls_first, sql.ref_integrity, sql.syntax_db2, sql.syntax_mss, sql.syntax_mys, sql.syntax_ora, sql.syntax_pgs, sql.unique_nulls, textdb.all_quoted, textdb.cache_rows, textdb.cache_scale, textdb.cache_size, textdb.cache_size_scale, textdb.encoding, textdb.fs, textdb.ignore_first, textdb.lvs, textdb.quoted, textdb.vs
+client info properties                    files_readonly, hsqldb.applog, hsqldb.cache_file_scale, hsqldb.cache_free_count, hsqldb.cache_rows, hsqldb.cache_size, hsqldb.default_table_type, hsqldb.defrag_limit, hsqldb.full_log_replay, hsqldb.inc_backup, hsqldb.lob_file_scale, hsqldb.lock_file, hsqldb.log_data, hsqldb.log_size, hsqldb.nio_data_file, hsqldb.nio_max_size, hsqldb.result_max_memory_rows, hsqldb.script_format, hsqldb.sqllog, hsqldb.temp_directory, hsqldb.tx, hsqldb.tx_conflict_rollback, hsqldb.tx_level, hsqldb.write_delay, hsqldb.write_delay_millis, jdbc.translate_tti_types, readonly, runtime.gc_interval, sql.avg_scale, sql.compare_in_locale, sql.concat_nulls, sql.convert_trunc, sql.double_nan, sql.enforce_names, sql.enforce_refs, sql.enforce_size, sql.enforce_tdc_delete, sql.enforce_tdc_update, sql.enforce_types, sql.identity_is_pk, sql.longvar_is_lob, sql.nulls_first, sql.ref_integrity, sql.regular_names, sql.syntax_db2, sql.syntax_mss, sql.syntax_mys, sql.syntax_ora, sql.syntax_pgs, sql.unique_nulls, textdb.all_quoted, textdb.cache_rows, textdb.cache_scale, textdb.cache_size, textdb.cache_size_scale, textdb.encoding, textdb.fs, textdb.ignore_first, textdb.lvs, textdb.quoted, textdb.vs
 data definition causes transaction commit  true                          
 data definition ignored in transactions   false                         
 database major version                    2                             
@@ -185,7 +185,7 @@ JDBC Driver Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
 driver name                               HSQL Database Engine Driver   
-driver version                            2.2.8                         
+driver version                            2.2.9                         
 driver class name                         org.hsqldb.jdbc.JDBCDriver    
 url                                       jdbc:hsqldb:hsql://localhost:9001/schemacrawler
 is JDBC compliant                         true                          
@@ -454,7 +454,7 @@ PK_AUTHORS                                                 [primary key]
 FK_Z_AUTHOR                                [foreign key, with no action]
   ID --> PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID                              
 
-SYS_IDX_PK_AUTHORS_10030                                  [unique index]
+SYS_IDX_PK_AUTHORS_10071                                  [unique index]
   ID                                ascending                   
 
 IDX_B_AUTHORS                                         [non-unique index]
@@ -526,10 +526,10 @@ FK_Z_AUTHOR                                [foreign key, with no action]
 FK_Y_BOOK                                  [foreign key, with no action]
   PUBLIC.BOOKS.BOOKS.ID --> BOOKID                              
 
-SYS_IDX_10040                                         [non-unique index]
+SYS_IDX_10090                                         [non-unique index]
   AUTHORID                          ascending                   
 
-SYS_IDX_10038                                         [non-unique index]
+SYS_IDX_10088                                         [non-unique index]
   BOOKID                            ascending                   
 
 UIDX_BOOKAUTHORS                                          [unique index]
@@ -579,7 +579,7 @@ FK_Y_BOOK                                  [foreign key, with no action]
                                                       [weak association]
   PUBLIC.BOOKS.PUBLISHERS.ID --> PUBLISHERID                              
 
-SYS_IDX_PK_BOOKS_10034                                    [unique index]
+SYS_IDX_PK_BOOKS_10079                                    [unique index]
   ID                                ascending                   
 
 DELETE                                                       [privilege]
@@ -644,7 +644,7 @@ PK_PUBLISHERS                                              [primary key]
                                                       [weak association]
   ID --> PUBLIC.BOOKS.BOOKS.PUBLISHERID                              
 
-SYS_IDX_PK_PUBLISHERS_10026                               [unique index]
+SYS_IDX_PK_PUBLISHERS_10066                               [unique index]
   ID                                ascending                   
 
 DELETE                                                       [privilege]
@@ -686,13 +686,13 @@ FK_PUBLICATION_JOIN                        [foreign key, with no action]
 FK_WRITER_JOIN                             [foreign key, with no action]
   PUBLIC.FOR_LINT.WRITERS.ID --> WRITERID                              
 
-SYS_IDX_PK_EXTRA_PK_10075                                 [unique index]
+SYS_IDX_PK_EXTRA_PK_10147                                 [unique index]
   ID                                ascending                   
 
-SYS_IDX_10078                                         [non-unique index]
+SYS_IDX_10153                                         [non-unique index]
   PUBLICATIONID                     ascending                   
 
-SYS_IDX_10076                                         [non-unique index]
+SYS_IDX_10151                                         [non-unique index]
   WRITERID                          ascending                   
 
 DELETE                                                       [privilege]
@@ -760,10 +760,10 @@ FK_WRITERS_PUBLICATION                     [foreign key, with no action]
 FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
   PUBLIC.FOR_LINT.WRITERS.ID --> WRITERID                              
 
-SYS_IDX_PK_PUBLICATIONS_10067                             [unique index]
+SYS_IDX_PK_PUBLICATIONS_10136                             [unique index]
   ID                                ascending                   
 
-SYS_IDX_10068                                         [non-unique index]
+SYS_IDX_10140                                         [non-unique index]
   WRITERID                          ascending                   
 
 DELETE                                                       [privilege]
@@ -818,10 +818,10 @@ FK_WRITER_JOIN                             [foreign key, with no action]
 FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
   ID --> PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID                              
 
-SYS_IDX_PK_WRITERS_10063                                  [unique index]
+SYS_IDX_PK_WRITERS_10126                                  [unique index]
   ID                                ascending                   
 
-SYS_IDX_10080                                         [non-unique index]
+SYS_IDX_10155                                         [non-unique index]
   PUBLICATION_ID                    ascending                   
 
 IDX_A1_WRITERS                                        [non-unique index]
@@ -876,7 +876,7 @@ FK_SALES_REGIONS                           [foreign key, with no action]
   POSTALCODE --> PUBLIC."PUBLISHER SALES".SALES.POSTALCODE                              
   COUNTRY --> PUBLIC."PUBLISHER SALES".SALES.COUNTRY                              
 
-SYS_IDX_PK_CUSTOMERS_10052                                [unique index]
+SYS_IDX_PK_CUSTOMERS_10109                                [unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
 
@@ -914,7 +914,7 @@ FK_SALES_REGIONS                           [foreign key, with no action]
                                                       [weak association]
   PUBLIC.BOOKS.BOOKS.ID --> BOOKID                              
 
-SYS_IDX_10056                                         [non-unique index]
+SYS_IDX_10119                                         [non-unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
 
@@ -946,18 +946,18 @@ Routines
 PUBLIC.BOOKS.CUSTOMADD               [function, does not return a table]
 ------------------------------------------------------------------------
   ONE                               INTEGER, in                 
+  TWO                               INTEGER, in                 
 
                                                          [specific name]
-CUSTOMADD_10046
+CUSTOMADD_10102
 
 
 PUBLIC.BOOKS.CUSTOMADD               [function, does not return a table]
 ------------------------------------------------------------------------
   ONE                               INTEGER, in                 
-  TWO                               INTEGER, in                 
 
                                                          [specific name]
-CUSTOMADD_10045
+CUSTOMADD_10103
 
 
 PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
@@ -965,7 +965,7 @@ PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
   PUBLISHER                         CHARACTER VARYING, out      
 
                                                          [specific name]
-NEW_PUBLISHER_10043
+NEW_PUBLISHER_10100
 
 
 PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
@@ -974,7 +974,7 @@ PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
   PUBLISHER                         CHARACTER VARYING, out      
 
                                                          [specific name]
-NEW_PUBLISHER_10044
+NEW_PUBLISHER_10101
 
 
 PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS                   [procedure, no result]
@@ -984,7 +984,7 @@ PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS                   [procedure, no result]
   L_ID                              BIGINT, in                  
 
                                                          [specific name]
-ALLOC_BLOCKS_10022
+ALLOC_BLOCKS_10057
 
 
 PUBLIC.SYSTEM_LOBS.CONVERT_BLOCK                  [procedure, no result]
@@ -995,7 +995,7 @@ PUBLIC.SYSTEM_LOBS.CONVERT_BLOCK                  [procedure, no result]
   L_ID                              BIGINT, in                  
 
                                                          [specific name]
-CONVERT_BLOCK_10012
+CONVERT_BLOCK_10019
 
 
 PUBLIC.SYSTEM_LOBS.CREATE_EMPTY_BLOCK             [procedure, no result]
@@ -1004,7 +1004,7 @@ PUBLIC.SYSTEM_LOBS.CREATE_EMPTY_BLOCK             [procedure, no result]
   B_COUNT                           INTEGER, in                 
 
                                                          [specific name]
-CREATE_EMPTY_BLOCK_10020
+CREATE_EMPTY_BLOCK_10049
 
 
 PUBLIC.SYSTEM_LOBS.DELETE_BLOCKS                  [procedure, no result]
@@ -1015,7 +1015,7 @@ PUBLIC.SYSTEM_LOBS.DELETE_BLOCKS                  [procedure, no result]
   TX_ID                             BIGINT, in                  
 
                                                          [specific name]
-DELETE_BLOCKS_10019
+DELETE_BLOCKS_10046
 
 
 PUBLIC.SYSTEM_LOBS.DELETE_LOB                     [procedure, no result]
@@ -1024,7 +1024,7 @@ PUBLIC.SYSTEM_LOBS.DELETE_LOB                     [procedure, no result]
   TX_ID                             BIGINT, in                  
 
                                                          [specific name]
-DELETE_LOB_10013
+DELETE_LOB_10021
 
 
 PUBLIC.SYSTEM_LOBS.DELETE_UNUSED                  [procedure, no result]
@@ -1032,7 +1032,15 @@ PUBLIC.SYSTEM_LOBS.DELETE_UNUSED                  [procedure, no result]
   L_IDS                             BIGINT ARRAY, in            
 
                                                          [specific name]
-DELETE_UNUSED_10018
+DELETE_UNUSED_10034
+
+
+PUBLIC.SYSTEM_LOBS.DELETE_UNUSED_LOBS             [procedure, no result]
+------------------------------------------------------------------------
+  LIMIT_ID                          BIGINT, in                  
+
+                                                         [specific name]
+DELETE_UNUSED_LOBS_10044
 
 
 PUBLIC.SYSTEM_LOBS.DIVIDE_BLOCK                   [procedure, no result]
@@ -1041,7 +1049,7 @@ PUBLIC.SYSTEM_LOBS.DIVIDE_BLOCK                   [procedure, no result]
   L_ID                              BIGINT, in                  
 
                                                          [specific name]
-DIVIDE_BLOCK_10021
+DIVIDE_BLOCK_10052
 
 
 

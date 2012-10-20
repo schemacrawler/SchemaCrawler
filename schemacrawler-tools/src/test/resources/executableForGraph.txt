@@ -7,7 +7,7 @@ digraph SchemaCrawler_Diagram {
         </tr>
         <tr>
           <td align="right">Database:</td>
-          <td align="left">HSQL Database Engine  2.2.8</td>
+          <td align="left">HSQL Database Engine  2.2.9</td>
         </tr>
         <tr>
           <td align="right">JDBC Connection:</td>
@@ -15,7 +15,7 @@ digraph SchemaCrawler_Diagram {
         </tr>
         <tr>
           <td align="right">JDBC Driver:</td>
-          <td align="left">HSQL Database Engine Driver  2.2.8</td>
+          <td align="left">HSQL Database Engine Driver  2.2.9</td>
         </tr>
       </table>    >, labeljust=r, labelloc=b];
 	node [label="\N", fontname=Helvetica, fontsize=8, shape=plaintext];
