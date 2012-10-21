@@ -27,7 +27,7 @@ JDBC Driver Information
 driver name                               SQLiteJDBC                    
 driver version                            native                        
 driver class name                         org.sqlite.JDBC               
-url                                       jdbc:sqlite:C:\Users\SUALEH~1\AppData\Local\Temp\SchemaCrawler3368341811184670420.dat
+url                                       jdbc:sqlite:C:\Users\SUALEH~1\AppData\Local\Temp\SchemaCrawler374684136256837369.dat
 is JDBC compliant                         false                         
 
 
@@ -35,14 +35,6 @@ is JDBC compliant                         false
 Data Types
 ========================================================================
 
-
-                                                             [data type]
-  based on                          VARCHAR                     
-  not user defined
-  defined with 
-  not nullable
-  not auto-incrementable
-  unknown
 
 BLOB                                                         [data type]
   based on                          BLOB                        
@@ -213,13 +205,6 @@ PK_Publishers                                              [primary key]
   Id                                ascending                   
 
 
-sqlite_stat1                                                     [table]
-------------------------------------------------------------------------
-  tbl                               (2000000000)                
-  idx                               (2000000000)                
-  stat                              (2000000000)                
-
-
 BookAuthors                                                      [table]
 ------------------------------------------------------------------------
   BookId                            INTEGER not null            
@@ -242,6 +227,9 @@ AuthorsList                                                       [view]
   Id                                INTEGER                     
   FirstName                         VARCHAR(20)(2000000000)     
   LastName                          VARCHAR(20)(2000000000)     
+
+                                                            [definition]
+CREATE VIEW AuthorsList AS SELECT Id, FirstName, LastName FROM Authors
 
 
 
