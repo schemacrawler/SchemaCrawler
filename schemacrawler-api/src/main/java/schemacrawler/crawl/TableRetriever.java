@@ -373,10 +373,6 @@ final class TableRetriever
       while (results.next())
       {
         String foreignKeyName = quotedName(results.getString("FK_NAME"));
-        if (Utility.isBlank(foreignKeyName))
-        {
-          foreignKeyName = UNKNOWN;
-        }
         LOGGER.log(Level.FINER, "Retrieving foreign key: " + foreignKeyName);
 
         final String pkTableCatalogName = quotedName(results
@@ -394,13 +390,6 @@ final class TableRetriever
         final String fkTableName = quotedName(results.getString("FKTABLE_NAME"));
         final String fkColumnName = quotedName(results
           .getString("FKCOLUMN_NAME"));
-
-        MutableForeignKey foreignKey = foreignKeys.lookup(foreignKeyName);
-        if (foreignKey == null)
-        {
-          foreignKey = new MutableForeignKey(foreignKeyName);
-          foreignKeys.add(foreignKey);
-        }
 
         final int keySequence = results.getInt("KEY_SEQ", 0);
         final int updateRule = results.getInt("UPDATE_RULE",
@@ -420,9 +409,28 @@ final class TableRetriever
                                                      fkTableSchemaName,
                                                      fkTableName,
                                                      fkColumnName);
+
         // Make a direct connection between the two columns
         if (pkColumn != null && fkColumn != null)
         {
+          if (Utility.isBlank(foreignKeyName))
+          {
+            foreignKeyName = String.format("SC_%s_%s",
+                                           Integer.toHexString(pkColumn
+                                             .getFullName().hashCode())
+                                             .toUpperCase(),
+                                           Integer.toHexString(fkColumn
+                                             .getFullName().hashCode())
+                                             .toUpperCase());
+          }
+
+          MutableForeignKey foreignKey = foreignKeys.lookup(foreignKeyName);
+          if (foreignKey == null)
+          {
+            foreignKey = new MutableForeignKey(foreignKeyName);
+            foreignKeys.add(foreignKey);
+          }
+
           foreignKey.addColumnReference(keySequence, pkColumn, fkColumn);
           foreignKey.setUpdateRule(ForeignKeyUpdateRule.valueOf(updateRule));
           foreignKey.setDeleteRule(ForeignKeyUpdateRule.valueOf(deleteRule));
@@ -469,10 +477,6 @@ final class TableRetriever
       {
         // "TABLE_CAT", "TABLE_SCHEM", "TABLE_NAME"
         String indexName = quotedName(results.getString("INDEX_NAME"));
-        if (Utility.isBlank(indexName))
-        {
-          indexName = UNKNOWN;
-        }
         LOGGER.log(Level.FINER, String.format("Retrieving index: %s.%s",
                                               table.getFullName(),
                                               indexName));
@@ -480,13 +484,6 @@ final class TableRetriever
         if (Utility.isBlank(columnName))
         {
           continue;
-        }
-
-        MutableIndex index = table.getIndex(indexName);
-        if (index == null)
-        {
-          index = new MutableIndex(table, indexName);
-          table.addIndex(index);
         }
 
         final boolean uniqueIndex = !results.getBoolean("NON_UNIQUE");
@@ -500,6 +497,20 @@ final class TableRetriever
         final MutableColumn column = table.getColumn(columnName);
         if (column != null)
         {
+          if (Utility.isBlank(indexName))
+          {
+            indexName = String.format("SC_%s",
+                                      Integer.toHexString(column.getFullName()
+                                        .hashCode()).toUpperCase());
+          }
+
+          MutableIndex index = table.getIndex(indexName);
+          if (index == null)
+          {
+            index = new MutableIndex(table, indexName);
+            table.addIndex(index);
+          }
+
           column.setPartOfUniqueIndex(uniqueIndex);
           final MutableIndexColumn indexColumn = new MutableIndexColumn(index,
                                                                         column);
