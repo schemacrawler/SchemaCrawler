@@ -10,11 +10,9 @@ import java.util.List;
 
 import org.junit.Test;
 
-import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.tools.options.OutputFormat;
 
 public class TestSqliteDistribution
-  extends BaseDatabaseTest
 {
 
   @Test
