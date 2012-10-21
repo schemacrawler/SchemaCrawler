@@ -30,7 +30,7 @@ public class TestSqliteDistribution
     schemacrawler.tools.sqlite.Main.main(new String[] {
         "-database=" + sqliteDbFile.getAbsolutePath(),
         "-command=details",
-        "-infolevel=standard",
+        "-infolevel=detailed",
         "-outputfile=" + testOutputFile
     });
 
