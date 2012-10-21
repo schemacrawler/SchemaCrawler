@@ -63,19 +63,12 @@ final class DataResultSet
   public DataResultSet(final ResultSet rows, final boolean showLobs)
     throws SchemaCrawlerException
   {
-    try
+    if (rows == null)
     {
-      if (rows == null || rows.isClosed() || rows.isAfterLast())
-      {
-        throw new SchemaCrawlerException("Result set cannot be used");
-      }
+      throw new IllegalArgumentException("Cannot use null results");
     }
-    catch (final SQLException e)
-    {
-      throw new SchemaCrawlerException("Result set cannot be used", e);
-    }
-
     this.rows = rows;
+
     this.showLobs = showLobs;
     resultsColumns = SchemaCrawlerUtility.getResultColumns(rows).getColumns();
   }
