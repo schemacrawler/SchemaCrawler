@@ -43,8 +43,6 @@ import sf.util.Utility;
 abstract class AbstractRetriever
 {
 
-  static final String UNKNOWN = "<unknown>";
-
   /**
    * Reads a single column result set as a list.
    * 

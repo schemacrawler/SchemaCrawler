@@ -27,7 +27,7 @@ JDBC Driver Information
 driver name                               SQLiteJDBC                    
 driver version                            native                        
 driver class name                         org.sqlite.JDBC               
-url                                       jdbc:sqlite:C:\Users\SUALEH~1\AppData\Local\Temp\SchemaCrawler905166519841680843.dat
+url                                       jdbc:sqlite:C:\Users\SUALEH~1\AppData\Local\Temp\SchemaCrawler3368341811184670420.dat
 is JDBC compliant                         false                         
 
 
@@ -169,9 +169,8 @@ Authors                                                          [table]
 PK_Authors                                                 [primary key]
   Id                                ascending                   
 
-<unknown>                                  [foreign key, with no action]
+SC_1D623CC1_CA52CC35                       [foreign key, with no action]
   Id --> BookAuthors.AuthorId                                   
-  Books.Id --> BookAuthors.BookId                               
 
 IDX_B_Authors                                         [non-unique index]
   LastName                          unknown                     
@@ -196,7 +195,7 @@ Books                                                            [table]
 PK_Books                                                   [primary key]
   Id                                ascending                   
 
-<unknown>                                  [foreign key, with no action]
+SC_7B63FF1F_ED9945D3                       [foreign key, with no action]
   Id --> BookAuthors.BookId                                     
 
 
@@ -227,7 +226,10 @@ BookAuthors                                                      [table]
   AuthorId                          INTEGER not null            
   UPDATE                            CLOB(2000000000)            
 
-<unknown>                                  [foreign key, with no action]
+SC_1D623CC1_CA52CC35                       [foreign key, with no action]
+  Authors.Id --> AuthorId                                       
+
+SC_7B63FF1F_ED9945D3                       [foreign key, with no action]
   Books.Id --> BookId                                           
 
 UIDX_BookAuthors                                          [unique index]
