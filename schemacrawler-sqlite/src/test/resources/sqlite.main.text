@@ -27,7 +27,7 @@ JDBC Driver Information
 driver name                               SQLiteJDBC                    
 driver version                            native                        
 driver class name                         org.sqlite.JDBC               
-url                                       jdbc:sqlite:C:\Users\SUALEH~1\AppData\Local\Temp\SchemaCrawler6276649750479990590.dat
+url                                       jdbc:sqlite:C:\Users\SUALEH~1\AppData\Local\Temp\SchemaCrawler905166519841680843.dat
 is JDBC compliant                         false                         
 
 
@@ -36,6 +36,14 @@ Data Types
 ========================================================================
 
 
+                                                             [data type]
+  based on                          VARCHAR                     
+  not user defined
+  defined with 
+  not nullable
+  not auto-incrementable
+  unknown
+
 BLOB                                                         [data type]
   based on                          BLOB                        
   not user defined
@@ -43,6 +51,22 @@ BLOB                                                         [data type]
   nullable
   not auto-incrementable
   searchable
+
+CLOB                                                         [data type]
+  based on                          VARCHAR                     
+  not user defined
+  defined with 
+  not nullable
+  not auto-incrementable
+  unknown
+
+DATE                                                         [data type]
+  based on                          VARCHAR                     
+  not user defined
+  defined with 
+  not nullable
+  not auto-incrementable
+  unknown
 
 FLOAT                                                        [data type]
   based on                          FLOAT                       
@@ -84,7 +108,39 @@ TEXT                                                         [data type]
   not auto-incrementable
   searchable
 
+VARCHAR(10)                                                  [data type]
+  based on                          VARCHAR                     
+  not user defined
+  defined with 
+  not nullable
+  not auto-incrementable
+  unknown
+
+VARCHAR(2)                                                   [data type]
+  based on                          VARCHAR                     
+  not user defined
+  defined with 
+  not nullable
+  not auto-incrementable
+  unknown
+
+VARCHAR(20)                                                  [data type]
+  based on                          VARCHAR                     
+  not user defined
+  defined with 
+  not nullable
+  not auto-incrementable
+  unknown
+
 VARCHAR(255)                                                 [data type]
+  based on                          VARCHAR                     
+  not user defined
+  defined with 
+  not nullable
+  not auto-incrementable
+  unknown
+
+VARCHAR(50)                                                  [data type]
   based on                          VARCHAR                     
   not user defined
   defined with 
@@ -98,97 +154,92 @@ Tables
 ========================================================================
 
 
-CUSTOMER                                                         [table]
+Authors                                                          [table]
 ------------------------------------------------------------------------
-  ID                                INTEGER not null            
-  FIRSTNAME                         VARCHAR(255)(2000000000)    
-  LASTNAME                          VARCHAR(255)(2000000000)    
-  STREET                            VARCHAR(255)(2000000000)    
-  CITY                              VARCHAR(255)(2000000000)    
+  Id                                INTEGER not null            
+  FirstName                         VARCHAR(20)(2000000000) not null
+  LastName                          VARCHAR(20)(2000000000) not null
+  Address1                          VARCHAR(255)(2000000000)    
+  Address2                          VARCHAR(255)(2000000000)    
+  City                              VARCHAR(50)(2000000000)     
+  State                             VARCHAR(2)(2000000000)      
+  PostalCode                        VARCHAR(10)(2000000000)     
+  Country                           VARCHAR(50)(2000000000)     
 
-PK_CUSTOMER                                                [primary key]
-  ID                                ascending                   
+PK_Authors                                                 [primary key]
+  Id                                ascending                   
 
 <unknown>                                  [foreign key, with no action]
-  ID --> INVOICE.CUSTOMERID                                     
-  INVOICE.ID --> ITEM.INVOICEID                                 
+  Id --> BookAuthors.AuthorId                                   
+  Books.Id --> BookAuthors.BookId                               
+
+IDX_B_Authors                                         [non-unique index]
+  LastName                          unknown                     
+  FirstName                         unknown                     
+
+IDX_A_Authors                                         [non-unique index]
+  City                              unknown                     
+  State                             unknown                     
+  PostalCode                        unknown                     
+  Country                           unknown                     
 
 
-PRODUCT                                                          [table]
+Books                                                            [table]
 ------------------------------------------------------------------------
-  ID                                INTEGER not null            
-  NAME                              VARCHAR(255)(2000000000)    
-  PRICE                             FLOAT(2000000000, 10)       
+  Id                                INTEGER not null            
+  Title                             VARCHAR(255)(2000000000) not null
+  Description                       VARCHAR(255)(2000000000)    
+  PublisherId                       INTEGER not null            
+  PublicationDate                   DATE(2000000000)            
+  Price                             FLOAT(2000000000, 10)       
 
-PK_PRODUCT                                                 [primary key]
-  ID                                ascending                   
+PK_Books                                                   [primary key]
+  Id                                ascending                   
 
 <unknown>                                  [foreign key, with no action]
-  ID --> ITEM.PRODUCTID                                         
+  Id --> BookAuthors.BookId                                     
 
 
-SUPPLIER                                                         [table]
+Global Counts                                                    [table]
 ------------------------------------------------------------------------
-  SUPPLIER_ID                       INTEGER                     
-  SUPPLIER_NAME                     VARCHAR(255)(2000000000)    
-
-INDEX_B_SUPPLIER                                      [non-unique index]
-  SUPPLIER_ID                       unknown                     
-  SUPPLIER_NAME                     unknown                     
-
-INDEX_A_SUPPLIER                                      [non-unique index]
-  SUPPLIER_NAME                     unknown                     
-  SUPPLIER_ID                       unknown                     
+  Global Count                      INTEGER                     
 
 
-INVOICE                                                          [table]
+Publishers                                                       [table]
 ------------------------------------------------------------------------
-  ID                                INTEGER not null            
-  CUSTOMERID                        INTEGER                     
-  TOTAL                             FLOAT(2000000000, 10)       
+  Id                                INTEGER not null            
+  Publisher                         VARCHAR(255)(2000000000)    
 
-                                                           [primary key]
-  ID                                ascending                   
+PK_Publishers                                              [primary key]
+  Id                                ascending                   
+
+
+sqlite_stat1                                                     [table]
+------------------------------------------------------------------------
+  tbl                               (2000000000)                
+  idx                               (2000000000)                
+  stat                              (2000000000)                
+
+
+BookAuthors                                                      [table]
+------------------------------------------------------------------------
+  BookId                            INTEGER not null            
+  AuthorId                          INTEGER not null            
+  UPDATE                            CLOB(2000000000)            
 
 <unknown>                                  [foreign key, with no action]
-  ID --> ITEM.INVOICEID                                         
-  PRODUCT.ID --> ITEM.PRODUCTID                                 
+  Books.Id --> BookId                                           
 
-INDEX_INVOICE_CUSTOMER                                [non-unique index]
-  CUSTOMERID                        unknown                     
+UIDX_BookAuthors                                          [unique index]
+  BookId                            unknown                     
+  AuthorId                          unknown                     
 
 
-ITEM                                                             [table]
+AuthorsList                                                       [view]
 ------------------------------------------------------------------------
-  INVOICEID                         INTEGER not null            
-  ITEM                              INTEGER not null            
-  PRODUCTID                         INTEGER                     
-  QUANTITY                          INTEGER                     
-  COST                              FLOAT(2000000000, 10)       
-
-PK_ITEM                                                    [primary key]
-  INVOICEID                         ascending                   
-  ITEM                              ascending                   
-
-<unknown>                                  [foreign key, with no action]
-  PRODUCT.ID --> PRODUCTID                                      
-
-INDEX_ITEM_INVOICE                                    [non-unique index]
-  INVOICEID                         unknown                     
-
-INDEX_ITEM_PRODUCT                                    [non-unique index]
-  PRODUCTID                         unknown                     
-
-sqlite_autoindex_ITEM_1                                   [unique index]
-  INVOICEID                         unknown                     
-  ITEM                              unknown                     
-
-
-CUSTOMERLIST                                                      [view]
-------------------------------------------------------------------------
-  ID                                INTEGER                     
-  FIRSTNAME                         VARCHAR(255)(2000000000)    
-  LASTNAME                          VARCHAR(255)(2000000000)    
+  Id                                INTEGER                     
+  FirstName                         VARCHAR(20)(2000000000)     
+  LastName                          VARCHAR(20)(2000000000)     
 
 
 
