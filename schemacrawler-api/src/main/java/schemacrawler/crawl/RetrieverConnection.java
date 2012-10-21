@@ -33,6 +33,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import sf.util.Utility;
@@ -78,9 +79,11 @@ final class RetrieverConnection
 
     informationSchemaViews = schemaCrawlerOptions.getInformationSchemaViews();
 
-    if (schemaCrawlerOptions.hasOverrideForSupportsCatalogs())
+    final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions = schemaCrawlerOptions
+      .getDatabaseSpecificOverrideOptions();
+    if (databaseSpecificOverrideOptions.hasOverrideForSupportsCatalogs())
     {
-      supportsCatalogs = schemaCrawlerOptions.isSupportsCatalogOverride();
+      supportsCatalogs = databaseSpecificOverrideOptions.isSupportsCatalogs();
     }
     else
     {
@@ -90,9 +93,9 @@ final class RetrieverConnection
       .format("Database %s catalogs", supportsCatalogs? "supports"
                                                       : "does not support"));
 
-    if (schemaCrawlerOptions.hasOverrideForSupportsSchemas())
+    if (databaseSpecificOverrideOptions.hasOverrideForSupportsSchemas())
     {
-      supportsSchemas = schemaCrawlerOptions.isSupportsCatalogOverride();
+      supportsSchemas = databaseSpecificOverrideOptions.isSupportsSchemas();
     }
     else
     {
@@ -103,7 +106,16 @@ final class RetrieverConnection
                                        supportsSchemas? "supports"
                                                       : "does not support"));
 
-    final String identifierQuoteString = metaData.getIdentifierQuoteString();
+    final String identifierQuoteString;
+    if (databaseSpecificOverrideOptions.hasOverrideForIdentifierQuoteString())
+    {
+      identifierQuoteString = databaseSpecificOverrideOptions
+        .getIdentifierQuoteString();
+    }
+    else
+    {
+      identifierQuoteString = metaData.getIdentifierQuoteString();
+    }
     if (Utility.isBlank(identifierQuoteString))
     {
       this.identifierQuoteString = "";
@@ -112,6 +124,9 @@ final class RetrieverConnection
     {
       this.identifierQuoteString = identifierQuoteString;
     }
+    LOGGER.log(Level.CONFIG, String
+      .format("Database identifier quote string is \"%s\"",
+              this.identifierQuoteString));
 
     final Set<String> rawReservedWords = new HashSet<String>();
     rawReservedWords

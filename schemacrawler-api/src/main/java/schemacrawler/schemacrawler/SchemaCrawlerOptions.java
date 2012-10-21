@@ -63,9 +63,6 @@ public final class SchemaCrawlerOptions
 
   private static final String SC_GREP_INVERT_MATCH = "schemacrawler.grep.invert-match";
 
-  private static final String SC_SUPPORTS_SCHEMAS_OVERRIDE = "schemacrawler.supports_schemas.override";
-  private static final String SC_SUPPORTS_CATALOG_OVERRIDE = "schemacrawler.supports_catalog.override";
-
   private InclusionRule schemaInclusionRule;
 
   private Collection<TableType> tableTypes;
@@ -87,11 +84,7 @@ public final class SchemaCrawlerOptions
 
   private SchemaInfoLevel schemaInfoLevel;
   private InformationSchemaViews informationSchemaViews;
-
-  private boolean hasOverrideForSupportsSchemas;
-  private boolean isSupportsSchemasOverride;
-  private boolean hasOverrideForSupportsCatalogs;
-  private boolean isSupportsCatalogOverride;
+  private DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions;
 
   /**
    * Default options.
@@ -99,6 +92,7 @@ public final class SchemaCrawlerOptions
   public SchemaCrawlerOptions()
   {
     informationSchemaViews = new InformationSchemaViews();
+    databaseSpecificOverrideOptions = new DatabaseSpecificOverrideOptions();
 
     schemaInclusionRule = InclusionRule.INCLUDE_ALL;
 
@@ -136,6 +130,7 @@ public final class SchemaCrawlerOptions
     }
 
     informationSchemaViews = new InformationSchemaViews(config);
+    databaseSpecificOverrideOptions = new DatabaseSpecificOverrideOptions(config);
 
     schemaInclusionRule = new InclusionRule(configProperties.getStringValue(SC_SCHEMA_PATTERN_INCLUDE,
                                                                             InclusionRule.ALL),
@@ -186,17 +181,6 @@ public final class SchemaCrawlerOptions
                                                                       InclusionRule.NONE));
     grepInvertMatch = configProperties.getBooleanValue(SC_GREP_INVERT_MATCH);
 
-    if (configProperties.hasValue(SC_SUPPORTS_SCHEMAS_OVERRIDE))
-    {
-      setSupportsSchemasOverride(configProperties
-        .getBooleanValue(SC_SUPPORTS_SCHEMAS_OVERRIDE));
-    }
-    if (configProperties.hasValue(SC_SUPPORTS_CATALOG_OVERRIDE))
-    {
-      setSupportsCatalogOverride(configProperties
-        .getBooleanValue(SC_SUPPORTS_CATALOG_OVERRIDE));
-    }
-
   }
 
   public int getChildTableFilterDepth()
@@ -212,6 +196,14 @@ public final class SchemaCrawlerOptions
   public InclusionRule getColumnInclusionRule()
   {
     return columnInclusionRule;
+  }
+
+  /**
+   * Gets database specific override options.
+   */
+  public DatabaseSpecificOverrideOptions getDatabaseSpecificOverrideOptions()
+  {
+    return databaseSpecificOverrideOptions;
   }
 
   /**
@@ -347,16 +339,6 @@ public final class SchemaCrawlerOptions
     return new HashSet<TableType>(tableTypes);
   }
 
-  public boolean hasOverrideForSupportsCatalogs()
-  {
-    return hasOverrideForSupportsCatalogs;
-  }
-
-  public boolean hasOverrideForSupportsSchemas()
-  {
-    return hasOverrideForSupportsSchemas;
-  }
-
   public boolean isGrepColumns()
   {
     return grepColumnInclusionRule != null;
@@ -382,16 +364,6 @@ public final class SchemaCrawlerOptions
     return grepRoutineColumnInclusionRule != null;
   }
 
-  public boolean isSupportsCatalogOverride()
-  {
-    return isSupportsCatalogOverride;
-  }
-
-  public boolean isSupportsSchemasOverride()
-  {
-    return isSupportsSchemasOverride;
-  }
-
   public void setChildTableFilterDepth(final int childTableFilterDepth)
   {
     this.childTableFilterDepth = childTableFilterDepth;
@@ -410,6 +382,24 @@ public final class SchemaCrawlerOptions
       throw new IllegalArgumentException("Cannot use null value in a setter");
     }
     this.columnInclusionRule = columnInclusionRule;
+  }
+
+  /**
+   * Sets database specific override options.
+   * 
+   * @param databaseSpecificOverrideOptions
+   *        Database specific override options
+   */
+  public void setDatabaseSpecificOverrideOptions(final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
+  {
+    if (databaseSpecificOverrideOptions == null)
+    {
+      this.databaseSpecificOverrideOptions = new DatabaseSpecificOverrideOptions();
+    }
+    else
+    {
+      this.databaseSpecificOverrideOptions = databaseSpecificOverrideOptions;
+    }
   }
 
   /**
@@ -569,42 +559,6 @@ public final class SchemaCrawlerOptions
   public void setSchemaInfoLevel(final SchemaInfoLevel schemaInfoLevel)
   {
     this.schemaInfoLevel = schemaInfoLevel;
-  }
-
-  /**
-   * Overrides the JDBC driver provided information about whether the
-   * database supports catalogs. Cannot be unset.
-   * 
-   * @param isSupportsCatalogOverride
-   *        Value for the override
-   */
-  public void setSupportsCatalogOverride(final boolean isSupportsCatalogOverride)
-  {
-    if (hasOverrideForSupportsCatalogs)
-    {
-      throw new IllegalAccessError("Cannot reset or unset override for catalog support");
-    }
-
-    hasOverrideForSupportsCatalogs = true;
-    this.isSupportsCatalogOverride = isSupportsCatalogOverride;
-  }
-
-  /**
-   * Overrides the JDBC driver provided information about whether the
-   * database supports schema. Cannot be unset.
-   * 
-   * @param isSupportsSchemasOverride
-   *        Value for the override
-   */
-  public void setSupportsSchemasOverride(final boolean isSupportsSchemasOverride)
-  {
-    if (hasOverrideForSupportsSchemas)
-    {
-      throw new IllegalAccessError("Cannot reset or unset override for schema support");
-    }
-
-    hasOverrideForSupportsSchemas = true;
-    this.isSupportsSchemasOverride = isSupportsSchemasOverride;
   }
 
   /**
