@@ -91,7 +91,6 @@ public final class SchemaCrawlerOptions
   private boolean hasOverrideForSupportsSchemas;
   private boolean isSupportsSchemasOverride;
   private boolean hasOverrideForSupportsCatalogs;
-
   private boolean isSupportsCatalogOverride;
 
   /**
