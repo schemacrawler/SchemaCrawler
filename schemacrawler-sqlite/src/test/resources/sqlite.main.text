@@ -27,7 +27,7 @@ JDBC Driver Information
 driver name                               SQLiteJDBC                    
 driver version                            native                        
 driver class name                         org.sqlite.JDBC               
-url                                       jdbc:sqlite:C:\Users\SUALEH~1\AppData\Local\Temp\SchemaCrawler5031095120670568980.dat
+url                                       jdbc:sqlite:C:\Users\SUALEH~1\AppData\Local\Temp\SchemaCrawler1754306267137377425.dat
 is JDBC compliant                         false                         
 
 
@@ -191,9 +191,9 @@ SC_7B63FF1F_ED9945D3                       [foreign key, with no action]
   Id --> BookAuthors.BookId                                     
 
 
-Global Counts                                                    [table]
+"Global Counts"                                                  [table]
 ------------------------------------------------------------------------
-  Global Count                      INTEGER                     
+  "Global Count"                    INTEGER                     
 
 
 Publishers                                                       [table]
@@ -209,7 +209,7 @@ BookAuthors                                                      [table]
 ------------------------------------------------------------------------
   BookId                            INTEGER not null            
   AuthorId                          INTEGER not null            
-  UPDATE                            CLOB(2000000000)            
+  "UPDATE"                          CLOB(2000000000)            
 
 SC_1D623CC1_CA52CC35                       [foreign key, with no action]
   Authors.Id --> AuthorId                                       
@@ -291,6 +291,12 @@ Id	Title	Description	PublisherId	PublicationDate	Price
 
 
 
+"Global Counts"
+------------------------------------------------------------------------
+Global Count
+
+
+
 Publishers
 ------------------------------------------------------------------------
 Id	Publisher
@@ -314,6 +320,32 @@ Id	Publisher
 18	Neville Cardenas
 19	Allistair Gilbert
 20	Cooper Chapman
+
+
+
+BookAuthors
+------------------------------------------------------------------------
+BookId	AuthorId	UPDATE
+1	7	This is the latest update
+2	4	<null>
+2	6	Some update
+3	1	<null>
+3	4	No updates since a week
+3	5	<null>
+3	6	<null>
+4	9	<null>
+5	5	<null>
+5	7	<null>
+6	1	<null>
+6	8	<null>
+7	8	<null>
+7	9	<null>
+8	6	<null>
+9	3	<null>
+9	6	<null>
+9	7	<null>
+10	1	<null>
+10	9	<null>
 
 
 
@@ -353,6 +385,7 @@ Row Count
 ------------------------------------------------------------------------
 Authors                                                          20 rows
 Books                                                            20 rows
+"Global Counts"                                                    empty
 Publishers                                                       20 rows
 BookAuthors                                                      20 rows
 AuthorsList                                                      20 rows
