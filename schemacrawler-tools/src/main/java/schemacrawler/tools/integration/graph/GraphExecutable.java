@@ -30,7 +30,6 @@ import java.util.Set;
 
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.Database;
-import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.analysis.associations.DatabaseWithAssociations;
 import schemacrawler.tools.analysis.associations.SimpleWeakAssociationsCollector;
@@ -82,16 +81,12 @@ public final class GraphExecutable
       database = db;
     }
 
-    final List<Table> tables = new ArrayList<Table>();
+    final List<Table> tables = new ArrayList<Table>(database.getTables());
     final Set<ColumnReference> weakAssociations = new HashSet<ColumnReference>();
-    for (final Schema schema: database.getSchemas())
+    for (final Table table: tables)
     {
-      for (final Table table: database.getTables(schema))
-      {
-        tables.add(table);
-        weakAssociations.addAll(SimpleWeakAssociationsCollector
-          .getWeakAssociations(table));
-      }
+      weakAssociations.addAll(SimpleWeakAssociationsCollector
+        .getWeakAssociations(table));
     }
 
     // Create dot file

@@ -153,12 +153,9 @@ class NamedObjectList<N extends NamedObject>
     return objects.get(key);
   }
 
-  void remove(final NamedObject namedObject)
+  N remove(final N namedObject)
   {
-    if (namedObject != null)
-    {
-      objects.remove(makeLookupKey(namedObject));
-    }
+    return objects.remove(makeLookupKey(namedObject));
   }
 
   /**

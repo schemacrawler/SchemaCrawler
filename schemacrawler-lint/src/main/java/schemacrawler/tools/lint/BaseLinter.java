@@ -81,12 +81,9 @@ public abstract class BaseLinter
 
     this.database = database;
     start();
-    for (final Schema schema: database.getSchemas())
+    for (final Table table: database.getTables())
     {
-      for (final Table table: database.getTables(schema))
-      {
-        lint(table);
-      }
+      lint(table);
     }
     end();
     this.database = null;
