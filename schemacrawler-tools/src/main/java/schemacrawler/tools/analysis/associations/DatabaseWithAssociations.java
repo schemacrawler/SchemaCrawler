@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import schemacrawler.schema.Database;
-import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.BaseDatabaseDecorator;
 
@@ -40,14 +39,7 @@ public final class DatabaseWithAssociations
   {
     super(database);
 
-    final List<Table> allTables = new ArrayList<Table>();
-    for (final Schema schema: database.getSchemas())
-    {
-      for (final Table table: database.getTables(schema))
-      {
-        allTables.add(table);
-      }
-    }
+    final List<Table> allTables = new ArrayList<Table>(database.getTables());
     collector = new SimpleWeakAssociationsCollector();
     final WeakAssociationsAnalyzer weakAssociationsAnalyzer = new WeakAssociationsAnalyzer(allTables,
                                                                                            collector);

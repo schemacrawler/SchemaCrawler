@@ -23,10 +23,10 @@ package schemacrawler.tools.analysis.associations;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.Table;
@@ -42,18 +42,18 @@ public class SimpleWeakAssociationsCollector
       return null;
     }
 
-    final Set<ColumnReference> weakAssociations = table
-      .getAttribute(WEAK_ASSOCIATIONS_KEY, new HashSet<ColumnReference>());
+    final SortedSet<ColumnReference> weakAssociations = table
+      .getAttribute(WEAK_ASSOCIATIONS_KEY, new TreeSet<ColumnReference>());
     final List<ColumnReference> weakAssociationsList = new ArrayList<ColumnReference>(weakAssociations);
     Collections.sort(weakAssociationsList);
     return weakAssociationsList;
   }
 
-  private final Set<ColumnReference> weakAssociations;
+  private final SortedSet<ColumnReference> weakAssociations;
 
   public SimpleWeakAssociationsCollector()
   {
-    weakAssociations = new HashSet<ColumnReference>();
+    weakAssociations = new TreeSet<ColumnReference>();
   }
 
   @Override
@@ -79,7 +79,7 @@ public class SimpleWeakAssociationsCollector
   @Override
   public Collection<ColumnReference> getCollection()
   {
-    return new HashSet<ColumnReference>(weakAssociations);
+    return new TreeSet<ColumnReference>(weakAssociations);
   }
 
   @Override
@@ -107,8 +107,8 @@ public class SimpleWeakAssociationsCollector
     {
       weakAssociations.add(weakAssociation);
 
-      final Collection<ColumnReference> tableWeakAssociations = table
-        .getAttribute(WEAK_ASSOCIATIONS_KEY, new HashSet<ColumnReference>());
+      final SortedSet<ColumnReference> tableWeakAssociations = table
+        .getAttribute(WEAK_ASSOCIATIONS_KEY, new TreeSet<ColumnReference>());
       tableWeakAssociations.add(weakAssociation);
       table.setAttribute(WEAK_ASSOCIATIONS_KEY, tableWeakAssociations);
     }

@@ -22,12 +22,10 @@ package schemacrawler.tools.lint.executable;
 
 import java.io.FileReader;
 import java.sql.Connection;
-import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schema.Database;
-import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseExecutable;
@@ -91,13 +89,9 @@ public class LintExecutable
 
     formatter.handleStart();
     formatter.handle(database);
-    for (final Schema schema: database.getSchemas())
+    for (final Table table: database.getTables())
     {
-      final Collection<Table> tables = database.getTables(schema);
-      for (final Table table: tables)
-      {
-        formatter.handle(table);
-      }
+      formatter.handle(table);
     }
     formatter.handleEnd();
 

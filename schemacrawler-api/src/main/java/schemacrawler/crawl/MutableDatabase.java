@@ -31,7 +31,6 @@ import java.util.Set;
 
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Database;
-import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaReference;
@@ -378,21 +377,6 @@ final class MutableDatabase
   MutableColumnDataType lookupColumnDataTypeByType(final int type)
   {
     return columnDataTypes.lookupColumnDataTypeByType(type);
-  }
-
-  void removeProcedure(final Procedure procedure)
-  {
-    routines.remove(procedure);
-  }
-
-  void removeSynonym(final Synonym synonym)
-  {
-    synonyms.remove(synonym);
-  }
-
-  void removeTable(final Table table)
-  {
-    tables.remove(table);
   }
 
 }

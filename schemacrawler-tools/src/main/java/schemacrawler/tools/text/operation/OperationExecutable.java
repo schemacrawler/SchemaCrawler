@@ -22,10 +22,8 @@ package schemacrawler.tools.text.operation;
 
 
 import java.sql.Connection;
-import java.util.Collection;
 
 import schemacrawler.schema.Database;
-import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseExecutable;
@@ -76,13 +74,9 @@ public final class OperationExecutable
                    database.getDatabaseInfo(),
                    database.getJdbcDriverInfo());
 
-    for (final Schema schema: database.getSchemas())
+    for (final Table table: database.getTables())
     {
-      final Collection<Table> tables = database.getTables(schema);
-      for (final Table table: tables)
-      {
-        handler.handle(table);
-      }
+      handler.handle(table);
     }
 
     handler.end();
