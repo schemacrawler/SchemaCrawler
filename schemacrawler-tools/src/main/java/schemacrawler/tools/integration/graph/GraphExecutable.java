@@ -32,7 +32,7 @@ import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.Database;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.analysis.associations.DatabaseWithAssociations;
-import schemacrawler.tools.analysis.associations.SimpleWeakAssociationsCollector;
+import schemacrawler.tools.analysis.associations.WeakAssociationsCollector;
 import schemacrawler.tools.executable.BaseExecutable;
 import schemacrawler.tools.options.InfoLevel;
 import sf.util.Utility;
@@ -85,7 +85,7 @@ public final class GraphExecutable
     final Set<ColumnReference> weakAssociations = new HashSet<ColumnReference>();
     for (final Table table: tables)
     {
-      weakAssociations.addAll(SimpleWeakAssociationsCollector
+      weakAssociations.addAll(WeakAssociationsCollector
         .getWeakAssociations(table));
     }
 

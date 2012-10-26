@@ -40,7 +40,7 @@ public final class DatabaseWithAssociations
     super(database);
 
     final List<Table> allTables = new ArrayList<Table>(database.getTables());
-    collector = new SimpleWeakAssociationsCollector();
+    collector = new WeakAssociationsCollector();
     final WeakAssociationsAnalyzer weakAssociationsAnalyzer = new WeakAssociationsAnalyzer(allTables,
                                                                                            collector);
     weakAssociationsAnalyzer.analyzeTables();
