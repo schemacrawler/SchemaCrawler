@@ -20,24 +20,94 @@
 package schemacrawler.tools.analysis.associations;
 
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import schemacrawler.schema.ColumnReference;
+import schemacrawler.schema.Table;
 
-public interface WeakAssociationsCollector
-  extends Iterable<ColumnReference>
+public class WeakAssociationsCollector
+  implements Iterable<ColumnReference>
 {
 
-  final String WEAK_ASSOCIATIONS_KEY = "schemacrawler.weak_associations";
+  static final String WEAK_ASSOCIATIONS_KEY = "schemacrawler.weak_associations";
 
-  void addWeakAssociation(final ColumnReference weakAssociation);
+  public static final List<ColumnReference> getWeakAssociations(final Table table)
+  {
+    if (table == null)
+    {
+      return null;
+    }
 
-  void clear();
+    final SortedSet<ColumnReference> weakAssociations = table
+      .getAttribute(WEAK_ASSOCIATIONS_KEY, new TreeSet<ColumnReference>());
+    final List<ColumnReference> weakAssociationsList = new ArrayList<ColumnReference>(weakAssociations);
+    Collections.sort(weakAssociationsList);
+    return weakAssociationsList;
+  }
 
-  Collection<ColumnReference> getCollection();
+  private final SortedSet<ColumnReference> weakAssociations;
 
-  boolean isEmpty();
+  public WeakAssociationsCollector()
+  {
+    weakAssociations = new TreeSet<ColumnReference>();
+  }
 
-  int size();
+  public void addWeakAssociation(final ColumnReference weakAssociation)
+  {
+    if (weakAssociation != null)
+    {
+      weakAssociations.add(weakAssociation);
+
+      addWeakAssociation(weakAssociation.getPrimaryKeyColumn().getParent(),
+                         weakAssociation);
+      addWeakAssociation(weakAssociation.getForeignKeyColumn().getParent(),
+                         weakAssociation);
+    }
+  }
+
+  public void clear()
+  {
+    weakAssociations.clear();
+  }
+
+  public Collection<ColumnReference> getCollection()
+  {
+    return new TreeSet<ColumnReference>(weakAssociations);
+  }
+
+  public boolean isEmpty()
+  {
+    return weakAssociations.isEmpty();
+  }
+
+  public Iterator<ColumnReference> iterator()
+  {
+    return weakAssociations.iterator();
+  }
+
+  public int size()
+  {
+    return weakAssociations.size();
+  }
+
+  private void addWeakAssociation(final Table table,
+                                  final ColumnReference weakAssociation)
+  {
+    if (table != null && weakAssociation != null)
+    {
+      weakAssociations.add(weakAssociation);
+
+      final SortedSet<ColumnReference> tableWeakAssociations = table
+        .getAttribute(WEAK_ASSOCIATIONS_KEY, new TreeSet<ColumnReference>());
+      tableWeakAssociations.add(weakAssociation);
+      table.setAttribute(WEAK_ASSOCIATIONS_KEY, tableWeakAssociations);
+    }
+  }
 
 }

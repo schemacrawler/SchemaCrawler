@@ -248,8 +248,10 @@ final class WeakAssociationsAnalyzer
                 final Column pkColumn = pkColumnNameMatchesMap.get("id");
                 if (pkColumn != null)
                 {
-                  final ColumnDataType fkColumnType = fkColumn.getColumnDataType();
-                  final ColumnDataType pkColumnType = pkColumn.getColumnDataType();
+                  final ColumnDataType fkColumnType = fkColumn
+                    .getColumnDataType();
+                  final ColumnDataType pkColumnType = pkColumn
+                    .getColumnDataType();
                   if (pkColumnType != null && fkColumnType != null
                       && fkColumnType.getType() == pkColumnType.getType())
                   {
