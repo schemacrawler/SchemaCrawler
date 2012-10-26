@@ -21,6 +21,7 @@ package schemacrawler.tools.analysis.associations;
 
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.SortedSet;
@@ -37,26 +38,7 @@ public final class DatabaseWithAssociations
 
   private static final long serialVersionUID = -3953296149824921463L;
 
-  private final WeakAssociationsCollector collector;
-
-  static final String WEAK_ASSOCIATIONS_KEY = "schemacrawler.weak_associations";
-
-  public DatabaseWithAssociations(final Database database)
-  {
-    super(database);
-
-    final List<Table> allTables = new ArrayList<Table>(database.getTables());
-    collector = new WeakAssociationsCollector();
-    final WeakAssociationsAnalyzer weakAssociationsAnalyzer = new WeakAssociationsAnalyzer(allTables,
-                                                                                           collector);
-    weakAssociationsAnalyzer.analyzeTables();
-
-  }
-
-  public WeakAssociationsCollector getCollector()
-  {
-    return collector;
-  }
+  private static final String WEAK_ASSOCIATIONS_KEY = "schemacrawler.weak_associations";
 
   public static final List<ColumnReference> getWeakAssociations(final Table table)
   {
@@ -64,12 +46,40 @@ public final class DatabaseWithAssociations
     {
       return null;
     }
-  
+
     final SortedSet<ColumnReference> weakAssociations = table
-      .getAttribute(DatabaseWithAssociations.WEAK_ASSOCIATIONS_KEY, new TreeSet<ColumnReference>());
+      .getAttribute(WEAK_ASSOCIATIONS_KEY, new TreeSet<ColumnReference>());
     final List<ColumnReference> weakAssociationsList = new ArrayList<ColumnReference>(weakAssociations);
     Collections.sort(weakAssociationsList);
     return weakAssociationsList;
+  }
+
+  static void addWeakAssociationToTable(final Table table,
+                                        final ColumnReference weakAssociation)
+  {
+    if (table != null && weakAssociation != null)
+    {
+      final SortedSet<ColumnReference> tableWeakAssociations = table
+        .getAttribute(WEAK_ASSOCIATIONS_KEY, new TreeSet<ColumnReference>());
+      tableWeakAssociations.add(weakAssociation);
+      table.setAttribute(WEAK_ASSOCIATIONS_KEY, tableWeakAssociations);
+    }
+  }
+
+  private final Collection<ColumnReference> weakAssociations;
+
+  public DatabaseWithAssociations(final Database database)
+  {
+    super(database);
+
+    final List<Table> allTables = new ArrayList<Table>(database.getTables());
+    final WeakAssociationsAnalyzer weakAssociationsAnalyzer = new WeakAssociationsAnalyzer(allTables);
+    weakAssociations = weakAssociationsAnalyzer.analyzeTables();
+  }
+
+  public Collection<ColumnReference> getWeakAssociations()
+  {
+    return weakAssociations;
   }
 
 }
