@@ -21,8 +21,12 @@ package schemacrawler.tools.analysis.associations;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
+import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.Database;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.BaseDatabaseDecorator;
@@ -34,6 +38,8 @@ public final class DatabaseWithAssociations
   private static final long serialVersionUID = -3953296149824921463L;
 
   private final WeakAssociationsCollector collector;
+
+  static final String WEAK_ASSOCIATIONS_KEY = "schemacrawler.weak_associations";
 
   public DatabaseWithAssociations(final Database database)
   {
@@ -50,6 +56,20 @@ public final class DatabaseWithAssociations
   public WeakAssociationsCollector getCollector()
   {
     return collector;
+  }
+
+  public static final List<ColumnReference> getWeakAssociations(final Table table)
+  {
+    if (table == null)
+    {
+      return null;
+    }
+  
+    final SortedSet<ColumnReference> weakAssociations = table
+      .getAttribute(DatabaseWithAssociations.WEAK_ASSOCIATIONS_KEY, new TreeSet<ColumnReference>());
+    final List<ColumnReference> weakAssociationsList = new ArrayList<ColumnReference>(weakAssociations);
+    Collections.sort(weakAssociationsList);
+    return weakAssociationsList;
   }
 
 }

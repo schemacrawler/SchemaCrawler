@@ -20,11 +20,8 @@
 package schemacrawler.tools.analysis.associations;
 
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Iterator;
-import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -34,22 +31,6 @@ import schemacrawler.schema.Table;
 public class WeakAssociationsCollector
   implements Iterable<ColumnReference>
 {
-
-  static final String WEAK_ASSOCIATIONS_KEY = "schemacrawler.weak_associations";
-
-  public static final List<ColumnReference> getWeakAssociations(final Table table)
-  {
-    if (table == null)
-    {
-      return null;
-    }
-
-    final SortedSet<ColumnReference> weakAssociations = table
-      .getAttribute(WEAK_ASSOCIATIONS_KEY, new TreeSet<ColumnReference>());
-    final List<ColumnReference> weakAssociationsList = new ArrayList<ColumnReference>(weakAssociations);
-    Collections.sort(weakAssociationsList);
-    return weakAssociationsList;
-  }
 
   private final SortedSet<ColumnReference> weakAssociations;
 
@@ -104,9 +85,9 @@ public class WeakAssociationsCollector
       weakAssociations.add(weakAssociation);
 
       final SortedSet<ColumnReference> tableWeakAssociations = table
-        .getAttribute(WEAK_ASSOCIATIONS_KEY, new TreeSet<ColumnReference>());
+        .getAttribute(DatabaseWithAssociations.WEAK_ASSOCIATIONS_KEY, new TreeSet<ColumnReference>());
       tableWeakAssociations.add(weakAssociation);
-      table.setAttribute(WEAK_ASSOCIATIONS_KEY, tableWeakAssociations);
+      table.setAttribute(DatabaseWithAssociations.WEAK_ASSOCIATIONS_KEY, tableWeakAssociations);
     }
   }
 
