@@ -20,6 +20,8 @@
 package schemacrawler.tools.analysis.associations;
 
 
+import static schemacrawler.tools.analysis.associations.DatabaseWithAssociations.addWeakAssociationToTable;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -30,6 +32,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.SortedMap;
 import java.util.TreeMap;
+import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -51,20 +54,19 @@ final class WeakAssociationsAnalyzer
     .getLogger(WeakAssociationsAnalyzer.class.getName());
 
   private final List<Table> tables;
-  private final WeakAssociationsCollector collector;
+  private final Collection<ColumnReference> weakAssociations;
 
-  WeakAssociationsAnalyzer(final List<Table> tables,
-                           final WeakAssociationsCollector collector)
+  WeakAssociationsAnalyzer(final List<Table> tables)
   {
     this.tables = tables;
-    this.collector = collector;
+    weakAssociations = new TreeSet<ColumnReference>();
   }
 
-  void analyzeTables()
+  Collection<ColumnReference> analyzeTables()
   {
     if (tables == null || tables.size() < 3)
     {
-      return;
+      return Collections.emptySet();
     }
 
     final Collection<String> prefixes = findTableNamePrefixes(tables);
@@ -80,6 +82,8 @@ final class WeakAssociationsAnalyzer
     final Map<String, ForeignKeyColumnReference> fkColumnsMap = mapForeignKeyColumns(tables);
 
     findWeakAssociations(tables, tableMatchMap, fkColumnsMap);
+
+    return weakAssociations;
   }
 
   private void addWeakAssociation(final Column fkColumn, final Column pkColumn)
@@ -88,11 +92,11 @@ final class WeakAssociationsAnalyzer
                String.format("Found weak association: %s --> %s",
                              fkColumn.getFullName(),
                              pkColumn.getFullName()));
-    if (collector != null)
+    if (weakAssociations != null)
     {
       final ColumnReference weakAssociation = new WeakAssociation(pkColumn,
                                                                   fkColumn);
-      collector.addWeakAssociation(weakAssociation);
+      addWeakAssociation(weakAssociation);
     }
   }
 
@@ -330,6 +334,19 @@ final class WeakAssociationsAnalyzer
     }
     matchMap.remove("");
     return matchMap;
+  }
+
+  private void addWeakAssociation(final ColumnReference weakAssociation)
+  {
+    if (weakAssociation != null)
+    {
+      weakAssociations.add(weakAssociation);
+
+      addWeakAssociationToTable(weakAssociation.getPrimaryKeyColumn()
+        .getParent(), weakAssociation);
+      addWeakAssociationToTable(weakAssociation.getForeignKeyColumn()
+        .getParent(), weakAssociation);
+    }
   }
 
 }
