@@ -140,10 +140,11 @@
           </dependency>
         </dependencies>        
         <configuration>
-          <parallel>both</parallel>
-          <threadCount>3</threadCount>
           <runOrder>random</runOrder>
           <workingDirectory>${java.io.tmpdir}</workingDirectory>
+          <systemPropertyVariables>
+            <buildDirectory>${project.build.directory}</buildDirectory>
+          </systemPropertyVariables>          
         </configuration>        
       </plugin>   
       <plugin>
