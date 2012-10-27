@@ -105,7 +105,9 @@ public final class TestUtility
                                           referenceFile);
       if (!testOutputLocalFile.getCanonicalPath().contains("target"))
       {
-        testOutputLocalFile = new File("./target/unit_tests_results_output",
+        final String buildDirectory = System.getProperty("buildDirectory");
+        testOutputLocalFile = new File(new File(buildDirectory,
+                                                "unit_tests_results_output"),
                                        referenceFile);
       }
       testOutputLocalFile.getParentFile().mkdirs();
