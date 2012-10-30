@@ -1,20 +1,30 @@
+/* 
+ *
+ * SchemaCrawler
+ * http://sourceforge.net/projects/schemacrawler
+ * Copyright (c) 2000-2012, Sualeh Fatehi.
+ *
+ * This library is free software; you can redistribute it and/or modify it under the terms
+ * of the GNU Lesser General Public License as published by the Free Software Foundation;
+ * either version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * library; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+ * Boston, MA 02111-1307, USA.
+ *
+ */
 package schemacrawler.tools.integration.graph;
 
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.FutureTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,6 +32,8 @@ import sf.util.Utility;
 
 final class GraphGenerator
 {
+
+  private static final String SC_GRAPHVIZ_OPTS = "SC_GRAPHVIZ_OPTS";
 
   private static final Logger LOGGER = Logger.getLogger(GraphGenerator.class
     .getName());
@@ -49,84 +61,43 @@ final class GraphGenerator
     throws IOException
   {
 
-    final String graphGenerator = System
-      .getProperty("schemacrawler.graph_generator", "dot");
-    final String[] command = new String[] {
-        graphGenerator,
-        "-q",
-        "-T" + graphOutputFormat,
-        "-o",
-        diagramFile.getAbsolutePath(),
-        dotFile.getAbsolutePath()
-    };
-    LOGGER.log(Level.CONFIG, "Executing: " + Arrays.toString(command));
-
-    final ExecutorService threadPool = Executors.newFixedThreadPool(2);
-    try
+    final String scGraphVizOptsEnv = System.getenv(SC_GRAPHVIZ_OPTS);
+    final String scGraphVizOptsProp = System.getProperty(SC_GRAPHVIZ_OPTS);
+    final StringBuilder scGraphVizOpts = new StringBuilder();
+    if (!Utility.isBlank(scGraphVizOptsEnv))
     {
-      final class StreamReader
-        implements Callable<String>
-      {
-
-        private final InputStream in;
-
-        private StreamReader(final InputStream in)
-        {
-          this.in = in;
-        }
-
-        @Override
-        public String call()
-          throws Exception
-        {
-          final Reader reader = new BufferedReader(new InputStreamReader(in));
-          return Utility.readFully(reader);
-        }
-      }
-
-      final Process process = new ProcessBuilder(command).start();
-
-      final FutureTask<String> inReaderTask = new FutureTask<String>(new StreamReader(process
-        .getInputStream()));
-      threadPool.execute(inReaderTask);
-      final FutureTask<String> errReaderTask = new FutureTask<String>(new StreamReader(process
-        .getErrorStream()));
-      threadPool.execute(errReaderTask);
-
-      final int exitCode = process.waitFor();
-
-      final String processOutput = inReaderTask.get();
-      if (!Utility.isBlank(processOutput))
-      {
-        LOGGER.log(Level.INFO, processOutput);
-      }
-      final String processError = errReaderTask.get();
-      if (exitCode != 0)
-      {
-        throw new IOException(String.format("Process returned exit code %d%n%s",
-                                            exitCode,
-                                            processError));
-      }
-      if (!Utility.isBlank(processError))
-      {
-        LOGGER.log(Level.WARNING, processError);
-      }
+      scGraphVizOpts.append(scGraphVizOptsEnv).append(" ");
     }
-    catch (final SecurityException e)
+    if (!Utility.isBlank(scGraphVizOptsProp))
     {
-      throw new IOException(e.getMessage(), e);
+      scGraphVizOpts.append(scGraphVizOptsProp).append(" ");
     }
-    catch (final ExecutionException e)
+
+    final String command = String.format("dot %s -T %s -o \"%s\" \"%s\"",
+                                         scGraphVizOpts.toString(),
+                                         graphOutputFormat,
+                                         diagramFile.getAbsolutePath(),
+                                         dotFile.getAbsolutePath());
+    LOGGER.log(Level.CONFIG, "Executing:\n" + command);
+
+    final ProcessExecutor processExecutor = new ProcessExecutor(command);
+    final int exitCode = processExecutor.execute();
+
+    final String processOutput = processExecutor.getProcessOutput();
+    if (!Utility.isBlank(processOutput))
     {
-      throw new IOException(e.getMessage(), e);
+      LOGGER.log(Level.INFO, processOutput);
     }
-    catch (final InterruptedException e)
+    final String processError = processExecutor.getProcessError();
+    if (exitCode != 0)
     {
-      throw new IOException(e.getMessage(), e);
+      throw new IOException(String.format("Process returned exit code %d%n%s",
+                                          exitCode,
+                                          processError));
     }
-    finally
+    if (!Utility.isBlank(processError))
     {
-      threadPool.shutdown();
+      LOGGER.log(Level.WARNING, processError);
     }
   }
 

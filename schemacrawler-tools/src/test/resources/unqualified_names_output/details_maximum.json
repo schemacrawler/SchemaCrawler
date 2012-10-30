@@ -3125,7 +3125,7 @@
     }
   ],
   "schemaCrawlerInfo": {
-    "productVersion": "9.2",
+    "productVersion": "9.3",
     "productName": "SchemaCrawler"
   },
   "jdbcDriverInfo": {

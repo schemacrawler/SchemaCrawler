@@ -5,7 +5,7 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-    <release version="9.2" date="2012-10-21">
+    <release version="9.3" date="2012-10-21">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Fixed Windows script, sc.cmd.
       ]]></action> 
