@@ -479,7 +479,7 @@ for (final Schema schema: database.getSchemas())
   <dependency>
     <groupId>net.sourceforge.schemacrawler</groupId>
     <artifactId>schemacrawler</artifactId>
-    <version>9.2</version>
+    <version>9.3</version>
   </dependency>
 </dependencies>
         ]]></source>
