@@ -408,6 +408,25 @@ schemacrawler.format.hide_constraint_names=false
           alt="SchemaCrawler database diagram" />
       </answer>
     </faq>
+    <faq id="graphviz_opts">
+      <question>
+        How to provide additional GraphViz command-line options
+      </question>
+      <answer>
+        <p>
+          SchemaCrawler integrates with
+          <a href="http://www.graphviz.org/">Graphviz</a>
+          to produce graph images. See the previous question for 
+          details.
+        </p>
+        <p>
+          You can provide additional GraphViz command-line options using
+          the SC_GRAPHVIZ_OPTS environmental variable, or pass in
+          the additional arguments using the SC_GRAPHVIZ_OPTS Java
+          system property.
+        </p>
+      </answer>
+    </faq>    
   </part>
   <part id="projects">
     <title>How to Use SchemaCrawler in Projects</title>

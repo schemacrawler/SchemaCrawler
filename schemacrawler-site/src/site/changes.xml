@@ -5,7 +5,16 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-    <release version="9.3" date="2012-10-21">
+    <release version="9.3" date="2012-10-31">
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Weak associations are returned sorted.
+      ]]></action> 
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added ability to specify additional command line options for GraphViz, using
+        either Java system properties, or environmental variables.
+      ]]></action>                           
+    </release>    
+    <release version="9.2" date="2012-10-21">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Fixed Windows script, sc.cmd.
       ]]></action> 

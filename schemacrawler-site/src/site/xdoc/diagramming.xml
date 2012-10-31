@@ -23,6 +23,12 @@
           <a href="https://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20Examples/">SchemaCrawler examples</a>
           download.
         </p>
+        <p>
+          You can provide additional GraphViz command-line options using
+          the SC_GRAPHVIZ_OPTS environmental variable, or pass in
+          the additional arguments using the SC_GRAPHVIZ_OPTS Java
+          system property.
+        </p>        
         <p><img src="images/diagram.png" width="100%" alt="SchemaCrawler database diagram" /></p>
       </subsection>
     </section>
