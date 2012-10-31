@@ -7,16 +7,23 @@
   </properties>
   <body>
     <section name="Who Uses SchemaCrawler">
-      <subsection name="Academia">
-        <p>Uses of SchemaCrawler in universities around the world.</p>
+      <subsection name="Question from Users">
+        <p>SchemaCrawler questions from users.</p>
         <ul>
           <li>
-            Prof. Zachary Ives, in his
-            <a href="http://www.seas.upenn.edu/~zives/cis550/">CIS 550 Database and Information Systems</a>
-            course at the University of Pennsylvania.
+            How <a href="http://dba.stackexchange.com/search?q=schemacrawler">database administrators</a>
+            use SchemaCrawler.
+          </li>
+          <li>
+            How <a href="http://serverfault.com/search?q=schemacrawler">system administrators</a>
+            use SchemaCrawler.
+          </li>
+          <li>
+            How <a href="http://stackoverflow.com/search?q=schemacrawler">programmers</a>
+            use SchemaCrawler.
           </li>
         </ul>
-      </subsection>
+      </subsection>  
       <subsection name="Press">
         <p>SchemaCrawler in the press, and in online articles and blogs.</p>
         <ul>
@@ -80,7 +87,7 @@
           <li>
             Kelvin Meeks' post on
             <a href="http://intltechventures.blogspot.com/2012/08/2012-08-22-wednesday-data-governance.html">Data Governance Tools.</a>
-          </li>            
+          </li>              
         </ul>
       </subsection>
       <subsection name="Open Source Projects">
@@ -97,40 +104,6 @@
           <li>
             <a href="http://code.google.com/p/anhquan/wiki/CodeGenerator4j">CodeGenerator4j,</a>
             a Java tool to generate Java source codes from XML files, using Apache Velocity and JAXB
-          </li>
-        </ul>
-      </subsection>
-      <subsection name="Consultants and Professionals">
-        <p>SchemaCrawler used by consultants and professionals.</p>
-        <ul>
-          <li>
-            <a href="http://www.netfocusconsulting.com/netfocus/TechnologyLinks2.jsp">Netfocus Consulting Inc.</a>
-            has built expertise in SchemaCrawler.
-          </li>
-          <li>
-            <a href="http://www.softweave.com/html/resume.html">Jane Eisenstein</a>
-            used SchemaCrawler in her migration project.
-          </li>
-          <li>
-            <a href="http://au.linkedin.com/in/ralfweinand">Ralf Weinand</a>
-            uses SchemaCrawler.
-          </li>
-        </ul>
-      </subsection>
-      <subsection name="Other Users">
-        <p>SchemaCrawler used in different scenarios.</p>
-        <ul>
-          <li>
-            How <a href="http://dba.stackexchange.com/search?q=schemacrawler">database administrators</a>
-            use SchemaCrawler.
-          </li>
-          <li>
-            How <a href="http://serverfault.com/search?q=schemacrawler">system administrators</a>
-            use SchemaCrawler.
-          </li>
-          <li>
-            How <a href="http://stackoverflow.com/search?q=schemacrawler">programmers</a>
-            use SchemaCrawler.
           </li>
         </ul>
       </subsection>
