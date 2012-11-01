@@ -28,7 +28,7 @@
           the SC_GRAPHVIZ_OPTS environmental variable, or pass in
           the additional arguments using the SC_GRAPHVIZ_OPTS Java
           system property. SchemaCrawler does not set the dpi, or resolution of generated graphs. A useful
-          GraphViz command-line option is -Gdpi=300.
+          GraphViz command-line option to set is -Gdpi=300.
         </p>        
         <p><img src="images/diagram.png" width="100%" alt="SchemaCrawler database diagram" /></p>
       </subsection>
