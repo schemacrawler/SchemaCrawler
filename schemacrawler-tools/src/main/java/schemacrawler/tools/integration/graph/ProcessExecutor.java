@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -66,14 +67,41 @@ public final class ProcessExecutor
   private static final Logger LOGGER = Logger.getLogger(ProcessExecutor.class
     .getName());
 
-  private final String command;
+  static private String createCommandLine(final List<String> cmd)
+  {
+    final StringBuilder sb = new StringBuilder();
+    boolean first = true;
+    for (final String item: cmd)
+    {
+      if (first)
+      {
+        first = false;
+      }
+      else
+      {
+        sb.append(" ");
+      }
+      if (item.matches(".*\\s.*"))
+      {
+        sb.append("\"").append(item).append("\"");
+      }
+      else
+      {
+        sb.append(item);
+      }
+    }
+    return sb.toString();
+  }
+
+  private final List<String> command;
   private String processOutput;
+
   private String processError;
 
-  public ProcessExecutor(final String command)
+  public ProcessExecutor(final List<String> command)
     throws IOException
   {
-    if (Utility.isBlank(command))
+    if (command == null)
     {
       throw new RuntimeException("No command provided");
     }
@@ -83,13 +111,14 @@ public final class ProcessExecutor
   public int execute()
     throws IOException
   {
-    LOGGER.log(Level.CONFIG, "Executing:\n" + command);
+    LOGGER.log(Level.CONFIG, "Executing:\n" + createCommandLine(command));
 
     final ExecutorService threadPool = Executors.newFixedThreadPool(2);
     try
     {
 
-      final Process process = Runtime.getRuntime().exec(command);
+      final ProcessBuilder processBuilder = new ProcessBuilder(command);
+      final Process process = processBuilder.start();
 
       final FutureTask<String> inReaderTask = new FutureTask<String>(new StreamReader(process
         .getInputStream()));
@@ -121,11 +150,6 @@ public final class ProcessExecutor
     {
       threadPool.shutdown();
     }
-  }
-
-  public String getCommand()
-  {
-    return command;
   }
 
   public String getProcessError()

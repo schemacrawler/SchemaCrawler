@@ -22,8 +22,10 @@ package schemacrawler.tools.integration.graph;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.StringTokenizer;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -61,24 +63,16 @@ final class GraphGenerator
     throws IOException
   {
 
-    final String scGraphVizOptsEnv = System.getenv(SC_GRAPHVIZ_OPTS);
-    final String scGraphVizOptsProp = System.getProperty(SC_GRAPHVIZ_OPTS);
-    final StringBuilder scGraphVizOpts = new StringBuilder();
-    if (!Utility.isBlank(scGraphVizOptsEnv))
-    {
-      scGraphVizOpts.append(scGraphVizOptsEnv).append(" ");
-    }
-    if (!Utility.isBlank(scGraphVizOptsProp))
-    {
-      scGraphVizOpts.append(scGraphVizOptsProp).append(" ");
-    }
+    final List<String> command = new ArrayList<String>();
+    command.add("dot");
 
-    final String command = String.format("dot %s -T %s -o \"%s\" \"%s\"",
-                                         scGraphVizOpts.toString(),
-                                         graphOutputFormat,
-                                         diagramFile.getAbsolutePath(),
-                                         dotFile.getAbsolutePath());
-    LOGGER.log(Level.CONFIG, "Executing:\n" + command);
+    final List<String> scGraphVizOpts = getGraphVizOpts();
+    command.addAll(scGraphVizOpts);
+
+    command.add("-T" + graphOutputFormat);
+    command.add("-o");
+    command.add(diagramFile.getAbsolutePath());
+    command.add(dotFile.getAbsolutePath());
 
     final ProcessExecutor processExecutor = new ProcessExecutor(command);
     final int exitCode = processExecutor.execute();
@@ -99,6 +93,29 @@ final class GraphGenerator
     {
       LOGGER.log(Level.WARNING, processError);
     }
+  }
+
+  private List<String> getGraphVizOpts()
+  {
+    final String scGraphVizOptsEnv = System.getenv(SC_GRAPHVIZ_OPTS);
+    final String scGraphVizOptsProp = System.getProperty(SC_GRAPHVIZ_OPTS);
+
+    final StringBuilder scGraphVizOpts = new StringBuilder();
+    if (!Utility.isBlank(scGraphVizOptsEnv))
+    {
+      scGraphVizOpts.append(scGraphVizOptsEnv).append(" ");
+    }
+    if (!Utility.isBlank(scGraphVizOptsProp))
+    {
+      scGraphVizOpts.append(scGraphVizOptsProp).append(" ");
+    }
+
+    List<String> scGraphVizOptsList = new ArrayList<String>();
+    StringTokenizer st = new StringTokenizer(scGraphVizOpts.toString());
+    while (st.hasMoreTokens())
+      scGraphVizOptsList.add(st.nextToken());
+
+    return scGraphVizOptsList;
   }
 
   private File determineDiagramFile(final File diagramOutputFile)
