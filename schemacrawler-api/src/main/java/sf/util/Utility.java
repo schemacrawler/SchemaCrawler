@@ -53,6 +53,8 @@ public final class Utility
 
   private static final Pattern containsWhitespacePattern = Pattern
     .compile(".*\\s.*");
+  private static final Pattern isAllWhitespacePattern = Pattern
+    .compile("^\\s*$");
 
   public static String commonPrefix(final String string1, final String string2)
   {
@@ -118,7 +120,8 @@ public final class Utility
    */
   public static boolean isBlank(final String text)
   {
-    return (text == null || text.isEmpty() || text.matches("^\\s*$"));
+    return (text == null || text.isEmpty() || isAllWhitespacePattern
+      .matcher(text).matches());
   }
 
   public static String pastelColorHTMLValue(final String text)
