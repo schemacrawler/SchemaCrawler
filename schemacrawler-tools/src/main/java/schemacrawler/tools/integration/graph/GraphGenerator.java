@@ -25,7 +25,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.StringTokenizer;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -110,12 +109,7 @@ final class GraphGenerator
       scGraphVizOpts.append(scGraphVizOptsProp).append(" ");
     }
 
-    List<String> scGraphVizOptsList = new ArrayList<String>();
-    StringTokenizer st = new StringTokenizer(scGraphVizOpts.toString());
-    while (st.hasMoreTokens())
-      scGraphVizOptsList.add(st.nextToken());
-
-    return scGraphVizOptsList;
+    return Arrays.asList(scGraphVizOpts.toString().split("\\s+"));
   }
 
   private File determineDiagramFile(final File diagramOutputFile)
