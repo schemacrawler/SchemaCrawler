@@ -38,6 +38,7 @@ import schemacrawler.schema.EventManipulationType;
 import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.InformationSchemaViews;
+import sf.util.Utility;
 
 /**
  * A retriever uses database metadata to get the extended details about
@@ -345,8 +346,7 @@ final class TableExRetriever
           continue;
         }
         final String text = checkConstraint.getDefinition();
-
-        if (!(text == null || text.trim().length() == 0))
+        if (!Utility.isBlank(text))
         {
           definition = checkConstraint.getDefinition() + definition;
         }

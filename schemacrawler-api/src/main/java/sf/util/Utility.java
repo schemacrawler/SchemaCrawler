@@ -118,19 +118,7 @@ public final class Utility
    */
   public static boolean isBlank(final String text)
   {
-    final int textLength;
-    if (text == null || (textLength = text.length()) == 0)
-    {
-      return true;
-    }
-    for (int i = 0; i < textLength; i++)
-    {
-      if (!Character.isWhitespace(text.charAt(i)))
-      {
-        return false;
-      }
-    }
-    return true;
+    return (text == null || text.isEmpty() || text.matches("^\\s*$"));
   }
 
   public static String pastelColorHTMLValue(final String text)
