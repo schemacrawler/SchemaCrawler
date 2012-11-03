@@ -18,32 +18,31 @@ package schemacrawler.test;
 
 
 import static org.junit.Assert.assertTrue;
+import static sf.util.Utility.isBlank;
 
 import org.junit.Test;
-
-import sf.util.Utility;
 
 public class UtilityTest
 {
 
   @Test
-  public void isBlank()
+  public void isBlankTest()
   {
-    assertTrue(Utility.isBlank(null));
-    assertTrue(Utility.isBlank(""));
-    assertTrue(Utility.isBlank(" "));
-    assertTrue(Utility.isBlank("   "));
-    assertTrue(Utility.isBlank("\t"));
-    assertTrue(Utility.isBlank("\n"));
-    assertTrue(Utility.isBlank("\r"));
-    assertTrue(Utility.isBlank(" \t "));
-    assertTrue(Utility.isBlank("\t\t"));
+    assertTrue(isBlank(null));
+    assertTrue(isBlank(""));
+    assertTrue(isBlank(" "));
+    assertTrue(isBlank("   "));
+    assertTrue(isBlank("\t"));
+    assertTrue(isBlank("\n"));
+    assertTrue(isBlank("\r"));
+    assertTrue(isBlank(" \t "));
+    assertTrue(isBlank("\t\t"));
 
-    assertTrue(!Utility.isBlank("a"));
-    assertTrue(!Utility.isBlank("©"));
-    assertTrue(!Utility.isBlank(" a"));
-    assertTrue(!Utility.isBlank("a "));
-    assertTrue(!Utility.isBlank("a b"));
+    assertTrue(!isBlank("a"));
+    assertTrue(!isBlank("©"));
+    assertTrue(!isBlank(" a"));
+    assertTrue(!isBlank("a "));
+    assertTrue(!isBlank("a b"));
   }
 
 }
