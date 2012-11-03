@@ -5,7 +5,12 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-    <release version="9.3.1" date="2012-10-31">
+    <release version="9.3.1" date="2012-11-3">
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Fix for generating diagrams on Unix.
+      ]]></action>                      
+    </release>   
+    <release version="9.3" date="2012-10-31">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Weak associations are returned sorted.
       ]]></action> 
