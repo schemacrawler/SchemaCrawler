@@ -10,7 +10,7 @@ SchemaCrawler Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
 product name                              SchemaCrawler                 
-product version                           9.3                           
+product version                           9.3.1                           
 
 
 Database Information
@@ -1423,11 +1423,11 @@ POSTALCODE	COUNTRY	BOOKID	PERIODENDDATE	TOTALAMOUNT
 24179	USA	4	2005-12-24	11103.0
 24179	USA	4	2009-02-14	5885.0
 24179	USA	9	2000-05-16	13595.0
-24179	USA	9	2004-04-10	14069.3
+24179	USA	9	2004-04-10	14069.3.1
 26131	USA	5	2001-12-02	14798.0
 26131	USA	5	2004-11-03	15348.0
 26131	USA	10	2000-09-20	14476.0
-26131	USA	10	2005-12-03	17069.3
+26131	USA	10	2005-12-03	17069.3.1
 
 
 

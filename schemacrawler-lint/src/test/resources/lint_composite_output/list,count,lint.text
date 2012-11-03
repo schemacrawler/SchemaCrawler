@@ -10,7 +10,7 @@ SchemaCrawler Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
 product name                              SchemaCrawler                 
-product version                           9.3                           
+product version                           9.3.1                         
 
 
 Database Information
@@ -27,7 +27,7 @@ JDBC Driver Information
 driver name                               HSQL Database Engine Driver   
 driver version                            2.2.9                         
 driver class name                         org.hsqldb.jdbc.JDBCDriver    
-url                                       jdbc:hsqldb:mem:schemacrawler 
+url                                       jdbc:hsqldb:hsql://localhost/schemacrawler
 is JDBC compliant                         true                          
 
 
