@@ -101,7 +101,7 @@ public final class ProcessExecutor
   public ProcessExecutor(final List<String> command)
     throws IOException
   {
-    if (command == null)
+    if (command == null || command.isEmpty())
     {
       throw new RuntimeException("No command provided");
     }
