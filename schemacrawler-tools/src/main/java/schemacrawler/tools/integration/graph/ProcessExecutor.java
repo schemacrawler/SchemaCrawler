@@ -20,6 +20,9 @@
 package schemacrawler.tools.integration.graph;
 
 
+import static sf.util.Utility.containsWhitespace;
+import static sf.util.Utility.readFully;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -33,8 +36,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import sf.util.Utility;
 
 public final class ProcessExecutor
 {
@@ -59,7 +60,7 @@ public final class ProcessExecutor
       throws Exception
     {
       final Reader reader = new BufferedReader(new InputStreamReader(in));
-      return Utility.readFully(reader);
+      return readFully(reader);
     }
 
   }
@@ -67,11 +68,11 @@ public final class ProcessExecutor
   private static final Logger LOGGER = Logger.getLogger(ProcessExecutor.class
     .getName());
 
-  static private String createCommandLine(final List<String> cmd)
+  static private String createCommandLine(final List<String> command)
   {
     final StringBuilder sb = new StringBuilder();
     boolean first = true;
-    for (final String item: cmd)
+    for (final String arg: command)
     {
       if (first)
       {
@@ -81,13 +82,13 @@ public final class ProcessExecutor
       {
         sb.append(" ");
       }
-      if (item.matches(".*\\s.*"))
+      if (containsWhitespace(arg))
       {
-        sb.append("\"").append(item).append("\"");
+        sb.append("\"").append(arg).append("\"");
       }
       else
       {
-        sb.append(item);
+        sb.append(arg);
       }
     }
     return sb.toString();
