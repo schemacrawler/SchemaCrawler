@@ -107,6 +107,7 @@ public final class ProcessExecutor
       throw new RuntimeException("No command provided");
     }
     this.command = command;
+    LOGGER.log(Level.CONFIG, command.toString());
   }
 
   public int execute()

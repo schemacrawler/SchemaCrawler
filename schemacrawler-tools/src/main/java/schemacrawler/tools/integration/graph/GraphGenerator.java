@@ -24,6 +24,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
@@ -68,7 +69,8 @@ final class GraphGenerator
     final List<String> scGraphVizOpts = getGraphVizOpts();
     command.addAll(scGraphVizOpts);
 
-    command.add("-T" + graphOutputFormat);
+    command.add("-T");
+    command.add(graphOutputFormat);
     command.add("-o");
     command.add(diagramFile.getAbsolutePath());
     command.add(dotFile.getAbsolutePath());
@@ -92,24 +94,6 @@ final class GraphGenerator
     {
       LOGGER.log(Level.WARNING, processError);
     }
-  }
-
-  private List<String> getGraphVizOpts()
-  {
-    final String scGraphVizOptsEnv = System.getenv(SC_GRAPHVIZ_OPTS);
-    final String scGraphVizOptsProp = System.getProperty(SC_GRAPHVIZ_OPTS);
-
-    final StringBuilder scGraphVizOpts = new StringBuilder();
-    if (!Utility.isBlank(scGraphVizOptsEnv))
-    {
-      scGraphVizOpts.append(scGraphVizOptsEnv).append(" ");
-    }
-    if (!Utility.isBlank(scGraphVizOptsProp))
-    {
-      scGraphVizOpts.append(scGraphVizOptsProp).append(" ");
-    }
-
-    return Arrays.asList(scGraphVizOpts.toString().split("\\s+"));
   }
 
   private File determineDiagramFile(final File diagramOutputFile)
@@ -167,6 +151,31 @@ final class GraphGenerator
       graphOutputFormat = "png";
     }
     return graphOutputFormat;
+  }
+
+  private List<String> getGraphVizOpts()
+  {
+    final String scGraphVizOptsEnv = System.getenv(SC_GRAPHVIZ_OPTS);
+    final String scGraphVizOptsProp = System.getProperty(SC_GRAPHVIZ_OPTS);
+
+    final StringBuilder scGraphVizOpts = new StringBuilder();
+    if (!Utility.isBlank(scGraphVizOptsEnv))
+    {
+      scGraphVizOpts.append(scGraphVizOptsEnv).append(" ");
+    }
+    if (!Utility.isBlank(scGraphVizOptsProp))
+    {
+      scGraphVizOpts.append(scGraphVizOptsProp).append(" ");
+    }
+
+    if (scGraphVizOpts.length() > 0)
+    {
+      return Arrays.asList(scGraphVizOpts.toString().split("\\s+"));
+    }
+    else
+    {
+      return Collections.emptyList();
+    }
   }
 
 }
