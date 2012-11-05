@@ -79,7 +79,13 @@
           <li>
             Gary Kelleher's blog post on
             <a href="http://www.garykelleher.net/wp/?p=4">SchemaCrawler.</a>
-          </li>  
+          </li> 
+          <li>Maxime Werlen's blog post on
+            <a href="http://www.garykelleher.net/wp/?p=4">SchemaCrawler pour extraire la structure d'une base de donnée</a> (SchemaCrawler to extract the structure of a database).
+          </li>
+          <li>A blog post,
+            <a href="http://de.softuses.com/120034">SQLite Spaltennamen in leere Tabelle zu finden</a> on documenting a SQLite database.
+          </li>          
           <li>
             Jan-Felix Wittmann's post on
             <a href="https://plus.google.com/100783002584203158903/posts/bW8K8Xn5qJm">SchemaCrawler.</a>
