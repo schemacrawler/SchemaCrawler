@@ -21,6 +21,7 @@
 package schemacrawler.tools.text.schema;
 
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -428,10 +429,12 @@ final class SchemaJsonFormatter
     return jsonColumnReferences;
   }
 
-  private JSONArray handleForeignKeys(final Collection<ForeignKey> foreignKeys)
+  private JSONArray handleForeignKeys(final Collection<ForeignKey> foreignKeysCollection)
   {
     final JSONArray jsonFks = new JSONArray();
-
+    List<ForeignKey> foreignKeys = new ArrayList<ForeignKey>(foreignKeysCollection);
+    Collections.sort(foreignKeys, NamedObjectSort
+      .getNamedObjectSort(options.isAlphabeticalSortForForeignKeys()));
     for (final ForeignKey foreignKey: foreignKeys)
     {
       if (foreignKey != null)
