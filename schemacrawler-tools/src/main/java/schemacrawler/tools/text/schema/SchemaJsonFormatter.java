@@ -22,6 +22,7 @@ package schemacrawler.tools.text.schema;
 
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 
@@ -54,6 +55,7 @@ import schemacrawler.tools.text.utility.org.json.JSONArray;
 import schemacrawler.tools.text.utility.org.json.JSONException;
 import schemacrawler.tools.text.utility.org.json.JSONObject;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
+import schemacrawler.utility.NamedObjectSort;
 
 /**
  * JSON formatting of schema.
@@ -251,7 +253,10 @@ final class SchemaJsonFormatter
       {
         final JSONArray jsonColumns = new JSONArray();
         jsonTable.put("columns", jsonColumns);
-        for (final Column column: table.getColumns())
+        final List<Column> columns = table.getColumns();
+        Collections.sort(columns, NamedObjectSort.getNamedObjectSort(options
+          .isAlphabeticalSortForTableColumns()));
+        for (final Column column: columns)
         {
           jsonColumns.put(handleTableColumn(column));
         }
