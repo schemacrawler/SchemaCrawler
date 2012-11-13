@@ -492,6 +492,7 @@ public class SchemaCrawlerTest
                                        tableAttribute.getValue()));
         }
         final Column[] columns = table.getColumns().toArray(new Column[0]);
+        Arrays.sort(columns);
         for (final Column column: columns)
         {
           writer.println(String.format("   o--> %s [%s]",
