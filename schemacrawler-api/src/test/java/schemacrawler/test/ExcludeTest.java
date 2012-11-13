@@ -183,6 +183,7 @@ public class ExcludeTest
       {
         final Table table = tables[tableIdx];
         final Column[] columns = table.getColumns().toArray(new Column[0]);
+        Arrays.sort(columns);
         final String[] columnsNamesForTable = columnNames[schemaIdx][tableIdx];
         for (int columnIdx = 0; columnIdx < columns.length; columnIdx++)
         {

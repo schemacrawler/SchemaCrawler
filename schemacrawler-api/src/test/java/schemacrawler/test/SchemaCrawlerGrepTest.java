@@ -21,6 +21,7 @@ package schemacrawler.test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -102,6 +103,7 @@ public class SchemaCrawlerGrepTest
       {
         final Table table = tables[tableIdx];
         final Column[] columns = table.getColumns().toArray(new Column[0]);
+        Arrays.sort(columns);
         final String[] columnsNamesForTable = columnNames[schemaIdx][tableIdx];
         for (int columnIdx = 0; columnIdx < columns.length; columnIdx++)
         {
@@ -222,6 +224,7 @@ public class SchemaCrawlerGrepTest
       {
         final Table table = tables[tableIdx];
         final Column[] columns = table.getColumns().toArray(new Column[0]);
+        Arrays.sort(columns);
         final String[] columnsNamesForTable = columnNames[schemaIdx][tableIdx];
         for (int columnIdx = 0; columnIdx < columns.length; columnIdx++)
         {
@@ -292,6 +295,7 @@ public class SchemaCrawlerGrepTest
       {
         final Table table = tables[tableIdx];
         final Column[] columns = table.getColumns().toArray(new Column[0]);
+        Arrays.sort(columns);
         final String[] columnsNamesForTable = columnNames[schemaIdx][tableIdx];
         for (int columnIdx = 0; columnIdx < columns.length; columnIdx++)
         {
