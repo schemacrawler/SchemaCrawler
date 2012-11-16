@@ -75,13 +75,13 @@
 			<groupId>org.python</groupId>
 			<artifactId>jython-standalone</artifactId>
 			<version>2.5.3</version>
-			<scope>test</scope>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.jruby</groupId>
 			<artifactId>jruby-complete</artifactId>
 			<version>1.7.0.preview2</version>
-			<scope>test</scope>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 	<build>
