@@ -275,7 +275,12 @@ final class SchemaJsonFormatter
 
         final JSONArray jsonIndices = new JSONArray();
         jsonTable.put("indices", jsonIndices);
-        for (final Index index: table.getIndices())
+
+        final Collection<Index> indicesCollection = table.getIndices();
+        final List<Index> indices = new ArrayList<Index>(indicesCollection);
+        Collections.sort(indices, NamedObjectSort.getNamedObjectSort(options
+          .isAlphabeticalSortForIndexes()));
+        for (final Index index: indices)
         {
           jsonIndices.put(handleIndex(index));
         }
@@ -432,9 +437,9 @@ final class SchemaJsonFormatter
   private JSONArray handleForeignKeys(final Collection<ForeignKey> foreignKeysCollection)
   {
     final JSONArray jsonFks = new JSONArray();
-    List<ForeignKey> foreignKeys = new ArrayList<ForeignKey>(foreignKeysCollection);
-    Collections.sort(foreignKeys, NamedObjectSort
-      .getNamedObjectSort(options.isAlphabeticalSortForForeignKeys()));
+    final List<ForeignKey> foreignKeys = new ArrayList<ForeignKey>(foreignKeysCollection);
+    Collections.sort(foreignKeys, NamedObjectSort.getNamedObjectSort(options
+      .isAlphabeticalSortForForeignKeys()));
     for (final ForeignKey foreignKey: foreignKeys)
     {
       if (foreignKey != null)
