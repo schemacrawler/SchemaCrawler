@@ -10,14 +10,14 @@ SchemaCrawler Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
 product name                          SchemaCrawler
-product version                       9.3.1
+product version                       9.3.2
 
 
 Database Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
 database product name                 PostgreSQL
-database product version              9.3.1.4
+database product version              9.3.2.4
 database user name                    books
 
 
@@ -184,7 +184,7 @@ JDBC Driver Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
 driver name                           PostgreSQL Native Driver
-driver version                        PostgreSQL 9.3.1 JDBC4 (build 801)
+driver version                        PostgreSQL 9.3.2 JDBC4 (build 801)
 driver class name                     org.postgresql.Driver
 url                                   jdbc:postgresql://192.168.62.133:5432/books
 is JDBC compliant                     false
