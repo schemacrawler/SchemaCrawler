@@ -1,66 +1,90 @@
 <!DOCTYPE document PUBLIC "-//Apache Software Foundation//DTD XDOC 1.0//EN"
   "http://maven.apache.org/dtd/xdoc_1_0.dtd">
 <document>
-  <properties>
-    <title>SchemaCrawler Database Diagramming</title>
-    <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
-  </properties>
-  <body>
-    <section name="SchemaCrawler Database Diagramming">
-      <subsection name="SchemaCrawler Database Diagramming">
-        <p>
-          SchemaCrawler is a command-line tool that allows you to generate database diagrams, using
-          <a href="http://www.graphviz.org/">Graphviz</a>
-          .
-          You can filter out tables, views, columns, stored procedure and functions based on regular expressions,
-          using the
-          <a href="faq.html#whats-schemacrawler-grep">grep</a>
-          functionality.
-        </p>
-        <p>
-          For more details, see the
-          <a href="how-to.html#diagrams">how-to</a>,   and the diagram example in the
-          <a href="https://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20Examples/">SchemaCrawler examples</a>
-          download.
-        </p>
-        <p>
-          You can provide additional GraphViz command-line options using
-          the SC_GRAPHVIZ_OPTS environmental variable, or pass in
-          the additional arguments using the SC_GRAPHVIZ_OPTS Java
-          system property. SchemaCrawler does not set the dpi, or resolution of generated graphs. A useful
-          GraphViz command-line option to set is -Gdpi=300.
-        </p>        
-        <p><img src="images/diagram.png" width="100%" alt="SchemaCrawler database diagram" /></p>
-      </subsection>
-    </section>
-        <footer>
-            <p>
-            <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">
-                <img alt="Creative Commons License" style="border-width:0"
-                    src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" />
-            </a>
-            <br />
-            <span xmlns:dc="http://purl.org/dc/elements/1.1/" href="http://purl.org/dc/dcmitype/Text"
-                property="dc:title" rel="dc:type">SchemaCrawler Website
-            </span>
-            by
-            <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Sualeh
-                Fatehi
-            </span>
-            is licensed under a
-            <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-Share Alike
-                3.0
-                Unported License
-            </a>
-            .
-            <br />
-            Based on a work at
-            <a xmlns:dc="http://purl.org/dc/elements/1.1/" href="http://schemacrawler.sourceforge.net/"
-                rel="dc:source">
-                schemacrawler.sourceforge.net
-            </a>
-            .
-            </p>
-        </footer>    
-  </body>
+	<properties>
+		<title>SchemaCrawler Database Diagramming</title>
+		<author email="sualeh@hotmail.com">Sualeh Fatehi</author>
+	</properties>
+	<body>
+		<section name="SchemaCrawler Database Diagramming">
+			<subsection name="SchemaCrawler Database Diagramming">
+				<p>
+					SchemaCrawler is a command-line tool that allows you to generate
+					database diagrams, using
+					<a href="http://www.graphviz.org/">Graphviz</a>
+					.
+					You can filter out tables, views, columns, stored procedure and
+					functions based on regular expressions,
+					using the
+					<a href="faq.html#whats-schemacrawler-grep">grep</a>
+					functionality.
+				</p>
+				<p>
+					To use generate SchemaCrawler diagrams, for install
+					<a href="http://www.graphviz.org/">Graphviz</a>
+					.
+					Then you can run SchemaCrawler with the correct command-line options -
+					for example,
+					<code>-command graph -outputformat png -outputfile=graph.png</code>
+					See the diagram example in the
+					<a
+						href="https://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20Examples/">
+						SchemaCrawler examples
+					</a>
+					download.
+					An example of a SchemaCrawler database diagram is below.
+				</p>
+				<p>
+					You can provide additional GraphViz command-line options using
+					the <code>SC_GRAPHVIZ_OPTS</code> environmental variable, or pass in
+					the
+					additional arguments using the <code>SC_GRAPHVIZ_OPTS</code> Java
+					system
+					property. SchemaCrawler does not set the dpi, or resolution of
+					generated graphs. A useful
+					GraphViz command-line option to set is
+					<code>-Gdpi=300</code>.
+				</p>
+                <p>
+                    For more details, see the diagram example in the
+                    <a
+                        href="https://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20Examples/">SchemaCrawler examples</a>
+                    download.
+                </p>
+				<p>
+					<img src="images/diagram.png" width="100%"
+						alt="SchemaCrawler database diagram" />
+				</p>
+			</subsection>
+		</section>
+		<footer>
+			<p>
+				<a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">
+					<img alt="Creative Commons License" style="border-width:0"
+						src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" />
+				</a>
+				<br />
+				<span xmlns:dc="http://purl.org/dc/elements/1.1/" href="http://purl.org/dc/dcmitype/Text"
+					property="dc:title" rel="dc:type">SchemaCrawler Website
+				</span>
+				by
+				<span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Sualeh
+					Fatehi
+				</span>
+				is licensed under a
+				<a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-Share Alike
+					3.0
+					Unported License
+				</a>
+				.
+				<br />
+				Based on a work at
+				<a xmlns:dc="http://purl.org/dc/elements/1.1/" href="http://schemacrawler.sourceforge.net/"
+					rel="dc:source">
+					schemacrawler.sourceforge.net
+				</a>
+				.
+			</p>
+		</footer>
+	</body>
 </document>

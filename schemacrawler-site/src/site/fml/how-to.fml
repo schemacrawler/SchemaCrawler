@@ -389,23 +389,13 @@ schemacrawler.format.hide_constraint_names=false
         <p>
           SchemaCrawler integrates with
           <a href="http://www.graphviz.org/">Graphviz</a>
-          to produce graph images. Install Graphviz, and run SchemaCrawler with
-          the correct command
-          line options -
-          for
-          example,
-          <code>-command graph -outputformat png -outputfile=graph.png</code>
-          . See the diagram example in the
+          to produce graph images. See the diagram example in the
           <a
             href="https://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20Examples/"
           >SchemaCrawler examples</a>
           download.
-          An example of a SchemaCrawler database diagram:
+          For more details, see the <a href="diagramming.html">diagram section</a>.
         </p>
-        <img
-          src="images/diagram.png"
-          width="100%"
-          alt="SchemaCrawler database diagram" />
       </answer>
     </faq>
     <faq id="graphviz_opts">
