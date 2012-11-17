@@ -166,7 +166,12 @@ final class SchemaJsonFormatter
       {
         final JSONArray jsonParameters = new JSONArray();
         jsonRoutine.put("parameters", jsonParameters);
-        for (final RoutineColumn<?> column: routine.getColumns())
+
+        final List<? extends RoutineColumn<? extends Routine>> columns = routine
+          .getColumns();
+        Collections.sort(columns, NamedObjectSort.getNamedObjectSort(options
+          .isAlphabeticalSortForRoutineColumns()));
+        for (final RoutineColumn<?> column: columns)
         {
           jsonParameters.put(handleRoutineColumn(column));
         }
