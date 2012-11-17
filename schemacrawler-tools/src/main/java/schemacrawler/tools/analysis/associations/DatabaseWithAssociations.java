@@ -40,7 +40,7 @@ public final class DatabaseWithAssociations
 
   private static final String WEAK_ASSOCIATIONS_KEY = "schemacrawler.weak_associations";
 
-  public static final List<ColumnReference> getWeakAssociations(final Table table)
+  public static final Collection<ColumnReference> getWeakAssociations(final Table table)
   {
     if (table == null)
     {
