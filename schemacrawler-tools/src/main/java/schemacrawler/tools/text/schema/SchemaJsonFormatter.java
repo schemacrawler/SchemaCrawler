@@ -272,8 +272,10 @@ final class SchemaJsonFormatter
 
         if (isVerbose)
         {
-          final List<ColumnReference> weakAssociations = DatabaseWithAssociations
+          final Collection<ColumnReference> weakAssociationsCollection = DatabaseWithAssociations
             .getWeakAssociations(table);
+          final List<ColumnReference> weakAssociations = new ArrayList<ColumnReference>(weakAssociationsCollection);
+          Collections.sort(weakAssociations);
           jsonTable.put("weakAssociations",
                         handleColumnReferences(weakAssociations));
         }

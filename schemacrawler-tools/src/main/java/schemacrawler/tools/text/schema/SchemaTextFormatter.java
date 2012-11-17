@@ -719,7 +719,8 @@ final class SchemaTextFormatter
       }
       else
       {
-        columnTypeName = column.getColumnDataType().getDatabaseSpecificTypeName();
+        columnTypeName = column.getColumnDataType()
+          .getDatabaseSpecificTypeName();
       }
       final StringBuilder columnType = new StringBuilder();
       columnType.append(columnTypeName).append(column.getWidth());
@@ -755,7 +756,8 @@ final class SchemaTextFormatter
       }
       else
       {
-        String columnTypeName = column.getColumnDataType().getDatabaseSpecificTypeName();
+        String columnTypeName = column.getColumnDataType()
+          .getDatabaseSpecificTypeName();
         if (options.isShowStandardColumnTypeNames())
         {
           columnTypeName = column.getColumnDataType().getTypeName();
@@ -826,8 +828,10 @@ final class SchemaTextFormatter
   private void printWeakAssociations(final Table table)
   {
     final String tableName = table.getName();
-    final List<ColumnReference> weakAssociations = DatabaseWithAssociations
+    final Collection<ColumnReference> weakAssociationsCollection = DatabaseWithAssociations
       .getWeakAssociations(table);
+    final List<ColumnReference> weakAssociations = new ArrayList<ColumnReference>(weakAssociationsCollection);
+    Collections.sort(weakAssociations);
     for (final ColumnReference weakAssociation: weakAssociations)
     {
       out.println(formattingHelper.createEmptyRow());
