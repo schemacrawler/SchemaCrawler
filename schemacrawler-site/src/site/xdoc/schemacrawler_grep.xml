@@ -1,60 +1,81 @@
 <!DOCTYPE document PUBLIC "-//Apache Software Foundation//DTD XDOC 1.0//EN"
   "http://maven.apache.org/dtd/xdoc_1_0.dtd">
 <document>
-  <properties>
-    <title>SchemaCrawler Grep</title>
-    <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
-  </properties>
-  <body>
-    <section name="SchemaCrawler Grep">
-      <subsection name="SchemaCrawler Grep">
-        <p>
-          SchemaCrawler is a command-line tool that allows you to search your database for tables and columns
-          that match
-          a regular expression, much like the standard
-          <a href="http://en.wikipedia.org/wiki/Grep">grep</a>
-          tool.
-        </p>
-        <p>
-          The SchemaCrawler command-line allows filtering tables, views, columns, stored procedure and function based on regular expressions,
-          in addition to the grep functionality. This can be useful, say, when you want to search through your schema
-          to find all tables that have a CUSTOMER_ID column, for example.
-        </p>
-        <p>
-          For more details, see grep example in the
-          <a href="https://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20Examples/">SchemaCrawler examples</a>
-          download.
-        </p>
-      </subsection>
-        <footer>
-            <p>
-            <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">
-                <img alt="Creative Commons License" style="border-width:0"
-                    src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" />
-            </a>
-            <br />
-            <span xmlns:dc="http://purl.org/dc/elements/1.1/" href="http://purl.org/dc/dcmitype/Text"
-                property="dc:title" rel="dc:type">SchemaCrawler Website
-            </span>
-            by
-            <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Sualeh
-                Fatehi
-            </span>
-            is licensed under a
-            <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-Share Alike
-                3.0
-                Unported License
-            </a>
-            .
-            <br />
-            Based on a work at
-            <a xmlns:dc="http://purl.org/dc/elements/1.1/" href="http://schemacrawler.sourceforge.net/"
-                rel="dc:source">
-                schemacrawler.sourceforge.net
-            </a>
-            .
-            </p>
-        </footer>      
-    </section>
-  </body>
+	<properties>
+		<title>SchemaCrawler Grep</title>
+		<author email="sualeh@hotmail.com">Sualeh Fatehi</author>
+	</properties>
+	<body>
+		<section name="SchemaCrawler Grep">
+			<subsection name="SchemaCrawler Grep">
+				<p>
+					SchemaCrawler is a command-line tool that allows you to search your
+					database for tables and columns
+					that match
+					a regular expression, much
+					like the standard
+					<a href="http://en.wikipedia.org/wiki/Grep">grep</a>
+					tool.
+				</p>
+				<p>
+					The SchemaCrawler command-line allows filtering tables, views,
+					columns, stored procedure and function based on regular
+					expressions,
+					in addition to the grep functionality. This can be
+					useful, say, when
+					you want to search through your schema
+					to find all
+					tables that have a CUSTOMER_ID column, for example.
+				</p>
+				<p>
+					To find tables with certain names, run SchemaCrawler with
+					command-line options similar to
+					<code>-infolevel=standard -command=list -grepcolumns=.*\..*CUSTOMER.*\..*</code>
+					This will find table with names that have "CUSTOMER" in them.
+				</p>
+				<p>
+					To find tables with certain column names, run SchemaCrawler with
+					command-line options similar to
+					<code>-infolevel=standard -command=list -grepcolumns=.*\.CUSTOMER_ID</code>
+					This will find all
+					tables that have a CUSTOMER_ID column.
+				</p>
+				<p>
+					For more details, see grep example in the
+					<a
+						href="https://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20Examples/">SchemaCrawler examples</a>
+					download.
+				</p>
+			</subsection>
+			<footer>
+				<p>
+					<a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">
+						<img alt="Creative Commons License" style="border-width:0"
+							src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" />
+					</a>
+					<br />
+					<span xmlns:dc="http://purl.org/dc/elements/1.1/" href="http://purl.org/dc/dcmitype/Text"
+						property="dc:title" rel="dc:type">SchemaCrawler Website
+					</span>
+					by
+					<span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Sualeh
+						Fatehi
+					</span>
+					is licensed under a
+					<a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-Share Alike
+						3.0
+						Unported License
+					</a>
+					.
+					<br />
+					Based on a work at
+					<a xmlns:dc="http://purl.org/dc/elements/1.1/" href="http://schemacrawler.sourceforge.net/"
+						rel="dc:source">
+						schemacrawler.sourceforge.net
+					</a>
+					.
+				</p>
+			</footer>
+		</section>
+	</body>
 </document>
