@@ -1,0 +1,2171 @@
+<!DOCTYPE html>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+  <title>SchemaCrawler Output</title>
+  <meta charset="utf-8"/>
+  <style>
+.underscore {
+	color: Maroon;
+	border-bottom: 2px solid rgb(190, 190, 190);
+}
+
+.name {
+	font-weight: bold;
+	width: 150px;
+}
+
+.property_name {
+	width: 350px;
+}
+
+.property_value {
+	width: 250px;
+}
+
+.right {
+	text-align: right;
+}
+
+.description {
+	width: 450px;
+}
+
+.ordinal {
+	width: 20px;
+}
+
+.subname {
+	width: 150px;
+}
+
+.type {
+	width: 150px;
+}
+
+.definition {
+	white-space: pre-line;
+}
+
+h2 {
+	color: Navy;
+}
+
+h3 {
+	color: DarkGreen;
+}
+
+body,p,pre,table,th,td,caption {
+	text-align: left;
+	font-family: 'Trebuchet MS';
+	font-size: 0.9em;
+	line-height: 1.2em;
+}
+
+body {
+	margin-top: 1em;
+	margin-right: 3em;
+	margin-bottom: 1em;
+	margin-left: 3em;
+}
+
+table,th,td {
+	border: 1px solid rgb(220, 220, 220);
+	border-collapse: collapse;
+	vertical-align: top;
+	padding: 2px;
+}
+
+table {
+	width: 600px;
+}
+
+caption {
+	font-weight: bold;
+}
+
+hr {
+	height: 1px;
+}
+  </style>
+</head>
+<body>
+
+<p>&#160;</p>
+<h2>System Information</h2>
+
+
+<h3>SchemaCrawler Information</h3>
+
+<table>
+	<tr>
+		<td class='property_name'>product name</td>
+		<td class='property_value'>SchemaCrawler</td>
+	</tr>
+	<tr>
+		<td class='property_name'>product version</td>
+		<td class='property_value'>9.3.1</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<h3>Database Information</h3>
+
+<table>
+	<tr>
+		<td class='property_name'>database product name</td>
+		<td class='property_value'>HSQL Database Engine</td>
+	</tr>
+	<tr>
+		<td class='property_name'>database product version</td>
+		<td class='property_value'>2.2.9</td>
+	</tr>
+	<tr>
+		<td class='property_name'>database user name</td>
+		<td class='property_value'>SA</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<h3>Database Characteristics</h3>
+
+<table>
+	<tr>
+		<td class='property_name'>all procedures are callable</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>all tables are selectable</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>auto commit failure closes all result sets</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>catalog separator</td>
+		<td class='property_value'>.</td>
+	</tr>
+	<tr>
+		<td class='property_name'>catalog term</td>
+		<td class='property_value'>CATALOG</td>
+	</tr>
+	<tr>
+		<td class='property_name'>catalogs</td>
+		<td class='property_value'>PUBLIC</td>
+	</tr>
+	<tr>
+		<td class='property_name'>client info properties</td>
+		<td class='property_value'>files_readonly, hsqldb.applog, hsqldb.cache_file_scale, hsqldb.cache_free_count, hsqldb.cache_rows, hsqldb.cache_size, hsqldb.default_table_type, hsqldb.defrag_limit, hsqldb.full_log_replay, hsqldb.inc_backup, hsqldb.lob_file_scale, hsqldb.lock_file, hsqldb.log_data, hsqldb.log_size, hsqldb.nio_data_file, hsqldb.nio_max_size, hsqldb.result_max_memory_rows, hsqldb.script_format, hsqldb.sqllog, hsqldb.temp_directory, hsqldb.tx, hsqldb.tx_conflict_rollback, hsqldb.tx_level, hsqldb.write_delay, hsqldb.write_delay_millis, jdbc.translate_tti_types, readonly, runtime.gc_interval, sql.avg_scale, sql.compare_in_locale, sql.concat_nulls, sql.convert_trunc, sql.double_nan, sql.enforce_names, sql.enforce_refs, sql.enforce_size, sql.enforce_tdc_delete, sql.enforce_tdc_update, sql.enforce_types, sql.identity_is_pk, sql.longvar_is_lob, sql.nulls_first, sql.ref_integrity, sql.regular_names, sql.syntax_db2, sql.syntax_mss, sql.syntax_mys, sql.syntax_ora, sql.syntax_pgs, sql.unique_nulls, textdb.all_quoted, textdb.cache_rows, textdb.cache_scale, textdb.cache_size, textdb.cache_size_scale, textdb.encoding, textdb.fs, textdb.ignore_first, textdb.lvs, textdb.quoted, textdb.vs</td>
+	</tr>
+	<tr>
+		<td class='property_name'>data definition causes transaction commit</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>data definition ignored in transactions</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>database major version</td>
+		<td class='property_value'>2</td>
+	</tr>
+	<tr>
+		<td class='property_name'>database minor version</td>
+		<td class='property_value'>2</td>
+	</tr>
+	<tr>
+		<td class='property_name'>default transaction isolation</td>
+		<td class='property_value'>2</td>
+	</tr>
+	<tr>
+		<td class='property_name'>deletes are detected for TYPE_FORWARD_ONLY result sets</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>deletes are detected for TYPE_SCROLL_INSENSITIVE result sets</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>deletes are detected for TYPE_SCROLL_SENSITIVE result sets</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>does max row size include blobs</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>driver major version</td>
+		<td class='property_value'>2</td>
+	</tr>
+	<tr>
+		<td class='property_name'>driver minor version</td>
+		<td class='property_value'>2</td>
+	</tr>
+	<tr>
+		<td class='property_name'>extra name characters</td>
+		<td class='property_value'></td>
+	</tr>
+	<tr>
+		<td class='property_name'>identifier quote string</td>
+		<td class='property_value'>&quot;</td>
+	</tr>
+	<tr>
+		<td class='property_name'>inserts are detected for TYPE_FORWARD_ONLY result sets</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>inserts are detected for TYPE_SCROLL_INSENSITIVE result sets</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>inserts are detected for TYPE_SCROLL_SENSITIVE result sets</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>is catalog at start</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>is read only</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>JDBC major version</td>
+		<td class='property_value'>4</td>
+	</tr>
+	<tr>
+		<td class='property_name'>JDBC minor version</td>
+		<td class='property_value'>0</td>
+	</tr>
+	<tr>
+		<td class='property_name'>locators update copy</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>max binary literal length</td>
+		<td class='property_value'>0</td>
+	</tr>
+	<tr>
+		<td class='property_name'>max catalog name length</td>
+		<td class='property_value'>128</td>
+	</tr>
+	<tr>
+		<td class='property_name'>max char literal length</td>
+		<td class='property_value'>0</td>
+	</tr>
+	<tr>
+		<td class='property_name'>max column name length</td>
+		<td class='property_value'>128</td>
+	</tr>
+	<tr>
+		<td class='property_name'>max columns in group by</td>
+		<td class='property_value'>0</td>
+	</tr>
+	<tr>
+		<td class='property_name'>max columns in index</td>
+		<td class='property_value'>0</td>
+	</tr>
+	<tr>
+		<td class='property_name'>max columns in order by</td>
+		<td class='property_value'>0</td>
+	</tr>
+	<tr>
+		<td class='property_name'>max columns in select</td>
+		<td class='property_value'>0</td>
+	</tr>
+	<tr>
+		<td class='property_name'>max columns in table</td>
+		<td class='property_value'>0</td>
+	</tr>
+	<tr>
+		<td class='property_name'>max connections</td>
+		<td class='property_value'>0</td>
+	</tr>
+	<tr>
+		<td class='property_name'>max cursor name length</td>
+		<td class='property_value'>128</td>
+	</tr>
+	<tr>
+		<td class='property_name'>max index length</td>
+		<td class='property_value'>0</td>
+	</tr>
+	<tr>
+		<td class='property_name'>max procedure name length</td>
+		<td class='property_value'>128</td>
+	</tr>
+	<tr>
+		<td class='property_name'>max row size</td>
+		<td class='property_value'>0</td>
+	</tr>
+	<tr>
+		<td class='property_name'>max schema name length</td>
+		<td class='property_value'>128</td>
+	</tr>
+	<tr>
+		<td class='property_name'>max statement length</td>
+		<td class='property_value'>0</td>
+	</tr>
+	<tr>
+		<td class='property_name'>max statements</td>
+		<td class='property_value'>0</td>
+	</tr>
+	<tr>
+		<td class='property_name'>max table name length</td>
+		<td class='property_value'>128</td>
+	</tr>
+	<tr>
+		<td class='property_name'>max tables in select</td>
+		<td class='property_value'>0</td>
+	</tr>
+	<tr>
+		<td class='property_name'>max user name length</td>
+		<td class='property_value'>128</td>
+	</tr>
+	<tr>
+		<td class='property_name'>null plus non null is null</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>nulls are sorted at end</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>nulls are sorted at start</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>nulls are sorted high</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>nulls are sorted low</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>numeric functions</td>
+		<td class='property_value'>ABS, ACOS, ASIN, ATAN, ATAN2, BITAND, BITOR, BITXOR, CEILING, COS, COT, DEGREES, EXP, FLOOR, LOG, LOG10, MOD, PI, POWER, RADIANS, RAND, ROUND, ROUNDMAGIC, SIGN, SIN, SQRT, TAN, TRUNCATE</td>
+	</tr>
+	<tr>
+		<td class='property_name'>others inserts are visible for TYPE_FORWARD_ONLY result sets</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>others inserts are visible for TYPE_SCROLL_INSENSITIVE result sets</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>others inserts are visible for TYPE_SCROLL_SENSITIVE result sets</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>others updates are visible for TYPE_FORWARD_ONLY result sets</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>others updates are visible for TYPE_SCROLL_INSENSITIVE result sets</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>others updates are visible for TYPE_SCROLL_SENSITIVE result sets</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>own deletes are visible for TYPE_FORWARD_ONLY result sets</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>own deletes are visible for TYPE_SCROLL_INSENSITIVE result sets</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>own deletes are visible for TYPE_SCROLL_SENSITIVE result sets</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>own inserts are visible for TYPE_FORWARD_ONLY result sets</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>own inserts are visible for TYPE_SCROLL_INSENSITIVE result sets</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>own inserts are visible for TYPE_SCROLL_SENSITIVE result sets</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>own updates are visible for TYPE_FORWARD_ONLY result sets</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>own updates are visible for TYPE_SCROLL_INSENSITIVE result sets</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>own updates are visible for TYPE_SCROLL_SENSITIVE result sets</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>procedure term</td>
+		<td class='property_value'>PROCEDURE</td>
+	</tr>
+	<tr>
+		<td class='property_name'>result set holdability</td>
+		<td class='property_value'>1</td>
+	</tr>
+	<tr>
+		<td class='property_name'>row id lifetime</td>
+		<td class='property_value'>ROWID_UNSUPPORTED</td>
+	</tr>
+	<tr>
+		<td class='property_name'>schema term</td>
+		<td class='property_value'>SCHEMA</td>
+	</tr>
+	<tr>
+		<td class='property_name'>schemas</td>
+		<td class='property_value'>BOOKS, FOR_LINT, INFORMATION_SCHEMA, PUBLIC, PUBLISHER SALES, SYSTEM_LOBS</td>
+	</tr>
+	<tr>
+		<td class='property_name'>search string escape</td>
+		<td class='property_value'>\</td>
+	</tr>
+	<tr>
+		<td class='property_name'>SQL keywords</td>
+		<td class='property_value'></td>
+	</tr>
+	<tr>
+		<td class='property_name'>SQL state type</td>
+		<td class='property_value'>2</td>
+	</tr>
+	<tr>
+		<td class='property_name'>stores lower case identifiers</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>stores lower case quoted identifiers</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>stores mixed case identifiers</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>stores mixed case quoted identifiers</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>stores upper case identifiers</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>stores upper case quoted identifiers</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>string functions</td>
+		<td class='property_value'>ASCII, CHAR, CONCAT, DIFFERENCE, HEXTORAW, INSERT, LCASE, LEFT, LENGTH, LOCATE, LTRIM, RAWTOHEX, REPEAT, REPLACE, RIGHT, RTRIM, SOUNDEX, SPACE, SUBSTR, UCASE</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports alter table with add column</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports alter table with drop column</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports ANSI92 entry level SQL</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports ANSI92 full SQL</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports ANSI92 intermediate SQL</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports batch updates</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports catalogs in data manipulation</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports catalogs in index definitions</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports catalogs in privilege definitions</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports catalogs in procedure calls</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports catalogs in table definitions</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports column aliasing</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports convert</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports core SQL grammar</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports correlated subqueries</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports data definition and data manipulation transactions</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports data manipulation transactions only</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports different table correlation names</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports expressions in order by</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports extended SQL grammar</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports full outer joins</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports get generated keys</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports group by</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports group by beyond select</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports group by unrelated</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports integrity enhancement facility</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports like escape clause</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports limited outer joins</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports minimum SQL grammar</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports mixed case identifiers</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports mixed case quoted identifiers</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports multiple open results</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports multiple result sets</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports multiple transactions</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports named parameters</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports non nullable columns</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports open cursors across commit</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports open cursors across rollback</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports open statements across commit</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports open statements across rollback</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports order by unrelated</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports outer joins</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports positioned delete</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports positioned update</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports result set type for TYPE_FORWARD_ONLY result sets</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports result set type for TYPE_SCROLL_INSENSITIVE result sets</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports result set type for TYPE_SCROLL_SENSITIVE result sets</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports savepoints</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports schemas in data manipulation</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports schemas in index definitions</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports schemas in privilege definitions</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports schemas in procedure calls</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports schemas in table definitions</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports select for update</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports statement pooling</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports stored functions using call syntax</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports stored procedures</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports subqueries in comparisons</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports subqueries in exists</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports subqueries in ins</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports subqueries in quantifieds</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports table correlation names</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports transactions</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports union</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports union all</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>system functions</td>
+		<td class='property_value'>DATABASE, IFNULL, USER</td>
+	</tr>
+	<tr>
+		<td class='property_name'>table types</td>
+		<td class='property_value'>GLOBAL TEMPORARY, SYSTEM TABLE, TABLE, VIEW</td>
+	</tr>
+	<tr>
+		<td class='property_name'>time date functions</td>
+		<td class='property_value'>CURDATE, CURTIME, DATEDIFF, DAYNAME, DAYOFMONTH, DAYOFWEEK, DAYOFYEAR, HOUR, MINUTE, MONTH, MONTHNAME, NOW, QUARTER, SECOND, SECONDS_SINCE_MIDNIGHT, TIMESTAMPADD, TIMESTAMPDIFF, TO_CHAR, WEEK, YEAR</td>
+	</tr>
+	<tr>
+		<td class='property_name'>type info</td>
+		<td class='property_value'>BIT, TINYINT, BIGINT, VARBINARY, BINARY, CHARACTER, NUMERIC, DECIMAL, INTEGER, SMALLINT, DOUBLE, FLOAT, REAL, NVARCHAR, VARCHAR, VARCHAR_IGNORECASE, BOOLEAN, DATE, TIME, TIMESTAMP, OTHER, BLOB, CLOB</td>
+	</tr>
+	<tr>
+		<td class='property_name'>uses local file per table</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>uses local files</td>
+		<td class='property_value'>false</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<h3>JDBC Driver Information</h3>
+
+<table>
+	<tr>
+		<td class='property_name'>driver name</td>
+		<td class='property_value'>HSQL Database Engine Driver</td>
+	</tr>
+	<tr>
+		<td class='property_name'>driver version</td>
+		<td class='property_value'>2.2.9</td>
+	</tr>
+	<tr>
+		<td class='property_name'>driver class name</td>
+		<td class='property_value'>org.hsqldb.jdbc.JDBCDriver</td>
+	</tr>
+	<tr>
+		<td class='property_name'>url</td>
+		<td class='property_value'>jdbc:hsqldb:hsql://localhost/schemacrawler</td>
+	</tr>
+	<tr>
+		<td class='property_name'>is JDBC compliant</td>
+		<td class='property_value'>true</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<h3>JDBC Driver Properties</h3>
+
+<table>
+	<tr>
+		<td colspan='2' class='name'>default_schema</td>
+		<td class='description right'>[driver property]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'></td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not required; choices [false, true]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>value</td>
+		<td class='type'>false</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>get_column_name</td>
+		<td class='description right'>[driver property]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'></td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not required; choices [false, true]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>value</td>
+		<td class='type'>true</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>ifexists</td>
+		<td class='description right'>[driver property]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'></td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not required; choices [false, true]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>value</td>
+		<td class='type'>false</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>password</td>
+		<td class='description right'>[driver property]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'></td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>required</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>value</td>
+		<td class='type'>null</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>shutdown</td>
+		<td class='description right'>[driver property]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'></td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not required; choices [false, true]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>value</td>
+		<td class='type'>false</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>user</td>
+		<td class='description right'>[driver property]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'></td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>required</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>value</td>
+		<td class='type'>null</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<p>&#160;</p>
+<h2>Data Types</h2>
+
+<table>
+	<tr>
+		<td colspan='2' class='name'>BIGINT</td>
+		<td class='description right'>[data type]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>based on</td>
+		<td class='type'>BIGINT</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not user defined</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>defined with no parameters</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>nullable</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>auto-incrementable</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>searchable except with where .. like</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>BINARY</td>
+		<td class='description right'>[data type]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>based on</td>
+		<td class='type'>BINARY</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not user defined</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>defined with LENGTH</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>nullable</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not auto-incrementable</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>searchable</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>BIT</td>
+		<td class='description right'>[data type]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>based on</td>
+		<td class='type'>BIT</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not user defined</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>defined with LENGTH</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>nullable</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not auto-incrementable</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>searchable except with where .. like</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>BLOB</td>
+		<td class='description right'>[data type]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>based on</td>
+		<td class='type'>BLOB</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not user defined</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>defined with LENGTH</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>nullable</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not auto-incrementable</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not searchable</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>BOOLEAN</td>
+		<td class='description right'>[data type]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>based on</td>
+		<td class='type'>BOOLEAN</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not user defined</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>defined with no parameters</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>nullable</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not auto-incrementable</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>searchable except with where .. like</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>CHARACTER</td>
+		<td class='description right'>[data type]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>based on</td>
+		<td class='type'>CHAR</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not user defined</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>defined with LENGTH</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>nullable</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not auto-incrementable</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>searchable</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>CLOB</td>
+		<td class='description right'>[data type]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>based on</td>
+		<td class='type'>CLOB</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not user defined</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>defined with LENGTH</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>nullable</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not auto-incrementable</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not searchable</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>DATE</td>
+		<td class='description right'>[data type]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>based on</td>
+		<td class='type'>DATE</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not user defined</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>defined with no parameters</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>nullable</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not auto-incrementable</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>searchable except with where .. like</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>DECIMAL</td>
+		<td class='description right'>[data type]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>based on</td>
+		<td class='type'>DECIMAL</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not user defined</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>defined with PRECISION,SCALE</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>nullable</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>auto-incrementable</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>searchable except with where .. like</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>DOUBLE</td>
+		<td class='description right'>[data type]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>based on</td>
+		<td class='type'>DOUBLE</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not user defined</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>defined with no parameters</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>nullable</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not auto-incrementable</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>searchable except with where .. like</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>FLOAT</td>
+		<td class='description right'>[data type]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>based on</td>
+		<td class='type'>DOUBLE</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not user defined</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>defined with no parameters</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>nullable</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not auto-incrementable</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>searchable except with where .. like</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>INTEGER</td>
+		<td class='description right'>[data type]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>based on</td>
+		<td class='type'>INTEGER</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not user defined</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>defined with no parameters</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>nullable</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>auto-incrementable</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>searchable except with where .. like</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>NUMERIC</td>
+		<td class='description right'>[data type]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>based on</td>
+		<td class='type'>NUMERIC</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not user defined</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>defined with PRECISION,SCALE</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>nullable</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>auto-incrementable</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>searchable except with where .. like</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>NVARCHAR</td>
+		<td class='description right'>[data type]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>based on</td>
+		<td class='type'>VARCHAR</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not user defined</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>defined with LENGTH</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>nullable</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not auto-incrementable</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>searchable</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>OTHER</td>
+		<td class='description right'>[data type]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>based on</td>
+		<td class='type'>OTHER</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not user defined</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>defined with no parameters</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>nullable</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not auto-incrementable</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>searchable except with where .. like</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>REAL</td>
+		<td class='description right'>[data type]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>based on</td>
+		<td class='type'>DOUBLE</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not user defined</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>defined with no parameters</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>nullable</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not auto-incrementable</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>searchable except with where .. like</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>SMALLINT</td>
+		<td class='description right'>[data type]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>based on</td>
+		<td class='type'>SMALLINT</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not user defined</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>defined with no parameters</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>nullable</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>auto-incrementable</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>searchable except with where .. like</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>TIME</td>
+		<td class='description right'>[data type]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>based on</td>
+		<td class='type'>TIME</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not user defined</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>defined with no parameters</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>nullable</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not auto-incrementable</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>searchable except with where .. like</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>TIMESTAMP</td>
+		<td class='description right'>[data type]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>based on</td>
+		<td class='type'>TIMESTAMP</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not user defined</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>defined with no parameters</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>nullable</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not auto-incrementable</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>searchable except with where .. like</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>TINYINT</td>
+		<td class='description right'>[data type]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>based on</td>
+		<td class='type'>TINYINT</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not user defined</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>defined with no parameters</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>nullable</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>auto-incrementable</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>searchable except with where .. like</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>VARBINARY</td>
+		<td class='description right'>[data type]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>based on</td>
+		<td class='type'>VARBINARY</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not user defined</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>defined with LENGTH</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>nullable</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not auto-incrementable</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>searchable</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>VARCHAR</td>
+		<td class='description right'>[data type]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>based on</td>
+		<td class='type'>VARCHAR</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not user defined</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>defined with LENGTH</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>nullable</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not auto-incrementable</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>searchable</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>VARCHAR_IGNORECASE</td>
+		<td class='description right'>[data type]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>based on</td>
+		<td class='type'>VARCHAR</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not user defined</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>defined with LENGTH</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>nullable</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not auto-incrementable</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>searchable</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>CHARACTER VARYING</td>
+		<td class='description right'>[data type]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>based on</td>
+		<td class='type'>VARCHAR</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not user defined</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>defined with </td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not nullable</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not auto-incrementable</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>unknown</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>BIGINT ARRAY</td>
+		<td class='description right'>[data type]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>based on</td>
+		<td class='type'>ARRAY</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not user defined</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>defined with </td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not nullable</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>not auto-incrementable</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>unknown</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<p>&#160;</p>
+<h2>Routines</h2>
+
+<table>
+	<tr>
+		<td colspan='2' class='name underscore'>CUSTOMADD</td>
+		<td class='description right underscore'>[function, does not return a table]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>ONE</td>
+		<td class='type'>INTEGER, in</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>TWO</td>
+		<td class='type'>INTEGER, in</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[definition]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER,IN TWO INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10102 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN ONE+TWO</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[specific name]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>CUSTOMADD_10102</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<table>
+	<tr>
+		<td colspan='2' class='name underscore'>CUSTOMADD</td>
+		<td class='description right underscore'>[function, does not return a table]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>ONE</td>
+		<td class='type'>INTEGER, in</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[definition]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10103 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN BOOKS.CUSTOMADD(ONE,1)</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[specific name]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>CUSTOMADD_10103</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<table>
+	<tr>
+		<td colspan='2' class='name underscore'>NEW_PUBLISHER</td>
+		<td class='description right underscore'>[procedure, no result]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>PUBLISHER</td>
+		<td class='type'>CHARACTER VARYING, out</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[definition]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>CREATE PROCEDURE BOOKS.NEW_PUBLISHER(OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10100 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = &apos;New Publisher&apos;</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[specific name]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>NEW_PUBLISHER_10100</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<table>
+	<tr>
+		<td colspan='2' class='name underscore'>NEW_PUBLISHER</td>
+		<td class='description right underscore'>[procedure, no result]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>NEWPUBLISHER</td>
+		<td class='type'>CHARACTER VARYING, in</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>PUBLISHER</td>
+		<td class='type'>CHARACTER VARYING, out</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[definition]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>CREATE PROCEDURE BOOKS.NEW_PUBLISHER(IN NEWPUBLISHER VARCHAR(50),OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10101 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = NEWPUBLISHER</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[specific name]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>NEW_PUBLISHER_10101</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<table>
+	<tr>
+		<td colspan='2' class='name underscore'>ALLOC_BLOCKS</td>
+		<td class='description right underscore'>[procedure, no result]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>B_COUNT</td>
+		<td class='type'>INTEGER, in</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>B_OFFSET</td>
+		<td class='type'>INTEGER, in</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>L_ID</td>
+		<td class='type'>BIGINT, in</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[definition]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>CREATE PROCEDURE SYSTEM_LOBS.ALLOC_BLOCKS(IN B_COUNT INTEGER,IN B_OFFSET INTEGER,IN L_ID BIGINT) SPECIFIC ALLOC_BLOCKS_10057 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE LOB_ADDR INT DEFAULT NULL;DECLARE REMAINING_COUNT INT DEFAULT 0;DECLARE BL_ADDR INT DEFAULT NULL;DECLARE TEMP_COUNT INT DEFAULT 0;DECLARE BL_OFFSET INT DEFAULT 0;SET REMAINING_COUNT=B_COUNT;SET BL_OFFSET=B_OFFSET;MAIN_LOOP:LOOP SET BL_ADDR=(SELECT BLOCK_ADDR FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_COUNT=REMAINING_COUNT AND TX_ID=0 FETCH 1 ROW ONLY);IF BL_ADDR IS NOT NULL THEN CALL CONVERT_BLOCK(BL_ADDR,REMAINING_COUNT,BL_OFFSET,L_ID);IF LOB_ADDR IS NULL THEN SET LOB_ADDR=BL_ADDR;END IF;LEAVE MAIN_LOOP;END IF;SET(BL_ADDR,TEMP_COUNT)=(SELECT BLOCK_ADDR,BLOCK_COUNT FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_COUNT&lt;REMAINING_COUNT AND TX_ID=0 FETCH 1 ROW ONLY);IF BL_ADDR IS NOT NULL THEN CALL CONVERT_BLOCK(BL_ADDR,TEMP_COUNT,BL_OFFSET,L_ID);IF LOB_ADDR IS NULL THEN SET LOB_ADDR=BL_ADDR;END IF;SET REMAINING_COUNT=REMAINING_COUNT-TEMP_COUNT;SET BL_OFFSET=BL_OFFSET+TEMP_COUNT;SET BL_ADDR=NULL;SET TEMP_COUNT=0;ELSE CALL CREATE_EMPTY_BLOCK(BL_ADDR,REMAINING_COUNT);CALL CONVERT_BLOCK(BL_ADDR,REMAINING_COUNT,BL_OFFSET,L_ID);IF LOB_ADDR IS NULL THEN SET LOB_ADDR=BL_ADDR;END IF;LEAVE MAIN_LOOP;END IF;END LOOP MAIN_LOOP;END</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[specific name]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>ALLOC_BLOCKS_10057</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<table>
+	<tr>
+		<td colspan='2' class='name underscore'>CONVERT_BLOCK</td>
+		<td class='description right underscore'>[procedure, no result]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>B_ADDR</td>
+		<td class='type'>INTEGER, in</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>B_COUNT</td>
+		<td class='type'>INTEGER, in</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>B_OFFSET</td>
+		<td class='type'>INTEGER, in</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>L_ID</td>
+		<td class='type'>BIGINT, in</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[definition]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>CREATE PROCEDURE SYSTEM_LOBS.CONVERT_BLOCK(IN B_ADDR INTEGER,IN B_COUNT INTEGER,IN B_OFFSET INTEGER,IN L_ID BIGINT) SPECIFIC CONVERT_BLOCK_10019 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DELETE FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_ADDR=B_ADDR;INSERT INTO SYSTEM_LOBS.LOBS VALUES(B_ADDR,B_COUNT,B_OFFSET,L_ID);END</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[specific name]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>CONVERT_BLOCK_10019</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<table>
+	<tr>
+		<td colspan='2' class='name underscore'>CREATE_EMPTY_BLOCK</td>
+		<td class='description right underscore'>[procedure, no result]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>B_ADDR</td>
+		<td class='type'>INTEGER, in/ out</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>B_COUNT</td>
+		<td class='type'>INTEGER, in</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[definition]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>CREATE PROCEDURE SYSTEM_LOBS.CREATE_EMPTY_BLOCK(INOUT B_ADDR INTEGER,IN B_COUNT INTEGER) SPECIFIC CREATE_EMPTY_BLOCK_10049 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE TEMP_COUNT INT DEFAULT NULL;DECLARE TEMP_ADDR INT DEFAULT NULL;SET(TEMP_ADDR,TEMP_COUNT)=(SELECT BLOCK_ADDR,BLOCK_COUNT FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_COUNT&gt;B_COUNT AND TX_ID=0 FETCH 1 ROW ONLY);IF TEMP_ADDR IS NULL THEN SIGNAL SQLSTATE&apos;45000&apos;;END IF;UPDATE SYSTEM_LOBS.BLOCKS SET BLOCK_COUNT=B_COUNT WHERE BLOCK_ADDR=TEMP_ADDR;INSERT INTO SYSTEM_LOBS.BLOCKS VALUES(TEMP_ADDR+B_COUNT,TEMP_COUNT-B_COUNT,0);SET B_ADDR=TEMP_ADDR;END</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[specific name]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>CREATE_EMPTY_BLOCK_10049</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<table>
+	<tr>
+		<td colspan='2' class='name underscore'>DELETE_BLOCKS</td>
+		<td class='description right underscore'>[procedure, no result]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>L_ID</td>
+		<td class='type'>BIGINT, in</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>B_OFFSET</td>
+		<td class='type'>INTEGER, in</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>B_LIMIT</td>
+		<td class='type'>INTEGER, in</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>TX_ID</td>
+		<td class='type'>BIGINT, in</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[definition]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>CREATE PROCEDURE SYSTEM_LOBS.DELETE_BLOCKS(IN L_ID BIGINT,IN B_OFFSET INTEGER,IN B_LIMIT INTEGER,IN TX_ID BIGINT) SPECIFIC DELETE_BLOCKS_10046 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC INSERT INTO SYSTEM_LOBS.BLOCKS(SELECT BLOCK_ADDR,BLOCK_COUNT,TX_ID FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID AND BLOCK_OFFSET&gt;=B_OFFSET AND BLOCK_OFFSET&lt;B_LIMIT);DELETE FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID AND BLOCK_OFFSET&gt;=B_OFFSET AND BLOCK_OFFSET&lt;B_LIMIT;END</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[specific name]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>DELETE_BLOCKS_10046</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<table>
+	<tr>
+		<td colspan='2' class='name underscore'>DELETE_LOB</td>
+		<td class='description right underscore'>[procedure, no result]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>L_ID</td>
+		<td class='type'>BIGINT, in</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>TX_ID</td>
+		<td class='type'>BIGINT, in</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[definition]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>CREATE PROCEDURE SYSTEM_LOBS.DELETE_LOB(IN L_ID BIGINT,IN TX_ID BIGINT) SPECIFIC DELETE_LOB_10021 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC INSERT INTO SYSTEM_LOBS.BLOCKS(SELECT BLOCK_ADDR,BLOCK_COUNT,TX_ID FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID);DELETE FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID;DELETE FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_ID=L_ID;END</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[specific name]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>DELETE_LOB_10021</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<table>
+	<tr>
+		<td colspan='2' class='name underscore'>DELETE_UNUSED</td>
+		<td class='description right underscore'>[procedure, no result]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>L_IDS</td>
+		<td class='type'>BIGINT ARRAY, in</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[definition]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>CREATE PROCEDURE SYSTEM_LOBS.DELETE_UNUSED(IN L_IDS BIGINT ARRAY) SPECIFIC DELETE_UNUSED_10034 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE TABLE LIVE_IDS(TEMP_ID INT);DECLARE TABLE TEMP_IDS(TEMP_ID INT);DECLARE TEMP_COUNT INT DEFAULT 1;WHILE TEMP_COUNT&lt;=CARDINALITY(L_IDS)DO INSERT INTO MODULE.LIVE_IDS VALUES L_IDS[TEMP_COUNT];SET TEMP_COUNT=TEMP_COUNT+1;END WHILE;SET TEMP_COUNT=0;REPEAT INSERT INTO MODULE.TEMP_IDS SELECT LOB_ID FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_USAGE_COUNT&lt;1 AND LOB_ID NOT IN(SELECT TEMP_ID FROM MODULE.LIVE_IDS)LIMIT 1000;INSERT INTO SYSTEM_LOBS.BLOCKS(SELECT BLOCK_ADDR,BLOCK_COUNT,0 FROM SYSTEM_LOBS.LOBS WHERE LOB_ID IN(SELECT TEMP_ID FROM MODULE.TEMP_IDS));DELETE FROM SYSTEM_LOBS.LOBS WHERE LOB_ID IN(SELECT TEMP_ID FROM MODULE.TEMP_IDS);DELETE FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_ID IN(SELECT TEMP_ID FROM MODULE.TEMP_IDS);GET DIAGNOSTICS TEMP_COUNT=ROW_COUNT;DELETE FROM MODULE.TEMP_IDS;UNTIL TEMP_COUNT&lt;1000 END REPEAT;END</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[specific name]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>DELETE_UNUSED_10034</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<table>
+	<tr>
+		<td colspan='2' class='name underscore'>DELETE_UNUSED_LOBS</td>
+		<td class='description right underscore'>[procedure, no result]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>LIMIT_ID</td>
+		<td class='type'>BIGINT, in</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[definition]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>CREATE PROCEDURE SYSTEM_LOBS.DELETE_UNUSED_LOBS(IN LIMIT_ID BIGINT) SPECIFIC DELETE_UNUSED_LOBS_10044 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE TABLE TEMP_IDS(TEMP_ID INT);DECLARE TEMP_COUNT INT DEFAULT 0;REPEAT INSERT INTO MODULE.TEMP_IDS SELECT LOB_ID FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_USAGE_COUNT=0 AND LOB_ID&lt;LIMIT_ID LIMIT 1000;INSERT INTO SYSTEM_LOBS.BLOCKS(SELECT BLOCK_ADDR,BLOCK_COUNT,0 FROM SYSTEM_LOBS.LOBS WHERE LOB_ID IN(SELECT TEMP_ID FROM MODULE.TEMP_IDS));DELETE FROM SYSTEM_LOBS.LOBS WHERE LOB_ID IN(SELECT TEMP_ID FROM MODULE.TEMP_IDS);DELETE FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_ID IN(SELECT TEMP_ID FROM MODULE.TEMP_IDS);GET DIAGNOSTICS TEMP_COUNT=ROW_COUNT;DELETE FROM MODULE.TEMP_IDS;UNTIL TEMP_COUNT&lt;1000 END REPEAT;END</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[specific name]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>DELETE_UNUSED_LOBS_10044</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<table>
+	<tr>
+		<td colspan='2' class='name underscore'>DIVIDE_BLOCK</td>
+		<td class='description right underscore'>[procedure, no result]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>B_OFFSET</td>
+		<td class='type'>INTEGER, in</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>L_ID</td>
+		<td class='type'>BIGINT, in</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[definition]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>CREATE PROCEDURE SYSTEM_LOBS.DIVIDE_BLOCK(IN B_OFFSET INTEGER,IN L_ID BIGINT) SPECIFIC DIVIDE_BLOCK_10052 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE BL_ADDR INT DEFAULT NULL;DECLARE BL_COUNT INT DEFAULT NULL;DECLARE BL_OFFSET INT DEFAULT NULL;SET(BL_ADDR,BL_COUNT,BL_OFFSET)=(SELECT BLOCK_ADDR,BLOCK_COUNT,BLOCK_OFFSET FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID AND B_OFFSET&gt;BLOCK_OFFSET AND B_OFFSET&lt;BLOCK_OFFSET+BLOCK_COUNT);IF BL_ADDR IS NULL THEN SIGNAL SQLSTATE&apos;45000&apos;;END IF;DELETE FROM SYSTEM_LOBS.LOBS WHERE BLOCK_ADDR=BL_ADDR;INSERT INTO SYSTEM_LOBS.LOBS VALUES(BL_ADDR,B_OFFSET-BL_OFFSET,BL_OFFSET,L_ID);INSERT INTO SYSTEM_LOBS.LOBS VALUES(BL_ADDR+B_OFFSET-BL_OFFSET,BL_OFFSET+BL_COUNT-B_OFFSET,B_OFFSET,L_ID);END</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[specific name]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>DIVIDE_BLOCK_10052</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+</body>
+</html>
