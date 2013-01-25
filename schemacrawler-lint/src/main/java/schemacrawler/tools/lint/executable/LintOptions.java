@@ -21,7 +21,7 @@ package schemacrawler.tools.lint.executable;
 
 
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.tools.text.base.BaseTextOptions;
+import schemacrawler.tools.options.BaseTextOptions;
 
 public class LintOptions
   extends BaseTextOptions

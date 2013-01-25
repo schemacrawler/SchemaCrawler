@@ -6,7 +6,7 @@ import java.sql.Connection;
 import schemacrawler.schema.Database;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.text.base.BaseTextOptions;
+import schemacrawler.tools.options.BaseTextOptions;
 
 public final class CommandDaisyChainExecutable
   extends BaseCommandChainExecutable

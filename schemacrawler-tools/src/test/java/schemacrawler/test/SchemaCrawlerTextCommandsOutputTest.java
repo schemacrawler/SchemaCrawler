@@ -34,9 +34,9 @@ import org.junit.Test;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import schemacrawler.tools.options.BaseTextOptions;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
-import schemacrawler.tools.text.base.BaseTextOptions;
 import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 

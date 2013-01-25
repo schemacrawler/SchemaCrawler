@@ -4,6 +4,7 @@ package schemacrawler.tools.text.base;
 import java.io.PrintWriter;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.options.BaseTextOptions;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputWriter;
