@@ -18,17 +18,12 @@
  *
  */
 
-package schemacrawler.tools.text.base;
+package schemacrawler.tools.options;
 
 
 import schemacrawler.schemacrawler.BaseConfigOptions;
 import schemacrawler.schemacrawler.Config;
 
-/**
- * Options.
- * 
- * @author Sualeh Fatehi
- */
 public class BaseTextOptions
   extends BaseConfigOptions
 {

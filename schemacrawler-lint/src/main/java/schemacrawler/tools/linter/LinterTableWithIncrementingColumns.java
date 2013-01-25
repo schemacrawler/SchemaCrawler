@@ -133,11 +133,13 @@ public class LinterTableWithIncrementingColumns
     }
 
     // Check for consistent column data-types
-    final ColumnDataType columnDataType = incrementingColumns.get(0).getColumnDataType();
+    final ColumnDataType columnDataType = incrementingColumns.get(0)
+      .getColumnDataType();
     final int columnSize = incrementingColumns.get(0).getSize();
     for (int i = 1; i < incrementingColumns.size(); i++)
     {
-      if (!columnDataType.equals(incrementingColumns.get(i).getColumnDataType())
+      if (!columnDataType
+        .equals(incrementingColumns.get(i).getColumnDataType())
           || columnSize != incrementingColumns.get(i).getSize())
       {
         addLint(table,

@@ -26,7 +26,6 @@ import java.util.logging.Logger;
 
 import schemacrawler.schema.Database;
 import schemacrawler.schema.NamedObject;
-import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Config;
 
