@@ -39,7 +39,7 @@ import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import schemacrawler.tools.options.BaseTextOptions;
+import schemacrawler.tools.options.BaseTextOptionsBuilder;
 import schemacrawler.tools.options.InfoLevel;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
@@ -76,10 +76,7 @@ public class SchemaCrawlerOutputTest
       .put(queryCommand2,
            "SELECT ${orderbycolumns} FROM ${table} ORDER BY ${orderbycolumns}");
 
-    final BaseTextOptions baseTextOptions = new BaseTextOptions();
-    baseTextOptions.setNoInfo(false);
-    baseTextOptions.setNoHeader(false);
-    baseTextOptions.setNoFooter(false);
+    final BaseTextOptionsBuilder baseTextOptions = new BaseTextOptionsBuilder();
     queriesConfig.putAll(baseTextOptions.toConfig());
 
     final String[] commands = new String[] {
@@ -215,11 +212,6 @@ public class SchemaCrawlerOutputTest
         final OutputOptions outputOptions = new OutputOptions(OutputFormat.text.name(),
                                                               testOutputFile);
 
-        final BaseTextOptions baseTextOptions = new BaseTextOptions();
-        baseTextOptions.setNoInfo(false);
-        baseTextOptions.setNoHeader(false);
-        baseTextOptions.setNoFooter(false);
-
         final Config config = Config
           .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
         final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
@@ -229,7 +221,6 @@ public class SchemaCrawlerOutputTest
           .name());
         executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
         executable.setOutputOptions(outputOptions);
-        executable.setAdditionalConfiguration(baseTextOptions.toConfig());
         executable.execute(getConnection());
 
         failures.addAll(compareOutput(INFO_LEVEL_OUTPUT + referenceFile,
@@ -265,11 +256,6 @@ public class SchemaCrawlerOutputTest
       final OutputOptions outputOptions = new OutputOptions(OutputFormat.json.name(),
                                                             testOutputFile);
 
-      final BaseTextOptions baseTextOptions = new BaseTextOptions();
-      baseTextOptions.setNoInfo(false);
-      baseTextOptions.setNoHeader(false);
-      baseTextOptions.setNoFooter(false);
-
       final Config config = Config
         .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
@@ -279,7 +265,6 @@ public class SchemaCrawlerOutputTest
         .name());
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
       executable.setOutputOptions(outputOptions);
-      executable.setAdditionalConfiguration(baseTextOptions.toConfig());
       executable.execute(getConnection());
 
       failures.addAll(compareOutput(JSON_OUTPUT + referenceFile,

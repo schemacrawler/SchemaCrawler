@@ -6,7 +6,7 @@ import java.sql.Connection;
 import schemacrawler.schema.Database;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.options.BaseTextOptions;
+import schemacrawler.tools.options.BaseTextOptionsBuilder;
 
 public final class CommandDaisyChainExecutable
   extends BaseCommandChainExecutable
@@ -34,31 +34,31 @@ public final class CommandDaisyChainExecutable
     {
       final Executable executable = addNext(command);
 
-      final BaseTextOptions baseTextOptions = new BaseTextOptions(additionalConfiguration);
+      final BaseTextOptionsBuilder baseTextOptions = new BaseTextOptionsBuilder(additionalConfiguration);
 
       if (commands.hasMultipleCommands())
       {
         if (commands.isFirstCommand(command))
         {
           // First command - no footer
-          baseTextOptions.setNoFooter(true);
+          baseTextOptions.hideFooter();
         }
         else if (commands.isLastCommand(command))
         {
           // Last command - no header, or info
-          baseTextOptions.setNoHeader(true);
-          baseTextOptions.setNoInfo(true);
+          baseTextOptions.hideHeader();
+          baseTextOptions.hideInfo();
 
-          baseTextOptions.setAppendOutput(true);
+          baseTextOptions.appendOutput();
         }
         else
         {
           // Middle command - no header, footer, or info
-          baseTextOptions.setNoHeader(true);
-          baseTextOptions.setNoInfo(true);
-          baseTextOptions.setNoFooter(true);
+          baseTextOptions.hideHeader();
+          baseTextOptions.hideInfo();
+          baseTextOptions.hideFooter();
 
-          baseTextOptions.setAppendOutput(true);
+          baseTextOptions.appendOutput();
         }
       }
 
