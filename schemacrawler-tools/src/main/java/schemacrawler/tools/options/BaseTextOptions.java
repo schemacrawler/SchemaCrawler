@@ -24,7 +24,7 @@ package schemacrawler.tools.options;
 import schemacrawler.schemacrawler.BaseConfigOptions;
 import schemacrawler.schemacrawler.Config;
 
-public class BaseTextOptions
+public abstract class BaseTextOptions
   extends BaseConfigOptions
 {
 
@@ -37,12 +37,12 @@ public class BaseTextOptions
   private static final String NO_INFO = "no_info";
   private static final String APPEND_OUTPUT = "append_output";
 
-  public BaseTextOptions()
+  protected BaseTextOptions()
   {
     this(null);
   }
 
-  public BaseTextOptions(final Config config)
+  protected BaseTextOptions(final Config config)
   {
     super(SCHEMACRAWLER_FORMAT_PREFIX);
     setNoFooter(getBooleanValue(config, NO_FOOTER));
