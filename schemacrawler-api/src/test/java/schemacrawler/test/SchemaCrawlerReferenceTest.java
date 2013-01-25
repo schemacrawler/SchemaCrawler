@@ -1,6 +1,6 @@
 /*
  * SchemaCrawler
- * Copyright (c) 2000-2012, Sualeh Fatehi.
+ * Copyright (c) 2000-2013, Sualeh Fatehi.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.

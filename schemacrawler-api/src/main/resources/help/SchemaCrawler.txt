@@ -1,5 +1,5 @@
 SchemaCrawler 9.3.2
-Copyright (c) 2000-2012, Sualeh Fatehi.
+Copyright (c) 2000-2013, Sualeh Fatehi.
 
 SchemaCrawler is a database schema discovery and comprehension tool. 
 You can search for database schema objects using regular expressions, 

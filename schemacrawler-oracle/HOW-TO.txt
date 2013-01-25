@@ -1,6 +1,6 @@
 SchemaCrawler
 http://sourceforge.net/projects/schemacrawler
-Copyright (c) 2000-2012, Sualeh Fatehi.
+Copyright (c) 2000-2013, Sualeh Fatehi.
 
 How-to Guide
 
