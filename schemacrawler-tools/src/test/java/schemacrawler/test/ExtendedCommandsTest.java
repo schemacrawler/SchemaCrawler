@@ -58,6 +58,15 @@ public class ExtendedCommandsTest
   }
 
   @Test
+  public void executableGraphDot()
+    throws Exception
+  {
+    executeExecutableAndCheckForOutputFile(new GraphExecutable(),
+                                           "canon",
+                                           "executableForGraph");
+  }
+
+  @Test
   public void executableJavaScript()
     throws Exception
   {
