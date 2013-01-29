@@ -22,7 +22,7 @@ package schemacrawler.tools.text.schema;
 
 
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.tools.options.SchemaOutputOptions;
+import schemacrawler.tools.text.base.SchemaOutputOptions;
 
 public class SchemaTextOptions
   extends SchemaOutputOptions

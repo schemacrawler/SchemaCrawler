@@ -22,7 +22,7 @@ package schemacrawler.tools.text.operation;
 
 
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.tools.options.BaseTextOptions;
+import schemacrawler.tools.text.base.BaseTextOptions;
 
 /**
  * Operator options.
