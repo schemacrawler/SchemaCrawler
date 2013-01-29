@@ -154,7 +154,7 @@ public final class SchemaDotFormatter
       .append(Utility.NEWLINE);
     out.append("        <tr>").append(Utility.NEWLINE);
 
-    out.append("          <td colspan=\"2\" bgcolor=\"")
+    out.append("          <td colspan=\"3\" bgcolor=\"")
       .append(tableNameBgColor).append("\" align=\"left\"><b>")
       .append(tableName).append("</b></td>").append(Utility.NEWLINE);
 
@@ -341,7 +341,7 @@ public final class SchemaDotFormatter
       .format("  %s:w -> %s:e [label=<%s> style=\"%s\" arrowhead=\"%s\" arrowtail=\"%s\"];%n",
               pkPortIds[0],
               fkPortIds[1],
-              associationName,
+              options.isHideForeignKeyNames()? "": associationName,
               style,
               fkSymbol,
               pkSymbol);
@@ -365,22 +365,23 @@ public final class SchemaDotFormatter
 
       out.append("        <tr>").append(Utility.NEWLINE);
       out.append("          <td port=\"").append(nodeId(column))
-        .append(".start\" align=\"left\">");
+        .append(".start\" align=\"right\">");
       if (options.isShowOrdinalNumbers())
       {
         final String ordinalNumberString = String.valueOf(column
           .getOrdinalPosition());
-        out.append(ordinalNumberString).append("</td>").append(Utility.NEWLINE)
-          .append("          <td>");
+        out.append(ordinalNumberString);
       }
+      out.append("</td>").append(Utility.NEWLINE)
+        .append("          <td align=\"left\">");
       if (column.isPartOfPrimaryKey())
       {
-        out.append("<b><i>");
+        out.append("<b><i><u>");
       }
       out.append(column.getName());
       if (column.isPartOfPrimaryKey())
       {
-        out.append("</i></b>");
+        out.append("</u></i></b>");
       }
       out.append("</td>").append(Utility.NEWLINE);
       out.append("          <td> </td>").append(Utility.NEWLINE);
