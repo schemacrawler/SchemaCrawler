@@ -3198,7 +3198,7 @@
     }
   ],
   "schemaCrawlerInfo": {
-    "productVersion": "9.3.2",
+    "productVersion": "9.4",
     "productName": "SchemaCrawler"
   },
   "jdbcDriverInfo": {
@@ -4604,7 +4604,7 @@
           "USA",
           "9",
           "2004-04-10",
-          "14069.3.2"
+          "14069.4"
         ],
         [
           "26131",
@@ -4632,7 +4632,7 @@
           "USA",
           "10",
           "2005-12-03",
-          "17069.3.2"
+          "17069.4"
         ]
       ]
     }
