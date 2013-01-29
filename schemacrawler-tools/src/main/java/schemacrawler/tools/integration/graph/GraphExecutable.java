@@ -23,17 +23,17 @@ package schemacrawler.tools.integration.graph;
 
 import java.io.File;
 import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
-import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.Database;
-import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.analysis.associations.DatabaseWithAssociations;
 import schemacrawler.tools.executable.BaseExecutable;
 import schemacrawler.tools.options.InfoLevel;
+import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.text.schema.SchemaDotFormatter;
+import schemacrawler.tools.text.schema.SchemaTextDetailType;
+import schemacrawler.tools.traversal.SchemaTraversalHandler;
+import schemacrawler.tools.traversal.SchemaTraverser;
 import sf.util.Utility;
 
 /**
@@ -47,9 +47,30 @@ public final class GraphExecutable
 
   static final String COMMAND = "graph";
 
+  private GraphOptions graphOptions;
+
   public GraphExecutable()
   {
     super(COMMAND);
+  }
+
+  public final GraphOptions getGraphOptions()
+  {
+    final GraphOptions graphOptions;
+    if (this.graphOptions == null)
+    {
+      graphOptions = new GraphOptions(additionalConfiguration);
+    }
+    else
+    {
+      graphOptions = this.graphOptions;
+    }
+    return graphOptions;
+  }
+
+  public final void setGraphOptions(final GraphOptions graphOptions)
+  {
+    this.graphOptions = graphOptions;
   }
 
   /**
@@ -80,23 +101,15 @@ public final class GraphExecutable
       database = db;
     }
 
-    final List<Table> tables = new ArrayList<Table>(database.getTables());
-    final Set<ColumnReference> weakAssociations = new HashSet<ColumnReference>();
-    for (final Table table: tables)
-    {
-      weakAssociations.addAll(DatabaseWithAssociations
-        .getWeakAssociations(table));
-    }
-
     // Create dot file
     final File dotFile = File.createTempFile("schemacrawler.", ".dot");
-    final DotWriter dotWriter = new DotWriter(dotFile);
-    dotWriter.open();
-    dotWriter.print(database.getSchemaCrawlerInfo(),
-                    database.getDatabaseInfo(),
-                    database.getJdbcDriverInfo());
-    dotWriter.print(tables, weakAssociations);
-    dotWriter.close();
+
+    final SchemaTraversalHandler formatter = getSchemaTraversalHandler(dotFile);
+
+    final SchemaTraverser traverser = new SchemaTraverser();
+    traverser.setDatabase(database);
+    traverser.setFormatter(formatter);
+    traverser.traverse();
 
     // Create graph image
     final GraphGenerator dot = new GraphGenerator(dotFile,
@@ -112,6 +125,21 @@ public final class GraphExecutable
       System.out.println(Utility.readResourceFully("/dot.error.txt"));
       throw e;
     }
+  }
+
+  private SchemaTraversalHandler getSchemaTraversalHandler(final File dotFile)
+    throws SchemaCrawlerException
+  {
+    final SchemaTraversalHandler formatter;
+    final GraphOptions graphOptions = getGraphOptions();
+    final SchemaTextDetailType schemaTextDetailType = graphOptions
+      .getSchemaTextDetailType();
+
+    formatter = new SchemaDotFormatter(schemaTextDetailType,
+                                       graphOptions,
+                                       new OutputOptions("dot", dotFile));
+
+    return formatter;
   }
 
 }

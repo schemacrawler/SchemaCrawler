@@ -82,10 +82,14 @@ public final class SchemaTextExecutable
       infoLevel = InfoLevel.unknown;
     }
 
-    Database database = db;
+    final Database database;
     if (infoLevel == InfoLevel.maximum)
     {
-      database = new DatabaseWithAssociations(database);
+      database = new DatabaseWithAssociations(db);
+    }
+    else
+    {
+      database = db;
     }
 
     final SchemaTraversalHandler formatter = getSchemaTraversalHandler();
