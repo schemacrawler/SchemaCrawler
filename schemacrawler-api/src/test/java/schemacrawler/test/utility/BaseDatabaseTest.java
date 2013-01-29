@@ -70,11 +70,11 @@ public abstract class BaseDatabaseTest
   protected static void checkDiagramFile(final File diagramFile)
     throws IOException
   {
-    assertTrue(diagramFile.exists());
-    assertTrue(diagramFile.length() > 0);
+    assertTrue("Diagram file not created", diagramFile.exists());
+    assertTrue("Diagram file has 0 bytes size", diagramFile.length() > 0);
     final BufferedImage image = ImageIO.read(diagramFile);
-    assertTrue(image.getHeight() > 0);
-    assertTrue(image.getWidth() > 0);
+    assertTrue("Diagram not created", image.getHeight() > 0);
+    assertTrue("Diagram not created", image.getWidth() > 0);
 
     diagramFile.delete();
   }
