@@ -32,12 +32,11 @@ public abstract class BaseConfigOptions
 
   private static final long serialVersionUID = -8133661515343358712L;
 
-  private final String prefix;
-  private final Config config = new Config();
+  private final Config config;
 
-  protected BaseConfigOptions(final String prefix)
+  protected BaseConfigOptions()
   {
-    this.prefix = prefix;
+    config = new Config();
   }
 
   public Config toConfig()
@@ -65,7 +64,7 @@ public abstract class BaseConfigOptions
     {
       return defaultValue;
     }
-    return config.getBooleanValue(prefix + propertyName);
+    return config.getBooleanValue(propertyName);
   }
 
   protected boolean getBooleanValue(final String propertyName)
@@ -87,13 +86,13 @@ public abstract class BaseConfigOptions
     {
       return defaultValue;
     }
-    return config.getEnumValue(prefix + propertyName, defaultValue);
+    return config.getEnumValue(propertyName, defaultValue);
   }
 
   protected <E extends Enum<E>> E getEnumValue(final String propertyName,
                                                final E defaultValue)
   {
-    return getEnumValue(config, prefix + propertyName, defaultValue);
+    return getEnumValue(config, propertyName, defaultValue);
   }
 
   protected int getIntegerValue(final Config config,
@@ -104,13 +103,13 @@ public abstract class BaseConfigOptions
     {
       return defaultValue;
     }
-    return config.getIntegerValue(prefix + propertyName, defaultValue);
+    return config.getIntegerValue(propertyName, defaultValue);
   }
 
   protected int getIntegerValue(final String propertyName,
                                 final int defaultValue)
   {
-    return getIntegerValue(config, prefix + propertyName, defaultValue);
+    return getIntegerValue(config, propertyName, defaultValue);
   }
 
   protected String getStringValue(final Config config,
@@ -121,33 +120,33 @@ public abstract class BaseConfigOptions
     {
       return defaultValue;
     }
-    return config.getStringValue(prefix + propertyName, defaultValue);
+    return config.getStringValue(propertyName, defaultValue);
   }
 
   protected String getStringValue(final String propertyName,
                                   final String defaultValue)
   {
-    return getStringValue(config, prefix + propertyName, defaultValue);
+    return getStringValue(config, propertyName, defaultValue);
   }
 
   protected void setBooleanValue(final String propertyName, final boolean value)
   {
-    config.put(prefix + propertyName, Boolean.toString(value));
+    config.put(propertyName, Boolean.toString(value));
   }
 
   protected <E extends Enum<E>> void setEnumValue(final String propertyName,
                                                   final E value)
   {
-    config.put(prefix + propertyName, value.name());
+    config.put(propertyName, value.name());
   }
 
   protected void setIntegerValue(final String propertyName, final int value)
   {
-    config.put(prefix + propertyName, Integer.toString(value));
+    config.put(propertyName, Integer.toString(value));
   }
 
   protected void setStringValue(final String propertyName, final String value)
   {
-    config.put(prefix + propertyName, value);
+    config.put(propertyName, value);
   }
 }
