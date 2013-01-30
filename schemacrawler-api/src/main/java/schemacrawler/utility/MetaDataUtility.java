@@ -35,24 +35,71 @@ public final class MetaDataUtility
 
   public enum Connectivity
   {
+    unknown
+    {
+      @Override
+      public String arrowhead()
+      {
+        return "vee";
+      }
+    },
+    zero_one
+    {
+      @Override
+      public String arrowhead()
+      {
+        return "teeodot";
+      }
+    },
+    zero_many
+    {
+      @Override
+      public String arrowhead()
+      {
+        return "crowodot";
+      }
+    },
+    one_one
+    {
+      @Override
+      public String arrowhead()
+      {
+        return "teetee";
+      }
+    };
 
-    OneToOne,
-    OneToMany;
+    public abstract String arrowhead();
   }
 
   public static Connectivity getConnectivity(final Column fkColumn)
   {
     if (fkColumn == null)
     {
-      return null;
+      return Connectivity.unknown;
     }
+
+    boolean isColumnReference;
+    try
+    {
+      fkColumn.getColumnDataType();
+      isColumnReference = false;
+    }
+    catch (final Exception e)
+    {
+      isColumnReference = true;
+    }
+    if (isColumnReference)
+    {
+      return Connectivity.unknown;
+    }
+
     if (fkColumn.isPartOfPrimaryKey() || fkColumn.isPartOfUniqueIndex())
     {
-      return Connectivity.OneToOne;
+      return Connectivity.zero_one;
     }
     else
     {
-      return Connectivity.OneToMany;
+      return Connectivity.zero_many;
     }
   }
 
