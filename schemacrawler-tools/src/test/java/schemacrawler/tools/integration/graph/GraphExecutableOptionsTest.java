@@ -28,6 +28,8 @@ import java.util.List;
 
 import org.junit.Test;
 
+import schemacrawler.schemacrawler.InclusionRule;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.executable.Executable;
@@ -89,12 +91,33 @@ public class GraphExecutableOptionsTest
     executableGraph(4, graphOptions);
   }
 
+  @Test
+  public void executableGraphDot05()
+    throws Exception
+  {
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+    schemaCrawlerOptions.setTableInclusionRule(new InclusionRule(".*BOOKS"));
+    final GraphOptions graphOptions = new GraphOptions();
+
+    executableGraph(5, schemaCrawlerOptions, graphOptions);
+  }
+
   private void executableGraph(final int testNumber,
                                final GraphOptions graphOptions)
     throws Exception
   {
+    executableGraph(testNumber, new SchemaCrawlerOptions(), graphOptions);
+  }
+
+  private void executableGraph(final int testNumber,
+                               final SchemaCrawlerOptions schemaCrawlerOptions,
+                               final GraphOptions graphOptions)
+    throws Exception
+  {
     final GraphExecutable executable = new GraphExecutable();
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setAdditionalConfiguration(graphOptions.toConfig());
+
     final String referenceFileName = String.format("executableForGraph_%02d",
                                                    testNumber);
     executeExecutableAndCheckForOutputFile(executable,
