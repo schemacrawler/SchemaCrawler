@@ -34,11 +34,17 @@ public class GraphOptions
 
   public GraphOptions()
   {
+    // Required to set all options
+    this(null);
   }
 
   public GraphOptions(final Config config)
   {
     super(config);
+
+    setSchemaTextDetailType(getEnumValue(config,
+                                         GRAPH_DETAILS,
+                                         SchemaTextDetailType.details));
   }
 
   public SchemaTextDetailType getSchemaTextDetailType()

@@ -30,6 +30,7 @@ import org.junit.Test;
 
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.executable.Executable;
@@ -45,9 +46,11 @@ public class GraphExecutableOptionsTest
   public void executableGraphDot00()
     throws Exception
   {
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
     final GraphOptions graphOptions = new GraphOptions();
 
-    executableGraph(0, graphOptions);
+    executableGraph(0, schemaCrawlerOptions, graphOptions);
   }
 
   @Test

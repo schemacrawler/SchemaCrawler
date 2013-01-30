@@ -79,6 +79,23 @@ public abstract class BaseConfigOptions
     return getBooleanValue(config, propertyName, defaultValue);
   }
 
+  protected <E extends Enum<E>> E getEnumValue(final Config config,
+                                               final String propertyName,
+                                               final E defaultValue)
+  {
+    if (config == null)
+    {
+      return defaultValue;
+    }
+    return config.getEnumValue(prefix + propertyName, defaultValue);
+  }
+
+  protected <E extends Enum<E>> E getEnumValue(final String propertyName,
+                                               final E defaultValue)
+  {
+    return getEnumValue(config, prefix + propertyName, defaultValue);
+  }
+
   protected int getIntegerValue(final Config config,
                                 final String propertyName,
                                 final int defaultValue)
@@ -116,6 +133,12 @@ public abstract class BaseConfigOptions
   protected void setBooleanValue(final String propertyName, final boolean value)
   {
     config.put(prefix + propertyName, Boolean.toString(value));
+  }
+
+  protected <E extends Enum<E>> void setEnumValue(final String propertyName,
+                                                  final E value)
+  {
+    config.put(prefix + propertyName, value.name());
   }
 
   protected void setIntegerValue(final String propertyName, final int value)
