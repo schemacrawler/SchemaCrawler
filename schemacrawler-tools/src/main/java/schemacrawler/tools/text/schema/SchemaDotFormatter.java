@@ -26,7 +26,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
@@ -239,18 +238,18 @@ public final class SchemaDotFormatter
   {
     final String portIds[] = new String[2];
 
-    boolean isTableReference;
+    boolean isColumnReference;
     try
     {
-      column.getParent().getTableType();
-      isTableReference = false;
+      column.getColumnDataType();
+      isColumnReference = false;
     }
     catch (final Exception e)
     {
-      isTableReference = true;
+      isColumnReference = true;
     }
 
-    if (!isTableReference)
+    if (!isColumnReference)
     {
       portIds[0] = String.format("\"%s\":\"%s.start\"",
                                  nodeId(column.getParent()),
@@ -270,22 +269,22 @@ public final class SchemaDotFormatter
     return portIds;
   }
 
-  private String nodeId(final NamedObject namedOjbect)
+  private String nodeId(final NamedObject namedObject)
   {
-    if (namedOjbect == null)
+    if (namedObject == null)
     {
       return "";
     }
     else
     {
-      return Utility.convertForComparison(namedOjbect.getName()) + "_"
-             + Integer.toHexString(namedOjbect.getFullName().hashCode());
+      return Utility.convertForComparison(namedObject.getName()) + "_"
+             + Integer.toHexString(namedObject.getFullName().hashCode());
     }
   }
 
   private String print(final Column column)
   {
-    final String nodeId = "\"" + UUID.randomUUID().toString() + "\"";
+    final String nodeId = "\"" + nodeId(column) + "\"";
     final String columnNode = String.format("  %s [label=<%s>];%n",
                                             nodeId,
                                             column.getFullName());
@@ -307,26 +306,7 @@ public final class SchemaDotFormatter
     final Connectivity connectivity = MetaDataUtility
       .getConnectivity(foreignKeyColumn);
     final String pkSymbol = "teetee";
-    final String fkSymbol;
-    if (connectivity != null)
-    {
-      switch (connectivity)
-      {
-        case OneToOne:
-          fkSymbol = "teeodot";
-          break;
-        case OneToMany:
-          fkSymbol = "crowodot";
-          break;
-        default:
-          fkSymbol = "none";
-          break;
-      }
-    }
-    else
-    {
-      fkSymbol = "none";
-    }
+    final String fkSymbol = connectivity.arrowhead();
     final String style;
     if (Utility.isBlank(associationName))
     {
@@ -338,7 +318,7 @@ public final class SchemaDotFormatter
     }
 
     return String
-      .format("  %s:w -> %s:e [label=<%s> style=\"%s\" arrowhead=\"%s\" arrowtail=\"%s\"];%n",
+      .format("  %s:w -> %s:e [label=<%s> style=\"%s\" dir=\"both\" arrowhead=\"%s\" arrowtail=\"%s\"];%n",
               pkPortIds[0],
               fkPortIds[1],
               options.isHideForeignKeyNames()? "": associationName,

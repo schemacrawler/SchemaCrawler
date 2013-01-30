@@ -484,12 +484,12 @@ digraph SchemaCrawler_Diagram {
         </tr>
       </table>
     >];
-	authors_dba8a1ff:"id_ecfc5f6a.start":w -> bookauthors_aa4376:"authorid_19681b5e.end":e [label=<FK_Z_AUTHOR>, style=solid, arrowhead=crowodot, arrowtail=teetee];
-	books_afd2ba21:"id_bb8abc08.start":w -> bookauthors_aa4376:"bookid_931bd73c.end":e [label=<FK_Y_BOOK>, style=solid, arrowhead=crowodot, arrowtail=teetee];
-	publications_949377f7:"id_f5162672.start":w -> extra_pk_334890da:"publicationid_d4d93213.end":e [label=<FK_PUBLICATION_JOIN>, style=solid, arrowhead=crowodot, arrowtail=teetee];
-	publications_949377f7:"id_f5162672.start":w -> writers_bf84ac10:"publication_id_b1bcb5cc.end":e [label=<FK_WRITERS_PUBLICATION>, style=solid, arrowhead=crowodot, arrowtail=teetee];
-	writers_bf84ac10:"id_3033cfb9.start":w -> extra_pk_334890da:"writerid_b8c70762.end":e [label=<FK_WRITER_JOIN>, style=solid, arrowhead=crowodot, arrowtail=teetee];
-	writers_bf84ac10:"id_3033cfb9.start":w -> publications_949377f7:"writerid_1c21d0e5.end":e [label=<FK_PUBLICATIONS_WRITER>, style=solid, arrowhead=crowodot, arrowtail=teetee];
-	regions_bc895c48:"postalcode_9b2bfe9e.start":w -> sales_20be6f95:"postalcode_738bc931.end":e [label=<FK_SALES_REGIONS>, style=solid, arrowhead=crowodot, arrowtail=teetee];
-	regions_bc895c48:"country_7d0587d0.start":w -> sales_20be6f95:"country_890cfe1d.end":e [label=<FK_SALES_REGIONS>, style=solid, arrowhead=crowodot, arrowtail=teetee];
+	authors_dba8a1ff:"id_ecfc5f6a.start":w -> bookauthors_aa4376:"authorid_19681b5e.end":e [label=<FK_Z_AUTHOR>, style=solid, dir=both, arrowhead=crowodot, arrowtail=teetee];
+	books_afd2ba21:"id_bb8abc08.start":w -> bookauthors_aa4376:"bookid_931bd73c.end":e [label=<FK_Y_BOOK>, style=solid, dir=both, arrowhead=crowodot, arrowtail=teetee];
+	publications_949377f7:"id_f5162672.start":w -> extra_pk_334890da:"publicationid_d4d93213.end":e [label=<FK_PUBLICATION_JOIN>, style=solid, dir=both, arrowhead=crowodot, arrowtail=teetee];
+	publications_949377f7:"id_f5162672.start":w -> writers_bf84ac10:"publication_id_b1bcb5cc.end":e [label=<FK_WRITERS_PUBLICATION>, style=solid, dir=both, arrowhead=crowodot, arrowtail=teetee];
+	writers_bf84ac10:"id_3033cfb9.start":w -> extra_pk_334890da:"writerid_b8c70762.end":e [label=<FK_WRITER_JOIN>, style=solid, dir=both, arrowhead=crowodot, arrowtail=teetee];
+	writers_bf84ac10:"id_3033cfb9.start":w -> publications_949377f7:"writerid_1c21d0e5.end":e [label=<FK_PUBLICATIONS_WRITER>, style=solid, dir=both, arrowhead=crowodot, arrowtail=teetee];
+	regions_bc895c48:"postalcode_9b2bfe9e.start":w -> sales_20be6f95:"postalcode_738bc931.end":e [label=<FK_SALES_REGIONS>, style=solid, dir=both, arrowhead=crowodot, arrowtail=teetee];
+	regions_bc895c48:"country_7d0587d0.start":w -> sales_20be6f95:"country_890cfe1d.end":e [label=<FK_SALES_REGIONS>, style=solid, dir=both, arrowhead=crowodot, arrowtail=teetee];
 }
