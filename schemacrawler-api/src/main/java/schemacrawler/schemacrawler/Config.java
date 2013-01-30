@@ -250,6 +250,36 @@ public final class Config
   }
 
   /**
+   * Gets the value of a property as an enum.
+   * 
+   * @param propertyName
+   *        Property name
+   * @return Enum value
+   */
+  public <E extends Enum<E>> E getEnumValue(final String propertyName,
+                                            final E defaultValue)
+  {
+    final String value = getStringValue(propertyName, defaultValue.name());
+    E enumValue;
+    if (value == null || defaultValue == null)
+    {
+      enumValue = defaultValue;
+    }
+    else
+    {
+      try
+      {
+        enumValue = (E) Enum.valueOf(defaultValue.getClass(), value);
+      }
+      catch (final Exception e)
+      {
+        enumValue = defaultValue;
+      }
+    }
+    return enumValue;
+  }
+
+  /**
    * Gets the value of a property as an integer.
    * 
    * @param propertyName

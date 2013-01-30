@@ -178,20 +178,6 @@ digraph SchemaCrawler_Diagram {
         </tr>
       </table>
     >];
-	globalcounts_2ab3635a [label=<
-      <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
-        <tr>
-          <td colspan="3" bgcolor="#96C2FA" align="left"><b>PUBLIC.BOOKS."Global Counts"</b></td>
-          <td bgcolor="#96C2FA" align="right">[table]</td>
-        </tr>
-        <tr>
-          <td port="globalcount_22cfa042.start" align="right"></td>
-          <td align="left">"Global Count"</td>
-          <td> </td>
-          <td port="globalcount_22cfa042.end" align="right">INTEGER</td>
-        </tr>
-      </table>
-    >];
 	publishers_b8da20c0 [label=<
       <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
         <tr>
@@ -209,6 +195,58 @@ digraph SchemaCrawler_Diagram {
           <td align="left">PUBLISHER</td>
           <td> </td>
           <td port="publisher_13c8362e.end" align="right">VARCHAR(255)</td>
+        </tr>
+      </table>
+    >];
+	sales_20be6f95 [label=<
+      <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
+        <tr>
+          <td colspan="3" bgcolor="#FA96E1" align="left"><b>PUBLIC."PUBLISHER SALES".SALES</b></td>
+          <td bgcolor="#FA96E1" align="right">[table]</td>
+        </tr>
+        <tr>
+          <td port="postalcode_738bc931.start" align="right"></td>
+          <td align="left">POSTALCODE</td>
+          <td> </td>
+          <td port="postalcode_738bc931.end" align="right">VARCHAR(10) not null</td>
+        </tr>
+        <tr>
+          <td port="country_890cfe1d.start" align="right"></td>
+          <td align="left">COUNTRY</td>
+          <td> </td>
+          <td port="country_890cfe1d.end" align="right">VARCHAR(50) not null</td>
+        </tr>
+        <tr>
+          <td port="bookid_3c829a3d.start" align="right"></td>
+          <td align="left">BOOKID</td>
+          <td> </td>
+          <td port="bookid_3c829a3d.end" align="right">INTEGER</td>
+        </tr>
+        <tr>
+          <td port="periodenddate_1bd9ab6f.start" align="right"></td>
+          <td align="left">PERIODENDDATE</td>
+          <td> </td>
+          <td port="periodenddate_1bd9ab6f.end" align="right">DATE</td>
+        </tr>
+        <tr>
+          <td port="totalamount_63baaba3.start" align="right"></td>
+          <td align="left">TOTALAMOUNT</td>
+          <td> </td>
+          <td port="totalamount_63baaba3.end" align="right">DOUBLE(64, 0)</td>
+        </tr>
+      </table>
+    >];
+	globalcounts_2ab3635a [label=<
+      <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
+        <tr>
+          <td colspan="3" bgcolor="#96C2FA" align="left"><b>PUBLIC.BOOKS."Global Counts"</b></td>
+          <td bgcolor="#96C2FA" align="right">[table]</td>
+        </tr>
+        <tr>
+          <td port="globalcount_22cfa042.start" align="right"></td>
+          <td align="left">"Global Count"</td>
+          <td> </td>
+          <td port="globalcount_22cfa042.end" align="right">INTEGER</td>
         </tr>
       </table>
     >];
@@ -464,50 +502,16 @@ digraph SchemaCrawler_Diagram {
         </tr>
       </table>
     >];
-	sales_20be6f95 [label=<
-      <table border="1" cellborder="0" cellspacing="0" bgcolor="white">
-        <tr>
-          <td colspan="3" bgcolor="#FA96E1" align="left"><b>PUBLIC."PUBLISHER SALES".SALES</b></td>
-          <td bgcolor="#FA96E1" align="right">[table]</td>
-        </tr>
-        <tr>
-          <td port="postalcode_738bc931.start" align="right"></td>
-          <td align="left">POSTALCODE</td>
-          <td> </td>
-          <td port="postalcode_738bc931.end" align="right">VARCHAR(10) not null</td>
-        </tr>
-        <tr>
-          <td port="country_890cfe1d.start" align="right"></td>
-          <td align="left">COUNTRY</td>
-          <td> </td>
-          <td port="country_890cfe1d.end" align="right">VARCHAR(50) not null</td>
-        </tr>
-        <tr>
-          <td port="bookid_3c829a3d.start" align="right"></td>
-          <td align="left">BOOKID</td>
-          <td> </td>
-          <td port="bookid_3c829a3d.end" align="right">INTEGER</td>
-        </tr>
-        <tr>
-          <td port="periodenddate_1bd9ab6f.start" align="right"></td>
-          <td align="left">PERIODENDDATE</td>
-          <td> </td>
-          <td port="periodenddate_1bd9ab6f.end" align="right">DATE</td>
-        </tr>
-        <tr>
-          <td port="totalamount_63baaba3.start" align="right"></td>
-          <td align="left">TOTALAMOUNT</td>
-          <td> </td>
-          <td port="totalamount_63baaba3.end" align="right">DOUBLE(64, 0)</td>
-        </tr>
-      </table>
-    >];
 	authors_dba8a1ff:"id_ecfc5f6a.start":w -> bookauthors_aa4376:"authorid_19681b5e.end":e [label=<FK_Z_AUTHOR>, style=solid, dir=both, arrowhead=crowodot, arrowtail=teetee];
 	books_afd2ba21:"id_bb8abc08.start":w -> bookauthors_aa4376:"bookid_931bd73c.end":e [label=<FK_Y_BOOK>, style=solid, dir=both, arrowhead=crowodot, arrowtail=teetee];
+	publishers_b8da20c0:"id_6fc9dd09.start":w -> books_afd2ba21:"publisherid_3413fbaa.end":e [style=dashed, dir=both, arrowhead=crowodot, arrowtail=teetee];
+	books_afd2ba21:"id_bb8abc08.start":w -> sales_20be6f95:"bookid_3c829a3d.end":e [style=dashed, dir=both, arrowhead=crowodot, arrowtail=teetee];
+	publishers_b8da20c0:"id_6fc9dd09.start":w -> books_afd2ba21:"publisherid_3413fbaa.end":e [style=dashed, dir=both, arrowhead=crowodot, arrowtail=teetee];
 	publications_949377f7:"id_f5162672.start":w -> extra_pk_334890da:"publicationid_d4d93213.end":e [label=<FK_PUBLICATION_JOIN>, style=solid, dir=both, arrowhead=crowodot, arrowtail=teetee];
 	publications_949377f7:"id_f5162672.start":w -> writers_bf84ac10:"publication_id_b1bcb5cc.end":e [label=<FK_WRITERS_PUBLICATION>, style=solid, dir=both, arrowhead=crowodot, arrowtail=teetee];
 	writers_bf84ac10:"id_3033cfb9.start":w -> extra_pk_334890da:"writerid_b8c70762.end":e [label=<FK_WRITER_JOIN>, style=solid, dir=both, arrowhead=crowodot, arrowtail=teetee];
 	writers_bf84ac10:"id_3033cfb9.start":w -> publications_949377f7:"writerid_1c21d0e5.end":e [label=<FK_PUBLICATIONS_WRITER>, style=solid, dir=both, arrowhead=crowodot, arrowtail=teetee];
 	regions_bc895c48:"postalcode_9b2bfe9e.start":w -> sales_20be6f95:"postalcode_738bc931.end":e [label=<FK_SALES_REGIONS>, style=solid, dir=both, arrowhead=crowodot, arrowtail=teetee];
 	regions_bc895c48:"country_7d0587d0.start":w -> sales_20be6f95:"country_890cfe1d.end":e [label=<FK_SALES_REGIONS>, style=solid, dir=both, arrowhead=crowodot, arrowtail=teetee];
+	books_afd2ba21:"id_bb8abc08.start":w -> sales_20be6f95:"bookid_3c829a3d.end":e [style=dashed, dir=both, arrowhead=crowodot, arrowtail=teetee];
 }
