@@ -30,7 +30,7 @@ public class GraphOptions
 
   private static final long serialVersionUID = -5850945398335496207L;
 
-  private static final String GRAPH_DETAILS = "graph.details";
+  private static final String GRAPH_DETAILS = "schemacrawler.graph.details";
 
   public GraphOptions()
   {
@@ -49,18 +49,7 @@ public class GraphOptions
 
   public SchemaTextDetailType getSchemaTextDetailType()
   {
-    final SchemaTextDetailType defaultTextDetailType = SchemaTextDetailType.details;
-    SchemaTextDetailType schemaTextDetailType;
-    try
-    {
-      schemaTextDetailType = SchemaTextDetailType
-        .valueOf(getStringValue(GRAPH_DETAILS, defaultTextDetailType.name()));
-    }
-    catch (final IllegalArgumentException e)
-    {
-      schemaTextDetailType = defaultTextDetailType;
-    }
-    return schemaTextDetailType;
+    return getEnumValue(GRAPH_DETAILS, SchemaTextDetailType.details);
   }
 
   public void setSchemaTextDetailType(final SchemaTextDetailType schemaTextDetailType)
@@ -69,7 +58,7 @@ public class GraphOptions
     {
       throw new IllegalArgumentException("Cannot use null value in a setter");
     }
-    setStringValue(GRAPH_DETAILS, schemaTextDetailType.name());
+    setEnumValue(GRAPH_DETAILS, schemaTextDetailType);
   }
 
 }

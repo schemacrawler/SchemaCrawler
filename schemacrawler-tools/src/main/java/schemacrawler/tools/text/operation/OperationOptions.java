@@ -35,7 +35,8 @@ public final class OperationOptions
 
   private static final long serialVersionUID = -7977434852526746391L;
 
-  private static final String SHOW_LOBS = "data.show_lobs";
+  private static final String SHOW_LOBS = SCHEMACRAWLER_FORMAT_PREFIX
+                                          + "data.show_lobs";
 
   /**
    * Operator options, defaults.

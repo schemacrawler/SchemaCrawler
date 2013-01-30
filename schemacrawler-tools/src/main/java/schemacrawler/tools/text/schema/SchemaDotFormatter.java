@@ -57,6 +57,7 @@ public final class SchemaDotFormatter
 {
 
   private final boolean isVerbose;
+  private final boolean isList;
   private final Map<Schema, String> colorMap;
 
   /**
@@ -80,6 +81,7 @@ public final class SchemaDotFormatter
           schemaTextDetailType == SchemaTextDetailType.details,
           outputOptions);
     isVerbose = schemaTextDetailType == SchemaTextDetailType.details;
+    isList = schemaTextDetailType == SchemaTextDetailType.list;
     colorMap = new HashMap<Schema, String>();
   }
 
@@ -162,29 +164,36 @@ public final class SchemaDotFormatter
       .append(Utility.NEWLINE);
     out.append("        </tr>").append(Utility.NEWLINE);
 
-    final List<Column> columns = table.getColumns();
-    printTableColumns(columns);
+    if (!isList)
+    {
+      final List<Column> columns = table.getColumns();
+      printTableColumns(columns);
+    }
+
     out.append("      </table>").append(Utility.NEWLINE);
     out.append("    >").append(Utility.NEWLINE).append("  ];")
       .append(Utility.NEWLINE);
 
-    out.write(Utility.NEWLINE);
-    for (final ForeignKey foreignKey: table.getForeignKeys())
+    if (!isList)
     {
-      for (final ColumnReference columnReference: foreignKey
-        .getColumnReferences())
+      out.write(Utility.NEWLINE);
+      for (final ForeignKey foreignKey: table.getForeignKeys())
       {
-        if (table.equals(columnReference.getPrimaryKeyColumn().getParent()))
+        for (final ColumnReference columnReference: foreignKey
+          .getColumnReferences())
         {
-          out
-            .write(printColumnReference(foreignKey.getName(), columnReference));
+          if (table.equals(columnReference.getPrimaryKeyColumn().getParent()))
+          {
+            out.write(printColumnReference(foreignKey.getName(),
+                                           columnReference));
+          }
         }
       }
-    }
 
-    if (isVerbose)
-    {
-      printWeakAssociations(table);
+      if (isVerbose)
+      {
+        printWeakAssociations(table);
+      }
     }
   }
 

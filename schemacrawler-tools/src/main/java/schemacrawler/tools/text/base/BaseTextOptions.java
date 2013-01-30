@@ -30,12 +30,15 @@ public abstract class BaseTextOptions
 
   private static final long serialVersionUID = -8133661515343358712L;
 
-  private static final String SCHEMACRAWLER_FORMAT_PREFIX = "schemacrawler.format.";
+  protected static final String SCHEMACRAWLER_FORMAT_PREFIX = "schemacrawler.format.";
 
-  private static final String NO_HEADER = "no_header";
-  private static final String NO_FOOTER = "no_footer";
-  private static final String NO_INFO = "no_info";
-  private static final String APPEND_OUTPUT = "append_output";
+  private static final String NO_HEADER = SCHEMACRAWLER_FORMAT_PREFIX
+                                          + "no_header";
+  private static final String NO_FOOTER = SCHEMACRAWLER_FORMAT_PREFIX
+                                          + "no_footer";
+  private static final String NO_INFO = SCHEMACRAWLER_FORMAT_PREFIX + "no_info";
+  private static final String APPEND_OUTPUT = SCHEMACRAWLER_FORMAT_PREFIX
+                                              + "append_output";
 
   protected BaseTextOptions()
   {
@@ -44,7 +47,6 @@ public abstract class BaseTextOptions
 
   protected BaseTextOptions(final Config config)
   {
-    super(SCHEMACRAWLER_FORMAT_PREFIX);
     setNoFooter(getBooleanValue(config, NO_FOOTER));
     setNoHeader(getBooleanValue(config, NO_HEADER));
     setNoInfo(getBooleanValue(config, NO_INFO));

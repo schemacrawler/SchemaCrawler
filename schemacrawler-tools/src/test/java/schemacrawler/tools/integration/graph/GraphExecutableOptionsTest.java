@@ -35,6 +35,7 @@ import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.text.schema.SchemaTextDetailType;
 
 public class GraphExecutableOptionsTest
   extends BaseDatabaseTest
@@ -103,6 +104,30 @@ public class GraphExecutableOptionsTest
     final GraphOptions graphOptions = new GraphOptions();
 
     executableGraph(5, schemaCrawlerOptions, graphOptions);
+  }
+
+  @Test
+  public void executableGraphDot06()
+    throws Exception
+  {
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
+    final GraphOptions graphOptions = new GraphOptions();
+    graphOptions.setSchemaTextDetailType(SchemaTextDetailType.list);
+
+    executableGraph(6, schemaCrawlerOptions, graphOptions);
+  }
+
+  @Test
+  public void executableGraphDot07()
+    throws Exception
+  {
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
+    final GraphOptions graphOptions = new GraphOptions();
+    graphOptions.setSchemaTextDetailType(SchemaTextDetailType.schema);
+
+    executableGraph(7, schemaCrawlerOptions, graphOptions);
   }
 
   private void executableGraph(final int testNumber,
