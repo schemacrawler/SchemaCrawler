@@ -112,7 +112,9 @@ public final class GraphExecutable
     traverser.traverse();
 
     // Create graph image
-    final GraphGenerator dot = new GraphGenerator(dotFile,
+    final GraphOptions graphOptions = getGraphOptions();
+    final GraphGenerator dot = new GraphGenerator(graphOptions.getGraphVizOpts(),
+                                                  dotFile,
                                                   outputOptions
                                                     .getOutputFormatValue(),
                                                   outputOptions.getOutputFile());

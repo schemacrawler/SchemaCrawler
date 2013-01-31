@@ -23,14 +23,19 @@ package schemacrawler.tools.integration.graph;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
+import sf.util.Utility;
 
 public class GraphOptions
   extends SchemaTextOptions
 {
 
+  private static final String SC_GRAPHVIZ_OPTS = "SC_GRAPHVIZ_OPTS";
+
   private static final long serialVersionUID = -5850945398335496207L;
 
   private static final String GRAPH_DETAILS = "schemacrawler.graph.details";
+
+  private static final String GRAPH_GRAPHVIZ_OPTS = "schemacrawler.graph.graphviz_opts";
 
   public GraphOptions()
   {
@@ -45,11 +50,31 @@ public class GraphOptions
     setSchemaTextDetailType(getEnumValue(config,
                                          GRAPH_DETAILS,
                                          SchemaTextDetailType.details));
+
+    setGraphVizOpts(getStringValue(config, GRAPH_GRAPHVIZ_OPTS, ""));
+    if (Utility.isBlank(getGraphVizOpts()))
+    {
+      setGraphVizOpts(readGraphVizOpts());
+    }
+  }
+
+  public String getGraphVizOpts()
+  {
+    return getStringValue(GRAPH_GRAPHVIZ_OPTS, "");
   }
 
   public SchemaTextDetailType getSchemaTextDetailType()
   {
     return getEnumValue(GRAPH_DETAILS, SchemaTextDetailType.details);
+  }
+
+  public void setGraphVizOpts(final String graphVizOpts)
+  {
+    if (graphVizOpts == null)
+    {
+      throw new IllegalArgumentException("Cannot use null value in a setter");
+    }
+    setStringValue(GRAPH_GRAPHVIZ_OPTS, graphVizOpts);
   }
 
   public void setSchemaTextDetailType(final SchemaTextDetailType schemaTextDetailType)
@@ -59,6 +84,24 @@ public class GraphOptions
       throw new IllegalArgumentException("Cannot use null value in a setter");
     }
     setEnumValue(GRAPH_DETAILS, schemaTextDetailType);
+  }
+
+  private String readGraphVizOpts()
+  {
+    final String scGraphVizOptsEnv = System.getenv(SC_GRAPHVIZ_OPTS);
+    final String scGraphVizOptsProp = System.getProperty(SC_GRAPHVIZ_OPTS);
+
+    final StringBuilder scGraphVizOpts = new StringBuilder();
+    if (!Utility.isBlank(scGraphVizOptsEnv))
+    {
+      scGraphVizOpts.append(scGraphVizOptsEnv).append(" ");
+    }
+    if (!Utility.isBlank(scGraphVizOptsProp))
+    {
+      scGraphVizOpts.append(scGraphVizOptsProp).append(" ");
+    }
+
+    return scGraphVizOpts.toString();
   }
 
 }
