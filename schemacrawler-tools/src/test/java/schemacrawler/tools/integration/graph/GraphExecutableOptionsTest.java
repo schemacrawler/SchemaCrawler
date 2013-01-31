@@ -159,7 +159,8 @@ public class GraphExecutableOptionsTest
     final File referenceDotFile = TestUtility
       .copyResourceToTempFile("/" + GRAPH_OPTIONS_OUTPUT + referenceFileName
                               + ".dot");
-    final GraphGenerator graphGenerator = new GraphGenerator(referenceDotFile,
+    final GraphGenerator graphGenerator = new GraphGenerator(graphOptions.getGraphVizOpts(),
+                                                             referenceDotFile,
                                                              "png",
                                                              testDiagramFile);
     graphGenerator.generateDiagram();
