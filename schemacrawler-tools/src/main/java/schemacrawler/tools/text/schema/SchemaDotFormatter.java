@@ -151,13 +151,15 @@ public final class SchemaDotFormatter
     out.append("  \"").append(nodeId(table)).append("\" [")
       .append(Utility.NEWLINE).append("    label=<").append(Utility.NEWLINE);
     out
-      .append("      <table border=\"1\" cellborder=\"0\" cellspacing=\"0\" bgcolor=\"white\">")
+      .append("      <table border=\"1\" cellborder=\"0\" cellpadding=\"2\" cellspacing=\"0\" bgcolor=\"white\">")
       .append(Utility.NEWLINE);
     out.append("        <tr>").append(Utility.NEWLINE);
 
-    out.append("          <td colspan=\"3\" bgcolor=\"")
-      .append(tableNameBgColor).append("\" align=\"left\"><b>")
-      .append(tableName).append("</b></td>").append(Utility.NEWLINE);
+    int colspan = options.isShowOrdinalNumbers()? 3: 2;
+    out.append("          <td colspan=\"").append(String.valueOf(colspan))
+      .append("\" bgcolor=\"").append(tableNameBgColor)
+      .append("\" align=\"left\"><b>").append(tableName).append("</b></td>")
+      .append(Utility.NEWLINE);
 
     out.append("          <td bgcolor=\"").append(tableNameBgColor)
       .append("\" align=\"right\">").append(tableType).append("</td>")
@@ -354,15 +356,16 @@ public final class SchemaDotFormatter
 
       out.append("        <tr>").append(Utility.NEWLINE);
       out.append("          <td port=\"").append(nodeId(column))
-        .append(".start\" align=\"right\">");
+        .append(".start\" ");
       if (options.isShowOrdinalNumbers())
       {
+        out.append("align=\"right\">");
         final String ordinalNumberString = String.valueOf(column
           .getOrdinalPosition());
         out.append(ordinalNumberString);
+        out.append("</td>").append(Utility.NEWLINE).append("          <td ");
       }
-      out.append("</td>").append(Utility.NEWLINE)
-        .append("          <td align=\"left\">");
+      out.append("align=\"left\">");
       if (column.isPartOfPrimaryKey())
       {
         out.append("<b><i><u>");
