@@ -443,19 +443,19 @@ final class TableRetriever
             ((MutableColumn) fkColumn).setReferencedColumn(pkColumn);
             ((MutableTable) fkColumn.getParent()).addForeignKey(foreignKey);
           }
-          else if (fkColumn instanceof ColumnReference)
+          else if (fkColumn instanceof ColumnPartial)
           {
-            ((ColumnReference) fkColumn).setReferencedColumn(pkColumn);
-            ((TableReference) fkColumn.getParent()).addForeignKey(foreignKey);
+            ((ColumnPartial) fkColumn).setReferencedColumn(pkColumn);
+            ((TablePartial) fkColumn.getParent()).addForeignKey(foreignKey);
           }
 
           if (pkColumn instanceof MutableColumn)
           {
             ((MutableTable) pkColumn.getParent()).addForeignKey(foreignKey);
           }
-          else if (pkColumn instanceof ColumnReference)
+          else if (pkColumn instanceof ColumnPartial)
           {
-            ((TableReference) pkColumn.getParent()).addForeignKey(foreignKey);
+            ((TablePartial) pkColumn.getParent()).addForeignKey(foreignKey);
           }
         }
       }
@@ -584,9 +584,9 @@ final class TableRetriever
       if (column == null)
       {
         // Create the table and column, but do not add it to the schema
-        table = new TableReference(schema, tableName);
-        column = new ColumnReference(table, columnName);
-        ((TableReference) table).addColumn(column);
+        table = new TablePartial(schema, tableName);
+        column = new ColumnPartial(table, columnName);
+        ((TablePartial) table).addColumn(column);
 
         LOGGER
           .log(Level.FINER,

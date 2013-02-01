@@ -39,7 +39,7 @@ import schemacrawler.schema.TableRelationshipType;
 import schemacrawler.schema.TableType;
 import schemacrawler.schema.Trigger;
 
-final class TableReference
+final class TablePartial
   extends AbstractDatabaseObject
   implements Table
 {
@@ -49,7 +49,7 @@ final class TableReference
   private Column column;
   private ForeignKey foreignKey;
 
-  TableReference(final Schema schema, final String tableName)
+  TablePartial(final Schema schema, final String tableName)
   {
     super(schema, tableName);
   }

@@ -28,15 +28,16 @@ import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Table;
 
-final class ColumnReference
+final class ColumnPartial
   extends AbstractDependantObject<Table>
   implements Column
 {
 
   private static final long serialVersionUID = 502720342852782630L;
+
   private Column referencedColumn;
 
-  ColumnReference(final Table parent, final String name)
+  ColumnPartial(final Table parent, final String name)
   {
     super(parent, name);
   }
