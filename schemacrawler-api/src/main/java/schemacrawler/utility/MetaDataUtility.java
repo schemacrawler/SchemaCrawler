@@ -35,40 +35,10 @@ public final class MetaDataUtility
 
   public enum Connectivity
   {
-    unknown
-    {
-      @Override
-      public String arrowhead()
-      {
-        return "vee";
-      }
-    },
-    zero_one
-    {
-      @Override
-      public String arrowhead()
-      {
-        return "teeodot";
-      }
-    },
-    zero_many
-    {
-      @Override
-      public String arrowhead()
-      {
-        return "crowodot";
-      }
-    },
-    one_one
-    {
-      @Override
-      public String arrowhead()
-      {
-        return "teetee";
-      }
-    };
-
-    public abstract String arrowhead();
+    unknown,
+    zero_one,
+    zero_many,
+    one_one;
   }
 
   public static Connectivity getConnectivity(final Column fkColumn)

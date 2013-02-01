@@ -155,7 +155,7 @@ public final class SchemaDotFormatter
       .append(Utility.NEWLINE);
     out.append("        <tr>").append(Utility.NEWLINE);
 
-    int colspan = options.isShowOrdinalNumbers()? 3: 2;
+    final int colspan = options.isShowOrdinalNumbers()? 3: 2;
     out.append("          <td colspan=\"").append(String.valueOf(colspan))
       .append("\" bgcolor=\"").append(tableNameBgColor)
       .append("\" align=\"left\"><b>").append(tableName).append("</b></td>")
@@ -245,6 +245,23 @@ public final class SchemaDotFormatter
   {
   }
 
+  private String arrowhead(final Connectivity connectivity)
+  {
+    switch (connectivity)
+    {
+      case unknown:
+        return "vee";
+      case zero_one:
+        return "teeodot";
+      case zero_many:
+        return "crowodot";
+      case one_one:
+        return "teetee";
+      default:
+        return "vee";
+    }
+  }
+
   private String[] getPortIds(final Column column)
   {
     final String portIds[] = new String[2];
@@ -317,7 +334,7 @@ public final class SchemaDotFormatter
     final Connectivity connectivity = MetaDataUtility
       .getConnectivity(foreignKeyColumn);
     final String pkSymbol = "teetee";
-    final String fkSymbol = connectivity.arrowhead();
+    final String fkSymbol = arrowhead(connectivity);
     final String style;
     if (Utility.isBlank(associationName))
     {
