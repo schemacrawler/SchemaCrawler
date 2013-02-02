@@ -41,6 +41,7 @@ final class GraphGenerator
   private final File dotFile;
   private final String graphOutputFormat;
   private final File diagramFile;
+  private final boolean echo;
 
   GraphGenerator(final String graphVizOptions,
                  final File dotFile,
@@ -64,6 +65,7 @@ final class GraphGenerator
     }
     this.dotFile = dotFile;
 
+    echo = "echo".equals(outputFormat);
     graphOutputFormat = determineGraphOutputFormat(outputFormat);
     diagramFile = determineDiagramFile(diagramOutputFile);
   }
@@ -71,6 +73,12 @@ final class GraphGenerator
   void generateDiagram()
     throws IOException
   {
+
+    if (echo)
+    {
+      Utility.copyFile(dotFile, diagramFile);
+      return;
+    }
 
     final List<String> command = new ArrayList<String>();
     command.add("dot");
@@ -152,6 +160,7 @@ final class GraphGenerator
                                                      "vrml",
                                                      "wbmp",
                                                      "xdot");
+
     if (Utility.isBlank(graphOutputFormat)
         || !outputFormats.contains(graphOutputFormat))
     {

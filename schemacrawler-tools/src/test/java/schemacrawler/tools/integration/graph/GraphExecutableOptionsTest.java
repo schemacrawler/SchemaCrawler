@@ -149,7 +149,7 @@ public class GraphExecutableOptionsTest
     final String referenceFileName = String.format("executableForGraph_%02d",
                                                    testNumber);
     executeExecutableAndCheckForOutputFile(executable,
-                                           "canon",
+                                           "echo",
                                            referenceFileName);
 
     final File testDiagramFile = File.createTempFile("schemacrawler."

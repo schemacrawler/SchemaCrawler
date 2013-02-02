@@ -50,7 +50,7 @@ public final class DatabaseWithAssociations
     final SortedSet<ColumnReference> weakAssociations = table
       .getAttribute(WEAK_ASSOCIATIONS_KEY, new TreeSet<ColumnReference>());
     final List<ColumnReference> weakAssociationsList = new ArrayList<ColumnReference>(weakAssociations);
-    Collections.shuffle(weakAssociationsList);
+    Collections.sort(weakAssociationsList);
     return weakAssociationsList;
   }
 
