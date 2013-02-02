@@ -167,7 +167,7 @@
         <p>
           An example of a SchemaCrawler database diagram:
         </p>
-        <img src="images/diagram.png" width="100%" alt="SchemaCrawler database diagram" />
+        <a href="images/diagram.png" rel="lightbox" title="SchemaCrawler database diagram"><img src="images/diagram.png" width="200" /></a>
       </answer>
     </faq>
   </part>
