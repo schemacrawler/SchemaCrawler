@@ -45,6 +45,14 @@
 					GraphViz command-line option to set is
 					<code>-Gdpi=300</code>.
 				</p>
+				<p>You can decide whether foreign-key names, column ordinal numbers, and schema names are displayed by setting
+				the following properties in the SchemaCrawler configuration file, <span class="code">schemacrawler.config.properties</span>.
+				        <source><![CDATA[
+schemacrawler.format.show_ordinal_numbers=true        
+schemacrawler.format.hide_foreignkey_names=true
+schemacrawler.format.show_unqualified_names=true
+]]></source>
+				</p>
                 <p>
                     For more details, see the diagram example in the
                     <a

@@ -48,6 +48,20 @@
             using a command-line option of
             <span class="code">-grepcolumns=.*\.AUTHOR.*</span>
           </li>
+          <li>Try controlling display of foreign-key names, column ordinal numbers, and schema names by setting
+                the following properties in the SchemaCrawler configuration file, <span class="code">schemacrawler.config.properties</span>.
+                        <source><![CDATA[
+schemacrawler.format.show_ordinal_numbers=true        
+schemacrawler.format.hide_foreignkey_names=true
+schemacrawler.format.show_unqualified_names=true
+]]></source>
+          </li>
+          <li>Try using GraphViz command-line options by setting
+                the following property in the SchemaCrawler configuration file, <span class="code">schemacrawler.config.properties</span>.
+                        <source><![CDATA[
+schemacrawler.graph.graphviz_opts=-Gdpi=300
+]]></source>
+          </li>          
         </ol>
       </subsection>
     </section>
