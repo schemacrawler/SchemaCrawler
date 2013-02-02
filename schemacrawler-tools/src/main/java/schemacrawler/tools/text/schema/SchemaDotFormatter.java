@@ -174,11 +174,10 @@ public final class SchemaDotFormatter
 
     out.append("      </table>").append(Utility.NEWLINE);
     out.append("    >").append(Utility.NEWLINE).append("  ];")
-      .append(Utility.NEWLINE);
+      .append(Utility.NEWLINE).append(Utility.NEWLINE);
 
     if (!isList)
     {
-      out.write(Utility.NEWLINE);
       for (final ForeignKey foreignKey: table.getForeignKeys())
       {
         for (final ColumnReference columnReference: foreignKey
@@ -197,6 +196,9 @@ public final class SchemaDotFormatter
         printWeakAssociations(table);
       }
     }
+
+    out.append(Utility.NEWLINE).append(Utility.NEWLINE);
+
   }
 
   @Override
