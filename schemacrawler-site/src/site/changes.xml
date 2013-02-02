@@ -5,7 +5,12 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-    <release version="9.4" date="2012-11-17">
+    <release version="9.4" date="2013-02-02">
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Fix for honoring text formatting options in GraphViz dot output.
+      ]]></action>                      
+    </release>   
+    <release version="9.3.2" date="2012-11-17">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Fix for honoring sort options on JSON output.
       ]]></action>                      
