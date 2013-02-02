@@ -32,13 +32,14 @@ public class GraphOptions
   extends SchemaTextOptions
 {
 
-  private static final String SC_GRAPHVIZ_OPTS = "SC_GRAPHVIZ_OPTS";
-
   private static final long serialVersionUID = -5850945398335496207L;
 
   private static final String GRAPH_DETAILS = "schemacrawler.graph.details";
-
   private static final String GRAPH_GRAPHVIZ_OPTS = "schemacrawler.graph.graphviz_opts";
+  private static final String SC_GRAPHVIZ_OPTS = "SC_GRAPHVIZ_OPTS";
+
+  private static final Logger LOGGER = Logger.getLogger(GraphOptions.class
+    .getName());
 
   public GraphOptions()
   {
@@ -84,9 +85,6 @@ public class GraphOptions
     }
     setEnumValue(GRAPH_DETAILS, schemaTextDetailType);
   }
-
-  private static final Logger LOGGER = Logger.getLogger(GraphOptions.class
-    .getName());
 
   private String readGraphVizOpts(final Config config)
   {
