@@ -23,6 +23,7 @@ package schemacrawler.schemacrawler;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import sf.util.TemplatingUtility;
 import sf.util.Utility;
@@ -63,10 +64,16 @@ public final class DatabaseConfigConnectionOptions
     final Map<String, String> properties = new HashMap<String, String>(this.properties);
     TemplatingUtility.substituteVariables(properties);
     final String connectionUrl = properties.get(URL);
-    if (!TemplatingUtility.extractTemplateVariables(connectionUrl).isEmpty())
+
+    // Check that all required parameters have been substituted
+    final Set<String> unmatchedVariables = TemplatingUtility
+      .extractTemplateVariables(connectionUrl);
+    if (!unmatchedVariables.isEmpty())
     {
-      throw new IllegalArgumentException("Insufficient parameters for database connection URL");
+      throw new IllegalArgumentException(String.format("Insufficient parameters for database connection URL: missing %s",
+                                                       unmatchedVariables));
     }
+
     return connectionUrl;
   }
 
