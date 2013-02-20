@@ -43,10 +43,10 @@ import schemacrawler.schema.Database;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseExecutable;
 import schemacrawler.tools.executable.CommandChainExecutable;
+import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputWriter;
 import sf.util.FileUtility;
 import sf.util.ObjectToString;
-import sf.util.Utility;
 
 /**
  * Main executor for the scripting engine integration.
@@ -75,14 +75,14 @@ public final class ScriptExecutable
                                  final Connection connection)
     throws Exception
   {
+    if (outputOptions.getOutputFormat() == OutputFormat.text)
+    {
+      throw new SchemaCrawlerException("No script file provided");
+    }
 
     final CommandChainExecutable chain = new CommandChainExecutable();
 
     final String scriptFileName = outputOptions.getOutputFormatValue();
-    if (Utility.isBlank(scriptFileName))
-    {
-      throw new SchemaCrawlerException("No script file provided");
-    }
     final Reader reader;
     final File scriptFile = new File(scriptFileName);
     if (scriptFile.exists() && scriptFile.canRead())
