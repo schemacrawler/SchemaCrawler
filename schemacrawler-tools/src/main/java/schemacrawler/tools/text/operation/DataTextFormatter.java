@@ -175,8 +175,8 @@ final class DataTextFormatter
   {
     while (dataRows.next())
     {
-      final List<String> currentRow = dataRows.row();
-      final String[] columnData = currentRow.toArray(new String[currentRow
+      final List currentRow = dataRows.row();
+      final Object[] columnData = currentRow.toArray(new Object[currentRow
         .size()]);
       out.println(formattingHelper.createRow(columnData));
     }

@@ -62,25 +62,25 @@ PUBLIC.BOOKS.BOOKAUTHORS
 ------------------------------------------------------------------------
 BOOKID	AUTHORID	UPDATE
 1	7	This is the latest update
-2	4	<null>
+2	4	NULL
 2	6	Some update
-3	1	<null>
+3	1	NULL
 3	4	No updates since a week
-3	5	<null>
-3	6	<null>
-4	9	<null>
-5	7	<null>
-5	5	<null>
-6	8	<null>
-6	1	<null>
-7	9	<null>
-7	8	<null>
-8	6	<null>
-9	7	<null>
-9	3	<null>
-9	6	<null>
-10	1	<null>
-10	9	<null>
+3	5	NULL
+3	6	NULL
+4	9	NULL
+5	7	NULL
+5	5	NULL
+6	8	NULL
+6	1	NULL
+7	9	NULL
+7	8	NULL
+8	6	NULL
+9	7	NULL
+9	3	NULL
+9	6	NULL
+10	1	NULL
+10	9	NULL
 
 
 

@@ -236,7 +236,7 @@ abstract class BaseTextFormattingHelper
    *        Column data
    */
   @Override
-  public String createRow(final String... columnData)
+  public String createRow(final Object... columnData)
   {
     OutputFormat outputFormat = this.outputFormat;
     if (outputFormat == OutputFormat.text)
@@ -244,9 +244,24 @@ abstract class BaseTextFormattingHelper
       outputFormat = OutputFormat.tsv;
     }
     final TableRow row = new TableRow(outputFormat);
-    for (final String element: columnData)
+    for (final Object element: columnData)
     {
-      row.add(newTableCell(element, "", outputFormat));
+      if (element == null)
+      {
+        row.add(newTableCell(null, "data_null", outputFormat));
+      }
+      else if (element instanceof BinaryData)
+      {
+        row.add(newTableCell(element.toString(), "data_binary", outputFormat));
+      }
+      else if (element instanceof Number)
+      {
+        row.add(newTableCell(element.toString(), "data_number", outputFormat));
+      }
+      else
+      {
+        row.add(newTableCell(element.toString(), "", outputFormat));
+      }
     }
     return row.toString();
   }

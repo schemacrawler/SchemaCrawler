@@ -40,6 +40,21 @@
 	white-space: pre-line;
 }
 
+.data_binary {
+	font-style: italic;
+	background-color: #FFDDFF;
+}
+
+.data_null {
+	font-weight: bold;
+	background-color: #FFFFDD;
+}
+
+.data_number {
+	text-align: right;
+	padding-right: 5px;
+}
+
 h2 {
 	color: Navy;
 }
