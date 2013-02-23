@@ -4,74 +4,9 @@
   <title>SchemaCrawler Output</title>
   <meta charset="utf-8"/>
   <style>
-.underscore {
-	color: Maroon;
-	border-bottom: 2px solid rgb(190, 190, 190);
-}
-
-.name {
-	font-weight: bold;
-	width: 150px;
-}
-
-.property_name {
-	width: 350px;
-}
-
-.property_value {
-	width: 250px;
-}
-
-.right {
-	text-align: right;
-}
-
-.description {
-	width: 450px;
-}
-
-.ordinal {
-	width: 20px;
-}
-
-.subname {
-	width: 150px;
-}
-
-.type {
-	width: 150px;
-}
-
-.definition {
-	white-space: pre-line;
-}
-
-.data_binary {
-	font-style: italic;
-	background-color: #FFDDFF;
-}
-
-.data_null {
-	font-weight: bold;
-	background-color: #FFFFDD;
-}
-
-.data_number {
-	text-align: right;
-	padding-right: 5px;
-}
-
-h2 {
-	color: Navy;
-}
-
-h3 {
-	color: DarkGreen;
-}
-
-body,p,pre,table,th,td,caption {
+body,p,pre,table,th,td,th,caption {
 	text-align: left;
-	font-family: 'Trebuchet MS';
+	font-family: 'Trebuchet MS', 'sans-serif';
 	font-size: 0.9em;
 	line-height: 1.2em;
 }
@@ -83,23 +18,91 @@ body {
 	margin-left: 3em;
 }
 
-table,th,td {
-	border: 1px solid rgb(220, 220, 220);
+h1,h2 {
+	color: Navy;
+}
+
+h3 {
+	color: DarkGreen;
+}
+
+table,th,td,th {
+	border: 1px solid rgb(230, 230, 230);
 	border-collapse: collapse;
 	vertical-align: top;
 	padding: 2px;
 }
 
 table {
-	width: 600px;
+	width: 800px;
 }
 
 caption {
 	font-weight: bold;
+	color: Maroon;
+	border-bottom: 2px solid rgb(190, 190, 190);
+}
+
+th {
+	font-weight: bold;
+	border-bottom: 1px solid rgb(190, 190, 190);
 }
 
 hr {
 	height: 1px;
+}
+
+.name {
+	font-weight: bold;
+	min-width: 350px;
+}
+
+.property_name {
+	min-width: 350px;
+}
+
+.property_value {
+	min-width: 250px;
+}
+
+.right {
+	text-align: right;
+}
+
+.description {
+	min-width: 450px;
+}
+
+.ordinal {
+	min-width: 20px;
+}
+
+.subname {
+	min-width: 150px;
+}
+
+.type {
+	min-width: 150px;
+}
+
+.definition {
+	white-space: pre-line;
+}
+
+.data_binary {
+	font-style: italic;
+	color: #666;
+}
+
+.data_null {
+	font-weight: italic;
+	color: #666;
+	background-color: #FFEEFF;
+}
+
+.data_number {
+	text-align: right;
+	padding-right: 5px;
 }
   </style>
 </head>
@@ -1722,9 +1725,11 @@ hr {
 <h2>Routines</h2>
 
 <table>
+  <caption>CUSTOMADD</caption>
+
 	<tr>
-		<td colspan='2' class='name underscore'>CUSTOMADD</td>
-		<td class='description right underscore'>[function, does not return a table]</td>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[function, does not return a table]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
@@ -1760,9 +1765,11 @@ hr {
 <p>&#160;</p>
 
 <table>
+  <caption>CUSTOMADD</caption>
+
 	<tr>
-		<td colspan='2' class='name underscore'>CUSTOMADD</td>
-		<td class='description right underscore'>[function, does not return a table]</td>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[function, does not return a table]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
@@ -1793,9 +1800,11 @@ hr {
 <p>&#160;</p>
 
 <table>
+  <caption>NEW_PUBLISHER</caption>
+
 	<tr>
-		<td colspan='2' class='name underscore'>NEW_PUBLISHER</td>
-		<td class='description right underscore'>[procedure, no result]</td>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[procedure, no result]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
@@ -1826,9 +1835,11 @@ hr {
 <p>&#160;</p>
 
 <table>
+  <caption>NEW_PUBLISHER</caption>
+
 	<tr>
-		<td colspan='2' class='name underscore'>NEW_PUBLISHER</td>
-		<td class='description right underscore'>[procedure, no result]</td>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[procedure, no result]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
@@ -1864,9 +1875,11 @@ hr {
 <p>&#160;</p>
 
 <table>
+  <caption>ALLOC_BLOCKS</caption>
+
 	<tr>
-		<td colspan='2' class='name underscore'>ALLOC_BLOCKS</td>
-		<td class='description right underscore'>[procedure, no result]</td>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[procedure, no result]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
@@ -1907,9 +1920,11 @@ hr {
 <p>&#160;</p>
 
 <table>
+  <caption>CONVERT_BLOCK</caption>
+
 	<tr>
-		<td colspan='2' class='name underscore'>CONVERT_BLOCK</td>
-		<td class='description right underscore'>[procedure, no result]</td>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[procedure, no result]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
@@ -1955,9 +1970,11 @@ hr {
 <p>&#160;</p>
 
 <table>
+  <caption>CREATE_EMPTY_BLOCK</caption>
+
 	<tr>
-		<td colspan='2' class='name underscore'>CREATE_EMPTY_BLOCK</td>
-		<td class='description right underscore'>[procedure, no result]</td>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[procedure, no result]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
@@ -1993,9 +2010,11 @@ hr {
 <p>&#160;</p>
 
 <table>
+  <caption>DELETE_BLOCKS</caption>
+
 	<tr>
-		<td colspan='2' class='name underscore'>DELETE_BLOCKS</td>
-		<td class='description right underscore'>[procedure, no result]</td>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[procedure, no result]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
@@ -2041,9 +2060,11 @@ hr {
 <p>&#160;</p>
 
 <table>
+  <caption>DELETE_LOB</caption>
+
 	<tr>
-		<td colspan='2' class='name underscore'>DELETE_LOB</td>
-		<td class='description right underscore'>[procedure, no result]</td>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[procedure, no result]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
@@ -2079,9 +2100,11 @@ hr {
 <p>&#160;</p>
 
 <table>
+  <caption>DELETE_UNUSED</caption>
+
 	<tr>
-		<td colspan='2' class='name underscore'>DELETE_UNUSED</td>
-		<td class='description right underscore'>[procedure, no result]</td>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[procedure, no result]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
@@ -2112,9 +2135,11 @@ hr {
 <p>&#160;</p>
 
 <table>
+  <caption>DELETE_UNUSED_LOBS</caption>
+
 	<tr>
-		<td colspan='2' class='name underscore'>DELETE_UNUSED_LOBS</td>
-		<td class='description right underscore'>[procedure, no result]</td>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[procedure, no result]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
@@ -2145,9 +2170,11 @@ hr {
 <p>&#160;</p>
 
 <table>
+  <caption>DIVIDE_BLOCK</caption>
+
 	<tr>
-		<td colspan='2' class='name underscore'>DIVIDE_BLOCK</td>
-		<td class='description right underscore'>[procedure, no result]</td>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[procedure, no result]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>

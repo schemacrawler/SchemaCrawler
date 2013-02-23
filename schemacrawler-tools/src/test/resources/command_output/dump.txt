@@ -60,11 +60,11 @@ ID	FIRSTNAME	LASTNAME
 PUBLIC.BOOKS.BOOKAUTHORS
 ------------------------------------------------------------------------
 BOOKID	AUTHORID	UPDATE
-1	7	BINARY
+1	7	<binary>
 2	4	NULL
-2	6	BINARY
+2	6	<binary>
 3	1	NULL
-3	4	BINARY
+3	4	<binary>
 3	5	NULL
 3	6	NULL
 4	9	NULL

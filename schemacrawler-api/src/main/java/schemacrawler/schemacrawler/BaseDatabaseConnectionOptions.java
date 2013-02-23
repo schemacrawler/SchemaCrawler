@@ -21,6 +21,9 @@
 package schemacrawler.schemacrawler;
 
 
+import static sf.util.Utility.NEWLINE;
+import static sf.util.Utility.isBlank;
+
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.Driver;
@@ -31,8 +34,6 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import sf.util.Utility;
 
 abstract class BaseDatabaseConnectionOptions
   implements ConnectionOptions
@@ -180,11 +181,11 @@ abstract class BaseDatabaseConnectionOptions
   public void setConnectionProperties(final String connectionPropertiesString)
   {
     connectionProperties = new HashMap<String, String>();
-    if (!Utility.isBlank(connectionPropertiesString))
+    if (!isBlank(connectionPropertiesString))
     {
       for (final String property: connectionPropertiesString.split(";"))
       {
-        if (!Utility.isBlank(property))
+        if (!isBlank(property))
         {
           final String[] propertyValues = property.split("=");
           if (propertyValues.length >= 1)
@@ -237,9 +238,9 @@ abstract class BaseDatabaseConnectionOptions
   {
     final StringBuilder builder = new StringBuilder();
     builder.append("driver=").append(getJdbcDriver().getClass().getName())
-      .append(Utility.NEWLINE);
-    builder.append("url=").append(getConnectionUrl()).append(Utility.NEWLINE);
-    builder.append("user=").append(getUser()).append(Utility.NEWLINE);
+      .append(NEWLINE);
+    builder.append("url=").append(getConnectionUrl()).append(NEWLINE);
+    builder.append("user=").append(getUser()).append(NEWLINE);
     return builder.toString();
   }
 

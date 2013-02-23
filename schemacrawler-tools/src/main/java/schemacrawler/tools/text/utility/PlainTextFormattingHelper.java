@@ -21,8 +21,9 @@
 package schemacrawler.tools.text.utility;
 
 
+import static sf.util.Utility.NEWLINE;
+import static sf.util.Utility.isBlank;
 import schemacrawler.tools.options.OutputFormat;
-import sf.util.Utility;
 
 /**
  * Methods to format entire rows of output as text.
@@ -71,7 +72,7 @@ public class PlainTextFormattingHelper
   @Override
   public String createHeader(final DocumentHeaderType type, final String header)
   {
-    if (!sf.util.Utility.isBlank(header))
+    if (!isBlank(header))
     {
       final String defaultSeparator = separator("=");
 
@@ -79,7 +80,7 @@ public class PlainTextFormattingHelper
       final String separator;
       if (type == null)
       {
-        prefix = Utility.NEWLINE;
+        prefix = NEWLINE;
         separator = defaultSeparator;
       }
       else
@@ -87,11 +88,11 @@ public class PlainTextFormattingHelper
         switch (type)
         {
           case title:
-            prefix = Utility.NEWLINE;
+            prefix = NEWLINE;
             separator = separator("_");
             break;
           case subTitle:
-            prefix = Utility.NEWLINE;
+            prefix = NEWLINE;
             separator = defaultSeparator;
             break;
           case section:
@@ -99,13 +100,12 @@ public class PlainTextFormattingHelper
             separator = separator("-=-");
             break;
           default:
-            prefix = Utility.NEWLINE;
+            prefix = NEWLINE;
             separator = defaultSeparator;
             break;
         }
       }
-      return Utility.NEWLINE + prefix + header + Utility.NEWLINE + separator
-             + Utility.NEWLINE + prefix;
+      return NEWLINE + prefix + header + NEWLINE + separator + NEWLINE + prefix;
     }
     else
     {
@@ -119,7 +119,7 @@ public class PlainTextFormattingHelper
   @Override
   public String createObjectEnd()
   {
-    return Utility.NEWLINE;
+    return NEWLINE;
   }
 
   /**
@@ -128,11 +128,14 @@ public class PlainTextFormattingHelper
   @Override
   public String createObjectStart(final String name)
   {
-    String objectStart = "";
-    if (!sf.util.Utility.isBlank(name))
+    final String objectStart;
+    if (!isBlank(name))
     {
-      objectStart = objectStart + Utility.NEWLINE + name + Utility.NEWLINE
-                    + DASHED_SEPARATOR;
+      objectStart = NEWLINE + name + NEWLINE + DASHED_SEPARATOR;
+    }
+    else
+    {
+      objectStart = "";
     }
     return objectStart;
   }

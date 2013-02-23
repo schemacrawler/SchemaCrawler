@@ -152,9 +152,8 @@ final class SchemaTextFormatter
     }
     else
     {
-      out.print(formattingHelper.createObjectStart(""));
-      out.println(formattingHelper
-        .createNameRow(routineName, routineType, true));
+      out.println(formattingHelper.createObjectStart(routineName));
+      out.println(formattingHelper.createNameRow("", routineType));
 
       printRoutineColumns(routine.getColumns());
       printDefinition("definition", "", routine.getDefinition());
@@ -199,9 +198,8 @@ final class SchemaTextFormatter
     }
     else
     {
-      out.print(formattingHelper.createObjectStart(""));
-      out.println(formattingHelper
-        .createNameRow(synonymName, synonymType, true));
+      out.println(formattingHelper.createObjectStart(synonymName));
+      out.println(formattingHelper.createNameRow("", synonymType));
 
       final String referencedObjectName;
       if (options.isShowUnqualifiedNames())
@@ -258,8 +256,8 @@ final class SchemaTextFormatter
     }
     else
     {
-      out.print(formattingHelper.createObjectStart(""));
-      out.println(formattingHelper.createNameRow(tableName, tableType, true));
+      out.println(formattingHelper.createObjectStart(tableName));
+      out.println(formattingHelper.createNameRow("", tableType));
 
       final List<Column> columns = table.getColumns();
       printTableColumns(columns);
@@ -297,7 +295,7 @@ final class SchemaTextFormatter
         if (Utility.isBlank(tableRemarks) && hasColumnRemarks)
         {
           out.println(formattingHelper.createEmptyRow());
-          out.println(formattingHelper.createNameRow("", "[remarks]", false));
+          out.println(formattingHelper.createNameRow("", "[remarks]"));
         }
         else
         {
@@ -488,8 +486,7 @@ final class SchemaTextFormatter
       definedWith = definedWith + columnDataType.getCreateParameters();
     }
     out.println(formattingHelper.createNameRow(databaseSpecificTypeName,
-                                               "[data type]",
-                                               false));
+                                               "[data type]"));
     out.println(formattingHelper.createDetailRow("", "based on", typeName));
     out.println(formattingHelper.createDescriptionRow(userDefined));
     out.println(formattingHelper.createDescriptionRow(definedWith));
@@ -570,7 +567,7 @@ final class SchemaTextFormatter
     }
     out.println(formattingHelper.createEmptyRow());
     out.println(formattingHelper.createNameRow(definitionName, "[" + heading
-                                                               + "]", false));
+                                                               + "]"));
     out.println(formattingHelper.createDefinitionRow(definition));
   }
 
@@ -620,7 +617,7 @@ final class SchemaTextFormatter
           fkName = name;
         }
         final String fkDetails = "[foreign key" + ruleString + "]";
-        out.println(formattingHelper.createNameRow(fkName, fkDetails, false));
+        out.println(formattingHelper.createNameRow(fkName, fkDetails));
         printColumnReferences(tableName, foreignKey.getColumnReferences()
           .toArray(new ColumnReference[0]));
       }
@@ -652,9 +649,7 @@ final class SchemaTextFormatter
         }
         final String indexDetails = "[" + (index.isUnique()? "": "non-")
                                     + "unique " + indexTypeString + "index]";
-        out.println(formattingHelper.createNameRow(indexName,
-                                                   indexDetails,
-                                                   false));
+        out.println(formattingHelper.createNameRow(indexName, indexDetails));
         printTableColumns(index.getColumns());
       }
     }
@@ -676,8 +671,7 @@ final class SchemaTextFormatter
       {
         pkName = "";
       }
-      out.println(formattingHelper
-        .createNameRow(pkName, "[primary key]", false));
+      out.println(formattingHelper.createNameRow(pkName, "[primary key]"));
       printTableColumns(primaryKey.getColumns());
     }
   }
@@ -691,8 +685,7 @@ final class SchemaTextFormatter
       {
         out.println(formattingHelper.createEmptyRow());
         out.println(formattingHelper.createNameRow(privilege.getName(),
-                                                   "[privilege]",
-                                                   false));
+                                                   "[privilege]"));
         for (final Grant grant: privilege.getGrants())
         {
           final String grantedFrom = grant.getGrantor()
@@ -707,6 +700,7 @@ final class SchemaTextFormatter
 
   private void printRoutineColumns(final List<? extends RoutineColumn<?>> columns)
   {
+
     Collections.sort(columns, NamedObjectSort.getNamedObjectSort(options
       .isAlphabeticalSortForRoutineColumns()));
 
@@ -742,6 +736,7 @@ final class SchemaTextFormatter
 
   private void printTableColumns(final List<? extends Column> columns)
   {
+
     Collections.sort(columns, NamedObjectSort.getNamedObjectSort(options
       .isAlphabeticalSortForTableColumns()));
 
@@ -809,9 +804,7 @@ final class SchemaTextFormatter
         out.println(formattingHelper.createEmptyRow());
 
         final String triggerName = trigger.getName();
-        out.println(formattingHelper.createNameRow(triggerName,
-                                                   triggerType,
-                                                   false));
+        out.println(formattingHelper.createNameRow(triggerName, triggerType));
 
         if (!Utility.isBlank(actionCondition))
         {
@@ -835,9 +828,7 @@ final class SchemaTextFormatter
     for (final ColumnReference weakAssociation: weakAssociations)
     {
       out.println(formattingHelper.createEmptyRow());
-      out.println(formattingHelper.createNameRow("",
-                                                 "[weak association]",
-                                                 false));
+      out.println(formattingHelper.createNameRow("", "[weak association]"));
       printColumnReferences(tableName, weakAssociation);
     }
   }

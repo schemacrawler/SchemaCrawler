@@ -436,8 +436,10 @@ Tables
 ========================================================================
 
 
-PUBLIC.BOOKS.AUTHORS                                             [table]
+
+PUBLIC.BOOKS.AUTHORS
 ------------------------------------------------------------------------
+                                                                 [table]
   ID                                INTEGER not null            
   FIRSTNAME                         VARCHAR(20) not null        
   LASTNAME                          VARCHAR(20) not null        
@@ -504,8 +506,10 @@ UPDATE                                                       [privilege]
 Contact details for book authors
 
 
-PUBLIC.BOOKS.AUTHORSLIST                                          [view]
+
+PUBLIC.BOOKS.AUTHORSLIST
 ------------------------------------------------------------------------
+                                                                  [view]
   ID                                INTEGER                     
   FIRSTNAME                         VARCHAR(20)                 
   LASTNAME                          VARCHAR(20)                 
@@ -532,8 +536,10 @@ UPDATE                                                       [privilege]
   _SYSTEM --> DBA (grantable)                                   
 
 
-PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
+
+PUBLIC.BOOKS.BOOKAUTHORS
 ------------------------------------------------------------------------
+                                                                 [table]
   BOOKID                            INTEGER not null            
   AUTHORID                          INTEGER not null            
   "UPDATE"                          CLOB                        
@@ -582,8 +588,10 @@ UPDATE                                                       [privilege]
 Relationship between books and their authors, along with the latest updated information
 
 
-PUBLIC.BOOKS.BOOKS                                               [table]
+
+PUBLIC.BOOKS.BOOKS
 ------------------------------------------------------------------------
+                                                                 [table]
   ID                                INTEGER not null            
   TITLE                             VARCHAR(255) not null       
   DESCRIPTION                       VARCHAR(255)                
@@ -643,8 +651,10 @@ Details for published books
   PRICE                             Current price for the book  
 
 
-PUBLIC.BOOKS."Global Counts"                                     [table]
+
+PUBLIC.BOOKS."Global Counts"
 ------------------------------------------------------------------------
+                                                                 [table]
   "Global Count"                    INTEGER                     
 
 DELETE                                                       [privilege]
@@ -666,8 +676,10 @@ UPDATE                                                       [privilege]
   _SYSTEM --> DBA (grantable)                                   
 
 
-PUBLIC.BOOKS.PUBLISHERS                                          [table]
+
+PUBLIC.BOOKS.PUBLISHERS
 ------------------------------------------------------------------------
+                                                                 [table]
   ID                                INTEGER not null            
   PUBLISHER                         VARCHAR(255)                
 
@@ -707,8 +719,10 @@ List of book publishers
   PUBLISHER                         Name of book publisher      
 
 
-PUBLIC.FOR_LINT.EXTRA_PK                                         [table]
+
+PUBLIC.FOR_LINT.EXTRA_PK
 ------------------------------------------------------------------------
+                                                                 [table]
   ID                                INTEGER not null            
   WRITERID                          BIGINT not null             
   PUBLICATIONID                     INTEGER not null            
@@ -759,8 +773,10 @@ UPDATE                                                       [privilege]
   _SYSTEM --> DBA (grantable)                                   
 
 
-PUBLIC.FOR_LINT."Global Counts"                                  [table]
+
+PUBLIC.FOR_LINT."Global Counts"
 ------------------------------------------------------------------------
+                                                                 [table]
   "Global Count"                    INTEGER                     
 
 DELETE                                                       [privilege]
@@ -782,8 +798,10 @@ UPDATE                                                       [privilege]
   _SYSTEM --> DBA (grantable)                                   
 
 
-PUBLIC.FOR_LINT.PUBLICATIONS                                     [table]
+
+PUBLIC.FOR_LINT.PUBLICATIONS
 ------------------------------------------------------------------------
+                                                                 [table]
   ID                                INTEGER not null            
   TITLE                             VARCHAR(255) not null       
   DESCRIPTION                       VARCHAR(255)                
@@ -839,8 +857,10 @@ UPDATE                                                       [privilege]
   _SYSTEM --> DBA (grantable)                                   
 
 
-PUBLIC.FOR_LINT.WRITERS                                          [table]
+
+PUBLIC.FOR_LINT.WRITERS
 ------------------------------------------------------------------------
+                                                                 [table]
   ID                                BIGINT not null             
   FIRSTNAME                         VARCHAR(20) not null        
   LASTNAME                          VARCHAR(20) not null        
@@ -933,8 +953,10 @@ UPDATE                                                       [privilege]
   _SYSTEM --> DBA (grantable)                                   
 
 
-PUBLIC."PUBLISHER SALES".REGIONS                                 [table]
+
+PUBLIC."PUBLISHER SALES".REGIONS
 ------------------------------------------------------------------------
+                                                                 [table]
   CITY                              VARCHAR(50) not null        
   STATE                             VARCHAR(2) not null         
   POSTALCODE                        VARCHAR(10) not null        
@@ -983,8 +1005,10 @@ UPDATE                                                       [privilege]
   _SYSTEM --> DBA (grantable)                                   
 
 
-PUBLIC."PUBLISHER SALES".SALES                                   [table]
+
+PUBLIC."PUBLISHER SALES".SALES
 ------------------------------------------------------------------------
+                                                                 [table]
   POSTALCODE                        VARCHAR(10) not null        
   COUNTRY                           VARCHAR(50) not null        
   BOOKID                            INTEGER                     
@@ -1033,8 +1057,10 @@ Routines
 ========================================================================
 
 
-PUBLIC.BOOKS.CUSTOMADD               [function, does not return a table]
+
+PUBLIC.BOOKS.CUSTOMADD
 ------------------------------------------------------------------------
+                                     [function, does not return a table]
   ONE                               INTEGER, in                 
   TWO                               INTEGER, in                 
 
@@ -1045,8 +1071,10 @@ CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER,IN TWO INTEGER) RETURNS INTEGER S
 CUSTOMADD_10102
 
 
-PUBLIC.BOOKS.CUSTOMADD               [function, does not return a table]
+
+PUBLIC.BOOKS.CUSTOMADD
 ------------------------------------------------------------------------
+                                     [function, does not return a table]
   ONE                               INTEGER, in                 
 
                                                             [definition]
@@ -1056,8 +1084,10 @@ CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER) RETURNS INTEGER SPECIFIC CUSTOMA
 CUSTOMADD_10103
 
 
-PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
+
+PUBLIC.BOOKS.NEW_PUBLISHER
 ------------------------------------------------------------------------
+                                                  [procedure, no result]
   PUBLISHER                         CHARACTER VARYING, out      
 
                                                             [definition]
@@ -1067,8 +1097,10 @@ CREATE PROCEDURE BOOKS.NEW_PUBLISHER(OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUB
 NEW_PUBLISHER_10100
 
 
-PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
+
+PUBLIC.BOOKS.NEW_PUBLISHER
 ------------------------------------------------------------------------
+                                                  [procedure, no result]
   NEWPUBLISHER                      CHARACTER VARYING, in       
   PUBLISHER                         CHARACTER VARYING, out      
 
@@ -1079,8 +1111,10 @@ CREATE PROCEDURE BOOKS.NEW_PUBLISHER(IN NEWPUBLISHER VARCHAR(50),OUT PUBLISHER V
 NEW_PUBLISHER_10101
 
 
-PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS                   [procedure, no result]
+
+PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS
 ------------------------------------------------------------------------
+                                                  [procedure, no result]
   B_COUNT                           INTEGER, in                 
   B_OFFSET                          INTEGER, in                 
   L_ID                              BIGINT, in                  
@@ -1092,8 +1126,10 @@ CREATE PROCEDURE SYSTEM_LOBS.ALLOC_BLOCKS(IN B_COUNT INTEGER,IN B_OFFSET INTEGER
 ALLOC_BLOCKS_10057
 
 
-PUBLIC.SYSTEM_LOBS.CONVERT_BLOCK                  [procedure, no result]
+
+PUBLIC.SYSTEM_LOBS.CONVERT_BLOCK
 ------------------------------------------------------------------------
+                                                  [procedure, no result]
   B_ADDR                            INTEGER, in                 
   B_COUNT                           INTEGER, in                 
   B_OFFSET                          INTEGER, in                 
@@ -1106,8 +1142,10 @@ CREATE PROCEDURE SYSTEM_LOBS.CONVERT_BLOCK(IN B_ADDR INTEGER,IN B_COUNT INTEGER,
 CONVERT_BLOCK_10019
 
 
-PUBLIC.SYSTEM_LOBS.CREATE_EMPTY_BLOCK             [procedure, no result]
+
+PUBLIC.SYSTEM_LOBS.CREATE_EMPTY_BLOCK
 ------------------------------------------------------------------------
+                                                  [procedure, no result]
   B_ADDR                            INTEGER, in/ out            
   B_COUNT                           INTEGER, in                 
 
@@ -1118,8 +1156,10 @@ CREATE PROCEDURE SYSTEM_LOBS.CREATE_EMPTY_BLOCK(INOUT B_ADDR INTEGER,IN B_COUNT 
 CREATE_EMPTY_BLOCK_10049
 
 
-PUBLIC.SYSTEM_LOBS.DELETE_BLOCKS                  [procedure, no result]
+
+PUBLIC.SYSTEM_LOBS.DELETE_BLOCKS
 ------------------------------------------------------------------------
+                                                  [procedure, no result]
   L_ID                              BIGINT, in                  
   B_OFFSET                          INTEGER, in                 
   B_LIMIT                           INTEGER, in                 
@@ -1132,8 +1172,10 @@ CREATE PROCEDURE SYSTEM_LOBS.DELETE_BLOCKS(IN L_ID BIGINT,IN B_OFFSET INTEGER,IN
 DELETE_BLOCKS_10046
 
 
-PUBLIC.SYSTEM_LOBS.DELETE_LOB                     [procedure, no result]
+
+PUBLIC.SYSTEM_LOBS.DELETE_LOB
 ------------------------------------------------------------------------
+                                                  [procedure, no result]
   L_ID                              BIGINT, in                  
   TX_ID                             BIGINT, in                  
 
@@ -1144,8 +1186,10 @@ CREATE PROCEDURE SYSTEM_LOBS.DELETE_LOB(IN L_ID BIGINT,IN TX_ID BIGINT) SPECIFIC
 DELETE_LOB_10021
 
 
-PUBLIC.SYSTEM_LOBS.DELETE_UNUSED                  [procedure, no result]
+
+PUBLIC.SYSTEM_LOBS.DELETE_UNUSED
 ------------------------------------------------------------------------
+                                                  [procedure, no result]
   L_IDS                             BIGINT ARRAY, in            
 
                                                             [definition]
@@ -1155,8 +1199,10 @@ CREATE PROCEDURE SYSTEM_LOBS.DELETE_UNUSED(IN L_IDS BIGINT ARRAY) SPECIFIC DELET
 DELETE_UNUSED_10034
 
 
-PUBLIC.SYSTEM_LOBS.DELETE_UNUSED_LOBS             [procedure, no result]
+
+PUBLIC.SYSTEM_LOBS.DELETE_UNUSED_LOBS
 ------------------------------------------------------------------------
+                                                  [procedure, no result]
   LIMIT_ID                          BIGINT, in                  
 
                                                             [definition]
@@ -1166,8 +1212,10 @@ CREATE PROCEDURE SYSTEM_LOBS.DELETE_UNUSED_LOBS(IN LIMIT_ID BIGINT) SPECIFIC DEL
 DELETE_UNUSED_LOBS_10044
 
 
-PUBLIC.SYSTEM_LOBS.DIVIDE_BLOCK                   [procedure, no result]
+
+PUBLIC.SYSTEM_LOBS.DIVIDE_BLOCK
 ------------------------------------------------------------------------
+                                                  [procedure, no result]
   B_OFFSET                          INTEGER, in                 
   L_ID                              BIGINT, in                  
 

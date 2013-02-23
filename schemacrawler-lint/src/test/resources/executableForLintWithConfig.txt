@@ -36,22 +36,28 @@ Lints
 ========================================================================
 
 
-PUBLIC.BOOKS."Global Counts"                                     [table]
+
+PUBLIC.BOOKS."Global Counts"
 ------------------------------------------------------------------------
+                                                                 [table]
 
                                                           [lint, medium]
 	single column	
 
 
-PUBLIC.FOR_LINT."Global Counts"                                  [table]
+
+PUBLIC.FOR_LINT."Global Counts"
 ------------------------------------------------------------------------
+                                                                 [table]
 
                                                           [lint, medium]
 	single column	
 
 
-PUBLIC.FOR_LINT.No_Columns                                       [table]
+
+PUBLIC.FOR_LINT.No_Columns
 ------------------------------------------------------------------------
+                                                                 [table]
 
                                                           [lint, medium]
 	single column	

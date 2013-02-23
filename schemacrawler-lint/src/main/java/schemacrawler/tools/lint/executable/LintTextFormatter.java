@@ -58,9 +58,7 @@ final class LintTextFormatter
     {
       out.print(formattingHelper.createObjectStart(""));
 
-      final String nameRow = formattingHelper.createNameRow("",
-                                                            "[database]",
-                                                            true);
+      final String nameRow = formattingHelper.createNameRow("", "[database]");
       out.println(nameRow);
 
       printLints(lints);
@@ -81,8 +79,9 @@ final class LintTextFormatter
     final Collection<Lint<?>> lints = SimpleLintCollector.getLint(table);
     if (lints != null && !lints.isEmpty())
     {
-      out.print(formattingHelper.createObjectStart(""));
-      printTableName(table);
+      out.println(formattingHelper.createObjectStart(table.getFullName()));
+      final String tableType = "[" + table.getTableType() + "]";
+      out.println(formattingHelper.createNameRow("", tableType));
       printLints(lints);
       out.println(formattingHelper.createObjectEnd());
 
@@ -131,7 +130,7 @@ final class LintTextFormatter
       }
 
       out.println(formattingHelper.createNameRow("", String
-        .format("[lint, %s]", severity), false));
+        .format("[lint, %s]", severity)));
       final List<Lint<?>> lintsById = new ArrayList<Lint<?>>(multiMap.get(severity));
       for (final Lint<?> lint: lintsById)
       {
@@ -151,17 +150,6 @@ final class LintTextFormatter
         }
       }
     }
-  }
-
-  private void printTableName(final Table table)
-  {
-    final String nameRow = formattingHelper.createNameRow(table.getFullName(),
-                                                          "["
-                                                              + table
-                                                                .getTableType()
-                                                              + "]",
-                                                          true);
-    out.println(nameRow);
   }
 
 }

@@ -436,8 +436,10 @@ Routines
 ========================================================================
 
 
-CUSTOMADD,"[function, does not return a table]"
+
+CUSTOMADD
 ------------------------------------------------------------------------
+"","[function, does not return a table]"
 "",ONE,"INTEGER, in"
 "",TWO,"INTEGER, in"
 ""
@@ -448,8 +450,10 @@ CUSTOMADD,"[function, does not return a table]"
 CUSTOMADD_10102
 
 
-CUSTOMADD,"[function, does not return a table]"
+
+CUSTOMADD
 ------------------------------------------------------------------------
+"","[function, does not return a table]"
 "",ONE,"INTEGER, in"
 ""
 "",[definition]
@@ -459,8 +463,10 @@ CUSTOMADD,"[function, does not return a table]"
 CUSTOMADD_10103
 
 
-NEW_PUBLISHER,"[procedure, no result]"
+
+NEW_PUBLISHER
 ------------------------------------------------------------------------
+"","[procedure, no result]"
 "",PUBLISHER,"CHARACTER VARYING, out"
 ""
 "",[definition]
@@ -470,8 +476,10 @@ CREATE PROCEDURE BOOKS.NEW_PUBLISHER(OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUB
 NEW_PUBLISHER_10100
 
 
-NEW_PUBLISHER,"[procedure, no result]"
+
+NEW_PUBLISHER
 ------------------------------------------------------------------------
+"","[procedure, no result]"
 "",NEWPUBLISHER,"CHARACTER VARYING, in"
 "",PUBLISHER,"CHARACTER VARYING, out"
 ""
@@ -482,8 +490,10 @@ NEW_PUBLISHER,"[procedure, no result]"
 NEW_PUBLISHER_10101
 
 
-ALLOC_BLOCKS,"[procedure, no result]"
+
+ALLOC_BLOCKS
 ------------------------------------------------------------------------
+"","[procedure, no result]"
 "",B_COUNT,"INTEGER, in"
 "",B_OFFSET,"INTEGER, in"
 "",L_ID,"BIGINT, in"
@@ -495,8 +505,10 @@ ALLOC_BLOCKS,"[procedure, no result]"
 ALLOC_BLOCKS_10057
 
 
-CONVERT_BLOCK,"[procedure, no result]"
+
+CONVERT_BLOCK
 ------------------------------------------------------------------------
+"","[procedure, no result]"
 "",B_ADDR,"INTEGER, in"
 "",B_COUNT,"INTEGER, in"
 "",B_OFFSET,"INTEGER, in"
@@ -509,8 +521,10 @@ CONVERT_BLOCK,"[procedure, no result]"
 CONVERT_BLOCK_10019
 
 
-CREATE_EMPTY_BLOCK,"[procedure, no result]"
+
+CREATE_EMPTY_BLOCK
 ------------------------------------------------------------------------
+"","[procedure, no result]"
 "",B_ADDR,"INTEGER, in/ out"
 "",B_COUNT,"INTEGER, in"
 ""
@@ -521,8 +535,10 @@ CREATE_EMPTY_BLOCK,"[procedure, no result]"
 CREATE_EMPTY_BLOCK_10049
 
 
-DELETE_BLOCKS,"[procedure, no result]"
+
+DELETE_BLOCKS
 ------------------------------------------------------------------------
+"","[procedure, no result]"
 "",L_ID,"BIGINT, in"
 "",B_OFFSET,"INTEGER, in"
 "",B_LIMIT,"INTEGER, in"
@@ -535,8 +551,10 @@ DELETE_BLOCKS,"[procedure, no result]"
 DELETE_BLOCKS_10046
 
 
-DELETE_LOB,"[procedure, no result]"
+
+DELETE_LOB
 ------------------------------------------------------------------------
+"","[procedure, no result]"
 "",L_ID,"BIGINT, in"
 "",TX_ID,"BIGINT, in"
 ""
@@ -547,8 +565,10 @@ DELETE_LOB,"[procedure, no result]"
 DELETE_LOB_10021
 
 
-DELETE_UNUSED,"[procedure, no result]"
+
+DELETE_UNUSED
 ------------------------------------------------------------------------
+"","[procedure, no result]"
 "",L_IDS,"BIGINT ARRAY, in"
 ""
 "",[definition]
@@ -558,8 +578,10 @@ DELETE_UNUSED,"[procedure, no result]"
 DELETE_UNUSED_10034
 
 
-DELETE_UNUSED_LOBS,"[procedure, no result]"
+
+DELETE_UNUSED_LOBS
 ------------------------------------------------------------------------
+"","[procedure, no result]"
 "",LIMIT_ID,"BIGINT, in"
 ""
 "",[definition]
@@ -569,8 +591,10 @@ DELETE_UNUSED_LOBS,"[procedure, no result]"
 DELETE_UNUSED_LOBS_10044
 
 
-DIVIDE_BLOCK,"[procedure, no result]"
+
+DIVIDE_BLOCK
 ------------------------------------------------------------------------
+"","[procedure, no result]"
 "",B_OFFSET,"INTEGER, in"
 "",L_ID,"BIGINT, in"
 ""

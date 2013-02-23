@@ -63,22 +63,25 @@ Lints
 
 
 "",[database]
-------------------------------------------------------------------------
 ""
 "","[lint, medium]"
 "",column with same name but different data types,"ID [BIGINT, INTEGER]"
 "",cycles in table relationships,""
 
 
-PUBLIC.FOR_LINT.EXTRA_PK,[table]
+
+PUBLIC.FOR_LINT.EXTRA_PK
 ------------------------------------------------------------------------
+"",[table]
 ""
 "","[lint, medium]"
 "",useless surrogate key,PK_EXTRA_PK
 
 
-"PUBLIC.FOR_LINT.""Global Counts""",[table]
+
+PUBLIC.FOR_LINT."Global Counts"
 ------------------------------------------------------------------------
+"",[table]
 ""
 "","[lint, medium]"
 "",no indices,""
@@ -87,8 +90,10 @@ PUBLIC.FOR_LINT.EXTRA_PK,[table]
 "",single column,""
 
 
-PUBLIC.FOR_LINT.PUBLICATIONS,[table]
+
+PUBLIC.FOR_LINT.PUBLICATIONS
 ------------------------------------------------------------------------
+"",[table]
 ""
 "","[lint, medium]"
 "","spaces in name, or reserved word","""UPDATE"""
@@ -96,8 +101,10 @@ PUBLIC.FOR_LINT.PUBLICATIONS,[table]
 "",too many binary objects,"""UPDATE"", PRESS_RELEASE"
 
 
-PUBLIC.FOR_LINT.WRITERS,[table]
+
+PUBLIC.FOR_LINT.WRITERS
 ------------------------------------------------------------------------
+"",[table]
 ""
 "","[lint, high]"
 "",foreign key and primary key have different data types,FK_WRITERS_PUBLICATION

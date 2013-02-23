@@ -5,8 +5,10 @@ Routines
 ========================================================================
 
 
-PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS                   [procedure, no result]
+
+PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS
 ------------------------------------------------------------------------
+                                                  [procedure, no result]
   B_COUNT                           INTEGER, in                 
   B_OFFSET                          INTEGER, in                 
   L_ID                              BIGINT, in                  
@@ -18,8 +20,10 @@ CREATE PROCEDURE SYSTEM_LOBS.ALLOC_BLOCKS(IN B_COUNT INTEGER,IN B_OFFSET INTEGER
 ALLOC_BLOCKS_10057
 
 
-PUBLIC.SYSTEM_LOBS.CONVERT_BLOCK                  [procedure, no result]
+
+PUBLIC.SYSTEM_LOBS.CONVERT_BLOCK
 ------------------------------------------------------------------------
+                                                  [procedure, no result]
   B_ADDR                            INTEGER, in                 
   B_COUNT                           INTEGER, in                 
   B_OFFSET                          INTEGER, in                 
@@ -32,8 +36,10 @@ CREATE PROCEDURE SYSTEM_LOBS.CONVERT_BLOCK(IN B_ADDR INTEGER,IN B_COUNT INTEGER,
 CONVERT_BLOCK_10019
 
 
-PUBLIC.SYSTEM_LOBS.DELETE_BLOCKS                  [procedure, no result]
+
+PUBLIC.SYSTEM_LOBS.DELETE_BLOCKS
 ------------------------------------------------------------------------
+                                                  [procedure, no result]
   L_ID                              BIGINT, in                  
   B_OFFSET                          INTEGER, in                 
   B_LIMIT                           INTEGER, in                 
@@ -46,8 +52,10 @@ CREATE PROCEDURE SYSTEM_LOBS.DELETE_BLOCKS(IN L_ID BIGINT,IN B_OFFSET INTEGER,IN
 DELETE_BLOCKS_10046
 
 
-PUBLIC.SYSTEM_LOBS.DIVIDE_BLOCK                   [procedure, no result]
+
+PUBLIC.SYSTEM_LOBS.DIVIDE_BLOCK
 ------------------------------------------------------------------------
+                                                  [procedure, no result]
   B_OFFSET                          INTEGER, in                 
   L_ID                              BIGINT, in                  
 

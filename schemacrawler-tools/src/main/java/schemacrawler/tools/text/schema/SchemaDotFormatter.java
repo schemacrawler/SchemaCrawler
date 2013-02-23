@@ -21,6 +21,12 @@
 package schemacrawler.tools.text.schema;
 
 
+import static schemacrawler.utility.MetaDataUtility.getConnectivity;
+import static sf.util.Utility.NEWLINE;
+import static sf.util.Utility.convertForComparison;
+import static sf.util.Utility.isBlank;
+import static sf.util.Utility.pastelColorHTMLValue;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -41,10 +47,8 @@ import schemacrawler.tools.analysis.associations.DatabaseWithAssociations;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.BaseDotFormatter;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
-import schemacrawler.utility.MetaDataUtility;
 import schemacrawler.utility.MetaDataUtility.Connectivity;
 import schemacrawler.utility.NamedObjectSort;
-import sf.util.Utility;
 
 /**
  * GraphViz DOT formatting of schema.
@@ -138,7 +142,7 @@ public final class SchemaDotFormatter
     final String tableNameBgColor;
     if (!colorMap.containsKey(schema))
     {
-      tableNameBgColor = Utility.pastelColorHTMLValue(schema.getFullName());
+      tableNameBgColor = pastelColorHTMLValue(schema.getFullName());
       colorMap.put(schema, tableNameBgColor);
     }
     else
@@ -147,24 +151,24 @@ public final class SchemaDotFormatter
     }
 
     out.append("  /* ").append(table.getFullName())
-      .append(" -=-=-=-=-=-=-=-=-=-=-=-=-=- */").append(Utility.NEWLINE);
-    out.append("  \"").append(nodeId(table)).append("\" [")
-      .append(Utility.NEWLINE).append("    label=<").append(Utility.NEWLINE);
+      .append(" -=-=-=-=-=-=-=-=-=-=-=-=-=- */").append(NEWLINE);
+    out.append("  \"").append(nodeId(table)).append("\" [").append(NEWLINE)
+      .append("    label=<").append(NEWLINE);
     out
       .append("      <table border=\"1\" cellborder=\"0\" cellpadding=\"2\" cellspacing=\"0\" bgcolor=\"white\">")
-      .append(Utility.NEWLINE);
-    out.append("        <tr>").append(Utility.NEWLINE);
+      .append(NEWLINE);
+    out.append("        <tr>").append(NEWLINE);
 
     final int colspan = options.isShowOrdinalNumbers()? 3: 2;
     out.append("          <td colspan=\"").append(String.valueOf(colspan))
       .append("\" bgcolor=\"").append(tableNameBgColor)
       .append("\" align=\"left\"><b>").append(tableName).append("</b></td>")
-      .append(Utility.NEWLINE);
+      .append(NEWLINE);
 
     out.append("          <td bgcolor=\"").append(tableNameBgColor)
       .append("\" align=\"right\">").append(tableType).append("</td>")
-      .append(Utility.NEWLINE);
-    out.append("        </tr>").append(Utility.NEWLINE);
+      .append(NEWLINE);
+    out.append("        </tr>").append(NEWLINE);
 
     if (!isList)
     {
@@ -172,9 +176,9 @@ public final class SchemaDotFormatter
       printTableColumns(columns);
     }
 
-    out.append("      </table>").append(Utility.NEWLINE);
-    out.append("    >").append(Utility.NEWLINE).append("  ];")
-      .append(Utility.NEWLINE).append(Utility.NEWLINE);
+    out.append("      </table>").append(NEWLINE);
+    out.append("    >").append(NEWLINE).append("  ];").append(NEWLINE)
+      .append(NEWLINE);
 
     if (!isList)
     {
@@ -197,7 +201,7 @@ public final class SchemaDotFormatter
       }
     }
 
-    out.append(Utility.NEWLINE).append(Utility.NEWLINE);
+    out.append(NEWLINE).append(NEWLINE);
 
   }
 
@@ -307,7 +311,7 @@ public final class SchemaDotFormatter
     }
     else
     {
-      return Utility.convertForComparison(namedObject.getName()) + "_"
+      return convertForComparison(namedObject.getName()) + "_"
              + Integer.toHexString(namedObject.getFullName().hashCode());
     }
   }
@@ -333,12 +337,11 @@ public final class SchemaDotFormatter
     final String[] pkPortIds = getPortIds(primaryKeyColumn);
     final String[] fkPortIds = getPortIds(foreignKeyColumn);
 
-    final Connectivity connectivity = MetaDataUtility
-      .getConnectivity(foreignKeyColumn);
+    final Connectivity connectivity = getConnectivity(foreignKeyColumn);
     final String pkSymbol = "teetee";
     final String fkSymbol = arrowhead(connectivity);
     final String style;
-    if (Utility.isBlank(associationName))
+    if (isBlank(associationName))
     {
       style = "dashed";
     }
@@ -373,7 +376,7 @@ public final class SchemaDotFormatter
       final String nullable = column.isNullable()? "": " not null";
       final String columnDetails = columnType + nullable;
 
-      out.append("        <tr>").append(Utility.NEWLINE);
+      out.append("        <tr>").append(NEWLINE);
       out.append("          <td port=\"").append(nodeId(column))
         .append(".start\" ");
       if (options.isShowOrdinalNumbers())
@@ -382,7 +385,7 @@ public final class SchemaDotFormatter
         final String ordinalNumberString = String.valueOf(column
           .getOrdinalPosition());
         out.append(ordinalNumberString);
-        out.append("</td>").append(Utility.NEWLINE).append("          <td ");
+        out.append("</td>").append(NEWLINE).append("          <td ");
       }
       out.append("align=\"left\">");
       if (column.isPartOfPrimaryKey())
@@ -394,13 +397,13 @@ public final class SchemaDotFormatter
       {
         out.append("</u></i></b>");
       }
-      out.append("</td>").append(Utility.NEWLINE);
-      out.append("          <td> </td>").append(Utility.NEWLINE);
+      out.append("</td>").append(NEWLINE);
+      out.append("          <td> </td>").append(NEWLINE);
       out.append("          <td port=\"").append(nodeId(column))
         .append(".end\" align=\"right\">");
       out.append(columnDetails);
-      out.append("</td>").append(Utility.NEWLINE);
-      out.append("        </tr>").append(Utility.NEWLINE);
+      out.append("</td>").append(NEWLINE);
+      out.append("        </tr>").append(NEWLINE);
     }
 
   }

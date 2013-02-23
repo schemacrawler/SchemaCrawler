@@ -5,8 +5,10 @@ Tables
 ========================================================================
 
 
-PUBLIC.BOOKS.BOOKS                                               [table]
+
+PUBLIC.BOOKS.BOOKS
 ------------------------------------------------------------------------
+                                                                 [table]
   ID                                INTEGER not null            
   TITLE                             VARCHAR(255) not null       
   DESCRIPTION                       VARCHAR(255)                
@@ -42,8 +44,10 @@ Details for published books
   PRICE                             Current price for the book  
 
 
-PUBLIC.FOR_LINT.PUBLICATIONS                                     [table]
+
+PUBLIC.FOR_LINT.PUBLICATIONS
 ------------------------------------------------------------------------
+                                                                 [table]
   ID                                INTEGER not null            
   TITLE                             VARCHAR(255) not null       
   DESCRIPTION                       VARCHAR(255)                
