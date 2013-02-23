@@ -212,7 +212,7 @@ ifexists,[driver property]
 password,[driver property]
 "",""
 "",required
-"",value,null
+"",value,NULL
 
 shutdown,[driver property]
 "",""
@@ -222,7 +222,7 @@ shutdown,[driver property]
 user,[driver property]
 "",""
 "",required
-"",value,null
+"",value,NULL
 
 
 

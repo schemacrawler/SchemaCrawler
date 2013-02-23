@@ -18,7 +18,7 @@ Database Information
 
 database product name                     SQLite                        
 database product version                  3.7.8                         
-database user name                        null                          
+database user name                        NULL                          
 
 
 JDBC Driver Information
@@ -27,7 +27,7 @@ JDBC Driver Information
 driver name                               SQLiteJDBC                    
 driver version                            native                        
 driver class name                         org.sqlite.JDBC               
-url                                       jdbc:sqlite:C:\Users\SUALEH~1\AppData\Local\Temp\SchemaCrawler8018476919521795167.dat
+url                                       jdbc:sqlite:C:\Users\SUALEH~1\AppData\Local\Temp\SchemaCrawler7194814090195316895.dat
 is JDBC compliant                         false                         
 
 
@@ -327,25 +327,25 @@ BookAuthors
 ------------------------------------------------------------------------
 BookId	AuthorId	UPDATE
 1	7	This is the latest update
-2	4	<null>
+2	4	NULL
 2	6	Some update
-3	1	<null>
+3	1	NULL
 3	4	No updates since a week
-3	5	<null>
-3	6	<null>
-4	9	<null>
-5	5	<null>
-5	7	<null>
-6	1	<null>
-6	8	<null>
-7	8	<null>
-7	9	<null>
-8	6	<null>
-9	3	<null>
-9	6	<null>
-9	7	<null>
-10	1	<null>
-10	9	<null>
+3	5	NULL
+3	6	NULL
+4	9	NULL
+5	5	NULL
+5	7	NULL
+6	1	NULL
+6	8	NULL
+7	8	NULL
+7	9	NULL
+8	6	NULL
+9	3	NULL
+9	6	NULL
+9	7	NULL
+10	1	NULL
+10	9	NULL
 
 
 

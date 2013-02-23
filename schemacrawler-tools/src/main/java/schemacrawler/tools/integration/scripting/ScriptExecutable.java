@@ -75,14 +75,13 @@ public final class ScriptExecutable
                                  final Connection connection)
     throws Exception
   {
+
+    final String scriptFileName = outputOptions.getOutputFormatValue();
     if (outputOptions.getOutputFormat() == OutputFormat.text)
     {
       throw new SchemaCrawlerException("No script file provided");
     }
 
-    final CommandChainExecutable chain = new CommandChainExecutable();
-
-    final String scriptFileName = outputOptions.getOutputFormatValue();
     final Reader reader;
     final File scriptFile = new File(scriptFileName);
     if (scriptFile.exists() && scriptFile.canRead())
@@ -155,7 +154,7 @@ public final class ScriptExecutable
 
     final ScriptEngine scriptEngine = scriptEngineFactory.getScriptEngine();
     final Writer writer = new PrintWriter(new OutputWriter(outputOptions), true);
-
+    final CommandChainExecutable chain = new CommandChainExecutable();
     try
     {
       // Set up the context

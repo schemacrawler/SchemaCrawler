@@ -133,7 +133,14 @@ final class TableCell
       buffer.append(" class='").append(styleClass).append("'");
     }
     buffer.append(">");
-    buffer.append(Entities.XML.escape(String.valueOf(text)));
+    if (text == null)
+    {
+      buffer.append("NULL");
+    }
+    else
+    {
+      buffer.append(Entities.XML.escape(String.valueOf(text)));
+    }
     buffer.append("</td>");
 
     return buffer.toString();
@@ -146,13 +153,15 @@ final class TableCell
    */
   private String toPlainTextString()
   {
+    final String value = this.text == null? "NULL": this.text;
+
     if (outputFormat == OutputFormat.csv)
     {
-      return escapeAndQuoteCsv(text);
+      return escapeAndQuoteCsv(value);
     }
     else if (outputFormat == OutputFormat.tsv)
     {
-      return String.valueOf(text);
+      return String.valueOf(value);
     }
     else
     {
@@ -160,16 +169,16 @@ final class TableCell
       {
         if (align == Alignment.right)
         {
-          return String.format("%" + characterWidth + "s", text);
+          return String.format("%" + characterWidth + "s", value);
         }
         else
         {
-          return String.format("%-" + characterWidth + "s", text);
+          return String.format("%-" + characterWidth + "s", value);
         }
       }
       else
       {
-        return text;
+        return value;
       }
     }
   }

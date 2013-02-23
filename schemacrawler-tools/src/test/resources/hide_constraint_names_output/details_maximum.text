@@ -212,7 +212,7 @@ ifexists                                               [driver property]
 password                                               [driver property]
   
   required
-  value                             null                        
+  value                             NULL                        
 
 shutdown                                               [driver property]
   
@@ -222,7 +222,7 @@ shutdown                                               [driver property]
 user                                                   [driver property]
   
   required
-  value                             null                        
+  value                             NULL                        
 
 
 
@@ -1263,26 +1263,26 @@ ID	FIRSTNAME	LASTNAME
 PUBLIC.BOOKS.BOOKAUTHORS
 ------------------------------------------------------------------------
 BOOKID	AUTHORID	UPDATE
-1	7	<binary>
-2	4	<null>
-2	6	<binary>
-3	1	<null>
-3	4	<binary>
-3	5	<null>
-3	6	<null>
-4	9	<null>
-5	5	<null>
-5	7	<null>
-6	1	<null>
-6	8	<null>
-7	8	<null>
-7	9	<null>
-8	6	<null>
-9	3	<null>
-9	6	<null>
-9	7	<null>
-10	1	<null>
-10	9	<null>
+1	7	BINARY
+2	4	NULL
+2	6	BINARY
+3	1	NULL
+3	4	BINARY
+3	5	NULL
+3	6	NULL
+4	9	NULL
+5	5	NULL
+5	7	NULL
+6	1	NULL
+6	8	NULL
+7	8	NULL
+7	9	NULL
+8	6	NULL
+9	3	NULL
+9	6	NULL
+9	7	NULL
+10	1	NULL
+10	9	NULL
 
 
 

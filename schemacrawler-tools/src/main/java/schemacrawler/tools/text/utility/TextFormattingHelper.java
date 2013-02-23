@@ -154,7 +154,7 @@ public interface TextFormattingHelper
    *        Column data
    * @return Row of data
    */
-  String createRow(String... columnData);
+  String createRow(Object... columnData);
 
   /**
    * Creates a header row for data.

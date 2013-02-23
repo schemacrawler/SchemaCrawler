@@ -138,8 +138,10 @@ public abstract class BaseDotFormatter<O extends BaseTextOptions>
       return;
     }
 
-    out
-      .append("      </table>    >\n    labeljust=r\n    labelloc=b\n  ];\n\n");
+    out.append("      </table>    >").append(Utility.NEWLINE)
+      .append("    labeljust=r").append(Utility.NEWLINE)
+      .append("    labelloc=b").append(Utility.NEWLINE).append("  ];")
+      .append(Utility.NEWLINE).append(Utility.NEWLINE);
   }
 
   @Override
@@ -150,8 +152,9 @@ public abstract class BaseDotFormatter<O extends BaseTextOptions>
     {
       return;
     }
-    out
-      .append("  graph [\n    label=<\n<table border=\"1\" cellborder=\"0\" cellspacing=\"0\">")
+    out.append("  graph [").append(Utility.NEWLINE).append("    label=<")
+      .append(Utility.NEWLINE)
+      .append("<table border=\"1\" cellborder=\"0\" cellspacing=\"0\">")
       .append(Utility.NEWLINE);
   }
 }

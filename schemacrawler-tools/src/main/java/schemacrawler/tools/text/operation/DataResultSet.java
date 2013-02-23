@@ -21,6 +21,8 @@
 package schemacrawler.tools.text.operation;
 
 
+import static sf.util.Utility.readFully;
+
 import java.io.BufferedInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -31,15 +33,15 @@ import java.sql.NClob;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.hsqldb.types.Types;
-
 import schemacrawler.schema.ResultsColumn;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.text.utility.BinaryData;
 import schemacrawler.utility.SchemaCrawlerUtility;
 
 /**
@@ -52,9 +54,6 @@ final class DataResultSet
 
   private static final Logger LOGGER = Logger.getLogger(DataResultSet.class
     .getName());
-
-  private static final String NULL = "<null>";
-  private static final String BINARY = "<binary>";
 
   private final ResultSet rows;
   private final List<ResultsColumn> resultsColumns;
@@ -90,15 +89,14 @@ final class DataResultSet
     return rows.next();
   }
 
-  public List<String> row()
+  public List row()
     throws SQLException
   {
     final int columnCount = resultsColumns.size();
-    final List<String> currentRow = new ArrayList<String>(columnCount);
+    final List currentRow = new ArrayList(columnCount);
     for (int i = 0; i < columnCount; i++)
     {
-      final String columnDataString = convertColumnDataToString(i);
-      currentRow.add(columnDataString);
+      currentRow.add(getColumnData(i));
     }
 
     return currentRow;
@@ -109,21 +107,21 @@ final class DataResultSet
     return resultsColumns.size();
   }
 
-  private String convertColumnDataToString(final int i)
+  private Object getColumnData(final int i)
     throws SQLException
   {
     final int javaSqlType = resultsColumns.get(i).getColumnDataType().getType();
-    String columnDataString;
+    Object columnData;
     if (javaSqlType == Types.CLOB)
     {
       final Clob clob = rows.getClob(i + 1);
       if (rows.wasNull() || clob == null)
       {
-        columnDataString = NULL;
+        columnData = null;
       }
       else
       {
-        columnDataString = readClob(clob);
+        columnData = readClob(clob);
       }
     }
     else if (javaSqlType == Types.NCLOB)
@@ -131,11 +129,11 @@ final class DataResultSet
       final NClob nClob = rows.getNClob(i + 1);
       if (rows.wasNull() || nClob == null)
       {
-        columnDataString = NULL;
+        columnData = null;
       }
       else
       {
-        columnDataString = readClob(nClob);
+        columnData = readClob(nClob);
       }
     }
     else if (javaSqlType == Types.BLOB)
@@ -143,11 +141,11 @@ final class DataResultSet
       final Blob blob = rows.getBlob(i + 1);
       if (rows.wasNull() || blob == null)
       {
-        columnDataString = NULL;
+        columnData = null;
       }
       else
       {
-        columnDataString = readBlob(blob);
+        columnData = readBlob(blob);
       }
     }
     else if (javaSqlType == Types.LONGVARBINARY)
@@ -155,11 +153,11 @@ final class DataResultSet
       final InputStream stream = rows.getBinaryStream(i + 1);
       if (rows.wasNull() || stream == null)
       {
-        columnDataString = NULL;
+        columnData = null;
       }
       else
       {
-        columnDataString = readStream(stream);
+        columnData = readStream(stream);
       }
     }
     else if (javaSqlType == Types.LONGNVARCHAR
@@ -168,38 +166,34 @@ final class DataResultSet
       final InputStream stream = rows.getAsciiStream(i + 1);
       if (rows.wasNull() || stream == null)
       {
-        columnDataString = NULL;
+        columnData = null;
       }
       else
       {
-        columnDataString = readStream(stream);
+        columnData = readStream(stream);
       }
     }
     else
     {
-      final Object columnData = rows.getObject(i + 1);
-      if (rows.wasNull() || columnData == null)
+      columnData = rows.getObject(i + 1);
+      if (rows.wasNull())
       {
-        columnDataString = NULL;
-      }
-      else
-      {
-        columnDataString = columnData.toString();
+        columnData = null;
       }
     }
-    return columnDataString;
+    return columnData;
   }
 
-  private String readBlob(final Blob blob)
+  private BinaryData readBlob(final Blob blob)
   {
     if (blob == null)
     {
-      return NULL;
+      return null;
     }
     else if (showLobs)
     {
       InputStream in = null;
-      String lobData;
+      BinaryData lobData;
       try
       {
         try
@@ -213,36 +207,36 @@ final class DataResultSet
 
         if (in != null)
         {
-          lobData = sf.util.Utility.readFully(in);
+          lobData = new BinaryData(readFully(in));
         }
         else
         {
-          lobData = BINARY;
+          lobData = new BinaryData();
         }
       }
       catch (final SQLException e)
       {
         LOGGER.log(Level.WARNING, "Could not read BLOB data", e);
-        lobData = BINARY;
+        lobData = new BinaryData();
       }
       return lobData;
     }
     else
     {
-      return BINARY;
+      return new BinaryData();
     }
   }
 
-  private String readClob(final Clob clob)
+  private BinaryData readClob(final Clob clob)
   {
     if (clob == null)
     {
-      return NULL;
+      return null;
     }
     else if (showLobs)
     {
       Reader rdr = null;
-      String lobData;
+      BinaryData lobData;
       try
       {
         try
@@ -267,29 +261,30 @@ final class DataResultSet
 
         if (rdr != null)
         {
-          lobData = sf.util.Utility.readFully(rdr);
-          if (lobData.length() == 0)
+          String lobDataString = readFully(rdr);
+          if (lobDataString.isEmpty())
           {
             // Attempt yet another read
             final long clobLength = clob.length();
-            lobData = clob.getSubString(1, (int) clobLength);
+            lobDataString = clob.getSubString(1, (int) clobLength);
           }
+          lobData = new BinaryData(lobDataString);
         }
         else
         {
-          lobData = BINARY;
+          lobData = new BinaryData();
         }
       }
       catch (final SQLException e)
       {
         LOGGER.log(Level.WARNING, "Could not read CLOB data", e);
-        lobData = BINARY;
+        lobData = new BinaryData();
       }
       return lobData;
     }
     else
     {
-      return BINARY;
+      return new BinaryData();
     }
   }
 
@@ -301,21 +296,21 @@ final class DataResultSet
    *        Column data object returned by JDBC
    * @return A string with the contents of the LOB
    */
-  private String readStream(final InputStream stream)
+  private BinaryData readStream(final InputStream stream)
   {
     if (stream == null)
     {
-      return NULL;
+      return null;
     }
     else if (showLobs)
     {
       final BufferedInputStream in = new BufferedInputStream(stream);
-      final String lobData = sf.util.Utility.readFully(in);
+      final BinaryData lobData = new BinaryData(readFully(in));
       return lobData;
     }
     else
     {
-      return BINARY;
+      return new BinaryData();
     }
   }
 }
