@@ -4,74 +4,9 @@
   <title>SchemaCrawler Output</title>
   <meta charset="utf-8"/>
   <style>
-.underscore {
-	color: Maroon;
-	border-bottom: 2px solid rgb(190, 190, 190);
-}
-
-.name {
-	font-weight: bold;
-	width: 150px;
-}
-
-.property_name {
-	width: 350px;
-}
-
-.property_value {
-	width: 250px;
-}
-
-.right {
-	text-align: right;
-}
-
-.description {
-	width: 450px;
-}
-
-.ordinal {
-	width: 20px;
-}
-
-.subname {
-	width: 150px;
-}
-
-.type {
-	width: 150px;
-}
-
-.definition {
-	white-space: pre-line;
-}
-
-.data_binary {
-	font-style: italic;
-	background-color: #FFDDFF;
-}
-
-.data_null {
-	font-weight: bold;
-	background-color: #FFFFDD;
-}
-
-.data_number {
-	text-align: right;
-	padding-right: 5px;
-}
-
-h2 {
-	color: Navy;
-}
-
-h3 {
-	color: DarkGreen;
-}
-
-body,p,pre,table,th,td,caption {
+body,p,pre,table,th,td,th,caption {
 	text-align: left;
-	font-family: 'Trebuchet MS';
+	font-family: 'Trebuchet MS', 'sans-serif';
 	font-size: 0.9em;
 	line-height: 1.2em;
 }
@@ -83,23 +18,91 @@ body {
 	margin-left: 3em;
 }
 
-table,th,td {
-	border: 1px solid rgb(220, 220, 220);
+h1,h2 {
+	color: Navy;
+}
+
+h3 {
+	color: DarkGreen;
+}
+
+table,th,td,th {
+	border: 1px solid rgb(230, 230, 230);
 	border-collapse: collapse;
 	vertical-align: top;
 	padding: 2px;
 }
 
 table {
-	width: 600px;
+	width: 800px;
 }
 
 caption {
 	font-weight: bold;
+	color: Maroon;
+	border-bottom: 2px solid rgb(190, 190, 190);
+}
+
+th {
+	font-weight: bold;
+	border-bottom: 1px solid rgb(190, 190, 190);
 }
 
 hr {
 	height: 1px;
+}
+
+.name {
+	font-weight: bold;
+	min-width: 350px;
+}
+
+.property_name {
+	min-width: 350px;
+}
+
+.property_value {
+	min-width: 250px;
+}
+
+.right {
+	text-align: right;
+}
+
+.description {
+	min-width: 450px;
+}
+
+.ordinal {
+	min-width: 20px;
+}
+
+.subname {
+	min-width: 150px;
+}
+
+.type {
+	min-width: 150px;
+}
+
+.definition {
+	white-space: pre-line;
+}
+
+.data_binary {
+	font-style: italic;
+	color: #666;
+}
+
+.data_null {
+	font-weight: italic;
+	color: #666;
+	background-color: #FFEEFF;
+}
+
+.data_number {
+	text-align: right;
+	padding-right: 5px;
 }
   </style>
 </head>

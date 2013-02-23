@@ -21,6 +21,8 @@
 package schemacrawler.tools.text.utility;
 
 
+import static sf.util.Utility.NEWLINE;
+import static sf.util.Utility.isBlank;
 import schemacrawler.tools.options.OutputFormat;
 import sf.util.Utility;
 
@@ -36,8 +38,7 @@ public final class HtmlFormattingHelper
   /**
    * HTML footer.
    */
-  private static final String HTML_FOOTER = "</body>" + Utility.NEWLINE
-                                            + "</html>";
+  private static final String HTML_FOOTER = "</body>" + NEWLINE + "</html>";
   /**
    * HTML header.
    */
@@ -48,14 +49,12 @@ public final class HtmlFormattingHelper
     final String styleSheet = Utility
       .readResourceFully("/schemacrawler-output.css");
 
-    return "<!DOCTYPE html>" + Utility.NEWLINE
-           + "<html xmlns='http://www.w3.org/1999/xhtml'>" + Utility.NEWLINE
-           + "<head>" + Utility.NEWLINE
-           + "  <title>SchemaCrawler Output</title>" + Utility.NEWLINE
-           + "  <meta charset=\"utf-8\"/>" + Utility.NEWLINE + "  <style>"
-           + Utility.NEWLINE + styleSheet + Utility.NEWLINE + "  </style>"
-           + Utility.NEWLINE + "</head>" + Utility.NEWLINE + "<body>"
-           + Utility.NEWLINE;
+    return "<!DOCTYPE html>" + NEWLINE
+           + "<html xmlns='http://www.w3.org/1999/xhtml'>" + NEWLINE + "<head>"
+           + NEWLINE + "  <title>SchemaCrawler Output</title>" + NEWLINE
+           + "  <meta charset=\"utf-8\"/>" + NEWLINE + "  <style>" + NEWLINE
+           + styleSheet + NEWLINE + "  </style>" + NEWLINE + "</head>"
+           + NEWLINE + "<body>" + NEWLINE;
   }
 
   public HtmlFormattingHelper(final OutputFormat outputFormat)
@@ -90,7 +89,7 @@ public final class HtmlFormattingHelper
   @Override
   public String createHeader(final DocumentHeaderType type, final String header)
   {
-    if (!sf.util.Utility.isBlank(header))
+    if (!isBlank(header))
     {
       final String prefix;
       final String headerTag;
@@ -139,7 +138,7 @@ public final class HtmlFormattingHelper
   @Override
   public String createObjectEnd()
   {
-    return "</table>" + Utility.NEWLINE + "<p>&#160;</p>" + Utility.NEWLINE;
+    return "</table>" + NEWLINE + "<p>&#160;</p>" + NEWLINE;
   }
 
   /**
@@ -148,11 +147,10 @@ public final class HtmlFormattingHelper
   @Override
   public String createObjectStart(final String name)
   {
-    String objectStart = "<table>" + Utility.NEWLINE;
-    if (!sf.util.Utility.isBlank(name))
+    String objectStart = "<table>" + NEWLINE;
+    if (!isBlank(name))
     {
-      objectStart = objectStart + "  <caption>" + name + "</caption>"
-                    + Utility.NEWLINE;
+      objectStart = objectStart + "  <caption>" + name + "</caption>" + NEWLINE;
     }
     return objectStart;
   }

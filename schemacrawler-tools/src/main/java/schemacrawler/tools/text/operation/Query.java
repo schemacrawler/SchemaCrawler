@@ -53,7 +53,8 @@ final class Query
     {
       final Column column = columns.get(i);
       final JavaSqlTypeGroup javaSqlTypeGroup = JavaSqlTypesUtility
-        .lookupSqlDataType(column.getColumnDataType().getType()).getJavaSqlTypeGroup();
+        .lookupSqlDataType(column.getColumnDataType().getType())
+        .getJavaSqlTypeGroup();
       if (javaSqlTypeGroup != JavaSqlTypeGroup.large_object)
       {
         if (i > 0)

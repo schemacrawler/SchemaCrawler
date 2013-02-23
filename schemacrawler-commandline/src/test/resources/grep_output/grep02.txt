@@ -5,8 +5,10 @@ Tables
 ========================================================================
 
 
-PUBLIC.BOOKS.AUTHORS                                             [table]
+
+PUBLIC.BOOKS.AUTHORS
 ------------------------------------------------------------------------
+                                                                 [table]
   ID                                INTEGER not null            
   FIRSTNAME                         VARCHAR(20) not null        
   LASTNAME                          VARCHAR(20) not null        
@@ -55,8 +57,10 @@ BOOKS.AUTHORS.LASTNAME IS NOT NULL
 Contact details for book authors
 
 
-PUBLIC.BOOKS.AUTHORSLIST                                          [view]
+
+PUBLIC.BOOKS.AUTHORSLIST
 ------------------------------------------------------------------------
+                                                                  [view]
   ID                                INTEGER                     
   FIRSTNAME                         VARCHAR(20)                 
   LASTNAME                          VARCHAR(20)                 
@@ -65,8 +69,10 @@ PUBLIC.BOOKS.AUTHORSLIST                                          [view]
 SELECT ID,FIRSTNAME,LASTNAME FROM BOOKS.AUTHORS
 
 
-PUBLIC.FOR_LINT.WRITERS                                          [table]
+
+PUBLIC.FOR_LINT.WRITERS
 ------------------------------------------------------------------------
+                                                                 [table]
   ID                                BIGINT not null             
   FIRSTNAME                         VARCHAR(20) not null        
   LASTNAME                          VARCHAR(20) not null        

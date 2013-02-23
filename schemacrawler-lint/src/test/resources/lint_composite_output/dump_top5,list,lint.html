@@ -4,74 +4,9 @@
   <title>SchemaCrawler Output</title>
   <meta charset="utf-8"/>
   <style>
-.underscore {
-	color: Maroon;
-	border-bottom: 2px solid rgb(190, 190, 190);
-}
-
-.name {
-	font-weight: bold;
-	width: 150px;
-}
-
-.property_name {
-	width: 350px;
-}
-
-.property_value {
-	width: 250px;
-}
-
-.right {
-	text-align: right;
-}
-
-.description {
-	width: 450px;
-}
-
-.ordinal {
-	width: 20px;
-}
-
-.subname {
-	width: 150px;
-}
-
-.type {
-	width: 150px;
-}
-
-.definition {
-	white-space: pre-line;
-}
-
-.data_binary {
-	font-style: italic;
-	background-color: #FFDDFF;
-}
-
-.data_null {
-	font-weight: bold;
-	background-color: #FFFFDD;
-}
-
-.data_number {
-	text-align: right;
-	padding-right: 5px;
-}
-
-h2 {
-	color: Navy;
-}
-
-h3 {
-	color: DarkGreen;
-}
-
-body,p,pre,table,th,td,caption {
+body,p,pre,table,th,td,th,caption {
 	text-align: left;
-	font-family: 'Trebuchet MS';
+	font-family: 'Trebuchet MS', 'sans-serif';
 	font-size: 0.9em;
 	line-height: 1.2em;
 }
@@ -83,23 +18,91 @@ body {
 	margin-left: 3em;
 }
 
-table,th,td {
-	border: 1px solid rgb(220, 220, 220);
+h1,h2 {
+	color: Navy;
+}
+
+h3 {
+	color: DarkGreen;
+}
+
+table,th,td,th {
+	border: 1px solid rgb(230, 230, 230);
 	border-collapse: collapse;
 	vertical-align: top;
 	padding: 2px;
 }
 
 table {
-	width: 600px;
+	width: 800px;
 }
 
 caption {
 	font-weight: bold;
+	color: Maroon;
+	border-bottom: 2px solid rgb(190, 190, 190);
+}
+
+th {
+	font-weight: bold;
+	border-bottom: 1px solid rgb(190, 190, 190);
 }
 
 hr {
 	height: 1px;
+}
+
+.name {
+	font-weight: bold;
+	min-width: 350px;
+}
+
+.property_name {
+	min-width: 350px;
+}
+
+.property_value {
+	min-width: 250px;
+}
+
+.right {
+	text-align: right;
+}
+
+.description {
+	min-width: 450px;
+}
+
+.ordinal {
+	min-width: 20px;
+}
+
+.subname {
+	min-width: 150px;
+}
+
+.type {
+	min-width: 150px;
+}
+
+.definition {
+	white-space: pre-line;
+}
+
+.data_binary {
+	font-style: italic;
+	color: #666;
+}
+
+.data_null {
+	font-weight: italic;
+	color: #666;
+	background-color: #FFEEFF;
+}
+
+.data_number {
+	text-align: right;
+	padding-right: 5px;
 }
   </style>
 </head>
@@ -173,9 +176,9 @@ hr {
   <caption>PUBLIC.FOR_LINT.EXTRA_PK</caption>
 
 	<tr>
-		<td class='name'>ID</td>
-		<td class='name'>WRITERID</td>
-		<td class='name'>PUBLICATIONID</td>
+		<th>ID</th>
+		<th>WRITERID</th>
+		<th>PUBLICATIONID</th>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -184,7 +187,7 @@ hr {
   <caption>PUBLIC.FOR_LINT."Global Counts"</caption>
 
 	<tr>
-		<td class='name'>Global Count</td>
+		<th>Global Count</th>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -193,12 +196,12 @@ hr {
   <caption>PUBLIC.FOR_LINT.PUBLICATIONS</caption>
 
 	<tr>
-		<td class='name'>ID</td>
-		<td class='name'>TITLE</td>
-		<td class='name'>DESCRIPTION</td>
-		<td class='name'>WRITERID</td>
-		<td class='name'>PUBLICATIONDATE</td>
-		<td class='name'>PRICE</td>
+		<th>ID</th>
+		<th>TITLE</th>
+		<th>DESCRIPTION</th>
+		<th>WRITERID</th>
+		<th>PUBLICATIONDATE</th>
+		<th>PRICE</th>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -207,24 +210,24 @@ hr {
   <caption>PUBLIC.FOR_LINT.WRITERS</caption>
 
 	<tr>
-		<td class='name'>ID</td>
-		<td class='name'>FIRSTNAME</td>
-		<td class='name'>LASTNAME</td>
-		<td class='name'>ADDRESS1</td>
-		<td class='name'>ADDRESS2</td>
-		<td class='name'>CITY</td>
-		<td class='name'>STATE</td>
-		<td class='name'>POSTALCODE</td>
-		<td class='name'>COUNTRY</td>
-		<td class='name'>PHONE1</td>
-		<td class='name'>PHONE2</td>
-		<td class='name'>EMAIL1</td>
-		<td class='name'>EMAIL2</td>
-		<td class='name'>FAX</td>
-		<td class='name'>FAX3</td>
-		<td class='name'>HOMEEMAIL11</td>
-		<td class='name'>HOMEEMAIL12</td>
-		<td class='name'>PUBLICATION_ID</td>
+		<th>ID</th>
+		<th>FIRSTNAME</th>
+		<th>LASTNAME</th>
+		<th>ADDRESS1</th>
+		<th>ADDRESS2</th>
+		<th>CITY</th>
+		<th>STATE</th>
+		<th>POSTALCODE</th>
+		<th>COUNTRY</th>
+		<th>PHONE1</th>
+		<th>PHONE2</th>
+		<th>EMAIL1</th>
+		<th>EMAIL2</th>
+		<th>FAX</th>
+		<th>FAX3</th>
+		<th>HOMEEMAIL11</th>
+		<th>HOMEEMAIL12</th>
+		<th>PUBLICATION_ID</th>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -256,8 +259,8 @@ hr {
 
 <table>
 	<tr>
-		<td colspan='2' class='name underscore'></td>
-		<td class='description right underscore'>[database]</td>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[database]</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -280,9 +283,11 @@ hr {
 <p>&#160;</p>
 
 <table>
+  <caption>PUBLIC.FOR_LINT.EXTRA_PK</caption>
+
 	<tr>
-		<td colspan='2' class='name underscore'>PUBLIC.FOR_LINT.EXTRA_PK</td>
-		<td class='description right underscore'>[table]</td>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[table]</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -300,9 +305,11 @@ hr {
 <p>&#160;</p>
 
 <table>
+  <caption>PUBLIC.FOR_LINT."Global Counts"</caption>
+
 	<tr>
-		<td colspan='2' class='name underscore'>PUBLIC.FOR_LINT.&quot;Global Counts&quot;</td>
-		<td class='description right underscore'>[table]</td>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[table]</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -335,9 +342,11 @@ hr {
 <p>&#160;</p>
 
 <table>
+  <caption>PUBLIC.FOR_LINT.PUBLICATIONS</caption>
+
 	<tr>
-		<td colspan='2' class='name underscore'>PUBLIC.FOR_LINT.PUBLICATIONS</td>
-		<td class='description right underscore'>[table]</td>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[table]</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -364,9 +373,11 @@ hr {
 <p>&#160;</p>
 
 <table>
+  <caption>PUBLIC.FOR_LINT.WRITERS</caption>
+
 	<tr>
-		<td colspan='2' class='name underscore'>PUBLIC.FOR_LINT.WRITERS</td>
-		<td class='description right underscore'>[table]</td>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[table]</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>

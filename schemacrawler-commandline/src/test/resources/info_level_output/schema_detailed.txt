@@ -36,8 +36,10 @@ Tables
 ========================================================================
 
 
-PUBLIC.BOOKS.AUTHORS                                             [table]
+
+PUBLIC.BOOKS.AUTHORS
 ------------------------------------------------------------------------
+                                                                 [table]
   ID                                INTEGER not null            
   FIRSTNAME                         VARCHAR(20) not null        
   LASTNAME                          VARCHAR(20) not null        
@@ -83,8 +85,10 @@ SYS_CT_10070                                          [check constraint]
 BOOKS.AUTHORS.LASTNAME IS NOT NULL
 
 
-PUBLIC.BOOKS.AUTHORSLIST                                          [view]
+
+PUBLIC.BOOKS.AUTHORSLIST
 ------------------------------------------------------------------------
+                                                                  [view]
   ID                                INTEGER                     
   FIRSTNAME                         VARCHAR(20)                 
   LASTNAME                          VARCHAR(20)                 
@@ -93,8 +97,10 @@ PUBLIC.BOOKS.AUTHORSLIST                                          [view]
 SELECT ID,FIRSTNAME,LASTNAME FROM BOOKS.AUTHORS
 
 
-PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
+
+PUBLIC.BOOKS.BOOKAUTHORS
 ------------------------------------------------------------------------
+                                                                 [table]
   BOOKID                            INTEGER not null            
   AUTHORID                          INTEGER not null            
   "UPDATE"                          CLOB                        
@@ -122,8 +128,10 @@ SYS_CT_10084                                          [check constraint]
 BOOKS.BOOKAUTHORS.AUTHORID IS NOT NULL
 
 
-PUBLIC.BOOKS.BOOKS                                               [table]
+
+PUBLIC.BOOKS.BOOKS
 ------------------------------------------------------------------------
+                                                                 [table]
   ID                                INTEGER not null            
   TITLE                             VARCHAR(255) not null       
   DESCRIPTION                       VARCHAR(255)                
@@ -150,13 +158,17 @@ SYS_CT_10078                                          [check constraint]
 BOOKS.BOOKS.PUBLISHERID IS NOT NULL
 
 
-PUBLIC.BOOKS."Global Counts"                                     [table]
+
+PUBLIC.BOOKS."Global Counts"
 ------------------------------------------------------------------------
+                                                                 [table]
   "Global Count"                    INTEGER                     
 
 
-PUBLIC.BOOKS.PUBLISHERS                                          [table]
+
+PUBLIC.BOOKS.PUBLISHERS
 ------------------------------------------------------------------------
+                                                                 [table]
   ID                                INTEGER not null            
   PUBLISHER                         VARCHAR(255)                
 
@@ -170,8 +182,10 @@ SYS_CT_10065                                          [check constraint]
 BOOKS.PUBLISHERS.ID IS NOT NULL
 
 
-PUBLIC.FOR_LINT.EXTRA_PK                                         [table]
+
+PUBLIC.FOR_LINT.EXTRA_PK
 ------------------------------------------------------------------------
+                                                                 [table]
   ID                                INTEGER not null            
   WRITERID                          BIGINT not null             
   PUBLICATIONID                     INTEGER not null            
@@ -204,17 +218,23 @@ SYS_CT_10146                                          [check constraint]
 FOR_LINT.EXTRA_PK.PUBLICATIONID IS NOT NULL
 
 
-PUBLIC.FOR_LINT."Global Counts"                                  [table]
+
+PUBLIC.FOR_LINT."Global Counts"
 ------------------------------------------------------------------------
+                                                                 [table]
   "Global Count"                    INTEGER                     
 
 
-PUBLIC.FOR_LINT.No_Columns                                       [table]
+
+PUBLIC.FOR_LINT.No_Columns
 ------------------------------------------------------------------------
+                                                                 [table]
 
 
-PUBLIC.FOR_LINT.PUBLICATIONS                                     [table]
+
+PUBLIC.FOR_LINT.PUBLICATIONS
 ------------------------------------------------------------------------
+                                                                 [table]
   ID                                INTEGER not null            
   TITLE                             VARCHAR(255) not null       
   DESCRIPTION                       VARCHAR(255)                
@@ -252,8 +272,10 @@ SYS_CT_10135                                          [check constraint]
 FOR_LINT.PUBLICATIONS.WRITERID IS NOT NULL
 
 
-PUBLIC.FOR_LINT.WRITERS                                          [table]
+
+PUBLIC.FOR_LINT.WRITERS
 ------------------------------------------------------------------------
+                                                                 [table]
   ID                                BIGINT not null             
   FIRSTNAME                         VARCHAR(20) not null        
   LASTNAME                          VARCHAR(20) not null        
@@ -328,8 +350,10 @@ SYS_CT_10125                                          [check constraint]
 FOR_LINT.WRITERS.PUBLICATION_ID IS NOT NULL
 
 
-PUBLIC."PUBLISHER SALES".REGIONS                                 [table]
+
+PUBLIC."PUBLISHER SALES".REGIONS
 ------------------------------------------------------------------------
+                                                                 [table]
   CITY                              VARCHAR(50) not null        
   STATE                             VARCHAR(2) not null         
   POSTALCODE                        VARCHAR(10) not null        
@@ -360,8 +384,10 @@ SYS_CT_10108                                          [check constraint]
 "PUBLISHER SALES".REGIONS.COUNTRY IS NOT NULL
 
 
-PUBLIC."PUBLISHER SALES".SALES                                   [table]
+
+PUBLIC."PUBLISHER SALES".SALES
 ------------------------------------------------------------------------
+                                                                 [table]
   POSTALCODE                        VARCHAR(10) not null        
   COUNTRY                           VARCHAR(50) not null        
   BOOKID                            INTEGER                     
@@ -389,8 +415,10 @@ Routines
 ========================================================================
 
 
-PUBLIC.BOOKS.CUSTOMADD               [function, does not return a table]
+
+PUBLIC.BOOKS.CUSTOMADD
 ------------------------------------------------------------------------
+                                     [function, does not return a table]
   ONE                               INTEGER, in                 
   TWO                               INTEGER, in                 
 
@@ -398,24 +426,30 @@ PUBLIC.BOOKS.CUSTOMADD               [function, does not return a table]
 CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER,IN TWO INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10102 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN ONE+TWO
 
 
-PUBLIC.BOOKS.CUSTOMADD               [function, does not return a table]
+
+PUBLIC.BOOKS.CUSTOMADD
 ------------------------------------------------------------------------
+                                     [function, does not return a table]
   ONE                               INTEGER, in                 
 
                                                             [definition]
 CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10103 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN BOOKS.CUSTOMADD(ONE,1)
 
 
-PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
+
+PUBLIC.BOOKS.NEW_PUBLISHER
 ------------------------------------------------------------------------
+                                                  [procedure, no result]
   PUBLISHER                         CHARACTER VARYING, out      
 
                                                             [definition]
 CREATE PROCEDURE BOOKS.NEW_PUBLISHER(OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10100 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = 'New Publisher'
 
 
-PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
+
+PUBLIC.BOOKS.NEW_PUBLISHER
 ------------------------------------------------------------------------
+                                                  [procedure, no result]
   NEWPUBLISHER                      CHARACTER VARYING, in       
   PUBLISHER                         CHARACTER VARYING, out      
 
@@ -423,8 +457,10 @@ PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
 CREATE PROCEDURE BOOKS.NEW_PUBLISHER(IN NEWPUBLISHER VARCHAR(50),OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10101 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = NEWPUBLISHER
 
 
-PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS                   [procedure, no result]
+
+PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS
 ------------------------------------------------------------------------
+                                                  [procedure, no result]
   B_COUNT                           INTEGER, in                 
   B_OFFSET                          INTEGER, in                 
   L_ID                              BIGINT, in                  
@@ -433,8 +469,10 @@ PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS                   [procedure, no result]
 CREATE PROCEDURE SYSTEM_LOBS.ALLOC_BLOCKS(IN B_COUNT INTEGER,IN B_OFFSET INTEGER,IN L_ID BIGINT) SPECIFIC ALLOC_BLOCKS_10057 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE LOB_ADDR INT DEFAULT NULL;DECLARE REMAINING_COUNT INT DEFAULT 0;DECLARE BL_ADDR INT DEFAULT NULL;DECLARE TEMP_COUNT INT DEFAULT 0;DECLARE BL_OFFSET INT DEFAULT 0;SET REMAINING_COUNT=B_COUNT;SET BL_OFFSET=B_OFFSET;MAIN_LOOP:LOOP SET BL_ADDR=(SELECT BLOCK_ADDR FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_COUNT=REMAINING_COUNT AND TX_ID=0 FETCH 1 ROW ONLY);IF BL_ADDR IS NOT NULL THEN CALL CONVERT_BLOCK(BL_ADDR,REMAINING_COUNT,BL_OFFSET,L_ID);IF LOB_ADDR IS NULL THEN SET LOB_ADDR=BL_ADDR;END IF;LEAVE MAIN_LOOP;END IF;SET(BL_ADDR,TEMP_COUNT)=(SELECT BLOCK_ADDR,BLOCK_COUNT FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_COUNT<REMAINING_COUNT AND TX_ID=0 FETCH 1 ROW ONLY);IF BL_ADDR IS NOT NULL THEN CALL CONVERT_BLOCK(BL_ADDR,TEMP_COUNT,BL_OFFSET,L_ID);IF LOB_ADDR IS NULL THEN SET LOB_ADDR=BL_ADDR;END IF;SET REMAINING_COUNT=REMAINING_COUNT-TEMP_COUNT;SET BL_OFFSET=BL_OFFSET+TEMP_COUNT;SET BL_ADDR=NULL;SET TEMP_COUNT=0;ELSE CALL CREATE_EMPTY_BLOCK(BL_ADDR,REMAINING_COUNT);CALL CONVERT_BLOCK(BL_ADDR,REMAINING_COUNT,BL_OFFSET,L_ID);IF LOB_ADDR IS NULL THEN SET LOB_ADDR=BL_ADDR;END IF;LEAVE MAIN_LOOP;END IF;END LOOP MAIN_LOOP;END
 
 
-PUBLIC.SYSTEM_LOBS.CONVERT_BLOCK                  [procedure, no result]
+
+PUBLIC.SYSTEM_LOBS.CONVERT_BLOCK
 ------------------------------------------------------------------------
+                                                  [procedure, no result]
   B_ADDR                            INTEGER, in                 
   B_COUNT                           INTEGER, in                 
   B_OFFSET                          INTEGER, in                 
@@ -444,8 +482,10 @@ PUBLIC.SYSTEM_LOBS.CONVERT_BLOCK                  [procedure, no result]
 CREATE PROCEDURE SYSTEM_LOBS.CONVERT_BLOCK(IN B_ADDR INTEGER,IN B_COUNT INTEGER,IN B_OFFSET INTEGER,IN L_ID BIGINT) SPECIFIC CONVERT_BLOCK_10019 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DELETE FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_ADDR=B_ADDR;INSERT INTO SYSTEM_LOBS.LOBS VALUES(B_ADDR,B_COUNT,B_OFFSET,L_ID);END
 
 
-PUBLIC.SYSTEM_LOBS.CREATE_EMPTY_BLOCK             [procedure, no result]
+
+PUBLIC.SYSTEM_LOBS.CREATE_EMPTY_BLOCK
 ------------------------------------------------------------------------
+                                                  [procedure, no result]
   B_ADDR                            INTEGER, in/ out            
   B_COUNT                           INTEGER, in                 
 
@@ -453,8 +493,10 @@ PUBLIC.SYSTEM_LOBS.CREATE_EMPTY_BLOCK             [procedure, no result]
 CREATE PROCEDURE SYSTEM_LOBS.CREATE_EMPTY_BLOCK(INOUT B_ADDR INTEGER,IN B_COUNT INTEGER) SPECIFIC CREATE_EMPTY_BLOCK_10049 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE TEMP_COUNT INT DEFAULT NULL;DECLARE TEMP_ADDR INT DEFAULT NULL;SET(TEMP_ADDR,TEMP_COUNT)=(SELECT BLOCK_ADDR,BLOCK_COUNT FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_COUNT>B_COUNT AND TX_ID=0 FETCH 1 ROW ONLY);IF TEMP_ADDR IS NULL THEN SIGNAL SQLSTATE'45000';END IF;UPDATE SYSTEM_LOBS.BLOCKS SET BLOCK_COUNT=B_COUNT WHERE BLOCK_ADDR=TEMP_ADDR;INSERT INTO SYSTEM_LOBS.BLOCKS VALUES(TEMP_ADDR+B_COUNT,TEMP_COUNT-B_COUNT,0);SET B_ADDR=TEMP_ADDR;END
 
 
-PUBLIC.SYSTEM_LOBS.DELETE_BLOCKS                  [procedure, no result]
+
+PUBLIC.SYSTEM_LOBS.DELETE_BLOCKS
 ------------------------------------------------------------------------
+                                                  [procedure, no result]
   L_ID                              BIGINT, in                  
   B_OFFSET                          INTEGER, in                 
   B_LIMIT                           INTEGER, in                 
@@ -464,8 +506,10 @@ PUBLIC.SYSTEM_LOBS.DELETE_BLOCKS                  [procedure, no result]
 CREATE PROCEDURE SYSTEM_LOBS.DELETE_BLOCKS(IN L_ID BIGINT,IN B_OFFSET INTEGER,IN B_LIMIT INTEGER,IN TX_ID BIGINT) SPECIFIC DELETE_BLOCKS_10046 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC INSERT INTO SYSTEM_LOBS.BLOCKS(SELECT BLOCK_ADDR,BLOCK_COUNT,TX_ID FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID AND BLOCK_OFFSET>=B_OFFSET AND BLOCK_OFFSET<B_LIMIT);DELETE FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID AND BLOCK_OFFSET>=B_OFFSET AND BLOCK_OFFSET<B_LIMIT;END
 
 
-PUBLIC.SYSTEM_LOBS.DELETE_LOB                     [procedure, no result]
+
+PUBLIC.SYSTEM_LOBS.DELETE_LOB
 ------------------------------------------------------------------------
+                                                  [procedure, no result]
   L_ID                              BIGINT, in                  
   TX_ID                             BIGINT, in                  
 
@@ -473,24 +517,30 @@ PUBLIC.SYSTEM_LOBS.DELETE_LOB                     [procedure, no result]
 CREATE PROCEDURE SYSTEM_LOBS.DELETE_LOB(IN L_ID BIGINT,IN TX_ID BIGINT) SPECIFIC DELETE_LOB_10021 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC INSERT INTO SYSTEM_LOBS.BLOCKS(SELECT BLOCK_ADDR,BLOCK_COUNT,TX_ID FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID);DELETE FROM SYSTEM_LOBS.LOBS WHERE LOB_ID=L_ID;DELETE FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_ID=L_ID;END
 
 
-PUBLIC.SYSTEM_LOBS.DELETE_UNUSED                  [procedure, no result]
+
+PUBLIC.SYSTEM_LOBS.DELETE_UNUSED
 ------------------------------------------------------------------------
+                                                  [procedure, no result]
   L_IDS                             BIGINT ARRAY, in            
 
                                                             [definition]
 CREATE PROCEDURE SYSTEM_LOBS.DELETE_UNUSED(IN L_IDS BIGINT ARRAY) SPECIFIC DELETE_UNUSED_10034 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE TABLE LIVE_IDS(TEMP_ID INT);DECLARE TABLE TEMP_IDS(TEMP_ID INT);DECLARE TEMP_COUNT INT DEFAULT 1;WHILE TEMP_COUNT<=CARDINALITY(L_IDS)DO INSERT INTO MODULE.LIVE_IDS VALUES L_IDS[TEMP_COUNT];SET TEMP_COUNT=TEMP_COUNT+1;END WHILE;SET TEMP_COUNT=0;REPEAT INSERT INTO MODULE.TEMP_IDS SELECT LOB_ID FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_USAGE_COUNT<1 AND LOB_ID NOT IN(SELECT TEMP_ID FROM MODULE.LIVE_IDS)LIMIT 1000;INSERT INTO SYSTEM_LOBS.BLOCKS(SELECT BLOCK_ADDR,BLOCK_COUNT,0 FROM SYSTEM_LOBS.LOBS WHERE LOB_ID IN(SELECT TEMP_ID FROM MODULE.TEMP_IDS));DELETE FROM SYSTEM_LOBS.LOBS WHERE LOB_ID IN(SELECT TEMP_ID FROM MODULE.TEMP_IDS);DELETE FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_ID IN(SELECT TEMP_ID FROM MODULE.TEMP_IDS);GET DIAGNOSTICS TEMP_COUNT=ROW_COUNT;DELETE FROM MODULE.TEMP_IDS;UNTIL TEMP_COUNT<1000 END REPEAT;END
 
 
-PUBLIC.SYSTEM_LOBS.DELETE_UNUSED_LOBS             [procedure, no result]
+
+PUBLIC.SYSTEM_LOBS.DELETE_UNUSED_LOBS
 ------------------------------------------------------------------------
+                                                  [procedure, no result]
   LIMIT_ID                          BIGINT, in                  
 
                                                             [definition]
 CREATE PROCEDURE SYSTEM_LOBS.DELETE_UNUSED_LOBS(IN LIMIT_ID BIGINT) SPECIFIC DELETE_UNUSED_LOBS_10044 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE TABLE TEMP_IDS(TEMP_ID INT);DECLARE TEMP_COUNT INT DEFAULT 0;REPEAT INSERT INTO MODULE.TEMP_IDS SELECT LOB_ID FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_USAGE_COUNT=0 AND LOB_ID<LIMIT_ID LIMIT 1000;INSERT INTO SYSTEM_LOBS.BLOCKS(SELECT BLOCK_ADDR,BLOCK_COUNT,0 FROM SYSTEM_LOBS.LOBS WHERE LOB_ID IN(SELECT TEMP_ID FROM MODULE.TEMP_IDS));DELETE FROM SYSTEM_LOBS.LOBS WHERE LOB_ID IN(SELECT TEMP_ID FROM MODULE.TEMP_IDS);DELETE FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_ID IN(SELECT TEMP_ID FROM MODULE.TEMP_IDS);GET DIAGNOSTICS TEMP_COUNT=ROW_COUNT;DELETE FROM MODULE.TEMP_IDS;UNTIL TEMP_COUNT<1000 END REPEAT;END
 
 
-PUBLIC.SYSTEM_LOBS.DIVIDE_BLOCK                   [procedure, no result]
+
+PUBLIC.SYSTEM_LOBS.DIVIDE_BLOCK
 ------------------------------------------------------------------------
+                                                  [procedure, no result]
   B_OFFSET                          INTEGER, in                 
   L_ID                              BIGINT, in                  
 

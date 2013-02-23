@@ -27,7 +27,7 @@ JDBC Driver Information
 driver name                               SQLiteJDBC                    
 driver version                            native                        
 driver class name                         org.sqlite.JDBC               
-url                                       jdbc:sqlite:C:\Users\SUALEH~1\AppData\Local\Temp\SchemaCrawler7194814090195316895.dat
+url                                       jdbc:sqlite:C:\Users\SUALEH~1\AppData\Local\Temp\SchemaCrawler1863665920225739562.dat
 is JDBC compliant                         false                         
 
 
@@ -146,8 +146,10 @@ Tables
 ========================================================================
 
 
-Authors                                                          [table]
+
+Authors
 ------------------------------------------------------------------------
+                                                                 [table]
   Id                                INTEGER not null            
   FirstName                         VARCHAR(20)(2000000000) not null
   LastName                          VARCHAR(20)(2000000000) not null
@@ -175,8 +177,10 @@ IDX_A_Authors                                         [non-unique index]
   Country                           unknown                     
 
 
-Books                                                            [table]
+
+Books
 ------------------------------------------------------------------------
+                                                                 [table]
   Id                                INTEGER not null            
   Title                             VARCHAR(255)(2000000000) not null
   Description                       VARCHAR(255)(2000000000)    
@@ -191,13 +195,17 @@ SC_7B63FF1F_ED9945D3                       [foreign key, with no action]
   Id --> BookAuthors.BookId                                     
 
 
-"Global Counts"                                                  [table]
+
+"Global Counts"
 ------------------------------------------------------------------------
+                                                                 [table]
   "Global Count"                    INTEGER                     
 
 
-Publishers                                                       [table]
+
+Publishers
 ------------------------------------------------------------------------
+                                                                 [table]
   Id                                INTEGER not null            
   Publisher                         VARCHAR(255)(2000000000)    
 
@@ -205,8 +213,10 @@ PK_Publishers                                              [primary key]
   Id                                ascending                   
 
 
-BookAuthors                                                      [table]
+
+BookAuthors
 ------------------------------------------------------------------------
+                                                                 [table]
   BookId                            INTEGER not null            
   AuthorId                          INTEGER not null            
   "UPDATE"                          CLOB(2000000000)            
@@ -222,8 +232,10 @@ UIDX_BookAuthors                                          [unique index]
   AuthorId                          unknown                     
 
 
-AuthorsList                                                       [view]
+
+AuthorsList
 ------------------------------------------------------------------------
+                                                                  [view]
   Id                                INTEGER                     
   FirstName                         VARCHAR(20)(2000000000)     
   LastName                          VARCHAR(20)(2000000000)     

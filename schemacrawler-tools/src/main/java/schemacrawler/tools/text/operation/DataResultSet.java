@@ -202,6 +202,7 @@ final class DataResultSet
         }
         catch (final SQLFeatureNotSupportedException e)
         {
+          LOGGER.log(Level.FINEST, "Could not read BLOB data", e);
           in = null;
         }
 
@@ -245,6 +246,9 @@ final class DataResultSet
         }
         catch (final SQLFeatureNotSupportedException e)
         {
+          LOGGER.log(Level.FINEST,
+                     "Could not read CLOB data, as character stream",
+                     e);
           rdr = null;
         }
         if (rdr == null)
@@ -255,6 +259,9 @@ final class DataResultSet
           }
           catch (final SQLFeatureNotSupportedException e)
           {
+            LOGGER.log(Level.FINEST,
+                       "Could not read CLOB data, as ASCII stream",
+                       e);
             rdr = null;
           }
         }
@@ -313,4 +320,5 @@ final class DataResultSet
       return new BinaryData();
     }
   }
+
 }

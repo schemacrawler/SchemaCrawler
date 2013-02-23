@@ -5,8 +5,10 @@ Tables
 ========================================================================
 
 
-PUBLIC.BOOKS.AUTHORS                                             [table]
+
+PUBLIC.BOOKS.AUTHORS
 ------------------------------------------------------------------------
+                                                                 [table]
   ID                                INTEGER not null            
   FIRSTNAME                         VARCHAR(20) not null        
   LASTNAME                          VARCHAR(20) not null        
@@ -55,8 +57,10 @@ BOOKS.AUTHORS.LASTNAME IS NOT NULL
 Contact details for book authors
 
 
-PUBLIC.BOOKS.BOOKS                                               [table]
+
+PUBLIC.BOOKS.BOOKS
 ------------------------------------------------------------------------
+                                                                 [table]
   ID                                INTEGER not null            
   TITLE                             VARCHAR(255) not null       
   DESCRIPTION                       VARCHAR(255)                
@@ -92,8 +96,10 @@ Details for published books
   PRICE                             Current price for the book  
 
 
-PUBLIC.FOR_LINT.PUBLICATIONS                                     [table]
+
+PUBLIC.FOR_LINT.PUBLICATIONS
 ------------------------------------------------------------------------
+                                                                 [table]
   ID                                INTEGER not null            
   TITLE                             VARCHAR(255) not null       
   DESCRIPTION                       VARCHAR(255)                

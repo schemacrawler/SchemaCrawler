@@ -112,11 +112,9 @@ public interface TextFormattingHelper
    *        Name
    * @param description
    *        Description
-   * @param underscore
-   *        Whether to underscore the name row
    * @return Row as a string
    */
-  String createNameRow(String name, String description, boolean underscore);
+  String createNameRow(String name, String description);
 
   /**
    * Create a name and value row.

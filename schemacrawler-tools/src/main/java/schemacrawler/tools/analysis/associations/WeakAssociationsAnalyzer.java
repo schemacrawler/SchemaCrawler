@@ -100,6 +100,19 @@ final class WeakAssociationsAnalyzer
     }
   }
 
+  private void addWeakAssociation(final ColumnReference weakAssociation)
+  {
+    if (weakAssociation != null)
+    {
+      weakAssociations.add(weakAssociation);
+
+      addWeakAssociationToTable(weakAssociation.getPrimaryKeyColumn()
+        .getParent(), weakAssociation);
+      addWeakAssociationToTable(weakAssociation.getForeignKeyColumn()
+        .getParent(), weakAssociation);
+    }
+  }
+
   /**
    * Finds table prefixes. A prefix ends with "_".
    * 
@@ -334,19 +347,6 @@ final class WeakAssociationsAnalyzer
     }
     matchMap.remove("");
     return matchMap;
-  }
-
-  private void addWeakAssociation(final ColumnReference weakAssociation)
-  {
-    if (weakAssociation != null)
-    {
-      weakAssociations.add(weakAssociation);
-
-      addWeakAssociationToTable(weakAssociation.getPrimaryKeyColumn()
-        .getParent(), weakAssociation);
-      addWeakAssociationToTable(weakAssociation.getForeignKeyColumn()
-        .getParent(), weakAssociation);
-    }
   }
 
 }

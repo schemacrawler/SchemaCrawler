@@ -4,74 +4,9 @@
   <title>SchemaCrawler Output</title>
   <meta charset="utf-8"/>
   <style>
-.underscore {
-	color: Maroon;
-	border-bottom: 2px solid rgb(190, 190, 190);
-}
-
-.name {
-	font-weight: bold;
-	width: 150px;
-}
-
-.property_name {
-	width: 350px;
-}
-
-.property_value {
-	width: 250px;
-}
-
-.right {
-	text-align: right;
-}
-
-.description {
-	width: 450px;
-}
-
-.ordinal {
-	width: 20px;
-}
-
-.subname {
-	width: 150px;
-}
-
-.type {
-	width: 150px;
-}
-
-.definition {
-	white-space: pre-line;
-}
-
-.data_binary {
-	font-style: italic;
-	background-color: #FFDDFF;
-}
-
-.data_null {
-	font-weight: bold;
-	background-color: #FFFFDD;
-}
-
-.data_number {
-	text-align: right;
-	padding-right: 5px;
-}
-
-h2 {
-	color: Navy;
-}
-
-h3 {
-	color: DarkGreen;
-}
-
-body,p,pre,table,th,td,caption {
+body,p,pre,table,th,td,th,caption {
 	text-align: left;
-	font-family: 'Trebuchet MS';
+	font-family: 'Trebuchet MS', 'sans-serif';
 	font-size: 0.9em;
 	line-height: 1.2em;
 }
@@ -83,23 +18,91 @@ body {
 	margin-left: 3em;
 }
 
-table,th,td {
-	border: 1px solid rgb(220, 220, 220);
+h1,h2 {
+	color: Navy;
+}
+
+h3 {
+	color: DarkGreen;
+}
+
+table,th,td,th {
+	border: 1px solid rgb(230, 230, 230);
 	border-collapse: collapse;
 	vertical-align: top;
 	padding: 2px;
 }
 
 table {
-	width: 600px;
+	width: 800px;
 }
 
 caption {
 	font-weight: bold;
+	color: Maroon;
+	border-bottom: 2px solid rgb(190, 190, 190);
+}
+
+th {
+	font-weight: bold;
+	border-bottom: 1px solid rgb(190, 190, 190);
 }
 
 hr {
 	height: 1px;
+}
+
+.name {
+	font-weight: bold;
+	min-width: 350px;
+}
+
+.property_name {
+	min-width: 350px;
+}
+
+.property_value {
+	min-width: 250px;
+}
+
+.right {
+	text-align: right;
+}
+
+.description {
+	min-width: 450px;
+}
+
+.ordinal {
+	min-width: 20px;
+}
+
+.subname {
+	min-width: 150px;
+}
+
+.type {
+	min-width: 150px;
+}
+
+.definition {
+	white-space: pre-line;
+}
+
+.data_binary {
+	font-style: italic;
+	color: #666;
+}
+
+.data_null {
+	font-weight: italic;
+	color: #666;
+	background-color: #FFEEFF;
+}
+
+.data_number {
+	text-align: right;
+	padding-right: 5px;
 }
   </style>
 </head>
@@ -173,19 +176,19 @@ hr {
   <caption>all_tables</caption>
 
 	<tr>
-		<td class='name'>TABLE_CAT</td>
-		<td class='name'>TABLE_SCHEM</td>
-		<td class='name'>TABLE_NAME</td>
-		<td class='name'>TABLE_TYPE</td>
-		<td class='name'>REMARKS</td>
-		<td class='name'>TYPE_CAT</td>
-		<td class='name'>TYPE_SCHEM</td>
-		<td class='name'>TYPE_NAME</td>
-		<td class='name'>SELF_REFERENCING_COL_NAME</td>
-		<td class='name'>REF_GENERATION</td>
-		<td class='name'>HSQLDB_TYPE</td>
-		<td class='name'>READ_ONLY</td>
-		<td class='name'>COMMIT_ACTION</td>
+		<th>TABLE_CAT</th>
+		<th>TABLE_SCHEM</th>
+		<th>TABLE_NAME</th>
+		<th>TABLE_TYPE</th>
+		<th>REMARKS</th>
+		<th>TYPE_CAT</th>
+		<th>TYPE_SCHEM</th>
+		<th>TYPE_NAME</th>
+		<th>SELF_REFERENCING_COL_NAME</th>
+		<th>REF_GENERATION</th>
+		<th>HSQLDB_TYPE</th>
+		<th>READ_ONLY</th>
+		<th>COMMIT_ACTION</th>
 	</tr>
 	<tr>
 		<td>PUBLIC</td>
@@ -1757,15 +1760,15 @@ hr {
   <caption>PUBLIC.BOOKS.AUTHORS</caption>
 
 	<tr>
-		<td class='name'>ID</td>
-		<td class='name'>FIRSTNAME</td>
-		<td class='name'>LASTNAME</td>
-		<td class='name'>ADDRESS1</td>
-		<td class='name'>ADDRESS2</td>
-		<td class='name'>CITY</td>
-		<td class='name'>STATE</td>
-		<td class='name'>POSTALCODE</td>
-		<td class='name'>COUNTRY</td>
+		<th>ID</th>
+		<th>FIRSTNAME</th>
+		<th>LASTNAME</th>
+		<th>ADDRESS1</th>
+		<th>ADDRESS2</th>
+		<th>CITY</th>
+		<th>STATE</th>
+		<th>POSTALCODE</th>
+		<th>COUNTRY</th>
 	</tr>
 	<tr>
 		<td class='data_number'>1</td>
@@ -1994,9 +1997,9 @@ hr {
   <caption>PUBLIC.BOOKS.AUTHORSLIST</caption>
 
 	<tr>
-		<td class='name'>ID</td>
-		<td class='name'>FIRSTNAME</td>
-		<td class='name'>LASTNAME</td>
+		<th>ID</th>
+		<th>FIRSTNAME</th>
+		<th>LASTNAME</th>
 	</tr>
 	<tr>
 		<td class='data_number'>1</td>
@@ -2105,8 +2108,8 @@ hr {
   <caption>PUBLIC.BOOKS.BOOKAUTHORS</caption>
 
 	<tr>
-		<td class='name'>BOOKID</td>
-		<td class='name'>AUTHORID</td>
+		<th>BOOKID</th>
+		<th>AUTHORID</th>
 	</tr>
 	<tr>
 		<td class='data_number'>1</td>
@@ -2195,12 +2198,12 @@ hr {
   <caption>PUBLIC.BOOKS.BOOKS</caption>
 
 	<tr>
-		<td class='name'>ID</td>
-		<td class='name'>TITLE</td>
-		<td class='name'>DESCRIPTION</td>
-		<td class='name'>PUBLISHERID</td>
-		<td class='name'>PUBLICATIONDATE</td>
-		<td class='name'>PRICE</td>
+		<th>ID</th>
+		<th>TITLE</th>
+		<th>DESCRIPTION</th>
+		<th>PUBLISHERID</th>
+		<th>PUBLICATIONDATE</th>
+		<th>PRICE</th>
 	</tr>
 	<tr>
 		<td class='data_number'>1</td>
@@ -2369,7 +2372,7 @@ hr {
   <caption>PUBLIC.BOOKS."Global Counts"</caption>
 
 	<tr>
-		<td class='name'>Global Count</td>
+		<th>Global Count</th>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -2378,8 +2381,8 @@ hr {
   <caption>PUBLIC.BOOKS.PUBLISHERS</caption>
 
 	<tr>
-		<td class='name'>ID</td>
-		<td class='name'>PUBLISHER</td>
+		<th>ID</th>
+		<th>PUBLISHER</th>
 	</tr>
 	<tr>
 		<td class='data_number'>1</td>
@@ -2468,9 +2471,9 @@ hr {
   <caption>PUBLIC.FOR_LINT.EXTRA_PK</caption>
 
 	<tr>
-		<td class='name'>ID</td>
-		<td class='name'>WRITERID</td>
-		<td class='name'>PUBLICATIONID</td>
+		<th>ID</th>
+		<th>WRITERID</th>
+		<th>PUBLICATIONID</th>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -2479,7 +2482,7 @@ hr {
   <caption>PUBLIC.FOR_LINT."Global Counts"</caption>
 
 	<tr>
-		<td class='name'>Global Count</td>
+		<th>Global Count</th>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -2488,12 +2491,12 @@ hr {
   <caption>PUBLIC.FOR_LINT.PUBLICATIONS</caption>
 
 	<tr>
-		<td class='name'>ID</td>
-		<td class='name'>TITLE</td>
-		<td class='name'>DESCRIPTION</td>
-		<td class='name'>WRITERID</td>
-		<td class='name'>PUBLICATIONDATE</td>
-		<td class='name'>PRICE</td>
+		<th>ID</th>
+		<th>TITLE</th>
+		<th>DESCRIPTION</th>
+		<th>WRITERID</th>
+		<th>PUBLICATIONDATE</th>
+		<th>PRICE</th>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -2502,24 +2505,24 @@ hr {
   <caption>PUBLIC.FOR_LINT.WRITERS</caption>
 
 	<tr>
-		<td class='name'>ID</td>
-		<td class='name'>FIRSTNAME</td>
-		<td class='name'>LASTNAME</td>
-		<td class='name'>ADDRESS1</td>
-		<td class='name'>ADDRESS2</td>
-		<td class='name'>CITY</td>
-		<td class='name'>STATE</td>
-		<td class='name'>POSTALCODE</td>
-		<td class='name'>COUNTRY</td>
-		<td class='name'>PHONE1</td>
-		<td class='name'>PHONE2</td>
-		<td class='name'>EMAIL1</td>
-		<td class='name'>EMAIL2</td>
-		<td class='name'>FAX</td>
-		<td class='name'>FAX3</td>
-		<td class='name'>HOMEEMAIL11</td>
-		<td class='name'>HOMEEMAIL12</td>
-		<td class='name'>PUBLICATION_ID</td>
+		<th>ID</th>
+		<th>FIRSTNAME</th>
+		<th>LASTNAME</th>
+		<th>ADDRESS1</th>
+		<th>ADDRESS2</th>
+		<th>CITY</th>
+		<th>STATE</th>
+		<th>POSTALCODE</th>
+		<th>COUNTRY</th>
+		<th>PHONE1</th>
+		<th>PHONE2</th>
+		<th>EMAIL1</th>
+		<th>EMAIL2</th>
+		<th>FAX</th>
+		<th>FAX3</th>
+		<th>HOMEEMAIL11</th>
+		<th>HOMEEMAIL12</th>
+		<th>PUBLICATION_ID</th>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -2528,10 +2531,10 @@ hr {
   <caption>PUBLIC."PUBLISHER SALES".REGIONS</caption>
 
 	<tr>
-		<td class='name'>CITY</td>
-		<td class='name'>STATE</td>
-		<td class='name'>POSTALCODE</td>
-		<td class='name'>COUNTRY</td>
+		<th>CITY</th>
+		<th>STATE</th>
+		<th>POSTALCODE</th>
+		<th>COUNTRY</th>
 	</tr>
 	<tr>
 		<td>Arvada</td>
@@ -2660,11 +2663,11 @@ hr {
   <caption>PUBLIC."PUBLISHER SALES".SALES</caption>
 
 	<tr>
-		<td class='name'>POSTALCODE</td>
-		<td class='name'>COUNTRY</td>
-		<td class='name'>BOOKID</td>
-		<td class='name'>PERIODENDDATE</td>
-		<td class='name'>TOTALAMOUNT</td>
+		<th>POSTALCODE</th>
+		<th>COUNTRY</th>
+		<th>BOOKID</th>
+		<th>PERIODENDDATE</th>
+		<th>TOTALAMOUNT</th>
 	</tr>
 	<tr>
 		<td>13078</td>

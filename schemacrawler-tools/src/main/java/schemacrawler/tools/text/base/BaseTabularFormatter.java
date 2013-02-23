@@ -233,8 +233,7 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions>
     final String value = driverProperty.getValue();
 
     out.println(formattingHelper.createNameRow(driverProperty.getName(),
-                                               "[driver property]",
-                                               false));
+                                               "[driver property]"));
     out.println(formattingHelper.createDescriptionRow(driverProperty
       .getDescription()));
     out.println(formattingHelper.createDescriptionRow(details));

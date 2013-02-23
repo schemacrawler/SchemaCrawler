@@ -20,40 +20,26 @@
 package schemacrawler.tools.text.utility;
 
 
-public class BinaryData
+import schemacrawler.tools.options.OutputFormat;
+
+class TableHeaderCell
+  extends TableCell
 {
 
-  private final boolean hasData;
-  private final String data;
-
-  public BinaryData()
+  TableHeaderCell(final String text,
+                  final int characterWidth,
+                  final Alignment align,
+                  final int colSpan,
+                  final String styleClass,
+                  final OutputFormat outputFormat)
   {
-    data = null;
-    hasData = false;
-  }
-
-  public BinaryData(final String data)
-  {
-    this.data = data;
-    hasData = true;
-  }
-
-  public boolean hasData()
-  {
-    return hasData;
+    super(text, characterWidth, align, colSpan, styleClass, outputFormat);
   }
 
   @Override
-  public String toString()
+  protected String getCellTag()
   {
-    if (hasData)
-    {
-      return data;
-    }
-    else
-    {
-      return "<binary>";
-    }
+    return "th";
   }
 
 }

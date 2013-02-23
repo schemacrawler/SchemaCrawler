@@ -36,29 +36,37 @@ Tables
 ========================================================================
 
 
-PUBLIC.BOOKS.AUTHORS                                             [table]
+
+PUBLIC.BOOKS.AUTHORS
 ------------------------------------------------------------------------
+                                                                 [table]
 
                                                                [remarks]
 Contact details for book authors
 
 
-PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
+
+PUBLIC.BOOKS.BOOKAUTHORS
 ------------------------------------------------------------------------
+                                                                 [table]
 
                                                                [remarks]
 Relationship between books and their authors, along with the latest updated information
 
 
-PUBLIC.BOOKS.BOOKS                                               [table]
+
+PUBLIC.BOOKS.BOOKS
 ------------------------------------------------------------------------
+                                                                 [table]
 
                                                                [remarks]
 Details for published books
 
 
-PUBLIC.BOOKS.PUBLISHERS                                          [table]
+
+PUBLIC.BOOKS.PUBLISHERS
 ------------------------------------------------------------------------
+                                                                 [table]
 
                                                                [remarks]
 List of book publishers

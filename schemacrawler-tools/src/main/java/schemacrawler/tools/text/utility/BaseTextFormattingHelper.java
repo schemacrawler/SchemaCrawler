@@ -21,7 +21,6 @@
 package schemacrawler.tools.text.utility;
 
 
-import static sf.util.Utility.NEWLINE;
 import schemacrawler.tools.options.OutputFormat;
 
 /**
@@ -145,12 +144,10 @@ abstract class BaseTextFormattingHelper
    * {@inheritDoc}
    * 
    * @see schemacrawler.tools.text.utility.TextFormattingHelper#createNameRow(java.lang.String,
-   *      java.lang.String, boolean)
+   *      java.lang.String)
    */
   @Override
-  public String createNameRow(final String name,
-                              final String description,
-                              final boolean underscore)
+  public String createNameRow(final String name, final String description)
   {
     int nameWidth = 34;
     int descriptionWidth = 36;
@@ -174,21 +171,15 @@ abstract class BaseTextFormattingHelper
                           nameWidth,
                           Alignment.left,
                           2,
-                          "name" + (underscore? " underscore": ""),
+                          "name",
                           outputFormat));
-    row
-      .add(new TableCell(description,
-                         descriptionWidth,
-                         Alignment.right,
-                         1,
-                         "description right" + (underscore? " underscore": ""),
-                         outputFormat));
+    row.add(new TableCell(description,
+                          descriptionWidth,
+                          Alignment.right,
+                          1,
+                          "description right",
+                          outputFormat));
     nameRowString = row.toString();
-
-    if (underscore && outputFormat != OutputFormat.html)
-    {
-      nameRowString = nameRowString + NEWLINE + DASHED_SEPARATOR;
-    }
 
     return nameRowString;
   }
@@ -284,7 +275,13 @@ abstract class BaseTextFormattingHelper
     final TableRow row = new TableRow(outputFormat);
     for (final String columnName: columnNames)
     {
-      row.add(newTableCell(columnName, "name", outputFormat));
+      final TableHeaderCell headerCell = new TableHeaderCell(columnName,
+                                                             0,
+                                                             Alignment.left,
+                                                             1,
+                                                             "",
+                                                             outputFormat);
+      row.add(headerCell);
     }
     return row.toString();
   }

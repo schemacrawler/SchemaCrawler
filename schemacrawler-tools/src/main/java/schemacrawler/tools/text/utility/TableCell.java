@@ -27,7 +27,7 @@ import schemacrawler.tools.options.OutputFormat;
  * 
  * @author Sualeh Fatehi
  */
-final class TableCell
+class TableCell
 {
 
   /**
@@ -115,6 +115,11 @@ final class TableCell
     }
   }
 
+  protected String getCellTag()
+  {
+    return "td";
+  }
+
   /**
    * Converts the table cell to HTML.
    * 
@@ -123,7 +128,7 @@ final class TableCell
   private String toHtmlString()
   {
     final StringBuilder buffer = new StringBuilder();
-    buffer.append("<td");
+    buffer.append("<").append(getCellTag());
     if (colSpan > 1)
     {
       buffer.append(" colspan='").append(colSpan).append("'");
@@ -141,7 +146,7 @@ final class TableCell
     {
       buffer.append(Entities.XML.escape(String.valueOf(text)));
     }
-    buffer.append("</td>");
+    buffer.append("</").append(getCellTag()).append(">");
 
     return buffer.toString();
   }
@@ -153,7 +158,7 @@ final class TableCell
    */
   private String toPlainTextString()
   {
-    final String value = this.text == null? "NULL": this.text;
+    final String value = text == null? "NULL": text;
 
     if (outputFormat == OutputFormat.csv)
     {

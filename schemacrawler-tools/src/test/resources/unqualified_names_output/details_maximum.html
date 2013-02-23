@@ -4,74 +4,9 @@
   <title>SchemaCrawler Output</title>
   <meta charset="utf-8"/>
   <style>
-.underscore {
-	color: Maroon;
-	border-bottom: 2px solid rgb(190, 190, 190);
-}
-
-.name {
-	font-weight: bold;
-	width: 150px;
-}
-
-.property_name {
-	width: 350px;
-}
-
-.property_value {
-	width: 250px;
-}
-
-.right {
-	text-align: right;
-}
-
-.description {
-	width: 450px;
-}
-
-.ordinal {
-	width: 20px;
-}
-
-.subname {
-	width: 150px;
-}
-
-.type {
-	width: 150px;
-}
-
-.definition {
-	white-space: pre-line;
-}
-
-.data_binary {
-	font-style: italic;
-	background-color: #FFDDFF;
-}
-
-.data_null {
-	font-weight: bold;
-	background-color: #FFFFDD;
-}
-
-.data_number {
-	text-align: right;
-	padding-right: 5px;
-}
-
-h2 {
-	color: Navy;
-}
-
-h3 {
-	color: DarkGreen;
-}
-
-body,p,pre,table,th,td,caption {
+body,p,pre,table,th,td,th,caption {
 	text-align: left;
-	font-family: 'Trebuchet MS';
+	font-family: 'Trebuchet MS', 'sans-serif';
 	font-size: 0.9em;
 	line-height: 1.2em;
 }
@@ -83,23 +18,91 @@ body {
 	margin-left: 3em;
 }
 
-table,th,td {
-	border: 1px solid rgb(220, 220, 220);
+h1,h2 {
+	color: Navy;
+}
+
+h3 {
+	color: DarkGreen;
+}
+
+table,th,td,th {
+	border: 1px solid rgb(230, 230, 230);
 	border-collapse: collapse;
 	vertical-align: top;
 	padding: 2px;
 }
 
 table {
-	width: 600px;
+	width: 800px;
 }
 
 caption {
 	font-weight: bold;
+	color: Maroon;
+	border-bottom: 2px solid rgb(190, 190, 190);
+}
+
+th {
+	font-weight: bold;
+	border-bottom: 1px solid rgb(190, 190, 190);
 }
 
 hr {
 	height: 1px;
+}
+
+.name {
+	font-weight: bold;
+	min-width: 350px;
+}
+
+.property_name {
+	min-width: 350px;
+}
+
+.property_value {
+	min-width: 250px;
+}
+
+.right {
+	text-align: right;
+}
+
+.description {
+	min-width: 450px;
+}
+
+.ordinal {
+	min-width: 20px;
+}
+
+.subname {
+	min-width: 150px;
+}
+
+.type {
+	min-width: 150px;
+}
+
+.definition {
+	white-space: pre-line;
+}
+
+.data_binary {
+	font-style: italic;
+	color: #666;
+}
+
+.data_null {
+	font-weight: italic;
+	color: #666;
+	background-color: #FFEEFF;
+}
+
+.data_number {
+	text-align: right;
+	padding-right: 5px;
 }
   </style>
 </head>
@@ -1722,9 +1725,11 @@ hr {
 <h2>Tables</h2>
 
 <table>
+  <caption>AUTHORS</caption>
+
 	<tr>
-		<td colspan='2' class='name underscore'>AUTHORS</td>
-		<td class='description right underscore'>[table]</td>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[table]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
@@ -1988,9 +1993,11 @@ hr {
 <p>&#160;</p>
 
 <table>
+  <caption>AUTHORSLIST</caption>
+
 	<tr>
-		<td colspan='2' class='name underscore'>AUTHORSLIST</td>
-		<td class='description right underscore'>[view]</td>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[view]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
@@ -2093,9 +2100,11 @@ hr {
 <p>&#160;</p>
 
 <table>
+  <caption>BOOKAUTHORS</caption>
+
 	<tr>
-		<td colspan='2' class='name underscore'>BOOKAUTHORS</td>
-		<td class='description right underscore'>[table]</td>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[table]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
@@ -2283,9 +2292,11 @@ hr {
 <p>&#160;</p>
 
 <table>
+  <caption>BOOKS</caption>
+
 	<tr>
-		<td colspan='2' class='name underscore'>BOOKS</td>
-		<td class='description right underscore'>[table]</td>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[table]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
@@ -2523,9 +2534,11 @@ hr {
 <p>&#160;</p>
 
 <table>
+  <caption>"Global Counts"</caption>
+
 	<tr>
-		<td colspan='2' class='name underscore'>&quot;Global Counts&quot;</td>
-		<td class='description right underscore'>[table]</td>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[table]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
@@ -2608,9 +2621,11 @@ hr {
 <p>&#160;</p>
 
 <table>
+  <caption>PUBLISHERS</caption>
+
 	<tr>
-		<td colspan='2' class='name underscore'>PUBLISHERS</td>
-		<td class='description right underscore'>[table]</td>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[table]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
@@ -2764,9 +2779,11 @@ hr {
 <p>&#160;</p>
 
 <table>
+  <caption>EXTRA_PK</caption>
+
 	<tr>
-		<td colspan='2' class='name underscore'>EXTRA_PK</td>
-		<td class='description right underscore'>[table]</td>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[table]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
@@ -2961,9 +2978,11 @@ hr {
 <p>&#160;</p>
 
 <table>
+  <caption>"Global Counts"</caption>
+
 	<tr>
-		<td colspan='2' class='name underscore'>&quot;Global Counts&quot;</td>
-		<td class='description right underscore'>[table]</td>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[table]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
@@ -3046,9 +3065,11 @@ hr {
 <p>&#160;</p>
 
 <table>
+  <caption>PUBLICATIONS</caption>
+
 	<tr>
-		<td colspan='2' class='name underscore'>PUBLICATIONS</td>
-		<td class='description right underscore'>[table]</td>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[table]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
@@ -3268,9 +3289,11 @@ hr {
 <p>&#160;</p>
 
 <table>
+  <caption>WRITERS</caption>
+
 	<tr>
-		<td colspan='2' class='name underscore'>WRITERS</td>
-		<td class='description right underscore'>[table]</td>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[table]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
@@ -3648,9 +3671,11 @@ hr {
 <p>&#160;</p>
 
 <table>
+  <caption>REGIONS</caption>
+
 	<tr>
-		<td colspan='2' class='name underscore'>REGIONS</td>
-		<td class='description right underscore'>[table]</td>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[table]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
@@ -3839,9 +3864,11 @@ hr {
 <p>&#160;</p>
 
 <table>
+  <caption>SALES</caption>
+
 	<tr>
-		<td colspan='2' class='name underscore'>SALES</td>
-		<td class='description right underscore'>[table]</td>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[table]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
@@ -4013,9 +4040,11 @@ hr {
 <h2>Routines</h2>
 
 <table>
+  <caption>CUSTOMADD</caption>
+
 	<tr>
-		<td colspan='2' class='name underscore'>CUSTOMADD</td>
-		<td class='description right underscore'>[function, does not return a table]</td>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[function, does not return a table]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
@@ -4051,9 +4080,11 @@ hr {
 <p>&#160;</p>
 
 <table>
+  <caption>CUSTOMADD</caption>
+
 	<tr>
-		<td colspan='2' class='name underscore'>CUSTOMADD</td>
-		<td class='description right underscore'>[function, does not return a table]</td>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[function, does not return a table]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
@@ -4084,9 +4115,11 @@ hr {
 <p>&#160;</p>
 
 <table>
+  <caption>NEW_PUBLISHER</caption>
+
 	<tr>
-		<td colspan='2' class='name underscore'>NEW_PUBLISHER</td>
-		<td class='description right underscore'>[procedure, no result]</td>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[procedure, no result]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
@@ -4117,9 +4150,11 @@ hr {
 <p>&#160;</p>
 
 <table>
+  <caption>NEW_PUBLISHER</caption>
+
 	<tr>
-		<td colspan='2' class='name underscore'>NEW_PUBLISHER</td>
-		<td class='description right underscore'>[procedure, no result]</td>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[procedure, no result]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
@@ -4155,9 +4190,11 @@ hr {
 <p>&#160;</p>
 
 <table>
+  <caption>ALLOC_BLOCKS</caption>
+
 	<tr>
-		<td colspan='2' class='name underscore'>ALLOC_BLOCKS</td>
-		<td class='description right underscore'>[procedure, no result]</td>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[procedure, no result]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
@@ -4198,9 +4235,11 @@ hr {
 <p>&#160;</p>
 
 <table>
+  <caption>CONVERT_BLOCK</caption>
+
 	<tr>
-		<td colspan='2' class='name underscore'>CONVERT_BLOCK</td>
-		<td class='description right underscore'>[procedure, no result]</td>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[procedure, no result]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
@@ -4246,9 +4285,11 @@ hr {
 <p>&#160;</p>
 
 <table>
+  <caption>CREATE_EMPTY_BLOCK</caption>
+
 	<tr>
-		<td colspan='2' class='name underscore'>CREATE_EMPTY_BLOCK</td>
-		<td class='description right underscore'>[procedure, no result]</td>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[procedure, no result]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
@@ -4284,9 +4325,11 @@ hr {
 <p>&#160;</p>
 
 <table>
+  <caption>DELETE_BLOCKS</caption>
+
 	<tr>
-		<td colspan='2' class='name underscore'>DELETE_BLOCKS</td>
-		<td class='description right underscore'>[procedure, no result]</td>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[procedure, no result]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
@@ -4332,9 +4375,11 @@ hr {
 <p>&#160;</p>
 
 <table>
+  <caption>DELETE_LOB</caption>
+
 	<tr>
-		<td colspan='2' class='name underscore'>DELETE_LOB</td>
-		<td class='description right underscore'>[procedure, no result]</td>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[procedure, no result]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
@@ -4370,9 +4415,11 @@ hr {
 <p>&#160;</p>
 
 <table>
+  <caption>DELETE_UNUSED</caption>
+
 	<tr>
-		<td colspan='2' class='name underscore'>DELETE_UNUSED</td>
-		<td class='description right underscore'>[procedure, no result]</td>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[procedure, no result]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
@@ -4403,9 +4450,11 @@ hr {
 <p>&#160;</p>
 
 <table>
+  <caption>DELETE_UNUSED_LOBS</caption>
+
 	<tr>
-		<td colspan='2' class='name underscore'>DELETE_UNUSED_LOBS</td>
-		<td class='description right underscore'>[procedure, no result]</td>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[procedure, no result]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
@@ -4436,9 +4485,11 @@ hr {
 <p>&#160;</p>
 
 <table>
+  <caption>DIVIDE_BLOCK</caption>
+
 	<tr>
-		<td colspan='2' class='name underscore'>DIVIDE_BLOCK</td>
-		<td class='description right underscore'>[procedure, no result]</td>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[procedure, no result]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
@@ -4537,15 +4588,15 @@ hr {
   <caption>PUBLIC.BOOKS.AUTHORS</caption>
 
 	<tr>
-		<td class='name'>ID</td>
-		<td class='name'>FIRSTNAME</td>
-		<td class='name'>LASTNAME</td>
-		<td class='name'>ADDRESS1</td>
-		<td class='name'>ADDRESS2</td>
-		<td class='name'>CITY</td>
-		<td class='name'>STATE</td>
-		<td class='name'>POSTALCODE</td>
-		<td class='name'>COUNTRY</td>
+		<th>ID</th>
+		<th>FIRSTNAME</th>
+		<th>LASTNAME</th>
+		<th>ADDRESS1</th>
+		<th>ADDRESS2</th>
+		<th>CITY</th>
+		<th>STATE</th>
+		<th>POSTALCODE</th>
+		<th>COUNTRY</th>
 	</tr>
 	<tr>
 		<td class='data_number'>1</td>
@@ -4774,9 +4825,9 @@ hr {
   <caption>PUBLIC.BOOKS.AUTHORSLIST</caption>
 
 	<tr>
-		<td class='name'>ID</td>
-		<td class='name'>FIRSTNAME</td>
-		<td class='name'>LASTNAME</td>
+		<th>ID</th>
+		<th>FIRSTNAME</th>
+		<th>LASTNAME</th>
 	</tr>
 	<tr>
 		<td class='data_number'>1</td>
@@ -4885,14 +4936,14 @@ hr {
   <caption>PUBLIC.BOOKS.BOOKAUTHORS</caption>
 
 	<tr>
-		<td class='name'>BOOKID</td>
-		<td class='name'>AUTHORID</td>
-		<td class='name'>UPDATE</td>
+		<th>BOOKID</th>
+		<th>AUTHORID</th>
+		<th>UPDATE</th>
 	</tr>
 	<tr>
 		<td class='data_number'>1</td>
 		<td class='data_number'>7</td>
-		<td class='data_binary'>BINARY</td>
+		<td class='data_binary'>&lt;binary&gt;</td>
 	</tr>
 	<tr>
 		<td class='data_number'>2</td>
@@ -4902,7 +4953,7 @@ hr {
 	<tr>
 		<td class='data_number'>2</td>
 		<td class='data_number'>6</td>
-		<td class='data_binary'>BINARY</td>
+		<td class='data_binary'>&lt;binary&gt;</td>
 	</tr>
 	<tr>
 		<td class='data_number'>3</td>
@@ -4912,7 +4963,7 @@ hr {
 	<tr>
 		<td class='data_number'>3</td>
 		<td class='data_number'>4</td>
-		<td class='data_binary'>BINARY</td>
+		<td class='data_binary'>&lt;binary&gt;</td>
 	</tr>
 	<tr>
 		<td class='data_number'>3</td>
@@ -4996,12 +5047,12 @@ hr {
   <caption>PUBLIC.BOOKS.BOOKS</caption>
 
 	<tr>
-		<td class='name'>ID</td>
-		<td class='name'>TITLE</td>
-		<td class='name'>DESCRIPTION</td>
-		<td class='name'>PUBLISHERID</td>
-		<td class='name'>PUBLICATIONDATE</td>
-		<td class='name'>PRICE</td>
+		<th>ID</th>
+		<th>TITLE</th>
+		<th>DESCRIPTION</th>
+		<th>PUBLISHERID</th>
+		<th>PUBLICATIONDATE</th>
+		<th>PRICE</th>
 	</tr>
 	<tr>
 		<td class='data_number'>1</td>
@@ -5170,7 +5221,7 @@ hr {
   <caption>PUBLIC.BOOKS."Global Counts"</caption>
 
 	<tr>
-		<td class='name'>Global Count</td>
+		<th>Global Count</th>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -5179,8 +5230,8 @@ hr {
   <caption>PUBLIC.BOOKS.PUBLISHERS</caption>
 
 	<tr>
-		<td class='name'>ID</td>
-		<td class='name'>PUBLISHER</td>
+		<th>ID</th>
+		<th>PUBLISHER</th>
 	</tr>
 	<tr>
 		<td class='data_number'>1</td>
@@ -5269,9 +5320,9 @@ hr {
   <caption>PUBLIC.FOR_LINT.EXTRA_PK</caption>
 
 	<tr>
-		<td class='name'>ID</td>
-		<td class='name'>WRITERID</td>
-		<td class='name'>PUBLICATIONID</td>
+		<th>ID</th>
+		<th>WRITERID</th>
+		<th>PUBLICATIONID</th>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -5280,7 +5331,7 @@ hr {
   <caption>PUBLIC.FOR_LINT."Global Counts"</caption>
 
 	<tr>
-		<td class='name'>Global Count</td>
+		<th>Global Count</th>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -5289,14 +5340,14 @@ hr {
   <caption>PUBLIC.FOR_LINT.PUBLICATIONS</caption>
 
 	<tr>
-		<td class='name'>ID</td>
-		<td class='name'>TITLE</td>
-		<td class='name'>DESCRIPTION</td>
-		<td class='name'>WRITERID</td>
-		<td class='name'>PUBLICATIONDATE</td>
-		<td class='name'>PRICE</td>
-		<td class='name'>UPDATE</td>
-		<td class='name'>PRESS_RELEASE</td>
+		<th>ID</th>
+		<th>TITLE</th>
+		<th>DESCRIPTION</th>
+		<th>WRITERID</th>
+		<th>PUBLICATIONDATE</th>
+		<th>PRICE</th>
+		<th>UPDATE</th>
+		<th>PRESS_RELEASE</th>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -5305,24 +5356,24 @@ hr {
   <caption>PUBLIC.FOR_LINT.WRITERS</caption>
 
 	<tr>
-		<td class='name'>ID</td>
-		<td class='name'>FIRSTNAME</td>
-		<td class='name'>LASTNAME</td>
-		<td class='name'>ADDRESS1</td>
-		<td class='name'>ADDRESS2</td>
-		<td class='name'>CITY</td>
-		<td class='name'>STATE</td>
-		<td class='name'>POSTALCODE</td>
-		<td class='name'>COUNTRY</td>
-		<td class='name'>PHONE1</td>
-		<td class='name'>PHONE2</td>
-		<td class='name'>EMAIL1</td>
-		<td class='name'>EMAIL2</td>
-		<td class='name'>FAX</td>
-		<td class='name'>FAX3</td>
-		<td class='name'>HOMEEMAIL11</td>
-		<td class='name'>HOMEEMAIL12</td>
-		<td class='name'>PUBLICATION_ID</td>
+		<th>ID</th>
+		<th>FIRSTNAME</th>
+		<th>LASTNAME</th>
+		<th>ADDRESS1</th>
+		<th>ADDRESS2</th>
+		<th>CITY</th>
+		<th>STATE</th>
+		<th>POSTALCODE</th>
+		<th>COUNTRY</th>
+		<th>PHONE1</th>
+		<th>PHONE2</th>
+		<th>EMAIL1</th>
+		<th>EMAIL2</th>
+		<th>FAX</th>
+		<th>FAX3</th>
+		<th>HOMEEMAIL11</th>
+		<th>HOMEEMAIL12</th>
+		<th>PUBLICATION_ID</th>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -5331,10 +5382,10 @@ hr {
   <caption>PUBLIC."PUBLISHER SALES".REGIONS</caption>
 
 	<tr>
-		<td class='name'>CITY</td>
-		<td class='name'>STATE</td>
-		<td class='name'>POSTALCODE</td>
-		<td class='name'>COUNTRY</td>
+		<th>CITY</th>
+		<th>STATE</th>
+		<th>POSTALCODE</th>
+		<th>COUNTRY</th>
 	</tr>
 	<tr>
 		<td>Arvada</td>
@@ -5463,11 +5514,11 @@ hr {
   <caption>PUBLIC."PUBLISHER SALES".SALES</caption>
 
 	<tr>
-		<td class='name'>POSTALCODE</td>
-		<td class='name'>COUNTRY</td>
-		<td class='name'>BOOKID</td>
-		<td class='name'>PERIODENDDATE</td>
-		<td class='name'>TOTALAMOUNT</td>
+		<th>POSTALCODE</th>
+		<th>COUNTRY</th>
+		<th>BOOKID</th>
+		<th>PERIODENDDATE</th>
+		<th>TOTALAMOUNT</th>
 	</tr>
 	<tr>
 		<td>13078</td>
