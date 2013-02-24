@@ -5,7 +5,7 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-    <release version="9.4" date="2013-02-02">
+    <release version="9.5" date="2013-02-02">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Fix for honoring text formatting options in GraphViz dot output.
       ]]></action>                      
