@@ -4,59 +4,9 @@
   <title>SchemaCrawler Output</title>
   <meta charset="utf-8"/>
   <style>
-.underscore {
-	color: Maroon;
-	border-bottom: 2px solid rgb(190, 190, 190);
-}
-
-.name {
-	font-weight: bold;
-	width: 150px;
-}
-
-.property_name {
-	width: 350px;
-}
-
-.property_value {
-	width: 250px;
-}
-
-.right {
-	text-align: right;
-}
-
-.description {
-	width: 450px;
-}
-
-.ordinal {
-	width: 20px;
-}
-
-.subname {
-	width: 150px;
-}
-
-.type {
-	width: 150px;
-}
-
-.definition {
-	white-space: pre-line;
-}
-
-h2 {
-	color: Navy;
-}
-
-h3 {
-	color: DarkGreen;
-}
-
-body,p,pre,table,th,td,caption {
+body,p,pre,table,th,td,th,caption {
 	text-align: left;
-	font-family: 'Trebuchet MS';
+	font-family: 'Trebuchet MS', 'sans-serif';
 	font-size: 0.9em;
 	line-height: 1.2em;
 }
@@ -68,23 +18,91 @@ body {
 	margin-left: 3em;
 }
 
-table,th,td {
-	border: 1px solid rgb(220, 220, 220);
+h1,h2 {
+	color: Navy;
+}
+
+h3 {
+	color: DarkGreen;
+}
+
+table,th,td,th {
+	border: 1px solid rgb(230, 230, 230);
 	border-collapse: collapse;
 	vertical-align: top;
 	padding: 2px;
 }
 
 table {
-	width: 600px;
+	width: 800px;
 }
 
 caption {
 	font-weight: bold;
+	color: Maroon;
+	border-bottom: 2px solid rgb(190, 190, 190);
+}
+
+th {
+	font-weight: bold;
+	border-bottom: 1px solid rgb(190, 190, 190);
 }
 
 hr {
 	height: 1px;
+}
+
+.name {
+	font-weight: bold;
+	min-width: 350px;
+}
+
+.property_name {
+	min-width: 350px;
+}
+
+.property_value {
+	min-width: 250px;
+}
+
+.right {
+	text-align: right;
+}
+
+.description {
+	min-width: 450px;
+}
+
+.ordinal {
+	min-width: 20px;
+}
+
+.subname {
+	min-width: 150px;
+}
+
+.type {
+	min-width: 150px;
+}
+
+.definition {
+	white-space: pre-line;
+}
+
+.data_binary {
+	font-style: italic;
+	color: #666;
+}
+
+.data_null {
+	font-weight: italic;
+	color: #666;
+	background-color: #FFEEFF;
+}
+
+.data_number {
+	text-align: right;
+	padding-right: 5px;
 }
   </style>
 </head>
@@ -155,9 +173,11 @@ hr {
 <h2>Lints</h2>
 
 <table>
+  <caption>Database</caption>
+
 	<tr>
-		<td colspan='2' class='name underscore'></td>
-		<td class='description right underscore'>[database]</td>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[database]</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -180,9 +200,11 @@ hr {
 <p>&#160;</p>
 
 <table>
+  <caption>PUBLIC.BOOKS.AUTHORS</caption>
+
 	<tr>
-		<td colspan='2' class='name underscore'>PUBLIC.BOOKS.AUTHORS</td>
-		<td class='description right underscore'>[table]</td>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[table]</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -200,9 +222,11 @@ hr {
 <p>&#160;</p>
 
 <table>
+  <caption>PUBLIC.BOOKS.BOOKAUTHORS</caption>
+
 	<tr>
-		<td colspan='2' class='name underscore'>PUBLIC.BOOKS.BOOKAUTHORS</td>
-		<td class='description right underscore'>[table]</td>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[table]</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -214,7 +238,7 @@ hr {
 	<tr>
 		<td></td>
 		<td>redundant index</td>
-		<td>SYS_IDX_10038</td>
+		<td>SYS_IDX_10088</td>
 	</tr>
 	<tr>
 		<td colspan='2' class='name'></td>
@@ -229,9 +253,11 @@ hr {
 <p>&#160;</p>
 
 <table>
+  <caption>PUBLIC.BOOKS."Global Counts"</caption>
+
 	<tr>
-		<td colspan='2' class='name underscore'>PUBLIC.BOOKS.&quot;Global Counts&quot;</td>
-		<td class='description right underscore'>[table]</td>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[table]</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -264,9 +290,11 @@ hr {
 <p>&#160;</p>
 
 <table>
+  <caption>PUBLIC.FOR_LINT.EXTRA_PK</caption>
+
 	<tr>
-		<td colspan='2' class='name underscore'>PUBLIC.FOR_LINT.EXTRA_PK</td>
-		<td class='description right underscore'>[table]</td>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[table]</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -284,9 +312,11 @@ hr {
 <p>&#160;</p>
 
 <table>
+  <caption>PUBLIC.FOR_LINT."Global Counts"</caption>
+
 	<tr>
-		<td colspan='2' class='name underscore'>PUBLIC.FOR_LINT.&quot;Global Counts&quot;</td>
-		<td class='description right underscore'>[table]</td>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[table]</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -319,9 +349,11 @@ hr {
 <p>&#160;</p>
 
 <table>
+  <caption>PUBLIC.FOR_LINT.No_Columns</caption>
+
 	<tr>
-		<td colspan='2' class='name underscore'>PUBLIC.FOR_LINT.No_Columns</td>
-		<td class='description right underscore'>[table]</td>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[table]</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -344,9 +376,11 @@ hr {
 <p>&#160;</p>
 
 <table>
+  <caption>PUBLIC.FOR_LINT.PUBLICATIONS</caption>
+
 	<tr>
-		<td colspan='2' class='name underscore'>PUBLIC.FOR_LINT.PUBLICATIONS</td>
-		<td class='description right underscore'>[table]</td>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[table]</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -373,9 +407,11 @@ hr {
 <p>&#160;</p>
 
 <table>
+  <caption>PUBLIC.FOR_LINT.WRITERS</caption>
+
 	<tr>
-		<td colspan='2' class='name underscore'>PUBLIC.FOR_LINT.WRITERS</td>
-		<td class='description right underscore'>[table]</td>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[table]</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
