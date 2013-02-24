@@ -8,7 +8,7 @@
     <release version="9.5" date="2013-02-24">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Updated HTML generation to have captions consistently for all tables. Numeric data is right-aligned in HTML,
-        and correctly reported in JSON as well. These changes affect other outpur formats as well.
+        and correctly reported in JSON as well. These changes affect other output formats as well.
       ]]></action>     
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Updated Oracle database connection URL to the new syntax.
