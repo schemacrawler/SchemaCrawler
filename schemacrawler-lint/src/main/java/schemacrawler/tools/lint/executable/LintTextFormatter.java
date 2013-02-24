@@ -56,7 +56,7 @@ final class LintTextFormatter
     final Collection<Lint<?>> lints = SimpleLintCollector.getLint(database);
     if (lints != null && !lints.isEmpty())
     {
-      out.print(formattingHelper.createObjectStart(""));
+      out.println(formattingHelper.createObjectStart("Database"));
 
       final String nameRow = formattingHelper.createNameRow("", "[database]");
       out.println(nameRow);

@@ -18,7 +18,7 @@
         {
           "id": "schemacrawler.tools.linter.LinterRedundantIndices",
           "description": "redundant index",
-          "value": "SYS_IDX_10038",
+          "value": "SYS_IDX_10088",
           "severity": "high"
         },
         {
