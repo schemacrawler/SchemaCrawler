@@ -29,6 +29,7 @@ import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.SQLFeatureNotSupportedException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -160,6 +161,12 @@ abstract class BaseDatabaseConnectionOptions
     return null;
   }
 
+  public Logger getParentLogger()
+    throws SQLFeatureNotSupportedException
+  {
+    throw new SQLFeatureNotSupportedException("Not supported");
+  }
+
   @Override
   public final String getUser()
   {
@@ -211,14 +218,17 @@ abstract class BaseDatabaseConnectionOptions
   public void setLoginTimeout(final int seconds)
     throws SQLException
   {
-    throw new SQLException("Not implemented");
+    throw new SQLFeatureNotSupportedException("Not supported");
   }
 
   @Override
   public void setLogWriter(final PrintWriter out)
     throws SQLException
   {
-    throw new SQLException("Not implemented");
+    if (out != null)
+    {
+      throw new SQLFeatureNotSupportedException("Not supported");
+    }
   }
 
   @Override
@@ -248,7 +258,7 @@ abstract class BaseDatabaseConnectionOptions
   public <T> T unwrap(final Class<T> iface)
     throws SQLException
   {
-    return null;
+    throw new SQLFeatureNotSupportedException("Not supported");
   }
 
 }
