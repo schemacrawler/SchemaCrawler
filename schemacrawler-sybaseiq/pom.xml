@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>net.sourceforge.schemacrawler</groupId>
 		<artifactId>schemacrawler-all</artifactId>
-		<version>9.5</version>
+		<version>9.6-SNAPSHOT</version>
 	</parent>
 	<artifactId>schemacrawler-sybaseiq</artifactId>
 	<packaging>jar</packaging>
