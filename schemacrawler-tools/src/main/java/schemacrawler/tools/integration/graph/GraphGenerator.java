@@ -24,6 +24,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
@@ -80,16 +81,7 @@ final class GraphGenerator
       return;
     }
 
-    final List<String> command = new ArrayList<String>();
-    command.add("dot");
-
-    command.addAll(Arrays.asList(graphVizOptions.split("\\s+")));
-    command.add("-T");
-    command.add(graphOutputFormat);
-    command.add("-o");
-    command.add(diagramFile.getAbsolutePath());
-    command.add(dotFile.getAbsolutePath());
-
+    final List<String> command = createDiagramCommand();
     final ProcessExecutor processExecutor = new ProcessExecutor(command);
     final int exitCode = processExecutor.execute();
 
@@ -109,6 +101,31 @@ final class GraphGenerator
     {
       LOGGER.log(Level.WARNING, processError);
     }
+  }
+
+  private List<String> createDiagramCommand()
+  {
+    final List<String> command = new ArrayList<String>();
+    command.add("dot");
+
+    command.addAll(Arrays.asList(graphVizOptions.split("\\s+")));
+    command.add("-T");
+    command.add(graphOutputFormat);
+    command.add("-o");
+    command.add(diagramFile.getAbsolutePath());
+    command.add(dotFile.getAbsolutePath());
+
+    final Iterator<String> iterator = command.iterator();
+    while (iterator.hasNext())
+    {
+      final String argument = iterator.next();
+      if (Utility.isBlank(argument))
+      {
+        iterator.remove();
+      }
+    }
+
+    return command;
   }
 
   private File determineDiagramFile(final File diagramOutputFile)
