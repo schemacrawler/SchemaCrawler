@@ -118,8 +118,7 @@ final class GraphGenerator
     final Iterator<String> iterator = command.iterator();
     while (iterator.hasNext())
     {
-      final String argument = iterator.next();
-      if (Utility.isBlank(argument))
+      if (Utility.isBlank(iterator.next()))
       {
         iterator.remove();
       }
