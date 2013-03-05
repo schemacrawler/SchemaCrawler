@@ -803,7 +803,16 @@ final class SchemaTextFormatter
         final String actionStatement = trigger.getActionStatement();
         out.println(formattingHelper.createEmptyRow());
 
-        final String triggerName = trigger.getName();
+        final String triggerName;
+        if (options.isHideTriggerNames())
+        {
+          triggerName = "";
+        }
+        else
+        {
+          triggerName = trigger.getName();
+        }
+
         out.println(formattingHelper.createNameRow(triggerName, triggerType));
 
         if (!Utility.isBlank(actionCondition))

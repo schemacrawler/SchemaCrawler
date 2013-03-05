@@ -78,6 +78,7 @@ final class AdditionalConfigParser
       textOptions.setHideForeignKeyNames(true);
       textOptions.setHideIndexNames(true);
       textOptions.setHidePrimaryKeyNames(true);
+      textOptions.setHideTriggerNames(true);
       textOptions.setShowUnqualifiedNames(true);
     }
 
