@@ -608,6 +608,11 @@ final class SchemaJsonFormatter
           final JSONObject jsonTrigger = new JSONObject();
           jsonTriggers.put(jsonTrigger);
 
+          if (!options.isHideTriggerNames())
+          {
+            jsonTrigger.put("name", trigger.getName());
+          }
+
           final ConditionTimingType conditionTiming = trigger
             .getConditionTiming();
           final EventManipulationType eventManipulationType = trigger

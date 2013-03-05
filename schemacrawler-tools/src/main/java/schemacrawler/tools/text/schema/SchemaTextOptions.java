@@ -45,6 +45,8 @@ public class SchemaTextOptions
                                                  + "hide_index_names";
   private static final String HIDE_CONSTRAINT_NAMES = SCHEMACRAWLER_FORMAT_PREFIX
                                                       + "hide_constraint_names";
+  private static final String HIDE_TRIGGER_NAMES = SCHEMACRAWLER_FORMAT_PREFIX
+                                                   + "hide_trigger_names";
 
   private static final String SC_SORT_ALPHABETICALLY_TABLES = SCHEMACRAWLER_FORMAT_PREFIX
                                                               + "sort_alphabetically.tables";
@@ -83,6 +85,7 @@ public class SchemaTextOptions
     setHideForeignKeyNames(getBooleanValue(config, HIDE_FOREIGN_KEY_NAMES));
     setHidePrimaryKeyNames(getBooleanValue(config, HIDE_PRIMARY_KEY_NAMES));
     setHideIndexNames(getBooleanValue(config, HIDE_INDEX_NAMES));
+    setHideTriggerNames(getBooleanValue(config, HIDE_TRIGGER_NAMES));
     setHideConstraintNames(getBooleanValue(config, HIDE_CONSTRAINT_NAMES));
 
     setAlphabeticalSortForTables(getBooleanValue(config,
@@ -161,6 +164,16 @@ public class SchemaTextOptions
   public boolean isHidePrimaryKeyNames()
   {
     return getBooleanValue(HIDE_PRIMARY_KEY_NAMES);
+  }
+
+  /**
+   * Whether to hide trigger names.
+   * 
+   * @return Hide trigger names.
+   */
+  public boolean isHideTriggerNames()
+  {
+    return getBooleanValue(HIDE_TRIGGER_NAMES);
   }
 
   /**
@@ -259,6 +272,17 @@ public class SchemaTextOptions
   public void setHidePrimaryKeyNames(final boolean hidePrimaryKeyNames)
   {
     setBooleanValue(HIDE_PRIMARY_KEY_NAMES, hidePrimaryKeyNames);
+  }
+
+  /**
+   * Sets whether to hide trigger names.
+   * 
+   * @param hideTriggerNames
+   *        Whether to hide trigger names.
+   */
+  public void setHideTriggerNames(final boolean hideTriggerNames)
+  {
+    setBooleanValue(HIDE_TRIGGER_NAMES, hideTriggerNames);
   }
 
   /**
