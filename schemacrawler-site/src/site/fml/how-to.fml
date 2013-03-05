@@ -279,6 +279,17 @@
         </p>
       </answer>
     </faq>
+    <faq id="portable-names">
+      <question>
+        How to hide display of object names that can change from server to server
+      </question>
+      <answer>
+        <p>Use the -portablenames=true command-line option to allows for easy comparison between databases, by hiding
+  foreign key names, constraint names, index and primary key
+  names, and not showing the fully-qualified table name.
+        </p>
+      </answer>
+    </faq>    
     <faq id="index-names">
       <question>
         How to hide primary key, foreign key and index names
@@ -681,7 +692,7 @@ for (final Schema schema: database.getSchemas())
           <code>-command=list -sorttables=false -routines=</code>
         </p>
       </answer>
-    </faq>
+    </faq>    
     <faq id="add_new_command">
       <question>
         How to extend SchemaCrawler by adding a new command
