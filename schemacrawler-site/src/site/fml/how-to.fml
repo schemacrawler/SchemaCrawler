@@ -285,7 +285,7 @@
       </question>
       <answer>
         <p>Use the -portablenames=true command-line option to allows for easy comparison between databases, by hiding
-  foreign key names, constraint names, index and primary key
+  foreign key names, constraint names, trigger, index and primary key
   names, and not showing the fully-qualified table name.
         </p>
       </answer>
