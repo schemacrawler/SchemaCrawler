@@ -10,8 +10,8 @@
         Fixed diagram generation on Linux when no GraphViz options are supplied.
       ]]></action>     
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
-        Added new -portablenames command-line option, to allowd for easy comparison between databases, by hiding
-  foreign key names, constraint names, index and primary key
+        Added new -portablenames command-line option, to allow for easy comparison between databases, by hiding
+  foreign key names, constraint names, trigger, index and primary key
   names, and not showing the fully-qualified table name.
       ]]></action>                      
     </release>   
