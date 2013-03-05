@@ -53,6 +53,13 @@
   <boolean> can be true or false
   Optional, defaults to false
   
+-portablenames=<boolean>
+  Allows for easy comparison between databases, by hiding
+  foreign key names, constraint names, index and primary key
+  names, and not showing the fully-qualified table name
+  <boolean> can be true or false
+  Optional, defaults to false
+    
 -outputformat=<outputformat>
   Format of the SchemaCrawler output, where <outputformat> is one of:
     text

@@ -44,7 +44,8 @@ final class AdditionalConfigParser
           new BooleanOption("noinfo"),
           new BooleanOption("sorttables"),
           new BooleanOption("sortcolumns"),
-          new BooleanOption("sortinout"));
+          new BooleanOption("sortinout"),
+          new BooleanOption("portablenames"));
   }
 
   @Override
@@ -70,6 +71,14 @@ final class AdditionalConfigParser
     if (getBooleanValue("sortinout"))
     {
       textOptions.setAlphabeticalSortForRoutineColumns(true);
+    }
+    if (getBooleanValue("portablenames"))
+    {
+      textOptions.setHideConstraintNames(true);
+      textOptions.setHideForeignKeyNames(true);
+      textOptions.setHideIndexNames(true);
+      textOptions.setHidePrimaryKeyNames(true);
+      textOptions.setShowUnqualifiedNames(true);
     }
 
     config.putAll(textOptions.toConfig());
