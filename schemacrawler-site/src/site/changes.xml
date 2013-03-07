@@ -8,7 +8,12 @@
     <release version="9.6" date="2013-03-02">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Fixed diagram generation on Linux when no GraphViz options are supplied.
-      ]]></action>     
+      ]]></action>  
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Added trigger names to JSON output by default. Added new configuration variable, 
+        schemacrawler.format.hide_trigger_names to suppress trigger names in all 
+        output formats.
+      ]]></action>  
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Added new -portablenames command-line option, to allow for easy comparison between databases, by hiding
   foreign key names, constraint names, trigger, index and primary key
