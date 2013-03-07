@@ -30,8 +30,6 @@ public class SchemaTextOptions
 
   private static final long serialVersionUID = -8133661515343358712L;
 
-  private static final String SHOW_UNQUALIFIED_NAMES = SCHEMACRAWLER_FORMAT_PREFIX
-                                                       + "show_unqualified_names";
   private static final String SHOW_ORDINAL_NUMBERS = SCHEMACRAWLER_FORMAT_PREFIX
                                                      + "show_ordinal_numbers";
   private static final String SHOW_STANDARD_COLUMN_TYPE_NAMES = SCHEMACRAWLER_FORMAT_PREFIX
@@ -77,7 +75,6 @@ public class SchemaTextOptions
   {
     super(config);
 
-    setShowUnqualifiedNames(getBooleanValue(config, SHOW_UNQUALIFIED_NAMES));
     setShowStandardColumnTypeNames(getBooleanValue(config,
                                                    SHOW_STANDARD_COLUMN_TYPE_NAMES));
     setShowOrdinalNumbers(getBooleanValue(config, SHOW_ORDINAL_NUMBERS));
@@ -196,11 +193,6 @@ public class SchemaTextOptions
     return getBooleanValue(SHOW_STANDARD_COLUMN_TYPE_NAMES);
   }
 
-  public boolean isShowUnqualifiedNames()
-  {
-    return getBooleanValue(SHOW_UNQUALIFIED_NAMES);
-  }
-
   public void setAlphabeticalSortForForeignKeys(final boolean isAlphabeticalSortForForeignKeys)
   {
     setBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS,
@@ -306,11 +298,6 @@ public class SchemaTextOptions
   {
     setBooleanValue(SHOW_STANDARD_COLUMN_TYPE_NAMES,
                     showStandardColumnTypeNames);
-  }
-
-  public void setShowUnqualifiedNames(final boolean showUnqualifiedNames)
-  {
-    setBooleanValue(SHOW_UNQUALIFIED_NAMES, showUnqualifiedNames);
   }
 
 }

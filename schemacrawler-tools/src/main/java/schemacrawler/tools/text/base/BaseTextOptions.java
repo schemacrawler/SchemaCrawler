@@ -40,6 +40,9 @@ public abstract class BaseTextOptions
   private static final String APPEND_OUTPUT = SCHEMACRAWLER_FORMAT_PREFIX
                                               + "append_output";
 
+  private static final String SHOW_UNQUALIFIED_NAMES = SCHEMACRAWLER_FORMAT_PREFIX
+                                                       + "show_unqualified_names";
+
   protected BaseTextOptions()
   {
     this(null);
@@ -51,6 +54,8 @@ public abstract class BaseTextOptions
     setNoHeader(getBooleanValue(config, NO_HEADER));
     setNoInfo(getBooleanValue(config, NO_INFO));
     setAppendOutput(getBooleanValue(config, APPEND_OUTPUT));
+
+    setShowUnqualifiedNames(getBooleanValue(config, SHOW_UNQUALIFIED_NAMES));
   }
 
   public boolean isAppendOutput()
@@ -86,6 +91,11 @@ public abstract class BaseTextOptions
   public boolean isNoInfo()
   {
     return getBooleanValue(NO_INFO);
+  }
+
+  public boolean isShowUnqualifiedNames()
+  {
+    return getBooleanValue(SHOW_UNQUALIFIED_NAMES);
   }
 
   public void setAppendOutput(final boolean appendOutput)
@@ -124,6 +134,11 @@ public abstract class BaseTextOptions
   public void setNoInfo(final boolean noInfo)
   {
     setBooleanValue(NO_INFO, noInfo);
+  }
+
+  public void setShowUnqualifiedNames(final boolean showUnqualifiedNames)
+  {
+    setBooleanValue(SHOW_UNQUALIFIED_NAMES, showUnqualifiedNames);
   }
 
 }
