@@ -40,19 +40,27 @@ public class SchemaTraverser
     return database;
   }
 
-  public SchemaTraversalHandler getFormatter()
+  public SchemaTraversalHandler getHandler()
   {
     return handler;
   }
 
   public void setDatabase(final Database database)
   {
+    if (database == null)
+    {
+      throw new IllegalArgumentException("No database provided");
+    }
     this.database = database;
   }
 
-  public void setFormatter(final SchemaTraversalHandler formatter)
+  public void setHandler(final SchemaTraversalHandler handler)
   {
-    handler = formatter;
+    if (handler == null)
+    {
+      throw new IllegalArgumentException("No handler provided");
+    }
+    this.handler = handler;
   }
 
   public final void traverse()

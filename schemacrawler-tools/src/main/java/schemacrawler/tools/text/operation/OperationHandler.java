@@ -25,16 +25,16 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import schemacrawler.schema.Database;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.SchemaCrawlerInfo;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.options.OutputFormat;
-import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.traversal.DataTraversalHandler;
 
 /**
@@ -48,43 +48,39 @@ final class OperationHandler
   private static final Logger LOGGER = Logger.getLogger(OperationHandler.class
     .getName());
 
-  private final Connection connection;
-  private final DataTraversalHandler dataFormatter;
-  private final Query query;
+  private Connection connection;
+  private DataTraversalHandler handler;
+  private Query query;
 
-  OperationHandler(final Operation operation,
-                   final Query query,
-                   final OperationOptions options,
-                   final OutputOptions outputOptions,
-                   final Connection connection)
-    throws SchemaCrawlerException
+  public Database getDatabase()
   {
-    if (connection == null)
-    {
-      throw new SchemaCrawlerException("No connection provided");
-    }
-    this.connection = connection;
+    return database;
+  }
 
-    if (query == null)
+  public void setDatabase(final Database database)
+  {
+    if (database == null)
     {
-      throw new SchemaCrawlerException("No query provided");
+      throw new IllegalArgumentException("No database provided");
     }
-    this.query = query;
+    this.database = database;
+  }
 
-    if (options == null)
-    {
-      throw new SchemaCrawlerException("No operation options provided");
-    }
+  private Database database;
 
-    final OutputFormat outputFormat = outputOptions.getOutputFormat();
-    if (outputFormat == OutputFormat.json)
-    {
-      dataFormatter = new DataJsonFormatter(operation, options, outputOptions);
-    }
-    else
-    {
-      dataFormatter = new DataTextFormatter(operation, options, outputOptions);
-    }
+  public Connection getConnection()
+  {
+    return connection;
+  }
+
+  public DataTraversalHandler getFormatter()
+  {
+    return handler;
+  }
+
+  public Query getQuery()
+  {
+    return query;
   }
 
   /**
@@ -95,16 +91,48 @@ final class OperationHandler
                      final JdbcDriverInfo jdbcDriverInfo)
     throws SchemaCrawlerException
   {
-    dataFormatter.handleInfoStart();
-    dataFormatter.handle(schemaCrawlerInfo);
-    dataFormatter.handle(databaseInfo);
-    dataFormatter.handle(jdbcDriverInfo);
-    dataFormatter.handleInfoEnd();
+    handler.handleInfoStart();
+    handler.handle(schemaCrawlerInfo);
+    handler.handle(databaseInfo);
+    handler.handle(jdbcDriverInfo);
+    handler.handleInfoEnd();
   }
 
-  void begin()
+  public void setConnection(final Connection connection)
+  {
+    if (connection == null)
+    {
+      throw new IllegalArgumentException("No connection provided");
+    }
+    this.connection = connection;
+  }
+
+  public void setFormatter(final DataTraversalHandler formatter)
+  {
+    if (formatter == null)
+    {
+      throw new IllegalArgumentException("No formatter provided");
+    }
+    this.handler = formatter;
+  }
+
+  public void setQuery(final Query query)
+  {
+    if (query == null)
+    {
+      throw new IllegalArgumentException("No query provided");
+    }
+    this.query = query;
+  }
+
+  public final void traverse()
     throws SchemaCrawlerException
   {
+    if (connection == null || handler == null || query == null)
+    {
+      throw new SchemaCrawlerException("Cannot perform operation");
+    }
+
     try
     {
       if (connection.isClosed())
@@ -117,31 +145,33 @@ final class OperationHandler
       throw new SchemaCrawlerException("Connection is closed", e);
     }
 
-    dataFormatter.begin();
-  }
+    handler.begin();
 
-  void end()
-    throws SchemaCrawlerException
-  {
-    if (!query.isQueryOver())
+    handler.handleInfoStart();
+    handler.handle(database.getSchemaCrawlerInfo());
+    handler.handle(database.getDatabaseInfo());
+    handler.handle(database.getJdbcDriverInfo());
+    handler.handleInfoEnd();
+
+    if (query.isQueryOver())
+    {
+      final Collection<Table> tables = database.getTables();
+
+      for (final Table table: tables)
+      {
+        final String title = table.getFullName();
+        final String sql = query.getQueryForTable(table);
+        executeSqlAndHandleData(title, sql);
+      }
+    }
+    else
     {
       final String title = query.getName();
       final String sql = query.getQuery();
       executeSqlAndHandleData(title, sql);
     }
 
-    dataFormatter.end();
-  }
-
-  void handle(final Table table)
-    throws SchemaCrawlerException
-  {
-    if (query.isQueryOver())
-    {
-      final String title = table.getFullName();
-      final String sql = query.getQueryForTable(table);
-      executeSqlAndHandleData(title, sql);
-    }
+    handler.end();
   }
 
   private void executeSqlAndHandleData(final String title, final String sql)
@@ -159,7 +189,7 @@ final class OperationHandler
       if (hasResults)
       {
         results = statement.getResultSet();
-        dataFormatter.handleData(title, results);
+        handler.handleData(title, results);
       }
     }
     catch (final SQLException e)

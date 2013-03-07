@@ -24,9 +24,10 @@ package schemacrawler.tools.text.operation;
 import java.sql.Connection;
 
 import schemacrawler.schema.Database;
-import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseExecutable;
+import schemacrawler.tools.options.OutputFormat;
+import schemacrawler.tools.traversal.DataTraversalHandler;
 
 /**
  * Basic SchemaCrawler executor.
@@ -67,28 +68,46 @@ public final class OperationExecutable
   protected void executeOn(final Database database, final Connection connection)
     throws Exception
   {
-    final OperationHandler handler = getHandler(connection);
+    final DataTraversalHandler formatter = getDataTraversalHandler();
+    final Query query = getQuery();
 
-    handler.begin();
-    handler.handle(database.getSchemaCrawlerInfo(),
-                   database.getDatabaseInfo(),
-                   database.getJdbcDriverInfo());
+    final OperationHandler handler = new OperationHandler();
+    handler.setDatabase(database);
+    handler.setConnection(connection);
+    handler.setFormatter(formatter);
+    handler.setQuery(query);
 
-    for (final Table table: database.getTables())
-    {
-      handler.handle(table);
-    }
-
-    handler.end();
-
+    handler.traverse();
   }
 
-  private OperationHandler getHandler(final Connection connection)
+  private DataTraversalHandler getDataTraversalHandler()
     throws SchemaCrawlerException
   {
-    final OperationHandler handler;
+    final Operation operation = getOperation();
 
-    // Determine the operation, or whether this command is a query
+    final OperationOptions operationOptions = getOperationOptions();
+    final DataTraversalHandler formatter;
+    final OutputFormat outputFormat = outputOptions.getOutputFormat();
+    if (outputFormat == OutputFormat.json)
+    {
+      formatter = new DataJsonFormatter(operation,
+                                        operationOptions,
+                                        outputOptions);
+    }
+    else
+    {
+      formatter = new DataTextFormatter(operation,
+                                        operationOptions,
+                                        outputOptions);
+    }
+    return formatter;
+  }
+
+  /**
+   * Determine the operation, or whether this command is a query.
+   */
+  private Operation getOperation()
+  {
     Operation operation = null;
     try
     {
@@ -98,8 +117,12 @@ public final class OperationExecutable
     {
       operation = null;
     }
+    return operation;
+  }
 
-    // Get the query
+  private Query getQuery()
+  {
+    final Operation operation = getOperation();
     final Query query;
     if (operation == null)
     {
@@ -120,14 +143,7 @@ public final class OperationExecutable
       query = operation.getQuery();
     }
 
-    final OperationOptions operationOptions = getOperationOptions();
-    handler = new OperationHandler(operation,
-                                   query,
-                                   operationOptions,
-                                   outputOptions,
-                                   connection);
-
-    return handler;
+    return query;
   }
 
 }

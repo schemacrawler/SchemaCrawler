@@ -96,7 +96,7 @@ public final class SchemaTextExecutable
 
     final SchemaTraverser traverser = new SchemaTraverser();
     traverser.setDatabase(database);
-    traverser.setFormatter(formatter);
+    traverser.setHandler(formatter);
     traverser.traverse();
 
   }
