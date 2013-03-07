@@ -108,7 +108,7 @@ public final class GraphExecutable
 
     final SchemaTraverser traverser = new SchemaTraverser();
     traverser.setDatabase(database);
-    traverser.setFormatter(formatter);
+    traverser.setHandler(formatter);
     traverser.traverse();
 
     // Create graph image
