@@ -215,6 +215,7 @@
         "actionCondition": "",
         "eventManipulationType": "delete",
         "conditionTiming": "after",
+        "name": "TRG_AUTHORS",
         "actionStatement": "UPDATE BOOKS.PUBLISHERS SET PUBLISHER='Jacob'WHERE PUBLISHER='John'",
         "actionOrientation": "row"
       }],

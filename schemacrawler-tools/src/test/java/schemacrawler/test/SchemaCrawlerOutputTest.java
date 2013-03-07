@@ -42,6 +42,7 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.InfoLevel;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.text.base.BaseTextOptions;
 import schemacrawler.tools.text.base.BaseTextOptionsBuilder;
 import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
@@ -338,7 +339,7 @@ public class SchemaCrawlerOutputTest
 
     final List<String> failures = new ArrayList<String>();
 
-    final SchemaTextOptions textOptions = new SchemaTextOptions();
+    final BaseTextOptions textOptions = new SchemaTextOptions();
     textOptions.setNoInfo(false);
     textOptions.setNoHeader(false);
     textOptions.setNoFooter(false);
@@ -389,7 +390,7 @@ public class SchemaCrawlerOutputTest
 
     final List<String> failures = new ArrayList<String>();
 
-    final SchemaTextOptions textOptions = new SchemaTextOptions();
+    final BaseTextOptions textOptions = new SchemaTextOptions();
     textOptions.setNoInfo(false);
     textOptions.setNoHeader(false);
     textOptions.setNoFooter(false);
