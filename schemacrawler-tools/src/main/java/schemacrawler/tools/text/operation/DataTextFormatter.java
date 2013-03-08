@@ -25,6 +25,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.BaseTabularFormatter;
@@ -85,43 +86,54 @@ final class DataTextFormatter
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.traversal.DataTraversalHandler#handleData(java.lang.String,
+   * @see schemacrawler.tools.traversal.DataTraversalHandler#handleData(schemacrawler.tools.text.operation.Query,
    *      java.sql.ResultSet)
    */
   @Override
-  public void handleData(final String title, final ResultSet rows)
+  public void handleData(final Query query, final ResultSet rows)
     throws SchemaCrawlerException
   {
-    if (dataBlockCount == 0)
+    String title;
+    if (query != null)
     {
-      printHeader();
-    }
-
-    if (operation == Operation.count)
-    {
-      handleAggregateOperationForTable(title, rows);
+      title = query.getName();
     }
     else
     {
-      out.println(formattingHelper.createObjectStart(title));
-      try
-      {
-        final DataResultSet dataRows = new DataResultSet(rows,
-                                                         options.isShowLobs());
-
-        out
-          .println(formattingHelper.createRowHeader(dataRows.getColumnNames()));
-
-        iterateRows(dataRows);
-      }
-      catch (final SQLException e)
-      {
-        throw new SchemaCrawlerException(e.getMessage(), e);
-      }
-      out.println(formattingHelper.createObjectEnd());
+      title = "";
     }
 
-    dataBlockCount++;
+    handleData(title, rows);
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.traversal.DataTraversalHandler#handleData(schemacrawler.schema.Table,
+   *      java.sql.ResultSet)
+   */
+  @Override
+  public void handleData(final Table table, final ResultSet rows)
+    throws SchemaCrawlerException
+  {
+    final String tableName;
+    if (table != null)
+    {
+      if (options.isShowUnqualifiedNames())
+      {
+        tableName = table.getName();
+      }
+      else
+      {
+        tableName = table.getFullName();
+      }
+    }
+    else
+    {
+      tableName = "";
+    }
+
+    handleData(tableName, rows);
   }
 
   private String getMessage(final double aggregate)
@@ -168,6 +180,46 @@ final class DataTextFormatter
     out.println(formattingHelper.createNameValueRow(title,
                                                     message,
                                                     Alignment.right));
+  }
+
+  private void handleData(final String title, final ResultSet rows)
+    throws SchemaCrawlerException
+  {
+    if (rows == null)
+    {
+      return;
+    }
+
+    if (dataBlockCount == 0)
+    {
+      printHeader();
+    }
+
+    if (operation == Operation.count)
+    {
+      handleAggregateOperationForTable(title, rows);
+    }
+    else
+    {
+      out.println(formattingHelper.createObjectStart(title));
+      try
+      {
+        final DataResultSet dataRows = new DataResultSet(rows,
+                                                         options.isShowLobs());
+
+        out
+          .println(formattingHelper.createRowHeader(dataRows.getColumnNames()));
+
+        iterateRows(dataRows);
+      }
+      catch (final SQLException e)
+      {
+        throw new SchemaCrawlerException(e.getMessage(), e);
+      }
+      out.println(formattingHelper.createObjectEnd());
+    }
+
+    dataBlockCount++;
   }
 
   private void iterateRows(final DataResultSet dataRows)

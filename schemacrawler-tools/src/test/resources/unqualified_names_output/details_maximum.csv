@@ -1235,18 +1235,18 @@ Row Count
 
 Row Count
 ------------------------------------------------------------------------
-PUBLIC.BOOKS.AUTHORS,20 rows
-PUBLIC.BOOKS.AUTHORSLIST,20 rows
-PUBLIC.BOOKS.BOOKAUTHORS,20 rows
-PUBLIC.BOOKS.BOOKS,20 rows
-"PUBLIC.BOOKS.""Global Counts""",empty
-PUBLIC.BOOKS.PUBLISHERS,20 rows
-PUBLIC.FOR_LINT.EXTRA_PK,empty
-"PUBLIC.FOR_LINT.""Global Counts""",empty
-PUBLIC.FOR_LINT.PUBLICATIONS,empty
-PUBLIC.FOR_LINT.WRITERS,empty
-"PUBLIC.""PUBLISHER SALES"".REGIONS",20 rows
-"PUBLIC.""PUBLISHER SALES"".SALES",20 rows
+AUTHORS,20 rows
+AUTHORSLIST,20 rows
+BOOKAUTHORS,20 rows
+BOOKS,20 rows
+"""Global Counts""",empty
+PUBLISHERS,20 rows
+EXTRA_PK,empty
+"""Global Counts""",empty
+PUBLICATIONS,empty
+WRITERS,empty
+REGIONS,20 rows
+SALES,20 rows
 
 
 
@@ -1256,7 +1256,7 @@ Dump
 
 
 
-PUBLIC.BOOKS.AUTHORS
+AUTHORS
 ------------------------------------------------------------------------
 ID,FIRSTNAME,LASTNAME,ADDRESS1,ADDRESS2,CITY,STATE,POSTALCODE,COUNTRY
 1,Oren,Shaffer,900-2273 Integer Avenue,"",Farmer City,MD,37032,Cook Islands
@@ -1282,7 +1282,7 @@ ID,FIRSTNAME,LASTNAME,ADDRESS1,ADDRESS2,CITY,STATE,POSTALCODE,COUNTRY
 
 
 
-PUBLIC.BOOKS.AUTHORSLIST
+AUTHORSLIST
 ------------------------------------------------------------------------
 ID,FIRSTNAME,LASTNAME
 1,Oren,Shaffer
@@ -1308,7 +1308,7 @@ ID,FIRSTNAME,LASTNAME
 
 
 
-PUBLIC.BOOKS.BOOKAUTHORS
+BOOKAUTHORS
 ------------------------------------------------------------------------
 BOOKID,AUTHORID,UPDATE
 1,7,<binary>
@@ -1334,7 +1334,7 @@ BOOKID,AUTHORID,UPDATE
 
 
 
-PUBLIC.BOOKS.BOOKS
+BOOKS
 ------------------------------------------------------------------------
 ID,TITLE,DESCRIPTION,PUBLISHERID,PUBLICATIONDATE,PRICE
 1,Neque. In Ornare Sagittis,"Dis Parturient Montes, Nascetur Ridiculus Mus.",18,2000-10-27,69.99
@@ -1360,13 +1360,13 @@ ID,TITLE,DESCRIPTION,PUBLISHERID,PUBLICATIONDATE,PRICE
 
 
 
-PUBLIC.BOOKS."Global Counts"
+"Global Counts"
 ------------------------------------------------------------------------
 Global Count
 
 
 
-PUBLIC.BOOKS.PUBLISHERS
+PUBLISHERS
 ------------------------------------------------------------------------
 ID,PUBLISHER
 1,Dalton Lewis
@@ -1392,31 +1392,31 @@ ID,PUBLISHER
 
 
 
-PUBLIC.FOR_LINT.EXTRA_PK
+EXTRA_PK
 ------------------------------------------------------------------------
 ID,WRITERID,PUBLICATIONID
 
 
 
-PUBLIC.FOR_LINT."Global Counts"
+"Global Counts"
 ------------------------------------------------------------------------
 Global Count
 
 
 
-PUBLIC.FOR_LINT.PUBLICATIONS
+PUBLICATIONS
 ------------------------------------------------------------------------
 ID,TITLE,DESCRIPTION,WRITERID,PUBLICATIONDATE,PRICE,UPDATE,PRESS_RELEASE
 
 
 
-PUBLIC.FOR_LINT.WRITERS
+WRITERS
 ------------------------------------------------------------------------
 ID,FIRSTNAME,LASTNAME,ADDRESS1,ADDRESS2,CITY,STATE,POSTALCODE,COUNTRY,PHONE1,PHONE2,EMAIL1,EMAIL2,FAX,FAX3,HOMEEMAIL11,HOMEEMAIL12,PUBLICATION_ID
 
 
 
-PUBLIC."PUBLISHER SALES".REGIONS
+REGIONS
 ------------------------------------------------------------------------
 CITY,STATE,POSTALCODE,COUNTRY
 Arvada,KY,17131,USA
@@ -1442,7 +1442,7 @@ Woburn,NV,27392,USA
 
 
 
-PUBLIC."PUBLISHER SALES".SALES
+SALES
 ------------------------------------------------------------------------
 POSTALCODE,COUNTRY,BOOKID,PERIODENDDATE,TOTALAMOUNT
 13078,USA,1,2001-07-18,18257.0

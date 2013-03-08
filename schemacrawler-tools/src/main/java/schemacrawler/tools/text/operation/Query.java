@@ -39,7 +39,7 @@ import sf.util.Utility;
  * 
  * @author sfatehi
  */
-final class Query
+public final class Query
   implements Serializable
 {
 

@@ -3457,51 +3457,51 @@
   "description": "Row Count",
   "data": [
     {
-      "title": "PUBLIC.BOOKS.AUTHORS",
+      "title": "AUTHORS",
       "value": 20
     },
     {
-      "title": "PUBLIC.BOOKS.AUTHORSLIST",
+      "title": "AUTHORSLIST",
       "value": 20
     },
     {
-      "title": "PUBLIC.BOOKS.BOOKAUTHORS",
+      "title": "BOOKAUTHORS",
       "value": 20
     },
     {
-      "title": "PUBLIC.BOOKS.BOOKS",
+      "title": "BOOKS",
       "value": 20
     },
     {
-      "title": "PUBLIC.BOOKS.\"Global Counts\"",
+      "title": "\"Global Counts\"",
       "value": 0
     },
     {
-      "title": "PUBLIC.BOOKS.PUBLISHERS",
+      "title": "PUBLISHERS",
       "value": 20
     },
     {
-      "title": "PUBLIC.FOR_LINT.EXTRA_PK",
+      "title": "EXTRA_PK",
       "value": 0
     },
     {
-      "title": "PUBLIC.FOR_LINT.\"Global Counts\"",
+      "title": "\"Global Counts\"",
       "value": 0
     },
     {
-      "title": "PUBLIC.FOR_LINT.PUBLICATIONS",
+      "title": "PUBLICATIONS",
       "value": 0
     },
     {
-      "title": "PUBLIC.FOR_LINT.WRITERS",
+      "title": "WRITERS",
       "value": 0
     },
     {
-      "title": "PUBLIC.\"PUBLISHER SALES\".REGIONS",
+      "title": "REGIONS",
       "value": 20
     },
     {
-      "title": "PUBLIC.\"PUBLISHER SALES\".SALES",
+      "title": "SALES",
       "value": 20
     }
   ]
@@ -3510,7 +3510,7 @@
   "description": "Dump",
   "data": [
     {
-      "title": "PUBLIC.BOOKS.AUTHORS",
+      "title": "AUTHORS",
       "columnNames": [
         "ID",
         "FIRSTNAME",
@@ -3746,7 +3746,7 @@
       ]
     },
     {
-      "title": "PUBLIC.BOOKS.AUTHORSLIST",
+      "title": "AUTHORSLIST",
       "columnNames": [
         "ID",
         "FIRSTNAME",
@@ -3856,7 +3856,7 @@
       ]
     },
     {
-      "title": "PUBLIC.BOOKS.BOOKAUTHORS",
+      "title": "BOOKAUTHORS",
       "columnNames": [
         "BOOKID",
         "AUTHORID",
@@ -3966,7 +3966,7 @@
       ]
     },
     {
-      "title": "PUBLIC.BOOKS.BOOKS",
+      "title": "BOOKS",
       "columnNames": [
         "ID",
         "TITLE",
@@ -4139,12 +4139,12 @@
       ]
     },
     {
-      "title": "PUBLIC.BOOKS.\"Global Counts\"",
+      "title": "\"Global Counts\"",
       "columnNames": ["Global Count"],
       "rows": []
     },
     {
-      "title": "PUBLIC.BOOKS.PUBLISHERS",
+      "title": "PUBLISHERS",
       "columnNames": [
         "ID",
         "PUBLISHER"
@@ -4233,7 +4233,7 @@
       ]
     },
     {
-      "title": "PUBLIC.FOR_LINT.EXTRA_PK",
+      "title": "EXTRA_PK",
       "columnNames": [
         "ID",
         "WRITERID",
@@ -4242,12 +4242,12 @@
       "rows": []
     },
     {
-      "title": "PUBLIC.FOR_LINT.\"Global Counts\"",
+      "title": "\"Global Counts\"",
       "columnNames": ["Global Count"],
       "rows": []
     },
     {
-      "title": "PUBLIC.FOR_LINT.PUBLICATIONS",
+      "title": "PUBLICATIONS",
       "columnNames": [
         "ID",
         "TITLE",
@@ -4261,7 +4261,7 @@
       "rows": []
     },
     {
-      "title": "PUBLIC.FOR_LINT.WRITERS",
+      "title": "WRITERS",
       "columnNames": [
         "ID",
         "FIRSTNAME",
@@ -4285,7 +4285,7 @@
       "rows": []
     },
     {
-      "title": "PUBLIC.\"PUBLISHER SALES\".REGIONS",
+      "title": "REGIONS",
       "columnNames": [
         "CITY",
         "STATE",
@@ -4416,7 +4416,7 @@
       ]
     },
     {
-      "title": "PUBLIC.\"PUBLISHER SALES\".SALES",
+      "title": "SALES",
       "columnNames": [
         "POSTALCODE",
         "COUNTRY",

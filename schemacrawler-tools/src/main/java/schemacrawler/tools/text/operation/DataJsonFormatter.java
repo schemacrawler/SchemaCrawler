@@ -25,6 +25,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.BaseJsonFormatter;
@@ -82,13 +83,91 @@ final class DataJsonFormatter
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.traversal.DataTraversalHandler#handleData(java.lang.String,
+   * @see schemacrawler.tools.traversal.DataTraversalHandler#handleData(schemacrawler.tools.text.operation.Query,
    *      java.sql.ResultSet)
    */
   @Override
-  public void handleData(final String title, final ResultSet rows)
+  public void handleData(final Query query, final ResultSet rows)
     throws SchemaCrawlerException
   {
+    String title;
+    if (query != null)
+    {
+      title = query.getName();
+    }
+    else
+    {
+      title = "";
+    }
+
+    handleData(title, rows);
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.traversal.DataTraversalHandler#handleData(schemacrawler.schema.Table,
+   *      java.sql.ResultSet)
+   */
+  @Override
+  public void handleData(final Table table, final ResultSet rows)
+    throws SchemaCrawlerException
+  {
+    final String tableName;
+    if (table != null)
+    {
+      if (options.isShowUnqualifiedNames())
+      {
+        tableName = table.getName();
+      }
+      else
+      {
+        tableName = table.getFullName();
+      }
+    }
+    else
+    {
+      tableName = "";
+    }
+
+    handleData(tableName, rows);
+  }
+
+  /**
+   * Handles an aggregate operation, such as a count, for a given table.
+   * 
+   * @param title
+   *        Title
+   * @param results
+   *        Results
+   */
+  private long handleAggregateOperationForTable(final String title,
+                                                final ResultSet results)
+    throws SchemaCrawlerException
+  {
+    try
+    {
+      long aggregate = 0;
+      if (results.next())
+      {
+        aggregate = results.getLong(1);
+      }
+      return aggregate;
+    }
+    catch (final SQLException e)
+    {
+      throw new SchemaCrawlerException("Could not obtain aggregate data", e);
+    }
+  }
+
+  private void handleData(final String title, final ResultSet rows)
+    throws SchemaCrawlerException
+  {
+    if (rows == null)
+    {
+      return;
+    }
+
     try
     {
       final JSONObject jsonData = new JSONObject();
@@ -126,40 +205,13 @@ final class DataJsonFormatter
 
   }
 
-  /**
-   * Handles an aggregate operation, such as a count, for a given table.
-   * 
-   * @param title
-   *        Title
-   * @param results
-   *        Results
-   */
-  private long handleAggregateOperationForTable(final String title,
-                                                final ResultSet results)
-    throws SchemaCrawlerException
-  {
-    try
-    {
-      long aggregate = 0;
-      if (results.next())
-      {
-        aggregate = results.getLong(1);
-      }
-      return aggregate;
-    }
-    catch (final SQLException e)
-    {
-      throw new SchemaCrawlerException("Could not obtain aggregate data", e);
-    }
-  }
-
   private JSONArray iterateRows(final DataResultSet dataRows)
     throws SQLException
   {
     final JSONArray jsonRows = new JSONArray();
     while (dataRows.next())
     {
-      final List<String> currentRow = dataRows.row();
+      final List currentRow = dataRows.row();
       jsonRows.put(new JSONArray(currentRow));
     }
     return jsonRows;
