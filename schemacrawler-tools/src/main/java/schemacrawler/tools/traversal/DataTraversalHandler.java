@@ -22,13 +22,18 @@ package schemacrawler.tools.traversal;
 
 import java.sql.ResultSet;
 
+import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.text.operation.Query;
 
 public interface DataTraversalHandler
   extends TraversalHandler
 {
 
-  void handleData(final String title, final ResultSet rows)
+  void handleData(final Query query, final ResultSet rows)
+    throws SchemaCrawlerException;
+
+  void handleData(final Table table, final ResultSet rows)
     throws SchemaCrawlerException;
 
 }

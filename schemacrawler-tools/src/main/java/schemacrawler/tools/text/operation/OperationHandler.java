@@ -30,9 +30,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schema.Database;
-import schemacrawler.schema.DatabaseInfo;
-import schemacrawler.schema.JdbcDriverInfo;
-import schemacrawler.schema.SchemaCrawlerInfo;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.traversal.DataTraversalHandler;
@@ -52,25 +49,16 @@ final class OperationHandler
   private DataTraversalHandler handler;
   private Query query;
 
-  public Database getDatabase()
-  {
-    return database;
-  }
-
-  public void setDatabase(final Database database)
-  {
-    if (database == null)
-    {
-      throw new IllegalArgumentException("No database provided");
-    }
-    this.database = database;
-  }
-
   private Database database;
 
   public Connection getConnection()
   {
     return connection;
+  }
+
+  public Database getDatabase()
+  {
+    return database;
   }
 
   public DataTraversalHandler getFormatter()
@@ -83,21 +71,6 @@ final class OperationHandler
     return query;
   }
 
-  /**
-   * {@inheritDoc}
-   */
-  public void handle(final SchemaCrawlerInfo schemaCrawlerInfo,
-                     final DatabaseInfo databaseInfo,
-                     final JdbcDriverInfo jdbcDriverInfo)
-    throws SchemaCrawlerException
-  {
-    handler.handleInfoStart();
-    handler.handle(schemaCrawlerInfo);
-    handler.handle(databaseInfo);
-    handler.handle(jdbcDriverInfo);
-    handler.handleInfoEnd();
-  }
-
   public void setConnection(final Connection connection)
   {
     if (connection == null)
@@ -107,13 +80,22 @@ final class OperationHandler
     this.connection = connection;
   }
 
+  public void setDatabase(final Database database)
+  {
+    if (database == null)
+    {
+      throw new IllegalArgumentException("No database provided");
+    }
+    this.database = database;
+  }
+
   public void setFormatter(final DataTraversalHandler formatter)
   {
     if (formatter == null)
     {
       throw new IllegalArgumentException("No formatter provided");
     }
-    this.handler = formatter;
+    handler = formatter;
   }
 
   public void setQuery(final Query query)
@@ -128,22 +110,12 @@ final class OperationHandler
   public final void traverse()
     throws SchemaCrawlerException
   {
-    if (connection == null || handler == null || query == null)
+    if (handler == null || query == null)
     {
       throw new SchemaCrawlerException("Cannot perform operation");
     }
 
-    try
-    {
-      if (connection.isClosed())
-      {
-        throw new SchemaCrawlerException("Connection is closed");
-      }
-    }
-    catch (final SQLException e)
-    {
-      throw new SchemaCrawlerException("Connection is closed", e);
-    }
+    final Statement statement = createStatement();
 
     handler.begin();
 
@@ -159,60 +131,117 @@ final class OperationHandler
 
       for (final Table table: tables)
       {
-        final String title = table.getFullName();
         final String sql = query.getQueryForTable(table);
-        executeSqlAndHandleData(title, sql);
+
+        LOGGER.log(Level.FINE,
+                   String.format("Executing query for table %s: %s",
+                                 table.getFullName(),
+                                 sql));
+        final ResultSet results = executeSql(statement, sql);
+        handler.handleData(table, results);
+        closeResults(results);
       }
     }
     else
     {
-      final String title = query.getName();
       final String sql = query.getQuery();
-      executeSqlAndHandleData(title, sql);
+      final ResultSet results = executeSql(statement, sql);
+      handler.handleData(query, results);
+      closeResults(results);
     }
 
     handler.end();
+
+    closeStatement(statement);
   }
 
-  private void executeSqlAndHandleData(final String title, final String sql)
-    throws SchemaCrawlerException
+  private void closeResults(final ResultSet results)
   {
-    LOGGER.log(Level.FINE,
-               String.format("Executing query for %s: %s", title, sql));
-    Statement statement = null;
-    ResultSet results = null;
     try
     {
-      statement = connection.createStatement();
+      if (results != null)
+      {
+        results.close();
+      }
+    }
+    catch (final SQLException e)
+    {
+      LOGGER.log(Level.WARNING, "Error releasing resources", e);
+    }
+  }
+
+  private void closeStatement(final Statement statement)
+  {
+    try
+    {
+      if (statement != null)
+      {
+        statement.close();
+      }
+    }
+    catch (final SQLException e)
+    {
+      LOGGER.log(Level.WARNING, "Error releasing resources", e);
+    }
+  }
+
+  private Statement createStatement()
+    throws SchemaCrawlerException
+  {
+    if (connection == null)
+    {
+      throw new SchemaCrawlerException("No connection provided");
+    }
+    try
+    {
+      if (connection.isClosed())
+      {
+        throw new SchemaCrawlerException("Connection is closed");
+      }
+    }
+    catch (final SQLException e)
+    {
+      throw new SchemaCrawlerException("Connection is closed", e);
+    }
+
+    try
+    {
+      final Statement statement = connection.createStatement();
+      return statement;
+    }
+    catch (final SQLException e)
+    {
+      throw new SchemaCrawlerException("Could not create a statement", e);
+    }
+  }
+
+  private ResultSet executeSql(final Statement statement, final String sql)
+    throws SchemaCrawlerException
+  {
+    ResultSet results = null;
+    if (statement == null)
+    {
+      return results;
+    }
+
+    try
+    {
       final boolean hasResults = statement.execute(sql);
-      // Pass into data handler for output
       if (hasResults)
       {
         results = statement.getResultSet();
-        handler.handleData(title, results);
+        return results;
+      }
+      else
+      {
+        LOGGER.log(Level.WARNING, "No results for: " + sql);
+        return null;
       }
     }
     catch (final SQLException e)
     {
       LOGGER.log(Level.WARNING, "Error executing: " + sql, e);
-    }
-    finally
-    {
-      try
-      {
-        if (results != null)
-        {
-          results.close();
-        }
-        if (statement != null)
-        {
-          statement.close();
-        }
-      }
-      catch (final SQLException e)
-      {
-        LOGGER.log(Level.WARNING, "Error releasing resources", e);
-      }
+      return null;
     }
   }
 
