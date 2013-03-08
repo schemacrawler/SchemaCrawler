@@ -43,6 +43,7 @@ does max row size include blobs,true
 driver major version,2
 driver minor version,2
 extra name characters,""
+generated key always returned,true
 identifier quote string,""""
 inserts are detected for TYPE_FORWARD_ONLY result sets,false
 inserts are detected for TYPE_SCROLL_INSENSITIVE result sets,false

@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>net.sourceforge.schemacrawler</groupId>
 		<artifactId>schemacrawler-all</artifactId>
-		<version>9.6</version>
+		<version>10.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>schemacrawler-sqlserver</artifactId>
 	<packaging>jar</packaging>
@@ -32,7 +32,7 @@
 		<dependency>
 			<groupId>net.sourceforge.jtds</groupId>
 			<artifactId>jtds</artifactId>
-			<version>1.2.7</version>
+			<version>1.3.0</version>
 		</dependency>
 	</dependencies>
 	<build>

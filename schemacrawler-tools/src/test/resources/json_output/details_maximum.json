@@ -2127,6 +2127,11 @@
         "value": [""]
       },
       {
+        "description": "generated key always returned",
+        "name": "generatedKeyAlwaysReturned",
+        "value": true
+      },
+      {
         "description": "identifier quote string",
         "name": "getIdentifierQuoteString",
         "value": "\""
