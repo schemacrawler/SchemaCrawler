@@ -155,7 +155,7 @@ public class LinterTableWithIncrementingColumns
   {
     if (columns == null || columns.size() <= 1)
     {
-      return new Multimap<String, IncrementingColumn>();
+      return new Multimap<>();
     }
 
     final Pattern pattern = Pattern.compile("(.*[^0-9])([0-9]+)");
