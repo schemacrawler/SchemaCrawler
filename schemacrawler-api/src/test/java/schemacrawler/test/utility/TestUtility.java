@@ -142,9 +142,11 @@ public final class TestUtility
   public static File copyResourceToTempFile(final String resource)
     throws IOException
   {
-    final InputStream resourceStream = Utility.class
-      .getResourceAsStream(resource);
-    return writeToTempFile(resourceStream);
+    try (final InputStream resourceStream = Utility.class
+      .getResourceAsStream(resource);)
+    {
+      return writeToTempFile(resourceStream);
+    }
   }
 
   private static boolean contentEquals(final Reader expectedInputReader,
@@ -157,9 +159,8 @@ public final class TestUtility
       return false;
     }
 
-    final BufferedReader expectedBufferedReader = new BufferedReader(expectedInputReader);
-    final BufferedReader actualBufferedReader = new BufferedReader(actualInputReader);
-    try
+    try (final BufferedReader expectedBufferedReader = new BufferedReader(expectedInputReader);
+        final BufferedReader actualBufferedReader = new BufferedReader(actualInputReader);)
     {
       String expectedline;
       while ((expectedline = expectedBufferedReader.readLine()) != null)
@@ -197,11 +198,6 @@ public final class TestUtility
 
       return true;
     }
-    finally
-    {
-      expectedBufferedReader.close();
-      actualBufferedReader.close();
-    }
   }
 
   private static void fastChannelCopy(final ReadableByteChannel src,
@@ -232,39 +228,41 @@ public final class TestUtility
                                       final List<String> failures)
     throws FileNotFoundException, SAXException, IOException
   {
-    try
+    final JsonElement jsonElement;
+    try (final Reader reader = new BufferedReader(new FileReader(testOutputFile));
+        final JsonReader jsonReader = new JsonReader(reader);)
     {
-      final Reader reader = new BufferedReader(new FileReader(testOutputFile));
-      final JsonReader jsonReader = new JsonReader(reader);
-      final JsonElement jsonElement = new JsonParser().parse(jsonReader);
+      jsonElement = new JsonParser().parse(jsonReader);
       if (jsonReader.peek() != JsonToken.END_DOCUMENT)
       {
         failures.add("JSON document was not fully consumed.");
-      }
-      jsonReader.close();
-      final int size;
-      if (jsonElement.isJsonObject())
-      {
-        size = jsonElement.getAsJsonObject().entrySet().size();
-      }
-      else if (jsonElement.isJsonArray())
-      {
-        size = jsonElement.getAsJsonArray().size();
-      }
-      else
-      {
-        size = 0;
-      }
-
-      if (size == 0)
-      {
-        failures.add("Invalid JSON string");
       }
     }
     catch (final Exception e)
     {
       failures.add(e.getMessage());
+      return false;
     }
+
+    final int size;
+    if (jsonElement.isJsonObject())
+    {
+      size = jsonElement.getAsJsonObject().entrySet().size();
+    }
+    else if (jsonElement.isJsonArray())
+    {
+      size = jsonElement.getAsJsonArray().size();
+    }
+    else
+    {
+      size = 0;
+    }
+
+    if (size == 0)
+    {
+      failures.add("Invalid JSON string");
+    }
+
     return failures.isEmpty();
   }
 
@@ -280,14 +278,15 @@ public final class TestUtility
     xhtmlReader.setReplace(true);
 
     final boolean isOutputValid;
-    final Reader reader = new BufferedReader(xhtmlReader);
-    final Validator validator = new Validator(reader);
-    isOutputValid = validator.isValid();
-    if (!isOutputValid)
+    try (final Reader reader = new BufferedReader(xhtmlReader);)
     {
-      failures.add(validator.toString());
+      final Validator validator = new Validator(reader);
+      isOutputValid = validator.isValid();
+      if (!isOutputValid)
+      {
+        failures.add(validator.toString());
+      }
     }
-    reader.close();
     return isOutputValid;
   }
 
@@ -295,12 +294,14 @@ public final class TestUtility
     throws IOException, FileNotFoundException
   {
     final File tempFile = File.createTempFile("SchemaCrawler", ".dat");
-    final OutputStream tempFileStream = new FileOutputStream(tempFile);
-    fastChannelCopy(Channels.newChannel(resourceStream),
-                    Channels.newChannel(tempFileStream));
-    tempFileStream.close();
-    resourceStream.close();
     tempFile.deleteOnExit();
+
+    try (final OutputStream tempFileStream = new FileOutputStream(tempFile);)
+    {
+      fastChannelCopy(Channels.newChannel(resourceStream),
+                      Channels.newChannel(tempFileStream));
+    }
+
     return tempFile;
   }
 

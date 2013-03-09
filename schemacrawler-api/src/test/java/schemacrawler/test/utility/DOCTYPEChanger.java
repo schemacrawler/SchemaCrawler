@@ -52,13 +52,15 @@ public final class DOCTYPEChanger
       tester.setPublicIdentifier("-//SIMONSTLCOM//DTD tester//EN");
       tester.setInternalSubset("this is a test");
       tester.setReplace(false);
-      final BufferedReader in = new BufferedReader(tester);
-      String line;
-      while ((line = in.readLine()) != null)
+
+      try (final BufferedReader in = new BufferedReader(tester);)
       {
-        System.out.println(line);
+        String line;
+        while ((line = in.readLine()) != null)
+        {
+          System.out.println(line);
+        }
       }
-      in.close(); // Close the stream.
     }
     catch (final Exception e)
     {

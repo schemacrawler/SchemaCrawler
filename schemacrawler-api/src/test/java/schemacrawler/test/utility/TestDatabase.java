@@ -147,58 +147,26 @@ public class TestDatabase
    */
   public void stop()
   {
-    Connection connection = null;
-    Statement statement = null;
-    try
+    try (final Connection connection = getConnection();
+        final Statement statement = connection.createStatement();)
     {
-      connection = getConnection();
-      statement = connection.createStatement();
       statement.execute("SHUTDOWN");
-      connection.close();
-      deleteServerFiles();
-      LOGGER.log(Level.INFO, "SHUTDOWN database");
     }
     catch (final SQLException e)
     {
       LOGGER.log(Level.WARNING, e.getMessage(), e);
     }
-    finally
-    {
-      if (statement != null)
-      {
-        try
-        {
-          statement.close();
-        }
-        catch (final SQLException e)
-        {
-          LOGGER.log(Level.WARNING, "", e);
-        }
-      }
-      if (connection != null)
-      {
-        try
-        {
-          connection.close();
-        }
-        catch (final SQLException e)
-        {
-          LOGGER.log(Level.WARNING, "", e);
-        }
-      }
-    }
+
+    deleteServerFiles();
+    LOGGER.log(Level.INFO, "SHUTDOWN database");
   }
 
   private void createDatabase()
     throws SchemaCrawlerException
   {
-    Connection connection = null;
-    Statement statement = null;
-    try
+    try (final Connection connection = getConnection();
+        final Statement statement = connection.createStatement();)
     {
-      connection = getConnection();
-      connection.setAutoCommit(true);
-      statement = connection.createStatement();
       for (final String schema: new String[] {
           "books", "publisher sales", "for_lint",
       })
@@ -229,37 +197,14 @@ public class TestDatabase
       System.err.println(e.getMessage());
       LOGGER.log(Level.WARNING, e.getMessage(), e);
     }
-    finally
-    {
-      if (statement != null)
-      {
-        try
-        {
-          statement.close();
-        }
-        catch (final SQLException e)
-        {
-          LOGGER.log(Level.WARNING, "", e);
-        }
-      }
-      if (connection != null)
-      {
-        try
-        {
-          connection.close();
-        }
-        catch (final SQLException e)
-        {
-          LOGGER.log(Level.WARNING, "", e);
-        }
-      }
-    }
   }
 
   private Connection getConnection()
     throws SQLException
   {
-    return DriverManager.getConnection(url, "SA", "");
+    final Connection connection = DriverManager.getConnection(url, "SA", "");
+    connection.setAutoCommit(true);
+    return connection;
   }
 
 }

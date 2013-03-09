@@ -65,37 +65,35 @@ public class ResultColumnsTest
                        + " INNER JOIN PUBLIC.BOOKS.AUTHORS                                          "
                        + "   ON PUBLIC.BOOKS.AUTHORS.ID = PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID         ";
 
-    final Connection connection = getConnection();
-    final Statement statement = connection.createStatement();
-    final ResultSet resultSet = statement.executeQuery(sql);
-
-    final ResultsColumns resultColumns = SchemaCrawlerUtility
-      .getResultColumns(resultSet);
-    connection.close();
-
-    assertNotNull("Could not obtain result columns", resultColumns);
-    final ResultsColumn[] columns = resultColumns.getColumns()
-      .toArray(new ResultsColumn[0]);
-    assertEquals("Column count does not match",
-                 columnNames.length,
-                 columns.length);
-    for (int columnIdx = 0; columnIdx < columns.length; columnIdx++)
+    try (final Connection connection = getConnection();
+        final Statement statement = connection.createStatement();
+        final ResultSet resultSet = statement.executeQuery(sql);)
     {
-      final ResultsColumn column = columns[columnIdx];
-      LOGGER.log(Level.FINE, column.toString());
-      assertEquals("Column full name does not match",
-                   columnNames[columnIdx],
-                   column.getFullName());
-      assertEquals("Column type does not match",
-                   columnDataTypes[columnIdx],
-                   column.getColumnDataType().getDatabaseSpecificTypeName());
-      assertEquals("Column JDBC type does not match",
-                   columnDataTypes[columnIdx],
-                   column.getColumnDataType().getTypeName());
+
+      final ResultsColumns resultColumns = SchemaCrawlerUtility
+        .getResultColumns(resultSet);
+
+      assertNotNull("Could not obtain result columns", resultColumns);
+      final ResultsColumn[] columns = resultColumns.getColumns()
+        .toArray(new ResultsColumn[0]);
+      assertEquals("Column count does not match",
+                   columnNames.length,
+                   columns.length);
+      for (int columnIdx = 0; columnIdx < columns.length; columnIdx++)
+      {
+        final ResultsColumn column = columns[columnIdx];
+        LOGGER.log(Level.FINE, column.toString());
+        assertEquals("Column full name does not match",
+                     columnNames[columnIdx],
+                     column.getFullName());
+        assertEquals("Column type does not match",
+                     columnDataTypes[columnIdx],
+                     column.getColumnDataType().getDatabaseSpecificTypeName());
+        assertEquals("Column JDBC type does not match",
+                     columnDataTypes[columnIdx],
+                     column.getColumnDataType().getTypeName());
+      }
     }
-
-    resultSet.close();
-    statement.close();
-
   }
+
 }

@@ -460,59 +460,58 @@ public class SchemaCrawlerTest
                                                     ".test");
     testOutputFile.delete();
 
-    final PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(testOutputFile)));
-
-    final Config config = Config
-      .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
-    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
-    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
-    schemaCrawlerOptions
-      .setSchemaInclusionRule(new InclusionRule(InclusionRule.ALL,
-                                                ".*\\.FOR_LINT"));
-
-    final Database database = getDatabase(schemaCrawlerOptions);
-    final Schema[] schemas = database.getSchemas().toArray(new Schema[0]);
-    assertEquals("Schema count does not match", 5, schemas.length);
-    for (final Schema schema: schemas)
+    try (final PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(testOutputFile)));)
     {
-      final Table[] tables = database.getTables(schema).toArray(new Table[0]);
-      Arrays.sort(tables, NamedObjectSort.alphabetical);
-      for (final Table table: tables)
+
+      final Config config = Config
+        .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
+      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
+      schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
+      schemaCrawlerOptions
+        .setSchemaInclusionRule(new InclusionRule(InclusionRule.ALL,
+                                                  ".*\\.FOR_LINT"));
+
+      final Database database = getDatabase(schemaCrawlerOptions);
+      final Schema[] schemas = database.getSchemas().toArray(new Schema[0]);
+      assertEquals("Schema count does not match", 5, schemas.length);
+      for (final Schema schema: schemas)
       {
-        writer.println(String.format("o--> %s [%s]",
-                                     table.getFullName(),
-                                     table.getTableType()));
-        final SortedMap<String, Object> tableAttributes = new TreeMap<String, Object>(table
-          .getAttributes());
-        for (final Entry<String, Object> tableAttribute: tableAttributes
-          .entrySet())
+        final Table[] tables = database.getTables(schema).toArray(new Table[0]);
+        Arrays.sort(tables, NamedObjectSort.alphabetical);
+        for (final Table table: tables)
         {
-          writer.println(String.format("      ~ %s=%s",
-                                       tableAttribute.getKey(),
-                                       tableAttribute.getValue()));
-        }
-        final Column[] columns = table.getColumns().toArray(new Column[0]);
-        Arrays.sort(columns);
-        for (final Column column: columns)
-        {
-          writer.println(String.format("   o--> %s [%s]",
-                                       column.getFullName(),
-                                       column.getColumnDataType()));
-          final SortedMap<String, Object> columnAttributes = new TreeMap<String, Object>(column
+          writer.println(String.format("o--> %s [%s]",
+                                       table.getFullName(),
+                                       table.getTableType()));
+          final SortedMap<String, Object> tableAttributes = new TreeMap<String, Object>(table
             .getAttributes());
-          for (final Entry<String, Object> columnAttribute: columnAttributes
+          for (final Entry<String, Object> tableAttribute: tableAttributes
             .entrySet())
           {
-            writer.println(String.format("          ~ %s=%s",
-                                         columnAttribute.getKey(),
-                                         columnAttribute.getValue()));
+            writer.println(String.format("      ~ %s=%s",
+                                         tableAttribute.getKey(),
+                                         tableAttribute.getValue()));
+          }
+          final Column[] columns = table.getColumns().toArray(new Column[0]);
+          Arrays.sort(columns);
+          for (final Column column: columns)
+          {
+            writer.println(String.format("   o--> %s [%s]",
+                                         column.getFullName(),
+                                         column.getColumnDataType()));
+            final SortedMap<String, Object> columnAttributes = new TreeMap<String, Object>(column
+              .getAttributes());
+            for (final Entry<String, Object> columnAttribute: columnAttributes
+              .entrySet())
+            {
+              writer.println(String.format("          ~ %s=%s",
+                                           columnAttribute.getKey(),
+                                           columnAttribute.getValue()));
+            }
           }
         }
       }
     }
-
-    writer.flush();
-    writer.close();
 
     final List<String> failures = TestUtility
       .compareOutput(METADATA_OUTPUT + referenceFile, testOutputFile);
