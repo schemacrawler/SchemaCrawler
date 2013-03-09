@@ -34,13 +34,14 @@ public class TestBundledDistributions
 
     final File testConfigFile = File.createTempFile("schemacrawler.test.",
                                                     ".properties");
-    final FileWriter writer = new FileWriter(testConfigFile);
-    final Properties properties = new Properties();
-    properties
-      .setProperty("hsqldb.tables",
-                   "SELECT TABLE_CAT, TABLE_SCHEM, TABLE_NAME, TABLE_TYPE, REMARKS FROM INFORMATION_SCHEMA.SYSTEM_TABLES");
-    properties.store(writer, "testHsqldbMain");
-    writer.close();
+    try (final FileWriter writer = new FileWriter(testConfigFile);)
+    {
+      final Properties properties = new Properties();
+      properties
+        .setProperty("hsqldb.tables",
+                     "SELECT TABLE_CAT, TABLE_SCHEM, TABLE_NAME, TABLE_TYPE, REMARKS FROM INFORMATION_SCHEMA.SYSTEM_TABLES");
+      properties.store(writer, "testHsqldbMain");
+    }
 
     final OutputFormat outputFormat = OutputFormat.text;
     final String referenceFile = "hsqldb.main" + "." + outputFormat.name();

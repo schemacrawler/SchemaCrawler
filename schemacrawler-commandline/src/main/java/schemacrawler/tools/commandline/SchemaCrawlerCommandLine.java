@@ -170,20 +170,10 @@ public final class SchemaCrawlerCommandLine
     }
     if (connectionOptions != null)
     {
-      Connection connection = null;
-      try
+      try (final Connection connection = connectionOptions.getConnection();)
       {
-        connection = connectionOptions.getConnection();
         LOGGER.log(Level.INFO, "Made connection, " + connection);
         executable.execute(connection);
-      }
-      finally
-      {
-        if (connection != null)
-        {
-          connection.close();
-          LOGGER.log(Level.INFO, "Closed connection, " + connection);
-        }
       }
     }
     else

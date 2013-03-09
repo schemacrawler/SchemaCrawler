@@ -22,7 +22,6 @@ package schemacrawler.tools.integration.spring;
 
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -63,37 +62,18 @@ public class SchemaCrawlerSpringCommandLine
   public void execute()
     throws Exception
   {
-    Connection connection = null;
-    try
-    {
-      final ApplicationContext appContext = new FileSystemXmlApplicationContext(springOptions
-        .getContextFileName());
+    final ApplicationContext appContext = new FileSystemXmlApplicationContext(springOptions
+      .getContextFileName());
 
-      final DataSource dataSource = (DataSource) appContext
-        .getBean(springOptions.getDataSourceName());
-      connection = dataSource.getConnection();
+    final DataSource dataSource = (DataSource) appContext.getBean(springOptions
+      .getDataSourceName());
+    try (Connection connection = dataSource.getConnection();)
+    {
       LOGGER.log(Level.INFO, "Opened database connection, " + connection);
 
       final Executable executable = (Executable) appContext
         .getBean(springOptions.getExecutableName());
       executable.execute(connection);
-    }
-    finally
-    {
-      try
-      {
-        if (connection != null)
-        {
-          connection.close();
-          LOGGER.log(Level.INFO, "Closed database connection, " + connection);
-        }
-      }
-      catch (final SQLException e)
-      {
-        final String errorMessage = e.getMessage();
-        LOGGER.log(Level.WARNING, "Could not close the connection: "
-                                  + errorMessage);
-      }
     }
   }
 
