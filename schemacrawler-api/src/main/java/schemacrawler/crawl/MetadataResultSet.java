@@ -46,6 +46,7 @@ import sf.util.Utility;
  * @author Sualeh Fatehi
  */
 final class MetadataResultSet
+  implements AutoCloseable
 {
 
   private static final Logger LOGGER = Logger.getLogger(MetadataResultSet.class
@@ -111,7 +112,8 @@ final class MetadataResultSet
    * @throws SQLException
    *         On an exception
    */
-  void close()
+  @Override
+  public void close()
     throws SQLException
   {
     results.close();
