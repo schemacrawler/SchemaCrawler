@@ -73,7 +73,7 @@ public final class TestUtility
                                        + testOutputFile.getAbsolutePath());
     }
 
-    final List<String> failures = new ArrayList<String>();
+    final List<String> failures = new ArrayList<>();
 
     final boolean contentEquals;
     final InputStream referenceStream = TestUtility.class

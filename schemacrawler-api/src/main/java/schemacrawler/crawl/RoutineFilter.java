@@ -62,8 +62,7 @@ class RoutineFilter
 
   private Collection<MutableRoutine> doFilter()
   {
-    // Filter for grep
-    final Set<MutableRoutine> greppedRoutines = new HashSet<MutableRoutine>();
+    final Set<MutableRoutine> greppedRoutines = new HashSet<>();
     for (final MutableRoutine routine: allRoutines)
     {
       if (grepMatch(options, routine))

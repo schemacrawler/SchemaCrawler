@@ -171,7 +171,7 @@ public final class Config
    */
   private static Map<String, String> propertiesMap(final Properties properties)
   {
-    final Map<String, String> propertiesMap = new HashMap<String, String>();
+    final Map<String, String> propertiesMap = new HashMap<>();
     if (properties != null)
     {
       final Set<Map.Entry<Object, Object>> entries = properties.entrySet();

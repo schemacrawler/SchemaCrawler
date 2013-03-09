@@ -128,12 +128,12 @@ final class RetrieverConnection
       .format("Database identifier quote string is \"%s\"",
               this.identifierQuoteString));
 
-    final Set<String> rawReservedWords = new HashSet<String>();
+    final Set<String> rawReservedWords = new HashSet<>();
     rawReservedWords
       .addAll(Arrays.asList(metaData.getSQLKeywords().split(",")));
     rawReservedWords.addAll(Arrays.asList(Utility
       .readResourceFully("/sql2003_reserved_words.txt").split("\r\n")));
-    final List<String> reservedWordsList = new ArrayList<String>();
+    final List<String> reservedWordsList = new ArrayList<>();
     for (final String reservedWord: rawReservedWords)
     {
       reservedWordsList.add(reservedWord.trim().toUpperCase());

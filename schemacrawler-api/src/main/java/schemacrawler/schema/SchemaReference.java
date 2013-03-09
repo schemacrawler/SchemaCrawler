@@ -35,7 +35,7 @@ public final class SchemaReference
   private final String catalogName;
   private final String schemaName;
   private transient String fullName;
-  private final Map<String, Object> attributeMap = new HashMap<String, Object>();
+  private final Map<String, Object> attributeMap = new HashMap<>();
 
   public SchemaReference()
   {

@@ -48,7 +48,7 @@ final class MutableSchemaCrawlerInfo
   /**
    * Needs to be sorted, so serialization does not break.
    */
-  private final Map<String, String> systemProperties = new HashMap<String, String>();
+  private final Map<String, String> systemProperties = new HashMap<>();
 
   @Override
   public String getSchemaCrawlerAbout()

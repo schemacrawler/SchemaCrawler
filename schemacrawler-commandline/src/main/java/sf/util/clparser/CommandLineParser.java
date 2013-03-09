@@ -1,21 +1,22 @@
-/* 
- *
+/*
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
  * Copyright (c) 2000-2013, Sualeh Fatehi.
- *
- * This library is free software; you can redistribute it and/or modify it under the terms
- * of the GNU Lesser General Public License as published by the Free Software Foundation;
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms
+ * of the GNU Lesser General Public License as published by the Free Software
+ * Foundation;
  * either version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * library; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this
+ * library; if not, write to the Free Software Foundation, Inc., 59 Temple
+ * Place, Suite 330,
  * Boston, MA 02111-1307, USA.
- *
  */
 
 package sf.util.clparser;
@@ -36,8 +37,8 @@ public class CommandLineParser
 
   private static final String DASH = "-";
 
-  private final Map<String, Option<?>> optionsMap = new HashMap<String, Option<?>>();
-  private Map<Option<?>, OptionValue<?>> optionValues = new HashMap<Option<?>, OptionValue<?>>();
+  private final Map<String, Option<?>> optionsMap = new HashMap<>();
+  private Map<Option<?>, OptionValue<?>> optionValues = new HashMap<>();
 
   public CommandLineParser(final Option<?>... options)
   {
@@ -114,13 +115,13 @@ public class CommandLineParser
    * options whose values might be locale-specific.
    * 
    * @param args
-   *        Command line arguments
+   *          Command line arguments
    */
   public final String[] parse(final String[] args)
   {
-    optionValues = new HashMap<Option<?>, OptionValue<?>>();
+    optionValues = new HashMap<>();
 
-    final List<String> remainingArgs = new ArrayList<String>();
+    final List<String> remainingArgs = new ArrayList<>();
     int position = 0;
     while (position < args.length)
     {
@@ -190,7 +191,7 @@ public class CommandLineParser
    * Add the specified Option to the list of accepted options.
    * 
    * @param option
-   *        Option to add
+   *          Option to add
    */
   protected void addOption(final Option<?> option)
   {
@@ -217,7 +218,7 @@ public class CommandLineParser
       optionValue = (OptionValue<T>) optionValues.get(option);
       if (optionValue == null)
       {
-        optionValue = new OptionValue<T>(option, null);
+        optionValue = new OptionValue<>(option, null);
       }
     }
     return optionValue;

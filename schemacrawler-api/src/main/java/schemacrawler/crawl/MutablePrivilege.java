@@ -171,7 +171,7 @@ final class MutablePrivilege<P extends DatabaseObject>
 
   }
 
-  private final Set<Grant> grants = new HashSet<Grant>();
+  private final Set<Grant> grants = new HashSet<>();
 
   private static final long serialVersionUID = -1117664231494271886L;
 
@@ -183,7 +183,7 @@ final class MutablePrivilege<P extends DatabaseObject>
   @Override
   public Collection<Grant> getGrants()
   {
-    final List<Grant> values = new ArrayList<Grant>(grants);
+    final List<Grant> values = new ArrayList<>(grants);
     Collections.sort(values);
     return values;
   }

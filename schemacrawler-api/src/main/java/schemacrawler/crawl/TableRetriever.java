@@ -71,7 +71,7 @@ final class TableRetriever
       return new String[0];
     }
 
-    final List<String> tableTypeStrings = new ArrayList<String>(tableTypes.size());
+    final List<String> tableTypeStrings = new ArrayList<>(tableTypes.size());
     for (final TableType tableType: tableTypes)
     {
       if (tableType != null)
@@ -169,7 +169,7 @@ final class TableRetriever
     throws SQLException
   {
 
-    final NamedObjectList<MutableForeignKey> foreignKeys = new NamedObjectList<MutableForeignKey>();
+    final NamedObjectList<MutableForeignKey> foreignKeys = new NamedObjectList<>();
     MetadataResultSet results;
 
     final DatabaseMetaData metaData = getMetaData();

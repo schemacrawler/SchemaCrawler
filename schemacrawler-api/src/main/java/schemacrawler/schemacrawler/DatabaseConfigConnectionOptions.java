@@ -51,7 +51,7 @@ public final class DatabaseConfigConnectionOptions
     {
       throw new SchemaCrawlerException("No connection properties provided");
     }
-    this.properties = new HashMap<String, String>(properties);
+    this.properties = new HashMap<>(properties);
 
     loadJdbcDriver(properties.get(DRIVER));
     setUser(properties.get(USER));
@@ -61,7 +61,7 @@ public final class DatabaseConfigConnectionOptions
   @Override
   public String getConnectionUrl()
   {
-    final Map<String, String> properties = new HashMap<String, String>(this.properties);
+    final Map<String, String> properties = new HashMap<>(this.properties);
     TemplatingUtility.substituteVariables(properties);
     final String connectionUrl = properties.get(URL);
 

@@ -75,7 +75,7 @@ final class MetadataResultSet
       LOGGER.log(Level.WARNING, "Could not set fetch size", e);
     }
 
-    final List<String> resultSetColumns = new ArrayList<String>();
+    final List<String> resultSetColumns = new ArrayList<>();
     try
     {
       final ResultSetMetaData rsMetaData = resultSet.getMetaData();
@@ -96,7 +96,7 @@ final class MetadataResultSet
     }
     this.resultSetColumns = Collections.unmodifiableList(resultSetColumns);
 
-    readColumns = new HashSet<String>();
+    readColumns = new HashSet<>();
   }
 
   /**
@@ -123,7 +123,7 @@ final class MetadataResultSet
    */
   Map<String, Object> getAttributes()
   {
-    final Map<String, Object> attributes = new HashMap<String, Object>();
+    final Map<String, Object> attributes = new HashMap<>();
     for (final String columnName: resultSetColumns)
     {
       if (!readColumns.contains(columnName))
@@ -364,7 +364,7 @@ final class MetadataResultSet
   boolean next()
     throws SQLException
   {
-    readColumns = new HashSet<String>();
+    readColumns = new HashSet<>();
     return results.next();
   }
 

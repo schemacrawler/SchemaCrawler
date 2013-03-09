@@ -39,7 +39,7 @@ public class Multimap<K, V>
     }
     if (values == null)
     {
-      values = new ArrayList<V>();
+      values = new ArrayList<>();
     }
     put(key, values);
 

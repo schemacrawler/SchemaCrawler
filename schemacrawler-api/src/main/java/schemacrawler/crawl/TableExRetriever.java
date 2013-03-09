@@ -199,7 +199,7 @@ final class TableExRetriever
   void retrieveCheckConstraintInformation()
     throws SQLException
   {
-    final Map<String, MutableCheckConstraint> checkConstraintsMap = new HashMap<String, MutableCheckConstraint>();
+    final Map<String, MutableCheckConstraint> checkConstraintsMap = new HashMap<>();
 
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
       .getInformationSchemaViews();
@@ -559,7 +559,7 @@ final class TableExRetriever
           .getPrivilege(privilegeName);
         if (columnPrivilege == null)
         {
-          privilege = new MutablePrivilege<Column>(column, privilegeName);
+          privilege = new MutablePrivilege<>(column, privilegeName);
           column.addPrivilege((MutablePrivilege<Column>) privilege);
         }
         else
@@ -573,7 +573,7 @@ final class TableExRetriever
           .getPrivilege(privilegeName);
         if (tablePrivilege == null)
         {
-          privilege = new MutablePrivilege<Table>(table, privilegeName);
+          privilege = new MutablePrivilege<>(table, privilegeName);
           table.addPrivilege((MutablePrivilege<Table>) privilege);
         }
         else

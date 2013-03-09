@@ -123,10 +123,10 @@ public final class ProcessExecutor
       final ProcessBuilder processBuilder = new ProcessBuilder(command);
       final Process process = processBuilder.start();
 
-      final FutureTask<String> inReaderTask = new FutureTask<String>(new StreamReader(process
+      final FutureTask<String> inReaderTask = new FutureTask<>(new StreamReader(process
         .getInputStream()));
       threadPool.execute(inReaderTask);
-      final FutureTask<String> errReaderTask = new FutureTask<String>(new StreamReader(process
+      final FutureTask<String> errReaderTask = new FutureTask<>(new StreamReader(process
         .getErrorStream()));
       threadPool.execute(errReaderTask);
 

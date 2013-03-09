@@ -235,7 +235,7 @@ public final class SimpleLint<V extends Serializable>
 
       if (Iterable.class.isAssignableFrom(valueObject.getClass()))
       {
-        final List<String> list = new ArrayList<String>();
+        final List<String> list = new ArrayList<>();
         for (final Object valuePart: (Iterable<?>) valueObject)
         {
           if (valuePart instanceof NamedObject)

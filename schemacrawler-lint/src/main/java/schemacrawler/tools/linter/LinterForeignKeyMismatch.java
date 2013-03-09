@@ -69,7 +69,7 @@ public class LinterForeignKeyMismatch
 
   private List<ForeignKey> findMismatchedForeignKeys(final Table table)
   {
-    final List<ForeignKey> mismatchedForeignKeys = new ArrayList<ForeignKey>();
+    final List<ForeignKey> mismatchedForeignKeys = new ArrayList<>();
     if (table != null && !(table instanceof View))
     {
       for (final ForeignKey foreignKey: table.getImportedForeignKeys())

@@ -60,7 +60,7 @@ public class LinterColumnTypes
     for (final Entry<String, List<ColumnDataType>> entry: columnTypes
       .entrySet())
     {
-      final SortedSet<ColumnDataType> currentColumnTypes = new TreeSet<ColumnDataType>(entry
+      final SortedSet<ColumnDataType> currentColumnTypes = new TreeSet<>(entry
         .getValue());
       if (currentColumnTypes.size() > 1)
       {
@@ -97,7 +97,7 @@ public class LinterColumnTypes
   {
     super.start();
 
-    columnTypes = new Multimap<String, ColumnDataType>();
+    columnTypes = new Multimap<>();
   }
 
 }

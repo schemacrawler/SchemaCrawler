@@ -114,7 +114,7 @@ final class SchemaRetriever
    */
   private Set<String> retrieveAllCatalogs()
   {
-    final Set<String> catalogNames = new HashSet<String>();
+    final Set<String> catalogNames = new HashSet<>();
 
     if (supportsCatalogs)
     {
@@ -140,7 +140,7 @@ final class SchemaRetriever
   private Set<SchemaReference> retrieveAllSchemas()
     throws SQLException
   {
-    final Set<SchemaReference> schemaRefs = new HashSet<SchemaReference>();
+    final Set<SchemaReference> schemaRefs = new HashSet<>();
     final Set<String> allCatalogNames = retrieveAllCatalogs();
     if (supportsSchemas)
     {
@@ -201,7 +201,7 @@ final class SchemaRetriever
   private Set<SchemaReference> retrieveAllSchemasFromInformationSchemaViews()
     throws SQLException
   {
-    final Set<SchemaReference> schemaRefs = new HashSet<SchemaReference>();
+    final Set<SchemaReference> schemaRefs = new HashSet<>();
 
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
       .getInformationSchemaViews();

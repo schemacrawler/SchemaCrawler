@@ -40,7 +40,7 @@ class MutableResultsColumns
 
   private static final long serialVersionUID = 5204766782914559188L;
 
-  private final NamedObjectList<MutableResultsColumn> columns = new NamedObjectList<MutableResultsColumn>();
+  private final NamedObjectList<MutableResultsColumn> columns = new NamedObjectList<>();
 
   MutableResultsColumns(final String name)
   {

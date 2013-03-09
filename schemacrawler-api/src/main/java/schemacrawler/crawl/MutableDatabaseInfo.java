@@ -48,7 +48,7 @@ final class MutableDatabaseInfo
   private String userName;
   private String productName;
   private String productVersion;
-  private final Set<DatabaseProperty> databaseProperties = new HashSet<DatabaseProperty>();
+  private final Set<DatabaseProperty> databaseProperties = new HashSet<>();
 
   /**
    * {@inheritDoc}
@@ -74,7 +74,7 @@ final class MutableDatabaseInfo
   @Override
   public Collection<DatabaseProperty> getProperties()
   {
-    final List<DatabaseProperty> properties = new ArrayList<DatabaseProperty>(databaseProperties);
+    final List<DatabaseProperty> properties = new ArrayList<>(databaseProperties);
     Collections.sort(properties);
     return properties;
   }

@@ -75,7 +75,7 @@ public final class JavaSqlTypesGenerationUtility
    */
   private static Map<String, String> getJavaSqlTypesClassNameMap()
   {
-    final Map<String, Class<?>> javaSqlTypesPrimitivesClassMap = new TreeMap<String, Class<?>>();
+    final Map<String, Class<?>> javaSqlTypesPrimitivesClassMap = new TreeMap<>();
     javaSqlTypesPrimitivesClassMap.put("BIGINT", Long.class);
     javaSqlTypesPrimitivesClassMap.put("BINARY", byte[].class);
     javaSqlTypesPrimitivesClassMap.put("BIT", Boolean.class);
@@ -102,7 +102,7 @@ public final class JavaSqlTypesGenerationUtility
     javaSqlTypesPrimitivesClassMap.put("VARBINARY", byte[].class);
     javaSqlTypesPrimitivesClassMap.put("VARCHAR", String.class);
 
-    final Map<String, String> javaSqlTypesClassNamesMap = new TreeMap<String, String>();
+    final Map<String, String> javaSqlTypesClassNamesMap = new TreeMap<>();
     for (final Entry<String, Class<?>> javaSqlTypesPrimitivesClassMapping: javaSqlTypesPrimitivesClassMap
       .entrySet())
     {
@@ -127,7 +127,7 @@ public final class JavaSqlTypesGenerationUtility
 
   private static Map<String, JavaSqlTypeGroup> getJavaSqlTypesGroupsMap()
   {
-    final Map<String, JavaSqlTypeGroup> javaSqlTypesGroupsMap = new HashMap<String, JavaSqlTypeGroup>();
+    final Map<String, JavaSqlTypeGroup> javaSqlTypesGroupsMap = new HashMap<>();
     javaSqlTypesGroupsMap.put("ARRAY", JavaSqlTypeGroup.binary);
     javaSqlTypesGroupsMap.put("BIGINT", JavaSqlTypeGroup.integer);
     javaSqlTypesGroupsMap.put("BINARY", JavaSqlTypeGroup.binary);
@@ -187,7 +187,7 @@ public final class JavaSqlTypesGenerationUtility
       return;
     }
 
-    final Map<String, Integer> javaSqlTypesMap = new HashMap<String, Integer>();
+    final Map<String, Integer> javaSqlTypesMap = new HashMap<>();
     final Map<String, JavaSqlTypeGroup> javaSqlTypeGroupsMap = getJavaSqlTypesGroupsMap();
     final Map<String, String> javaSqlTypesClassMap = getJavaSqlTypesClassNameMap();
     for (final Field field: Types.class.getFields())
@@ -210,7 +210,7 @@ public final class JavaSqlTypesGenerationUtility
     writers[1] = startWriting(directory, "java.sql.Types.mappings.properties");
     writers[2] = startWriting(directory, "java.sql.Types.groups.properties");
 
-    final List<String> javaSqlTypeNames = new ArrayList<String>(javaSqlTypesMap.keySet());
+    final List<String> javaSqlTypeNames = new ArrayList<>(javaSqlTypesMap.keySet());
     Collections.sort(javaSqlTypeNames);
     for (final String javaSqlTypeName: javaSqlTypeNames)
     {

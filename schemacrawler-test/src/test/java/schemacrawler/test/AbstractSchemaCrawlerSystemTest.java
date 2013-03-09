@@ -56,7 +56,7 @@ public abstract class AbstractSchemaCrawlerSystemTest
   public void connections()
     throws Exception
   {
-    final List<String> connectionErrors = new ArrayList<String>();
+    final List<String> connectionErrors = new ArrayList<>();
     for (final String dataSource: dataSources)
     {
       try

@@ -43,7 +43,7 @@ public class SchemaCrawlerSystemOutputTest
   public void outputs()
     throws Exception
   {
-    final List<String> messages = new ArrayList<String>();
+    final List<String> messages = new ArrayList<>();
     String message;
     message = output("MicrosoftSQLServer", "Books.dbo");
     if (message != null)

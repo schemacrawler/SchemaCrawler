@@ -128,7 +128,7 @@ public class LinterConfigs
       throw new IllegalArgumentException("No document provided");
     }
 
-    final List<LinterConfig> linterConfigs = new ArrayList<LinterConfig>();
+    final List<LinterConfig> linterConfigs = new ArrayList<>();
 
     final Element root = document.getDocumentElement();
     final NodeList linterNodesList = root.getElementsByTagName("linter");
@@ -191,7 +191,7 @@ public class LinterConfigs
 
   public LinterConfigs()
   {
-    linterConfigsMap = new HashMap<String, LinterConfig>();
+    linterConfigsMap = new HashMap<>();
   }
 
   public boolean containsLinterConfig(final String linterId)

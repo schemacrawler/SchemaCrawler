@@ -67,7 +67,7 @@ public class LintOutputTest
         queryCommand1 + "," + SchemaTextDetailType.list + "," + "lint",
     };
 
-    final List<String> failures = new ArrayList<String>();
+    final List<String> failures = new ArrayList<>();
     for (final OutputFormat outputFormat: EnumSet.complementOf(EnumSet
       .of(OutputFormat.tsv)))
     {
@@ -113,7 +113,7 @@ public class LintOutputTest
   public void compareJsonOutput()
     throws Exception
   {
-    final List<String> failures = new ArrayList<String>();
+    final List<String> failures = new ArrayList<>();
     final InfoLevel infoLevel = InfoLevel.standard;
 
     final String referenceFile = "lints.json";
@@ -153,7 +153,7 @@ public class LintOutputTest
   public void compareTextOutput()
     throws Exception
   {
-    final List<String> failures = new ArrayList<String>();
+    final List<String> failures = new ArrayList<>();
     final InfoLevel infoLevel = InfoLevel.standard;
     final String referenceFile = "lint.txt";
 

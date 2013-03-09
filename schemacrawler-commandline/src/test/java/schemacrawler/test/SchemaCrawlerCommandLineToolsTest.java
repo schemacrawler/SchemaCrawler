@@ -33,7 +33,7 @@ public class SchemaCrawlerCommandLineToolsTest
   public void compareInfoLevelOutput()
     throws Exception
   {
-    final List<String> failures = new ArrayList<String>();
+    final List<String> failures = new ArrayList<>();
 
     final File additionalProperties = copyResourceToTempFile("/hsqldb.INFORMATION_SCHEMA.config.properties");
 
@@ -84,7 +84,7 @@ public class SchemaCrawlerCommandLineToolsTest
   public void grep()
     throws Exception
   {
-    final List<String> failures = new ArrayList<String>();
+    final List<String> failures = new ArrayList<>();
 
     final String[][] grepArgs = new String[][] {
         new String[] {
@@ -130,7 +130,7 @@ public class SchemaCrawlerCommandLineToolsTest
 
       final OutputFormat outputFormat = OutputFormat.text;
 
-      final List<String> args = new ArrayList<String>(Arrays.asList(new String[] {
+      final List<String> args = new ArrayList<>(Arrays.asList(new String[] {
           "-driver=org.hsqldb.jdbc.JDBCDriver",
           "-url=jdbc:hsqldb:hsql://localhost/schemacrawler",
           "-user=sa",

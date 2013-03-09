@@ -212,8 +212,8 @@ public class DirectedGraph<T extends Comparable<? super T>>
 
   public DirectedGraph()
   {
-    verticesMap = new HashMap<T, Vertex>();
-    edges = new HashSet<DirectedEdge>();
+    verticesMap = new HashMap<>();
+    edges = new HashSet<>();
   }
 
   /**
@@ -283,7 +283,7 @@ public class DirectedGraph<T extends Comparable<? super T>>
     final Collection<Vertex> vertices = clearTraversalStates();
     visitForSubGraph(verticesMap.get(value), depth);
 
-    final Set<Vertex> subGraphVertices = new HashSet<Vertex>();
+    final Set<Vertex> subGraphVertices = new HashSet<>();
     for (final Vertex currentVertex: vertices)
     {
       if (currentVertex.getTraversalState() == TraversalState.complete)
@@ -292,7 +292,7 @@ public class DirectedGraph<T extends Comparable<? super T>>
       }
     }
 
-    final DirectedGraph<T> subGraph = new DirectedGraph<T>();
+    final DirectedGraph<T> subGraph = new DirectedGraph<>();
     for (final DirectedEdge edge: edges)
     {
       final Vertex from = edge.getFrom();
@@ -318,14 +318,14 @@ public class DirectedGraph<T extends Comparable<? super T>>
 
     final int collectionSize = verticesMap.size();
 
-    final Collection<Vertex> vertices = new ArrayList<Vertex>(verticesMap.values());
-    final Collection<DirectedEdge> edges = new ArrayList<DirectedEdge>(this.edges);
-    final List<T> sortedValues = new ArrayList<T>(collectionSize);
+    final Collection<Vertex> vertices = new ArrayList<>(verticesMap.values());
+    final Collection<DirectedEdge> edges = new ArrayList<>(this.edges);
+    final List<T> sortedValues = new ArrayList<>(collectionSize);
 
     while (!vertices.isEmpty())
     {
 
-      final List<T> nodesAtLevel = new ArrayList<T>(collectionSize);
+      final List<T> nodesAtLevel = new ArrayList<>(collectionSize);
 
       // Remove unattached nodes
       for (final Iterator<Vertex> iterator = vertices.iterator(); iterator
@@ -340,7 +340,7 @@ public class DirectedGraph<T extends Comparable<? super T>>
       }
 
       // Find all nodes at the current level
-      final List<Vertex> startNodes = new ArrayList<Vertex>(collectionSize);
+      final List<Vertex> startNodes = new ArrayList<>(collectionSize);
       for (final Vertex vertex: vertices)
       {
         if (isStartNode(vertex, edges))

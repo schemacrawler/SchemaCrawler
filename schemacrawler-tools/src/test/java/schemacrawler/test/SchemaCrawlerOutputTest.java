@@ -1,21 +1,22 @@
-/* 
- *
+/*
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
  * Copyright (c) 2000-2013, Sualeh Fatehi.
- *
- * This library is free software; you can redistribute it and/or modify it under the terms
- * of the GNU Lesser General Public License as published by the Free Software Foundation;
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms
+ * of the GNU Lesser General Public License as published by the Free Software
+ * Foundation;
  * either version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * library; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this
+ * library; if not, write to the Free Software Foundation, Inc., 59 Temple
+ * Place, Suite 330,
  * Boston, MA 02111-1307, USA.
- *
  */
 
 package schemacrawler.test;
@@ -88,7 +89,7 @@ public class SchemaCrawlerOutputTest
             + SchemaTextDetailType.list,
     };
 
-    final List<String> failures = new ArrayList<String>();
+    final List<String> failures = new ArrayList<>();
     for (final OutputFormat outputFormat: EnumSet.complementOf(EnumSet
       .of(OutputFormat.tsv)))
     {
@@ -135,7 +136,7 @@ public class SchemaCrawlerOutputTest
     FileUtils.deleteDirectory(new File("./target/unit_tests_results_output",
                                        HIDE_CONSTRAINT_NAMES_OUTPUT));
 
-    final List<String> failures = new ArrayList<String>();
+    final List<String> failures = new ArrayList<>();
 
     final SchemaTextOptions textOptions = new SchemaTextOptions();
     textOptions.setNoInfo(false);
@@ -191,7 +192,7 @@ public class SchemaCrawlerOutputTest
     FileUtils.deleteDirectory(new File("./target/unit_tests_results_output",
                                        INFO_LEVEL_OUTPUT));
 
-    final List<String> failures = new ArrayList<String>();
+    final List<String> failures = new ArrayList<>();
     for (final InfoLevel infoLevel: InfoLevel.values())
     {
       if (infoLevel == InfoLevel.unknown)
@@ -242,7 +243,7 @@ public class SchemaCrawlerOutputTest
     FileUtils.deleteDirectory(new File("./target/unit_tests_results_output",
                                        JSON_OUTPUT));
 
-    final List<String> failures = new ArrayList<String>();
+    final List<String> failures = new ArrayList<>();
     final InfoLevel infoLevel = InfoLevel.maximum;
     for (final SchemaTextDetailType schemaTextDetailType: SchemaTextDetailType
       .values())
@@ -285,7 +286,7 @@ public class SchemaCrawlerOutputTest
     FileUtils.deleteDirectory(new File("./target/unit_tests_results_output",
                                        ORDINAL_OUTPUT));
 
-    final List<String> failures = new ArrayList<String>();
+    final List<String> failures = new ArrayList<>();
 
     final SchemaTextOptions textOptions = new SchemaTextOptions();
     textOptions.setNoInfo(false);
@@ -337,7 +338,7 @@ public class SchemaCrawlerOutputTest
     FileUtils.deleteDirectory(new File("./target/unit_tests_results_output",
                                        ROUTINES_OUTPUT));
 
-    final List<String> failures = new ArrayList<String>();
+    final List<String> failures = new ArrayList<>();
 
     final BaseTextOptions textOptions = new SchemaTextOptions();
     textOptions.setNoInfo(false);
@@ -388,7 +389,7 @@ public class SchemaCrawlerOutputTest
     FileUtils.deleteDirectory(new File("./target/unit_tests_results_output",
                                        UNQUALIFIED_NAMES_OUTPUT));
 
-    final List<String> failures = new ArrayList<String>();
+    final List<String> failures = new ArrayList<>();
 
     final BaseTextOptions textOptions = new SchemaTextOptions();
     textOptions.setNoInfo(false);

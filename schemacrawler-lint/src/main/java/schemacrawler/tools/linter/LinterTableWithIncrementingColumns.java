@@ -106,7 +106,7 @@ public class LinterTableWithIncrementingColumns
 
     int minIncrement = Integer.MAX_VALUE;
     int maxIncrement = 0;
-    final ArrayList<Column> incrementingColumns = new ArrayList<Column>(incrementingColumnsList
+    final ArrayList<Column> incrementingColumns = new ArrayList<>(incrementingColumnsList
       .size());
     for (int i = 0; i < incrementingColumnsList.size(); i++)
     {
@@ -160,7 +160,7 @@ public class LinterTableWithIncrementingColumns
 
     final Pattern pattern = Pattern.compile("(.*[^0-9])([0-9]+)");
 
-    final Map<String, Integer> incrementingColumnsMap = new HashMap<String, Integer>();
+    final Map<String, Integer> incrementingColumnsMap = new HashMap<>();
     for (final Column column: columns)
     {
       final String columnName = Utility.convertForComparison(column.getName());
@@ -181,7 +181,7 @@ public class LinterTableWithIncrementingColumns
       }
     }
 
-    final Set<String> columnNameBases = new HashSet<String>(incrementingColumnsMap
+    final Set<String> columnNameBases = new HashSet<>(incrementingColumnsMap
       .keySet());
     for (final String columnNameBase: columnNameBases)
     {
@@ -191,7 +191,7 @@ public class LinterTableWithIncrementingColumns
       }
     }
 
-    final Multimap<String, IncrementingColumn> incrementingColumns = new Multimap<String, IncrementingColumn>();
+    final Multimap<String, IncrementingColumn> incrementingColumns = new Multimap<>();
 
     for (final Column column: columns)
     {

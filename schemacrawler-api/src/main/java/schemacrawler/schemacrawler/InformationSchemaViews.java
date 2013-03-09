@@ -66,7 +66,7 @@ public final class InformationSchemaViews
    */
   InformationSchemaViews(final Map<String, String> informationSchemaViewsSql)
   {
-    informationSchemaQueries = new HashMap<String, String>();
+    informationSchemaQueries = new HashMap<>();
     if (informationSchemaViewsSql != null)
     {
       final String[] keys = new String[] {

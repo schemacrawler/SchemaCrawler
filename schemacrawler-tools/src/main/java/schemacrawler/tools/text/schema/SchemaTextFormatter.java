@@ -1,21 +1,22 @@
-/* 
- *
+/*
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
  * Copyright (c) 2000-2013, Sualeh Fatehi.
- *
- * This library is free software; you can redistribute it and/or modify it under the terms
- * of the GNU Lesser General Public License as published by the Free Software Foundation;
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms
+ * of the GNU Lesser General Public License as published by the Free Software
+ * Foundation;
  * either version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * library; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this
+ * library; if not, write to the Free Software Foundation, Inc., 59 Temple
+ * Place, Suite 330,
  * Boston, MA 02111-1307, USA.
- *
  */
 
 package schemacrawler.tools.text.schema;
@@ -85,13 +86,13 @@ final class SchemaTextFormatter
    * Text formatting of schema.
    * 
    * @param schemaTextDetailType
-   *        Types for text formatting of schema
+   *          Types for text formatting of schema
    * @param options
-   *        Options for text formatting of schema
+   *          Options for text formatting of schema
    * @param outputOptions
-   *        Options for text formatting of schema
+   *          Options for text formatting of schema
    * @throws SchemaCrawlerException
-   *         On an exception
+   *           On an exception
    */
   SchemaTextFormatter(final SchemaTextDetailType schemaTextDetailType,
                       final SchemaTextOptions options,
@@ -574,7 +575,7 @@ final class SchemaTextFormatter
   private void printForeignKeys(final String tableName,
                                 final Collection<ForeignKey> foreignKeysCollection)
   {
-    final List<ForeignKey> foreignKeys = new ArrayList<ForeignKey>(foreignKeysCollection);
+    final List<ForeignKey> foreignKeys = new ArrayList<>(foreignKeysCollection);
     Collections.sort(foreignKeys, NamedObjectSort.getNamedObjectSort(options
       .isAlphabeticalSortForForeignKeys()));
 
@@ -626,7 +627,7 @@ final class SchemaTextFormatter
 
   private void printIndices(final Collection<Index> indicesCollection)
   {
-    final List<Index> indices = new ArrayList<Index>(indicesCollection);
+    final List<Index> indices = new ArrayList<>(indicesCollection);
     Collections.sort(indices, NamedObjectSort.getNamedObjectSort(options
       .isAlphabeticalSortForIndexes()));
 
@@ -832,7 +833,7 @@ final class SchemaTextFormatter
     final String tableName = table.getName();
     final Collection<ColumnReference> weakAssociationsCollection = DatabaseWithAssociations
       .getWeakAssociations(table);
-    final List<ColumnReference> weakAssociations = new ArrayList<ColumnReference>(weakAssociationsCollection);
+    final List<ColumnReference> weakAssociations = new ArrayList<>(weakAssociationsCollection);
     Collections.sort(weakAssociations);
     for (final ColumnReference weakAssociation: weakAssociations)
     {

@@ -87,7 +87,7 @@ final class MutableJdbcDriverProperty
   @Override
   public Collection<String> getChoices()
   {
-    return new ArrayList<String>(choices);
+    return new ArrayList<>(choices);
   }
 
   /**

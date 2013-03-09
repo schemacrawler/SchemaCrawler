@@ -64,12 +64,12 @@ class MutableTable
 
   private TableType tableType = TableType.unknown; // Default value
   private MutablePrimaryKey primaryKey;
-  private final NamedObjectList<MutableColumn> columns = new NamedObjectList<MutableColumn>();
-  private final NamedObjectList<MutableForeignKey> foreignKeys = new NamedObjectList<MutableForeignKey>();
-  private final NamedObjectList<MutableIndex> indices = new NamedObjectList<MutableIndex>();
-  private final NamedObjectList<MutableCheckConstraint> checkConstraints = new NamedObjectList<MutableCheckConstraint>();
-  private final NamedObjectList<MutableTrigger> triggers = new NamedObjectList<MutableTrigger>();
-  private final NamedObjectList<MutablePrivilege<Table>> privileges = new NamedObjectList<MutablePrivilege<Table>>();
+  private final NamedObjectList<MutableColumn> columns = new NamedObjectList<>();
+  private final NamedObjectList<MutableForeignKey> foreignKeys = new NamedObjectList<>();
+  private final NamedObjectList<MutableIndex> indices = new NamedObjectList<>();
+  private final NamedObjectList<MutableCheckConstraint> checkConstraints = new NamedObjectList<>();
+  private final NamedObjectList<MutableTrigger> triggers = new NamedObjectList<>();
+  private final NamedObjectList<MutablePrivilege<Table>> privileges = new NamedObjectList<>();
   private int sortIndex;
 
   MutableTable(final Schema schema, final String name)
@@ -260,11 +260,11 @@ class MutableTable
   @Override
   public Collection<Table> getRelatedTables(final TableRelationshipType tableRelationshipType)
   {
-    final Set<Table> relatedTables = new HashSet<Table>();
+    final Set<Table> relatedTables = new HashSet<>();
     if (tableRelationshipType != null
         && tableRelationshipType != TableRelationshipType.none)
     {
-      final List<MutableForeignKey> foreignKeysList = new ArrayList<MutableForeignKey>(foreignKeys
+      final List<MutableForeignKey> foreignKeysList = new ArrayList<>(foreignKeys
         .values());
       for (final MutableForeignKey mutableForeignKey: foreignKeysList)
       {

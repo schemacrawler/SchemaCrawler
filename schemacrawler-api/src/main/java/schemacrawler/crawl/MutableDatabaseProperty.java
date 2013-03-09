@@ -41,7 +41,7 @@ class MutableDatabaseProperty
 
   static
   {
-    final Map<String, String> acronymsMap = new HashMap<String, String>();
+    final Map<String, String> acronymsMap = new HashMap<>();
     acronymsMap.put("JDBC", "Jdbc");
     acronymsMap.put("ANSI", "Ansi");
     acronymsMap.put("SQL", "Sql");

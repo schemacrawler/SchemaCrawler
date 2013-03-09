@@ -96,13 +96,12 @@ public final class SchemaCrawlerOptions
 
     schemaInclusionRule = InclusionRule.INCLUDE_ALL;
 
-    tableTypes = new HashSet<TableType>(Arrays.asList(TableType.table,
-                                                      TableType.view));
+    tableTypes = new HashSet<>(Arrays.asList(TableType.table, TableType.view));
     tableInclusionRule = InclusionRule.INCLUDE_ALL;
     columnInclusionRule = InclusionRule.INCLUDE_ALL;
 
-    routineTypes = new HashSet<RoutineType>(Arrays.asList(RoutineType.procedure,
-                                                          RoutineType.function));
+    routineTypes = new HashSet<>(Arrays.asList(RoutineType.procedure,
+                                               RoutineType.function));
     routineInclusionRule = InclusionRule.INCLUDE_ALL;
     routineColumnInclusionRule = InclusionRule.INCLUDE_ALL;
 
@@ -273,7 +272,7 @@ public final class SchemaCrawlerOptions
 
   public Collection<RoutineType> getRoutineTypes()
   {
-    return new HashSet<RoutineType>(routineTypes);
+    return new HashSet<>(routineTypes);
   }
 
   /**
@@ -336,7 +335,7 @@ public final class SchemaCrawlerOptions
 
   public Collection<TableType> getTableTypes()
   {
-    return new HashSet<TableType>(tableTypes);
+    return new HashSet<>(tableTypes);
   }
 
   public boolean isGrepColumns()
@@ -507,7 +506,7 @@ public final class SchemaCrawlerOptions
     }
     else
     {
-      this.routineTypes = new HashSet<RoutineType>(routineTypes);
+      this.routineTypes = new HashSet<>(routineTypes);
     }
   }
 
@@ -519,7 +518,7 @@ public final class SchemaCrawlerOptions
    */
   public void setRoutineTypes(final String routineTypesString)
   {
-    routineTypes = new HashSet<RoutineType>();
+    routineTypes = new HashSet<>();
     if (routineTypesString != null)
     {
       final String[] routineTypeStrings = routineTypesString.split(",");
@@ -615,7 +614,7 @@ public final class SchemaCrawlerOptions
     }
     else
     {
-      this.tableTypes = new HashSet<TableType>(tableTypes);
+      this.tableTypes = new HashSet<>(tableTypes);
     }
   }
 
@@ -630,7 +629,7 @@ public final class SchemaCrawlerOptions
    */
   public void setTableTypes(final String tableTypesString)
   {
-    tableTypes = new HashSet<TableType>();
+    tableTypes = new HashSet<>();
     if (tableTypesString != null)
     {
       final String[] tableTypeStrings = tableTypesString.split(",");

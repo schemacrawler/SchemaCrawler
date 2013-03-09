@@ -78,7 +78,7 @@ final class TablePartial
   {
     if (column != null)
     {
-      return new ArrayList<Column>(Arrays.asList(column));
+      return new ArrayList<>(Arrays.asList(column));
     }
     else
     {
@@ -116,7 +116,7 @@ final class TablePartial
   {
     if (foreignKey != null)
     {
-      return new ArrayList<ForeignKey>(Arrays.asList(foreignKey));
+      return new ArrayList<>(Arrays.asList(foreignKey));
     }
     else
     {
