@@ -151,28 +151,13 @@ public final class Config
       LOGGER.log(Level.WARNING, "No properties provided");
     }
 
-    try
+    try (final BufferedReader bufferedReader = new BufferedReader(reader);)
     {
-      properties.load(new BufferedReader(reader));
-      reader.close();
+      properties.load(bufferedReader);
     }
     catch (final IOException e)
     {
       LOGGER.log(Level.WARNING, "Error loading properties", e);
-    }
-    finally
-    {
-      try
-      {
-        if (reader != null)
-        {
-          reader.close();
-        }
-      }
-      catch (final IOException e)
-      {
-        LOGGER.log(Level.WARNING, "Error closing stream", e);
-      }
     }
     return properties;
   }
