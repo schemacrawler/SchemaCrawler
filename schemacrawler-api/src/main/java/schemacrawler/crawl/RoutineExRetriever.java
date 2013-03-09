@@ -103,6 +103,10 @@ final class RoutineExRetriever
         }
       }
     }
+    catch (final Exception e)
+    {
+      LOGGER.log(Level.WARNING, "Could not retrieve routines", e);
+    }
   }
 
 }

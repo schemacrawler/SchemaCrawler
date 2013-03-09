@@ -149,6 +149,10 @@ final class SynonymRetriever
 
       }
     }
+    catch (final Exception e)
+    {
+      LOGGER.log(Level.WARNING, "Could not retrieve synonyms", e);
+    }
 
   }
 
