@@ -75,12 +75,13 @@ public class LintTest
                                                     ".test");
     testOutputFile.delete();
 
-    final PrintWriter writer = new PrintWriter(new FileWriter(testOutputFile));
-    for (final Lint<?> lint: lintCollector)
+    try (final PrintWriter writer = new PrintWriter(new FileWriter(testOutputFile));)
     {
-      writer.println(lint);
+      for (final Lint<?> lint: lintCollector)
+      {
+        writer.println(lint);
+      }
     }
-    writer.close();
 
     final List<String> failures = TestUtility
       .compareOutput(LINTS_OUTPUT + "schemacrawler.lints.txt", testOutputFile);

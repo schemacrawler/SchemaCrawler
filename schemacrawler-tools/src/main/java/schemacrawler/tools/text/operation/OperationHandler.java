@@ -115,104 +115,66 @@ final class OperationHandler
       throw new SchemaCrawlerException("Cannot perform operation");
     }
 
-    final Statement statement = createStatement();
-
-    handler.begin();
-
-    handler.handleInfoStart();
-    handler.handle(database.getSchemaCrawlerInfo());
-    handler.handle(database.getDatabaseInfo());
-    handler.handle(database.getJdbcDriverInfo());
-    handler.handleInfoEnd();
-
-    if (query.isQueryOver())
+    try (final Statement statement = createStatement();)
     {
-      final Collection<Table> tables = database.getTables();
 
-      for (final Table table: tables)
+      handler.begin();
+
+      handler.handleInfoStart();
+      handler.handle(database.getSchemaCrawlerInfo());
+      handler.handle(database.getDatabaseInfo());
+      handler.handle(database.getJdbcDriverInfo());
+      handler.handleInfoEnd();
+
+      if (query.isQueryOver())
       {
-        final String sql = query.getQueryForTable(table);
+        final Collection<Table> tables = database.getTables();
 
-        LOGGER.log(Level.FINE,
-                   String.format("Executing query for table %s: %s",
-                                 table.getFullName(),
-                                 sql));
-        final ResultSet results = executeSql(statement, sql);
-        handler.handleData(table, results);
-        closeResults(results);
+        for (final Table table: tables)
+        {
+          final String sql = query.getQueryForTable(table);
+
+          LOGGER.log(Level.FINE,
+                     String.format("Executing query for table %s: %s",
+                                   table.getFullName(),
+                                   sql));
+          try (final ResultSet results = executeSql(statement, sql);)
+          {
+            handler.handleData(table, results);
+          }
+        }
       }
-    }
-    else
-    {
-      final String sql = query.getQuery();
-      final ResultSet results = executeSql(statement, sql);
-      handler.handleData(query, results);
-      closeResults(results);
-    }
-
-    handler.end();
-
-    closeStatement(statement);
-  }
-
-  private void closeResults(final ResultSet results)
-  {
-    try
-    {
-      if (results != null)
+      else
       {
-        results.close();
+        final String sql = query.getQuery();
+        try (final ResultSet results = executeSql(statement, sql);)
+        {
+          handler.handleData(query, results);
+        }
       }
-    }
-    catch (final SQLException e)
-    {
-      LOGGER.log(Level.WARNING, "Error releasing resources", e);
-    }
-  }
 
-  private void closeStatement(final Statement statement)
-  {
-    try
-    {
-      if (statement != null)
-      {
-        statement.close();
-      }
+      handler.end();
+
     }
-    catch (final SQLException e)
+    catch (SQLException e)
     {
-      LOGGER.log(Level.WARNING, "Error releasing resources", e);
+      throw new SchemaCrawlerException("Cannot perform operation", e);
     }
   }
 
   private Statement createStatement()
-    throws SchemaCrawlerException
+    throws SchemaCrawlerException, SQLException
   {
     if (connection == null)
     {
       throw new SchemaCrawlerException("No connection provided");
     }
-    try
+    if (connection.isClosed())
     {
-      if (connection.isClosed())
-      {
-        throw new SchemaCrawlerException("Connection is closed");
-      }
-    }
-    catch (final SQLException e)
-    {
-      throw new SchemaCrawlerException("Connection is closed", e);
+      throw new SchemaCrawlerException("Connection is closed");
     }
 
-    try
-    {
-      final Statement statement = connection.createStatement();
-      return statement;
-    }
-    catch (final SQLException e)
-    {
-      throw new SchemaCrawlerException("Could not create a statement", e);
-    }
+    return connection.createStatement();
   }
 
   private ResultSet executeSql(final Statement statement, final String sql)

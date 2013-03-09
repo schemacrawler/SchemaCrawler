@@ -1,6 +1,5 @@
 package com.example.command;
 
-
 import java.io.PrintWriter;
 import java.sql.Connection;
 
@@ -11,35 +10,32 @@ import schemacrawler.schema.Table;
 import schemacrawler.tools.executable.BaseExecutable;
 import schemacrawler.tools.options.OutputWriter;
 
-public class AdditionalExecutable
-  extends BaseExecutable
-{
+public class AdditionalExecutable extends BaseExecutable {
 
-  static final String COMMAND = "additional";
+	static final String COMMAND = "additional";
 
-  protected AdditionalExecutable()
-  {
-    super(COMMAND);
-  }
+	protected AdditionalExecutable() {
+		super(COMMAND);
+	}
 
-  @Override
+	@Override
   protected void executeOn(final Database database, final Connection connection)
     throws Exception
   {
-    final PrintWriter writer = new PrintWriter(new OutputWriter(outputOptions));
-    for (final Schema schema: database.getSchemas())
+    try (final PrintWriter writer = new PrintWriter(new OutputWriter(outputOptions));)
     {
-      System.out.println(schema);
-      for (final Table table: schema.getTables())
+      for (final Schema schema: database.getSchemas())
       {
-        writer.println("o--> " + table);
-        for (final Column column: table.getColumns())
+        System.out.println(schema);
+        for (final Table table: schema.getTables())
         {
-          writer.println("     o--> " + column);
+          writer.println("o--> " + table);
+          for (final Column column: table.getColumns())
+          {
+            writer.println("     o--> " + column);
+          }
         }
       }
     }
-    writer.close();
   }
-
 }
