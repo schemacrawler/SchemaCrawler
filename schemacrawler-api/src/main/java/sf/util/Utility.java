@@ -123,25 +123,12 @@ public final class Utility
       destFile.createNewFile();
     }
 
-    FileChannel source = null;
-    FileChannel destination = null;
-
-    try
+    try (final FileInputStream fileInputStream = new FileInputStream(sourceFile);
+        final FileOutputStream fileOutputStream = new FileOutputStream(destFile);
+        final FileChannel source = fileInputStream.getChannel();
+        final FileChannel destination = fileOutputStream.getChannel();)
     {
-      source = new FileInputStream(sourceFile).getChannel();
-      destination = new FileOutputStream(destFile).getChannel();
       destination.transferFrom(source, 0, source.size());
-    }
-    finally
-    {
-      if (source != null)
-      {
-        source.close();
-      }
-      if (destination != null)
-      {
-        destination.close();
-      }
     }
   }
 
