@@ -57,10 +57,12 @@ public final class SerializationExecutable
   protected void executeOn(final Database db, final Connection connection)
     throws Exception
   {
-    final Writer writer = new PrintWriter(new OutputWriter(outputOptions), true);
     final SerializableDatabase database = new XmlDatabase(db);
-    database.save(writer);
-    writer.close();
+    try (final Writer writer = new PrintWriter(new OutputWriter(outputOptions),
+                                               true);)
+    {
+      database.save(writer);
+    }
   }
 
 }

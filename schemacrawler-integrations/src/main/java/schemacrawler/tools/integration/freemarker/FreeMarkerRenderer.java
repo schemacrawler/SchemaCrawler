@@ -104,13 +104,13 @@ public final class FreeMarkerRenderer
     final Map<String, Object> objectMap = new HashMap<String, Object>();
     objectMap.put("database", database);
 
-    final Writer writer = new PrintWriter(new OutputWriter(outputOptions), true);
-
-    // Evaluate the template
-    final Template template = cfg.getTemplate(templateLocation);
-    template.process(objectMap, writer);
-
-    writer.close();
+    try (final Writer writer = new PrintWriter(new OutputWriter(outputOptions),
+                                               true);)
+    {
+      // Evaluate the template
+      final Template template = cfg.getTemplate(templateLocation);
+      template.process(objectMap, writer);
+    }
   }
 
 }
