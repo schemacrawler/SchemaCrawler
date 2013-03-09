@@ -83,19 +83,9 @@ final class SynonymRetriever
       .getSynonymsSql();
 
     final Connection connection = getDatabaseConnection();
-    final Statement statement = connection.createStatement();
-    MetadataResultSet results = null;
-    try
-    {
-      results = new MetadataResultSet(statement.executeQuery(synonymsDefinitionSql));
-    }
-    catch (final SQLException e)
-    {
-      LOGGER.log(Level.WARNING, "Could not retrieve synonym information", e);
-      return;
-    }
 
-    try
+    try (final Statement statement = connection.createStatement();
+        MetadataResultSet results = new MetadataResultSet(statement.executeQuery(synonymsDefinitionSql));)
     {
       while (results.next())
       {
@@ -158,14 +148,6 @@ final class SynonymRetriever
         }
 
       }
-    }
-    finally
-    {
-      if (results != null)
-      {
-        results.close();
-      }
-      statement.close();
     }
 
   }

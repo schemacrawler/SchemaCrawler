@@ -338,9 +338,8 @@ final class DatabaseInfoRetriever
   {
     final Schema systemSchema = new SchemaReference();
 
-    final MetadataResultSet results = new MetadataResultSet(getMetaData()
-      .getTypeInfo());
-    try
+    try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
+      .getTypeInfo());)
     {
       while (results.next())
       {
@@ -393,20 +392,15 @@ final class DatabaseInfoRetriever
         database.addColumnDataType(columnDataType);
       }
     }
-    finally
-    {
-      results.close();
-    }
-
   }
 
   void retrieveUserDefinedColumnDataTypes(final String catalogName,
                                           final String schemaName)
     throws SQLException
   {
-    final MetadataResultSet results = new MetadataResultSet(getMetaData()
-      .getUDTs(catalogName, schemaName, "%", null));
-    try
+
+    try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
+      .getUDTs(catalogName, schemaName, "%", null));)
     {
       while (results.next())
       {
@@ -432,10 +426,6 @@ final class DatabaseInfoRetriever
 
         database.addColumnDataType(columnDataType);
       }
-    }
-    finally
-    {
-      results.close();
     }
 
   }

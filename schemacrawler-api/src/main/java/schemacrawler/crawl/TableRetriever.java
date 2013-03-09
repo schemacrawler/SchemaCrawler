@@ -93,14 +93,12 @@ final class TableRetriever
                        final InclusionRule columnInclusionRule)
     throws SQLException
   {
-    MetadataResultSet results = null;
-    try
+    try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
+      .getColumns(unquotedName(table.getSchema().getCatalogName()),
+                  unquotedName(table.getSchema().getName()),
+                  unquotedName(table.getName()),
+                  null));)
     {
-      results = new MetadataResultSet(getMetaData()
-        .getColumns(unquotedName(table.getSchema().getCatalogName()),
-                    unquotedName(table.getSchema().getName()),
-                    unquotedName(table.getName()),
-                    null));
 
       while (results.next())
       {
@@ -163,13 +161,6 @@ final class TableRetriever
       throw new SchemaCrawlerSQLException("Could not retrieve columns for table "
                                               + table,
                                           e);
-    }
-    finally
-    {
-      if (results != null)
-      {
-        results.close();
-      }
     }
 
   }
@@ -248,13 +239,11 @@ final class TableRetriever
   void retrievePrimaryKey(final MutableTable table)
     throws SQLException
   {
-    MetadataResultSet results = null;
-    try
+    try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
+      .getPrimaryKeys(unquotedName(table.getSchema().getCatalogName()),
+                      unquotedName(table.getSchema().getName()),
+                      unquotedName(table.getName())));)
     {
-      results = new MetadataResultSet(getMetaData()
-        .getPrimaryKeys(unquotedName(table.getSchema().getCatalogName()),
-                        unquotedName(table.getSchema().getName()),
-                        unquotedName(table.getName())));
 
       MutablePrimaryKey primaryKey;
       while (results.next())
@@ -292,13 +281,6 @@ final class TableRetriever
                                               + table,
                                           e);
     }
-    finally
-    {
-      if (results != null)
-      {
-        results.close();
-      }
-    }
 
   }
 
@@ -315,14 +297,12 @@ final class TableRetriever
       return;
     }
 
-    MetadataResultSet results = null;
-    try
+    try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
+      .getTables(unquotedName(catalogName),
+                 unquotedName(schemaName),
+                 tableNamePattern,
+                 toStrings(tableTypes)));)
     {
-      results = new MetadataResultSet(getMetaData()
-        .getTables(unquotedName(catalogName),
-                   unquotedName(schemaName),
-                   tableNamePattern,
-                   toStrings(tableTypes)));
 
       while (results.next())
       {
@@ -353,13 +333,6 @@ final class TableRetriever
 
           database.addTable(table);
         }
-      }
-    }
-    finally
-    {
-      if (results != null)
-      {
-        results.close();
       }
     }
   }
@@ -602,15 +575,13 @@ final class TableRetriever
     throws SQLException
   {
 
-    MetadataResultSet results = null;
-    try
+    try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
+      .getIndexInfo(unquotedName(table.getSchema().getCatalogName()),
+                    unquotedName(table.getSchema().getName()),
+                    unquotedName(table.getName()),
+                    unique,
+                    true/* approximate */));)
     {
-      results = new MetadataResultSet(getMetaData()
-        .getIndexInfo(unquotedName(table.getSchema().getCatalogName()),
-                      unquotedName(table.getSchema().getName()),
-                      unquotedName(table.getName()),
-                      unique,
-                      true/* approximate */));
       createIndices(table, results);
     }
     catch (final SQLException e)
@@ -618,13 +589,6 @@ final class TableRetriever
       throw new SchemaCrawlerSQLException("Could not retrieve indices for table "
                                               + table,
                                           e);
-    }
-    finally
-    {
-      if (results != null)
-      {
-        results.close();
-      }
     }
 
   }
@@ -633,11 +597,9 @@ final class TableRetriever
     throws SQLException
   {
 
-    MetadataResultSet results = null;
-    try
+    try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
+      .getIndexInfo(null, null, table.getName(), unique, true/* approximate */));)
     {
-      results = new MetadataResultSet(getMetaData()
-        .getIndexInfo(null, null, table.getName(), unique, true/* approximate */));
       createIndices(table, results);
     }
     catch (final SQLException e)
@@ -645,13 +607,6 @@ final class TableRetriever
       throw new SchemaCrawlerSQLException("Could not retrieve indices for table "
                                               + table,
                                           e);
-    }
-    finally
-    {
-      if (results != null)
-      {
-        results.close();
-      }
     }
 
   }

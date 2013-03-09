@@ -61,15 +61,13 @@ final class RoutineRetriever
                                final InclusionRule columnInclusionRule)
     throws SQLException
   {
-    MetadataResultSet results = null;
     int ordinalNumber = 0;
-    try
+    try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
+      .getFunctionColumns(unquotedName(function.getSchema().getCatalogName()),
+                          unquotedName(function.getSchema().getName()),
+                          unquotedName(function.getName()),
+                          null));)
     {
-      results = new MetadataResultSet(getMetaData()
-        .getFunctionColumns(unquotedName(function.getSchema().getCatalogName()),
-                            unquotedName(function.getSchema().getName()),
-                            unquotedName(function.getName()),
-                            null));
 
       while (results.next())
       {
@@ -121,13 +119,7 @@ final class RoutineRetriever
         }
       }
     }
-    catch (final AbstractMethodError e)
-    {
-      LOGGER.log(Level.WARNING,
-                 "JDBC driver does not support retrieving functions",
-                 e);
-    }
-    catch (final SQLFeatureNotSupportedException e)
+    catch (final AbstractMethodError | SQLFeatureNotSupportedException e)
     {
       LOGGER.log(Level.WARNING,
                  "JDBC driver does not support retrieving functions",
@@ -138,13 +130,6 @@ final class RoutineRetriever
       throw new SchemaCrawlerSQLException("Could not retrieve columns for function "
                                               + function,
                                           e);
-    }
-    finally
-    {
-      if (results != null)
-      {
-        results.close();
-      }
     }
 
   }
@@ -160,11 +145,9 @@ final class RoutineRetriever
       return;
     }
 
-    MetadataResultSet results = null;
-    try
+    try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
+      .getFunctions(unquotedName(catalogName), unquotedName(schemaName), "%"));)
     {
-      results = new MetadataResultSet(getMetaData()
-        .getFunctions(unquotedName(catalogName), unquotedName(schemaName), "%"));
 
       while (results.next())
       {
@@ -191,24 +174,11 @@ final class RoutineRetriever
         }
       }
     }
-    catch (final AbstractMethodError e)
+    catch (final AbstractMethodError | SQLFeatureNotSupportedException e)
     {
       LOGGER.log(Level.WARNING,
                  "JDBC driver does not support retrieving functions",
                  e);
-    }
-    catch (final SQLFeatureNotSupportedException e)
-    {
-      LOGGER.log(Level.WARNING,
-                 "JDBC driver does not support retrieving functions",
-                 e);
-    }
-    finally
-    {
-      if (results != null)
-      {
-        results.close();
-      }
     }
   }
 
@@ -216,16 +186,13 @@ final class RoutineRetriever
                                 final InclusionRule columnInclusionRule)
     throws SQLException
   {
-    MetadataResultSet results = null;
     int ordinalNumber = 0;
-    try
+    try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
+      .getProcedureColumns(unquotedName(procedure.getSchema().getCatalogName()),
+                           unquotedName(procedure.getSchema().getName()),
+                           unquotedName(procedure.getName()),
+                           null));)
     {
-      results = new MetadataResultSet(getMetaData()
-        .getProcedureColumns(unquotedName(procedure.getSchema()
-                               .getCatalogName()),
-                             unquotedName(procedure.getSchema().getName()),
-                             unquotedName(procedure.getName()),
-                             null));
 
       while (results.next())
       {
@@ -284,13 +251,6 @@ final class RoutineRetriever
                                               + procedure,
                                           e);
     }
-    finally
-    {
-      if (results != null)
-      {
-        results.close();
-      }
-    }
 
   }
 
@@ -305,11 +265,9 @@ final class RoutineRetriever
       return;
     }
 
-    MetadataResultSet results = null;
-    try
+    try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
+      .getProcedures(unquotedName(catalogName), unquotedName(schemaName), "%"));)
     {
-      results = new MetadataResultSet(getMetaData()
-        .getProcedures(unquotedName(catalogName), unquotedName(schemaName), "%"));
 
       while (results.next())
       {
@@ -335,13 +293,6 @@ final class RoutineRetriever
 
           database.addRoutine(procedure);
         }
-      }
-    }
-    finally
-    {
-      if (results != null)
-      {
-        results.close();
       }
     }
   }

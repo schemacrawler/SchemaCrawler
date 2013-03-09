@@ -71,19 +71,8 @@ final class RoutineExRetriever
       .getRoutinesSql();
 
     final Connection connection = getDatabaseConnection();
-    final Statement statement = connection.createStatement();
-    MetadataResultSet results = null;
-    try
-    {
-      results = new MetadataResultSet(statement.executeQuery(routineDefinitionsSql));
-    }
-    catch (final SQLException e)
-    {
-      LOGGER.log(Level.WARNING, "Could not retrieve routine information", e);
-      return;
-    }
-
-    try
+    try (final Statement statement = connection.createStatement();
+        final MetadataResultSet results = new MetadataResultSet(statement.executeQuery(routineDefinitionsSql)))
     {
       while (results.next())
       {
@@ -114,15 +103,6 @@ final class RoutineExRetriever
         }
       }
     }
-    finally
-    {
-      if (results != null)
-      {
-        results.close();
-      }
-      statement.close();
-    }
-
   }
 
 }

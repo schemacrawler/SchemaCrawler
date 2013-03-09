@@ -81,11 +81,9 @@ final class TableExRetriever
       .getAdditionalColumnAttributesSql();
 
     final Connection connection = getDatabaseConnection();
-    final Statement statement = connection.createStatement();
-    MetadataResultSet results = null;
-    try
+    try (final Statement statement = connection.createStatement();
+        final MetadataResultSet results = new MetadataResultSet(statement.executeQuery(columnAttributesSql));)
     {
-      results = new MetadataResultSet(statement.executeQuery(columnAttributesSql));
 
       while (results.next())
       {
@@ -130,14 +128,6 @@ final class TableExRetriever
                  "Could not retrieve additional column attributes",
                  e);
     }
-    finally
-    {
-      if (results != null)
-      {
-        results.close();
-      }
-      statement.close();
-    }
 
   }
 
@@ -162,11 +152,9 @@ final class TableExRetriever
       .getAdditionalTableAttributesSql();
 
     final Connection connection = getDatabaseConnection();
-    final Statement statement = connection.createStatement();
-    MetadataResultSet results = null;
-    try
+    try (final Statement statement = connection.createStatement();
+        final MetadataResultSet results = new MetadataResultSet(statement.executeQuery(tableAttributesSql));)
     {
-      results = new MetadataResultSet(statement.executeQuery(tableAttributesSql));
 
       while (results.next())
       {
@@ -198,14 +186,6 @@ final class TableExRetriever
                  "Could not retrieve additional table attributes",
                  e);
     }
-    finally
-    {
-      if (results != null)
-      {
-        results.close();
-      }
-      statement.close();
-    }
 
   }
 
@@ -234,12 +214,9 @@ final class TableExRetriever
       .getTableConstraintsSql();
 
     final Connection connection = getDatabaseConnection();
-    Statement statement = null;
-    MetadataResultSet results = null;
-    try
+    try (final Statement statement = connection.createStatement();
+        final MetadataResultSet results = new MetadataResultSet(statement.executeQuery(tableConstraintsInformationSql));)
     {
-      statement = connection.createStatement();
-      results = new MetadataResultSet(statement.executeQuery(tableConstraintsInformationSql));
 
       while (results.next())
       {
@@ -293,17 +270,6 @@ final class TableExRetriever
                  e);
       return;
     }
-    finally
-    {
-      if (results != null)
-      {
-        results.close();
-      }
-      if (statement != null)
-      {
-        statement.close();
-      }
-    }
 
     if (!informationSchemaViews.hasCheckConstraintsSql())
     {
@@ -315,12 +281,9 @@ final class TableExRetriever
       .getCheckConstraintsSql();
 
     // Get check constraint definitions
-    statement = null;
-    results = null;
-    try
+    try (final Statement statement = connection.createStatement();
+        final MetadataResultSet results = new MetadataResultSet(statement.executeQuery(checkConstraintInformationSql));)
     {
-      statement = connection.createStatement();
-      results = new MetadataResultSet(statement.executeQuery(checkConstraintInformationSql));
       while (results.next())
       {
         final String catalogName = quotedName(results
@@ -354,17 +317,6 @@ final class TableExRetriever
         checkConstraint.setDefinition(definition);
       }
     }
-    finally
-    {
-      if (results != null)
-      {
-        results.close();
-      }
-      if (statement != null)
-      {
-        statement.close();
-      }
-    }
 
     // Add check constraints to tables
     final Collection<MutableCheckConstraint> checkConstraintsCollection = checkConstraintsMap
@@ -380,13 +332,9 @@ final class TableExRetriever
   void retrieveTableColumnPrivileges()
     throws SQLException
   {
-    MetadataResultSet results = null;
-    try
+    try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
+      .getColumnPrivileges(null, null, "%", "%"));)
     {
-      results = new MetadataResultSet(getMetaData().getColumnPrivileges(null,
-                                                                        null,
-                                                                        "%",
-                                                                        "%"));
       createPrivileges(results, true);
     }
     catch (final Exception e)
@@ -394,36 +342,19 @@ final class TableExRetriever
       LOGGER.log(Level.WARNING, "Could not retrieve table column privileges:"
                                 + e.getMessage());
     }
-    finally
-    {
-      if (results != null)
-      {
-        results.close();
-      }
-    }
   }
 
   void retrieveTablePrivileges()
     throws SQLException
   {
-    MetadataResultSet results = null;
-    try
+    try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
+      .getTablePrivileges(null, null, "%"));)
     {
-      results = new MetadataResultSet(getMetaData().getTablePrivileges(null,
-                                                                       null,
-                                                                       "%"));
       createPrivileges(results, false);
     }
     catch (final Exception e)
     {
       LOGGER.log(Level.WARNING, "Could not retrieve table privileges", e);
-    }
-    finally
-    {
-      if (results != null)
-      {
-        results.close();
-      }
     }
   }
 
@@ -449,11 +380,9 @@ final class TableExRetriever
       .getTriggersSql();
 
     final Connection connection = getDatabaseConnection();
-    final Statement statement = connection.createStatement();
-    MetadataResultSet results = null;
-    try
+    try (final Statement statement = connection.createStatement();
+        final MetadataResultSet results = new MetadataResultSet(statement.executeQuery(triggerInformationSql));)
     {
-      results = new MetadataResultSet(statement.executeQuery(triggerInformationSql));
 
       while (results.next())
       {
@@ -516,14 +445,6 @@ final class TableExRetriever
     {
       LOGGER.log(Level.WARNING, "Could not retrieve trigger information", e);
     }
-    finally
-    {
-      if (results != null)
-      {
-        results.close();
-      }
-      statement.close();
-    }
 
   }
 
@@ -548,11 +469,9 @@ final class TableExRetriever
     final String viewInformationSql = informationSchemaViews.getViewsSql();
 
     final Connection connection = getDatabaseConnection();
-    final Statement statement = connection.createStatement();
-    MetadataResultSet results = null;
-    try
+    try (final Statement statement = connection.createStatement();
+        final MetadataResultSet results = new MetadataResultSet(statement.executeQuery(viewInformationSql));)
     {
-      results = new MetadataResultSet(statement.executeQuery(viewInformationSql));
 
       while (results.next())
       {
@@ -589,14 +508,6 @@ final class TableExRetriever
     catch (final Exception e)
     {
       LOGGER.log(Level.WARNING, "Could not retrieve view information", e);
-    }
-    finally
-    {
-      if (results != null)
-      {
-        results.close();
-      }
-      statement.close();
     }
 
   }

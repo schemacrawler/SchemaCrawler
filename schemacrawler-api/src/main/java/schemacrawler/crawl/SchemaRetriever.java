@@ -144,9 +144,9 @@ final class SchemaRetriever
     final Set<String> allCatalogNames = retrieveAllCatalogs();
     if (supportsSchemas)
     {
-      final MetadataResultSet results = new MetadataResultSet(getMetaData()
-        .getSchemas());
-      try
+
+      try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
+        .getSchemas());)
       {
         while (results.next())
         {
@@ -184,10 +184,6 @@ final class SchemaRetriever
           }
         }
       }
-      finally
-      {
-        results.close();
-      }
     }
     else
     {
@@ -217,11 +213,10 @@ final class SchemaRetriever
     final String schemataSql = informationSchemaViews.getSchemataSql();
 
     final Connection connection = getDatabaseConnection();
-    final Statement statement = connection.createStatement();
-    MetadataResultSet results = null;
-    try
+
+    try (final Statement statement = connection.createStatement();
+        final MetadataResultSet results = new MetadataResultSet(statement.executeQuery(schemataSql));)
     {
-      results = new MetadataResultSet(statement.executeQuery(schemataSql));
       while (results.next())
       {
         final String catalogName = quotedName(results.getString("CATALOG_NAME"));
@@ -235,14 +230,6 @@ final class SchemaRetriever
     catch (final Exception e)
     {
       LOGGER.log(Level.WARNING, "Could not retrieve schemas", e);
-    }
-    finally
-    {
-      if (results != null)
-      {
-        results.close();
-      }
-      statement.close();
     }
 
     return schemaRefs;
