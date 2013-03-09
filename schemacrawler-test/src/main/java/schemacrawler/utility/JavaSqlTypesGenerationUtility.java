@@ -198,12 +198,7 @@ public final class JavaSqlTypesGenerationUtility
         final Integer javaSqlType = (Integer) field.get(null);
         javaSqlTypesMap.put(javaSqlTypeName, javaSqlType);
       }
-      catch (final SecurityException e)
-      {
-        LOGGER.log(Level.WARNING, "Could not access java.sql.Types", e);
-        // continue
-      }
-      catch (final IllegalAccessException e)
+      catch (final SecurityException | IllegalAccessException e)
       {
         LOGGER.log(Level.WARNING, "Could not access java.sql.Types", e);
         // continue
