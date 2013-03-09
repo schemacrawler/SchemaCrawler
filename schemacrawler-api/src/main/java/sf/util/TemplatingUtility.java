@@ -141,11 +141,11 @@ public final class TemplatingUtility
 
     if (Utility.isBlank(template))
     {
-      return new HashSet<String>();
+      return new HashSet<>();
     }
 
     String shrunkTemplate = template;
-    final Set<String> keys = new HashSet<String>();
+    final Set<String> keys = new HashSet<>();
     for (int left; (left = shrunkTemplate.indexOf(DELIMITER_START)) >= 0;)
     {
       final int right = shrunkTemplate.indexOf(DELIMITER_END, left + 2);
@@ -196,7 +196,7 @@ public final class TemplatingUtility
    */
   private static Map<String, String> propertiesMap(final Properties properties)
   {
-    final Map<String, String> propertiesMap = new HashMap<String, String>();
+    final Map<String, String> propertiesMap = new HashMap<>();
     if (properties != null)
     {
       final Set<Entry<Object, Object>> entries = properties.entrySet();

@@ -1,21 +1,22 @@
-/* 
- *
+/*
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
  * Copyright (c) 2000-2013, Sualeh Fatehi.
- *
- * This library is free software; you can redistribute it and/or modify it under the terms
- * of the GNU Lesser General Public License as published by the Free Software Foundation;
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms
+ * of the GNU Lesser General Public License as published by the Free Software
+ * Foundation;
  * either version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * library; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this
+ * library; if not, write to the Free Software Foundation, Inc., 59 Temple
+ * Place, Suite 330,
  * Boston, MA 02111-1307, USA.
- *
  */
 package schemacrawler.tools.analysis.associations;
 
@@ -59,7 +60,7 @@ final class WeakAssociationsAnalyzer
   WeakAssociationsAnalyzer(final List<Table> tables)
   {
     this.tables = tables;
-    weakAssociations = new TreeSet<ColumnReference>();
+    weakAssociations = new TreeSet<>();
   }
 
   Collection<ColumnReference> analyzeTables()
@@ -117,12 +118,12 @@ final class WeakAssociationsAnalyzer
    * Finds table prefixes. A prefix ends with "_".
    * 
    * @param tables
-   *        Tables
+   *          Tables
    * @return Table name prefixes
    */
   private Collection<String> findTableNamePrefixes(final List<Table> tables)
   {
-    final SortedMap<String, Integer> prefixesMap = new TreeMap<String, Integer>();
+    final SortedMap<String, Integer> prefixesMap = new TreeMap<>();
     for (int i = 0; i < tables.size(); i++)
     {
       for (int j = i + 1; j < tables.size(); j++)
@@ -132,7 +133,7 @@ final class WeakAssociationsAnalyzer
         final String commonPrefix = Utility.commonPrefix(table1, table2);
         if (!Utility.isBlank(commonPrefix) && commonPrefix.endsWith("_"))
         {
-          final List<String> splitCommonPrefixes = new ArrayList<String>();
+          final List<String> splitCommonPrefixes = new ArrayList<>();
           final String[] splitPrefix = commonPrefix.split("_");
           if (splitPrefix != null && splitPrefix.length > 0)
           {
@@ -169,7 +170,7 @@ final class WeakAssociationsAnalyzer
     }
 
     // Make sure we have the smallest prefixes
-    final List<String> keySet = new ArrayList<String>(prefixesMap.keySet());
+    final List<String> keySet = new ArrayList<>(prefixesMap.keySet());
     Collections.sort(keySet, new Comparator<String>()
     {
 
@@ -199,9 +200,8 @@ final class WeakAssociationsAnalyzer
       }
     }
 
-    // Sort prefixes by the number of tables using them, in descending
-    // order
-    final List<Map.Entry<String, Integer>> prefixesList = new ArrayList<Map.Entry<String, Integer>>(prefixesMap
+    // Sort prefixes by the number of tables using them, in descending order
+    final List<Map.Entry<String, Integer>> prefixesList = new ArrayList<>(prefixesMap
       .entrySet());
     Collections.sort(prefixesList, new Comparator<Map.Entry<String, Integer>>()
     {
@@ -215,7 +215,7 @@ final class WeakAssociationsAnalyzer
     });
 
     // Reduce the number of prefixes in use
-    final List<String> prefixes = new ArrayList<String>();
+    final List<String> prefixes = new ArrayList<>();
     for (int i = 0; i < prefixesList.size(); i++)
     {
       final boolean add = i < 5
@@ -285,7 +285,7 @@ final class WeakAssociationsAnalyzer
 
   private Map<String, Column> mapColumnNameMatches(final Table table)
   {
-    final Map<String, Column> matchMap = new HashMap<String, Column>();
+    final Map<String, Column> matchMap = new HashMap<>();
 
     final PrimaryKey primaryKey = table.getPrimaryKey();
     if (primaryKey != null && primaryKey.getColumns().size() == 1)
@@ -314,7 +314,7 @@ final class WeakAssociationsAnalyzer
 
   private Map<String, ForeignKeyColumnReference> mapForeignKeyColumns(final List<Table> tables)
   {
-    final Map<String, ForeignKeyColumnReference> fkColumnsMap = new HashMap<String, ForeignKeyColumnReference>();
+    final Map<String, ForeignKeyColumnReference> fkColumnsMap = new HashMap<>();
     for (final Table table: tables)
     {
       for (final ForeignKey fk: table.getForeignKeys())
@@ -331,7 +331,7 @@ final class WeakAssociationsAnalyzer
   private Multimap<String, Table> mapTableNameMatches(final List<Table> tables,
                                                       final Collection<String> prefixes)
   {
-    final Multimap<String, Table> matchMap = new Multimap<String, Table>();
+    final Multimap<String, Table> matchMap = new Multimap<>();
     for (final Table table: tables)
     {
       for (final String prefix: prefixes)

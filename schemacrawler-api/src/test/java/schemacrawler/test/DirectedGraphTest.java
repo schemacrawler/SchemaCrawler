@@ -50,7 +50,7 @@ public class DirectedGraphTest
   public void smallCycle()
     throws Exception
   {
-    final DirectedGraph<String> graph = new DirectedGraph<String>();
+    final DirectedGraph<String> graph = new DirectedGraph<>();
 
     assertFalse(graph.containsCycle());
 

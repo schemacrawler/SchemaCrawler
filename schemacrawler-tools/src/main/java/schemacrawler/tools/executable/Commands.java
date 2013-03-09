@@ -19,7 +19,7 @@ final class Commands
 
   Commands(final String commandsList)
   {
-    commands = new ArrayList<String>();
+    commands = new ArrayList<>();
     if (!Utility.isBlank(commandsList))
     {
       final String[] commandStrings = commandsList.split(",");

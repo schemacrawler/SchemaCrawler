@@ -55,7 +55,7 @@ abstract class AbstractRetriever
   static List<String> readResultsVector(final ResultSet results)
     throws SQLException
   {
-    final List<String> values = new ArrayList<String>();
+    final List<String> values = new ArrayList<>();
     try
     {
       while (results.next())

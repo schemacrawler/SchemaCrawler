@@ -92,7 +92,7 @@ public final class JavaSqlTypesUtility
 
   private static Map<Integer, JavaSqlType> mapJavaSqlTypesByType(final List<JavaSqlType> javaSqlTypes)
   {
-    final Map<Integer, JavaSqlType> javaSqlTypesByTypeMap = new HashMap<Integer, JavaSqlType>();
+    final Map<Integer, JavaSqlType> javaSqlTypesByTypeMap = new HashMap<>();
     if (javaSqlTypes != null)
     {
       for (final JavaSqlType javaSqlType: javaSqlTypes)
@@ -105,7 +105,7 @@ public final class JavaSqlTypesUtility
 
   private static Map<String, JavaSqlType> mapJavaSqlTypesByTypeName(final List<JavaSqlType> javaSqlTypes)
   {
-    final Map<String, JavaSqlType> javaSqlTypesByTypeNameMap = new HashMap<String, JavaSqlType>();
+    final Map<String, JavaSqlType> javaSqlTypesByTypeNameMap = new HashMap<>();
     if (javaSqlTypes != null)
     {
       for (final JavaSqlType javaSqlType: javaSqlTypes)
@@ -124,7 +124,7 @@ public final class JavaSqlTypesUtility
     final Map<String, String> javaSqlTypesProperties = Config
       .loadResource("/java.sql.Types.properties");
 
-    final List<JavaSqlType> javaSqlTypes = new ArrayList<JavaSqlType>();
+    final List<JavaSqlType> javaSqlTypes = new ArrayList<>();
 
     for (final Entry<String, String> javaSqlTypesEntry: javaSqlTypesProperties
       .entrySet())
@@ -157,7 +157,7 @@ public final class JavaSqlTypesUtility
 
   private static Map<String, JavaSqlTypeGroup> readJavaSqlTypesGroupsMap()
   {
-    final Map<String, JavaSqlTypeGroup> javaSqlTypesGroupsMap = new HashMap<String, JavaSqlTypeGroup>();
+    final Map<String, JavaSqlTypeGroup> javaSqlTypesGroupsMap = new HashMap<>();
     final Map<String, String> javaSqlTypesGroups = Config
       .loadResource("/java.sql.Types.groups.properties");
     for (final Entry<String, String> javaSqlTypesGroupsEntry: javaSqlTypesGroups

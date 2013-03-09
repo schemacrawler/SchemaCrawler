@@ -94,7 +94,7 @@ class NamedObjectList<N extends NamedObject>
     return key;
   }
 
-  private final Map<String, N> objects = new HashMap<String, N>();
+  private final Map<String, N> objects = new HashMap<>();
 
   /**
    * {@inheritDoc}
@@ -175,7 +175,7 @@ class NamedObjectList<N extends NamedObject>
    */
   List<N> values()
   {
-    final List<N> all = new ArrayList<N>(objects.values());
+    final List<N> all = new ArrayList<>(objects.values());
     Collections.sort(all);
     return all;
   }

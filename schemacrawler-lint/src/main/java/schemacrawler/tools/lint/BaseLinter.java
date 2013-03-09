@@ -147,7 +147,7 @@ public abstract class BaseLinter
                                                    final String message,
                                                    final V value)
   {
-    return new SimpleLint<V>(getId(), objectName, getSeverity(), message, value);
+    return new SimpleLint<>(getId(), objectName, getSeverity(), message, value);
   }
 
 }

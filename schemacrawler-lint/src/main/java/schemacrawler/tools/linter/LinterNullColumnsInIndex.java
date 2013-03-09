@@ -63,7 +63,7 @@ public class LinterNullColumnsInIndex
 
   private List<Index> findNullableColumnsInUniqueIndex(final Collection<Index> indices)
   {
-    final List<Index> nullableColumnsInUniqueIndex = new ArrayList<Index>();
+    final List<Index> nullableColumnsInUniqueIndex = new ArrayList<>();
     for (final Index index: indices)
     {
       if (index.isUnique())

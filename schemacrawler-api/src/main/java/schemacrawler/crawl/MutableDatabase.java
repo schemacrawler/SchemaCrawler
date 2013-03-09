@@ -55,9 +55,9 @@ final class MutableDatabase
   private final MutableSchemaCrawlerInfo schemaCrawlerInfo;
   private final Set<Schema> schemas;
   private final ColumnDataTypes columnDataTypes = new ColumnDataTypes();
-  private final NamedObjectList<MutableTable> tables = new NamedObjectList<MutableTable>();
-  private final NamedObjectList<MutableRoutine> routines = new NamedObjectList<MutableRoutine>();
-  private final NamedObjectList<MutableSynonym> synonyms = new NamedObjectList<MutableSynonym>();
+  private final NamedObjectList<MutableTable> tables = new NamedObjectList<>();
+  private final NamedObjectList<MutableRoutine> routines = new NamedObjectList<>();
+  private final NamedObjectList<MutableSynonym> synonyms = new NamedObjectList<>();
 
   MutableDatabase(final String name)
   {
@@ -65,7 +65,7 @@ final class MutableDatabase
     databaseInfo = new MutableDatabaseInfo();
     jdbcDriverInfo = new MutableJdbcDriverInfo();
     schemaCrawlerInfo = new MutableSchemaCrawlerInfo();
-    schemas = new HashSet<Schema>();
+    schemas = new HashSet<>();
   }
 
   /**

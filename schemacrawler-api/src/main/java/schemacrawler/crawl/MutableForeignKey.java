@@ -46,7 +46,7 @@ class MutableForeignKey
 
   private static final long serialVersionUID = 4121411795974895671L;
 
-  private final SortedSet<MutableForeignKeyColumnReference> columnReferences = new TreeSet<MutableForeignKeyColumnReference>();
+  private final SortedSet<MutableForeignKeyColumnReference> columnReferences = new TreeSet<>();
   private ForeignKeyUpdateRule updateRule;
   private ForeignKeyUpdateRule deleteRule;
   private ForeignKeyDeferrability deferrability;

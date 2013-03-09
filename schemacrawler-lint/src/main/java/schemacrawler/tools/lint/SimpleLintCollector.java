@@ -39,7 +39,7 @@ public class SimpleLintCollector
       return null;
     }
 
-    final List<Lint<?>> lints = new ArrayList<Lint<?>>(namedObject
+    final List<Lint<?>> lints = new ArrayList<>(namedObject
       .getAttribute(LINT_KEY, new ArrayList<Lint<?>>()));
     Collections.sort(lints);
     return lints;
@@ -49,7 +49,7 @@ public class SimpleLintCollector
 
   public SimpleLintCollector()
   {
-    lints = new ArrayList<Lint<?>>();
+    lints = new ArrayList<>();
   }
 
   @Override

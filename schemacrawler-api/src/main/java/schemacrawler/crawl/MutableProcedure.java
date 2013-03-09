@@ -44,7 +44,7 @@ final class MutableProcedure
   private static final long serialVersionUID = 3906925686089134130L;
 
   private ProcedureReturnType returnType;
-  private final NamedObjectList<MutableProcedureColumn> columns = new NamedObjectList<MutableProcedureColumn>();
+  private final NamedObjectList<MutableProcedureColumn> columns = new NamedObjectList<>();
 
   MutableProcedure(final Schema schema, final String name)
   {

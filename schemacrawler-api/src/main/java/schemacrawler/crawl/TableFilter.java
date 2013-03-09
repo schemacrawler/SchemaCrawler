@@ -65,7 +65,7 @@ class TableFilter
   private Collection<MutableTable> doFilter()
   {
     // Filter for grep
-    final Set<MutableTable> greppedTables = new HashSet<MutableTable>();
+    final Set<MutableTable> greppedTables = new HashSet<>();
     for (final MutableTable table: allTables)
     {
       if (grepMatch(options, table))
@@ -84,7 +84,7 @@ class TableFilter
                                                                        parentTableFilterDepth,
                                                                        greppedTables);
 
-    final Set<MutableTable> filteredTables = new HashSet<MutableTable>();
+    final Set<MutableTable> filteredTables = new HashSet<>();
     filteredTables.addAll(greppedTables);
     filteredTables.addAll(childTables);
     filteredTables.addAll(parentTables);
@@ -184,12 +184,12 @@ class TableFilter
                                                         final int depth,
                                                         final Set<MutableTable> greppedTables)
   {
-    final Set<MutableTable> includedTables = new HashSet<MutableTable>();
+    final Set<MutableTable> includedTables = new HashSet<>();
     includedTables.addAll(greppedTables);
 
     for (int i = 0; i < depth; i++)
     {
-      for (final MutableTable table: new HashSet<MutableTable>(includedTables))
+      for (final MutableTable table: new HashSet<>(includedTables))
       {
         for (final Table relatedTable: table
           .getRelatedTables(tableRelationshipType))

@@ -51,7 +51,7 @@ final class TablesGraph
     try
     {
       final List<Table> sortedTables = topologicalSort();
-      final List<View> sortedViews = new ArrayList<View>();
+      final List<View> sortedViews = new ArrayList<>();
       int sortIndex = 0;
       for (final Table table: sortedTables)
       {

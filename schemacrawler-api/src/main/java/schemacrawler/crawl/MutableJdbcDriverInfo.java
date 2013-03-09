@@ -50,7 +50,7 @@ final class MutableJdbcDriverInfo
   private String driverVersion;
   private String connectionUrl;
   private boolean jdbcCompliant;
-  private final Set<MutableJdbcDriverProperty> jdbcDriverProperties = new HashSet<MutableJdbcDriverProperty>();
+  private final Set<MutableJdbcDriverProperty> jdbcDriverProperties = new HashSet<>();
 
   /**
    * {@inheritDoc}

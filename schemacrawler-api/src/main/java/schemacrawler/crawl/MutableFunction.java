@@ -45,7 +45,7 @@ final class MutableFunction
   private static final long serialVersionUID = 3906925686089134130L;
 
   private FunctionReturnType returnType;
-  private final NamedObjectList<MutableFunctionColumn> columns = new NamedObjectList<MutableFunctionColumn>();
+  private final NamedObjectList<MutableFunctionColumn> columns = new NamedObjectList<>();
   private RoutineBodyType routineBodyType;
 
   MutableFunction(final Schema schema, final String name)

@@ -72,7 +72,7 @@ public class SchemaCrawlerSystemTest
   public void tablesAndCounts()
     throws Exception
   {
-    final List<String> messages = new ArrayList<String>();
+    final List<String> messages = new ArrayList<>();
     String message;
     message = tablesAndCounts("MicrosoftSQLServer", "Books.dbo", "\"");
     if (message != null)

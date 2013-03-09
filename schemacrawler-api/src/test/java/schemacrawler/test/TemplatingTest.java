@@ -38,7 +38,7 @@ public class TemplatingTest
   public void expandTemplate()
     throws Exception
   {
-    final Map<String, String> values = new HashMap<String, String>();
+    final Map<String, String> values = new HashMap<>();
     values.put("one", "one.value");
     values.put("another", "two.value");
     values.put("unusual", "10");
@@ -150,7 +150,7 @@ public class TemplatingTest
 
   private List<String> getSortedVariables(final Set<String> variables)
   {
-    final List<String> sortedVariables = new ArrayList<String>(variables);
+    final List<String> sortedVariables = new ArrayList<>(variables);
     Collections.sort(sortedVariables);
     return sortedVariables;
   }

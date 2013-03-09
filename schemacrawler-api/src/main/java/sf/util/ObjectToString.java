@@ -210,7 +210,7 @@ public final class ObjectToString
 
   private static Class<?>[] getClassHierarchy(final Object object)
   {
-    final List<Class<?>> classHierarchy = new ArrayList<Class<?>>();
+    final List<Class<?>> classHierarchy = new ArrayList<>();
     if (object != null)
     {
       Class<?> clazz = object.getClass();
@@ -230,7 +230,7 @@ public final class ObjectToString
   private static Field[] getFields(final Object object)
   {
     final Class<?>[] classes = getClassHierarchy(object);
-    final List<Field> allFields = new ArrayList<Field>();
+    final List<Field> allFields = new ArrayList<>();
     if (classes != null && classes.length > 0)
     {
       for (final Class<?> clazz: classes)

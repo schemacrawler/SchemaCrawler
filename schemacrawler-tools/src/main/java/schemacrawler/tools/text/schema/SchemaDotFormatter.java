@@ -1,21 +1,22 @@
-/* 
- *
+/*
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
  * Copyright (c) 2000-2013, Sualeh Fatehi.
- *
- * This library is free software; you can redistribute it and/or modify it under the terms
- * of the GNU Lesser General Public License as published by the Free Software Foundation;
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms
+ * of the GNU Lesser General Public License as published by the Free Software
+ * Foundation;
  * either version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * library; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this
+ * library; if not, write to the Free Software Foundation, Inc., 59 Temple
+ * Place, Suite 330,
  * Boston, MA 02111-1307, USA.
- *
  */
 
 package schemacrawler.tools.text.schema;
@@ -68,13 +69,13 @@ public final class SchemaDotFormatter
    * Text formatting of schema.
    * 
    * @param schemaTextDetailType
-   *        Types for text formatting of schema
+   *          Types for text formatting of schema
    * @param options
-   *        Options for text formatting of schema
+   *          Options for text formatting of schema
    * @param outputOptions
-   *        Options for text formatting of schema
+   *          Options for text formatting of schema
    * @throws SchemaCrawlerException
-   *         On an exception
+   *           On an exception
    */
   public SchemaDotFormatter(final SchemaTextDetailType schemaTextDetailType,
                             final SchemaTextOptions options,
@@ -86,7 +87,7 @@ public final class SchemaDotFormatter
           outputOptions);
     isVerbose = schemaTextDetailType == SchemaTextDetailType.details;
     isList = schemaTextDetailType == SchemaTextDetailType.list;
-    colorMap = new HashMap<Schema, String>();
+    colorMap = new HashMap<>();
   }
 
   @Override
@@ -99,7 +100,7 @@ public final class SchemaDotFormatter
    * Provides information on the database schema.
    * 
    * @param routine
-   *        Routine metadata.
+   *          Routine metadata.
    */
   @Override
   public void handle(final Routine routine)
@@ -110,7 +111,7 @@ public final class SchemaDotFormatter
    * Provides information on the database schema.
    * 
    * @param synonym
-   *        Synonym metadata.
+   *          Synonym metadata.
    */
   @Override
   public void handle(final Synonym synonym)
@@ -121,7 +122,7 @@ public final class SchemaDotFormatter
    * Provides information on the database schema.
    * 
    * @param table
-   *        Table metadata.
+   *          Table metadata.
    */
   @Override
   public void handle(final Table table)

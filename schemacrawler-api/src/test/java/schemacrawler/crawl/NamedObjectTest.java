@@ -40,7 +40,7 @@ public class NamedObjectTest
     };
 
     MutableTable table;
-    final NamedObjectList<Table> tables = new NamedObjectList<Table>();
+    final NamedObjectList<Table> tables = new NamedObjectList<>();
 
     final MutableDatabase database = new MutableDatabase("DATABASE");
     for (final String schemaName: schemaNames)

@@ -35,7 +35,7 @@ public class CoverageTest
   @Test
   public void namedObjectList()
   {
-    final NamedObjectList<NamedObject> list = new NamedObjectList<NamedObject>();
+    final NamedObjectList<NamedObject> list = new NamedObjectList<>();
     list.add(new AbstractNamedObject("name1")
     {
 
@@ -55,7 +55,7 @@ public class CoverageTest
   @Test(expected = IllegalArgumentException.class)
   public void namedObjectListNull()
   {
-    final NamedObjectList<NamedObject> list = new NamedObjectList<NamedObject>();
+    final NamedObjectList<NamedObject> list = new NamedObjectList<>();
     list.add(null);
   }
 

@@ -39,7 +39,7 @@ public class LintUtility
       return Collections.emptyList();
     }
 
-    final List<String> columnNames = new ArrayList<String>();
+    final List<String> columnNames = new ArrayList<>();
     for (final IndexColumn indexColumn: index.getColumns())
     {
       columnNames.add(indexColumn.getFullName());
@@ -54,7 +54,7 @@ public class LintUtility
       return Collections.emptyList();
     }
 
-    final List<String> columnNames = new ArrayList<String>();
+    final List<String> columnNames = new ArrayList<>();
     for (final ForeignKeyColumnReference columnReference: foreignKey
       .getColumnReferences())
     {

@@ -149,7 +149,7 @@ final class DatabaseInfoRetriever
     final DatabaseMetaData dbMetaData = getMetaData();
     final MutableDatabaseInfo dbInfo = database.getDatabaseInfo();
 
-    final Collection<MutableDatabaseProperty> dbProperties = new ArrayList<MutableDatabaseProperty>();
+    final Collection<MutableDatabaseProperty> dbProperties = new ArrayList<>();
 
     final Method[] methods = DatabaseMetaData.class.getMethods();
     for (final Method method: methods)

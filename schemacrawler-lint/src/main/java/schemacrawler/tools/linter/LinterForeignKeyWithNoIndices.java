@@ -72,10 +72,10 @@ public class LinterForeignKeyWithNoIndices
 
   private List<ForeignKey> findForeignKeysWithoutIndices(final Table table)
   {
-    final List<ForeignKey> foreignKeysWithoutIndices = new ArrayList<ForeignKey>();
+    final List<ForeignKey> foreignKeysWithoutIndices = new ArrayList<>();
     if (!(table instanceof View))
     {
-      final List<List<String>> indexColumnsList = new ArrayList<List<String>>();
+      final List<List<String>> indexColumnsList = new ArrayList<>();
       for (final Index index: table.getIndices())
       {
         final List<String> indexColumns = columns(index);

@@ -77,8 +77,8 @@ public class LinterRedundantIndices
 
   private Set<Index> findRedundantIndices(final Collection<Index> indices)
   {
-    final Set<Index> redundantIndices = new HashSet<Index>();
-    final Map<Index, List<String>> indexColumns = new HashMap<Index, List<String>>(indices
+    final Set<Index> redundantIndices = new HashSet<>();
+    final Map<Index, List<String>> indexColumns = new HashMap<>(indices
       .size());
     for (final Index index: indices)
     {

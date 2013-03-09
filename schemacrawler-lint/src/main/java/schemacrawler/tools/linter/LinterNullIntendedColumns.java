@@ -62,7 +62,7 @@ public class LinterNullIntendedColumns
 
   private List<Column> findNullDefaultValueMayBeIntendedColumns(final List<Column> columns)
   {
-    final List<Column> nullDefaultValueMayBeIntendedColumns = new ArrayList<Column>();
+    final List<Column> nullDefaultValueMayBeIntendedColumns = new ArrayList<>();
     for (final Column column: columns)
     {
       final String columnDefaultValue = column.getDefaultValue();

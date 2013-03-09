@@ -43,7 +43,7 @@ abstract class AbstractNamedObject
   private final String name;
 
   private String remarks;
-  private final Map<String, Object> attributeMap = new HashMap<String, Object>();
+  private final Map<String, Object> attributeMap = new HashMap<>();
 
   AbstractNamedObject(final String name)
   {

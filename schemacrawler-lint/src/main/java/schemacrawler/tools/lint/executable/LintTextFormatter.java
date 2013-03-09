@@ -115,7 +115,7 @@ final class LintTextFormatter
   {
     out.println(formattingHelper.createEmptyRow());
 
-    final Multimap<LintSeverity, Lint<?>> multiMap = new Multimap<LintSeverity, Lint<?>>();
+    final Multimap<LintSeverity, Lint<?>> multiMap = new Multimap<>();
     for (final Lint<?> lint: lints)
     {
       multiMap.add(lint.getSeverity(), lint);
@@ -131,7 +131,7 @@ final class LintTextFormatter
 
       out.println(formattingHelper.createNameRow("", String
         .format("[lint, %s]", severity)));
-      final List<Lint<?>> lintsById = new ArrayList<Lint<?>>(multiMap.get(severity));
+      final List<Lint<?>> lintsById = new ArrayList<>(multiMap.get(severity));
       for (final Lint<?> lint: lintsById)
       {
         final Object lintValue = lint.getValue();

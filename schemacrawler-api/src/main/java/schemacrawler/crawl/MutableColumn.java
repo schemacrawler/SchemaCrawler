@@ -45,7 +45,7 @@ class MutableColumn
   private boolean isPartOfPrimaryKey;
   private boolean isPartOfUniqueIndex;
   private Column referencedColumn;
-  private final NamedObjectList<MutablePrivilege<Column>> privileges = new NamedObjectList<MutablePrivilege<Column>>();
+  private final NamedObjectList<MutablePrivilege<Column>> privileges = new NamedObjectList<>();
 
   MutableColumn(final Table parent, final String name)
   {
