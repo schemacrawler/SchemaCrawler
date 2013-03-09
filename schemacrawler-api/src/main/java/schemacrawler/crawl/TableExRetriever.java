@@ -317,6 +317,10 @@ final class TableExRetriever
         checkConstraint.setDefinition(definition);
       }
     }
+    catch (final Exception e)
+    {
+      LOGGER.log(Level.WARNING, "Could not retrieve check constraints", e);
+    }
 
     // Add check constraints to tables
     final Collection<MutableCheckConstraint> checkConstraintsCollection = checkConstraintsMap
@@ -443,7 +447,7 @@ final class TableExRetriever
     }
     catch (final Exception e)
     {
-      LOGGER.log(Level.WARNING, "Could not retrieve trigger information", e);
+      LOGGER.log(Level.WARNING, "Could not retrieve triggers", e);
     }
 
   }
@@ -507,7 +511,7 @@ final class TableExRetriever
     }
     catch (final Exception e)
     {
-      LOGGER.log(Level.WARNING, "Could not retrieve view information", e);
+      LOGGER.log(Level.WARNING, "Could not retrieve views", e);
     }
 
   }
