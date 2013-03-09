@@ -199,11 +199,7 @@ public final class ObjectToString
             break;
           }
         }
-        catch (final SecurityException e)
-        {
-          // continue
-        }
-        catch (final NoSuchMethodException e)
+        catch (final SecurityException | NoSuchMethodException e)
         {
           // continue
         }

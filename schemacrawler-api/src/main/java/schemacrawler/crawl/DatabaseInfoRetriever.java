@@ -215,21 +215,13 @@ final class DatabaseInfoRetriever
                                                "TYPE_SCROLL_SENSITIVE"));
         }
       }
-      catch (final IllegalAccessException e)
-      {
-        LOGGER.log(Level.FINE, "Could not execute method, " + method, e);
-      }
-      catch (final InvocationTargetException e)
+      catch (final IllegalAccessException | InvocationTargetException e)
       {
         LOGGER.log(Level.FINE,
                    "Could not execute method, " + method,
                    e.getCause());
       }
-      catch (final AbstractMethodError e)
-      {
-        LOGGER.log(Level.FINE, "JDBC driver does not support " + method, e);
-      }
-      catch (final SQLFeatureNotSupportedException e)
+      catch (final AbstractMethodError | SQLFeatureNotSupportedException e)
       {
         LOGGER.log(Level.FINE, "JDBC driver does not support " + method, e);
       }

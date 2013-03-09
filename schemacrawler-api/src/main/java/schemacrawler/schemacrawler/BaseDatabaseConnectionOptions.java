@@ -161,6 +161,7 @@ abstract class BaseDatabaseConnectionOptions
     return null;
   }
 
+  @Override
   public Logger getParentLogger()
     throws SQLFeatureNotSupportedException
   {

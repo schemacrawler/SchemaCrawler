@@ -70,12 +70,7 @@ final class MetadataResultSet
     {
       results.setFetchSize(FETCHSIZE);
     }
-    catch (final NullPointerException e)
-    {
-      // Need this catch for the JDBC/ ODBC driver
-      LOGGER.log(Level.WARNING, "Could not set fetch size", e);
-    }
-    catch (final SQLException e)
+    catch (final NullPointerException | SQLException e)
     {
       LOGGER.log(Level.WARNING, "Could not set fetch size", e);
     }
