@@ -153,9 +153,9 @@ public final class ScriptExecutable
     }
 
     final ScriptEngine scriptEngine = scriptEngineFactory.getScriptEngine();
-    final Writer writer = new PrintWriter(new OutputWriter(outputOptions), true);
     final CommandChainExecutable chain = new CommandChainExecutable();
-    try
+    try (final Writer writer = new PrintWriter(new OutputWriter(outputOptions),
+                                               true);)
     {
       // Set up the context
       scriptEngine.getContext().setWriter(writer);
@@ -175,11 +175,6 @@ public final class ScriptExecutable
         scriptEngine.eval(reader);
       }
     }
-    finally
-    {
-      writer.close();
-    }
-
   }
 
 }
