@@ -87,7 +87,10 @@ public final class TestUtility
     {
       contentEquals = contentEquals(new InputStreamReader(referenceStream),
                                     new FileReader(testOutputFile),
-                                    Pattern.compile("url +jdbc:.*"));
+                                    Pattern.compile("url +jdbc:.*"),
+                                    Pattern
+                                      .compile("database product version.*"),
+                                    Pattern.compile("driver version.*"));
     }
 
     if ("html".equals(outputFormat))
