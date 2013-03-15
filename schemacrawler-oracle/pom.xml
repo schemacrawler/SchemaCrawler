@@ -25,8 +25,8 @@
       <version>${project.version}</version>
     </dependency>
     <dependency>
-      <groupId>oracle</groupId>
-      <artifactId>oracle-jdbc</artifactId>
+      <groupId>com.oracle</groupId>
+      <artifactId>ojdbc6</artifactId>
       <version>11.2.0.2.0</version>
       <scope>provided</scope>
     </dependency>
