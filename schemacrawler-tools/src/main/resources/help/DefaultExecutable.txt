@@ -55,9 +55,9 @@
   
 -portablenames=<boolean>
   Allows for easy comparison between databases, by hiding
-  foreign key names, constraint names, trigger names, index  
-  and primary key names, and not showing the 
-  fully-qualified table name
+  foreign key names, constraint names, trigger names, 
+  specific names for procedures, or index and primary key names, 
+  and not showing the fully-qualified table name
   <boolean> can be true or false
   Optional, defaults to false
     

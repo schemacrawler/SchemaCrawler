@@ -285,33 +285,32 @@
       </question>
       <answer>
         <p>Use the -portablenames=true command-line option to allows for easy comparison between databases, by hiding
-  foreign key names, constraint names, trigger, index and primary key
-  names, and not showing the fully-qualified table name.
+  foreign key names, constraint names, trigger names, specific names for procedures, 
+          and index and primary key names, and not showing the fully-qualified table name.
         </p>
       </answer>
     </faq>    
     <faq id="index-names">
       <question>
-        How to hide primary key, foreign key and index names
+        How to hide foreign key names, constraint names, trigger names, specific names for procedures, 
+          or index and primary key names
       </question>
       <answer>
         <p>
-          If primary key, foreign key and index names are not explicitly
-          provided while creating a
-          schema, most database
-          system assign default
-          names. These names can show up as spurious
-          diffs in
-          SchemaCrawler
-          output. Change the
+          If foreign key names, constraint names, trigger names, specific names for procedures, 
+          or index and primary key names are not explicitly
+          provided while creating a schema, most database systems assign default
+          names. These names can show up as spurious diffs in SchemaCrawler output. Change the
           configuration for the following properties in your
           <code>schemacrawler.config.properties </code>
           file.
-        </p>
+        </p>All of these names can be hidden by using the -portablenames command-line option.</p>
         <source><![CDATA[
 schemacrawler.format.hide_primarykey_names=false
 schemacrawler.format.hide_foreignkey_names=false
 schemacrawler.format.hide_index_names=false
+schemacrawler.format.hide_trigger_names=false
+schemacrawler.format.hide_routine_specific_names=false
 schemacrawler.format.hide_constraint_names=false
 ]]></source>
       </answer>

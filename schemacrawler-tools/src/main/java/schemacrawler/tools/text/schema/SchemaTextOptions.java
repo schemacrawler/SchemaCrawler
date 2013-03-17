@@ -1,21 +1,22 @@
-/* 
- *
+/*
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
  * Copyright (c) 2000-2013, Sualeh Fatehi.
- *
- * This library is free software; you can redistribute it and/or modify it under the terms
- * of the GNU Lesser General Public License as published by the Free Software Foundation;
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms
+ * of the GNU Lesser General Public License as published by the Free Software
+ * Foundation;
  * either version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * library; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this
+ * library; if not, write to the Free Software Foundation, Inc., 59 Temple
+ * Place, Suite 330,
  * Boston, MA 02111-1307, USA.
- *
  */
 
 package schemacrawler.tools.text.schema;
@@ -45,6 +46,8 @@ public class SchemaTextOptions
                                                       + "hide_constraint_names";
   private static final String HIDE_TRIGGER_NAMES = SCHEMACRAWLER_FORMAT_PREFIX
                                                    + "hide_trigger_names";
+  private static final String HIDE_ROUTINE_SPECIFIC_NAMES = SCHEMACRAWLER_FORMAT_PREFIX
+                                                            + "hide_routine_specific_names";
 
   private static final String SC_SORT_ALPHABETICALLY_TABLES = SCHEMACRAWLER_FORMAT_PREFIX
                                                               + "sort_alphabetically.tables";
@@ -69,7 +72,7 @@ public class SchemaTextOptions
    * Options from properties. Constructor.
    * 
    * @param config
-   *        Properties
+   *          Properties
    */
   public SchemaTextOptions(final Config config)
   {
@@ -83,6 +86,8 @@ public class SchemaTextOptions
     setHidePrimaryKeyNames(getBooleanValue(config, HIDE_PRIMARY_KEY_NAMES));
     setHideIndexNames(getBooleanValue(config, HIDE_INDEX_NAMES));
     setHideTriggerNames(getBooleanValue(config, HIDE_TRIGGER_NAMES));
+    setHideRoutineSpecificNames(getBooleanValue(config,
+                                                HIDE_ROUTINE_SPECIFIC_NAMES));
     setHideConstraintNames(getBooleanValue(config, HIDE_CONSTRAINT_NAMES));
 
     setAlphabeticalSortForTables(getBooleanValue(config,
@@ -164,6 +169,16 @@ public class SchemaTextOptions
   }
 
   /**
+   * Whether to hide routine specific names.
+   * 
+   * @return Hide routine specific names.
+   */
+  public boolean isHideRoutineSpecificNames()
+  {
+    return getBooleanValue(HIDE_ROUTINE_SPECIFIC_NAMES);
+  }
+
+  /**
    * Whether to hide trigger names.
    * 
    * @return Hide trigger names.
@@ -226,7 +241,7 @@ public class SchemaTextOptions
    * Sets whether to hide constraint names.
    * 
    * @param hideConstraintNames
-   *        Whether to hide constraint names.
+   *          Whether to hide constraint names.
    */
   public void setHideConstraintNames(final boolean hideConstraintNames)
   {
@@ -237,7 +252,7 @@ public class SchemaTextOptions
    * Sets whether to hide foreign key names.
    * 
    * @param hideForeignKeyNames
-   *        Whether to hide foreign key names.
+   *          Whether to hide foreign key names.
    */
   public void setHideForeignKeyNames(final boolean hideForeignKeyNames)
   {
@@ -248,7 +263,7 @@ public class SchemaTextOptions
    * Sets whether to hide index names.
    * 
    * @param hideIndexNames
-   *        Whether to hide index names.
+   *          Whether to hide index names.
    */
   public void setHideIndexNames(final boolean hideIndexNames)
   {
@@ -259,7 +274,7 @@ public class SchemaTextOptions
    * Sets whether to hide primary key names.
    * 
    * @param hidePrimaryKeyNames
-   *        Whether to hide primary key names.
+   *          Whether to hide primary key names.
    */
   public void setHidePrimaryKeyNames(final boolean hidePrimaryKeyNames)
   {
@@ -267,10 +282,21 @@ public class SchemaTextOptions
   }
 
   /**
+   * Sets whether to hide routine specific names.
+   * 
+   * @param hideRoutineSpecificNames
+   *          Whether to hide routine specific names.
+   */
+  public void setHideRoutineSpecificNames(final boolean hideRoutineSpecificNames)
+  {
+    setBooleanValue(HIDE_ROUTINE_SPECIFIC_NAMES, hideRoutineSpecificNames);
+  }
+
+  /**
    * Sets whether to hide trigger names.
    * 
    * @param hideTriggerNames
-   *        Whether to hide trigger names.
+   *          Whether to hide trigger names.
    */
   public void setHideTriggerNames(final boolean hideTriggerNames)
   {
@@ -281,7 +307,7 @@ public class SchemaTextOptions
    * Sets whether to show ordinal numbers.
    * 
    * @param showOrdinalNumbers
-   *        Whether to show ordinal numbers.
+   *          Whether to show ordinal numbers.
    */
   public void setShowOrdinalNumbers(final boolean showOrdinalNumbers)
   {
@@ -292,7 +318,7 @@ public class SchemaTextOptions
    * Sets whether to show standard column type names.
    * 
    * @param showStandardColumnTypeNames
-   *        Whether to show standard column type names.
+   *          Whether to show standard column type names.
    */
   public void setShowStandardColumnTypeNames(final boolean showStandardColumnTypeNames)
   {

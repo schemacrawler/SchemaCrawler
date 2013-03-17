@@ -161,7 +161,10 @@ final class SchemaTextFormatter
 
       if (isVerbose)
       {
-        printDefinition("specific name", "", routine.getSpecificName());
+        if (!options.isHideRoutineSpecificNames())
+        {
+          printDefinition("specific name", "", routine.getSpecificName());
+        }
         printDefinition("remarks", "", routine.getRemarks());
       }
 
