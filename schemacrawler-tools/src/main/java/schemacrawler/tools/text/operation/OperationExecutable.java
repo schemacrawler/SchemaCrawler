@@ -71,13 +71,13 @@ public final class OperationExecutable
     final DataTraversalHandler formatter = getDataTraversalHandler();
     final Query query = getQuery();
 
-    final OperationHandler handler = new OperationHandler();
-    handler.setDatabase(database);
-    handler.setConnection(connection);
-    handler.setFormatter(formatter);
-    handler.setQuery(query);
+    final OperationHelper operationHelper = new OperationHelper();
+    operationHelper.setDatabase(database);
+    operationHelper.setConnection(connection);
+    operationHelper.setFormatter(formatter);
+    operationHelper.setQuery(query);
 
-    handler.traverse();
+    operationHelper.traverse();
   }
 
   private DataTraversalHandler getDataTraversalHandler()

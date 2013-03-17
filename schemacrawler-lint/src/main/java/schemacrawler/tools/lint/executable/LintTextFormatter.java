@@ -40,7 +40,7 @@ import sf.util.Multimap;
 
 final class LintTextFormatter
   extends BaseTabularFormatter<LintOptions>
-  implements LintFormatter
+  implements LintTraversalHandler
 {
 
   LintTextFormatter(final LintOptions options, final OutputOptions outputOptions)

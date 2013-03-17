@@ -37,7 +37,7 @@ import schemacrawler.tools.text.utility.org.json.JSONObject;
 
 final class LintJsonFormatter
   extends BaseJsonFormatter<LintOptions>
-  implements LintFormatter
+  implements LintTraversalHandler
 {
 
   LintJsonFormatter(final LintOptions options, final OutputOptions outputOptions)
