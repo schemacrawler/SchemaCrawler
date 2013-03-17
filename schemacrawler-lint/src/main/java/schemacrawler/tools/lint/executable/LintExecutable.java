@@ -77,7 +77,7 @@ public class LintExecutable
     final LinterConfigs linterConfigs = readLinterConfigs();
     final LintedDatabase database = new LintedDatabase(db, linterConfigs);
 
-    final LintFormatter formatter = getSchemaTraversalHandler();
+    final LintTraversalHandler formatter = getSchemaTraversalHandler();
 
     formatter.begin();
 
@@ -99,10 +99,10 @@ public class LintExecutable
 
   }
 
-  private LintFormatter getSchemaTraversalHandler()
+  private LintTraversalHandler getSchemaTraversalHandler()
     throws SchemaCrawlerException
   {
-    final LintFormatter formatter;
+    final LintTraversalHandler formatter;
     final LintOptions lintOptions = getLintOptions();
 
     final OutputFormat outputFormat = outputOptions.getOutputFormat();

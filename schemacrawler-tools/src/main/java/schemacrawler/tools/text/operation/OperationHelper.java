@@ -39,10 +39,10 @@ import schemacrawler.tools.traversal.DataTraversalHandler;
  * 
  * @author Sualeh Fatehi
  */
-final class OperationHandler
+final class OperationHelper
 {
 
-  private static final Logger LOGGER = Logger.getLogger(OperationHandler.class
+  private static final Logger LOGGER = Logger.getLogger(OperationHelper.class
     .getName());
 
   private Connection connection;
