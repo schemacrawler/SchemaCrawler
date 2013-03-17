@@ -180,7 +180,10 @@ final class SchemaJsonFormatter
 
         if (isVerbose)
         {
-          jsonRoutine.put("specificName", routine.getSpecificName());
+          if (!options.isHideRoutineSpecificNames())
+          {
+            jsonRoutine.put("specificName", routine.getSpecificName());
+          }
           jsonRoutine.put("remarks", routine.getRemarks());
         }
       }
