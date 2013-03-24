@@ -31,6 +31,10 @@ public interface DependantObject<P extends DatabaseObject>
   extends DatabaseObject, ContainedObject<P>
 {
 
+  /**
+   * Gets the name of the dependent object and the name of the parent.
+   * The parent name is not fully-qualified.
+   */
   String getShortName();
 
 }

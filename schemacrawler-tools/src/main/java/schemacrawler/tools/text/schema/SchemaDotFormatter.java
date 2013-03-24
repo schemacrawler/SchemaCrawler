@@ -296,7 +296,7 @@ public final class SchemaDotFormatter
     else
     {
       // Create new node
-      final String nodeId = print(column);
+      final String nodeId = printNewNode(column);
       //
       portIds[0] = nodeId;
       portIds[1] = nodeId;
@@ -317,12 +317,21 @@ public final class SchemaDotFormatter
     }
   }
 
-  private String print(final Column column)
+  private String printNewNode(final Column column)
   {
     final String nodeId = "\"" + nodeId(column) + "\"";
+    final String columnName;
+    if (options.isShowUnqualifiedNames())
+    {
+      columnName = column.getShortName();
+    }
+    else
+    {
+      columnName = column.getFullName();
+    }
     final String columnNode = String.format("  %s [label=<%s>];%n",
                                             nodeId,
-                                            column.getFullName());
+                                            columnName);
 
     out.write(columnNode);
 
