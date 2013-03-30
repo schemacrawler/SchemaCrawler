@@ -134,6 +134,11 @@ class NamedObjectList<N extends NamedObject>
     objects.put(key, namedObject);
   }
 
+  boolean contains(final N namedObject)
+  {
+    return objects.containsKey(makeLookupKey(namedObject));
+  }
+
   N lookup(final NamedObject namedObject, final String name)
   {
     final String key = makeLookupKey(namedObject, name);
@@ -156,6 +161,11 @@ class NamedObjectList<N extends NamedObject>
   N remove(final N namedObject)
   {
     return objects.remove(makeLookupKey(namedObject));
+  }
+
+  N remove(final String fullName)
+  {
+    return objects.remove(makeLookupKey(fullName));
   }
 
   /**

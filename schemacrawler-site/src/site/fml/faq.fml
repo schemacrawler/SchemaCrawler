@@ -95,8 +95,8 @@
     <faq id="supported-java">
       <question> What Java version does SchemaCrawler work with? </question>
       <answer>
-        <p> SchemaCrawler works with J2SE 6 and above. SchemaCrawler does not depend on any Java libraries other than
-          the standard J2SE 6 runtime libraries and a JDBC driver.
+        <p> SchemaCrawler works with J2SE 7 and above. SchemaCrawler does not depend on any Java libraries other than
+          the standard J2SE 7 runtime libraries and a JDBC driver.
         </p>
       </answer>
     </faq>

@@ -27,6 +27,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schema.Column;
+import schemacrawler.schema.ForeignKey;
+import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableRelationshipType;
 import schemacrawler.schema.Trigger;
@@ -52,6 +54,7 @@ class TableFilter
 
   public void filter()
   {
+
     final Collection<MutableTable> filteredTables = doFilter();
     for (final MutableTable table: allTables)
     {
@@ -60,6 +63,8 @@ class TableFilter
         allTables.remove(table);
       }
     }
+
+    removeForeignKeys();
   }
 
   private Collection<MutableTable> doFilter()
@@ -200,6 +205,63 @@ class TableFilter
     }
 
     return includedTables;
+  }
+
+  private void removeForeignKeys()
+  {
+    if (!options.isGrepOnlyMatching())
+    {
+      return;
+    }
+
+    for (final MutableTable table: allTables)
+    {
+      for (final ForeignKey fk: table.getExportedForeignKeys())
+      {
+        for (final ForeignKeyColumnReference fkColumnReference: fk
+          .getColumnReferences())
+        {
+          final Table referencedTable = fkColumnReference.getForeignKeyColumn()
+            .getParent();
+          boolean removeFk = false;
+          if (!(referencedTable instanceof MutableTable))
+          {
+            removeFk = true;
+          }
+          else if (!allTables.contains((MutableTable) referencedTable))
+          {
+            removeFk = true;
+          }
+          if (removeFk)
+          {
+            table.removeForeignKey(fk.getFullName());
+          }
+        }
+      }
+
+      for (final ForeignKey fk: table.getImportedForeignKeys())
+      {
+        for (final ForeignKeyColumnReference fkColumnReference: fk
+          .getColumnReferences())
+        {
+          final MutableTable referencedTable = (MutableTable) fkColumnReference
+            .getPrimaryKeyColumn().getParent();
+          boolean removeFk = false;
+          if (!(referencedTable instanceof MutableTable))
+          {
+            removeFk = true;
+          }
+          else if (!allTables.contains(referencedTable))
+          {
+            removeFk = true;
+          }
+          if (removeFk)
+          {
+            table.removeForeignKey(fk.getFullName());
+          }
+        }
+      }
+    }
   }
 
 }

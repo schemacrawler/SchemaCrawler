@@ -88,9 +88,15 @@
   definitions of views, stored proedures and triggers, if available
   Optional, default is no grep
     
--v (short for -invert-match)        
-  Optional, inverts the match, and shows non-matching tables and columns
+-invert-match   
+  Inverts the sense of matching, and shows non-matching tables and columns
+  Optional, default is false
 
+-only-matching
+  Shows only matching tables, and does not show foreign keys that reference
+  other non-matching tables
+  Optional, default is false
+  
 -parents=<depth of parent tables>
   <depth of parent tables> is the number of generations of ancestors
   for the tables selected by grep, and shown in the results

@@ -45,70 +45,72 @@ public class GraphExecutableOptionsTest
   private static final String GRAPH_OPTIONS_OUTPUT = "graph_options_output/";
 
   @Test
-  public void executableGraphDot00()
+  public void executableForGraph_00()
     throws Exception
   {
+
+    final String testMethodName = TestUtility.currentMethodName();
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
     final GraphOptions graphOptions = new GraphOptions();
 
-    executableGraph(0, schemaCrawlerOptions, graphOptions);
+    executableGraph(schemaCrawlerOptions, graphOptions);
   }
 
   @Test
-  public void executableGraphDot01()
+  public void executableForGraph_01()
     throws Exception
   {
     final GraphOptions graphOptions = new GraphOptions();
     graphOptions.setAlphabeticalSortForTableColumns(true);
     graphOptions.setShowOrdinalNumbers(true);
 
-    executableGraph(1, graphOptions);
+    executableGraph(new SchemaCrawlerOptions(), graphOptions);
   }
 
   @Test
-  public void executableGraphDot02()
+  public void executableForGraph_02()
     throws Exception
   {
     final GraphOptions graphOptions = new GraphOptions();
     graphOptions.setHideForeignKeyNames(true);
 
-    executableGraph(2, graphOptions);
+    executableGraph(new SchemaCrawlerOptions(), graphOptions);
   }
 
   @Test
-  public void executableGraphDot03()
+  public void executableForGraph_03()
     throws Exception
   {
     final GraphOptions graphOptions = new GraphOptions();
     graphOptions.setNoInfo(true);
 
-    executableGraph(3, graphOptions);
+    executableGraph(new SchemaCrawlerOptions(), graphOptions);
   }
 
   @Test
-  public void executableGraphDot04()
+  public void executableForGraph_04()
     throws Exception
   {
     final GraphOptions graphOptions = new GraphOptions();
     graphOptions.setShowUnqualifiedNames(true);
 
-    executableGraph(4, graphOptions);
+    executableGraph(new SchemaCrawlerOptions(), graphOptions);
   }
 
   @Test
-  public void executableGraphDot05()
+  public void executableForGraph_05()
     throws Exception
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setTableInclusionRule(new InclusionRule(".*BOOKS"));
     final GraphOptions graphOptions = new GraphOptions();
 
-    executableGraph(5, schemaCrawlerOptions, graphOptions);
+    executableGraph(schemaCrawlerOptions, graphOptions);
   }
 
   @Test
-  public void executableGraphDot06()
+  public void executableForGraph_06()
     throws Exception
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
@@ -116,11 +118,11 @@ public class GraphExecutableOptionsTest
     final GraphOptions graphOptions = new GraphOptions();
     graphOptions.setSchemaTextDetailType(SchemaTextDetailType.list);
 
-    executableGraph(6, schemaCrawlerOptions, graphOptions);
+    executableGraph(schemaCrawlerOptions, graphOptions);
   }
 
   @Test
-  public void executableGraphDot07()
+  public void executableForGraph_07()
     throws Exception
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
@@ -128,11 +130,11 @@ public class GraphExecutableOptionsTest
     final GraphOptions graphOptions = new GraphOptions();
     graphOptions.setSchemaTextDetailType(SchemaTextDetailType.schema);
 
-    executableGraph(7, schemaCrawlerOptions, graphOptions);
+    executableGraph(schemaCrawlerOptions, graphOptions);
   }
 
   @Test
-  public void executableGraphDot08()
+  public void executableForGraph_08()
     throws Exception
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
@@ -142,18 +144,52 @@ public class GraphExecutableOptionsTest
     graphOptions.setShowUnqualifiedNames(true);
     graphOptions.setHideForeignKeyNames(true);
 
-    executableGraph(8, schemaCrawlerOptions, graphOptions);
+    executableGraph(schemaCrawlerOptions, graphOptions);
   }
 
-  private void executableGraph(final int testNumber,
-                               final GraphOptions graphOptions)
+  @Test
+  public void executableForGraph_09()
     throws Exception
   {
-    executableGraph(testNumber, new SchemaCrawlerOptions(), graphOptions);
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+    schemaCrawlerOptions.setTableInclusionRule(new InclusionRule(".*BOOKS"));
+    schemaCrawlerOptions.setGrepOnlyMatching(true);
+
+    final GraphOptions graphOptions = new GraphOptions();
+    graphOptions.setShowUnqualifiedNames(true);
+    graphOptions.setHideForeignKeyNames(true);
+
+    executableGraph(schemaCrawlerOptions, graphOptions);
   }
 
-  private void executableGraph(final int testNumber,
-                               final SchemaCrawlerOptions schemaCrawlerOptions,
+  @Test
+  public void executableForGraph_10()
+    throws Exception
+  {
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+    schemaCrawlerOptions
+      .setGrepColumnInclusionRule(new InclusionRule(".*\\.REGIONS\\..*", ""));
+
+    final GraphOptions graphOptions = new GraphOptions();
+
+    executableGraph(schemaCrawlerOptions, graphOptions);
+  }
+
+  @Test
+  public void executableForGraph_11()
+    throws Exception
+  {
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+    schemaCrawlerOptions
+      .setGrepColumnInclusionRule(new InclusionRule(".*\\.REGIONS\\..*", ""));
+    schemaCrawlerOptions.setGrepOnlyMatching(true);
+
+    final GraphOptions graphOptions = new GraphOptions();
+
+    executableGraph(schemaCrawlerOptions, graphOptions);
+  }
+
+  private void executableGraph(final SchemaCrawlerOptions schemaCrawlerOptions,
                                final GraphOptions graphOptions)
     throws Exception
   {
@@ -161,8 +197,8 @@ public class GraphExecutableOptionsTest
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setAdditionalConfiguration(graphOptions.toConfig());
 
-    final String referenceFileName = String.format("executableForGraph_%02d",
-                                                   testNumber);
+    final String testMethodName = TestUtility.callingMethodName();
+    final String referenceFileName = testMethodName;
     executeExecutableAndCheckForOutputFile(executable,
                                            "echo",
                                            referenceFileName);
