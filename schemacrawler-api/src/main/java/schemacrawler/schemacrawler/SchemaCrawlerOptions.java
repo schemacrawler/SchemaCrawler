@@ -62,6 +62,7 @@ public final class SchemaCrawlerOptions
   private static final String SC_GREP_DEFINITION_PATTERN_INCLUDE = "schemacrawler.grep.definition.pattern.include";
 
   private static final String SC_GREP_INVERT_MATCH = "schemacrawler.grep.invert-match";
+  private static final String SC_GREP_ONLY_MATCHING = "schemacrawler.grep.only-matching";
 
   private InclusionRule schemaInclusionRule;
 
@@ -79,6 +80,7 @@ public final class SchemaCrawlerOptions
   private InclusionRule grepRoutineColumnInclusionRule;
   private InclusionRule grepDefinitionInclusionRule;
   private boolean grepInvertMatch;
+  private boolean grepOnlyMatching;
   private int childTableFilterDepth;
   private int parentTableFilterDepth;
 
@@ -179,6 +181,7 @@ public final class SchemaCrawlerOptions
                                                       .getStringValue(SC_GREP_DEFINITION_PATTERN_EXCLUDE,
                                                                       InclusionRule.NONE));
     grepInvertMatch = configProperties.getBooleanValue(SC_GREP_INVERT_MATCH);
+    grepOnlyMatching = configProperties.getBooleanValue(SC_GREP_ONLY_MATCHING);
 
   }
 
@@ -358,6 +361,15 @@ public final class SchemaCrawlerOptions
     return grepInvertMatch;
   }
 
+  /**
+   * Whether grep includes show foreign keys that reference other
+   * non-matching tables.
+   */
+  public boolean isGrepOnlyMatching()
+  {
+    return grepOnlyMatching;
+  }
+
   public boolean isGrepRoutineColumns()
   {
     return grepRoutineColumnInclusionRule != null;
@@ -432,6 +444,19 @@ public final class SchemaCrawlerOptions
   public void setGrepInvertMatch(final boolean grepInvertMatch)
   {
     this.grepInvertMatch = grepInvertMatch;
+  }
+
+  /**
+   * Whether grep includes show foreign keys that reference other
+   * non-matching tables.
+   * 
+   * @param grepOnlyMatching
+   *        Whether grep includes show foreign keys that reference other
+   *        non-matching tables.
+   */
+  public void setGrepOnlyMatching(final boolean grepOnlyMatching)
+  {
+    this.grepOnlyMatching = grepOnlyMatching;
   }
 
   /**

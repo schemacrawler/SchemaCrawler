@@ -15,8 +15,7 @@
           (SchemaCrawler supports any scripting language supported on the JDK.)
           Database meta-data is provided to your script, as the "database" object, and you can use any of the API
           methods to obtain details about your schema. A live database connection is provided to your script as the
-          "connection" object. You can use standard JDBC to script against the database. J2SE 6 is required for this
-          functionality to work.
+          "connection" object. You can use standard JDBC to script against the database. 
         </p>
         <p>
           For more details, see scripting example in the

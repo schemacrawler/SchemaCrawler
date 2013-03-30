@@ -166,7 +166,7 @@
           <code>schemacrawler.config.properties </code>
           file. The include or exclude specification is a
           <a
-            href="http://java.sun.com/j2se/1.5.0/docs/api/java/util/regex/Pattern.html"
+            href="http://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html"
           > Java regular expression </a>
           . The include pattern is evaluated first, and the exclusions are
           made
@@ -344,7 +344,7 @@ schemacrawler.format.hide_constraint_names=false
       </question>
       <answer>
         <p>
-          When SchemaCrawler is used with J2SE 6 and above, it has built-in
+          SchemaCrawler has built-in
           support to be used with
           JavaScript scripts.
           Write your JavaScript file,

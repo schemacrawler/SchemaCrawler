@@ -389,6 +389,11 @@ class MutableTable
     return triggers.lookup(this, triggerName);
   }
 
+  void removeForeignKey(final String fullName)
+  {
+    foreignKeys.remove(fullName);
+  }
+
   void replacePrimaryKey()
   {
     if (primaryKey == null)
