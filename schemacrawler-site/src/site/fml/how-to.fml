@@ -304,6 +304,7 @@
           configuration for the following properties in your
           <code>schemacrawler.config.properties </code>
           file.
+        </p>
         </p>All of these names can be hidden by using the -portablenames command-line option.</p>
         <source><![CDATA[
 schemacrawler.format.hide_primarykey_names=false
