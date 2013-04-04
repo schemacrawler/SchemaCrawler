@@ -79,8 +79,10 @@ digraph "SchemaCrawler_Diagram" {
     >
   ];
 
-  "regions_bc895c48":"postalcode_9b2bfe9e.start":w -> "sales_20be6f95":"postalcode_738bc931.end":e [label=<FK_SALES_REGIONS> style="solid" dir="both" arrowhead="crowodot" arrowtail="teetee"];
-  "regions_bc895c48":"country_7d0587d0.start":w -> "sales_20be6f95":"country_890cfe1d.end":e [label=<FK_SALES_REGIONS> style="solid" dir="both" arrowhead="crowodot" arrowtail="teetee"];
+  "postalcode_738bc931" [label=<PUBLIC."PUBLISHER SALES".SALES.POSTALCODE>];
+  "regions_bc895c48":"postalcode_9b2bfe9e.start":w -> "postalcode_738bc931":e [label=<FK_SALES_REGIONS> style="solid" dir="both" arrowhead="vee" arrowtail="teetee"];
+  "country_890cfe1d" [label=<PUBLIC."PUBLISHER SALES".SALES.COUNTRY>];
+  "regions_bc895c48":"country_7d0587d0.start":w -> "country_890cfe1d":e [label=<FK_SALES_REGIONS> style="solid" dir="both" arrowhead="vee" arrowtail="teetee"];
 
 
 }

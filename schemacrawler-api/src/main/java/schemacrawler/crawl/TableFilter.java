@@ -209,10 +209,6 @@ class TableFilter
 
   private void removeForeignKeys()
   {
-    if (!options.isGrepOnlyMatching())
-    {
-      return;
-    }
 
     for (final MutableTable table: allTables)
     {
@@ -232,9 +228,22 @@ class TableFilter
           {
             removeFk = true;
           }
+
           if (removeFk)
           {
-            table.removeForeignKey(fk.getFullName());
+            if (options.isGrepOnlyMatching())
+            {
+              table.removeForeignKey(fk.getFullName());
+            }
+            else
+            {
+              // Replace reference with a column partial
+              final ColumnPartial columnPartial = new ColumnPartial(fkColumnReference
+                .getForeignKeyColumn());
+              ((TablePartial) columnPartial.getParent()).addForeignKey(fk);
+              ((MutableForeignKeyColumnReference) fkColumnReference)
+                .setForeignKeyColumn(columnPartial);
+            }
           }
         }
       }
@@ -244,20 +253,33 @@ class TableFilter
         for (final ForeignKeyColumnReference fkColumnReference: fk
           .getColumnReferences())
         {
-          final MutableTable referencedTable = (MutableTable) fkColumnReference
-            .getPrimaryKeyColumn().getParent();
+          final Table referencedTable = fkColumnReference.getPrimaryKeyColumn()
+            .getParent();
           boolean removeFk = false;
           if (!(referencedTable instanceof MutableTable))
           {
             removeFk = true;
           }
-          else if (!allTables.contains(referencedTable))
+          else if (!allTables.contains((MutableTable) referencedTable))
           {
             removeFk = true;
           }
+
           if (removeFk)
           {
-            table.removeForeignKey(fk.getFullName());
+            if (options.isGrepOnlyMatching())
+            {
+              table.removeForeignKey(fk.getFullName());
+            }
+            else
+            {
+              // Replace reference with a column partial
+              final ColumnPartial columnPartial = new ColumnPartial(fkColumnReference
+                .getPrimaryKeyColumn());
+              ((TablePartial) columnPartial.getParent()).addForeignKey(fk);
+              ((MutableForeignKeyColumnReference) fkColumnReference)
+                .setPrimaryKeyColumn(columnPartial);
+            }
           }
         }
       }
