@@ -37,6 +37,13 @@ final class ColumnPartial
 
   private Column referencedColumn;
 
+  ColumnPartial(final Column column)
+  {
+    super(new TablePartial(column.getParent()), column.getName());
+    final TablePartial table = (TablePartial) this.getParent();
+    table.addColumn(this);
+  }
+
   ColumnPartial(final Table parent, final String name)
   {
     super(parent, name);
