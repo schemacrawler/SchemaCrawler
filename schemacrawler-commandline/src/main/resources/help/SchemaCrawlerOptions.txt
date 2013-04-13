@@ -13,8 +13,8 @@
   Schemas that do not match the pattern are not displayed
   Optional, defaults to showing all schemas
   
--table_types=<table_types>
-  <table_types> is a comma-separated list of table types of 
+-tabletypes=<tabletypes>
+  <tabletypes> is a comma-separated list of table types of 
   TABLE,VIEW,SYSTEM_TABLE,GLOBAL_TEMPORARY,LOCAL_TEMPORARY,ALIAS
   Optional, defaults to TABLE,VIEW
   
@@ -35,8 +35,8 @@
   Columns that match the pattern are not displayed
   Optional, default is to show all columns
 
--routine_types=<routine_types>
-  <routine_types> is a comma-separated list of routine types of 
+-routinetypes=<routinetypes>
+  <routinetypes> is a comma-separated list of routine types of 
   PROCEDURE,FUNCTION
   Optional, defaults to PROCEDURE,FUNCTION
         

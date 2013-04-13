@@ -50,11 +50,11 @@ final class SchemaCrawlerOptionsParser
   {
     super(new StringOption("infolevel", "standard"),
           new StringOption("schemas", InclusionRule.NONE),
-          new StringOption("table_types", DEFAULT_TABLE_TYPES),
+          new StringOption("tabletypes", DEFAULT_TABLE_TYPES),
           new StringOption("tables", InclusionRule.ALL),
           new StringOption("excludecolumns", InclusionRule.NONE),
           new StringOption("synonyms", InclusionRule.ALL),
-          new StringOption("routine_types", DEFAULT_ROUTINE_TYPES),
+          new StringOption("routinetypes", DEFAULT_ROUTINE_TYPES),
           new StringOption("routines", InclusionRule.ALL),
           new StringOption("excludeinout", InclusionRule.NONE),
           new StringOption("grepcolumns", InclusionRule.NONE),
@@ -97,9 +97,9 @@ final class SchemaCrawlerOptionsParser
       options.setSchemaInclusionRule(schemaInclusionRule);
     }
 
-    if (hasOptionValue("table_types"))
+    if (hasOptionValue("tabletypes"))
     {
-      options.setTableTypes(getStringValue("table_types"));
+      options.setTableTypes(getStringValue("tabletypes"));
     }
 
     if (hasOptionValue("tables"))
@@ -115,9 +115,9 @@ final class SchemaCrawlerOptionsParser
       options.setColumnInclusionRule(columnInclusionRule);
     }
 
-    if (hasOptionValue("routine_types"))
+    if (hasOptionValue("routinetypes"))
     {
-      options.setRoutineTypes(getStringValue("routine_types"));
+      options.setRoutineTypes(getStringValue("routinetypes"));
     }
 
     if (hasOptionValue("routines"))
