@@ -186,7 +186,7 @@
       </question>
       <answer>
         <p>
-          Use the -table_types command-line option, without VIEW. For example,
+          Use the -tabletypes command-line option, without VIEW. For example,
           you can provide -table_type=TABLE. Further, see the
           <a href="faq.html#commands">details on the command-line options.</a>
         </p>
@@ -214,7 +214,7 @@
       </question>
       <answer>
         <p>
-          Use the -routine_types=FUNCTION command-line option. Further, see the
+          Use the -routinetypes=FUNCTION command-line option. Further, see the
           <a href="faq.html#commands">details on the command-line options.</a>
         </p>
       </answer>
@@ -305,7 +305,7 @@
           <code>schemacrawler.config.properties </code>
           file.
         </p>
-        </p>All of these names can be hidden by using the -portablenames command-line option.</p>
+        <p>All of these names can be hidden by using the -portablenames command-line option.</p>
         <source><![CDATA[
 schemacrawler.format.hide_primarykey_names=false
 schemacrawler.format.hide_foreignkey_names=false

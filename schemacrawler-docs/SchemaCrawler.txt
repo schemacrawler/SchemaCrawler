@@ -35,7 +35,7 @@ sc -host=192.169.63.139 -user=sa -password=sualeh -database=AdventureWorks -sche
 sc -host=192.169.63.139 -user=sa -password=sualeh -database=AdventureWorks -schemas=AdventureWorks\.HumanResources -noinfo -infolevel=maximum -tables= -command=details
 
 13. Diagram
-sc -host=192.169.63.139 -user=sa -password=sualeh -database=AdventureWorks -schemas=AdventureWorks\.(?:(?!sys).)* -infolevel=maximum -table_types=TABLE -routines= -grepcolumns=.*\..*CustomerID -command=graph -outputformat=pdf
+sc -host=192.169.63.139 -user=sa -password=sualeh -database=AdventureWorks -schemas=AdventureWorks\.(?:(?!sys).)* -infolevel=maximum -tabletypes=TABLE -routines= -grepcolumns=.*\..*CustomerID -command=graph -outputformat=pdf
 
 14. Javascript
 sc -host=192.169.63.139 -user=sa -password=sualeh -database=AdventureWorks -schemas=AdventureWorks\.(?:(?!sys).)* -tables=.*\..*\.Product.* -infolevel=standard -routines= -command=script -outputformat=tables.js
