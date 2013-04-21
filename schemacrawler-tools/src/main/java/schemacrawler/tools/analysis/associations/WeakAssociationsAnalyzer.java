@@ -118,7 +118,7 @@ final class WeakAssociationsAnalyzer
    * Finds table prefixes. A prefix ends with "_".
    * 
    * @param tables
-   *          Tables
+   *        Tables
    * @return Table name prefixes
    */
   private Collection<String> findTableNamePrefixes(final List<Table> tables)
@@ -200,7 +200,8 @@ final class WeakAssociationsAnalyzer
       }
     }
 
-    // Sort prefixes by the number of tables using them, in descending order
+    // Sort prefixes by the number of tables using them, in descending
+    // order
     final List<Map.Entry<String, Integer>> prefixesList = new ArrayList<>(prefixesMap
       .entrySet());
     Collections.sort(prefixesList, new Comparator<Map.Entry<String, Integer>>()

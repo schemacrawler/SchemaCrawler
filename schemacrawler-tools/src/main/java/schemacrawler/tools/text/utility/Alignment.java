@@ -23,5 +23,6 @@ package schemacrawler.tools.text.utility;
 public enum Alignment
 {
 
-  left, right;
+  left,
+  right;
 }

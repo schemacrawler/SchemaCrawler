@@ -196,6 +196,24 @@ public final class TestUtility
       .getMethodName();
   }
 
+  public static Reader readerForFile(final File file, final Charset encoding)
+    throws IOException
+  {
+    final InputStream inputStream = new FileInputStream(file);
+    final Reader reader;
+    final Charset charset;
+    if (encoding == null)
+    {
+      charset = Charset.defaultCharset();
+    }
+    else
+    {
+      charset = encoding;
+    }
+    reader = new InputStreamReader(inputStream, charset);
+    return reader;
+  }
+
   public static Reader readerForResource(final String resource,
                                          final Charset encoding)
     throws IOException
@@ -220,24 +238,6 @@ public final class TestUtility
     {
       reader = null;
     }
-    return reader;
-  }
-
-  public static Reader readerForFile(final File file, final Charset encoding)
-    throws IOException
-  {
-    final InputStream inputStream = new FileInputStream(file);
-    final Reader reader;
-    final Charset charset;
-    if (encoding == null)
-    {
-      charset = Charset.defaultCharset();
-    }
-    else
-    {
-      charset = encoding;
-    }
-    reader = new InputStreamReader(inputStream, charset);
     return reader;
   }
 

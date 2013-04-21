@@ -32,7 +32,9 @@ public interface TextFormattingHelper
   enum DocumentHeaderType
   {
 
-    title, subTitle, section;
+    title,
+    subTitle,
+    section;
   }
 
   /**

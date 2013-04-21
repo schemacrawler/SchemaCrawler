@@ -49,7 +49,7 @@ public class GraphExecutableOptionsTest
     throws Exception
   {
 
-    final String testMethodName = TestUtility.currentMethodName();
+    TestUtility.currentMethodName();
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
     final GraphOptions graphOptions = new GraphOptions();

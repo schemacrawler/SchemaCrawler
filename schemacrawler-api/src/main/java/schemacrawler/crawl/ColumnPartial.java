@@ -40,7 +40,7 @@ final class ColumnPartial
   ColumnPartial(final Column column)
   {
     super(new TablePartial(column.getParent()), column.getName());
-    final TablePartial table = (TablePartial) this.getParent();
+    final TablePartial table = (TablePartial) getParent();
     table.addColumn(this);
   }
 

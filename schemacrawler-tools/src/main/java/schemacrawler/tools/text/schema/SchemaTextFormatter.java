@@ -86,13 +86,13 @@ final class SchemaTextFormatter
    * Text formatting of schema.
    * 
    * @param schemaTextDetailType
-   *          Types for text formatting of schema
+   *        Types for text formatting of schema
    * @param options
-   *          Options for text formatting of schema
+   *        Options for text formatting of schema
    * @param outputOptions
-   *          Options for text formatting of schema
+   *        Options for text formatting of schema
    * @throws SchemaCrawlerException
-   *           On an exception
+   *         On an exception
    */
   SchemaTextFormatter(final SchemaTextDetailType schemaTextDetailType,
                       final SchemaTextOptions options,
