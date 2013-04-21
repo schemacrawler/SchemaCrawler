@@ -5,7 +5,7 @@
   <parent>
     <artifactId>schemacrawler-all</artifactId>
     <groupId>net.sourceforge.schemacrawler</groupId>
-    <version>10.1-SNAPSHOT</version>
+    <version>10.1</version>
   </parent>
   <artifactId>schemacrawler-integrations</artifactId>
   <packaging>jar</packaging>
@@ -80,7 +80,7 @@
     <dependency>
       <groupId>org.apache.ant</groupId>
       <artifactId>ant-testutil</artifactId>
-      <version>1.8.4</version>
+      <version>1.9.0</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
