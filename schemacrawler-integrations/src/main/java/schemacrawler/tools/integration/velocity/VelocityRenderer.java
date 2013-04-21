@@ -128,7 +128,14 @@ public final class VelocityRenderer
     try (final Writer writer = new PrintWriter(new OutputWriter(outputOptions),
                                                true);)
     {
-      final Template template = ve.getTemplate(templateLocation, "UTF-8");
+      final String templateEncoding = schemaCrawlerOptions.getInputCharset()
+        .name();
+      LOGGER.log(Level.CONFIG, String
+        .format("Reading Velocity template %s, with encoding \"%s\"",
+                templateLocation,
+                templateEncoding));
+      final Template template = ve.getTemplate(templateLocation,
+                                               templateEncoding);
       template.merge(context, writer);
     }
 

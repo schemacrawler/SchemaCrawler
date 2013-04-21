@@ -27,6 +27,7 @@ import java.io.PrintWriter;
 import java.io.Writer;
 import java.sql.Connection;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -92,7 +93,8 @@ public final class FreeMarkerRenderer
         ctl, ftl
     });
     cfg.setTemplateLoader(mtl);
-
+    cfg.setEncoding(Locale.getDefault(),
+                    schemaCrawlerOptions.getInputEncoding());
     cfg.setStrictSyntaxMode(true);
     cfg.setWhitespaceStripping(true);
 
