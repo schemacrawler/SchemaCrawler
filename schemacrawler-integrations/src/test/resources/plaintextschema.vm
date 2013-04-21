@@ -1,3 +1,5 @@
+UTF-8: ¥ · £ · € · $ · ¢ · ₡ · ₢ · ₣ · ₤ · ₥ · ₦ · ₧ · ₨ · ₩ · ₪ · ₫ · ₭ · ₮ · ₯
+
 $database.schemaCrawlerInfo
 $database.databaseInfo
 $database.jdbcDriverInfo

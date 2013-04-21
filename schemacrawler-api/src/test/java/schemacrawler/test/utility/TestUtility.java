@@ -52,13 +52,6 @@ import com.google.gson.stream.JsonToken;
 public final class TestUtility
 {
 
-  public static List<String> compareOutput(final String referenceFile,
-                                           final File testOutputFile)
-    throws Exception
-  {
-    return compareOutput(referenceFile, testOutputFile, null);
-  }
-
   private static final int CLIENT_CODE_STACK_INDEX;
 
   static
@@ -66,7 +59,7 @@ public final class TestUtility
     // Finds out the index of "this code" in the returned stack trace -
     // funny but it differs in JDK 1.5 and 1.6
     int i = 0;
-    for (StackTraceElement ste: Thread.currentThread().getStackTrace())
+    for (final StackTraceElement ste: Thread.currentThread().getStackTrace())
     {
       i++;
       if (ste.getClassName().equals(TestUtility.class.getName()))
@@ -77,16 +70,17 @@ public final class TestUtility
     CLIENT_CODE_STACK_INDEX = i;
   }
 
-  public static String currentMethodName()
-  {
-    return Thread.currentThread().getStackTrace()[CLIENT_CODE_STACK_INDEX]
-      .getMethodName();
-  }
-
   public static String callingMethodName()
   {
     return Thread.currentThread().getStackTrace()[CLIENT_CODE_STACK_INDEX + 1]
       .getMethodName();
+  }
+
+  public static List<String> compareOutput(final String referenceFile,
+                                           final File testOutputFile)
+    throws Exception
+  {
+    return compareOutput(referenceFile, testOutputFile, null);
   }
 
   public static List<String> compareOutput(final String referenceFile,
@@ -106,16 +100,15 @@ public final class TestUtility
     final List<String> failures = new ArrayList<>();
 
     final boolean contentEquals;
-    final InputStream referenceStream = TestUtility.class
-      .getResourceAsStream("/" + referenceFile);
-    if (referenceStream == null)
+    final Reader referenceReader = readerForResource(referenceFile);
+    if (referenceReader == null)
 
     {
       contentEquals = false;
     }
     else
     {
-      contentEquals = contentEquals(new InputStreamReader(referenceStream),
+      contentEquals = contentEquals(referenceReader,
                                     new FileReader(testOutputFile),
                                     Pattern.compile("url +jdbc:.*"),
                                     Pattern
@@ -180,6 +173,29 @@ public final class TestUtility
     {
       return writeToTempFile(resourceStream);
     }
+  }
+
+  public static String currentMethodName()
+  {
+    return Thread.currentThread().getStackTrace()[CLIENT_CODE_STACK_INDEX]
+      .getMethodName();
+  }
+
+  public static Reader readerForResource(final String resource)
+    throws IOException
+  {
+    final InputStream inputStream = TestUtility.class
+      .getResourceAsStream("/" + resource);
+    final Reader reader;
+    if (inputStream != null)
+    {
+      reader = new InputStreamReader(inputStream);
+    }
+    else
+    {
+      reader = null;
+    }
+    return reader;
   }
 
   private static boolean contentEquals(final Reader expectedInputReader,
