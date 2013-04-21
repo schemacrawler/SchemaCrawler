@@ -22,6 +22,7 @@ package schemacrawler.test.utility;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
@@ -34,6 +35,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.channels.WritableByteChannel;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -85,6 +87,7 @@ public final class TestUtility
 
   public static List<String> compareOutput(final String referenceFile,
                                            final File testOutputFile,
+                                           final Charset encoding,
                                            final String outputFormat)
     throws Exception
   {
@@ -100,7 +103,7 @@ public final class TestUtility
     final List<String> failures = new ArrayList<>();
 
     final boolean contentEquals;
-    final Reader referenceReader = readerForResource(referenceFile);
+    final Reader referenceReader = readerForResource(referenceFile, encoding);
     if (referenceReader == null)
 
     {
@@ -108,8 +111,9 @@ public final class TestUtility
     }
     else
     {
+      final Reader fileReader = readerForFile(testOutputFile, encoding);
       contentEquals = contentEquals(referenceReader,
-                                    new FileReader(testOutputFile),
+                                    fileReader,
                                     Pattern.compile("url +jdbc:.*"),
                                     Pattern
                                       .compile("database product version.*"),
@@ -165,6 +169,17 @@ public final class TestUtility
     return failures;
   }
 
+  public static List<String> compareOutput(final String referenceFile,
+                                           final File testOutputFile,
+                                           final String outputFormat)
+    throws Exception
+  {
+    return compareOutput(referenceFile,
+                         testOutputFile,
+                         Charset.defaultCharset(),
+                         null);
+  }
+
   public static File copyResourceToTempFile(final String resource)
     throws IOException
   {
@@ -181,7 +196,8 @@ public final class TestUtility
       .getMethodName();
   }
 
-  public static Reader readerForResource(final String resource)
+  public static Reader readerForResource(final String resource,
+                                         final Charset encoding)
     throws IOException
   {
     final InputStream inputStream = TestUtility.class
@@ -189,12 +205,39 @@ public final class TestUtility
     final Reader reader;
     if (inputStream != null)
     {
-      reader = new InputStreamReader(inputStream);
+      final Charset charset;
+      if (encoding == null)
+      {
+        charset = Charset.defaultCharset();
+      }
+      else
+      {
+        charset = encoding;
+      }
+      reader = new InputStreamReader(inputStream, charset);
     }
     else
     {
       reader = null;
     }
+    return reader;
+  }
+
+  public static Reader readerForFile(final File file, final Charset encoding)
+    throws IOException
+  {
+    final InputStream inputStream = new FileInputStream(file);
+    final Reader reader;
+    final Charset charset;
+    if (encoding == null)
+    {
+      charset = Charset.defaultCharset();
+    }
+    else
+    {
+      charset = encoding;
+    }
+    reader = new InputStreamReader(inputStream, charset);
     return reader;
   }
 

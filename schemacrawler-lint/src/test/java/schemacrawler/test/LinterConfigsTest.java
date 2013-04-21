@@ -27,6 +27,7 @@ import static schemacrawler.test.utility.TestUtility.readerForResource;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.nio.charset.Charset;
 
 import org.junit.Test;
 
@@ -42,7 +43,7 @@ public class LinterConfigsTest
   public void testParseBadLinterConfigs1()
     throws SchemaCrawlerException, IOException
   {
-    final Reader reader = readerForResource("/bad-schemacrawler-linter-configs-a.xml");
+    final Reader reader = readerForResource("bad-schemacrawler-linter-configs-a.xml", Charset.defaultCharset());
     final LinterConfigs linterConfigs = new LinterConfigs();
     linterConfigs.parse(reader);
     assertEquals(3, linterConfigs.size());
@@ -71,7 +72,7 @@ public class LinterConfigsTest
   public void testParseBadXml1()
     throws SchemaCrawlerException, IOException
   {
-    final Reader reader = readerForResource("/bad-schemacrawler-linter-configs-1.xml");
+    final Reader reader = readerForResource("bad-schemacrawler-linter-configs-1.xml", Charset.defaultCharset());
     final LinterConfigs linterConfigs = new LinterConfigs();
     linterConfigs.parse(reader);
     assertEquals(0, linterConfigs.size());
@@ -81,7 +82,7 @@ public class LinterConfigsTest
   public void testParseBadXml2()
     throws SchemaCrawlerException, IOException
   {
-    final Reader reader = readerForResource("/bad-schemacrawler-linter-configs-2.xml");
+    final Reader reader = readerForResource("bad-schemacrawler-linter-configs-2.xml", Charset.defaultCharset());
     final LinterConfigs linterConfigs = new LinterConfigs();
     linterConfigs.parse(reader);
   }
@@ -90,7 +91,7 @@ public class LinterConfigsTest
   public void testParseGoodLinterConfigs()
     throws SchemaCrawlerException, IOException
   {
-    final Reader reader = readerForResource("/schemacrawler-linter-configs-1.xml");
+    final Reader reader = readerForResource("schemacrawler-linter-configs-1.xml", Charset.defaultCharset());
     final LinterConfigs linterConfigs = new LinterConfigs();
     linterConfigs.parse(reader);
 
