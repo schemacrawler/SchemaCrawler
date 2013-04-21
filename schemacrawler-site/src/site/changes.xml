@@ -5,6 +5,23 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+    <release version="10.1" date="2013-04-21">
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        SchemaCrawler support for J2SE 7 only, since previous Java versions are deprecated. Converted
+        the codebase over to use J2SE 7 constructs.
+      ]]></action>  
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        New command-line option, -only-matching, to show only matching tables, and does not show foreign keys that reference
+  other non-matching tables. Modeled after the analogous grep option.
+      ]]></action>  
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        New option to set input encoding format for script files and templates. The option is
+        "schemacrawler.encoding.input" in the SchemaCrawler properties file.
+      ]]></action>
+<action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Renamed command-line option -table_types to -tabletypes.
+      ]]></action>                             
+    </release>   
     <release version="9.6" date="2013-03-08">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Fixed diagram generation on Linux when no GraphViz options are supplied.
