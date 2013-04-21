@@ -76,9 +76,9 @@ public final class Query
    * regular SQL.
    * 
    * @param name
-   *          Query name.
+   *        Query name.
    * @param query
-   *          Query SQL.
+   *        Query SQL.
    */
   Query(final String name, final String query)
   {
@@ -146,7 +146,7 @@ public final class Query
    * Gets the query with parameters substituted.
    * 
    * @param table
-   *          Table information
+   *        Table information
    * @return Ready-to-execute quer
    */
   String getQueryForTable(final Table table)

@@ -72,7 +72,7 @@ public class SchemaTextOptions
    * Options from properties. Constructor.
    * 
    * @param config
-   *          Properties
+   *        Properties
    */
   public SchemaTextOptions(final Config config)
   {
@@ -241,7 +241,7 @@ public class SchemaTextOptions
    * Sets whether to hide constraint names.
    * 
    * @param hideConstraintNames
-   *          Whether to hide constraint names.
+   *        Whether to hide constraint names.
    */
   public void setHideConstraintNames(final boolean hideConstraintNames)
   {
@@ -252,7 +252,7 @@ public class SchemaTextOptions
    * Sets whether to hide foreign key names.
    * 
    * @param hideForeignKeyNames
-   *          Whether to hide foreign key names.
+   *        Whether to hide foreign key names.
    */
   public void setHideForeignKeyNames(final boolean hideForeignKeyNames)
   {
@@ -263,7 +263,7 @@ public class SchemaTextOptions
    * Sets whether to hide index names.
    * 
    * @param hideIndexNames
-   *          Whether to hide index names.
+   *        Whether to hide index names.
    */
   public void setHideIndexNames(final boolean hideIndexNames)
   {
@@ -274,7 +274,7 @@ public class SchemaTextOptions
    * Sets whether to hide primary key names.
    * 
    * @param hidePrimaryKeyNames
-   *          Whether to hide primary key names.
+   *        Whether to hide primary key names.
    */
   public void setHidePrimaryKeyNames(final boolean hidePrimaryKeyNames)
   {
@@ -285,7 +285,7 @@ public class SchemaTextOptions
    * Sets whether to hide routine specific names.
    * 
    * @param hideRoutineSpecificNames
-   *          Whether to hide routine specific names.
+   *        Whether to hide routine specific names.
    */
   public void setHideRoutineSpecificNames(final boolean hideRoutineSpecificNames)
   {
@@ -296,7 +296,7 @@ public class SchemaTextOptions
    * Sets whether to hide trigger names.
    * 
    * @param hideTriggerNames
-   *          Whether to hide trigger names.
+   *        Whether to hide trigger names.
    */
   public void setHideTriggerNames(final boolean hideTriggerNames)
   {
@@ -307,7 +307,7 @@ public class SchemaTextOptions
    * Sets whether to show ordinal numbers.
    * 
    * @param showOrdinalNumbers
-   *          Whether to show ordinal numbers.
+   *        Whether to show ordinal numbers.
    */
   public void setShowOrdinalNumbers(final boolean showOrdinalNumbers)
   {
@@ -318,7 +318,7 @@ public class SchemaTextOptions
    * Sets whether to show standard column type names.
    * 
    * @param showStandardColumnTypeNames
-   *          Whether to show standard column type names.
+   *        Whether to show standard column type names.
    */
   public void setShowStandardColumnTypeNames(final boolean showStandardColumnTypeNames)
   {

@@ -25,7 +25,11 @@ import schemacrawler.schemacrawler.SchemaInfoLevel;
 public enum InfoLevel
 {
 
-  unknown, minimum, standard, detailed, maximum, ;
+  unknown,
+  minimum,
+  standard,
+  detailed,
+  maximum, ;
 
   public final SchemaInfoLevel getSchemaInfoLevel()
   {

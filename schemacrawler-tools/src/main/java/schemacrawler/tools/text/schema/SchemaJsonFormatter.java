@@ -76,13 +76,13 @@ final class SchemaJsonFormatter
    * Text formatting of schema.
    * 
    * @param schemaTextDetailType
-   *          Types for text formatting of schema
+   *        Types for text formatting of schema
    * @param options
-   *          Options for text formatting of schema
+   *        Options for text formatting of schema
    * @param outputOptions
-   *          Options for text formatting of schema
+   *        Options for text formatting of schema
    * @throws SchemaCrawlerException
-   *           On an exception
+   *         On an exception
    */
   SchemaJsonFormatter(final SchemaTextDetailType schemaTextDetailType,
                       final SchemaTextOptions options,
@@ -145,7 +145,7 @@ final class SchemaJsonFormatter
    * Provides information on the database schema.
    * 
    * @param routine
-   *          Routine metadata.
+   *        Routine metadata.
    */
   @Override
   public void handle(final Routine routine)
@@ -199,7 +199,7 @@ final class SchemaJsonFormatter
    * Provides information on the database schema.
    * 
    * @param synonym
-   *          Synonym metadata.
+   *        Synonym metadata.
    */
   @Override
   public void handle(final Synonym synonym)
@@ -241,7 +241,7 @@ final class SchemaJsonFormatter
    * Provides information on the database schema.
    * 
    * @param table
-   *          Table metadata.
+   *        Table metadata.
    */
   @Override
   public void handle(final Table table)

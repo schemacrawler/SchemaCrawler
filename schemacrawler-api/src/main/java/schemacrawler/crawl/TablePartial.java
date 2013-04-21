@@ -49,14 +49,14 @@ final class TablePartial
   private Column column;
   private ForeignKey foreignKey;
 
-  TablePartial(final Table table)
-  {
-    super(table.getSchema(), table.getName());
-  }
-
   TablePartial(final Schema schema, final String tableName)
   {
     super(schema, tableName);
+  }
+
+  TablePartial(final Table table)
+  {
+    super(table.getSchema(), table.getName());
   }
 
   @Override

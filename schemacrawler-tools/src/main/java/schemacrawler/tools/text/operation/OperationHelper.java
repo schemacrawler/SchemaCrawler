@@ -156,7 +156,7 @@ final class OperationHelper
       handler.end();
 
     }
-    catch (SQLException e)
+    catch (final SQLException e)
     {
       throw new SchemaCrawlerException("Cannot perform operation", e);
     }

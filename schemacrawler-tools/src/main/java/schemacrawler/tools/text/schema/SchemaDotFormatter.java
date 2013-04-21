@@ -69,13 +69,13 @@ public final class SchemaDotFormatter
    * Text formatting of schema.
    * 
    * @param schemaTextDetailType
-   *          Types for text formatting of schema
+   *        Types for text formatting of schema
    * @param options
-   *          Options for text formatting of schema
+   *        Options for text formatting of schema
    * @param outputOptions
-   *          Options for text formatting of schema
+   *        Options for text formatting of schema
    * @throws SchemaCrawlerException
-   *           On an exception
+   *         On an exception
    */
   public SchemaDotFormatter(final SchemaTextDetailType schemaTextDetailType,
                             final SchemaTextOptions options,
@@ -100,7 +100,7 @@ public final class SchemaDotFormatter
    * Provides information on the database schema.
    * 
    * @param routine
-   *          Routine metadata.
+   *        Routine metadata.
    */
   @Override
   public void handle(final Routine routine)
@@ -111,7 +111,7 @@ public final class SchemaDotFormatter
    * Provides information on the database schema.
    * 
    * @param synonym
-   *          Synonym metadata.
+   *        Synonym metadata.
    */
   @Override
   public void handle(final Synonym synonym)
@@ -122,7 +122,7 @@ public final class SchemaDotFormatter
    * Provides information on the database schema.
    * 
    * @param table
-   *          Table metadata.
+   *        Table metadata.
    */
   @Override
   public void handle(final Table table)
@@ -317,27 +317,6 @@ public final class SchemaDotFormatter
     }
   }
 
-  private String printNewNode(final Column column)
-  {
-    final String nodeId = "\"" + nodeId(column) + "\"";
-    final String columnName;
-    if (options.isShowUnqualifiedNames())
-    {
-      columnName = column.getShortName();
-    }
-    else
-    {
-      columnName = column.getFullName();
-    }
-    final String columnNode = String.format("  %s [label=<%s>];%n",
-                                            nodeId,
-                                            columnName);
-
-    out.write(columnNode);
-
-    return nodeId;
-  }
-
   private String printColumnReference(final String associationName,
                                       final ColumnReference columnReference)
   {
@@ -368,6 +347,27 @@ public final class SchemaDotFormatter
               style,
               fkSymbol,
               pkSymbol);
+  }
+
+  private String printNewNode(final Column column)
+  {
+    final String nodeId = "\"" + nodeId(column) + "\"";
+    final String columnName;
+    if (options.isShowUnqualifiedNames())
+    {
+      columnName = column.getShortName();
+    }
+    else
+    {
+      columnName = column.getFullName();
+    }
+    final String columnNode = String.format("  %s [label=<%s>];%n",
+                                            nodeId,
+                                            columnName);
+
+    out.write(columnNode);
+
+    return nodeId;
   }
 
   private void printTableColumns(final List<Column> columns)
