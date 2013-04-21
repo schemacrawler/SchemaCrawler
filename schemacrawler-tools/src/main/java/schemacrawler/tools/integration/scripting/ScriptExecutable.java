@@ -1,28 +1,29 @@
-/* 
- *
+/*
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
  * Copyright (c) 2000-2013, Sualeh Fatehi.
- *
- * This library is free software; you can redistribute it and/or modify it under the terms
- * of the GNU Lesser General Public License as published by the Free Software Foundation;
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms
+ * of the GNU Lesser General Public License as published by the Free Software
+ * Foundation;
  * either version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * library; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this
+ * library; if not, write to the Free Software Foundation, Inc., 59 Temple
+ * Place, Suite 330,
  * Boston, MA 02111-1307, USA.
- *
  */
 
 package schemacrawler.tools.integration.scripting;
 
 
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -82,21 +83,17 @@ public final class ScriptExecutable
       throw new SchemaCrawlerException("No script file provided");
     }
 
-    final Reader reader;
+    final InputStream inputStream;
     final File scriptFile = new File(scriptFileName);
     if (scriptFile.exists() && scriptFile.canRead())
     {
-      reader = new FileReader(scriptFile);
+      inputStream = new FileInputStream(scriptFile);
     }
     else
     {
-      final InputStream inputStream = ScriptExecutable.class
+      inputStream = ScriptExecutable.class
         .getResourceAsStream("/" + scriptFileName);
-      if (inputStream != null)
-      {
-        reader = new InputStreamReader(inputStream);
-      }
-      else
+      if (inputStream == null)
       {
         throw new SchemaCrawlerException("Cannot load script, "
                                          + scriptFileName);
@@ -154,8 +151,11 @@ public final class ScriptExecutable
 
     final ScriptEngine scriptEngine = scriptEngineFactory.getScriptEngine();
     final CommandChainExecutable chain = new CommandChainExecutable();
-    try (final Writer writer = new PrintWriter(new OutputWriter(outputOptions),
-                                               true);)
+    try (final Reader reader = new InputStreamReader(inputStream,
+                                                     schemaCrawlerOptions
+                                                       .getInputCharset());
+        final Writer writer = new PrintWriter(new OutputWriter(outputOptions),
+                                              true);)
     {
       // Set up the context
       scriptEngine.getContext().setWriter(writer);
@@ -175,6 +175,7 @@ public final class ScriptExecutable
         scriptEngine.eval(reader);
       }
     }
+
   }
 
 }
