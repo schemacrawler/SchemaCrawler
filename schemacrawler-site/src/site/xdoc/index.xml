@@ -35,7 +35,7 @@
 					<a href="bundled.html">bundled with drivers</a>
 					for some commonly used RDBMS systems. SchemaCrawler works with any
 					operating system that
-					supports Java 6 or better.
+					supports Java 7 or better.
 				</p>
 			</subsection>
 			<subsection name="SchemaCrawler API">

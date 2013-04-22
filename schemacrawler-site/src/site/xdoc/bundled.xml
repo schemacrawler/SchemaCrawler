@@ -108,7 +108,7 @@
       </subsection>
       <subsection name="How To">
         <p>
-          Ensure that you have Java 6 or better installed, and download and unzip the bundled distribution,
+          Ensure that you have Java 7 or better installed, and download and unzip the bundled distribution,
           and you are
           ready to use SchemaCrawler. No additional downloads are required. A typical command line for SchemaCrawler for
           Microsoft SQL
