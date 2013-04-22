@@ -68,5 +68,4 @@ public class SchemaCrawlerExecutableChainTest
 
     checkDiagramFile(new File("schema.png"));
   }
-
 }

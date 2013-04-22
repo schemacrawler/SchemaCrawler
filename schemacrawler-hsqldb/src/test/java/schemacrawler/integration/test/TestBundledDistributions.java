@@ -7,7 +7,8 @@ import static org.junit.Assert.fail;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
 
 import java.io.File;
-import java.io.FileWriter;
+import java.io.PrintWriter;
+import java.io.Writer;
 import java.util.List;
 import java.util.Properties;
 
@@ -34,7 +35,7 @@ public class TestBundledDistributions
 
     final File testConfigFile = File.createTempFile("schemacrawler.test.",
                                                     ".properties");
-    try (final FileWriter writer = new FileWriter(testConfigFile);)
+    try (final Writer writer = new PrintWriter(testConfigFile, "UTF-8");)
     {
       final Properties properties = new Properties();
       properties

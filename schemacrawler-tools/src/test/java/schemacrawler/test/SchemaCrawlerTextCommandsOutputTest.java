@@ -26,7 +26,8 @@ import static org.junit.Assert.fail;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
 
 import java.io.File;
-import java.io.FileWriter;
+import java.io.PrintWriter;
+import java.io.Writer;
 import java.util.List;
 
 import org.junit.Test;
@@ -111,7 +112,7 @@ public class SchemaCrawlerTextCommandsOutputTest
     dummyOutputFile.delete();
     assertTrue(!dummyOutputFile.exists());
 
-    final FileWriter writer = new FileWriter(testOutputFile);
+    final Writer writer = new PrintWriter(testOutputFile, "UTF-8");
     final OutputOptions outputOptions = new OutputOptions(OutputFormat.text.name(),
                                                           dummyOutputFile);
     outputOptions.setWriter(writer);

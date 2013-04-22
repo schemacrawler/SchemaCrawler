@@ -75,7 +75,7 @@ public class LintTest
                                                     ".test");
     testOutputFile.delete();
 
-    try (final PrintWriter writer = new PrintWriter(new FileWriter(testOutputFile));)
+    try (final PrintWriter writer = new PrintWriter(testOutputFile, "UTF-8");)
     {
       for (final Lint<?> lint: lintCollector)
       {

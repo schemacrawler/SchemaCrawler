@@ -22,8 +22,8 @@ package schemacrawler.utility;
 
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.Writer;
 import java.lang.reflect.Field;
 import java.sql.Types;
@@ -170,8 +170,8 @@ public final class JavaSqlTypesGenerationUtility
   private static Writer startWriting(final File directory, final String fileName)
     throws IOException
   {
-    final Writer writer;
-    writer = new FileWriter(new File(directory, fileName));
+    final Writer writer = new PrintWriter(new File(directory, fileName),
+                                          "UTF-8");
     writer.write(String.format("# java.sql.Types from Java %s %s%n",
                                System.getProperty("java.version"),
                                System.getProperty("java.vendor")));
