@@ -23,7 +23,6 @@ package schemacrawler.tools.integration.velocity;
 
 
 import java.io.File;
-import java.io.PrintWriter;
 import java.io.Writer;
 import java.sql.Connection;
 import java.util.Properties;
@@ -125,11 +124,9 @@ public final class VelocityRenderer
     final Context context = new VelocityContext();
     context.put("database", database);
 
-    try (final Writer writer = new PrintWriter(new OutputWriter(outputOptions),
-                                               true);)
+    try (final Writer writer = new OutputWriter(outputOptions);)
     {
-      final String templateEncoding = schemaCrawlerOptions.getInputCharset()
-        .name();
+      final String templateEncoding = outputOptions.getInputCharset().name();
       LOGGER.log(Level.CONFIG, String
         .format("Reading Velocity template %s, with encoding \"%s\"",
                 templateLocation,

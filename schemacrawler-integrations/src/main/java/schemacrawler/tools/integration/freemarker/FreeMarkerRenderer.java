@@ -23,7 +23,6 @@ package schemacrawler.tools.integration.freemarker;
 
 
 import java.io.File;
-import java.io.PrintWriter;
 import java.io.Writer;
 import java.sql.Connection;
 import java.util.HashMap;
@@ -93,8 +92,8 @@ public final class FreeMarkerRenderer
         ctl, ftl
     });
     cfg.setTemplateLoader(mtl);
-    cfg.setEncoding(Locale.getDefault(),
-                    schemaCrawlerOptions.getInputEncoding());
+    cfg
+      .setEncoding(Locale.getDefault(), outputOptions.getInputCharset().name());
     cfg.setStrictSyntaxMode(true);
     cfg.setWhitespaceStripping(true);
 
@@ -107,8 +106,7 @@ public final class FreeMarkerRenderer
     final Map<String, Object> objectMap = new HashMap<>();
     objectMap.put("database", database);
 
-    try (final Writer writer = new PrintWriter(new OutputWriter(outputOptions),
-                                               true);)
+    try (final Writer writer = new OutputWriter(outputOptions);)
     {
       // Evaluate the template
       final Template template = cfg.getTemplate(templateLocation);

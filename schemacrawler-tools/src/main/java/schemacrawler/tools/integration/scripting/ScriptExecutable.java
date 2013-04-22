@@ -23,10 +23,6 @@ package schemacrawler.tools.integration.scripting;
 
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.io.Reader;
 import java.io.Writer;
 import java.sql.Connection;
@@ -44,7 +40,7 @@ import schemacrawler.schema.Database;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseExecutable;
 import schemacrawler.tools.executable.CommandChainExecutable;
-import schemacrawler.tools.options.OutputFormat;
+import schemacrawler.tools.options.InputReader;
 import schemacrawler.tools.options.OutputWriter;
 import sf.util.FileUtility;
 import sf.util.ObjectToString;
@@ -78,27 +74,7 @@ public final class ScriptExecutable
   {
 
     final String scriptFileName = outputOptions.getOutputFormatValue();
-    if (outputOptions.getOutputFormat() == OutputFormat.text)
-    {
-      throw new SchemaCrawlerException("No script file provided");
-    }
-
-    final InputStream inputStream;
     final File scriptFile = new File(scriptFileName);
-    if (scriptFile.exists() && scriptFile.canRead())
-    {
-      inputStream = new FileInputStream(scriptFile);
-    }
-    else
-    {
-      inputStream = ScriptExecutable.class
-        .getResourceAsStream("/" + scriptFileName);
-      if (inputStream == null)
-      {
-        throw new SchemaCrawlerException("Cannot load script, "
-                                         + scriptFileName);
-      }
-    }
 
     // Create a new instance of the engine
     final ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
@@ -151,11 +127,8 @@ public final class ScriptExecutable
 
     final ScriptEngine scriptEngine = scriptEngineFactory.getScriptEngine();
     final CommandChainExecutable chain = new CommandChainExecutable();
-    try (final Reader reader = new InputStreamReader(inputStream,
-                                                     schemaCrawlerOptions
-                                                       .getInputCharset());
-        final Writer writer = new PrintWriter(new OutputWriter(outputOptions),
-                                              true);)
+    try (final Reader reader = new InputReader(outputOptions);
+        final Writer writer = new OutputWriter(outputOptions);)
     {
       // Set up the context
       scriptEngine.getContext().setWriter(writer);
@@ -177,5 +150,4 @@ public final class ScriptExecutable
     }
 
   }
-
 }

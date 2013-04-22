@@ -21,7 +21,6 @@
 package schemacrawler.schemacrawler;
 
 
-import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -30,7 +29,6 @@ import java.util.Locale;
 
 import schemacrawler.schema.RoutineType;
 import schemacrawler.schema.TableType;
-import sf.util.Utility;
 
 /**
  * SchemaCrawler options.
@@ -66,8 +64,6 @@ public final class SchemaCrawlerOptions
   private static final String SC_GREP_INVERT_MATCH = "schemacrawler.grep.invert-match";
   private static final String SC_GREP_ONLY_MATCHING = "schemacrawler.grep.only-matching";
 
-  private static final String SC_INPUT_ENCODING = "schemacrawler.encoding.input";
-
   private InclusionRule schemaInclusionRule;
 
   private Collection<TableType> tableTypes;
@@ -92,8 +88,6 @@ public final class SchemaCrawlerOptions
   private InformationSchemaViews informationSchemaViews;
   private DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions;
 
-  private String inputEncoding;
-
   /**
    * Default options.
    */
@@ -114,8 +108,6 @@ public final class SchemaCrawlerOptions
     routineColumnInclusionRule = InclusionRule.INCLUDE_ALL;
 
     synonymInclusionRule = InclusionRule.INCLUDE_ALL;
-
-    inputEncoding = Charset.defaultCharset().name();
   }
 
   /**
@@ -189,9 +181,6 @@ public final class SchemaCrawlerOptions
                                                                       InclusionRule.NONE));
     grepInvertMatch = configProperties.getBooleanValue(SC_GREP_INVERT_MATCH);
     grepOnlyMatching = configProperties.getBooleanValue(SC_GREP_ONLY_MATCHING);
-
-    inputEncoding = configProperties.getStringValue(SC_INPUT_ENCODING, Charset
-      .defaultCharset().name());
   }
 
   public int getChildTableFilterDepth()
@@ -255,22 +244,6 @@ public final class SchemaCrawlerOptions
   public InformationSchemaViews getInformationSchemaViews()
   {
     return informationSchemaViews;
-  }
-
-  /**
-   * Character encoding for input files, such as scripts and templates.
-   */
-  public Charset getInputCharset()
-  {
-    return Charset.forName(getInputEncoding());
-  }
-
-  /**
-   * Character encoding for input files, such as scripts and templates.
-   */
-  public String getInputEncoding()
-  {
-    return inputEncoding;
   }
 
   public int getParentTableFilterDepth()
@@ -510,25 +483,6 @@ public final class SchemaCrawlerOptions
     else
     {
       this.informationSchemaViews = informationSchemaViews;
-    }
-  }
-
-  /**
-   * Set character encoding for input files, such as scripts and
-   * templates.
-   * 
-   * @param inputEncoding
-   *        Input encoding
-   */
-  public void setInputEncoding(final String inputEncoding)
-  {
-    if (Utility.isBlank(inputEncoding))
-    {
-      this.inputEncoding = Charset.defaultCharset().name();
-    }
-    else
-    {
-      this.inputEncoding = inputEncoding;
     }
   }
 
