@@ -9,14 +9,7 @@
 		<section name="About SchemaCrawler">
 			<subsection name="SchemaCrawler">
 				<p>
-					SchemaCrawler is an open-source Java API that makes working with database
-					metadata as easy
-					as working with
-					plain old Java
-					objects.
-				</p>
-				<p>
-					SchemaCrawler is a database schema discovery and comprehension tool. 
+					SchemaCrawler is a free database schema discovery and comprehension tool. 
 					SchemaCrawler has a good mix
                     useful features for data governance. You can
 					<a href="schemacrawler_grep.html">search for database schema objects</a>
@@ -40,7 +33,11 @@
 			</subsection>
 			<subsection name="SchemaCrawler API">
 				<p>
-					Java programmers need to access database metadata
+					SchemaCrawler is also a Java API that makes working with database
+                    metadata as easy
+                    as working with
+                    plain old Java
+                    objects. Java programmers need to access database metadata
 				</p>
 				<ul>
 					<li>in order to dynamically generate SQL statements</li>
