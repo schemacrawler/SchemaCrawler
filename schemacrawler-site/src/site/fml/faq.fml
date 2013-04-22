@@ -243,7 +243,7 @@
     <faq id="scripting">
       <question> Can SchemaCrawler be used with scripting languages? </question>
       <answer>
-        <p> When SchemaCrawler is used with J2SE 6 and above, it has built-in support to be used with JavaScript
+        <p>SchemaCrawler has built-in support to be used with JavaScript
           scripts. SchemaCrawler can be integrated with any other scripting language, for example, Groovy,
           Ruby, Python, and more.
         </p>
