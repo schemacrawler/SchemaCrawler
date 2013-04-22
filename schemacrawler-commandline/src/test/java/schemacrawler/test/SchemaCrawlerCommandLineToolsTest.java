@@ -5,9 +5,8 @@ import static org.junit.Assert.fail;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
 import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -116,7 +115,7 @@ public class SchemaCrawlerCommandLineToolsTest
       final InfoLevel infoLevel = InfoLevel.detailed;
       final File additionalProperties = File
         .createTempFile("hsqldb.INFORMATION_SCHEMA.config", ".properties");
-      final Writer writer = new BufferedWriter(new FileWriter(additionalProperties));
+      final Writer writer = new PrintWriter(additionalProperties, "UTF-8");
       final Properties properties = new Properties();
       properties.load(this.getClass()
         .getResourceAsStream("/hsqldb.INFORMATION_SCHEMA.config.properties"));

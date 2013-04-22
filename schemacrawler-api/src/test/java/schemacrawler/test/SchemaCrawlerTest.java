@@ -25,9 +25,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.List;
@@ -460,7 +458,7 @@ public class SchemaCrawlerTest
                                                     ".test");
     testOutputFile.delete();
 
-    try (final PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(testOutputFile)));)
+    try (final PrintWriter writer = new PrintWriter(testOutputFile, "UTF-8");)
     {
 
       final Config config = Config

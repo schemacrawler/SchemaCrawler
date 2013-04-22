@@ -25,6 +25,7 @@ import java.io.File;
 import java.io.Writer;
 import java.nio.charset.Charset;
 
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.Options;
 import sf.util.ObjectToString;
 import sf.util.Utility;
@@ -40,12 +41,15 @@ public final class OutputOptions
 
   private static final long serialVersionUID = 7018337388923813055L;
 
+  private static final String SC_INPUT_ENCODING = "schemacrawler.encoding.input";
+  private static final String SC_OUTPUT_ENCODING = "schemacrawler.encoding.output";
+
   private String outputFormatValue;
   private File outputFile;
   private Writer writer;
 
-  private Charset inputCharset = Charset.defaultCharset();
-  private Charset outputCharset = Charset.defaultCharset();
+  private Charset inputCharset;
+  private Charset outputCharset;
 
   /**
    * Creates default OutputOptions.
@@ -53,6 +57,26 @@ public final class OutputOptions
   public OutputOptions()
   {
     this(OutputFormat.text.name());
+  }
+
+  public OutputOptions(final Config config)
+  {
+    this();
+
+    final Config configProperties;
+    if (config == null)
+    {
+      configProperties = new Config();
+    }
+    else
+    {
+      configProperties = config;
+    }
+
+    setInputEncoding(configProperties
+      .getStringValue(SC_INPUT_ENCODING, "UTF-8"));
+    setOutputEncoding(configProperties.getStringValue(SC_OUTPUT_ENCODING,
+                                                      "UTF-8"));
   }
 
   /**
@@ -101,7 +125,14 @@ public final class OutputOptions
    */
   public Charset getInputCharset()
   {
-    return inputCharset;
+    if (inputCharset == null)
+    {
+      return Charset.forName("UTF-8");
+    }
+    else
+    {
+      return inputCharset;
+    }
   }
 
   /**
@@ -109,7 +140,14 @@ public final class OutputOptions
    */
   public Charset getOutputCharset()
   {
-    return outputCharset;
+    if (outputCharset == null)
+    {
+      return getInputCharset();
+    }
+    else
+    {
+      return outputCharset;
+    }
   }
 
   /**

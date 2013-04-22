@@ -95,10 +95,6 @@ public final class SchemaCrawlerCommandLine
     }
     command = commandParser.getOptions().toString();
 
-    final OutputOptionsParser outputOptionsParser = new OutputOptionsParser();
-    remainingArgs = outputOptionsParser.parse(remainingArgs);
-    outputOptions = outputOptionsParser.getOptions();
-
     final boolean isBundledWithDriver = providedConfig != null;
     if (isBundledWithDriver)
     {
@@ -143,6 +139,10 @@ public final class SchemaCrawlerCommandLine
     final SchemaCrawlerOptionsParser schemaCrawlerOptionsParser = new SchemaCrawlerOptionsParser(config);
     remainingArgs = schemaCrawlerOptionsParser.parse(remainingArgs);
     schemaCrawlerOptions = schemaCrawlerOptionsParser.getOptions();
+
+    final OutputOptionsParser outputOptionsParser = new OutputOptionsParser(config);
+    remainingArgs = outputOptionsParser.parse(remainingArgs);
+    outputOptions = outputOptionsParser.getOptions();
 
     if (remainingArgs.length > 0)
     {

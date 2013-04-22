@@ -23,6 +23,7 @@ package schemacrawler.tools.commandline;
 
 import java.io.File;
 
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 import sf.util.Utility;
@@ -37,18 +38,23 @@ final class OutputOptionsParser
   extends BaseOptionsParser<OutputOptions>
 {
 
-  OutputOptionsParser()
+  final OutputOptions outputOptions;
+
+  OutputOptionsParser(final Config config)
   {
     super(new StringOption("outputformat", OutputFormat.text.toString()),
           new StringOption('o', "outputfile", ""));
+
+    outputOptions = new OutputOptions(config);
   }
 
   @Override
   protected OutputOptions getOptions()
   {
     final String outputFormatValue = getStringValue("outputformat");
-    final String outputFileName = getStringValue("outputfile");
+    outputOptions.setOutputFormatValue(outputFormatValue);
 
+    final String outputFileName = getStringValue("outputfile");
     final File outputFile;
     if (Utility.isBlank(outputFileName))
     {
@@ -58,8 +64,7 @@ final class OutputOptionsParser
     {
       outputFile = new File(outputFileName);
     }
-    final OutputOptions outputOptions = new OutputOptions(outputFormatValue,
-                                                          outputFile);
+    outputOptions.setOutputFile(outputFile);
 
     return outputOptions;
   }
