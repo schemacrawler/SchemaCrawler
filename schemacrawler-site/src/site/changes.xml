@@ -22,7 +22,7 @@
         Renamed command-line option -table_types to -tabletypes.
       ]]></action>                             
     </release>   
-    <release version="10.1" date="2013-03-08">
+    <release version="9.6" date="2013-03-08">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Fixed diagram generation on Linux when no GraphViz options are supplied.
       ]]></action>  
