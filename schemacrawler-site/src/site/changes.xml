@@ -576,7 +576,7 @@
 			]]></action>
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Added support for JavaScript
-        scripting with J2SE 6 and above.
+        scripting.
 			]]></action>
     </release>
     <release version="5.5" date="2008-02-28">
