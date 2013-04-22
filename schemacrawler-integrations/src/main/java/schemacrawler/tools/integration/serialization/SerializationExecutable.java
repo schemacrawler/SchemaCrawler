@@ -21,7 +21,6 @@
 package schemacrawler.tools.integration.serialization;
 
 
-import java.io.PrintWriter;
 import java.io.Writer;
 import java.sql.Connection;
 
@@ -58,8 +57,7 @@ public final class SerializationExecutable
     throws Exception
   {
     final SerializableDatabase database = new XmlDatabase(db);
-    try (final Writer writer = new PrintWriter(new OutputWriter(outputOptions),
-                                               true);)
+    try (final Writer writer = new OutputWriter(outputOptions);)
     {
       database.save(writer);
     }

@@ -23,9 +23,11 @@ package schemacrawler.tools.options;
 
 import java.io.File;
 import java.io.Writer;
+import java.nio.charset.Charset;
 
 import schemacrawler.schemacrawler.Options;
 import sf.util.ObjectToString;
+import sf.util.Utility;
 
 /**
  * Contains output options.
@@ -41,6 +43,9 @@ public final class OutputOptions
   private String outputFormatValue;
   private File outputFile;
   private Writer writer;
+
+  private Charset inputCharset = Charset.defaultCharset();
+  private Charset outputCharset = Charset.defaultCharset();
 
   /**
    * Creates default OutputOptions.
@@ -58,9 +63,7 @@ public final class OutputOptions
    */
   public OutputOptions(final String outputFormatValue)
   {
-    this.outputFormatValue = outputFormatValue;
-    outputFile = null;
-    writer = null;
+    this(outputFormatValue, (File) null);
   }
 
   /**
@@ -91,6 +94,22 @@ public final class OutputOptions
     this.outputFormatValue = outputFormatValue;
     outputFile = null;
     this.writer = writer;
+  }
+
+  /**
+   * Character encoding for input files, such as scripts and templates.
+   */
+  public Charset getInputCharset()
+  {
+    return inputCharset;
+  }
+
+  /**
+   * Character encoding for output files.
+   */
+  public Charset getOutputCharset()
+  {
+    return outputCharset;
   }
 
   /**
@@ -145,6 +164,43 @@ public final class OutputOptions
   public boolean isFileOutput()
   {
     return outputFile != null && writer == null;
+  }
+
+  /**
+   * Set character encoding for input files, such as scripts and
+   * templates.
+   * 
+   * @param inputEncoding
+   *        Input encoding
+   */
+  public void setInputEncoding(final String inputEncoding)
+  {
+    if (Utility.isBlank(inputEncoding))
+    {
+      inputCharset = Charset.defaultCharset();
+    }
+    else
+    {
+      inputCharset = Charset.forName(inputEncoding);
+    }
+  }
+
+  /**
+   * Set character encoding for output files.
+   * 
+   * @param outputEncoding
+   *        Output encoding
+   */
+  public void setOutputEncoding(final String outputEncoding)
+  {
+    if (Utility.isBlank(outputEncoding))
+    {
+      outputCharset = Charset.defaultCharset();
+    }
+    else
+    {
+      outputCharset = Charset.forName(outputEncoding);
+    }
   }
 
   /**

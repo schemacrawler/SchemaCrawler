@@ -119,13 +119,13 @@ public class IntegrationTest
     testOutputFile.delete();
     final OutputOptions outputOptions = new OutputOptions(outputFormatValue,
                                                           testOutputFile);
+    outputOptions.setInputEncoding("UTF-8");
+    outputOptions.setOutputEncoding("UTF-8");
 
     executable.setOutputOptions(outputOptions);
     executable.execute(getConnection());
 
-    executable.getSchemaCrawlerOptions().setInputEncoding("UTF-8");
-    final Charset templateCharset = executable.getSchemaCrawlerOptions()
-      .getInputCharset();
+    final Charset templateCharset = outputOptions.getInputCharset();
 
     final List<String> failures = TestUtility.compareOutput(referenceFileName
                                                                 + ".txt",

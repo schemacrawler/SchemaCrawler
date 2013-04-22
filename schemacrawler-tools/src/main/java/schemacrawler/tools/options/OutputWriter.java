@@ -21,7 +21,7 @@ package schemacrawler.tools.options;
 
 
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
@@ -200,7 +200,10 @@ public final class OutputWriter
       {
         isFileOutput = true;
         final File outputFile = outputOptions.getOutputFile();
-        writer = new FileWriter(outputFile, appendOutput);
+        final FileOutputStream fileOutputStream = new FileOutputStream(outputFile,
+                                                                       appendOutput);
+        writer = new OutputStreamWriter(fileOutputStream,
+                                        outputOptions.getOutputCharset());
         LOGGER.log(Level.INFO,
                    "Opened output writer to file, "
                        + outputFile.getAbsolutePath());
