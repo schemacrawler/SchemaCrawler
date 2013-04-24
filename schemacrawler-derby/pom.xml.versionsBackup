@@ -9,9 +9,9 @@
     <artifactId>schemacrawler-all</artifactId>
     <version>10.2</version>
   </parent>
-  <artifactId>schemacrawler-oracle</artifactId>
+  <artifactId>schemacrawler-derby</artifactId>
   <packaging>jar</packaging>
-  <name>SchemaCrawler for Oracle</name>
+  <name>SchemaCrawler for Apache Derby</name>
   <licenses>
     <license>
       <name>GNU General Public License</name>
@@ -25,10 +25,9 @@
       <version>${project.version}</version>
     </dependency>
     <dependency>
-      <groupId>com.oracle</groupId>
-      <artifactId>ojdbc6</artifactId>
-      <version>11.2.0.2.0</version>
-      <scope>provided</scope>
+      <groupId>org.apache.derby</groupId>
+      <artifactId>derbyclient</artifactId>
+      <version>10.20.1.1</version>
     </dependency>
   </dependencies>
   <build>
@@ -41,7 +40,7 @@
           <archive>
             <index>true</index>
             <manifest>
-              <mainClass>schemacrawler.tools.oracle.Main</mainClass>
+              <mainClass>schemacrawler.tools.derby.Main</mainClass>
               <addClasspath>true</addClasspath>
             </manifest>
             <manifestEntries>
