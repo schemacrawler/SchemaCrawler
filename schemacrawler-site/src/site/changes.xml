@@ -5,7 +5,7 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-    <release version="10.1" date="2013-04-21">
+    <release version="10.2" date="2013-04-21">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         SchemaCrawler support for J2SE 7 only, since previous Java versions are deprecated. Converted
         the codebase over to use J2SE 7 constructs.
