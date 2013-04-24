@@ -7,6 +7,13 @@
   <body>
     <release version="10.2" date="2013-04-21">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        New option to set output encoding format. The option is
+        "schemacrawler.encoding.output" in the SchemaCrawler properties file. Default input
+        and output encoding has been changed to UTF-8.
+      ]]></action>                            
+    </release>   
+    <release version="10.1" date="2013-04-21">
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
         SchemaCrawler support for J2SE 7 only, since previous Java versions are deprecated. Converted
         the codebase over to use J2SE 7 constructs.
       ]]></action>  
