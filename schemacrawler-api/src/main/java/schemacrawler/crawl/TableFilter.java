@@ -23,17 +23,14 @@ package schemacrawler.crawl;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.schema.Column;
+import schemacrawler.crawl.filter.DatabaseObjectFilter;
+import schemacrawler.crawl.filter.FilterFactory;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableRelationshipType;
-import schemacrawler.schema.Trigger;
-import schemacrawler.schema.View;
-import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
 class TableFilter
@@ -70,10 +67,12 @@ class TableFilter
   private Collection<MutableTable> doFilter()
   {
     // Filter for grep
+    final DatabaseObjectFilter<Table> grepFilter = FilterFactory
+      .grepFilter(options);
     final Set<MutableTable> greppedTables = new HashSet<>();
     for (final MutableTable table: allTables)
     {
-      if (grepMatch(options, table))
+      if (grepFilter.include(table))
       {
         greppedTables.add(table);
       }
@@ -94,95 +93,6 @@ class TableFilter
     filteredTables.addAll(childTables);
     filteredTables.addAll(parentTables);
     return filteredTables;
-  }
-
-  /**
-   * Special case for "grep" like functionality. Handle table if a table
-   * column inclusion rule is found, and at least one column matches the
-   * rule.
-   * 
-   * @param options
-   *        Options
-   * @param table
-   *        Table to check
-   * @return Whether the column should be included
-   */
-  private boolean grepMatch(final SchemaCrawlerOptions options,
-                            final Table table)
-  {
-    final boolean invertMatch = options.isGrepInvertMatch();
-    final boolean checkIncludeForColumns = options.isGrepColumns();
-    final boolean checkIncludeForDefinitions = options.isGrepDefinitions();
-
-    final InclusionRule grepColumnInclusionRule = options
-      .getGrepColumnInclusionRule();
-    final InclusionRule grepDefinitionInclusionRule = options
-      .getGrepDefinitionInclusionRule();
-
-    if (!checkIncludeForColumns && !checkIncludeForDefinitions)
-    {
-      return true;
-    }
-
-    boolean includeForColumns = false;
-    boolean includeForDefinitions = false;
-    for (final Column column: table.getColumns())
-    {
-      if (checkIncludeForColumns)
-      {
-        if (grepColumnInclusionRule.include(column.getFullName()))
-        {
-          includeForColumns = true;
-          break;
-        }
-      }
-      if (checkIncludeForDefinitions)
-      {
-        if (grepDefinitionInclusionRule.include(column.getRemarks()))
-        {
-          includeForDefinitions = true;
-          break;
-        }
-      }
-    }
-    // Additional include checks for definitions
-    if (checkIncludeForDefinitions)
-    {
-      if (grepDefinitionInclusionRule.include(table.getRemarks()))
-      {
-        includeForDefinitions = true;
-      }
-      if (table instanceof View)
-      {
-        if (grepDefinitionInclusionRule.include(((View) table).getDefinition()))
-        {
-          includeForDefinitions = true;
-        }
-      }
-      for (final Trigger trigger: table.getTriggers())
-      {
-        if (grepDefinitionInclusionRule.include(trigger.getActionStatement()))
-        {
-          includeForDefinitions = true;
-          break;
-        }
-      }
-    }
-
-    boolean include = checkIncludeForColumns && includeForColumns
-                      || checkIncludeForDefinitions && includeForDefinitions;
-    if (invertMatch)
-    {
-      include = !include;
-    }
-
-    if (!include)
-    {
-      LOGGER.log(Level.FINE, "Removing table " + table
-                             + " since it does not match the grep pattern");
-    }
-
-    return include;
   }
 
   private Collection<MutableTable> includeRelatedTables(final TableRelationshipType tableRelationshipType,
