@@ -25,8 +25,8 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Logger;
 
-import schemacrawler.crawl.filter.NamedObjectFilter;
-import schemacrawler.crawl.filter.FilterFactory;
+import schemacrawler.filter.FilterFactory;
+import schemacrawler.filter.NamedObjectFilter;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.Table;

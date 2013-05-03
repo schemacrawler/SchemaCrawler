@@ -17,33 +17,35 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.crawl.filter;
+package schemacrawler.filter;
 
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.schema.Routine;
-import schemacrawler.schema.RoutineColumn;
+import schemacrawler.schema.Column;
+import schemacrawler.schema.Table;
+import schemacrawler.schema.Trigger;
+import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
-class RoutineGrepFilter
-  implements NamedObjectFilter<Routine>
+class TableGrepFilter
+  implements NamedObjectFilter<Table>
 {
 
-  private static final Logger LOGGER = Logger.getLogger(RoutineGrepFilter.class
+  private static final Logger LOGGER = Logger.getLogger(TableGrepFilter.class
     .getName());
 
   private final boolean invertMatch;
   private final InclusionRule grepColumnInclusionRule;
   private final InclusionRule grepDefinitionInclusionRule;
 
-  public RoutineGrepFilter(final SchemaCrawlerOptions options)
+  public TableGrepFilter(final SchemaCrawlerOptions options)
   {
     invertMatch = options.isGrepInvertMatch();
 
-    grepColumnInclusionRule = options.getGrepRoutineColumnInclusionRule();
+    grepColumnInclusionRule = options.getGrepColumnInclusionRule();
     grepDefinitionInclusionRule = options.getGrepDefinitionInclusionRule();
   }
 
@@ -54,12 +56,12 @@ class RoutineGrepFilter
    * 
    * @param options
    *        Options
-   * @param routine
+   * @param table
    *        Table to check
    * @return Whether the column should be included
    */
   @Override
-  public boolean include(final Routine routine)
+  public boolean include(final Table table)
   {
     final boolean checkIncludeForColumns = grepColumnInclusionRule != null;
     final boolean checkIncludeForDefinitions = grepDefinitionInclusionRule != null;
@@ -71,7 +73,7 @@ class RoutineGrepFilter
 
     boolean includeForColumns = false;
     boolean includeForDefinitions = false;
-    for (final RoutineColumn<?> column: routine.getColumns())
+    for (final Column column: table.getColumns())
     {
       if (checkIncludeForColumns)
       {
@@ -93,13 +95,24 @@ class RoutineGrepFilter
     // Additional include checks for definitions
     if (checkIncludeForDefinitions)
     {
-      if (grepDefinitionInclusionRule.include(routine.getRemarks()))
+      if (grepDefinitionInclusionRule.include(table.getRemarks()))
       {
         includeForDefinitions = true;
       }
-      if (grepDefinitionInclusionRule.include(routine.getDefinition()))
+      if (table instanceof View)
       {
-        includeForDefinitions = true;
+        if (grepDefinitionInclusionRule.include(((View) table).getDefinition()))
+        {
+          includeForDefinitions = true;
+        }
+      }
+      for (final Trigger trigger: table.getTriggers())
+      {
+        if (grepDefinitionInclusionRule.include(trigger.getActionStatement()))
+        {
+          includeForDefinitions = true;
+          break;
+        }
       }
     }
 
@@ -112,7 +125,7 @@ class RoutineGrepFilter
 
     if (!include)
     {
-      LOGGER.log(Level.FINE, "Removing table " + routine
+      LOGGER.log(Level.FINE, "Removing table " + table
                              + " since it does not match the grep pattern");
     }
 

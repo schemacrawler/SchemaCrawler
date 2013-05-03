@@ -17,39 +17,42 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.crawl.filter;
+package schemacrawler.filter;
 
-
-import java.util.ArrayList;
-import java.util.List;
 
 import schemacrawler.schema.NamedObject;
+import schemacrawler.schemacrawler.InclusionRule;
 
-class ChainedNamedObjectFilter<N extends NamedObject>
+public class InclusionRuleFilter<N extends NamedObject>
   implements NamedObjectFilter<N>
 {
 
-  private final List<NamedObjectFilter<N>> filters = new ArrayList<>();
+  private final InclusionRule inclusionRule;
+
+  public InclusionRuleFilter(final InclusionRule inclusionRule)
+  {
+    if (inclusionRule != null)
+    {
+      this.inclusionRule = inclusionRule;
+    }
+    else
+    {
+      this.inclusionRule = InclusionRule.INCLUDE_ALL;
+    }
+  }
 
   @Override
   public boolean include(final N namedObject)
   {
-    for (final NamedObjectFilter<N> filter: filters)
+    if (namedObject == null)
     {
-      if (filter.include(namedObject))
-      {
-        return true;
-      }
+      return false;
     }
-    return false;
-  }
-
-  void add(final NamedObjectFilter<N> filter)
-  {
-    if (filter != null)
+    // Schema names may be null
+    if (namedObject.getFullName() == null)
     {
-      filters.add(filter);
+      return false;
     }
+    return inclusionRule.include(namedObject.getFullName());
   }
-
 }

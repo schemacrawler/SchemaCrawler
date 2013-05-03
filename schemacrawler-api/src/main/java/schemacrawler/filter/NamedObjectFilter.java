@@ -17,42 +17,14 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.crawl.filter;
+package schemacrawler.filter;
 
 
 import schemacrawler.schema.NamedObject;
-import schemacrawler.schemacrawler.InclusionRule;
 
-public class InclusionRuleFilter<N extends NamedObject>
-  implements NamedObjectFilter<N>
+public interface NamedObjectFilter<N extends NamedObject>
 {
 
-  private final InclusionRule inclusionRule;
+  boolean include(N namedObject);
 
-  public InclusionRuleFilter(final InclusionRule inclusionRule)
-  {
-    if (inclusionRule != null)
-    {
-      this.inclusionRule = inclusionRule;
-    }
-    else
-    {
-      this.inclusionRule = InclusionRule.INCLUDE_ALL;
-    }
-  }
-
-  @Override
-  public boolean include(final N namedObject)
-  {
-    if (namedObject == null)
-    {
-      return false;
-    }
-    // Schema names may be null
-    if (namedObject.getFullName() == null)
-    {
-      return false;
-    }
-    return inclusionRule.include(namedObject.getFullName());
-  }
 }

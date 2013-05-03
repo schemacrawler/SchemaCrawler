@@ -31,7 +31,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.crawl.filter.InclusionRuleFilter;
+import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaReference;
 import schemacrawler.schemacrawler.InclusionRule;
