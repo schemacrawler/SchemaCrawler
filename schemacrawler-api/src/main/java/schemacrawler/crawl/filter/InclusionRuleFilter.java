@@ -20,12 +20,13 @@
 package schemacrawler.crawl.filter;
 
 
-import schemacrawler.schema.DatabaseObject;
+import schemacrawler.schema.NamedObject;
 import schemacrawler.schemacrawler.InclusionRule;
 
-class InclusionRuleFilter<D extends DatabaseObject>
-  implements DatabaseObjectFilter<D>
+public class InclusionRuleFilter<N extends NamedObject>
+  implements NamedObjectFilter<N>
 {
+
   private final InclusionRule inclusionRule;
 
   public InclusionRuleFilter(final InclusionRule inclusionRule)
@@ -41,13 +42,17 @@ class InclusionRuleFilter<D extends DatabaseObject>
   }
 
   @Override
-  public boolean include(final D databaseObject)
+  public boolean include(final N namedObject)
   {
-    if (databaseObject == null)
+    if (namedObject == null)
     {
       return false;
     }
-    return inclusionRule.include(databaseObject.getFullName());
+    // Schema names may be null
+    if (namedObject.getFullName() == null)
+    {
+      return false;
+    }
+    return inclusionRule.include(namedObject.getFullName());
   }
-
 }

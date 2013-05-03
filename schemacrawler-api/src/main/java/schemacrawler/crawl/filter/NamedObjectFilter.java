@@ -20,11 +20,11 @@
 package schemacrawler.crawl.filter;
 
 
-import schemacrawler.schema.DatabaseObject;
+import schemacrawler.schema.NamedObject;
 
-public interface DatabaseObjectFilter<D extends DatabaseObject>
+public interface NamedObjectFilter<N extends NamedObject>
 {
 
-  boolean include(D databaseObject);
+  boolean include(N namedObject);
 
 }

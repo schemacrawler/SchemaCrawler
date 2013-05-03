@@ -21,17 +21,18 @@ package schemacrawler.crawl.filter;
 
 
 import schemacrawler.schema.Column;
+import schemacrawler.schema.Routine;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
 public class FilterFactory
 {
 
-  public static DatabaseObjectFilter<Column> columnInclusionFilter(final SchemaCrawlerOptions options)
+  public static NamedObjectFilter<Column> columnInclusionFilter(final SchemaCrawlerOptions options)
   {
     if (options != null)
     {
-      final ChainedDatabaseObjectFilter<Column> filter = new ChainedDatabaseObjectFilter<Column>();
+      final ChainedNamedObjectFilter<Column> filter = new ChainedNamedObjectFilter<Column>();
       filter.add(new InclusionRuleFilter<Column>(options
         .getColumnInclusionRule()));
       return filter;
@@ -42,7 +43,7 @@ public class FilterFactory
     }
   }
 
-  public static DatabaseObjectFilter<Table> grepFilter(final SchemaCrawlerOptions options)
+  public static NamedObjectFilter<Table> grepTablesFilter(final SchemaCrawlerOptions options)
   {
     if (options != null)
     {
@@ -54,11 +55,23 @@ public class FilterFactory
     }
   }
 
-  public static DatabaseObjectFilter<Table> tableInclusionFilter(final SchemaCrawlerOptions options)
+  public static NamedObjectFilter<Routine> grepRoutinesFilter(final SchemaCrawlerOptions options)
   {
     if (options != null)
     {
-      final ChainedDatabaseObjectFilter<Table> filter = new ChainedDatabaseObjectFilter<Table>();
+      return new RoutineGrepFilter(options);
+    }
+    else
+    {
+      return new PassthroughFilter<Routine>();
+    }
+  }
+
+  public static NamedObjectFilter<Table> tableInclusionFilter(final SchemaCrawlerOptions options)
+  {
+    if (options != null)
+    {
+      final ChainedNamedObjectFilter<Table> filter = new ChainedNamedObjectFilter<Table>();
       filter
         .add(new InclusionRuleFilter<Table>(options.getTableInclusionRule()));
       return filter;

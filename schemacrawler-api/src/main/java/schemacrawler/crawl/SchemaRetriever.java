@@ -31,6 +31,8 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import schemacrawler.crawl.filter.InclusionRuleFilter;
+import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaReference;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.InformationSchemaViews;
@@ -76,13 +78,12 @@ final class SchemaRetriever
     }
 
     // Filter out schemas
+    final InclusionRuleFilter<Schema> schemaFilter = new InclusionRuleFilter<>(schemaInclusionRule);
     for (final Iterator<SchemaReference> iterator = schemaRefs.iterator(); iterator
       .hasNext();)
     {
       final SchemaReference schemaRef = iterator.next();
-      final String schemaFullName = schemaRef.getFullName();
-      if (schemaInclusionRule != null && schemaFullName != null
-          && !schemaInclusionRule.include(schemaFullName))
+      if (!schemaFilter.include(schemaRef))
       {
         LOGGER.log(Level.FINER, "Dropping schema, since schema is excluded: "
                                 + schemaRef.getFullName());

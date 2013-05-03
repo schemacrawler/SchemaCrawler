@@ -4,7 +4,7 @@ package schemacrawler.crawl.filter;
 import schemacrawler.schema.DatabaseObject;
 
 class PassthroughFilter<D extends DatabaseObject>
-  implements DatabaseObjectFilter<D>
+  implements NamedObjectFilter<D>
 {
 
   @Override
