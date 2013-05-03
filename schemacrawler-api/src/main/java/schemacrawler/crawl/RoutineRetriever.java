@@ -27,8 +27,13 @@ import java.sql.SQLFeatureNotSupportedException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import schemacrawler.crawl.filter.InclusionRuleFilter;
+import schemacrawler.schema.Function;
+import schemacrawler.schema.FunctionColumn;
 import schemacrawler.schema.FunctionColumnType;
 import schemacrawler.schema.FunctionReturnType;
+import schemacrawler.schema.Procedure;
+import schemacrawler.schema.ProcedureColumn;
 import schemacrawler.schema.ProcedureColumnType;
 import schemacrawler.schema.ProcedureReturnType;
 import schemacrawler.schema.Schema;
@@ -68,7 +73,7 @@ final class RoutineRetriever
                           unquotedName(function.getName()),
                           null));)
     {
-
+      final InclusionRuleFilter<FunctionColumn> columnFilter = new InclusionRuleFilter<>(columnInclusionRule);
       while (results.next())
       {
         final String columnCatalogName = quotedName(results
@@ -83,8 +88,7 @@ final class RoutineRetriever
 
         final MutableFunctionColumn column = new MutableFunctionColumn(function,
                                                                        columnName);
-        final String columnFullName = column.getFullName();
-        if (columnInclusionRule.include(columnFullName)
+        if (columnFilter.include(column)
             && function.getName().equals(functionName)
             && belongsToSchema(function, columnCatalogName, schemaName))
         {
@@ -148,7 +152,7 @@ final class RoutineRetriever
     try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
       .getFunctions(unquotedName(catalogName), unquotedName(schemaName), "%"));)
     {
-
+      final InclusionRuleFilter<Function> functionFilter = new InclusionRuleFilter<>(routineInclusionRule);
       while (results.next())
       {
         // "FUNCTION_CAT", "FUNCTION_SCHEM"
@@ -163,7 +167,7 @@ final class RoutineRetriever
         final Schema schema = new SchemaReference(catalogName, schemaName);
         final MutableFunction function = new MutableFunction(schema,
                                                              functionName);
-        if (routineInclusionRule.include(function.getFullName()))
+        if (functionFilter.include(function))
         {
           function.setReturnType(FunctionReturnType.valueOf(functionType));
           function.setSpecificName(specificName);
@@ -193,7 +197,7 @@ final class RoutineRetriever
                            unquotedName(procedure.getName()),
                            null));)
     {
-
+      final InclusionRuleFilter<ProcedureColumn> columnFilter = new InclusionRuleFilter<>(columnInclusionRule);
       while (results.next())
       {
         final String columnCatalogName = quotedName(results
@@ -208,8 +212,7 @@ final class RoutineRetriever
 
         final MutableProcedureColumn column = new MutableProcedureColumn(procedure,
                                                                          columnName);
-        final String columnFullName = column.getFullName();
-        if (columnInclusionRule.include(columnFullName)
+        if (columnFilter.include(column)
             && procedure.getName().equals(procedureName)
             && belongsToSchema(procedure, columnCatalogName, schemaName))
         {
@@ -268,7 +271,7 @@ final class RoutineRetriever
     try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
       .getProcedures(unquotedName(catalogName), unquotedName(schemaName), "%"));)
     {
-
+      final InclusionRuleFilter<Procedure> procedureFilter = new InclusionRuleFilter<>(routineInclusionRule);
       while (results.next())
       {
         // "PROCEDURE_CAT", "PROCEDURE_SCHEM"
@@ -284,7 +287,7 @@ final class RoutineRetriever
         final Schema schema = new SchemaReference(catalogName, schemaName);
         final MutableProcedure procedure = new MutableProcedure(schema,
                                                                 procedureName);
-        if (routineInclusionRule.include(procedure.getFullName()))
+        if (procedureFilter.include(procedure))
         {
           procedure.setReturnType(ProcedureReturnType.valueOf(procedureType));
           procedure.setSpecificName(specificName);

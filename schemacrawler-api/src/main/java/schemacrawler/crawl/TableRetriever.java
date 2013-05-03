@@ -30,6 +30,7 @@ import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import schemacrawler.crawl.filter.InclusionRuleFilter;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ForeignKeyDeferrability;
 import schemacrawler.schema.ForeignKeyUpdateRule;
@@ -99,7 +100,7 @@ final class TableRetriever
                   unquotedName(table.getName()),
                   null));)
     {
-
+      final InclusionRuleFilter<Column> columnFilter = new InclusionRuleFilter<>(columnInclusionRule);
       while (results.next())
       {
         // Get the "COLUMN_DEF" value first as it the Oracle drivers
@@ -119,12 +120,10 @@ final class TableRetriever
         MutableColumn column;
 
         column = lookupOrCreateColumn(table, columnName, false/* add */);
-        final String columnFullName = column.getFullName();
         // Note: If the table name contains an underscore character,
         // this is a wildcard character. We need to do another check to
         // see if the table name matches.
-        if (columnInclusionRule.include(columnFullName)
-            && table.getName().equals(tableName)
+        if (columnFilter.include(column) && table.getName().equals(tableName)
             && belongsToSchema(table, columnCatalogName, schemaName))
         {
           column = lookupOrCreateColumn(table, columnName, true/* add */);
@@ -303,7 +302,7 @@ final class TableRetriever
                  tableNamePattern,
                  toStrings(tableTypes)));)
     {
-
+      final InclusionRuleFilter<Table> tableFilter = new InclusionRuleFilter<>(tableInclusionRule);
       while (results.next())
       {
         // "TABLE_CAT", "TABLE_SCHEM"
@@ -326,7 +325,7 @@ final class TableRetriever
         {
           table = new MutableTable(schema, tableName);
         }
-        if (tableInclusionRule.include(table.getFullName()))
+        if (tableFilter.include(table))
         {
           table.setTableType(tableType);
           table.setRemarks(remarks);

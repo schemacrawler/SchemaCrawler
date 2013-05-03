@@ -27,9 +27,11 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import schemacrawler.crawl.filter.InclusionRuleFilter;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaReference;
+import schemacrawler.schema.Synonym;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import sf.util.Utility;
@@ -70,6 +72,8 @@ final class SynonymRetriever
     {
       return;
     }
+
+    final InclusionRuleFilter<Synonym> synonymInclusionFilter = new InclusionRuleFilter<>(synonymInclusionRule);
 
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
       .getInformationSchemaViews();
@@ -142,7 +146,7 @@ final class SynonymRetriever
         final MutableSynonym synonym = new MutableSynonym(schema, synonymName);
         synonym.setReferencedObject(referencedObject);
 
-        if (synonymInclusionRule.include(synonym.getFullName()))
+        if (synonymInclusionFilter.include(synonym))
         {
           database.addSynonym(synonym);
         }

@@ -25,7 +25,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Logger;
 
-import schemacrawler.crawl.filter.DatabaseObjectFilter;
+import schemacrawler.crawl.filter.NamedObjectFilter;
 import schemacrawler.crawl.filter.FilterFactory;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnReference;
@@ -67,8 +67,8 @@ class TableFilter
   private Collection<MutableTable> doFilter()
   {
     // Filter for grep
-    final DatabaseObjectFilter<Table> grepFilter = FilterFactory
-      .grepFilter(options);
+    final NamedObjectFilter<Table> grepFilter = FilterFactory
+      .grepTablesFilter(options);
     final Set<MutableTable> greppedTables = new HashSet<>();
     for (final MutableTable table: allTables)
     {

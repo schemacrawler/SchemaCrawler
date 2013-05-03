@@ -23,20 +23,20 @@ package schemacrawler.crawl.filter;
 import java.util.ArrayList;
 import java.util.List;
 
-import schemacrawler.schema.DatabaseObject;
+import schemacrawler.schema.NamedObject;
 
-class ChainedDatabaseObjectFilter<D extends DatabaseObject>
-  implements DatabaseObjectFilter<D>
+class ChainedNamedObjectFilter<N extends NamedObject>
+  implements NamedObjectFilter<N>
 {
 
-  private final List<DatabaseObjectFilter<D>> filters = new ArrayList<>();
+  private final List<NamedObjectFilter<N>> filters = new ArrayList<>();
 
   @Override
-  public boolean include(final D databaseObject)
+  public boolean include(final N namedObject)
   {
-    for (final DatabaseObjectFilter<D> filter: filters)
+    for (final NamedObjectFilter<N> filter: filters)
     {
-      if (filter.include(databaseObject))
+      if (filter.include(namedObject))
       {
         return true;
       }
@@ -44,7 +44,7 @@ class ChainedDatabaseObjectFilter<D extends DatabaseObject>
     return false;
   }
 
-  void add(final DatabaseObjectFilter<D> filter)
+  void add(final NamedObjectFilter<N> filter)
   {
     if (filter != null)
     {
