@@ -30,7 +30,7 @@ import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.crawl.filter.InclusionRuleFilter;
+import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ForeignKeyDeferrability;
 import schemacrawler.schema.ForeignKeyUpdateRule;

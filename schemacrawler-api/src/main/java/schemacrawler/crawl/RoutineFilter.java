@@ -24,8 +24,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import schemacrawler.crawl.filter.FilterFactory;
-import schemacrawler.crawl.filter.NamedObjectFilter;
+import schemacrawler.filter.FilterFactory;
+import schemacrawler.filter.NamedObjectFilter;
 import schemacrawler.schema.Routine;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 

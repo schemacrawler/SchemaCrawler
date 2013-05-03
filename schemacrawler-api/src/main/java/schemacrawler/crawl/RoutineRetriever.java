@@ -27,7 +27,7 @@ import java.sql.SQLFeatureNotSupportedException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.crawl.filter.InclusionRuleFilter;
+import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.schema.Function;
 import schemacrawler.schema.FunctionColumn;
 import schemacrawler.schema.FunctionColumnType;

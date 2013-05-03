@@ -1,4 +1,4 @@
-package schemacrawler.crawl.filter;
+package schemacrawler.filter;
 
 
 import schemacrawler.schema.DatabaseObject;

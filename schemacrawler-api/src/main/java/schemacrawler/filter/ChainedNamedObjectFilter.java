@@ -17,14 +17,39 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.crawl.filter;
+package schemacrawler.filter;
 
+
+import java.util.ArrayList;
+import java.util.List;
 
 import schemacrawler.schema.NamedObject;
 
-public interface NamedObjectFilter<N extends NamedObject>
+class ChainedNamedObjectFilter<N extends NamedObject>
+  implements NamedObjectFilter<N>
 {
 
-  boolean include(N namedObject);
+  private final List<NamedObjectFilter<N>> filters = new ArrayList<>();
+
+  @Override
+  public boolean include(final N namedObject)
+  {
+    for (final NamedObjectFilter<N> filter: filters)
+    {
+      if (filter.include(namedObject))
+      {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  void add(final NamedObjectFilter<N> filter)
+  {
+    if (filter != null)
+    {
+      filters.add(filter);
+    }
+  }
 
 }
