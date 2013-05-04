@@ -42,16 +42,17 @@ final class MutableIndexColumn
       return -1;
     }
 
-    final MutableIndexColumn other = (MutableIndexColumn) obj;
     int comparison = 0;
+
+    if (obj instanceof MutableIndexColumn)
+    {
+      final MutableIndexColumn other = (MutableIndexColumn) obj;
+      comparison = indexOrdinalPosition - other.indexOrdinalPosition;
+    }
 
     if (comparison == 0)
     {
-      comparison = indexOrdinalPosition - other.indexOrdinalPosition;
-    }
-    if (comparison == 0)
-    {
-      comparison = super.compareTo(other);
+      comparison = super.compareTo(obj);
     }
 
     return comparison;

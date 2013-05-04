@@ -24,6 +24,7 @@ package schemacrawler.crawl;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -86,6 +87,8 @@ final class SynonymRetriever
     final String synonymsDefinitionSql = informationSchemaViews
       .getSynonymsSql();
 
+    final Collection<Schema> schemas = database.getSchemaNames();
+
     final Connection connection = getDatabaseConnection();
 
     try (final Statement statement = connection.createStatement();
@@ -116,6 +119,13 @@ final class SynonymRetriever
         }
 
         final Schema schema = new SchemaReference(catalogName, schemaName);
+        final Schema referencedSchema = new SchemaReference(referencedObjectCatalogName,
+                                                            referencedObjectSchemaName);
+        if (!schemas.contains(schema) && !schemas.contains(referencedSchema))
+        {
+          continue;
+        }
+
         final MutableTable referencedTable = lookupTable(referencedObjectCatalogName,
                                                          referencedObjectSchemaName,
                                                          referencedObjectName);
@@ -134,8 +144,7 @@ final class SynonymRetriever
         }
         else
         {
-          referencedObject = new AbstractDatabaseObject(new SchemaReference(referencedObjectCatalogName,
-                                                                            referencedObjectSchemaName),
+          referencedObject = new AbstractDatabaseObject(referencedSchema,
             referencedObjectName)
           {
 
