@@ -147,7 +147,7 @@ abstract class AbstractColumn<P extends DatabaseObject>
       return "";
     }
 
-    if (size == 0 || size == Integer.MIN_VALUE || size == Integer.MAX_VALUE)
+    if (size < 0 || size >= 2_000_000_000)
     {
       return "";
     }
