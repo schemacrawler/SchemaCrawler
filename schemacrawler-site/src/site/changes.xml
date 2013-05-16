@@ -5,12 +5,15 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-    <release version="10.2" date="2013-04-21">
+    <release version="10.2" date="2013-05-21">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         New option to set output encoding format. The option is
         "schemacrawler.encoding.output" in the SchemaCrawler properties file. Default input
         and output encoding has been changed to UTF-8.
-      ]]></action>                            
+      ]]></action> 
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Support for showing trigger information in Sqlite.
+      ]]></action>                                  
     </release>   
     <release version="10.1" date="2013-04-21">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
