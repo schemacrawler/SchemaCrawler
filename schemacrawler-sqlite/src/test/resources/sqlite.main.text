@@ -27,7 +27,7 @@ JDBC Driver Information
 driver name                               SQLiteJDBC                    
 driver version                            native                        
 driver class name                         org.sqlite.JDBC               
-url                                       jdbc:sqlite:C:\Users\SUALEH~1\AppData\Local\Temp\SchemaCrawler1344276778399797224.dat
+url                                       jdbc:sqlite:C:\Users\SUALEH~1\AppData\Local\Temp\SchemaCrawler1721793654458555040.dat
 is JDBC compliant                         false                         
 
 
@@ -151,14 +151,14 @@ Authors
 ------------------------------------------------------------------------
                                                                  [table]
   Id                                INTEGER not null            
-  FirstName                         VARCHAR(20)(2000000000) not null
-  LastName                          VARCHAR(20)(2000000000) not null
-  Address1                          VARCHAR(255)(2000000000)    
-  Address2                          VARCHAR(255)(2000000000)    
-  City                              VARCHAR(50)(2000000000)     
-  State                             VARCHAR(2)(2000000000)      
-  PostalCode                        VARCHAR(10)(2000000000)     
-  Country                           VARCHAR(50)(2000000000)     
+  FirstName                         VARCHAR(20) not null        
+  LastName                          VARCHAR(20) not null        
+  Address1                          VARCHAR(255)                
+  Address2                          VARCHAR(255)                
+  City                              VARCHAR(50)                 
+  State                             VARCHAR(2)                  
+  PostalCode                        VARCHAR(10)                 
+  Country                           VARCHAR(50)                 
 
 PK_Authors                                                 [primary key]
   Id                                ascending                   
@@ -176,17 +176,23 @@ IDX_A_Authors                                         [non-unique index]
   PostalCode                        unknown                     
   Country                           unknown                     
 
+TRG_Authors                             [trigger, after delete, per row]
+  CREATE TRIGGER TRG_Authors AFTER DELETE ON Authors FOR EACH ROW 
+BEGIN
+UPDATE Publishers SET Publisher = 'Jacob' WHERE Publisher = 'John';
+END
+
 
 
 Books
 ------------------------------------------------------------------------
                                                                  [table]
   Id                                INTEGER not null            
-  Title                             VARCHAR(255)(2000000000) not null
-  Description                       VARCHAR(255)(2000000000)    
+  Title                             VARCHAR(255) not null       
+  Description                       VARCHAR(255)                
   PublisherId                       INTEGER not null            
-  PublicationDate                   DATE(2000000000)            
-  Price                             FLOAT(2000000000, 10)       
+  PublicationDate                   DATE                        
+  Price                             FLOAT                       
 
 PK_Books                                                   [primary key]
   Id                                ascending                   
@@ -207,7 +213,7 @@ Publishers
 ------------------------------------------------------------------------
                                                                  [table]
   Id                                INTEGER not null            
-  Publisher                         VARCHAR(255)(2000000000)    
+  Publisher                         VARCHAR(255)                
 
 PK_Publishers                                              [primary key]
   Id                                ascending                   
@@ -219,7 +225,7 @@ BookAuthors
                                                                  [table]
   BookId                            INTEGER not null            
   AuthorId                          INTEGER not null            
-  "UPDATE"                          CLOB(2000000000)            
+  "UPDATE"                          CLOB                        
 
 SC_1D623CC1_CA52CC35                       [foreign key, with no action]
   Authors.Id --> AuthorId                                       
@@ -237,8 +243,8 @@ AuthorsList
 ------------------------------------------------------------------------
                                                                   [view]
   Id                                INTEGER                     
-  FirstName                         VARCHAR(20)(2000000000)     
-  LastName                          VARCHAR(20)(2000000000)     
+  FirstName                         VARCHAR(20)                 
+  LastName                          VARCHAR(20)                 
 
                                                             [definition]
 CREATE VIEW AuthorsList AS SELECT Id, FirstName, LastName FROM Authors
