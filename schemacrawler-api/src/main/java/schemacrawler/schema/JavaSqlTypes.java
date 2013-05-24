@@ -18,7 +18,7 @@
  *
  */
 
-package schemacrawler.crawl;
+package schemacrawler.schema;
 
 
 import java.lang.reflect.Field;
@@ -32,7 +32,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.crawl.JavaSqlType.JavaSqlTypeGroup;
+import schemacrawler.schema.JavaSqlType.JavaSqlTypeGroup;
 import sf.util.Utility;
 
 /**
@@ -46,13 +46,6 @@ public final class JavaSqlTypes
 
   private static final Logger LOGGER = Logger.getLogger(JavaSqlTypes.class
     .getName());
-
-  private static final Map<Integer, JavaSqlType> JAVA_SQL_TYPES_BY_TYPE;
-
-  static
-  {
-    JAVA_SQL_TYPES_BY_TYPE = mapJavaSqlTypes();
-  }
 
   private static Map<String, JavaSqlTypeGroup> createJavaSqlTypesGroupsMap()
   {
@@ -146,8 +139,11 @@ public final class JavaSqlTypes
     return Collections.unmodifiableMap(javaSqlTypes);
   }
 
-  private JavaSqlTypes()
+  private final Map<Integer, JavaSqlType> javaSqlTypeMap;
+
+  public JavaSqlTypes()
   {
+    javaSqlTypeMap = mapJavaSqlTypes();
   }
 
   @Override
@@ -159,31 +155,31 @@ public final class JavaSqlTypes
   @Override
   public boolean containsKey(final Object key)
   {
-    return JAVA_SQL_TYPES_BY_TYPE.containsKey(key);
+    return javaSqlTypeMap.containsKey(key);
   }
 
   @Override
   public boolean containsValue(final Object value)
   {
-    return JAVA_SQL_TYPES_BY_TYPE.containsValue(value);
+    return javaSqlTypeMap.containsValue(value);
   }
 
   @Override
   public Set<java.util.Map.Entry<Integer, JavaSqlType>> entrySet()
   {
-    return new HashSet<>(JAVA_SQL_TYPES_BY_TYPE.entrySet());
+    return new HashSet<>(javaSqlTypeMap.entrySet());
   }
 
   @Override
   public boolean equals(final Object o)
   {
-    return JAVA_SQL_TYPES_BY_TYPE.equals(o);
+    return javaSqlTypeMap.equals(o);
   }
 
   @Override
   public JavaSqlType get(final Object key)
   {
-    JavaSqlType sqlDataType = JAVA_SQL_TYPES_BY_TYPE.get(key);
+    JavaSqlType sqlDataType = javaSqlTypeMap.get(key);
     if (sqlDataType == null)
     {
       sqlDataType = JavaSqlType.UNKNOWN;
@@ -207,7 +203,7 @@ public final class JavaSqlTypes
       return sqlDataType;
     }
 
-    for (final JavaSqlType javaSqlType: JAVA_SQL_TYPES_BY_TYPE.values())
+    for (final JavaSqlType javaSqlType: javaSqlTypeMap.values())
     {
       if (typeName.equals(javaSqlType.getJavaSqlTypeName()))
       {
@@ -221,19 +217,19 @@ public final class JavaSqlTypes
   @Override
   public int hashCode()
   {
-    return JAVA_SQL_TYPES_BY_TYPE.hashCode();
+    return javaSqlTypeMap.hashCode();
   }
 
   @Override
   public boolean isEmpty()
   {
-    return JAVA_SQL_TYPES_BY_TYPE.isEmpty();
+    return javaSqlTypeMap.isEmpty();
   }
 
   @Override
   public Set<Integer> keySet()
   {
-    return new HashSet<>(JAVA_SQL_TYPES_BY_TYPE.keySet());
+    return new HashSet<>(javaSqlTypeMap.keySet());
   }
 
   @Override
@@ -257,13 +253,13 @@ public final class JavaSqlTypes
   @Override
   public int size()
   {
-    return JAVA_SQL_TYPES_BY_TYPE.size();
+    return javaSqlTypeMap.size();
   }
 
   @Override
   public Collection<JavaSqlType> values()
   {
-    return new HashSet<>(JAVA_SQL_TYPES_BY_TYPE.values());
+    return new HashSet<>(javaSqlTypeMap.values());
   }
 
 }

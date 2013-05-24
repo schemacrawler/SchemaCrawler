@@ -113,6 +113,15 @@ public interface ColumnDataType
    * 
    * @return java.sql.Types type
    */
+  JavaSqlType getJavaSqlType();
+
+  /**
+   * Gets the java.sql.Types type.
+   * 
+   * @return java.sql.Types type
+   * @see #getJavaSqlType()
+   */
+  @Deprecated
   int getType();
 
   /**
@@ -126,7 +135,9 @@ public interface ColumnDataType
    * Gets the java.sql.Types type name.
    * 
    * @return java.sql.Types type name
+   * @see #getJavaSqlType()
    */
+  @Deprecated
   String getTypeName();
 
   /**

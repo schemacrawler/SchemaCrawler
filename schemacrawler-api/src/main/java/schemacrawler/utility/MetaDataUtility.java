@@ -21,9 +21,9 @@
 package schemacrawler.utility;
 
 
-import schemacrawler.crawl.JavaSqlType;
-import schemacrawler.crawl.JavaSqlTypes;
 import schemacrawler.schema.Column;
+import schemacrawler.schema.JavaSqlType;
+import schemacrawler.schema.JavaSqlTypes;
 
 /**
  * SchemaCrawler utility methods.
@@ -71,32 +71,6 @@ public final class MetaDataUtility
     {
       return Connectivity.zero_many;
     }
-  }
-
-  /**
-   * Lookup java.sql.Types type, and return more detailed information,
-   * including the mapped Java class.
-   * 
-   * @param type
-   *        java.sql.Types type
-   * @return JavaSqlType type
-   */
-  public static JavaSqlType lookupSqlDataType(final int type)
-  {
-    return JavaSqlTypes.lookupJavaSqlType(type);
-  }
-
-  /**
-   * Lookup java.sql.Types type, and return more detailed information,
-   * including the mapped Java class.
-   * 
-   * @param typeName
-   *        java.sql.Types type name
-   * @return JavaSqlType type
-   */
-  public static JavaSqlType lookupSqlDataType(final String typeName)
-  {
-    return JavaSqlTypes.lookupJavaSqlType(typeName);
   }
 
   private MetaDataUtility()

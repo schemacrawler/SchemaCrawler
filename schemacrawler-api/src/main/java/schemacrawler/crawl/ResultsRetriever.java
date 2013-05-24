@@ -84,10 +84,12 @@ final class ResultsRetriever
 
       final String databaseSpecificTypeName = resultsMetaData
         .getColumnTypeName(i);
-      final MutableColumnDataType columnDataType = new MutableColumnDataType(schema,
-                                                                             databaseSpecificTypeName);
-      columnDataType.setType(resultsMetaData.getColumnType(i),
-                             resultsMetaData.getColumnClassName(i));
+      final int javaSqlType = resultsMetaData.getColumnType(i);
+      final String columnClassName = resultsMetaData.getColumnClassName(i);
+      final MutableColumnDataType columnDataType = lookupOrCreateColumnDataType(schema,
+                                                                                javaSqlType,
+                                                                                databaseSpecificTypeName,
+                                                                                columnClassName);
       columnDataType.setPrecision(resultsMetaData.getPrecision(i));
       final int scale = resultsMetaData.getScale(i);
       columnDataType.setMaximumScale(scale);
