@@ -21,6 +21,7 @@
 package schemacrawler.schemacrawler;
 
 
+import java.sql.DatabaseMetaData;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,6 +46,7 @@ public final class InformationSchemaViews
   private static final String KEY_INFORMATION_SCHEMA_CHECK_CONSTRAINTS = "select.INFORMATION_SCHEMA.CHECK_CONSTRAINTS";
   private static final String KEY_INFORMATION_SCHEMA_SCHEMATA = "select.INFORMATION_SCHEMA.SCHEMATA";
   private static final String KEY_INFORMATION_SCHEMA_SYNONYMS = "select.INFORMATION_SCHEMA.SYNONYMS";
+  private static final String KEY_OVERRIDE_TYPE_INFO = "select.OVERRIDE_TYPE_INFO";
   private static final String KEY_ADDITIONAL_TABLE_ATTRIBUTES = "select.ADDITIONAL_TABLE_ATTRIBUTES";
   private static final String KEY_ADDITIONAL_COLUMN_ATTRIBUTES = "select.ADDITIONAL_COLUMN_ATTRIBUTES";
 
@@ -77,6 +79,7 @@ public final class InformationSchemaViews
           KEY_INFORMATION_SCHEMA_CHECK_CONSTRAINTS,
           KEY_INFORMATION_SCHEMA_SCHEMATA,
           KEY_INFORMATION_SCHEMA_SYNONYMS,
+          KEY_OVERRIDE_TYPE_INFO,
           KEY_ADDITIONAL_TABLE_ATTRIBUTES,
           KEY_ADDITIONAL_COLUMN_ATTRIBUTES
       };
@@ -130,6 +133,17 @@ public final class InformationSchemaViews
   {
     return informationSchemaQueries
       .get(KEY_INFORMATION_SCHEMA_CHECK_CONSTRAINTS);
+  }
+
+  /**
+   * SQL that overrides DatabaseMetaData#getTypeInfo().
+   * {@link DatabaseMetaData#getTypeInfo()}
+   * 
+   * @return SQL that overrides DatabaseMetaData#getTypeInfo().
+   */
+  public String getOverrideTypeInfoSql()
+  {
+    return informationSchemaQueries.get(KEY_OVERRIDE_TYPE_INFO);
   }
 
   /**
@@ -211,6 +225,11 @@ public final class InformationSchemaViews
       .containsKey(KEY_INFORMATION_SCHEMA_CHECK_CONSTRAINTS);
   }
 
+  public boolean hasOverrideTypeInfoSql()
+  {
+    return informationSchemaQueries.containsKey(KEY_OVERRIDE_TYPE_INFO);
+  }
+
   public boolean hasRoutinesSql()
   {
     return informationSchemaQueries
@@ -277,6 +296,18 @@ public final class InformationSchemaViews
   public void setCheckConstraintsSql(final String sql)
   {
     informationSchemaQueries.put(KEY_INFORMATION_SCHEMA_CHECK_CONSTRAINTS, sql);
+  }
+
+  /**
+   * Sets SQL that overrides DatabaseMetaData#getTypeInfo().
+   * {@link DatabaseMetaData#getTypeInfo()}.
+   * 
+   * @param sql
+   *        SQL that overrides DatabaseMetaData#getTypeInfo().
+   */
+  public void setOverrideTypeInfoSql(final String sql)
+  {
+    informationSchemaQueries.put(KEY_OVERRIDE_TYPE_INFO, sql);
   }
 
   /**

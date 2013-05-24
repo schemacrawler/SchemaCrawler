@@ -364,7 +364,7 @@ final class MutableColumnDataType
   void setType(final int type, final String typeClassName)
   {
     setTypeFromJavaSqlType(JavaSqlTypesUtility.lookupSqlDataType(type));
-    if (javaSqlTypeMappedClassName == null && !Utility.isBlank(typeClassName))
+    if (!Utility.isBlank(typeClassName))
     {
       javaSqlTypeMappedClassName = typeClassName;
     }
