@@ -47,9 +47,10 @@ final class MutableColumnDataType
     .getName());
 
   private JavaSqlType javaSqlType;
-  private Class<?> javaSqlTypeMappedClass;
 
+  private Class<?> javaSqlTypeMappedClass;
   private boolean userDefined;
+
   private long precision;
   private String literalPrefix;
   private String literalSuffix;
@@ -209,9 +210,17 @@ final class MutableColumnDataType
    * @see schemacrawler.schema.ColumnDataType#getType()
    */
   @Override
+  @Deprecated
   public int getType()
   {
     return javaSqlType.getJavaSqlType();
+  }
+
+  @Override
+  @Deprecated
+  public String getTypeClassName()
+  {
+    return getTypeMappedClass().getCanonicalName();
   }
 
   /**
@@ -231,6 +240,7 @@ final class MutableColumnDataType
    * @see schemacrawler.schema.ColumnDataType#getTypeName()
    */
   @Override
+  @Deprecated
   public String getTypeName()
   {
     return javaSqlType.getJavaSqlTypeName();
@@ -404,7 +414,7 @@ final class MutableColumnDataType
       {
         javaSqlTypeMappedClass = Class.forName(mappedClassName);
       }
-      catch (ClassNotFoundException e)
+      catch (final ClassNotFoundException e)
       {
         LOGGER.log(Level.FINE, "Could not load mapped class, "
                                + mappedClassName, e);
