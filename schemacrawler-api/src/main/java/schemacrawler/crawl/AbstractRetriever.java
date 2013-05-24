@@ -30,8 +30,10 @@ import java.util.Collection;
 import java.util.List;
 
 import schemacrawler.schema.DatabaseObject;
+import schemacrawler.schema.JavaSqlType;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaReference;
+import schemacrawler.utility.TypeMap;
 import sf.util.Utility;
 
 /**
@@ -181,14 +183,14 @@ abstract class AbstractRetriever
    * 
    * @param schema
    *        Schema
-   * @param javaSqlType
+   * @param javaSqlTypeInt
    *        JDBC data type
    * @param databaseSpecificTypeName
    *        Database specific type name
    * @return Column data type
    */
   MutableColumnDataType lookupOrCreateColumnDataType(final Schema schema,
-                                                     final int javaSqlType,
+                                                     final int javaSqlTypeInt,
                                                      final String databaseSpecificTypeName,
                                                      final String mappedClassName)
   {
@@ -204,12 +206,22 @@ abstract class AbstractRetriever
     {
       columnDataType = new MutableColumnDataType(schema,
                                                  databaseSpecificTypeName);
-      columnDataType.setJavaSqlType(retrieverConnection.getJavaSqlTypes()
-        .get(javaSqlType));
+      final JavaSqlType javaSqlType = retrieverConnection.getJavaSqlTypes()
+        .get(javaSqlTypeInt);
+      columnDataType.setJavaSqlType(javaSqlType);
       if (Utility.isBlank(mappedClassName))
       {
-        columnDataType.setTypeMappedClass(retrieverConnection.getTypeMap()
-          .get(databaseSpecificTypeName));
+        final TypeMap typeMap = retrieverConnection.getTypeMap();
+        final Class<?> mappedClass;
+        if (typeMap.containsKey(databaseSpecificTypeName))
+        {
+          mappedClass = typeMap.get(databaseSpecificTypeName);
+        }
+        else
+        {
+          mappedClass = typeMap.get(javaSqlType.getJavaSqlTypeName());
+        }
+        columnDataType.setTypeMappedClass(mappedClass);
       }
       else
       {
