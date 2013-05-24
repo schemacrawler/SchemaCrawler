@@ -51,7 +51,6 @@ public final class JavaSqlType
 
   private final int javaSqlType;
   private final String javaSqlTypeName;
-  private final Class<?> javaSqlTypeMappedClass;
   private final JavaSqlTypeGroup javaSqlTypeGroup;
 
   /**
@@ -59,18 +58,15 @@ public final class JavaSqlType
    */
   static final JavaSqlType UNKNOWN = new JavaSqlType(Integer.MAX_VALUE,
                                                      "<UNKNOWN>",
-                                                     null,
                                                      JavaSqlTypeGroup.unknown);
 
   JavaSqlType(final int javaSqlType,
               final String javaSqlTypeName,
-              final Class<?> javaSqlTypeMappedClass,
               final JavaSqlTypeGroup javaSqlTypeGroup)
   {
     this.javaSqlType = javaSqlType;
     this.javaSqlTypeName = javaSqlTypeName;
     this.javaSqlTypeGroup = javaSqlTypeGroup;
-    this.javaSqlTypeMappedClass = javaSqlTypeMappedClass;
   }
 
   @Override
@@ -110,17 +106,6 @@ public final class JavaSqlType
     {
       return false;
     }
-    if (javaSqlTypeMappedClass == null)
-    {
-      if (other.javaSqlTypeMappedClass != null)
-      {
-        return false;
-      }
-    }
-    else if (!javaSqlTypeMappedClass.equals(other.javaSqlTypeMappedClass))
-    {
-      return false;
-    }
     if (javaSqlTypeName == null)
     {
       if (other.javaSqlTypeName != null)
@@ -150,11 +135,6 @@ public final class JavaSqlType
     return javaSqlTypeGroup;
   }
 
-  public Class<?> getJavaSqlTypeMappedClass()
-  {
-    return javaSqlTypeMappedClass;
-  }
-
   /**
    * The java.sql.Types type name.
    * 
@@ -173,10 +153,6 @@ public final class JavaSqlType
     result = prime * result + javaSqlType;
     result = prime * result
              + (javaSqlTypeGroup == null? 0: javaSqlTypeGroup.hashCode());
-    result = prime
-             * result
-             + (javaSqlTypeMappedClass == null? 0: javaSqlTypeMappedClass
-               .hashCode());
     result = prime * result
              + (javaSqlTypeName == null? 0: javaSqlTypeName.hashCode());
     return result;
@@ -188,7 +164,6 @@ public final class JavaSqlType
     return String.format("%s\t%d\t%s\t%s",
                          javaSqlTypeName,
                          javaSqlType,
-                         javaSqlTypeMappedClass,
                          javaSqlTypeGroup);
   }
 
