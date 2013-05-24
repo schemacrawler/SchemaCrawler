@@ -21,6 +21,9 @@
 package schemacrawler.crawl;
 
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SearchableType;
@@ -39,10 +42,13 @@ final class MutableColumnDataType
 
   private static final long serialVersionUID = 3688503281676530744L;
 
+  private static final Logger LOGGER = Logger
+    .getLogger(MutableColumnDataType.class.getName());
+
   // Fields related to the java.sql.Types type
   private int javaSqlType;
   private String javaSqlTypeName;
-  private String javaSqlTypeMappedClassName;
+  private Class<?> javaSqlTypeMappedClass;
 
   // Other fields
   private boolean userDefined;
@@ -206,12 +212,12 @@ final class MutableColumnDataType
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schema.ColumnDataType#getTypeClassName()
+   * @see schemacrawler.schema.ColumnDataType#getTypeMappedClass()
    */
   @Override
-  public String getTypeClassName()
+  public Class<?> getTypeMappedClass()
   {
-    return javaSqlTypeMappedClassName;
+    return javaSqlTypeMappedClass;
   }
 
   /**
@@ -366,7 +372,14 @@ final class MutableColumnDataType
     setTypeFromJavaSqlType(JavaSqlTypesUtility.lookupSqlDataType(type));
     if (!Utility.isBlank(typeClassName))
     {
-      javaSqlTypeMappedClassName = typeClassName;
+      try
+      {
+        javaSqlTypeMappedClass = Class.forName(typeClassName);
+      }
+      catch (final Exception e)
+      {
+        LOGGER.log(Level.FINE, "Could not load class " + typeClassName, e);
+      }
     }
   }
 
@@ -386,7 +399,7 @@ final class MutableColumnDataType
     {
       this.javaSqlType = javaSqlType.getJavaSqlType();
       javaSqlTypeName = javaSqlType.getJavaSqlTypeName();
-      javaSqlTypeMappedClassName = javaSqlType.getJavaSqlTypeMappedClassName();
+      javaSqlTypeMappedClass = javaSqlType.getJavaSqlTypeMappedClass();
     }
   }
 

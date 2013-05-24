@@ -937,7 +937,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           </schema>
           <javaSqlType>-5</javaSqlType>
           <javaSqlTypeName>BIGINT</javaSqlTypeName>
-          <javaSqlTypeMappedClassName>java.lang.Long</javaSqlTypeMappedClassName>
+          <javaSqlTypeMappedClass>java.lang.Long</javaSqlTypeMappedClass>
           <userDefined>false</userDefined>
           <precision>64</precision>
           <nullable>true</nullable>
@@ -972,7 +972,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           <schema class="schema" reference="204"/>
           <javaSqlType>-2</javaSqlType>
           <javaSqlTypeName>BINARY</javaSqlTypeName>
-          <javaSqlTypeMappedClassName>byte[]</javaSqlTypeMappedClassName>
+          <javaSqlTypeMappedClass>[B</javaSqlTypeMappedClass>
           <userDefined>false</userDefined>
           <precision>2147483647</precision>
           <literalPrefix>&apos;</literalPrefix>
@@ -1010,7 +1010,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           <schema class="schema" reference="204"/>
           <javaSqlType>-7</javaSqlType>
           <javaSqlTypeName>BIT</javaSqlTypeName>
-          <javaSqlTypeMappedClassName>java.lang.Boolean</javaSqlTypeMappedClassName>
+          <javaSqlTypeMappedClass>java.lang.Boolean</javaSqlTypeMappedClass>
           <userDefined>false</userDefined>
           <precision>1024</precision>
           <literalPrefix>&apos;</literalPrefix>
@@ -1048,7 +1048,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           <schema class="schema" reference="204"/>
           <javaSqlType>2004</javaSqlType>
           <javaSqlTypeName>BLOB</javaSqlTypeName>
-          <javaSqlTypeMappedClassName>java.sql.Blob</javaSqlTypeMappedClassName>
+          <javaSqlTypeMappedClass>java.sql.Blob</javaSqlTypeMappedClass>
           <userDefined>false</userDefined>
           <precision>2147483647</precision>
           <literalPrefix>&apos;</literalPrefix>
@@ -1086,7 +1086,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           <schema class="schema" reference="204"/>
           <javaSqlType>16</javaSqlType>
           <javaSqlTypeName>BOOLEAN</javaSqlTypeName>
-          <javaSqlTypeMappedClassName>java.lang.Boolean</javaSqlTypeMappedClassName>
+          <javaSqlTypeMappedClass>java.lang.Boolean</javaSqlTypeMappedClass>
           <userDefined>false</userDefined>
           <precision>0</precision>
           <nullable>true</nullable>
@@ -1121,7 +1121,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           <schema class="schema" reference="204"/>
           <javaSqlType>1</javaSqlType>
           <javaSqlTypeName>CHAR</javaSqlTypeName>
-          <javaSqlTypeMappedClassName>java.lang.String</javaSqlTypeMappedClassName>
+          <javaSqlTypeMappedClass>java.lang.String</javaSqlTypeMappedClass>
           <userDefined>false</userDefined>
           <precision>2147483647</precision>
           <literalPrefix>&apos;</literalPrefix>
@@ -1159,7 +1159,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           <schema class="schema" reference="204"/>
           <javaSqlType>2005</javaSqlType>
           <javaSqlTypeName>CLOB</javaSqlTypeName>
-          <javaSqlTypeMappedClassName>java.sql.Clob</javaSqlTypeMappedClassName>
+          <javaSqlTypeMappedClass>java.sql.Clob</javaSqlTypeMappedClass>
           <userDefined>false</userDefined>
           <precision>2147483647</precision>
           <literalPrefix>&apos;</literalPrefix>
@@ -1197,7 +1197,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           <schema class="schema" reference="204"/>
           <javaSqlType>91</javaSqlType>
           <javaSqlTypeName>DATE</javaSqlTypeName>
-          <javaSqlTypeMappedClassName>java.sql.Date</javaSqlTypeMappedClassName>
+          <javaSqlTypeMappedClass>java.sql.Date</javaSqlTypeMappedClass>
           <userDefined>false</userDefined>
           <precision>0</precision>
           <literalPrefix>&apos;</literalPrefix>
@@ -1234,7 +1234,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           <schema class="schema" reference="204"/>
           <javaSqlType>3</javaSqlType>
           <javaSqlTypeName>DECIMAL</javaSqlTypeName>
-          <javaSqlTypeMappedClassName>java.math.BigDecimal</javaSqlTypeMappedClassName>
+          <javaSqlTypeMappedClass>java.math.BigDecimal</javaSqlTypeMappedClass>
           <userDefined>false</userDefined>
           <precision>2147483647</precision>
           <createParameters>PRECISION,SCALE</createParameters>
@@ -1270,7 +1270,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           <schema class="schema" reference="204"/>
           <javaSqlType>8</javaSqlType>
           <javaSqlTypeName>DOUBLE</javaSqlTypeName>
-          <javaSqlTypeMappedClassName>java.lang.Double</javaSqlTypeMappedClassName>
+          <javaSqlTypeMappedClass>java.lang.Double</javaSqlTypeMappedClass>
           <userDefined>false</userDefined>
           <precision>64</precision>
           <nullable>true</nullable>
@@ -1305,7 +1305,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           <schema class="schema" reference="204"/>
           <javaSqlType>8</javaSqlType>
           <javaSqlTypeName>DOUBLE</javaSqlTypeName>
-          <javaSqlTypeMappedClassName>java.lang.Double</javaSqlTypeMappedClassName>
+          <javaSqlTypeMappedClass>java.lang.Double</javaSqlTypeMappedClass>
           <userDefined>false</userDefined>
           <precision>64</precision>
           <nullable>true</nullable>
@@ -1340,7 +1340,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           <schema class="schema" reference="204"/>
           <javaSqlType>4</javaSqlType>
           <javaSqlTypeName>INTEGER</javaSqlTypeName>
-          <javaSqlTypeMappedClassName>java.lang.Integer</javaSqlTypeMappedClassName>
+          <javaSqlTypeMappedClass>java.lang.Integer</javaSqlTypeMappedClass>
           <userDefined>false</userDefined>
           <precision>32</precision>
           <nullable>true</nullable>
@@ -1375,7 +1375,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           <schema class="schema" reference="204"/>
           <javaSqlType>2</javaSqlType>
           <javaSqlTypeName>NUMERIC</javaSqlTypeName>
-          <javaSqlTypeMappedClassName>java.math.BigDecimal</javaSqlTypeMappedClassName>
+          <javaSqlTypeMappedClass>java.math.BigDecimal</javaSqlTypeMappedClass>
           <userDefined>false</userDefined>
           <precision>2147483647</precision>
           <createParameters>PRECISION,SCALE</createParameters>
@@ -1411,7 +1411,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           <schema class="schema" reference="204"/>
           <javaSqlType>12</javaSqlType>
           <javaSqlTypeName>VARCHAR</javaSqlTypeName>
-          <javaSqlTypeMappedClassName>java.lang.String</javaSqlTypeMappedClassName>
+          <javaSqlTypeMappedClass>java.lang.String</javaSqlTypeMappedClass>
           <userDefined>false</userDefined>
           <precision>2147483647</precision>
           <literalPrefix>&apos;</literalPrefix>
@@ -1449,7 +1449,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           <schema class="schema" reference="204"/>
           <javaSqlType>1111</javaSqlType>
           <javaSqlTypeName>OTHER</javaSqlTypeName>
-          <javaSqlTypeMappedClassName>java.lang.Object</javaSqlTypeMappedClassName>
+          <javaSqlTypeMappedClass>java.lang.Object</javaSqlTypeMappedClass>
           <userDefined>false</userDefined>
           <precision>0</precision>
           <nullable>true</nullable>
@@ -1475,7 +1475,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           </schema>
           <javaSqlType>12</javaSqlType>
           <javaSqlTypeName>VARCHAR</javaSqlTypeName>
-          <javaSqlTypeMappedClassName>java.lang.String</javaSqlTypeMappedClassName>
+          <javaSqlTypeMappedClass>java.lang.String</javaSqlTypeMappedClass>
           <userDefined>false</userDefined>
           <precision>0</precision>
           <createParameters></createParameters>
@@ -1502,7 +1502,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           </schema>
           <javaSqlType>2003</javaSqlType>
           <javaSqlTypeName>ARRAY</javaSqlTypeName>
-          <javaSqlTypeMappedClassName>java.sql.Array</javaSqlTypeMappedClassName>
+          <javaSqlTypeMappedClass>java.sql.Array</javaSqlTypeMappedClass>
           <userDefined>false</userDefined>
           <precision>0</precision>
           <createParameters></createParameters>
@@ -1538,7 +1538,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           <schema class="schema" reference="204"/>
           <javaSqlType>8</javaSqlType>
           <javaSqlTypeName>DOUBLE</javaSqlTypeName>
-          <javaSqlTypeMappedClassName>java.lang.Double</javaSqlTypeMappedClassName>
+          <javaSqlTypeMappedClass>java.lang.Double</javaSqlTypeMappedClass>
           <userDefined>false</userDefined>
           <precision>64</precision>
           <nullable>true</nullable>
@@ -1573,7 +1573,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           <schema class="schema" reference="204"/>
           <javaSqlType>5</javaSqlType>
           <javaSqlTypeName>SMALLINT</javaSqlTypeName>
-          <javaSqlTypeMappedClassName>java.lang.Short</javaSqlTypeMappedClassName>
+          <javaSqlTypeMappedClass>java.lang.Short</javaSqlTypeMappedClass>
           <userDefined>false</userDefined>
           <precision>16</precision>
           <nullable>true</nullable>
@@ -1608,7 +1608,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           <schema class="schema" reference="204"/>
           <javaSqlType>92</javaSqlType>
           <javaSqlTypeName>TIME</javaSqlTypeName>
-          <javaSqlTypeMappedClassName>java.sql.Time</javaSqlTypeMappedClassName>
+          <javaSqlTypeMappedClass>java.sql.Time</javaSqlTypeMappedClass>
           <userDefined>false</userDefined>
           <precision>0</precision>
           <literalPrefix>&apos;</literalPrefix>
@@ -1645,7 +1645,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           <schema class="schema" reference="204"/>
           <javaSqlType>93</javaSqlType>
           <javaSqlTypeName>TIMESTAMP</javaSqlTypeName>
-          <javaSqlTypeMappedClassName>java.sql.Timestamp</javaSqlTypeMappedClassName>
+          <javaSqlTypeMappedClass>java.sql.Timestamp</javaSqlTypeMappedClass>
           <userDefined>false</userDefined>
           <precision>0</precision>
           <literalPrefix>&apos;</literalPrefix>
@@ -1682,7 +1682,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           <schema class="schema" reference="204"/>
           <javaSqlType>-6</javaSqlType>
           <javaSqlTypeName>TINYINT</javaSqlTypeName>
-          <javaSqlTypeMappedClassName>byte</javaSqlTypeMappedClassName>
+          <javaSqlTypeMappedClass>byte</javaSqlTypeMappedClass>
           <userDefined>false</userDefined>
           <precision>8</precision>
           <nullable>true</nullable>
@@ -1717,7 +1717,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           <schema class="schema" reference="204"/>
           <javaSqlType>-3</javaSqlType>
           <javaSqlTypeName>VARBINARY</javaSqlTypeName>
-          <javaSqlTypeMappedClassName>byte[]</javaSqlTypeMappedClassName>
+          <javaSqlTypeMappedClass>[B</javaSqlTypeMappedClass>
           <userDefined>false</userDefined>
           <precision>2147483647</precision>
           <literalPrefix>&apos;</literalPrefix>
@@ -1755,7 +1755,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           <schema class="schema" reference="204"/>
           <javaSqlType>12</javaSqlType>
           <javaSqlTypeName>VARCHAR</javaSqlTypeName>
-          <javaSqlTypeMappedClassName>java.lang.String</javaSqlTypeMappedClassName>
+          <javaSqlTypeMappedClass>java.lang.String</javaSqlTypeMappedClass>
           <userDefined>false</userDefined>
           <precision>2147483647</precision>
           <literalPrefix>&apos;</literalPrefix>
@@ -1793,7 +1793,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           <schema class="schema" reference="204"/>
           <javaSqlType>12</javaSqlType>
           <javaSqlTypeName>VARCHAR</javaSqlTypeName>
-          <javaSqlTypeMappedClassName>java.lang.String</javaSqlTypeMappedClassName>
+          <javaSqlTypeMappedClass>java.lang.String</javaSqlTypeMappedClass>
           <userDefined>false</userDefined>
           <precision>2147483647</precision>
           <literalPrefix>&apos;</literalPrefix>

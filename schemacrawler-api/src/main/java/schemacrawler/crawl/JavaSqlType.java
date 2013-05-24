@@ -51,7 +51,7 @@ public final class JavaSqlType
 
   private final int javaSqlType;
   private final String javaSqlTypeName;
-  private final String javaSqlTypeMappedClassName;
+  private final Class<?> javaSqlTypeMappedClass;
   private final JavaSqlTypeGroup javaSqlTypeGroup;
 
   /**
@@ -64,13 +64,13 @@ public final class JavaSqlType
 
   JavaSqlType(final int javaSqlType,
               final String javaSqlTypeName,
-              final String javaSqlTypeMappedClassName,
+              final Class<?> javaSqlTypeMappedClass,
               final JavaSqlTypeGroup javaSqlTypeGroup)
   {
     this.javaSqlType = javaSqlType;
     this.javaSqlTypeName = javaSqlTypeName;
     this.javaSqlTypeGroup = javaSqlTypeGroup;
-    this.javaSqlTypeMappedClassName = javaSqlTypeMappedClassName;
+    this.javaSqlTypeMappedClass = javaSqlTypeMappedClass;
   }
 
   @Override
@@ -110,15 +110,14 @@ public final class JavaSqlType
     {
       return false;
     }
-    if (javaSqlTypeMappedClassName == null)
+    if (javaSqlTypeMappedClass == null)
     {
-      if (other.javaSqlTypeMappedClassName != null)
+      if (other.javaSqlTypeMappedClass != null)
       {
         return false;
       }
     }
-    else if (!javaSqlTypeMappedClassName
-      .equals(other.javaSqlTypeMappedClassName))
+    else if (!javaSqlTypeMappedClass.equals(other.javaSqlTypeMappedClass))
     {
       return false;
     }
@@ -151,9 +150,9 @@ public final class JavaSqlType
     return javaSqlTypeGroup;
   }
 
-  public String getJavaSqlTypeMappedClassName()
+  public Class<?> getJavaSqlTypeMappedClass()
   {
-    return javaSqlTypeMappedClassName;
+    return javaSqlTypeMappedClass;
   }
 
   /**
@@ -176,9 +175,8 @@ public final class JavaSqlType
              + (javaSqlTypeGroup == null? 0: javaSqlTypeGroup.hashCode());
     result = prime
              * result
-             + (javaSqlTypeMappedClassName == null? 0
-                                                  : javaSqlTypeMappedClassName
-                                                    .hashCode());
+             + (javaSqlTypeMappedClass == null? 0: javaSqlTypeMappedClass
+               .hashCode());
     result = prime * result
              + (javaSqlTypeName == null? 0: javaSqlTypeName.hashCode());
     return result;
@@ -190,7 +188,7 @@ public final class JavaSqlType
     return String.format("%s\t%d\t%s\t%s",
                          javaSqlTypeName,
                          javaSqlType,
-                         javaSqlTypeMappedClassName,
+                         javaSqlTypeMappedClass,
                          javaSqlTypeGroup);
   }
 
