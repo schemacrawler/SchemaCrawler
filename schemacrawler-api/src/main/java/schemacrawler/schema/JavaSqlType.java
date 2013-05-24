@@ -44,7 +44,8 @@ public final class JavaSqlType
     temporal,
     url,
     xml,
-    large_object;
+    large_object,
+    object;
   }
 
   private static final long serialVersionUID = 2614819974745473431L;
