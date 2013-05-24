@@ -5,6 +5,12 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+    <release version="10.3" date="2013-05-24">
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Rework of the column data type classes, as well as a workaround 
+        for an Oracle JDBC driver bug with reporting data type information.
+      ]]></action>                              
+    </release>    
     <release version="10.2" date="2013-05-21">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         New option to set output encoding format. The option is

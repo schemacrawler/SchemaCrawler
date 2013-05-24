@@ -499,7 +499,7 @@ for (final Schema schema: database.getSchemas())
   <dependency>
     <groupId>net.sourceforge.schemacrawler</groupId>
     <artifactId>schemacrawler</artifactId>
-    <version>10.2</version>
+    <version>10.3</version>
   </dependency>
 </dependencies>
         ]]></source>

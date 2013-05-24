@@ -1,5 +1,5 @@
 Bundle-ManifestVersion=1
-version=10.2
+version=10.3
 Bundle-Version=${version}
 Bundle-Name=SchemaCrawler
 Bundle-SymbolicName=net.sourceforge.schemacrawler

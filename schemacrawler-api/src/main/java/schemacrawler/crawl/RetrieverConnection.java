@@ -33,10 +33,11 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.schema.JavaSqlTypes;
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.utility.JavaSqlTypes;
+import schemacrawler.utility.TypeMap;
 import sf.util.Utility;
 
 /**

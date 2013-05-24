@@ -17,7 +17,7 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.crawl;
+package schemacrawler.utility;
 
 
 import java.sql.Connection;
@@ -32,7 +32,7 @@ import java.util.logging.Logger;
 
 import sf.util.Utility;
 
-final class TypeMap
+public final class TypeMap
   implements Map<String, Class<?>>
 {
 
@@ -87,7 +87,12 @@ final class TypeMap
 
   private final Map<String, Class<?>> sqlTypeMap;
 
-  TypeMap(final Connection connection)
+  public TypeMap()
+  {
+    this(null);
+  }
+
+  public TypeMap(final Connection connection)
   {
     final Map<String, Class<?>> sqlTypeMap = createDefaultTypeMap();
 
