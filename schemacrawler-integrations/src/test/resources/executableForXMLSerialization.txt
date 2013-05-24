@@ -1488,7 +1488,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           <javaSqlType id="247">
             <javaSqlType>1111</javaSqlType>
             <javaSqlTypeName>OTHER</javaSqlTypeName>
-            <javaSqlTypeGroup>binary</javaSqlTypeGroup>
+            <javaSqlTypeGroup>object</javaSqlTypeGroup>
           </javaSqlType>
           <javaSqlTypeMappedClass>java.lang.Object</javaSqlTypeMappedClass>
           <userDefined>false</userDefined>
@@ -1543,7 +1543,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           <javaSqlType id="256">
             <javaSqlType>2003</javaSqlType>
             <javaSqlTypeName>ARRAY</javaSqlTypeName>
-            <javaSqlTypeGroup>binary</javaSqlTypeGroup>
+            <javaSqlTypeGroup>object</javaSqlTypeGroup>
           </javaSqlType>
           <javaSqlTypeMappedClass>java.lang.Object</javaSqlTypeMappedClass>
           <userDefined>false</userDefined>
