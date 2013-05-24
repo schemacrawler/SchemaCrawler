@@ -24,7 +24,6 @@ package schemacrawler.utility;
 import java.lang.reflect.Field;
 import java.sql.Types;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -49,49 +48,6 @@ public final class JavaSqlTypes
   private static final Logger LOGGER = Logger.getLogger(JavaSqlTypes.class
     .getName());
 
-  private static Map<String, JavaSqlTypeGroup> createJavaSqlTypesGroupsMap()
-  {
-    final Map<String, JavaSqlTypeGroup> javaSqlTypesGroupsMap = new HashMap<>();
-
-    javaSqlTypesGroupsMap.put("ARRAY", JavaSqlTypeGroup.binary);
-    javaSqlTypesGroupsMap.put("BIGINT", JavaSqlTypeGroup.integer);
-    javaSqlTypesGroupsMap.put("BINARY", JavaSqlTypeGroup.binary);
-    javaSqlTypesGroupsMap.put("BIT", JavaSqlTypeGroup.bit);
-    javaSqlTypesGroupsMap.put("BLOB", JavaSqlTypeGroup.large_object);
-    javaSqlTypesGroupsMap.put("BOOLEAN", JavaSqlTypeGroup.bit);
-    javaSqlTypesGroupsMap.put("CHAR", JavaSqlTypeGroup.character);
-    javaSqlTypesGroupsMap.put("CLOB", JavaSqlTypeGroup.large_object);
-    javaSqlTypesGroupsMap.put("DATALINK", JavaSqlTypeGroup.url);
-    javaSqlTypesGroupsMap.put("DATE", JavaSqlTypeGroup.temporal);
-    javaSqlTypesGroupsMap.put("DECIMAL", JavaSqlTypeGroup.real);
-    javaSqlTypesGroupsMap.put("DISTINCT", JavaSqlTypeGroup.binary);
-    javaSqlTypesGroupsMap.put("DOUBLE", JavaSqlTypeGroup.real);
-    javaSqlTypesGroupsMap.put("FLOAT", JavaSqlTypeGroup.real);
-    javaSqlTypesGroupsMap.put("INTEGER", JavaSqlTypeGroup.integer);
-    javaSqlTypesGroupsMap.put("JAVA_OBJECT", JavaSqlTypeGroup.binary);
-    javaSqlTypesGroupsMap.put("LONGNVARCHAR", JavaSqlTypeGroup.character);
-    javaSqlTypesGroupsMap.put("LONGVARBINARY", JavaSqlTypeGroup.binary);
-    javaSqlTypesGroupsMap.put("LONGVARCHAR", JavaSqlTypeGroup.character);
-    javaSqlTypesGroupsMap.put("NCHAR", JavaSqlTypeGroup.character);
-    javaSqlTypesGroupsMap.put("NCLOB", JavaSqlTypeGroup.large_object);
-    javaSqlTypesGroupsMap.put("NUMERIC", JavaSqlTypeGroup.real);
-    javaSqlTypesGroupsMap.put("NVARCHAR", JavaSqlTypeGroup.character);
-    javaSqlTypesGroupsMap.put("OTHER", JavaSqlTypeGroup.binary);
-    javaSqlTypesGroupsMap.put("REAL", JavaSqlTypeGroup.real);
-    javaSqlTypesGroupsMap.put("REF", JavaSqlTypeGroup.reference);
-    javaSqlTypesGroupsMap.put("ROWID", JavaSqlTypeGroup.id);
-    javaSqlTypesGroupsMap.put("SMALLINT", JavaSqlTypeGroup.integer);
-    javaSqlTypesGroupsMap.put("SQLXML", JavaSqlTypeGroup.xml);
-    javaSqlTypesGroupsMap.put("STRUCT", JavaSqlTypeGroup.binary);
-    javaSqlTypesGroupsMap.put("TIME", JavaSqlTypeGroup.temporal);
-    javaSqlTypesGroupsMap.put("TIMESTAMP", JavaSqlTypeGroup.temporal);
-    javaSqlTypesGroupsMap.put("TINYINT", JavaSqlTypeGroup.integer);
-    javaSqlTypesGroupsMap.put("VARBINARY", JavaSqlTypeGroup.binary);
-    javaSqlTypesGroupsMap.put("VARCHAR", JavaSqlTypeGroup.character);
-
-    return Collections.unmodifiableMap(javaSqlTypesGroupsMap);
-  }
-
   private static Map<String, Integer> createJavaSqlTypesMap()
   {
     final Map<String, Integer> javaSqlTypesMap = new HashMap<>();
@@ -113,10 +69,81 @@ public final class JavaSqlTypes
     return javaSqlTypesMap;
   }
 
+  private static JavaSqlTypeGroup groupJavaSqlType(final int type)
+  {
+
+    final JavaSqlTypeGroup typeGroup;
+    switch (type)
+    {
+      case java.sql.Types.ARRAY:
+      case java.sql.Types.DISTINCT:
+      case java.sql.Types.JAVA_OBJECT:
+      case java.sql.Types.OTHER:
+      case java.sql.Types.STRUCT:
+        typeGroup = JavaSqlTypeGroup.object;
+        break;
+      case java.sql.Types.BINARY:
+      case java.sql.Types.LONGVARBINARY:
+      case java.sql.Types.VARBINARY:
+        typeGroup = JavaSqlTypeGroup.binary;
+        break;
+      case java.sql.Types.BIT:
+      case java.sql.Types.BOOLEAN:
+        typeGroup = JavaSqlTypeGroup.bit;
+        break;
+      case java.sql.Types.CHAR:
+      case java.sql.Types.LONGNVARCHAR:
+      case java.sql.Types.LONGVARCHAR:
+      case java.sql.Types.NCHAR:
+      case java.sql.Types.NVARCHAR:
+      case java.sql.Types.VARCHAR:
+        typeGroup = JavaSqlTypeGroup.character;
+        break;
+      case java.sql.Types.ROWID:
+        typeGroup = JavaSqlTypeGroup.id;
+        break;
+      case java.sql.Types.BIGINT:
+      case java.sql.Types.INTEGER:
+      case java.sql.Types.SMALLINT:
+      case java.sql.Types.TINYINT:
+        typeGroup = JavaSqlTypeGroup.integer;
+        break;
+      case java.sql.Types.BLOB:
+      case java.sql.Types.CLOB:
+      case java.sql.Types.NCLOB:
+        typeGroup = JavaSqlTypeGroup.large_object;
+        break;
+      case java.sql.Types.DECIMAL:
+      case java.sql.Types.DOUBLE:
+      case java.sql.Types.FLOAT:
+      case java.sql.Types.NUMERIC:
+      case java.sql.Types.REAL:
+        typeGroup = JavaSqlTypeGroup.real;
+        break;
+      case java.sql.Types.REF:
+        typeGroup = JavaSqlTypeGroup.reference;
+        break;
+      case java.sql.Types.DATE:
+      case java.sql.Types.TIME:
+      case java.sql.Types.TIMESTAMP:
+        typeGroup = JavaSqlTypeGroup.temporal;
+        break;
+      case java.sql.Types.DATALINK:
+        typeGroup = JavaSqlTypeGroup.url;
+        break;
+      case java.sql.Types.SQLXML:
+        typeGroup = JavaSqlTypeGroup.xml;
+        break;
+      default:
+        typeGroup = JavaSqlTypeGroup.unknown;
+        break;
+    }
+    return typeGroup;
+  }
+
   private static Map<Integer, JavaSqlType> mapJavaSqlTypes()
   {
     final Map<String, Integer> javaSqlTypesMap = createJavaSqlTypesMap();
-    final Map<String, JavaSqlTypeGroup> javaSqlTypeGroupsMap = createJavaSqlTypesGroupsMap();
 
     final Map<Integer, JavaSqlType> javaSqlTypes = new HashMap<>();
 
@@ -128,8 +155,7 @@ public final class JavaSqlTypes
       {
         final Integer javaSqlTypeInt = javaSqlTypesEntry.getValue();
         final String javaSqlTypeName = javaSqlTypesEntry.getKey();
-        final JavaSqlTypeGroup javaSqlTypeGroup = javaSqlTypeGroupsMap
-          .get(javaSqlTypeName);
+        final JavaSqlTypeGroup javaSqlTypeGroup = groupJavaSqlType(javaSqlTypeInt);
 
         final JavaSqlType javaSqlType = new JavaSqlType(javaSqlTypeInt,
                                                         javaSqlTypeName,
