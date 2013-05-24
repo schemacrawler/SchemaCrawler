@@ -116,11 +116,11 @@ public interface ColumnDataType
   int getType();
 
   /**
-   * Gets the Java class name for the type.
+   * Gets the Java class mapped to the type.
    * 
-   * @return The Java class name for the type
+   * @return The Java class mapped to the type
    */
-  String getTypeClassName();
+  Class<?> getTypeMappedClass();
 
   /**
    * Gets the java.sql.Types type name.
