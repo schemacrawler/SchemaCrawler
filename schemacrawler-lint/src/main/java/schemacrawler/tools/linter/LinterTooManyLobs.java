@@ -24,11 +24,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import schemacrawler.schema.Column;
-import schemacrawler.schema.JavaSqlTypes;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.JavaSqlType.JavaSqlTypeGroup;
 import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.LintSeverity;
+import schemacrawler.utility.JavaSqlTypes;
 
 public class LinterTooManyLobs
   extends BaseLinter

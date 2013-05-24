@@ -18,7 +18,7 @@
  *
  */
 
-package schemacrawler.schema;
+package schemacrawler.utility;
 
 
 import java.lang.reflect.Field;
@@ -27,11 +27,13 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import schemacrawler.schema.JavaSqlType;
 import schemacrawler.schema.JavaSqlType.JavaSqlTypeGroup;
 import sf.util.Utility;
 
@@ -41,7 +43,7 @@ import sf.util.Utility;
  * @author Sualeh Fatehi
  */
 public final class JavaSqlTypes
-  implements Map<Integer, JavaSqlType>
+  implements Map<Integer, JavaSqlType>, Iterable<JavaSqlType>
 {
 
   private static final Logger LOGGER = Logger.getLogger(JavaSqlTypes.class
@@ -226,6 +228,12 @@ public final class JavaSqlTypes
   public boolean isEmpty()
   {
     return javaSqlTypeMap.isEmpty();
+  }
+
+  @Override
+  public Iterator<JavaSqlType> iterator()
+  {
+    return javaSqlTypeMap.values().iterator();
   }
 
   @Override

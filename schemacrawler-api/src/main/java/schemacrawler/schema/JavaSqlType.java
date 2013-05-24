@@ -60,9 +60,9 @@ public final class JavaSqlType
                                                             "<UNKNOWN>",
                                                             JavaSqlTypeGroup.unknown);
 
-  JavaSqlType(final int javaSqlType,
-              final String javaSqlTypeName,
-              final JavaSqlTypeGroup javaSqlTypeGroup)
+  public JavaSqlType(final int javaSqlType,
+                     final String javaSqlTypeName,
+                     final JavaSqlTypeGroup javaSqlTypeGroup)
   {
     this.javaSqlType = javaSqlType;
     this.javaSqlTypeName = javaSqlTypeName;

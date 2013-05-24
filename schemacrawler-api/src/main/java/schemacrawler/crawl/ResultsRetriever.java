@@ -25,10 +25,10 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
-import schemacrawler.schema.JavaSqlTypes;
 import schemacrawler.schema.ResultsColumns;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.utility.JavaSqlTypes;
 import sf.util.Utility;
 
 /**
