@@ -23,7 +23,6 @@ package schemacrawler.crawl;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.logging.Logger;
 
 import schemacrawler.filter.FilterFactory;
 import schemacrawler.filter.NamedObjectFilter;
@@ -33,17 +32,14 @@ import schemacrawler.schema.Table;
 import schemacrawler.schema.TableRelationshipType;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
-class TableFilter
+class TablesReducer
 {
-
-  private static final Logger LOGGER = Logger.getLogger(TableFilter.class
-    .getName());
 
   private final SchemaCrawlerOptions options;
   private final NamedObjectList<MutableTable> allTables;
 
-  public TableFilter(final SchemaCrawlerOptions options,
-                     final NamedObjectList<MutableTable> allTables)
+  public TablesReducer(final SchemaCrawlerOptions options,
+                       final NamedObjectList<MutableTable> allTables)
   {
     this.options = options;
     this.allTables = allTables;
