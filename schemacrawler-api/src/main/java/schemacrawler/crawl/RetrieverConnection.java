@@ -33,6 +33,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import schemacrawler.schema.JavaSqlTypes;
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -56,6 +57,8 @@ final class RetrieverConnection
   private final String identifierQuoteString;
   private final List<String> reservedWords;
   private final InformationSchemaViews informationSchemaViews;
+  private final JavaSqlTypes javaSqlTypes;
+  private final TypeMap typeMap;
 
   RetrieverConnection(final Connection connection,
                       final SchemaCrawlerOptions options)
@@ -140,6 +143,9 @@ final class RetrieverConnection
     }
     Collections.sort(reservedWordsList);
     reservedWords = Collections.unmodifiableList(reservedWordsList);
+
+    typeMap = new TypeMap(connection);
+    javaSqlTypes = new JavaSqlTypes();
   }
 
   Connection getConnection()
@@ -162,6 +168,11 @@ final class RetrieverConnection
     return informationSchemaViews;
   }
 
+  JavaSqlTypes getJavaSqlTypes()
+  {
+    return javaSqlTypes;
+  }
+
   DatabaseMetaData getMetaData()
   {
     return metaData;
@@ -170,6 +181,11 @@ final class RetrieverConnection
   List<String> getReservedWords()
   {
     return reservedWords;
+  }
+
+  TypeMap getTypeMap()
+  {
+    return typeMap;
   }
 
   boolean isSupportsCatalogs()

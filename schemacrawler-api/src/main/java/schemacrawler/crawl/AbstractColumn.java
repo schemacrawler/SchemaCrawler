@@ -21,10 +21,10 @@
 package schemacrawler.crawl;
 
 
-import schemacrawler.crawl.JavaSqlType.JavaSqlTypeGroup;
 import schemacrawler.schema.BaseColumn;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.DatabaseObject;
+import schemacrawler.schema.JavaSqlType.JavaSqlTypeGroup;
 import schemacrawler.schema.NamedObject;
 
 /**
@@ -152,8 +152,8 @@ abstract class AbstractColumn<P extends DatabaseObject>
       return "";
     }
 
-    final JavaSqlTypeGroup sqlDataTypeGroup = JavaSqlTypes
-      .lookupJavaSqlType(columnDataType.getType()).getJavaSqlTypeGroup();
+    final JavaSqlTypeGroup sqlDataTypeGroup = columnDataType.getJavaSqlType()
+      .getJavaSqlTypeGroup();
     final boolean needWidth = sqlDataTypeGroup == JavaSqlTypeGroup.character
                               || sqlDataTypeGroup == JavaSqlTypeGroup.real;
 

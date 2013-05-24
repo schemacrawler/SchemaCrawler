@@ -28,9 +28,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import schemacrawler.crawl.JavaSqlType.JavaSqlTypeGroup;
-import schemacrawler.crawl.JavaSqlTypesUtility;
 import schemacrawler.schema.Column;
+import schemacrawler.schema.JavaSqlType.JavaSqlTypeGroup;
 import schemacrawler.schema.Table;
 import sf.util.TemplatingUtility;
 import sf.util.Utility;
@@ -53,9 +52,8 @@ public final class Query
     for (int i = 0; i < columns.size(); i++)
     {
       final Column column = columns.get(i);
-      final JavaSqlTypeGroup javaSqlTypeGroup = JavaSqlTypesUtility
-        .lookupSqlDataType(column.getColumnDataType().getType())
-        .getJavaSqlTypeGroup();
+      final JavaSqlTypeGroup javaSqlTypeGroup = column.getColumnDataType()
+        .getJavaSqlType().getJavaSqlTypeGroup();
       if (javaSqlTypeGroup != JavaSqlTypeGroup.large_object)
       {
         if (i > 0)

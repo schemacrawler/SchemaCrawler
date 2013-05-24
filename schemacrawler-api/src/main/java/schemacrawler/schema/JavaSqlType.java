@@ -17,7 +17,7 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.crawl;
+package schemacrawler.schema;
 
 
 import java.io.Serializable;
@@ -56,9 +56,9 @@ public final class JavaSqlType
   /**
    * Unknown SQL data type.
    */
-  static final JavaSqlType UNKNOWN = new JavaSqlType(Integer.MAX_VALUE,
-                                                     "<UNKNOWN>",
-                                                     JavaSqlTypeGroup.unknown);
+  public static final JavaSqlType UNKNOWN = new JavaSqlType(Integer.MAX_VALUE,
+                                                            "<UNKNOWN>",
+                                                            JavaSqlTypeGroup.unknown);
 
   JavaSqlType(final int javaSqlType,
               final String javaSqlTypeName,

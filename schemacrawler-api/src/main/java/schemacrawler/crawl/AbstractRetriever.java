@@ -167,27 +167,12 @@ abstract class AbstractRetriever
    */
   MutableColumnDataType lookupOrCreateColumnDataType(final Schema schema,
                                                      final int javaSqlType,
-                                                     final String databaseSpecificTypeName,
-                                                     final String mappedClassName)
+                                                     final String databaseSpecificTypeName)
   {
-    MutableColumnDataType columnDataType = database
-      .getColumnDataType(schema, databaseSpecificTypeName);
-    if (columnDataType == null)
-    {
-      columnDataType = database
-        .getSystemColumnDataType(databaseSpecificTypeName);
-    }
-    // Create new data type, if needed
-    if (columnDataType == null)
-    {
-      columnDataType = new MutableColumnDataType(schema,
-                                                 databaseSpecificTypeName);
-      // Set the Java SQL type code, but no mapped Java class is
-      // available, so use the defaults
-      columnDataType.setType(javaSqlType, null);
-      database.addColumnDataType(columnDataType);
-    }
-    return columnDataType;
+    return lookupOrCreateColumnDataType(schema,
+                                        javaSqlType,
+                                        databaseSpecificTypeName,
+                                        null);
   }
 
   /**
@@ -204,12 +189,29 @@ abstract class AbstractRetriever
    */
   MutableColumnDataType lookupOrCreateColumnDataType(final Schema schema,
                                                      final int javaSqlType,
-                                                     final String databaseSpecificTypeName)
+                                                     final String databaseSpecificTypeName,
+                                                     final String mappedClassName)
   {
-    return lookupOrCreateColumnDataType(schema,
-                                        javaSqlType,
-                                        databaseSpecificTypeName,
-                                        null);
+    MutableColumnDataType columnDataType = database
+      .getColumnDataType(schema, databaseSpecificTypeName);
+    if (columnDataType == null)
+    {
+      columnDataType = database
+        .getSystemColumnDataType(databaseSpecificTypeName);
+    }
+    // Create new data type, if needed
+    if (columnDataType == null)
+    {
+      columnDataType = new MutableColumnDataType(schema,
+                                                 databaseSpecificTypeName);
+      columnDataType.setJavaSqlType(retrieverConnection.getJavaSqlTypes()
+        .get(javaSqlType));
+      columnDataType.setTypeMappedClass(retrieverConnection.getTypeMap()
+        .get(mappedClassName));
+
+      database.addColumnDataType(columnDataType);
+    }
+    return columnDataType;
   }
 
   MutableRoutine lookupRoutine(final String catalogName,

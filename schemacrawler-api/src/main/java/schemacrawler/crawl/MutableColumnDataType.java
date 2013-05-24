@@ -22,6 +22,7 @@ package schemacrawler.crawl;
 
 
 import schemacrawler.schema.ColumnDataType;
+import schemacrawler.schema.JavaSqlType;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SearchableType;
 
@@ -38,12 +39,9 @@ final class MutableColumnDataType
 
   private static final long serialVersionUID = 3688503281676530744L;
 
-  // Fields related to the java.sql.Types type
-  private int javaSqlType;
-  private String javaSqlTypeName;
+  private JavaSqlType javaSqlType;
   private Class<?> javaSqlTypeMappedClass;
 
-  // Other fields
   private boolean userDefined;
   private long precision;
   private String literalPrefix;
@@ -64,8 +62,9 @@ final class MutableColumnDataType
   MutableColumnDataType(final Schema schema, final String name)
   {
     super(schema, name);
-    // Default values
-    setTypeFromJavaSqlType(JavaSqlType.UNKNOWN, Object.class);
+
+    javaSqlType = JavaSqlType.UNKNOWN;
+    javaSqlTypeMappedClass = Object.class;
     searchable = SearchableType.unknown;
     createParameters = "";
   }
@@ -101,6 +100,12 @@ final class MutableColumnDataType
   public String getDatabaseSpecificTypeName()
   {
     return getName();
+  }
+
+  @Override
+  public JavaSqlType getJavaSqlType()
+  {
+    return javaSqlType;
   }
 
   /**
@@ -199,7 +204,7 @@ final class MutableColumnDataType
   @Override
   public int getType()
   {
-    return javaSqlType;
+    return javaSqlType.getJavaSqlType();
   }
 
   /**
@@ -221,7 +226,7 @@ final class MutableColumnDataType
   @Override
   public String getTypeName()
   {
-    return javaSqlTypeName;
+    return javaSqlType.getJavaSqlTypeName();
   }
 
   /**
@@ -315,6 +320,18 @@ final class MutableColumnDataType
     this.fixedPrecisionScale = fixedPrecisionScale;
   }
 
+  void setJavaSqlType(final JavaSqlType javaSqlType)
+  {
+    if (javaSqlType != null)
+    {
+      this.javaSqlType = javaSqlType;
+    }
+    else
+    {
+      this.javaSqlType = JavaSqlType.UNKNOWN;
+    }
+  }
+
   void setLiteralPrefix(final String literalPrefix)
   {
     this.literalPrefix = literalPrefix;
@@ -360,21 +377,15 @@ final class MutableColumnDataType
     this.searchable = searchable;
   }
 
-  void setTypeFromJavaSqlType(final JavaSqlType javaSqlType,
-                              final Class<?> mappedClass)
+  void setTypeMappedClass(final Class<?> mappedClass)
   {
-    if (javaSqlType != null)
+    if (mappedClass != null)
     {
-      this.javaSqlType = javaSqlType.getJavaSqlType();
-      javaSqlTypeName = javaSqlType.getJavaSqlTypeName();
-    }
-    if (mappedClass == null)
-    {
-      javaSqlTypeMappedClass = Object.class;
+      javaSqlTypeMappedClass = mappedClass;
     }
     else
     {
-      javaSqlTypeMappedClass = mappedClass;
+      javaSqlTypeMappedClass = Object.class;
     }
   }
 
