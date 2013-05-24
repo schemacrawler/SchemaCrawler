@@ -206,8 +206,15 @@ abstract class AbstractRetriever
                                                  databaseSpecificTypeName);
       columnDataType.setJavaSqlType(retrieverConnection.getJavaSqlTypes()
         .get(javaSqlType));
-      columnDataType.setTypeMappedClass(retrieverConnection.getTypeMap()
-        .get(mappedClassName));
+      if (Utility.isBlank(mappedClassName))
+      {
+        columnDataType.setTypeMappedClass(retrieverConnection.getTypeMap()
+          .get(databaseSpecificTypeName));
+      }
+      else
+      {
+        columnDataType.setTypeMappedClass(mappedClassName);
+      }
 
       database.addColumnDataType(columnDataType);
     }
