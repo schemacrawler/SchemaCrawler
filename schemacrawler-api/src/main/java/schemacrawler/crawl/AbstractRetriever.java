@@ -167,7 +167,8 @@ abstract class AbstractRetriever
    */
   MutableColumnDataType lookupOrCreateColumnDataType(final Schema schema,
                                                      final int javaSqlType,
-                                                     final String databaseSpecificTypeName)
+                                                     final String databaseSpecificTypeName,
+                                                     final String mappedClassName)
   {
     MutableColumnDataType columnDataType = database
       .getColumnDataType(schema, databaseSpecificTypeName);
@@ -187,6 +188,28 @@ abstract class AbstractRetriever
       database.addColumnDataType(columnDataType);
     }
     return columnDataType;
+  }
+
+  /**
+   * Creates a data type from the JDBC data type id, and the database
+   * specific type name, if it does not exist.
+   * 
+   * @param schema
+   *        Schema
+   * @param javaSqlType
+   *        JDBC data type
+   * @param databaseSpecificTypeName
+   *        Database specific type name
+   * @return Column data type
+   */
+  MutableColumnDataType lookupOrCreateColumnDataType(final Schema schema,
+                                                     final int javaSqlType,
+                                                     final String databaseSpecificTypeName)
+  {
+    return lookupOrCreateColumnDataType(schema,
+                                        javaSqlType,
+                                        databaseSpecificTypeName,
+                                        null);
   }
 
   MutableRoutine lookupRoutine(final String catalogName,

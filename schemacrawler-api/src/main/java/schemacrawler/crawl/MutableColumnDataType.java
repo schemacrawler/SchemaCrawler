@@ -21,13 +21,9 @@
 package schemacrawler.crawl;
 
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SearchableType;
-import sf.util.Utility;
 
 /**
  * Represents a column type. Provides the java.sql.Types type, the
@@ -41,9 +37,6 @@ final class MutableColumnDataType
 {
 
   private static final long serialVersionUID = 3688503281676530744L;
-
-  private static final Logger LOGGER = Logger
-    .getLogger(MutableColumnDataType.class.getName());
 
   // Fields related to the java.sql.Types type
   private int javaSqlType;
@@ -72,8 +65,8 @@ final class MutableColumnDataType
   {
     super(schema, name);
     // Default values
+    setTypeFromJavaSqlType(JavaSqlType.UNKNOWN, Object.class);
     searchable = SearchableType.unknown;
-    setTypeFromJavaSqlType(JavaSqlType.UNKNOWN);
     createParameters = "";
   }
 
@@ -367,19 +360,21 @@ final class MutableColumnDataType
     this.searchable = searchable;
   }
 
-  void setType(final int type, final String typeClassName)
+  void setTypeFromJavaSqlType(final JavaSqlType javaSqlType,
+                              final Class<?> mappedClass)
   {
-    setTypeFromJavaSqlType(JavaSqlTypesUtility.lookupSqlDataType(type));
-    if (!Utility.isBlank(typeClassName))
+    if (javaSqlType != null)
     {
-      try
-      {
-        javaSqlTypeMappedClass = Class.forName(typeClassName);
-      }
-      catch (final Exception e)
-      {
-        LOGGER.log(Level.FINE, "Could not load class " + typeClassName, e);
-      }
+      this.javaSqlType = javaSqlType.getJavaSqlType();
+      javaSqlTypeName = javaSqlType.getJavaSqlTypeName();
+    }
+    if (mappedClass == null)
+    {
+      javaSqlTypeMappedClass = Object.class;
+    }
+    else
+    {
+      javaSqlTypeMappedClass = mappedClass;
     }
   }
 
@@ -391,16 +386,6 @@ final class MutableColumnDataType
   void setUserDefined(final boolean userDefined)
   {
     this.userDefined = userDefined;
-  }
-
-  private void setTypeFromJavaSqlType(final JavaSqlType javaSqlType)
-  {
-    if (javaSqlType != null)
-    {
-      this.javaSqlType = javaSqlType.getJavaSqlType();
-      javaSqlTypeName = javaSqlType.getJavaSqlTypeName();
-      javaSqlTypeMappedClass = javaSqlType.getJavaSqlTypeMappedClass();
-    }
   }
 
 }

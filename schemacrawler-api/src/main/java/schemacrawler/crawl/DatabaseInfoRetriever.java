@@ -380,11 +380,11 @@ final class DatabaseInfoRetriever
         final int maximumScale = results.getInt("MAXIMUM_SCALE", 0);
         final int numPrecisionRadix = results.getInt("NUM_PREC_RADIX", 0);
 
-        final MutableColumnDataType columnDataType = new MutableColumnDataType(systemSchema,
-                                                                               typeName);
+        final MutableColumnDataType columnDataType = lookupOrCreateColumnDataType(systemSchema,
+                                                                                  dataType,
+                                                                                  typeName);
         // Set the Java SQL type code, but no mapped Java class is
         // available, so use the defaults
-        columnDataType.setType(dataType, null);
         columnDataType.setPrecision(precision);
         columnDataType.setLiteralPrefix(literalPrefix);
         columnDataType.setLiteralSuffix(literalSuffix);
@@ -439,10 +439,11 @@ final class DatabaseInfoRetriever
         final Schema schema = new SchemaReference(catalogName, schemaName);
         final ColumnDataType baseType = database
           .lookupColumnDataTypeByType(baseTypeValue);
-        final MutableColumnDataType columnDataType = new MutableColumnDataType(schema,
-                                                                               typeName);
+        final MutableColumnDataType columnDataType = lookupOrCreateColumnDataType(schema,
+                                                                                  dataType,
+                                                                                  typeName,
+                                                                                  className);
         columnDataType.setUserDefined(true);
-        columnDataType.setType(dataType, className);
         columnDataType.setBaseType(baseType);
         columnDataType.setRemarks(remarks);
 

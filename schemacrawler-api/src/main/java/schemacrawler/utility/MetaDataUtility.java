@@ -22,7 +22,7 @@ package schemacrawler.utility;
 
 
 import schemacrawler.crawl.JavaSqlType;
-import schemacrawler.crawl.JavaSqlTypesUtility;
+import schemacrawler.crawl.JavaSqlTypes;
 import schemacrawler.schema.Column;
 
 /**
@@ -83,7 +83,7 @@ public final class MetaDataUtility
    */
   public static JavaSqlType lookupSqlDataType(final int type)
   {
-    return JavaSqlTypesUtility.lookupSqlDataType(type);
+    return JavaSqlTypes.lookupJavaSqlType(type);
   }
 
   /**
@@ -96,7 +96,7 @@ public final class MetaDataUtility
    */
   public static JavaSqlType lookupSqlDataType(final String typeName)
   {
-    return JavaSqlTypesUtility.lookupSqlDataType(typeName);
+    return JavaSqlTypes.lookupJavaSqlType(typeName);
   }
 
   private MetaDataUtility()
