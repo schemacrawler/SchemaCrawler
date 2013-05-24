@@ -53,6 +53,13 @@ public interface ColumnDataType
   String getDatabaseSpecificTypeName();
 
   /**
+   * Gets the java.sql.Types type.
+   * 
+   * @return java.sql.Types type
+   */
+  JavaSqlType getJavaSqlType();
+
+  /**
    * Gets the literal prefix.
    * 
    * @return Literal prefix
@@ -112,17 +119,19 @@ public interface ColumnDataType
    * Gets the java.sql.Types type.
    * 
    * @return java.sql.Types type
-   */
-  JavaSqlType getJavaSqlType();
-
-  /**
-   * Gets the java.sql.Types type.
-   * 
-   * @return java.sql.Types type
    * @see #getJavaSqlType()
    */
   @Deprecated
   int getType();
+
+  /**
+   * Gets the Java class name for the type.
+   * 
+   * @return The Java class name for the type
+   * @see #getTypeMappedClass()
+   */
+  @Deprecated
+  String getTypeClassName();
 
   /**
    * Gets the Java class mapped to the type.
