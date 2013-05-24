@@ -21,10 +21,14 @@
 package schemacrawler.crawl;
 
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.JavaSqlType;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SearchableType;
+import sf.util.Utility;
 
 /**
  * Represents a column type. Provides the java.sql.Types type, the
@@ -38,6 +42,9 @@ final class MutableColumnDataType
 {
 
   private static final long serialVersionUID = 3688503281676530744L;
+
+  private static final Logger LOGGER = Logger.getLogger(SchemaCrawler.class
+    .getName());
 
   private JavaSqlType javaSqlType;
   private Class<?> javaSqlTypeMappedClass;
@@ -382,6 +389,27 @@ final class MutableColumnDataType
     if (mappedClass != null)
     {
       javaSqlTypeMappedClass = mappedClass;
+    }
+    else
+    {
+      javaSqlTypeMappedClass = Object.class;
+    }
+  }
+
+  void setTypeMappedClass(final String mappedClassName)
+  {
+    if (!Utility.isBlank(mappedClassName))
+    {
+      try
+      {
+        javaSqlTypeMappedClass = Class.forName(mappedClassName);
+      }
+      catch (ClassNotFoundException e)
+      {
+        LOGGER.log(Level.FINE, "Could not load mapped class, "
+                               + mappedClassName, e);
+        javaSqlTypeMappedClass = Object.class;
+      }
     }
     else
     {

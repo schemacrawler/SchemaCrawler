@@ -25,6 +25,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
+import schemacrawler.schema.JavaSqlTypes;
 import schemacrawler.schema.ResultsColumns;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -65,6 +66,7 @@ final class ResultsRetriever
   ResultsColumns retrieveResults()
     throws SQLException
   {
+    final JavaSqlTypes javaSqlTypes = new JavaSqlTypes();
     final MutableResultsColumns resultColumns = new MutableResultsColumns("");
     final MutableDatabase database = new MutableDatabase("results");
     final int columnCount = resultsMetaData.getColumnCount();
@@ -86,10 +88,10 @@ final class ResultsRetriever
         .getColumnTypeName(i);
       final int javaSqlType = resultsMetaData.getColumnType(i);
       final String columnClassName = resultsMetaData.getColumnClassName(i);
-      final MutableColumnDataType columnDataType = lookupOrCreateColumnDataType(schema,
-                                                                                javaSqlType,
-                                                                                databaseSpecificTypeName,
-                                                                                columnClassName);
+      final MutableColumnDataType columnDataType = new MutableColumnDataType(schema,
+                                                                             databaseSpecificTypeName);
+      columnDataType.setJavaSqlType(javaSqlTypes.get(javaSqlType));
+      columnDataType.setTypeMappedClass(columnClassName);
       columnDataType.setPrecision(resultsMetaData.getPrecision(i));
       final int scale = resultsMetaData.getScale(i);
       columnDataType.setMaximumScale(scale);

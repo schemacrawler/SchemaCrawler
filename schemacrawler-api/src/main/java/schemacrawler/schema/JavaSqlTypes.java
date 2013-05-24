@@ -136,7 +136,7 @@ public final class JavaSqlTypes
       }
     }
 
-    return Collections.unmodifiableMap(javaSqlTypes);
+    return javaSqlTypes;
   }
 
   private final Map<Integer, JavaSqlType> javaSqlTypeMap;
@@ -179,12 +179,14 @@ public final class JavaSqlTypes
   @Override
   public JavaSqlType get(final Object key)
   {
-    JavaSqlType sqlDataType = javaSqlTypeMap.get(key);
-    if (sqlDataType == null)
+    if (containsKey(key))
     {
-      sqlDataType = JavaSqlType.UNKNOWN;
+      return javaSqlTypeMap.get(key);
     }
-    return sqlDataType;
+    else
+    {
+      return JavaSqlType.UNKNOWN;
+    }
   }
 
   /**
@@ -254,6 +256,12 @@ public final class JavaSqlTypes
   public int size()
   {
     return javaSqlTypeMap.size();
+  }
+
+  @Override
+  public String toString()
+  {
+    return javaSqlTypeMap.toString();
   }
 
   @Override
