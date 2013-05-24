@@ -31,6 +31,7 @@ import java.sql.DriverPropertyInfo;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -43,6 +44,7 @@ import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.SearchableType;
+import schemacrawler.schemacrawler.InformationSchemaViews;
 
 final class DatabaseInfoRetriever
   extends AbstractRetriever
@@ -330,8 +332,27 @@ final class DatabaseInfoRetriever
   {
     final Schema systemSchema = new SchemaReference();
 
-    try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-      .getTypeInfo());)
+    final Statement statement;
+    final MetadataResultSet results;
+
+    final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
+      .getInformationSchemaViews();
+    if (informationSchemaViews.hasOverrideTypeInfoSql())
+    {
+      final String typeInfoSql = informationSchemaViews
+        .getOverrideTypeInfoSql();
+
+      final Connection connection = getDatabaseConnection();
+      statement = connection.createStatement();
+      results = new MetadataResultSet(statement.executeQuery(typeInfoSql));
+    }
+    else
+    {
+      statement = null;
+      results = new MetadataResultSet(getMetaData().getTypeInfo());
+    }
+
+    try
     {
       while (results.next())
       {
@@ -382,6 +403,17 @@ final class DatabaseInfoRetriever
         columnDataType.addAttributes(results.getAttributes());
 
         database.addColumnDataType(columnDataType);
+      }
+    }
+    finally
+    {
+      if (results != null)
+      {
+        results.close();
+      }
+      if (statement != null)
+      {
+        statement.close();
       }
     }
   }
