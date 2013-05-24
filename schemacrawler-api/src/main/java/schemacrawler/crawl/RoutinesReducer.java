@@ -29,13 +29,13 @@ import schemacrawler.filter.NamedObjectFilter;
 import schemacrawler.schema.Routine;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
-class RoutineFilter
+class RoutinesReducer
 {
 
   private final SchemaCrawlerOptions options;
   private final NamedObjectList<MutableRoutine> allRoutines;
 
-  public RoutineFilter(final SchemaCrawlerOptions options,
+  public RoutinesReducer(final SchemaCrawlerOptions options,
                        final NamedObjectList<MutableRoutine> allRoutines)
   {
     this.options = options;
