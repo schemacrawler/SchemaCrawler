@@ -452,7 +452,15 @@ final class TableRetriever
         LOGGER.log(Level.FINER, String.format("Retrieving index: %s.%s",
                                               table.getFullName(),
                                               indexName));
-        final String columnName = quotedName(results.getString("COLUMN_NAME"));
+
+        // Work-around PostgreSQL JDBC driver bugs by unquoting column
+        // names first
+        // #3480 -
+        // http://www.postgresql.org/message-id/200707231358.l6NDwlWh026230@wwwmaster.postgresql.org
+        // #6253 -
+        // http://www.postgresql.org/message-id/201110121403.p9CE3fsx039675@wwwmaster.postgresql.org
+        final String columnName = quotedName(unquotedName(results
+          .getString("COLUMN_NAME")));
         if (Utility.isBlank(columnName))
         {
           continue;
