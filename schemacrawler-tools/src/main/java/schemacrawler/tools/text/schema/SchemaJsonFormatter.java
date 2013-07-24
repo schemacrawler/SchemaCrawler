@@ -176,7 +176,10 @@ final class SchemaJsonFormatter
         {
           jsonParameters.put(handleRoutineColumn(column));
         }
-        jsonRoutine.put("definition", routine.getDefinition());
+        if (routine.hasDefinition())
+        {
+          jsonRoutine.put("definition", routine.getDefinition());
+        }
 
         if (isVerbose)
         {
@@ -299,7 +302,10 @@ final class SchemaJsonFormatter
         if (table instanceof View)
         {
           final View view = (View) table;
-          jsonTable.put("definition", view.getDefinition());
+          if (view.hasDefinition())
+          {
+            jsonTable.put("definition", view.getDefinition());
+          }
         }
 
         jsonTable.put("triggers", handleTriggers(table.getTriggers()));
@@ -314,7 +320,10 @@ final class SchemaJsonFormatter
             {
               jsonConsraint.put("name", constraint.getName());
             }
-            jsonConsraint.put("definition", constraint.getDefinition());
+            if (constraint.hasDefinition())
+            {
+              jsonConsraint.put("definition", constraint.getDefinition());
+            }
           }
         }
 
@@ -524,6 +533,10 @@ final class SchemaJsonFormatter
       for (final IndexColumn indexColumn: index.getColumns())
       {
         jsonIndex.accumulate("columns", handleTableColumn(indexColumn));
+      }
+      if (index.hasDefinition())
+      {
+        jsonIndex.put("definition", index.getDefinition());
       }
     }
     catch (final JSONException e)

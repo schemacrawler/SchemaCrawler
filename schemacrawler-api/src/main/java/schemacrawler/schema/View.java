@@ -27,7 +27,7 @@ package schemacrawler.schema;
  * @author Sualeh Fatehi
  */
 public interface View
-  extends Table
+  extends Table, DefinedObject
 {
 
   /**
@@ -38,13 +38,6 @@ public interface View
    * @return Check option.
    */
   CheckOptionType getCheckOption();
-
-  /**
-   * Gets the definition.
-   * 
-   * @return Definition
-   */
-  String getDefinition();
 
   /**
    * Specifies whether the view is updatable.

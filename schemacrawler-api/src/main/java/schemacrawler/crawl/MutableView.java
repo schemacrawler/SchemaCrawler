@@ -79,6 +79,12 @@ class MutableView
     return TableType.view;
   }
 
+  @Override
+  public boolean hasDefinition()
+  {
+    return definition.length() > 0;
+  }
+
   /**
    * {@inheritDoc}
    */

@@ -45,6 +45,7 @@ public final class SchemaInfoLevel
     detailed.setRetrieveCheckConstraintInformation(true);
     detailed.setRetrieveTriggerInformation(true);
     detailed.setRetrieveViewInformation(true);
+    detailed.setRetrieveIndexInformation(true);
     detailed.setTag("detailed");
     return detailed;
   }
@@ -117,6 +118,7 @@ public final class SchemaInfoLevel
   private boolean retrieveRoutineInformation;
   private boolean retrieveCheckConstraintInformation;
   private boolean retrieveViewInformation;
+  private boolean retrieveIndexInformation;
   private boolean retrieveForeignKeys;
   private boolean retrieveIndices;
   private boolean retrieveTablePrivileges;
@@ -175,6 +177,11 @@ public final class SchemaInfoLevel
   public boolean isRetrieveForeignKeys()
   {
     return retrieveForeignKeys;
+  }
+
+  public boolean isRetrieveIndexInformation()
+  {
+    return retrieveIndexInformation;
   }
 
   public boolean isRetrieveIndices()
@@ -290,6 +297,11 @@ public final class SchemaInfoLevel
   public void setRetrieveForeignKeys(final boolean retrieveForeignKeys)
   {
     this.retrieveForeignKeys = retrieveForeignKeys;
+  }
+
+  public void setRetrieveIndexInformation(final boolean retrieveIndexInformation)
+  {
+    this.retrieveIndexInformation = retrieveIndexInformation;
   }
 
   public void setRetrieveIndices(final boolean retrieveIndices)

@@ -54,6 +54,12 @@ class MutableCheckConstraint
     return definition;
   }
 
+  @Override
+  public boolean hasDefinition()
+  {
+    return definition.length() > 0;
+  }
+
   /**
    * {@inheritDoc}
    * 

@@ -34,6 +34,7 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.ConditionTimingType;
+import schemacrawler.schema.DefinedObject;
 import schemacrawler.schema.EventManipulationType;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnReference;
@@ -157,7 +158,7 @@ final class SchemaTextFormatter
       out.println(formattingHelper.createNameRow("", routineType));
 
       printRoutineColumns(routine.getColumns());
-      printDefinition("definition", "", routine.getDefinition());
+      printDefinition(routine);
 
       if (isVerbose)
       {
@@ -276,7 +277,7 @@ final class SchemaTextFormatter
       if (table instanceof View)
       {
         final View view = (View) table;
-        printDefinition("definition", "", view.getDefinition());
+        printDefinition(view);
       }
       printTriggers(table.getTriggers());
       printCheckConstraints(table.getCheckConstraints());
@@ -552,6 +553,19 @@ final class SchemaTextFormatter
     }
   }
 
+  private void printDefinition(final DefinedObject definedObject)
+  {
+    if (definedObject == null || !definedObject.hasDefinition())
+    {
+      return;
+    }
+
+    out.println(formattingHelper.createEmptyRow());
+    out.println(formattingHelper.createNameRow("", "[definition]"));
+    out.println(formattingHelper.createDefinitionRow(definedObject
+      .getDefinition()));
+  }
+
   private void printDefinition(final String heading,
                                final String name,
                                final String definition)
@@ -655,6 +669,12 @@ final class SchemaTextFormatter
                                     + "unique " + indexTypeString + "index]";
         out.println(formattingHelper.createNameRow(indexName, indexDetails));
         printTableColumns(index.getColumns());
+
+        if (index.hasDefinition())
+        {
+          out.println(formattingHelper.createDefinitionRow(index
+            .getDefinition()));
+        }
       }
     }
   }

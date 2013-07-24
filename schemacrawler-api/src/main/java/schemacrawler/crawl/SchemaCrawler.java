@@ -206,7 +206,8 @@ public final class SchemaCrawler
 
       // Filter the list of routines based on grep criteria, and
       // parent-child relationships
-      final RoutinesReducer routineFiter = new RoutinesReducer(options, allRoutines);
+      final RoutinesReducer routineFiter = new RoutinesReducer(options,
+                                                               allRoutines);
       routineFiter.filter();
 
       if (infoLevel.isRetrieveRoutineInformation())
@@ -365,6 +366,10 @@ public final class SchemaCrawler
       if (infoLevel.isRetrieveViewInformation())
       {
         retrieverExtra.retrieveViewInformation();
+      }
+      if (infoLevel.isRetrieveIndexInformation())
+      {
+        retrieverExtra.retrieveIndexInformation();
       }
       if (infoLevel.isRetrieveAdditionalTableAttributes())
       {

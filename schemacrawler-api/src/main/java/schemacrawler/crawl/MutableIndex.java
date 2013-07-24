@@ -48,12 +48,14 @@ class MutableIndex
   private IndexType indexType;
   private int cardinality;
   private int pages;
+  private final StringBuilder definition;
 
   MutableIndex(final Table parent, final String name)
   {
     super(parent, name);
     // Default values
     indexType = IndexType.unknown;
+    definition = new StringBuilder();
   }
 
   /**
@@ -104,6 +106,17 @@ class MutableIndex
   /**
    * {@inheritDoc}
    * 
+   * @see schemacrawler.schema.Index#getDefinition()
+   */
+  @Override
+  public String getDefinition()
+  {
+    return definition.toString();
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
    * @see Index#getIndexType()
    */
   @Override
@@ -134,6 +147,12 @@ class MutableIndex
     return getIndexType();
   }
 
+  @Override
+  public boolean hasDefinition()
+  {
+    return definition.length() > 0;
+  }
+
   /**
    * {@inheritDoc}
    * 
@@ -148,6 +167,14 @@ class MutableIndex
   void addColumn(final MutableIndexColumn column)
   {
     columns.add(column);
+  }
+
+  void appendDefinition(final String definition)
+  {
+    if (definition != null)
+    {
+      this.definition.append(definition);
+    }
   }
 
   final void setCardinality(final int cardinality)

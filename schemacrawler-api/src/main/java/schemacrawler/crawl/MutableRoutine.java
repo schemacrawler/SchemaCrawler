@@ -105,6 +105,12 @@ abstract class MutableRoutine
     return getRoutineType();
   }
 
+  @Override
+  public boolean hasDefinition()
+  {
+    return definition.length() > 0;
+  }
+
   void appendDefinition(final String definition)
   {
     if (definition != null)
