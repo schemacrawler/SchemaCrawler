@@ -23,7 +23,7 @@ package schemacrawler.schema;
 import java.util.List;
 
 public interface Routine
-  extends DatabaseObject, TypedObject<RoutineType>
+  extends DatabaseObject, TypedObject<RoutineType>, DefinedObject
 {
 
   /**
@@ -41,13 +41,6 @@ public interface Routine
    * @return Columns of the routine
    */
   List<? extends RoutineColumn<? extends Routine>> getColumns();
-
-  /**
-   * Gets the definition.
-   * 
-   * @return Definition
-   */
-  String getDefinition();
 
   /**
    * Gets the routine type.

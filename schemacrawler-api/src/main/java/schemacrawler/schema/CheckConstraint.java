@@ -27,15 +27,8 @@ package schemacrawler.schema;
  * @author Sualeh Fatehi
  */
 public interface CheckConstraint
-  extends DependantObject<Table>
+  extends DependantObject<Table>, DefinedObject
 {
-
-  /**
-   * Gets the definition.
-   * 
-   * @return Definition
-   */
-  String getDefinition();
 
   /**
    * Whether the constraint is deferrable.
