@@ -44,7 +44,7 @@
         s.parentNode.insertBefore(ga, s);
         })();
       </script>
-      <script src="js/jquery-1.7.2.min.js"></script>
+     <script src="js/jquery-1.7.2.min.js"></script>
       <script src="js/lightbox.js"></script>
       <link rel="stylesheet" href="css/lightbox.css" />
 	  <link rel="stylesheet" href="./css/sc.css" />
@@ -56,11 +56,11 @@
     <menu name="SchemaCrawler">
       <item name="About SchemaCrawler" href="index.html" />
       <item name="Readme" href="readme.html" />
-      <item name="Resources" href="resources.html" />
-      <item name="FAQS" href="faq.html" />
-      <item name="How-tos" href="how-to.html" />
-      <item name="Database-specific Distributions" href="bundled.html" />
       <item name="Who Uses" href="who-uses.html" />
+      <item name="Donations" href="http://sourceforge.net/donate/index.php?group_id=148383" />
+      <item name="Change History" href="changes-report.html" />      
+      <item name="Database-specific Distributions" href="bundled.html" />
+      <item name="Download" href="http://sourceforge.net/projects/schemacrawler/files/" />
     </menu>
     <menu name="Special Features">
       <item name="SchemaCrawler Grep" href="schemacrawler_grep.html" />
@@ -69,10 +69,11 @@
       <item name="SchemaCrawler Lint" href="lint.html" />
       <item name="Using INFORMATION_SCHEMA Views" href="INFORMATION_SCHEMA.html" />
     </menu>
-    <menu name="Project Pages">
-      <item name="Donations" href="http://sourceforge.net/donate/index.php?group_id=148383" />
-      <item name="Download" href="http://sourceforge.net/projects/schemacrawler/files/" />
-      <item name="Change History" href="changes-report.html" />
+    <menu name="Resources">
+      <item name="Resources" href="resources.html" />
+      <item name="FAQS" href="faq.html" />
+      <item name="How-tos" href="how-to.html" />
+      <item name="Get Help" href="https://sourceforge.net/p/schemacrawler/discussion/?source=navbar"/>
       <item name="Javadocs" href="apidocs/index.html" />
       <item name="Source Code" href="https://sourceforge.net/p/schemacrawler/code/HEAD/tree/10.4/" />
       <item name="Project Page on SourceForge" href="http://sourceforge.net/projects/schemacrawler/" />
