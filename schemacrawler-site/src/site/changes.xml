@@ -13,7 +13,7 @@
         Fixed retrieving index metadata for tables, working around PostgreSQL bugs #3480 and #6253.
       ]]></action> 
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
-        Added retrieving index definitions for PostgreSQL.
+        Added retrieving index definitions for PostgreSQL and Oracle.
       ]]></action>                                       
     </release>     
     <release version="10.3" date="2013-05-24">
