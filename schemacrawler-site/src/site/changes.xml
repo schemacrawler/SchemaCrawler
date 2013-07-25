@@ -14,7 +14,10 @@
       ]]></action> 
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Added retrieving index definitions for PostgreSQL and Oracle.
-      ]]></action>                                       
+      ]]></action>   
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added retrieving view definitions for Apache Derby.
+      ]]></action>                                           
     </release>     
     <release version="10.3" date="2013-05-24">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
