@@ -425,7 +425,43 @@ hsqldb.select.INFORMATION_SCHEMA.VIEWS=\
                         </tr>                        
                     </tbody>
                 </table>
-            </subsection>			
+            </subsection>		
+            <subsection name="INFORMATION_SCHEMA.EXT_INDEXES">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Column name</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>INDEX_CATALOG</td>
+                            <td>
+                                The name of the catalog containing the index.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>INDEX_SCHEMA</td>
+                            <td>
+                                The name of the schema containing the index.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>INDEX_NAME</td>
+                            <td>The name of the index.</td>
+                        </tr>      
+                        <tr>
+                            <td>TABLE_NAME</td>
+                            <td>The name of the table which has the index.</td>
+                        </tr> 
+                        <tr>
+                            <td>INDEX_DEFINITION</td>
+                            <td>The definition of the index.</td>
+                        </tr>                                                             
+                    </tbody>
+                </table>
+            </subsection>                   	
 			<subsection name="Additional Metadata in SchemaCrawler Output">
 				<p>
 					SchemaCrawler saves any additional metadata from the

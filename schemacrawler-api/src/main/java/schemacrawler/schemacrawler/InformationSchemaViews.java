@@ -45,8 +45,8 @@ public final class InformationSchemaViews
   private static final String KEY_INFORMATION_SCHEMA_ROUTINES = "select.INFORMATION_SCHEMA.ROUTINES";
   private static final String KEY_INFORMATION_SCHEMA_CHECK_CONSTRAINTS = "select.INFORMATION_SCHEMA.CHECK_CONSTRAINTS";
   private static final String KEY_INFORMATION_SCHEMA_SCHEMATA = "select.INFORMATION_SCHEMA.SCHEMATA";
-  private static final String KEY_INFORMATION_SCHEMA_SYNONYMS = "select.INFORMATION_SCHEMA.SYNONYMS";
-  private static final String KEY_INFORMATION_SCHEMA_INDEXES_EXT = "select.INFORMATION_SCHEMA.INDEXES_EXT";
+  private static final String KEY_INFORMATION_SCHEMA_EXT_SYNONYMS = "select.INFORMATION_SCHEMA.EXT_SYNONYMS";
+  private static final String KEY_INFORMATION_SCHEMA_EXT_INDEXES = "select.INFORMATION_SCHEMA.EXT_INDEXES";
   private static final String KEY_OVERRIDE_TYPE_INFO = "select.OVERRIDE_TYPE_INFO";
   private static final String KEY_ADDITIONAL_TABLE_ATTRIBUTES = "select.ADDITIONAL_TABLE_ATTRIBUTES";
   private static final String KEY_ADDITIONAL_COLUMN_ATTRIBUTES = "select.ADDITIONAL_COLUMN_ATTRIBUTES";
@@ -79,8 +79,8 @@ public final class InformationSchemaViews
           KEY_INFORMATION_SCHEMA_ROUTINES,
           KEY_INFORMATION_SCHEMA_CHECK_CONSTRAINTS,
           KEY_INFORMATION_SCHEMA_SCHEMATA,
-          KEY_INFORMATION_SCHEMA_SYNONYMS,
-          KEY_INFORMATION_SCHEMA_INDEXES_EXT,
+          KEY_INFORMATION_SCHEMA_EXT_SYNONYMS,
+          KEY_INFORMATION_SCHEMA_EXT_INDEXES,
           KEY_OVERRIDE_TYPE_INFO,
           KEY_ADDITIONAL_TABLE_ATTRIBUTES,
           KEY_ADDITIONAL_COLUMN_ATTRIBUTES
@@ -144,7 +144,7 @@ public final class InformationSchemaViews
    */
   public String getIndexesExtSql()
   {
-    return informationSchemaQueries.get(KEY_INFORMATION_SCHEMA_INDEXES_EXT);
+    return informationSchemaQueries.get(KEY_INFORMATION_SCHEMA_EXT_INDEXES);
   }
 
   /**
@@ -185,7 +185,7 @@ public final class InformationSchemaViews
    */
   public String getSynonymsSql()
   {
-    return informationSchemaQueries.get(KEY_INFORMATION_SCHEMA_SYNONYMS);
+    return informationSchemaQueries.get(KEY_INFORMATION_SCHEMA_EXT_SYNONYMS);
   }
 
   /**
@@ -240,7 +240,7 @@ public final class InformationSchemaViews
   public boolean hasIndexesExtSql()
   {
     return informationSchemaQueries
-      .containsKey(KEY_INFORMATION_SCHEMA_INDEXES_EXT);
+      .containsKey(KEY_INFORMATION_SCHEMA_EXT_INDEXES);
   }
 
   public boolean hasOverrideTypeInfoSql()
@@ -263,7 +263,7 @@ public final class InformationSchemaViews
   public boolean hasSynonymsSql()
   {
     return informationSchemaQueries
-      .containsKey(KEY_INFORMATION_SCHEMA_SYNONYMS);
+      .containsKey(KEY_INFORMATION_SCHEMA_EXT_SYNONYMS);
   }
 
   public boolean hasTableConstraintsSql()
@@ -324,7 +324,7 @@ public final class InformationSchemaViews
    */
   public void setIndexesExtSql(final String sql)
   {
-    informationSchemaQueries.put(KEY_INFORMATION_SCHEMA_INDEXES_EXT, sql);
+    informationSchemaQueries.put(KEY_INFORMATION_SCHEMA_EXT_INDEXES, sql);
   }
 
   /**
@@ -369,7 +369,7 @@ public final class InformationSchemaViews
    */
   public void setSynonymSql(final String sql)
   {
-    informationSchemaQueries.put(KEY_INFORMATION_SCHEMA_SYNONYMS, sql);
+    informationSchemaQueries.put(KEY_INFORMATION_SCHEMA_EXT_SYNONYMS, sql);
   }
 
   /**
