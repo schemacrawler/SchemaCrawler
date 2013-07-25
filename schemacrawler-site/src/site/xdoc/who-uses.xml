@@ -1,151 +1,173 @@
 <!DOCTYPE document PUBLIC "-//Apache Software Foundation//DTD XDOC 1.0//EN"
   "http://maven.apache.org/dtd/xdoc_1_0.dtd">
 <document>
-  <properties>
-    <title>SchemaCrawler - Who Uses</title>
-    <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
-  </properties>
-  <body>
-    <section name="Who Uses SchemaCrawler">
-      <subsection name="Question from Users">
-        <p>SchemaCrawler questions from users.</p>
-        <ul>
-          <li>
-            How <a href="http://dba.stackexchange.com/search?q=schemacrawler">database administrators</a>
-            use SchemaCrawler.
-          </li>
-          <li>
-            How <a href="http://serverfault.com/search?q=schemacrawler">system administrators</a>
-            use SchemaCrawler.
-          </li>
-          <li>
-            How <a href="http://stackoverflow.com/search?q=schemacrawler">programmers</a>
-            use SchemaCrawler.
-          </li>
-        </ul>
-      </subsection>  
-      <subsection name="Press">
-        <p>SchemaCrawler in the press, and in online articles and blogs.</p>
-        <ul>
-          <li>
-            Baseline Database Magazine, in an article on
-            <a href="http://www.baselinemag.com/c/a/Database/7-Free-Database-Tools/6/">Free Database Tools.</a>
-          </li>
-          <li>
-            Luxembourg Java Users Group presentation on
-            <a href="http://www.yajug.org/confluence/download/attachments/917512/20081016_Eclipse_SDK.pdf?version=1">
-              Make daily development easier and smarter
-            </a>
-          </li>
-          <li>
-            Mynitor's May 2, 2010
-            <a href="http://www.mynitor.com/2010/05/02/tool-of-the-week-schemacrawler/">
-              Tool of the week – SchemaCrawler
-            </a>
-          </li>
-          <li>
-            Tweets from
-            <a href="http://twitter.com/willchinelato/status/12117092941">
-              willchinelato
-            </a>
-            ,
-            <a href="http://twitter.com/#!/stigkj/statuses/70973992479109121">
-              stigkj
-            </a>
-            ,
-            <a href="http://twitter.com/#!/sourceforge/statuses/75995352091729921">
-              sourceforge
-            </a>,
-            <a href="https://twitter.com/marektomas/status/240462380365119489">
-              Marek Tomáš
-            </a>
-          </li>
-          <li>
-            IT journalist Lee Schlesinger's blog on
-            <a href="http://www.schlesinger.us/?p=650">
-              SchemaCrawler
-            </a>
-          </li>
-          <li>
-            Buffer of My Mind on
-            <a href="http://mindbuffer.wordpress.com/2010/10/14/schema-crawler/">
-              SchemaCrawler
-            </a>
-          </li>
-          <li>
-            "worker and parasite", blog post on
-            <a href="http://thegreyhope.co.za/linux/creating-er-diagrams-from-oracle-schemas/">Creating ER Diagrams from Oracle schemas.</a>
-          </li>
-          <li>
-            Gary Kelleher's blog post on
-            <a href="http://www.garykelleher.net/wp/?p=4">SchemaCrawler.</a>
-          </li> 
-          <li>Maxime Werlen's blog post on
-            <a href="http://www.garykelleher.net/wp/?p=4">SchemaCrawler pour extraire la structure d'une base de donnée</a> (SchemaCrawler to extract the structure of a database).
-          </li>
-          <li>A blog post,
-            <a href="http://de.softuses.com/120034">SQLite Spaltennamen in leere Tabelle zu finden</a> on documenting a SQLite database.
-          </li>          
-          <li>
-            Jan-Felix Wittmann's post on
-            <a href="https://plus.google.com/100783002584203158903/posts/bW8K8Xn5qJm">SchemaCrawler.</a>
-          </li>  
-          <li>
-            Kelvin Meeks' post on
-            <a href="http://intltechventures.blogspot.com/2012/08/2012-08-22-wednesday-data-governance.html">Data Governance Tools.</a>
-          </li> 
-          <li>
-            Gilesey's post on
-            <a href="https://gilesey.wordpress.com/2012/11/15/a-lightweight-schema-diff-or-dump-from-oracle/">A lightweight schema diff or dump from Oracle</a>
-          </li>                        
-        </ul>
-      </subsection>
-      <subsection name="Open Source Projects">
-        <p>SchemaCrawler in the open source projects.</p>
-        <ul>
-          <li>
-            <a href="http://code.google.com/p/jule/">Jule,</a>
-            a code generator in Java.
-          </li>
-          <li>
-            <a href="http://www.jequel.de/">JEQUEL,</a>
-            Java Embedded QUEry Language.
-          </li>
-          <li>
-            <a href="http://code.google.com/p/anhquan/wiki/CodeGenerator4j">CodeGenerator4j,</a>
-            a Java tool to generate Java source codes from XML files, using Apache Velocity and JAXB
-          </li>
-        </ul>
-      </subsection>
-    </section>
-        <footer>
-            <p>
-            <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">
-                <img alt="Creative Commons License" style="border-width:0"
-                    src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" />
-            </a>
-            <br />
-            <span xmlns:dc="http://purl.org/dc/elements/1.1/" href="http://purl.org/dc/dcmitype/Text"
-                property="dc:title" rel="dc:type">SchemaCrawler Website
-            </span>
-            by
-            <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Sualeh
-                Fatehi
-            </span>
-            is licensed under a
-            <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-Share Alike
-                3.0
-                Unported License
-            </a>
-            .
-            <br />
-            Based on a work at
-            <a xmlns:dc="http://purl.org/dc/elements/1.1/" href="http://schemacrawler.sourceforge.net/"
-                rel="dc:source">
-                schemacrawler.sourceforge.net
-            </a>
-            .
-            </p>
-        </footer>    
-  </body>
+	<properties>
+		<title>SchemaCrawler - Who Uses</title>
+		<author email="sualeh@hotmail.com">Sualeh Fatehi</author>
+	</properties>
+	<body>
+		<section name="Who Uses SchemaCrawler">
+			<subsection name="Question from Users">
+				<p>SchemaCrawler questions from users.</p>
+				<ul>
+					<li>
+						How
+						<a href="http://dba.stackexchange.com/search?q=schemacrawler">database administrators</a>
+						use SchemaCrawler.
+					</li>
+					<li>
+						How
+						<a href="http://serverfault.com/search?q=schemacrawler">system administrators</a>
+						use SchemaCrawler.
+					</li>
+					<li>
+						How
+						<a href="http://stackoverflow.com/search?q=schemacrawler">programmers</a>
+						use SchemaCrawler.
+					</li>
+				</ul>
+			</subsection>
+			<subsection name="Press">
+				<p>SchemaCrawler in the press, and in online articles and blogs.</p>
+				<ul>
+					<li>
+						Baseline Database Magazine, in an article on
+						<a
+							href="http://www.baselinemag.com/c/a/Database/7-Free-Database-Tools/6/">Free Database Tools.</a>
+					</li>
+					<li>
+						Luxembourg Java Users Group presentation on
+						<a
+							href="http://www.yajug.org/confluence/download/attachments/917512/20081016_Eclipse_SDK.pdf?version=1">
+							Make daily development easier and smarter
+						</a>
+					</li>
+					<li>
+						Mynitor's May 2, 2010
+						<a
+							href="http://www.mynitor.com/2010/05/02/tool-of-the-week-schemacrawler/">
+							Tool of the week – SchemaCrawler
+						</a>
+					</li>
+					<li>
+						Tweets from
+						<a href="http://twitter.com/willchinelato/status/12117092941">
+							willchinelato
+						</a>
+						,
+						<a href="http://twitter.com/#!/stigkj/statuses/70973992479109121">
+							stigkj
+						</a>
+						,
+						<a href="http://twitter.com/#!/sourceforge/statuses/75995352091729921">
+							sourceforge
+						</a>
+						,
+						<a href="https://twitter.com/marektomas/status/240462380365119489">
+							Marek Tomáš
+						</a>
+					</li>
+					<li>
+						IT journalist Lee Schlesinger's blog on
+						<a href="http://www.schlesinger.us/?p=650">
+							SchemaCrawler
+						</a>
+					</li>
+					<li>
+						Buffer of My Mind on
+						<a href="http://mindbuffer.wordpress.com/2010/10/14/schema-crawler/">
+							SchemaCrawler
+						</a>
+					</li>
+					<li>
+						"worker and parasite", blog post on
+						<a
+							href="http://thegreyhope.co.za/linux/creating-er-diagrams-from-oracle-schemas/">Creating ER Diagrams from Oracle schemas.</a>
+					</li>
+					<li>
+						Gary Kelleher's blog post on
+						<a href="http://www.garykelleher.net/wp/?p=4">SchemaCrawler.</a>
+					</li>
+					<li>
+						Maxime Werlen's blog post on
+						<a href="http://www.garykelleher.net/wp/?p=4">SchemaCrawler pour extraire la structure d'une base de
+							donnée</a>
+						(SchemaCrawler to extract the structure of a database).
+					</li>
+					<li>
+						A blog post,
+						<a href="http://de.softuses.com/120034">SQLite Spaltennamen in leere Tabelle zu finden</a>
+						on documenting a SQLite database.
+					</li>
+					<li>
+						Jan-Felix Wittmann's post on
+						<a
+							href="https://plus.google.com/100783002584203158903/posts/bW8K8Xn5qJm">SchemaCrawler.</a>
+					</li>
+					<li>
+						Kelvin Meeks' post on
+						<a
+							href="http://intltechventures.blogspot.com/2012/08/2012-08-22-wednesday-data-governance.html">Data Governance Tools.</a>
+					</li>
+					<li>
+						Gilesey's post on
+						<a
+							href="https://gilesey.wordpress.com/2012/11/15/a-lightweight-schema-diff-or-dump-from-oracle/">A lightweight schema diff or dump from Oracle</a>
+					</li>
+					<li>
+						Pierluigi Vernetto's post
+						<a
+							href="http://www.javamonamour.org/2013/06/schemacrawler-for-oracle-db-diff.html">SchemaCrawler for Oracle DB Diff</a>
+					</li>
+				</ul>
+			</subsection>
+			<subsection name="Open Source Projects">
+				<p>SchemaCrawler in the open source projects.</p>
+				<ul>
+					<li>
+						<a href="http://code.google.com/p/jule/">Jule,</a>
+						a code generator in Java.
+					</li>
+					<li>
+						<a href="http://www.jequel.de/">JEQUEL,</a>
+						Java Embedded QUEry Language.
+					</li>
+					<li>
+						<a href="http://code.google.com/p/anhquan/wiki/CodeGenerator4j">CodeGenerator4j,</a>
+						a Java tool to generate Java source codes from XML files, using
+						Apache Velocity and JAXB
+					</li>
+				</ul>
+			</subsection>
+		</section>
+		<footer>
+			<p>
+				<a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">
+					<img alt="Creative Commons License" style="border-width:0"
+						src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" />
+				</a>
+				<br />
+				<span xmlns:dc="http://purl.org/dc/elements/1.1/" href="http://purl.org/dc/dcmitype/Text"
+					property="dc:title" rel="dc:type">SchemaCrawler Website
+				</span>
+				by
+				<span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Sualeh
+					Fatehi
+				</span>
+				is licensed under a
+				<a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-Share Alike
+					3.0
+					Unported License
+				</a>
+				.
+				<br />
+				Based on a work at
+				<a xmlns:dc="http://purl.org/dc/elements/1.1/" href="http://schemacrawler.sourceforge.net/"
+					rel="dc:source">
+					schemacrawler.sourceforge.net
+				</a>
+				.
+			</p>
+		</footer>
+	</body>
 </document>
