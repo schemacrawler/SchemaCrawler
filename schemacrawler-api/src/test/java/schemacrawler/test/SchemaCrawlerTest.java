@@ -54,6 +54,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestUtility;
+import schemacrawler.test.utility.TestWriter;
 import schemacrawler.utility.NamedObjectSort;
 import sf.util.Utility;
 
@@ -67,69 +68,7 @@ public class SchemaCrawlerTest
   public void checkConstraints()
     throws Exception
   {
-
-    final int[] tableCounts = {
-        6, 5, 0, 0, 2, 0
-    };
-    final int[][] checkConstraintCounts = {
-        {
-            4, 0, 2, 3, 0, 1, 0
-        }, {
-            3, 0, 0, 3, 6,
-        }, {}, {}, {
-            4, 2
-        }, {}
-    };
-    final String[][][] checkConstraintNames = {
-        {
-            {
-                "CHECK_UPPERCASE_STATE",
-                "SYS_CT_10068",
-                "SYS_CT_10069",
-                "SYS_CT_10070"
-            },
-            {},
-            {
-                "SYS_CT_10083", "SYS_CT_10084"
-            },
-            {
-                "SYS_CT_10076", "SYS_CT_10077", "SYS_CT_10078"
-            },
-            {},
-            {
-              "SYS_CT_10065"
-            },
-            {}
-        },
-        {
-            {
-                "SYS_CT_10144", "SYS_CT_10145", "SYS_CT_10146"
-            },
-            {},
-            {},
-            {
-                "SYS_CT_10133", "SYS_CT_10134", "SYS_CT_10135",
-            },
-            {
-                "CHECK_UPPERCASE_STATE",
-                "SYS_CT_10121",
-                "SYS_CT_10122",
-                "SYS_CT_10123",
-                "SYS_CT_10124",
-                "SYS_CT_10125",
-            },
-        },
-        {},
-        {},
-        {
-            {
-                "SYS_CT_10105", "SYS_CT_10106", "SYS_CT_10107", "SYS_CT_10108"
-            }, {
-                "SYS_CT_10114", "SYS_CT_10115"
-            }
-        },
-        {}
-    };
+    final TestWriter out = new TestWriter();
 
     final InformationSchemaViews informationSchemaViews = new InformationSchemaViews();
     informationSchemaViews
@@ -147,31 +86,24 @@ public class SchemaCrawlerTest
     for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++)
     {
       final Schema schema = schemas[schemaIdx];
+      out.println("schema: " + schema.getFullName());
       final Table[] tables = database.getTables(schema).toArray(new Table[0]);
-      assertEquals("Table count does not match",
-                   tableCounts[schemaIdx],
-                   tables.length);
       for (int tableIdx = 0; tableIdx < tables.length; tableIdx++)
       {
         final Table table = tables[tableIdx];
+        out.println("  table: " + table.getFullName());
         final CheckConstraint[] checkConstraints = table.getCheckConstraints()
           .toArray(new CheckConstraint[0]);
-        assertEquals(String.format("Table [%d][%d] %s check constraints count does not match",
-                                   schemaIdx,
-                                   tableIdx,
-                                   table.getFullName()),
-                     checkConstraintCounts[schemaIdx][tableIdx],
-                     checkConstraints.length);
         for (int i = 0; i < checkConstraints.length; i++)
         {
           final CheckConstraint checkConstraint = checkConstraints[i];
-          assertEquals("Check constraint name does not match for table "
-                           + table,
-                       checkConstraintNames[schemaIdx][tableIdx][i],
-                       checkConstraint.getName());
+          out.println("    constraint: " + checkConstraint.getName());
         }
       }
     }
+
+    out.close();
+    out.assertEquals(TestUtility.callingMethodFullName());
   }
 
   @Test
@@ -196,59 +128,7 @@ public class SchemaCrawlerTest
   public void counts()
     throws Exception
   {
-
-    final int[] tableCounts = {
-        6, 0, 0, 2, 0,
-    };
-    final int[][] tableColumnCounts = {
-        {
-            9, 3, 3, 6, 1, 2
-        }, {}, {}, {
-            4, 5
-        }, {},
-    };
-    final int[][] checkConstraints = {
-        {
-            4, 0, 2, 3, 0, 1, 0
-        }, {}, {}, {
-            4, 2
-        }, {},
-    };
-    final int[][] indexCounts = {
-        {
-            3, 0, 3, 1, 0, 1,
-        }, {}, {}, {
-            1, 1
-        }, {},
-    };
-    final int[][] fkCounts = {
-        {
-            1, 0, 2, 1, 0, 0,
-        }, {}, {}, {
-            1, 1
-        }, {},
-    };
-    final int[][] exportedFkCounts = {
-        {
-            1, 0, 0, 1, 0, 0,
-        }, {}, {}, {
-            1, 0
-        }, {},
-    };
-    final int[][] importedFkCounts = {
-        {
-            0, 0, 2, 0, 0, 0,
-        }, {}, {}, {
-            0, 1
-        }, {},
-    };
-    final int[][] tablePrivilegesCounts = {
-        {
-            6, 6, 6, 6, 6, 6, 6
-        }, {}, {}, {
-            6, 6,
-        }, {},
-    };
+    final TestWriter out = new TestWriter();
 
     final InformationSchemaViews informationSchemaViews = new InformationSchemaViews();
     informationSchemaViews
@@ -269,58 +149,26 @@ public class SchemaCrawlerTest
     for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++)
     {
       final Schema schema = schemas[schemaIdx];
+      out.println("schema: " + schema.getFullName());
       final Table[] tables = database.getTables(schema).toArray(new Table[0]);
-      assertEquals("Table count does not match",
-                   tableCounts[schemaIdx],
-                   tables.length);
       Arrays.sort(tables, NamedObjectSort.alphabetical);
       for (int tableIdx = 0; tableIdx < tables.length; tableIdx++)
       {
         final Table table = tables[tableIdx];
-        assertEquals(String.format("Table [%d][%d] %s columns count does not match",
-                                   schemaIdx,
-                                   tableIdx,
-                                   table.getFullName()),
-                     tableColumnCounts[schemaIdx][tableIdx],
-                     table.getColumns().size());
-        assertEquals(String.format("Table [%d][%d] %s check constraints count does not match",
-                                   schemaIdx,
-                                   tableIdx,
-                                   table.getFullName()),
-                     checkConstraints[schemaIdx][tableIdx],
-                     table.getCheckConstraints().size());
-        assertEquals(String.format("Table [%d][%d] %s index count does not match",
-                                   schemaIdx,
-                                   tableIdx,
-                                   table.getFullName()),
-                     indexCounts[schemaIdx][tableIdx],
-                     table.getIndices().size());
-        assertEquals(String.format("Table [%d][%d] %s foreign key count does not match",
-                                   schemaIdx,
-                                   tableIdx,
-                                   table.getFullName()),
-                     fkCounts[schemaIdx][tableIdx],
-                     table.getForeignKeys().size());
-        assertEquals(String.format("Table [%d][%d] %s exported foreign key count does not match",
-                                   schemaIdx,
-                                   tableIdx,
-                                   table.getFullName()),
-                     exportedFkCounts[schemaIdx][tableIdx],
-                     table.getExportedForeignKeys().size());
-        assertEquals(String.format("Table [%d][%d] %s imported foreign key count does not match",
-                                   schemaIdx,
-                                   tableIdx,
-                                   table.getFullName()),
-                     importedFkCounts[schemaIdx][tableIdx],
-                     table.getImportedForeignKeys().size());
-        assertEquals(String.format("Table [%d][%d] %s privileges count does not match",
-                                   schemaIdx,
-                                   tableIdx,
-                                   table.getFullName()),
-                     tablePrivilegesCounts[schemaIdx][tableIdx],
-                     table.getPrivileges().size());
+        out.println("  table: " + table.getFullName());
+        out.println("    # columns: " + table.getColumns().size());
+        out.println("    # constraints: " + table.getCheckConstraints().size());
+        out.println("    # indices: " + table.getIndices().size());
+        out.println("    # foreign keys: " + table.getForeignKeys().size());
+        out.println("    # imported foreign keys: "
+                    + table.getExportedForeignKeys().size());
+        out.println("    # exported: " + table.getImportedForeignKeys().size());
+        out.println("    # privileges: " + table.getPrivileges().size());
       }
     }
+
+    out.close();
+    out.assertEquals(TestUtility.callingMethodFullName());
   }
 
   @Test
@@ -383,17 +231,7 @@ public class SchemaCrawlerTest
   public void synonyms()
     throws Exception
   {
-    final String[] classes = {
-        "MutableTable", "MutableTable", "MutableTable", "", "", "",
-    };
-    final String[] synonymNames = {
-        "AUTHORS",
-        "BOOKAUTHORS",
-        "BOOKS",
-        "\"Global Counts\"",
-        "No_Columns",
-        "PUBLICATIONS",
-    };
+    final TestWriter out = new TestWriter();
 
     final InformationSchemaViews informationSchemaViews = new InformationSchemaViews();
     informationSchemaViews
@@ -439,12 +277,13 @@ public class SchemaCrawlerTest
     {
       final Synonym synonym = synonyms[i];
       assertNotNull(synonym);
-      assertEquals("Wrong referenced object class - "
-                       + synonym.getReferencedObject().getClass(),
-                   classes[i],
-                   synonym.getReferencedObject().getClass().getSimpleName());
-      assertEquals("", synonymNames[i], synonym.getName());
+      out.println("synonym: " + synonym.getName());
+      out.println("  class: "
+                  + synonym.getReferencedObject().getClass().getSimpleName());
     }
+
+    out.close();
+    out.assertEquals(TestUtility.callingMethodFullName());
   }
 
   @Test
@@ -635,4 +474,5 @@ public class SchemaCrawlerTest
     assertFalse("View definition not found", view.getDefinition().trim()
       .equals(""));
   }
+
 }

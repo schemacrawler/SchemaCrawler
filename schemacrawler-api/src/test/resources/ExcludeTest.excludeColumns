@@ -1,0 +1,100 @@
+schema: PUBLIC.BOOKS
+  table: PUBLIC.BOOKS.AUTHORS
+    column: PUBLIC.BOOKS.AUTHORS.FIRSTNAME
+      database type: VARCHAR
+      type: VARCHAR
+    column: PUBLIC.BOOKS.AUTHORS.LASTNAME
+      database type: VARCHAR
+      type: VARCHAR
+    column: PUBLIC.BOOKS.AUTHORS.ADDRESS1
+      database type: VARCHAR
+      type: VARCHAR
+    column: PUBLIC.BOOKS.AUTHORS.ADDRESS2
+      database type: VARCHAR
+      type: VARCHAR
+    column: PUBLIC.BOOKS.AUTHORS.CITY
+      database type: VARCHAR
+      type: VARCHAR
+    column: PUBLIC.BOOKS.AUTHORS.STATE
+      database type: VARCHAR
+      type: VARCHAR
+    column: PUBLIC.BOOKS.AUTHORS.POSTALCODE
+      database type: VARCHAR
+      type: VARCHAR
+    column: PUBLIC.BOOKS.AUTHORS.COUNTRY
+      database type: VARCHAR
+      type: VARCHAR
+  table: PUBLIC.BOOKS.AUTHORSLIST
+    column: PUBLIC.BOOKS.AUTHORSLIST.FIRSTNAME
+      database type: VARCHAR
+      type: VARCHAR
+    column: PUBLIC.BOOKS.AUTHORSLIST.LASTNAME
+      database type: VARCHAR
+      type: VARCHAR
+  table: PUBLIC.BOOKS.BOOKAUTHORS
+    column: PUBLIC.BOOKS.BOOKAUTHORS.BOOKID
+      database type: INTEGER
+      type: INTEGER
+    column: PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID
+      database type: INTEGER
+      type: INTEGER
+    column: PUBLIC.BOOKS.BOOKAUTHORS."UPDATE"
+      database type: CLOB
+      type: CLOB
+  table: PUBLIC.BOOKS.BOOKS
+    column: PUBLIC.BOOKS.BOOKS.TITLE
+      database type: VARCHAR
+      type: VARCHAR
+    column: PUBLIC.BOOKS.BOOKS.DESCRIPTION
+      database type: VARCHAR
+      type: VARCHAR
+    column: PUBLIC.BOOKS.BOOKS.PUBLISHERID
+      database type: INTEGER
+      type: INTEGER
+    column: PUBLIC.BOOKS.BOOKS.PUBLICATIONDATE
+      database type: DATE
+      type: DATE
+    column: PUBLIC.BOOKS.BOOKS.PRICE
+      database type: DOUBLE
+      type: DOUBLE
+  table: PUBLIC.BOOKS."Global Counts"
+    column: PUBLIC.BOOKS."Global Counts"."Global Count"
+      database type: INTEGER
+      type: INTEGER
+  table: PUBLIC.BOOKS.PUBLISHERS
+    column: PUBLIC.BOOKS.PUBLISHERS.PUBLISHER
+      database type: VARCHAR
+      type: VARCHAR
+schema: PUBLIC.INFORMATION_SCHEMA
+schema: PUBLIC.PUBLIC
+schema: PUBLIC."PUBLISHER SALES"
+  table: PUBLIC."PUBLISHER SALES".REGIONS
+    column: PUBLIC."PUBLISHER SALES".REGIONS.CITY
+      database type: VARCHAR
+      type: VARCHAR
+    column: PUBLIC."PUBLISHER SALES".REGIONS.STATE
+      database type: VARCHAR
+      type: VARCHAR
+    column: PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE
+      database type: VARCHAR
+      type: VARCHAR
+    column: PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY
+      database type: VARCHAR
+      type: VARCHAR
+  table: PUBLIC."PUBLISHER SALES".SALES
+    column: PUBLIC."PUBLISHER SALES".SALES.POSTALCODE
+      database type: VARCHAR
+      type: VARCHAR
+    column: PUBLIC."PUBLISHER SALES".SALES.COUNTRY
+      database type: VARCHAR
+      type: VARCHAR
+    column: PUBLIC."PUBLISHER SALES".SALES.BOOKID
+      database type: INTEGER
+      type: INTEGER
+    column: PUBLIC."PUBLISHER SALES".SALES.PERIODENDDATE
+      database type: DATE
+      type: DATE
+    column: PUBLIC."PUBLISHER SALES".SALES.TOTALAMOUNT
+      database type: DOUBLE
+      type: DOUBLE
+schema: PUBLIC.SYSTEM_LOBS
