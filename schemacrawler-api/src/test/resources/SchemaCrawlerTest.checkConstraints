@@ -1,0 +1,47 @@
+schema: PUBLIC.BOOKS
+  table: PUBLIC.BOOKS.AUTHORS
+    constraint: CHECK_UPPERCASE_STATE
+    constraint: SYS_CT_10068
+    constraint: SYS_CT_10069
+    constraint: SYS_CT_10070
+  table: PUBLIC.BOOKS.AUTHORSLIST
+  table: PUBLIC.BOOKS.BOOKAUTHORS
+    constraint: SYS_CT_10083
+    constraint: SYS_CT_10084
+  table: PUBLIC.BOOKS.BOOKS
+    constraint: SYS_CT_10076
+    constraint: SYS_CT_10077
+    constraint: SYS_CT_10078
+  table: PUBLIC.BOOKS."Global Counts"
+  table: PUBLIC.BOOKS.PUBLISHERS
+    constraint: SYS_CT_10065
+schema: PUBLIC.FOR_LINT
+  table: PUBLIC.FOR_LINT.EXTRA_PK
+    constraint: SYS_CT_10144
+    constraint: SYS_CT_10145
+    constraint: SYS_CT_10146
+  table: PUBLIC.FOR_LINT."Global Counts"
+  table: PUBLIC.FOR_LINT.No_Columns
+  table: PUBLIC.FOR_LINT.PUBLICATIONS
+    constraint: SYS_CT_10133
+    constraint: SYS_CT_10134
+    constraint: SYS_CT_10135
+  table: PUBLIC.FOR_LINT.WRITERS
+    constraint: CHECK_UPPERCASE_STATE
+    constraint: SYS_CT_10121
+    constraint: SYS_CT_10122
+    constraint: SYS_CT_10123
+    constraint: SYS_CT_10124
+    constraint: SYS_CT_10125
+schema: PUBLIC.INFORMATION_SCHEMA
+schema: PUBLIC.PUBLIC
+schema: PUBLIC."PUBLISHER SALES"
+  table: PUBLIC."PUBLISHER SALES".REGIONS
+    constraint: SYS_CT_10105
+    constraint: SYS_CT_10106
+    constraint: SYS_CT_10107
+    constraint: SYS_CT_10108
+  table: PUBLIC."PUBLISHER SALES".SALES
+    constraint: SYS_CT_10114
+    constraint: SYS_CT_10115
+schema: PUBLIC.SYSTEM_LOBS

@@ -33,6 +33,8 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseDatabaseTest;
+import schemacrawler.test.utility.TestUtility;
+import schemacrawler.test.utility.TestWriter;
 import schemacrawler.utility.NamedObjectSort;
 
 public class ExcludeTest
@@ -46,114 +48,8 @@ public class ExcludeTest
   public void excludeColumns()
     throws Exception
   {
-    final String[] schemaNames = {
-        "BOOKS",
-        "INFORMATION_SCHEMA",
-        "PUBLIC",
-        "\"PUBLISHER SALES\"",
-        "SYSTEM_LOBS"
-    };
-    final int[] tableCounts = {
-        6, 0, 0, 2, 0,
-    };
-    final String[][][] columnNames = {
-        {
-            {
-                // "AUTHORS.ID",
-                "AUTHORS.FIRSTNAME",
-                "AUTHORS.LASTNAME",
-                "AUTHORS.ADDRESS1",
-                "AUTHORS.ADDRESS2",
-                "AUTHORS.CITY",
-                "AUTHORS.STATE",
-                "AUTHORS.POSTALCODE",
-                "AUTHORS.COUNTRY",
-            },
-            {
-                // "AUTHORSLIST.ID",
-                "AUTHORSLIST.FIRSTNAME",
-                "AUTHORSLIST.LASTNAME",
-            },
-            {
-                "BOOKAUTHORS.BOOKID",
-                "BOOKAUTHORS.AUTHORID",
-                "BOOKAUTHORS.\"UPDATE\"",
-            },
-            {
-                // "BOOKS.ID",
-                "BOOKS.TITLE",
-                "BOOKS.DESCRIPTION",
-                "BOOKS.PUBLISHERID",
-                "BOOKS.PUBLICATIONDATE",
-                "BOOKS.PRICE",
-            },
-            {
-              "\"Global Counts\".\"Global Count\"",
-            },
-            {
-              // "PUBLISHERS.ID",
-              "PUBLISHERS.PUBLISHER",
-            },
-        },
-        {},
-        {},
-        {
-            {
-                "REGIONS.CITY",
-                "REGIONS.STATE",
-                "REGIONS.POSTALCODE",
-                "REGIONS.COUNTRY",
-            },
-            {
-                "SALES.POSTALCODE",
-                "SALES.COUNTRY",
-                "SALES.BOOKID",
-                "SALES.PERIODENDDATE",
-                "SALES.TOTALAMOUNT",
-            },
-        },
-        {},
-    };
-    final String[][][] columnDataTypes = {
-        {
 
-            {
-                // "INTEGER",
-                "VARCHAR",
-                "VARCHAR",
-                "VARCHAR",
-                "VARCHAR",
-                "VARCHAR",
-                "VARCHAR",
-                "VARCHAR",
-                "VARCHAR",
-            }, {
-                // "INTEGER",
-                "VARCHAR",
-                "VARCHAR",
-            }, {
-                "INTEGER", "INTEGER", "CLOB",
-            }, {
-                // "INTEGER",
-                "VARCHAR",
-                "VARCHAR",
-                "INTEGER",
-                "DATE",
-                "DOUBLE"
-            }, {
-              "INTEGER",
-            }, {
-              // "INTEGER",
-              "VARCHAR",
-            },
-        }, {}, {}, {
-            {
-                "VARCHAR", "VARCHAR", "VARCHAR", "VARCHAR"
-            }, {
-                "VARCHAR", "VARCHAR", "INTEGER", "DATE", "DOUBLE",
-            },
-        }, {},
-    };
+    final TestWriter out = new TestWriter();
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions
@@ -165,43 +61,32 @@ public class ExcludeTest
 
     final Database database = getDatabase(schemaCrawlerOptions);
     final Schema[] schemas = database.getSchemas().toArray(new Schema[0]);
-    assertEquals("Schema count does not match",
-                 schemaNames.length,
-                 schemas.length);
-    for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++)
+    assertEquals("Schema count does not match", 5, schemas.length);
+    for (final Schema schema: schemas)
     {
-      final Schema schema = schemas[schemaIdx];
-      assertEquals("Schema name does not match",
-                   "PUBLIC." + schemaNames[schemaIdx],
-                   schema.getFullName());
+      out.println("schema: " + schema.getFullName());
       final Table[] tables = database.getTables(schema).toArray(new Table[0]);
       Arrays.sort(tables, NamedObjectSort.alphabetical);
-      assertEquals("Table count does not match, for schema " + schema,
-                   tableCounts[schemaIdx],
-                   tables.length);
-      for (int tableIdx = 0; tableIdx < tables.length; tableIdx++)
+      for (final Table table: tables)
       {
-        final Table table = tables[tableIdx];
+        out.println("  table: " + table.getFullName());
         final Column[] columns = table.getColumns().toArray(new Column[0]);
         Arrays.sort(columns);
-        final String[] columnsNamesForTable = columnNames[schemaIdx][tableIdx];
-        for (int columnIdx = 0; columnIdx < columns.length; columnIdx++)
+        for (final Column column: columns)
         {
-          final Column column = columns[columnIdx];
           LOGGER.log(Level.FINE, column.toString());
-          assertEquals("Column full name does not match for column " + column,
-                       "PUBLIC." + schemaNames[schemaIdx] + "."
-                           + columnsNamesForTable[columnIdx],
-                       column.getFullName());
-          assertEquals("Column type does not match for column " + column,
-                       columnDataTypes[schemaIdx][tableIdx][columnIdx],
-                       column.getColumnDataType().getDatabaseSpecificTypeName());
-          assertEquals("Column JDBC type does not match",
-                       columnDataTypes[schemaIdx][tableIdx][columnIdx],
-                       column.getColumnDataType().getTypeName());
+          out.println("    column: " + column.getFullName());
+          out.println("      database type: "
+                      + column.getColumnDataType()
+                        .getDatabaseSpecificTypeName());
+          out
+            .println("      type: " + column.getColumnDataType().getTypeName());
         }
       }
     }
+
+    out.close();
+    out.assertEquals(TestUtility.callingMethodFullName());
   }
 
 }

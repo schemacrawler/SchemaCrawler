@@ -18,7 +18,6 @@
 package schemacrawler.test;
 
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.sql.Connection;
@@ -32,6 +31,8 @@ import org.junit.Test;
 import schemacrawler.schema.ResultsColumn;
 import schemacrawler.schema.ResultsColumns;
 import schemacrawler.test.utility.BaseDatabaseTest;
+import schemacrawler.test.utility.TestUtility;
+import schemacrawler.test.utility.TestWriter;
 import schemacrawler.utility.SchemaCrawlerUtility;
 
 public class ResultColumnsTest
@@ -46,12 +47,7 @@ public class ResultColumnsTest
     throws Exception
   {
 
-    final String[] columnNames = {
-        "PUBLIC.BOOKS.BOOKS.TITLE", "C2", "PUBLIC.BOOKS.BOOKS.PRICE",
-    };
-    final String[] columnDataTypes = {
-        "VARCHAR", "VARCHAR", "DOUBLE",
-    };
+    final TestWriter out = new TestWriter();
 
     final String sql = ""
                        + "SELECT                                                                    "
@@ -76,24 +72,20 @@ public class ResultColumnsTest
       assertNotNull("Could not obtain result columns", resultColumns);
       final ResultsColumn[] columns = resultColumns.getColumns()
         .toArray(new ResultsColumn[0]);
-      assertEquals("Column count does not match",
-                   columnNames.length,
-                   columns.length);
       for (int columnIdx = 0; columnIdx < columns.length; columnIdx++)
       {
         final ResultsColumn column = columns[columnIdx];
         LOGGER.log(Level.FINE, column.toString());
-        assertEquals("Column full name does not match",
-                     columnNames[columnIdx],
-                     column.getFullName());
-        assertEquals("Column type does not match",
-                     columnDataTypes[columnIdx],
-                     column.getColumnDataType().getDatabaseSpecificTypeName());
-        assertEquals("Column JDBC type does not match",
-                     columnDataTypes[columnIdx],
-                     column.getColumnDataType().getTypeName());
+        out.println("column: " + column.getFullName());
+        out.println("  database type: "
+                    + column.getColumnDataType().getDatabaseSpecificTypeName());
+        out.println("  type: " + column.getColumnDataType().getTypeName());
       }
     }
+
+    out.close();
+    out.assertEquals(TestUtility.callingMethodFullName());
+    ;
   }
 
 }

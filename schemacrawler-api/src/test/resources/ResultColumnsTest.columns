@@ -1,0 +1,9 @@
+column: PUBLIC.BOOKS.BOOKS.TITLE
+  database type: VARCHAR
+  type: VARCHAR
+column: C2
+  database type: VARCHAR
+  type: VARCHAR
+column: PUBLIC.BOOKS.BOOKS.PRICE
+  database type: DOUBLE
+  type: DOUBLE

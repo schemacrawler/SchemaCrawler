@@ -74,8 +74,20 @@ public final class TestUtility
 
   public static String callingMethodName()
   {
-    return Thread.currentThread().getStackTrace()[CLIENT_CODE_STACK_INDEX + 1]
-      .getMethodName();
+    return callingMethodStackTraceElement().getMethodName();
+  }
+
+  public static String callingMethodFullName()
+  {
+    final StackTraceElement callingMethodStackTraceElement = callingMethodStackTraceElement();
+    final String className = callingMethodStackTraceElement.getClassName();
+    return className.substring(className.lastIndexOf('.') + 1) + "."
+           + callingMethodStackTraceElement.getMethodName();
+  }
+
+  private static StackTraceElement callingMethodStackTraceElement()
+  {
+    return Thread.currentThread().getStackTrace()[CLIENT_CODE_STACK_INDEX + 1];
   }
 
   public static List<String> compareOutput(final String referenceFile,
