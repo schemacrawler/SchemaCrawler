@@ -1,47 +1,47 @@
 schema: PUBLIC.BOOKS
   table: PUBLIC.BOOKS.AUTHORS
     constraint: CHECK_UPPERCASE_STATE
-    constraint: SYS_CT_10068
-    constraint: SYS_CT_10069
-    constraint: SYS_CT_10070
+    constraint: SYS_CT_10095
+    constraint: SYS_CT_10096
+    constraint: SYS_CT_10097
   table: PUBLIC.BOOKS.AUTHORSLIST
   table: PUBLIC.BOOKS.BOOKAUTHORS
-    constraint: SYS_CT_10083
-    constraint: SYS_CT_10084
+    constraint: SYS_CT_10110
+    constraint: SYS_CT_10111
   table: PUBLIC.BOOKS.BOOKS
-    constraint: SYS_CT_10076
-    constraint: SYS_CT_10077
-    constraint: SYS_CT_10078
+    constraint: SYS_CT_10103
+    constraint: SYS_CT_10104
+    constraint: SYS_CT_10105
   table: PUBLIC.BOOKS."Global Counts"
   table: PUBLIC.BOOKS.PUBLISHERS
-    constraint: SYS_CT_10065
+    constraint: SYS_CT_10092
 schema: PUBLIC.FOR_LINT
   table: PUBLIC.FOR_LINT.EXTRA_PK
-    constraint: SYS_CT_10144
-    constraint: SYS_CT_10145
-    constraint: SYS_CT_10146
+    constraint: SYS_CT_10171
+    constraint: SYS_CT_10172
+    constraint: SYS_CT_10173
   table: PUBLIC.FOR_LINT."Global Counts"
   table: PUBLIC.FOR_LINT.No_Columns
   table: PUBLIC.FOR_LINT.PUBLICATIONS
-    constraint: SYS_CT_10133
-    constraint: SYS_CT_10134
-    constraint: SYS_CT_10135
+    constraint: SYS_CT_10160
+    constraint: SYS_CT_10161
+    constraint: SYS_CT_10162
   table: PUBLIC.FOR_LINT.WRITERS
     constraint: CHECK_UPPERCASE_STATE
-    constraint: SYS_CT_10121
-    constraint: SYS_CT_10122
-    constraint: SYS_CT_10123
-    constraint: SYS_CT_10124
-    constraint: SYS_CT_10125
+    constraint: SYS_CT_10148
+    constraint: SYS_CT_10149
+    constraint: SYS_CT_10150
+    constraint: SYS_CT_10151
+    constraint: SYS_CT_10152
 schema: PUBLIC.INFORMATION_SCHEMA
 schema: PUBLIC.PUBLIC
 schema: PUBLIC."PUBLISHER SALES"
   table: PUBLIC."PUBLISHER SALES".REGIONS
-    constraint: SYS_CT_10105
-    constraint: SYS_CT_10106
-    constraint: SYS_CT_10107
-    constraint: SYS_CT_10108
+    constraint: SYS_CT_10132
+    constraint: SYS_CT_10133
+    constraint: SYS_CT_10134
+    constraint: SYS_CT_10135
   table: PUBLIC."PUBLISHER SALES".SALES
-    constraint: SYS_CT_10114
-    constraint: SYS_CT_10115
+    constraint: SYS_CT_10141
+    constraint: SYS_CT_10142
 schema: PUBLIC.SYSTEM_LOBS
