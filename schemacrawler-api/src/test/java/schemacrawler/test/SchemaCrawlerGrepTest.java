@@ -78,7 +78,7 @@ public class SchemaCrawlerGrepTest
     }
 
     out.close();
-    out.assertEquals(TestUtility.callingMethodFullName());
+    out.assertEquals(TestUtility.currentMethodFullName());
   }
 
   @Test
@@ -150,7 +150,7 @@ public class SchemaCrawlerGrepTest
     }
 
     out.close();
-    out.assertEquals(TestUtility.callingMethodFullName());
+    out.assertEquals(TestUtility.currentMethodFullName());
   }
 
   @Test
@@ -186,7 +186,7 @@ public class SchemaCrawlerGrepTest
     }
 
     out.close();
-    out.assertEquals(TestUtility.callingMethodFullName());
+    out.assertEquals(TestUtility.currentMethodFullName());
   }
 
   @Test
@@ -223,7 +223,7 @@ public class SchemaCrawlerGrepTest
     }
 
     out.close();
-    out.assertEquals(TestUtility.callingMethodFullName());
+    out.assertEquals(TestUtility.currentMethodFullName());
 
   }
 
