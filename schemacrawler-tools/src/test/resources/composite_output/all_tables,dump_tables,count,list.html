@@ -135,7 +135,7 @@ hr {
 	</tr>
 	<tr>
 		<td class='property_name'>database product version</td>
-		<td class='property_value'>2.2.9</td>
+		<td class='property_value'>2.3.0</td>
 	</tr>
 	<tr>
 		<td class='property_name'>database user name</td>
@@ -153,7 +153,7 @@ hr {
 	</tr>
 	<tr>
 		<td class='property_name'>driver version</td>
-		<td class='property_value'>2.2.9</td>
+		<td class='property_value'>2.3.0</td>
 	</tr>
 	<tr>
 		<td class='property_name'>driver class name</td>
@@ -375,7 +375,7 @@ hr {
 		<td>INFORMATION_SCHEMA</td>
 		<td>ADMINISTRABLE_ROLE_AUTHORIZATIONS</td>
 		<td>SYSTEM TABLE</td>
-		<td class='data_null'>NULL</td>
+		<td>SYSTEM TABLE=one row for each role that can be granted</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
@@ -390,7 +390,7 @@ hr {
 		<td>INFORMATION_SCHEMA</td>
 		<td>APPLICABLE_ROLES</td>
 		<td>SYSTEM TABLE</td>
-		<td class='data_null'>NULL</td>
+		<td>one row for each role granted to an authorization</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
@@ -405,7 +405,7 @@ hr {
 		<td>INFORMATION_SCHEMA</td>
 		<td>ASSERTIONS</td>
 		<td>SYSTEM TABLE</td>
-		<td class='data_null'>NULL</td>
+		<td></td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
@@ -435,7 +435,7 @@ hr {
 		<td>INFORMATION_SCHEMA</td>
 		<td>CHARACTER_SETS</td>
 		<td>SYSTEM TABLE</td>
-		<td class='data_null'>NULL</td>
+		<td>one row for each character set name</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
@@ -495,7 +495,7 @@ hr {
 		<td>INFORMATION_SCHEMA</td>
 		<td>COLUMNS</td>
 		<td>SYSTEM TABLE</td>
-		<td class='data_null'>NULL</td>
+		<td>one row for each column of table of view</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
@@ -510,7 +510,7 @@ hr {
 		<td>INFORMATION_SCHEMA</td>
 		<td>COLUMN_COLUMN_USAGE</td>
 		<td>SYSTEM TABLE</td>
-		<td class='data_null'>NULL</td>
+		<td>one row for each usage of a column in a generated column definition</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
@@ -525,7 +525,7 @@ hr {
 		<td>INFORMATION_SCHEMA</td>
 		<td>COLUMN_DOMAIN_USAGE</td>
 		<td>SYSTEM TABLE</td>
-		<td class='data_null'>NULL</td>
+		<td>one row for each usage of a domain as the type of a column</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
@@ -555,7 +555,7 @@ hr {
 		<td>INFORMATION_SCHEMA</td>
 		<td>COLUMN_UDT_USAGE</td>
 		<td>SYSTEM TABLE</td>
-		<td class='data_null'>NULL</td>
+		<td>one row for each usage of a user defined type as the type of a column</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
@@ -600,7 +600,7 @@ hr {
 		<td>INFORMATION_SCHEMA</td>
 		<td>DATA_TYPE_PRIVILEGES</td>
 		<td>SYSTEM TABLE</td>
-		<td class='data_null'>NULL</td>
+		<td>one row for each usage privilege granted on a user defined type</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
@@ -615,7 +615,7 @@ hr {
 		<td>INFORMATION_SCHEMA</td>
 		<td>DOMAINS</td>
 		<td>SYSTEM TABLE</td>
-		<td class='data_null'>NULL</td>
+		<td>one row for each domain identified</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
@@ -630,7 +630,7 @@ hr {
 		<td>INFORMATION_SCHEMA</td>
 		<td>DOMAIN_CONSTRAINTS</td>
 		<td>SYSTEM TABLE</td>
-		<td class='data_null'>NULL</td>
+		<td>one row for each check constraint included in a domain definition</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
@@ -645,7 +645,7 @@ hr {
 		<td>INFORMATION_SCHEMA</td>
 		<td>ELEMENT_TYPES</td>
 		<td>SYSTEM TABLE</td>
-		<td class='data_null'>NULL</td>
+		<td></td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
@@ -660,7 +660,7 @@ hr {
 		<td>INFORMATION_SCHEMA</td>
 		<td>ENABLED_ROLES</td>
 		<td>SYSTEM TABLE</td>
-		<td class='data_null'>NULL</td>
+		<td></td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
@@ -690,7 +690,7 @@ hr {
 		<td>INFORMATION_SCHEMA</td>
 		<td>JARS</td>
 		<td>SYSTEM TABLE</td>
-		<td class='data_null'>NULL</td>
+		<td></td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
@@ -705,7 +705,7 @@ hr {
 		<td>INFORMATION_SCHEMA</td>
 		<td>JAR_JAR_USAGE</td>
 		<td>SYSTEM TABLE</td>
-		<td class='data_null'>NULL</td>
+		<td></td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
@@ -720,7 +720,7 @@ hr {
 		<td>INFORMATION_SCHEMA</td>
 		<td>KEY_COLUMN_USAGE</td>
 		<td>SYSTEM TABLE</td>
-		<td class='data_null'>NULL</td>
+		<td>one row for each column used in s primary key or unique constraint</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
@@ -735,7 +735,7 @@ hr {
 		<td>INFORMATION_SCHEMA</td>
 		<td>PARAMETERS</td>
 		<td>SYSTEM TABLE</td>
-		<td class='data_null'>NULL</td>
+		<td>one row for each routine parameter</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
@@ -750,7 +750,7 @@ hr {
 		<td>INFORMATION_SCHEMA</td>
 		<td>REFERENTIAL_CONSTRAINTS</td>
 		<td>SYSTEM TABLE</td>
-		<td class='data_null'>NULL</td>
+		<td>one row for each foreign key constraint</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
@@ -780,7 +780,7 @@ hr {
 		<td>INFORMATION_SCHEMA</td>
 		<td>ROLE_COLUMN_GRANTS</td>
 		<td>SYSTEM TABLE</td>
-		<td class='data_null'>NULL</td>
+		<td>one row for each privilege on a column granted to a role</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
@@ -795,7 +795,7 @@ hr {
 		<td>INFORMATION_SCHEMA</td>
 		<td>ROLE_ROUTINE_GRANTS</td>
 		<td>SYSTEM TABLE</td>
-		<td class='data_null'>NULL</td>
+		<td>one row for each usage grant on a routine to a role</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
@@ -810,7 +810,7 @@ hr {
 		<td>INFORMATION_SCHEMA</td>
 		<td>ROLE_TABLE_GRANTS</td>
 		<td>SYSTEM TABLE</td>
-		<td class='data_null'>NULL</td>
+		<td>one row for each privilege grant on a table to a role</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
@@ -825,7 +825,7 @@ hr {
 		<td>INFORMATION_SCHEMA</td>
 		<td>ROLE_UDT_GRANTS</td>
 		<td>SYSTEM TABLE</td>
-		<td class='data_null'>NULL</td>
+		<td>one row for each usage grant on a user defined type to a role</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
@@ -840,7 +840,7 @@ hr {
 		<td>INFORMATION_SCHEMA</td>
 		<td>ROLE_USAGE_GRANTS</td>
 		<td>SYSTEM TABLE</td>
-		<td class='data_null'>NULL</td>
+		<td>one row for each usage grant to a role</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
@@ -855,7 +855,7 @@ hr {
 		<td>INFORMATION_SCHEMA</td>
 		<td>ROUTINES</td>
 		<td>SYSTEM TABLE</td>
-		<td class='data_null'>NULL</td>
+		<td>one row for each routine</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
@@ -870,7 +870,7 @@ hr {
 		<td>INFORMATION_SCHEMA</td>
 		<td>ROUTINE_COLUMN_USAGE</td>
 		<td>SYSTEM TABLE</td>
-		<td class='data_null'>NULL</td>
+		<td>one row for each table column usage in a routine</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
@@ -885,7 +885,7 @@ hr {
 		<td>INFORMATION_SCHEMA</td>
 		<td>ROUTINE_JAR_USAGE</td>
 		<td>SYSTEM TABLE</td>
-		<td class='data_null'>NULL</td>
+		<td></td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
@@ -900,7 +900,7 @@ hr {
 		<td>INFORMATION_SCHEMA</td>
 		<td>ROUTINE_PRIVILEGES</td>
 		<td>SYSTEM TABLE</td>
-		<td class='data_null'>NULL</td>
+		<td>one row for each usage privilege on a routine</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
@@ -915,7 +915,7 @@ hr {
 		<td>INFORMATION_SCHEMA</td>
 		<td>ROUTINE_ROUTINE_USAGE</td>
 		<td>SYSTEM TABLE</td>
-		<td class='data_null'>NULL</td>
+		<td>one row for each usage of a routine in a routine</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
@@ -930,7 +930,7 @@ hr {
 		<td>INFORMATION_SCHEMA</td>
 		<td>ROUTINE_SEQUENCE_USAGE</td>
 		<td>SYSTEM TABLE</td>
-		<td class='data_null'>NULL</td>
+		<td>one row for each usage of a sequence in a routine</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
@@ -945,7 +945,7 @@ hr {
 		<td>INFORMATION_SCHEMA</td>
 		<td>ROUTINE_TABLE_USAGE</td>
 		<td>SYSTEM TABLE</td>
-		<td class='data_null'>NULL</td>
+		<td>one row for each usage of a table in a routine</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
@@ -960,7 +960,7 @@ hr {
 		<td>INFORMATION_SCHEMA</td>
 		<td>SCHEMATA</td>
 		<td>SYSTEM TABLE</td>
-		<td>one row for each schema.</td>
+		<td>one row for each schema</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
@@ -990,7 +990,7 @@ hr {
 		<td>INFORMATION_SCHEMA</td>
 		<td>SQL_FEATURES</td>
 		<td>SYSTEM TABLE</td>
-		<td class='data_null'>NULL</td>
+		<td>list of supported SQL Standard features</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
@@ -1005,7 +1005,7 @@ hr {
 		<td>INFORMATION_SCHEMA</td>
 		<td>SQL_IMPLEMENTATION_INFO</td>
 		<td>SYSTEM TABLE</td>
-		<td class='data_null'>NULL</td>
+		<td>list of implementation specific limits</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
@@ -1020,7 +1020,7 @@ hr {
 		<td>INFORMATION_SCHEMA</td>
 		<td>SQL_PACKAGES</td>
 		<td>SYSTEM TABLE</td>
-		<td class='data_null'>NULL</td>
+		<td>list of supported SQL Standard packages</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
@@ -1035,7 +1035,7 @@ hr {
 		<td>INFORMATION_SCHEMA</td>
 		<td>SQL_PARTS</td>
 		<td>SYSTEM TABLE</td>
-		<td class='data_null'>NULL</td>
+		<td>list of supported SQL Standard parts</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
@@ -1050,7 +1050,7 @@ hr {
 		<td>INFORMATION_SCHEMA</td>
 		<td>SQL_SIZING</td>
 		<td>SYSTEM TABLE</td>
-		<td class='data_null'>NULL</td>
+		<td>list of size limits for names and database objects</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
@@ -1065,7 +1065,7 @@ hr {
 		<td>INFORMATION_SCHEMA</td>
 		<td>SQL_SIZING_PROFILES</td>
 		<td>SYSTEM TABLE</td>
-		<td class='data_null'>NULL</td>
+		<td>list of supported SQL Standard packages</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
@@ -1333,6 +1333,21 @@ hr {
 	<tr>
 		<td>PUBLIC</td>
 		<td>INFORMATION_SCHEMA</td>
+		<td>SYSTEM_TABLESTATS</td>
+		<td>SYSTEM TABLE</td>
+		<td>cardinality and storage space used by tables and table spaces</td>
+		<td class='data_null'>NULL</td>
+		<td class='data_null'>NULL</td>
+		<td class='data_null'>NULL</td>
+		<td class='data_null'>NULL</td>
+		<td class='data_null'>NULL</td>
+		<td>MEMORY</td>
+		<td>true</td>
+		<td class='data_null'>NULL</td>
+	</tr>
+	<tr>
+		<td>PUBLIC</td>
+		<td>INFORMATION_SCHEMA</td>
 		<td>SYSTEM_TABLETYPES</td>
 		<td>SYSTEM TABLE</td>
 		<td>the types of tables that can be created/found within this database</td>
@@ -1425,7 +1440,7 @@ hr {
 		<td>INFORMATION_SCHEMA</td>
 		<td>TABLES</td>
 		<td>SYSTEM TABLE</td>
-		<td class='data_null'>NULL</td>
+		<td>one row for each table or view</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
@@ -1470,7 +1485,7 @@ hr {
 		<td>INFORMATION_SCHEMA</td>
 		<td>TRANSLATIONS</td>
 		<td>SYSTEM TABLE</td>
-		<td class='data_null'>NULL</td>
+		<td></td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
@@ -1485,7 +1500,7 @@ hr {
 		<td>INFORMATION_SCHEMA</td>
 		<td>TRIGGERED_UPDATE_COLUMNS</td>
 		<td>SYSTEM TABLE</td>
-		<td class='data_null'>NULL</td>
+		<td>one row for each column in a foreign key cascade action</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
@@ -1500,7 +1515,7 @@ hr {
 		<td>INFORMATION_SCHEMA</td>
 		<td>TRIGGERS</td>
 		<td>SYSTEM TABLE</td>
-		<td class='data_null'>NULL</td>
+		<td>one row for each trigger definition</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
@@ -1515,7 +1530,7 @@ hr {
 		<td>INFORMATION_SCHEMA</td>
 		<td>TRIGGER_COLUMN_USAGE</td>
 		<td>SYSTEM TABLE</td>
-		<td class='data_null'>NULL</td>
+		<td>one row for each usage of a table column in a trigger definition</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
@@ -1530,7 +1545,7 @@ hr {
 		<td>INFORMATION_SCHEMA</td>
 		<td>TRIGGER_ROUTINE_USAGE</td>
 		<td>SYSTEM TABLE</td>
-		<td class='data_null'>NULL</td>
+		<td>one row for each usage of a routine in a trigger definition</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
@@ -1545,7 +1560,7 @@ hr {
 		<td>INFORMATION_SCHEMA</td>
 		<td>TRIGGER_SEQUENCE_USAGE</td>
 		<td>SYSTEM TABLE</td>
-		<td class='data_null'>NULL</td>
+		<td>one row for each usage of a sequence in a trigger definition</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
@@ -1560,7 +1575,7 @@ hr {
 		<td>INFORMATION_SCHEMA</td>
 		<td>TRIGGER_TABLE_USAGE</td>
 		<td>SYSTEM TABLE</td>
-		<td class='data_null'>NULL</td>
+		<td>one row for each usage of a table or view in a trigger definition</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
@@ -1575,7 +1590,7 @@ hr {
 		<td>INFORMATION_SCHEMA</td>
 		<td>UDT_PRIVILEGES</td>
 		<td>SYSTEM TABLE</td>
-		<td class='data_null'>NULL</td>
+		<td>one row for each usage privilege on a user defined type</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
@@ -1590,7 +1605,7 @@ hr {
 		<td>INFORMATION_SCHEMA</td>
 		<td>USAGE_PRIVILEGES</td>
 		<td>SYSTEM TABLE</td>
-		<td>one row for each usage privilege descriptor.</td>
+		<td>one row for each usage privilege granted on character set or domain</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
@@ -1605,7 +1620,7 @@ hr {
 		<td>INFORMATION_SCHEMA</td>
 		<td>USER_DEFINED_TYPES</td>
 		<td>SYSTEM TABLE</td>
-		<td class='data_null'>NULL</td>
+		<td>one row for each user defined type</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
@@ -1635,7 +1650,7 @@ hr {
 		<td>INFORMATION_SCHEMA</td>
 		<td>VIEW_COLUMN_USAGE</td>
 		<td>SYSTEM TABLE</td>
-		<td>one row for each column of a table that is explicitly or implicitly referenced in the &lt;query expression&gt; of the view being described.</td>
+		<td>one row for each column of a table that is explicitly or implicitly referenced in the &lt;query expression&gt; of the view being described</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
@@ -1739,6 +1754,21 @@ hr {
 		<td>PUBLIC</td>
 		<td>SYSTEM_LOBS</td>
 		<td>LOB_IDS</td>
+		<td>SYSTEM TABLE</td>
+		<td class='data_null'>NULL</td>
+		<td class='data_null'>NULL</td>
+		<td class='data_null'>NULL</td>
+		<td class='data_null'>NULL</td>
+		<td class='data_null'>NULL</td>
+		<td class='data_null'>NULL</td>
+		<td>MEMORY</td>
+		<td>false</td>
+		<td class='data_null'>NULL</td>
+	</tr>
+	<tr>
+		<td>PUBLIC</td>
+		<td>SYSTEM_LOBS</td>
+		<td>PARTS</td>
 		<td>SYSTEM TABLE</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
@@ -2945,6 +2975,10 @@ hr {
 	</tr>
 	<tr>
 		<td class='property_name'>PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS</td>
+		<td class='property_value right'>[procedure, no result]</td>
+	</tr>
+	<tr>
+		<td class='property_name'>PUBLIC.SYSTEM_LOBS.ALLOC_SINGLE_BLOCK</td>
 		<td class='property_value right'>[procedure, no result]</td>
 	</tr>
 	<tr>

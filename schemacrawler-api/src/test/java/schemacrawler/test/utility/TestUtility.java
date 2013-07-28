@@ -54,42 +54,6 @@ import com.google.gson.stream.JsonToken;
 public final class TestUtility
 {
 
-  private static final int CLIENT_CODE_STACK_INDEX;
-
-  static
-  {
-    // Finds out the index of "this code" in the returned stack trace -
-    // funny but it differs in JDK 1.5 and 1.6
-    int i = 0;
-    for (final StackTraceElement ste: Thread.currentThread().getStackTrace())
-    {
-      i++;
-      if (ste.getClassName().equals(TestUtility.class.getName()))
-      {
-        break;
-      }
-    }
-    CLIENT_CODE_STACK_INDEX = i;
-  }
-
-  public static String callingMethodName()
-  {
-    return callingMethodStackTraceElement().getMethodName();
-  }
-
-  public static String callingMethodFullName()
-  {
-    final StackTraceElement callingMethodStackTraceElement = callingMethodStackTraceElement();
-    final String className = callingMethodStackTraceElement.getClassName();
-    return className.substring(className.lastIndexOf('.') + 1) + "."
-           + callingMethodStackTraceElement.getMethodName();
-  }
-
-  private static StackTraceElement callingMethodStackTraceElement()
-  {
-    return Thread.currentThread().getStackTrace()[CLIENT_CODE_STACK_INDEX + 1];
-  }
-
   public static List<String> compareOutput(final String referenceFile,
                                            final File testOutputFile)
     throws Exception
@@ -202,10 +166,18 @@ public final class TestUtility
     }
   }
 
+  public static String currentMethodFullName()
+  {
+    final StackTraceElement ste = currentMethodStackTraceElement();
+    final String className = ste.getClassName();
+    return className.substring(className.lastIndexOf('.') + 1) + "."
+           + ste.getMethodName();
+  }
+
   public static String currentMethodName()
   {
-    return Thread.currentThread().getStackTrace()[CLIENT_CODE_STACK_INDEX]
-      .getMethodName();
+    final StackTraceElement ste = currentMethodStackTraceElement();
+    return ste.getMethodName();
   }
 
   public static Reader readerForFile(final File file, final Charset encoding)
@@ -302,6 +274,24 @@ public final class TestUtility
 
       return true;
     }
+  }
+
+  private static StackTraceElement currentMethodStackTraceElement()
+  {
+    final StackTraceElement[] stackTrace = Thread.currentThread()
+      .getStackTrace();
+    for (int i = 0; i < stackTrace.length; i++)
+    {
+      final StackTraceElement stackTraceElement = stackTrace[i];
+      if (stackTraceElement.getClassName().equals(TestUtility.class.getName())
+          && stackTraceElement.getMethodName()
+            .equals("currentMethodStackTraceElement"))
+      {
+        return stackTrace[i + 2];
+      }
+    }
+
+    return null;
   }
 
   private static void fastChannelCopy(final ReadableByteChannel src,

@@ -17,7 +17,7 @@ Database Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
 database product name                     HSQL Database Engine          
-database product version                  2.2.9                         
+database product version                  2.3.0                         
 database user name                        SA                            
 
 
@@ -25,7 +25,7 @@ JDBC Driver Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
 driver name                               HSQL Database Engine Driver   
-driver version                            2.2.9                         
+driver version                            2.3.0                         
 driver class name                         org.hsqldb.jdbc.JDBCDriver    
 url                                       jdbc:hsqldb:hsql://localhost/schemacrawler
 is JDBC compliant                         true                          
@@ -60,6 +60,7 @@ PUBLIC.BOOKS.CUSTOMADD                    [function, does not return a table]
 PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
 PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
 PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS                   [procedure, no result]
+PUBLIC.SYSTEM_LOBS.ALLOC_SINGLE_BLOCK             [procedure, no result]
 PUBLIC.SYSTEM_LOBS.CONVERT_BLOCK                  [procedure, no result]
 PUBLIC.SYSTEM_LOBS.CREATE_EMPTY_BLOCK             [procedure, no result]
 PUBLIC.SYSTEM_LOBS.DELETE_BLOCKS                  [procedure, no result]

@@ -84,7 +84,7 @@ public class ResultColumnsTest
     }
 
     out.close();
-    out.assertEquals(TestUtility.callingMethodFullName());
+    out.assertEquals(TestUtility.currentMethodFullName());
     ;
   }
 

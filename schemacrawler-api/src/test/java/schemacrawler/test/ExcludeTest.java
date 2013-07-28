@@ -86,7 +86,7 @@ public class ExcludeTest
     }
 
     out.close();
-    out.assertEquals(TestUtility.callingMethodFullName());
+    out.assertEquals(TestUtility.currentMethodFullName());
   }
 
 }

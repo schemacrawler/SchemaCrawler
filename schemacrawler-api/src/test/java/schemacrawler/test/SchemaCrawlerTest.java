@@ -103,7 +103,7 @@ public class SchemaCrawlerTest
     }
 
     out.close();
-    out.assertEquals(TestUtility.callingMethodFullName());
+    out.assertEquals(TestUtility.currentMethodFullName());
   }
 
   @Test
@@ -168,7 +168,7 @@ public class SchemaCrawlerTest
     }
 
     out.close();
-    out.assertEquals(TestUtility.callingMethodFullName());
+    out.assertEquals(TestUtility.currentMethodFullName());
   }
 
   @Test
@@ -283,7 +283,7 @@ public class SchemaCrawlerTest
     }
 
     out.close();
-    out.assertEquals(TestUtility.callingMethodFullName());
+    out.assertEquals(TestUtility.currentMethodFullName());
   }
 
   @Test
