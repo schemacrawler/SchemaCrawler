@@ -23,6 +23,7 @@ package schemacrawler.test.utility;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -129,12 +130,27 @@ public class TestDatabase
     LOGGER.log(Level.FINE, toString() + " - Setting up database");
     // Attempt to delete the database files
     deleteServerFiles();
+
+    // Set up writers
+    final PrintWriter logWriter;
+    final PrintWriter errWriter;
+    if (trace)
+    {
+      logWriter = new PrintWriter(System.out);
+      errWriter = new PrintWriter(System.err);
+    }
+    else
+    {
+      logWriter = null;
+      errWriter = null;
+    }
+
     // Start the server
     final Server server = new Server();
     server.setSilent(!trace);
     server.setTrace(trace);
-    server.setLogWriter(null);
-    server.setErrWriter(null);
+    server.setLogWriter(logWriter);
+    server.setErrWriter(errWriter);
     server.setDatabaseName(0, "schemacrawler");
     server.setDatabasePath(0, serverFileStem);
     server.start();

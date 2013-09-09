@@ -200,13 +200,12 @@ public final class Utility
 
     final StringBuilder out = new StringBuilder();
 
-    try
+    final char[] buffer = new char[0x10000];
+    try (final Reader bufferedReader = new BufferedReader(reader, buffer.length);)
     {
-      final char[] buffer = new char[0x10000];
       int read;
       do
       {
-        final Reader bufferedReader = new BufferedReader(reader, buffer.length);
         read = bufferedReader.read(buffer, 0, buffer.length);
         if (read > 0)
         {
@@ -214,24 +213,9 @@ public final class Utility
         }
       } while (read >= 0);
     }
-    catch (final UnsupportedEncodingException e)
-    {
-      LOGGER.log(Level.WARNING, e.getMessage(), e);
-    }
     catch (final IOException e)
     {
-      LOGGER.log(Level.WARNING, "Could not read from reader", e);
-    }
-    finally
-    {
-      try
-      {
-        reader.close();
-      }
-      catch (final IOException e)
-      {
-        LOGGER.log(Level.WARNING, "Could not close reader", e);
-      }
+      LOGGER.log(Level.WARNING, e.getMessage(), e);
     }
 
     return out.toString();
