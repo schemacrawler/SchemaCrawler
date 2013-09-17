@@ -314,7 +314,9 @@ final class TableRetriever
                                                     TableType.unknown);
         final String remarks = results.getString("REMARKS");
 
-        final Schema schema = new SchemaReference(catalogName, schemaName);
+        final SchemaReference schemaReference = new SchemaReference(catalogName,
+                                                                    schemaName);
+        final Schema schema = database.getSchema(schemaReference.getFullName());
 
         final MutableTable table;
         if (tableType == TableType.view)
