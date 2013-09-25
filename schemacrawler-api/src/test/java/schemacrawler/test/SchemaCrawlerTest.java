@@ -45,6 +45,7 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
+import schemacrawler.schema.TableRelationshipType;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.Config;
@@ -83,20 +84,17 @@ public class SchemaCrawlerTest
     final Database database = getDatabase(schemaCrawlerOptions);
     final Schema[] schemas = database.getSchemas().toArray(new Schema[0]);
     assertEquals("Schema count does not match", 6, schemas.length);
-    for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++)
+    for (final Schema schema: schemas)
     {
-      final Schema schema = schemas[schemaIdx];
       out.println("schema: " + schema.getFullName());
       final Table[] tables = database.getTables(schema).toArray(new Table[0]);
-      for (int tableIdx = 0; tableIdx < tables.length; tableIdx++)
+      for (final Table table: tables)
       {
-        final Table table = tables[tableIdx];
         out.println("  table: " + table.getFullName());
         final CheckConstraint[] checkConstraints = table.getCheckConstraints()
           .toArray(new CheckConstraint[0]);
-        for (int i = 0; i < checkConstraints.length; i++)
+        for (final CheckConstraint checkConstraint: checkConstraints)
         {
-          final CheckConstraint checkConstraint = checkConstraints[i];
           out.println("    constraint: " + checkConstraint.getName());
         }
       }
@@ -146,15 +144,13 @@ public class SchemaCrawlerTest
     final Database database = getDatabase(schemaCrawlerOptions);
     final Schema[] schemas = database.getSchemas().toArray(new Schema[0]);
     assertEquals("Schema count does not match", 5, schemas.length);
-    for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++)
+    for (final Schema schema: schemas)
     {
-      final Schema schema = schemas[schemaIdx];
       out.println("schema: " + schema.getFullName());
       final Table[] tables = database.getTables(schema).toArray(new Table[0]);
       Arrays.sort(tables, NamedObjectSort.alphabetical);
-      for (int tableIdx = 0; tableIdx < tables.length; tableIdx++)
+      for (final Table table: tables)
       {
-        final Table table = tables[tableIdx];
         out.println("  table: " + table.getFullName());
         out.println("    # columns: " + table.getColumns().size());
         out.println("    # constraints: " + table.getCheckConstraints().size());
@@ -165,6 +161,66 @@ public class SchemaCrawlerTest
         out.println("    # exported: " + table.getImportedForeignKeys().size());
         out.println("    # privileges: " + table.getPrivileges().size());
       }
+    }
+
+    out.close();
+    out.assertEquals(TestUtility.currentMethodFullName());
+  }
+
+  @Test
+  public void relatedTables()
+    throws Exception
+  {
+    final TestWriter out = new TestWriter();
+
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.standard());
+    schemaCrawlerOptions
+      .setSchemaInclusionRule(new InclusionRule(InclusionRule.ALL,
+                                                ".*\\.FOR_LINT"));
+
+    final Database database = getDatabase(schemaCrawlerOptions);
+    final Table[] tables = database.getTables().toArray(new Table[0]);
+    assertEquals("Table count does not match", 8, tables.length);
+    Arrays.sort(tables, NamedObjectSort.alphabetical);
+    for (final Table table: tables)
+    {
+      out.println("  table: " + table.getFullName());
+      out.println("    # columns: " + table.getColumns().size());
+      out.println("    # child tables: "
+                  + table.getRelatedTables(TableRelationshipType.child));
+      out.println("    # parent tables: "
+                  + table.getRelatedTables(TableRelationshipType.parent));
+    }
+
+    out.close();
+    out.assertEquals(TestUtility.currentMethodFullName());
+  }
+
+  @Test
+  public void relatedTablesWithTableRestriction()
+    throws Exception
+  {
+    final TestWriter out = new TestWriter();
+
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.standard());
+    schemaCrawlerOptions
+      .setTableInclusionRule(new InclusionRule(".*\\.AUTHORS",
+                                               InclusionRule.NONE));
+
+    final Database database = getDatabase(schemaCrawlerOptions);
+    final Table[] tables = database.getTables().toArray(new Table[0]);
+    assertEquals("Table count does not match", 1, tables.length);
+    Arrays.sort(tables, NamedObjectSort.alphabetical);
+    for (final Table table: tables)
+    {
+      out.println("  table: " + table.getFullName());
+      out.println("    # columns: " + table.getColumns().size());
+      out.println("    # child tables: "
+                  + table.getRelatedTables(TableRelationshipType.child));
+      out.println("    # parent tables: "
+                  + table.getRelatedTables(TableRelationshipType.parent));
     }
 
     out.close();
@@ -273,9 +329,8 @@ public class SchemaCrawlerTest
     final Synonym[] synonyms = database.getSynonyms(schema)
       .toArray(new Synonym[0]);
     assertEquals("Synonym count does not match", 6, synonyms.length);
-    for (int i = 0; i < synonyms.length; i++)
+    for (final Synonym synonym: synonyms)
     {
-      final Synonym synonym = synonyms[i];
       assertNotNull(synonym);
       out.println("synonym: " + synonym.getName());
       out.println("  class: "

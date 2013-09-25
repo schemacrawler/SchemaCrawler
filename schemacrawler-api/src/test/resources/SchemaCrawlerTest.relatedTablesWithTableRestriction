@@ -1,0 +1,4 @@
+  table: PUBLIC.BOOKS.AUTHORS
+    # columns: 9
+    # child tables: [PUBLIC.BOOKS.BOOKAUTHORS]
+    # parent tables: []

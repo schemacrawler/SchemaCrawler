@@ -266,15 +266,15 @@ class MutableTable
     {
       final List<MutableForeignKey> foreignKeysList = new ArrayList<>(foreignKeys
         .values());
-      for (final MutableForeignKey mutableForeignKey: foreignKeysList)
+      for (final ForeignKey foreignKey: foreignKeysList)
       {
-        for (final ForeignKeyColumnReference columnReference: mutableForeignKey
+        for (final ForeignKeyColumnReference columnReference: foreignKey
           .getColumnReferences())
         {
-          final MutableTable parentTable = (MutableTable) columnReference
-            .getPrimaryKeyColumn().getParent();
-          final MutableTable childTable = (MutableTable) columnReference
-            .getForeignKeyColumn().getParent();
+          final Table parentTable = columnReference.getPrimaryKeyColumn()
+            .getParent();
+          final Table childTable = columnReference.getForeignKeyColumn()
+            .getParent();
           switch (tableRelationshipType)
           {
             case parent:

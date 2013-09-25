@@ -24,7 +24,7 @@ public class TestWriter
     tempFile = File.createTempFile("schemacrawler", ".dat");
     tempFile.deleteOnExit();
 
-    out = new PrintWriter(tempFile);
+    out = new PrintWriter(tempFile, "UTF-8");
   }
 
   @Override

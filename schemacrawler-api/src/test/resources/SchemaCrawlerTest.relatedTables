@@ -1,0 +1,32 @@
+  table: PUBLIC.BOOKS.AUTHORS
+    # columns: 9
+    # child tables: [PUBLIC.BOOKS.BOOKAUTHORS]
+    # parent tables: []
+  table: PUBLIC.BOOKS.AUTHORSLIST
+    # columns: 3
+    # child tables: []
+    # parent tables: []
+  table: PUBLIC.BOOKS.BOOKAUTHORS
+    # columns: 3
+    # child tables: []
+    # parent tables: [PUBLIC.BOOKS.AUTHORS, PUBLIC.BOOKS.BOOKS]
+  table: PUBLIC.BOOKS.BOOKS
+    # columns: 6
+    # child tables: [PUBLIC.BOOKS.BOOKAUTHORS]
+    # parent tables: []
+  table: PUBLIC.BOOKS."Global Counts"
+    # columns: 1
+    # child tables: []
+    # parent tables: []
+  table: PUBLIC.BOOKS.PUBLISHERS
+    # columns: 2
+    # child tables: []
+    # parent tables: []
+  table: PUBLIC."PUBLISHER SALES".REGIONS
+    # columns: 4
+    # child tables: [PUBLIC."PUBLISHER SALES".SALES]
+    # parent tables: []
+  table: PUBLIC."PUBLISHER SALES".SALES
+    # columns: 5
+    # child tables: []
+    # parent tables: [PUBLIC."PUBLISHER SALES".REGIONS]
