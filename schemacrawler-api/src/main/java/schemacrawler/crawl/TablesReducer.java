@@ -105,7 +105,10 @@ class TablesReducer
         for (final Table relatedTable: table
           .getRelatedTables(tableRelationshipType))
         {
-          includedTables.add((MutableTable) relatedTable);
+          if (relatedTable instanceof MutableTable)
+          {
+            includedTables.add((MutableTable) relatedTable);
+          }
         }
       }
     }
