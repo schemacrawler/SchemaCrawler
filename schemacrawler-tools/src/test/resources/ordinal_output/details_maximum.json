@@ -3260,7 +3260,7 @@
     }
   ],
   "schemaCrawlerInfo": {
-    "productVersion": "10.4",
+    "productVersion": "10.5",
     "productName": "SchemaCrawler"
   },
   "jdbcDriverInfo": {

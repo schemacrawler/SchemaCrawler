@@ -5,6 +5,11 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+    <release version="10.5" date="2013-09-24">
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Fixed bug with table restrictions.
+      ]]></action>                                            
+    </release>      
     <release version="10.4" date="2013-07-24">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Fixed view definitions for PostgreSQL.
