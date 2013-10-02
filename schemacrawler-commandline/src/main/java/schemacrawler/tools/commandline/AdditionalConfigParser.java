@@ -56,7 +56,7 @@ final class AdditionalConfigParser
     final String cfgFile = getStringValue("p");
     final Config config = Config.load(cfgFile);
 
-    final SchemaTextOptions textOptions = new SchemaTextOptions();
+    final SchemaTextOptions textOptions = new SchemaTextOptions(config);
     if (getBooleanValue("noinfo"))
     {
       textOptions.setNoInfo(true);
