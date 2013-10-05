@@ -50,7 +50,7 @@ final class MutableJdbcDriverInfo
   private String driverVersion;
   private String connectionUrl;
   private boolean jdbcCompliant;
-  private final Set<MutableJdbcDriverProperty> jdbcDriverProperties = new HashSet<>();
+  private final Set<ImmutableJdbcDriverProperty> jdbcDriverProperties = new HashSet<>();
 
   /**
    * {@inheritDoc}
@@ -144,7 +144,7 @@ final class MutableJdbcDriverInfo
    * @param jdbcDriverProperty
    *        JDBC driver property
    */
-  void addJdbcDriverProperty(final MutableJdbcDriverProperty jdbcDriverProperty)
+  void addJdbcDriverProperty(final ImmutableJdbcDriverProperty jdbcDriverProperty)
   {
     jdbcDriverProperties.add(jdbcDriverProperty);
   }

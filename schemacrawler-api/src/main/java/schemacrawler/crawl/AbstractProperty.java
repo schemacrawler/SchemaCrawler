@@ -25,7 +25,7 @@ import java.io.Serializable;
 import schemacrawler.schema.Property;
 import sf.util.Utility;
 
-abstract class MutableProperty
+abstract class AbstractProperty
   implements Property
 {
 
@@ -34,7 +34,7 @@ abstract class MutableProperty
   private final String name;
   private final Serializable value;
 
-  MutableProperty(final String name, final Serializable value)
+  AbstractProperty(final String name, final Serializable value)
   {
     if (Utility.isBlank(name))
     {
@@ -60,11 +60,11 @@ abstract class MutableProperty
     {
       return false;
     }
-    if (!(obj instanceof MutableProperty))
+    if (!(obj instanceof AbstractProperty))
     {
       return false;
     }
-    final MutableProperty other = (MutableProperty) obj;
+    final AbstractProperty other = (AbstractProperty) obj;
     if (name == null)
     {
       if (other.name != null)

@@ -30,8 +30,8 @@ import java.util.Set;
 import schemacrawler.schema.DatabaseProperty;
 import schemacrawler.schema.Property;
 
-class MutableDatabaseProperty
-  extends MutableProperty
+class ImmutableDatabaseProperty
+  extends AbstractProperty
   implements DatabaseProperty
 {
 
@@ -54,7 +54,7 @@ class MutableDatabaseProperty
 
   private transient String description;
 
-  MutableDatabaseProperty(final String name, final Object value)
+  ImmutableDatabaseProperty(final String name, final Object value)
   {
     super(name, (Serializable) value);
     buildDescription();

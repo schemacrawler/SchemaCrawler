@@ -118,7 +118,7 @@ final class DatabaseInfoRetriever
     return isDatabasePropertyResultSetType;
   }
 
-  private static MutableDatabaseProperty retrieveResultSetTypeProperty(final DatabaseMetaData dbMetaData,
+  private static ImmutableDatabaseProperty retrieveResultSetTypeProperty(final DatabaseMetaData dbMetaData,
                                                                        final Method method,
                                                                        final int resultSetType,
                                                                        final String resultSetTypeName)
@@ -129,7 +129,7 @@ final class DatabaseInfoRetriever
     Boolean propertyValue = null;
     propertyValue = (Boolean) method.invoke(dbMetaData,
                                             Integer.valueOf(resultSetType));
-    return new MutableDatabaseProperty(name, propertyValue);
+    return new ImmutableDatabaseProperty(name, propertyValue);
   }
 
   DatabaseInfoRetriever(final RetrieverConnection retrieverConnection,
@@ -151,7 +151,7 @@ final class DatabaseInfoRetriever
     final DatabaseMetaData dbMetaData = getMetaData();
     final MutableDatabaseInfo dbInfo = database.getDatabaseInfo();
 
-    final Collection<MutableDatabaseProperty> dbProperties = new ArrayList<>();
+    final Collection<ImmutableDatabaseProperty> dbProperties = new ArrayList<>();
 
     final Method[] methods = DatabaseMetaData.class.getMethods();
     for (final Method method: methods)
@@ -178,7 +178,7 @@ final class DatabaseInfoRetriever
           }
           // Add to the properties map
           dbProperties
-            .add(new MutableDatabaseProperty(method.getName(), value));
+            .add(new ImmutableDatabaseProperty(method.getName(), value));
         }
         else if (isDatabasePropertiesResultSetMethod(method))
         {
@@ -190,7 +190,7 @@ final class DatabaseInfoRetriever
           final ResultSet results = (ResultSet) method.invoke(dbMetaData);
           final List<String> resultsList = readResultsVector(results);
           dbProperties
-            .add(new MutableDatabaseProperty(method.getName(), resultsList
+            .add(new ImmutableDatabaseProperty(method.getName(), resultsList
               .toArray(new String[resultsList.size()])));
         }
         else if (isDatabasePropertyResultSetType(method))
@@ -256,7 +256,7 @@ final class DatabaseInfoRetriever
         for (final DriverPropertyInfo driverPropertyInfo: propertyInfo)
         {
           driverInfo
-            .addJdbcDriverProperty(new MutableJdbcDriverProperty(driverPropertyInfo));
+            .addJdbcDriverProperty(new ImmutableJdbcDriverProperty(driverPropertyInfo));
         }
       }
       catch (final SQLException e)
