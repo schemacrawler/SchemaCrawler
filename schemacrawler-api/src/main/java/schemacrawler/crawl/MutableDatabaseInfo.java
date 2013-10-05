@@ -102,7 +102,7 @@ final class MutableDatabaseInfo
     return info.toString();
   }
 
-  void addAll(final Collection<MutableDatabaseProperty> dbProperties)
+  void addAll(final Collection<ImmutableDatabaseProperty> dbProperties)
   {
     if (dbProperties != null)
     {

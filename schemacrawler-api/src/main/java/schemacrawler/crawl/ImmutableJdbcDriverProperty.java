@@ -37,8 +37,8 @@ import schemacrawler.schema.Property;
  * 
  * @author Sualeh Fatehi sualeh@hotmail.com
  */
-final class MutableJdbcDriverProperty
-  extends MutableProperty
+final class ImmutableJdbcDriverProperty
+  extends AbstractProperty
   implements JdbcDriverProperty
 {
 
@@ -48,7 +48,7 @@ final class MutableJdbcDriverProperty
   private final boolean required;
   private final List<String> choices;
 
-  MutableJdbcDriverProperty(final DriverPropertyInfo driverPropertyInfo)
+  ImmutableJdbcDriverProperty(final DriverPropertyInfo driverPropertyInfo)
   {
     super(driverPropertyInfo.name, driverPropertyInfo.value);
     description = driverPropertyInfo.description;
