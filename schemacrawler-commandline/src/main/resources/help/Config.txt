@@ -1,4 +1,5 @@
 --- Configuration Options ---
+Command-line options will override configuration file options.
 
 -g=<config-file> (short for -configfile <config-file>)
   Reads SchemaCrawler configuration properties from <config-file>
@@ -8,4 +9,5 @@
 -p=<additional-config-file> (short for -additionalconfigfile <additional-config-file>)
   Reads SchemaCrawler configuration properties from 
   <additional-config-file> for command-specific configuration
+  Overrides configuration from configuration properties file <config-file>
   Optional, defaults to no additional configuration
