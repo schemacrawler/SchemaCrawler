@@ -94,13 +94,19 @@ final class TableRetriever
                        final InclusionRule columnInclusionRule)
     throws SQLException
   {
+    final InclusionRuleFilter<Column> columnFilter = new InclusionRuleFilter<>(columnInclusionRule,
+                                                                               true);
+    if (columnFilter.isExcludeAll())
+    {
+      return;
+    }
+
     try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
       .getColumns(unquotedName(table.getSchema().getCatalogName()),
                   unquotedName(table.getSchema().getName()),
                   unquotedName(table.getName()),
                   null));)
     {
-      final InclusionRuleFilter<Column> columnFilter = new InclusionRuleFilter<>(columnInclusionRule);
       while (results.next())
       {
         // Get the "COLUMN_DEF" value first as it the Oracle drivers
@@ -290,8 +296,9 @@ final class TableRetriever
                       final InclusionRule tableInclusionRule)
     throws SQLException
   {
-    if (tableInclusionRule == null
-        || tableInclusionRule.equals(InclusionRule.EXCLUDE_ALL))
+    final InclusionRuleFilter<Table> tableFilter = new InclusionRuleFilter<>(tableInclusionRule,
+                                                                             false);
+    if (tableFilter.isExcludeAll())
     {
       return;
     }
@@ -302,7 +309,6 @@ final class TableRetriever
                  tableNamePattern,
                  toStrings(tableTypes)));)
     {
-      final InclusionRuleFilter<Table> tableFilter = new InclusionRuleFilter<>(tableInclusionRule);
       while (results.next())
       {
         // "TABLE_CAT", "TABLE_SCHEM"

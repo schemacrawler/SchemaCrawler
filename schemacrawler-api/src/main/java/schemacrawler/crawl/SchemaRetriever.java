@@ -68,6 +68,14 @@ final class SchemaRetriever
   void retrieveSchemas(final InclusionRule schemaInclusionRule)
     throws SQLException
   {
+    final InclusionRuleFilter<Schema> schemaFilter = new InclusionRuleFilter<>(schemaInclusionRule,
+                                                                               true);
+
+    if (schemaFilter.isExcludeAll())
+    {
+      return;
+    }
+
     final Set<SchemaReference> schemaRefs;
 
     // Prefer to retrieve schemas from the INFORMATION_SCHEMA views
@@ -78,7 +86,6 @@ final class SchemaRetriever
     }
 
     // Filter out schemas
-    final InclusionRuleFilter<Schema> schemaFilter = new InclusionRuleFilter<>(schemaInclusionRule);
     for (final Iterator<SchemaReference> iterator = schemaRefs.iterator(); iterator
       .hasNext();)
     {

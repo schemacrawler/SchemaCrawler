@@ -29,7 +29,8 @@ public class InclusionRuleFilter<N extends NamedObject>
 
   private final InclusionRule inclusionRule;
 
-  public InclusionRuleFilter(final InclusionRule inclusionRule)
+  public InclusionRuleFilter(final InclusionRule inclusionRule,
+                             final boolean inclusive)
   {
     if (inclusionRule != null)
     {
@@ -37,7 +38,14 @@ public class InclusionRuleFilter<N extends NamedObject>
     }
     else
     {
-      this.inclusionRule = InclusionRule.INCLUDE_ALL;
+      if (inclusive)
+      {
+        this.inclusionRule = InclusionRule.INCLUDE_ALL;
+      }
+      else
+      {
+        this.inclusionRule = InclusionRule.EXCLUDE_ALL;
+      }
     }
   }
 
@@ -55,4 +63,10 @@ public class InclusionRuleFilter<N extends NamedObject>
     }
     return inclusionRule.include(namedObject.getFullName());
   }
+
+  public boolean isExcludeAll()
+  {
+    return inclusionRule.equals(InclusionRule.EXCLUDE_ALL);
+  }
+
 }

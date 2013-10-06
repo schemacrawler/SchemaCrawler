@@ -20,28 +20,12 @@
 package schemacrawler.filter;
 
 
-import schemacrawler.schema.Column;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
 public class FilterFactory
 {
-
-  public static NamedObjectFilter<Column> columnInclusionFilter(final SchemaCrawlerOptions options)
-  {
-    if (options != null)
-    {
-      final ChainedNamedObjectFilter<Column> filter = new ChainedNamedObjectFilter<Column>();
-      filter.add(new InclusionRuleFilter<Column>(options
-        .getColumnInclusionRule()));
-      return filter;
-    }
-    else
-    {
-      return new PassthroughFilter<Column>();
-    }
-  }
 
   public static NamedObjectFilter<Table> grepTablesFilter(final SchemaCrawlerOptions options)
   {
@@ -64,21 +48,6 @@ public class FilterFactory
     else
     {
       return new PassthroughFilter<Routine>();
-    }
-  }
-
-  public static NamedObjectFilter<Table> tableInclusionFilter(final SchemaCrawlerOptions options)
-  {
-    if (options != null)
-    {
-      final ChainedNamedObjectFilter<Table> filter = new ChainedNamedObjectFilter<Table>();
-      filter
-        .add(new InclusionRuleFilter<Table>(options.getTableInclusionRule()));
-      return filter;
-    }
-    else
-    {
-      return new PassthroughFilter<Table>();
     }
   }
 

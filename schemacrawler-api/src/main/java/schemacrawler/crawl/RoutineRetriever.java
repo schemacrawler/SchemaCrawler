@@ -66,6 +66,13 @@ final class RoutineRetriever
                                final InclusionRule columnInclusionRule)
     throws SQLException
   {
+    final InclusionRuleFilter<FunctionColumn> columnFilter = new InclusionRuleFilter<>(columnInclusionRule,
+                                                                                       true);
+    if (columnFilter.isExcludeAll())
+    {
+      return;
+    }
+
     int ordinalNumber = 0;
     try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
       .getFunctionColumns(unquotedName(function.getSchema().getCatalogName()),
@@ -73,7 +80,6 @@ final class RoutineRetriever
                           unquotedName(function.getName()),
                           null));)
     {
-      final InclusionRuleFilter<FunctionColumn> columnFilter = new InclusionRuleFilter<>(columnInclusionRule);
       while (results.next())
       {
         final String columnCatalogName = quotedName(results
@@ -143,8 +149,9 @@ final class RoutineRetriever
                          final InclusionRule routineInclusionRule)
     throws SQLException
   {
-    if (routineInclusionRule == null
-        || routineInclusionRule.equals(InclusionRule.EXCLUDE_ALL))
+    final InclusionRuleFilter<Function> functionFilter = new InclusionRuleFilter<>(routineInclusionRule,
+                                                                                   false);
+    if (functionFilter.isExcludeAll())
     {
       return;
     }
@@ -152,7 +159,6 @@ final class RoutineRetriever
     try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
       .getFunctions(unquotedName(catalogName), unquotedName(schemaName), "%"));)
     {
-      final InclusionRuleFilter<Function> functionFilter = new InclusionRuleFilter<>(routineInclusionRule);
       while (results.next())
       {
         // "FUNCTION_CAT", "FUNCTION_SCHEM"
@@ -190,6 +196,13 @@ final class RoutineRetriever
                                 final InclusionRule columnInclusionRule)
     throws SQLException
   {
+    final InclusionRuleFilter<ProcedureColumn> columnFilter = new InclusionRuleFilter<>(columnInclusionRule,
+                                                                                        true);
+    if (columnFilter.isExcludeAll())
+    {
+      return;
+    }
+
     int ordinalNumber = 0;
     try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
       .getProcedureColumns(unquotedName(procedure.getSchema().getCatalogName()),
@@ -197,7 +210,6 @@ final class RoutineRetriever
                            unquotedName(procedure.getName()),
                            null));)
     {
-      final InclusionRuleFilter<ProcedureColumn> columnFilter = new InclusionRuleFilter<>(columnInclusionRule);
       while (results.next())
       {
         final String columnCatalogName = quotedName(results
@@ -262,8 +274,9 @@ final class RoutineRetriever
                           final InclusionRule routineInclusionRule)
     throws SQLException
   {
-    if (routineInclusionRule == null
-        || routineInclusionRule.equals(InclusionRule.EXCLUDE_ALL))
+    final InclusionRuleFilter<Procedure> procedureFilter = new InclusionRuleFilter<>(routineInclusionRule,
+                                                                                     false);
+    if (procedureFilter.isExcludeAll())
     {
       return;
     }
@@ -271,7 +284,6 @@ final class RoutineRetriever
     try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
       .getProcedures(unquotedName(catalogName), unquotedName(schemaName), "%"));)
     {
-      final InclusionRuleFilter<Procedure> procedureFilter = new InclusionRuleFilter<>(routineInclusionRule);
       while (results.next())
       {
         // "PROCEDURE_CAT", "PROCEDURE_SCHEM"

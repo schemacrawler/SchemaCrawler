@@ -68,13 +68,12 @@ final class SynonymRetriever
   void retrieveSynonymInformation(final InclusionRule synonymInclusionRule)
     throws SQLException
   {
-    if (synonymInclusionRule == null
-        || synonymInclusionRule.equals(InclusionRule.EXCLUDE_ALL))
+    final InclusionRuleFilter<Synonym> synonymFilter = new InclusionRuleFilter<>(synonymInclusionRule,
+                                                                                 false);
+    if (synonymFilter.isExcludeAll())
     {
       return;
     }
-
-    final InclusionRuleFilter<Synonym> synonymInclusionFilter = new InclusionRuleFilter<>(synonymInclusionRule);
 
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
       .getInformationSchemaViews();
@@ -155,7 +154,7 @@ final class SynonymRetriever
         final MutableSynonym synonym = new MutableSynonym(schema, synonymName);
         synonym.setReferencedObject(referencedObject);
 
-        if (synonymInclusionFilter.include(synonym))
+        if (synonymFilter.include(synonym))
         {
           database.addSynonym(synonym);
         }
