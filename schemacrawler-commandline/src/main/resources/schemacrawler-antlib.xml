@@ -4,19 +4,12 @@
   <macrodef name="schemacrawler">
 
     <attribute
-      name="config"
-      description="Path to the configuration file"
-      default="schemacrawler.config.properties"/>
-    <attribute
-      name="additional-config"
-      description="Path to the additional configuration file"
-      default="schemacrawler.additional.config.properties"/>
-
-    <attribute
       name="schemacrawler-classpath"
       description="SchemaCrawler jars, and database driver classpath"
       default="${schemacrawler-classpath}"/>
 
+    <!-- Connection Options -->
+    
     <attribute
       name="driver"
       description="JDBC driver class name"
@@ -33,27 +26,20 @@
       name="password"
       description="Database connection password"
       default=""/>
-
+         
+    <!-- Filtering Options -->
+    
     <attribute
       name="infolevel"
-      description="determines the amount of database metadata retrieved, and also determines the time taken to crawl the schema"/>
+      description="Determines the amount of database metadata retrieved, and also determines the time taken to crawl the schema"/>
     <attribute
-      name="command"
-      description="Comma-separated list of commands"/>
-
+      name="schemas"
+      description="Regular expression to select schemas"
+      default=".*"/>
     <attribute
-      name="no-info"
-      description="Whether to print information - true or false"
-      default="false"/>
-
-    <attribute
-      name="outputformat"
-      description="Output format"
-      default="text"/>
-    <attribute
-      name="outputfile"
-      description="Path to output file"/>
-
+      name="tabletypes"
+      description="Comma-separated list of table types of TABLE,VIEW,SYSTEM_TABLE,GLOBAL_TEMPORARY,LOCAL_TEMPORARY,ALIAS"
+      default="TABLE,VIEW"/>      
     <attribute
       name="tables"
       description="Regular expression to select tables"
@@ -62,6 +48,10 @@
       name="excludecolumns"
       description="Regular expression to exclude columns"
       default=""/>
+    <attribute
+      name="routinetypes"
+      description="Comma-separated list of routine types of PROCEDURE,FUNCTION"
+      default="PROCEDURE,FUNCTION"/>      
     <attribute
       name="routines"
       description="Regular expression to select routines"
@@ -74,7 +64,9 @@
       name="synonyms"
       description="Regular expression to select synonyms"
       default=".*"/>
-            
+      
+    <!-- Grep Options -->  
+    
     <attribute
       name="grepcolumns"
       description="Regular expression to grep columns"
@@ -84,14 +76,87 @@
       description="Regular expression to grep routine parameters"
       default=".*"/>
     <attribute
+      name="grepdef"
+      description="Regular expression to grep routine parameters"
+      default=".*"/>      
+    <attribute
       name="invert-match"
       description="Whether to invert the matching tables"
       default="false"/>
-
+    <attribute
+      name="only-matching"
+      description="Shows only matching tables, and does not show foreign keys that reference other non-matching tables"
+      default="false"/>
+    <attribute
+      name="parents"
+      description="Number of generations of ancestors for the tables selected by grep"
+      default="0"/>
+    <attribute
+      name="children"
+      description="Number of generations of descendants for the tables selected by grep"
+      default="0"/>
+                  
+    <!-- Configuration Options -->
+    
+    <attribute
+      name="config"
+      description="Path to the configuration file"
+      default="schemacrawler.config.properties"/>
+    <attribute
+      name="additional-config"
+      description="Path to the additional configuration file"
+      default="schemacrawler.additional.config.properties"/>
+          
+    <!-- Application Options -->
+    
     <attribute
       name="loglevel"
       description="Log level - may be one of: OFF, SEVERE, WARNING, INFO, CONFIG, FINE, FINER, FINEST, ALL"
       default="SEVERE"/>
+
+    <!-- Command -->
+    
+    <attribute
+      name="command"
+      description="Comma-separated list of commands"/>
+
+    <!-- Sort Options -->
+    
+    <attribute
+      name="sorttables"
+      description="Sort tables alphabetically"
+      default="true"/>
+  
+    <attribute
+      name="sortcolumns"
+      description="Sort columns in a table alphabetically"
+      default="false"/>
+
+    <attribute
+      name="sortinout"
+      description="Sort parameters in a routine alphabetically"
+      default="false"/>
+       
+    <!-- Output Options -->    
+         
+    <attribute
+      name="no-info"
+      description="Whether to print information - true or false"
+      default="false"/>
+
+    <attribute
+      name="portablenames"
+      description="Allows for easy comparison between databases"
+      default="false"/>
+      
+    <attribute
+      name="outputformat"
+      description="Output format"
+      default="text"/>
+      
+    <attribute
+      name="outputfile"
+      description="Path to output file"/>
 
     <sequential>
 
@@ -120,15 +185,26 @@
         <arg value="-password=@{password}"/>
         <arg value="-command=@{command}"/>
         <arg value="-infolevel=@{infolevel}"/>
+        <arg value="-schemas=@{schemas}"/>
+        <arg value="-tabletypes=@{tabletypes}"/>
         <arg value="-tables=@{tables}"/>
         <arg value="-excludecolumns=@{excludecolumns}"/>
+        <arg value="-routinetypes=@{routinetypes}"/>
         <arg value="-routines=@{routines}"/>
         <arg value="-excludeinout=@{excludeinout}"/>
         <arg value="-synonyms=@{synonyms}"/>
         <arg value="-grepcolumns=@{grepcolumns}"/>
         <arg value="-grepinout=@{grepinout}"/>
+        <arg value="-grepdef=@{grepdef}"/>
         <arg value="-v=@{invert-match}"/>
+        <arg value="-only-matching=@{only-matching}"/>
+        <arg value="-parents=@{parents}"/>
+        <arg value="-children=@{children}"/>
+        <arg value="-sorttables=@{sorttables}"/>
+        <arg value="-sortcolumns=@{sortcolumns}"/>
+        <arg value="-sortinout=@{sortinout}"/>
         <arg value="-noinfo=@{no-info}"/>
+        <arg value="-portablenames=@{portablenames}"/>
         <arg value="-outputformat=@{outputformat}"/>
         <arg value="-outputfile=@{outputfile}"/>
         <arg value="-loglevel=@{loglevel}"/>

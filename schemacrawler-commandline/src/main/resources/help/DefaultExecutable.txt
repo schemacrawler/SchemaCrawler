@@ -42,7 +42,7 @@
   Optional, defaults to false
 
 -sortinout=<boolean>
-  Sort parameters in a stored procedure alphabetically
+  Sort parameters in a routine alphabetically
   <boolean> can be true or false
   Optional, defaults to false
 
