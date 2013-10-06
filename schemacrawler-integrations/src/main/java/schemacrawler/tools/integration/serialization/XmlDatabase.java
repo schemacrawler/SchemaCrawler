@@ -116,17 +116,15 @@ public final class XmlDatabase
         }
       }, 5000);
 
-      final String[] xmlElements = new String[] {
+      final String[] mutable = new String[] {
           "checkConstraint",
           "column",
           "columnDataType",
           "database",
-          "databaseProperty",
           "foreignKey",
           "foreignKeyColumnReference",
           "index",
           "indexColumn",
-          "jdbcDriverProperty",
           "primaryKey",
           "privilege",
           "procedure",
@@ -137,10 +135,20 @@ public final class XmlDatabase
           "trigger",
           "view",
       };
-      for (final String xmlElement: xmlElements)
+      for (final String xmlElement: mutable)
       {
         xStream.alias(xmlElement,
                       Class.forName("schemacrawler.crawl.Mutable"
+                                    + xmlElement.substring(0, 1).toUpperCase()
+                                    + xmlElement.substring(1)));
+      }
+      final String[] immutable = new String[] {
+          "databaseProperty", "jdbcDriverProperty",
+      };
+      for (final String xmlElement: immutable)
+      {
+        xStream.alias(xmlElement,
+                      Class.forName("schemacrawler.crawl.Immutable"
                                     + xmlElement.substring(0, 1).toUpperCase()
                                     + xmlElement.substring(1)));
       }
