@@ -69,16 +69,34 @@ class MutableIndex
   @Override
   public int compareTo(final NamedObject obj)
   {
-    if (obj == null)
+    if (obj == null || !(obj instanceof Index))
     {
       return -1;
     }
 
-    final Index other = (Index) obj;
-    final List<IndexColumn> thisColumns = getColumns();
-    final List<IndexColumn> otherColumns = other.getColumns();
+    final Index that = (Index) obj;
 
-    return CompareUtility.compareLists(thisColumns, otherColumns);
+    int compareTo = 0;
+
+    if (compareTo == 0)
+    {
+      compareTo = isUnique? -1: 0;
+    }
+
+    if (compareTo == 0)
+    {
+      final List<IndexColumn> thisColumns = getColumns();
+      final List<IndexColumn> otherColumns = that.getColumns();
+
+      compareTo = CompareUtility.compareLists(thisColumns, otherColumns);
+    }
+
+    if (compareTo == 0)
+    {
+      compareTo = indexType.ordinal() - that.getIndexType().ordinal();
+    }
+
+    return compareTo;
   }
 
   /**
