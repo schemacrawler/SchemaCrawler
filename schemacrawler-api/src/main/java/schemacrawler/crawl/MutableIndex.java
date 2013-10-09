@@ -80,20 +80,28 @@ class MutableIndex
 
     if (compareTo == 0)
     {
-      compareTo = isUnique? -1: 0;
+      final List<IndexColumn> thisColumns = getColumns();
+      final List<IndexColumn> thatColumns = that.getColumns();
+
+      compareTo = CompareUtility.compareLists(thisColumns, thatColumns);
     }
 
     if (compareTo == 0)
     {
-      final List<IndexColumn> thisColumns = getColumns();
-      final List<IndexColumn> otherColumns = that.getColumns();
-
-      compareTo = CompareUtility.compareLists(thisColumns, otherColumns);
+      if (isUnique != that.isUnique())
+      {
+        compareTo = isUnique? -1: 1;
+      }
     }
 
     if (compareTo == 0)
     {
       compareTo = indexType.ordinal() - that.getIndexType().ordinal();
+    }
+
+    if (compareTo == 0)
+    {
+      compareTo = super.compareTo(obj);
     }
 
     return compareTo;
