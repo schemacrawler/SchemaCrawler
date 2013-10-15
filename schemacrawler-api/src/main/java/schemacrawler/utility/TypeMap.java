@@ -21,7 +21,6 @@ package schemacrawler.utility;
 
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -107,8 +106,10 @@ public final class TypeMap
           sqlTypeMap.putAll(typeMap);
         }
       }
-      catch (final SQLException e)
+      catch (final Exception e)
       {
+        // (Some drivers would throw SQLException, Sybase Adaptive
+        // Server throws UnimplementedOperationException)
         LOGGER.log(Level.WARNING,
                    "Could not obtain data type map from connection",
                    e);
