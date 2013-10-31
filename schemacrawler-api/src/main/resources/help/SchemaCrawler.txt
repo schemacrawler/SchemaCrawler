@@ -1,4 +1,4 @@
-SchemaCrawler 10.5
+SchemaCrawler 10.6
 Copyright (c) 2000-2013, Sualeh Fatehi.
 
 SchemaCrawler is a database schema discovery and comprehension tool. 
