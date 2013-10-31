@@ -80,23 +80,23 @@
       <version>1.5</version>
       <scope>test</scope>
     </dependency>
-	<dependency>
-	   <groupId>com.google.code.gson</groupId>
-	   <artifactId>gson</artifactId>
-	   <version>2.2.4</version>
-	   <scope>test</scope>
-	</dependency>    
-	<dependency>
-		<groupId>com.google.guava</groupId>
-		<artifactId>guava-collections</artifactId>
-		<version>r03</version>
-		<scope>test</scope>
-	</dependency>	
+  <dependency>
+     <groupId>com.google.code.gson</groupId>
+     <artifactId>gson</artifactId>
+     <version>2.2.4</version>
+     <scope>test</scope>
+  </dependency>    
+  <dependency>
+    <groupId>com.google.guava</groupId>
+    <artifactId>guava-collections</artifactId>
+    <version>r03</version>
+    <scope>test</scope>
+  </dependency> 
     <dependency>
       <groupId>org.hsqldb</groupId>
       <artifactId>hsqldb</artifactId>
-      <version>2.3.1</version>
-	  <classifier>jdk6debug</classifier>
+      <version>2.3.0</version>
+      <classifier>jdk6debug</classifier>
       <scope>provided</scope>
     </dependency>
   </dependencies>
@@ -174,7 +174,7 @@
         <artifactId>maven-gpg-plugin</artifactId>
         <version>1.1</version>
         <configuration>
-		  <useAgent>true</useAgent>
+      <useAgent>true</useAgent>
           <skip>${skip.signing.artifacts}</skip>
         </configuration>
         <executions>
