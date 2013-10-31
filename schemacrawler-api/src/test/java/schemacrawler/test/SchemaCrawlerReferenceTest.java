@@ -34,7 +34,7 @@ import schemacrawler.schema.Database;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.InclusionRule;
+import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.test.utility.BaseDatabaseTest;
@@ -83,9 +83,9 @@ public class SchemaCrawlerReferenceTest
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions
-      .setTableInclusionRule(new InclusionRule(".*\\.BOOKAUTHORS"));
+      .setTableInclusionRule(new RegularExpressionInclusionRule(".*\\.BOOKAUTHORS"));
     schemaCrawlerOptions
-      .setGrepColumnInclusionRule(new InclusionRule(".*\\.BOOKAUTHORS\\..*"));
+      .setGrepColumnInclusionRule(new RegularExpressionInclusionRule(".*\\.BOOKAUTHORS\\..*"));
 
     int fkReferenceCount = 0;
     final Database database = getDatabase(schemaCrawlerOptions);
@@ -120,9 +120,9 @@ public class SchemaCrawlerReferenceTest
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions
-      .setTableInclusionRule(new InclusionRule(".*\\.AUTHORS"));
+      .setTableInclusionRule(new RegularExpressionInclusionRule(".*\\.AUTHORS"));
     schemaCrawlerOptions
-      .setGrepColumnInclusionRule(new InclusionRule(".*\\.AUTHORS\\..*"));
+      .setGrepColumnInclusionRule(new RegularExpressionInclusionRule(".*\\.AUTHORS\\..*"));
 
     int fkReferenceCount = 0;
     final Database database = getDatabase(schemaCrawlerOptions);
@@ -157,7 +157,7 @@ public class SchemaCrawlerReferenceTest
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions
-      .setGrepColumnInclusionRule(new InclusionRule(".*\\.BOOKAUTHORS\\..*"));
+      .setGrepColumnInclusionRule(new RegularExpressionInclusionRule(".*\\.BOOKAUTHORS\\..*"));
 
     int fkReferenceCount = 0;
     final Database database = getDatabase(schemaCrawlerOptions);
@@ -192,7 +192,7 @@ public class SchemaCrawlerReferenceTest
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions
-      .setGrepColumnInclusionRule(new InclusionRule(".*\\.AUTHORS\\..*"));
+      .setGrepColumnInclusionRule(new RegularExpressionInclusionRule(".*\\.AUTHORS\\..*"));
 
     int fkReferenceCount = 0;
     final Database database = getDatabase(schemaCrawlerOptions);

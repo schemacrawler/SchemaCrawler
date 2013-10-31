@@ -8,7 +8,8 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.DatabaseConnectionOptions;
-import schemacrawler.schemacrawler.InclusionRule;
+import schemacrawler.schemacrawler.ExcludeAll;
+import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.utility.SchemaCrawlerUtility;
@@ -29,10 +30,8 @@ public final class ApiExample
     // Set what details are required in the schema - this affects the
     // time taken to crawl the schema
     options.setSchemaInfoLevel(SchemaInfoLevel.standard());
-    options.setRoutineInclusionRule(new InclusionRule(InclusionRule.NONE,
-                                                        InclusionRule.ALL));
-    options.setSchemaInclusionRule(new InclusionRule("PUBLIC.BOOKS",
-                                                     InclusionRule.NONE));
+    options.setRoutineInclusionRule(new ExcludeAll());
+    options.setSchemaInclusionRule(new RegularExpressionInclusionRule("PUBLIC.BOOKS"));
 
     // Get the schema definition
     final Database database = SchemaCrawlerUtility.getDatabase(connection,

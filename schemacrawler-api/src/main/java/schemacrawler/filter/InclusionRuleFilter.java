@@ -21,6 +21,8 @@ package schemacrawler.filter;
 
 
 import schemacrawler.schema.NamedObject;
+import schemacrawler.schemacrawler.ExcludeAll;
+import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.InclusionRule;
 
 public class InclusionRuleFilter<N extends NamedObject>
@@ -40,11 +42,11 @@ public class InclusionRuleFilter<N extends NamedObject>
     {
       if (inclusive)
       {
-        this.inclusionRule = InclusionRule.INCLUDE_ALL;
+        this.inclusionRule = new IncludeAll();
       }
       else
       {
-        this.inclusionRule = InclusionRule.EXCLUDE_ALL;
+        this.inclusionRule = new ExcludeAll();
       }
     }
   }
@@ -66,7 +68,7 @@ public class InclusionRuleFilter<N extends NamedObject>
 
   public boolean isExcludeAll()
   {
-    return inclusionRule.equals(InclusionRule.EXCLUDE_ALL);
+    return inclusionRule instanceof ExcludeAll;
   }
 
 }

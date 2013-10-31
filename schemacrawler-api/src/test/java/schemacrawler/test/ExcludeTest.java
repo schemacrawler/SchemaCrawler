@@ -30,7 +30,7 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.Database;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.InclusionRule;
+import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestUtility;
@@ -53,11 +53,9 @@ public class ExcludeTest
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions
-      .setSchemaInclusionRule(new InclusionRule(InclusionRule.ALL,
-                                                ".*\\.FOR_LINT"));
+      .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
     schemaCrawlerOptions
-      .setColumnInclusionRule(new InclusionRule(InclusionRule.ALL,
-                                                ".*\\..*\\.ID"));
+      .setColumnInclusionRule(new RegularExpressionExclusionRule(".*\\..*\\.ID"));
 
     final Database database = getDatabase(schemaCrawlerOptions);
     final Schema[] schemas = database.getSchemas().toArray(new Schema[0]);

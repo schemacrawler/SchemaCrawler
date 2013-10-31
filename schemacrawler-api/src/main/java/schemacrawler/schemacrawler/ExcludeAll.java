@@ -17,33 +17,48 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-
 package schemacrawler.schemacrawler;
 
 
-import java.io.Serializable;
-
 /**
- * Specifies inclusion and exclusion patterns that can be applied to the
- * names, definitions, and other attributes of named objects.
+ * Include all names, definitions, and other attributes of named
+ * objects.
  * 
  * @author Sualeh Fatehi
  */
-// @FunctionalInterface
-public interface InclusionRule
-  extends Serializable
+public final class ExcludeAll
+  implements InclusionRule
 {
 
+  private static final long serialVersionUID = -2992724018349021861L;
+
+  @Override
+  public boolean equals(final Object obj)
+  {
+    return obj instanceof ExcludeAll;
+  }
+
+  @Override
+  public int hashCode()
+  {
+    return 2;
+  }
+
   /**
-   * Checks whether to include a named object.
+   * {@inheritDoc}
    * 
-   * @param text
-   *        Text to check, which could be the fully qualified name of
-   *        the named object, the definition, or some other attribute of
-   *        the named object.
-   * @return Whether the text qualifies the named object for inclusion
-   *         or not
+   * @see schemacrawler.schemacrawler.InclusionRule#include(java.lang.String)
    */
-  boolean include(final String text);
+  @Override
+  public boolean include(final String text)
+  {
+    return false;
+  }
+
+  @Override
+  public String toString()
+  {
+    return getClass().getSimpleName();
+  }
 
 }

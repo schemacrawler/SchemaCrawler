@@ -30,16 +30,10 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
     class="schemacrawler.schemacrawler.SchemaCrawlerOptions"
   >
     <property name="tableInclusionRule">
-      <bean class="schemacrawler.schemacrawler.InclusionRule">
-        <constructor-arg value=".*" />
-        <constructor-arg value="" />
-      </bean>
+      <bean class="schemacrawler.schemacrawler.IncludeAll"/>
     </property>
     <property name="columnInclusionRule">
-      <bean class="schemacrawler.schemacrawler.InclusionRule">
-        <constructor-arg value=".*" />
-        <constructor-arg value="" />
-      </bean>
+      <bean class="schemacrawler.schemacrawler.IncludeAll"/>
     </property>
     <property name="tableTypes">
       <set>

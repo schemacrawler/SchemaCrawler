@@ -24,6 +24,8 @@ package schemacrawler.tools.commandline;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.InclusionRule;
+import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
+import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
@@ -49,17 +51,17 @@ final class SchemaCrawlerOptionsParser
   SchemaCrawlerOptionsParser(final Config config)
   {
     super(new StringOption("infolevel", "standard"),
-          new StringOption("schemas", InclusionRule.NONE),
+          new StringOption("schemas", null),
           new StringOption("tabletypes", DEFAULT_TABLE_TYPES),
-          new StringOption("tables", InclusionRule.ALL),
-          new StringOption("excludecolumns", InclusionRule.NONE),
-          new StringOption("synonyms", InclusionRule.ALL),
+          new StringOption("tables", null),
+          new StringOption("excludecolumns", null),
+          new StringOption("synonyms", null),
           new StringOption("routinetypes", DEFAULT_ROUTINE_TYPES),
-          new StringOption("routines", InclusionRule.ALL),
-          new StringOption("excludeinout", InclusionRule.NONE),
-          new StringOption("grepcolumns", InclusionRule.NONE),
-          new StringOption("grepinout", InclusionRule.NONE),
-          new StringOption("grepdef", InclusionRule.NONE),
+          new StringOption("routines", null),
+          new StringOption("excludeinout", null),
+          new StringOption("grepcolumns", null),
+          new StringOption("grepinout", null),
+          new StringOption("grepdef", null),
           new BooleanOption("invert-match"),
           new BooleanOption("only-matching"),
           new NumberOption("parents", 0),
@@ -92,8 +94,7 @@ final class SchemaCrawlerOptionsParser
 
     if (hasOptionValue("schemas"))
     {
-      final InclusionRule schemaInclusionRule = new InclusionRule(getStringValue("schemas"),
-                                                                  InclusionRule.NONE);
+      final InclusionRule schemaInclusionRule = new RegularExpressionInclusionRule(getStringValue("schemas"));
       options.setSchemaInclusionRule(schemaInclusionRule);
     }
 
@@ -104,14 +105,12 @@ final class SchemaCrawlerOptionsParser
 
     if (hasOptionValue("tables"))
     {
-      final InclusionRule tableInclusionRule = new InclusionRule(getStringValue("tables"),
-                                                                 InclusionRule.NONE);
+      final InclusionRule tableInclusionRule = new RegularExpressionInclusionRule(getStringValue("tables"));
       options.setTableInclusionRule(tableInclusionRule);
     }
     if (hasOptionValue("excludecolumns"))
     {
-      final InclusionRule columnInclusionRule = new InclusionRule(InclusionRule.ALL,
-                                                                  getStringValue("excludecolumns"));
+      final InclusionRule columnInclusionRule = new RegularExpressionExclusionRule(getStringValue("excludecolumns"));
       options.setColumnInclusionRule(columnInclusionRule);
     }
 
@@ -122,21 +121,18 @@ final class SchemaCrawlerOptionsParser
 
     if (hasOptionValue("routines"))
     {
-      final InclusionRule routineInclusionRule = new InclusionRule(getStringValue("routines"),
-                                                                   InclusionRule.NONE);
+      final InclusionRule routineInclusionRule = new RegularExpressionInclusionRule(getStringValue("routines"));
       options.setRoutineInclusionRule(routineInclusionRule);
     }
     if (hasOptionValue("excludeinout"))
     {
-      final InclusionRule routineColumnInclusionRule = new InclusionRule(InclusionRule.ALL,
-                                                                         getStringValue("excludeinout"));
+      final InclusionRule routineColumnInclusionRule = new RegularExpressionExclusionRule(getStringValue("excludeinout"));
       options.setRoutineColumnInclusionRule(routineColumnInclusionRule);
     }
 
     if (hasOptionValue("synonyms"))
     {
-      final InclusionRule synonymInclusionRule = new InclusionRule(getStringValue("synonyms"),
-                                                                   InclusionRule.NONE);
+      final InclusionRule synonymInclusionRule = new RegularExpressionInclusionRule(getStringValue("synonyms"));
       options.setSynonymInclusionRule(synonymInclusionRule);
     }
 
@@ -152,8 +148,7 @@ final class SchemaCrawlerOptionsParser
 
     if (hasOptionValue("grepcolumns"))
     {
-      final InclusionRule grepColumnInclusionRule = new InclusionRule(getStringValue("grepcolumns"),
-                                                                      InclusionRule.NONE);
+      final InclusionRule grepColumnInclusionRule = new RegularExpressionInclusionRule(getStringValue("grepcolumns"));
       options.setGrepColumnInclusionRule(grepColumnInclusionRule);
     }
     else
@@ -163,8 +158,7 @@ final class SchemaCrawlerOptionsParser
 
     if (hasOptionValue("grepinout"))
     {
-      final InclusionRule grepRoutineColumnInclusionRule = new InclusionRule(getStringValue("grepinout"),
-                                                                             InclusionRule.NONE);
+      final InclusionRule grepRoutineColumnInclusionRule = new RegularExpressionInclusionRule(getStringValue("grepinout"));
       options.setGrepRoutineColumnInclusionRule(grepRoutineColumnInclusionRule);
     }
     else
@@ -174,8 +168,7 @@ final class SchemaCrawlerOptionsParser
 
     if (hasOptionValue("grepdef"))
     {
-      final InclusionRule grepDefinitionInclusionRule = new InclusionRule(getStringValue("grepdef"),
-                                                                          InclusionRule.NONE);
+      final InclusionRule grepDefinitionInclusionRule = new RegularExpressionInclusionRule(getStringValue("grepdef"));
       options.setGrepDefinitionInclusionRule(grepDefinitionInclusionRule);
     }
     else

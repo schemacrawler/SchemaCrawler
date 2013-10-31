@@ -33,6 +33,7 @@ import org.junit.Test;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.InclusionRule;
+import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.test.utility.BaseDatabaseTest;
@@ -88,8 +89,7 @@ public class LintOutputTest
           .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
         final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
         schemaCrawlerOptions
-          .setSchemaInclusionRule(new InclusionRule(".*FOR_LINT",
-                                                    InclusionRule.NONE));
+          .setSchemaInclusionRule(new RegularExpressionInclusionRule(".*FOR_LINT"));
         schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
 
         final Executable executable = new SchemaCrawlerExecutable(command);
@@ -130,8 +130,7 @@ public class LintOutputTest
       .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
     schemaCrawlerOptions
-      .setSchemaInclusionRule(new InclusionRule(".*FOR_LINT",
-                                                InclusionRule.NONE));
+      .setSchemaInclusionRule(new RegularExpressionInclusionRule(".*FOR_LINT"));
     schemaCrawlerOptions.setSchemaInfoLevel(infoLevel.getSchemaInfoLevel());
 
     final Executable executable = new SchemaCrawlerExecutable("lint");
@@ -169,8 +168,7 @@ public class LintOutputTest
       .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
     schemaCrawlerOptions
-      .setSchemaInclusionRule(new InclusionRule(".*FOR_LINT",
-                                                InclusionRule.NONE));
+      .setSchemaInclusionRule(new RegularExpressionInclusionRule(".*FOR_LINT"));
     schemaCrawlerOptions.setSchemaInfoLevel(infoLevel.getSchemaInfoLevel());
 
     final Executable executable = new SchemaCrawlerExecutable("lint");
