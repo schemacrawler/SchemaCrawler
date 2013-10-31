@@ -26,7 +26,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.List;
 
@@ -34,7 +33,7 @@ import org.junit.Test;
 
 import schemacrawler.schema.Database;
 import schemacrawler.schema.Schema;
-import schemacrawler.schemacrawler.InclusionRule;
+import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestUtility;
@@ -55,8 +54,7 @@ public class LintTest
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions
-      .setSchemaInclusionRule(new InclusionRule(".*FOR_LINT",
-                                                InclusionRule.NONE));
+      .setSchemaInclusionRule(new RegularExpressionInclusionRule(".*FOR_LINT"));
 
     final Database database = getDatabase(schemaCrawlerOptions);
     assertNotNull(database);

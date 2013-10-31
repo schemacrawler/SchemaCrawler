@@ -19,25 +19,15 @@ package schemacrawler.crawl;
 
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import org.junit.Ignore;
 import org.junit.Test;
 
 import schemacrawler.schema.SchemaReference;
-import schemacrawler.schemacrawler.InclusionRule;
 
 @Ignore("Slow test")
 public class EqualsHashCodeTest
 {
-
-  @Test
-  public void inclusionRule()
-  {
-    final InclusionRule inclusionRule = new InclusionRule("", "");
-    assertTrue("", !inclusionRule.equals(null));
-    assertEquals("", inclusionRule, InclusionRule.EXCLUDE_ALL);
-  }
 
   @Test
   public void schemaRef()

@@ -34,7 +34,8 @@ import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.InclusionRule;
+import schemacrawler.schemacrawler.ExcludeAll;
+import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.test.utility.BaseDatabaseTest;
@@ -361,8 +362,9 @@ public class SchemaCrawlerOutputTest
       final Config config = Config
         .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
-      schemaCrawlerOptions.setTableInclusionRule(InclusionRule.EXCLUDE_ALL);
-      schemaCrawlerOptions.setRoutineInclusionRule(InclusionRule.INCLUDE_ALL);
+      schemaCrawlerOptions.setTableInclusionRule(new ExcludeAll());
+      schemaCrawlerOptions
+        .setRoutineInclusionRule(new IncludeAll());
       schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
 
       final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(SchemaTextDetailType.details

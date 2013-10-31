@@ -49,8 +49,10 @@ import schemacrawler.schema.TableRelationshipType;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.InclusionRule;
+import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.InformationSchemaViews;
+import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
+import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.test.utility.BaseDatabaseTest;
@@ -138,8 +140,7 @@ public class SchemaCrawlerTest
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
     schemaCrawlerOptions.setInformationSchemaViews(informationSchemaViews);
     schemaCrawlerOptions
-      .setSchemaInclusionRule(new InclusionRule(InclusionRule.ALL,
-                                                ".*\\.FOR_LINT"));
+      .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
 
     final Database database = getDatabase(schemaCrawlerOptions);
     final Schema[] schemas = database.getSchemas().toArray(new Schema[0]);
@@ -176,8 +177,7 @@ public class SchemaCrawlerTest
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.standard());
     schemaCrawlerOptions
-      .setSchemaInclusionRule(new InclusionRule(InclusionRule.ALL,
-                                                ".*\\.FOR_LINT"));
+      .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
 
     final Database database = getDatabase(schemaCrawlerOptions);
     final Table[] tables = database.getTables().toArray(new Table[0]);
@@ -206,8 +206,7 @@ public class SchemaCrawlerTest
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.standard());
     schemaCrawlerOptions
-      .setTableInclusionRule(new InclusionRule(".*\\.AUTHORS",
-                                               InclusionRule.NONE));
+      .setTableInclusionRule(new RegularExpressionInclusionRule(".*\\.AUTHORS"));
 
     final Database database = getDatabase(schemaCrawlerOptions);
     final Table[] tables = database.getTables().toArray(new Table[0]);
@@ -321,7 +320,7 @@ public class SchemaCrawlerTest
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setSchemaInfoLevel(minimum);
     schemaCrawlerOptions.setInformationSchemaViews(informationSchemaViews);
-    schemaCrawlerOptions.setSynonymInclusionRule(InclusionRule.INCLUDE_ALL);
+    schemaCrawlerOptions.setSynonymInclusionRule(new IncludeAll());
 
     final Database database = getDatabase(schemaCrawlerOptions);
     final Schema schema = database.getSchema("PUBLIC.BOOKS");
@@ -360,8 +359,7 @@ public class SchemaCrawlerTest
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
       schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
       schemaCrawlerOptions
-        .setSchemaInclusionRule(new InclusionRule(InclusionRule.ALL,
-                                                  ".*\\.FOR_LINT"));
+        .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
 
       final Database database = getDatabase(schemaCrawlerOptions);
       final Schema[] schemas = database.getSchemas().toArray(new Schema[0]);
@@ -429,8 +427,7 @@ public class SchemaCrawlerTest
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions
-      .setSchemaInclusionRule(new InclusionRule(InclusionRule.ALL,
-                                                ".*\\.FOR_LINT"));
+      .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
 
     final Database database = getDatabase(schemaCrawlerOptions);
     final Schema[] schemas = database.getSchemas().toArray(new Schema[0]);

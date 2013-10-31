@@ -22,17 +22,15 @@ import static org.junit.Assert.fail;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import schemacrawler.schema.Database;
-import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.ConnectionOptions;
-import schemacrawler.schemacrawler.InclusionRule;
+import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.options.InfoLevel;
@@ -98,8 +96,7 @@ public abstract class AbstractSchemaCrawlerSystemTest
     if (schemaInclusion != null)
     {
       schemaCrawlerOptions
-        .setSchemaInclusionRule(new InclusionRule(schemaInclusion,
-                                                  InclusionRule.NONE));
+        .setSchemaInclusionRule(new RegularExpressionInclusionRule(schemaInclusion));
     }
     return schemaCrawlerOptions;
   }

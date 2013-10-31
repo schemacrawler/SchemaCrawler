@@ -30,7 +30,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import schemacrawler.schemacrawler.InclusionRule;
+import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.test.utility.BaseDatabaseTest;
@@ -111,7 +111,8 @@ public class GraphExecutableOptionsTest
     throws Exception
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setTableInclusionRule(new InclusionRule(".*BOOKS"));
+    schemaCrawlerOptions
+      .setTableInclusionRule(new RegularExpressionInclusionRule(".*BOOKS"));
     final GraphOptions graphOptions = new GraphOptions();
 
     executableGraph(schemaCrawlerOptions, graphOptions, currentMethodName());
@@ -146,7 +147,8 @@ public class GraphExecutableOptionsTest
     throws Exception
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setTableInclusionRule(new InclusionRule(".*BOOKS"));
+    schemaCrawlerOptions
+      .setTableInclusionRule(new RegularExpressionInclusionRule(".*BOOKS"));
 
     final GraphOptions graphOptions = new GraphOptions();
     graphOptions.setShowUnqualifiedNames(true);
@@ -160,7 +162,8 @@ public class GraphExecutableOptionsTest
     throws Exception
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setTableInclusionRule(new InclusionRule(".*BOOKS"));
+    schemaCrawlerOptions
+      .setTableInclusionRule(new RegularExpressionInclusionRule(".*BOOKS"));
     schemaCrawlerOptions.setGrepOnlyMatching(true);
 
     final GraphOptions graphOptions = new GraphOptions();
@@ -176,7 +179,7 @@ public class GraphExecutableOptionsTest
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions
-      .setGrepColumnInclusionRule(new InclusionRule(".*\\.REGIONS\\..*", ""));
+      .setGrepColumnInclusionRule(new RegularExpressionInclusionRule(".*\\.REGIONS\\..*"));
 
     final GraphOptions graphOptions = new GraphOptions();
 
@@ -189,7 +192,7 @@ public class GraphExecutableOptionsTest
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions
-      .setGrepColumnInclusionRule(new InclusionRule(".*\\.REGIONS\\..*", ""));
+      .setGrepColumnInclusionRule(new RegularExpressionInclusionRule(".*\\.REGIONS\\..*"));
     schemaCrawlerOptions.setGrepOnlyMatching(true);
 
     final GraphOptions graphOptions = new GraphOptions();
