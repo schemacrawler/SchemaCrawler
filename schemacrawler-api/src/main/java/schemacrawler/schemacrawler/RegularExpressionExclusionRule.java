@@ -50,7 +50,7 @@ public final class RegularExpressionExclusionRule
     }
     else
     {
-      inclusionRule = new RegularExpressionInclusionRule(null, patternExclude);
+      inclusionRule = new RegularExpressionRule(null, patternExclude);
     }
   }
 
