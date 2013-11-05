@@ -28,7 +28,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 
-import schemacrawler.schema.CheckConstraint;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ColumnReference;
@@ -47,6 +46,7 @@ import schemacrawler.schema.Routine;
 import schemacrawler.schema.RoutineColumn;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
+import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -310,7 +310,7 @@ final class SchemaJsonFormatter
 
         jsonTable.put("triggers", handleTriggers(table.getTriggers()));
 
-        for (final CheckConstraint constraint: table.getCheckConstraints())
+        for (final TableConstraint constraint: table.getTableConstraints())
         {
           if (constraint != null)
           {
@@ -320,6 +320,8 @@ final class SchemaJsonFormatter
             {
               jsonConsraint.put("name", constraint.getName());
             }
+            jsonConsraint.put("tableConstraintType", constraint
+              .getTableConstraintType().getValue().toLowerCase());
             if (constraint.hasDefinition())
             {
               jsonConsraint.put("definition", constraint.getDefinition());

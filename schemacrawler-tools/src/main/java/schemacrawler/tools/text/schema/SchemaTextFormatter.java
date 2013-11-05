@@ -29,7 +29,6 @@ import java.util.List;
 import java.util.Locale;
 
 import schemacrawler.schema.ActionOrientationType;
-import schemacrawler.schema.CheckConstraint;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ColumnReference;
@@ -48,6 +47,7 @@ import schemacrawler.schema.Routine;
 import schemacrawler.schema.RoutineColumn;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
+import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -280,7 +280,7 @@ final class SchemaTextFormatter
         printDefinition(view);
       }
       printTriggers(table.getTriggers());
-      printCheckConstraints(table.getCheckConstraints());
+      printConstraints(table.getTableConstraints());
       if (isVerbose)
       {
         printPrivileges(table.getPrivileges());
@@ -446,9 +446,9 @@ final class SchemaTextFormatter
     }
   }
 
-  private void printCheckConstraints(final Collection<CheckConstraint> constraints)
+  private void printConstraints(final Collection<TableConstraint> constraints)
   {
-    for (final CheckConstraint constraint: constraints)
+    for (final TableConstraint constraint: constraints)
     {
       if (constraint != null)
       {
@@ -457,7 +457,9 @@ final class SchemaTextFormatter
         {
           constraintName = constraint.getName();
         }
-        printDefinition("check constraint",
+        final String constraintType = constraint.getTableConstraintType()
+          .getValue().toLowerCase();
+        printDefinition(constraintType + " constraint",
                         constraintName,
                         constraint.getDefinition());
       }

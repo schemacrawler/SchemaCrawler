@@ -117,7 +117,7 @@ public final class XmlDatabase
       }, 5000);
 
       final String[] mutable = new String[] {
-          "checkConstraint",
+          "tableConstraint",
           "column",
           "columnDataType",
           "database",

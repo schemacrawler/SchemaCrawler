@@ -357,7 +357,7 @@ public final class SchemaCrawler
 
       if (infoLevel.isRetrieveCheckConstraintInformation())
       {
-        retrieverExtra.retrieveCheckConstraintInformation();
+        retrieverExtra.retrieveConstraintInformation();
       }
       if (infoLevel.isRetrieveTriggerInformation())
       {

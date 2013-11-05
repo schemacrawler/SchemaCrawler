@@ -36,7 +36,7 @@ import java.util.TreeMap;
 
 import org.junit.Test;
 
-import schemacrawler.schema.CheckConstraint;
+import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Database;
 import schemacrawler.schema.EventManipulationType;
@@ -77,7 +77,7 @@ public class SchemaCrawlerTest
     informationSchemaViews
       .setTableConstraintsSql("SELECT * FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS");
     informationSchemaViews
-      .setCheckConstraintsSql("SELECT * FROM INFORMATION_SCHEMA.CHECK_CONSTRAINTS");
+      .setExtTableConstraintsSql("SELECT * FROM INFORMATION_SCHEMA.CHECK_CONSTRAINTS");
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
@@ -93,9 +93,9 @@ public class SchemaCrawlerTest
       for (final Table table: tables)
       {
         out.println("  table: " + table.getFullName());
-        final CheckConstraint[] checkConstraints = table.getCheckConstraints()
-          .toArray(new CheckConstraint[0]);
-        for (final CheckConstraint checkConstraint: checkConstraints)
+        final TableConstraint[] checkConstraints = table.getTableConstraints()
+          .toArray(new TableConstraint[0]);
+        for (final TableConstraint checkConstraint: checkConstraints)
         {
           out.println("    constraint: " + checkConstraint.getName());
         }
@@ -134,7 +134,7 @@ public class SchemaCrawlerTest
     informationSchemaViews
       .setTableConstraintsSql("SELECT * FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS");
     informationSchemaViews
-      .setCheckConstraintsSql("SELECT * FROM INFORMATION_SCHEMA.CHECK_CONSTRAINTS");
+      .setExtTableConstraintsSql("SELECT * FROM INFORMATION_SCHEMA.CHECK_CONSTRAINTS");
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
@@ -154,7 +154,7 @@ public class SchemaCrawlerTest
       {
         out.println("  table: " + table.getFullName());
         out.println("    # columns: " + table.getColumns().size());
-        out.println("    # constraints: " + table.getCheckConstraints().size());
+        out.println("    # constraints: " + table.getTableConstraints().size());
         out.println("    # indices: " + table.getIndices().size());
         out.println("    # foreign keys: " + table.getForeignKeys().size());
         out.println("    # imported foreign keys: "
