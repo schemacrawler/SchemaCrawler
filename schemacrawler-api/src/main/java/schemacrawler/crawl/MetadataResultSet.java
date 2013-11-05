@@ -133,8 +133,15 @@ final class MetadataResultSet
           final Object value = results.getObject(columnName);
           attributes.put(columnName, value);
         }
-        catch (final SQLException e)
+        catch (final SQLException | ArrayIndexOutOfBoundsException e)
         {
+          /*
+           * MySQL connector is broken and can cause
+           * ArrayIndexOutOfBoundsExceptions for no good reason (tested
+           * with connector 5.1.26 and server version 5.0.95). Ignoring
+           * the exception, we can still get some useful data out of the
+           * database.
+           */
           LOGGER.log(Level.WARNING, "Could not read value for column "
                                     + columnName, e);
         }
