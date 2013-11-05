@@ -25,30 +25,19 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Condition timing type.
+ * Table constraint type.
  */
-public enum ConditionTimingType
+public enum TableConstraintType
 {
 
-  /**
-   * Unknown
-   */
   unknown("unknown"),
-  /**
-   * Before
-   */
-  before("BEFORE"),
-  /**
-   * Instead of
-   */
-  instead_of("INSTEAD OF"),
-  /**
-   * After
-   */
-  after("AFTER");
+  check("CHECK"),
+  unique("UNIQUE"),
+  primary_key("PRIMARY KEY"),
+  foreign_key("FOREIGN KEY");
 
   private static final Logger LOGGER = Logger
-    .getLogger(ConditionTimingType.class.getName());
+    .getLogger(TableConstraintType.class.getName());
 
   /**
    * Find the enumeration value corresponding to the string.
@@ -57,9 +46,9 @@ public enum ConditionTimingType
    *        Sort sequence code.
    * @return Enumeration value
    */
-  public static ConditionTimingType valueOfFromValue(final String value)
+  public static TableConstraintType valueOfFromValue(final String value)
   {
-    for (final ConditionTimingType type: ConditionTimingType.values())
+    for (final TableConstraintType type: TableConstraintType.values())
     {
       if (type.getValue().equalsIgnoreCase(value))
       {
@@ -72,7 +61,7 @@ public enum ConditionTimingType
 
   private final String value;
 
-  private ConditionTimingType(final String value)
+  private TableConstraintType(final String value)
   {
     this.value = value;
   }

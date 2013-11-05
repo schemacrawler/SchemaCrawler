@@ -34,11 +34,11 @@ public interface Table
 {
 
   /**
-   * Gets the list of check constraints.
+   * Gets the constraints for the table.
    * 
-   * @return Check constraints for the table
+   * @return Constraints for the table
    */
-  Collection<CheckConstraint> getCheckConstraints();
+  Collection<TableConstraint> getTableConstraints();
 
   /**
    * Gets a column by name.

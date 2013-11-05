@@ -24,7 +24,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import schemacrawler.schema.CheckConstraint;
+import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Database;
 import schemacrawler.schema.ForeignKey;
@@ -100,10 +100,10 @@ public class SchemaCrawlerDeepTest
       table1.addPrivilege((MutablePrivilege) privilege);
       table2.addPrivilege((MutablePrivilege) privilege);
     }
-    for (final CheckConstraint checkConstraint: table0.getCheckConstraints())
+    for (final TableConstraint checkConstraint: table0.getTableConstraints())
     {
-      table1.addCheckConstraint((MutableCheckConstraint) checkConstraint);
-      table2.addCheckConstraint((MutableCheckConstraint) checkConstraint);
+      table1.addTableConstraint((MutableTableConstraint) checkConstraint);
+      table2.addTableConstraint((MutableTableConstraint) checkConstraint);
     }
 
     assertFalse("Tables should not be equal", table1.equals(table2));

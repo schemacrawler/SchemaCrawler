@@ -20,10 +20,23 @@
       },
       "name": "AUTHORS",
       "constraints": [
-        {"definition": "BOOKS.AUTHORS.STATE=UPPER(BOOKS.AUTHORS.STATE)"},
-        {"definition": "BOOKS.AUTHORS.ID IS NOT NULL"},
-        {"definition": "BOOKS.AUTHORS.FIRSTNAME IS NOT NULL"},
-        {"definition": "BOOKS.AUTHORS.LASTNAME IS NOT NULL"}
+        {
+          "definition": "BOOKS.AUTHORS.STATE=UPPER(BOOKS.AUTHORS.STATE)",
+          "tableConstraintType": "check"
+        },
+        {"tableConstraintType": "primary key"},
+        {
+          "definition": "BOOKS.AUTHORS.ID IS NOT NULL",
+          "tableConstraintType": "check"
+        },
+        {
+          "definition": "BOOKS.AUTHORS.FIRSTNAME IS NOT NULL",
+          "tableConstraintType": "check"
+        },
+        {
+          "definition": "BOOKS.AUTHORS.LASTNAME IS NOT NULL",
+          "tableConstraintType": "check"
+        }
       ],
       "columns": [
         {
@@ -339,8 +352,16 @@
       "primaryKey": {},
       "name": "BOOKAUTHORS",
       "constraints": [
-        {"definition": "BOOKS.BOOKAUTHORS.BOOKID IS NOT NULL"},
-        {"definition": "BOOKS.BOOKAUTHORS.AUTHORID IS NOT NULL"}
+        {"tableConstraintType": "foreign key"},
+        {"tableConstraintType": "foreign key"},
+        {
+          "definition": "BOOKS.BOOKAUTHORS.BOOKID IS NOT NULL",
+          "tableConstraintType": "check"
+        },
+        {
+          "definition": "BOOKS.BOOKAUTHORS.AUTHORID IS NOT NULL",
+          "tableConstraintType": "check"
+        }
       ],
       "columns": [
         {
@@ -486,9 +507,19 @@
       },
       "name": "BOOKS",
       "constraints": [
-        {"definition": "BOOKS.BOOKS.ID IS NOT NULL"},
-        {"definition": "BOOKS.BOOKS.TITLE IS NOT NULL"},
-        {"definition": "BOOKS.BOOKS.PUBLISHERID IS NOT NULL"}
+        {"tableConstraintType": "primary key"},
+        {
+          "definition": "BOOKS.BOOKS.ID IS NOT NULL",
+          "tableConstraintType": "check"
+        },
+        {
+          "definition": "BOOKS.BOOKS.TITLE IS NOT NULL",
+          "tableConstraintType": "check"
+        },
+        {
+          "definition": "BOOKS.BOOKS.PUBLISHERID IS NOT NULL",
+          "tableConstraintType": "check"
+        }
       ],
       "columns": [
         {
@@ -699,7 +730,13 @@
         }
       },
       "name": "PUBLISHERS",
-      "constraints": {"definition": "BOOKS.PUBLISHERS.ID IS NOT NULL"},
+      "constraints": [
+        {"tableConstraintType": "primary key"},
+        {
+          "definition": "BOOKS.PUBLISHERS.ID IS NOT NULL",
+          "tableConstraintType": "check"
+        }
+      ],
       "columns": [
         {
           "dataType": "INTEGER",
@@ -813,9 +850,21 @@
       },
       "name": "EXTRA_PK",
       "constraints": [
-        {"definition": "FOR_LINT.EXTRA_PK.ID IS NOT NULL"},
-        {"definition": "FOR_LINT.EXTRA_PK.WRITERID IS NOT NULL"},
-        {"definition": "FOR_LINT.EXTRA_PK.PUBLICATIONID IS NOT NULL"}
+        {"tableConstraintType": "foreign key"},
+        {"tableConstraintType": "foreign key"},
+        {"tableConstraintType": "primary key"},
+        {
+          "definition": "FOR_LINT.EXTRA_PK.ID IS NOT NULL",
+          "tableConstraintType": "check"
+        },
+        {
+          "definition": "FOR_LINT.EXTRA_PK.WRITERID IS NOT NULL",
+          "tableConstraintType": "check"
+        },
+        {
+          "definition": "FOR_LINT.EXTRA_PK.PUBLICATIONID IS NOT NULL",
+          "tableConstraintType": "check"
+        }
       ],
       "columns": [
         {
@@ -1035,9 +1084,20 @@
       },
       "name": "PUBLICATIONS",
       "constraints": [
-        {"definition": "FOR_LINT.PUBLICATIONS.ID IS NOT NULL"},
-        {"definition": "FOR_LINT.PUBLICATIONS.TITLE IS NOT NULL"},
-        {"definition": "FOR_LINT.PUBLICATIONS.WRITERID IS NOT NULL"}
+        {"tableConstraintType": "foreign key"},
+        {"tableConstraintType": "primary key"},
+        {
+          "definition": "FOR_LINT.PUBLICATIONS.ID IS NOT NULL",
+          "tableConstraintType": "check"
+        },
+        {
+          "definition": "FOR_LINT.PUBLICATIONS.TITLE IS NOT NULL",
+          "tableConstraintType": "check"
+        },
+        {
+          "definition": "FOR_LINT.PUBLICATIONS.WRITERID IS NOT NULL",
+          "tableConstraintType": "check"
+        }
       ],
       "columns": [
         {
@@ -1229,12 +1289,32 @@
       },
       "name": "WRITERS",
       "constraints": [
-        {"definition": "FOR_LINT.WRITERS.STATE=UPPER(FOR_LINT.WRITERS.STATE)"},
-        {"definition": "FOR_LINT.WRITERS.ID IS NOT NULL"},
-        {"definition": "FOR_LINT.WRITERS.FIRSTNAME IS NOT NULL"},
-        {"definition": "FOR_LINT.WRITERS.LASTNAME IS NOT NULL"},
-        {"definition": "FOR_LINT.WRITERS.ADDRESS2 IS NOT NULL"},
-        {"definition": "FOR_LINT.WRITERS.PUBLICATION_ID IS NOT NULL"}
+        {
+          "definition": "FOR_LINT.WRITERS.STATE=UPPER(FOR_LINT.WRITERS.STATE)",
+          "tableConstraintType": "check"
+        },
+        {"tableConstraintType": "foreign key"},
+        {"tableConstraintType": "primary key"},
+        {
+          "definition": "FOR_LINT.WRITERS.ID IS NOT NULL",
+          "tableConstraintType": "check"
+        },
+        {
+          "definition": "FOR_LINT.WRITERS.FIRSTNAME IS NOT NULL",
+          "tableConstraintType": "check"
+        },
+        {
+          "definition": "FOR_LINT.WRITERS.LASTNAME IS NOT NULL",
+          "tableConstraintType": "check"
+        },
+        {
+          "definition": "FOR_LINT.WRITERS.ADDRESS2 IS NOT NULL",
+          "tableConstraintType": "check"
+        },
+        {
+          "definition": "FOR_LINT.WRITERS.PUBLICATION_ID IS NOT NULL",
+          "tableConstraintType": "check"
+        }
       ],
       "columns": [
         {
@@ -1580,10 +1660,23 @@
       },
       "name": "REGIONS",
       "constraints": [
-        {"definition": "\"PUBLISHER SALES\".REGIONS.CITY IS NOT NULL"},
-        {"definition": "\"PUBLISHER SALES\".REGIONS.STATE IS NOT NULL"},
-        {"definition": "\"PUBLISHER SALES\".REGIONS.POSTALCODE IS NOT NULL"},
-        {"definition": "\"PUBLISHER SALES\".REGIONS.COUNTRY IS NOT NULL"}
+        {"tableConstraintType": "primary key"},
+        {
+          "definition": "\"PUBLISHER SALES\".REGIONS.CITY IS NOT NULL",
+          "tableConstraintType": "check"
+        },
+        {
+          "definition": "\"PUBLISHER SALES\".REGIONS.STATE IS NOT NULL",
+          "tableConstraintType": "check"
+        },
+        {
+          "definition": "\"PUBLISHER SALES\".REGIONS.POSTALCODE IS NOT NULL",
+          "tableConstraintType": "check"
+        },
+        {
+          "definition": "\"PUBLISHER SALES\".REGIONS.COUNTRY IS NOT NULL",
+          "tableConstraintType": "check"
+        }
       ],
       "columns": [
         {
@@ -1717,8 +1810,15 @@
       "primaryKey": {},
       "name": "SALES",
       "constraints": [
-        {"definition": "\"PUBLISHER SALES\".SALES.POSTALCODE IS NOT NULL"},
-        {"definition": "\"PUBLISHER SALES\".SALES.COUNTRY IS NOT NULL"}
+        {"tableConstraintType": "foreign key"},
+        {
+          "definition": "\"PUBLISHER SALES\".SALES.POSTALCODE IS NOT NULL",
+          "tableConstraintType": "check"
+        },
+        {
+          "definition": "\"PUBLISHER SALES\".SALES.COUNTRY IS NOT NULL",
+          "tableConstraintType": "check"
+        }
       ],
       "columns": [
         {

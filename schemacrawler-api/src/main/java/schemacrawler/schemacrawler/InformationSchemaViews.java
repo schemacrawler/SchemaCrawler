@@ -43,7 +43,7 @@ public final class InformationSchemaViews
   private static final String KEY_INFORMATION_SCHEMA_TRIGGERS = "select.INFORMATION_SCHEMA.TRIGGERS";
   private static final String KEY_INFORMATION_SCHEMA_TABLE_CONSTRAINTS = "select.INFORMATION_SCHEMA.TABLE_CONSTRAINTS";
   private static final String KEY_INFORMATION_SCHEMA_ROUTINES = "select.INFORMATION_SCHEMA.ROUTINES";
-  private static final String KEY_INFORMATION_SCHEMA_CHECK_CONSTRAINTS = "select.INFORMATION_SCHEMA.CHECK_CONSTRAINTS";
+  private static final String KEY_INFORMATION_SCHEMA_EXT_TABLE_CONSTRAINTS = "select.INFORMATION_SCHEMA.EXT_TABLE_CONSTRAINTS";
   private static final String KEY_INFORMATION_SCHEMA_SCHEMATA = "select.INFORMATION_SCHEMA.SCHEMATA";
   private static final String KEY_INFORMATION_SCHEMA_EXT_SYNONYMS = "select.INFORMATION_SCHEMA.EXT_SYNONYMS";
   private static final String KEY_INFORMATION_SCHEMA_EXT_INDEXES = "select.INFORMATION_SCHEMA.EXT_INDEXES";
@@ -77,7 +77,7 @@ public final class InformationSchemaViews
           KEY_INFORMATION_SCHEMA_TRIGGERS,
           KEY_INFORMATION_SCHEMA_TABLE_CONSTRAINTS,
           KEY_INFORMATION_SCHEMA_ROUTINES,
-          KEY_INFORMATION_SCHEMA_CHECK_CONSTRAINTS,
+          KEY_INFORMATION_SCHEMA_EXT_TABLE_CONSTRAINTS,
           KEY_INFORMATION_SCHEMA_SCHEMATA,
           KEY_INFORMATION_SCHEMA_EXT_SYNONYMS,
           KEY_INFORMATION_SCHEMA_EXT_INDEXES,
@@ -131,10 +131,10 @@ public final class InformationSchemaViews
    * 
    * @return Table check constraints SQL.
    */
-  public String getCheckConstraintsSql()
+  public String getExtTableConstraintsSql()
   {
     return informationSchemaQueries
-      .get(KEY_INFORMATION_SCHEMA_CHECK_CONSTRAINTS);
+      .get(KEY_INFORMATION_SCHEMA_EXT_TABLE_CONSTRAINTS);
   }
 
   /**
@@ -231,10 +231,10 @@ public final class InformationSchemaViews
       .containsKey(KEY_ADDITIONAL_TABLE_ATTRIBUTES);
   }
 
-  public boolean hasCheckConstraintsSql()
+  public boolean hasExtTableConstraintsSql()
   {
     return informationSchemaQueries
-      .containsKey(KEY_INFORMATION_SCHEMA_CHECK_CONSTRAINTS);
+      .containsKey(KEY_INFORMATION_SCHEMA_EXT_TABLE_CONSTRAINTS);
   }
 
   public boolean hasIndexesExtSql()
@@ -311,9 +311,10 @@ public final class InformationSchemaViews
    * @param sql
    *        Table check constraints SQL.
    */
-  public void setCheckConstraintsSql(final String sql)
+  public void setExtTableConstraintsSql(final String sql)
   {
-    informationSchemaQueries.put(KEY_INFORMATION_SCHEMA_CHECK_CONSTRAINTS, sql);
+    informationSchemaQueries.put(KEY_INFORMATION_SCHEMA_EXT_TABLE_CONSTRAINTS,
+                                 sql);
   }
 
   /**

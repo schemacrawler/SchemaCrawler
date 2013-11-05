@@ -21,37 +21,29 @@
 package schemacrawler.crawl;
 
 
-import schemacrawler.schema.CheckConstraint;
 import schemacrawler.schema.Table;
+import schemacrawler.schema.TableConstraint;
+import schemacrawler.schema.TableConstraintType;
 
 /**
  * Represents a table constraint.
  */
-class MutableCheckConstraint
+class MutableTableConstraint
   extends AbstractDependantObject<Table>
-  implements CheckConstraint
+  implements TableConstraint
 {
 
   private static final long serialVersionUID = 1155277343302693656L;
 
+  private TableConstraintType tableConstraintType;
   private boolean deferrable;
   private boolean initiallyDeferred;
-  private String definition;
+  private final StringBuilder definition;
 
-  MutableCheckConstraint(final Table parent, final String name)
+  MutableTableConstraint(final Table parent, final String name)
   {
     super(parent, name);
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.CheckConstraint#getDefinition()
-   */
-  @Override
-  public String getDefinition()
-  {
-    return definition;
+    definition = new StringBuilder();
   }
 
   @Override
@@ -63,7 +55,35 @@ class MutableCheckConstraint
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schema.CheckConstraint#isDeferrable()
+   * @see schemacrawler.schema.TableConstraint#getDefinition()
+   */
+  @Override
+  public String getDefinition()
+  {
+    return definition.toString();
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.TableConstraint#getTableConstraintType()
+   */
+  @Override
+  public TableConstraintType getTableConstraintType()
+  {
+    return tableConstraintType;
+  }
+
+  @Override
+  public TableConstraintType getType()
+  {
+    return getTableConstraintType();
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.TableConstraint#isDeferrable()
    */
   @Override
   public boolean isDeferrable()
@@ -74,7 +94,7 @@ class MutableCheckConstraint
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schema.CheckConstraint#isInitiallyDeferred()
+   * @see schemacrawler.schema.TableConstraint#isInitiallyDeferred()
    */
   @Override
   public boolean isInitiallyDeferred()
@@ -82,14 +102,22 @@ class MutableCheckConstraint
     return initiallyDeferred;
   }
 
+  public void setTableConstraintType(final TableConstraintType tableConstraintType)
+  {
+    this.tableConstraintType = tableConstraintType;
+  }
+
   void setDeferrable(final boolean deferrable)
   {
     this.deferrable = deferrable;
   }
 
-  void setDefinition(final String definition)
+  void appendDefinition(final String definition)
   {
-    this.definition = definition;
+    if (definition != null)
+    {
+      this.definition.append(definition);
+    }
   }
 
   void setInitiallyDeferred(final boolean initiallyDeferred)

@@ -37,8 +37,8 @@ import schemacrawler.schema.ConditionTimingType;
 import schemacrawler.schema.EventManipulationType;
 import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.Table;
+import schemacrawler.schema.TableConstraintType;
 import schemacrawler.schemacrawler.InformationSchemaViews;
-import sf.util.Utility;
 
 /**
  * A retriever uses database metadata to get the extended details about
@@ -196,10 +196,10 @@ final class TableExRetriever
    * @throws SQLException
    *         On a SQL exception
    */
-  void retrieveCheckConstraintInformation()
+  void retrieveConstraintInformation()
     throws SQLException
   {
-    final Map<String, MutableCheckConstraint> checkConstraintsMap = new HashMap<>();
+    final Map<String, MutableTableConstraint> checkConstraintsMap = new HashMap<>();
 
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
       .getInformationSchemaViews();
@@ -247,38 +247,37 @@ final class TableExRetriever
         final boolean initiallyDeferred = results
           .getBoolean("INITIALLY_DEFERRED");
 
-        if (constraintType.equalsIgnoreCase("check"))
-        {
-          final MutableCheckConstraint checkConstraint = new MutableCheckConstraint(table,
-                                                                                    constraintName);
-          checkConstraint.setDeferrable(deferrable);
-          checkConstraint.setInitiallyDeferred(initiallyDeferred);
+        final MutableTableConstraint checkConstraint = new MutableTableConstraint(table,
+                                                                                  constraintName);
+        checkConstraint.setTableConstraintType(TableConstraintType
+          .valueOfFromValue(constraintType));
+        checkConstraint.setDeferrable(deferrable);
+        checkConstraint.setInitiallyDeferred(initiallyDeferred);
 
-          checkConstraint.addAttributes(results.getAttributes());
+        checkConstraint.addAttributes(results.getAttributes());
 
-          // Add to map, since we will need this later
-          final String constraintFullName = table.getSchema().getFullName()
-                                            + "." + constraintName;
-          checkConstraintsMap.put(constraintFullName, checkConstraint);
-        }
+        // Add to map, since we will need this later
+        final String constraintKey = table.getSchema().getFullName() + "."
+                                     + constraintName;
+        checkConstraintsMap.put(constraintKey, checkConstraint);
       }
     }
     catch (final Exception e)
     {
       LOGGER.log(Level.WARNING,
-                 "Could not retrieve check constraint information",
+                 "Could not retrieve table constraint information",
                  e);
       return;
     }
 
-    if (!informationSchemaViews.hasCheckConstraintsSql())
+    if (!informationSchemaViews.hasExtTableConstraintsSql())
     {
       LOGGER
         .log(Level.FINE, "Check constraints SQL statement was not provided");
       return;
     }
     final String checkConstraintInformationSql = informationSchemaViews
-      .getCheckConstraintsSql();
+      .getExtTableConstraintsSql();
 
     // Get check constraint definitions
     try (final Statement statement = connection.createStatement();
@@ -294,27 +293,21 @@ final class TableExRetriever
           .getString("CONSTRAINT_NAME"));
         LOGGER.log(Level.FINER, "Retrieving constraint definition: "
                                 + constraintName);
-        String definition = results.getString("CHECK_CLAUSE");
+        final String definition = results.getString("CHECK_CLAUSE");
 
-        final String constraintFullName = new SchemaReference(catalogName,
-                                                              schemaName)
-                                          + "."
-                                          + constraintName;
-        final MutableCheckConstraint checkConstraint = checkConstraintsMap
-          .get(constraintFullName);
+        final String constraintKey = new SchemaReference(catalogName,
+                                                         schemaName)
+                                     + "."
+                                     + constraintName;
+        final MutableTableConstraint checkConstraint = checkConstraintsMap
+          .get(constraintKey);
         if (checkConstraint == null)
         {
           LOGGER.log(Level.FINEST, "Could not add check constraint to table: "
                                    + constraintName);
           continue;
         }
-        final String text = checkConstraint.getDefinition();
-        if (!Utility.isBlank(text))
-        {
-          definition = checkConstraint.getDefinition() + definition;
-        }
-
-        checkConstraint.setDefinition(definition);
+        checkConstraint.appendDefinition(definition);
       }
     }
     catch (final Exception e)
@@ -323,12 +316,12 @@ final class TableExRetriever
     }
 
     // Add check constraints to tables
-    final Collection<MutableCheckConstraint> checkConstraintsCollection = checkConstraintsMap
+    final Collection<MutableTableConstraint> checkConstraintsCollection = checkConstraintsMap
       .values();
-    for (final MutableCheckConstraint checkConstraint: checkConstraintsCollection)
+    for (final MutableTableConstraint checkConstraint: checkConstraintsCollection)
     {
       final MutableTable table = (MutableTable) checkConstraint.getParent();
-      table.addCheckConstraint(checkConstraint);
+      table.addTableConstraint(checkConstraint);
     }
 
   }

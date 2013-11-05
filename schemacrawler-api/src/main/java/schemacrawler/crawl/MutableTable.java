@@ -28,7 +28,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import schemacrawler.schema.CheckConstraint;
+import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnReference;
@@ -67,7 +67,7 @@ class MutableTable
   private final NamedObjectList<MutableColumn> columns = new NamedObjectList<>();
   private final NamedObjectList<MutableForeignKey> foreignKeys = new NamedObjectList<>();
   private final NamedObjectList<MutableIndex> indices = new NamedObjectList<>();
-  private final NamedObjectList<MutableCheckConstraint> checkConstraints = new NamedObjectList<>();
+  private final NamedObjectList<MutableTableConstraint> constraints = new NamedObjectList<>();
   private final NamedObjectList<MutableTrigger> triggers = new NamedObjectList<>();
   private final NamedObjectList<MutablePrivilege<Table>> privileges = new NamedObjectList<>();
   private int sortIndex;
@@ -105,12 +105,12 @@ class MutableTable
   /**
    * {@inheritDoc}
    * 
-   * @see Table#getCheckConstraints()
+   * @see Table#getTableConstraints()
    */
   @Override
-  public Collection<CheckConstraint> getCheckConstraints()
+  public Collection<TableConstraint> getTableConstraints()
   {
-    return new ArrayList<CheckConstraint>(checkConstraints.values());
+    return new ArrayList<TableConstraint>(constraints.values());
   }
 
   /**
@@ -342,9 +342,9 @@ class MutableTable
     return getTableType();
   }
 
-  void addCheckConstraint(final MutableCheckConstraint checkConstraint)
+  void addTableConstraint(final MutableTableConstraint checkConstraint)
   {
-    checkConstraints.add(checkConstraint);
+    constraints.add(checkConstraint);
   }
 
   void addColumn(final MutableColumn column)

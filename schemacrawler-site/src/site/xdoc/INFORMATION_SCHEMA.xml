@@ -346,7 +346,7 @@ hsqldb.select.INFORMATION_SCHEMA.VIEWS=\
 					</tbody>
 				</table>
 			</subsection>
-			<subsection name="INFORMATION_SCHEMA.CHECK_CONSTRAINTS">
+			<subsection name="INFORMATION_SCHEMA.EXT_TABLE_CONSTRAINTS">
 				<table>
 					<thead>
 						<tr>
@@ -358,18 +358,18 @@ hsqldb.select.INFORMATION_SCHEMA.VIEWS=\
 						<tr>
 							<td>CONSTRAINT_CATALOG</td>
 							<td>
-								The name of the catalog containing the check constraint.
+								The name of the catalog containing the constraint.
 							</td>
 						</tr>
 						<tr>
 							<td>CONSTRAINT_SCHEMA</td>
 							<td>
-								The name of the schema containing the check constraint.
+								The name of the schema containing the constraint.
 							</td>
 						</tr>
 						<tr>
 							<td>CONSTRAINT_NAME</td>
-							<td>The name of the check constraint.</td>
+							<td>The name of the constraint.</td>
 						</tr>
 						<tr>
 							<td>CHECK_CLAUSE</td>

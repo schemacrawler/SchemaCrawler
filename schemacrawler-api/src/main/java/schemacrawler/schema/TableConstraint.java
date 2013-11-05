@@ -26,8 +26,9 @@ package schemacrawler.schema;
  * 
  * @author Sualeh Fatehi
  */
-public interface CheckConstraint
-  extends DependantObject<Table>, DefinedObject
+public interface TableConstraint
+  extends DependantObject<Table>, DefinedObject,
+  TypedObject<TableConstraintType>
 {
 
   /**
@@ -43,5 +44,12 @@ public interface CheckConstraint
    * @return Whether the constraint is initially deferred
    */
   boolean isInitiallyDeferred();
+
+  /**
+   * Gets the table constraint type.
+   * 
+   * @return Table constraint type
+   */
+  TableConstraintType getTableConstraintType();
 
 }

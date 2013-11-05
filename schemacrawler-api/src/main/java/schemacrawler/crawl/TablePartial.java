@@ -27,7 +27,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import schemacrawler.schema.CheckConstraint;
+import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Index;
@@ -60,7 +60,7 @@ final class TablePartial
   }
 
   @Override
-  public Collection<CheckConstraint> getCheckConstraints()
+  public Collection<TableConstraint> getTableConstraints()
   {
     throw new NotLoadedException();
   }

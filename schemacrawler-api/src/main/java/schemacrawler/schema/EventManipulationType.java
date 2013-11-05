@@ -22,7 +22,7 @@ package schemacrawler.schema;
 
 
 /**
- * Constraint type.
+ * Event manipulation type.
  */
 public enum EventManipulationType
 {
