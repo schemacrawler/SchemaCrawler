@@ -159,11 +159,6 @@ public final class SchemaInfoLevel
     return retrieveAdditionalTableAttributes;
   }
 
-  public boolean isRetrieveTableConstraintInformation()
-  {
-    return retrieveTableConstraintInformation;
-  }
-
   public boolean isRetrieveColumnDataTypes()
   {
     return retrieveColumnDataTypes;
@@ -229,6 +224,11 @@ public final class SchemaInfoLevel
     return retrieveTableColumns;
   }
 
+  public boolean isRetrieveTableConstraintInformation()
+  {
+    return retrieveTableConstraintInformation;
+  }
+
   public boolean isRetrieveTablePrivileges()
   {
     return retrieveTablePrivileges;
@@ -277,11 +277,6 @@ public final class SchemaInfoLevel
   public void setRetrieveAdditionalTableAttributes(final boolean retrieveAdditionalTableAttributes)
   {
     this.retrieveAdditionalTableAttributes = retrieveAdditionalTableAttributes;
-  }
-
-  public void setRetrieveTableConstraintInformation(final boolean retrieveTableConstraintInformation)
-  {
-    this.retrieveTableConstraintInformation = retrieveTableConstraintInformation;
   }
 
   public void setRetrieveColumnDataTypes(final boolean retrieveColumnDataTypes)
@@ -347,6 +342,11 @@ public final class SchemaInfoLevel
   public void setRetrieveTableColumns(final boolean retrieveTableColumns)
   {
     this.retrieveTableColumns = retrieveTableColumns;
+  }
+
+  public void setRetrieveTableConstraintInformation(final boolean retrieveTableConstraintInformation)
+  {
+    this.retrieveTableConstraintInformation = retrieveTableConstraintInformation;
   }
 
   public void setRetrieveTablePrivileges(final boolean retrieveTablePrivileges)

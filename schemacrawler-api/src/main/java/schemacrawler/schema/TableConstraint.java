@@ -32,6 +32,13 @@ public interface TableConstraint
 {
 
   /**
+   * Gets the table constraint type.
+   * 
+   * @return Table constraint type
+   */
+  TableConstraintType getTableConstraintType();
+
+  /**
    * Whether the constraint is deferrable.
    * 
    * @return Whether the constraint is deferrable
@@ -44,12 +51,5 @@ public interface TableConstraint
    * @return Whether the constraint is initially deferred
    */
   boolean isInitiallyDeferred();
-
-  /**
-   * Gets the table constraint type.
-   * 
-   * @return Table constraint type
-   */
-  TableConstraintType getTableConstraintType();
 
 }

@@ -34,13 +34,6 @@ public interface Table
 {
 
   /**
-   * Gets the constraints for the table.
-   * 
-   * @return Constraints for the table
-   */
-  Collection<TableConstraint> getTableConstraints();
-
-  /**
    * Gets a column by name.
    * 
    * @param name
@@ -146,6 +139,13 @@ public interface Table
    * @return Related tables.
    */
   Collection<Table> getRelatedTables(final TableRelationshipType tableRelationshipType);
+
+  /**
+   * Gets the constraints for the table.
+   * 
+   * @return Constraints for the table
+   */
+  Collection<TableConstraint> getTableConstraints();
 
   /**
    * Gets the table type.

@@ -36,7 +36,7 @@ class RoutinesReducer
   private final NamedObjectList<MutableRoutine> allRoutines;
 
   public RoutinesReducer(final SchemaCrawlerOptions options,
-                       final NamedObjectList<MutableRoutine> allRoutines)
+                         final NamedObjectList<MutableRoutine> allRoutines)
   {
     this.options = options;
     this.allRoutines = allRoutines;

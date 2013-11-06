@@ -27,7 +27,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Index;
@@ -35,6 +34,7 @@ import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
+import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.TableRelationshipType;
 import schemacrawler.schema.TableType;
 import schemacrawler.schema.Trigger;
@@ -57,12 +57,6 @@ final class TablePartial
   TablePartial(final Table table)
   {
     super(table.getSchema(), table.getName());
-  }
-
-  @Override
-  public Collection<TableConstraint> getTableConstraints()
-  {
-    throw new NotLoadedException();
   }
 
   @Override
@@ -167,6 +161,12 @@ final class TablePartial
 
   @Override
   public Collection<Table> getRelatedTables(final TableRelationshipType tableRelationshipType)
+  {
+    throw new NotLoadedException();
+  }
+
+  @Override
+  public Collection<TableConstraint> getTableConstraints()
   {
     throw new NotLoadedException();
   }

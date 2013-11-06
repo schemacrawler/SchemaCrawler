@@ -126,6 +126,16 @@ public final class InformationSchemaViews
   }
 
   /**
+   * Gets the index definitions SQL from the additional configuration.
+   * 
+   * @return Index definitions SQL.
+   */
+  public String getExtIndexesSql()
+  {
+    return informationSchemaQueries.get(KEY_INFORMATION_SCHEMA_EXT_INDEXES);
+  }
+
+  /**
    * Gets the table check constraints SQL from the additional
    * configuration.
    * 
@@ -135,16 +145,6 @@ public final class InformationSchemaViews
   {
     return informationSchemaQueries
       .get(KEY_INFORMATION_SCHEMA_EXT_TABLE_CONSTRAINTS);
-  }
-
-  /**
-   * Gets the index definitions SQL from the additional configuration.
-   * 
-   * @return Index definitions SQL.
-   */
-  public String getExtIndexesSql()
-  {
-    return informationSchemaQueries.get(KEY_INFORMATION_SCHEMA_EXT_INDEXES);
   }
 
   /**
@@ -306,6 +306,17 @@ public final class InformationSchemaViews
   }
 
   /**
+   * Sets the index definitions SQL.
+   * 
+   * @param sql
+   *        Index definitions SQL.
+   */
+  public void setExtIndexesSql(final String sql)
+  {
+    informationSchemaQueries.put(KEY_INFORMATION_SCHEMA_EXT_INDEXES, sql);
+  }
+
+  /**
    * Sets the table check constraints SQL.
    * 
    * @param sql
@@ -315,17 +326,6 @@ public final class InformationSchemaViews
   {
     informationSchemaQueries.put(KEY_INFORMATION_SCHEMA_EXT_TABLE_CONSTRAINTS,
                                  sql);
-  }
-
-  /**
-   * Sets the index definitions SQL.
-   * 
-   * @param sql
-   *        Index definitions SQL.
-   */
-  public void setExtIndexesSql(final String sql)
-  {
-    informationSchemaQueries.put(KEY_INFORMATION_SCHEMA_EXT_INDEXES, sql);
   }
 
   /**
