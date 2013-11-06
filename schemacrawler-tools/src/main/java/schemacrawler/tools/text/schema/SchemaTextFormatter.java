@@ -25,6 +25,7 @@ package schemacrawler.tools.text.schema;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Locale;
 
@@ -48,6 +49,7 @@ import schemacrawler.schema.RoutineColumn;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableConstraint;
+import schemacrawler.schema.TableConstraintType;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -550,7 +552,11 @@ final class SchemaTextFormatter
           .getValue().toLowerCase();
         final String definition = constraint.getDefinition();
 
-        if (options.isHideConstraintNames() && !constraint.hasDefinition())
+        // Show only check or unique constraints, or any constraint that
+        // has a definition
+        if (!(EnumSet.of(TableConstraintType.check, TableConstraintType.unique)
+          .contains(constraint.getTableConstraintType()) || constraint
+          .hasDefinition()))
         {
           continue;
         }
