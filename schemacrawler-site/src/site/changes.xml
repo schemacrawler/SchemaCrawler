@@ -5,6 +5,15 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+    <release version="10.7" date="2013-11-05">
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Providing richer information about table constraints. Renaming check constraints to table constraints.
+      ]]></action>  
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Worked abound ArrayIndexOutOfBoundsException in MySQL connector with connector 5.1.26 and server version 5.0.95.
+        See https://sourceforge.net/p/schemacrawler/patches/5/
+      ]]></action>                                                 
+    </release>    
     <release version="10.6" date="2013-10-30">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Changed InclusionRule to an interface, to allow custom implementations.
