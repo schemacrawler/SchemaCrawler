@@ -24,7 +24,6 @@ package schemacrawler.crawl;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -343,6 +342,9 @@ final class TableExRetriever
 
         tableConstraint.addAttributes(results.getAttributes());
 
+        // Add constraint to table
+        table.addTableConstraint(tableConstraint);
+
         // Add to map, since we will need this later
         final String constraintKey = table.getSchema().getFullName() + "."
                                      + constraintName;
@@ -359,8 +361,8 @@ final class TableExRetriever
 
     if (!informationSchemaViews.hasExtTableConstraintsSql())
     {
-      LOGGER
-        .log(Level.FINE, "Check constraints SQL statement was not provided");
+      LOGGER.log(Level.FINE,
+                 "Extended table constraints SQL statement was not provided");
       return;
     }
     final String extTableConstraintInformationSql = informationSchemaViews
@@ -400,15 +402,6 @@ final class TableExRetriever
     catch (final Exception e)
     {
       LOGGER.log(Level.WARNING, "Could not retrieve check constraints", e);
-    }
-
-    // Add check constraints to tables
-    final Collection<MutableTableConstraint> tableConstraintsCollection = tableConstraintsMap
-      .values();
-    for (final MutableTableConstraint tableConstraint: tableConstraintsCollection)
-    {
-      final MutableTable table = (MutableTable) tableConstraint.getParent();
-      table.addTableConstraint(tableConstraint);
     }
 
   }
