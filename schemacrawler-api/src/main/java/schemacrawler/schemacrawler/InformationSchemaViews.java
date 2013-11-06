@@ -142,7 +142,7 @@ public final class InformationSchemaViews
    * 
    * @return Index definitions SQL.
    */
-  public String getIndexesExtSql()
+  public String getExtIndexesSql()
   {
     return informationSchemaQueries.get(KEY_INFORMATION_SCHEMA_EXT_INDEXES);
   }
@@ -323,7 +323,7 @@ public final class InformationSchemaViews
    * @param sql
    *        Index definitions SQL.
    */
-  public void setIndexesExtSql(final String sql)
+  public void setExtIndexesSql(final String sql)
   {
     informationSchemaQueries.put(KEY_INFORMATION_SCHEMA_EXT_INDEXES, sql);
   }
