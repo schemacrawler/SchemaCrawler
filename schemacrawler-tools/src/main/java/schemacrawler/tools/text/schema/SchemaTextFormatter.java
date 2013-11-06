@@ -446,26 +446,6 @@ final class SchemaTextFormatter
     }
   }
 
-  private void printConstraints(final Collection<TableConstraint> constraints)
-  {
-    for (final TableConstraint constraint: constraints)
-    {
-      if (constraint != null)
-      {
-        String constraintName = "";
-        if (!options.isHideConstraintNames())
-        {
-          constraintName = constraint.getName();
-        }
-        final String constraintType = constraint.getTableConstraintType()
-          .getValue().toLowerCase();
-        printDefinition(constraintType + " constraint",
-                        constraintName,
-                        constraint.getDefinition());
-      }
-    }
-  }
-
   private void printColumnDataType(final ColumnDataType columnDataType)
   {
     final String databaseSpecificTypeName;
@@ -552,6 +532,43 @@ final class SchemaTextFormatter
                                                          .createArrow()
                                                        + fkColumnName,
                                                    ""));
+    }
+  }
+
+  private void printConstraints(final Collection<TableConstraint> constraints)
+  {
+    for (final TableConstraint constraint: constraints)
+    {
+      if (constraint != null)
+      {
+        String constraintName = "";
+        if (!options.isHideConstraintNames())
+        {
+          constraintName = constraint.getName();
+        }
+        final String constraintType = constraint.getTableConstraintType()
+          .getValue().toLowerCase();
+        final String definition = constraint.getDefinition();
+
+        if (options.isHideConstraintNames() && !constraint.hasDefinition())
+        {
+          continue;
+        }
+
+        if (constraint.hasDefinition())
+        {
+          printDefinition(constraintType + " constraint",
+                          constraintName,
+                          definition);
+        }
+        else
+        {
+          out.println(formattingHelper.createEmptyRow());
+          out.println(formattingHelper.createNameRow(constraintName,
+                                                     "[" + constraintType
+                                                         + " constraint]"));
+        }
+      }
     }
   }
 
