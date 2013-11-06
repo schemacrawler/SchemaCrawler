@@ -355,9 +355,9 @@ public final class SchemaCrawler
       final TablesReducer tableFiter = new TablesReducer(options, allTables);
       tableFiter.filter();
 
-      if (infoLevel.isRetrieveCheckConstraintInformation())
+      if (infoLevel.isRetrieveTableConstraintInformation())
       {
-        retrieverExtra.retrieveConstraintInformation();
+        retrieverExtra.retrieveTableConstraintInformation();
       }
       if (infoLevel.isRetrieveTriggerInformation())
       {
