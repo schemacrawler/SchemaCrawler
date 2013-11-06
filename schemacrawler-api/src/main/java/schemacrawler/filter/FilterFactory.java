@@ -27,18 +27,6 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 public class FilterFactory
 {
 
-  public static NamedObjectFilter<Table> grepTablesFilter(final SchemaCrawlerOptions options)
-  {
-    if (options != null)
-    {
-      return new TableGrepFilter(options);
-    }
-    else
-    {
-      return new PassthroughFilter<Table>();
-    }
-  }
-
   public static NamedObjectFilter<Routine> grepRoutinesFilter(final SchemaCrawlerOptions options)
   {
     if (options != null)
@@ -48,6 +36,18 @@ public class FilterFactory
     else
     {
       return new PassthroughFilter<Routine>();
+    }
+  }
+
+  public static NamedObjectFilter<Table> grepTablesFilter(final SchemaCrawlerOptions options)
+  {
+    if (options != null)
+    {
+      return new TableGrepFilter(options);
+    }
+    else
+    {
+      return new PassthroughFilter<Table>();
     }
   }
 

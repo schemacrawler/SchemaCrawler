@@ -22,7 +22,6 @@ package schemacrawler.utility;
 
 
 import schemacrawler.schema.Column;
-import schemacrawler.schema.JavaSqlType;
 
 /**
  * SchemaCrawler utility methods.

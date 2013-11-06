@@ -8,7 +8,7 @@ class PassthroughFilter<D extends DatabaseObject>
 {
 
   @Override
-  public boolean include(D databaseObject)
+  public boolean include(final D databaseObject)
   {
     return true;
   }

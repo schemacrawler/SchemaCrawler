@@ -54,7 +54,7 @@ public final class RegularExpressionRule
    *        Exclusion pattern. If null, excludes nothing.
    */
   public RegularExpressionRule(final Pattern patternInclude,
-                                        final Pattern patternExclude)
+                               final Pattern patternExclude)
   {
     final String ALL = ".*";
     final String NONE = "";
@@ -87,7 +87,7 @@ public final class RegularExpressionRule
    *        Exclusion pattern. If null, excludes nothing.
    */
   public RegularExpressionRule(final String patternInclude,
-                                        final String patternExclude)
+                               final String patternExclude)
   {
     this(patternInclude == null? null: Pattern.compile(patternInclude),
          patternExclude == null? null: Pattern.compile(patternExclude));
@@ -151,6 +151,7 @@ public final class RegularExpressionRule
    * 
    * @see schemacrawler.schemacrawler.InclusionRule#include(java.lang.String)
    */
+  @Override
   public boolean include(final String text)
   {
 

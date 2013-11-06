@@ -119,9 +119,9 @@ final class DatabaseInfoRetriever
   }
 
   private static ImmutableDatabaseProperty retrieveResultSetTypeProperty(final DatabaseMetaData dbMetaData,
-                                                                       final Method method,
-                                                                       final int resultSetType,
-                                                                       final String resultSetTypeName)
+                                                                         final Method method,
+                                                                         final int resultSetType,
+                                                                         final String resultSetTypeName)
     throws IllegalAccessException, InvocationTargetException
   {
     final String name = method.getName() + "For" + resultSetTypeName
@@ -177,8 +177,8 @@ final class DatabaseInfoRetriever
             value = ((String) value).split(",");
           }
           // Add to the properties map
-          dbProperties
-            .add(new ImmutableDatabaseProperty(method.getName(), value));
+          dbProperties.add(new ImmutableDatabaseProperty(method.getName(),
+                                                         value));
         }
         else if (isDatabasePropertiesResultSetMethod(method))
         {

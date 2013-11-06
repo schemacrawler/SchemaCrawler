@@ -46,12 +46,6 @@ class MutableTableConstraint
     definition = new StringBuilder();
   }
 
-  @Override
-  public boolean hasDefinition()
-  {
-    return definition.length() > 0;
-  }
-
   /**
    * {@inheritDoc}
    * 
@@ -78,6 +72,12 @@ class MutableTableConstraint
   public TableConstraintType getType()
   {
     return getTableConstraintType();
+  }
+
+  @Override
+  public boolean hasDefinition()
+  {
+    return definition.length() > 0;
   }
 
   /**
@@ -107,17 +107,17 @@ class MutableTableConstraint
     this.tableConstraintType = tableConstraintType;
   }
 
-  void setDeferrable(final boolean deferrable)
-  {
-    this.deferrable = deferrable;
-  }
-
   void appendDefinition(final String definition)
   {
     if (definition != null)
     {
       this.definition.append(definition);
     }
+  }
+
+  void setDeferrable(final boolean deferrable)
+  {
+    this.deferrable = deferrable;
   }
 
   void setInitiallyDeferred(final boolean initiallyDeferred)

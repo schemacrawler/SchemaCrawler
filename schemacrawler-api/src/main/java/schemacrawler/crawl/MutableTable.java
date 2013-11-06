@@ -28,7 +28,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnReference;
@@ -38,6 +37,7 @@ import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
+import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.TableRelationshipType;
 import schemacrawler.schema.TableType;
 import schemacrawler.schema.Trigger;
@@ -100,17 +100,6 @@ class MutableTable
     }
 
     return comparison;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see Table#getTableConstraints()
-   */
-  @Override
-  public Collection<TableConstraint> getTableConstraints()
-  {
-    return new ArrayList<TableConstraint>(constraints.values());
   }
 
   /**
@@ -301,6 +290,17 @@ class MutableTable
   /**
    * {@inheritDoc}
    * 
+   * @see Table#getTableConstraints()
+   */
+  @Override
+  public Collection<TableConstraint> getTableConstraints()
+  {
+    return new ArrayList<TableConstraint>(constraints.values());
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
    * @see Table#getTableType()
    */
   @Override
@@ -342,11 +342,6 @@ class MutableTable
     return getTableType();
   }
 
-  void addTableConstraint(final MutableTableConstraint tableConstraint)
-  {
-    constraints.add(tableConstraint);
-  }
-
   void addColumn(final MutableColumn column)
   {
     columns.add(column);
@@ -365,6 +360,11 @@ class MutableTable
   void addPrivilege(final MutablePrivilege<Table> privilege)
   {
     privileges.add(privilege);
+  }
+
+  void addTableConstraint(final MutableTableConstraint tableConstraint)
+  {
+    constraints.add(tableConstraint);
   }
 
   void addTrigger(final MutableTrigger trigger)
