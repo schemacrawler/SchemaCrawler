@@ -100,10 +100,10 @@ public class SchemaCrawlerDeepTest
       table1.addPrivilege((MutablePrivilege) privilege);
       table2.addPrivilege((MutablePrivilege) privilege);
     }
-    for (final TableConstraint checkConstraint: table0.getTableConstraints())
+    for (final TableConstraint tableConstraint: table0.getTableConstraints())
     {
-      table1.addTableConstraint((MutableTableConstraint) checkConstraint);
-      table2.addTableConstraint((MutableTableConstraint) checkConstraint);
+      table1.addTableConstraint((MutableTableConstraint) tableConstraint);
+      table2.addTableConstraint((MutableTableConstraint) tableConstraint);
     }
 
     assertFalse("Tables should not be equal", table1.equals(table2));

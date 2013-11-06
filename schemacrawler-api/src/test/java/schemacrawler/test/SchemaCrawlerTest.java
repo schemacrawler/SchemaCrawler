@@ -36,7 +36,6 @@ import java.util.TreeMap;
 
 import org.junit.Test;
 
-import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Database;
 import schemacrawler.schema.EventManipulationType;
@@ -45,6 +44,7 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
+import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.TableRelationshipType;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schema.View;
@@ -68,7 +68,7 @@ public class SchemaCrawlerTest
   private static final String METADATA_OUTPUT = "metadata/";
 
   @Test
-  public void checkConstraints()
+  public void tableConstraints()
     throws Exception
   {
     final TestWriter out = new TestWriter();
@@ -93,11 +93,11 @@ public class SchemaCrawlerTest
       for (final Table table: tables)
       {
         out.println("  table: " + table.getFullName());
-        final TableConstraint[] checkConstraints = table.getTableConstraints()
+        final TableConstraint[] tableConstraints = table.getTableConstraints()
           .toArray(new TableConstraint[0]);
-        for (final TableConstraint checkConstraint: checkConstraints)
+        for (final TableConstraint tableConstraint: tableConstraints)
         {
-          out.println("    constraint: " + checkConstraint.getName());
+          out.println("    constraint: " + tableConstraint.getName());
         }
       }
     }

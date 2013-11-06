@@ -199,7 +199,7 @@ final class TableExRetriever
   void retrieveTableConstraintInformation()
     throws SQLException
   {
-    final Map<String, MutableTableConstraint> checkConstraintsMap = new HashMap<>();
+    final Map<String, MutableTableConstraint> tableConstraintsMap = new HashMap<>();
 
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
       .getInformationSchemaViews();
@@ -247,19 +247,19 @@ final class TableExRetriever
         final boolean initiallyDeferred = results
           .getBoolean("INITIALLY_DEFERRED");
 
-        final MutableTableConstraint checkConstraint = new MutableTableConstraint(table,
+        final MutableTableConstraint tableConstraint = new MutableTableConstraint(table,
                                                                                   constraintName);
-        checkConstraint.setTableConstraintType(TableConstraintType
+        tableConstraint.setTableConstraintType(TableConstraintType
           .valueOfFromValue(constraintType));
-        checkConstraint.setDeferrable(deferrable);
-        checkConstraint.setInitiallyDeferred(initiallyDeferred);
+        tableConstraint.setDeferrable(deferrable);
+        tableConstraint.setInitiallyDeferred(initiallyDeferred);
 
-        checkConstraint.addAttributes(results.getAttributes());
+        tableConstraint.addAttributes(results.getAttributes());
 
         // Add to map, since we will need this later
         final String constraintKey = table.getSchema().getFullName() + "."
                                      + constraintName;
-        checkConstraintsMap.put(constraintKey, checkConstraint);
+        tableConstraintsMap.put(constraintKey, tableConstraint);
       }
     }
     catch (final Exception e)
@@ -276,12 +276,12 @@ final class TableExRetriever
         .log(Level.FINE, "Check constraints SQL statement was not provided");
       return;
     }
-    final String checkConstraintInformationSql = informationSchemaViews
+    final String extTableConstraintInformationSql = informationSchemaViews
       .getExtTableConstraintsSql();
 
     // Get check constraint definitions
     try (final Statement statement = connection.createStatement();
-        final MetadataResultSet results = new MetadataResultSet(statement.executeQuery(checkConstraintInformationSql));)
+        final MetadataResultSet results = new MetadataResultSet(statement.executeQuery(extTableConstraintInformationSql));)
     {
       while (results.next())
       {
@@ -299,15 +299,15 @@ final class TableExRetriever
                                                          schemaName)
                                      + "."
                                      + constraintName;
-        final MutableTableConstraint checkConstraint = checkConstraintsMap
+        final MutableTableConstraint tableConstraint = tableConstraintsMap
           .get(constraintKey);
-        if (checkConstraint == null)
+        if (tableConstraint == null)
         {
           LOGGER.log(Level.FINEST, "Could not add check constraint to table: "
                                    + constraintName);
           continue;
         }
-        checkConstraint.appendDefinition(definition);
+        tableConstraint.appendDefinition(definition);
       }
     }
     catch (final Exception e)
@@ -316,12 +316,12 @@ final class TableExRetriever
     }
 
     // Add check constraints to tables
-    final Collection<MutableTableConstraint> checkConstraintsCollection = checkConstraintsMap
+    final Collection<MutableTableConstraint> tableConstraintsCollection = tableConstraintsMap
       .values();
-    for (final MutableTableConstraint checkConstraint: checkConstraintsCollection)
+    for (final MutableTableConstraint tableConstraint: tableConstraintsCollection)
     {
-      final MutableTable table = (MutableTable) checkConstraint.getParent();
-      table.addTableConstraint(checkConstraint);
+      final MutableTable table = (MutableTable) tableConstraint.getParent();
+      table.addTableConstraint(tableConstraint);
     }
 
   }
@@ -464,12 +464,12 @@ final class TableExRetriever
                  "Indexes information SQL statement was not provided");
       return;
     }
-    final String indexesExtInformationSql = informationSchemaViews
-      .getIndexesExtSql();
+    final String extIndexesInformationSql = informationSchemaViews
+      .getExtIndexesSql();
 
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
-        final MetadataResultSet results = new MetadataResultSet(statement.executeQuery(indexesExtInformationSql));)
+        final MetadataResultSet results = new MetadataResultSet(statement.executeQuery(extIndexesInformationSql));)
     {
 
       while (results.next())

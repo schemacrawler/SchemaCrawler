@@ -342,9 +342,9 @@ class MutableTable
     return getTableType();
   }
 
-  void addTableConstraint(final MutableTableConstraint checkConstraint)
+  void addTableConstraint(final MutableTableConstraint tableConstraint)
   {
-    constraints.add(checkConstraint);
+    constraints.add(tableConstraint);
   }
 
   void addColumn(final MutableColumn column)
