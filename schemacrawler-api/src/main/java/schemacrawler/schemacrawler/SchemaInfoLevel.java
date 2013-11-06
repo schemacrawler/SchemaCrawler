@@ -42,7 +42,7 @@ public final class SchemaInfoLevel
     final SchemaInfoLevel detailed = standard();
     detailed.setRetrieveUserDefinedColumnDataTypes(true);
     detailed.setRetrieveRoutineInformation(true);
-    detailed.setRetrieveCheckConstraintInformation(true);
+    detailed.setRetrieveTableConstraintInformation(true);
     detailed.setRetrieveTriggerInformation(true);
     detailed.setRetrieveViewInformation(true);
     detailed.setRetrieveIndexInformation(true);
@@ -116,7 +116,7 @@ public final class SchemaInfoLevel
   private boolean retrieveUserDefinedColumnDataTypes;
   private boolean retrieveRoutineColumns;
   private boolean retrieveRoutineInformation;
-  private boolean retrieveCheckConstraintInformation;
+  private boolean retrieveTableConstraintInformation;
   private boolean retrieveViewInformation;
   private boolean retrieveIndexInformation;
   private boolean retrieveForeignKeys;
@@ -159,9 +159,9 @@ public final class SchemaInfoLevel
     return retrieveAdditionalTableAttributes;
   }
 
-  public boolean isRetrieveCheckConstraintInformation()
+  public boolean isRetrieveTableConstraintInformation()
   {
-    return retrieveCheckConstraintInformation;
+    return retrieveTableConstraintInformation;
   }
 
   public boolean isRetrieveColumnDataTypes()
@@ -279,9 +279,9 @@ public final class SchemaInfoLevel
     this.retrieveAdditionalTableAttributes = retrieveAdditionalTableAttributes;
   }
 
-  public void setRetrieveCheckConstraintInformation(final boolean retrieveCheckConstraintInformation)
+  public void setRetrieveTableConstraintInformation(final boolean retrieveTableConstraintInformation)
   {
-    this.retrieveCheckConstraintInformation = retrieveCheckConstraintInformation;
+    this.retrieveTableConstraintInformation = retrieveTableConstraintInformation;
   }
 
   public void setRetrieveColumnDataTypes(final boolean retrieveColumnDataTypes)

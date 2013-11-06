@@ -190,13 +190,13 @@ final class TableExRetriever
   }
 
   /**
-   * Retrieves a check constraint information from the database, in the
+   * Retrieves table constraint information from the database, in the
    * INFORMATION_SCHEMA format.
    * 
    * @throws SQLException
    *         On a SQL exception
    */
-  void retrieveConstraintInformation()
+  void retrieveTableConstraintInformation()
     throws SQLException
   {
     final Map<String, MutableTableConstraint> checkConstraintsMap = new HashMap<>();
