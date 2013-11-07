@@ -36,7 +36,6 @@ UTF-8: ¥ · £ · € · $ · ¢ · ₡ · ₢ · ₣ · ₤ · ₥ · ₦ · �
  - PUBLIC.FOR_LINT.EXTRA_PK.PUBLICATIONID
 - PUBLIC.FOR_LINT."Global Counts"
  - PUBLIC.FOR_LINT."Global Counts"."Global Count"
-- PUBLIC.FOR_LINT.No_Columns
 - PUBLIC.FOR_LINT.PUBLICATIONS
  - PUBLIC.FOR_LINT.PUBLICATIONS.ID
  - PUBLIC.FOR_LINT.PUBLICATIONS.TITLE

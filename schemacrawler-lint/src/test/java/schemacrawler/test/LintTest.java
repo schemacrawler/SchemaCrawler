@@ -61,13 +61,13 @@ public class LintTest
     assertEquals(1, database.getSchemas().size());
     final Schema schema = database.getSchema("PUBLIC.FOR_LINT");
     assertNotNull("FOR_LINT schema not found", schema);
-    assertEquals("FOR_LINT tables not found", 5, database.getTables(schema)
+    assertEquals("FOR_LINT tables not found", 4, database.getTables(schema)
       .size());
 
     final LintedDatabase lintedDatabase = new LintedDatabase(database,
                                                              new LinterConfigs());
     final LintCollector lintCollector = lintedDatabase.getCollector();
-    assertEquals(25, lintCollector.size());
+    assertEquals(23, lintCollector.size());
 
     final File testOutputFile = File.createTempFile("schemacrawler.lints.",
                                                     ".test");

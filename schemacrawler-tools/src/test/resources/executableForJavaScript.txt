@@ -44,7 +44,6 @@ o--> EXTRA_PK
      o--> PUBLICATIONID
 o--> "Global Counts"
      o--> "Global Count"
-o--> No_Columns
 o--> PUBLICATIONS
      o--> ID
      o--> TITLE

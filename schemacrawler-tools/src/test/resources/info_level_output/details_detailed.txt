@@ -417,22 +417,22 @@ FK_PUBLICATION_JOIN                        [foreign key, with no action]
 FK_WRITER_JOIN                             [foreign key, with no action]
   PUBLIC.FOR_LINT.WRITERS.ID --> WRITERID                              
 
-SYS_IDX_PK_EXTRA_PK_10174                                 [unique index]
+SYS_IDX_PK_EXTRA_PK_10173                                 [unique index]
   ID                                ascending                   
 
-SYS_IDX_10180                                         [non-unique index]
+SYS_IDX_10179                                         [non-unique index]
   PUBLICATIONID                     ascending                   
 
-SYS_IDX_10178                                         [non-unique index]
+SYS_IDX_10177                                         [non-unique index]
   WRITERID                          ascending                   
 
-SYS_CT_10171                                          [check constraint]
+SYS_CT_10170                                          [check constraint]
 FOR_LINT.EXTRA_PK.ID IS NOT NULL
 
-SYS_CT_10172                                          [check constraint]
+SYS_CT_10171                                          [check constraint]
 FOR_LINT.EXTRA_PK.WRITERID IS NOT NULL
 
-SYS_CT_10173                                          [check constraint]
+SYS_CT_10172                                          [check constraint]
 FOR_LINT.EXTRA_PK.PUBLICATIONID IS NOT NULL
 
 
@@ -522,7 +522,7 @@ FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
 SYS_IDX_PK_WRITERS_10153                                  [unique index]
   ID                                ascending                   
 
-SYS_IDX_10182                                         [non-unique index]
+SYS_IDX_10181                                         [non-unique index]
   PUBLICATION_ID                    ascending                   
 
 IDX_A1_WRITERS                                        [non-unique index]

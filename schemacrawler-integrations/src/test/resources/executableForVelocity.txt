@@ -66,11 +66,6 @@ CREATE TABLE "Global Counts"
   "Global Count" INTEGER
 );
 
-CREATE TABLE No_Columns
-(
-
-);
-
 CREATE TABLE PUBLICATIONS
 (
   ID INTEGER NOT NULL,
