@@ -105,25 +105,6 @@
       "type": "table"
     },
     {
-      "name": "No_Columns",
-      "lints": [
-        {
-          "id": "schemacrawler.tools.linter.LinterTableWithNoIndices",
-          "description": "no indices",
-          "value": "true",
-          "severity": "medium"
-        },
-        {
-          "id": "schemacrawler.tools.linter.LinterTableWithSingleColumn",
-          "description": "single column",
-          "value": "true",
-          "severity": "medium"
-        }
-      ],
-      "fullName": "PUBLIC.FOR_LINT.No_Columns",
-      "type": "table"
-    },
-    {
       "name": "PUBLICATIONS",
       "lints": [
         {
