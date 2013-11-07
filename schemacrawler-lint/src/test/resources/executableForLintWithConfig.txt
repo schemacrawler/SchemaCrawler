@@ -17,7 +17,7 @@ Database Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
 database product name                     HSQL Database Engine          
-database product version                  2.2.9                         
+database product version                  2.3.0                         
 database user name                        SA                            
 
 
@@ -25,7 +25,7 @@ JDBC Driver Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
 driver name                               HSQL Database Engine Driver   
-driver version                            2.2.9                         
+driver version                            2.3.0                         
 driver class name                         org.hsqldb.jdbc.JDBCDriver    
 url                                       jdbc:hsqldb:hsql://localhost/schemacrawler
 is JDBC compliant                         true                          
@@ -47,15 +47,6 @@ PUBLIC.BOOKS."Global Counts"
 
 
 PUBLIC.FOR_LINT."Global Counts"
-------------------------------------------------------------------------
-                                                                 [table]
-
-                                                          [lint, medium]
-	single column	
-
-
-
-PUBLIC.FOR_LINT.No_Columns
 ------------------------------------------------------------------------
                                                                  [table]
 

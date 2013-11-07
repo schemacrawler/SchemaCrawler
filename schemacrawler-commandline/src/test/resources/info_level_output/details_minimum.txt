@@ -91,12 +91,6 @@ PUBLIC.FOR_LINT."Global Counts"
 
 
 
-PUBLIC.FOR_LINT.No_Columns
-------------------------------------------------------------------------
-                                                                 [table]
-
-
-
 PUBLIC.FOR_LINT.PUBLICATIONS
 ------------------------------------------------------------------------
                                                                  [table]

@@ -157,21 +157,6 @@
       [
         "PUBLIC",
         "FOR_LINT",
-        "No_Columns",
-        "TABLE",
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        "MEMORY",
-        false,
-        null
-      ],
-      [
-        "PUBLIC",
-        "FOR_LINT",
         "PUBLICATIONS",
         "TABLE",
         null,

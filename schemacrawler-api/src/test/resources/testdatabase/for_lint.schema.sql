@@ -45,11 +45,6 @@ CREATE TABLE "Global Counts"
 )
 ;
 
-CREATE TABLE "No_Columns"
-(
-)
-;
-
 CREATE TABLE EXTRA_PK
 (
   Id INTEGER NOT NULL,

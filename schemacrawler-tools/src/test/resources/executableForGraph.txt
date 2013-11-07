@@ -224,14 +224,6 @@ digraph SchemaCrawler_Diagram {
         </tr>
       </table>
     >];
-	no_columns_1899a78f [label=<
-      <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white">
-        <tr>
-          <td colspan="2" bgcolor="#BFFA96" align="left"><b>PUBLIC.FOR_LINT.No_Columns</b></td>
-          <td bgcolor="#BFFA96" align="right">[table]</td>
-        </tr>
-      </table>
-    >];
 	publications_949377f7 [label=<
       <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white">
         <tr>

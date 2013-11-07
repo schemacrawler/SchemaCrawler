@@ -107,7 +107,7 @@ FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
 SYS_IDX_PK_WRITERS_10153                                  [unique index]
   ID                                ascending                   
 
-SYS_IDX_10182                                         [non-unique index]
+SYS_IDX_10181                                         [non-unique index]
   PUBLICATION_ID                    ascending                   
 
 IDX_A1_WRITERS                                        [non-unique index]
