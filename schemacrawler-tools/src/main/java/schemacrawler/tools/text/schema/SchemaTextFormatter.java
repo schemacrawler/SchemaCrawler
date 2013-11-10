@@ -49,6 +49,7 @@ import schemacrawler.schema.RoutineColumn;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableConstraint;
+import schemacrawler.schema.TableConstraintColumn;
 import schemacrawler.schema.TableConstraintType;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schema.View;
@@ -537,20 +538,25 @@ final class SchemaTextFormatter
     }
   }
 
-  private void printConstraints(final Collection<TableConstraint> constraints)
+  private void printConstraints(final Collection<TableConstraint> constraintsCollection)
   {
+    final List<TableConstraint> constraints = new ArrayList<>(constraintsCollection);
+    Collections.sort(constraints, NamedObjectSort.getNamedObjectSort(options
+      .isAlphabeticalSortForIndexes()));
+
     for (final TableConstraint constraint: constraints)
     {
       if (constraint != null)
       {
+        out.println(formattingHelper.createEmptyRow());
+
         String constraintName = "";
-        if (!options.isHideConstraintNames())
+        if (!options.isHideTableConstraintNames())
         {
           constraintName = constraint.getName();
         }
         final String constraintType = constraint.getTableConstraintType()
           .getValue().toLowerCase();
-        final String definition = constraint.getDefinition();
 
         // Show only check or unique constraints, or any constraint that
         // has a definition
@@ -561,19 +567,17 @@ final class SchemaTextFormatter
           continue;
         }
 
+        final String constraintDetails = "[" + constraintType + " constraint]";
+        out.println(formattingHelper.createNameRow(constraintName,
+                                                   constraintDetails));
+        printTableColumns(constraint.getColumns());
+
         if (constraint.hasDefinition())
         {
-          printDefinition(constraintType + " constraint",
-                          constraintName,
-                          definition);
+          out.println(formattingHelper.createDefinitionRow(constraint
+            .getDefinition()));
         }
-        else
-        {
-          out.println(formattingHelper.createEmptyRow());
-          out.println(formattingHelper.createNameRow(constraintName,
-                                                     "[" + constraintType
-                                                         + " constraint]"));
-        }
+
       }
     }
   }
@@ -797,6 +801,10 @@ final class SchemaTextFormatter
       if (column instanceof IndexColumn)
       {
         columnDetails = ((IndexColumn) column).getSortSequence().name();
+      }
+      else if (column instanceof TableConstraintColumn)
+      {
+        columnDetails = "";
       }
       else
       {

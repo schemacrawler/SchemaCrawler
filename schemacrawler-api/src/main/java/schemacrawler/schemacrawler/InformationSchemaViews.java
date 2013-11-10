@@ -42,8 +42,9 @@ public final class InformationSchemaViews
   private static final String KEY_INFORMATION_SCHEMA_VIEWS = "select.INFORMATION_SCHEMA.VIEWS";
   private static final String KEY_INFORMATION_SCHEMA_TRIGGERS = "select.INFORMATION_SCHEMA.TRIGGERS";
   private static final String KEY_INFORMATION_SCHEMA_TABLE_CONSTRAINTS = "select.INFORMATION_SCHEMA.TABLE_CONSTRAINTS";
-  private static final String KEY_INFORMATION_SCHEMA_ROUTINES = "select.INFORMATION_SCHEMA.ROUTINES";
+  private static final String KEY_INFORMATION_SCHEMA_CONSTRAINT_COLUMN_USAGE = "select.INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE";
   private static final String KEY_INFORMATION_SCHEMA_EXT_TABLE_CONSTRAINTS = "select.INFORMATION_SCHEMA.EXT_TABLE_CONSTRAINTS";
+  private static final String KEY_INFORMATION_SCHEMA_ROUTINES = "select.INFORMATION_SCHEMA.ROUTINES";
   private static final String KEY_INFORMATION_SCHEMA_SCHEMATA = "select.INFORMATION_SCHEMA.SCHEMATA";
   private static final String KEY_INFORMATION_SCHEMA_EXT_SYNONYMS = "select.INFORMATION_SCHEMA.EXT_SYNONYMS";
   private static final String KEY_INFORMATION_SCHEMA_EXT_INDEXES = "select.INFORMATION_SCHEMA.EXT_INDEXES";
@@ -76,8 +77,9 @@ public final class InformationSchemaViews
           KEY_INFORMATION_SCHEMA_VIEWS,
           KEY_INFORMATION_SCHEMA_TRIGGERS,
           KEY_INFORMATION_SCHEMA_TABLE_CONSTRAINTS,
-          KEY_INFORMATION_SCHEMA_ROUTINES,
+          KEY_INFORMATION_SCHEMA_CONSTRAINT_COLUMN_USAGE,
           KEY_INFORMATION_SCHEMA_EXT_TABLE_CONSTRAINTS,
+          KEY_INFORMATION_SCHEMA_ROUTINES,
           KEY_INFORMATION_SCHEMA_SCHEMATA,
           KEY_INFORMATION_SCHEMA_EXT_SYNONYMS,
           KEY_INFORMATION_SCHEMA_EXT_INDEXES,
@@ -189,6 +191,18 @@ public final class InformationSchemaViews
   }
 
   /**
+   * Gets the table constraints columns SQL from the additional
+   * configuration.
+   * 
+   * @return Table constraints columns SQL.
+   */
+  public String getTableConstraintsColumnsSql()
+  {
+    return informationSchemaQueries
+      .get(KEY_INFORMATION_SCHEMA_CONSTRAINT_COLUMN_USAGE);
+  }
+
+  /**
    * Gets the table constraints SQL from the additional configuration.
    * 
    * @return Table constraints SQL.
@@ -264,6 +278,12 @@ public final class InformationSchemaViews
   {
     return informationSchemaQueries
       .containsKey(KEY_INFORMATION_SCHEMA_EXT_SYNONYMS);
+  }
+
+  public boolean hasTableConstraintsColumnsSql()
+  {
+    return informationSchemaQueries
+      .containsKey(KEY_INFORMATION_SCHEMA_CONSTRAINT_COLUMN_USAGE);
   }
 
   public boolean hasTableConstraintsSql()
@@ -371,6 +391,18 @@ public final class InformationSchemaViews
   public void setSynonymSql(final String sql)
   {
     informationSchemaQueries.put(KEY_INFORMATION_SCHEMA_EXT_SYNONYMS, sql);
+  }
+
+  /**
+   * Sets the table constraints columns SQL.
+   * 
+   * @param sql
+   *        Table constraints columns SQL.
+   */
+  public void setTableConstraintsColumnsSql(final String sql)
+  {
+    informationSchemaQueries
+      .put(KEY_INFORMATION_SCHEMA_CONSTRAINT_COLUMN_USAGE, sql);
   }
 
   /**

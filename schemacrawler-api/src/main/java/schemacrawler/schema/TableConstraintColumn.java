@@ -17,48 +17,25 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-
 package schemacrawler.schema;
 
 
-import java.util.List;
-
-/**
- * Represents a table constraint.
- * 
- * @author Sualeh Fatehi
- */
-public interface TableConstraint
-  extends DependantObject<Table>, TypedObject<TableConstraintType>,
-  DefinedObject
+public interface TableConstraintColumn
+  extends Column
 {
 
   /**
-   * Gets the list of columns in ordinal order.
+   * Gets the table constraint this column belongs to.
    * 
-   * @return Columns of the table constraint.
+   * @return Table constraint
    */
-  List<TableConstraintColumn> getColumns();
+  TableConstraint getTableConstraint();
 
   /**
-   * Gets the table constraint type.
+   * Ordinal position of the column, in the table constraint.
    * 
-   * @return Table constraint type
+   * @return Ordinal position
    */
-  TableConstraintType getTableConstraintType();
-
-  /**
-   * Whether the constraint is deferrable.
-   * 
-   * @return Whether the constraint is deferrable
-   */
-  boolean isDeferrable();
-
-  /**
-   * Whether the constraint is initially deferred.
-   * 
-   * @return Whether the constraint is initially deferred
-   */
-  boolean isInitiallyDeferred();
+  int getTableConstraintOrdinalPosition();
 
 }

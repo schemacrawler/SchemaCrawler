@@ -47,6 +47,8 @@ import schemacrawler.schema.RoutineColumn;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableConstraint;
+import schemacrawler.schema.TableConstraintColumn;
+import schemacrawler.schema.TableConstraintType;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -289,7 +291,6 @@ final class SchemaJsonFormatter
 
         final JSONArray jsonIndices = new JSONArray();
         jsonTable.put("indices", jsonIndices);
-
         final Collection<Index> indicesCollection = table.getIndices();
         final List<Index> indices = new ArrayList<>(indicesCollection);
         Collections.sort(indices, NamedObjectSort.getNamedObjectSort(options
@@ -310,23 +311,16 @@ final class SchemaJsonFormatter
 
         jsonTable.put("triggers", handleTriggers(table.getTriggers()));
 
-        for (final TableConstraint constraint: table.getTableConstraints())
+        final JSONArray jsonTableConstraints = new JSONArray();
+        jsonTable.put("tableConstraints", jsonTableConstraints);
+        final Collection<TableConstraint> tableConstraintsCollection = table
+          .getTableConstraints();
+        final List<TableConstraint> tableConstraints = new ArrayList<>(tableConstraintsCollection);
+        Collections.sort(tableConstraints, NamedObjectSort
+          .getNamedObjectSort(options.isAlphabeticalSortForIndexes()));
+        for (final TableConstraint tableConstraint: tableConstraints)
         {
-          if (constraint != null)
-          {
-            final JSONObject jsonConsraint = new JSONObject();
-            jsonTable.accumulate("constraints", jsonConsraint);
-            if (!options.isHideConstraintNames())
-            {
-              jsonConsraint.put("name", constraint.getName());
-            }
-            jsonConsraint.put("tableConstraintType", constraint
-              .getTableConstraintType().getValue().toLowerCase());
-            if (constraint.hasDefinition())
-            {
-              jsonConsraint.put("definition", constraint.getDefinition());
-            }
-          }
+          jsonTableConstraints.put(handleTableConstraint(tableConstraint));
         }
 
         if (isVerbose)
@@ -547,6 +541,51 @@ final class SchemaJsonFormatter
     }
 
     return jsonIndex;
+  }
+
+  private JSONObject handleTableConstraint(final TableConstraint tableConstraint)
+  {
+
+    final JSONObject jsonTableConstraint = new JSONObject();
+
+    if (tableConstraint == null)
+    {
+      return jsonTableConstraint;
+    }
+
+    try
+    {
+      if (!options.isHideTableConstraintNames())
+      {
+        jsonTableConstraint.put("name", tableConstraint.getName());
+      }
+
+      final TableConstraintType tableConstraintType = tableConstraint
+        .getTableConstraintType();
+      if (tableConstraintType != TableConstraintType.unknown)
+      {
+        jsonTableConstraint.put("type", tableConstraintType.toString());
+      }
+
+      for (final TableConstraintColumn tableConstraintColumn: tableConstraint
+        .getColumns())
+      {
+        jsonTableConstraint
+          .accumulate("columns", handleTableColumn(tableConstraintColumn));
+      }
+      if (tableConstraint.hasDefinition())
+      {
+        jsonTableConstraint.put("definition", tableConstraint.getDefinition());
+      }
+    }
+    catch (final JSONException e)
+    {
+      LOGGER.log(Level.FINER,
+                 "Error outputting TableConstraint: " + e.getMessage(),
+                 e);
+    }
+
+    return jsonTableConstraint;
   }
 
   private JSONObject handleRoutineColumn(final RoutineColumn<?> column)

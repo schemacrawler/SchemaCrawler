@@ -133,7 +133,7 @@ public class SchemaTextOptions
    * 
    * @return Hide constraint names.
    */
-  public boolean isHideConstraintNames()
+  public boolean isHideTableConstraintNames()
   {
     return getBooleanValue(HIDE_CONSTRAINT_NAMES);
   }
