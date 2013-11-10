@@ -44,7 +44,7 @@ public interface Index
   /**
    * Gets the list of columns in ordinal order.
    * 
-   * @return Columns of the table.
+   * @return Columns of the index.
    */
   List<IndexColumn> getColumns();
 

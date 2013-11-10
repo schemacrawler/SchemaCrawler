@@ -21,8 +21,12 @@
 package schemacrawler.crawl;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableConstraint;
+import schemacrawler.schema.TableConstraintColumn;
 import schemacrawler.schema.TableConstraintType;
 
 /**
@@ -35,10 +39,27 @@ class MutableTableConstraint
 
   private static final long serialVersionUID = 1155277343302693656L;
 
+  private final NamedObjectList<MutableTableConstraintColumn> columns = new NamedObjectList<>();
   private TableConstraintType tableConstraintType;
   private boolean deferrable;
   private boolean initiallyDeferred;
   private final StringBuilder definition;
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see TableConstraint#getColumns()
+   */
+  @Override
+  public List<TableConstraintColumn> getColumns()
+  {
+    return new ArrayList<TableConstraintColumn>(columns.values());
+  }
+
+  void addColumn(final MutableTableConstraintColumn column)
+  {
+    columns.add(column);
+  }
 
   MutableTableConstraint(final Table parent, final String name)
   {
