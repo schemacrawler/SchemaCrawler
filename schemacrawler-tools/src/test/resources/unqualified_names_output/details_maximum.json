@@ -3,6 +3,32 @@
   "tables": [
     {
       "weakAssociations": [],
+      "tableConstraints": [
+        {
+          "definition": "BOOKS.AUTHORS.STATE=UPPER(BOOKS.AUTHORS.STATE)",
+          "name": "CHECK_UPPERCASE_STATE",
+          "type": "check"
+        },
+        {
+          "name": "PK_AUTHORS",
+          "type": "primary_key"
+        },
+        {
+          "definition": "BOOKS.AUTHORS.ID IS NOT NULL",
+          "name": "SYS_CT_10095",
+          "type": "check"
+        },
+        {
+          "definition": "BOOKS.AUTHORS.FIRSTNAME IS NOT NULL",
+          "name": "SYS_CT_10096",
+          "type": "check"
+        },
+        {
+          "definition": "BOOKS.AUTHORS.LASTNAME IS NOT NULL",
+          "name": "SYS_CT_10097",
+          "type": "check"
+        }
+      ],
       "foreignKeys": [{
         "updateRule": "no action",
         "columnReferences": [{
@@ -21,32 +47,6 @@
         }
       },
       "name": "AUTHORS",
-      "constraints": [
-        {
-          "definition": "BOOKS.AUTHORS.STATE=UPPER(BOOKS.AUTHORS.STATE)",
-          "tableConstraintType": "check",
-          "name": "CHECK_UPPERCASE_STATE"
-        },
-        {
-          "tableConstraintType": "primary key",
-          "name": "PK_AUTHORS"
-        },
-        {
-          "definition": "BOOKS.AUTHORS.ID IS NOT NULL",
-          "tableConstraintType": "check",
-          "name": "SYS_CT_10095"
-        },
-        {
-          "definition": "BOOKS.AUTHORS.FIRSTNAME IS NOT NULL",
-          "tableConstraintType": "check",
-          "name": "SYS_CT_10096"
-        },
-        {
-          "definition": "BOOKS.AUTHORS.LASTNAME IS NOT NULL",
-          "tableConstraintType": "check",
-          "name": "SYS_CT_10097"
-        }
-      ],
       "columns": [
         {
           "dataType": "INTEGER",
@@ -249,6 +249,7 @@
     {
       "weakAssociations": [],
       "definition": "SELECT ID,FIRSTNAME,LASTNAME FROM BOOKS.AUTHORS",
+      "tableConstraints": [],
       "foreignKeys": [],
       "primaryKey": {},
       "name": "AUTHORSLIST",
@@ -341,6 +342,26 @@
     },
     {
       "weakAssociations": [],
+      "tableConstraints": [
+        {
+          "name": "FK_Y_BOOK",
+          "type": "foreign_key"
+        },
+        {
+          "name": "FK_Z_AUTHOR",
+          "type": "foreign_key"
+        },
+        {
+          "definition": "BOOKS.BOOKAUTHORS.BOOKID IS NOT NULL",
+          "name": "SYS_CT_10110",
+          "type": "check"
+        },
+        {
+          "definition": "BOOKS.BOOKAUTHORS.AUTHORID IS NOT NULL",
+          "name": "SYS_CT_10111",
+          "type": "check"
+        }
+      ],
       "foreignKeys": [
         {
           "updateRule": "no action",
@@ -363,26 +384,6 @@
       ],
       "primaryKey": {},
       "name": "BOOKAUTHORS",
-      "constraints": [
-        {
-          "tableConstraintType": "foreign key",
-          "name": "FK_Y_BOOK"
-        },
-        {
-          "tableConstraintType": "foreign key",
-          "name": "FK_Z_AUTHOR"
-        },
-        {
-          "definition": "BOOKS.BOOKAUTHORS.BOOKID IS NOT NULL",
-          "tableConstraintType": "check",
-          "name": "SYS_CT_10110"
-        },
-        {
-          "definition": "BOOKS.BOOKAUTHORS.AUTHORID IS NOT NULL",
-          "tableConstraintType": "check",
-          "name": "SYS_CT_10111"
-        }
-      ],
       "columns": [
         {
           "dataType": "INTEGER",
@@ -512,6 +513,27 @@
           "fkColumn": "BOOKS.PUBLISHERID"
         }
       ],
+      "tableConstraints": [
+        {
+          "name": "PK_BOOKS",
+          "type": "primary_key"
+        },
+        {
+          "definition": "BOOKS.BOOKS.ID IS NOT NULL",
+          "name": "SYS_CT_10103",
+          "type": "check"
+        },
+        {
+          "definition": "BOOKS.BOOKS.TITLE IS NOT NULL",
+          "name": "SYS_CT_10104",
+          "type": "check"
+        },
+        {
+          "definition": "BOOKS.BOOKS.PUBLISHERID IS NOT NULL",
+          "name": "SYS_CT_10105",
+          "type": "check"
+        }
+      ],
       "foreignKeys": [{
         "updateRule": "no action",
         "columnReferences": [{
@@ -530,27 +552,6 @@
         }
       },
       "name": "BOOKS",
-      "constraints": [
-        {
-          "tableConstraintType": "primary key",
-          "name": "PK_BOOKS"
-        },
-        {
-          "definition": "BOOKS.BOOKS.ID IS NOT NULL",
-          "tableConstraintType": "check",
-          "name": "SYS_CT_10103"
-        },
-        {
-          "definition": "BOOKS.BOOKS.TITLE IS NOT NULL",
-          "tableConstraintType": "check",
-          "name": "SYS_CT_10104"
-        },
-        {
-          "definition": "BOOKS.BOOKS.PUBLISHERID IS NOT NULL",
-          "tableConstraintType": "check",
-          "name": "SYS_CT_10105"
-        }
-      ],
       "columns": [
         {
           "dataType": "INTEGER",
@@ -677,6 +678,7 @@
     },
     {
       "weakAssociations": [],
+      "tableConstraints": [],
       "foreignKeys": [],
       "primaryKey": {},
       "name": "\"Global Counts\"",
@@ -750,6 +752,17 @@
         "pkColumn": "PUBLISHERS.ID",
         "fkColumn": "BOOKS.PUBLISHERID"
       }],
+      "tableConstraints": [
+        {
+          "name": "PK_PUBLISHERS",
+          "type": "primary_key"
+        },
+        {
+          "definition": "BOOKS.PUBLISHERS.ID IS NOT NULL",
+          "name": "SYS_CT_10092",
+          "type": "check"
+        }
+      ],
       "foreignKeys": [],
       "primaryKey": {
         "unique": true,
@@ -760,17 +773,6 @@
         }
       },
       "name": "PUBLISHERS",
-      "constraints": [
-        {
-          "tableConstraintType": "primary key",
-          "name": "PK_PUBLISHERS"
-        },
-        {
-          "definition": "BOOKS.PUBLISHERS.ID IS NOT NULL",
-          "tableConstraintType": "check",
-          "name": "SYS_CT_10092"
-        }
-      ],
       "columns": [
         {
           "dataType": "INTEGER",
@@ -857,6 +859,35 @@
     },
     {
       "weakAssociations": [],
+      "tableConstraints": [
+        {
+          "name": "FK_PUBLICATION_JOIN",
+          "type": "foreign_key"
+        },
+        {
+          "name": "FK_WRITER_JOIN",
+          "type": "foreign_key"
+        },
+        {
+          "name": "PK_EXTRA_PK",
+          "type": "primary_key"
+        },
+        {
+          "definition": "FOR_LINT.EXTRA_PK.ID IS NOT NULL",
+          "name": "SYS_CT_10170",
+          "type": "check"
+        },
+        {
+          "definition": "FOR_LINT.EXTRA_PK.WRITERID IS NOT NULL",
+          "name": "SYS_CT_10171",
+          "type": "check"
+        },
+        {
+          "definition": "FOR_LINT.EXTRA_PK.PUBLICATIONID IS NOT NULL",
+          "name": "SYS_CT_10172",
+          "type": "check"
+        }
+      ],
       "foreignKeys": [
         {
           "updateRule": "no action",
@@ -886,35 +917,6 @@
         }
       },
       "name": "EXTRA_PK",
-      "constraints": [
-        {
-          "tableConstraintType": "foreign key",
-          "name": "FK_PUBLICATION_JOIN"
-        },
-        {
-          "tableConstraintType": "foreign key",
-          "name": "FK_WRITER_JOIN"
-        },
-        {
-          "tableConstraintType": "primary key",
-          "name": "PK_EXTRA_PK"
-        },
-        {
-          "definition": "FOR_LINT.EXTRA_PK.ID IS NOT NULL",
-          "tableConstraintType": "check",
-          "name": "SYS_CT_10170"
-        },
-        {
-          "definition": "FOR_LINT.EXTRA_PK.WRITERID IS NOT NULL",
-          "tableConstraintType": "check",
-          "name": "SYS_CT_10171"
-        },
-        {
-          "definition": "FOR_LINT.EXTRA_PK.PUBLICATIONID IS NOT NULL",
-          "tableConstraintType": "check",
-          "name": "SYS_CT_10172"
-        }
-      ],
       "columns": [
         {
           "dataType": "INTEGER",
@@ -1029,6 +1031,7 @@
     },
     {
       "weakAssociations": [],
+      "tableConstraints": [],
       "foreignKeys": [],
       "primaryKey": {},
       "name": "\"Global Counts\"",
@@ -1099,6 +1102,31 @@
     },
     {
       "weakAssociations": [],
+      "tableConstraints": [
+        {
+          "name": "FK_PUBLICATIONS_WRITER",
+          "type": "foreign_key"
+        },
+        {
+          "name": "PK_PUBLICATIONS",
+          "type": "primary_key"
+        },
+        {
+          "definition": "FOR_LINT.PUBLICATIONS.ID IS NOT NULL",
+          "name": "SYS_CT_10160",
+          "type": "check"
+        },
+        {
+          "definition": "FOR_LINT.PUBLICATIONS.TITLE IS NOT NULL",
+          "name": "SYS_CT_10161",
+          "type": "check"
+        },
+        {
+          "definition": "FOR_LINT.PUBLICATIONS.WRITERID IS NOT NULL",
+          "name": "SYS_CT_10162",
+          "type": "check"
+        }
+      ],
       "foreignKeys": [
         {
           "updateRule": "no action",
@@ -1137,31 +1165,6 @@
         }
       },
       "name": "PUBLICATIONS",
-      "constraints": [
-        {
-          "tableConstraintType": "foreign key",
-          "name": "FK_PUBLICATIONS_WRITER"
-        },
-        {
-          "tableConstraintType": "primary key",
-          "name": "PK_PUBLICATIONS"
-        },
-        {
-          "definition": "FOR_LINT.PUBLICATIONS.ID IS NOT NULL",
-          "tableConstraintType": "check",
-          "name": "SYS_CT_10160"
-        },
-        {
-          "definition": "FOR_LINT.PUBLICATIONS.TITLE IS NOT NULL",
-          "tableConstraintType": "check",
-          "name": "SYS_CT_10161"
-        },
-        {
-          "definition": "FOR_LINT.PUBLICATIONS.WRITERID IS NOT NULL",
-          "tableConstraintType": "check",
-          "name": "SYS_CT_10162"
-        }
-      ],
       "columns": [
         {
           "dataType": "INTEGER",
@@ -1318,6 +1321,46 @@
     },
     {
       "weakAssociations": [],
+      "tableConstraints": [
+        {
+          "definition": "FOR_LINT.WRITERS.STATE=UPPER(FOR_LINT.WRITERS.STATE)",
+          "name": "CHECK_UPPERCASE_STATE",
+          "type": "check"
+        },
+        {
+          "name": "FK_WRITERS_PUBLICATION",
+          "type": "foreign_key"
+        },
+        {
+          "name": "PK_WRITERS",
+          "type": "primary_key"
+        },
+        {
+          "definition": "FOR_LINT.WRITERS.ID IS NOT NULL",
+          "name": "SYS_CT_10148",
+          "type": "check"
+        },
+        {
+          "definition": "FOR_LINT.WRITERS.FIRSTNAME IS NOT NULL",
+          "name": "SYS_CT_10149",
+          "type": "check"
+        },
+        {
+          "definition": "FOR_LINT.WRITERS.LASTNAME IS NOT NULL",
+          "name": "SYS_CT_10150",
+          "type": "check"
+        },
+        {
+          "definition": "FOR_LINT.WRITERS.ADDRESS2 IS NOT NULL",
+          "name": "SYS_CT_10151",
+          "type": "check"
+        },
+        {
+          "definition": "FOR_LINT.WRITERS.PUBLICATION_ID IS NOT NULL",
+          "name": "SYS_CT_10152",
+          "type": "check"
+        }
+      ],
       "foreignKeys": [
         {
           "updateRule": "no action",
@@ -1356,46 +1399,6 @@
         }
       },
       "name": "WRITERS",
-      "constraints": [
-        {
-          "definition": "FOR_LINT.WRITERS.STATE=UPPER(FOR_LINT.WRITERS.STATE)",
-          "tableConstraintType": "check",
-          "name": "CHECK_UPPERCASE_STATE"
-        },
-        {
-          "tableConstraintType": "foreign key",
-          "name": "FK_WRITERS_PUBLICATION"
-        },
-        {
-          "tableConstraintType": "primary key",
-          "name": "PK_WRITERS"
-        },
-        {
-          "definition": "FOR_LINT.WRITERS.ID IS NOT NULL",
-          "tableConstraintType": "check",
-          "name": "SYS_CT_10148"
-        },
-        {
-          "definition": "FOR_LINT.WRITERS.FIRSTNAME IS NOT NULL",
-          "tableConstraintType": "check",
-          "name": "SYS_CT_10149"
-        },
-        {
-          "definition": "FOR_LINT.WRITERS.LASTNAME IS NOT NULL",
-          "tableConstraintType": "check",
-          "name": "SYS_CT_10150"
-        },
-        {
-          "definition": "FOR_LINT.WRITERS.ADDRESS2 IS NOT NULL",
-          "tableConstraintType": "check",
-          "name": "SYS_CT_10151"
-        },
-        {
-          "definition": "FOR_LINT.WRITERS.PUBLICATION_ID IS NOT NULL",
-          "tableConstraintType": "check",
-          "name": "SYS_CT_10152"
-        }
-      ],
       "columns": [
         {
           "dataType": "BIGINT",
@@ -1716,6 +1719,32 @@
     },
     {
       "weakAssociations": [],
+      "tableConstraints": [
+        {
+          "name": "PK_CUSTOMERS",
+          "type": "primary_key"
+        },
+        {
+          "definition": "\"PUBLISHER SALES\".REGIONS.CITY IS NOT NULL",
+          "name": "SYS_CT_10132",
+          "type": "check"
+        },
+        {
+          "definition": "\"PUBLISHER SALES\".REGIONS.STATE IS NOT NULL",
+          "name": "SYS_CT_10133",
+          "type": "check"
+        },
+        {
+          "definition": "\"PUBLISHER SALES\".REGIONS.POSTALCODE IS NOT NULL",
+          "name": "SYS_CT_10134",
+          "type": "check"
+        },
+        {
+          "definition": "\"PUBLISHER SALES\".REGIONS.COUNTRY IS NOT NULL",
+          "name": "SYS_CT_10135",
+          "type": "check"
+        }
+      ],
       "foreignKeys": [{
         "updateRule": "no action",
         "columnReferences": [
@@ -1746,32 +1775,6 @@
         ]
       },
       "name": "REGIONS",
-      "constraints": [
-        {
-          "tableConstraintType": "primary key",
-          "name": "PK_CUSTOMERS"
-        },
-        {
-          "definition": "\"PUBLISHER SALES\".REGIONS.CITY IS NOT NULL",
-          "tableConstraintType": "check",
-          "name": "SYS_CT_10132"
-        },
-        {
-          "definition": "\"PUBLISHER SALES\".REGIONS.STATE IS NOT NULL",
-          "tableConstraintType": "check",
-          "name": "SYS_CT_10133"
-        },
-        {
-          "definition": "\"PUBLISHER SALES\".REGIONS.POSTALCODE IS NOT NULL",
-          "tableConstraintType": "check",
-          "name": "SYS_CT_10134"
-        },
-        {
-          "definition": "\"PUBLISHER SALES\".REGIONS.COUNTRY IS NOT NULL",
-          "tableConstraintType": "check",
-          "name": "SYS_CT_10135"
-        }
-      ],
       "columns": [
         {
           "dataType": "VARCHAR",
@@ -1887,6 +1890,22 @@
         "pkColumn": "BOOKS.ID",
         "fkColumn": "SALES.BOOKID"
       }],
+      "tableConstraints": [
+        {
+          "name": "FK_SALES_REGIONS",
+          "type": "foreign_key"
+        },
+        {
+          "definition": "\"PUBLISHER SALES\".SALES.POSTALCODE IS NOT NULL",
+          "name": "SYS_CT_10141",
+          "type": "check"
+        },
+        {
+          "definition": "\"PUBLISHER SALES\".SALES.COUNTRY IS NOT NULL",
+          "name": "SYS_CT_10142",
+          "type": "check"
+        }
+      ],
       "foreignKeys": [{
         "updateRule": "no action",
         "columnReferences": [
@@ -1904,22 +1923,6 @@
       }],
       "primaryKey": {},
       "name": "SALES",
-      "constraints": [
-        {
-          "tableConstraintType": "foreign key",
-          "name": "FK_SALES_REGIONS"
-        },
-        {
-          "definition": "\"PUBLISHER SALES\".SALES.POSTALCODE IS NOT NULL",
-          "tableConstraintType": "check",
-          "name": "SYS_CT_10141"
-        },
-        {
-          "definition": "\"PUBLISHER SALES\".SALES.COUNTRY IS NOT NULL",
-          "tableConstraintType": "check",
-          "name": "SYS_CT_10142"
-        }
-      ],
       "columns": [
         {
           "dataType": "VARCHAR",

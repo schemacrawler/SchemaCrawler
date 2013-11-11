@@ -3,6 +3,25 @@
   "tables": [
     {
       "weakAssociations": [],
+      "tableConstraints": [
+        {
+          "definition": "BOOKS.AUTHORS.STATE=UPPER(BOOKS.AUTHORS.STATE)",
+          "type": "check"
+        },
+        {"type": "primary_key"},
+        {
+          "definition": "BOOKS.AUTHORS.ID IS NOT NULL",
+          "type": "check"
+        },
+        {
+          "definition": "BOOKS.AUTHORS.FIRSTNAME IS NOT NULL",
+          "type": "check"
+        },
+        {
+          "definition": "BOOKS.AUTHORS.LASTNAME IS NOT NULL",
+          "type": "check"
+        }
+      ],
       "foreignKeys": [{
         "updateRule": "no action",
         "columnReferences": [{
@@ -19,25 +38,6 @@
         }
       },
       "name": "AUTHORS",
-      "constraints": [
-        {
-          "definition": "BOOKS.AUTHORS.STATE=UPPER(BOOKS.AUTHORS.STATE)",
-          "tableConstraintType": "check"
-        },
-        {"tableConstraintType": "primary key"},
-        {
-          "definition": "BOOKS.AUTHORS.ID IS NOT NULL",
-          "tableConstraintType": "check"
-        },
-        {
-          "definition": "BOOKS.AUTHORS.FIRSTNAME IS NOT NULL",
-          "tableConstraintType": "check"
-        },
-        {
-          "definition": "BOOKS.AUTHORS.LASTNAME IS NOT NULL",
-          "tableConstraintType": "check"
-        }
-      ],
       "columns": [
         {
           "dataType": "INTEGER",
@@ -238,6 +238,7 @@
     {
       "weakAssociations": [],
       "definition": "SELECT ID,FIRSTNAME,LASTNAME FROM BOOKS.AUTHORS",
+      "tableConstraints": [],
       "foreignKeys": [],
       "primaryKey": {},
       "name": "AUTHORSLIST",
@@ -331,6 +332,18 @@
     },
     {
       "weakAssociations": [],
+      "tableConstraints": [
+        {"type": "foreign_key"},
+        {"type": "foreign_key"},
+        {
+          "definition": "BOOKS.BOOKAUTHORS.BOOKID IS NOT NULL",
+          "type": "check"
+        },
+        {
+          "definition": "BOOKS.BOOKAUTHORS.AUTHORID IS NOT NULL",
+          "type": "check"
+        }
+      ],
       "foreignKeys": [
         {
           "updateRule": "no action",
@@ -351,18 +364,6 @@
       ],
       "primaryKey": {},
       "name": "BOOKAUTHORS",
-      "constraints": [
-        {"tableConstraintType": "foreign key"},
-        {"tableConstraintType": "foreign key"},
-        {
-          "definition": "BOOKS.BOOKAUTHORS.BOOKID IS NOT NULL",
-          "tableConstraintType": "check"
-        },
-        {
-          "definition": "BOOKS.BOOKAUTHORS.AUTHORID IS NOT NULL",
-          "tableConstraintType": "check"
-        }
-      ],
       "columns": [
         {
           "dataType": "INTEGER",
@@ -490,6 +491,21 @@
           "fkColumn": "PUBLIC.BOOKS.BOOKS.PUBLISHERID"
         }
       ],
+      "tableConstraints": [
+        {"type": "primary_key"},
+        {
+          "definition": "BOOKS.BOOKS.ID IS NOT NULL",
+          "type": "check"
+        },
+        {
+          "definition": "BOOKS.BOOKS.TITLE IS NOT NULL",
+          "type": "check"
+        },
+        {
+          "definition": "BOOKS.BOOKS.PUBLISHERID IS NOT NULL",
+          "type": "check"
+        }
+      ],
       "foreignKeys": [{
         "updateRule": "no action",
         "columnReferences": [{
@@ -506,21 +522,6 @@
         }
       },
       "name": "BOOKS",
-      "constraints": [
-        {"tableConstraintType": "primary key"},
-        {
-          "definition": "BOOKS.BOOKS.ID IS NOT NULL",
-          "tableConstraintType": "check"
-        },
-        {
-          "definition": "BOOKS.BOOKS.TITLE IS NOT NULL",
-          "tableConstraintType": "check"
-        },
-        {
-          "definition": "BOOKS.BOOKS.PUBLISHERID IS NOT NULL",
-          "tableConstraintType": "check"
-        }
-      ],
       "columns": [
         {
           "dataType": "INTEGER",
@@ -647,6 +648,7 @@
     },
     {
       "weakAssociations": [],
+      "tableConstraints": [],
       "foreignKeys": [],
       "primaryKey": {},
       "name": "\"Global Counts\"",
@@ -721,6 +723,13 @@
         "pkColumn": "PUBLIC.BOOKS.PUBLISHERS.ID",
         "fkColumn": "PUBLIC.BOOKS.BOOKS.PUBLISHERID"
       }],
+      "tableConstraints": [
+        {"type": "primary_key"},
+        {
+          "definition": "BOOKS.PUBLISHERS.ID IS NOT NULL",
+          "type": "check"
+        }
+      ],
       "foreignKeys": [],
       "primaryKey": {
         "unique": true,
@@ -730,13 +739,6 @@
         }
       },
       "name": "PUBLISHERS",
-      "constraints": [
-        {"tableConstraintType": "primary key"},
-        {
-          "definition": "BOOKS.PUBLISHERS.ID IS NOT NULL",
-          "tableConstraintType": "check"
-        }
-      ],
       "columns": [
         {
           "dataType": "INTEGER",
@@ -823,6 +825,23 @@
     },
     {
       "weakAssociations": [],
+      "tableConstraints": [
+        {"type": "foreign_key"},
+        {"type": "foreign_key"},
+        {"type": "primary_key"},
+        {
+          "definition": "FOR_LINT.EXTRA_PK.ID IS NOT NULL",
+          "type": "check"
+        },
+        {
+          "definition": "FOR_LINT.EXTRA_PK.WRITERID IS NOT NULL",
+          "type": "check"
+        },
+        {
+          "definition": "FOR_LINT.EXTRA_PK.PUBLICATIONID IS NOT NULL",
+          "type": "check"
+        }
+      ],
       "foreignKeys": [
         {
           "updateRule": "no action",
@@ -849,23 +868,6 @@
         }
       },
       "name": "EXTRA_PK",
-      "constraints": [
-        {"tableConstraintType": "foreign key"},
-        {"tableConstraintType": "foreign key"},
-        {"tableConstraintType": "primary key"},
-        {
-          "definition": "FOR_LINT.EXTRA_PK.ID IS NOT NULL",
-          "tableConstraintType": "check"
-        },
-        {
-          "definition": "FOR_LINT.EXTRA_PK.WRITERID IS NOT NULL",
-          "tableConstraintType": "check"
-        },
-        {
-          "definition": "FOR_LINT.EXTRA_PK.PUBLICATIONID IS NOT NULL",
-          "tableConstraintType": "check"
-        }
-      ],
       "columns": [
         {
           "dataType": "INTEGER",
@@ -978,6 +980,7 @@
     },
     {
       "weakAssociations": [],
+      "tableConstraints": [],
       "foreignKeys": [],
       "primaryKey": {},
       "name": "\"Global Counts\"",
@@ -1049,6 +1052,22 @@
     },
     {
       "weakAssociations": [],
+      "tableConstraints": [
+        {"type": "foreign_key"},
+        {"type": "primary_key"},
+        {
+          "definition": "FOR_LINT.PUBLICATIONS.ID IS NOT NULL",
+          "type": "check"
+        },
+        {
+          "definition": "FOR_LINT.PUBLICATIONS.TITLE IS NOT NULL",
+          "type": "check"
+        },
+        {
+          "definition": "FOR_LINT.PUBLICATIONS.WRITERID IS NOT NULL",
+          "type": "check"
+        }
+      ],
       "foreignKeys": [
         {
           "updateRule": "no action",
@@ -1083,22 +1102,6 @@
         }
       },
       "name": "PUBLICATIONS",
-      "constraints": [
-        {"tableConstraintType": "foreign key"},
-        {"tableConstraintType": "primary key"},
-        {
-          "definition": "FOR_LINT.PUBLICATIONS.ID IS NOT NULL",
-          "tableConstraintType": "check"
-        },
-        {
-          "definition": "FOR_LINT.PUBLICATIONS.TITLE IS NOT NULL",
-          "tableConstraintType": "check"
-        },
-        {
-          "definition": "FOR_LINT.PUBLICATIONS.WRITERID IS NOT NULL",
-          "tableConstraintType": "check"
-        }
-      ],
       "columns": [
         {
           "dataType": "INTEGER",
@@ -1254,6 +1257,34 @@
     },
     {
       "weakAssociations": [],
+      "tableConstraints": [
+        {
+          "definition": "FOR_LINT.WRITERS.STATE=UPPER(FOR_LINT.WRITERS.STATE)",
+          "type": "check"
+        },
+        {"type": "foreign_key"},
+        {"type": "primary_key"},
+        {
+          "definition": "FOR_LINT.WRITERS.ID IS NOT NULL",
+          "type": "check"
+        },
+        {
+          "definition": "FOR_LINT.WRITERS.FIRSTNAME IS NOT NULL",
+          "type": "check"
+        },
+        {
+          "definition": "FOR_LINT.WRITERS.LASTNAME IS NOT NULL",
+          "type": "check"
+        },
+        {
+          "definition": "FOR_LINT.WRITERS.ADDRESS2 IS NOT NULL",
+          "type": "check"
+        },
+        {
+          "definition": "FOR_LINT.WRITERS.PUBLICATION_ID IS NOT NULL",
+          "type": "check"
+        }
+      ],
       "foreignKeys": [
         {
           "updateRule": "no action",
@@ -1288,34 +1319,6 @@
         }
       },
       "name": "WRITERS",
-      "constraints": [
-        {
-          "definition": "FOR_LINT.WRITERS.STATE=UPPER(FOR_LINT.WRITERS.STATE)",
-          "tableConstraintType": "check"
-        },
-        {"tableConstraintType": "foreign key"},
-        {"tableConstraintType": "primary key"},
-        {
-          "definition": "FOR_LINT.WRITERS.ID IS NOT NULL",
-          "tableConstraintType": "check"
-        },
-        {
-          "definition": "FOR_LINT.WRITERS.FIRSTNAME IS NOT NULL",
-          "tableConstraintType": "check"
-        },
-        {
-          "definition": "FOR_LINT.WRITERS.LASTNAME IS NOT NULL",
-          "tableConstraintType": "check"
-        },
-        {
-          "definition": "FOR_LINT.WRITERS.ADDRESS2 IS NOT NULL",
-          "tableConstraintType": "check"
-        },
-        {
-          "definition": "FOR_LINT.WRITERS.PUBLICATION_ID IS NOT NULL",
-          "tableConstraintType": "check"
-        }
-      ],
       "columns": [
         {
           "dataType": "BIGINT",
@@ -1631,6 +1634,25 @@
     },
     {
       "weakAssociations": [],
+      "tableConstraints": [
+        {"type": "primary_key"},
+        {
+          "definition": "\"PUBLISHER SALES\".REGIONS.CITY IS NOT NULL",
+          "type": "check"
+        },
+        {
+          "definition": "\"PUBLISHER SALES\".REGIONS.STATE IS NOT NULL",
+          "type": "check"
+        },
+        {
+          "definition": "\"PUBLISHER SALES\".REGIONS.POSTALCODE IS NOT NULL",
+          "type": "check"
+        },
+        {
+          "definition": "\"PUBLISHER SALES\".REGIONS.COUNTRY IS NOT NULL",
+          "type": "check"
+        }
+      ],
       "foreignKeys": [{
         "updateRule": "no action",
         "columnReferences": [
@@ -1659,25 +1681,6 @@
         ]
       },
       "name": "REGIONS",
-      "constraints": [
-        {"tableConstraintType": "primary key"},
-        {
-          "definition": "\"PUBLISHER SALES\".REGIONS.CITY IS NOT NULL",
-          "tableConstraintType": "check"
-        },
-        {
-          "definition": "\"PUBLISHER SALES\".REGIONS.STATE IS NOT NULL",
-          "tableConstraintType": "check"
-        },
-        {
-          "definition": "\"PUBLISHER SALES\".REGIONS.POSTALCODE IS NOT NULL",
-          "tableConstraintType": "check"
-        },
-        {
-          "definition": "\"PUBLISHER SALES\".REGIONS.COUNTRY IS NOT NULL",
-          "tableConstraintType": "check"
-        }
-      ],
       "columns": [
         {
           "dataType": "VARCHAR",
@@ -1793,6 +1796,17 @@
         "pkColumn": "PUBLIC.BOOKS.BOOKS.ID",
         "fkColumn": "PUBLIC.\"PUBLISHER SALES\".SALES.BOOKID"
       }],
+      "tableConstraints": [
+        {"type": "foreign_key"},
+        {
+          "definition": "\"PUBLISHER SALES\".SALES.POSTALCODE IS NOT NULL",
+          "type": "check"
+        },
+        {
+          "definition": "\"PUBLISHER SALES\".SALES.COUNTRY IS NOT NULL",
+          "type": "check"
+        }
+      ],
       "foreignKeys": [{
         "updateRule": "no action",
         "columnReferences": [
@@ -1809,17 +1823,6 @@
       }],
       "primaryKey": {},
       "name": "SALES",
-      "constraints": [
-        {"tableConstraintType": "foreign key"},
-        {
-          "definition": "\"PUBLISHER SALES\".SALES.POSTALCODE IS NOT NULL",
-          "tableConstraintType": "check"
-        },
-        {
-          "definition": "\"PUBLISHER SALES\".SALES.COUNTRY IS NOT NULL",
-          "tableConstraintType": "check"
-        }
-      ],
       "columns": [
         {
           "dataType": "VARCHAR",

@@ -283,7 +283,7 @@ final class SchemaTextFormatter
         printDefinition(view);
       }
       printTriggers(table.getTriggers());
-      printConstraints(table.getTableConstraints());
+      printTableConstraints(table.getTableConstraints());
       if (isVerbose)
       {
         printPrivileges(table.getPrivileges());
@@ -538,50 +538,6 @@ final class SchemaTextFormatter
     }
   }
 
-  private void printConstraints(final Collection<TableConstraint> constraintsCollection)
-  {
-    final List<TableConstraint> constraints = new ArrayList<>(constraintsCollection);
-    Collections.sort(constraints, NamedObjectSort.getNamedObjectSort(options
-      .isAlphabeticalSortForIndexes()));
-
-    for (final TableConstraint constraint: constraints)
-    {
-      if (constraint != null)
-      {
-        out.println(formattingHelper.createEmptyRow());
-
-        String constraintName = "";
-        if (!options.isHideTableConstraintNames())
-        {
-          constraintName = constraint.getName();
-        }
-        final String constraintType = constraint.getTableConstraintType()
-          .getValue().toLowerCase();
-
-        // Show only check or unique constraints, or any constraint that
-        // has a definition
-        if (!(EnumSet.of(TableConstraintType.check, TableConstraintType.unique)
-          .contains(constraint.getTableConstraintType()) || constraint
-          .hasDefinition()))
-        {
-          continue;
-        }
-
-        final String constraintDetails = "[" + constraintType + " constraint]";
-        out.println(formattingHelper.createNameRow(constraintName,
-                                                   constraintDetails));
-        printTableColumns(constraint.getColumns());
-
-        if (constraint.hasDefinition())
-        {
-          out.println(formattingHelper.createDefinitionRow(constraint
-            .getDefinition()));
-        }
-
-      }
-    }
-  }
-
   private void printDefinition(final DefinedObject definedObject)
   {
     if (definedObject == null || !definedObject.hasDefinition())
@@ -827,6 +783,48 @@ final class SchemaTextFormatter
       out.println(formattingHelper.createDetailRow(ordinalNumberString,
                                                    columnName,
                                                    columnDetails));
+    }
+  }
+
+  private void printTableConstraints(final Collection<TableConstraint> constraintsCollection)
+  {
+    final List<TableConstraint> constraints = new ArrayList<>(constraintsCollection);
+    Collections.sort(constraints, NamedObjectSort.getNamedObjectSort(options
+      .isAlphabeticalSortForIndexes()));
+
+    for (final TableConstraint constraint: constraints)
+    {
+      if (constraint != null)
+      {
+        String constraintName = "";
+        if (!options.isHideTableConstraintNames())
+        {
+          constraintName = constraint.getName();
+        }
+        final String constraintType = constraint.getTableConstraintType()
+          .getValue().toLowerCase();
+
+        // Show only check or unique constraints, or any constraint that
+        // has a definition
+        if (!(EnumSet.of(TableConstraintType.check, TableConstraintType.unique)
+          .contains(constraint.getTableConstraintType()) || constraint
+          .hasDefinition()))
+        {
+          continue;
+        }
+        final String constraintDetails = "[" + constraintType + " constraint]";
+        out.println(formattingHelper.createEmptyRow());
+        out.println(formattingHelper.createNameRow(constraintName,
+                                                   constraintDetails));
+        printTableColumns(constraint.getColumns());
+
+        if (constraint.hasDefinition())
+        {
+          out.println(formattingHelper.createDefinitionRow(constraint
+            .getDefinition()));
+        }
+
+      }
     }
   }
 
