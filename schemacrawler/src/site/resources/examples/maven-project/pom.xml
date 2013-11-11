@@ -21,7 +21,7 @@
 		<dependency>
 			<groupId>net.sourceforge.schemacrawler</groupId>
 			<artifactId>schemacrawler</artifactId>
-			<version>10.7</version>
+			<version>10.8</version>
 		</dependency>
 	</dependencies>
 </project>
