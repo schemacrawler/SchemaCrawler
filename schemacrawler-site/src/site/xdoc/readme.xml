@@ -72,7 +72,7 @@
   <dependency>
     <groupId>net.sourceforge.schemacrawler</groupId>
     <artifactId>schemacrawler</artifactId>
-    <version>10.8</version>
+    <version>10.08.01</version>
   </dependency>
 </dependencies>
         ]]></source>
