@@ -346,6 +346,10 @@ final class MetadataResultSet
         {
           value = null;
         }
+        else
+        {
+          value = value.trim();
+        }
       }
       catch (final SQLException e)
       {
