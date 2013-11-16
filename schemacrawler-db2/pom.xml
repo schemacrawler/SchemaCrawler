@@ -27,7 +27,7 @@
     <dependency>
       <groupId>db2</groupId>
       <artifactId>db2-jdbc</artifactId>
-      <version>3.50.152</version>
+      <version>4.17.28</version>
       <scope>provided</scope>
     </dependency>
   </dependencies>
