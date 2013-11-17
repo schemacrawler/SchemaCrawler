@@ -5,6 +5,11 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+    <release version="10.08.01" date="2013-11-17">
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Trim all table names, to allow Informix to match correctly.
+      ]]></action>                                                 
+    </release>    
     <release version="10.8" date="2013-11-10">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Providing richer information about table constraints, including details of constrained columns.
