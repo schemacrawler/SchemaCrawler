@@ -346,7 +346,8 @@ final class MetadataResultSet
         {
           value = null;
         }
-        else
+
+        if (value != null)
         {
           value = value.trim();
         }
