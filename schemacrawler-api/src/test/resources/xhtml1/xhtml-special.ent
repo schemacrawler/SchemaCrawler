@@ -54,7 +54,7 @@
 <!ENTITY zwj     "&#8205;"> <!-- zero width joiner, U+200D NEW RFC 2070 -->
 <!ENTITY lrm     "&#8206;"> <!-- left-to-right mark, U+200E NEW RFC 2070 -->
 <!ENTITY rlm     "&#8207;"> <!-- right-to-left mark, U+200F NEW RFC 2070 -->
-<!ENTITY ndash   "&#8211;"> <!-- en dash, U+2013 ISOpub -->
+<!ENTITY ndash   "&#8211;"> <!-- en dash, U+2014 ISOpub -->
 <!ENTITY mdash   "&#8212;"> <!-- em dash, U+2014 ISOpub -->
 <!ENTITY lsquo   "&#8216;"> <!-- left single quotation mark,
                                     U+2018 ISOnum -->
