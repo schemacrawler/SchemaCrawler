@@ -31,7 +31,8 @@ public final class ApiExample
     // time taken to crawl the schema
     options.setSchemaInfoLevel(SchemaInfoLevel.standard());
     options.setRoutineInclusionRule(new ExcludeAll());
-    options.setSchemaInclusionRule(new RegularExpressionInclusionRule("PUBLIC.BOOKS"));
+    options
+      .setSchemaInclusionRule(new RegularExpressionInclusionRule("PUBLIC.BOOKS"));
 
     // Get the schema definition
     final Database database = SchemaCrawlerUtility.getDatabase(connection,
@@ -54,8 +55,8 @@ public final class ApiExample
 
         for (final Column column: table.getColumns())
         {
-          System.out.println("     o--> " + column + " (" + column.getColumnDataType()
-                             + ")");
+          System.out.println("     o--> " + column + " ("
+                             + column.getColumnDataType() + ")");
         }
       }
     }

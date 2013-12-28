@@ -42,12 +42,8 @@ public abstract class AbstractSchemaCrawlerSystemTest
 
   protected final ApplicationContext appContext = new ClassPathXmlApplicationContext("datasources.xml");
   protected final String[] dataSources = {
-      "MicrosoftSQLServer",
-      "Oracle",
-      "IBM_DB2",
-      "MySQL",
-      "PostgreSQL",
-      // "Derby",
+      "MicrosoftSQLServer", "Oracle", "IBM_DB2", "MySQL", "PostgreSQL",
+  // "Derby",
   };
 
   @Test
@@ -91,8 +87,8 @@ public abstract class AbstractSchemaCrawlerSystemTest
     final Config config = (Config) appContext.getBean(dataSourceName
                                                       + ".properties");
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
-    schemaCrawlerOptions
-      .setSchemaInfoLevel(InfoLevel.maximum.getSchemaInfoLevel());
+    schemaCrawlerOptions.setSchemaInfoLevel(InfoLevel.maximum
+      .getSchemaInfoLevel());
     if (schemaInclusion != null)
     {
       schemaCrawlerOptions
@@ -117,7 +113,5 @@ public abstract class AbstractSchemaCrawlerSystemTest
       throw new SchemaCrawlerException(dataSourceName, e);
     }
   }
-
-
 
 }

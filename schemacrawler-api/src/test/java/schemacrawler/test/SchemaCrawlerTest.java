@@ -68,45 +68,6 @@ public class SchemaCrawlerTest
   private static final String METADATA_OUTPUT = "metadata/";
 
   @Test
-  public void tableConstraints()
-    throws Exception
-  {
-    final TestWriter out = new TestWriter();
-
-    final InformationSchemaViews informationSchemaViews = new InformationSchemaViews();
-    informationSchemaViews
-      .setTableConstraintsSql("SELECT * FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS");
-    informationSchemaViews
-      .setExtTableConstraintsSql("SELECT * FROM INFORMATION_SCHEMA.CHECK_CONSTRAINTS");
-
-    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
-    schemaCrawlerOptions.setInformationSchemaViews(informationSchemaViews);
-
-    final Database database = getDatabase(schemaCrawlerOptions);
-    final Schema[] schemas = database.getSchemas().toArray(new Schema[0]);
-    assertEquals("Schema count does not match", 6, schemas.length);
-    for (final Schema schema: schemas)
-    {
-      out.println("schema: " + schema.getFullName());
-      final Table[] tables = database.getTables(schema).toArray(new Table[0]);
-      for (final Table table: tables)
-      {
-        out.println("  table: " + table.getFullName());
-        final TableConstraint[] tableConstraints = table.getTableConstraints()
-          .toArray(new TableConstraint[0]);
-        for (final TableConstraint tableConstraint: tableConstraints)
-        {
-          out.println("    constraint: " + tableConstraint.getName());
-        }
-      }
-    }
-
-    out.close();
-    out.assertEquals(TestUtility.currentMethodFullName());
-  }
-
-  @Test
   public void columnLookup()
     throws Exception
   {
@@ -334,6 +295,45 @@ public class SchemaCrawlerTest
       out.println("synonym: " + synonym.getName());
       out.println("  class: "
                   + synonym.getReferencedObject().getClass().getSimpleName());
+    }
+
+    out.close();
+    out.assertEquals(TestUtility.currentMethodFullName());
+  }
+
+  @Test
+  public void tableConstraints()
+    throws Exception
+  {
+    final TestWriter out = new TestWriter();
+
+    final InformationSchemaViews informationSchemaViews = new InformationSchemaViews();
+    informationSchemaViews
+      .setTableConstraintsSql("SELECT * FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS");
+    informationSchemaViews
+      .setExtTableConstraintsSql("SELECT * FROM INFORMATION_SCHEMA.CHECK_CONSTRAINTS");
+
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
+    schemaCrawlerOptions.setInformationSchemaViews(informationSchemaViews);
+
+    final Database database = getDatabase(schemaCrawlerOptions);
+    final Schema[] schemas = database.getSchemas().toArray(new Schema[0]);
+    assertEquals("Schema count does not match", 6, schemas.length);
+    for (final Schema schema: schemas)
+    {
+      out.println("schema: " + schema.getFullName());
+      final Table[] tables = database.getTables(schema).toArray(new Table[0]);
+      for (final Table table: tables)
+      {
+        out.println("  table: " + table.getFullName());
+        final TableConstraint[] tableConstraints = table.getTableConstraints()
+          .toArray(new TableConstraint[0]);
+        for (final TableConstraint tableConstraint: tableConstraints)
+        {
+          out.println("    constraint: " + tableConstraint.getName());
+        }
+      }
     }
 
     out.close();

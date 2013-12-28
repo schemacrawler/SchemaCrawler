@@ -58,20 +58,17 @@ public class SchemaCrawlerGrepTest
     final Database database = getDatabase(schemaCrawlerOptions);
     final Schema[] schemas = database.getSchemas().toArray(new Schema[0]);
     assertEquals("Schema count does not match", 6, schemas.length);
-    for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++)
+    for (final Schema schema: schemas)
     {
-      final Schema schema = schemas[schemaIdx];
       out.println("schema: " + schema.getFullName());
       final Table[] tables = database.getTables(schema).toArray(new Table[0]);
-      for (int tableIdx = 0; tableIdx < tables.length; tableIdx++)
+      for (final Table table: tables)
       {
-        final Table table = tables[tableIdx];
         out.println("  table: " + table.getFullName());
         final Column[] columns = table.getColumns().toArray(new Column[0]);
         Arrays.sort(columns);
-        for (int columnIdx = 0; columnIdx < columns.length; columnIdx++)
+        for (final Column column: columns)
         {
-          final Column column = columns[columnIdx];
           out.println("    column: " + column.getFullName());
         }
       }
@@ -130,20 +127,17 @@ public class SchemaCrawlerGrepTest
     final Database database = getDatabase(schemaCrawlerOptions);
     final Schema[] schemas = database.getSchemas().toArray(new Schema[0]);
     assertEquals("Schema count does not match", 6, schemas.length);
-    for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++)
+    for (final Schema schema: schemas)
     {
-      final Schema schema = schemas[schemaIdx];
       out.println("schema: " + schema.getFullName());
       final Table[] tables = database.getTables(schema).toArray(new Table[0]);
-      for (int tableIdx = 0; tableIdx < tables.length; tableIdx++)
+      for (final Table table: tables)
       {
-        final Table table = tables[tableIdx];
         out.println("  table: " + table.getFullName());
         final Column[] columns = table.getColumns().toArray(new Column[0]);
         Arrays.sort(columns);
-        for (int columnIdx = 0; columnIdx < columns.length; columnIdx++)
+        for (final Column column: columns)
         {
-          final Column column = columns[columnIdx];
           out.println("    column: " + column.getFullName());
         }
       }
@@ -166,20 +160,17 @@ public class SchemaCrawlerGrepTest
     final Database database = getDatabase(schemaCrawlerOptions);
     final Schema[] schemas = database.getSchemas().toArray(new Schema[0]);
     assertEquals("Schema count does not match", 6, schemas.length);
-    for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++)
+    for (final Schema schema: schemas)
     {
-      final Schema schema = schemas[schemaIdx];
       out.println("schema: " + schema.getFullName());
       final Table[] tables = database.getTables(schema).toArray(new Table[0]);
-      for (int tableIdx = 0; tableIdx < tables.length; tableIdx++)
+      for (final Table table: tables)
       {
-        final Table table = tables[tableIdx];
         out.println("  table: " + table.getFullName());
         final Column[] columns = table.getColumns().toArray(new Column[0]);
         Arrays.sort(columns);
-        for (int columnIdx = 0; columnIdx < columns.length; columnIdx++)
+        for (final Column column: columns)
         {
-          final Column column = columns[columnIdx];
           out.println("    column: " + column.getFullName());
         }
       }
@@ -202,21 +193,18 @@ public class SchemaCrawlerGrepTest
     final Database database = getDatabase(schemaCrawlerOptions);
     final Schema[] schemas = database.getSchemas().toArray(new Schema[0]);
     assertEquals("Schema count does not match", 6, schemas.length);
-    for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++)
+    for (final Schema schema: schemas)
     {
-      final Schema schema = schemas[schemaIdx];
       out.println("schema: " + schema.getFullName());
       final Routine[] routines = database.getRoutines(schema)
         .toArray(new Routine[0]);
-      for (int routineIdx = 0; routineIdx < routines.length; routineIdx++)
+      for (final Routine routine: routines)
       {
-        final Routine routine = routines[routineIdx];
         out.println("  routine: " + routine.getFullName());
         final ProcedureColumn[] columns = routine.getColumns()
           .toArray(new ProcedureColumn[0]);
-        for (int columnIdx = 0; columnIdx < columns.length; columnIdx++)
+        for (final ProcedureColumn column: columns)
         {
-          final ProcedureColumn column = columns[columnIdx];
           out.println("    parameter: " + column.getFullName());
         }
       }

@@ -32,7 +32,6 @@ import java.util.List;
 import org.junit.Test;
 
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;

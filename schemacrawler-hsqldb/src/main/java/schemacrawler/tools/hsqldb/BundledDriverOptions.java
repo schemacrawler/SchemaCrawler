@@ -20,7 +20,6 @@
 package schemacrawler.tools.hsqldb;
 
 
-
 public final class BundledDriverOptions
   extends schemacrawler.tools.options.BundledDriverOptions
 {

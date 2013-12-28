@@ -129,16 +129,6 @@ public class SchemaTextOptions
   }
 
   /**
-   * Whether to hide constraint names.
-   * 
-   * @return Hide constraint names.
-   */
-  public boolean isHideTableConstraintNames()
-  {
-    return getBooleanValue(HIDE_CONSTRAINT_NAMES);
-  }
-
-  /**
    * Whether to hide foreign key names.
    * 
    * @return Hide foreign key names.
@@ -176,6 +166,16 @@ public class SchemaTextOptions
   public boolean isHideRoutineSpecificNames()
   {
     return getBooleanValue(HIDE_ROUTINE_SPECIFIC_NAMES);
+  }
+
+  /**
+   * Whether to hide constraint names.
+   * 
+   * @return Hide constraint names.
+   */
+  public boolean isHideTableConstraintNames()
+  {
+    return getBooleanValue(HIDE_CONSTRAINT_NAMES);
   }
 
   /**

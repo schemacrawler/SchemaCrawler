@@ -115,7 +115,7 @@ public class CommandLineParser
    * options whose values might be locale-specific.
    * 
    * @param args
-   *          Command line arguments
+   *        Command line arguments
    */
   public final String[] parse(final String[] args)
   {
@@ -191,7 +191,7 @@ public class CommandLineParser
    * Add the specified Option to the list of accepted options.
    * 
    * @param option
-   *          Option to add
+   *        Option to add
    */
   protected void addOption(final Option<?> option)
   {

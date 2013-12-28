@@ -24,7 +24,6 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Database;
 import schemacrawler.schema.ForeignKey;
@@ -33,6 +32,7 @@ import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.Table;
+import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseDatabaseTest;

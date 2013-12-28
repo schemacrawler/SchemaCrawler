@@ -45,6 +45,12 @@ class MutableTableConstraint
   private boolean initiallyDeferred;
   private final StringBuilder definition;
 
+  MutableTableConstraint(final Table parent, final String name)
+  {
+    super(parent, name);
+    definition = new StringBuilder();
+  }
+
   /**
    * {@inheritDoc}
    * 
@@ -54,17 +60,6 @@ class MutableTableConstraint
   public List<TableConstraintColumn> getColumns()
   {
     return new ArrayList<TableConstraintColumn>(columns.values());
-  }
-
-  void addColumn(final MutableTableConstraintColumn column)
-  {
-    columns.add(column);
-  }
-
-  MutableTableConstraint(final Table parent, final String name)
-  {
-    super(parent, name);
-    definition = new StringBuilder();
   }
 
   /**
@@ -126,6 +121,11 @@ class MutableTableConstraint
   public void setTableConstraintType(final TableConstraintType tableConstraintType)
   {
     this.tableConstraintType = tableConstraintType;
+  }
+
+  void addColumn(final MutableTableConstraintColumn column)
+  {
+    columns.add(column);
   }
 
   void appendDefinition(final String definition)

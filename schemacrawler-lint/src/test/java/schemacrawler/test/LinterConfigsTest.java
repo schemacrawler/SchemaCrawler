@@ -44,7 +44,8 @@ public class LinterConfigsTest
   public void testParseBadLinterConfigs1()
     throws SchemaCrawlerException, IOException
   {
-    final Reader reader = readerForResource("bad-schemacrawler-linter-configs-a.xml", Charset.forName("UTF-8"));
+    final Reader reader = readerForResource("bad-schemacrawler-linter-configs-a.xml",
+                                            Charset.forName("UTF-8"));
     final LinterConfigs linterConfigs = new LinterConfigs();
     linterConfigs.parse(reader);
     assertEquals(3, linterConfigs.size());
@@ -83,7 +84,8 @@ public class LinterConfigsTest
   public void testParseBadXml2()
     throws SchemaCrawlerException, IOException
   {
-    final Reader reader = readerForResource("bad-schemacrawler-linter-configs-2.xml", Charset.forName("UTF-8"));
+    final Reader reader = readerForResource("bad-schemacrawler-linter-configs-2.xml",
+                                            Charset.forName("UTF-8"));
     final LinterConfigs linterConfigs = new LinterConfigs();
     linterConfigs.parse(reader);
   }
@@ -92,7 +94,8 @@ public class LinterConfigsTest
   public void testParseGoodLinterConfigs()
     throws SchemaCrawlerException, IOException
   {
-    final Reader reader = readerForResource("schemacrawler-linter-configs-1.xml", Charset.forName("UTF-8"));
+    final Reader reader = readerForResource("schemacrawler-linter-configs-1.xml",
+                                            Charset.forName("UTF-8"));
     final LinterConfigs linterConfigs = new LinterConfigs();
     linterConfigs.parse(reader);
 

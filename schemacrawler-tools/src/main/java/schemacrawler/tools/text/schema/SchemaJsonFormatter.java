@@ -543,51 +543,6 @@ final class SchemaJsonFormatter
     return jsonIndex;
   }
 
-  private JSONObject handleTableConstraint(final TableConstraint tableConstraint)
-  {
-
-    final JSONObject jsonTableConstraint = new JSONObject();
-
-    if (tableConstraint == null)
-    {
-      return jsonTableConstraint;
-    }
-
-    try
-    {
-      if (!options.isHideTableConstraintNames())
-      {
-        jsonTableConstraint.put("name", tableConstraint.getName());
-      }
-
-      final TableConstraintType tableConstraintType = tableConstraint
-        .getTableConstraintType();
-      if (tableConstraintType != TableConstraintType.unknown)
-      {
-        jsonTableConstraint.put("type", tableConstraintType.toString());
-      }
-
-      for (final TableConstraintColumn tableConstraintColumn: tableConstraint
-        .getColumns())
-      {
-        jsonTableConstraint
-          .accumulate("columns", handleTableColumn(tableConstraintColumn));
-      }
-      if (tableConstraint.hasDefinition())
-      {
-        jsonTableConstraint.put("definition", tableConstraint.getDefinition());
-      }
-    }
-    catch (final JSONException e)
-    {
-      LOGGER.log(Level.FINER,
-                 "Error outputting TableConstraint: " + e.getMessage(),
-                 e);
-    }
-
-    return jsonTableConstraint;
-  }
-
   private JSONObject handleRoutineColumn(final RoutineColumn<?> column)
   {
     final JSONObject jsonColumn = new JSONObject();
@@ -652,6 +607,51 @@ final class SchemaJsonFormatter
     }
 
     return jsonColumn;
+  }
+
+  private JSONObject handleTableConstraint(final TableConstraint tableConstraint)
+  {
+
+    final JSONObject jsonTableConstraint = new JSONObject();
+
+    if (tableConstraint == null)
+    {
+      return jsonTableConstraint;
+    }
+
+    try
+    {
+      if (!options.isHideTableConstraintNames())
+      {
+        jsonTableConstraint.put("name", tableConstraint.getName());
+      }
+
+      final TableConstraintType tableConstraintType = tableConstraint
+        .getTableConstraintType();
+      if (tableConstraintType != TableConstraintType.unknown)
+      {
+        jsonTableConstraint.put("type", tableConstraintType.toString());
+      }
+
+      for (final TableConstraintColumn tableConstraintColumn: tableConstraint
+        .getColumns())
+      {
+        jsonTableConstraint
+          .accumulate("columns", handleTableColumn(tableConstraintColumn));
+      }
+      if (tableConstraint.hasDefinition())
+      {
+        jsonTableConstraint.put("definition", tableConstraint.getDefinition());
+      }
+    }
+    catch (final JSONException e)
+    {
+      LOGGER.log(Level.FINER,
+                 "Error outputting TableConstraint: " + e.getMessage(),
+                 e);
+    }
+
+    return jsonTableConstraint;
   }
 
   private JSONArray handleTriggers(final Collection<Trigger> triggers)

@@ -23,7 +23,6 @@ import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -145,7 +144,7 @@ public class SchemaCrawlerSystemTest
 
   private void counts(final String dataSourceName,
                       final Schema schema,
-                      Database database)
+                      final Database database)
     throws Exception
   {
 
@@ -177,10 +176,62 @@ public class SchemaCrawlerSystemTest
     }
   }
 
+  private Database retrieveDatabase(final String dataSourceName,
+                                    final String schemaInclusion)
+    throws Exception
+  {
+    final SchemaCrawlerOptions schemaCrawlerOptions = createOptions(dataSourceName,
+                                                                    schemaInclusion);
+    final Database database = retrieveDatabase(dataSourceName,
+                                               schemaCrawlerOptions);
+    return database;
+  }
+
+  private Schema retrieveSchema(final String schemaInclusion,
+                                final Database database)
+    throws Exception
+  {
+
+    final Schema[] schemas = (Schema[]) database.getSchemas().toArray();
+    final Schema schema;
+    if (schemas == null || schemas.length == 0)
+    {
+      schema = null;
+    }
+    else if (schemas.length == 1)
+    {
+      schema = schemas[0];
+    }
+    else
+    {
+      final Pattern schemaPattern = Pattern.compile(".*books",
+                                                    Pattern.CASE_INSENSITIVE);
+      Schema scSchema = null;
+      for (final Schema currSchema: schemas)
+      {
+        if (schemaPattern.matcher(currSchema.getFullName()).matches())
+        {
+          scSchema = currSchema;
+          break;
+        }
+      }
+      schema = scSchema;
+    }
+    return schema;
+  }
+
+  private Schema retrieveSchema(final String dataSourceName,
+                                final String schemaInclusion)
+    throws Exception
+  {
+    final Database database = retrieveDatabase(dataSourceName, schemaInclusion);
+    return retrieveSchema(schemaInclusion, database);
+  }
+
   private void tables(final String dataSourceName,
                       final Schema schema,
                       final String quote,
-                      Database database)
+                      final Database database)
     throws Exception
   {
     if (schema == null)
@@ -225,7 +276,7 @@ public class SchemaCrawlerSystemTest
     {
       final Database database = retrieveDatabase(dataSourceName,
                                                  schemaInclusion);
-      Schema schema = retrieveSchema(schemaInclusion, database);
+      final Schema schema = retrieveSchema(schemaInclusion, database);
       tables(dataSourceName, schema, quote, database);
       counts(dataSourceName, schema, database);
       return null;
@@ -235,57 +286,6 @@ public class SchemaCrawlerSystemTest
       e.printStackTrace();
       return e.getMessage();
     }
-  }
-
-  private Schema retrieveSchema(final String dataSourceName,
-                                final String schemaInclusion)
-    throws Exception
-  {
-    Database database = retrieveDatabase(dataSourceName, schemaInclusion);
-    return retrieveSchema(schemaInclusion, database);
-  }
-
-  private Schema retrieveSchema(final String schemaInclusion, Database database)
-    throws Exception
-  {
-
-    final Schema[] schemas = (Schema[]) database.getSchemas().toArray();
-    final Schema schema;
-    if (schemas == null || schemas.length == 0)
-    {
-      schema = null;
-    }
-    else if (schemas.length == 1)
-    {
-      schema = schemas[0];
-    }
-    else
-    {
-      final Pattern schemaPattern = Pattern.compile(".*books",
-                                                    Pattern.CASE_INSENSITIVE);
-      Schema scSchema = null;
-      for (final Schema currSchema: schemas)
-      {
-        if (schemaPattern.matcher(currSchema.getFullName()).matches())
-        {
-          scSchema = currSchema;
-          break;
-        }
-      }
-      schema = scSchema;
-    }
-    return schema;
-  }
-
-  private Database retrieveDatabase(final String dataSourceName,
-                                    final String schemaInclusion)
-    throws Exception
-  {
-    final SchemaCrawlerOptions schemaCrawlerOptions = createOptions(dataSourceName,
-                                                                    schemaInclusion);
-    final Database database = retrieveDatabase(dataSourceName,
-                                               schemaCrawlerOptions);
-    return database;
   }
 
 }

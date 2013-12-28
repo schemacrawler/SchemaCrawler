@@ -181,8 +181,7 @@ public class LinterTableWithIncrementingColumns
       }
     }
 
-    final Set<String> columnNameBases = new HashSet<>(incrementingColumnsMap
-      .keySet());
+    final Set<String> columnNameBases = new HashSet<>(incrementingColumnsMap.keySet());
     for (final String columnNameBase: columnNameBases)
     {
       if (incrementingColumnsMap.get(columnNameBase) == 1)
