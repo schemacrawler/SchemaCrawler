@@ -5,17 +5,17 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-    <release version="10.08.01" date="2013-11-17">
+    <release version="10.08.02" date="2014-11-17">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Trim all table names, to allow Informix to match correctly.
       ]]></action>                                                 
     </release>    
-    <release version="10.8" date="2013-11-10">
+    <release version="10.8" date="2014-11-10">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Providing richer information about table constraints, including details of constrained columns.
       ]]></action>                                                 
     </release>   
-    <release version="10.7" date="2013-11-05">
+    <release version="10.7" date="2014-11-05">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Providing richer information about table constraints. Renaming check constraints to table constraints.
       ]]></action>  
@@ -24,7 +24,7 @@
         See https://sourceforge.net/p/schemacrawler/patches/5/
       ]]></action>                                                 
     </release>    
-    <release version="10.6" date="2013-10-30">
+    <release version="10.6" date="2014-10-30">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Changed InclusionRule to an interface, to allow custom implementations.
       ]]></action>  
@@ -32,7 +32,7 @@
         Fixed lack of support for type maps by the Sybase IQ database driver.
       ]]></action>                                                 
     </release>   
-    <release version="10.5" date="2013-09-24">
+    <release version="10.5" date="2014-09-24">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Fixed bug with table restrictions.
       ]]></action>  
@@ -40,7 +40,7 @@
         Support all command-line options in ant task.
       ]]></action>                                                 
     </release>      
-    <release version="10.4" date="2013-07-24">
+    <release version="10.4" date="2014-07-24">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Fixed view definitions for PostgreSQL.
       ]]></action>         
@@ -54,13 +54,13 @@
         Added retrieving view definitions for Apache Derby.
       ]]></action>                                           
     </release>     
-    <release version="10.3" date="2013-05-24">
+    <release version="10.3" date="2014-05-24">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Rework of the column data type classes, as well as a workaround 
         for an Oracle JDBC driver bug with reporting data type information.
       ]]></action>                              
     </release>    
-    <release version="10.2" date="2013-05-21">
+    <release version="10.2" date="2014-05-21">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         New option to set output encoding format. The option is
         "schemacrawler.encoding.output" in the SchemaCrawler properties file. Default input
@@ -70,7 +70,7 @@
         Support for showing trigger information in Sqlite.
       ]]></action>                                  
     </release>   
-    <release version="10.1" date="2013-04-21">
+    <release version="10.1" date="2014-04-21">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         SchemaCrawler support for J2SE 7 only, since previous Java versions are deprecated. Converted
         the codebase over to use J2SE 7 constructs.
@@ -87,7 +87,7 @@
         Renamed command-line option -table_types to -tabletypes.
       ]]></action>                             
     </release>   
-    <release version="9.6" date="2013-03-08">
+    <release version="9.6" date="2014-03-08">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Fixed diagram generation on Linux when no GraphViz options are supplied.
       ]]></action>  
@@ -102,7 +102,7 @@
   names, and not showing the fully-qualified table name.
       ]]></action>                      
     </release>   
-    <release version="9.5" date="2013-02-24">
+    <release version="9.5" date="2014-02-24">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Updated HTML generation to have captions consistently for all tables. Numeric data is right-aligned in HTML,
         and correctly reported in JSON as well. These changes affect other output formats as well.
@@ -111,7 +111,7 @@
         Updated Oracle database connection URL to the new syntax.
       ]]></action>                      
     </release>    
-    <release version="9.4" date="2013-02-02">
+    <release version="9.4" date="2014-02-02">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Fix for honoring text formatting options in GraphViz dot output.
       ]]></action>                      
