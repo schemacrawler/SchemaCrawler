@@ -72,9 +72,8 @@ public class ResultColumnsTest
       assertNotNull("Could not obtain result columns", resultColumns);
       final ResultsColumn[] columns = resultColumns.getColumns()
         .toArray(new ResultsColumn[0]);
-      for (int columnIdx = 0; columnIdx < columns.length; columnIdx++)
+      for (final ResultsColumn column: columns)
       {
-        final ResultsColumn column = columns[columnIdx];
         LOGGER.log(Level.FINE, column.toString());
         out.println("column: " + column.getFullName());
         out.println("  database type: "

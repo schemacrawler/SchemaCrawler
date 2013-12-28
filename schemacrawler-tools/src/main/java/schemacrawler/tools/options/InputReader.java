@@ -193,8 +193,9 @@ public class InputReader
                                            + scriptFileName);
         }
       }
-      Reader reader = new InputStreamReader(inputStream,
-                                            outputOptions.getInputCharset());
+      final Reader reader = new InputStreamReader(inputStream,
+                                                  outputOptions
+                                                    .getInputCharset());
       return reader;
     }
     catch (final Exception e)

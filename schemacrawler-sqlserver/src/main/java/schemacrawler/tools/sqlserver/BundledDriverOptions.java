@@ -20,7 +20,6 @@
 package schemacrawler.tools.sqlserver;
 
 
-
 public final class BundledDriverOptions
   extends schemacrawler.tools.options.BundledDriverOptions
 {

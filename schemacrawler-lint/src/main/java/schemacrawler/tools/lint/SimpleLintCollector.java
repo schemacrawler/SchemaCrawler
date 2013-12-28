@@ -39,8 +39,8 @@ public class SimpleLintCollector
       return null;
     }
 
-    final List<Lint<?>> lints = new ArrayList<>(namedObject
-      .getAttribute(LINT_KEY, new ArrayList<Lint<?>>()));
+    final List<Lint<?>> lints = new ArrayList<>(namedObject.getAttribute(LINT_KEY,
+                                                                         new ArrayList<Lint<?>>()));
     Collections.sort(lints);
     return lints;
   }

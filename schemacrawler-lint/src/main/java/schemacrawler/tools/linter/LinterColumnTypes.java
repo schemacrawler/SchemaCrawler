@@ -60,8 +60,7 @@ public class LinterColumnTypes
     for (final Entry<String, List<ColumnDataType>> entry: columnTypes
       .entrySet())
     {
-      final SortedSet<ColumnDataType> currentColumnTypes = new TreeSet<>(entry
-        .getValue());
+      final SortedSet<ColumnDataType> currentColumnTypes = new TreeSet<>(entry.getValue());
       if (currentColumnTypes.size() > 1)
       {
         addLint(getSummary(), entry.getKey() + " " + currentColumnTypes);

@@ -113,8 +113,9 @@ public class SchemaCrawlerSystemOutputTest
     executable.execute(connection);
 
     final List<String> failures = compareOutput(COMMAND_OUTPUT + referenceFile,
-                     testOutputFile,
-                     outputOptions.getOutputFormat().name());
+                                                testOutputFile,
+                                                outputOptions.getOutputFormat()
+                                                  .name());
     if (failures.size() > 0)
     {
       return failures.toString();

@@ -24,11 +24,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import schemacrawler.schema.Column;
-import schemacrawler.schema.Table;
 import schemacrawler.schema.JavaSqlType.JavaSqlTypeGroup;
+import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.LintSeverity;
-import schemacrawler.utility.JavaSqlTypes;
 
 public class LinterTooManyLobs
   extends BaseLinter
@@ -73,8 +72,8 @@ public class LinterTooManyLobs
     final ArrayList<Column> lobColumns = new ArrayList<>();
     for (final Column column: columns)
     {
-      final JavaSqlTypeGroup javaSqlTypeGroup = column.getColumnDataType().getJavaSqlType()
-        .getJavaSqlTypeGroup();
+      final JavaSqlTypeGroup javaSqlTypeGroup = column.getColumnDataType()
+        .getJavaSqlType().getJavaSqlTypeGroup();
       if (javaSqlTypeGroup == JavaSqlTypeGroup.large_object)
       {
         lobColumns.add(column);

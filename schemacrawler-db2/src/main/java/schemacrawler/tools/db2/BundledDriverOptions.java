@@ -20,7 +20,6 @@
 package schemacrawler.tools.db2;
 
 
-
 public final class BundledDriverOptions
   extends schemacrawler.tools.options.BundledDriverOptions
 {

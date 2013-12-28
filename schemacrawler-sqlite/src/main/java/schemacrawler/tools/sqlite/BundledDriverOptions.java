@@ -20,7 +20,6 @@
 package schemacrawler.tools.sqlite;
 
 
-
 public final class BundledDriverOptions
   extends schemacrawler.tools.options.BundledDriverOptions
 {

@@ -41,8 +41,7 @@ public final class Main
     try
     {
       final BundledDriverOptions bundledDriverOptions = new BundledDriverOptions();
-      SchemaCrawlerMain
-        .main(args, bundledDriverOptions);
+      SchemaCrawlerMain.main(args, bundledDriverOptions);
     }
     catch (final Exception e)
     {

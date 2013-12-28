@@ -363,8 +363,7 @@ public class SchemaCrawlerOutputTest
         .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
       schemaCrawlerOptions.setTableInclusionRule(new ExcludeAll());
-      schemaCrawlerOptions
-        .setRoutineInclusionRule(new IncludeAll());
+      schemaCrawlerOptions.setRoutineInclusionRule(new IncludeAll());
       schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
 
       final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(SchemaTextDetailType.details
