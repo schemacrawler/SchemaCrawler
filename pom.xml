@@ -165,7 +165,6 @@
               <quiet>true</quiet>
               <show>public</show>
               <detectOfflineLinks>true</detectOfflineLinks>
-              <stylesheetfile>${basedir}/src/javadoc/javadocs.css</stylesheetfile>
               <links>
                 <link>http://docs.oracle.com/javase/7/docs/api/</link>
               </links>
