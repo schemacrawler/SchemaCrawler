@@ -168,6 +168,8 @@
               <links>
                 <link>http://docs.oracle.com/javase/7/docs/api/</link>
               </links>
+              <bottom>Copyright &#169; 2000-2014 {organizationName}. All rights reserved.</bottom>
+              <doctitle>SchemaCrawler ${project.version}</doctitle>
             </configuration>
           </execution>
         </executions>
