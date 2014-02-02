@@ -9,31 +9,24 @@
 		<section name="INFORMATION_SCHEMA Views">
 			<subsection name="Enhancing SchemaCrawler Output">
 				<p>
-					SchemaCrawler can display view, stored procedure and function definitions,
-					trigger
-					information, and check constraints by using data from
-					the
-					INFORMATION_SCHEMA views. Even though INFORMATION_SCHEMA
-					views are
-					defined in the SQL Standard, not all database
-					systems provide these
-					views. However, if it is possible to
-					construct a metadata view with
-					columns that match the
-					INFORMATION_SCHEMA views, then SchemaCrawler
-					can use the data
-					to obtain view, stored procedure and function definitions, trigger
-					information,
-					and check constraints. The INFORMATION_SCHEMA views
-					currently
-					processed by SchemaCrawler are shown below.
+					SchemaCrawler can display view, stored procedure and function
+					definitions, trigger information, and check constraints by using data
+					from the INFORMATION_SCHEMA views. Even though INFORMATION_SCHEMA views
+					are defined in the SQL Standard, not all database systems provide
+					these views. However, if it is possible to construct a metadata view with
+					columns that match the INFORMATION_SCHEMA views, then SchemaCrawler can
+					use the data to obtain view, stored procedure and function definitions,
+					trigger information, and check constraints. The INFORMATION_SCHEMA
+					views currently processed by SchemaCrawler are shown below.
+				</p>
+				<p>
+				    Any additional columns from the INFORMATION_SCHEMA views will be available
+				    using the getAttribute method on the SchemaCrawler Java object.
 				</p>
 				<p>
 					To get SchemaCrawler to use the views you will need to modify
-					your
-					database connection properties in your SchemaCrawler
-					configuration
-					file. Some examples are provided in the
+					your database connection properties in your SchemaCrawler
+					configuration file. Some examples are provided in the
 					<code>schemacrawler.config.properties</code>
 					file in the
 					<a
@@ -44,9 +37,7 @@
 					For example, if you had defined a connection called
 					<code>hsqldb</code>
 					, going against the HSQLDB database, and wanted to get view
-					definitions in the schema output, you would create a property
-					in
-					your
+					definitions in the schema output, you would create a property in your
 					<code>schemacrawler.config.properties</code>
 					file like this:
 				</p>
@@ -339,8 +330,8 @@ hsqldb.select.INFORMATION_SCHEMA.VIEWS=\
 						<tr>
 							<td>INITIALLY_DEFERRED</td>
 							<td>
-								One of: YES = the constraint is immediate; NO = the
-								constraint is deferred
+								One of: YES = the constraint is deferred; NO = the
+								constraint is immediate
 							</td>
 						</tr>
 					</tbody>
