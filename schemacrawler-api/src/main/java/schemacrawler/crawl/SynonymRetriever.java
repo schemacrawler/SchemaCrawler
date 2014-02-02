@@ -154,6 +154,8 @@ final class SynonymRetriever
         final MutableSynonym synonym = new MutableSynonym(schema, synonymName);
         synonym.setReferencedObject(referencedObject);
 
+        synonym.addAttributes(results.getAttributes());
+
         if (synonymFilter.include(synonym))
         {
           database.addSynonym(synonym);

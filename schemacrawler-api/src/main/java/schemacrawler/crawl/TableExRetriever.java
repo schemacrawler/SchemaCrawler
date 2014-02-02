@@ -251,6 +251,8 @@ final class TableExRetriever
         final String definition = results.getString("INDEX_DEFINITION");
 
         index.appendDefinition(definition);
+
+        index.addAttributes(results.getAttributes());
       }
     }
     catch (final Exception e)
@@ -754,6 +756,9 @@ final class TableExRetriever
           continue;
         }
         tableConstraint.appendDefinition(definition);
+
+        tableConstraint.addAttributes(results.getAttributes());
+
       }
     }
     catch (final Exception e)
