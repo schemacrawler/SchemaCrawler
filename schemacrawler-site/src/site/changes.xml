@@ -5,6 +5,11 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+     <release version="10.08.03" date="2014-02-02">
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Made information for all information schema views available as attributes of SchemaCrawler Java objects.
+      ]]></action>                                                      
+    </release>   
      <release version="10.08.02" date="2013-12-28">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Updated copyright notices.
