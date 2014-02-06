@@ -10,10 +10,6 @@ digraph SchemaCrawler_Diagram {
           <td align="left">HSQL Database Engine  2.3.0</td>
         </tr>
         <tr>
-          <td align="right">JDBC Connection:</td>
-          <td align="left">jdbc:hsqldb:hsql://localhost/schemacrawler</td>
-        </tr>
-        <tr>
           <td align="right">JDBC Driver:</td>
           <td align="left">HSQL Database Engine Driver  2.3.0</td>
         </tr>
