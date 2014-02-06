@@ -95,13 +95,6 @@ public abstract class BaseDotFormatter<O extends BaseTextOptions>
     }
 
     out.append("        <tr>").append(NEWLINE);
-    out.append("          <td align=\"right\">JDBC Connection:</td>")
-      .append(NEWLINE);
-    out.append("          <td align=\"left\">")
-      .append(driverInfo.getConnectionUrl()).append("</td>").append(NEWLINE);
-    out.append("        </tr>").append(NEWLINE);
-
-    out.append("        <tr>").append(NEWLINE);
     out.append("          <td align=\"right\">JDBC Driver:</td>")
       .append(NEWLINE);
     out.append("          <td align=\"left\">")
