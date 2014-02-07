@@ -30,6 +30,12 @@
 			<subsection name="Press">
 				<p>SchemaCrawler in the press, and in online articles and blogs.</p>
 				<ul>
+                    <li>
+                        <a
+                            href="https://developer.atlassian.com/display/JIRADEV/Database+Schema">
+                            Atlassian JIRA database schema
+                        </a>
+                    </li>				
 					<li>
 						Luxembourg Java Users Group presentation on
 						<a
