@@ -14,3 +14,4 @@ these third-party libraries are not provided. You can download the libraries
 that you want to use from their respective websites, and place them in the lib 
 folder of the SchemaCrawler distribution. Any jar files in the SchemaCrawler lib 
 folder will be used automatically.
+
