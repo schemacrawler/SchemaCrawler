@@ -31,22 +31,22 @@ public final class HelpOptions
   private static final long serialVersionUID = -2497570007150087268L;
 
   private final String title;
-  private final String resourceConnections;
+  private final String helpResource;
 
   public HelpOptions()
   {
     this(Version.getProductName(), "/help/Connections.txt");
   }
 
-  public HelpOptions(final String title, final String resourceConnections)
+  public HelpOptions(final String title, final String helpResource)
   {
     this.title = title;
-    this.resourceConnections = resourceConnections;
+    this.helpResource = helpResource;
   }
 
-  public String getResourceConnections()
+  public String getHelpResource()
   {
-    return resourceConnections;
+    return helpResource;
   }
 
   public String getTitle()

@@ -25,7 +25,7 @@ import java.io.Writer;
 import java.sql.Connection;
 
 import schemacrawler.schema.Database;
-import schemacrawler.tools.executable.BaseExecutable;
+import schemacrawler.tools.executable.BaseStagedExecutable;
 import schemacrawler.tools.options.OutputWriter;
 
 /**
@@ -34,7 +34,7 @@ import schemacrawler.tools.options.OutputWriter;
  * @author Sualeh Fatehi
  */
 public final class SerializationExecutable
-  extends BaseExecutable
+  extends BaseStagedExecutable
 {
 
   static final String COMMAND = "serialize";

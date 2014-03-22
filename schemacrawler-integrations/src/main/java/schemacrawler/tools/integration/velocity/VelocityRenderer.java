@@ -39,7 +39,7 @@ import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.apache.velocity.runtime.resource.loader.FileResourceLoader;
 
 import schemacrawler.schema.Database;
-import schemacrawler.tools.executable.BaseExecutable;
+import schemacrawler.tools.executable.BaseStagedExecutable;
 import schemacrawler.tools.options.OutputWriter;
 
 /**
@@ -48,7 +48,7 @@ import schemacrawler.tools.options.OutputWriter;
  * @author Sualeh Fatehi
  */
 public final class VelocityRenderer
-  extends BaseExecutable
+  extends BaseStagedExecutable
 {
 
   static final String COMMAND = "velocity";

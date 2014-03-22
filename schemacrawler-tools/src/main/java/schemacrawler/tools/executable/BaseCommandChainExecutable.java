@@ -31,7 +31,7 @@ import schemacrawler.schema.Database;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
 abstract class BaseCommandChainExecutable
-  extends BaseExecutable
+  extends BaseStagedExecutable
 {
 
   private static final Logger LOGGER = Logger
@@ -93,9 +93,9 @@ abstract class BaseCommandChainExecutable
 
     for (final Executable executable: executables)
     {
-      if (executable instanceof BaseExecutable)
+      if (executable instanceof BaseStagedExecutable)
       {
-        ((BaseExecutable) executable).executeOn(database, connection);
+        ((BaseStagedExecutable) executable).executeOn(database, connection);
       }
     }
   }

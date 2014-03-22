@@ -20,26 +20,51 @@
 package schemacrawler.tools.options;
 
 
+import java.sql.Connection;
+
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.Options;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.tools.executable.BaseExecutable;
+import schemacrawler.tools.executable.Executable;
 
 public abstract class BundledDriverOptions
   implements Options
 {
 
+  private final class NoOpExecutable
+    extends BaseExecutable
+  {
+    private NoOpExecutable(final String command)
+    {
+      super(command);
+    }
+
+    @Override
+    public void execute(final Connection connection)
+      throws Exception
+    {
+      // No-op
+    }
+  }
+
   private static final long serialVersionUID = 2160456864554076419L;
 
-  private final String title;
-  private final String resourceConnections;
+  private final HelpOptions helpOptions;
   private final String configResource;
 
+  protected BundledDriverOptions()
+  {
+    helpOptions = new HelpOptions();
+    configResource = null;
+  }
+
   protected BundledDriverOptions(final String title,
-                                 final String resourceConnections,
+                                 final String helpResource,
                                  final String configResource)
   {
-    this.title = title;
-    this.resourceConnections = resourceConnections;
+    helpOptions = new HelpOptions(title, helpResource);
     this.configResource = configResource;
   }
 
@@ -50,7 +75,7 @@ public abstract class BundledDriverOptions
 
   public final HelpOptions getHelpOptions()
   {
-    return new HelpOptions(title, resourceConnections);
+    return helpOptions;
   }
 
   public final SchemaCrawlerOptions getSchemaCrawlerOptions(final InfoLevel infoLevel)
@@ -61,6 +86,23 @@ public abstract class BundledDriverOptions
       schemaCrawlerOptions.setSchemaInfoLevel(infoLevel.getSchemaInfoLevel());
     }
     return schemaCrawlerOptions;
+  }
+
+  public final boolean hasConfig()
+  {
+    return configResource != null;
+  }
+
+  public Executable newPostExecutable()
+    throws SchemaCrawlerException
+  {
+    return new NoOpExecutable("no-op");
+  }
+
+  public Executable newPreExecutable()
+    throws SchemaCrawlerException
+  {
+    return new NoOpExecutable("no-op");
   }
 
 }
