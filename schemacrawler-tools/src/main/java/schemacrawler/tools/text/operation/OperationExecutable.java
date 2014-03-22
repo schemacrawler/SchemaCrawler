@@ -25,7 +25,7 @@ import java.sql.Connection;
 
 import schemacrawler.schema.Database;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.executable.BaseExecutable;
+import schemacrawler.tools.executable.BaseStagedExecutable;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.traversal.DataTraversalHandler;
 
@@ -35,7 +35,7 @@ import schemacrawler.tools.traversal.DataTraversalHandler;
  * @author Sualeh Fatehi
  */
 public final class OperationExecutable
-  extends BaseExecutable
+  extends BaseStagedExecutable
 {
 
   private OperationOptions operationOptions;

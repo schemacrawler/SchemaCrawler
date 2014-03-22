@@ -32,7 +32,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schema.Database;
-import schemacrawler.tools.executable.BaseExecutable;
+import schemacrawler.tools.executable.BaseStagedExecutable;
 import schemacrawler.tools.options.OutputWriter;
 import freemarker.cache.ClassTemplateLoader;
 import freemarker.cache.FileTemplateLoader;
@@ -48,7 +48,7 @@ import freemarker.template.Template;
  * @author Sualeh Fatehi
  */
 public final class FreeMarkerRenderer
-  extends BaseExecutable
+  extends BaseStagedExecutable
 {
 
   private static final Logger LOGGER = Logger

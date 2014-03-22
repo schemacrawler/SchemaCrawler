@@ -21,6 +21,8 @@ package schemacrawler.tools.commandline;
 
 
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -30,6 +32,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import schemacrawler.tools.options.BundledDriverOptions;
 import schemacrawler.tools.options.OutputOptions;
 import sf.util.ObjectToString;
 
@@ -50,22 +53,13 @@ public final class SchemaCrawlerCommandLine
   private final SchemaCrawlerOptions schemaCrawlerOptions;
   private final OutputOptions outputOptions;
   private final ConnectionOptions connectionOptions;
+  private final BundledDriverOptions bundledDriverOptions;
 
-  /**
-   * Loads objects from command line options. Optionally loads the
-   * config from the classpath.
-   * 
-   * @param args
-   *        Command line arguments.
-   * @param config
-   *        Configuration settings.
-   * @throws SchemaCrawlerException
-   *         On an exception
-   */
-  public SchemaCrawlerCommandLine(final Config config, final String... args)
+  public SchemaCrawlerCommandLine(final BundledDriverOptions bundledDriverOptions,
+                                  final String... args)
     throws SchemaCrawlerException
   {
-    this(config, null, args);
+    this(bundledDriverOptions, null, args);
   }
 
   public SchemaCrawlerCommandLine(final ConnectionOptions connectionOptions,
@@ -75,7 +69,7 @@ public final class SchemaCrawlerCommandLine
     this(null, connectionOptions, args);
   }
 
-  private SchemaCrawlerCommandLine(final Config providedConfig,
+  private SchemaCrawlerCommandLine(final BundledDriverOptions bundledDriverOptions,
                                    final ConnectionOptions connectionOptions,
                                    final String... args)
     throws SchemaCrawlerException
@@ -95,15 +89,21 @@ public final class SchemaCrawlerCommandLine
     }
     command = commandParser.getOptions().toString();
 
-    final boolean isBundledWithDriver = providedConfig != null;
-    if (isBundledWithDriver)
+    if (bundledDriverOptions != null)
     {
-      config = providedConfig;
+      this.bundledDriverOptions = bundledDriverOptions;
     }
     else
     {
-      config = new Config();
+      this.bundledDriverOptions = new BundledDriverOptions()
+      {
+
+        private static final long serialVersionUID = -8917733124364175122L;
+      };
     }
+
+    config = this.bundledDriverOptions.getConfig();
+
     if (remainingArgs.length > 0)
     {
       final ConfigParser configParser = new ConfigParser();
@@ -122,7 +122,7 @@ public final class SchemaCrawlerCommandLine
     {
       this.connectionOptions = connectionOptions;
     }
-    else if (isBundledWithDriver)
+    else if (this.bundledDriverOptions.hasConfig())
     {
       final BaseDatabaseConnectionOptionsParser bundledDriverConnectionOptionsParser = new BundledDriverConnectionOptionsParser(config);
       remainingArgs = bundledDriverConnectionOptionsParser.parse(remainingArgs);
@@ -155,25 +155,31 @@ public final class SchemaCrawlerCommandLine
   public void execute()
     throws Exception
   {
-    final Executable executable = new SchemaCrawlerExecutable(command);
-    if (outputOptions != null)
-    {
-      executable.setOutputOptions(outputOptions);
-    }
-    if (schemaCrawlerOptions != null)
-    {
-      executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    }
-    if (config != null)
-    {
-      executable.setAdditionalConfiguration(config);
-    }
+    final List<Executable> executables = new ArrayList<>();
+
+    Executable executableForList;
+
+    executableForList = bundledDriverOptions.newPreExecutable();
+    initialize(executableForList);
+    executables.add(executableForList);
+
+    executableForList = new SchemaCrawlerExecutable(command);
+    initialize(executableForList);
+    executables.add(executableForList);
+
+    executableForList = bundledDriverOptions.newPostExecutable();
+    initialize(executableForList);
+    executables.add(executableForList);
+
     if (connectionOptions != null)
     {
       try (final Connection connection = connectionOptions.getConnection();)
       {
         LOGGER.log(Level.INFO, "Made connection, " + connection);
-        executable.execute(connection);
+        for (final Executable executable: executables)
+        {
+          executable.execute(connection);
+        }
       }
     }
     else
@@ -205,6 +211,22 @@ public final class SchemaCrawlerCommandLine
   public final SchemaCrawlerOptions getSchemaCrawlerOptions()
   {
     return schemaCrawlerOptions;
+  }
+
+  private void initialize(final Executable executable)
+  {
+    if (outputOptions != null)
+    {
+      executable.setOutputOptions(outputOptions);
+    }
+    if (schemaCrawlerOptions != null)
+    {
+      executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    }
+    if (config != null)
+    {
+      executable.setAdditionalConfiguration(config);
+    }
   }
 
 }

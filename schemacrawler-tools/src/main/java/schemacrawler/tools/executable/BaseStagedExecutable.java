@@ -17,30 +17,50 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.tools.oracle;
+
+package schemacrawler.tools.executable;
 
 
+import java.sql.Connection;
+
+import schemacrawler.crawl.SchemaCrawler;
+import schemacrawler.schema.Database;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.executable.Executable;
 
-public final class BundledDriverOptions
-  extends schemacrawler.tools.options.BundledDriverOptions
+/**
+ * A SchemaCrawler tools executable unit.
+ * 
+ * @author Sualeh Fatehi
+ */
+public abstract class BaseStagedExecutable
+  extends BaseExecutable
 {
 
-  private static final long serialVersionUID = -8607886464063312321L;
-
-  public BundledDriverOptions()
+  protected BaseStagedExecutable(final String command)
   {
-    super("SchemaCrawler for Oracle",
-          "/help/Connections.oracle.txt",
-          "/schemacrawler-oracle.config.properties");
+    super(command);
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.executable.Executable#execute(java.sql.Connection)
+   */
   @Override
-  public Executable newPreExecutable()
-    throws SchemaCrawlerException
+  public final void execute(final Connection connection)
+    throws Exception
   {
-    return new OraclePreExecutable();
+    if (connection == null)
+    {
+      throw new SchemaCrawlerException("No connection provided");
+    }
+
+    final SchemaCrawler crawler = new SchemaCrawler(connection);
+    final Database database = crawler.crawl(schemaCrawlerOptions);
+    executeOn(database, connection);
   }
+
+  protected abstract void executeOn(Database database, Connection connection)
+    throws Exception;
 
 }

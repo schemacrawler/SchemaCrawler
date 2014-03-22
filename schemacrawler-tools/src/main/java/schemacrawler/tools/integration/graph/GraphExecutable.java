@@ -27,7 +27,7 @@ import java.sql.Connection;
 import schemacrawler.schema.Database;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.analysis.associations.DatabaseWithAssociations;
-import schemacrawler.tools.executable.BaseExecutable;
+import schemacrawler.tools.executable.BaseStagedExecutable;
 import schemacrawler.tools.options.InfoLevel;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.schema.SchemaDotFormatter;
@@ -42,7 +42,7 @@ import sf.util.Utility;
  * @author Sualeh Fatehi
  */
 public final class GraphExecutable
-  extends BaseExecutable
+  extends BaseStagedExecutable
 {
 
   static final String COMMAND = "graph";

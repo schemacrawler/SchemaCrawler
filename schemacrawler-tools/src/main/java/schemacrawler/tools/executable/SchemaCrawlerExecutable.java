@@ -20,7 +20,7 @@ import schemacrawler.tools.text.operation.OperationExecutable;
  * @author Sualeh Fatehi
  */
 public final class SchemaCrawlerExecutable
-  extends BaseExecutable
+  extends BaseStagedExecutable
 {
 
   private static final Logger LOGGER = Logger
@@ -42,7 +42,7 @@ public final class SchemaCrawlerExecutable
       throw new SchemaCrawlerException("No command specified");
     }
 
-    BaseExecutable executable = null;
+    BaseStagedExecutable executable = null;
     final CommandRegistry commandRegistry = new CommandRegistry();
 
     for (final String command: commands)
@@ -71,7 +71,7 @@ public final class SchemaCrawlerExecutable
       }
       else
       {
-        executable = (BaseExecutable) commandRegistry
+        executable = (BaseStagedExecutable) commandRegistry
           .newExecutable(getCommand());
         LOGGER.log(Level.INFO, String
           .format("Executing command \"%s\" using executable %s",

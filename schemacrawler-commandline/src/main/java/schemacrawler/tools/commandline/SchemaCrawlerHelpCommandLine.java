@@ -117,7 +117,7 @@ final class SchemaCrawlerHelpCommandLine
       System.exit(0);
     }
 
-    showHelp(helpOptions.getResourceConnections());
+    showHelp(helpOptions.getHelpResource());
     showHelp("/help/SchemaCrawlerOptions.txt");
     showHelp("/help/Config.txt");
     showHelp("/help/ApplicationOptions.txt");
