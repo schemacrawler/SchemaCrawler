@@ -30,7 +30,7 @@ import java.util.List;
  * @author Sualeh Fatehi
  */
 public interface Table
-  extends DatabaseObject, TypedObject<TableType>
+  extends DatabaseObject, TypedObject<TableType>, DefinedObject
 {
 
   /**

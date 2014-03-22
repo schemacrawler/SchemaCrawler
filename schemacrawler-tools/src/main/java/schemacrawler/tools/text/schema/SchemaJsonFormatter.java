@@ -50,7 +50,6 @@ import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.TableConstraintColumn;
 import schemacrawler.schema.TableConstraintType;
 import schemacrawler.schema.Trigger;
-import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.analysis.associations.DatabaseWithAssociations;
 import schemacrawler.tools.options.OutputOptions;
@@ -300,13 +299,9 @@ final class SchemaJsonFormatter
           jsonIndices.put(handleIndex(index));
         }
 
-        if (table instanceof View)
+        if (table.hasDefinition())
         {
-          final View view = (View) table;
-          if (view.hasDefinition())
-          {
-            jsonTable.put("definition", view.getDefinition());
-          }
+          jsonTable.put("definition", table.getDefinition());
         }
 
         jsonTable.put("triggers", handleTriggers(table.getTriggers()));

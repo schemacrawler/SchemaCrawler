@@ -159,11 +159,11 @@ public final class SchemaCrawler
     }
 
     final RoutineRetriever retriever;
-    final RoutineExRetriever retrieverExtra;
+    final RoutineExtRetriever retrieverExtra;
     try
     {
       retriever = new RoutineRetriever(retrieverConnection, database);
-      retrieverExtra = new RoutineExRetriever(retrieverConnection, database);
+      retrieverExtra = new RoutineExtRetriever(retrieverConnection, database);
       final Collection<RoutineType> routineTypes = options.getRoutineTypes();
       for (final Schema schema: retriever.getSchemas())
       {
@@ -296,11 +296,11 @@ public final class SchemaCrawler
     }
 
     final TableRetriever retriever;
-    final TableExRetriever retrieverExtra;
+    final TableExtRetriever retrieverExtra;
     try
     {
       retriever = new TableRetriever(retrieverConnection, database);
-      retrieverExtra = new TableExRetriever(retrieverConnection, database);
+      retrieverExtra = new TableExtRetriever(retrieverConnection, database);
 
       for (final Schema schema: retriever.getSchemas())
       {
@@ -366,6 +366,10 @@ public final class SchemaCrawler
       if (infoLevel.isRetrieveViewInformation())
       {
         retrieverExtra.retrieveViewInformation();
+      }
+      if (infoLevel.isRetrieveTableDefinitionsInformation())
+      {
+        retrieverExtra.retrieveTableDefinitions();
       }
       if (infoLevel.isRetrieveIndexInformation())
       {

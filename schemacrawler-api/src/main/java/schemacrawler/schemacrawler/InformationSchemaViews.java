@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -30,16 +30,17 @@ import sf.util.ObjectToString;
 /**
  * The database specific views to get additional database metadata in a
  * standard format.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public final class InformationSchemaViews
-  implements Options
+implements Options
 {
 
   private static final long serialVersionUID = 3587581365346059044L;
 
   private static final String KEY_INFORMATION_SCHEMA_VIEWS = "select.INFORMATION_SCHEMA.VIEWS";
+  private static final String KEY_INFORMATION_SCHEMA_EXT_TABLES = "select.INFORMATION_SCHEMA.EXT_TABLES";
   private static final String KEY_INFORMATION_SCHEMA_TRIGGERS = "select.INFORMATION_SCHEMA.TRIGGERS";
   private static final String KEY_INFORMATION_SCHEMA_TABLE_CONSTRAINTS = "select.INFORMATION_SCHEMA.TABLE_CONSTRAINTS";
   private static final String KEY_INFORMATION_SCHEMA_CONSTRAINT_COLUMN_USAGE = "select.INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE";
@@ -64,7 +65,7 @@ public final class InformationSchemaViews
 
   /**
    * Information schema views from a map.
-   * 
+   *
    * @param informationSchemaViewsSql
    *        Map of information schema view definitions.
    */
@@ -74,18 +75,19 @@ public final class InformationSchemaViews
     if (informationSchemaViewsSql != null)
     {
       final String[] keys = new String[] {
-          KEY_INFORMATION_SCHEMA_VIEWS,
-          KEY_INFORMATION_SCHEMA_TRIGGERS,
-          KEY_INFORMATION_SCHEMA_TABLE_CONSTRAINTS,
-          KEY_INFORMATION_SCHEMA_CONSTRAINT_COLUMN_USAGE,
-          KEY_INFORMATION_SCHEMA_EXT_TABLE_CONSTRAINTS,
-          KEY_INFORMATION_SCHEMA_ROUTINES,
-          KEY_INFORMATION_SCHEMA_SCHEMATA,
-          KEY_INFORMATION_SCHEMA_EXT_SYNONYMS,
-          KEY_INFORMATION_SCHEMA_EXT_INDEXES,
-          KEY_OVERRIDE_TYPE_INFO,
-          KEY_ADDITIONAL_TABLE_ATTRIBUTES,
-          KEY_ADDITIONAL_COLUMN_ATTRIBUTES
+                                          KEY_INFORMATION_SCHEMA_VIEWS,
+                                          KEY_INFORMATION_SCHEMA_EXT_TABLES,
+                                          KEY_INFORMATION_SCHEMA_TRIGGERS,
+                                          KEY_INFORMATION_SCHEMA_TABLE_CONSTRAINTS,
+                                          KEY_INFORMATION_SCHEMA_CONSTRAINT_COLUMN_USAGE,
+                                          KEY_INFORMATION_SCHEMA_EXT_TABLE_CONSTRAINTS,
+                                          KEY_INFORMATION_SCHEMA_ROUTINES,
+                                          KEY_INFORMATION_SCHEMA_SCHEMATA,
+                                          KEY_INFORMATION_SCHEMA_EXT_SYNONYMS,
+                                          KEY_INFORMATION_SCHEMA_EXT_INDEXES,
+                                          KEY_OVERRIDE_TYPE_INFO,
+                                          KEY_ADDITIONAL_TABLE_ATTRIBUTES,
+                                          KEY_ADDITIONAL_COLUMN_ATTRIBUTES
       };
       for (final String key: keys)
       {
@@ -108,7 +110,7 @@ public final class InformationSchemaViews
   /**
    * Gets the additional attributes SQL for columns, from the additional
    * configuration.
-   * 
+   *
    * @return Additional attributes SQL for columns.
    */
   public String getAdditionalColumnAttributesSql()
@@ -119,7 +121,7 @@ public final class InformationSchemaViews
   /**
    * Gets the additional attributes SQL for tables, from the additional
    * configuration.
-   * 
+   *
    * @return Additional attributes SQL for tables.
    */
   public String getAdditionalTableAttributesSql()
@@ -129,7 +131,7 @@ public final class InformationSchemaViews
 
   /**
    * Gets the index definitions SQL from the additional configuration.
-   * 
+   *
    * @return Index definitions SQL.
    */
   public String getExtIndexesSql()
@@ -140,19 +142,29 @@ public final class InformationSchemaViews
   /**
    * Gets the table check constraints SQL from the additional
    * configuration.
-   * 
+   *
    * @return Table check constraints SQL.
    */
   public String getExtTableConstraintsSql()
   {
     return informationSchemaQueries
-      .get(KEY_INFORMATION_SCHEMA_EXT_TABLE_CONSTRAINTS);
+        .get(KEY_INFORMATION_SCHEMA_EXT_TABLE_CONSTRAINTS);
+  }
+
+  /**
+   * Gets the table definitions SQL from the additional configuration.
+   *
+   * @return Table definitions SQL.
+   */
+  public String getExtTablesSql()
+  {
+    return informationSchemaQueries.get(KEY_INFORMATION_SCHEMA_EXT_TABLES);
   }
 
   /**
    * SQL that overrides DatabaseMetaData#getTypeInfo().
    * {@link DatabaseMetaData#getTypeInfo()}
-   * 
+   *
    * @return SQL that overrides DatabaseMetaData#getTypeInfo().
    */
   public String getOverrideTypeInfoSql()
@@ -162,7 +174,7 @@ public final class InformationSchemaViews
 
   /**
    * Gets the routine definitions SQL from the additional configuration.
-   * 
+   *
    * @return Routine definitions SQL.
    */
   public String getRoutinesSql()
@@ -172,7 +184,7 @@ public final class InformationSchemaViews
 
   /**
    * Gets the schemata SQL from the additional configuration.
-   * 
+   *
    * @return Schemata SQL.
    */
   public String getSchemataSql()
@@ -182,7 +194,7 @@ public final class InformationSchemaViews
 
   /**
    * Gets the synonyms SQL from the additional configuration.
-   * 
+   *
    * @return Synonyms SQL.
    */
   public String getSynonymsSql()
@@ -193,29 +205,29 @@ public final class InformationSchemaViews
   /**
    * Gets the table constraints columns SQL from the additional
    * configuration.
-   * 
+   *
    * @return Table constraints columns SQL.
    */
   public String getTableConstraintsColumnsSql()
   {
     return informationSchemaQueries
-      .get(KEY_INFORMATION_SCHEMA_CONSTRAINT_COLUMN_USAGE);
+        .get(KEY_INFORMATION_SCHEMA_CONSTRAINT_COLUMN_USAGE);
   }
 
   /**
    * Gets the table constraints SQL from the additional configuration.
-   * 
+   *
    * @return Table constraints SQL.
    */
   public String getTableConstraintsSql()
   {
     return informationSchemaQueries
-      .get(KEY_INFORMATION_SCHEMA_TABLE_CONSTRAINTS);
+        .get(KEY_INFORMATION_SCHEMA_TABLE_CONSTRAINTS);
   }
 
   /**
    * Gets the trigger definitions SQL from the additional configuration.
-   * 
+   *
    * @return Trigger definitions SQL.
    */
   public String getTriggersSql()
@@ -225,7 +237,7 @@ public final class InformationSchemaViews
 
   /**
    * Gets the view definitions SQL from the additional configuration.
-   * 
+   *
    * @return View definitions SQL.
    */
   public String getViewsSql()
@@ -236,25 +248,31 @@ public final class InformationSchemaViews
   public boolean hasAdditionalColumnAttributesSql()
   {
     return informationSchemaQueries
-      .containsKey(KEY_ADDITIONAL_COLUMN_ATTRIBUTES);
+        .containsKey(KEY_ADDITIONAL_COLUMN_ATTRIBUTES);
   }
 
   public boolean hasAdditionalTableAttributesSql()
   {
     return informationSchemaQueries
-      .containsKey(KEY_ADDITIONAL_TABLE_ATTRIBUTES);
+        .containsKey(KEY_ADDITIONAL_TABLE_ATTRIBUTES);
   }
 
   public boolean hasExtTableConstraintsSql()
   {
     return informationSchemaQueries
-      .containsKey(KEY_INFORMATION_SCHEMA_EXT_TABLE_CONSTRAINTS);
+        .containsKey(KEY_INFORMATION_SCHEMA_EXT_TABLE_CONSTRAINTS);
+  }
+
+  public boolean hasExtTablesSql()
+  {
+    return informationSchemaQueries
+        .containsKey(KEY_INFORMATION_SCHEMA_EXT_TABLES);
   }
 
   public boolean hasIndexesExtSql()
   {
     return informationSchemaQueries
-      .containsKey(KEY_INFORMATION_SCHEMA_EXT_INDEXES);
+        .containsKey(KEY_INFORMATION_SCHEMA_EXT_INDEXES);
   }
 
   public boolean hasOverrideTypeInfoSql()
@@ -265,37 +283,37 @@ public final class InformationSchemaViews
   public boolean hasRoutinesSql()
   {
     return informationSchemaQueries
-      .containsKey(KEY_INFORMATION_SCHEMA_ROUTINES);
+        .containsKey(KEY_INFORMATION_SCHEMA_ROUTINES);
   }
 
   public boolean hasSchemataSql()
   {
     return informationSchemaQueries
-      .containsKey(KEY_INFORMATION_SCHEMA_SCHEMATA);
+        .containsKey(KEY_INFORMATION_SCHEMA_SCHEMATA);
   }
 
   public boolean hasSynonymsSql()
   {
     return informationSchemaQueries
-      .containsKey(KEY_INFORMATION_SCHEMA_EXT_SYNONYMS);
+        .containsKey(KEY_INFORMATION_SCHEMA_EXT_SYNONYMS);
   }
 
   public boolean hasTableConstraintsColumnsSql()
   {
     return informationSchemaQueries
-      .containsKey(KEY_INFORMATION_SCHEMA_CONSTRAINT_COLUMN_USAGE);
+        .containsKey(KEY_INFORMATION_SCHEMA_CONSTRAINT_COLUMN_USAGE);
   }
 
   public boolean hasTableConstraintsSql()
   {
     return informationSchemaQueries
-      .containsKey(KEY_INFORMATION_SCHEMA_TABLE_CONSTRAINTS);
+        .containsKey(KEY_INFORMATION_SCHEMA_TABLE_CONSTRAINTS);
   }
 
   public boolean hasTriggerSql()
   {
     return informationSchemaQueries
-      .containsKey(KEY_INFORMATION_SCHEMA_TRIGGERS);
+        .containsKey(KEY_INFORMATION_SCHEMA_TRIGGERS);
   }
 
   public boolean hasViewsSql()
@@ -305,7 +323,7 @@ public final class InformationSchemaViews
 
   /**
    * Sets the additional attributes SQL for columns.
-   * 
+   *
    * @param sql
    *        Additional attributes SQL for columns.
    */
@@ -316,7 +334,7 @@ public final class InformationSchemaViews
 
   /**
    * Sets the additional attributes SQL for tables.
-   * 
+   *
    * @param sql
    *        Additional attributes SQL for tables.
    */
@@ -327,7 +345,7 @@ public final class InformationSchemaViews
 
   /**
    * Sets the index definitions SQL.
-   * 
+   *
    * @param sql
    *        Index definitions SQL.
    */
@@ -338,7 +356,7 @@ public final class InformationSchemaViews
 
   /**
    * Sets the table check constraints SQL.
-   * 
+   *
    * @param sql
    *        Table check constraints SQL.
    */
@@ -349,9 +367,20 @@ public final class InformationSchemaViews
   }
 
   /**
+   * Sets the table definitions SQL.
+   *
+   * @param sql
+   *        Table definitions SQL.
+   */
+  public void setExtTablesSql(final String sql)
+  {
+    informationSchemaQueries.put(KEY_INFORMATION_SCHEMA_EXT_TABLES, sql);
+  }
+
+  /**
    * Sets SQL that overrides DatabaseMetaData#getTypeInfo().
    * {@link DatabaseMetaData#getTypeInfo()}.
-   * 
+   *
    * @param sql
    *        SQL that overrides DatabaseMetaData#getTypeInfo().
    */
@@ -362,7 +391,7 @@ public final class InformationSchemaViews
 
   /**
    * Sets the procedure definitions SQL.
-   * 
+   *
    * @param sql
    *        Procedure definitions SQL.
    */
@@ -373,7 +402,7 @@ public final class InformationSchemaViews
 
   /**
    * Sets the schemata SQL.
-   * 
+   *
    * @param sql
    *        Schemata SQL.
    */
@@ -384,7 +413,7 @@ public final class InformationSchemaViews
 
   /**
    * Sets the synonym SQL.
-   * 
+   *
    * @param sql
    *        Synonym SQL.
    */
@@ -395,19 +424,19 @@ public final class InformationSchemaViews
 
   /**
    * Sets the table constraints columns SQL.
-   * 
+   *
    * @param sql
    *        Table constraints columns SQL.
    */
   public void setTableConstraintsColumnsSql(final String sql)
   {
     informationSchemaQueries
-      .put(KEY_INFORMATION_SCHEMA_CONSTRAINT_COLUMN_USAGE, sql);
+    .put(KEY_INFORMATION_SCHEMA_CONSTRAINT_COLUMN_USAGE, sql);
   }
 
   /**
    * Sets the table constraints SQL.
-   * 
+   *
    * @param sql
    *        Table constraints SQL.
    */
@@ -418,7 +447,7 @@ public final class InformationSchemaViews
 
   /**
    * Sets the trigger definitions SQL.
-   * 
+   *
    * @param sql
    *        Trigger definitions SQL.
    */
@@ -429,7 +458,7 @@ public final class InformationSchemaViews
 
   /**
    * Sets the view definitions SQL.
-   * 
+   *
    * @param sql
    *        View definitions SQL.
    */
