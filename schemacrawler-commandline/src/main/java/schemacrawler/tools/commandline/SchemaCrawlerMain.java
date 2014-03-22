@@ -24,10 +24,8 @@ import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.options.ApplicationOptions;
 import schemacrawler.tools.options.BundledDriverOptions;
-import schemacrawler.tools.options.HelpOptions;
 
 public class SchemaCrawlerMain
 {
@@ -38,7 +36,9 @@ public class SchemaCrawlerMain
   public static void main(final String[] args)
     throws Exception
   {
-    main(args, new HelpOptions(), null);
+    main(args, new BundledDriverOptions()
+    {
+    });
   }
 
   public static void main(final String[] args,
@@ -49,16 +49,7 @@ public class SchemaCrawlerMain
     {
       throw new IllegalArgumentException("No bundled driver options provided");
     }
-    main(args,
-         bundledDriverOptions.getHelpOptions(),
-         bundledDriverOptions.getConfig());
-  }
 
-  public static void main(final String[] args,
-                          final HelpOptions helpOptions,
-                          final Config config)
-    throws Exception
-  {
     final CommandLine commandLine;
     final boolean showHelp;
 
@@ -83,12 +74,14 @@ public class SchemaCrawlerMain
     {
       final boolean showVersionOnly = applicationOptions.isShowVersionOnly();
       commandLine = new SchemaCrawlerHelpCommandLine(remainingArgs,
-                                                     helpOptions,
+                                                     bundledDriverOptions
+                                                       .getHelpOptions(),
                                                      showVersionOnly);
     }
     else
     {
-      commandLine = new SchemaCrawlerCommandLine(config, remainingArgs);
+      commandLine = new SchemaCrawlerCommandLine(bundledDriverOptions,
+                                                 remainingArgs);
     }
     commandLine.execute();
   }

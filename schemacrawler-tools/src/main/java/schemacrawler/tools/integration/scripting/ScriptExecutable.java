@@ -38,7 +38,7 @@ import javax.script.ScriptEngineManager;
 
 import schemacrawler.schema.Database;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.executable.BaseExecutable;
+import schemacrawler.tools.executable.BaseStagedExecutable;
 import schemacrawler.tools.executable.CommandChainExecutable;
 import schemacrawler.tools.options.InputReader;
 import schemacrawler.tools.options.OutputWriter;
@@ -51,7 +51,7 @@ import sf.util.ObjectToString;
  * @author Sualeh Fatehi
  */
 public final class ScriptExecutable
-  extends BaseExecutable
+  extends BaseStagedExecutable
 {
 
   private static final Logger LOGGER = Logger.getLogger(ScriptExecutable.class

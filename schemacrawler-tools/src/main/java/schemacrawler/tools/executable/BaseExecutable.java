@@ -21,12 +21,7 @@
 package schemacrawler.tools.executable;
 
 
-import java.sql.Connection;
-
-import schemacrawler.crawl.SchemaCrawler;
-import schemacrawler.schema.Database;
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.options.OutputOptions;
 import sf.util.ObjectToString;
@@ -56,25 +51,6 @@ public abstract class BaseExecutable
 
     schemaCrawlerOptions = new SchemaCrawlerOptions();
     outputOptions = new OutputOptions();
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.executable.Executable#execute(java.sql.Connection)
-   */
-  @Override
-  public final void execute(final Connection connection)
-    throws Exception
-  {
-    if (connection == null)
-    {
-      throw new SchemaCrawlerException("No connection provided");
-    }
-
-    final SchemaCrawler crawler = new SchemaCrawler(connection);
-    final Database database = crawler.crawl(schemaCrawlerOptions);
-    executeOn(database, connection);
   }
 
   @Override
@@ -137,7 +113,10 @@ public abstract class BaseExecutable
   @Override
   public final void setOutputOptions(final OutputOptions outputOptions)
   {
-    this.outputOptions = outputOptions;
+    if (outputOptions != null)
+    {
+      this.outputOptions = outputOptions;
+    }
   }
 
   /**
@@ -148,7 +127,10 @@ public abstract class BaseExecutable
   @Override
   public final void setSchemaCrawlerOptions(final SchemaCrawlerOptions schemaCrawlerOptions)
   {
-    this.schemaCrawlerOptions = schemaCrawlerOptions;
+    if (schemaCrawlerOptions != null)
+    {
+      this.schemaCrawlerOptions = schemaCrawlerOptions;
+    }
   }
 
   /**
@@ -161,8 +143,5 @@ public abstract class BaseExecutable
   {
     return ObjectToString.toString(this);
   }
-
-  protected abstract void executeOn(Database database, Connection connection)
-    throws Exception;
 
 }

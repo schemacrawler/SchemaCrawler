@@ -26,7 +26,7 @@ import java.sql.Connection;
 import schemacrawler.schema.Database;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.analysis.associations.DatabaseWithAssociations;
-import schemacrawler.tools.executable.BaseExecutable;
+import schemacrawler.tools.executable.BaseStagedExecutable;
 import schemacrawler.tools.options.InfoLevel;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
@@ -38,7 +38,7 @@ import schemacrawler.tools.traversal.SchemaTraverser;
  * @author Sualeh Fatehi
  */
 public final class SchemaTextExecutable
-  extends BaseExecutable
+  extends BaseStagedExecutable
 {
 
   private SchemaTextOptions schemaTextOptions;

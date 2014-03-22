@@ -28,14 +28,14 @@ import java.util.logging.Logger;
 import schemacrawler.schema.Database;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.executable.BaseExecutable;
+import schemacrawler.tools.executable.BaseStagedExecutable;
 import schemacrawler.tools.lint.LintedDatabase;
 import schemacrawler.tools.lint.LinterConfigs;
 import schemacrawler.tools.options.OutputFormat;
 import sf.util.Utility;
 
 public class LintExecutable
-  extends BaseExecutable
+  extends BaseStagedExecutable
 {
 
   private static final Logger LOGGER = Logger.getLogger(LintExecutable.class
