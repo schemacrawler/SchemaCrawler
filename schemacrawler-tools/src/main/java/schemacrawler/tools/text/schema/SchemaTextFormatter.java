@@ -52,7 +52,6 @@ import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.TableConstraintColumn;
 import schemacrawler.schema.TableConstraintType;
 import schemacrawler.schema.Trigger;
-import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.analysis.associations.DatabaseWithAssociations;
 import schemacrawler.tools.options.OutputOptions;
@@ -277,11 +276,7 @@ final class SchemaTextFormatter
         printWeakAssociations(table);
       }
       printIndices(table.getIndices());
-      if (table instanceof View)
-      {
-        final View view = (View) table;
-        printDefinition(view);
-      }
+      printDefinition(table);
       printTriggers(table.getTriggers());
       printTableConstraints(table.getTableConstraints());
       if (isVerbose)

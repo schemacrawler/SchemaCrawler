@@ -26,7 +26,6 @@ import java.util.logging.Logger;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.Trigger;
-import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
@@ -99,12 +98,9 @@ class TableGrepFilter
       {
         includeForDefinitions = true;
       }
-      if (table instanceof View)
+      if (grepDefinitionInclusionRule.include(table.getDefinition()))
       {
-        if (grepDefinitionInclusionRule.include(((View) table).getDefinition()))
-        {
-          includeForDefinitions = true;
-        }
+        includeForDefinitions = true;
       }
       for (final Trigger trigger: table.getTriggers())
       {

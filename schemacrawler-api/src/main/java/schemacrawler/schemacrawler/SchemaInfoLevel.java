@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -23,7 +23,7 @@ package schemacrawler.schemacrawler;
 
 /**
  * Descriptor for level of schema detail.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public final class SchemaInfoLevel
@@ -34,7 +34,7 @@ public final class SchemaInfoLevel
 
   /**
    * Creates a new SchemaInfoLevel for verbose schema information.
-   * 
+   *
    * @return New SchemaInfoLevel
    */
   public static SchemaInfoLevel detailed()
@@ -52,7 +52,7 @@ public final class SchemaInfoLevel
 
   /**
    * Creates a new SchemaInfoLevel for maximum schema information.
-   * 
+   *
    * @return New SchemaInfoLevel
    */
   public static SchemaInfoLevel maximum()
@@ -63,6 +63,7 @@ public final class SchemaInfoLevel
     maximum.setRetrieveAdditionalJdbcDriverInfo(true);
     maximum.setRetrieveTablePrivileges(true);
     maximum.setRetrieveTableColumnPrivileges(true);
+    maximum.setRetrieveTableDefinitionsInformation(true);
     maximum.setRetrieveAdditionalTableAttributes(true);
     maximum.setRetrieveAdditionalColumnAttributes(true);
     maximum.setTag("maximum");
@@ -71,7 +72,7 @@ public final class SchemaInfoLevel
 
   /**
    * Creates a new SchemaInfoLevel for minimum schema information.
-   * 
+   *
    * @return New SchemaInfoLevel
    */
   public static SchemaInfoLevel minimum()
@@ -88,7 +89,7 @@ public final class SchemaInfoLevel
 
   /**
    * Creates a new SchemaInfoLevel for standard schema information.
-   * 
+   *
    * @return New SchemaInfoLevel
    */
   public static SchemaInfoLevel standard()
@@ -104,6 +105,7 @@ public final class SchemaInfoLevel
   }
 
   private String tag;
+
   private boolean retrieveSchemaCrawlerInfo = true;
   private boolean retrieveJdbcDriverInfo = true;
   private boolean retrieveDatabaseInfo = true;
@@ -128,6 +130,7 @@ public final class SchemaInfoLevel
   private boolean retrieveTableColumns;
   private boolean retrieveAdditionalTableAttributes;
   private boolean retrieveAdditionalColumnAttributes;
+  private boolean retrieveTableDefinitionsInformation;
 
   public String getTag()
   {
@@ -227,6 +230,11 @@ public final class SchemaInfoLevel
   public boolean isRetrieveTableConstraintInformation()
   {
     return retrieveTableConstraintInformation;
+  }
+
+  public boolean isRetrieveTableDefinitionsInformation()
+  {
+    return retrieveTableDefinitionsInformation;
   }
 
   public boolean isRetrieveTablePrivileges()
@@ -347,6 +355,11 @@ public final class SchemaInfoLevel
   public void setRetrieveTableConstraintInformation(final boolean retrieveTableConstraintInformation)
   {
     this.retrieveTableConstraintInformation = retrieveTableConstraintInformation;
+  }
+
+  public void setRetrieveTableDefinitionsInformation(final boolean retrieveTableDefinitionsInformation)
+  {
+    this.retrieveTableDefinitionsInformation = retrieveTableDefinitionsInformation;
   }
 
   public void setRetrieveTablePrivileges(final boolean retrieveTablePrivileges)

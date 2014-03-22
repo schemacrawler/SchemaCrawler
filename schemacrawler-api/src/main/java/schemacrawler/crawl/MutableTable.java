@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -44,12 +44,12 @@ import schemacrawler.schema.Trigger;
 
 /**
  * Represents a table in the database.
- * 
+ *
  * @author Sualeh Fatehi
  */
 class MutableTable
-  extends AbstractDatabaseObject
-  implements Table
+extends AbstractDatabaseObject
+implements Table
 {
 
   private enum TableAssociationType
@@ -71,10 +71,12 @@ class MutableTable
   private final NamedObjectList<MutableTrigger> triggers = new NamedObjectList<>();
   private final NamedObjectList<MutablePrivilege<Table>> privileges = new NamedObjectList<>();
   private int sortIndex;
+  private final StringBuilder definition;
 
   MutableTable(final Schema schema, final String name)
   {
     super(schema, name);
+    definition = new StringBuilder();
   }
 
   /**
@@ -104,7 +106,7 @@ class MutableTable
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Table#getColumn(java.lang.String)
    */
   @Override
@@ -115,7 +117,7 @@ class MutableTable
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see Table#getColumns()
    */
   @Override
@@ -126,7 +128,7 @@ class MutableTable
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Table#getColumnsListAsString()
    */
   @Override
@@ -148,7 +150,18 @@ class MutableTable
 
   /**
    * {@inheritDoc}
-   * 
+   *
+   * @see schemacrawler.schema.View#getDefinition()
+   */
+  @Override
+  public String getDefinition()
+  {
+    return definition.toString();
+  }
+
+  /**
+   * {@inheritDoc}
+   *
    * @see schemacrawler.schema.Table#getExportedForeignKeys()
    */
   @Override
@@ -159,7 +172,7 @@ class MutableTable
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Table#getForeignKey(java.lang.String)
    */
   @Override
@@ -170,7 +183,7 @@ class MutableTable
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Table#getForeignKeys()
    */
   @Override
@@ -187,7 +200,7 @@ class MutableTable
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Table#getIndex(java.lang.String)
    */
   @Override
@@ -198,7 +211,7 @@ class MutableTable
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see Table#getIndices()
    */
   @Override
@@ -210,7 +223,7 @@ class MutableTable
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see Table#getPrimaryKey()
    */
   @Override
@@ -221,7 +234,7 @@ class MutableTable
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Table#getPrivilege(java.lang.String)
    */
   @Override
@@ -232,7 +245,7 @@ class MutableTable
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see Table#getPrivileges()
    */
   @Override
@@ -243,7 +256,7 @@ class MutableTable
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Table#getRelatedTables(schemacrawler.schema.TableRelationshipType)
    */
   @Override
@@ -254,16 +267,16 @@ class MutableTable
         && tableRelationshipType != TableRelationshipType.none)
     {
       final List<MutableForeignKey> foreignKeysList = new ArrayList<>(foreignKeys
-        .values());
+          .values());
       for (final ForeignKey foreignKey: foreignKeysList)
       {
         for (final ForeignKeyColumnReference columnReference: foreignKey
-          .getColumnReferences())
+            .getColumnReferences())
         {
           final Table parentTable = columnReference.getPrimaryKeyColumn()
-            .getParent();
+              .getParent();
           final Table childTable = columnReference.getForeignKeyColumn()
-            .getParent();
+              .getParent();
           switch (tableRelationshipType)
           {
             case parent:
@@ -289,7 +302,7 @@ class MutableTable
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see Table#getTableConstraints()
    */
   @Override
@@ -300,7 +313,7 @@ class MutableTable
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see Table#getTableType()
    */
   @Override
@@ -311,7 +324,7 @@ class MutableTable
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Table#getTrigger(java.lang.String)
    */
   @Override
@@ -322,7 +335,7 @@ class MutableTable
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see Table#getTriggers()
    */
   @Override
@@ -333,13 +346,19 @@ class MutableTable
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.TypedObject#getType()
    */
   @Override
   public final TableType getType()
   {
     return getTableType();
+  }
+
+  @Override
+  public boolean hasDefinition()
+  {
+    return definition.length() > 0;
   }
 
   void addColumn(final MutableColumn column)
@@ -372,6 +391,14 @@ class MutableTable
     triggers.add(trigger);
   }
 
+  void appendDefinition(final String definition)
+  {
+    if (definition != null)
+    {
+      this.definition.append(definition);
+    }
+  }
+
   int getSortIndex()
   {
     return sortIndex;
@@ -379,7 +406,7 @@ class MutableTable
 
   /**
    * Looks up a trigger by name.
-   * 
+   *
    * @param triggerName
    *        Trigger name
    * @return Trigger, if found, or null
@@ -449,18 +476,18 @@ class MutableTable
   private Collection<ForeignKey> getForeignKeys(final TableAssociationType tableAssociationType)
   {
     final List<ForeignKey> foreignKeysList = new ArrayList<ForeignKey>(foreignKeys
-      .values());
+        .values());
     if (tableAssociationType != null
         && tableAssociationType != TableAssociationType.all)
     {
       for (final Iterator<ForeignKey> iterator = foreignKeysList.iterator(); iterator
-        .hasNext();)
+          .hasNext();)
       {
         final ForeignKey mutableForeignKey = iterator.next();
         boolean isExportedKey = false;
         boolean isImportedKey = false;
         for (final ForeignKeyColumnReference columnReference: mutableForeignKey
-          .getColumnReferences())
+            .getColumnReferences())
         {
           if (columnReference.getPrimaryKeyColumn().getParent().equals(this))
           {
