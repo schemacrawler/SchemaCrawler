@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseExecutable;
+import schemacrawler.tools.text.schema.SchemaTextOptions;
 import sf.util.Utility;
 
 public class OraclePreExecutable
@@ -27,7 +28,12 @@ public class OraclePreExecutable
   public void execute(final Connection connection)
     throws Exception
   {
-    executeScript("/schemacrawler-oracle.before.sql", connection);
+    final SchemaTextOptions schemaTextOptions = new SchemaTextOptions(additionalConfiguration);
+    if (schemaTextOptions.isShowUnqualifiedNames())
+    {
+      executeScript("/schemacrawler-oracle.show_unqualified_names.sql",
+                    connection);
+    }
   }
 
   private void executeScript(final String scriptResource,
