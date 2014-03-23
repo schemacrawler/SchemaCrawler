@@ -1,0 +1,434 @@
+
+
+
+System Information
+========================================================================
+
+
+
+SchemaCrawler Information
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
+
+product name                              SchemaCrawler                 
+product version                           10.08.03                      
+
+
+Database Information
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
+
+database product name                     HSQL Database Engine          
+database product version                  2.3.2                         
+database user name                        SA                            
+
+
+JDBC Driver Information
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
+
+driver name                               HSQL Database Engine Driver   
+driver version                            2.3.2                         
+driver class name                         org.hsqldb.jdbc.JDBCDriver    
+url                                       jdbc:hsqldb:hsql://localhost/schemacrawler
+is JDBC compliant                         true                          
+
+
+
+Tables
+========================================================================
+
+
+
+AUTHORS
+------------------------------------------------------------------------
+                                                                 [table]
+  ID                                INTEGER not null            
+  FIRSTNAME                         VARCHAR(20) not null        
+  LASTNAME                          VARCHAR(20) not null        
+  ADDRESS1                          VARCHAR(255)                
+  ADDRESS2                          VARCHAR(255)                
+  CITY                              VARCHAR(50)                 
+  STATE                             VARCHAR(2)                  
+  POSTALCODE                        VARCHAR(10)                 
+  COUNTRY                           VARCHAR(50)                 
+
+                                                           [primary key]
+  ID                                ascending                   
+
+                                           [foreign key, with no action]
+  ID --> BOOKAUTHORS.AUTHORID                                   
+
+                                                          [unique index]
+  ID                                ascending                   
+
+                                                      [non-unique index]
+  LASTNAME                          ascending                   
+  FIRSTNAME                         ascending                   
+
+                                                      [non-unique index]
+  CITY                              ascending                   
+  STATE                             ascending                   
+  POSTALCODE                        ascending                   
+  COUNTRY                           ascending                   
+
+
+
+AUTHORSLIST
+------------------------------------------------------------------------
+                                                                  [view]
+  ID                                INTEGER                     
+  FIRSTNAME                         VARCHAR(20)                 
+  LASTNAME                          VARCHAR(20)                 
+
+
+
+BOOKAUTHORS
+------------------------------------------------------------------------
+                                                                 [table]
+  BOOKID                            INTEGER not null            
+  AUTHORID                          INTEGER not null            
+  "UPDATE"                          CLOB                        
+
+                                           [foreign key, with no action]
+  AUTHORS.ID --> AUTHORID                                       
+
+                                           [foreign key, with no action]
+  BOOKS.ID --> BOOKID                                           
+
+                                                      [non-unique index]
+  AUTHORID                          ascending                   
+
+                                                      [non-unique index]
+  BOOKID                            ascending                   
+
+                                                          [unique index]
+  BOOKID                            ascending                   
+  AUTHORID                          ascending                   
+
+
+
+BOOKS
+------------------------------------------------------------------------
+                                                                 [table]
+  ID                                INTEGER not null            
+  TITLE                             VARCHAR(255) not null       
+  DESCRIPTION                       VARCHAR(255)                
+  PUBLISHERID                       INTEGER not null            
+  PUBLICATIONDATE                   DATE                        
+  PRICE                             DOUBLE(64, 0)               
+
+                                                           [primary key]
+  ID                                ascending                   
+
+                                           [foreign key, with no action]
+  ID --> BOOKAUTHORS.BOOKID                                     
+
+                                                          [unique index]
+  ID                                ascending                   
+
+
+
+"Global Counts"
+------------------------------------------------------------------------
+                                                                 [table]
+  "Global Count"                    INTEGER                     
+
+
+
+PUBLISHERS
+------------------------------------------------------------------------
+                                                                 [table]
+  ID                                INTEGER not null            
+  PUBLISHER                         VARCHAR(255)                
+
+                                                           [primary key]
+  ID                                ascending                   
+
+                                                          [unique index]
+  ID                                ascending                   
+
+
+
+EXTRA_PK
+------------------------------------------------------------------------
+                                                                 [table]
+  ID                                INTEGER not null            
+  WRITERID                          BIGINT not null             
+  PUBLICATIONID                     INTEGER not null            
+
+                                                           [primary key]
+  ID                                ascending                   
+
+                                           [foreign key, with no action]
+  PUBLICATIONS.ID --> PUBLICATIONID                              
+
+                                           [foreign key, with no action]
+  WRITERS.ID --> WRITERID                                       
+
+                                                          [unique index]
+  ID                                ascending                   
+
+                                                      [non-unique index]
+  PUBLICATIONID                     ascending                   
+
+                                                      [non-unique index]
+  WRITERID                          ascending                   
+
+
+
+"Global Counts"
+------------------------------------------------------------------------
+                                                                 [table]
+  "Global Count"                    INTEGER                     
+
+
+
+PUBLICATIONS
+------------------------------------------------------------------------
+                                                                 [table]
+  ID                                INTEGER not null            
+  TITLE                             VARCHAR(255) not null       
+  DESCRIPTION                       VARCHAR(255)                
+  WRITERID                          BIGINT not null             
+  PUBLICATIONDATE                   DATE                        
+  PRICE                             DOUBLE(64, 0)               
+  "UPDATE"                          CLOB                        
+  PRESS_RELEASE                     CLOB                        
+
+                                                           [primary key]
+  ID                                ascending                   
+
+                                           [foreign key, with no action]
+  ID --> EXTRA_PK.PUBLICATIONID                                 
+
+                                           [foreign key, with no action]
+  ID --> WRITERS.PUBLICATION_ID                                 
+
+                                           [foreign key, with no action]
+  WRITERS.ID --> WRITERID                                       
+
+                                                          [unique index]
+  ID                                ascending                   
+
+                                                      [non-unique index]
+  WRITERID                          ascending                   
+
+
+
+WRITERS
+------------------------------------------------------------------------
+                                                                 [table]
+  ID                                BIGINT not null             
+  FIRSTNAME                         VARCHAR(20) not null        
+  LASTNAME                          VARCHAR(20) not null        
+  ADDRESS1                          VARCHAR(255)                
+  ADDRESS2                          VARCHAR(255) not null       
+  CITY                              VARCHAR(50)                 
+  STATE                             VARCHAR(2)                  
+  POSTALCODE                        VARCHAR(10)                 
+  COUNTRY                           VARCHAR(50)                 
+  PHONE1                            VARCHAR(10)                 
+  PHONE2                            VARCHAR(15)                 
+  EMAIL1                            VARCHAR(10)                 
+  EMAIL2                            INTEGER                     
+  FAX                               VARCHAR(10)                 
+  FAX3                              INTEGER                     
+  HOMEEMAIL11                       VARCHAR(10)                 
+  HOMEEMAIL12                       VARCHAR(10)                 
+  PUBLICATION_ID                    BIGINT not null             
+
+                                                           [primary key]
+  ID                                ascending                   
+
+                                           [foreign key, with no action]
+  PUBLICATIONS.ID --> PUBLICATION_ID                              
+
+                                           [foreign key, with no action]
+  ID --> EXTRA_PK.WRITERID                                      
+
+                                           [foreign key, with no action]
+  ID --> PUBLICATIONS.WRITERID                                  
+
+                                                          [unique index]
+  ID                                ascending                   
+
+                                                      [non-unique index]
+  PUBLICATION_ID                    ascending                   
+
+                                                      [non-unique index]
+  CITY                              ascending                   
+  STATE                             ascending                   
+
+                                                          [unique index]
+  EMAIL1                            ascending                   
+  COUNTRY                           ascending                   
+
+                                                      [non-unique index]
+  LASTNAME                          ascending                   
+  FIRSTNAME                         ascending                   
+
+                                                      [non-unique index]
+  CITY                              ascending                   
+  STATE                             ascending                   
+  POSTALCODE                        ascending                   
+  COUNTRY                           ascending                   
+
+
+
+REGIONS
+------------------------------------------------------------------------
+                                                                 [table]
+  CITY                              VARCHAR(50) not null        
+  STATE                             VARCHAR(2) not null         
+  POSTALCODE                        VARCHAR(10) not null        
+  COUNTRY                           VARCHAR(50) not null        
+
+                                                           [primary key]
+  POSTALCODE                        ascending                   
+  COUNTRY                           ascending                   
+
+                                           [foreign key, with no action]
+  POSTALCODE --> SALES.POSTALCODE                               
+  COUNTRY --> SALES.COUNTRY                                     
+
+                                                          [unique index]
+  POSTALCODE                        ascending                   
+  COUNTRY                           ascending                   
+
+
+
+SALES
+------------------------------------------------------------------------
+                                                                 [table]
+  POSTALCODE                        VARCHAR(10) not null        
+  COUNTRY                           VARCHAR(50) not null        
+  BOOKID                            INTEGER                     
+  PERIODENDDATE                     DATE                        
+  TOTALAMOUNT                       DOUBLE(64, 0)               
+
+                                           [foreign key, with no action]
+  REGIONS.POSTALCODE --> POSTALCODE                              
+  REGIONS.COUNTRY --> COUNTRY                                   
+
+                                                      [non-unique index]
+  POSTALCODE                        ascending                   
+  COUNTRY                           ascending                   
+
+
+
+
+Routines
+========================================================================
+
+
+
+CUSTOMADD
+------------------------------------------------------------------------
+                                     [function, does not return a table]
+  ONE                               INTEGER, in                 
+
+
+
+CUSTOMADD
+------------------------------------------------------------------------
+                                     [function, does not return a table]
+  ONE                               INTEGER, in                 
+  TWO                               INTEGER, in                 
+
+
+
+NEW_PUBLISHER
+------------------------------------------------------------------------
+                                                  [procedure, no result]
+  NEWPUBLISHER                      CHARACTER VARYING, in       
+  PUBLISHER                         CHARACTER VARYING, out      
+
+
+
+NEW_PUBLISHER
+------------------------------------------------------------------------
+                                                  [procedure, no result]
+  PUBLISHER                         CHARACTER VARYING, out      
+
+
+
+ALLOC_BLOCKS
+------------------------------------------------------------------------
+                                                  [procedure, no result]
+  B_COUNT                           INTEGER, in                 
+  B_OFFSET                          INTEGER, in                 
+  L_ID                              BIGINT, in                  
+
+
+
+ALLOC_SINGLE_BLOCK
+------------------------------------------------------------------------
+                                                  [procedure, no result]
+  B_COUNT                           INTEGER, in                 
+  B_OFFSET                          INTEGER, in                 
+  L_ID                              BIGINT, in                  
+
+
+
+CONVERT_BLOCK
+------------------------------------------------------------------------
+                                                  [procedure, no result]
+  B_ADDR                            INTEGER, in                 
+  B_COUNT                           INTEGER, in                 
+  B_OFFSET                          INTEGER, in                 
+  L_ID                              BIGINT, in                  
+
+
+
+CREATE_EMPTY_BLOCK
+------------------------------------------------------------------------
+                                                  [procedure, no result]
+  B_ADDR                            INTEGER, in/ out            
+  B_COUNT                           INTEGER, in                 
+
+
+
+DELETE_BLOCKS
+------------------------------------------------------------------------
+                                                  [procedure, no result]
+  L_ID                              BIGINT, in                  
+  B_OFFSET                          INTEGER, in                 
+  B_LIMIT                           INTEGER, in                 
+  TX_ID                             BIGINT, in                  
+
+
+
+DELETE_LOB
+------------------------------------------------------------------------
+                                                  [procedure, no result]
+  L_ID                              BIGINT, in                  
+  TX_ID                             BIGINT, in                  
+
+
+
+DELETE_UNUSED
+------------------------------------------------------------------------
+                                                  [procedure, no result]
+  L_IDS                             BIGINT ARRAY, in            
+
+
+
+DELETE_UNUSED_LOBS
+------------------------------------------------------------------------
+                                                  [procedure, no result]
+  LIMIT_ID                          BIGINT, in                  
+
+
+
+DIVIDE_BLOCK
+------------------------------------------------------------------------
+                                                  [procedure, no result]
+  B_OFFSET                          INTEGER, in                 
+  L_ID                              BIGINT, in                  
+
+
+
+MERGE_EMPTY_BLOCKS
+------------------------------------------------------------------------
+                                                  [procedure, no result]
+
+
+
