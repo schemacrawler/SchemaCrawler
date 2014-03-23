@@ -71,7 +71,7 @@ hsqldb.select.INFORMATION_SCHEMA.VIEWS=\
                     </tbody>
                 </table>
             </subsection>
-			<subsection name="INFORMATION_SCHEMA.VIEWS">
+			<subsection name="INFORMATION_SCHEMA.EXT_TABLES">
 				<table>
 					<thead>
 						<tr>
@@ -93,34 +93,68 @@ hsqldb.select.INFORMATION_SCHEMA.VIEWS=\
 							<td>The name of the view.</td>
 						</tr>
 						<tr>
-							<td>VIEW_DEFINITION</td>
+							<td>TABLE_DEFINITION</td>
 							<td>
-								The definition of the view as it would appear in a
-								CREATE VIEW
+								The definition of the table as it would appear in a
+								CREATE TABLE
 								statement. If it does not fit, the value is
 								NULL.
-							</td>
-						</tr>
-						<tr>
-							<td>CHECK_OPTION</td>
-							<td>
-								One of: CASCADED = if WITH CHECK OPTION was specified in
-								the
-								CREATE VIEW statement that created the view; NONE =
-								otherwise.
-							</td>
-						</tr>
-						<tr>
-							<td>IS_UPDATABLE</td>
-							<td>
-								One of: YES = the view is updatable; NO = the view is
-								not
-								updatable.
 							</td>
 						</tr>
 					</tbody>
 				</table>
 			</subsection>
+
+            <subsection name="INFORMATION_SCHEMA.VIEWS">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Column name</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>TABLE_CATALOG</td>
+                            <td>The name of the catalog containing the view.</td>
+                        </tr>
+                        <tr>
+                            <td>TABLE_SCHEMA</td>
+                            <td>The name of the schema containing the view.</td>
+                        </tr>
+                        <tr>
+                            <td>TABLE_NAME</td>
+                            <td>The name of the view.</td>
+                        </tr>
+                        <tr>
+                            <td>VIEW_DEFINITION</td>
+                            <td>
+                                The definition of the view as it would appear in a
+                                CREATE VIEW
+                                statement. If it does not fit, the value is
+                                NULL.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>CHECK_OPTION</td>
+                            <td>
+                                One of: CASCADED = if WITH CHECK OPTION was specified in
+                                the
+                                CREATE VIEW statement that created the view; NONE =
+                                otherwise.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>IS_UPDATABLE</td>
+                            <td>
+                                One of: YES = the view is updatable; NO = the view is
+                                not
+                                updatable.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </subsection>			
 			<subsection name="INFORMATION_SCHEMA.ROUTINES">
 				<table>
 					<thead>
