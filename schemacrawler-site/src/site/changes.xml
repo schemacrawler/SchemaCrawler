@@ -5,10 +5,25 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-     <release version="10.08.03" date="2014-02-02">
+     <release version="10.08.03" date="2014-03-24">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
-        Made information for all information schema views available as attributes of SchemaCrawler Java objects.
-      ]]></action>                                                      
+        Made extra columns provided in all information schema views available as attributes of SchemaCrawler Java objects.
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added table definition metadata for Oracle.
+      ]]></action>    
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Allow for code to be executed before and after the crawl. This is in the form of pre- and post- executables.
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added foreign key definition metadata for Oracle.
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Fixed DDL metadata for Oracle, so that it is portable.
+      ]]></action>      
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Converted code to Git.
+      ]]></action>                                                                                
     </release>   
      <release version="10.08.02" date="2013-12-28">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
