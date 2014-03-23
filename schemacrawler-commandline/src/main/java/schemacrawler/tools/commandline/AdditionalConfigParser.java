@@ -37,7 +37,9 @@ final class AdditionalConfigParser
   extends BaseOptionsParser<Config>
 {
 
-  AdditionalConfigParser()
+  private final Config config;
+
+  AdditionalConfigParser(final Config config)
   {
     super(new StringOption('p',
                            "additionalconfigfile",
@@ -47,16 +49,21 @@ final class AdditionalConfigParser
           new BooleanOption("sortcolumns"),
           new BooleanOption("sortinout"),
           new BooleanOption("portablenames"));
+    this.config = config;
   }
 
   @Override
   protected Config getOptions()
     throws SchemaCrawlerException
   {
-    final String cfgFile = getStringValue("p");
-    final Config config = Config.load(cfgFile);
+    // Start with main config
+    final Config additionalConfig = new Config(config);
 
-    final SchemaTextOptions textOptions = new SchemaTextOptions(config);
+    // Override with additional config
+    final String cfgFile = getStringValue("p");
+    additionalConfig.putAll(Config.load(cfgFile));
+
+    final SchemaTextOptions textOptions = new SchemaTextOptions(additionalConfig);
     if (getBooleanValue("noinfo"))
     {
       textOptions.setNoInfo(true);
@@ -84,9 +91,9 @@ final class AdditionalConfigParser
       textOptions.setShowUnqualifiedNames(true);
     }
 
-    config.putAll(textOptions.toConfig());
+    additionalConfig.putAll(textOptions.toConfig());
 
-    return config;
+    return additionalConfig;
   }
 
 }
