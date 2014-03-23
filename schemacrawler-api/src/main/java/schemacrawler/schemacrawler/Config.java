@@ -123,6 +123,9 @@ public final class Config
   {
     try
     {
+      LOGGER.log(Level.INFO,
+                 "Loading properties from file, "
+                     + propertiesFile.getAbsolutePath());
       loadProperties(properties, new FileReader(propertiesFile));
     }
     catch (final FileNotFoundException e)
