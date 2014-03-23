@@ -25,7 +25,7 @@
   "databaseInfo": {
     "databaseProductName": "HSQL Database Engine",
     "databaseUserName": "SA",
-    "databaseProductVersion": "2.3.0"
+    "databaseProductVersion": "2.3.2"
   },
   "schemaCrawlerInfo": {
     "productVersion": "10.08.03",
@@ -34,7 +34,7 @@
   "jdbcDriverInfo": {
     "isJDBCCompliant": "true",
     "driverClassName": "org.hsqldb.jdbc.JDBCDriver",
-    "driverVersion": "2.3.0",
+    "driverVersion": "2.3.2",
     "driverName": "HSQL Database Engine Driver",
     "url": "jdbc:hsqldb:hsql://localhost/schemacrawler"
   }
