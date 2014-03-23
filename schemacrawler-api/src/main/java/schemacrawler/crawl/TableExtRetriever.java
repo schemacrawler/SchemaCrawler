@@ -201,7 +201,7 @@ final class TableExtRetriever
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
       .getInformationSchemaViews();
 
-    if (!informationSchemaViews.hasIndexesExtSql())
+    if (!informationSchemaViews.hasExtIndexesSql())
     {
       LOGGER.log(Level.FINE,
                  "Indexes information SQL statement was not provided");

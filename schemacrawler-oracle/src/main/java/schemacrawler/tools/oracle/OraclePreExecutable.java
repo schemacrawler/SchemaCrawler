@@ -28,6 +28,8 @@ public class OraclePreExecutable
   public void execute(final Connection connection)
     throws Exception
   {
+    executeScript("/schemacrawler-oracle.before.sql", connection);
+
     final SchemaTextOptions schemaTextOptions = new SchemaTextOptions(additionalConfiguration);
     if (schemaTextOptions.isShowUnqualifiedNames())
     {
