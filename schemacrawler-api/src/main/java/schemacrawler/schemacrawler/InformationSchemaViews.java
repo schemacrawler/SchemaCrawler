@@ -269,7 +269,7 @@ implements Options
         .containsKey(KEY_INFORMATION_SCHEMA_EXT_TABLES);
   }
 
-  public boolean hasIndexesExtSql()
+  public boolean hasExtIndexesSql()
   {
     return informationSchemaQueries
         .containsKey(KEY_INFORMATION_SCHEMA_EXT_INDEXES);
