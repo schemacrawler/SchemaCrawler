@@ -21,6 +21,20 @@
 package schemacrawler.schemacrawler;
 
 
+import static schemacrawler.schemacrawler.InformationSchemaViews.InformationSchemaKey.ADDITIONAL_COLUMN_ATTRIBUTES;
+import static schemacrawler.schemacrawler.InformationSchemaViews.InformationSchemaKey.ADDITIONAL_TABLE_ATTRIBUTES;
+import static schemacrawler.schemacrawler.InformationSchemaViews.InformationSchemaKey.CONSTRAINT_COLUMN_USAGE;
+import static schemacrawler.schemacrawler.InformationSchemaViews.InformationSchemaKey.EXT_INDEXES;
+import static schemacrawler.schemacrawler.InformationSchemaViews.InformationSchemaKey.EXT_SYNONYMS;
+import static schemacrawler.schemacrawler.InformationSchemaViews.InformationSchemaKey.EXT_TABLES;
+import static schemacrawler.schemacrawler.InformationSchemaViews.InformationSchemaKey.EXT_TABLE_CONSTRAINTS;
+import static schemacrawler.schemacrawler.InformationSchemaViews.InformationSchemaKey.OVERRIDE_TYPE_INFO;
+import static schemacrawler.schemacrawler.InformationSchemaViews.InformationSchemaKey.ROUTINES;
+import static schemacrawler.schemacrawler.InformationSchemaViews.InformationSchemaKey.SCHEMATA;
+import static schemacrawler.schemacrawler.InformationSchemaViews.InformationSchemaKey.TABLE_CONSTRAINTS;
+import static schemacrawler.schemacrawler.InformationSchemaViews.InformationSchemaKey.TRIGGERS;
+import static schemacrawler.schemacrawler.InformationSchemaViews.InformationSchemaKey.VIEWS;
+
 import java.sql.DatabaseMetaData;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,26 +48,43 @@ import sf.util.ObjectToString;
  * @author Sualeh Fatehi
  */
 public final class InformationSchemaViews
-implements Options
+  implements Options
 {
+
+  protected enum InformationSchemaKey
+  {
+
+    EXT_TABLES("select.INFORMATION_SCHEMA.EXT_TABLES"),
+    VIEWS("select.INFORMATION_SCHEMA.VIEWS"),
+    EXT_INDEXES("select.INFORMATION_SCHEMA.EXT_INDEXES"),
+    TRIGGERS("select.INFORMATION_SCHEMA.TRIGGERS"),
+    TABLE_CONSTRAINTS("select.INFORMATION_SCHEMA.TABLE_CONSTRAINTS"),
+    CONSTRAINT_COLUMN_USAGE("select.INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE"),
+    EXT_TABLE_CONSTRAINTS("select.INFORMATION_SCHEMA.EXT_TABLE_CONSTRAINTS"),
+    ROUTINES("select.INFORMATION_SCHEMA.ROUTINES"),
+    SCHEMATA("select.INFORMATION_SCHEMA.SCHEMATA"),
+    EXT_SYNONYMS("select.INFORMATION_SCHEMA.EXT_SYNONYMS"),
+    OVERRIDE_TYPE_INFO("select.OVERRIDE_TYPE_INFO"),
+    ADDITIONAL_TABLE_ATTRIBUTES("select.ADDITIONAL_TABLE_ATTRIBUTES"),
+    ADDITIONAL_COLUMN_ATTRIBUTES("select.ADDITIONAL_COLUMN_ATTRIBUTES");
+
+    private final String lookupKey;
+
+    private InformationSchemaKey(final String lookupKey)
+    {
+      this.lookupKey = lookupKey;
+    }
+
+    public String getLookupKey()
+    {
+      return lookupKey;
+    }
+
+  }
 
   private static final long serialVersionUID = 3587581365346059044L;
 
-  private static final String KEY_INFORMATION_SCHEMA_VIEWS = "select.INFORMATION_SCHEMA.VIEWS";
-  private static final String KEY_INFORMATION_SCHEMA_EXT_TABLES = "select.INFORMATION_SCHEMA.EXT_TABLES";
-  private static final String KEY_INFORMATION_SCHEMA_TRIGGERS = "select.INFORMATION_SCHEMA.TRIGGERS";
-  private static final String KEY_INFORMATION_SCHEMA_TABLE_CONSTRAINTS = "select.INFORMATION_SCHEMA.TABLE_CONSTRAINTS";
-  private static final String KEY_INFORMATION_SCHEMA_CONSTRAINT_COLUMN_USAGE = "select.INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE";
-  private static final String KEY_INFORMATION_SCHEMA_EXT_TABLE_CONSTRAINTS = "select.INFORMATION_SCHEMA.EXT_TABLE_CONSTRAINTS";
-  private static final String KEY_INFORMATION_SCHEMA_ROUTINES = "select.INFORMATION_SCHEMA.ROUTINES";
-  private static final String KEY_INFORMATION_SCHEMA_SCHEMATA = "select.INFORMATION_SCHEMA.SCHEMATA";
-  private static final String KEY_INFORMATION_SCHEMA_EXT_SYNONYMS = "select.INFORMATION_SCHEMA.EXT_SYNONYMS";
-  private static final String KEY_INFORMATION_SCHEMA_EXT_INDEXES = "select.INFORMATION_SCHEMA.EXT_INDEXES";
-  private static final String KEY_OVERRIDE_TYPE_INFO = "select.OVERRIDE_TYPE_INFO";
-  private static final String KEY_ADDITIONAL_TABLE_ATTRIBUTES = "select.ADDITIONAL_TABLE_ATTRIBUTES";
-  private static final String KEY_ADDITIONAL_COLUMN_ATTRIBUTES = "select.ADDITIONAL_COLUMN_ATTRIBUTES";
-
-  private final Map<String, String> informationSchemaQueries;
+  private final Map<InformationSchemaKey, String> informationSchemaQueries;
 
   /**
    * Creates empty information schema views.
@@ -74,29 +105,14 @@ implements Options
     informationSchemaQueries = new HashMap<>();
     if (informationSchemaViewsSql != null)
     {
-      final String[] keys = new String[] {
-                                          KEY_INFORMATION_SCHEMA_VIEWS,
-                                          KEY_INFORMATION_SCHEMA_EXT_TABLES,
-                                          KEY_INFORMATION_SCHEMA_TRIGGERS,
-                                          KEY_INFORMATION_SCHEMA_TABLE_CONSTRAINTS,
-                                          KEY_INFORMATION_SCHEMA_CONSTRAINT_COLUMN_USAGE,
-                                          KEY_INFORMATION_SCHEMA_EXT_TABLE_CONSTRAINTS,
-                                          KEY_INFORMATION_SCHEMA_ROUTINES,
-                                          KEY_INFORMATION_SCHEMA_SCHEMATA,
-                                          KEY_INFORMATION_SCHEMA_EXT_SYNONYMS,
-                                          KEY_INFORMATION_SCHEMA_EXT_INDEXES,
-                                          KEY_OVERRIDE_TYPE_INFO,
-                                          KEY_ADDITIONAL_TABLE_ATTRIBUTES,
-                                          KEY_ADDITIONAL_COLUMN_ATTRIBUTES
-      };
-      for (final String key: keys)
+      for (final InformationSchemaKey key: InformationSchemaKey.values())
       {
-        if (informationSchemaViewsSql.containsKey(key))
+        if (informationSchemaViewsSql.containsKey(key.getLookupKey()))
         {
           try
           {
-            informationSchemaQueries.put(key,
-                                         informationSchemaViewsSql.get(key));
+            informationSchemaQueries.put(key, informationSchemaViewsSql.get(key
+              .getLookupKey()));
           }
           catch (final IllegalArgumentException e)
           {
@@ -115,7 +131,7 @@ implements Options
    */
   public String getAdditionalColumnAttributesSql()
   {
-    return informationSchemaQueries.get(KEY_ADDITIONAL_COLUMN_ATTRIBUTES);
+    return informationSchemaQueries.get(ADDITIONAL_COLUMN_ATTRIBUTES);
   }
 
   /**
@@ -126,7 +142,7 @@ implements Options
    */
   public String getAdditionalTableAttributesSql()
   {
-    return informationSchemaQueries.get(KEY_ADDITIONAL_TABLE_ATTRIBUTES);
+    return informationSchemaQueries.get(ADDITIONAL_TABLE_ATTRIBUTES);
   }
 
   /**
@@ -136,7 +152,7 @@ implements Options
    */
   public String getExtIndexesSql()
   {
-    return informationSchemaQueries.get(KEY_INFORMATION_SCHEMA_EXT_INDEXES);
+    return informationSchemaQueries.get(EXT_INDEXES);
   }
 
   /**
@@ -147,8 +163,7 @@ implements Options
    */
   public String getExtTableConstraintsSql()
   {
-    return informationSchemaQueries
-        .get(KEY_INFORMATION_SCHEMA_EXT_TABLE_CONSTRAINTS);
+    return informationSchemaQueries.get(EXT_TABLE_CONSTRAINTS);
   }
 
   /**
@@ -158,7 +173,7 @@ implements Options
    */
   public String getExtTablesSql()
   {
-    return informationSchemaQueries.get(KEY_INFORMATION_SCHEMA_EXT_TABLES);
+    return informationSchemaQueries.get(EXT_TABLES);
   }
 
   /**
@@ -169,7 +184,7 @@ implements Options
    */
   public String getOverrideTypeInfoSql()
   {
-    return informationSchemaQueries.get(KEY_OVERRIDE_TYPE_INFO);
+    return informationSchemaQueries.get(OVERRIDE_TYPE_INFO);
   }
 
   /**
@@ -179,7 +194,7 @@ implements Options
    */
   public String getRoutinesSql()
   {
-    return informationSchemaQueries.get(KEY_INFORMATION_SCHEMA_ROUTINES);
+    return informationSchemaQueries.get(ROUTINES);
   }
 
   /**
@@ -189,7 +204,7 @@ implements Options
    */
   public String getSchemataSql()
   {
-    return informationSchemaQueries.get(KEY_INFORMATION_SCHEMA_SCHEMATA);
+    return informationSchemaQueries.get(SCHEMATA);
   }
 
   /**
@@ -199,7 +214,7 @@ implements Options
    */
   public String getSynonymsSql()
   {
-    return informationSchemaQueries.get(KEY_INFORMATION_SCHEMA_EXT_SYNONYMS);
+    return informationSchemaQueries.get(EXT_SYNONYMS);
   }
 
   /**
@@ -210,8 +225,7 @@ implements Options
    */
   public String getTableConstraintsColumnsSql()
   {
-    return informationSchemaQueries
-        .get(KEY_INFORMATION_SCHEMA_CONSTRAINT_COLUMN_USAGE);
+    return informationSchemaQueries.get(CONSTRAINT_COLUMN_USAGE);
   }
 
   /**
@@ -221,8 +235,7 @@ implements Options
    */
   public String getTableConstraintsSql()
   {
-    return informationSchemaQueries
-        .get(KEY_INFORMATION_SCHEMA_TABLE_CONSTRAINTS);
+    return informationSchemaQueries.get(TABLE_CONSTRAINTS);
   }
 
   /**
@@ -232,7 +245,7 @@ implements Options
    */
   public String getTriggersSql()
   {
-    return informationSchemaQueries.get(KEY_INFORMATION_SCHEMA_TRIGGERS);
+    return informationSchemaQueries.get(TRIGGERS);
   }
 
   /**
@@ -242,83 +255,72 @@ implements Options
    */
   public String getViewsSql()
   {
-    return informationSchemaQueries.get(KEY_INFORMATION_SCHEMA_VIEWS);
+    return informationSchemaQueries.get(VIEWS);
   }
 
   public boolean hasAdditionalColumnAttributesSql()
   {
-    return informationSchemaQueries
-        .containsKey(KEY_ADDITIONAL_COLUMN_ATTRIBUTES);
+    return informationSchemaQueries.containsKey(ADDITIONAL_COLUMN_ATTRIBUTES);
   }
 
   public boolean hasAdditionalTableAttributesSql()
   {
-    return informationSchemaQueries
-        .containsKey(KEY_ADDITIONAL_TABLE_ATTRIBUTES);
-  }
-
-  public boolean hasExtTableConstraintsSql()
-  {
-    return informationSchemaQueries
-        .containsKey(KEY_INFORMATION_SCHEMA_EXT_TABLE_CONSTRAINTS);
-  }
-
-  public boolean hasExtTablesSql()
-  {
-    return informationSchemaQueries
-        .containsKey(KEY_INFORMATION_SCHEMA_EXT_TABLES);
+    return informationSchemaQueries.containsKey(ADDITIONAL_TABLE_ATTRIBUTES);
   }
 
   public boolean hasExtIndexesSql()
   {
-    return informationSchemaQueries
-        .containsKey(KEY_INFORMATION_SCHEMA_EXT_INDEXES);
+    return informationSchemaQueries.containsKey(EXT_INDEXES);
+  }
+
+  public boolean hasExtTableConstraintsSql()
+  {
+    return informationSchemaQueries.containsKey(EXT_TABLE_CONSTRAINTS);
+  }
+
+  public boolean hasExtTablesSql()
+  {
+    return informationSchemaQueries.containsKey(EXT_TABLES);
   }
 
   public boolean hasOverrideTypeInfoSql()
   {
-    return informationSchemaQueries.containsKey(KEY_OVERRIDE_TYPE_INFO);
+    return informationSchemaQueries.containsKey(OVERRIDE_TYPE_INFO);
   }
 
   public boolean hasRoutinesSql()
   {
-    return informationSchemaQueries
-        .containsKey(KEY_INFORMATION_SCHEMA_ROUTINES);
+    return informationSchemaQueries.containsKey(ROUTINES);
   }
 
   public boolean hasSchemataSql()
   {
-    return informationSchemaQueries
-        .containsKey(KEY_INFORMATION_SCHEMA_SCHEMATA);
+    return informationSchemaQueries.containsKey(SCHEMATA);
   }
 
   public boolean hasSynonymsSql()
   {
-    return informationSchemaQueries
-        .containsKey(KEY_INFORMATION_SCHEMA_EXT_SYNONYMS);
+    return informationSchemaQueries.containsKey(EXT_SYNONYMS);
   }
 
   public boolean hasTableConstraintsColumnsSql()
   {
-    return informationSchemaQueries
-        .containsKey(KEY_INFORMATION_SCHEMA_CONSTRAINT_COLUMN_USAGE);
+    return informationSchemaQueries.containsKey(CONSTRAINT_COLUMN_USAGE);
   }
 
   public boolean hasTableConstraintsSql()
   {
-    return informationSchemaQueries
-        .containsKey(KEY_INFORMATION_SCHEMA_TABLE_CONSTRAINTS);
+    return informationSchemaQueries.containsKey(TABLE_CONSTRAINTS);
   }
 
   public boolean hasTriggerSql()
   {
-    return informationSchemaQueries
-        .containsKey(KEY_INFORMATION_SCHEMA_TRIGGERS);
+    return informationSchemaQueries.containsKey(TRIGGERS);
   }
 
   public boolean hasViewsSql()
   {
-    return informationSchemaQueries.containsKey(KEY_INFORMATION_SCHEMA_VIEWS);
+    return informationSchemaQueries.containsKey(VIEWS);
   }
 
   /**
@@ -329,7 +331,7 @@ implements Options
    */
   public void setAdditionalColumnAttributesSql(final String sql)
   {
-    informationSchemaQueries.put(KEY_ADDITIONAL_COLUMN_ATTRIBUTES, sql);
+    informationSchemaQueries.put(ADDITIONAL_COLUMN_ATTRIBUTES, sql);
   }
 
   /**
@@ -340,7 +342,7 @@ implements Options
    */
   public void setAdditionalTableAttributesSql(final String sql)
   {
-    informationSchemaQueries.put(KEY_ADDITIONAL_TABLE_ATTRIBUTES, sql);
+    informationSchemaQueries.put(ADDITIONAL_TABLE_ATTRIBUTES, sql);
   }
 
   /**
@@ -351,7 +353,7 @@ implements Options
    */
   public void setExtIndexesSql(final String sql)
   {
-    informationSchemaQueries.put(KEY_INFORMATION_SCHEMA_EXT_INDEXES, sql);
+    informationSchemaQueries.put(EXT_INDEXES, sql);
   }
 
   /**
@@ -362,8 +364,7 @@ implements Options
    */
   public void setExtTableConstraintsSql(final String sql)
   {
-    informationSchemaQueries.put(KEY_INFORMATION_SCHEMA_EXT_TABLE_CONSTRAINTS,
-                                 sql);
+    informationSchemaQueries.put(EXT_TABLE_CONSTRAINTS, sql);
   }
 
   /**
@@ -374,7 +375,7 @@ implements Options
    */
   public void setExtTablesSql(final String sql)
   {
-    informationSchemaQueries.put(KEY_INFORMATION_SCHEMA_EXT_TABLES, sql);
+    informationSchemaQueries.put(EXT_TABLES, sql);
   }
 
   /**
@@ -386,7 +387,7 @@ implements Options
    */
   public void setOverrideTypeInfoSql(final String sql)
   {
-    informationSchemaQueries.put(KEY_OVERRIDE_TYPE_INFO, sql);
+    informationSchemaQueries.put(OVERRIDE_TYPE_INFO, sql);
   }
 
   /**
@@ -397,7 +398,7 @@ implements Options
    */
   public void setRoutinesSql(final String sql)
   {
-    informationSchemaQueries.put(KEY_INFORMATION_SCHEMA_ROUTINES, sql);
+    informationSchemaQueries.put(ROUTINES, sql);
   }
 
   /**
@@ -408,7 +409,7 @@ implements Options
    */
   public void setSchemataSql(final String sql)
   {
-    informationSchemaQueries.put(KEY_INFORMATION_SCHEMA_SCHEMATA, sql);
+    informationSchemaQueries.put(SCHEMATA, sql);
   }
 
   /**
@@ -419,7 +420,7 @@ implements Options
    */
   public void setSynonymSql(final String sql)
   {
-    informationSchemaQueries.put(KEY_INFORMATION_SCHEMA_EXT_SYNONYMS, sql);
+    informationSchemaQueries.put(EXT_SYNONYMS, sql);
   }
 
   /**
@@ -430,8 +431,7 @@ implements Options
    */
   public void setTableConstraintsColumnsSql(final String sql)
   {
-    informationSchemaQueries
-    .put(KEY_INFORMATION_SCHEMA_CONSTRAINT_COLUMN_USAGE, sql);
+    informationSchemaQueries.put(CONSTRAINT_COLUMN_USAGE, sql);
   }
 
   /**
@@ -442,7 +442,7 @@ implements Options
    */
   public void setTableConstraintsSql(final String sql)
   {
-    informationSchemaQueries.put(KEY_INFORMATION_SCHEMA_TABLE_CONSTRAINTS, sql);
+    informationSchemaQueries.put(TABLE_CONSTRAINTS, sql);
   }
 
   /**
@@ -453,7 +453,7 @@ implements Options
    */
   public void setTriggersSql(final String sql)
   {
-    informationSchemaQueries.put(KEY_INFORMATION_SCHEMA_TRIGGERS, sql);
+    informationSchemaQueries.put(TRIGGERS, sql);
   }
 
   /**
@@ -464,7 +464,7 @@ implements Options
    */
   public void setViewsSql(final String sql)
   {
-    informationSchemaQueries.put(KEY_INFORMATION_SCHEMA_VIEWS, sql);
+    informationSchemaQueries.put(VIEWS, sql);
   }
 
   @Override
