@@ -16,6 +16,7 @@
 			url="jdbc:hsqldb:hsql://localhost:9001/schemacrawler" 
 			infolevel="maximum" 
 			command="details,count" 
+			config="${config}"
 			outputfile="${outputfile}" />
 
 	</target>

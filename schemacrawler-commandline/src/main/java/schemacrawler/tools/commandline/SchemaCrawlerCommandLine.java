@@ -113,7 +113,7 @@ public final class SchemaCrawlerCommandLine
 
     if (remainingArgs.length > 0)
     {
-      final AdditionalConfigParser additionalConfigParser = new AdditionalConfigParser();
+      final AdditionalConfigParser additionalConfigParser = new AdditionalConfigParser(config);
       remainingArgs = additionalConfigParser.parse(remainingArgs);
       config.putAll(additionalConfigParser.getOptions());
     }
