@@ -44,6 +44,7 @@ public final class SchemaInfoLevel
     detailed.setRetrieveRoutineInformation(true);
     detailed.setRetrieveTableConstraintInformation(true);
     detailed.setRetrieveTriggerInformation(true);
+    detailed.setRetrieveTableDefinitionsInformation(true);
     detailed.setRetrieveViewInformation(true);
     detailed.setRetrieveIndexInformation(true);
     detailed.setTag("detailed");
@@ -63,7 +64,6 @@ public final class SchemaInfoLevel
     maximum.setRetrieveAdditionalJdbcDriverInfo(true);
     maximum.setRetrieveTablePrivileges(true);
     maximum.setRetrieveTableColumnPrivileges(true);
-    maximum.setRetrieveTableDefinitionsInformation(true);
     maximum.setRetrieveAdditionalTableAttributes(true);
     maximum.setRetrieveAdditionalColumnAttributes(true);
     maximum.setTag("maximum");
