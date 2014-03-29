@@ -21,6 +21,8 @@
 package schemacrawler.test.utility;
 
 
+import static sf.util.Utility.executeScriptFromResource;
+
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.PrintWriter;
@@ -36,7 +38,6 @@ import java.util.logging.Logger;
 import org.hsqldb.server.Server;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import sf.util.Utility;
 
 /**
  * Sets up a database schema for tests and examples.
@@ -180,8 +181,7 @@ public class TestDatabase
   private void createDatabase()
     throws SchemaCrawlerException
   {
-    try (final Connection connection = getConnection();
-        final Statement statement = connection.createStatement();)
+    try (final Connection connection = getConnection();)
     {
       for (final String schema: new String[] {
           "books", "publisher sales", "for_lint",
@@ -194,17 +194,7 @@ public class TestDatabase
           final String scriptResource = String
             .format("/testdatabase/%s.%s.sql", schema, scriptType)
             .toLowerCase(Locale.ENGLISH);
-          final String sqlScript = Utility.readResourceFully(scriptResource);
-          if (!Utility.isBlank(sqlScript))
-          {
-            for (final String sql: sqlScript.split(";"))
-            {
-              if (!Utility.isBlank(sql))
-              {
-                statement.executeUpdate(sql);
-              }
-            }
-          }
+          executeScriptFromResource(scriptResource, connection);
         }
       }
     }
