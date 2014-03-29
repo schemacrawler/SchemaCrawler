@@ -40,9 +40,9 @@
           </li>
           <li>
             Run
-            <span class="code">velocity.cmd</span>
+            <span class="code">velocity.cmd tables.vm</span>
             (or
-            <span class="code">velocity.sh</span>
+            <span class="code">velocity.sh tables.vm</span>
             on Unix)
           </li>
         </ol>
