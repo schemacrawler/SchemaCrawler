@@ -21,6 +21,9 @@
 package schemacrawler.tools.text.operation;
 
 
+import static sf.util.DatabaseUtility.createStatement;
+import static sf.util.DatabaseUtility.executeSql;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -194,51 +197,6 @@ public final class OperationExecutable
     }
 
     return query;
-  }
-
-  private Statement createStatement(Connection connection)
-    throws SchemaCrawlerException, SQLException
-  {
-    if (connection == null)
-    {
-      throw new SchemaCrawlerException("No connection provided");
-    }
-    if (connection.isClosed())
-    {
-      throw new SchemaCrawlerException("Connection is closed");
-    }
-
-    return connection.createStatement();
-  }
-
-  private ResultSet executeSql(final Statement statement, final String sql)
-    throws SchemaCrawlerException
-  {
-    ResultSet results = null;
-    if (statement == null)
-    {
-      return results;
-    }
-
-    try
-    {
-      final boolean hasResults = statement.execute(sql);
-      if (hasResults)
-      {
-        results = statement.getResultSet();
-        return results;
-      }
-      else
-      {
-        LOGGER.log(Level.WARNING, "No results for: " + sql);
-        return null;
-      }
-    }
-    catch (final SQLException e)
-    {
-      LOGGER.log(Level.WARNING, "Error executing: " + sql, e);
-      return null;
-    }
   }
 
 }
