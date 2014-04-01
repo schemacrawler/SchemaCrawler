@@ -23,6 +23,7 @@ package schemacrawler.tools.text.operation;
 
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +32,7 @@ import java.util.Set;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.JavaSqlType.JavaSqlTypeGroup;
 import schemacrawler.schema.Table;
+import schemacrawler.utility.NamedObjectSort;
 import sf.util.TemplatingUtility;
 import sf.util.Utility;
 
@@ -45,16 +47,16 @@ public final class Query
 
   private static final long serialVersionUID = 2820769346069413473L;
 
-  private static String getOrderByColumnsListAsString(final Table table)
+  private static String getColumnsListAsString(final List<Column> columns,
+                                               boolean omitLargeObjectColumns)
   {
-    final List<Column> columns = table.getColumns();
     final StringBuilder buffer = new StringBuilder();
     for (int i = 0; i < columns.size(); i++)
     {
       final Column column = columns.get(i);
       final JavaSqlTypeGroup javaSqlTypeGroup = column.getColumnDataType()
         .getJavaSqlType().getJavaSqlTypeGroup();
-      if (javaSqlTypeGroup != JavaSqlTypeGroup.large_object)
+      if (!(omitLargeObjectColumns && javaSqlTypeGroup == JavaSqlTypeGroup.large_object))
       {
         if (i > 0)
         {
@@ -147,19 +149,25 @@ public final class Query
    *        Table information
    * @return Ready-to-execute quer
    */
-  String getQueryForTable(final Table table)
+  String getQueryForTable(final Table table,
+                          final boolean isAlphabeticalSortForTableColumns)
   {
     final Map<String, String> tableProperties = new HashMap<>();
     if (table != null)
     {
+      NamedObjectSort columnsSort = NamedObjectSort
+        .getNamedObjectSort(isAlphabeticalSortForTableColumns);
+      final List<Column> columns = table.getColumns();
+      Collections.sort(columns, columnsSort);
+
       if (table.getSchema() != null)
       {
         tableProperties.put("schema", table.getSchema().getFullName());
       }
       tableProperties.put("table", table.getFullName());
-      tableProperties.put("columns", table.getColumnsListAsString());
+      tableProperties.put("columns", getColumnsListAsString(columns, false));
       tableProperties.put("orderbycolumns",
-                          getOrderByColumnsListAsString(table));
+                          getColumnsListAsString(columns, true));
       tableProperties.put("tabletype", table.getTableType().toString());
     }
 
