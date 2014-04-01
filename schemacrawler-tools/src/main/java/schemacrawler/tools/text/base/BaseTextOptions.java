@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -25,7 +25,7 @@ import schemacrawler.schemacrawler.BaseConfigOptions;
 import schemacrawler.schemacrawler.Config;
 
 public abstract class BaseTextOptions
-  extends BaseConfigOptions
+extends BaseConfigOptions
 {
 
   private static final long serialVersionUID = -8133661515343358712L;
@@ -33,15 +33,25 @@ public abstract class BaseTextOptions
   protected static final String SCHEMACRAWLER_FORMAT_PREFIX = "schemacrawler.format.";
 
   private static final String NO_HEADER = SCHEMACRAWLER_FORMAT_PREFIX
-                                          + "no_header";
+      + "no_header";
   private static final String NO_FOOTER = SCHEMACRAWLER_FORMAT_PREFIX
-                                          + "no_footer";
+      + "no_footer";
   private static final String NO_INFO = SCHEMACRAWLER_FORMAT_PREFIX + "no_info";
   private static final String APPEND_OUTPUT = SCHEMACRAWLER_FORMAT_PREFIX
-                                              + "append_output";
+      + "append_output";
 
   private static final String SHOW_UNQUALIFIED_NAMES = SCHEMACRAWLER_FORMAT_PREFIX
-                                                       + "show_unqualified_names";
+      + "show_unqualified_names";
+
+  private static final String SC_SORT_ALPHABETICALLY_TABLES = SCHEMACRAWLER_FORMAT_PREFIX
+      + "sort_alphabetically.tables";
+  private static final String SC_SORT_ALPHABETICALLY_TABLE_COLUMNS = SCHEMACRAWLER_FORMAT_PREFIX
+      + "sort_alphabetically.table_columns";
+
+  private static final String SC_SORT_ALPHABETICALLY_ROUTINES = SCHEMACRAWLER_FORMAT_PREFIX
+      + "sort_alphabetically.routines";
+  private static final String SC_SORT_ALPHABETICALLY_ROUTINE_COLUMNS = SCHEMACRAWLER_FORMAT_PREFIX
+      + "sort_alphabetically.routine_columns";
 
   protected BaseTextOptions()
   {
@@ -56,6 +66,38 @@ public abstract class BaseTextOptions
     setAppendOutput(getBooleanValue(config, APPEND_OUTPUT));
 
     setShowUnqualifiedNames(getBooleanValue(config, SHOW_UNQUALIFIED_NAMES));
+
+    setAlphabeticalSortForTables(getBooleanValue(config,
+                                                 SC_SORT_ALPHABETICALLY_TABLES,
+                                                 true));
+    setAlphabeticalSortForTableColumns(getBooleanValue(config,
+                                                       SC_SORT_ALPHABETICALLY_TABLE_COLUMNS));
+
+    setAlphabeticalSortForRoutines(getBooleanValue(config,
+                                                   SC_SORT_ALPHABETICALLY_ROUTINES));
+
+    setAlphabeticalSortForRoutineColumns(getBooleanValue(config,
+                                                         SC_SORT_ALPHABETICALLY_ROUTINE_COLUMNS));
+  }
+
+  public boolean isAlphabeticalSortForRoutineColumns()
+  {
+    return getBooleanValue(SC_SORT_ALPHABETICALLY_ROUTINE_COLUMNS);
+  }
+
+  public boolean isAlphabeticalSortForRoutines()
+  {
+    return getBooleanValue(SC_SORT_ALPHABETICALLY_ROUTINES);
+  }
+
+  public boolean isAlphabeticalSortForTableColumns()
+  {
+    return getBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_COLUMNS);
+  }
+
+  public boolean isAlphabeticalSortForTables()
+  {
+    return getBooleanValue(SC_SORT_ALPHABETICALLY_TABLES);
   }
 
   public boolean isAppendOutput()
@@ -65,7 +107,7 @@ public abstract class BaseTextOptions
 
   /**
    * Whether to print footers.
-   * 
+   *
    * @return Whether to print footers
    */
   public boolean isNoFooter()
@@ -75,7 +117,7 @@ public abstract class BaseTextOptions
 
   /**
    * Whether to print headers.
-   * 
+   *
    * @return Whether to print headers
    */
   public boolean isNoHeader()
@@ -85,7 +127,7 @@ public abstract class BaseTextOptions
 
   /**
    * Whether to print information.
-   * 
+   *
    * @return Whether to print information
    */
   public boolean isNoInfo()
@@ -98,6 +140,29 @@ public abstract class BaseTextOptions
     return getBooleanValue(SHOW_UNQUALIFIED_NAMES);
   }
 
+  public void setAlphabeticalSortForRoutineColumns(final boolean isAlphabeticalSortForRoutineColumns)
+  {
+    setBooleanValue(SC_SORT_ALPHABETICALLY_ROUTINE_COLUMNS,
+                    isAlphabeticalSortForRoutineColumns);
+  }
+
+  public void setAlphabeticalSortForRoutines(final boolean isAlphabeticalSortForRoutines)
+  {
+    setBooleanValue(SC_SORT_ALPHABETICALLY_ROUTINES,
+                    isAlphabeticalSortForRoutines);
+  }
+
+  public void setAlphabeticalSortForTableColumns(final boolean isAlphabeticalSortForTableColumns)
+  {
+    setBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_COLUMNS,
+                    isAlphabeticalSortForTableColumns);
+  }
+
+  public void setAlphabeticalSortForTables(final boolean isAlphabeticalSortForTables)
+  {
+    setBooleanValue(SC_SORT_ALPHABETICALLY_TABLES, isAlphabeticalSortForTables);
+  }
+
   public void setAppendOutput(final boolean appendOutput)
   {
     setBooleanValue(APPEND_OUTPUT, appendOutput);
@@ -105,7 +170,7 @@ public abstract class BaseTextOptions
 
   /**
    * Whether to print footers.
-   * 
+   *
    * @param noFooter
    *        Whether to print footers
    */
@@ -116,7 +181,7 @@ public abstract class BaseTextOptions
 
   /**
    * Whether to print headers.
-   * 
+   *
    * @param noHeader
    *        Whether to print headers
    */
@@ -127,7 +192,7 @@ public abstract class BaseTextOptions
 
   /**
    * Whether to print information.
-   * 
+   *
    * @param noInfo
    *        Whether to print information
    */

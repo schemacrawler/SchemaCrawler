@@ -50,13 +50,6 @@ public interface Table
   List<Column> getColumns();
 
   /**
-   * Gets a comma-separated list of columns.
-   * 
-   * @return Comma-separated list of columns
-   */
-  String getColumnsListAsString();
-
-  /**
    * Gets the list of exported foreign keys. That is, only those whose
    * primary key is referenced in another table.
    * 
