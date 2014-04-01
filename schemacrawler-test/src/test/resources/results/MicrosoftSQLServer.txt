@@ -10,14 +10,14 @@ SchemaCrawler Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
 product name                          SchemaCrawler
-product version                       10.08.03
+product version                       10.08.04
 
 
 Database Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
 database product name                 Microsoft SQL Server
-database product version              10.08.030.1600
+database product version              10.08.040.1600
 database user name                    Books
 
 
