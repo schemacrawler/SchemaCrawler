@@ -21,6 +21,8 @@
 package schemacrawler.crawl;
 
 
+import static sf.util.DatabaseUtility.executeSql;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Connection;
@@ -45,6 +47,7 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.SearchableType;
 import schemacrawler.schemacrawler.InformationSchemaViews;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 
 final class DatabaseInfoRetriever
   extends AbstractRetriever
@@ -326,9 +329,10 @@ final class DatabaseInfoRetriever
    * 
    * @throws SQLException
    *         On a SQL exception
+   * @throws SchemaCrawlerException
    */
   void retrieveSystemColumnDataTypes()
-    throws SQLException
+    throws SQLException, SchemaCrawlerException
   {
     final Schema systemSchema = new SchemaReference();
 
@@ -344,7 +348,7 @@ final class DatabaseInfoRetriever
 
       final Connection connection = getDatabaseConnection();
       statement = connection.createStatement();
-      results = new MetadataResultSet(statement.executeQuery(typeInfoSql));
+      results = new MetadataResultSet(executeSql(statement, typeInfoSql));
     }
     else
     {

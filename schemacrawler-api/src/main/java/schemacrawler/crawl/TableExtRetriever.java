@@ -21,6 +21,8 @@
 package schemacrawler.crawl;
 
 
+import static sf.util.DatabaseUtility.executeSql;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -81,7 +83,8 @@ final class TableExtRetriever
 
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
-        final MetadataResultSet results = new MetadataResultSet(statement.executeQuery(columnAttributesSql));)
+        final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
+                                                                           columnAttributesSql));)
     {
 
       while (results.next())
@@ -152,7 +155,8 @@ final class TableExtRetriever
 
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
-        final MetadataResultSet results = new MetadataResultSet(statement.executeQuery(tableAttributesSql));)
+        final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
+                                                                           tableAttributesSql));)
     {
 
       while (results.next())
@@ -212,7 +216,8 @@ final class TableExtRetriever
 
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
-        final MetadataResultSet results = new MetadataResultSet(statement.executeQuery(extIndexesInformationSql));)
+        final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
+                                                                           extIndexesInformationSql));)
     {
 
       while (results.next())
@@ -334,7 +339,8 @@ final class TableExtRetriever
 
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
-        final MetadataResultSet results = new MetadataResultSet(statement.executeQuery(tableDefinitionsInformationSql));)
+        final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
+                                                                           tableDefinitionsInformationSql));)
     {
 
       while (results.next())
@@ -408,7 +414,8 @@ final class TableExtRetriever
 
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
-        final MetadataResultSet results = new MetadataResultSet(statement.executeQuery(triggerInformationSql));)
+        final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
+                                                                           triggerInformationSql));)
     {
 
       while (results.next())
@@ -497,7 +504,8 @@ final class TableExtRetriever
 
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
-        final MetadataResultSet results = new MetadataResultSet(statement.executeQuery(viewInformationSql));)
+        final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
+                                                                           viewInformationSql));)
     {
 
       while (results.next())
@@ -632,7 +640,8 @@ final class TableExtRetriever
     final String tableConstraintsInformationSql = informationSchemaViews
       .getTableConstraintsSql();
     try (final Statement statement = connection.createStatement();
-        final MetadataResultSet results = new MetadataResultSet(statement.executeQuery(tableConstraintsInformationSql));)
+        final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
+                                                                           tableConstraintsInformationSql));)
     {
 
       while (results.next())
@@ -706,7 +715,8 @@ final class TableExtRetriever
       .getTableConstraintsColumnsSql();
 
     try (final Statement statement = connection.createStatement();
-        final MetadataResultSet results = new MetadataResultSet(statement.executeQuery(tableConstraintsColumnsInformationSql));)
+        final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
+                                                                           tableConstraintsColumnsInformationSql));)
     {
       while (results.next())
       {
@@ -789,7 +799,8 @@ final class TableExtRetriever
 
     // Get check constraint definitions
     try (final Statement statement = connection.createStatement();
-        final MetadataResultSet results = new MetadataResultSet(statement.executeQuery(extTableConstraintInformationSql));)
+        final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
+                                                                           extTableConstraintInformationSql));)
     {
       while (results.next())
       {
