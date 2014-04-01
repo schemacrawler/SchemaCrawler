@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -87,6 +87,18 @@ public class BaseTextOptionsBuilder
   public BaseTextOptionsBuilder showInfo()
   {
     options.setNoInfo(false);
+    return this;
+  }
+
+  public BaseTextOptionsBuilder sortTableColumns()
+  {
+    options.setAlphabeticalSortForTableColumns(true);
+    return this;
+  }
+
+  public BaseTextOptionsBuilder sortTables()
+  {
+    options.setAlphabeticalSortForTables(true);
     return this;
   }
 

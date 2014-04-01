@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -95,6 +95,20 @@ public class SchemaCrawlerTextCommandsOutputTest
   }
 
   @Test
+  public void sortedColumnsOutput()
+    throws Exception
+  {
+    final String queryCommand = "dump_tables_sorted_columns";
+    final Config config = new Config();
+    config.put("schemacrawler.format.sort_alphabetically.table_columns",
+               Boolean.TRUE.toString());
+    config.put(queryCommand,
+               "SELECT ${columns} FROM ${table} ORDER BY ${orderbycolumns}");
+
+    textOutputTest(queryCommand, config);
+  }
+
+  @Test
   public void streamedOutput()
     throws Exception
   {
@@ -152,7 +166,7 @@ public class SchemaCrawlerTextCommandsOutputTest
     final OutputOptions outputOptions = new OutputOptions(OutputFormat.text.name(),
                                                           testOutputFile);
 
-    final BaseTextOptionsBuilder baseTextOptions = new BaseTextOptionsBuilder();
+    final BaseTextOptionsBuilder baseTextOptions = new BaseTextOptionsBuilder(config);
     baseTextOptions.hideInfo();
     baseTextOptions.hideHeader();
     baseTextOptions.hideFooter();

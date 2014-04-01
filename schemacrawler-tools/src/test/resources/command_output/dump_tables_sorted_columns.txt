@@ -1,0 +1,218 @@
+
+
+Query
+========================================================================
+
+
+
+PUBLIC.BOOKS.AUTHORS
+------------------------------------------------------------------------
+ADDRESS1	ADDRESS2	CITY	COUNTRY	FIRSTNAME	ID	LASTNAME	POSTALCODE	STATE
+1185 Per Ave		Rapid City	New Caledonia	Jillian	10	Mckee	11671	LA
+324-4875 Vitae Av.		Hudson	Russian Federation	Denise	12	Dominguez	41933	SD
+5047 Eu Rd.		LaGrange	Thailand	Damian	7	Donaldson	64681	UT
+6293 Enim, Ave		Baltimore	Saudi Arabia	Theodore	15	Gilliam	86549	UT
+7585 Magna. Ave		Villa Park	Cayman Islands	Adele	9	Holmes	00619	ME
+8869 Velit Rd.		Lincoln	Zambia	Ira	13	Dunn	74182	IA
+900-2273 Integer Avenue		Farmer City	Cook Islands	Oren	1	Shaffer	37032	MD
+955-7635 Natoque St.		Kalispell	Cape Verde	Octavia	2	Burke	66863	MS
+Ap #361-1093 Vitae Street		Fort Lauderdale	Venezuela	Hilary	18	Marks	10855	ID
+Ap #375-6798 Auctor St.		Sault Ste. Marie	Lesotho	Mikayla	11	Knight	26558	CO
+Ap #458-4569 Sem. Ave		Durham	Gambia	Frances	19	Ellis	50037	MS
+Ap #467-9359 Ipsum Rd.		Roanoke	Niger	Melyssa	17	Willis	45706	OH
+Ap #486-6702 Iaculis Road		Glen Cove	Libyan Arab Jamahiriya	Jordan	8	Woodward	18011	OH
+Ap #554-7132 Dictum Street		Kankakee	Brunei Darussalam	Aiko	3	Stafford	59675	ID
+Ap #629-9258 In St.		Abilene	Saint Vincent and The Grenadines	Elvis	14	Blevins	19269	WY
+Ap #698-4255 Sodales Av.		Riverton	Ghana	Christine	4	Aguilar	24828	MA
+P.O. Box 305, 8335 Cras St.		Somersworth	Kazakhstan	Kenneth	5	Curry	36619	ME
+P.O. Box 806, 6212 Adipiscing, Road		Thibodaux	China	Jared	16	White	90172	KS
+P.O. Box 827, 1923 Ornare Avenue		Sierra Vista	Mali	Lillian	6	Nieves	12684	MA
+P.O. Box 937, 3415 Nulla Ave		Half Moon Bay	Canada	Lenore	20	Cooley	51967	OR
+
+
+
+PUBLIC.BOOKS.AUTHORSLIST
+------------------------------------------------------------------------
+FIRSTNAME	ID	LASTNAME
+Adele	9	Holmes
+Aiko	3	Stafford
+Christine	4	Aguilar
+Damian	7	Donaldson
+Denise	12	Dominguez
+Elvis	14	Blevins
+Frances	19	Ellis
+Hilary	18	Marks
+Ira	13	Dunn
+Jared	16	White
+Jillian	10	Mckee
+Jordan	8	Woodward
+Kenneth	5	Curry
+Lenore	20	Cooley
+Lillian	6	Nieves
+Melyssa	17	Willis
+Mikayla	11	Knight
+Octavia	2	Burke
+Oren	1	Shaffer
+Theodore	15	Gilliam
+
+
+
+PUBLIC.BOOKS.BOOKAUTHORS
+------------------------------------------------------------------------
+AUTHORID	BOOKID	UPDATE
+1	3	NULL
+1	6	NULL
+1	10	NULL
+3	9	NULL
+4	2	NULL
+4	3	<binary>
+5	3	NULL
+5	5	NULL
+6	2	<binary>
+6	3	NULL
+6	8	NULL
+6	9	NULL
+7	1	<binary>
+7	5	NULL
+7	9	NULL
+8	6	NULL
+8	7	NULL
+9	4	NULL
+9	7	NULL
+9	10	NULL
+
+
+
+PUBLIC.BOOKS.BOOKS
+------------------------------------------------------------------------
+DESCRIPTION	ID	PRICE	PUBLICATIONDATE	PUBLISHERID	TITLE
+Cursus Purus. Nullam	16	47.99	2003-08-30	6	Vitae, Aliquet Nec, Imperdiet
+Dis Parturient Montes, Nascetur Ridiculus Mus.	1	69.99	2000-10-27	18	Neque. In Ornare Sagittis
+Egestas. Duis Ac Arcu. Nunc Mauris.	11	89.99	2003-10-19	5	Phasellus
+Elit, Pellentesque A, Facilisis Non, Bibendum Sed, Est. Nunc Laoreet Lectus Quis Massa. Mauris Vestibulum, Neque Sed	15	77.99	2001-08-28	20	Ultrices Posuere Cubilia
+Est Mauris, Rhoncus Id, Mollis	12	64.99	2002-05-04	5	Non Massa Non
+Est, Mollis Non, Cursus Non, Egestas A, Dui. Cras Pellentesque. Sed Dictum.	9	69.99	2004-06-25	1	Lobortis Ultrices. Vivamus Rhoncus.
+Et Ultrices Posuere Cubilia Curae Phasellus Ornare. Fusce Mollis. Duis Sit Amet Diam Eu Dolor Egestas Rhoncus.	10	34.99	2005-11-14	19	Quisque Purus Sapien, Gravida
+Eu, Euismod Ac, Fermentum Vel,	2	27.99	2002-05-09	20	Duis Dignissim Tempor Arcu.
+Facilisi. Sed Neque. Sed	18	63.99	2008-01-28	18	Lacus. Etiam Bibendum
+Fusce Mollis. Duis Sit Amet Diam Eu Dolor Egestas Rhoncus. Proin Nisl Sem, Consequat Nec,	13	25.99	2005-08-03	8	Gravida Mauris Ut Mi. Duis
+Ornare, Lectus Ante Dictum Mi, Ac Mattis Velit Justo Nec Ante. Maecenas Mi Felis, Adipiscing Fringilla, Porttitor Vulputate, Posuere Vulputate,	17	36.99	2005-06-24	17	Parturient Montes, Nascetur Ridiculus
+Rhoncus. Nullam Velit Dui, Semper Et, Lacinia Vitae, Sodales At,	4	64.99	2007-05-21	1	Vitae Sodales
+Risus A Ultricies Adipiscing, Enim Mi Tempor Lorem, Eget Mollis Lectus Pede	5	83.99	2010-05-14	7	Posuere Cubilia Curae Phasellus Ornare.
+Rutrum. Fusce Dolor Quam, Elementum At, Egestas A, Scelerisque Sed, Sapien.	19	67.99	2006-08-23	5	Luctus Lobortis.
+Sem Ut Cursus Luctus, Ipsum Leo Elementum Sem, Vitae Aliquam Eros Turpis Non Enim.	3	37.99	2006-04-14	15	Lacinia Orci, Consectetuer Euismod Est
+Sociis Natoque Penatibus Et Magnis Dis Parturient	20	43.99	2002-09-29	5	Dui, In Sodales Elit Erat
+Suspendisse Dui. Fusce Diam Nunc, Ullamcorper Eu, Euismod Ac, Fermentum Vel, Mauris. Integer Sem Elit, Pharetra	14	84.99	2009-02-09	2	Auctor Vitae,
+Tristique Pellentesque, Tellus Sem Mollis Dui,	6	31.99	2009-07-17	13	Tincidunt Aliquam Arcu.
+Turpis. Nulla Aliquet. Proin Velit. Sed Malesuada Augue Ut	8	30.99	2009-01-24	7	Sem. Nulla Interdum. Curabitur
+Vel, Faucibus Id, Libero. Donec Consectetuer Mauris Id Sapien. Cras Dolor Dolor, Tempus Non, Lacinia	7	76.99	1999-06-09	7	Auctor Quis, Tristique
+
+
+
+PUBLIC.BOOKS."Global Counts"
+------------------------------------------------------------------------
+Global Count
+
+
+
+PUBLIC.BOOKS.PUBLISHERS
+------------------------------------------------------------------------
+ID	PUBLISHER
+1	Dalton Lewis
+2	Macaulay Bryant
+3	Nash Fox
+4	Leonard Bradshaw
+5	Brendan Kramer
+6	Tobias Mosley
+7	Zachary Tate
+8	Derek Lee
+9	Neil Tyson
+10	Shad Robinson
+11	Justin Schroeder
+12	Leonard Atkinson
+13	Hyatt Caldwell
+14	Neil Fletcher
+15	Ferdinand Tucker
+16	Barrett Mclaughlin
+17	Hayden Potts
+18	Neville Cardenas
+19	Allistair Gilbert
+20	Cooper Chapman
+
+
+
+PUBLIC.FOR_LINT.EXTRA_PK
+------------------------------------------------------------------------
+ID	PUBLICATIONID	WRITERID
+
+
+
+PUBLIC.FOR_LINT."Global Counts"
+------------------------------------------------------------------------
+Global Count
+
+
+
+PUBLIC.FOR_LINT.PUBLICATIONS
+------------------------------------------------------------------------
+DESCRIPTION	ID	PRESS_RELEASE	PRICE	PUBLICATIONDATE	TITLE	UPDATE	WRITERID
+
+
+
+PUBLIC.FOR_LINT.WRITERS
+------------------------------------------------------------------------
+ADDRESS1	ADDRESS2	CITY	COUNTRY	EMAIL1	EMAIL2	FAX	FAX3	FIRSTNAME	HOMEEMAIL11	HOMEEMAIL12	ID	LASTNAME	PHONE1	PHONE2	POSTALCODE	PUBLICATION_ID	STATE
+
+
+
+PUBLIC."PUBLISHER SALES".REGIONS
+------------------------------------------------------------------------
+CITY	COUNTRY	POSTALCODE	STATE
+Arvada	USA	17131	KY
+Baltimore	USA	34702	AK
+Clairton	USA	42875	MA
+Del Rio	USA	24179	CA
+Duluth	USA	82539	ND
+Effingham	USA	44207	TX
+El Segundo	USA	13078	VA
+Fayetteville	USA	41233	MS
+Hopkinsville	USA	54618	IN
+Kent	USA	91624	OH
+Lake Forest	USA	26131	AK
+Marlborough	USA	88272	WV
+Martinsburg	USA	76672	KY
+Nashua	USA	27829	SC
+Ogdensburg	USA	50786	AZ
+San Juan	USA	30552	MD
+Tacoma	USA	70472	PA
+Warren	USA	42210	VA
+Watertown	USA	20239	SC
+Woburn	USA	27392	NV
+
+
+
+PUBLIC."PUBLISHER SALES".SALES
+------------------------------------------------------------------------
+BOOKID	COUNTRY	PERIODENDDATE	POSTALCODE	TOTALAMOUNT
+1	USA	2001-07-18	13078	18257.0
+1	USA	2001-09-29	13078	14895.0
+2	USA	2002-04-30	17131	17887.0
+2	USA	2004-11-13	17131	16317.0
+3	USA	2004-08-28	20239	18747.0
+3	USA	2005-07-27	20239	6712.0
+4	USA	2005-12-24	24179	11103.0
+4	USA	2009-02-14	24179	5885.0
+5	USA	2001-12-02	26131	14798.0
+5	USA	2004-11-03	26131	15348.0
+6	USA	2003-12-28	13078	6083.0
+6	USA	2006-06-11	13078	7840.0
+7	USA	2000-03-08	17131	6951.0
+7	USA	2003-03-21	17131	18431.0
+8	USA	2008-03-29	20239	11013.0
+8	USA	2008-08-15	20239	17514.0
+9	USA	2000-05-16	24179	13595.0
+9	USA	2004-04-10	24179	14069.0
+10	USA	2000-09-20	26131	14476.0
+10	USA	2005-12-03	26131	17069.0
+
+
