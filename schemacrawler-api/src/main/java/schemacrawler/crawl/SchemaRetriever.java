@@ -21,6 +21,8 @@
 package schemacrawler.crawl;
 
 
+import static sf.util.DatabaseUtility.executeSql;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -223,7 +225,8 @@ final class SchemaRetriever
     final Connection connection = getDatabaseConnection();
 
     try (final Statement statement = connection.createStatement();
-        final MetadataResultSet results = new MetadataResultSet(statement.executeQuery(schemataSql));)
+        final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
+                                                                           schemataSql));)
     {
       while (results.next())
       {
