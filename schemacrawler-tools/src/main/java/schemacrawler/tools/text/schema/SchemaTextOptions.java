@@ -26,39 +26,33 @@ import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.text.base.BaseTextOptions;
 
 public class SchemaTextOptions
-  extends BaseTextOptions
+extends BaseTextOptions
 {
 
   private static final long serialVersionUID = -8133661515343358712L;
 
   private static final String SHOW_ORDINAL_NUMBERS = SCHEMACRAWLER_FORMAT_PREFIX
-                                                     + "show_ordinal_numbers";
+      + "show_ordinal_numbers";
   private static final String SHOW_STANDARD_COLUMN_TYPE_NAMES = SCHEMACRAWLER_FORMAT_PREFIX
-                                                                + "show_standard_column_type_names";
+      + "show_standard_column_type_names";
 
   private static final String HIDE_PRIMARY_KEY_NAMES = SCHEMACRAWLER_FORMAT_PREFIX
-                                                       + "hide_primarykey_names";
+      + "hide_primarykey_names";
   private static final String HIDE_FOREIGN_KEY_NAMES = SCHEMACRAWLER_FORMAT_PREFIX
-                                                       + "hide_foreignkey_names";
+      + "hide_foreignkey_names";
   private static final String HIDE_INDEX_NAMES = SCHEMACRAWLER_FORMAT_PREFIX
-                                                 + "hide_index_names";
+      + "hide_index_names";
   private static final String HIDE_CONSTRAINT_NAMES = SCHEMACRAWLER_FORMAT_PREFIX
-                                                      + "hide_constraint_names";
+      + "hide_constraint_names";
   private static final String HIDE_TRIGGER_NAMES = SCHEMACRAWLER_FORMAT_PREFIX
-                                                   + "hide_trigger_names";
+      + "hide_trigger_names";
   private static final String HIDE_ROUTINE_SPECIFIC_NAMES = SCHEMACRAWLER_FORMAT_PREFIX
-                                                            + "hide_routine_specific_names";
+      + "hide_routine_specific_names";
 
-  private static final String SC_SORT_ALPHABETICALLY_TABLES = SCHEMACRAWLER_FORMAT_PREFIX
-                                                              + "sort_alphabetically.tables";
-  private static final String SC_SORT_ALPHABETICALLY_TABLE_COLUMNS = SCHEMACRAWLER_FORMAT_PREFIX
-                                                                     + "sort_alphabetically.table_columns";
   private static final String SC_SORT_ALPHABETICALLY_TABLE_INDEXES = SCHEMACRAWLER_FORMAT_PREFIX
-                                                                     + "sort_alphabetically.table_indices";
+      + "sort_alphabetically.table_indices";
   private static final String SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS = SCHEMACRAWLER_FORMAT_PREFIX
-                                                                         + "sort_alphabetically.table_foreignkeys";
-  private static final String SC_SORT_ALPHABETICALLY_ROUTINE_COLUMNS = SCHEMACRAWLER_FORMAT_PREFIX
-                                                                       + "sort_alphabetically.routine_columns";
+      + "sort_alphabetically.table_foreignkeys";
 
   /**
    * Creates the default SchemaTextOptions.
@@ -70,7 +64,7 @@ public class SchemaTextOptions
 
   /**
    * Options from properties. Constructor.
-   * 
+   *
    * @param config
    *        Properties
    */
@@ -90,17 +84,10 @@ public class SchemaTextOptions
                                                 HIDE_ROUTINE_SPECIFIC_NAMES));
     setHideConstraintNames(getBooleanValue(config, HIDE_CONSTRAINT_NAMES));
 
-    setAlphabeticalSortForTables(getBooleanValue(config,
-                                                 SC_SORT_ALPHABETICALLY_TABLES,
-                                                 true));
-    setAlphabeticalSortForTableColumns(getBooleanValue(config,
-                                                       SC_SORT_ALPHABETICALLY_TABLE_COLUMNS));
     setAlphabeticalSortForForeignKeys(getBooleanValue(config,
                                                       SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS));
     setAlphabeticalSortForIndexes(getBooleanValue(config,
                                                   SC_SORT_ALPHABETICALLY_TABLE_INDEXES));
-    setAlphabeticalSortForRoutineColumns(getBooleanValue(config,
-                                                         SC_SORT_ALPHABETICALLY_ROUTINE_COLUMNS));
   }
 
   public boolean isAlphabeticalSortForForeignKeys()
@@ -113,24 +100,9 @@ public class SchemaTextOptions
     return getBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_INDEXES);
   }
 
-  public boolean isAlphabeticalSortForRoutineColumns()
-  {
-    return getBooleanValue(SC_SORT_ALPHABETICALLY_ROUTINE_COLUMNS);
-  }
-
-  public boolean isAlphabeticalSortForTableColumns()
-  {
-    return getBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_COLUMNS);
-  }
-
-  public boolean isAlphabeticalSortForTables()
-  {
-    return getBooleanValue(SC_SORT_ALPHABETICALLY_TABLES);
-  }
-
   /**
    * Whether to hide foreign key names.
-   * 
+   *
    * @return Hide foreign key names.
    */
   public boolean isHideForeignKeyNames()
@@ -140,7 +112,7 @@ public class SchemaTextOptions
 
   /**
    * Whether to hide index names.
-   * 
+   *
    * @return Hide index names.
    */
   public boolean isHideIndexNames()
@@ -150,7 +122,7 @@ public class SchemaTextOptions
 
   /**
    * Whether to hide primary key names.
-   * 
+   *
    * @return Hide primary key names.
    */
   public boolean isHidePrimaryKeyNames()
@@ -160,7 +132,7 @@ public class SchemaTextOptions
 
   /**
    * Whether to hide routine specific names.
-   * 
+   *
    * @return Hide routine specific names.
    */
   public boolean isHideRoutineSpecificNames()
@@ -170,7 +142,7 @@ public class SchemaTextOptions
 
   /**
    * Whether to hide constraint names.
-   * 
+   *
    * @return Hide constraint names.
    */
   public boolean isHideTableConstraintNames()
@@ -180,7 +152,7 @@ public class SchemaTextOptions
 
   /**
    * Whether to hide trigger names.
-   * 
+   *
    * @return Hide trigger names.
    */
   public boolean isHideTriggerNames()
@@ -190,7 +162,7 @@ public class SchemaTextOptions
 
   /**
    * Whether to show ordinal numbers.
-   * 
+   *
    * @return Whether to show ordinal numbers.
    */
   public boolean isShowOrdinalNumbers()
@@ -200,7 +172,7 @@ public class SchemaTextOptions
 
   /**
    * Whether to show standard column types.
-   * 
+   *
    * @return Whether to show standard column types.
    */
   public boolean isShowStandardColumnTypeNames()
@@ -220,26 +192,9 @@ public class SchemaTextOptions
                     isAlphabeticalSortForIndexes);
   }
 
-  public void setAlphabeticalSortForRoutineColumns(final boolean isAlphabeticalSortForRoutineColumns)
-  {
-    setBooleanValue(SC_SORT_ALPHABETICALLY_ROUTINE_COLUMNS,
-                    isAlphabeticalSortForRoutineColumns);
-  }
-
-  public void setAlphabeticalSortForTableColumns(final boolean isAlphabeticalSortForTableColumns)
-  {
-    setBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_COLUMNS,
-                    isAlphabeticalSortForTableColumns);
-  }
-
-  public void setAlphabeticalSortForTables(final boolean isAlphabeticalSortForTables)
-  {
-    setBooleanValue(SC_SORT_ALPHABETICALLY_TABLES, isAlphabeticalSortForTables);
-  }
-
   /**
    * Sets whether to hide constraint names.
-   * 
+   *
    * @param hideConstraintNames
    *        Whether to hide constraint names.
    */
@@ -250,7 +205,7 @@ public class SchemaTextOptions
 
   /**
    * Sets whether to hide foreign key names.
-   * 
+   *
    * @param hideForeignKeyNames
    *        Whether to hide foreign key names.
    */
@@ -261,7 +216,7 @@ public class SchemaTextOptions
 
   /**
    * Sets whether to hide index names.
-   * 
+   *
    * @param hideIndexNames
    *        Whether to hide index names.
    */
@@ -272,7 +227,7 @@ public class SchemaTextOptions
 
   /**
    * Sets whether to hide primary key names.
-   * 
+   *
    * @param hidePrimaryKeyNames
    *        Whether to hide primary key names.
    */
@@ -283,7 +238,7 @@ public class SchemaTextOptions
 
   /**
    * Sets whether to hide routine specific names.
-   * 
+   *
    * @param hideRoutineSpecificNames
    *        Whether to hide routine specific names.
    */
@@ -294,7 +249,7 @@ public class SchemaTextOptions
 
   /**
    * Sets whether to hide trigger names.
-   * 
+   *
    * @param hideTriggerNames
    *        Whether to hide trigger names.
    */
@@ -305,7 +260,7 @@ public class SchemaTextOptions
 
   /**
    * Sets whether to show ordinal numbers.
-   * 
+   *
    * @param showOrdinalNumbers
    *        Whether to show ordinal numbers.
    */
@@ -316,7 +271,7 @@ public class SchemaTextOptions
 
   /**
    * Sets whether to show standard column type names.
-   * 
+   *
    * @param showStandardColumnTypeNames
    *        Whether to show standard column type names.
    */

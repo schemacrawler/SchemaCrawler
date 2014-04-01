@@ -22,8 +22,15 @@ package schemacrawler.tools.text.operation;
 
 
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Collection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import schemacrawler.schema.Database;
+import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseStagedExecutable;
 import schemacrawler.tools.options.OutputFormat;
@@ -37,6 +44,9 @@ import schemacrawler.tools.traversal.DataTraversalHandler;
 public final class OperationExecutable
   extends BaseStagedExecutable
 {
+
+  private static final Logger LOGGER = Logger
+    .getLogger(OperationExecutable.class.getName());
 
   private OperationOptions operationOptions;
 
@@ -68,16 +78,56 @@ public final class OperationExecutable
   protected void executeOn(final Database database, final Connection connection)
     throws Exception
   {
-    final DataTraversalHandler formatter = getDataTraversalHandler();
+    final DataTraversalHandler handler = getDataTraversalHandler();
     final Query query = getQuery();
 
-    final OperationHelper operationHelper = new OperationHelper();
-    operationHelper.setDatabase(database);
-    operationHelper.setConnection(connection);
-    operationHelper.setFormatter(formatter);
-    operationHelper.setQuery(query);
+    try (final Statement statement = createStatement(connection);)
+    {
 
-    operationHelper.traverse();
+      handler.begin();
+
+      handler.handleInfoStart();
+      handler.handle(database.getSchemaCrawlerInfo());
+      handler.handle(database.getDatabaseInfo());
+      handler.handle(database.getJdbcDriverInfo());
+      handler.handleInfoEnd();
+
+      if (query.isQueryOver())
+      {
+        final Collection<Table> tables = database.getTables();
+
+        for (final Table table: tables)
+        {
+          final String sql = query
+            .getQueryForTable(table, getOperationOptions()
+              .isAlphabeticalSortForTableColumns());
+
+          LOGGER.log(Level.FINE,
+                     String.format("Executing query for table %s: %s",
+                                   table.getFullName(),
+                                   sql));
+          try (final ResultSet results = executeSql(statement, sql);)
+          {
+            handler.handleData(table, results);
+          }
+        }
+      }
+      else
+      {
+        final String sql = query.getQuery();
+        try (final ResultSet results = executeSql(statement, sql);)
+        {
+          handler.handleData(query, results);
+        }
+      }
+
+      handler.end();
+
+    }
+    catch (final SQLException e)
+    {
+      throw new SchemaCrawlerException("Cannot perform operation", e);
+    }
   }
 
   private DataTraversalHandler getDataTraversalHandler()
@@ -144,6 +194,51 @@ public final class OperationExecutable
     }
 
     return query;
+  }
+
+  private Statement createStatement(Connection connection)
+    throws SchemaCrawlerException, SQLException
+  {
+    if (connection == null)
+    {
+      throw new SchemaCrawlerException("No connection provided");
+    }
+    if (connection.isClosed())
+    {
+      throw new SchemaCrawlerException("Connection is closed");
+    }
+
+    return connection.createStatement();
+  }
+
+  private ResultSet executeSql(final Statement statement, final String sql)
+    throws SchemaCrawlerException
+  {
+    ResultSet results = null;
+    if (statement == null)
+    {
+      return results;
+    }
+
+    try
+    {
+      final boolean hasResults = statement.execute(sql);
+      if (hasResults)
+      {
+        results = statement.getResultSet();
+        return results;
+      }
+      else
+      {
+        LOGGER.log(Level.WARNING, "No results for: " + sql);
+        return null;
+      }
+    }
+    catch (final SQLException e)
+    {
+      LOGGER.log(Level.WARNING, "Error executing: " + sql, e);
+      return null;
+    }
   }
 
 }
