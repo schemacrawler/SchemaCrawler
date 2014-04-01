@@ -873,8 +873,8 @@
   </jdbcDriverInfo>
   <schemaCrawlerInfo id="185">
     <schemaCrawlerProductName>SchemaCrawler</schemaCrawlerProductName>
-    <schemaCrawlerVersion>10.08.03</schemaCrawlerVersion>
-    <schemaCrawlerAbout>SchemaCrawler 10.08.03&#xd;
+    <schemaCrawlerVersion>10.08.04</schemaCrawlerVersion>
+    <schemaCrawlerAbout>SchemaCrawler 10.08.04&#xd;
 Copyright (c) 2000-2014, Sualeh Fatehi.&#xd;
 &#xd;
 SchemaCrawler is a database schema discovery and comprehension tool. &#xd;
