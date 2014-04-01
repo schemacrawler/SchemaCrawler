@@ -31,9 +31,6 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.nio.channels.FileChannel;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Handler;
@@ -41,8 +38,6 @@ import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
-
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 
 /**
  * Utility methods.
@@ -53,7 +48,7 @@ public final class Utility
 {
 
   private static final Logger LOGGER = Logger
-      .getLogger(Utility.class.getName());
+    .getLogger(Utility.class.getName());
 
   /**
    * System specific line separator character.
@@ -61,9 +56,9 @@ public final class Utility
   public static final String NEWLINE = System.getProperty("line.separator");
 
   private static final Pattern containsWhitespacePattern = Pattern
-      .compile(".*\\s.*");
+    .compile(".*\\s.*");
   private static final Pattern isAllWhitespacePattern = Pattern
-      .compile("^\\s*$");
+    .compile("^\\s*$");
 
   public static String commonPrefix(final String string1, final String string2)
   {
@@ -121,7 +116,7 @@ public final class Utility
   }
 
   public static void copyFile(final File sourceFile, final File destFile)
-      throws IOException
+    throws IOException
   {
     if (!destFile.exists())
     {
@@ -132,44 +127,8 @@ public final class Utility
         final FileOutputStream fileOutputStream = new FileOutputStream(destFile);
         final FileChannel source = fileInputStream.getChannel();
         final FileChannel destination = fileOutputStream.getChannel();)
-        {
+    {
       destination.transferFrom(source, 0, source.size());
-        }
-  }
-
-  public static void executeScriptFromResource(final String scriptResource,
-                                               final Connection connection)
-                                                   throws SchemaCrawlerException
-  {
-    try (final Statement statement = connection.createStatement();)
-    {
-      final String sqlScript = readResourceFully(scriptResource);
-      if (!isBlank(sqlScript))
-      {
-        for (final String sql: sqlScript.split(";"))
-        {
-          if (!isBlank(sql))
-          {
-            final boolean hasResults = statement.execute(sql);
-            // Log query results
-            if (hasResults)
-            {
-              LOGGER.log(Level.FINER, "Not logging results for query: " + sql);
-            }
-            else
-            {
-              final int updateCount = statement.getUpdateCount();
-              LOGGER.log(Level.FINER, String
-                         .format("Update count of %d for query: ", updateCount, sql));
-            }
-          }
-        }
-      }
-    }
-    catch (final SQLException e)
-    {
-      System.err.println(e.getMessage());
-      LOGGER.log(Level.WARNING, e.getMessage(), e);
     }
   }
 
@@ -183,7 +142,7 @@ public final class Utility
   public static boolean isBlank(final String text)
   {
     return text == null || text.isEmpty()
-        || isAllWhitespacePattern.matcher(text).matches();
+           || isAllWhitespacePattern.matcher(text).matches();
   }
 
   public static String pastelColorHTMLValue(final String text)
@@ -277,7 +236,7 @@ public final class Utility
   {
     final LogManager logManager = LogManager.getLogManager();
     final List<String> loggerNames = Collections.list(logManager
-                                                      .getLoggerNames());
+      .getLoggerNames());
     for (final String loggerName: loggerNames)
     {
       final Logger logger = logManager.getLogger(loggerName);

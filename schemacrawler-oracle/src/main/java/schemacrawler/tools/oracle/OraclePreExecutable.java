@@ -1,7 +1,7 @@
 package schemacrawler.tools.oracle;
 
 
-import static sf.util.Utility.executeScriptFromResource;
+import static sf.util.DatabaseUtility.executeScriptFromResource;
 
 import java.sql.Connection;
 

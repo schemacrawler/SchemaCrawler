@@ -21,6 +21,8 @@
 package schemacrawler.crawl;
 
 
+import static sf.util.DatabaseUtility.executeSql;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -91,7 +93,8 @@ final class SynonymRetriever
     final Connection connection = getDatabaseConnection();
 
     try (final Statement statement = connection.createStatement();
-        MetadataResultSet results = new MetadataResultSet(statement.executeQuery(synonymsDefinitionSql));)
+        MetadataResultSet results = new MetadataResultSet(executeSql(statement,
+                                                                     synonymsDefinitionSql));)
     {
       while (results.next())
       {

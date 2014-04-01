@@ -21,7 +21,7 @@
 package schemacrawler.test.utility;
 
 
-import static sf.util.Utility.executeScriptFromResource;
+import static sf.util.DatabaseUtility.executeScriptFromResource;
 
 import java.io.File;
 import java.io.FilenameFilter;

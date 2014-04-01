@@ -21,6 +21,8 @@
 package schemacrawler.crawl;
 
 
+import static sf.util.DatabaseUtility.executeSql;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -44,7 +46,7 @@ final class RoutineExtRetriever
     .getLogger(RoutineExtRetriever.class.getName());
 
   RoutineExtRetriever(final RetrieverConnection retrieverConnection,
-                     final MutableDatabase database)
+                      final MutableDatabase database)
     throws SQLException
   {
     super(retrieverConnection, database);
@@ -72,7 +74,8 @@ final class RoutineExtRetriever
 
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
-        final MetadataResultSet results = new MetadataResultSet(statement.executeQuery(routineDefinitionsSql)))
+        final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
+                                                                           routineDefinitionsSql)))
     {
       while (results.next())
       {
