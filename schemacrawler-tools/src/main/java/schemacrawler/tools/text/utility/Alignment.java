@@ -22,7 +22,7 @@ package schemacrawler.tools.text.utility;
 
 public enum Alignment
 {
-
+  inherit,
   left,
   right;
 }

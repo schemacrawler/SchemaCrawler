@@ -20,7 +20,6 @@
 package sf.util;
 
 
-import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -143,25 +142,6 @@ public final class Utility
   {
     return text == null || text.isEmpty()
            || isAllWhitespacePattern.matcher(text).matches();
-  }
-
-  public static String pastelColorHTMLValue(final String text)
-  {
-    final float hue;
-    if (isBlank(text))
-    {
-      hue = 0.123456f;
-    }
-    else
-    {
-      hue = text.hashCode() / 5119f % 1;
-    }
-
-    final float saturation = 0.4f;
-    final float luminance = 0.98f;
-
-    final Color color = Color.getHSBColor(hue, saturation, luminance);
-    return "#" + Integer.toHexString(color.getRGB()).substring(2).toUpperCase();
   }
 
   public static String readFully(final InputStream stream)
