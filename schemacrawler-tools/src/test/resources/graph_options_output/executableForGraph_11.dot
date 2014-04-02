@@ -46,31 +46,31 @@ digraph "SchemaCrawler_Diagram" {
   /* PUBLIC."PUBLISHER SALES".REGIONS -=-=-=-=-=-=-=-=-=-=-=-=-=- */
   "regions_bc895c48" [
     label=<
-      <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white">
-        <tr>
-          <td colspan="2" bgcolor="#FA96E1" align="left"><b>PUBLIC."PUBLISHER SALES".REGIONS</b></td>
-          <td bgcolor="#FA96E1" align="right">[table]</td>
-        </tr>
-        <tr>
-          <td port="city_2c74db51.start" align="left">CITY</td>
-          <td> </td>
-          <td port="city_2c74db51.end" align="right">VARCHAR(50) not null</td>
-        </tr>
-        <tr>
-          <td port="state_630cbf4b.start" align="left">STATE</td>
-          <td> </td>
-          <td port="state_630cbf4b.end" align="right">VARCHAR(2) not null</td>
-        </tr>
-        <tr>
-          <td port="postalcode_9b2bfe9e.start" align="left"><b><i><u>POSTALCODE</u></i></b></td>
-          <td> </td>
-          <td port="postalcode_9b2bfe9e.end" align="right">VARCHAR(10) not null</td>
-        </tr>
-        <tr>
-          <td port="country_7d0587d0.start" align="left"><b><i><u>COUNTRY</u></i></b></td>
-          <td> </td>
-          <td port="country_7d0587d0.end" align="right">VARCHAR(50) not null</td>
-        </tr>
+      <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#555555">
+	<tr>
+		<td colspan='2' bgcolor='#FA96E1' align='left'><b><i>PUBLIC.&quot;PUBLISHER SALES&quot;.REGIONS</i></b></td>
+		<td bgcolor='#FA96E1' align='right'>[table]</td>
+	</tr>
+	<tr>
+		<td port='city_2c74db51.start' align='left'>CITY</td>
+		<td align='left'> </td>
+		<td port='city_2c74db51.end' align='right'>VARCHAR(50) not null</td>
+	</tr>
+	<tr>
+		<td port='state_630cbf4b.start' align='left'>STATE</td>
+		<td align='left'> </td>
+		<td port='state_630cbf4b.end' align='right'>VARCHAR(2) not null</td>
+	</tr>
+	<tr>
+		<td port='postalcode_9b2bfe9e.start' align='left'><b><i>POSTALCODE</i></b></td>
+		<td align='left'> </td>
+		<td port='postalcode_9b2bfe9e.end' align='right'>VARCHAR(10) not null</td>
+	</tr>
+	<tr>
+		<td port='country_7d0587d0.start' align='left'><b><i>COUNTRY</i></b></td>
+		<td align='left'> </td>
+		<td port='country_7d0587d0.end' align='right'>VARCHAR(50) not null</td>
+	</tr>
       </table>
     >
   ];

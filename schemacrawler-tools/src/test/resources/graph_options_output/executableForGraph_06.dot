@@ -46,11 +46,11 @@ digraph "SchemaCrawler_Diagram" {
   /* PUBLIC.BOOKS.AUTHORS -=-=-=-=-=-=-=-=-=-=-=-=-=- */
   "authors_dba8a1ff" [
     label=<
-      <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white">
-        <tr>
-          <td colspan="2" bgcolor="#96C2FA" align="left"><b>PUBLIC.BOOKS.AUTHORS</b></td>
-          <td bgcolor="#96C2FA" align="right">[table]</td>
-        </tr>
+      <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#555555">
+	<tr>
+		<td colspan='2' bgcolor='#96C2FA' align='left'><b><i>PUBLIC.BOOKS.AUTHORS</i></b></td>
+		<td bgcolor='#96C2FA' align='right'>[table]</td>
+	</tr>
       </table>
     >
   ];
@@ -60,11 +60,11 @@ digraph "SchemaCrawler_Diagram" {
   /* PUBLIC.BOOKS.AUTHORSLIST -=-=-=-=-=-=-=-=-=-=-=-=-=- */
   "authorslist_b29d331d" [
     label=<
-      <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white">
-        <tr>
-          <td colspan="2" bgcolor="#96C2FA" align="left"><b>PUBLIC.BOOKS.AUTHORSLIST</b></td>
-          <td bgcolor="#96C2FA" align="right">[view]</td>
-        </tr>
+      <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#555555">
+	<tr>
+		<td colspan='2' bgcolor='#96C2FA' align='left'><b><i>PUBLIC.BOOKS.AUTHORSLIST</i></b></td>
+		<td bgcolor='#96C2FA' align='right'>[view]</td>
+	</tr>
       </table>
     >
   ];
@@ -74,11 +74,11 @@ digraph "SchemaCrawler_Diagram" {
   /* PUBLIC.BOOKS.BOOKAUTHORS -=-=-=-=-=-=-=-=-=-=-=-=-=- */
   "bookauthors_aa4376" [
     label=<
-      <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white">
-        <tr>
-          <td colspan="2" bgcolor="#96C2FA" align="left"><b>PUBLIC.BOOKS.BOOKAUTHORS</b></td>
-          <td bgcolor="#96C2FA" align="right">[table]</td>
-        </tr>
+      <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#555555">
+	<tr>
+		<td colspan='2' bgcolor='#96C2FA' align='left'><b><i>PUBLIC.BOOKS.BOOKAUTHORS</i></b></td>
+		<td bgcolor='#96C2FA' align='right'>[table]</td>
+	</tr>
       </table>
     >
   ];
@@ -88,11 +88,11 @@ digraph "SchemaCrawler_Diagram" {
   /* PUBLIC.BOOKS.BOOKS -=-=-=-=-=-=-=-=-=-=-=-=-=- */
   "books_afd2ba21" [
     label=<
-      <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white">
-        <tr>
-          <td colspan="2" bgcolor="#96C2FA" align="left"><b>PUBLIC.BOOKS.BOOKS</b></td>
-          <td bgcolor="#96C2FA" align="right">[table]</td>
-        </tr>
+      <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#555555">
+	<tr>
+		<td colspan='2' bgcolor='#96C2FA' align='left'><b><i>PUBLIC.BOOKS.BOOKS</i></b></td>
+		<td bgcolor='#96C2FA' align='right'>[table]</td>
+	</tr>
       </table>
     >
   ];
@@ -102,11 +102,11 @@ digraph "SchemaCrawler_Diagram" {
   /* PUBLIC.BOOKS."Global Counts" -=-=-=-=-=-=-=-=-=-=-=-=-=- */
   "globalcounts_2ab3635a" [
     label=<
-      <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white">
-        <tr>
-          <td colspan="2" bgcolor="#96C2FA" align="left"><b>PUBLIC.BOOKS."Global Counts"</b></td>
-          <td bgcolor="#96C2FA" align="right">[table]</td>
-        </tr>
+      <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#555555">
+	<tr>
+		<td colspan='2' bgcolor='#96C2FA' align='left'><b><i>PUBLIC.BOOKS.&quot;Global Counts&quot;</i></b></td>
+		<td bgcolor='#96C2FA' align='right'>[table]</td>
+	</tr>
       </table>
     >
   ];
@@ -116,11 +116,11 @@ digraph "SchemaCrawler_Diagram" {
   /* PUBLIC.BOOKS.PUBLISHERS -=-=-=-=-=-=-=-=-=-=-=-=-=- */
   "publishers_b8da20c0" [
     label=<
-      <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white">
-        <tr>
-          <td colspan="2" bgcolor="#96C2FA" align="left"><b>PUBLIC.BOOKS.PUBLISHERS</b></td>
-          <td bgcolor="#96C2FA" align="right">[table]</td>
-        </tr>
+      <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#555555">
+	<tr>
+		<td colspan='2' bgcolor='#96C2FA' align='left'><b><i>PUBLIC.BOOKS.PUBLISHERS</i></b></td>
+		<td bgcolor='#96C2FA' align='right'>[table]</td>
+	</tr>
       </table>
     >
   ];
@@ -130,11 +130,11 @@ digraph "SchemaCrawler_Diagram" {
   /* PUBLIC.FOR_LINT.EXTRA_PK -=-=-=-=-=-=-=-=-=-=-=-=-=- */
   "extra_pk_334890da" [
     label=<
-      <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white">
-        <tr>
-          <td colspan="2" bgcolor="#BFFA96" align="left"><b>PUBLIC.FOR_LINT.EXTRA_PK</b></td>
-          <td bgcolor="#BFFA96" align="right">[table]</td>
-        </tr>
+      <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#555555">
+	<tr>
+		<td colspan='2' bgcolor='#BFFA96' align='left'><b><i>PUBLIC.FOR_LINT.EXTRA_PK</i></b></td>
+		<td bgcolor='#BFFA96' align='right'>[table]</td>
+	</tr>
       </table>
     >
   ];
@@ -144,11 +144,11 @@ digraph "SchemaCrawler_Diagram" {
   /* PUBLIC.FOR_LINT."Global Counts" -=-=-=-=-=-=-=-=-=-=-=-=-=- */
   "globalcounts_986b8a53" [
     label=<
-      <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white">
-        <tr>
-          <td colspan="2" bgcolor="#BFFA96" align="left"><b>PUBLIC.FOR_LINT."Global Counts"</b></td>
-          <td bgcolor="#BFFA96" align="right">[table]</td>
-        </tr>
+      <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#555555">
+	<tr>
+		<td colspan='2' bgcolor='#BFFA96' align='left'><b><i>PUBLIC.FOR_LINT.&quot;Global Counts&quot;</i></b></td>
+		<td bgcolor='#BFFA96' align='right'>[table]</td>
+	</tr>
       </table>
     >
   ];
@@ -158,11 +158,11 @@ digraph "SchemaCrawler_Diagram" {
   /* PUBLIC.FOR_LINT.PUBLICATIONS -=-=-=-=-=-=-=-=-=-=-=-=-=- */
   "publications_949377f7" [
     label=<
-      <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white">
-        <tr>
-          <td colspan="2" bgcolor="#BFFA96" align="left"><b>PUBLIC.FOR_LINT.PUBLICATIONS</b></td>
-          <td bgcolor="#BFFA96" align="right">[table]</td>
-        </tr>
+      <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#555555">
+	<tr>
+		<td colspan='2' bgcolor='#BFFA96' align='left'><b><i>PUBLIC.FOR_LINT.PUBLICATIONS</i></b></td>
+		<td bgcolor='#BFFA96' align='right'>[table]</td>
+	</tr>
       </table>
     >
   ];
@@ -172,11 +172,11 @@ digraph "SchemaCrawler_Diagram" {
   /* PUBLIC.FOR_LINT.WRITERS -=-=-=-=-=-=-=-=-=-=-=-=-=- */
   "writers_bf84ac10" [
     label=<
-      <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white">
-        <tr>
-          <td colspan="2" bgcolor="#BFFA96" align="left"><b>PUBLIC.FOR_LINT.WRITERS</b></td>
-          <td bgcolor="#BFFA96" align="right">[table]</td>
-        </tr>
+      <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#555555">
+	<tr>
+		<td colspan='2' bgcolor='#BFFA96' align='left'><b><i>PUBLIC.FOR_LINT.WRITERS</i></b></td>
+		<td bgcolor='#BFFA96' align='right'>[table]</td>
+	</tr>
       </table>
     >
   ];
@@ -186,11 +186,11 @@ digraph "SchemaCrawler_Diagram" {
   /* PUBLIC."PUBLISHER SALES".REGIONS -=-=-=-=-=-=-=-=-=-=-=-=-=- */
   "regions_bc895c48" [
     label=<
-      <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white">
-        <tr>
-          <td colspan="2" bgcolor="#FA96E1" align="left"><b>PUBLIC."PUBLISHER SALES".REGIONS</b></td>
-          <td bgcolor="#FA96E1" align="right">[table]</td>
-        </tr>
+      <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#555555">
+	<tr>
+		<td colspan='2' bgcolor='#FA96E1' align='left'><b><i>PUBLIC.&quot;PUBLISHER SALES&quot;.REGIONS</i></b></td>
+		<td bgcolor='#FA96E1' align='right'>[table]</td>
+	</tr>
       </table>
     >
   ];
@@ -200,11 +200,11 @@ digraph "SchemaCrawler_Diagram" {
   /* PUBLIC."PUBLISHER SALES".SALES -=-=-=-=-=-=-=-=-=-=-=-=-=- */
   "sales_20be6f95" [
     label=<
-      <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white">
-        <tr>
-          <td colspan="2" bgcolor="#FA96E1" align="left"><b>PUBLIC."PUBLISHER SALES".SALES</b></td>
-          <td bgcolor="#FA96E1" align="right">[table]</td>
-        </tr>
+      <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#555555">
+	<tr>
+		<td colspan='2' bgcolor='#FA96E1' align='left'><b><i>PUBLIC.&quot;PUBLISHER SALES&quot;.SALES</i></b></td>
+		<td bgcolor='#FA96E1' align='right'>[table]</td>
+	</tr>
       </table>
     >
   ];
