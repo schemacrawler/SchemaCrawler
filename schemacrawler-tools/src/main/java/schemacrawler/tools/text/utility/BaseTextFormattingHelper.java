@@ -21,6 +21,8 @@
 package schemacrawler.tools.text.utility;
 
 
+import java.awt.Color;
+
 import schemacrawler.tools.options.OutputFormat;
 
 /**
@@ -60,9 +62,11 @@ abstract class BaseTextFormattingHelper
     final TableRow row = new TableRow(outputFormat);
     row.add(new TableCell(definition,
                           0,
-                          Alignment.left,
-                          3,
+                          Alignment.inherit,
+                          false,
                           "definition",
+                          Color.white,
+                          3,
                           outputFormat));
     return row.toString();
   }
@@ -79,9 +83,11 @@ abstract class BaseTextFormattingHelper
     row.add(newTableCell("", "ordinal", outputFormat));
     row.add(new TableCell(description,
                           0,
-                          Alignment.left,
-                          2,
+                          Alignment.inherit,
+                          false,
                           "definition",
+                          Color.white,
+                          2,
                           outputFormat));
     return row.toString();
   }
@@ -109,22 +115,28 @@ abstract class BaseTextFormattingHelper
     {
       row.add(new TableCell(ordinal,
                             2,
-                            Alignment.left,
-                            1,
+                            Alignment.inherit,
+                            false,
                             "ordinal",
+                            Color.white,
+                            1,
                             outputFormat));
     }
     row.add(new TableCell(subName,
                           subNameWidth,
-                          Alignment.left,
-                          1,
+                          Alignment.inherit,
+                          false,
                           "subname",
+                          Color.white,
+                          1,
                           outputFormat));
     row.add(new TableCell(type,
                           typeWidth,
-                          Alignment.left,
-                          1,
+                          Alignment.inherit,
+                          false,
                           "type",
+                          Color.white,
+                          1,
                           outputFormat));
     return row.toString();
   }
@@ -137,7 +149,16 @@ abstract class BaseTextFormattingHelper
   @Override
   public String createEmptyRow()
   {
-    return new TableRow(outputFormat, 3).toString();
+    final TableRow tableRow = new TableRow(outputFormat);
+    tableRow.add(new TableCell("",
+                               0,
+                               Alignment.inherit,
+                               false,
+                               "",
+                               Color.white,
+                               3,
+                               outputFormat));
+    return tableRow.toString();
   }
 
   /**
@@ -169,15 +190,19 @@ abstract class BaseTextFormattingHelper
     final TableRow row = new TableRow(outputFormat);
     row.add(new TableCell(name,
                           nameWidth,
-                          Alignment.left,
-                          2,
+                          Alignment.inherit,
+                          false,
                           "name",
+                          Color.white,
+                          2,
                           outputFormat));
     row.add(new TableCell(description,
                           descriptionWidth,
                           Alignment.right,
-                          1,
+                          false,
                           "description right",
+                          Color.white,
+                          1,
                           outputFormat));
     nameRowString = row.toString();
 
@@ -198,24 +223,28 @@ abstract class BaseTextFormattingHelper
     final int nameWidth = 40;
     final int valueWidth = 70 - nameWidth;
 
-    final Alignment alignmentForValue = valueAlignment == null? Alignment.left
+    final Alignment alignmentForValue = valueAlignment == null? Alignment.inherit
                                                               : valueAlignment;
     final String valueStyle = "property_value"
-                              + (alignmentForValue == Alignment.left? ""
+                              + (alignmentForValue == Alignment.inherit? ""
                                                                     : " right");
 
     final TableRow row = new TableRow(outputFormat);
     row.add(new TableCell(name,
                           nameWidth,
-                          Alignment.left,
-                          1,
+                          Alignment.inherit,
+                          false,
                           "property_name",
+                          Color.white,
+                          1,
                           outputFormat));
     row.add(new TableCell(value,
                           valueWidth,
                           alignmentForValue,
-                          1,
+                          false,
                           valueStyle,
+                          Color.white,
+                          1,
                           outputFormat));
     return row.toString();
   }
@@ -277,9 +306,11 @@ abstract class BaseTextFormattingHelper
     {
       final TableHeaderCell headerCell = new TableHeaderCell(columnName,
                                                              0,
-                                                             Alignment.left,
-                                                             1,
+                                                             Alignment.inherit,
+                                                             false,
                                                              "",
+                                                             Color.white,
+                                                             1,
                                                              outputFormat);
       row.add(headerCell);
     }
@@ -290,7 +321,14 @@ abstract class BaseTextFormattingHelper
                                  final String styleClass,
                                  final OutputFormat outputFormat)
   {
-    return new TableCell(text, 0, Alignment.left, 1, styleClass, outputFormat);
+    return new TableCell(text,
+                         0,
+                         Alignment.inherit,
+                         false,
+                         styleClass,
+                         Color.white,
+                         1,
+                         outputFormat);
   }
 
 }

@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -20,20 +20,31 @@
 package schemacrawler.tools.text.utility;
 
 
+import java.awt.Color;
+
 import schemacrawler.tools.options.OutputFormat;
 
-class TableHeaderCell
-  extends TableCell
+public final class TableHeaderCell
+extends TableCell
 {
 
-  TableHeaderCell(final String text,
-                  final int characterWidth,
-                  final Alignment align,
-                  final int colSpan,
-                  final String styleClass,
-                  final OutputFormat outputFormat)
+  public TableHeaderCell(final String text,
+                         final int characterWidth,
+                         final Alignment align,
+                         final boolean emphasizeText,
+                         final String styleClass,
+                         final Color bgColor,
+                         final int colSpan,
+                         final OutputFormat outputFormat)
   {
-    super(text, characterWidth, align, colSpan, styleClass, outputFormat);
+    super(text,
+          characterWidth,
+          align,
+          emphasizeText,
+          styleClass,
+          bgColor,
+          colSpan,
+          outputFormat);
   }
 
   @Override

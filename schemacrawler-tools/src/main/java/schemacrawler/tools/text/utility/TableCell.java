@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -20,20 +20,27 @@
 package schemacrawler.tools.text.utility;
 
 
+import static sf.util.Utility.isBlank;
+
+import java.awt.Color;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import schemacrawler.tools.options.OutputFormat;
 
 /**
  * Represents an HTML table row.
- * 
+ *
  * @author Sualeh Fatehi
  */
-class TableCell
+public class TableCell
 {
 
   /**
    * Enclose the value in quotes and escape the quote and comma
    * characters that are inside.
-   * 
+   *
    * @param text
    *        Text that needs to be escaped and quoted
    * @return Text, escaped and quoted.
@@ -79,15 +86,19 @@ class TableCell
   private final int colSpan;
   private final int characterWidth;
   private final Alignment align;
-
   private final String text;
+  private final Color bgColor;
+  private final boolean emphasizeText;
+  private final Map<String, String> attributes;
 
-  TableCell(final String text,
-            final int characterWidth,
-            final Alignment align,
-            final int colSpan,
-            final String styleClass,
-            final OutputFormat outputFormat)
+  public TableCell(final String text,
+                   final int characterWidth,
+                   final Alignment align,
+                   final boolean emphasizeText,
+                   final String styleClass,
+                   final Color bgColor,
+                   final int colSpan,
+                   final OutputFormat outputFormat)
   {
     this.outputFormat = outputFormat;
     this.colSpan = colSpan;
@@ -95,11 +106,19 @@ class TableCell
     this.text = text;
     this.characterWidth = characterWidth;
     this.align = align;
+    this.bgColor = bgColor;
+    this.emphasizeText = emphasizeText;
+    attributes = new HashMap<>();
+  }
+
+  public String addAttribute(final String key, final String value)
+  {
+    return attributes.put(key, value);
   }
 
   /**
    * Converts the table cell to HTML.
-   * 
+   *
    * @return HTML
    */
   @Override
@@ -122,22 +141,42 @@ class TableCell
 
   /**
    * Converts the table cell to HTML.
-   * 
+   *
    * @return HTML
    */
   private String toHtmlString()
   {
     final StringBuilder buffer = new StringBuilder();
     buffer.append("<").append(getCellTag());
+    for (final Entry<String, String> attribute: attributes.entrySet())
+    {
+      buffer.append(" ").append(attribute.getKey()).append("='")
+        .append(attribute.getValue()).append("'");
+    }
     if (colSpan > 1)
     {
       buffer.append(" colspan='").append(colSpan).append("'");
     }
-    if (!sf.util.Utility.isBlank(styleClass))
+    if (bgColor != null && !bgColor.equals(Color.white))
+    {
+      final String bgColorHtml = "#"
+                                 + Integer.toHexString(bgColor.getRGB())
+                                   .substring(2).toUpperCase();
+      buffer.append(" bgcolor='").append(bgColorHtml).append("'");
+    }
+    if (!isBlank(styleClass))
     {
       buffer.append(" class='").append(styleClass).append("'");
     }
+    else if (align != null && align != Alignment.inherit)
+    {
+      buffer.append(" align='").append(align).append("'");
+    }
     buffer.append(">");
+    if (emphasizeText)
+    {
+      buffer.append("<b><i>");
+    }
     if (text == null)
     {
       buffer.append("NULL");
@@ -146,6 +185,10 @@ class TableCell
     {
       buffer.append(Entities.XML.escape(String.valueOf(text)));
     }
+    if (emphasizeText)
+    {
+      buffer.append("</i></b>");
+    }
     buffer.append("</").append(getCellTag()).append(">");
 
     return buffer.toString();
@@ -153,7 +196,7 @@ class TableCell
 
   /**
    * Converts the table cell to CSV.
-   * 
+   *
    * @return CSV
    */
   private String toPlainTextString()

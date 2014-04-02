@@ -26,8 +26,8 @@ import static schemacrawler.utility.MetaDataUtility.getConnectivity;
 import static sf.util.Utility.NEWLINE;
 import static sf.util.Utility.convertForComparison;
 import static sf.util.Utility.isBlank;
-import static sf.util.Utility.pastelColorHTMLValue;
 
+import java.awt.Color;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -45,15 +45,19 @@ import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.analysis.associations.DatabaseWithAssociations;
+import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.BaseDotFormatter;
+import schemacrawler.tools.text.utility.Alignment;
+import schemacrawler.tools.text.utility.TableCell;
+import schemacrawler.tools.text.utility.TableRow;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
 import schemacrawler.utility.MetaDataUtility.Connectivity;
 import schemacrawler.utility.NamedObjectSort;
 
 /**
  * GraphViz DOT formatting of schema.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public final class SchemaDotFormatter
@@ -61,13 +65,32 @@ public final class SchemaDotFormatter
   implements SchemaTraversalHandler
 {
 
+  private static Color pastelColorHTMLValue(final String text)
+  {
+    final float hue;
+    if (isBlank(text))
+    {
+      hue = 0.123456f;
+    }
+    else
+    {
+      hue = text.hashCode() / 5119f % 1;
+    }
+
+    final float saturation = 0.4f;
+    final float luminance = 0.98f;
+
+    final Color color = Color.getHSBColor(hue, saturation, luminance);
+    return color;
+  }
+
   private final boolean isVerbose;
   private final boolean isList;
-  private final Map<Schema, String> colorMap;
+  private final Map<Schema, Color> colorMap;
 
   /**
    * Text formatting of schema.
-   * 
+   *
    * @param schemaTextDetailType
    *        Types for text formatting of schema
    * @param options
@@ -98,7 +121,7 @@ public final class SchemaDotFormatter
 
   /**
    * Provides information on the database schema.
-   * 
+   *
    * @param routine
    *        Routine metadata.
    */
@@ -109,7 +132,7 @@ public final class SchemaDotFormatter
 
   /**
    * Provides information on the database schema.
-   * 
+   *
    * @param synonym
    *        Synonym metadata.
    */
@@ -120,7 +143,7 @@ public final class SchemaDotFormatter
 
   /**
    * Provides information on the database schema.
-   * 
+   *
    * @param table
    *        Table metadata.
    */
@@ -140,7 +163,7 @@ public final class SchemaDotFormatter
     }
     final String tableType = "[" + table.getTableType() + "]";
 
-    final String tableNameBgColor;
+    final Color tableNameBgColor;
     if (!colorMap.containsKey(schema))
     {
       tableNameBgColor = pastelColorHTMLValue(schema.getFullName());
@@ -150,26 +173,27 @@ public final class SchemaDotFormatter
     {
       tableNameBgColor = colorMap.get(schema);
     }
+    final int colspan = options.isShowOrdinalNumbers()? 3: 2;
 
     out.append("  /* ").append(table.getFullName())
       .append(" -=-=-=-=-=-=-=-=-=-=-=-=-=- */").append(NEWLINE);
     out.append("  \"").append(nodeId(table)).append("\" [").append(NEWLINE)
       .append("    label=<").append(NEWLINE);
     out
-      .append("      <table border=\"1\" cellborder=\"0\" cellpadding=\"2\" cellspacing=\"0\" bgcolor=\"white\">")
-      .append(NEWLINE);
-    out.append("        <tr>").append(NEWLINE);
-
-    final int colspan = options.isShowOrdinalNumbers()? 3: 2;
-    out.append("          <td colspan=\"").append(String.valueOf(colspan))
-      .append("\" bgcolor=\"").append(tableNameBgColor)
-      .append("\" align=\"left\"><b>").append(tableName).append("</b></td>")
+      .append("      <table border=\"1\" cellborder=\"0\" cellpadding=\"2\" cellspacing=\"0\" bgcolor=\"white\" color=\"#555555\">")
       .append(NEWLINE);
 
-    out.append("          <td bgcolor=\"").append(tableNameBgColor)
-      .append("\" align=\"right\">").append(tableType).append("</td>")
-      .append(NEWLINE);
-    out.append("        </tr>").append(NEWLINE);
+    final TableRow row = new TableRow(OutputFormat.html);
+    row.add(newTableCell(tableName,
+                         Alignment.left,
+                         true,
+                         tableNameBgColor,
+                         colspan));
+    row
+      .add(newTableCell(tableType, Alignment.right, false, tableNameBgColor, 1));
+
+    out.append(row.toString());
+    out.append(NEWLINE);
 
     if (!isList)
     {
@@ -304,6 +328,22 @@ public final class SchemaDotFormatter
     return portIds;
   }
 
+  private TableCell newTableCell(final String text,
+                                 final Alignment align,
+                                 final boolean emphasizeText,
+                                 final Color bgColor,
+                                 final int colspan)
+  {
+    return new TableCell(text,
+                         0,
+                         align,
+                         emphasizeText,
+                         "",
+                         bgColor,
+                         colspan,
+                         OutputFormat.html);
+  }
+
   private String nodeId(final NamedObject namedObject)
   {
     if (namedObject == null)
@@ -385,35 +425,36 @@ public final class SchemaDotFormatter
       final String columnType = columnTypeName + column.getWidth();
       final String nullable = column.isNullable()? "": " not null";
       final String columnDetails = columnType + nullable;
+      final boolean emphasize = column.isPartOfPrimaryKey();
 
-      out.append("        <tr>").append(NEWLINE);
-      out.append("          <td port=\"").append(nodeId(column))
-        .append(".start\" ");
+      final TableRow row = new TableRow(OutputFormat.html);
       if (options.isShowOrdinalNumbers())
       {
-        out.append("align=\"right\">");
         final String ordinalNumberString = String.valueOf(column
           .getOrdinalPosition());
-        out.append(ordinalNumberString);
-        out.append("</td>").append(NEWLINE).append("          <td ");
+        row.add(newTableCell(ordinalNumberString,
+                             Alignment.right,
+                             false,
+                             Color.white,
+                             1));
       }
-      out.append("align=\"left\">");
-      if (column.isPartOfPrimaryKey())
-      {
-        out.append("<b><i><u>");
-      }
-      out.append(column.getName());
-      if (column.isPartOfPrimaryKey())
-      {
-        out.append("</u></i></b>");
-      }
-      out.append("</td>").append(NEWLINE);
-      out.append("          <td> </td>").append(NEWLINE);
-      out.append("          <td port=\"").append(nodeId(column))
-        .append(".end\" align=\"right\">");
-      out.append(columnDetails);
-      out.append("</td>").append(NEWLINE);
-      out.append("        </tr>").append(NEWLINE);
+      row.add(newTableCell(column.getName(),
+                           Alignment.left,
+                           emphasize,
+                           Color.white,
+                           1));
+      row.add(newTableCell(" ", Alignment.left, false, Color.white, 1));
+      row.add(newTableCell(columnDetails,
+                           Alignment.right,
+                           false,
+                           Color.white,
+                           1));
+
+      row.firstCell().addAttribute("port", nodeId(column) + ".start");
+      row.lastCell().addAttribute("port", nodeId(column) + ".end");
+
+      out.append(row.toString());
+      out.append(NEWLINE);
     }
 
   }

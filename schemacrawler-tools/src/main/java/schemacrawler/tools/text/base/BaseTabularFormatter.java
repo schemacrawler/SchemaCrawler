@@ -96,13 +96,13 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions>
     out.print(formattingHelper.createObjectStart(""));
     out.println(formattingHelper.createNameValueRow("database product name",
                                                     dbInfo.getProductName(),
-                                                    Alignment.left));
+                                                    Alignment.inherit));
     out.println(formattingHelper.createNameValueRow("database product version",
                                                     dbInfo.getProductVersion(),
-                                                    Alignment.left));
+                                                    Alignment.inherit));
     out.println(formattingHelper.createNameValueRow("database user name",
                                                     dbInfo.getUserName(),
-                                                    Alignment.left));
+                                                    Alignment.inherit));
     out.print(formattingHelper.createObjectEnd());
 
     if (printVerboseDatabaseInfo && dbInfo.getProperties().size() > 0)
@@ -119,7 +119,7 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions>
           value = "";
         }
         out.println(formattingHelper.createNameValueRow(name, ObjectToString
-          .toString(value), Alignment.left));
+          .toString(value), Alignment.inherit));
       }
       out.print(formattingHelper.createObjectEnd());
     }
@@ -141,21 +141,21 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions>
     out.print(formattingHelper.createObjectStart(""));
     out.println(formattingHelper.createNameValueRow("driver name",
                                                     driverInfo.getDriverName(),
-                                                    Alignment.left));
+                                                    Alignment.inherit));
     out.println(formattingHelper.createNameValueRow("driver version",
                                                     driverInfo
                                                       .getDriverVersion(),
-                                                    Alignment.left));
+                                                    Alignment.inherit));
     out.println(formattingHelper.createNameValueRow("driver class name",
                                                     driverInfo
                                                       .getDriverClassName(),
-                                                    Alignment.left));
+                                                    Alignment.inherit));
     out.println(formattingHelper.createNameValueRow("url", driverInfo
-      .getConnectionUrl(), Alignment.left));
+      .getConnectionUrl(), Alignment.inherit));
     out.println(formattingHelper.createNameValueRow("is JDBC compliant",
                                                     Boolean.toString(driverInfo
                                                       .isJdbcCompliant()),
-                                                    Alignment.left));
+                                                    Alignment.inherit));
     out.print(formattingHelper.createObjectEnd());
 
     final Collection<JdbcDriverProperty> jdbcDriverProperties = driverInfo
@@ -190,11 +190,11 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions>
     out.println(formattingHelper
       .createNameValueRow("product name",
                           schemaCrawlerInfo.getSchemaCrawlerProductName(),
-                          Alignment.left));
+                          Alignment.inherit));
     out.println(formattingHelper
       .createNameValueRow("product version",
                           schemaCrawlerInfo.getSchemaCrawlerVersion(),
-                          Alignment.left));
+                          Alignment.inherit));
     out.print(formattingHelper.createObjectEnd());
 
     out.flush();

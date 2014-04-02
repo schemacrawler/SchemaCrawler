@@ -22,6 +22,8 @@
 package schemacrawler.tools.text.utility;
 
 
+import static sf.util.Utility.NEWLINE;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,35 +31,47 @@ import schemacrawler.tools.options.OutputFormat;
 
 /**
  * Represents an HTML table row.
- * 
+ *
  * @author Sualeh Fatehi
  */
-final class TableRow
+public final class TableRow
 {
-
-  /**
-   * System specific line separator character.
-   */
-  private static final String NEWLINE = System.getProperty("line.separator");
 
   private final OutputFormat outputFormat;
   private final List<TableCell> cells;
 
-  TableRow(final OutputFormat outputFormat)
+  public TableRow(final OutputFormat outputFormat)
   {
     this.outputFormat = outputFormat;
     cells = new ArrayList<>();
   }
 
-  TableRow(final OutputFormat outputFormat, final int colSpan)
+  public void add(final TableCell cell)
   {
-    this(outputFormat);
-    cells.add(new TableCell("", 0, Alignment.left, colSpan, "", outputFormat));
+    cells.add(cell);
+  }
+
+  public TableCell firstCell()
+  {
+    if (cells.isEmpty())
+    {
+      return null;
+    }
+    return cells.get(0);
+  }
+
+  public TableCell lastCell()
+  {
+    if (cells.isEmpty())
+    {
+      return null;
+    }
+    return cells.get(cells.size() - 1);
   }
 
   /**
    * Converts the table row to HTML.
-   * 
+   *
    * @return HTML
    */
   @Override
@@ -71,11 +85,6 @@ final class TableRow
     {
       return toPlainTextString();
     }
-  }
-
-  void add(final TableCell cell)
-  {
-    cells.add(cell);
   }
 
   private String getFieldSeparator()
@@ -97,7 +106,7 @@ final class TableRow
 
   /**
    * Converts the table row to HTML.
-   * 
+   *
    * @return HTML
    */
   private String toHtmlString()
@@ -115,7 +124,7 @@ final class TableRow
 
   /**
    * Converts the table row to CSV.
-   * 
+   *
    * @return CSV
    */
   private String toPlainTextString()

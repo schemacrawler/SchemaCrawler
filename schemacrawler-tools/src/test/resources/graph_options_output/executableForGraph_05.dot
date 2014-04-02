@@ -46,41 +46,41 @@ digraph "SchemaCrawler_Diagram" {
   /* PUBLIC.BOOKS.BOOKS -=-=-=-=-=-=-=-=-=-=-=-=-=- */
   "books_afd2ba21" [
     label=<
-      <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white">
-        <tr>
-          <td colspan="2" bgcolor="#96C2FA" align="left"><b>PUBLIC.BOOKS.BOOKS</b></td>
-          <td bgcolor="#96C2FA" align="right">[table]</td>
-        </tr>
-        <tr>
-          <td port="id_bb8abc08.start" align="left"><b><i><u>ID</u></i></b></td>
-          <td> </td>
-          <td port="id_bb8abc08.end" align="right">INTEGER not null</td>
-        </tr>
-        <tr>
-          <td port="title_764df42b.start" align="left">TITLE</td>
-          <td> </td>
-          <td port="title_764df42b.end" align="right">VARCHAR(255) not null</td>
-        </tr>
-        <tr>
-          <td port="description_f1e45f8f.start" align="left">DESCRIPTION</td>
-          <td> </td>
-          <td port="description_f1e45f8f.end" align="right">VARCHAR(255)</td>
-        </tr>
-        <tr>
-          <td port="publisherid_3413fbaa.start" align="left">PUBLISHERID</td>
-          <td> </td>
-          <td port="publisherid_3413fbaa.end" align="right">INTEGER not null</td>
-        </tr>
-        <tr>
-          <td port="publicationdate_bf876ded.start" align="left">PUBLICATIONDATE</td>
-          <td> </td>
-          <td port="publicationdate_bf876ded.end" align="right">DATE</td>
-        </tr>
-        <tr>
-          <td port="price_7619831c.start" align="left">PRICE</td>
-          <td> </td>
-          <td port="price_7619831c.end" align="right">DOUBLE(64, 0)</td>
-        </tr>
+      <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#555555">
+	<tr>
+		<td colspan='2' bgcolor='#96C2FA' align='left'><b><i>PUBLIC.BOOKS.BOOKS</i></b></td>
+		<td bgcolor='#96C2FA' align='right'>[table]</td>
+	</tr>
+	<tr>
+		<td port='id_bb8abc08.start' align='left'><b><i>ID</i></b></td>
+		<td align='left'> </td>
+		<td port='id_bb8abc08.end' align='right'>INTEGER not null</td>
+	</tr>
+	<tr>
+		<td port='title_764df42b.start' align='left'>TITLE</td>
+		<td align='left'> </td>
+		<td port='title_764df42b.end' align='right'>VARCHAR(255) not null</td>
+	</tr>
+	<tr>
+		<td port='description_f1e45f8f.start' align='left'>DESCRIPTION</td>
+		<td align='left'> </td>
+		<td port='description_f1e45f8f.end' align='right'>VARCHAR(255)</td>
+	</tr>
+	<tr>
+		<td port='publisherid_3413fbaa.start' align='left'>PUBLISHERID</td>
+		<td align='left'> </td>
+		<td port='publisherid_3413fbaa.end' align='right'>INTEGER not null</td>
+	</tr>
+	<tr>
+		<td port='publicationdate_bf876ded.start' align='left'>PUBLICATIONDATE</td>
+		<td align='left'> </td>
+		<td port='publicationdate_bf876ded.end' align='right'>DATE</td>
+	</tr>
+	<tr>
+		<td port='price_7619831c.start' align='left'>PRICE</td>
+		<td align='left'> </td>
+		<td port='price_7619831c.end' align='right'>DOUBLE(64, 0)</td>
+	</tr>
       </table>
     >
   ];
