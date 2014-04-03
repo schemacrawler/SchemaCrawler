@@ -49,7 +49,6 @@ import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.BaseDotFormatter;
 import schemacrawler.tools.text.utility.Alignment;
-import schemacrawler.tools.text.utility.TableCell;
 import schemacrawler.tools.text.utility.TableRow;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
 import schemacrawler.utility.MetaDataUtility.Connectivity;
@@ -326,22 +325,6 @@ public final class SchemaDotFormatter
       portIds[1] = nodeId;
     }
     return portIds;
-  }
-
-  private TableCell newTableCell(final String text,
-                                 final Alignment align,
-                                 final boolean emphasizeText,
-                                 final Color bgColor,
-                                 final int colspan)
-  {
-    return new TableCell(text,
-                         0,
-                         align,
-                         emphasizeText,
-                         "",
-                         bgColor,
-                         colspan,
-                         OutputFormat.html);
   }
 
   private String nodeId(final NamedObject namedObject)

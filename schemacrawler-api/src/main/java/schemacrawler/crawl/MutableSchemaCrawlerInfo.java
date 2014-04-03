@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -21,7 +21,9 @@
 package schemacrawler.crawl;
 
 
+import java.text.DateFormat;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,7 +33,7 @@ import schemacrawler.schemacrawler.Config;
 
 /**
  * SchemaCrawler information.
- * 
+ *
  * @author Sualeh Fatehi sualeh@hotmail.com
  */
 final class MutableSchemaCrawlerInfo
@@ -45,10 +47,18 @@ final class MutableSchemaCrawlerInfo
   private String schemaCrawlerProductName;
   private String schemaCrawlerVersion;
   private String schemaCrawlerAbout;
+  private String crawlTimestamp;
+
   /**
    * Needs to be sorted, so serialization does not break.
    */
   private final Map<String, String> systemProperties = new HashMap<>();
+
+  @Override
+  public String getCrawlTimestamp()
+  {
+    return crawlTimestamp;
+  }
 
   @Override
   public String getSchemaCrawlerAbout()
@@ -70,7 +80,7 @@ final class MutableSchemaCrawlerInfo
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.SchemaCrawlerInfo#getSystemProperties()
    */
   @Override
@@ -81,7 +91,7 @@ final class MutableSchemaCrawlerInfo
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see Object#toString()
    */
   @Override
@@ -103,6 +113,10 @@ final class MutableSchemaCrawlerInfo
     schemaCrawlerProductName = Version.getProductName();
     schemaCrawlerVersion = Version.getVersion();
     schemaCrawlerAbout = Version.about();
+
+    final DateFormat dateFormatter = DateFormat
+      .getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT);
+    crawlTimestamp = dateFormatter.format(new Date());
   }
 
 }
