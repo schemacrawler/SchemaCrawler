@@ -5,7 +5,15 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-     <release version="10.08.04" date="2014-03-24">
+     <release version="10.08.04" date="2014-04-03">
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Column sort options sort columns in dumps also.
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Added generation date to database diagram.
+      ]]></action>      
+     </release>   
+     <release version="10.08.03" date="2014-03-24">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Made extra columns provided in all information schema views available as attributes of SchemaCrawler Java objects.
       ]]></action>
