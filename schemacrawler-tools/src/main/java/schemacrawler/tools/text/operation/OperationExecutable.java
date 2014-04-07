@@ -70,17 +70,12 @@ extends BaseStagedExecutable
   }
 
   @Override
-  protected void beforeExecuteOn()
-      throws Exception
-  {
-    super.beforeExecuteOn();
-    loadOperationOptions();
-  }
-
-  @Override
   protected void executeOn(final Database database, final Connection connection)
       throws Exception
   {
+    loadOperationOptions();
+    checkOutputFormat();
+
     final DataTraversalHandler handler = getDataTraversalHandler();
     final Query query = getQuery();
 
@@ -129,6 +124,15 @@ extends BaseStagedExecutable
     catch (final SQLException e)
     {
       throw new SchemaCrawlerException("Cannot perform operation", e);
+    }
+  }
+
+  private void checkOutputFormat()
+  {
+    if (!outputOptions.hasOutputFormat())
+    {
+      throw new IllegalArgumentException("Unknown output format: "
+          + outputOptions.getOutputFormatValue());
     }
   }
 

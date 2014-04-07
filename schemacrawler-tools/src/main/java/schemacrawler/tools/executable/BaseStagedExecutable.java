@@ -58,20 +58,7 @@ public abstract class BaseStagedExecutable
     final SchemaCrawler crawler = new SchemaCrawler(connection);
     final Database database = crawler.crawl(schemaCrawlerOptions);
 
-    beforeExecuteOn();
     executeOn(database, connection);
-    afterExecuteOn();
-
-  }
-
-  protected void afterExecuteOn()
-    throws Exception
-  {
-  }
-
-  protected void beforeExecuteOn()
-    throws Exception
-  {
   }
 
   protected abstract void executeOn(Database database, Connection connection)
