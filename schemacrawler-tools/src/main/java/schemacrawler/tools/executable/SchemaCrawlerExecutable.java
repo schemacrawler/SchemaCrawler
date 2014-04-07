@@ -16,25 +16,25 @@ import schemacrawler.tools.text.operation.OperationExecutable;
  * SchemaCrawlerExecutable will check if it is a query configured in the
  * properties. If not, it will assume that a query is specified on the
  * command line, and execute that.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public final class SchemaCrawlerExecutable
-  extends BaseStagedExecutable
+extends BaseStagedExecutable
 {
 
   private static final Logger LOGGER = Logger
-    .getLogger(SchemaCrawlerExecutable.class.getName());
+      .getLogger(SchemaCrawlerExecutable.class.getName());
 
   public SchemaCrawlerExecutable(final String command)
-    throws SchemaCrawlerException
+      throws SchemaCrawlerException
   {
     super(command);
   }
 
   @Override
   protected void executeOn(final Database database, final Connection connection)
-    throws Exception
+      throws Exception
   {
     final Commands commands = new Commands(getCommand());
     if (commands.isEmpty())
@@ -49,8 +49,8 @@ public final class SchemaCrawlerExecutable
     {
       final boolean isCommand = commandRegistry.hasCommand(command);
       final boolean isConfiguredQuery = additionalConfiguration != null
-                                        && additionalConfiguration
-                                          .containsKey(command);
+          && additionalConfiguration
+          .containsKey(command);
       // If the command is a direct query
       if (!isCommand && !isConfiguredQuery)
       {
@@ -66,17 +66,17 @@ public final class SchemaCrawlerExecutable
       if (commands.hasMultipleCommands())
       {
         LOGGER.log(Level.INFO, String
-          .format("Executing commands [%s] in sequence", commands));
+                   .format("Executing commands [%s] in sequence", commands));
         executable = new CommandDaisyChainExecutable(getCommand());
       }
       else
       {
         executable = (BaseStagedExecutable) commandRegistry
-          .newExecutable(getCommand());
+            .newExecutable(getCommand());
         LOGGER.log(Level.INFO, String
-          .format("Executing command \"%s\" using executable %s",
-                  getCommand(),
-                  executable.getClass().getName()));
+                   .format("Executing command \"%s\" using executable %s",
+                           getCommand(),
+                           executable.getClass().getName()));
       }
     }
 

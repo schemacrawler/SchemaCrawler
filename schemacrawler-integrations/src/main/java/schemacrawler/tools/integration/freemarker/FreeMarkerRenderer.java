@@ -44,15 +44,15 @@ import freemarker.template.Template;
 
 /**
  * Main executor for the FreeMarker integration.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public final class FreeMarkerRenderer
-  extends BaseStagedExecutable
+extends BaseStagedExecutable
 {
 
   private static final Logger LOGGER = Logger
-    .getLogger(FreeMarkerRenderer.class.getName());
+      .getLogger(FreeMarkerRenderer.class.getName());
   static final String COMMAND = "freemarker";
 
   public FreeMarkerRenderer()
@@ -66,7 +66,7 @@ public final class FreeMarkerRenderer
   @Override
   protected final void executeOn(final Database database,
                                  final Connection connection)
-    throws Exception
+                                     throws Exception
   {
     // Set the file path, in case the template is a file template
     // This allows Velocity to load templates from any directory
@@ -80,20 +80,20 @@ public final class FreeMarkerRenderer
     }
 
     freemarker.log.Logger
-      .selectLoggerLibrary(freemarker.log.Logger.LIBRARY_JAVA);
+    .selectLoggerLibrary(freemarker.log.Logger.LIBRARY_JAVA);
 
     // Create a new instance of the configuration
     final Configuration cfg = new Configuration();
 
     final TemplateLoader ctl = new ClassTemplateLoader(FreeMarkerRenderer.class,
-                                                       "/");
+        "/");
     final TemplateLoader ftl = new FileTemplateLoader(new File(templatePath));
     final TemplateLoader mtl = new MultiTemplateLoader(new TemplateLoader[] {
-        ctl, ftl
+                                                                             ctl, ftl
     });
     cfg.setTemplateLoader(mtl);
     cfg
-      .setEncoding(Locale.getDefault(), outputOptions.getInputCharset().name());
+    .setEncoding(Locale.getDefault(), outputOptions.getInputCharset().name());
     cfg.setStrictSyntaxMode(true);
     cfg.setWhitespaceStripping(true);
 
