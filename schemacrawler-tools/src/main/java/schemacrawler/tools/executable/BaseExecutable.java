@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -29,11 +29,11 @@ import sf.util.Utility;
 
 /**
  * A SchemaCrawler tools executable unit.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public abstract class BaseExecutable
-  implements Executable
+implements Executable
 {
 
   protected final String command;
@@ -61,7 +61,7 @@ public abstract class BaseExecutable
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.tools.executable.Executable#getCommand()
    */
   @Override
@@ -72,7 +72,7 @@ public abstract class BaseExecutable
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.tools.executable.Executable#getOutputOptions()
    */
   @Override
@@ -83,7 +83,7 @@ public abstract class BaseExecutable
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.tools.executable.Executable#getSchemaCrawlerOptions()
    */
   @Override
@@ -107,7 +107,7 @@ public abstract class BaseExecutable
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.tools.executable.Executable#setOutputOptions(schemacrawler.tools.options.OutputOptions)
    */
   @Override
@@ -121,7 +121,7 @@ public abstract class BaseExecutable
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.tools.executable.Executable#setSchemaCrawlerOptions(schemacrawler.schemacrawler.SchemaCrawlerOptions)
    */
   @Override
@@ -135,7 +135,7 @@ public abstract class BaseExecutable
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see Object#toString()
    */
   @Override

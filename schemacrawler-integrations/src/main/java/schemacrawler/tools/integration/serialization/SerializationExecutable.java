@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -30,11 +30,11 @@ import schemacrawler.tools.options.OutputWriter;
 
 /**
  * Main executor for the graphing integration.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public final class SerializationExecutable
-  extends BaseStagedExecutable
+extends BaseStagedExecutable
 {
 
   static final String COMMAND = "serialize";
@@ -54,7 +54,7 @@ public final class SerializationExecutable
    */
   @Override
   protected void executeOn(final Database db, final Connection connection)
-    throws Exception
+      throws Exception
   {
     final SerializableDatabase database = new XmlDatabase(db);
     try (final Writer writer = new OutputWriter(outputOptions);)

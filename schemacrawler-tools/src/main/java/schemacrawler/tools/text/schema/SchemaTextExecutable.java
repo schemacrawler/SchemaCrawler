@@ -34,11 +34,11 @@ import schemacrawler.tools.traversal.SchemaTraverser;
 
 /**
  * Basic SchemaCrawler executor.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public final class SchemaTextExecutable
-  extends BaseStagedExecutable
+extends BaseStagedExecutable
 {
 
   private SchemaTextOptions schemaTextOptions;
@@ -50,15 +50,7 @@ public final class SchemaTextExecutable
 
   public final SchemaTextOptions getSchemaTextOptions()
   {
-    final SchemaTextOptions schemaTextOptions;
-    if (this.schemaTextOptions == null)
-    {
-      schemaTextOptions = new SchemaTextOptions(additionalConfiguration);
-    }
-    else
-    {
-      schemaTextOptions = this.schemaTextOptions;
-    }
+    final SchemaTextOptions schemaTextOptions = loadSchemaTextOptions();
     return schemaTextOptions;
   }
 
@@ -68,14 +60,22 @@ public final class SchemaTextExecutable
   }
 
   @Override
+  protected void beforeExecuteOn()
+      throws Exception
+  {
+    super.beforeExecuteOn();
+    loadSchemaTextOptions();
+  }
+
+  @Override
   protected void executeOn(final Database db, final Connection connection)
-    throws Exception
+      throws Exception
   {
     InfoLevel infoLevel;
     try
     {
       infoLevel = InfoLevel.valueOf(getSchemaCrawlerOptions()
-        .getSchemaInfoLevel().getTag());
+                                    .getSchemaInfoLevel().getTag());
     }
     catch (final Exception e)
     {
@@ -102,7 +102,7 @@ public final class SchemaTextExecutable
   }
 
   private SchemaTraversalHandler getSchemaTraversalHandler()
-    throws SchemaCrawlerException
+      throws SchemaCrawlerException
   {
     final SchemaTraversalHandler formatter;
     SchemaTextDetailType schemaTextDetailType;
@@ -131,6 +131,20 @@ public final class SchemaTextExecutable
     }
 
     return formatter;
+  }
+
+  private SchemaTextOptions loadSchemaTextOptions()
+  {
+    final SchemaTextOptions schemaTextOptions;
+    if (this.schemaTextOptions == null)
+    {
+      schemaTextOptions = new SchemaTextOptions(additionalConfiguration);
+    }
+    else
+    {
+      schemaTextOptions = this.schemaTextOptions;
+    }
+    return schemaTextOptions;
   }
 
 }

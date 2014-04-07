@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -38,11 +38,11 @@ import sf.util.Utility;
 
 /**
  * Main executor for the graphing integration.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public final class GraphExecutable
-  extends BaseStagedExecutable
+extends BaseStagedExecutable
 {
 
   static final String COMMAND = "graph";
@@ -78,14 +78,14 @@ public final class GraphExecutable
    */
   @Override
   protected void executeOn(final Database db, final Connection connection)
-    throws Exception
+      throws Exception
   {
     // Determine what decorators to apply to the database
     InfoLevel infoLevel;
     try
     {
-      infoLevel = InfoLevel.valueOf(getSchemaCrawlerOptions()
-        .getSchemaInfoLevel().getTag());
+      infoLevel = InfoLevel.valueOf(schemaCrawlerOptions.getSchemaInfoLevel()
+                                    .getTag());
     }
     catch (final Exception e)
     {
@@ -116,7 +116,7 @@ public final class GraphExecutable
     final GraphGenerator dot = new GraphGenerator(graphOptions.getGraphVizOpts(),
                                                   dotFile,
                                                   outputOptions
-                                                    .getOutputFormatValue(),
+                                                  .getOutputFormatValue(),
                                                   outputOptions.getOutputFile());
     try
     {
@@ -130,12 +130,12 @@ public final class GraphExecutable
   }
 
   private SchemaTraversalHandler getSchemaTraversalHandler(final File dotFile)
-    throws SchemaCrawlerException
+      throws SchemaCrawlerException
   {
     final SchemaTraversalHandler formatter;
     final GraphOptions graphOptions = getGraphOptions();
     final SchemaTextDetailType schemaTextDetailType = graphOptions
-      .getSchemaTextDetailType();
+        .getSchemaTextDetailType();
 
     formatter = new SchemaDotFormatter(schemaTextDetailType,
                                        graphOptions,

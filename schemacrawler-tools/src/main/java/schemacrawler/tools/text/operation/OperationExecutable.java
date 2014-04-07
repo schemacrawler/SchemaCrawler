@@ -41,15 +41,15 @@ import schemacrawler.tools.traversal.DataTraversalHandler;
 
 /**
  * Basic SchemaCrawler executor.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public final class OperationExecutable
-  extends BaseStagedExecutable
+extends BaseStagedExecutable
 {
 
   private static final Logger LOGGER = Logger
-    .getLogger(OperationExecutable.class.getName());
+      .getLogger(OperationExecutable.class.getName());
 
   private OperationOptions operationOptions;
 
@@ -60,15 +60,7 @@ public final class OperationExecutable
 
   public final OperationOptions getOperationOptions()
   {
-    final OperationOptions operationOptions;
-    if (this.operationOptions == null)
-    {
-      operationOptions = new OperationOptions(additionalConfiguration);
-    }
-    else
-    {
-      operationOptions = this.operationOptions;
-    }
+    final OperationOptions operationOptions = loadOperationOptions();
     return operationOptions;
   }
 
@@ -78,8 +70,16 @@ public final class OperationExecutable
   }
 
   @Override
+  protected void beforeExecuteOn()
+      throws Exception
+  {
+    super.beforeExecuteOn();
+    loadOperationOptions();
+  }
+
+  @Override
   protected void executeOn(final Database database, final Connection connection)
-    throws Exception
+      throws Exception
   {
     final DataTraversalHandler handler = getDataTraversalHandler();
     final Query query = getQuery();
@@ -101,9 +101,8 @@ public final class OperationExecutable
 
         for (final Table table: tables)
         {
-          final String sql = query
-            .getQueryForTable(table, getOperationOptions()
-              .isAlphabeticalSortForTableColumns());
+          final String sql = query.getQueryForTable(table, operationOptions
+                                                    .isAlphabeticalSortForTableColumns());
 
           LOGGER.log(Level.FINE,
                      String.format("Executing query for table %s: %s",
@@ -134,7 +133,7 @@ public final class OperationExecutable
   }
 
   private DataTraversalHandler getDataTraversalHandler()
-    throws SchemaCrawlerException
+      throws SchemaCrawlerException
   {
     final Operation operation = getOperation();
 
@@ -197,6 +196,20 @@ public final class OperationExecutable
     }
 
     return query;
+  }
+
+  private OperationOptions loadOperationOptions()
+  {
+    final OperationOptions operationOptions;
+    if (this.operationOptions == null)
+    {
+      operationOptions = new OperationOptions(additionalConfiguration);
+    }
+    else
+    {
+      operationOptions = this.operationOptions;
+    }
+    return operationOptions;
   }
 
 }

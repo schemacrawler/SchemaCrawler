@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -29,7 +29,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 
 /**
  * A SchemaCrawler tools executable unit.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public abstract class BaseStagedExecutable
@@ -43,7 +43,7 @@ public abstract class BaseStagedExecutable
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.tools.executable.Executable#execute(java.sql.Connection)
    */
   @Override
@@ -57,7 +57,21 @@ public abstract class BaseStagedExecutable
 
     final SchemaCrawler crawler = new SchemaCrawler(connection);
     final Database database = crawler.crawl(schemaCrawlerOptions);
+
+    beforeExecuteOn();
     executeOn(database, connection);
+    afterExecuteOn();
+
+  }
+
+  protected void afterExecuteOn()
+    throws Exception
+  {
+  }
+
+  protected void beforeExecuteOn()
+    throws Exception
+  {
   }
 
   protected abstract void executeOn(Database database, Connection connection)
