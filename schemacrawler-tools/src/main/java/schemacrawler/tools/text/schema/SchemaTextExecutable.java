@@ -60,17 +60,12 @@ extends BaseStagedExecutable
   }
 
   @Override
-  protected void beforeExecuteOn()
-      throws Exception
-  {
-    super.beforeExecuteOn();
-    loadSchemaTextOptions();
-  }
-
-  @Override
   protected void executeOn(final Database db, final Connection connection)
       throws Exception
   {
+    loadSchemaTextOptions();
+    checkOutputFormat();
+
     InfoLevel infoLevel;
     try
     {
@@ -99,6 +94,15 @@ extends BaseStagedExecutable
     traverser.setHandler(formatter);
     traverser.traverse();
 
+  }
+
+  private void checkOutputFormat()
+  {
+    if (!outputOptions.hasOutputFormat())
+    {
+      throw new IllegalArgumentException("Unknown output format: "
+          + outputOptions.getOutputFormatValue());
+    }
   }
 
   private SchemaTraversalHandler getSchemaTraversalHandler()

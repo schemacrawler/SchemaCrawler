@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -32,11 +32,11 @@ import sf.util.Utility;
 
 /**
  * Contains output options.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public final class OutputOptions
-  implements Options
+implements Options
 {
 
   private static final long serialVersionUID = 7018337388923813055L;
@@ -74,14 +74,14 @@ public final class OutputOptions
     }
 
     setInputEncoding(configProperties
-      .getStringValue(SC_INPUT_ENCODING, "UTF-8"));
+                     .getStringValue(SC_INPUT_ENCODING, "UTF-8"));
     setOutputEncoding(configProperties.getStringValue(SC_OUTPUT_ENCODING,
-                                                      "UTF-8"));
+        "UTF-8"));
   }
 
   /**
    * Output options, given the type and the output to the console.
-   * 
+   *
    * @param outputFormatValue
    *        Type of output, which is dependent on the executor
    */
@@ -92,7 +92,7 @@ public final class OutputOptions
 
   /**
    * Output options, given the type and the output filename.
-   * 
+   *
    * @param outputFormatValue
    *        Type of output, which is dependent on the executor
    * @param outputFile
@@ -107,7 +107,7 @@ public final class OutputOptions
 
   /**
    * Output options, given the type and the output filename.
-   * 
+   *
    * @param outputFormatValue
    *        Type of output, which is dependent on the executor
    * @param outputFile
@@ -152,7 +152,7 @@ public final class OutputOptions
 
   /**
    * Output file, which has previously been created.
-   * 
+   *
    * @return Output file
    */
   public File getOutputFile()
@@ -162,7 +162,7 @@ public final class OutputOptions
 
   /**
    * Output format.
-   * 
+   *
    * @return Output format
    */
   public OutputFormat getOutputFormat()
@@ -181,7 +181,7 @@ public final class OutputOptions
 
   /**
    * Gets the output format value.
-   * 
+   *
    * @return Output format value.s
    */
   public String getOutputFormatValue()
@@ -192,6 +192,16 @@ public final class OutputOptions
   public Writer getWriter()
   {
     return writer;
+  }
+
+  /**
+   * Whether a known output format has been specified.
+   *
+   * @return Has output format
+   */
+  public boolean hasOutputFormat()
+  {
+    return getOutputFormat() != null;
   }
 
   public boolean isConsoleOutput()
@@ -207,7 +217,7 @@ public final class OutputOptions
   /**
    * Set character encoding for input files, such as scripts and
    * templates.
-   * 
+   *
    * @param inputEncoding
    *        Input encoding
    */
@@ -225,7 +235,7 @@ public final class OutputOptions
 
   /**
    * Set character encoding for output files.
-   * 
+   *
    * @param outputEncoding
    *        Output encoding
    */
@@ -243,7 +253,7 @@ public final class OutputOptions
 
   /**
    * Sets the name of the output file.
-   * 
+   *
    * @param outputFileName
    *        Output file name.
    */
@@ -254,7 +264,7 @@ public final class OutputOptions
 
   /**
    * Sets output format value.
-   * 
+   *
    * @param outputFormatValue
    *        Output format value
    */
