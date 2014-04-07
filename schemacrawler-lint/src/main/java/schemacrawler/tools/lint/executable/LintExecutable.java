@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -35,11 +35,11 @@ import schemacrawler.tools.options.OutputFormat;
 import sf.util.Utility;
 
 public class LintExecutable
-  extends BaseStagedExecutable
+extends BaseStagedExecutable
 {
 
   private static final Logger LOGGER = Logger.getLogger(LintExecutable.class
-    .getName());
+                                                        .getName());
 
   public static final String COMMAND = "lint";
   private static final String CONFIG_LINTER_CONFIGS_FILE = "schemacrawer.linter_configs.file";
@@ -72,7 +72,7 @@ public class LintExecutable
 
   @Override
   protected void executeOn(final Database db, final Connection connection)
-    throws Exception
+      throws Exception
   {
     final LinterConfigs linterConfigs = readLinterConfigs();
     final LintedDatabase database = new LintedDatabase(db, linterConfigs);
@@ -100,7 +100,7 @@ public class LintExecutable
   }
 
   private LintTraversalHandler getSchemaTraversalHandler()
-    throws SchemaCrawlerException
+      throws SchemaCrawlerException
   {
     final LintTraversalHandler formatter;
     final LintOptions lintOptions = getLintOptions();
@@ -120,7 +120,7 @@ public class LintExecutable
 
   /**
    * Obtain linter configuration from a system property
-   * 
+   *
    * @return LinterConfigs
    * @throws SchemaCrawlerException
    */
@@ -140,7 +140,7 @@ public class LintExecutable
     catch (final Exception e)
     {
       LOGGER.log(Level.WARNING, "Could not load linter configs from file "
-                                + linterConfigsFile, e);
+          + linterConfigsFile, e);
       return linterConfigs;
     }
   }

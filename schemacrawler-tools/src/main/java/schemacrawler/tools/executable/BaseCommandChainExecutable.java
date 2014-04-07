@@ -31,17 +31,17 @@ import schemacrawler.schema.Database;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
 abstract class BaseCommandChainExecutable
-  extends BaseStagedExecutable
+extends BaseStagedExecutable
 {
 
   private static final Logger LOGGER = Logger
-    .getLogger(BaseCommandChainExecutable.class.getName());
+      .getLogger(BaseCommandChainExecutable.class.getName());
 
   private final List<Executable> executables;
   private final CommandRegistry commandRegistry;
 
   protected BaseCommandChainExecutable(final String command)
-    throws SchemaCrawlerException
+      throws SchemaCrawlerException
   {
     super(command);
 
@@ -59,7 +59,7 @@ abstract class BaseCommandChainExecutable
   }
 
   public final Executable addNext(final String command)
-    throws SchemaCrawlerException
+      throws SchemaCrawlerException
   {
     try
     {
@@ -83,7 +83,7 @@ abstract class BaseCommandChainExecutable
 
   protected final void executeChain(final Database database,
                                     final Connection connection)
-    throws Exception
+                                        throws Exception
   {
     if (executables.isEmpty())
     {
