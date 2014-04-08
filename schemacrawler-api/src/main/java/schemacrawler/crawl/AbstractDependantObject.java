@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -21,14 +21,14 @@
 package schemacrawler.crawl;
 
 
+import static sf.util.Utility.isBlank;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.DependantObject;
-import sf.util.Utility;
 
 /**
  * Represents the dependent of a database object, such as a column or an
  * index, which are dependents of a table.
- * 
+ *
  * @author Sualeh Fatehi
  */
 abstract class AbstractDependantObject<P extends DatabaseObject>
@@ -52,7 +52,7 @@ abstract class AbstractDependantObject<P extends DatabaseObject>
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see java.lang.Object#equals(java.lang.Object)
    */
   @Override
@@ -87,7 +87,7 @@ abstract class AbstractDependantObject<P extends DatabaseObject>
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.crawl.AbstractDatabaseObject#getFullName()
    */
   @Override
@@ -99,7 +99,7 @@ abstract class AbstractDependantObject<P extends DatabaseObject>
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.DependantObject#getParent()
    */
   @Override
@@ -117,7 +117,7 @@ abstract class AbstractDependantObject<P extends DatabaseObject>
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see java.lang.Object#hashCode()
    */
   @Override
@@ -129,7 +129,7 @@ abstract class AbstractDependantObject<P extends DatabaseObject>
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see Object#toString()
    */
   @Override
@@ -143,13 +143,16 @@ abstract class AbstractDependantObject<P extends DatabaseObject>
     if (fullName == null)
     {
       final StringBuilder buffer = new StringBuilder();
-      final String parentFullName = parent.getFullName();
-      if (parent != null && !Utility.isBlank(parentFullName))
+      if (parent != null)
       {
-        buffer.append(parentFullName).append('.');
+        final String parentFullName = parent.getFullName();
+        if (!isBlank(parentFullName))
+        {
+          buffer.append(parentFullName).append('.');
+        }
       }
       final String quotedName = getName();
-      if (!Utility.isBlank(quotedName))
+      if (!isBlank(quotedName))
       {
         buffer.append(quotedName);
       }
@@ -174,13 +177,16 @@ abstract class AbstractDependantObject<P extends DatabaseObject>
     if (shortName == null)
     {
       final StringBuilder buffer = new StringBuilder();
-      final String parentName = parent.getName();
-      if (parent != null && !Utility.isBlank(parentName))
+      if (parent != null)
       {
-        buffer.append(parentName).append('.');
+        final String parentName = parent.getName();
+        if (!isBlank(parentName))
+        {
+          buffer.append(parentName).append('.');
+        }
       }
       final String quotedName = getName();
-      if (!Utility.isBlank(quotedName))
+      if (!isBlank(quotedName))
       {
         buffer.append(quotedName);
       }
