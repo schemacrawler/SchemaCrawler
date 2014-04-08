@@ -45,11 +45,11 @@ import schemacrawler.tools.traversal.DataTraversalHandler;
  * @author Sualeh Fatehi
  */
 public final class OperationExecutable
-extends BaseStagedExecutable
+  extends BaseStagedExecutable
 {
 
   private static final Logger LOGGER = Logger
-      .getLogger(OperationExecutable.class.getName());
+    .getLogger(OperationExecutable.class.getName());
 
   private OperationOptions operationOptions;
 
@@ -60,7 +60,7 @@ extends BaseStagedExecutable
 
   public final OperationOptions getOperationOptions()
   {
-    final OperationOptions operationOptions = loadOperationOptions();
+    loadOperationOptions();
     return operationOptions;
   }
 
@@ -71,7 +71,7 @@ extends BaseStagedExecutable
 
   @Override
   protected void executeOn(final Database database, final Connection connection)
-      throws Exception
+    throws Exception
   {
     loadOperationOptions();
     checkOutputFormat();
@@ -97,7 +97,7 @@ extends BaseStagedExecutable
         for (final Table table: tables)
         {
           final String sql = query.getQueryForTable(table, operationOptions
-                                                    .isAlphabeticalSortForTableColumns());
+            .isAlphabeticalSortForTableColumns());
 
           LOGGER.log(Level.FINE,
                      String.format("Executing query for table %s: %s",
@@ -132,12 +132,12 @@ extends BaseStagedExecutable
     if (!outputOptions.hasOutputFormat())
     {
       throw new IllegalArgumentException("Unknown output format: "
-          + outputOptions.getOutputFormatValue());
+                                         + outputOptions.getOutputFormatValue());
     }
   }
 
   private DataTraversalHandler getDataTraversalHandler()
-      throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
     final Operation operation = getOperation();
 
@@ -202,18 +202,12 @@ extends BaseStagedExecutable
     return query;
   }
 
-  private OperationOptions loadOperationOptions()
+  private void loadOperationOptions()
   {
-    final OperationOptions operationOptions;
     if (this.operationOptions == null)
     {
       operationOptions = new OperationOptions(additionalConfiguration);
     }
-    else
-    {
-      operationOptions = this.operationOptions;
-    }
-    return operationOptions;
   }
 
 }
