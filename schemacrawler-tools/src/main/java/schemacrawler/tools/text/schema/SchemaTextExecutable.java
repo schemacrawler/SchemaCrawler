@@ -38,7 +38,7 @@ import schemacrawler.tools.traversal.SchemaTraverser;
  * @author Sualeh Fatehi
  */
 public final class SchemaTextExecutable
-extends BaseStagedExecutable
+  extends BaseStagedExecutable
 {
 
   private SchemaTextOptions schemaTextOptions;
@@ -50,7 +50,7 @@ extends BaseStagedExecutable
 
   public final SchemaTextOptions getSchemaTextOptions()
   {
-    final SchemaTextOptions schemaTextOptions = loadSchemaTextOptions();
+    loadSchemaTextOptions();
     return schemaTextOptions;
   }
 
@@ -61,7 +61,7 @@ extends BaseStagedExecutable
 
   @Override
   protected void executeOn(final Database db, final Connection connection)
-      throws Exception
+    throws Exception
   {
     loadSchemaTextOptions();
     checkOutputFormat();
@@ -69,8 +69,8 @@ extends BaseStagedExecutable
     InfoLevel infoLevel;
     try
     {
-      infoLevel = InfoLevel.valueOf(getSchemaCrawlerOptions()
-                                    .getSchemaInfoLevel().getTag());
+      infoLevel = InfoLevel.valueOf(schemaCrawlerOptions.getSchemaInfoLevel()
+        .getTag());
     }
     catch (final Exception e)
     {
@@ -101,12 +101,12 @@ extends BaseStagedExecutable
     if (!outputOptions.hasOutputFormat())
     {
       throw new IllegalArgumentException("Unknown output format: "
-          + outputOptions.getOutputFormatValue());
+                                         + outputOptions.getOutputFormatValue());
     }
   }
 
   private SchemaTraversalHandler getSchemaTraversalHandler()
-      throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
     final SchemaTraversalHandler formatter;
     SchemaTextDetailType schemaTextDetailType;
@@ -118,7 +118,6 @@ extends BaseStagedExecutable
     {
       schemaTextDetailType = SchemaTextDetailType.schema;
     }
-    final SchemaTextOptions schemaTextOptions = getSchemaTextOptions();
 
     final OutputFormat outputFormat = outputOptions.getOutputFormat();
     if (outputFormat == OutputFormat.json)
@@ -137,18 +136,12 @@ extends BaseStagedExecutable
     return formatter;
   }
 
-  private SchemaTextOptions loadSchemaTextOptions()
+  private void loadSchemaTextOptions()
   {
-    final SchemaTextOptions schemaTextOptions;
     if (this.schemaTextOptions == null)
     {
       schemaTextOptions = new SchemaTextOptions(additionalConfiguration);
     }
-    else
-    {
-      schemaTextOptions = this.schemaTextOptions;
-    }
-    return schemaTextOptions;
   }
 
 }
