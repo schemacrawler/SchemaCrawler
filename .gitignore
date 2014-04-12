@@ -9,3 +9,5 @@ workspace
 /schemacrawler/gpl-3.0.txt
 /schemacrawler/lgpl-3.0.txt
 /schemacrawler/*.bnd
+/schemacrawler-docs/*.xml
+/schemacrawler-docs/schemacrawler.config.properties.1
