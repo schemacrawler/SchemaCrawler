@@ -38,24 +38,25 @@ import sf.util.ObjectToString;
 
 /**
  * Utility for parsing the SchemaCrawler command line.
- *
+ * 
  * @author Sualeh Fatehi
  */
 public final class OfflineSnapshotCommandLine
-implements CommandLine
+  implements CommandLine
 {
 
   private static final Logger LOGGER = Logger
-      .getLogger(OfflineSnapshotCommandLine.class.getName());
+    .getLogger(OfflineSnapshotCommandLine.class.getName());
 
   private final String command;
   private final Config config;
   private final SchemaCrawlerOptions schemaCrawlerOptions;
   private final OutputOptions outputOptions;
+  private final OfflineSnapshotOptions offlineSnapshotOptions;
 
   OfflineSnapshotCommandLine(final String... args)
-      throws SchemaCrawlerException
-      {
+    throws SchemaCrawlerException
+  {
     if (args == null || args.length == 0)
     {
       throw new SchemaCrawlerException("No command line arguments provided");
@@ -87,6 +88,10 @@ implements CommandLine
       config.putAll(additionalConfigParser.getOptions());
     }
 
+    final OfflineSnapshotOptionsParser offlineSnapshotOptionsParser = new OfflineSnapshotOptionsParser(config);
+    remainingArgs = offlineSnapshotOptionsParser.parse(remainingArgs);
+    offlineSnapshotOptions = offlineSnapshotOptionsParser.getOptions();
+
     final SchemaCrawlerOptionsParser schemaCrawlerOptionsParser = new SchemaCrawlerOptionsParser(config);
     remainingArgs = schemaCrawlerOptionsParser.parse(remainingArgs);
     schemaCrawlerOptions = schemaCrawlerOptionsParser.getOptions();
@@ -98,13 +103,13 @@ implements CommandLine
     if (remainingArgs.length > 0)
     {
       LOGGER.log(Level.INFO, "Too many command line arguments provided: "
-          + ObjectToString.toString(remainingArgs));
+                             + ObjectToString.toString(remainingArgs));
     }
-      }
+  }
 
   @Override
   public void execute()
-      throws Exception
+    throws Exception
   {
     final Executable executable = new OfflineSnapshotExecutable(command);
     initialize(executable);
