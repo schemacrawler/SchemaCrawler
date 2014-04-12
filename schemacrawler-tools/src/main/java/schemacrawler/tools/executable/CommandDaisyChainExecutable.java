@@ -9,18 +9,18 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.text.base.BaseTextOptionsBuilder;
 
 public final class CommandDaisyChainExecutable
-extends BaseCommandChainExecutable
+  extends BaseCommandChainExecutable
 {
 
   public CommandDaisyChainExecutable(final String commands)
-      throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
     super(commands);
   }
 
   @Override
-  protected void executeOn(final Database database, final Connection connection)
-      throws Exception
+  public void executeOn(final Database database, final Connection connection)
+    throws Exception
   {
     // Commands are processed at execution time. That is, after
     // all configuration settings are made.

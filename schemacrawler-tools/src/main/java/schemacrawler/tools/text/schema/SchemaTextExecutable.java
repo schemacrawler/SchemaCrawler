@@ -60,7 +60,7 @@ public final class SchemaTextExecutable
   }
 
   @Override
-  protected void executeOn(final Database db, final Connection connection)
+  public void executeOn(final Database db, final Connection connection)
     throws Exception
   {
     loadSchemaTextOptions();

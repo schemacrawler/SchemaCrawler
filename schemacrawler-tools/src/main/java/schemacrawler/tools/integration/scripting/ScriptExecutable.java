@@ -51,11 +51,11 @@ import sf.util.ObjectToString;
  * @author Sualeh Fatehi
  */
 public final class ScriptExecutable
-extends BaseStagedExecutable
+  extends BaseStagedExecutable
 {
 
   private static final Logger LOGGER = Logger.getLogger(ScriptExecutable.class
-                                                        .getName());
+    .getName());
 
   static final String COMMAND = "script";
 
@@ -68,9 +68,9 @@ extends BaseStagedExecutable
    * {@inheritDoc}
    */
   @Override
-  protected final void executeOn(final Database database,
-                                 final Connection connection)
-                                     throws Exception
+  public final void executeOn(final Database database,
+                              final Connection connection)
+    throws Exception
   {
 
     final String scriptFileName = outputOptions.getOutputFormatValue();
@@ -79,17 +79,17 @@ extends BaseStagedExecutable
     // Create a new instance of the engine
     final ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
     final List<ScriptEngineFactory> engineFactories = scriptEngineManager
-        .getEngineFactories();
+      .getEngineFactories();
     ScriptEngineFactory scriptEngineFactory = null;
     ScriptEngineFactory javaScriptEngineFactory = null;
     for (final ScriptEngineFactory engineFactory: engineFactories)
     {
       LOGGER.log(Level.FINER, String
-                 .format("Evaluating script engine: %s %s (%s %s)",
-                         engineFactory.getEngineName(),
-                         engineFactory.getEngineVersion(),
-                         engineFactory.getLanguageName(),
-                         engineFactory.getLanguageVersion()));
+        .format("Evaluating script engine: %s %s (%s %s)",
+                engineFactory.getEngineName(),
+                engineFactory.getEngineVersion(),
+                engineFactory.getLanguageName(),
+                engineFactory.getLanguageVersion()));
       final List<String> extensions = engineFactory.getExtensions();
       if (extensions.contains(FileUtility.getFileExtension(scriptFile)))
       {
@@ -113,23 +113,23 @@ extends BaseStagedExecutable
     if (LOGGER.isLoggable(Level.CONFIG))
     {
       LOGGER
-      .log(Level.CONFIG,
-           String
-           .format("Using script engine%n%s %s (%s %s)%nScript engine names: %s%nSupported file extensions: %s",
-                   scriptEngineFactory.getEngineName(),
-                   scriptEngineFactory.getEngineVersion(),
-                   scriptEngineFactory.getLanguageName(),
-                   scriptEngineFactory.getLanguageVersion(),
-                   ObjectToString.toString(scriptEngineFactory.getNames()),
-                   ObjectToString.toString(scriptEngineFactory
-                                           .getExtensions())));
+        .log(Level.CONFIG,
+             String
+               .format("Using script engine%n%s %s (%s %s)%nScript engine names: %s%nSupported file extensions: %s",
+                       scriptEngineFactory.getEngineName(),
+                       scriptEngineFactory.getEngineVersion(),
+                       scriptEngineFactory.getLanguageName(),
+                       scriptEngineFactory.getLanguageVersion(),
+                       ObjectToString.toString(scriptEngineFactory.getNames()),
+                       ObjectToString.toString(scriptEngineFactory
+                         .getExtensions())));
     }
 
     final ScriptEngine scriptEngine = scriptEngineFactory.getScriptEngine();
     final CommandChainExecutable chain = new CommandChainExecutable();
     try (final Reader reader = new InputReader(outputOptions);
         final Writer writer = new OutputWriter(outputOptions);)
-        {
+    {
       // Set up the context
       scriptEngine.getContext().setWriter(writer);
       scriptEngine.put("database", database);
@@ -140,14 +140,14 @@ extends BaseStagedExecutable
       if (scriptEngine instanceof Compilable)
       {
         final CompiledScript script = ((Compilable) scriptEngine)
-            .compile(reader);
+          .compile(reader);
         script.eval();
       }
       else
       {
         scriptEngine.eval(reader);
       }
-        }
+    }
 
   }
 }

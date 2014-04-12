@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -31,58 +31,50 @@ public class SchemaCrawlerMain
 {
 
   private static final Logger LOGGER = Logger.getLogger(SchemaCrawlerMain.class
-    .getName());
+                                                        .getName());
 
   public static void main(final String[] args)
-    throws Exception
+      throws Exception
   {
     main(args, new BundledDriverOptions()
     {
+
+      private static final long serialVersionUID = 1352308748762219275L;
     });
   }
 
   public static void main(final String[] args,
                           final BundledDriverOptions bundledDriverOptions)
-    throws Exception
+                              throws Exception
   {
     if (bundledDriverOptions == null)
     {
       throw new IllegalArgumentException("No bundled driver options provided");
     }
 
-    final CommandLine commandLine;
-    final boolean showHelp;
-
-    final ApplicationOptions applicationOptions;
     String[] remainingArgs = args;
-    if (remainingArgs.length == 0)
+
+    final ApplicationOptionsParser applicationOptionsParser = new ApplicationOptionsParser();
+    remainingArgs = applicationOptionsParser.parse(remainingArgs);
+    final ApplicationOptions applicationOptions = applicationOptionsParser
+        .getOptions();
+
+    if (applicationOptions.isShowHelp())
     {
-      applicationOptions = new ApplicationOptions();
-      showHelp = true;
+      final boolean showVersionOnly = applicationOptions.isShowVersionOnly();
+      final CommandLine helpCommandLine = new SchemaCrawlerHelpCommandLine(remainingArgs,
+                                                                           bundledDriverOptions
+                                                                             .getHelpOptions(),
+                                                                           showVersionOnly);
+      helpCommandLine.execute();
+      return;
     }
-    else
-    {
-      final ApplicationOptionsParser applicationOptionsParser = new ApplicationOptionsParser();
-      remainingArgs = applicationOptionsParser.parse(remainingArgs);
-      applicationOptions = applicationOptionsParser.getOptions();
-      showHelp = applicationOptions.isShowHelp();
-    }
+
     applicationOptions.applyApplicationLogLevel();
     LOGGER.log(Level.CONFIG, "Command line: " + Arrays.toString(args));
 
-    if (showHelp)
-    {
-      final boolean showVersionOnly = applicationOptions.isShowVersionOnly();
-      commandLine = new SchemaCrawlerHelpCommandLine(remainingArgs,
-                                                     bundledDriverOptions
-                                                       .getHelpOptions(),
-                                                     showVersionOnly);
-    }
-    else
-    {
-      commandLine = new SchemaCrawlerCommandLine(bundledDriverOptions,
-                                                 remainingArgs);
-    }
+    final CommandLine commandLine = new SchemaCrawlerCommandLine(bundledDriverOptions,
+                                                                 remainingArgs);
     commandLine.execute();
   }
 

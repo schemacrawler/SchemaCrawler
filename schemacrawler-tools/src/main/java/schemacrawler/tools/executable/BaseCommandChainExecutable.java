@@ -72,6 +72,7 @@ abstract class BaseCommandChainExecutable
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
       executable.setAdditionalConfiguration(additionalConfiguration);
       executable.setOutputOptions(outputOptions);
+
       return addNext(executable);
     }
     catch (final Exception e)
