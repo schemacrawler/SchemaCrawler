@@ -48,12 +48,12 @@ import schemacrawler.tools.options.OutputWriter;
  * @author Sualeh Fatehi
  */
 public final class VelocityRenderer
-extends BaseStagedExecutable
+  extends BaseStagedExecutable
 {
 
   static final String COMMAND = "velocity";
   private static final Logger LOGGER = Logger.getLogger(VelocityRenderer.class
-                                                        .getName());
+    .getName());
 
   private static void setVelocityResourceLoaderProperty(final Properties p,
                                                         final String resourceLoaderName,
@@ -61,7 +61,7 @@ extends BaseStagedExecutable
                                                         final String resourceLoaderPropertyValue)
   {
     p.setProperty(resourceLoaderName + "." + RuntimeConstants.RESOURCE_LOADER
-                  + "." + resourceLoaderPropertyName,
+                      + "." + resourceLoaderPropertyName,
                   resourceLoaderPropertyValue);
   }
 
@@ -74,9 +74,9 @@ extends BaseStagedExecutable
    * {@inheritDoc}
    */
   @Override
-  protected final void executeOn(final Database database,
-                                 final Connection connection)
-                                     throws Exception
+  public final void executeOn(final Database database,
+                              final Connection connection)
+    throws Exception
   {
     // Set the file path, in case the template is a file template
     // This allows Velocity to load templates from any directory
@@ -86,7 +86,7 @@ extends BaseStagedExecutable
     if (templateFilePath.exists())
     {
       templatePath = templatePath + ","
-          + templateFilePath.getAbsoluteFile().getParent();
+                     + templateFilePath.getAbsoluteFile().getParent();
       templateLocation = templateFilePath.getName();
     }
 
@@ -102,7 +102,7 @@ extends BaseStagedExecutable
     final String classpathResourceLoader = "classpath";
     final Properties p = new Properties();
     p.setProperty(RuntimeConstants.RESOURCE_LOADER, fileResourceLoader + ","
-        + classpathResourceLoader);
+                                                    + classpathResourceLoader);
     setVelocityResourceLoaderProperty(p,
                                       classpathResourceLoader,
                                       "class",
@@ -128,9 +128,9 @@ extends BaseStagedExecutable
     {
       final String templateEncoding = outputOptions.getInputCharset().name();
       LOGGER.log(Level.CONFIG, String
-                 .format("Reading Velocity template %s, with encoding \"%s\"",
-                         templateLocation,
-                         templateEncoding));
+        .format("Reading Velocity template %s, with encoding \"%s\"",
+                templateLocation,
+                templateEncoding));
       final Template template = ve.getTemplate(templateLocation,
                                                templateEncoding);
       template.merge(context, writer);

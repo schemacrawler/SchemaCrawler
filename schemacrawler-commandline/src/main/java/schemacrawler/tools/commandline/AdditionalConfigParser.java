@@ -33,13 +33,13 @@ import sf.util.clparser.StringOption;
  * 
  * @author Sualeh Fatehi
  */
-final class AdditionalConfigParser
+public final class AdditionalConfigParser
   extends BaseOptionsParser<Config>
 {
 
   private final Config config;
 
-  AdditionalConfigParser(final Config config)
+  public AdditionalConfigParser(final Config config)
   {
     super(new StringOption('p',
                            "additionalconfigfile",
@@ -53,7 +53,7 @@ final class AdditionalConfigParser
   }
 
   @Override
-  protected Config getOptions()
+  public Config getOptions()
     throws SchemaCrawlerException
   {
     // Start with main config

@@ -29,17 +29,17 @@ import sf.util.clparser.StringOption;
  * 
  * @author Sualeh Fatehi
  */
-class ConfigParser
+public class ConfigParser
   extends BaseOptionsParser<Config>
 {
 
-  ConfigParser()
+  public ConfigParser()
   {
     super(new StringOption('g', "configfile", "schemacrawler.config.properties"));
   }
 
   @Override
-  protected Config getOptions()
+  public Config getOptions()
   {
     final String cfgFile = getStringValue("g");
     return Config.load(cfgFile);

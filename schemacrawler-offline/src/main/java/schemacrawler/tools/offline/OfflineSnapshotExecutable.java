@@ -18,26 +18,28 @@
  *
  */
 
-package schemacrawler.tools.executable;
+package schemacrawler.tools.offline;
 
 
 import java.sql.Connection;
 
-import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Database;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.executable.BaseExecutable;
+import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import schemacrawler.tools.executable.StagedExecutable;
 
 /**
  * A SchemaCrawler tools executable unit.
  *
  * @author Sualeh Fatehi
  */
-public abstract class BaseStagedExecutable
-  extends BaseExecutable
-  implements StagedExecutable
+public class OfflineSnapshotExecutable
+extends BaseExecutable
+implements StagedExecutable
 {
 
-  protected BaseStagedExecutable(final String command)
+  protected OfflineSnapshotExecutable(final String command)
   {
     super(command);
   }
@@ -49,17 +51,35 @@ public abstract class BaseStagedExecutable
    */
   @Override
   public final void execute(final Connection connection)
-    throws Exception
+      throws Exception
   {
-    if (connection == null)
+    if (connection != null)
     {
-      throw new SchemaCrawlerException("No connection provided");
+      throw new SchemaCrawlerException("No connection should be provided");
     }
 
-    final SchemaCrawler crawler = new SchemaCrawler(connection);
-    final Database database = crawler.crawl(schemaCrawlerOptions);
+    final Database database = loadDatabase();
 
     executeOn(database, connection);
+  }
+
+  @Override
+  public void executeOn(final Database database, final Connection connection)
+      throws Exception
+  {
+    if (connection != null)
+    {
+      throw new SchemaCrawlerException("No connection should be provided");
+    }
+
+    // Create new SchemaCrawler executable
+    final StagedExecutable executable = new SchemaCrawlerExecutable(command);
+    executable.executeOn(database, connection);
+  }
+
+  private Database loadDatabase()
+  {
+    return null;
   }
 
 }

@@ -31,17 +31,17 @@ import sf.util.clparser.StringOption;
  * 
  * @author Sualeh Fatehi
  */
-final class CommandParser
+public final class CommandParser
   extends BaseOptionsParser<Command>
 {
 
-  CommandParser()
+  public CommandParser()
   {
     super(new StringOption('c', "command", null));
   }
 
   @Override
-  protected Command getOptions()
+  public Command getOptions()
     throws SchemaCrawlerException
   {
     if (hasOptions())
@@ -54,7 +54,7 @@ final class CommandParser
     }
   }
 
-  protected boolean hasOptions()
+  public boolean hasOptions()
     throws SchemaCrawlerException
   {
     boolean hasOptions;

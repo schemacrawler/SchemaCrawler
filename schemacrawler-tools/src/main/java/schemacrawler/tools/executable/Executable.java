@@ -12,14 +12,14 @@ public interface Executable
 
   /**
    * Executes main functionality for SchemaCrawler.
-   * 
+   *
    * @param connection
    *        Database connection
    * @throws Exception
    *         On an exception
    */
   void execute(Connection connection)
-    throws Exception;
+      throws Exception;
 
   Config getAdditionalConfiguration();
 

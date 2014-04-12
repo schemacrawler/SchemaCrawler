@@ -39,7 +39,7 @@ import sf.util.clparser.StringOption;
  * 
  * @author Sualeh Fatehi
  */
-final class SchemaCrawlerOptionsParser
+public final class SchemaCrawlerOptionsParser
   extends BaseOptionsParser<SchemaCrawlerOptions>
 {
 
@@ -48,7 +48,7 @@ final class SchemaCrawlerOptionsParser
 
   private final SchemaCrawlerOptions options;
 
-  SchemaCrawlerOptionsParser(final Config config)
+  public SchemaCrawlerOptionsParser(final Config config)
   {
     super(new StringOption("infolevel", "standard"),
           new StringOption("schemas", null),
@@ -70,7 +70,7 @@ final class SchemaCrawlerOptionsParser
   }
 
   @Override
-  protected SchemaCrawlerOptions getOptions()
+  public SchemaCrawlerOptions getOptions()
     throws SchemaCrawlerException
   {
     if (hasOptionValue("infolevel"))
@@ -198,4 +198,5 @@ final class SchemaCrawlerOptionsParser
 
     return options;
   }
+
 }

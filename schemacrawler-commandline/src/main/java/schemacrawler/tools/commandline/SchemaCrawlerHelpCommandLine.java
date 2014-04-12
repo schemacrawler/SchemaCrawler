@@ -30,7 +30,7 @@ import sf.util.Utility;
  * 
  * @author Sualeh Fatehi
  */
-final class SchemaCrawlerHelpCommandLine
+public final class SchemaCrawlerHelpCommandLine
   implements CommandLine
 {
 
@@ -63,9 +63,9 @@ final class SchemaCrawlerHelpCommandLine
    * @throws SchemaCrawlerException
    *         On an exception
    */
-  SchemaCrawlerHelpCommandLine(final String[] args,
-                               final HelpOptions helpOptions,
-                               final boolean showVersionOnly)
+  public SchemaCrawlerHelpCommandLine(final String[] args,
+                                      final HelpOptions helpOptions,
+                                      final boolean showVersionOnly)
     throws SchemaCrawlerException
   {
     if (args == null)

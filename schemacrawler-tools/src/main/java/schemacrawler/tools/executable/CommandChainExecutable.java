@@ -28,13 +28,13 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputOptions;
 
 public final class CommandChainExecutable
-extends BaseCommandChainExecutable
+  extends BaseCommandChainExecutable
 {
 
   private static final String COMMAND = "chain";
 
   public CommandChainExecutable()
-      throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
     super(COMMAND);
   }
@@ -42,7 +42,7 @@ extends BaseCommandChainExecutable
   public final Executable addNext(final String command,
                                   final String outputFormat,
                                   final String outputFileName)
-                                      throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
     try
     {
@@ -66,7 +66,7 @@ extends BaseCommandChainExecutable
 
   @Override
   public void executeOn(final Database database, final Connection connection)
-      throws Exception
+    throws Exception
   {
     executeChain(database, connection);
   }

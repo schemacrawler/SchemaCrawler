@@ -70,7 +70,7 @@ public final class OperationExecutable
   }
 
   @Override
-  protected void executeOn(final Database database, final Connection connection)
+  public void executeOn(final Database database, final Connection connection)
     throws Exception
   {
     loadOperationOptions();
