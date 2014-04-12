@@ -54,6 +54,8 @@
     <module>schemacrawler-commandline</module>
     <module>schemacrawler-integrations</module>
     <module>schemacrawler-lint</module>
+    
+    <module>schemacrawler-offline</module>    
     <module>schemacrawler-generic</module>
     <module>schemacrawler-db2</module>
     <module>schemacrawler-derby</module>
@@ -64,6 +66,7 @@
     <module>schemacrawler-sqlite</module>
     <module>schemacrawler-sqlserver</module>
     <module>schemacrawler-sybaseiq</module>
+    
     <module>schemacrawler-site</module>
     <module>schemacrawler</module>
   </modules>

@@ -18,49 +18,31 @@
  *
  */
 
-package schemacrawler.tools.integration.serialization;
+package schemacrawler.tools.executable;
 
 
-import java.io.Writer;
 import java.sql.Connection;
 
 import schemacrawler.schema.Database;
-import schemacrawler.tools.executable.BaseStagedExecutable;
-import schemacrawler.tools.options.OutputWriter;
 
 /**
- * Main executor for the graphing integration.
+ * A SchemaCrawler tools executable unit.
  *
  * @author Sualeh Fatehi
  */
-public final class SerializationExecutable
-  extends BaseStagedExecutable
+public interface StagedExecutable
 {
 
-  static final String COMMAND = "serialize";
-
-  public SerializationExecutable()
-  {
-    this(COMMAND);
-  }
-
-  public SerializationExecutable(final String command)
-  {
-    super(command);
-  }
-
   /**
-   * {@inheritDoc}
+   * Executes functionality for SchemaCrawler, after database metadata
+   * has been obtained.
+   * 
+   * @param connection
+   *        Database connection
+   * @throws Exception
+   *         On an exception
    */
-  @Override
-  public void executeOn(final Database db, final Connection connection)
-    throws Exception
-  {
-    final SerializableDatabase database = new XmlDatabase(db);
-    try (final Writer writer = new OutputWriter(outputOptions);)
-    {
-      database.save(writer);
-    }
-  }
+  void executeOn(Database database, Connection connection)
+    throws Exception;
 
 }

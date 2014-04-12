@@ -1,0 +1,4 @@
+--- Offline Snapshot Options ---
+
+-snapshot=<file>
+	File name and location of the database snapshot.

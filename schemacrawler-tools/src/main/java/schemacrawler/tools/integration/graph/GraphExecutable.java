@@ -42,7 +42,7 @@ import sf.util.Utility;
  * @author Sualeh Fatehi
  */
 public final class GraphExecutable
-extends BaseStagedExecutable
+  extends BaseStagedExecutable
 {
 
   static final String COMMAND = "graph";
@@ -77,15 +77,15 @@ extends BaseStagedExecutable
    * {@inheritDoc}
    */
   @Override
-  protected void executeOn(final Database db, final Connection connection)
-      throws Exception
+  public void executeOn(final Database db, final Connection connection)
+    throws Exception
   {
     // Determine what decorators to apply to the database
     InfoLevel infoLevel;
     try
     {
       infoLevel = InfoLevel.valueOf(schemaCrawlerOptions.getSchemaInfoLevel()
-                                    .getTag());
+        .getTag());
     }
     catch (final Exception e)
     {
@@ -116,7 +116,7 @@ extends BaseStagedExecutable
     final GraphGenerator dot = new GraphGenerator(graphOptions.getGraphVizOpts(),
                                                   dotFile,
                                                   outputOptions
-                                                  .getOutputFormatValue(),
+                                                    .getOutputFormatValue(),
                                                   outputOptions.getOutputFile());
     try
     {
@@ -130,12 +130,12 @@ extends BaseStagedExecutable
   }
 
   private SchemaTraversalHandler getSchemaTraversalHandler(final File dotFile)
-      throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
     final SchemaTraversalHandler formatter;
     final GraphOptions graphOptions = getGraphOptions();
     final SchemaTextDetailType schemaTextDetailType = graphOptions
-        .getSchemaTextDetailType();
+      .getSchemaTextDetailType();
 
     formatter = new SchemaDotFormatter(schemaTextDetailType,
                                        graphOptions,

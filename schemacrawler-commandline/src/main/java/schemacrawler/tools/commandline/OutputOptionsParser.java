@@ -34,13 +34,13 @@ import sf.util.clparser.StringOption;
  * 
  * @author Sualeh Fatehi
  */
-final class OutputOptionsParser
+public final class OutputOptionsParser
   extends BaseOptionsParser<OutputOptions>
 {
 
   final OutputOptions outputOptions;
 
-  OutputOptionsParser(final Config config)
+  public OutputOptionsParser(final Config config)
   {
     super(new StringOption("outputformat", OutputFormat.text.toString()),
           new StringOption('o', "outputfile", ""));
@@ -49,7 +49,7 @@ final class OutputOptionsParser
   }
 
   @Override
-  protected OutputOptions getOptions()
+  public OutputOptions getOptions()
   {
     final String outputFormatValue = getStringValue("outputformat");
     outputOptions.setOutputFormatValue(outputFormatValue);
