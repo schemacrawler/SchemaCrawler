@@ -21,12 +21,8 @@
 package schemacrawler.tools.offline;
 
 
-import java.io.File;
-
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.commandline.BaseOptionsParser;
-import schemacrawler.tools.options.OutputFormat;
-import sf.util.Utility;
 import sf.util.clparser.StringOption;
 
 /**
@@ -38,35 +34,23 @@ public final class OfflineSnapshotOptionsParser
   extends BaseOptionsParser<OfflineSnapshotOptions>
 {
 
-  final OfflineSnapshotOptions outputOptions;
+  final OfflineSnapshotOptions options;
 
   public OfflineSnapshotOptionsParser(final Config config)
   {
-    super(new StringOption("outputformat", OutputFormat.text.toString()),
-          new StringOption('o', "outputfile", ""));
+    super(new StringOption('i', "inputfile", ""));
 
-    outputOptions = new OfflineSnapshotOptions(config);
+    options = new OfflineSnapshotOptions(config);
   }
 
   @Override
   public OfflineSnapshotOptions getOptions()
   {
-    final String outputFormatValue = getStringValue("outputformat");
-    outputOptions.setOutputFormatValue(outputFormatValue);
 
-    final String outputFileName = getStringValue("outputfile");
-    final File outputFile;
-    if (Utility.isBlank(outputFileName))
-    {
-      outputFile = null;
-    }
-    else
-    {
-      outputFile = new File(outputFileName);
-    }
-    outputOptions.setOutputFile(outputFile);
+    final String inputSource = getStringValue("inputfile");
+    options.setInputSource(inputSource);
 
-    return outputOptions;
+    return options;
   }
 
 }

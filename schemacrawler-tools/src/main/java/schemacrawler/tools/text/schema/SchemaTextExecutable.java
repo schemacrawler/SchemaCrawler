@@ -38,7 +38,7 @@ import schemacrawler.tools.traversal.SchemaTraverser;
  * @author Sualeh Fatehi
  */
 public final class SchemaTextExecutable
-  extends BaseStagedExecutable
+extends BaseStagedExecutable
 {
 
   private SchemaTextOptions schemaTextOptions;
@@ -48,20 +48,9 @@ public final class SchemaTextExecutable
     super(command);
   }
 
-  public final SchemaTextOptions getSchemaTextOptions()
-  {
-    loadSchemaTextOptions();
-    return schemaTextOptions;
-  }
-
-  public final void setSchemaTextOptions(final SchemaTextOptions schemaTextOptions)
-  {
-    this.schemaTextOptions = schemaTextOptions;
-  }
-
   @Override
   public void executeOn(final Database db, final Connection connection)
-    throws Exception
+      throws Exception
   {
     loadSchemaTextOptions();
     checkOutputFormat();
@@ -70,7 +59,7 @@ public final class SchemaTextExecutable
     try
     {
       infoLevel = InfoLevel.valueOf(schemaCrawlerOptions.getSchemaInfoLevel()
-        .getTag());
+                                    .getTag());
     }
     catch (final Exception e)
     {
@@ -96,17 +85,28 @@ public final class SchemaTextExecutable
 
   }
 
+  public final SchemaTextOptions getSchemaTextOptions()
+  {
+    loadSchemaTextOptions();
+    return schemaTextOptions;
+  }
+
+  public final void setSchemaTextOptions(final SchemaTextOptions schemaTextOptions)
+  {
+    this.schemaTextOptions = schemaTextOptions;
+  }
+
   private void checkOutputFormat()
   {
     if (!outputOptions.hasOutputFormat())
     {
       throw new IllegalArgumentException("Unknown output format: "
-                                         + outputOptions.getOutputFormatValue());
+          + outputOptions.getOutputFormatValue());
     }
   }
 
   private SchemaTraversalHandler getSchemaTraversalHandler()
-    throws SchemaCrawlerException
+      throws SchemaCrawlerException
   {
     final SchemaTraversalHandler formatter;
     SchemaTextDetailType schemaTextDetailType;
@@ -138,7 +138,7 @@ public final class SchemaTextExecutable
 
   private void loadSchemaTextOptions()
   {
-    if (this.schemaTextOptions == null)
+    if (schemaTextOptions == null)
     {
       schemaTextOptions = new SchemaTextOptions(additionalConfiguration);
     }

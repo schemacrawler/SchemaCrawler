@@ -22,48 +22,34 @@ package schemacrawler.tools.offline;
 
 
 import java.io.File;
-import java.io.Writer;
+import java.io.Reader;
 import java.nio.charset.Charset;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.Options;
-import schemacrawler.tools.options.OutputFormat;
 import sf.util.ObjectToString;
 import sf.util.Utility;
 
 /**
- * Contains output options.
- * 
+ * Contains input options.
+ *
  * @author Sualeh Fatehi
  */
 public final class OfflineSnapshotOptions
-  implements Options
+implements Options
 {
 
-  private static final long serialVersionUID = 7018337388923813055L;
+  private static final long serialVersionUID = 5202680507264097856L;
 
   private static final String SC_INPUT_ENCODING = "schemacrawler.encoding.input";
-  private static final String SC_OUTPUT_ENCODING = "schemacrawler.encoding.output";
 
-  private String outputFormatValue;
-  private File outputFile;
-  private Writer writer;
-
+  private String inputSource;
+  private File inputFile;
+  private Reader reader;
   private Charset inputCharset;
-  private Charset outputCharset;
-
-  /**
-   * Creates default OutputOptions.
-   */
-  public OfflineSnapshotOptions()
-  {
-    this(OutputFormat.text.name());
-  }
 
   public OfflineSnapshotOptions(final Config config)
   {
-    this();
-
     final Config configProperties;
     if (config == null)
     {
@@ -75,56 +61,50 @@ public final class OfflineSnapshotOptions
     }
 
     setInputEncoding(configProperties
-      .getStringValue(SC_INPUT_ENCODING, "UTF-8"));
-    setOutputEncoding(configProperties.getStringValue(SC_OUTPUT_ENCODING,
-                                                      "UTF-8"));
+                     .getStringValue(SC_INPUT_ENCODING, "UTF-8"));
   }
 
   /**
-   * Output options, given the type and the output to the console.
-   * 
-   * @param outputFormatValue
-   *        Type of output, which is dependent on the executor
+   * Input options, given the type and the input filename.
+   *
+   * @param inputFile
+   *        Input file
    */
-  public OfflineSnapshotOptions(final String outputFormatValue)
+  public OfflineSnapshotOptions(final File inputFile)
   {
-    this(outputFormatValue, (File) null);
+    inputSource = null;
+    this.inputFile = inputFile;
+    reader = null;
   }
 
   /**
-   * Output options, given the type and the output filename.
-   * 
-   * @param outputFormatValue
-   *        Type of output, which is dependent on the executor
-   * @param outputFile
-   *        Output file
+   * Input options, given the type and the input filename.
+   *
+   * @param inputFile
+   *        Input file
    */
-  public OfflineSnapshotOptions(final String outputFormatValue,
-                                final File outputFile)
+  public OfflineSnapshotOptions(final Reader reader)
   {
-    this.outputFormatValue = outputFormatValue;
-    this.outputFile = outputFile;
-    writer = null;
+    inputSource = null;
+    inputFile = null;
+    this.reader = reader;
   }
 
   /**
-   * Output options, given the type and the output filename.
-   * 
-   * @param outputFormatValue
-   *        Type of output, which is dependent on the executor
-   * @param outputFile
-   *        Output file
+   * Input options, given the type and the input filename.
+   *
+   * @param inputSource
+   *        Type of input, which is dependent on the executor
    */
-  public OfflineSnapshotOptions(final String outputFormatValue,
-                                final Writer writer)
+  public OfflineSnapshotOptions(final String inputSource)
   {
-    this.outputFormatValue = outputFormatValue;
-    outputFile = null;
-    this.writer = writer;
+    this.inputSource = inputSource;
+    inputFile = null;
+    reader = null;
   }
 
   /**
-   * Character encoding for input files, such as scripts and templates.
+   * Character encoding for input files for offline snapshots.
    */
   public Charset getInputCharset()
   {
@@ -139,88 +119,39 @@ public final class OfflineSnapshotOptions
   }
 
   /**
-   * Character encoding for output files.
+   * Input file, which has previously been created.
+   *
+   * @return Input file
    */
-  public Charset getOutputCharset()
+  public File getInputFile()
   {
-    if (outputCharset == null)
-    {
-      return getInputCharset();
-    }
-    else
-    {
-      return outputCharset;
-    }
+    return inputFile;
   }
 
   /**
-   * Output file, which has previously been created.
-   * 
-   * @return Output file
+   * Gets the input format value.
+   *
+   * @return Input format value.s
    */
-  public File getOutputFile()
+  public String getInputSource()
   {
-    return outputFile;
+    return inputSource;
   }
 
-  /**
-   * Output format.
-   * 
-   * @return Output format
-   */
-  public OutputFormat getOutputFormat()
+  public Reader getReader()
   {
-    OutputFormat outputFormat;
-    try
-    {
-      outputFormat = OutputFormat.valueOf(outputFormatValue);
-    }
-    catch (final IllegalArgumentException e)
-    {
-      outputFormat = null;
-    }
-    return outputFormat;
+    return reader;
   }
 
-  /**
-   * Gets the output format value.
-   * 
-   * @return Output format value.s
-   */
-  public String getOutputFormatValue()
+  public boolean hasReader()
   {
-    return outputFormatValue;
-  }
-
-  public Writer getWriter()
-  {
-    return writer;
-  }
-
-  /**
-   * Whether a known output format has been specified.
-   * 
-   * @return Has output format
-   */
-  public boolean hasOutputFormat()
-  {
-    return getOutputFormat() != null;
-  }
-
-  public boolean isConsoleOutput()
-  {
-    return outputFile == null && writer == null;
-  }
-
-  public boolean isFileOutput()
-  {
-    return outputFile != null && writer == null;
+    return reader != null;
   }
 
   /**
    * Set character encoding for input files, such as scripts and
    * templates.
-   * 
+   *
    * @param inputEncoding
    *        Input encoding
    */
@@ -237,52 +168,30 @@ public final class OfflineSnapshotOptions
   }
 
   /**
-   * Set character encoding for output files.
-   * 
-   * @param outputEncoding
-   *        Output encoding
+   * Sets the name of the input file.
+   *
+   * @param inputFileName
+   *        Input file name.
    */
-  public void setOutputEncoding(final String outputEncoding)
+  public void setInputFile(final File inputFile)
   {
-    if (Utility.isBlank(outputEncoding))
-    {
-      outputCharset = Charset.defaultCharset();
-    }
-    else
-    {
-      outputCharset = Charset.forName(outputEncoding);
-    }
+    this.inputFile = inputFile;
   }
 
   /**
-   * Sets the name of the output file.
-   * 
-   * @param outputFileName
-   *        Output file name.
+   * Sets input source.
+   *
+   * @param inputSource
+   *        Input source
    */
-  public void setOutputFile(final File outputFile)
+  public void setInputSource(final String inputSource)
   {
-    this.outputFile = outputFile;
+    this.inputSource = inputSource;
   }
 
-  /**
-   * Sets output format value.
-   * 
-   * @param outputFormatValue
-   *        Output format value
-   */
-  public void setOutputFormatValue(final String outputFormatValue)
+  public void setReader(final Reader reader)
   {
-    if (outputFormatValue == null)
-    {
-      throw new IllegalArgumentException("Cannot use null value in a setter");
-    }
-    this.outputFormatValue = outputFormatValue;
-  }
-
-  public void setWriter(final Writer writer)
-  {
-    this.writer = writer;
+    this.reader = reader;
   }
 
   @Override

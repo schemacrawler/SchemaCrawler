@@ -31,7 +31,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.integration.scripting.ScriptExecutable;
 
 public class InputReader
   extends Reader
@@ -42,7 +41,6 @@ public class InputReader
 
   private final Reader reader;
   private boolean isClosed;
-  private boolean isFileOutput;
 
   public InputReader(final OutputOptions outputOptions)
     throws SchemaCrawlerException
@@ -56,18 +54,10 @@ public class InputReader
   {
     ensureOpen();
 
-    if (isFileOutput)
+    if (reader != null)
     {
-      if (reader != null)
-      {
-        reader.close();
-        LOGGER.log(Level.INFO, "Closed input reader");
-      }
-    }
-    else
-    {
-      LOGGER.log(Level.INFO,
-                 "Not closing input reader, since input is not from a file");
+      reader.close();
+      LOGGER.log(Level.INFO, "Closed input reader");
     }
 
     isClosed = true;
@@ -171,26 +161,24 @@ public class InputReader
   {
     try
     {
-      final String scriptFileName = outputOptions.getOutputFormatValue();
+      final String inputSource = outputOptions.getOutputFormatValue();
       if (outputOptions.getOutputFormat() == OutputFormat.text)
       {
         throw new SchemaCrawlerException("No script file provided");
       }
-      final File scriptFile = new File(scriptFileName);
+      final File inputFile = new File(inputSource);
 
       final InputStream inputStream;
-      if (scriptFile.exists() && scriptFile.canRead())
+      if (inputFile.exists() && inputFile.canRead())
       {
-        inputStream = new FileInputStream(scriptFile);
+        inputStream = new FileInputStream(inputFile);
       }
       else
       {
-        inputStream = ScriptExecutable.class
-          .getResourceAsStream("/" + scriptFileName);
+        inputStream = InputReader.class.getResourceAsStream("/" + inputSource);
         if (inputStream == null)
         {
-          throw new SchemaCrawlerException("Cannot load script, "
-                                           + scriptFileName);
+          throw new SchemaCrawlerException("Cannot load " + inputSource);
         }
       }
       final Reader reader = new InputStreamReader(inputStream,

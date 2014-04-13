@@ -30,16 +30,14 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import schemacrawler.test.utility.BaseDatabaseTest;
+import schemacrawler.test.utility.BaseExecutableTest;
 import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.commandline.SchemaCrawlerCommandLine;
-import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputFormat;
-import schemacrawler.tools.options.OutputOptions;
 
 public class LintExecutableTest
-  extends BaseDatabaseTest
+  extends BaseExecutableTest
 {
 
   private static final String CONFIG_LINTER_CONFIGS_FILE = "schemacrawer.linter_configs.file";
@@ -128,24 +126,9 @@ public class LintExecutableTest
                                                       final String referenceFileName)
     throws Exception
   {
-    final Executable executable = new SchemaCrawlerExecutable("lint");
-    final File testOutputFile = File.createTempFile("schemacrawler."
-                                                    + executable.getCommand()
-                                                    + ".", ".test");
-    testOutputFile.delete();
-    final OutputOptions outputOptions = new OutputOptions(outputFormatValue,
-                                                          testOutputFile);
-
-    executable.setOutputOptions(outputOptions);
-    executable.execute(getConnection());
-
-    final List<String> failures = TestUtility.compareOutput(referenceFileName
-                                                                + ".txt",
-                                                            testOutputFile);
-    if (failures.size() > 0)
-    {
-      fail(failures.toString());
-    }
+    executeExecutableAndCheckForOutputFile(new SchemaCrawlerExecutable("lint"),
+                                           outputFormatValue,
+                                           referenceFileName + ".txt");
   }
 
   private void useLinterConfigFile()

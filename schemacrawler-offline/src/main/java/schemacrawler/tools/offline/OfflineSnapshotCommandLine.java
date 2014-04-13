@@ -32,21 +32,20 @@ import schemacrawler.tools.commandline.CommandParser;
 import schemacrawler.tools.commandline.ConfigParser;
 import schemacrawler.tools.commandline.OutputOptionsParser;
 import schemacrawler.tools.commandline.SchemaCrawlerOptionsParser;
-import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.options.OutputOptions;
 import sf.util.ObjectToString;
 
 /**
  * Utility for parsing the SchemaCrawler command line.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public final class OfflineSnapshotCommandLine
-  implements CommandLine
+implements CommandLine
 {
 
   private static final Logger LOGGER = Logger
-    .getLogger(OfflineSnapshotCommandLine.class.getName());
+      .getLogger(OfflineSnapshotCommandLine.class.getName());
 
   private final String command;
   private final Config config;
@@ -55,8 +54,8 @@ public final class OfflineSnapshotCommandLine
   private final OfflineSnapshotOptions offlineSnapshotOptions;
 
   OfflineSnapshotCommandLine(final String... args)
-    throws SchemaCrawlerException
-  {
+      throws SchemaCrawlerException
+      {
     if (args == null || args.length == 0)
     {
       throw new SchemaCrawlerException("No command line arguments provided");
@@ -103,15 +102,15 @@ public final class OfflineSnapshotCommandLine
     if (remainingArgs.length > 0)
     {
       LOGGER.log(Level.INFO, "Too many command line arguments provided: "
-                             + ObjectToString.toString(remainingArgs));
+          + ObjectToString.toString(remainingArgs));
     }
-  }
+      }
 
   @Override
   public void execute()
-    throws Exception
+      throws Exception
   {
-    final Executable executable = new OfflineSnapshotExecutable(command);
+    final OfflineSnapshotExecutable executable = new OfflineSnapshotExecutable(command);
     initialize(executable);
 
     executable.execute(null);
@@ -137,7 +136,7 @@ public final class OfflineSnapshotCommandLine
     return schemaCrawlerOptions;
   }
 
-  private void initialize(final Executable executable)
+  private void initialize(final OfflineSnapshotExecutable executable)
   {
     if (outputOptions != null)
     {
@@ -146,6 +145,10 @@ public final class OfflineSnapshotCommandLine
     if (schemaCrawlerOptions != null)
     {
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    }
+    if (offlineSnapshotOptions != null)
+    {
+      executable.setOfflineSnapshotOptions(offlineSnapshotOptions);
     }
     if (config != null)
     {
