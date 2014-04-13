@@ -143,6 +143,11 @@ implements Options
     return reader;
   }
 
+  public boolean hasInputFile()
+  {
+    return inputFile != null;
+  }
+
   public boolean hasReader()
   {
     return reader != null;
