@@ -35,24 +35,24 @@ import java.util.logging.Logger;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
 public class InputReader
-extends Reader
+  extends Reader
 {
 
   private static final Logger LOGGER = Logger.getLogger(InputReader.class
-                                                        .getName());
+    .getName());
 
   private final Reader reader;
   private boolean isClosed;
 
   public InputReader(final OfflineSnapshotOptions options)
-      throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
     reader = openInputReader(options);
   }
 
   @Override
   public void close()
-      throws IOException
+    throws IOException
   {
     ensureOpen();
 
@@ -67,7 +67,7 @@ extends Reader
 
   @Override
   public void mark(final int readAheadLimit)
-      throws IOException
+    throws IOException
   {
     ensureOpen();
     reader.mark(readAheadLimit);
@@ -81,7 +81,7 @@ extends Reader
 
   @Override
   public int read()
-      throws IOException
+    throws IOException
   {
     ensureOpen();
     return reader.read();
@@ -89,7 +89,7 @@ extends Reader
 
   @Override
   public int read(final char[] cbuf)
-      throws IOException
+    throws IOException
   {
     ensureOpen();
     return reader.read(cbuf);
@@ -97,7 +97,7 @@ extends Reader
 
   @Override
   public int read(final char[] cbuf, final int off, final int len)
-      throws IOException
+    throws IOException
   {
     ensureOpen();
     return reader.read(cbuf, off, len);
@@ -105,7 +105,7 @@ extends Reader
 
   @Override
   public int read(final CharBuffer target)
-      throws IOException
+    throws IOException
   {
     ensureOpen();
     return reader.read(target);
@@ -113,7 +113,7 @@ extends Reader
 
   @Override
   public boolean ready()
-      throws IOException
+    throws IOException
   {
     ensureOpen();
     return reader.ready();
@@ -121,7 +121,7 @@ extends Reader
 
   @Override
   public void reset()
-      throws IOException
+    throws IOException
   {
     ensureOpen();
     reader.reset();
@@ -129,7 +129,7 @@ extends Reader
 
   @Override
   public long skip(final long n)
-      throws IOException
+    throws IOException
   {
     ensureOpen();
     return reader.skip(n);
@@ -137,7 +137,7 @@ extends Reader
 
   @Override
   protected void finalize()
-      throws Throwable
+    throws Throwable
   {
     super.finalize();
     if (!isClosed)
@@ -150,7 +150,7 @@ extends Reader
    * Checks to make sure that the stream has not been closed.
    */
   private void ensureOpen()
-      throws IOException
+    throws IOException
   {
     if (isClosed)
     {
@@ -159,7 +159,7 @@ extends Reader
   }
 
   private Reader openInputReader(final OfflineSnapshotOptions options)
-      throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
     try
     {
@@ -174,9 +174,13 @@ extends Reader
       {
         inputFile = new File(inputSource);
       }
-      else
+      else if (options.hasInputFile())
       {
         inputFile = options.getInputFile();
+      }
+      else
+      {
+        throw new SchemaCrawlerException("Offline snapshot file not provided");
       }
 
       final InputStream inputStream;
