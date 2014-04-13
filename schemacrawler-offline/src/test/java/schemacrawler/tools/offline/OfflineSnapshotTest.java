@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -24,12 +24,15 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.List;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import schemacrawler.schema.Database;
@@ -38,6 +41,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.test.utility.BaseExecutableTest;
+import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.integration.serialization.XmlDatabase;
 import schemacrawler.tools.options.OutputOptions;
 
@@ -46,21 +50,52 @@ public class OfflineSnapshotTest
 {
 
   private static final String OFFLINE_EXECUTABLE_OUTPUT = "offline_executable_output/";
+  private File serializedDatabaseFile;
 
   @Test
-  public void offlineSnapshot()
+  public void offlineSnapshotCommandLine()
     throws Exception
   {
-    File serializedDatabaseFile = serializeDatabase();
-
-    final OfflineSnapshotExecutable executable = new OfflineSnapshotExecutable("details");
     final File testOutputFile = File.createTempFile("schemacrawler."
-                                                    + executable.getCommand()
-                                                    + ".", ".test");
+                                                    + "details" + ".", ".test");
+    testOutputFile.delete();
+
+    final OfflineSnapshotCommandLine commandLine = new OfflineSnapshotCommandLine("-inputfile",
+                                                                                  serializedDatabaseFile
+                                                                                    .getAbsolutePath(),
+                                                                                  "-command="
+                                                                                      + "details",
+                                                                                  "-infolevel=maximum",
+                                                                                  "-outputformat="
+                                                                                      + "text",
+                                                                                  "-outputfile",
+                                                                                  testOutputFile
+                                                                                    .getAbsolutePath());
+    commandLine.execute();
+
+    final List<String> failures = TestUtility
+      .compareOutput(OFFLINE_EXECUTABLE_OUTPUT + "details.txt", testOutputFile);
+    if (failures.size() > 0)
+    {
+      fail(failures.toString());
+    }
+  }
+
+  @Test
+  public void offlineSnapshotExecutable()
+    throws Exception
+  {
+
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
+
+    final File testOutputFile = File.createTempFile("schemacrawler.", ".test");
     testOutputFile.delete();
     final OutputOptions outputOptions = new OutputOptions("text",
                                                           testOutputFile);
 
+    final OfflineSnapshotExecutable executable = new OfflineSnapshotExecutable("details");
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setOutputOptions(outputOptions);
     executable
       .setOfflineSnapshotOptions(new OfflineSnapshotOptions(serializedDatabaseFile));
@@ -71,7 +106,8 @@ public class OfflineSnapshotTest
                                                + "details.txt");
   }
 
-  private File serializeDatabase()
+  @Before
+  public void serializeDatabase()
     throws SchemaCrawlerException, IOException
   {
 
@@ -87,18 +123,16 @@ public class OfflineSnapshotTest
     assertEquals("Unexpected number of tables in the schema", 6, database
       .getTables(schema).size());
 
-    final File serializedDatabaseFile = File.createTempFile("schemacrawler.",
-                                                            ".ser");
+    serializedDatabaseFile = File.createTempFile("schemacrawler.", ".ser");
 
-    XmlDatabase xmlDatabase = new XmlDatabase(database);
-    Writer writer = new FileWriter(serializedDatabaseFile);
+    final XmlDatabase xmlDatabase = new XmlDatabase(database);
+    final Writer writer = new FileWriter(serializedDatabaseFile);
     xmlDatabase.save(writer);
     writer.close();
     assertNotSame("Database was not serialized to XML",
                   0,
                   serializedDatabaseFile.length());
 
-    return serializedDatabaseFile;
   }
 
 }
