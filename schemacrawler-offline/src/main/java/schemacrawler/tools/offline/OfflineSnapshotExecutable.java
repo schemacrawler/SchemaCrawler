@@ -22,12 +22,15 @@ package schemacrawler.tools.offline;
 
 
 import java.sql.Connection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import schemacrawler.schema.Database;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseExecutable;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.executable.StagedExecutable;
+import schemacrawler.tools.integration.serialization.XmlDatabase;
 
 /**
  * A SchemaCrawler tools executable unit.
@@ -38,6 +41,11 @@ public class OfflineSnapshotExecutable
 extends BaseExecutable
 implements StagedExecutable
 {
+
+  private static final Logger LOGGER = Logger
+      .getLogger(OfflineSnapshotExecutable.class.getName());
+
+  private OfflineSnapshotOptions offlineSnapshotOptions;
 
   protected OfflineSnapshotExecutable(final String command)
   {
@@ -53,10 +61,7 @@ implements StagedExecutable
   public final void execute(final Connection connection)
       throws Exception
   {
-    if (connection != null)
-    {
-      throw new SchemaCrawlerException("No connection should be provided");
-    }
+    checkConnection(connection);
 
     final Database database = loadDatabase();
 
@@ -67,19 +72,61 @@ implements StagedExecutable
   public void executeOn(final Database database, final Connection connection)
       throws Exception
   {
-    if (connection != null)
-    {
-      throw new SchemaCrawlerException("No connection should be provided");
-    }
+    loadOfflineSnapshotOptions();
+    checkConnection(connection);
 
-    // Create new SchemaCrawler executable
-    final StagedExecutable executable = new SchemaCrawlerExecutable(command);
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    executable.setAdditionalConfiguration(additionalConfiguration);
+    executable.setOutputOptions(outputOptions);
     executable.executeOn(database, connection);
   }
 
-  private Database loadDatabase()
+  public OfflineSnapshotOptions getOfflineSnapshotOptions()
   {
-    return null;
+    return offlineSnapshotOptions;
+  }
+
+  public final OfflineSnapshotOptions getSchemaTextOptions()
+  {
+    loadOfflineSnapshotOptions();
+    return offlineSnapshotOptions;
+  }
+
+  public void setOfflineSnapshotOptions(final OfflineSnapshotOptions offlineSnapshotOptions)
+  {
+    this.offlineSnapshotOptions = offlineSnapshotOptions;
+  }
+
+  public final void setSchemaTextOptions(final OfflineSnapshotOptions offlineSnapshotOptions)
+  {
+    this.offlineSnapshotOptions = offlineSnapshotOptions;
+  }
+
+  private void checkConnection(final Connection connection)
+  {
+    if (connection != null)
+    {
+      LOGGER
+      .log(Level.CONFIG,
+          "No database connection should be provided for the offline snapshot");
+    }
+  }
+
+  private Database loadDatabase()
+      throws SchemaCrawlerException
+  {
+    final InputReader snapshotReader = new InputReader(offlineSnapshotOptions);
+    final XmlDatabase xmlDatabase = new XmlDatabase(snapshotReader);
+    return xmlDatabase;
+  }
+
+  private void loadOfflineSnapshotOptions()
+  {
+    if (offlineSnapshotOptions == null)
+    {
+      offlineSnapshotOptions = new OfflineSnapshotOptions(additionalConfiguration);
+    }
   }
 
 }

@@ -3,8 +3,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>net.sourceforge.schemacrawler</groupId>
 		<artifactId>schemacrawler-all</artifactId>
+		<groupId>net.sourceforge.schemacrawler</groupId>
 		<version>10.08.04</version>
 	</parent>
 	<artifactId>schemacrawler-offline</artifactId>
@@ -22,15 +22,29 @@
 			<artifactId>schemacrawler-integrations</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-    <dependency>
-      <groupId>com.thoughtworks.xstream</groupId>
-      <artifactId>xstream</artifactId>
-      <version>${xstream.version}</version>
-    </dependency>
+		<dependency>
+			<groupId>net.sourceforge.schemacrawler</groupId>
+			<artifactId>schemacrawler-api</artifactId>
+			<version>${project.version}</version>
+			<type>test-jar</type>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>net.sourceforge.schemacrawler</groupId>
+			<artifactId>schemacrawler-tools</artifactId>
+			<version>${project.version}</version>
+			<type>test-jar</type>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.thoughtworks.xstream</groupId>
+			<artifactId>xstream</artifactId>
+			<version>${xstream.version}</version>
+		</dependency>
 	</dependencies>
-  <properties>
-    <xstream.version>1.4.4</xstream.version>
-  </properties>  
+	<properties>
+		<xstream.version>1.4.4</xstream.version>
+	</properties>
 	<build>
 		<plugins>
 			<plugin>

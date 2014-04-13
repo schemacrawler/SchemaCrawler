@@ -21,21 +21,13 @@
 package schemacrawler.integration.test;
 
 
-import static org.junit.Assert.fail;
-
-import java.io.File;
-import java.util.List;
-
 import org.junit.Test;
 
-import schemacrawler.test.utility.BaseDatabaseTest;
-import schemacrawler.test.utility.TestUtility;
-import schemacrawler.tools.executable.Executable;
+import schemacrawler.test.utility.BaseExecutableTest;
 import schemacrawler.tools.integration.scripting.ScriptExecutable;
-import schemacrawler.tools.options.OutputOptions;
 
 public class ScriptingTest
-  extends BaseDatabaseTest
+  extends BaseExecutableTest
 {
 
   @Test
@@ -63,29 +55,6 @@ public class ScriptingTest
     executeExecutableAndCheckForOutputFile(new ScriptExecutable(),
                                            "plaintextschema.rb",
                                            "script_output.txt");
-  }
-
-  private void executeExecutableAndCheckForOutputFile(final Executable executable,
-                                                      final String outputFormatValue,
-                                                      final String referenceFileName)
-    throws Exception
-  {
-    final File testOutputFile = File.createTempFile("schemacrawler."
-                                                    + executable.getCommand()
-                                                    + ".", ".test");
-    testOutputFile.delete();
-    final OutputOptions outputOptions = new OutputOptions(outputFormatValue,
-                                                          testOutputFile);
-
-    executable.setOutputOptions(outputOptions);
-    executable.execute(getConnection());
-
-    final List<String> failures = TestUtility.compareOutput(referenceFileName,
-                                                            testOutputFile);
-    if (failures.size() > 0)
-    {
-      fail(failures.toString());
-    }
   }
 
 }

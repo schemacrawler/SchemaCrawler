@@ -22,25 +22,21 @@
 package schemacrawler.tools.integration.graph;
 
 
-import static org.junit.Assert.fail;
 import static schemacrawler.test.utility.TestUtility.currentMethodName;
 
 import java.io.File;
-import java.util.List;
 
 import org.junit.Test;
 
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
-import schemacrawler.test.utility.BaseDatabaseTest;
+import schemacrawler.test.utility.BaseExecutableTest;
 import schemacrawler.test.utility.TestUtility;
-import schemacrawler.tools.executable.Executable;
-import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 
 public class GraphExecutableOptionsTest
-  extends BaseDatabaseTest
+  extends BaseExecutableTest
 {
 
   private static final String GRAPH_OPTIONS_OUTPUT = "graph_options_output/";
@@ -212,7 +208,8 @@ public class GraphExecutableOptionsTest
     final String referenceFileName = testMethodName;
     executeExecutableAndCheckForOutputFile(executable,
                                            "echo",
-                                           referenceFileName);
+                                           GRAPH_OPTIONS_OUTPUT
+                                               + referenceFileName + ".dot");
 
     final File testDiagramFile = File.createTempFile("schemacrawler."
                                                      + executable.getCommand()
@@ -227,30 +224,6 @@ public class GraphExecutableOptionsTest
                                                              testDiagramFile);
     graphGenerator.generateDiagram();
     checkDiagramFile(testDiagramFile);
-  }
-
-  private void executeExecutableAndCheckForOutputFile(final Executable executable,
-                                                      final String outputFormatValue,
-                                                      final String referenceFileName)
-    throws Exception
-  {
-    final File testOutputFile = File.createTempFile("schemacrawler."
-                                                    + executable.getCommand()
-                                                    + ".", ".test");
-    testOutputFile.delete();
-    final OutputOptions outputOptions = new OutputOptions(outputFormatValue,
-                                                          testOutputFile);
-
-    executable.setOutputOptions(outputOptions);
-    executable.execute(getConnection());
-
-    final List<String> failures = TestUtility
-      .compareOutput(GRAPH_OPTIONS_OUTPUT + referenceFileName + ".dot",
-                     testOutputFile);
-    if (failures.size() > 0)
-    {
-      fail(failures.toString());
-    }
   }
 
 }
