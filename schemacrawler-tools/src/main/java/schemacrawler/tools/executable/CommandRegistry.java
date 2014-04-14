@@ -22,15 +22,13 @@
 package schemacrawler.tools.executable;
 
 
-import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.ServiceLoader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,7 +36,7 @@ import java.util.logging.Logger;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
 /**
- * Parses the command line.
+ * Command registry for mapping commands to executable.
  * 
  * @author Sualeh Fatehi
  */
@@ -51,35 +49,22 @@ public final class CommandRegistry
   private static Map<String, CommandProvider> loadCommandRegistry()
     throws SchemaCrawlerException
   {
-    final Map<String, CommandProvider> commandRegistry = new HashMap<>();
-    try
-    {
-      final ClassLoader classLoader = CommandRegistry.class.getClassLoader();
-      final URL commandRegistryUrl = classLoader
-        .getResource("tools.command.properties");
 
-      final Properties commandRegistryProperties = new Properties();
-      commandRegistryProperties.load(commandRegistryUrl.openStream());
-      final List<String> commands = (List<String>) Collections
-        .list(commandRegistryProperties.propertyNames());
-      for (final String command: commands)
-      {
-        final String executableClassName = commandRegistryProperties
-          .getProperty(command);
-        commandRegistry.put(command,
-                            new ExecutableCommandProvider(command,
-                                                          executableClassName));
-      }
-      if (commandRegistry.isEmpty())
-      {
-        throw new SchemaCrawlerException("Could not load base command registry");
-      }
-    }
-    catch (final IOException e)
-    {
-      throw new SchemaCrawlerException("Could not load base command registry",
-                                       e);
-    }
+    final List<CommandProvider> commandProviders = new ArrayList<CommandProvider>(Arrays
+      .asList(new ExecutableCommandProvider("list",
+                                            "schemacrawler.tools.text.schema.SchemaTextExecutable"),
+              new ExecutableCommandProvider("schema",
+                                            "schemacrawler.tools.text.schema.SchemaTextExecutable"),
+              new ExecutableCommandProvider("details",
+                                            "schemacrawler.tools.text.schema.SchemaTextExecutable"),
+              new ExecutableCommandProvider("count",
+                                            "schemacrawler.tools.text.operation.OperationExecutable"),
+              new ExecutableCommandProvider("dump",
+                                            "schemacrawler.tools.text.operation.OperationExecutable"),
+              new ExecutableCommandProvider("script",
+                                            "schemacrawler.tools.integration.scripting.ScriptExecutable"),
+              new ExecutableCommandProvider("graph",
+                                            "schemacrawler.tools.integration.graph.GraphExecutable")));
 
     try
     {
@@ -91,7 +76,7 @@ public final class CommandRegistry
         LOGGER.log(Level.FINER, "Loading executable, " + executableCommand
                                 + "="
                                 + commandRegistryEntry.getClass().getName());
-        commandRegistry.put(executableCommand, commandRegistryEntry);
+        commandProviders.add(commandRegistryEntry);
       }
     }
     catch (final Exception e)
@@ -100,6 +85,11 @@ public final class CommandRegistry
                                        e);
     }
 
+    final Map<String, CommandProvider> commandRegistry = new HashMap<>();
+    for (final CommandProvider commandProvider: commandProviders)
+    {
+      commandRegistry.put(commandProvider.getCommand(), commandProvider);
+    }
     return commandRegistry;
   }
 
@@ -141,18 +131,17 @@ public final class CommandRegistry
   Executable newExecutable(final String command)
     throws SchemaCrawlerException
   {
-    final CommandProvider commandRegistryEntry;
+    final CommandProvider commandProvider;
     if (commandRegistry.containsKey(command))
     {
-      commandRegistryEntry = commandRegistry.get(command);
+      commandProvider = commandRegistry.get(command);
     }
     else
     {
-      commandRegistryEntry = new ExecutableCommandProvider(command,
-                                                           "schemacrawler.tools.text.operation.OperationExecutable");
+      commandProvider = new ExecutableCommandProvider(command,
+                                                      "schemacrawler.tools.text.operation.OperationExecutable");
     }
 
-    return commandRegistryEntry.newExecutable();
+    return commandProvider.newExecutable();
   }
-
 }
