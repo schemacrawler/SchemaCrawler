@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -40,6 +40,7 @@ public final class OutputWriter
   private final Writer writer;
   private boolean isClosed;
   private boolean isFileOutput;
+  private String description;
 
   public OutputWriter(final OutputOptions outputOptions)
     throws SchemaCrawlerException
@@ -115,6 +116,12 @@ public final class OutputWriter
   }
 
   @Override
+  public String toString()
+  {
+    return description;
+  }
+
+  @Override
   public void write(final char[] cbuf)
     throws IOException
   {
@@ -179,7 +186,7 @@ public final class OutputWriter
 
   /**
    * Opens the output writer.
-   * 
+   *
    * @return Writer
    * @throws SchemaCrawlerException
    *         On an exception
@@ -194,6 +201,7 @@ public final class OutputWriter
       if (outputOptions == null || outputOptions.isConsoleOutput())
       {
         writer = new OutputStreamWriter(System.out);
+        description = "<console>";
         LOGGER.log(Level.INFO, "Opened output writer to console");
       }
       else if (outputOptions.isFileOutput())
@@ -204,6 +212,7 @@ public final class OutputWriter
                                                                        appendOutput);
         writer = new OutputStreamWriter(fileOutputStream,
                                         outputOptions.getOutputCharset());
+        description = outputFile.getAbsolutePath();
         LOGGER.log(Level.INFO,
                    "Opened output writer to file, "
                        + outputFile.getAbsolutePath());
@@ -211,6 +220,7 @@ public final class OutputWriter
       else
       {
         writer = outputOptions.getWriter();
+        description = "<writer>";
         LOGGER.log(Level.INFO, "Output to provided writer");
       }
       return writer;
