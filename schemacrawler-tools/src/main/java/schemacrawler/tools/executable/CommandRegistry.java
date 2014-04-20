@@ -51,12 +51,12 @@ public final class CommandRegistry
   {
 
     final List<CommandProvider> commandProviders = new ArrayList<CommandProvider>(Arrays
-      .asList(new ExecutableCommandProvider("list",
-                                            "schemacrawler.tools.text.schema.SchemaTextExecutable"),
-              new ExecutableCommandProvider("schema",
-                                            "schemacrawler.tools.text.schema.SchemaTextExecutable"),
-              new ExecutableCommandProvider("details",
-                                            "schemacrawler.tools.text.schema.SchemaTextExecutable"),
+      .asList(new SchemaTextExecutableCommandProvider("list",
+                                                      "schemacrawler.tools.text.schema.SchemaTextExecutable"),
+              new SchemaTextExecutableCommandProvider("schema",
+                                                      "schemacrawler.tools.text.schema.SchemaTextExecutable"),
+              new SchemaTextExecutableCommandProvider("details",
+                                                      "schemacrawler.tools.text.schema.SchemaTextExecutable"),
               new ExecutableCommandProvider("count",
                                             "schemacrawler.tools.text.operation.OperationExecutable"),
               new ExecutableCommandProvider("dump",

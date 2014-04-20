@@ -27,6 +27,13 @@
     </dependency>
     <dependency>
       <groupId>net.sourceforge.schemacrawler</groupId>
+      <artifactId>schemacrawler-tools</artifactId>
+      <version>${project.version}</version>
+      <type>test-jar</type>
+      <scope>test</scope>
+    </dependency>    
+    <dependency>
+      <groupId>net.sourceforge.schemacrawler</groupId>
       <artifactId>schemacrawler-commandline</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>
