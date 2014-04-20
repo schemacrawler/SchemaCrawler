@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -41,6 +41,7 @@ public class InputReader
 
   private final Reader reader;
   private boolean isClosed;
+  private String description;
 
   public InputReader(final OutputOptions outputOptions)
     throws SchemaCrawlerException
@@ -134,6 +135,12 @@ public class InputReader
   }
 
   @Override
+  public String toString()
+  {
+    return description;
+  }
+
+  @Override
   protected void finalize()
     throws Throwable
   {
@@ -172,14 +179,19 @@ public class InputReader
       if (inputFile.exists() && inputFile.canRead())
       {
         inputStream = new FileInputStream(inputFile);
+        description = inputFile.getAbsolutePath();
+        LOGGER.log(Level.INFO, "Reading from " + description);
       }
       else
       {
-        inputStream = InputReader.class.getResourceAsStream("/" + inputSource);
+        final String resource = "/" + inputSource;
+        inputStream = InputReader.class.getResourceAsStream(resource);
         if (inputStream == null)
         {
           throw new SchemaCrawlerException("Cannot load " + inputSource);
         }
+        description = InputReader.class.getResource(resource).toExternalForm();
+        LOGGER.log(Level.INFO, "Reading from " + description);
       }
       final Reader reader = new InputStreamReader(inputStream,
                                                   outputOptions
