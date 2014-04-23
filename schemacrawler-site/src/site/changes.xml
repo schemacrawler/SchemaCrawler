@@ -5,6 +5,15 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+     <release version="10.09.01" date="2014-04-25">
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Fixed bug #31, https://sourceforge.net/p/schemacrawler/bugs/31/, for loading XML databases.
+      ]]></action>   
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Fixed MySQL connection issue, by removing URL parameter "useInformationSchema=true" so that MySQL's buggy metadata provider is not used. 
+        This provider does not honor mixed-case tables names.
+      ]]></action>         
+     </release>   
      <release version="10.08.04" date="2014-04-03">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Column sort options sort columns in dumps also.
