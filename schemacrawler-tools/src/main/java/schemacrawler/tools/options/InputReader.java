@@ -53,12 +53,15 @@ public class InputReader
   public void close()
     throws IOException
   {
-    ensureOpen();
-
-    if (reader != null)
+    if (reader != null && !isClosed)
     {
       reader.close();
-      LOGGER.log(Level.INFO, "Closed input reader");
+      LOGGER.log(Level.INFO, "Closed input reader, " + description);
+    }
+    else
+    {
+      LOGGER.log(Level.INFO, String
+        .format("Input reader \"%s\" is already closed", description));
     }
 
     isClosed = true;
@@ -147,7 +150,8 @@ public class InputReader
     super.finalize();
     if (!isClosed)
     {
-      throw new IllegalStateException("Input reader was not closed");
+      throw new IllegalStateException(String.format("Input reader \"%s\" was not closed",
+                                                    description));
     }
   }
 
@@ -159,7 +163,8 @@ public class InputReader
   {
     if (isClosed)
     {
-      throw new IOException("Reader has already been closed");
+      throw new IOException(String.format("Input reader \"%s\" has been closed",
+                                          description));
     }
   }
 
