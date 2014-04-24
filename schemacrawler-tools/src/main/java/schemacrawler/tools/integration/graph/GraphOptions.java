@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -20,6 +20,8 @@
 package schemacrawler.tools.integration.graph;
 
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -29,7 +31,7 @@ import schemacrawler.tools.text.schema.SchemaTextOptions;
 import sf.util.Utility;
 
 public class GraphOptions
-  extends SchemaTextOptions
+extends SchemaTextOptions
 {
 
   private static final long serialVersionUID = -5850945398335496207L;
@@ -39,7 +41,7 @@ public class GraphOptions
   private static final String SC_GRAPHVIZ_OPTS = "SC_GRAPHVIZ_OPTS";
 
   private static final Logger LOGGER = Logger.getLogger(GraphOptions.class
-    .getName());
+                                                        .getName());
 
   public GraphOptions()
   {
@@ -58,9 +60,12 @@ public class GraphOptions
     setGraphVizOpts(readGraphVizOpts(config));
   }
 
-  public String getGraphVizOpts()
+  public List<String> getGraphVizOpts()
   {
-    return getStringValue(GRAPH_GRAPHVIZ_OPTS, "");
+    final String graphVizOptions = getStringValue(GRAPH_GRAPHVIZ_OPTS, "");
+    final List<String> graphVizOptionsList = Arrays.asList(graphVizOptions
+                                                           .split("\\s+"));
+    return graphVizOptionsList;
   }
 
   public SchemaTextDetailType getSchemaTextDetailType()
@@ -90,7 +95,7 @@ public class GraphOptions
   {
     final String scGraphVizOptsCfg = getStringValue(config,
                                                     GRAPH_GRAPHVIZ_OPTS,
-                                                    "");
+        "");
     if (!Utility.isBlank(scGraphVizOptsCfg))
     {
       LOGGER.log(Level.CONFIG,
@@ -103,9 +108,9 @@ public class GraphOptions
     if (!Utility.isBlank(scGraphVizOptsProp))
     {
       LOGGER
-        .log(Level.CONFIG,
-             "Using additional GraphViz command-line options from SC_GRAPHVIZ_OPTS system property, "
-                 + scGraphVizOptsProp);
+      .log(Level.CONFIG,
+           "Using additional GraphViz command-line options from SC_GRAPHVIZ_OPTS system property, "
+               + scGraphVizOptsProp);
       return scGraphVizOptsProp;
     }
 
@@ -113,9 +118,9 @@ public class GraphOptions
     if (!Utility.isBlank(scGraphVizOptsEnv))
     {
       LOGGER
-        .log(Level.CONFIG,
-             "Using additional GraphViz command-line options from SC_GRAPHVIZ_OPTS environmental variable, "
-                 + scGraphVizOptsEnv);
+      .log(Level.CONFIG,
+           "Using additional GraphViz command-line options from SC_GRAPHVIZ_OPTS environmental variable, "
+               + scGraphVizOptsEnv);
       return scGraphVizOptsEnv;
     }
 

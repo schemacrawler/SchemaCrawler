@@ -35,8 +35,8 @@ import sf.util.Utility;
  *
  * @author Sualeh Fatehi
  */
-public final class OutputOptions
-implements Options
+public class OutputOptions
+  implements Options
 {
 
   private static final long serialVersionUID = 7018337388923813055L;
@@ -74,9 +74,9 @@ implements Options
     }
 
     setInputEncoding(configProperties
-                     .getStringValue(SC_INPUT_ENCODING, "UTF-8"));
+      .getStringValue(SC_INPUT_ENCODING, "UTF-8"));
     setOutputEncoding(configProperties.getStringValue(SC_OUTPUT_ENCODING,
-        "UTF-8"));
+                                                      "UTF-8"));
   }
 
   /**

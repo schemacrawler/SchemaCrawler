@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -33,9 +33,8 @@ public abstract class BaseExecutableTest
   extends BaseDatabaseTest
 {
 
-  protected void executeExecutableAndCheckForOutputFile(final Executable executable,
-                                                        final String outputFormatValue,
-                                                        final String referenceFileName)
+  protected File executeExecutable(final Executable executable,
+                                   final String outputFormatValue)
     throws Exception
   {
     final File testOutputFile = File.createTempFile("schemacrawler."
@@ -47,6 +46,16 @@ public abstract class BaseExecutableTest
 
     executable.setOutputOptions(outputOptions);
     executable.execute(getConnection());
+
+    return testOutputFile;
+  }
+
+  protected void executeExecutableAndCheckForOutputFile(final Executable executable,
+                                                        final String outputFormatValue,
+                                                        final String referenceFileName)
+    throws Exception
+  {
+    final File testOutputFile = executeExecutable(executable, outputFormatValue);
 
     final List<String> failures = TestUtility.compareOutput(referenceFileName,
                                                             testOutputFile);

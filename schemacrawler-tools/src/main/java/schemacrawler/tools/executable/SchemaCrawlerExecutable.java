@@ -68,11 +68,15 @@ public final class SchemaCrawlerExecutable
         LOGGER.log(Level.INFO, String
           .format("Executing commands [%s] in sequence", commands));
         executable = new CommandDaisyChainExecutable(getCommand());
+        executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+        executable.setOutputOptions(outputOptions);
       }
       else
       {
         executable = (BaseStagedExecutable) commandRegistry
-          .newExecutable(getCommand());
+          .configureNewExecutable(getCommand(),
+                                  schemaCrawlerOptions,
+                                  outputOptions);
         LOGGER.log(Level.INFO, String
           .format("Executing command \"%s\" using executable %s",
                   getCommand(),
@@ -80,9 +84,7 @@ public final class SchemaCrawlerExecutable
       }
     }
 
-    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setAdditionalConfiguration(additionalConfiguration);
-    executable.setOutputOptions(outputOptions);
 
     executable.executeOn(database, connection);
   }
