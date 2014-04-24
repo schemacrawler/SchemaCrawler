@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -20,12 +20,30 @@
 package schemacrawler.tools.integration.graph;
 
 
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.CommandProvider;
 import schemacrawler.tools.executable.Executable;
+import schemacrawler.tools.options.OutputOptions;
 
 public class GraphCommandProvider
-  implements CommandProvider
+implements CommandProvider
 {
+
+  @Override
+  public Executable configureNewExecutable(final SchemaCrawlerOptions schemaCrawlerOptions,
+                                           final OutputOptions outputOptions)
+  {
+    final GraphExecutable executable = new GraphExecutable();
+    if (schemaCrawlerOptions != null)
+    {
+      executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    }
+    if (outputOptions != null)
+    {
+      executable.setOutputOptions(outputOptions);
+    }
+    return executable;
+  }
 
   @Override
   public String getCommand()
@@ -37,12 +55,6 @@ public class GraphCommandProvider
   public String getHelpResource()
   {
     return "/help/GraphExecutable.txt";
-  }
-
-  @Override
-  public Executable newExecutable()
-  {
-    return new GraphExecutable();
   }
 
 }

@@ -63,15 +63,14 @@ abstract class BaseCommandChainExecutable
   {
     try
     {
-      final Executable executable = commandRegistry.newExecutable(command);
+      final Executable executable = commandRegistry
+        .configureNewExecutable(command, schemaCrawlerOptions, outputOptions);
       if (executable == null)
       {
         return executable;
       }
 
-      executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
       executable.setAdditionalConfiguration(additionalConfiguration);
-      executable.setOutputOptions(outputOptions);
 
       return addNext(executable);
     }
