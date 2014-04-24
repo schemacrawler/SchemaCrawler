@@ -2,6 +2,8 @@ package schemacrawler.tools.executable;
 
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.tools.options.OutputOptions;
 
 public interface CommandProvider
 {
@@ -10,7 +12,8 @@ public interface CommandProvider
 
   String getHelpResource();
 
-  Executable newExecutable()
+  Executable configureNewExecutable(SchemaCrawlerOptions schemaCrawlerOptions,
+                                    OutputOptions outputOptions)
     throws SchemaCrawlerException;
 
 }

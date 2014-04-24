@@ -32,7 +32,6 @@ import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.test.utility.BaseExecutableTest;
-import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 
 public class GraphExecutableOptionsTest
@@ -205,24 +204,15 @@ public class GraphExecutableOptionsTest
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setAdditionalConfiguration(graphOptions.toConfig());
 
+    // Check DOT file
     final String referenceFileName = testMethodName;
     executeExecutableAndCheckForOutputFile(executable,
                                            "echo",
                                            GRAPH_OPTIONS_OUTPUT
                                                + referenceFileName + ".dot");
 
-    final File testDiagramFile = File.createTempFile("schemacrawler."
-                                                     + executable.getCommand()
-                                                     + ".", ".png");
-    testDiagramFile.delete();
-    final File referenceDotFile = TestUtility
-      .copyResourceToTempFile("/" + GRAPH_OPTIONS_OUTPUT + referenceFileName
-                              + ".dot");
-    final GraphGenerator graphGenerator = new GraphGenerator(graphOptions.getGraphVizOpts(),
-                                                             referenceDotFile,
-                                                             "png",
-                                                             testDiagramFile);
-    graphGenerator.generateDiagram();
+    // Check diagram
+    final File testDiagramFile = executeExecutable(executable, "png");
     checkDiagramFile(testDiagramFile);
   }
 

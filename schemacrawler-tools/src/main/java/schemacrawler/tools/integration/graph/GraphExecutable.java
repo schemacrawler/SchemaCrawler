@@ -22,7 +22,13 @@ package schemacrawler.tools.integration.graph;
 
 
 import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import schemacrawler.schema.Database;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -49,28 +55,12 @@ public final class GraphExecutable
 
   private GraphOptions graphOptions;
 
+  private static final Logger LOGGER = Logger.getLogger(GraphExecutable.class
+    .getName());
+
   public GraphExecutable()
   {
     super(COMMAND);
-  }
-
-  public final GraphOptions getGraphOptions()
-  {
-    final GraphOptions graphOptions;
-    if (this.graphOptions == null)
-    {
-      graphOptions = new GraphOptions(additionalConfiguration);
-    }
-    else
-    {
-      graphOptions = this.graphOptions;
-    }
-    return graphOptions;
-  }
-
-  public final void setGraphOptions(final GraphOptions graphOptions)
-  {
-    this.graphOptions = graphOptions;
   }
 
   /**
@@ -113,19 +103,97 @@ public final class GraphExecutable
 
     // Create graph image
     final GraphOptions graphOptions = getGraphOptions();
-    final GraphGenerator dot = new GraphGenerator(graphOptions.getGraphVizOpts(),
-                                                  dotFile,
-                                                  outputOptions
-                                                    .getOutputFormatValue(),
-                                                  outputOptions.getOutputFile());
+    final GraphOutputOptions graphOutputOptions = new GraphOutputOptions(outputOptions);
     try
     {
-      dot.generateDiagram();
+      generateDiagram(graphOptions, graphOutputOptions, dotFile);
     }
     catch (final Exception e)
     {
       System.out.println(Utility.readResourceFully("/dot.error.txt"));
       throw e;
+    }
+  }
+
+  public final GraphOptions getGraphOptions()
+  {
+    final GraphOptions graphOptions;
+    if (this.graphOptions == null)
+    {
+      graphOptions = new GraphOptions(additionalConfiguration);
+    }
+    else
+    {
+      graphOptions = this.graphOptions;
+    }
+    return graphOptions;
+  }
+
+  public final void setGraphOptions(final GraphOptions graphOptions)
+  {
+    this.graphOptions = graphOptions;
+  }
+
+  private List<String> createDiagramCommand(final GraphOptions graphOptions,
+                                            final GraphOutputOptions graphOutputOptions,
+                                            final File dotFile)
+  {
+    final List<String> command = new ArrayList<>();
+    command.add("dot");
+
+    command.addAll(graphOptions.getGraphVizOpts());
+    command.add("-T");
+    command.add(graphOutputOptions.getGraphOutputFormat().getFormat());
+    command.add("-o");
+    command.add(graphOutputOptions.getDiagramFile().getAbsolutePath());
+    command.add(dotFile.getAbsolutePath());
+
+    final Iterator<String> iterator = command.iterator();
+    while (iterator.hasNext())
+    {
+      if (Utility.isBlank(iterator.next()))
+      {
+        iterator.remove();
+      }
+    }
+
+    return command;
+  }
+
+  private void generateDiagram(final GraphOptions graphOptions,
+                               final GraphOutputOptions graphOutputOptions,
+                               final File dotFile)
+    throws IOException
+  {
+
+    if (graphOutputOptions.getGraphOutputFormat() == GraphOutputFormat.echo)
+    {
+      Utility.copyFile(dotFile, graphOutputOptions.getDiagramFile());
+      return;
+    }
+
+    final List<String> command = createDiagramCommand(graphOptions,
+                                                      graphOutputOptions,
+                                                      dotFile);
+
+    final ProcessExecutor processExecutor = new ProcessExecutor(command);
+    final int exitCode = processExecutor.execute();
+
+    final String processOutput = processExecutor.getProcessOutput();
+    if (!Utility.isBlank(processOutput))
+    {
+      LOGGER.log(Level.INFO, processOutput);
+    }
+    final String processError = processExecutor.getProcessError();
+    if (exitCode != 0)
+    {
+      throw new IOException(String.format("Process returned exit code %d%n%s",
+                                          exitCode,
+                                          processError));
+    }
+    if (!Utility.isBlank(processError))
+    {
+      LOGGER.log(Level.WARNING, processError);
     }
   }
 

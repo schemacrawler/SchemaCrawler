@@ -34,10 +34,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.tools.options.OutputOptions;
 
 /**
  * Command registry for mapping commands to executable.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public final class CommandRegistry
@@ -128,7 +130,9 @@ public final class CommandRegistry
     return availableCommands;
   }
 
-  Executable newExecutable(final String command)
+  Executable configureNewExecutable(final String command,
+                                    final SchemaCrawlerOptions schemaCrawlerOptions,
+                                    final OutputOptions outputOptions)
     throws SchemaCrawlerException
   {
     final CommandProvider commandProvider;
@@ -142,6 +146,8 @@ public final class CommandRegistry
                                                       "schemacrawler.tools.text.operation.OperationExecutable");
     }
 
-    return commandProvider.newExecutable();
+    return commandProvider.configureNewExecutable(schemaCrawlerOptions,
+                                                  outputOptions);
   }
+
 }
