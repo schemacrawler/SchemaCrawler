@@ -1,3 +1,8 @@
+if (typeof println != 'function') {
+   // Account for Java 8 Nashorn engine
+   println = function(args) { print(args); };
+}
+
 var printDb = function()
 {
   println(database.schemaCrawlerInfo);
