@@ -22,6 +22,7 @@ package schemacrawler.crawl;
 
 
 import static sf.util.Utility.isBlank;
+import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.DatabaseObjectReference;
 import schemacrawler.schema.DependantObject;
 
@@ -31,7 +32,7 @@ import schemacrawler.schema.DependantObject;
  *
  * @author Sualeh Fatehi
  */
-abstract class AbstractDependantObject<P extends DatabaseObjectReference>
+abstract class AbstractDependantObject<P extends DatabaseObjectReference & DatabaseObject>
   extends AbstractDatabaseObject
   implements DependantObject<P>
 {

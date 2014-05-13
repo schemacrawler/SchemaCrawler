@@ -23,7 +23,6 @@ package schemacrawler.tools.linter;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.Table;
-import schemacrawler.schema.TableReference;
 import schemacrawler.tools.lint.BaseLinter;
 import sf.util.DirectedGraph;
 
@@ -31,7 +30,7 @@ public class LinterTableCycles
   extends BaseLinter
 {
 
-  private DirectedGraph<TableReference> tablesGraph;
+  private DirectedGraph<Table> tablesGraph;
 
   @Override
   public String getDescription()
