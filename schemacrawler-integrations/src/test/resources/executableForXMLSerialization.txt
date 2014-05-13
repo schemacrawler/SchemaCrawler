@@ -884,7 +884,7 @@ potential schema design issues with lint. The output serves for &#xd;
 database documentation is designed to be diff-ed against other database &#xd;
 schemas. SchemaCrawler also generates schema diagrams.&#xd;
 </schemaCrawlerAbout>
-    <crawlTimestamp>Apr 2, 2014 10:53 PM</crawlTimestamp>
+    <crawlTimestamp>May 11, 2014 9:26 AM</crawlTimestamp>
     <systemProperties id="186"/>
   </schemaCrawlerInfo>
   <schemas id="187">
@@ -2693,11 +2693,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                           <privileges id="367">
                             <objects id="368">
                               <entry>
-                                <string>PUBLIC.&quot;PUBLISHER SALES&quot;.SALES.DELETE</string>
+                                <string>DELETE</string>
                                 <privilege id="369">
                                   <name>DELETE</name>
                                   <attributeMap id="370"/>
-                                  <schema class="schema" reference="196"/>
                                   <parent class="table" reference="315"/>
                                   <grants id="371">
                                     <grant id="372">
@@ -2710,11 +2709,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                 </privilege>
                               </entry>
                               <entry>
-                                <string>PUBLIC.&quot;PUBLISHER SALES&quot;.SALES.INSERT</string>
+                                <string>INSERT</string>
                                 <privilege id="373">
                                   <name>INSERT</name>
                                   <attributeMap id="374"/>
-                                  <schema class="schema" reference="196"/>
                                   <parent class="table" reference="315"/>
                                   <grants id="375">
                                     <grant id="376">
@@ -2727,11 +2725,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                 </privilege>
                               </entry>
                               <entry>
-                                <string>PUBLIC.&quot;PUBLISHER SALES&quot;.SALES.REFERENCES</string>
+                                <string>REFERENCES</string>
                                 <privilege id="377">
                                   <name>REFERENCES</name>
                                   <attributeMap id="378"/>
-                                  <schema class="schema" reference="196"/>
                                   <parent class="table" reference="315"/>
                                   <grants id="379">
                                     <grant id="380">
@@ -2744,11 +2741,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                 </privilege>
                               </entry>
                               <entry>
-                                <string>PUBLIC.&quot;PUBLISHER SALES&quot;.SALES.SELECT</string>
+                                <string>SELECT</string>
                                 <privilege id="381">
                                   <name>SELECT</name>
                                   <attributeMap id="382"/>
-                                  <schema class="schema" reference="196"/>
                                   <parent class="table" reference="315"/>
                                   <grants id="383">
                                     <grant id="384">
@@ -2761,11 +2757,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                 </privilege>
                               </entry>
                               <entry>
-                                <string>PUBLIC.&quot;PUBLISHER SALES&quot;.SALES.TRIGGER</string>
+                                <string>TRIGGER</string>
                                 <privilege id="385">
                                   <name>TRIGGER</name>
                                   <attributeMap id="386"/>
-                                  <schema class="schema" reference="196"/>
                                   <parent class="table" reference="315"/>
                                   <grants id="387">
                                     <grant id="388">
@@ -2778,11 +2773,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                 </privilege>
                               </entry>
                               <entry>
-                                <string>PUBLIC.&quot;PUBLISHER SALES&quot;.SALES.UPDATE</string>
+                                <string>UPDATE</string>
                                 <privilege id="389">
                                   <name>UPDATE</name>
                                   <attributeMap id="390"/>
-                                  <schema class="schema" reference="196"/>
                                   <parent class="table" reference="315"/>
                                   <grants id="391">
                                     <grant id="392">
@@ -3035,11 +3029,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           <privileges id="437">
             <objects id="438">
               <entry>
-                <string>PUBLIC.&quot;PUBLISHER SALES&quot;.REGIONS.DELETE</string>
+                <string>DELETE</string>
                 <privilege id="439">
                   <name>DELETE</name>
                   <attributeMap id="440"/>
-                  <schema class="schema" reference="196"/>
                   <parent class="table" reference="278"/>
                   <grants id="441">
                     <grant id="442">
@@ -3052,11 +3045,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                 </privilege>
               </entry>
               <entry>
-                <string>PUBLIC.&quot;PUBLISHER SALES&quot;.REGIONS.INSERT</string>
+                <string>INSERT</string>
                 <privilege id="443">
                   <name>INSERT</name>
                   <attributeMap id="444"/>
-                  <schema class="schema" reference="196"/>
                   <parent class="table" reference="278"/>
                   <grants id="445">
                     <grant id="446">
@@ -3069,11 +3061,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                 </privilege>
               </entry>
               <entry>
-                <string>PUBLIC.&quot;PUBLISHER SALES&quot;.REGIONS.REFERENCES</string>
+                <string>REFERENCES</string>
                 <privilege id="447">
                   <name>REFERENCES</name>
                   <attributeMap id="448"/>
-                  <schema class="schema" reference="196"/>
                   <parent class="table" reference="278"/>
                   <grants id="449">
                     <grant id="450">
@@ -3086,11 +3077,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                 </privilege>
               </entry>
               <entry>
-                <string>PUBLIC.&quot;PUBLISHER SALES&quot;.REGIONS.SELECT</string>
+                <string>SELECT</string>
                 <privilege id="451">
                   <name>SELECT</name>
                   <attributeMap id="452"/>
-                  <schema class="schema" reference="196"/>
                   <parent class="table" reference="278"/>
                   <grants id="453">
                     <grant id="454">
@@ -3103,11 +3093,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                 </privilege>
               </entry>
               <entry>
-                <string>PUBLIC.&quot;PUBLISHER SALES&quot;.REGIONS.TRIGGER</string>
+                <string>TRIGGER</string>
                 <privilege id="455">
                   <name>TRIGGER</name>
                   <attributeMap id="456"/>
-                  <schema class="schema" reference="196"/>
                   <parent class="table" reference="278"/>
                   <grants id="457">
                     <grant id="458">
@@ -3120,11 +3109,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                 </privilege>
               </entry>
               <entry>
-                <string>PUBLIC.&quot;PUBLISHER SALES&quot;.REGIONS.UPDATE</string>
+                <string>UPDATE</string>
                 <privilege id="459">
                   <name>UPDATE</name>
                   <attributeMap id="460"/>
-                  <schema class="schema" reference="196"/>
                   <parent class="table" reference="278"/>
                   <grants id="461">
                     <grant id="462">
@@ -3242,11 +3230,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           <privileges id="480">
             <objects id="481">
               <entry>
-                <string>PUBLIC.BOOKS.&quot;Global Counts&quot;.DELETE</string>
+                <string>DELETE</string>
                 <privilege id="482">
                   <name>DELETE</name>
                   <attributeMap id="483"/>
-                  <schema class="schema" reference="188"/>
                   <parent class="table" reference="464"/>
                   <grants id="484">
                     <grant id="485">
@@ -3259,11 +3246,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                 </privilege>
               </entry>
               <entry>
-                <string>PUBLIC.BOOKS.&quot;Global Counts&quot;.INSERT</string>
+                <string>INSERT</string>
                 <privilege id="486">
                   <name>INSERT</name>
                   <attributeMap id="487"/>
-                  <schema class="schema" reference="188"/>
                   <parent class="table" reference="464"/>
                   <grants id="488">
                     <grant id="489">
@@ -3276,11 +3262,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                 </privilege>
               </entry>
               <entry>
-                <string>PUBLIC.BOOKS.&quot;Global Counts&quot;.REFERENCES</string>
+                <string>REFERENCES</string>
                 <privilege id="490">
                   <name>REFERENCES</name>
                   <attributeMap id="491"/>
-                  <schema class="schema" reference="188"/>
                   <parent class="table" reference="464"/>
                   <grants id="492">
                     <grant id="493">
@@ -3293,11 +3278,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                 </privilege>
               </entry>
               <entry>
-                <string>PUBLIC.BOOKS.&quot;Global Counts&quot;.SELECT</string>
+                <string>SELECT</string>
                 <privilege id="494">
                   <name>SELECT</name>
                   <attributeMap id="495"/>
-                  <schema class="schema" reference="188"/>
                   <parent class="table" reference="464"/>
                   <grants id="496">
                     <grant id="497">
@@ -3310,11 +3294,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                 </privilege>
               </entry>
               <entry>
-                <string>PUBLIC.BOOKS.&quot;Global Counts&quot;.TRIGGER</string>
+                <string>TRIGGER</string>
                 <privilege id="498">
                   <name>TRIGGER</name>
                   <attributeMap id="499"/>
-                  <schema class="schema" reference="188"/>
                   <parent class="table" reference="464"/>
                   <grants id="500">
                     <grant id="501">
@@ -3327,11 +3310,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                 </privilege>
               </entry>
               <entry>
-                <string>PUBLIC.BOOKS.&quot;Global Counts&quot;.UPDATE</string>
+                <string>UPDATE</string>
                 <privilege id="502">
                   <name>UPDATE</name>
                   <attributeMap id="503"/>
-                  <schema class="schema" reference="188"/>
                   <parent class="table" reference="464"/>
                   <grants id="504">
                     <grant id="505">
@@ -4860,11 +4842,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                       <privileges id="644">
                                         <objects id="645">
                                           <entry>
-                                            <string>PUBLIC.BOOKS.BOOKS.DELETE</string>
+                                            <string>DELETE</string>
                                             <privilege id="646">
                                               <name>DELETE</name>
                                               <attributeMap id="647"/>
-                                              <schema class="schema" reference="188"/>
                                               <parent class="table" reference="574"/>
                                               <grants id="648">
                                                 <grant id="649">
@@ -4877,11 +4858,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                             </privilege>
                                           </entry>
                                           <entry>
-                                            <string>PUBLIC.BOOKS.BOOKS.INSERT</string>
+                                            <string>INSERT</string>
                                             <privilege id="650">
                                               <name>INSERT</name>
                                               <attributeMap id="651"/>
-                                              <schema class="schema" reference="188"/>
                                               <parent class="table" reference="574"/>
                                               <grants id="652">
                                                 <grant id="653">
@@ -4894,11 +4874,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                             </privilege>
                                           </entry>
                                           <entry>
-                                            <string>PUBLIC.BOOKS.BOOKS.REFERENCES</string>
+                                            <string>REFERENCES</string>
                                             <privilege id="654">
                                               <name>REFERENCES</name>
                                               <attributeMap id="655"/>
-                                              <schema class="schema" reference="188"/>
                                               <parent class="table" reference="574"/>
                                               <grants id="656">
                                                 <grant id="657">
@@ -4911,11 +4890,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                             </privilege>
                                           </entry>
                                           <entry>
-                                            <string>PUBLIC.BOOKS.BOOKS.SELECT</string>
+                                            <string>SELECT</string>
                                             <privilege id="658">
                                               <name>SELECT</name>
                                               <attributeMap id="659"/>
-                                              <schema class="schema" reference="188"/>
                                               <parent class="table" reference="574"/>
                                               <grants id="660">
                                                 <grant id="661">
@@ -4928,11 +4906,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                             </privilege>
                                           </entry>
                                           <entry>
-                                            <string>PUBLIC.BOOKS.BOOKS.TRIGGER</string>
+                                            <string>TRIGGER</string>
                                             <privilege id="662">
                                               <name>TRIGGER</name>
                                               <attributeMap id="663"/>
-                                              <schema class="schema" reference="188"/>
                                               <parent class="table" reference="574"/>
                                               <grants id="664">
                                                 <grant id="665">
@@ -4945,11 +4922,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                             </privilege>
                                           </entry>
                                           <entry>
-                                            <string>PUBLIC.BOOKS.BOOKS.UPDATE</string>
+                                            <string>UPDATE</string>
                                             <privilege id="666">
                                               <name>UPDATE</name>
                                               <attributeMap id="667"/>
-                                              <schema class="schema" reference="188"/>
                                               <parent class="table" reference="574"/>
                                               <grants id="668">
                                                 <grant id="669">
@@ -5291,11 +5267,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                           <privileges id="726">
                             <objects id="727">
                               <entry>
-                                <string>PUBLIC.BOOKS.BOOKAUTHORS.DELETE</string>
+                                <string>DELETE</string>
                                 <privilege id="728">
                                   <name>DELETE</name>
                                   <attributeMap id="729"/>
-                                  <schema class="schema" reference="188"/>
                                   <parent class="table" reference="562"/>
                                   <grants id="730">
                                     <grant id="731">
@@ -5308,11 +5283,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                 </privilege>
                               </entry>
                               <entry>
-                                <string>PUBLIC.BOOKS.BOOKAUTHORS.INSERT</string>
+                                <string>INSERT</string>
                                 <privilege id="732">
                                   <name>INSERT</name>
                                   <attributeMap id="733"/>
-                                  <schema class="schema" reference="188"/>
                                   <parent class="table" reference="562"/>
                                   <grants id="734">
                                     <grant id="735">
@@ -5325,11 +5299,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                 </privilege>
                               </entry>
                               <entry>
-                                <string>PUBLIC.BOOKS.BOOKAUTHORS.REFERENCES</string>
+                                <string>REFERENCES</string>
                                 <privilege id="736">
                                   <name>REFERENCES</name>
                                   <attributeMap id="737"/>
-                                  <schema class="schema" reference="188"/>
                                   <parent class="table" reference="562"/>
                                   <grants id="738">
                                     <grant id="739">
@@ -5342,11 +5315,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                 </privilege>
                               </entry>
                               <entry>
-                                <string>PUBLIC.BOOKS.BOOKAUTHORS.SELECT</string>
+                                <string>SELECT</string>
                                 <privilege id="740">
                                   <name>SELECT</name>
                                   <attributeMap id="741"/>
-                                  <schema class="schema" reference="188"/>
                                   <parent class="table" reference="562"/>
                                   <grants id="742">
                                     <grant id="743">
@@ -5359,11 +5331,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                 </privilege>
                               </entry>
                               <entry>
-                                <string>PUBLIC.BOOKS.BOOKAUTHORS.TRIGGER</string>
+                                <string>TRIGGER</string>
                                 <privilege id="744">
                                   <name>TRIGGER</name>
                                   <attributeMap id="745"/>
-                                  <schema class="schema" reference="188"/>
                                   <parent class="table" reference="562"/>
                                   <grants id="746">
                                     <grant id="747">
@@ -5376,11 +5347,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                 </privilege>
                               </entry>
                               <entry>
-                                <string>PUBLIC.BOOKS.BOOKAUTHORS.UPDATE</string>
+                                <string>UPDATE</string>
                                 <privilege id="748">
                                   <name>UPDATE</name>
                                   <attributeMap id="749"/>
-                                  <schema class="schema" reference="188"/>
                                   <parent class="table" reference="562"/>
                                   <grants id="750">
                                     <grant id="751">
@@ -5824,11 +5794,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           <privileges id="819">
             <objects id="820">
               <entry>
-                <string>PUBLIC.BOOKS.AUTHORS.DELETE</string>
+                <string>DELETE</string>
                 <privilege id="821">
                   <name>DELETE</name>
                   <attributeMap id="822"/>
-                  <schema class="schema" reference="188"/>
                   <parent class="table" reference="507"/>
                   <grants id="823">
                     <grant id="824">
@@ -5841,11 +5810,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                 </privilege>
               </entry>
               <entry>
-                <string>PUBLIC.BOOKS.AUTHORS.INSERT</string>
+                <string>INSERT</string>
                 <privilege id="825">
                   <name>INSERT</name>
                   <attributeMap id="826"/>
-                  <schema class="schema" reference="188"/>
                   <parent class="table" reference="507"/>
                   <grants id="827">
                     <grant id="828">
@@ -5858,11 +5826,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                 </privilege>
               </entry>
               <entry>
-                <string>PUBLIC.BOOKS.AUTHORS.REFERENCES</string>
+                <string>REFERENCES</string>
                 <privilege id="829">
                   <name>REFERENCES</name>
                   <attributeMap id="830"/>
-                  <schema class="schema" reference="188"/>
                   <parent class="table" reference="507"/>
                   <grants id="831">
                     <grant id="832">
@@ -5875,11 +5842,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                 </privilege>
               </entry>
               <entry>
-                <string>PUBLIC.BOOKS.AUTHORS.SELECT</string>
+                <string>SELECT</string>
                 <privilege id="833">
                   <name>SELECT</name>
                   <attributeMap id="834"/>
-                  <schema class="schema" reference="188"/>
                   <parent class="table" reference="507"/>
                   <grants id="835">
                     <grant id="836">
@@ -5892,11 +5858,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                 </privilege>
               </entry>
               <entry>
-                <string>PUBLIC.BOOKS.AUTHORS.TRIGGER</string>
+                <string>TRIGGER</string>
                 <privilege id="837">
                   <name>TRIGGER</name>
                   <attributeMap id="838"/>
-                  <schema class="schema" reference="188"/>
                   <parent class="table" reference="507"/>
                   <grants id="839">
                     <grant id="840">
@@ -5909,11 +5874,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                 </privilege>
               </entry>
               <entry>
-                <string>PUBLIC.BOOKS.AUTHORS.UPDATE</string>
+                <string>UPDATE</string>
                 <privilege id="841">
                   <name>UPDATE</name>
                   <attributeMap id="842"/>
-                  <schema class="schema" reference="188"/>
                   <parent class="table" reference="507"/>
                   <grants id="843">
                     <grant id="844">
@@ -6182,11 +6146,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           <privileges id="870">
             <objects id="871">
               <entry>
-                <string>PUBLIC.BOOKS.AUTHORSLIST.DELETE</string>
+                <string>DELETE</string>
                 <privilege id="872">
                   <name>DELETE</name>
                   <attributeMap id="873"/>
-                  <schema class="schema" reference="188"/>
                   <parent class="view" reference="846"/>
                   <grants id="874">
                     <grant id="875">
@@ -6199,11 +6162,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                 </privilege>
               </entry>
               <entry>
-                <string>PUBLIC.BOOKS.AUTHORSLIST.INSERT</string>
+                <string>INSERT</string>
                 <privilege id="876">
                   <name>INSERT</name>
                   <attributeMap id="877"/>
-                  <schema class="schema" reference="188"/>
                   <parent class="view" reference="846"/>
                   <grants id="878">
                     <grant id="879">
@@ -6216,11 +6178,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                 </privilege>
               </entry>
               <entry>
-                <string>PUBLIC.BOOKS.AUTHORSLIST.REFERENCES</string>
+                <string>REFERENCES</string>
                 <privilege id="880">
                   <name>REFERENCES</name>
                   <attributeMap id="881"/>
-                  <schema class="schema" reference="188"/>
                   <parent class="view" reference="846"/>
                   <grants id="882">
                     <grant id="883">
@@ -6233,11 +6194,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                 </privilege>
               </entry>
               <entry>
-                <string>PUBLIC.BOOKS.AUTHORSLIST.SELECT</string>
+                <string>SELECT</string>
                 <privilege id="884">
                   <name>SELECT</name>
                   <attributeMap id="885"/>
-                  <schema class="schema" reference="188"/>
                   <parent class="view" reference="846"/>
                   <grants id="886">
                     <grant id="887">
@@ -6250,11 +6210,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                 </privilege>
               </entry>
               <entry>
-                <string>PUBLIC.BOOKS.AUTHORSLIST.TRIGGER</string>
+                <string>TRIGGER</string>
                 <privilege id="888">
                   <name>TRIGGER</name>
                   <attributeMap id="889"/>
-                  <schema class="schema" reference="188"/>
                   <parent class="view" reference="846"/>
                   <grants id="890">
                     <grant id="891">
@@ -6267,11 +6226,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                 </privilege>
               </entry>
               <entry>
-                <string>PUBLIC.BOOKS.AUTHORSLIST.UPDATE</string>
+                <string>UPDATE</string>
                 <privilege id="892">
                   <name>UPDATE</name>
                   <attributeMap id="893"/>
-                  <schema class="schema" reference="188"/>
                   <parent class="view" reference="846"/>
                   <grants id="894">
                     <grant id="895">
@@ -6600,11 +6558,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           <privileges id="941">
             <objects id="942">
               <entry>
-                <string>PUBLIC.BOOKS.PUBLISHERS.DELETE</string>
+                <string>DELETE</string>
                 <privilege id="943">
                   <name>DELETE</name>
                   <attributeMap id="944"/>
-                  <schema class="schema" reference="188"/>
                   <parent class="table" reference="897"/>
                   <grants id="945">
                     <grant id="946">
@@ -6617,11 +6574,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                 </privilege>
               </entry>
               <entry>
-                <string>PUBLIC.BOOKS.PUBLISHERS.INSERT</string>
+                <string>INSERT</string>
                 <privilege id="947">
                   <name>INSERT</name>
                   <attributeMap id="948"/>
-                  <schema class="schema" reference="188"/>
                   <parent class="table" reference="897"/>
                   <grants id="949">
                     <grant id="950">
@@ -6634,11 +6590,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                 </privilege>
               </entry>
               <entry>
-                <string>PUBLIC.BOOKS.PUBLISHERS.REFERENCES</string>
+                <string>REFERENCES</string>
                 <privilege id="951">
                   <name>REFERENCES</name>
                   <attributeMap id="952"/>
-                  <schema class="schema" reference="188"/>
                   <parent class="table" reference="897"/>
                   <grants id="953">
                     <grant id="954">
@@ -6651,11 +6606,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                 </privilege>
               </entry>
               <entry>
-                <string>PUBLIC.BOOKS.PUBLISHERS.SELECT</string>
+                <string>SELECT</string>
                 <privilege id="955">
                   <name>SELECT</name>
                   <attributeMap id="956"/>
-                  <schema class="schema" reference="188"/>
                   <parent class="table" reference="897"/>
                   <grants id="957">
                     <grant id="958">
@@ -6668,11 +6622,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                 </privilege>
               </entry>
               <entry>
-                <string>PUBLIC.BOOKS.PUBLISHERS.TRIGGER</string>
+                <string>TRIGGER</string>
                 <privilege id="959">
                   <name>TRIGGER</name>
                   <attributeMap id="960"/>
-                  <schema class="schema" reference="188"/>
                   <parent class="table" reference="897"/>
                   <grants id="961">
                     <grant id="962">
@@ -6685,11 +6638,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                 </privilege>
               </entry>
               <entry>
-                <string>PUBLIC.BOOKS.PUBLISHERS.UPDATE</string>
+                <string>UPDATE</string>
                 <privilege id="963">
                   <name>UPDATE</name>
                   <attributeMap id="964"/>
-                  <schema class="schema" reference="188"/>
                   <parent class="table" reference="897"/>
                   <grants id="965">
                     <grant id="966">
@@ -6803,11 +6755,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           <privileges id="984">
             <objects id="985">
               <entry>
-                <string>PUBLIC.FOR_LINT.&quot;Global Counts&quot;.DELETE</string>
+                <string>DELETE</string>
                 <privilege id="986">
                   <name>DELETE</name>
                   <attributeMap id="987"/>
-                  <schema class="schema" reference="190"/>
                   <parent class="table" reference="968"/>
                   <grants id="988">
                     <grant id="989">
@@ -6820,11 +6771,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                 </privilege>
               </entry>
               <entry>
-                <string>PUBLIC.FOR_LINT.&quot;Global Counts&quot;.INSERT</string>
+                <string>INSERT</string>
                 <privilege id="990">
                   <name>INSERT</name>
                   <attributeMap id="991"/>
-                  <schema class="schema" reference="190"/>
                   <parent class="table" reference="968"/>
                   <grants id="992">
                     <grant id="993">
@@ -6837,11 +6787,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                 </privilege>
               </entry>
               <entry>
-                <string>PUBLIC.FOR_LINT.&quot;Global Counts&quot;.REFERENCES</string>
+                <string>REFERENCES</string>
                 <privilege id="994">
                   <name>REFERENCES</name>
                   <attributeMap id="995"/>
-                  <schema class="schema" reference="190"/>
                   <parent class="table" reference="968"/>
                   <grants id="996">
                     <grant id="997">
@@ -6854,11 +6803,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                 </privilege>
               </entry>
               <entry>
-                <string>PUBLIC.FOR_LINT.&quot;Global Counts&quot;.SELECT</string>
+                <string>SELECT</string>
                 <privilege id="998">
                   <name>SELECT</name>
                   <attributeMap id="999"/>
-                  <schema class="schema" reference="190"/>
                   <parent class="table" reference="968"/>
                   <grants id="1000">
                     <grant id="1001">
@@ -6871,11 +6819,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                 </privilege>
               </entry>
               <entry>
-                <string>PUBLIC.FOR_LINT.&quot;Global Counts&quot;.TRIGGER</string>
+                <string>TRIGGER</string>
                 <privilege id="1002">
                   <name>TRIGGER</name>
                   <attributeMap id="1003"/>
-                  <schema class="schema" reference="190"/>
                   <parent class="table" reference="968"/>
                   <grants id="1004">
                     <grant id="1005">
@@ -6888,11 +6835,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                 </privilege>
               </entry>
               <entry>
-                <string>PUBLIC.FOR_LINT.&quot;Global Counts&quot;.UPDATE</string>
+                <string>UPDATE</string>
                 <privilege id="1006">
                   <name>UPDATE</name>
                   <attributeMap id="1007"/>
-                  <schema class="schema" reference="190"/>
                   <parent class="table" reference="968"/>
                   <grants id="1008">
                     <grant id="1009">
@@ -9689,11 +9635,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                   <privileges id="1266">
                                     <objects id="1267">
                                       <entry>
-                                        <string>PUBLIC.FOR_LINT.WRITERS.DELETE</string>
+                                        <string>DELETE</string>
                                         <privilege id="1268">
                                           <name>DELETE</name>
                                           <attributeMap id="1269"/>
-                                          <schema class="schema" reference="190"/>
                                           <parent class="table" reference="1069"/>
                                           <grants id="1270">
                                             <grant id="1271">
@@ -9706,11 +9651,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                         </privilege>
                                       </entry>
                                       <entry>
-                                        <string>PUBLIC.FOR_LINT.WRITERS.INSERT</string>
+                                        <string>INSERT</string>
                                         <privilege id="1272">
                                           <name>INSERT</name>
                                           <attributeMap id="1273"/>
-                                          <schema class="schema" reference="190"/>
                                           <parent class="table" reference="1069"/>
                                           <grants id="1274">
                                             <grant id="1275">
@@ -9723,11 +9667,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                         </privilege>
                                       </entry>
                                       <entry>
-                                        <string>PUBLIC.FOR_LINT.WRITERS.REFERENCES</string>
+                                        <string>REFERENCES</string>
                                         <privilege id="1276">
                                           <name>REFERENCES</name>
                                           <attributeMap id="1277"/>
-                                          <schema class="schema" reference="190"/>
                                           <parent class="table" reference="1069"/>
                                           <grants id="1278">
                                             <grant id="1279">
@@ -9740,11 +9683,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                         </privilege>
                                       </entry>
                                       <entry>
-                                        <string>PUBLIC.FOR_LINT.WRITERS.SELECT</string>
+                                        <string>SELECT</string>
                                         <privilege id="1280">
                                           <name>SELECT</name>
                                           <attributeMap id="1281"/>
-                                          <schema class="schema" reference="190"/>
                                           <parent class="table" reference="1069"/>
                                           <grants id="1282">
                                             <grant id="1283">
@@ -9757,11 +9699,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                         </privilege>
                                       </entry>
                                       <entry>
-                                        <string>PUBLIC.FOR_LINT.WRITERS.TRIGGER</string>
+                                        <string>TRIGGER</string>
                                         <privilege id="1284">
                                           <name>TRIGGER</name>
                                           <attributeMap id="1285"/>
-                                          <schema class="schema" reference="190"/>
                                           <parent class="table" reference="1069"/>
                                           <grants id="1286">
                                             <grant id="1287">
@@ -9774,11 +9715,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                         </privilege>
                                       </entry>
                                       <entry>
-                                        <string>PUBLIC.FOR_LINT.WRITERS.UPDATE</string>
+                                        <string>UPDATE</string>
                                         <privilege id="1288">
                                           <name>UPDATE</name>
                                           <attributeMap id="1289"/>
-                                          <schema class="schema" reference="190"/>
                                           <parent class="table" reference="1069"/>
                                           <grants id="1290">
                                             <grant id="1291">
@@ -10098,11 +10038,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                       <privileges id="1348">
                         <objects id="1349">
                           <entry>
-                            <string>PUBLIC.FOR_LINT.PUBLICATIONS.DELETE</string>
+                            <string>DELETE</string>
                             <privilege id="1350">
                               <name>DELETE</name>
                               <attributeMap id="1351"/>
-                              <schema class="schema" reference="190"/>
                               <parent class="table" reference="1030"/>
                               <grants id="1352">
                                 <grant id="1353">
@@ -10115,11 +10054,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                             </privilege>
                           </entry>
                           <entry>
-                            <string>PUBLIC.FOR_LINT.PUBLICATIONS.INSERT</string>
+                            <string>INSERT</string>
                             <privilege id="1354">
                               <name>INSERT</name>
                               <attributeMap id="1355"/>
-                              <schema class="schema" reference="190"/>
                               <parent class="table" reference="1030"/>
                               <grants id="1356">
                                 <grant id="1357">
@@ -10132,11 +10070,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                             </privilege>
                           </entry>
                           <entry>
-                            <string>PUBLIC.FOR_LINT.PUBLICATIONS.REFERENCES</string>
+                            <string>REFERENCES</string>
                             <privilege id="1358">
                               <name>REFERENCES</name>
                               <attributeMap id="1359"/>
-                              <schema class="schema" reference="190"/>
                               <parent class="table" reference="1030"/>
                               <grants id="1360">
                                 <grant id="1361">
@@ -10149,11 +10086,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                             </privilege>
                           </entry>
                           <entry>
-                            <string>PUBLIC.FOR_LINT.PUBLICATIONS.SELECT</string>
+                            <string>SELECT</string>
                             <privilege id="1362">
                               <name>SELECT</name>
                               <attributeMap id="1363"/>
-                              <schema class="schema" reference="190"/>
                               <parent class="table" reference="1030"/>
                               <grants id="1364">
                                 <grant id="1365">
@@ -10166,11 +10102,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                             </privilege>
                           </entry>
                           <entry>
-                            <string>PUBLIC.FOR_LINT.PUBLICATIONS.TRIGGER</string>
+                            <string>TRIGGER</string>
                             <privilege id="1366">
                               <name>TRIGGER</name>
                               <attributeMap id="1367"/>
-                              <schema class="schema" reference="190"/>
                               <parent class="table" reference="1030"/>
                               <grants id="1368">
                                 <grant id="1369">
@@ -10183,11 +10118,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                             </privilege>
                           </entry>
                           <entry>
-                            <string>PUBLIC.FOR_LINT.PUBLICATIONS.UPDATE</string>
+                            <string>UPDATE</string>
                             <privilege id="1370">
                               <name>UPDATE</name>
                               <attributeMap id="1371"/>
-                              <schema class="schema" reference="190"/>
                               <parent class="table" reference="1030"/>
                               <grants id="1372">
                                 <grant id="1373">
@@ -10570,11 +10504,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           <privileges id="1438">
             <objects id="1439">
               <entry>
-                <string>PUBLIC.FOR_LINT.EXTRA_PK.DELETE</string>
+                <string>DELETE</string>
                 <privilege id="1440">
                   <name>DELETE</name>
                   <attributeMap id="1441"/>
-                  <schema class="schema" reference="190"/>
                   <parent class="table" reference="1011"/>
                   <grants id="1442">
                     <grant id="1443">
@@ -10587,11 +10520,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                 </privilege>
               </entry>
               <entry>
-                <string>PUBLIC.FOR_LINT.EXTRA_PK.INSERT</string>
+                <string>INSERT</string>
                 <privilege id="1444">
                   <name>INSERT</name>
                   <attributeMap id="1445"/>
-                  <schema class="schema" reference="190"/>
                   <parent class="table" reference="1011"/>
                   <grants id="1446">
                     <grant id="1447">
@@ -10604,11 +10536,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                 </privilege>
               </entry>
               <entry>
-                <string>PUBLIC.FOR_LINT.EXTRA_PK.REFERENCES</string>
+                <string>REFERENCES</string>
                 <privilege id="1448">
                   <name>REFERENCES</name>
                   <attributeMap id="1449"/>
-                  <schema class="schema" reference="190"/>
                   <parent class="table" reference="1011"/>
                   <grants id="1450">
                     <grant id="1451">
@@ -10621,11 +10552,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                 </privilege>
               </entry>
               <entry>
-                <string>PUBLIC.FOR_LINT.EXTRA_PK.SELECT</string>
+                <string>SELECT</string>
                 <privilege id="1452">
                   <name>SELECT</name>
                   <attributeMap id="1453"/>
-                  <schema class="schema" reference="190"/>
                   <parent class="table" reference="1011"/>
                   <grants id="1454">
                     <grant id="1455">
@@ -10638,11 +10568,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                 </privilege>
               </entry>
               <entry>
-                <string>PUBLIC.FOR_LINT.EXTRA_PK.TRIGGER</string>
+                <string>TRIGGER</string>
                 <privilege id="1456">
                   <name>TRIGGER</name>
                   <attributeMap id="1457"/>
-                  <schema class="schema" reference="190"/>
                   <parent class="table" reference="1011"/>
                   <grants id="1458">
                     <grant id="1459">
@@ -10655,11 +10584,10 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                 </privilege>
               </entry>
               <entry>
-                <string>PUBLIC.FOR_LINT.EXTRA_PK.UPDATE</string>
+                <string>UPDATE</string>
                 <privilege id="1460">
                   <name>UPDATE</name>
                   <attributeMap id="1461"/>
-                  <schema class="schema" reference="190"/>
                   <parent class="table" reference="1011"/>
                   <grants id="1462">
                     <grant id="1463">

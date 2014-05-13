@@ -29,6 +29,7 @@ import schemacrawler.filter.NamedObjectFilter;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.Table;
+import schemacrawler.schema.TableReference;
 import schemacrawler.schema.TableRelationshipType;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
@@ -102,7 +103,7 @@ class TablesReducer
     {
       for (final MutableTable table: new HashSet<>(includedTables))
       {
-        for (final Table relatedTable: table
+        for (final TableReference relatedTable: table
           .getRelatedTables(tableRelationshipType))
         {
           if (relatedTable instanceof MutableTable)
@@ -126,8 +127,8 @@ class TablesReducer
         for (final ForeignKeyColumnReference fkColumnReference: fk
           .getColumnReferences())
         {
-          final Table referencedTable = fkColumnReference.getForeignKeyColumn()
-            .getParent();
+          final TableReference referencedTable = fkColumnReference
+            .getForeignKeyColumn().getParent();
           boolean removeFk = false;
           if (!(referencedTable instanceof MutableTable))
           {
@@ -162,8 +163,8 @@ class TablesReducer
         for (final ForeignKeyColumnReference fkColumnReference: fk
           .getColumnReferences())
         {
-          final Table referencedTable = fkColumnReference.getPrimaryKeyColumn()
-            .getParent();
+          final TableReference referencedTable = fkColumnReference
+            .getPrimaryKeyColumn().getParent();
           boolean removeFk = false;
           if (!(referencedTable instanceof MutableTable))
           {

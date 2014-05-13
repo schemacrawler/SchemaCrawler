@@ -38,7 +38,7 @@ import sf.util.Utility;
  * @author Sualeh Fatehi
  */
 final class MutablePrivilege<P extends DatabaseObject>
-  extends AbstractDependantObject<P>
+  extends AbstractNamedObject
   implements Privilege<P>
 {
 
@@ -171,13 +171,20 @@ final class MutablePrivilege<P extends DatabaseObject>
 
   }
 
+  private final P parent;
   private final Set<Grant> grants = new HashSet<>();
 
   private static final long serialVersionUID = -1117664231494271886L;
 
   MutablePrivilege(final P parent, final String name)
   {
-    super(parent, name);
+    super(name);
+    this.parent = parent;
+  }
+
+  public P getParent()
+  {
+    return parent;
   }
 
   @Override

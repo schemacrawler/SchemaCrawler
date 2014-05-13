@@ -38,6 +38,7 @@ import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableConstraint;
+import schemacrawler.schema.TableReference;
 import schemacrawler.schema.TableRelationshipType;
 import schemacrawler.schema.TableType;
 import schemacrawler.schema.Trigger;
@@ -48,7 +49,7 @@ import schemacrawler.schema.Trigger;
  * @author Sualeh Fatehi
  */
 class MutableTable
-  extends AbstractDatabaseObject
+  extends TableReferenceI
   implements Table
 {
 
@@ -238,9 +239,9 @@ class MutableTable
    * @see schemacrawler.schema.Table#getRelatedTables(schemacrawler.schema.TableRelationshipType)
    */
   @Override
-  public Collection<Table> getRelatedTables(final TableRelationshipType tableRelationshipType)
+  public Collection<TableReference> getRelatedTables(final TableRelationshipType tableRelationshipType)
   {
-    final Set<Table> relatedTables = new HashSet<>();
+    final Set<TableReference> relatedTables = new HashSet<>();
     if (tableRelationshipType != null
         && tableRelationshipType != TableRelationshipType.none)
     {
@@ -251,10 +252,10 @@ class MutableTable
         for (final ForeignKeyColumnReference columnReference: foreignKey
           .getColumnReferences())
         {
-          final Table parentTable = columnReference.getPrimaryKeyColumn()
-            .getParent();
-          final Table childTable = columnReference.getForeignKeyColumn()
-            .getParent();
+          final TableReference parentTable = columnReference
+            .getPrimaryKeyColumn().getParent();
+          final TableReference childTable = columnReference
+            .getForeignKeyColumn().getParent();
           switch (tableRelationshipType)
           {
             case parent:

@@ -23,7 +23,7 @@ package schemacrawler.crawl;
 
 import schemacrawler.schema.BaseColumn;
 import schemacrawler.schema.ColumnDataType;
-import schemacrawler.schema.DatabaseObject;
+import schemacrawler.schema.DatabaseObjectReference;
 import schemacrawler.schema.JavaSqlType.JavaSqlTypeGroup;
 import schemacrawler.schema.NamedObject;
 
@@ -33,7 +33,7 @@ import schemacrawler.schema.NamedObject;
  * 
  * @author Sualeh Fatehi
  */
-abstract class AbstractColumn<P extends DatabaseObject>
+abstract class AbstractColumn<P extends DatabaseObjectReference>
   extends AbstractDependantObject<P>
   implements BaseColumn<P>
 {

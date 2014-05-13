@@ -9,12 +9,13 @@ import java.util.logging.Logger;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.Table;
+import schemacrawler.schema.TableReference;
 import schemacrawler.schema.View;
 import sf.util.DirectedGraph;
 import sf.util.GraphException;
 
 final class TablesGraph
-  extends DirectedGraph<Table>
+  extends DirectedGraph<TableReference>
 {
 
   private static final Logger LOGGER = Logger.getLogger(TablesGraph.class
@@ -50,10 +51,10 @@ final class TablesGraph
   {
     try
     {
-      final List<Table> sortedTables = topologicalSort();
+      final List<TableReference> sortedTables = topologicalSort();
       final List<View> sortedViews = new ArrayList<>();
       int sortIndex = 0;
-      for (final Table table: sortedTables)
+      for (final TableReference table: sortedTables)
       {
         if (table instanceof View)
         {
