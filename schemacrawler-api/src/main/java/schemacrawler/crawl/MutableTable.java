@@ -49,7 +49,7 @@ import schemacrawler.schema.Trigger;
  * @author Sualeh Fatehi
  */
 class MutableTable
-  extends TableReferenceI
+  extends AbstractDatabaseObject
   implements Table
 {
 
@@ -252,10 +252,10 @@ class MutableTable
         for (final ForeignKeyColumnReference columnReference: foreignKey
           .getColumnReferences())
         {
-          final TableReference parentTable = columnReference
-            .getPrimaryKeyColumn().getParent();
-          final TableReference childTable = columnReference
-            .getForeignKeyColumn().getParent();
+          final Table parentTable = columnReference.getPrimaryKeyColumn()
+            .getParent();
+          final Table childTable = columnReference.getForeignKeyColumn()
+            .getParent();
           switch (tableRelationshipType)
           {
             case parent:

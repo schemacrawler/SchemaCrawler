@@ -7,12 +7,12 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Privilege;
+import schemacrawler.schema.Table;
 import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.TableConstraintColumn;
-import schemacrawler.schema.TableReference;
 
 final class MutableTableConstraintColumn
-  extends AbstractDependantObject<TableReference>
+  extends AbstractDependantObject<Table>
   implements TableConstraintColumn
 {
 
