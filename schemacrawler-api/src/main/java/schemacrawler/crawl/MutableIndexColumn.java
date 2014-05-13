@@ -10,10 +10,10 @@ import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.IndexColumnSortSequence;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Privilege;
-import schemacrawler.schema.Table;
+import schemacrawler.schema.TableReference;
 
 final class MutableIndexColumn
-  extends AbstractDependantObject<Table>
+  extends AbstractDependantObject<TableReference>
   implements IndexColumn
 {
 

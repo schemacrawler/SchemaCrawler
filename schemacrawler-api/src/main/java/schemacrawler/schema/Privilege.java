@@ -30,7 +30,7 @@ import java.util.Collection;
  * @author Sualeh Fatehi
  */
 public interface Privilege<P extends DatabaseObject>
-  extends DependantObject<P>
+  extends NamedObject, ContainedObject<P>
 {
 
   public interface Grant

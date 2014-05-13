@@ -29,7 +29,7 @@ import java.util.Collection;
  * @author Sualeh Fatehi
  */
 public interface Column
-  extends BaseColumn<Table>
+  extends BaseColumn<TableReference>
 {
 
   /**

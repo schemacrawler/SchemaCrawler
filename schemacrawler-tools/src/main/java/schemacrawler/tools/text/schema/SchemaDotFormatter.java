@@ -23,7 +23,6 @@ package schemacrawler.tools.text.schema;
 
 
 import static schemacrawler.utility.MetaDataUtility.getConnectivity;
-import static sf.util.Utility.NEWLINE;
 import static sf.util.Utility.convertForComparison;
 import static sf.util.Utility.isBlank;
 
@@ -149,7 +148,6 @@ public final class SchemaDotFormatter
   @Override
   public void handle(final Table table)
   {
-    final Schema schema = table.getSchema();
 
     final String tableName;
     if (options.isShowUnqualifiedNames())
@@ -162,25 +160,16 @@ public final class SchemaDotFormatter
     }
     final String tableType = "[" + table.getTableType() + "]";
 
-    final Color tableNameBgColor;
-    if (!colorMap.containsKey(schema))
-    {
-      tableNameBgColor = pastelColorHTMLValue(schema.getFullName());
-      colorMap.put(schema, tableNameBgColor);
-    }
-    else
-    {
-      tableNameBgColor = colorMap.get(schema);
-    }
+    final Color tableNameBgColor = getTableNameBgColor(table);
     final int colspan = options.isShowOrdinalNumbers()? 3: 2;
 
     out.append("  /* ").append(table.getFullName())
-      .append(" -=-=-=-=-=-=-=-=-=-=-=-=-=- */").append(NEWLINE);
-    out.append("  \"").append(nodeId(table)).append("\" [").append(NEWLINE)
-      .append("    label=<").append(NEWLINE);
+      .append(" -=-=-=-=-=-=-=-=-=-=-=-=-=- */").println();
+    out.append("  \"").append(nodeId(table)).append("\" [").println();
+    out.append("    label=<").println();
     out
       .append("      <table border=\"1\" cellborder=\"0\" cellpadding=\"2\" cellspacing=\"0\" bgcolor=\"white\" color=\"#555555\">")
-      .append(NEWLINE);
+      .println();
 
     final TableRow row = new TableRow(OutputFormat.html);
     row.add(newTableCell(tableName,
@@ -192,7 +181,7 @@ public final class SchemaDotFormatter
       .add(newTableCell(tableType, Alignment.right, false, tableNameBgColor, 1));
 
     out.append(row.toString());
-    out.append(NEWLINE);
+    out.println();
 
     if (!isList)
     {
@@ -200,24 +189,14 @@ public final class SchemaDotFormatter
       printTableColumns(columns);
     }
 
-    out.append("      </table>").append(NEWLINE);
-    out.append("    >").append(NEWLINE).append("  ];").append(NEWLINE)
-      .append(NEWLINE);
+    out.append("      </table>").println();
+    out.append("    >").println();
+    out.append("  ];").println();
+    out.println();
 
     if (!isList)
     {
-      for (final ForeignKey foreignKey: table.getForeignKeys())
-      {
-        for (final ColumnReference columnReference: foreignKey
-          .getColumnReferences())
-        {
-          if (table.equals(columnReference.getPrimaryKeyColumn().getParent()))
-          {
-            out.write(printColumnReference(foreignKey.getName(),
-                                           columnReference));
-          }
-        }
-      }
+      printForeignKeys(table);
 
       if (isVerbose)
       {
@@ -225,8 +204,10 @@ public final class SchemaDotFormatter
       }
     }
 
-    out.append(NEWLINE).append(NEWLINE);
+    out.println();
+    out.println();
 
+    out.flush();
   }
 
   @Override
@@ -327,6 +308,22 @@ public final class SchemaDotFormatter
     return portIds;
   }
 
+  private Color getTableNameBgColor(final Table table)
+  {
+    final Color tableNameBgColor;
+    final Schema schema = table.getSchema();
+    if (!colorMap.containsKey(schema))
+    {
+      tableNameBgColor = pastelColorHTMLValue(schema.getFullName());
+      colorMap.put(schema, tableNameBgColor);
+    }
+    else
+    {
+      tableNameBgColor = colorMap.get(schema);
+    }
+    return tableNameBgColor;
+  }
+
   private String nodeId(final NamedObject namedObject)
   {
     if (namedObject == null)
@@ -370,6 +367,22 @@ public final class SchemaDotFormatter
               style,
               fkSymbol,
               pkSymbol);
+  }
+
+  private void printForeignKeys(final Table table)
+  {
+    for (final ForeignKey foreignKey: table.getForeignKeys())
+    {
+      for (final ColumnReference columnReference: foreignKey
+        .getColumnReferences())
+      {
+        if (table.equals(columnReference.getPrimaryKeyColumn().getParent()))
+        {
+          out
+            .write(printColumnReference(foreignKey.getName(), columnReference));
+        }
+      }
+    }
   }
 
   private String printNewNode(final Column column)
@@ -436,8 +449,7 @@ public final class SchemaDotFormatter
       row.firstCell().addAttribute("port", nodeId(column) + ".start");
       row.lastCell().addAttribute("port", nodeId(column) + ".end");
 
-      out.append(row.toString());
-      out.append(NEWLINE);
+      out.println(row.toString());
     }
 
   }

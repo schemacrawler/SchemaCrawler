@@ -64,7 +64,7 @@ import sf.util.Utility;
 
 /**
  * Text formatting of schema.
- * 
+ *
  * @author Sualeh Fatehi
  */
 final class SchemaTextFormatter
@@ -87,7 +87,7 @@ final class SchemaTextFormatter
 
   /**
    * Text formatting of schema.
-   * 
+   *
    * @param schemaTextDetailType
    *        Types for text formatting of schema
    * @param options
@@ -111,7 +111,7 @@ final class SchemaTextFormatter
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handle(schemacrawler.schema.ColumnDataType)
    */
   @Override
@@ -120,15 +120,15 @@ final class SchemaTextFormatter
   {
     if (printVerboseDatabaseInfo && isVerbose)
     {
-      out.print(formattingHelper.createObjectStart(""));
+      out.append(formattingHelper.createObjectStart(""));
       printColumnDataType(columnDataType);
-      out.print(formattingHelper.createObjectEnd());
+      out.append(formattingHelper.createObjectEnd());
     }
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handle(Routine)
    */
   @Override
@@ -180,7 +180,7 @@ final class SchemaTextFormatter
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handle(schemacrawler.schema.Synonym)
    */
   @Override
@@ -238,7 +238,7 @@ final class SchemaTextFormatter
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handle(schemacrawler.schema.Table)
    */
   @Override
@@ -270,7 +270,7 @@ final class SchemaTextFormatter
       printTableColumns(columns);
 
       printPrimaryKey(table.getPrimaryKey());
-      printForeignKeys(table.getName(), table.getForeignKeys());
+      printForeignKeys(table);
       if (isVerbose)
       {
         printWeakAssociations(table);
@@ -322,7 +322,7 @@ final class SchemaTextFormatter
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handleColumnDataTypesEnd()
    */
   @Override
@@ -332,7 +332,7 @@ final class SchemaTextFormatter
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handleColumnDataTypesStart()
    */
   @Override
@@ -347,7 +347,7 @@ final class SchemaTextFormatter
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handleRoutinesEnd()
    */
   @Override
@@ -356,13 +356,13 @@ final class SchemaTextFormatter
   {
     if (isList)
     {
-      out.print(formattingHelper.createObjectEnd());
+      out.append(formattingHelper.createObjectEnd());
     }
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handleRoutinesStart()
    */
   @Override
@@ -374,13 +374,13 @@ final class SchemaTextFormatter
 
     if (isList)
     {
-      out.print(formattingHelper.createObjectStart(""));
+      out.append(formattingHelper.createObjectStart(""));
     }
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handleSynonymsEnd()
    */
   @Override
@@ -389,13 +389,13 @@ final class SchemaTextFormatter
   {
     if (isList)
     {
-      out.print(formattingHelper.createObjectEnd());
+      out.append(formattingHelper.createObjectEnd());
     }
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handleSynonymsStart()
    */
   @Override
@@ -407,13 +407,13 @@ final class SchemaTextFormatter
 
     if (isList)
     {
-      out.print(formattingHelper.createObjectStart(""));
+      out.append(formattingHelper.createObjectStart(""));
     }
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handleTablesEnd()
    */
   @Override
@@ -422,13 +422,13 @@ final class SchemaTextFormatter
   {
     if (isList)
     {
-      out.print(formattingHelper.createObjectEnd());
+      out.append(formattingHelper.createObjectEnd());
     }
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handleTablesStart()
    */
   @Override
@@ -440,7 +440,7 @@ final class SchemaTextFormatter
 
     if (isList)
     {
-      out.print(formattingHelper.createObjectStart(""));
+      out.append(formattingHelper.createObjectStart(""));
     }
   }
 
@@ -569,9 +569,10 @@ final class SchemaTextFormatter
     out.println(formattingHelper.createDefinitionRow(definition));
   }
 
-  private void printForeignKeys(final String tableName,
-                                final Collection<ForeignKey> foreignKeysCollection)
+  private void printForeignKeys(final Table table)
   {
+    final String tableName = table.getName();
+    final Collection<ForeignKey> foreignKeysCollection = table.getForeignKeys();
     final List<ForeignKey> foreignKeys = new ArrayList<>(foreignKeysCollection);
     Collections.sort(foreignKeys, NamedObjectSort.getNamedObjectSort(options
       .isAlphabeticalSortForForeignKeys()));
