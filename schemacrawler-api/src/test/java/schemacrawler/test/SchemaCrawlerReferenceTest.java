@@ -34,6 +34,7 @@ import schemacrawler.schema.Database;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.Table;
+import schemacrawler.schema.TableReference;
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
@@ -224,18 +225,18 @@ public class SchemaCrawlerReferenceTest
                                                   final Column column,
                                                   final boolean assertDataNotLoaded)
   {
-    final Table table = column.getParent();
+    final TableReference table = column.getParent();
     assertNull("Primary key table table should not be in the database - "
                    + table.getName(),
                database.getTable(table.getSchema(), table.getName()));
     assertTrue("Column references do not match",
-               column == table.getColumn(column.getName()));
+               column == ((Table) table).getColumn(column.getName()));
 
     if (assertDataNotLoaded)
     {
       try
       {
-        table.getTableType();
+        ((Table) table).getTableType();
         fail("An exception should be thrown indicating that this table was not loaded from the database");
       }
       catch (final NotLoadedException e)
@@ -258,11 +259,11 @@ public class SchemaCrawlerReferenceTest
                                             final Column column)
   {
     assertTrue(column != null);
-    final Table table = column.getParent();
+    final TableReference table = column.getParent();
     assertTrue("Table references do not match - " + table.getName(),
                table == database.getTable(table.getSchema(), table.getName()));
     assertTrue("Column references do not match",
-               column == table.getColumn(column.getName()));
+               column == ((Table) table).getColumn(column.getName()));
   }
 
 }

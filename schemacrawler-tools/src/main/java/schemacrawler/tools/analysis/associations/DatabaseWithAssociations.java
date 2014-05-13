@@ -31,6 +31,7 @@ import java.util.TreeSet;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.Database;
 import schemacrawler.schema.Table;
+import schemacrawler.schema.TableReference;
 import schemacrawler.schemacrawler.BaseDatabaseDecorator;
 
 public final class DatabaseWithAssociations
@@ -55,7 +56,7 @@ public final class DatabaseWithAssociations
     return weakAssociationsList;
   }
 
-  static void addWeakAssociationToTable(final Table table,
+  static void addWeakAssociationToTable(final TableReference table,
                                         final ColumnReference weakAssociation)
   {
     if (table != null && weakAssociation != null)

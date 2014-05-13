@@ -26,7 +26,7 @@ import java.util.Collection;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Privilege;
-import schemacrawler.schema.Table;
+import schemacrawler.schema.TableReference;
 
 /**
  * Represents a column in a database table or routine. Created from
@@ -35,7 +35,7 @@ import schemacrawler.schema.Table;
  * @author Sualeh Fatehi
  */
 class MutableColumn
-  extends AbstractColumn<Table>
+  extends AbstractColumn<TableReference>
   implements Column
 {
 
@@ -47,7 +47,7 @@ class MutableColumn
   private Column referencedColumn;
   private final NamedObjectList<MutablePrivilege<Column>> privileges = new NamedObjectList<>();
 
-  MutableColumn(final Table parent, final String name)
+  MutableColumn(final TableReference parent, final String name)
   {
     super(parent, name);
   }

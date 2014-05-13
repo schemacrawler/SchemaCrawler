@@ -27,9 +27,10 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Table;
+import schemacrawler.schema.TableReference;
 
 final class ColumnPartial
-  extends AbstractDependantObject<Table>
+  extends AbstractDependantObject<TableReference>
   implements Column
 {
 
