@@ -127,8 +127,8 @@ class TablesReducer
         for (final ForeignKeyColumnReference fkColumnReference: fk
           .getColumnReferences())
         {
-          final TableReference referencedTable = fkColumnReference
-            .getForeignKeyColumn().getParent();
+          final Table referencedTable = fkColumnReference.getForeignKeyColumn()
+            .getParent();
           boolean removeFk = false;
           if (!(referencedTable instanceof MutableTable))
           {

@@ -35,7 +35,7 @@ import sf.util.Utility;
  * @author Sualeh Fatehi
  */
 abstract class MutableRoutine
-  extends RoutineReferenceI
+  extends AbstractDatabaseObject
   implements Routine
 {
 
