@@ -729,22 +729,22 @@ FK_PUBLICATION_JOIN                        [foreign key, with no action]
 FK_WRITER_JOIN                             [foreign key, with no action]
   PUBLIC.FOR_LINT.WRITERS.ID --> WRITERID                              
 
-SYS_IDX_PK_EXTRA_PK_10173                                 [unique index]
+SYS_IDX_PK_EXTRA_PK_10177                                 [unique index]
   ID                                ascending                   
 
-SYS_IDX_10179                                         [non-unique index]
+SYS_IDX_10183                                         [non-unique index]
   PUBLICATIONID                     ascending                   
 
-SYS_IDX_10177                                         [non-unique index]
+SYS_IDX_10181                                         [non-unique index]
   WRITERID                          ascending                   
 
-SYS_CT_10170                                          [check constraint]
+SYS_CT_10174                                          [check constraint]
 FOR_LINT.EXTRA_PK.ID IS NOT NULL
 
-SYS_CT_10171                                          [check constraint]
+SYS_CT_10175                                          [check constraint]
 FOR_LINT.EXTRA_PK.WRITERID IS NOT NULL
 
-SYS_CT_10172                                          [check constraint]
+SYS_CT_10176                                          [check constraint]
 FOR_LINT.EXTRA_PK.PUBLICATIONID IS NOT NULL
 
 DELETE                                                       [privilege]
@@ -816,19 +816,19 @@ FK_WRITERS_PUBLICATION                     [foreign key, with no action]
 FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
   PUBLIC.FOR_LINT.WRITERS.ID --> WRITERID                              
 
-SYS_IDX_PK_PUBLICATIONS_10163                             [unique index]
+SYS_IDX_PK_PUBLICATIONS_10167                             [unique index]
   ID                                ascending                   
 
-SYS_IDX_10167                                         [non-unique index]
+SYS_IDX_10171                                         [non-unique index]
   WRITERID                          ascending                   
 
-SYS_CT_10160                                          [check constraint]
+SYS_CT_10164                                          [check constraint]
 FOR_LINT.PUBLICATIONS.ID IS NOT NULL
 
-SYS_CT_10161                                          [check constraint]
+SYS_CT_10165                                          [check constraint]
 FOR_LINT.PUBLICATIONS.TITLE IS NOT NULL
 
-SYS_CT_10162                                          [check constraint]
+SYS_CT_10166                                          [check constraint]
 FOR_LINT.PUBLICATIONS.WRITERID IS NOT NULL
 
 DELETE                                                       [privilege]
@@ -885,10 +885,10 @@ FK_WRITER_JOIN                             [foreign key, with no action]
 FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
   ID --> PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID                              
 
-SYS_IDX_PK_WRITERS_10153                                  [unique index]
+SYS_IDX_PK_WRITERS_10157                                  [unique index]
   ID                                ascending                   
 
-SYS_IDX_10181                                         [non-unique index]
+SYS_IDX_10185                                         [non-unique index]
   PUBLICATION_ID                    ascending                   
 
 IDX_A1_WRITERS                                        [non-unique index]
@@ -912,19 +912,19 @@ IDX_A_WRITERS                                         [non-unique index]
 CHECK_UPPERCASE_STATE                                 [check constraint]
 FOR_LINT.WRITERS.STATE=UPPER(FOR_LINT.WRITERS.STATE)
 
-SYS_CT_10148                                          [check constraint]
+SYS_CT_10152                                          [check constraint]
 FOR_LINT.WRITERS.ID IS NOT NULL
 
-SYS_CT_10149                                          [check constraint]
+SYS_CT_10153                                          [check constraint]
 FOR_LINT.WRITERS.FIRSTNAME IS NOT NULL
 
-SYS_CT_10150                                          [check constraint]
+SYS_CT_10154                                          [check constraint]
 FOR_LINT.WRITERS.LASTNAME IS NOT NULL
 
-SYS_CT_10151                                          [check constraint]
+SYS_CT_10155                                          [check constraint]
 FOR_LINT.WRITERS.ADDRESS2 IS NOT NULL
 
-SYS_CT_10152                                          [check constraint]
+SYS_CT_10156                                          [check constraint]
 FOR_LINT.WRITERS.PUBLICATION_ID IS NOT NULL
 
 DELETE                                                       [privilege]
@@ -963,20 +963,20 @@ FK_SALES_REGIONS                           [foreign key, with no action]
   POSTALCODE --> PUBLIC."PUBLISHER SALES".SALES.POSTALCODE                              
   COUNTRY --> PUBLIC."PUBLISHER SALES".SALES.COUNTRY                              
 
-SYS_IDX_PK_CUSTOMERS_10136                                [unique index]
+SYS_IDX_PK_CUSTOMERS_10140                                [unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
 
-SYS_CT_10132                                          [check constraint]
+SYS_CT_10136                                          [check constraint]
 "PUBLISHER SALES".REGIONS.CITY IS NOT NULL
 
-SYS_CT_10133                                          [check constraint]
+SYS_CT_10137                                          [check constraint]
 "PUBLISHER SALES".REGIONS.STATE IS NOT NULL
 
-SYS_CT_10134                                          [check constraint]
+SYS_CT_10138                                          [check constraint]
 "PUBLISHER SALES".REGIONS.POSTALCODE IS NOT NULL
 
-SYS_CT_10135                                          [check constraint]
+SYS_CT_10139                                          [check constraint]
 "PUBLISHER SALES".REGIONS.COUNTRY IS NOT NULL
 
 DELETE                                                       [privilege]
@@ -1015,14 +1015,14 @@ FK_SALES_REGIONS                           [foreign key, with no action]
                                                       [weak association]
   PUBLIC.BOOKS.BOOKS.ID --> BOOKID                              
 
-SYS_IDX_10146                                         [non-unique index]
+SYS_IDX_10150                                         [non-unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
 
-SYS_CT_10141                                          [check constraint]
+SYS_CT_10145                                          [check constraint]
 "PUBLISHER SALES".SALES.POSTALCODE IS NOT NULL
 
-SYS_CT_10142                                          [check constraint]
+SYS_CT_10146                                          [check constraint]
 "PUBLISHER SALES".SALES.COUNTRY IS NOT NULL
 
 DELETE                                                       [privilege]

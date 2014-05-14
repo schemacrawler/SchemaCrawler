@@ -120,10 +120,10 @@ FK_WRITER_JOIN                             [foreign key, with no action]
 FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
   ID --> PUBLICATIONS.WRITERID                                  
 
-SYS_IDX_PK_WRITERS_10153                                  [unique index]
+SYS_IDX_PK_WRITERS_10157                                  [unique index]
   ID                                ascending                   
 
-SYS_IDX_10181                                         [non-unique index]
+SYS_IDX_10185                                         [non-unique index]
   PUBLICATION_ID                    ascending                   
 
 IDX_A1_WRITERS                                        [non-unique index]
