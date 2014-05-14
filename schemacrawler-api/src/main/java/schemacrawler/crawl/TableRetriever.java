@@ -26,7 +26,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -39,7 +38,6 @@ import schemacrawler.schema.IndexType;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.Table;
-import schemacrawler.schema.TableType;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import sf.util.Utility;
@@ -65,19 +63,23 @@ final class TableRetriever
    *        Array of table types
    * @return Array of string table types
    */
-  private static String[] toStrings(final Collection<TableType> tableTypes)
+  private static String[] toStrings(final Collection<String> tableTypes)
   {
-    if (tableTypes == null || tableTypes.isEmpty())
+    if (tableTypes == null)
+    {
+      return null;
+    }
+    if (tableTypes.isEmpty())
     {
       return new String[0];
     }
 
     final List<String> tableTypeStrings = new ArrayList<>(tableTypes.size());
-    for (final TableType tableType: tableTypes)
+    for (final String tableType: tableTypes)
     {
       if (tableType != null)
       {
-        tableTypeStrings.add(tableType.toString().toUpperCase(Locale.ENGLISH));
+        tableTypeStrings.add(tableType);
       }
     }
     return tableTypeStrings.toArray(new String[tableTypeStrings.size()]);
@@ -292,7 +294,7 @@ final class TableRetriever
   void retrieveTables(final String catalogName,
                       final String schemaName,
                       final String tableNamePattern,
-                      final Collection<TableType> tableTypes,
+                      final Collection<String> tableTypes,
                       final InclusionRule tableInclusionRule)
     throws SQLException
   {
@@ -316,8 +318,7 @@ final class TableRetriever
         LOGGER.log(Level.FINER, String.format("Retrieving table: %s.%s",
                                               schemaName,
                                               tableName));
-        final TableType tableType = results.getEnum("TABLE_TYPE",
-                                                    TableType.unknown);
+        final String tableType = results.getString("TABLE_TYPE");
         final String remarks = results.getString("REMARKS");
 
         final SchemaReference schemaReference = new SchemaReference(catalogName,
@@ -325,7 +326,7 @@ final class TableRetriever
         final Schema schema = database.getSchema(schemaReference.getFullName());
 
         final MutableTable table;
-        if (tableType == TableType.view)
+        if ("VIEW".equalsIgnoreCase(tableType))
         {
           table = new MutableView(schema, tableName);
         }

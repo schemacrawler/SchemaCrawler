@@ -40,7 +40,6 @@ import schemacrawler.schema.Table;
 import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.TableReference;
 import schemacrawler.schema.TableRelationshipType;
-import schemacrawler.schema.TableType;
 import schemacrawler.schema.Trigger;
 
 /**
@@ -63,7 +62,7 @@ class MutableTable
 
   private static final long serialVersionUID = 3257290248802284852L;
 
-  private TableType tableType = TableType.unknown; // Default value
+  private String tableType; // Default value is NULL
   private MutablePrimaryKey primaryKey;
   private final NamedObjectList<MutableColumn> columns = new NamedObjectList<>();
   private final NamedObjectList<MutableForeignKey> foreignKeys = new NamedObjectList<>();
@@ -296,7 +295,7 @@ class MutableTable
    * @see Table#getTableType()
    */
   @Override
-  public TableType getTableType()
+  public String getTableType()
   {
     return tableType;
   }
@@ -329,7 +328,7 @@ class MutableTable
    * @see schemacrawler.schema.TypedObject#getType()
    */
   @Override
-  public final TableType getType()
+  public final String getType()
   {
     return getTableType();
   }
@@ -443,12 +442,8 @@ class MutableTable
     this.sortIndex = sortIndex;
   }
 
-  void setTableType(final TableType tableType)
+  void setTableType(final String tableType)
   {
-    if (tableType == null)
-    {
-      throw new IllegalArgumentException("Null table type");
-    }
     this.tableType = tableType;
   }
 

@@ -30,7 +30,7 @@ import java.util.List;
  * @author Sualeh Fatehi
  */
 public interface Table
-  extends TableReference, TypedObject<TableType>, DefinedObject
+  extends TableReference, TypedObject<String>, DefinedObject
 {
 
   /**
@@ -145,7 +145,7 @@ public interface Table
    *
    * @return Table type.
    */
-  TableType getTableType();
+  String getTableType();
 
   /**
    * Gets a trigger by name.
