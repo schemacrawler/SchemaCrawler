@@ -264,7 +264,7 @@ public class SchemaCrawlerSystemTest
                    table.getName().toUpperCase());
       assertEquals(dataSourceName + " table type does not match",
                    tableTypes[tableIdx],
-                   table.getTableType().toString().toUpperCase());
+                   table.getTableType());
     }
   }
 

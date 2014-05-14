@@ -1,4 +1,4 @@
-o--> PUBLIC.BOOKS.AUTHORS [table]
+o--> PUBLIC.BOOKS.AUTHORS [TABLE]
       ~ COMMIT_ACTION=null
    o--> PUBLIC.BOOKS.AUTHORS.ID [INTEGER]
           ~ BUFFER_LENGTH=null
@@ -135,7 +135,7 @@ o--> PUBLIC.BOOKS.AUTHORS [table]
           ~ SOURCE_DATA_TYPE=null
           ~ SQL_DATA_TYPE=12
           ~ SQL_DATETIME_SUB=null
-o--> PUBLIC.BOOKS.AUTHORSLIST [view]
+o--> PUBLIC.BOOKS.AUTHORSLIST [VIEW]
       ~ COMMIT_ACTION=null
       ~ INSERTABLE_INTO=YES
       ~ IS_TRIGGER_DELETABLE=NO
@@ -186,7 +186,7 @@ o--> PUBLIC.BOOKS.AUTHORSLIST [view]
           ~ SOURCE_DATA_TYPE=null
           ~ SQL_DATA_TYPE=12
           ~ SQL_DATETIME_SUB=null
-o--> PUBLIC.BOOKS.BOOKAUTHORS [table]
+o--> PUBLIC.BOOKS.BOOKAUTHORS [TABLE]
       ~ COMMIT_ACTION=null
    o--> PUBLIC.BOOKS.BOOKAUTHORS.BOOKID [INTEGER]
           ~ BUFFER_LENGTH=null
@@ -233,7 +233,7 @@ o--> PUBLIC.BOOKS.BOOKAUTHORS [table]
           ~ SOURCE_DATA_TYPE=null
           ~ SQL_DATA_TYPE=40
           ~ SQL_DATETIME_SUB=null
-o--> PUBLIC.BOOKS.BOOKS [table]
+o--> PUBLIC.BOOKS.BOOKS [TABLE]
       ~ COMMIT_ACTION=null
    o--> PUBLIC.BOOKS.BOOKS.ID [INTEGER]
           ~ BUFFER_LENGTH=null
@@ -325,7 +325,7 @@ o--> PUBLIC.BOOKS.BOOKS [table]
           ~ SOURCE_DATA_TYPE=null
           ~ SQL_DATA_TYPE=8
           ~ SQL_DATETIME_SUB=null
-o--> PUBLIC.BOOKS."Global Counts" [table]
+o--> PUBLIC.BOOKS."Global Counts" [TABLE]
       ~ COMMIT_ACTION=null
    o--> PUBLIC.BOOKS."Global Counts"."Global Count" [INTEGER]
           ~ BUFFER_LENGTH=null
@@ -342,7 +342,7 @@ o--> PUBLIC.BOOKS."Global Counts" [table]
           ~ SOURCE_DATA_TYPE=null
           ~ SQL_DATA_TYPE=4
           ~ SQL_DATETIME_SUB=null
-o--> PUBLIC.BOOKS.PUBLISHERS [table]
+o--> PUBLIC.BOOKS.PUBLISHERS [TABLE]
       ~ COMMIT_ACTION=null
    o--> PUBLIC.BOOKS.PUBLISHERS.ID [INTEGER]
           ~ BUFFER_LENGTH=null
@@ -374,7 +374,7 @@ o--> PUBLIC.BOOKS.PUBLISHERS [table]
           ~ SOURCE_DATA_TYPE=null
           ~ SQL_DATA_TYPE=12
           ~ SQL_DATETIME_SUB=null
-o--> PUBLIC."PUBLISHER SALES".REGIONS [table]
+o--> PUBLIC."PUBLISHER SALES".REGIONS [TABLE]
       ~ COMMIT_ACTION=null
    o--> PUBLIC."PUBLISHER SALES".REGIONS.CITY [VARCHAR]
           ~ BUFFER_LENGTH=null
@@ -436,7 +436,7 @@ o--> PUBLIC."PUBLISHER SALES".REGIONS [table]
           ~ SOURCE_DATA_TYPE=null
           ~ SQL_DATA_TYPE=12
           ~ SQL_DATETIME_SUB=null
-o--> PUBLIC."PUBLISHER SALES".SALES [table]
+o--> PUBLIC."PUBLISHER SALES".SALES [TABLE]
       ~ COMMIT_ACTION=null
    o--> PUBLIC."PUBLISHER SALES".SALES.POSTALCODE [VARCHAR]
           ~ BUFFER_LENGTH=null

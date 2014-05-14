@@ -80,7 +80,7 @@ final class LintTextFormatter
     if (lints != null && !lints.isEmpty())
     {
       out.println(formattingHelper.createObjectStart(table.getFullName()));
-      final String tableType = "[" + table.getTableType() + "]";
+      final String tableType = "[" + table.getTableType().toLowerCase() + "]";
       out.println(formattingHelper.createNameRow("", tableType));
       printLints(lints);
       out.println(formattingHelper.createObjectEnd());
