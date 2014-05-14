@@ -514,7 +514,7 @@ public class SchemaCrawlerTest
       .setViewsSql("SELECT * FROM INFORMATION_SCHEMA.VIEWS");
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setTableTypes("VIEW");
+    schemaCrawlerOptions.setTableTypesFromString("VIEW");
     schemaCrawlerOptions.setInformationSchemaViews(informationSchemaViews);
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
 
