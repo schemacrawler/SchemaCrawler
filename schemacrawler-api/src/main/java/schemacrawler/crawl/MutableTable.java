@@ -297,7 +297,14 @@ class MutableTable
   @Override
   public String getTableType()
   {
-    return tableType;
+    if (tableType == null)
+    {
+      return "UNKNOWN";
+    }
+    else
+    {
+      return tableType;
+    }
   }
 
   /**

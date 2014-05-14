@@ -37,8 +37,8 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
     </property>
     <property name="tableTypes">
       <set>
-        <util:constant static-field="schemacrawler.schema.TableType.table" />
-        <util:constant static-field="schemacrawler.schema.TableType.view" />
+        <value>TABLE</value>
+        <value>VIEW</value>
       </set>
     </property>
     <property

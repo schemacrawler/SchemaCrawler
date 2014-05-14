@@ -884,7 +884,7 @@ potential schema design issues with lint. The output serves for &#xd;
 database documentation is designed to be diff-ed against other database &#xd;
 schemas. SchemaCrawler also generates schema diagrams.&#xd;
 </schemaCrawlerAbout>
-    <crawlTimestamp>May 14, 2014 4:43 PM</crawlTimestamp>
+    <crawlTimestamp>May 14, 2014 5:56 PM</crawlTimestamp>
     <systemProperties id="186"/>
   </schemaCrawlerInfo>
   <schemas id="187">
@@ -1846,7 +1846,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           <remarks></remarks>
           <attributeMap id="279"/>
           <schema class="schema" reference="196"/>
-          <tableType>table</tableType>
+          <tableType>TABLE</tableType>
           <primaryKey id="280">
             <name>PK_CUSTOMERS</name>
             <attributeMap id="281"/>
@@ -2241,7 +2241,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                           <remarks></remarks>
                           <attributeMap id="316"/>
                           <schema class="schema" reference="196"/>
-                          <tableType>table</tableType>
+                          <tableType>TABLE</tableType>
                           <columns id="317">
                             <objects id="318">
                               <entry>
@@ -3129,7 +3129,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           <remarks></remarks>
           <attributeMap id="453"/>
           <schema class="schema" reference="188"/>
-          <tableType>table</tableType>
+          <tableType>TABLE</tableType>
           <columns id="454">
             <objects id="455">
               <entry>
@@ -3320,7 +3320,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           <remarks>Contact details for book authors</remarks>
           <attributeMap id="490"/>
           <schema class="schema" reference="188"/>
-          <tableType>table</tableType>
+          <tableType>TABLE</tableType>
           <primaryKey id="491">
             <name>PK_AUTHORS</name>
             <attributeMap id="492"/>
@@ -4047,7 +4047,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                           <remarks>Relationship between books and their authors, along with the latest updated information</remarks>
                           <attributeMap id="545"/>
                           <schema class="schema" reference="188"/>
-                          <tableType>table</tableType>
+                          <tableType>TABLE</tableType>
                           <columns id="546">
                             <objects id="547">
                               <entry>
@@ -4246,7 +4246,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                       <remarks>Details for published books</remarks>
                                       <attributeMap id="557"/>
                                       <schema class="schema" reference="188"/>
-                                      <tableType>table</tableType>
+                                      <tableType>TABLE</tableType>
                                       <primaryKey id="558">
                                         <name>PK_BOOKS</name>
                                         <attributeMap id="559"/>
@@ -5883,7 +5883,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
             </entry>
           </attributeMap>
           <schema class="schema" reference="188"/>
-          <tableType>unknown</tableType>
           <columns id="812">
             <objects id="813">
               <entry>
@@ -6222,7 +6221,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           <remarks>List of book publishers</remarks>
           <attributeMap id="856"/>
           <schema class="schema" reference="188"/>
-          <tableType>table</tableType>
+          <tableType>TABLE</tableType>
           <primaryKey id="857">
             <name>PK_PUBLISHERS</name>
             <attributeMap id="858"/>
@@ -6618,7 +6617,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           <remarks></remarks>
           <attributeMap id="921"/>
           <schema class="schema" reference="190"/>
-          <tableType>table</tableType>
+          <tableType>TABLE</tableType>
           <columns id="922">
             <objects id="923">
               <entry>
@@ -6809,7 +6808,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           <remarks></remarks>
           <attributeMap id="958"/>
           <schema class="schema" reference="190"/>
-          <tableType>table</tableType>
+          <tableType>TABLE</tableType>
           <primaryKey id="959">
             <name>PK_EXTRA_PK</name>
             <attributeMap id="960"/>
@@ -7032,7 +7031,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                       <remarks></remarks>
                       <attributeMap id="977"/>
                       <schema class="schema" reference="190"/>
-                      <tableType>table</tableType>
+                      <tableType>TABLE</tableType>
                       <primaryKey id="978">
                         <name>PK_PUBLICATIONS</name>
                         <attributeMap id="979"/>
@@ -7604,7 +7603,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                   <remarks></remarks>
                                   <attributeMap id="1016"/>
                                   <schema class="schema" reference="190"/>
-                                  <tableType>table</tableType>
+                                  <tableType>TABLE</tableType>
                                   <primaryKey id="1017">
                                     <name>PK_WRITERS</name>
                                     <attributeMap id="1018"/>
