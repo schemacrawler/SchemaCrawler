@@ -100,7 +100,7 @@ public final class SchemaCrawlerOptionsParser
 
     if (hasOptionValue("tabletypes"))
     {
-      options.setTableTypes(getStringValue("tabletypes"));
+      options.setTableTypesFromString(getStringValue("tabletypes"));
     }
 
     if (hasOptionValue("tables"))

@@ -37,7 +37,6 @@ import schemacrawler.schema.Table;
 import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.TableReference;
 import schemacrawler.schema.TableRelationshipType;
-import schemacrawler.schema.TableType;
 import schemacrawler.schema.Trigger;
 
 final class TablePartial
@@ -173,7 +172,7 @@ final class TablePartial
   }
 
   @Override
-  public TableType getTableType()
+  public String getTableType()
   {
     throw new NotLoadedException();
   }
@@ -191,7 +190,7 @@ final class TablePartial
   }
 
   @Override
-  public TableType getType()
+  public String getType()
   {
     throw new NotLoadedException();
   }

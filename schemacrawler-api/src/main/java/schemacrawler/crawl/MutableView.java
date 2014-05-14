@@ -23,7 +23,6 @@ package schemacrawler.crawl;
 
 import schemacrawler.schema.CheckOptionType;
 import schemacrawler.schema.Schema;
-import schemacrawler.schema.TableType;
 import schemacrawler.schema.View;
 
 /**
@@ -61,9 +60,9 @@ class MutableView
    * @see View#getTableType()
    */
   @Override
-  public TableType getTableType()
+  public String getTableType()
   {
-    return TableType.view;
+    return "VIEW";
   }
 
   /**
@@ -81,9 +80,9 @@ class MutableView
   }
 
   @Override
-  void setTableType(final TableType type)
+  void setTableType(final String type)
   {
-    if (type != TableType.view)
+    if (!"VIEW".equalsIgnoreCase(type))
     {
       throw new UnsupportedOperationException("Cannot reset view type");
     }
