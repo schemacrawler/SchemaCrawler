@@ -5,7 +5,7 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-     <release version="10.08.05" date="2014-04-25">
+     <release version="10.09.01" date="2014-04-25">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Fixed lint "foreign key with no index" to look at primary keys as well.
       ]]></action>       
