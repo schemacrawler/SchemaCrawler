@@ -49,8 +49,8 @@ import schemacrawler.schema.Trigger;
  * @author Sualeh Fatehi
  */
 class MutableTable
-  extends AbstractDatabaseObject
-  implements Table
+extends AbstractDatabaseObject
+implements Table
 {
 
   private enum TableAssociationType
@@ -246,16 +246,16 @@ class MutableTable
         && tableRelationshipType != TableRelationshipType.none)
     {
       final List<MutableForeignKey> foreignKeysList = new ArrayList<>(foreignKeys
-        .values());
+          .values());
       for (final ForeignKey foreignKey: foreignKeysList)
       {
         for (final ForeignKeyColumnReference columnReference: foreignKey
-          .getColumnReferences())
+            .getColumnReferences())
         {
           final Table parentTable = columnReference.getPrimaryKeyColumn()
-            .getParent();
+              .getParent();
           final Table childTable = columnReference.getForeignKeyColumn()
-            .getParent();
+              .getParent();
           switch (tableRelationshipType)
           {
             case parent:
@@ -455,18 +455,18 @@ class MutableTable
   private Collection<ForeignKey> getForeignKeys(final TableAssociationType tableAssociationType)
   {
     final List<ForeignKey> foreignKeysList = new ArrayList<ForeignKey>(foreignKeys
-      .values());
+        .values());
     if (tableAssociationType != null
         && tableAssociationType != TableAssociationType.all)
     {
       for (final Iterator<ForeignKey> iterator = foreignKeysList.iterator(); iterator
-        .hasNext();)
+          .hasNext();)
       {
         final ForeignKey mutableForeignKey = iterator.next();
         boolean isExportedKey = false;
         boolean isImportedKey = false;
         for (final ForeignKeyColumnReference columnReference: mutableForeignKey
-          .getColumnReferences())
+            .getColumnReferences())
         {
           if (columnReference.getPrimaryKeyColumn().getParent().equals(this))
           {

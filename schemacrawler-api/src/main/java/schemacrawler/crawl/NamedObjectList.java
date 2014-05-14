@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -35,11 +35,11 @@ import sf.util.Utility;
 
 /**
  * Ordered list of named objects, that can be searched associatively.
- * 
+ *
  * @author Sualeh Fatehi
  */
 class NamedObjectList<N extends NamedObject>
-  implements Serializable, Iterable<N>
+implements Serializable, Iterable<N>
 {
 
   private static final long serialVersionUID = 3257847666804142128L;
@@ -98,7 +98,7 @@ class NamedObjectList<N extends NamedObject>
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see java.lang.Iterable#iterator()
    */
   @Override
@@ -109,7 +109,7 @@ class NamedObjectList<N extends NamedObject>
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see java.lang.Object#toString()
    */
   @Override
@@ -120,7 +120,7 @@ class NamedObjectList<N extends NamedObject>
 
   /**
    * Add a named object to the list.
-   * 
+   *
    * @param namedObject
    *        Named object
    */
@@ -147,7 +147,7 @@ class NamedObjectList<N extends NamedObject>
 
   /**
    * Looks up a named object by name.
-   * 
+   *
    * @param fullName
    *        Fully qualified name
    * @return Named object
@@ -170,7 +170,7 @@ class NamedObjectList<N extends NamedObject>
 
   /**
    * Returns the number of elements in this list.
-   * 
+   *
    * @return Number of elements in this list.
    */
   int size()
@@ -180,7 +180,7 @@ class NamedObjectList<N extends NamedObject>
 
   /**
    * Gets all named objects in the list, in sorted order.
-   * 
+   *
    * @return All named objects
    */
   List<N> values()

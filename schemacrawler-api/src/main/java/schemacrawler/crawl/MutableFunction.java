@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -34,12 +34,12 @@ import schemacrawler.schema.Schema;
 /**
  * Represents a database function. Created from metadata returned by a
  * JDBC call.
- * 
+ *
  * @author Sualeh Fatehi
  */
 final class MutableFunction
-  extends MutableRoutine
-  implements Function
+extends MutableRoutine
+implements Function
 {
 
   private static final long serialVersionUID = 3906925686089134130L;
@@ -58,7 +58,7 @@ final class MutableFunction
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Function#getColumn(java.lang.String)
    */
   @Override
@@ -69,7 +69,7 @@ final class MutableFunction
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see Function#getColumns()
    */
   @Override
@@ -80,7 +80,7 @@ final class MutableFunction
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see Function#getReturnType()
    */
   @Override
@@ -91,7 +91,7 @@ final class MutableFunction
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see Function#getRoutineBodyType()
    */
   @Override

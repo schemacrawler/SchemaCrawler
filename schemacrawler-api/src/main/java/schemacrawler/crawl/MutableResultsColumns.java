@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -30,12 +30,12 @@ import schemacrawler.schema.ResultsColumns;
 
 /**
  * Represents a result set, a result of a query.
- * 
+ *
  * @author Sualeh Fatehi
  */
 class MutableResultsColumns
-  extends AbstractNamedObject
-  implements ResultsColumns
+extends AbstractNamedObject
+implements ResultsColumns
 {
 
   private static final long serialVersionUID = 5204766782914559188L;
@@ -49,7 +49,7 @@ class MutableResultsColumns
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.ResultsColumns#getColumn(java.lang.String)
    */
   @Override
@@ -60,7 +60,7 @@ class MutableResultsColumns
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.ResultsColumns#getColumns()
    */
   @Override
@@ -71,7 +71,7 @@ class MutableResultsColumns
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.ResultsColumns#getColumnsListAsString()
    */
   @Override

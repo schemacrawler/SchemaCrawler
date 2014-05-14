@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -26,34 +26,34 @@ import java.util.Collection;
 
 /**
  * Represents a privilege of a table or column.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public interface Privilege<P extends DatabaseObject>
-  extends NamedObject, ContainedObject<P>
+extends NamedObject, ContainedObject<P>
 {
 
   public interface Grant
-    extends Serializable, Comparable<Grant>
+  extends Serializable, Comparable<Grant>, ContainedObject<Privilege<?>>
   {
 
     /**
      * Gets the grantee.
-     * 
+     *
      * @return Grantee
      */
     String getGrantee();
 
     /**
      * Gets the grantor.
-     * 
+     *
      * @return Grantor
      */
     String getGrantor();
 
     /**
      * If the privilege is grantable.
-     * 
+     *
      * @return Is grantable
      */
     boolean isGrantable();

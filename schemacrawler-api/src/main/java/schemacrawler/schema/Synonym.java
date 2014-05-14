@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -23,16 +23,16 @@ package schemacrawler.schema;
 
 /**
  * Represents a database synonym.
- * 
+ *
  * @author Matt Albrecht, Sualeh Fatehi
  */
 public interface Synonym
-  extends DatabaseObject
+extends DatabaseObject
 {
 
   /**
    * Gets the referenced object, which may or may not actually exist.
-   * 
+   *
    * @return Referenced object.
    */
   DatabaseObject getReferencedObject();

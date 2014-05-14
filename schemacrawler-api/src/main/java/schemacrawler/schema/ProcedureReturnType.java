@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -29,7 +29,7 @@ import java.util.logging.Logger;
  * An enumeration wrapper around JDBC procedure types.
  */
 public enum ProcedureReturnType
-  implements RoutineReturnType
+implements RoutineReturnType
 {
 
   /**
@@ -46,11 +46,11 @@ public enum ProcedureReturnType
   returnsResult(DatabaseMetaData.procedureReturnsResult, "returns result");
 
   private static final Logger LOGGER = Logger
-    .getLogger(ProcedureReturnType.class.getName());
+      .getLogger(ProcedureReturnType.class.getName());
 
   /**
    * Gets the enum value from the integer.
-   * 
+   *
    * @param id
    *        Id of the integer
    * @return ForeignKeyDeferrability
@@ -79,7 +79,7 @@ public enum ProcedureReturnType
 
   /**
    * Gets the id.
-   * 
+   *
    * @return id
    */
   public int getId()
@@ -89,7 +89,7 @@ public enum ProcedureReturnType
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see Object#toString()
    */
   @Override

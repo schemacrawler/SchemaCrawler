@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -25,11 +25,11 @@ import java.io.Serializable;
 
 /**
  * Options.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public interface Options
-  extends Serializable
+extends Serializable
 {
 
 }

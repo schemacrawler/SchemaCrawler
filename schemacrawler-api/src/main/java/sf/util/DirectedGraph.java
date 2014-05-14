@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -218,7 +218,7 @@ public class DirectedGraph<T extends Comparable<? super T>>
 
   /**
    * Adds vertices, and a directed edge between them.
-   * 
+   *
    * @param from
    *        Vertex value at the start of the edge
    * @param to
@@ -231,7 +231,7 @@ public class DirectedGraph<T extends Comparable<? super T>>
 
   /**
    * Adds a vertex.
-   * 
+   *
    * @param value
    *        Vertex value
    * @return The newly added vertex
@@ -253,7 +253,7 @@ public class DirectedGraph<T extends Comparable<? super T>>
 
   /**
    * Checks if the graph contains a cycle.
-   * 
+   *
    * @return true if the graph contains a cycle, false otherwise
    */
   public boolean containsCycle()
@@ -309,8 +309,8 @@ public class DirectedGraph<T extends Comparable<? super T>>
   }
 
   public List<T> topologicalSort()
-    throws GraphException
-  {
+      throws GraphException
+      {
     if (containsCycle())
     {
       throw new GraphException("Graph contains a cycle, so cannot be topologically sorted");
@@ -329,7 +329,7 @@ public class DirectedGraph<T extends Comparable<? super T>>
 
       // Remove unattached nodes
       for (final Iterator<Vertex> iterator = vertices.iterator(); iterator
-        .hasNext();)
+          .hasNext();)
       {
         final Vertex vertex = iterator.next();
         if (isUnattachedNode(vertex, edges))
@@ -364,7 +364,7 @@ public class DirectedGraph<T extends Comparable<? super T>>
     }
 
     return sortedValues;
-  }
+      }
 
   private Collection<Vertex> clearTraversalStates()
   {
@@ -380,7 +380,7 @@ public class DirectedGraph<T extends Comparable<? super T>>
                             final Collection<DirectedEdge> edges)
   {
     for (final Iterator<DirectedEdge> iterator = edges.iterator(); iterator
-      .hasNext();)
+        .hasNext();)
     {
       final DirectedEdge edge = iterator.next();
       if (edge.isFrom(vertex))

@@ -47,7 +47,7 @@ public final class Utility
 {
 
   private static final Logger LOGGER = Logger
-    .getLogger(Utility.class.getName());
+      .getLogger(Utility.class.getName());
 
   /**
    * System specific line separator character.
@@ -55,9 +55,9 @@ public final class Utility
   public static final String NEWLINE = System.getProperty("line.separator");
 
   private static final Pattern containsWhitespacePattern = Pattern
-    .compile(".*\\s.*");
+      .compile(".*\\s.*");
   private static final Pattern isAllWhitespacePattern = Pattern
-    .compile("^\\s*$");
+      .compile("^\\s*$");
 
   public static String commonPrefix(final String string1, final String string2)
   {
@@ -115,7 +115,7 @@ public final class Utility
   }
 
   public static void copyFile(final File sourceFile, final File destFile)
-    throws IOException
+      throws IOException
   {
     if (!destFile.exists())
     {
@@ -126,9 +126,9 @@ public final class Utility
         final FileOutputStream fileOutputStream = new FileOutputStream(destFile);
         final FileChannel source = fileInputStream.getChannel();
         final FileChannel destination = fileOutputStream.getChannel();)
-    {
+        {
       destination.transferFrom(source, 0, source.size());
-    }
+        }
   }
 
   /**
@@ -141,7 +141,7 @@ public final class Utility
   public static boolean isBlank(final String text)
   {
     return text == null || text.isEmpty()
-           || isAllWhitespacePattern.matcher(text).matches();
+        || isAllWhitespacePattern.matcher(text).matches();
   }
 
   public static String readFully(final InputStream stream)
@@ -216,7 +216,7 @@ public final class Utility
   {
     final LogManager logManager = LogManager.getLogManager();
     final List<String> loggerNames = Collections.list(logManager
-      .getLoggerNames());
+                                                      .getLoggerNames());
     for (final String loggerName: loggerNames)
     {
       final Logger logger = logManager.getLogger(loggerName);

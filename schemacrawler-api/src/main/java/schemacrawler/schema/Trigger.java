@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -23,37 +23,37 @@ package schemacrawler.schema;
 
 /**
  * Represents an trigger.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public interface Trigger
-  extends DependantObject<Table>
+extends DependantObject<Table>
 {
 
   /**
    * Gets the WHEN clause of the trigger.
-   * 
+   *
    * @return Action condition.
    */
   String getActionCondition();
 
   /**
    * Gets the action order.
-   * 
+   *
    * @return Action order.
    */
   int getActionOrder();
 
   /**
    * Gets whether the trigger is a row trigger or a statement trigger.
-   * 
+   *
    * @return Action orientation.
    */
   ActionOrientationType getActionOrientation();
 
   /**
    * Gets the body of the trigger.
-   * 
+   *
    * @return Body of the trigger.
    */
   String getActionStatement();
@@ -64,7 +64,7 @@ public interface Trigger
    * trigger is executed instead of the triggering data manipulation
    * operation; AFTER = the trigger is executed after the triggering
    * data manipulation operation.
-   * 
+   *
    * @return Condition timing.
    */
   ConditionTimingType getConditionTiming();
@@ -72,7 +72,7 @@ public interface Trigger
   /**
    * Gets the event manipulation type. The trigger event - INSERT,
    * DELETE, or UPDATE.
-   * 
+   *
    * @return Event manipulation type
    */
   EventManipulationType getEventManipulationType();

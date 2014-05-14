@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -26,17 +26,17 @@ import java.io.Serializable;
 /**
  * Specifies inclusion and exclusion patterns that can be applied to the
  * names, definitions, and other attributes of named objects.
- * 
+ *
  * @author Sualeh Fatehi
  */
 // @FunctionalInterface
 public interface InclusionRule
-  extends Serializable
+extends Serializable
 {
 
   /**
    * Checks whether to include a named object.
-   * 
+   *
    * @param text
    *        Text to check, which could be the fully qualified name of
    *        the named object, the definition, or some other attribute of

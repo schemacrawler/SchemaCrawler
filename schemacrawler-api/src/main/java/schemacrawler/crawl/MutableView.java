@@ -32,8 +32,8 @@ import schemacrawler.schema.View;
  * @author Sualeh Fatehi
  */
 class MutableView
-extends MutableTable
-implements View
+  extends MutableTable
+  implements View
 {
 
   private static final long serialVersionUID = 3257290248802284852L;

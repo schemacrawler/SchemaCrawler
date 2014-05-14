@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -28,12 +28,12 @@ import schemacrawler.schema.FunctionColumnType;
 /**
  * Represents a column in a database function. Created from metadata
  * returned by a JDBC call.
- * 
+ *
  * @author Sualeh Fatehi
  */
 final class MutableFunctionColumn
-  extends MutableRoutineColumn<Function>
-  implements FunctionColumn
+extends MutableRoutineColumn<Function>
+implements FunctionColumn
 {
 
   private static final long serialVersionUID = 3546361725629772857L;
@@ -47,7 +47,7 @@ final class MutableFunctionColumn
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see FunctionColumn#getColumnType()
    */
   @Override

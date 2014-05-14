@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -40,12 +40,12 @@ import schemacrawler.schema.Table;
 /**
  * Database and connection information. Created from metadata returned
  * by a JDBC call, and other sources of information.
- * 
+ *
  * @author Sualeh Fatehi sualeh@hotmail.com
  */
 final class MutableDatabase
-  extends AbstractNamedObject
-  implements Database
+extends AbstractNamedObjectWithAttributes
+implements Database
 {
 
   private static final long serialVersionUID = 4051323422934251828L;
@@ -70,7 +70,7 @@ final class MutableDatabase
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Schema#getColumnDataType(java.lang.String)
    */
   @Override
@@ -82,7 +82,7 @@ final class MutableDatabase
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Database#getSystemColumnDataTypes()
    */
   @Override
@@ -93,7 +93,7 @@ final class MutableDatabase
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Database#getSystemColumnDataTypes()
    */
   @Override
@@ -101,7 +101,7 @@ final class MutableDatabase
   {
     final Collection<ColumnDataType> values = getColumnDataTypes();
     for (final Iterator<ColumnDataType> iterator = values.iterator(); iterator
-      .hasNext();)
+        .hasNext();)
     {
       final ColumnDataType mutableColumnDataType = iterator.next();
       if (!mutableColumnDataType.getSchema().equals(schema))
@@ -120,7 +120,7 @@ final class MutableDatabase
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Database#getJdbcDriverInfo()
    */
   @Override
@@ -140,7 +140,7 @@ final class MutableDatabase
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Schema#getRoutines()
    */
   @Override
@@ -152,7 +152,7 @@ final class MutableDatabase
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Schema#getRoutines()
    */
   @Override
@@ -160,7 +160,7 @@ final class MutableDatabase
   {
     final List<Routine> values = new ArrayList<Routine>(routines.values());
     for (final Iterator<Routine> iterator = values.iterator(); iterator
-      .hasNext();)
+        .hasNext();)
     {
       final Routine routine = iterator.next();
       if (!routine.getSchema().equals(schema))
@@ -173,7 +173,7 @@ final class MutableDatabase
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Database#getSchema(java.lang.String)
    */
   @Override
@@ -192,7 +192,7 @@ final class MutableDatabase
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Database#getSchemaCrawlerInfo()
    */
   @Override
@@ -203,7 +203,7 @@ final class MutableDatabase
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Database#getSchemas()
    */
   @Override
@@ -225,7 +225,7 @@ final class MutableDatabase
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Schema#getRoutines()
    */
   @Override
@@ -236,7 +236,7 @@ final class MutableDatabase
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Schema#getRoutines()
    */
   @Override
@@ -244,7 +244,7 @@ final class MutableDatabase
   {
     final Collection<Synonym> values = getSynonyms();
     for (final Iterator<Synonym> iterator = values.iterator(); iterator
-      .hasNext();)
+        .hasNext();)
     {
       final Synonym mutableSynonym = iterator.next();
       if (!mutableSynonym.getSchema().equals(schemaRef))
@@ -257,7 +257,7 @@ final class MutableDatabase
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Database#getSystemColumnDataType(java.lang.String)
    */
   @Override
@@ -268,7 +268,7 @@ final class MutableDatabase
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Database#getSystemColumnDataTypes()
    */
   @Override
@@ -279,7 +279,7 @@ final class MutableDatabase
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Schema#getTable(java.lang.String)
    */
   @Override
@@ -290,7 +290,7 @@ final class MutableDatabase
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Schema#getTables()
    */
   @Override
@@ -302,7 +302,7 @@ final class MutableDatabase
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Schema#getTables()
    */
   @Override

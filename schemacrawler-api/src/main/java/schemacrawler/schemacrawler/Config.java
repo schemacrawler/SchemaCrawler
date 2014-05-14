@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -41,12 +41,12 @@ import sf.util.Utility;
 
 /**
  * Configuration properties.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public final class Config
-  extends HashMap<String, String>
-  implements Options
+extends HashMap<String, String>
+implements Options
 {
 
   private static final long serialVersionUID = 8720699738076915453L;
@@ -56,7 +56,7 @@ public final class Config
   /**
    * Loads the SchemaCrawler configuration, and override configuration,
    * from properties files.
-   * 
+   *
    * @param configFilenames
    *        Configuration file name.
    * @return Configuration properties.
@@ -81,7 +81,7 @@ public final class Config
   /**
    * Loads the SchemaCrawler configuration, from a properties file
    * stream.
-   * 
+   *
    * @param configStream
    *        Configuration stream.
    * @return Configuration properties.
@@ -111,7 +111,7 @@ public final class Config
 
   /**
    * Loads a properties file.
-   * 
+   *
    * @param properties
    *        Properties object.
    * @param propertiesFile
@@ -131,7 +131,7 @@ public final class Config
     catch (final FileNotFoundException e)
     {
       LOGGER.log(Level.WARNING, "Cannot load properties from file, "
-                                + propertiesFile.getAbsolutePath());
+          + propertiesFile.getAbsolutePath());
       LOGGER.log(Level.FINEST, e.getMessage(), e);
     }
     return properties;
@@ -139,7 +139,7 @@ public final class Config
 
   /**
    * Loads a properties file.
-   * 
+   *
    * @param properties
    *        Properties object.
    * @param reader
@@ -167,7 +167,7 @@ public final class Config
 
   /**
    * Copies properties into a map.
-   * 
+   *
    * @param properties
    *        Properties to copy
    * @return Map of properties and values
@@ -195,7 +195,7 @@ public final class Config
 
   /**
    * Copies config into a map.
-   * 
+   *
    * @param config
    *        Config to copy
    */
@@ -209,7 +209,7 @@ public final class Config
 
   /**
    * Copies properties into a map.
-   * 
+   *
    * @param properties
    *        Properties to copy
    */
@@ -220,7 +220,7 @@ public final class Config
 
   /**
    * Gets the value of a property as a boolean.
-   * 
+   *
    * @param propertyName
    *        Property name
    * @return Boolean value
@@ -239,7 +239,7 @@ public final class Config
 
   /**
    * Gets the value of a property as an enum.
-   * 
+   *
    * @param propertyName
    *        Property name
    * @return Enum value
@@ -269,7 +269,7 @@ public final class Config
 
   /**
    * Gets the value of a property as an integer.
-   * 
+   *
    * @param propertyName
    *        Property name
    * @return Integer value
@@ -282,7 +282,7 @@ public final class Config
 
   /**
    * Gets the value of a property as a string.
-   * 
+   *
    * @param propertyName
    *        Property name
    * @param defaultValue
@@ -302,7 +302,7 @@ public final class Config
 
   /**
    * Checks if a value is available.
-   * 
+   *
    * @param propertyName
    *        Property name
    * @return True if a value ia available.

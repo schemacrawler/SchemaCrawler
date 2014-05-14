@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -21,17 +21,12 @@
 package schemacrawler.crawl;
 
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-
 import schemacrawler.schema.NamedObject;
 import schemacrawler.utility.NamedObjectSort;
-import sf.util.Utility;
 
 /**
  * Represents a named object.
- * 
+ *
  * @author Sualeh Fatehi
  */
 abstract class AbstractNamedObject
@@ -42,9 +37,6 @@ abstract class AbstractNamedObject
 
   private final String name;
 
-  private String remarks;
-  private final Map<String, Object> attributeMap = new HashMap<>();
-
   AbstractNamedObject(final String name)
   {
     this.name = name;
@@ -52,7 +44,7 @@ abstract class AbstractNamedObject
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see java.lang.Comparable#compareTo(java.lang.Object)
    */
   @Override
@@ -98,62 +90,13 @@ abstract class AbstractNamedObject
 
   /**
    * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.NamedObject#getAttribute(java.lang.String)
-   */
-  @Override
-  public final Object getAttribute(final String name)
-  {
-    return attributeMap.get(name);
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.NamedObject#getAttribute(java.lang.String,
-   *      java.lang.Object)
-   */
-  @Override
-  public final <T> T getAttribute(final String name, final T defaultValue)
-  {
-    final Object attributeValue = getAttribute(name);
-    if (attributeValue == null)
-    {
-      return defaultValue;
-    }
-    else
-    {
-      try
-      {
-        return (T) attributeValue;
-      }
-      catch (final ClassCastException e)
-      {
-        return defaultValue;
-      }
-    }
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.NamedObject#getAttributes()
-   */
-  @Override
-  public final Map<String, Object> getAttributes()
-  {
-    return Collections.unmodifiableMap(attributeMap);
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.NamedObject#getFullName()
+   *
+   * @see schemacrawler.schema.NamedObjectWithAttributes#getFullName()
    */
   @Override
   public String getFullName()
   {
-    return name;
+    return getName();
   }
 
   @Override
@@ -164,24 +107,13 @@ abstract class AbstractNamedObject
 
   /**
    * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.NamedObject#getName()
+   *
+   * @see schemacrawler.schema.NamedObjectWithAttributes#getName()
    */
   @Override
   public final String getName()
   {
     return name;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.DatabaseObject#getRemarks()
-   */
-  @Override
-  public final String getRemarks()
-  {
-    return remarks;
   }
 
   @Override
@@ -195,54 +127,13 @@ abstract class AbstractNamedObject
 
   /**
    * {@inheritDoc}
-   * 
-   * @see NamedObject#setAttribute(String, Object)
-   */
-  @Override
-  public final void setAttribute(final String name, final Object value)
-  {
-    if (!Utility.isBlank(name))
-    {
-      if (value == null)
-      {
-        attributeMap.remove(name);
-      }
-      else
-      {
-        attributeMap.put(name, value);
-      }
-    }
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
+   *
    * @see Object#toString()
    */
   @Override
-  public String toString()
+  public final String toString()
   {
-    return name;
-  }
-
-  final void addAttributes(final Map<String, Object> values)
-  {
-    if (values != null)
-    {
-      attributeMap.putAll(values);
-    }
-  }
-
-  final void setRemarks(final String remarks)
-  {
-    if (remarks == null)
-    {
-      this.remarks = "";
-    }
-    else
-    {
-      this.remarks = remarks;
-    }
+    return getFullName();
   }
 
 }

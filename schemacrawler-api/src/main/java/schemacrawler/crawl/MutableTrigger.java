@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -29,12 +29,12 @@ import schemacrawler.schema.Trigger;
 
 /**
  * Represents a trigger.
- * 
+ *
  * @author Sualeh Fatehi
  */
 class MutableTrigger
-  extends AbstractDependantObject<Table>
-  implements Trigger
+extends AbstractDependantObject<Table>
+implements Trigger
 {
 
   private static final long serialVersionUID = -1619291073229701764L;

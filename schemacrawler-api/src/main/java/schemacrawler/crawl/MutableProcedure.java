@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -33,12 +33,12 @@ import schemacrawler.schema.Schema;
 /**
  * Represents a database procedure. Created from metadata returned by a
  * JDBC call.
- * 
+ *
  * @author Sualeh Fatehi
  */
 final class MutableProcedure
-  extends MutableRoutine
-  implements Procedure
+extends MutableRoutine
+implements Procedure
 {
 
   private static final long serialVersionUID = 3906925686089134130L;
@@ -55,7 +55,7 @@ final class MutableProcedure
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Procedure#getColumn(java.lang.String)
    */
   @Override
@@ -66,7 +66,7 @@ final class MutableProcedure
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see Procedure#getColumns()
    */
   @Override
@@ -77,7 +77,7 @@ final class MutableProcedure
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see Procedure#getReturnType()
    */
   @Override

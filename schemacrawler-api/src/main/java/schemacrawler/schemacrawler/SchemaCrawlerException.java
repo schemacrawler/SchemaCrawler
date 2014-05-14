@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -25,7 +25,7 @@ package schemacrawler.schemacrawler;
  * Exception for the SchemaCrawler.
  */
 public class SchemaCrawlerException
-  extends Exception
+extends Exception
 {
 
   private static final long serialVersionUID = 3257848770627713076L;

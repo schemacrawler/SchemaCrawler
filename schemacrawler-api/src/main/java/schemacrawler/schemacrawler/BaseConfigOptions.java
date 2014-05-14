@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -23,11 +23,11 @@ package schemacrawler.schemacrawler;
 
 /**
  * Options.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public abstract class BaseConfigOptions
-  implements Options
+implements Options
 {
 
   private static final long serialVersionUID = -8133661515343358712L;

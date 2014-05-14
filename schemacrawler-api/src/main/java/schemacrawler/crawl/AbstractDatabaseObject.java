@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -28,11 +28,11 @@ import sf.util.Utility;
 
 /**
  * Represents a database object.
- * 
+ *
  * @author Sualeh Fatehi
  */
 abstract class AbstractDatabaseObject
-  extends AbstractNamedObject
+  extends AbstractNamedObjectWithAttributes
   implements DatabaseObject
 {
 
@@ -71,7 +71,7 @@ abstract class AbstractDatabaseObject
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see java.lang.Object#equals(java.lang.Object)
    */
   @Override
@@ -106,7 +106,7 @@ abstract class AbstractDatabaseObject
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see Object#toString()
    */
   @Override
@@ -124,7 +124,7 @@ abstract class AbstractDatabaseObject
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see java.lang.Object#hashCode()
    */
   @Override
@@ -132,17 +132,6 @@ abstract class AbstractDatabaseObject
   {
     buildHashCode();
     return hashCode;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see Object#toString()
-   */
-  @Override
-  public String toString()
-  {
-    return getFullName();
   }
 
   private void buildFullName()

@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -45,29 +45,29 @@ import sf.util.Utility;
 /**
  * A retriever uses database metadata to get the details about the
  * database procedures.
- * 
+ *
  * @author Sualeh Fatehi
  */
 final class RoutineRetriever
-  extends AbstractRetriever
+extends AbstractRetriever
 {
 
   private static final Logger LOGGER = Logger.getLogger(RoutineRetriever.class
-    .getName());
+                                                        .getName());
 
   RoutineRetriever(final RetrieverConnection retrieverConnection,
                    final MutableDatabase database)
-    throws SQLException
-  {
+                       throws SQLException
+                       {
     super(retrieverConnection, database);
-  }
+                       }
 
   void retrieveFunctionColumns(final MutableFunction function,
                                final InclusionRule columnInclusionRule)
-    throws SQLException
+                                   throws SQLException
   {
     final InclusionRuleFilter<FunctionColumn> columnFilter = new InclusionRuleFilter<>(columnInclusionRule,
-                                                                                       true);
+        true);
     if (columnFilter.isExcludeAll())
     {
       return;
@@ -75,22 +75,22 @@ final class RoutineRetriever
 
     int ordinalNumber = 0;
     try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-      .getFunctionColumns(unquotedName(function.getSchema().getCatalogName()),
-                          unquotedName(function.getSchema().getName()),
-                          unquotedName(function.getName()),
-                          null));)
-    {
+                                                                 .getFunctionColumns(unquotedName(function.getSchema().getCatalogName()),
+                                                                                     unquotedName(function.getSchema().getName()),
+                                                                                     unquotedName(function.getName()),
+                                                                                     null));)
+                                                                                     {
       while (results.next())
       {
         final String columnCatalogName = quotedName(results
-          .getString("FUNCTION_CAT"));
+                                                    .getString("FUNCTION_CAT"));
         final String schemaName = quotedName(results
-          .getString("FUNCTION_SCHEM"));
+                                             .getString("FUNCTION_SCHEM"));
         final String functionName = quotedName(results
-          .getString("FUNCTION_NAME"));
+                                               .getString("FUNCTION_NAME"));
         final String columnName = quotedName(results.getString("COLUMN_NAME"));
         final String specificName = quotedName(results
-          .getString("SPECIFIC_NAME"));
+                                               .getString("SPECIFIC_NAME"));
 
         final MutableFunctionColumn column = new MutableFunctionColumn(function,
                                                                        columnName);
@@ -111,13 +111,13 @@ final class RoutineRetriever
           final int length = results.getInt("LENGTH", 0);
           final int precision = results.getInt("PRECISION", 0);
           final boolean isNullable = results
-            .getShort("NULLABLE",
-                      (short) DatabaseMetaData.functionNullableUnknown) == (short) DatabaseMetaData.functionNullable;
+              .getShort("NULLABLE",
+                        (short) DatabaseMetaData.functionNullableUnknown) == (short) DatabaseMetaData.functionNullable;
           final String remarks = results.getString("REMARKS");
           column.setOrdinalPosition(ordinalNumber++);
           column.setFunctionColumnType(FunctionColumnType.valueOf(columnType));
           column.setColumnDataType(lookupOrCreateColumnDataType(function
-            .getSchema(), dataType, typeName));
+                                                                .getSchema(), dataType, typeName));
           column.setSize(length);
           column.setPrecision(precision);
           column.setNullable(isNullable);
@@ -128,7 +128,7 @@ final class RoutineRetriever
           function.addColumn(column);
         }
       }
-    }
+                                                                                     }
     catch (final AbstractMethodError | SQLFeatureNotSupportedException e)
     {
       LOGGER.log(Level.WARNING,
@@ -138,8 +138,8 @@ final class RoutineRetriever
     catch (final SQLException e)
     {
       throw new SchemaCrawlerSQLException("Could not retrieve columns for function "
-                                              + function,
-                                          e);
+          + function,
+          e);
     }
 
   }
@@ -147,26 +147,26 @@ final class RoutineRetriever
   void retrieveFunctions(final String catalogName,
                          final String schemaName,
                          final InclusionRule routineInclusionRule)
-    throws SQLException
+                             throws SQLException
   {
     final InclusionRuleFilter<Function> functionFilter = new InclusionRuleFilter<>(routineInclusionRule,
-                                                                                   false);
+        false);
     if (functionFilter.isExcludeAll())
     {
       return;
     }
 
     try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-      .getFunctions(unquotedName(catalogName), unquotedName(schemaName), "%"));)
-    {
+                                                                 .getFunctions(unquotedName(catalogName), unquotedName(schemaName), "%"));)
+                                                                 {
       while (results.next())
       {
         // "FUNCTION_CAT", "FUNCTION_SCHEM"
         final String functionName = quotedName(results
-          .getString("FUNCTION_NAME"));
+                                               .getString("FUNCTION_NAME"));
         LOGGER.log(Level.FINER, "Retrieving function: " + functionName);
         final short functionType = results
-          .getShort("FUNCTION_TYPE", (short) FunctionReturnType.unknown.getId());
+            .getShort("FUNCTION_TYPE", (short) FunctionReturnType.unknown.getId());
         final String remarks = results.getString("REMARKS");
         final String specificName = results.getString("SPECIFIC_NAME");
 
@@ -183,7 +183,7 @@ final class RoutineRetriever
           database.addRoutine(function);
         }
       }
-    }
+                                                                 }
     catch (final AbstractMethodError | SQLFeatureNotSupportedException e)
     {
       LOGGER.log(Level.WARNING,
@@ -194,10 +194,10 @@ final class RoutineRetriever
 
   void retrieveProcedureColumns(final MutableProcedure procedure,
                                 final InclusionRule columnInclusionRule)
-    throws SQLException
+                                    throws SQLException
   {
     final InclusionRuleFilter<ProcedureColumn> columnFilter = new InclusionRuleFilter<>(columnInclusionRule,
-                                                                                        true);
+        true);
     if (columnFilter.isExcludeAll())
     {
       return;
@@ -205,22 +205,22 @@ final class RoutineRetriever
 
     int ordinalNumber = 0;
     try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-      .getProcedureColumns(unquotedName(procedure.getSchema().getCatalogName()),
-                           unquotedName(procedure.getSchema().getName()),
-                           unquotedName(procedure.getName()),
-                           null));)
-    {
+                                                                 .getProcedureColumns(unquotedName(procedure.getSchema().getCatalogName()),
+                                                                                      unquotedName(procedure.getSchema().getName()),
+                                                                                      unquotedName(procedure.getName()),
+                                                                                      null));)
+                                                                                      {
       while (results.next())
       {
         final String columnCatalogName = quotedName(results
-          .getString("PROCEDURE_CAT"));
+                                                    .getString("PROCEDURE_CAT"));
         final String schemaName = quotedName(results
-          .getString("PROCEDURE_SCHEM"));
+                                             .getString("PROCEDURE_SCHEM"));
         final String procedureName = quotedName(results
-          .getString("PROCEDURE_NAME"));
+                                                .getString("PROCEDURE_NAME"));
         final String columnName = quotedName(results.getString("COLUMN_NAME"));
         final String specificName = quotedName(results
-          .getString("SPECIFIC_NAME"));
+                                               .getString("SPECIFIC_NAME"));
 
         final MutableProcedureColumn column = new MutableProcedureColumn(procedure,
                                                                          columnName);
@@ -241,14 +241,14 @@ final class RoutineRetriever
           final int length = results.getInt("LENGTH", 0);
           final int precision = results.getInt("PRECISION", 0);
           final boolean isNullable = results
-            .getShort("NULLABLE",
-                      (short) DatabaseMetaData.procedureNullableUnknown) == (short) DatabaseMetaData.procedureNullable;
+              .getShort("NULLABLE",
+                        (short) DatabaseMetaData.procedureNullableUnknown) == (short) DatabaseMetaData.procedureNullable;
           final String remarks = results.getString("REMARKS");
           column.setOrdinalPosition(ordinalNumber++);
           column
-            .setProcedureColumnType(ProcedureColumnType.valueOf(columnType));
+          .setProcedureColumnType(ProcedureColumnType.valueOf(columnType));
           column.setColumnDataType(lookupOrCreateColumnDataType(procedure
-            .getSchema(), dataType, typeName));
+                                                                .getSchema(), dataType, typeName));
           column.setSize(length);
           column.setPrecision(precision);
           column.setNullable(isNullable);
@@ -259,12 +259,12 @@ final class RoutineRetriever
           procedure.addColumn(column);
         }
       }
-    }
+                                                                                      }
     catch (final SQLException e)
     {
       throw new SchemaCrawlerSQLException("Could not retrieve columns for procedure "
-                                              + procedure,
-                                          e);
+          + procedure,
+          e);
     }
 
   }
@@ -272,27 +272,27 @@ final class RoutineRetriever
   void retrieveProcedures(final String catalogName,
                           final String schemaName,
                           final InclusionRule routineInclusionRule)
-    throws SQLException
+                              throws SQLException
   {
     final InclusionRuleFilter<Procedure> procedureFilter = new InclusionRuleFilter<>(routineInclusionRule,
-                                                                                     false);
+        false);
     if (procedureFilter.isExcludeAll())
     {
       return;
     }
 
     try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-      .getProcedures(unquotedName(catalogName), unquotedName(schemaName), "%"));)
-    {
+                                                                 .getProcedures(unquotedName(catalogName), unquotedName(schemaName), "%"));)
+                                                                 {
       while (results.next())
       {
         // "PROCEDURE_CAT", "PROCEDURE_SCHEM"
         final String procedureName = quotedName(results
-          .getString("PROCEDURE_NAME"));
+                                                .getString("PROCEDURE_NAME"));
         LOGGER.log(Level.FINER, "Retrieving procedure: " + procedureName);
         final short procedureType = results
-          .getShort("PROCEDURE_TYPE",
-                    (short) ProcedureReturnType.unknown.getId());
+            .getShort("PROCEDURE_TYPE",
+                      (short) ProcedureReturnType.unknown.getId());
         final String remarks = results.getString("REMARKS");
         final String specificName = results.getString("SPECIFIC_NAME");
 
@@ -309,6 +309,6 @@ final class RoutineRetriever
           database.addRoutine(procedure);
         }
       }
-    }
+                                                                 }
   }
 }

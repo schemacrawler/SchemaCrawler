@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -23,11 +23,11 @@ package schemacrawler.schema;
 
 /**
  * Represents the database schema.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public interface Schema
-  extends NamedObject
+extends NamedObjectWithAttributes
 {
 
   String getCatalogName();

@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -42,15 +42,15 @@ import sf.util.Utility;
  * call. This allows type-safe methods to obtain boolean, integer and
  * string data, while abstracting away the quirks of the JDBC metadata
  * API.
- * 
+ *
  * @author Sualeh Fatehi
  */
 final class MetadataResultSet
-  implements AutoCloseable
+implements AutoCloseable
 {
 
   private static final Logger LOGGER = Logger.getLogger(MetadataResultSet.class
-    .getName());
+                                                        .getName());
 
   private static final int FETCHSIZE = 20;
 
@@ -59,8 +59,8 @@ final class MetadataResultSet
   private Set<String> readColumns;
 
   MetadataResultSet(final ResultSet resultSet)
-    throws SQLException
-  {
+      throws SQLException
+      {
     if (resultSet == null)
     {
       throw new IllegalArgumentException("Cannot use null results");
@@ -97,19 +97,19 @@ final class MetadataResultSet
     this.resultSetColumns = Collections.unmodifiableList(resultSetColumns);
 
     readColumns = new HashSet<>();
-  }
+      }
 
   /**
    * Releases this <code>ResultSet</code> object's database and JDBC
    * resources immediately instead of waiting for this to happen when it
    * is automatically closed.
-   * 
+   *
    * @throws SQLException
    *         On an exception
    */
   @Override
   public void close()
-    throws SQLException
+      throws SQLException
   {
     results.close();
   }
@@ -118,7 +118,7 @@ final class MetadataResultSet
    * Gets unread (and therefore unmapped) columns from the database
    * metadata resultset, and makes them available as addiiotnal
    * attributes.
-   * 
+   *
    * @return Map of additional attributes to the database object
    */
   Map<String, Object> getAttributes()
@@ -143,7 +143,7 @@ final class MetadataResultSet
            * database.
            */
           LOGGER.log(Level.WARNING, "Could not read value for column "
-                                    + columnName, e);
+              + columnName, e);
         }
       }
     }
@@ -153,7 +153,7 @@ final class MetadataResultSet
   /**
    * Checks if the value of a column from the result set evaluates to
    * true.
-   * 
+   *
    * @param columnName
    *        Column name to check
    * @return Whether the string evaluates to true
@@ -185,14 +185,14 @@ final class MetadataResultSet
           catch (final NumberFormatException e)
           {
             value = stringBooleanValue.equalsIgnoreCase("YES")
-                    || Boolean.valueOf(stringBooleanValue).booleanValue();
+                || Boolean.valueOf(stringBooleanValue).booleanValue();
           }
         }
       }
       catch (final SQLException e)
       {
         LOGGER.log(Level.WARNING, "Could not read boolean value for column "
-                                  + columnName, e);
+            + columnName, e);
       }
     }
     return value;
@@ -200,7 +200,7 @@ final class MetadataResultSet
 
   /**
    * Reads the value of a column from the result set as an enum.
-   * 
+   *
    * @param columnName
    *        Column name
    * @param defaultValue
@@ -233,7 +233,7 @@ final class MetadataResultSet
   /**
    * Reads the value of a column from the result set as an integer. If
    * the value was null, returns the default.
-   * 
+   *
    * @param columnName
    *        Column name
    * @param defaultValue
@@ -257,7 +257,7 @@ final class MetadataResultSet
       catch (final SQLException e)
       {
         LOGGER.log(Level.WARNING, "Could not read integer value for column "
-                                  + columnName, e);
+            + columnName, e);
       }
     }
     return value;
@@ -266,7 +266,7 @@ final class MetadataResultSet
   /**
    * Reads the value of a column from the result set as a long. If the
    * value was null, returns the default.
-   * 
+   *
    * @param columnName
    *        Column name
    * @param defaultValue
@@ -289,7 +289,7 @@ final class MetadataResultSet
       catch (final SQLException e)
       {
         LOGGER.log(Level.WARNING, "Could not read long value for column "
-                                  + columnName, e);
+            + columnName, e);
       }
     }
     return value;
@@ -298,7 +298,7 @@ final class MetadataResultSet
   /**
    * Reads the value of a column from the result set as a short. If the
    * value was null, returns the default.
-   * 
+   *
    * @param columnName
    *        Column name
    * @param defaultValue
@@ -321,7 +321,7 @@ final class MetadataResultSet
       catch (final SQLException e)
       {
         LOGGER.log(Level.WARNING, "Could not read short value for column "
-                                  + columnName, e);
+            + columnName, e);
       }
     }
     return value;
@@ -329,7 +329,7 @@ final class MetadataResultSet
 
   /**
    * Reads the value of a column from the result set as a string.
-   * 
+   *
    * @param columnName
    *        Column name
    * @return String value of the column, or null if not available
@@ -355,7 +355,7 @@ final class MetadataResultSet
       catch (final SQLException e)
       {
         LOGGER.log(Level.WARNING, "Could not read string value for column "
-                                  + columnName, e);
+            + columnName, e);
       }
     }
     return value;
@@ -367,14 +367,14 @@ final class MetadataResultSet
    * first row; the first call to the method <code>next</code> makes the
    * first row the current row; the second call makes the second row the
    * current row, and so on.
-   * 
+   *
    * @return <code>true</code> if the new current row is valid;
    *         <code>false</code> if there are no more rows
    * @throws SQLException
    *         On a database access error
    */
   boolean next()
-    throws SQLException
+      throws SQLException
   {
     readColumns = new HashSet<>();
     return results.next();
@@ -383,7 +383,7 @@ final class MetadataResultSet
   private boolean useColumn(final String columnName)
   {
     final boolean useColumn = columnName != null
-                              && resultSetColumns.contains(columnName);
+        && resultSetColumns.contains(columnName);
     if (useColumn)
     {
       readColumns.add(columnName);

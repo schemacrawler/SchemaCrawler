@@ -128,17 +128,6 @@ abstract class AbstractDependantObject<P extends DatabaseObjectReference & Datab
     return hashCode;
   }
 
-  /**
-   * {@inheritDoc}
-   *
-   * @see Object#toString()
-   */
-  @Override
-  public String toString()
-  {
-    return getFullName();
-  }
-
   private void buildFullName()
   {
     if (fullName == null)

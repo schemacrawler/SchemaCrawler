@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -29,7 +29,7 @@ import java.util.logging.Logger;
  * An enumeration wrapper around procedure column types.
  */
 public enum FunctionColumnType
-  implements RoutineColumnType
+implements RoutineColumnType
 {
 
   /**
@@ -58,11 +58,11 @@ public enum FunctionColumnType
   result(DatabaseMetaData.procedureColumnResult, "result");
 
   private static final Logger LOGGER = Logger
-    .getLogger(FunctionColumnType.class.getName());
+      .getLogger(FunctionColumnType.class.getName());
 
   /**
    * Gets the enum value from the integer.
-   * 
+   *
    * @param id
    *        Id of the integer
    * @return ForeignKeyDeferrability
@@ -91,7 +91,7 @@ public enum FunctionColumnType
 
   /**
    * Gets the id.
-   * 
+   *
    * @return id
    */
   public int getId()
@@ -101,7 +101,7 @@ public enum FunctionColumnType
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see Object#toString()
    */
   @Override

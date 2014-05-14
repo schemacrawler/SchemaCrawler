@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -31,12 +31,12 @@ import sf.util.Utility;
 /**
  * Represents a database routine. Created from metadata returned by a
  * JDBC call.
- * 
+ *
  * @author Sualeh Fatehi
  */
 abstract class MutableRoutine
-  extends AbstractDatabaseObject
-  implements Routine
+extends AbstractDatabaseObject
+implements Routine
 {
 
   private static final long serialVersionUID = 3906925686089134130L;
@@ -54,7 +54,7 @@ abstract class MutableRoutine
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see Procedure#getDefinition()
    */
   @Override
@@ -79,7 +79,7 @@ abstract class MutableRoutine
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see Procedure#getRoutineBodyType()
    */
   @Override
@@ -96,7 +96,7 @@ abstract class MutableRoutine
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.TypedObject#getType()
    */
   @Override

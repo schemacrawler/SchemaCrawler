@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -23,16 +23,16 @@ package schemacrawler.schema;
 
 /**
  * Represents a database object.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public interface DatabaseObject
-  extends NamedObject
+extends NamedObjectWithAttributes
 {
 
   /**
    * Gets the database schema.
-   * 
+   *
    * @return Database schema
    */
   Schema getSchema();

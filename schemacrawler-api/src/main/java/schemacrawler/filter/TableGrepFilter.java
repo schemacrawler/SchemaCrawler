@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -30,11 +30,11 @@ import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
 class TableGrepFilter
-  implements NamedObjectFilter<Table>
+implements NamedObjectFilter<Table>
 {
 
   private static final Logger LOGGER = Logger.getLogger(TableGrepFilter.class
-    .getName());
+                                                        .getName());
 
   private final boolean invertMatch;
   private final InclusionRule grepColumnInclusionRule;
@@ -52,7 +52,7 @@ class TableGrepFilter
    * Special case for "grep" like functionality. Handle table if a table
    * column inclusion rule is found, and at least one column matches the
    * rule.
-   * 
+   *
    * @param options
    *        Options
    * @param table
@@ -113,7 +113,7 @@ class TableGrepFilter
     }
 
     boolean include = checkIncludeForColumns && includeForColumns
-                      || checkIncludeForDefinitions && includeForDefinitions;
+        || checkIncludeForDefinitions && includeForDefinitions;
     if (invertMatch)
     {
       include = !include;
@@ -122,7 +122,7 @@ class TableGrepFilter
     if (!include)
     {
       LOGGER.log(Level.FINE, "Removing table " + table
-                             + " since it does not match the grep pattern");
+                 + " since it does not match the grep pattern");
     }
 
     return include;

@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -29,8 +29,8 @@ import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Table;
 
 final class ColumnPartial
-  extends AbstractDependantObject<Table>
-  implements Column
+extends AbstractDependantObject<Table>
+implements Column
 {
 
   private static final long serialVersionUID = 502720342852782630L;

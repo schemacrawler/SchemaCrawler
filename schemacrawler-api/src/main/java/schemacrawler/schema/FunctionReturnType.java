@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -29,7 +29,7 @@ import java.util.logging.Logger;
  * An enumeration wrapper around JDBC function types.
  */
 public enum FunctionReturnType
-  implements RoutineReturnType
+implements RoutineReturnType
 {
 
   /**
@@ -46,11 +46,11 @@ public enum FunctionReturnType
   returnsTable(DatabaseMetaData.functionReturnsTable, "returns table");
 
   private static final Logger LOGGER = Logger
-    .getLogger(FunctionReturnType.class.getName());
+      .getLogger(FunctionReturnType.class.getName());
 
   /**
    * Gets the enum value from the integer.
-   * 
+   *
    * @param id
    *        Id of the integer
    * @return ForeignKeyDeferrability
@@ -79,7 +79,7 @@ public enum FunctionReturnType
 
   /**
    * Gets the id.
-   * 
+   *
    * @return id
    */
   public int getId()
@@ -89,7 +89,7 @@ public enum FunctionReturnType
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see Object#toString()
    */
   @Override

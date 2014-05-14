@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -36,12 +36,12 @@ import schemacrawler.utility.CompareUtility;
 
 /**
  * Represents a foreign-key mapping to a primary key in another table.
- * 
+ *
  * @author Sualeh Fatehi
  */
 class MutableForeignKey
-  extends AbstractNamedObject
-  implements ForeignKey
+extends AbstractNamedObjectWithAttributes
+implements ForeignKey
 {
 
   private static final long serialVersionUID = 4121411795974895671L;
@@ -80,7 +80,7 @@ class MutableForeignKey
     final ForeignKey other = (ForeignKey) obj;
     final List<ForeignKeyColumnReference> thisColumnReferences = getColumnReferences();
     final List<ForeignKeyColumnReference> otherColumnReferences = other
-      .getColumnReferences();
+        .getColumnReferences();
 
     return CompareUtility.compareLists(thisColumnReferences,
                                        otherColumnReferences);
@@ -88,7 +88,7 @@ class MutableForeignKey
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see ForeignKey#getColumnReferences()
    */
   @Override
@@ -99,7 +99,7 @@ class MutableForeignKey
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see ForeignKey#getDeferrability()
    */
   @Override
@@ -110,7 +110,7 @@ class MutableForeignKey
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see ForeignKey#getDeleteRule()
    */
   @Override
@@ -121,7 +121,7 @@ class MutableForeignKey
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see ForeignKey#getUpdateRule()
    */
   @Override

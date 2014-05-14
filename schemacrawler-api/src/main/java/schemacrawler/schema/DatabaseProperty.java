@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -21,7 +21,7 @@ package schemacrawler.schema;
 
 
 public interface DatabaseProperty
-  extends Property
+extends Property
 {
 
 }

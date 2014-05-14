@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -33,8 +33,8 @@ import schemacrawler.schema.TableConstraintType;
  * Represents a table constraint.
  */
 class MutableTableConstraint
-  extends AbstractDependantObject<Table>
-  implements TableConstraint
+extends AbstractDependantObject<Table>
+implements TableConstraint
 {
 
   private static final long serialVersionUID = 1155277343302693656L;
@@ -53,7 +53,7 @@ class MutableTableConstraint
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see TableConstraint#getColumns()
    */
   @Override
@@ -64,7 +64,7 @@ class MutableTableConstraint
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.TableConstraint#getDefinition()
    */
   @Override
@@ -75,7 +75,7 @@ class MutableTableConstraint
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.TableConstraint#getTableConstraintType()
    */
   @Override
@@ -98,7 +98,7 @@ class MutableTableConstraint
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.TableConstraint#isDeferrable()
    */
   @Override
@@ -109,7 +109,7 @@ class MutableTableConstraint
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.TableConstraint#isInitiallyDeferred()
    */
   @Override
