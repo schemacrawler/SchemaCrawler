@@ -27,7 +27,7 @@ import java.util.Map;
 import sf.util.Utility;
 
 public final class SchemaReference
-implements Schema
+  implements Schema
 {
 
   private static final long serialVersionUID = -5309848447599233878L;
@@ -58,7 +58,7 @@ implements Schema
     else
     {
       return getFullName().replaceAll("\"", "").compareTo(otherSchemaRef
-                                                          .getFullName().replaceAll("\"", ""));
+        .getFullName().replaceAll("\"", ""));
     }
   }
 
@@ -200,7 +200,7 @@ implements Schema
     final int prime = 31;
     int result = 1;
     result = prime * result
-        + (attributeMap == null? 0: attributeMap.hashCode());
+             + (attributeMap == null? 0: attributeMap.hashCode());
     result = prime * result + (catalogName == null? 0: catalogName.hashCode());
     result = prime * result + (schemaName == null? 0: schemaName.hashCode());
     return result;
@@ -240,8 +240,8 @@ implements Schema
       final boolean hasCatalogName = !Utility.isBlank(catalogName);
       final boolean hasSchemaName = !Utility.isBlank(getName());
       fullName = (hasCatalogName? catalogName: "")
-          + (hasCatalogName && hasSchemaName? ".": "")
-          + (hasSchemaName? getName(): "");
+                 + (hasCatalogName && hasSchemaName? ".": "")
+                 + (hasSchemaName? getName(): "");
     }
   }
 

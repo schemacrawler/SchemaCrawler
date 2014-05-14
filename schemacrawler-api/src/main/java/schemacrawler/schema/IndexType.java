@@ -53,7 +53,7 @@ public enum IndexType
   other(DatabaseMetaData.tableIndexOther);
 
   private static final Logger LOGGER = Logger.getLogger(IndexType.class
-                                                        .getName());
+    .getName());
 
   /**
    * Gets the value from the id.

@@ -28,7 +28,7 @@ package schemacrawler.schema;
  * @author Sualeh Fatehi
  */
 public interface ForeignKeyColumnReference
-extends ColumnReference
+  extends ColumnReference
 {
 
   /**

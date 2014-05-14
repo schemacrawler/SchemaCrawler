@@ -39,7 +39,7 @@ import sf.util.Utility;
  * @author Sualeh Fatehi
  */
 class NamedObjectList<N extends NamedObject>
-implements Serializable, Iterable<N>
+  implements Serializable, Iterable<N>
 {
 
   private static final long serialVersionUID = 3257847666804142128L;

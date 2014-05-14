@@ -25,7 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Multimap<K, V>
-extends HashMap<K, List<V>>
+  extends HashMap<K, List<V>>
 {
 
   private static final long serialVersionUID = 1470713639458689002L;

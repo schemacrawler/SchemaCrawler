@@ -33,8 +33,8 @@ import schemacrawler.schema.TableConstraintType;
  * Represents a table constraint.
  */
 class MutableTableConstraint
-extends AbstractDependantObject<Table>
-implements TableConstraint
+  extends AbstractDependantObject<Table>
+  implements TableConstraint
 {
 
   private static final long serialVersionUID = 1155277343302693656L;

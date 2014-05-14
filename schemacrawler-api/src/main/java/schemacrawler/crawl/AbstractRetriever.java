@@ -55,8 +55,8 @@ abstract class AbstractRetriever
    *         On an exception
    */
   static List<String> readResultsVector(final ResultSet results)
-      throws SQLException
-      {
+    throws SQLException
+  {
     final List<String> values = new ArrayList<>();
     try
     {
@@ -71,25 +71,25 @@ abstract class AbstractRetriever
       results.close();
     }
     return values;
-      }
+  }
 
   private final RetrieverConnection retrieverConnection;
 
   final MutableDatabase database;
 
   AbstractRetriever()
-      throws SQLException
-      {
+    throws SQLException
+  {
     this(null, null);
-      }
+  }
 
   AbstractRetriever(final RetrieverConnection retrieverConnection,
                     final MutableDatabase database)
-                        throws SQLException
-                        {
+    throws SQLException
+  {
     this.retrieverConnection = retrieverConnection;
     this.database = database;
-                        }
+  }
 
   /**
    * Checks whether the provided database object belongs to the
@@ -121,7 +121,7 @@ abstract class AbstractRetriever
       final String dbObjectCatalogName = dbObject.getSchema().getCatalogName();
       if (catalogName != null
           && !unquotedName(catalogName)
-          .equals(unquotedName(dbObjectCatalogName)))
+            .equals(unquotedName(dbObjectCatalogName)))
       {
         belongsToCatalog = false;
       }
@@ -195,11 +195,11 @@ abstract class AbstractRetriever
                                                      final String mappedClassName)
   {
     MutableColumnDataType columnDataType = database
-        .getColumnDataType(schema, databaseSpecificTypeName);
+      .getColumnDataType(schema, databaseSpecificTypeName);
     if (columnDataType == null)
     {
       columnDataType = database
-          .getSystemColumnDataType(databaseSpecificTypeName);
+        .getSystemColumnDataType(databaseSpecificTypeName);
     }
     // Create new data type, if needed
     if (columnDataType == null)
@@ -207,7 +207,7 @@ abstract class AbstractRetriever
       columnDataType = new MutableColumnDataType(schema,
                                                  databaseSpecificTypeName);
       final JavaSqlType javaSqlType = retrieverConnection.getJavaSqlTypes()
-          .get(javaSqlTypeInt);
+        .get(javaSqlTypeInt);
       columnDataType.setJavaSqlType(javaSqlType);
       if (Utility.isBlank(mappedClassName))
       {
@@ -252,8 +252,8 @@ abstract class AbstractRetriever
         routineLookupName = routineName;
       }
       routine = (MutableRoutine) database
-          .getRoutine(new SchemaReference(catalogName, schemaName),
-                      routineLookupName);
+        .getRoutine(new SchemaReference(catalogName, schemaName),
+                    routineLookupName);
     }
     return routine;
   }
@@ -279,7 +279,7 @@ abstract class AbstractRetriever
     if (retrieverConnection != null && !Utility.isBlank(name))
     {
       final String identifierQuoteString = retrieverConnection
-          .getIdentifierQuoteString();
+        .getIdentifierQuoteString();
       if (retrieverConnection.needsToBeQuoted(name))
       {
         quotedName = identifierQuoteString + name + identifierQuoteString;
@@ -303,7 +303,7 @@ abstract class AbstractRetriever
     if (retrieverConnection != null && !Utility.isBlank(name))
     {
       final String identifierQuoteString = retrieverConnection
-          .getIdentifierQuoteString();
+        .getIdentifierQuoteString();
       if (name.startsWith(identifierQuoteString)
           && name.endsWith(identifierQuoteString))
       {

@@ -37,8 +37,8 @@ import schemacrawler.utility.CompareUtility;
  * @author Sualeh Fatehi
  */
 class MutableIndex
-extends AbstractDependantObject<TableReference>
-implements Index
+  extends AbstractDependantObject<TableReference>
+  implements Index
 {
 
   private static final long serialVersionUID = 4051326747138079028L;

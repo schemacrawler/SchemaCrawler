@@ -29,7 +29,7 @@ import java.util.List;
  * @author Sualeh Fatehi
  */
 public interface ResultsColumns
-extends NamedObject, Iterable<ResultsColumn>
+  extends NamedObject, Iterable<ResultsColumn>
 {
 
   /**

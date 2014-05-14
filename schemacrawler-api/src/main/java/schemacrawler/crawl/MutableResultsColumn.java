@@ -30,8 +30,8 @@ import schemacrawler.schema.Table;
  * @author Sualeh Fatehi
  */
 final class MutableResultsColumn
-extends AbstractColumn<Table>
-implements ResultsColumn
+  extends AbstractColumn<Table>
+  implements ResultsColumn
 {
 
   private static final long serialVersionUID = -6983013302549352559L;

@@ -27,7 +27,7 @@ package schemacrawler.schema;
  * @author Sualeh Fatehi
  */
 public interface View
-extends Table
+  extends Table
 {
 
   /**

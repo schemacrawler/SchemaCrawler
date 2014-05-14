@@ -26,7 +26,7 @@ import java.util.List;
 import schemacrawler.schema.NamedObjectWithAttributes;
 
 class ChainedNamedObjectFilter<N extends NamedObjectWithAttributes>
-implements NamedObjectFilter<N>
+  implements NamedObjectFilter<N>
 {
 
   private final List<NamedObjectFilter<N>> filters = new ArrayList<>();

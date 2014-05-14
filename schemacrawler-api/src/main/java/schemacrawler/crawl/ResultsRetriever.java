@@ -38,20 +38,20 @@ import sf.util.Utility;
  * @author Sualeh Fatehi
  */
 final class ResultsRetriever
-extends AbstractRetriever
+  extends AbstractRetriever
 {
 
   private final ResultSetMetaData resultsMetaData;
 
   ResultsRetriever(final ResultSet resultSet)
-      throws SQLException
-      {
+    throws SQLException
+  {
     if (resultSet == null)
     {
       throw new SQLException("Cannot retrieve metadata for null results");
     }
     resultsMetaData = resultSet.getMetaData();
-      }
+  }
 
   /**
    * Retrieves a list of columns from the results. There is no attempt
@@ -64,7 +64,7 @@ extends AbstractRetriever
    *         On an exception
    */
   ResultsColumns retrieveResults()
-      throws SQLException
+    throws SQLException
   {
     final JavaSqlTypes javaSqlTypes = new JavaSqlTypes();
     final MutableResultsColumns resultColumns = new MutableResultsColumns("");
@@ -85,7 +85,7 @@ extends AbstractRetriever
       database.addTable(table);
 
       final String databaseSpecificTypeName = resultsMetaData
-          .getColumnTypeName(i);
+        .getColumnTypeName(i);
       final int javaSqlType = resultsMetaData.getColumnType(i);
       final String columnClassName = resultsMetaData.getColumnClassName(i);
       final MutableColumnDataType columnDataType = new MutableColumnDataType(schema,

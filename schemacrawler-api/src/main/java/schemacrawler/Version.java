@@ -49,7 +49,7 @@ public final class Version
     try
     {
       final String readLine = new BufferedReader(new StringReader(ABOUT))
-      .readLine();
+        .readLine();
       if (readLine != null)
       {
         productLine = readLine.split(" ");
@@ -57,14 +57,14 @@ public final class Version
       else
       {
         productLine = new String[] {
-                                    PRODUCTNAME, ""
+            PRODUCTNAME, ""
         };
       }
     }
     catch (final IOException e)
     {
       productLine = new String[] {
-                                  PRODUCTNAME, ""
+          PRODUCTNAME, ""
       };
     }
     VERSION = productLine[1];

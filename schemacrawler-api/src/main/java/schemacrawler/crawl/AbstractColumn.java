@@ -34,8 +34,8 @@ import schemacrawler.schema.NamedObject;
  * @author Sualeh Fatehi
  */
 abstract class AbstractColumn<P extends DatabaseObjectReference>
-extends AbstractDependantObject<P>
-implements BaseColumn<P>
+  extends AbstractDependantObject<P>
+  implements BaseColumn<P>
 {
 
   private static final long serialVersionUID = -8492662324895309485L;
@@ -153,9 +153,9 @@ implements BaseColumn<P>
     }
 
     final JavaSqlTypeGroup sqlDataTypeGroup = columnDataType.getJavaSqlType()
-        .getJavaSqlTypeGroup();
+      .getJavaSqlTypeGroup();
     final boolean needWidth = sqlDataTypeGroup == JavaSqlTypeGroup.character
-        || sqlDataTypeGroup == JavaSqlTypeGroup.real;
+                              || sqlDataTypeGroup == JavaSqlTypeGroup.real;
 
     final StringBuilder columnWidthBuffer = new StringBuilder();
     if (needWidth)

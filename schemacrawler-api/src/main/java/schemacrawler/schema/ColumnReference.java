@@ -30,7 +30,7 @@ import java.io.Serializable;
  * @author Sualeh Fatehi
  */
 public interface ColumnReference
-extends Serializable, Comparable<ColumnReference>
+  extends Serializable, Comparable<ColumnReference>
 {
 
   /**

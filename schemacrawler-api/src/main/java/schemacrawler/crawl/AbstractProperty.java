@@ -26,7 +26,7 @@ import schemacrawler.schema.Property;
 import sf.util.Utility;
 
 abstract class AbstractProperty
-implements Property
+  implements Property
 {
 
   private static final long serialVersionUID = -7150431683440256142L;

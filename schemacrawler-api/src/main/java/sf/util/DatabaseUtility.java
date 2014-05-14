@@ -42,10 +42,10 @@ public final class DatabaseUtility
 {
 
   private static final Logger LOGGER = Logger.getLogger(DatabaseUtility.class
-                                                        .getName());
+    .getName());
 
   public static Statement createStatement(final Connection connection)
-      throws SchemaCrawlerException, SQLException
+    throws SchemaCrawlerException, SQLException
   {
     if (connection == null)
     {
@@ -61,7 +61,7 @@ public final class DatabaseUtility
 
   public static void executeScriptFromResource(final String scriptResource,
                                                final Connection connection)
-                                                   throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
     try (final Statement statement = createStatement(connection);)
     {
@@ -87,7 +87,7 @@ public final class DatabaseUtility
   }
 
   public static ResultSet executeSql(final Statement statement, final String sql)
-      throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
     ResultSet results = null;
     if (statement == null)
@@ -113,9 +113,9 @@ public final class DatabaseUtility
       {
         final int updateCount = statement.getUpdateCount();
         LOGGER.log(Level.FINE, String
-                   .format("No results. Update count of %d for query: ",
-                           updateCount,
-                           sql));
+          .format("No results. Update count of %d for query: ",
+                  updateCount,
+                  sql));
       }
 
       SQLWarning sqlWarning = statement.getWarnings();

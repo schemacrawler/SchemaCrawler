@@ -40,24 +40,24 @@ import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 
 final class SchemaRetriever
-extends AbstractRetriever
+  extends AbstractRetriever
 {
 
   private static final Logger LOGGER = Logger.getLogger(SchemaRetriever.class
-                                                        .getName());
+    .getName());
 
   private final boolean supportsCatalogs;
   private final boolean supportsSchemas;
 
   SchemaRetriever(final RetrieverConnection retrieverConnection,
                   final MutableDatabase database)
-                      throws SQLException
-                      {
+    throws SQLException
+  {
     super(retrieverConnection, database);
 
     supportsCatalogs = retrieverConnection.isSupportsCatalogs();
     supportsSchemas = retrieverConnection.isSupportsSchemas();
-                      }
+  }
 
   /**
    * Retrieves a list of schemas from the database.
@@ -68,10 +68,10 @@ extends AbstractRetriever
    *         On an exception
    */
   void retrieveSchemas(final InclusionRule schemaInclusionRule)
-      throws SQLException
+    throws SQLException
   {
     final InclusionRuleFilter<Schema> schemaFilter = new InclusionRuleFilter<>(schemaInclusionRule,
-        true);
+                                                                               true);
 
     if (schemaFilter.isExcludeAll())
     {
@@ -89,13 +89,13 @@ extends AbstractRetriever
 
     // Filter out schemas
     for (final Iterator<SchemaReference> iterator = schemaRefs.iterator(); iterator
-        .hasNext();)
+      .hasNext();)
     {
       final SchemaReference schemaRef = iterator.next();
       if (!schemaFilter.include(schemaRef))
       {
         LOGGER.log(Level.FINER, "Dropping schema, since schema is excluded: "
-            + schemaRef.getFullName());
+                                + schemaRef.getFullName());
         iterator.remove();
         // continue
       }
@@ -131,7 +131,7 @@ extends AbstractRetriever
       try
       {
         final List<String> metaDataCatalogNames = readResultsVector(getMetaData()
-                                                                    .getCatalogs());
+          .getCatalogs());
         for (final String catalogName: metaDataCatalogNames)
         {
           catalogNames.add(quotedName(catalogName));
@@ -148,16 +148,16 @@ extends AbstractRetriever
   }
 
   private Set<SchemaReference> retrieveAllSchemas()
-      throws SQLException
-      {
+    throws SQLException
+  {
     final Set<SchemaReference> schemaRefs = new HashSet<>();
     final Set<String> allCatalogNames = retrieveAllCatalogs();
     if (supportsSchemas)
     {
 
       try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-                                                                   .getSchemas());)
-                                                                   {
+        .getSchemas());)
+      {
         while (results.next())
         {
           final String catalogName;
@@ -193,7 +193,7 @@ extends AbstractRetriever
             schemaRefs.add(new SchemaReference(catalogName, schemaName));
           }
         }
-                                                                   }
+      }
     }
     else
     {
@@ -206,15 +206,15 @@ extends AbstractRetriever
       }
     }
     return schemaRefs;
-      }
+  }
 
   private Set<SchemaReference> retrieveAllSchemasFromInformationSchemaViews()
-      throws SQLException
-      {
+    throws SQLException
+  {
     final Set<SchemaReference> schemaRefs = new HashSet<>();
 
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
-        .getInformationSchemaViews();
+      .getInformationSchemaViews();
     if (!informationSchemaViews.hasSchemataSql())
     {
       LOGGER.log(Level.FINE, "Schemata SQL statement was not provided");
@@ -227,7 +227,7 @@ extends AbstractRetriever
     try (final Statement statement = connection.createStatement();
         final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
                                                                            schemataSql));)
-                                                                           {
+    {
       while (results.next())
       {
         final String catalogName = quotedName(results.getString("CATALOG_NAME"));
@@ -237,13 +237,13 @@ extends AbstractRetriever
                                               schemaName));
         schemaRefs.add(new SchemaReference(catalogName, schemaName));
       }
-                                                                           }
+    }
     catch (final Exception e)
     {
       LOGGER.log(Level.WARNING, "Could not retrieve schemas", e);
     }
 
     return schemaRefs;
-      }
+  }
 
 }

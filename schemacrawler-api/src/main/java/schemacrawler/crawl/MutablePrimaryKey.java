@@ -32,8 +32,8 @@ import schemacrawler.schema.Table;
  * @author Sualeh Fatehi
  */
 class MutablePrimaryKey
-extends MutableIndex
-implements PrimaryKey
+  extends MutableIndex
+  implements PrimaryKey
 {
 
   private static final long serialVersionUID = -7169206178562782087L;

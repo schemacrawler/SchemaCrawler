@@ -30,7 +30,7 @@ import java.util.List;
  * @author Sualeh Fatehi
  */
 public interface Table
-extends TableReference, TypedObject<TableType>, DefinedObject
+  extends TableReference, TypedObject<TableType>, DefinedObject
 {
 
   /**

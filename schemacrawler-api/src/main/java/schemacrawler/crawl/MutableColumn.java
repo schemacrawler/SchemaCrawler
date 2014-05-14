@@ -35,8 +35,8 @@ import schemacrawler.schema.Table;
  * @author Sualeh Fatehi
  */
 class MutableColumn
-extends AbstractColumn<Table>
-implements Column
+  extends AbstractColumn<Table>
+  implements Column
 {
 
   private static final long serialVersionUID = 3834591019449528633L;

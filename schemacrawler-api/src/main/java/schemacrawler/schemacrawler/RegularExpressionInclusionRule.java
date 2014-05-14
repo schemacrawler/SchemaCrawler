@@ -30,7 +30,7 @@ import java.util.regex.Pattern;
  * @author Sualeh Fatehi
  */
 public final class RegularExpressionInclusionRule
-implements InclusionRule
+  implements InclusionRule
 {
 
   private static final long serialVersionUID = 6274652266761961575L;
@@ -101,7 +101,7 @@ implements InclusionRule
     final int prime = 31;
     int result = 1;
     result = prime * result
-        + (inclusionRule == null? 0: inclusionRule.hashCode());
+             + (inclusionRule == null? 0: inclusionRule.hashCode());
     return result;
   }
 

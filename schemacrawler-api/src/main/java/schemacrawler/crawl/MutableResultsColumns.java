@@ -34,8 +34,8 @@ import schemacrawler.schema.ResultsColumns;
  * @author Sualeh Fatehi
  */
 class MutableResultsColumns
-extends AbstractNamedObject
-implements ResultsColumns
+  extends AbstractNamedObject
+  implements ResultsColumns
 {
 
   private static final long serialVersionUID = 5204766782914559188L;

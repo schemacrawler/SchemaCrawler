@@ -31,7 +31,7 @@ import java.io.Serializable;
  */
 // @FunctionalInterface
 public interface InclusionRule
-extends Serializable
+  extends Serializable
 {
 
   /**

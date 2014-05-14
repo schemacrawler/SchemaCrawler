@@ -45,8 +45,8 @@ import sf.util.Utility;
  * @author Sualeh Fatehi
  */
 public final class Config
-extends HashMap<String, String>
-implements Options
+  extends HashMap<String, String>
+  implements Options
 {
 
   private static final long serialVersionUID = 8720699738076915453L;
@@ -131,7 +131,7 @@ implements Options
     catch (final FileNotFoundException e)
     {
       LOGGER.log(Level.WARNING, "Cannot load properties from file, "
-          + propertiesFile.getAbsolutePath());
+                                + propertiesFile.getAbsolutePath());
       LOGGER.log(Level.FINEST, e.getMessage(), e);
     }
     return properties;

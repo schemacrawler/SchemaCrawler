@@ -29,7 +29,7 @@ import java.util.logging.Logger;
  * An enumeration wrapper around procedure column types.
  */
 public enum FunctionColumnType
-implements RoutineColumnType
+  implements RoutineColumnType
 {
 
   /**
@@ -58,7 +58,7 @@ implements RoutineColumnType
   result(DatabaseMetaData.procedureColumnResult, "result");
 
   private static final Logger LOGGER = Logger
-      .getLogger(FunctionColumnType.class.getName());
+    .getLogger(FunctionColumnType.class.getName());
 
   /**
    * Gets the enum value from the integer.

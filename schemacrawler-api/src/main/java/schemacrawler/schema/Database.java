@@ -29,7 +29,7 @@ import java.util.Collection;
  * @author Sualeh Fatehi
  */
 public interface Database
-extends NamedObjectWithAttributes
+  extends NamedObjectWithAttributes
 {
 
   /**
