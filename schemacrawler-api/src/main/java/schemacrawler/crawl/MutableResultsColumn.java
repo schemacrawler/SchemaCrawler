@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -26,12 +26,12 @@ import schemacrawler.schema.Table;
 
 /**
  * Represents a column in a result set.
- * 
+ *
  * @author Sualeh Fatehi
  */
 final class MutableResultsColumn
-  extends AbstractColumn<Table>
-  implements ResultsColumn
+extends AbstractColumn<Table>
+implements ResultsColumn
 {
 
   private static final long serialVersionUID = -6983013302549352559L;
@@ -54,7 +54,7 @@ final class MutableResultsColumn
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.ResultsColumn#getDisplaySize()
    */
   @Override
@@ -65,7 +65,7 @@ final class MutableResultsColumn
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.ResultsColumn#getLabel()
    */
   @Override
@@ -76,7 +76,7 @@ final class MutableResultsColumn
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.ResultsColumn#isAutoIncrement()
    */
   @Override
@@ -87,7 +87,7 @@ final class MutableResultsColumn
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.ResultsColumn#isCaseSensitive()
    */
   @Override
@@ -98,7 +98,7 @@ final class MutableResultsColumn
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.ResultsColumn#isCurrency()
    */
   @Override
@@ -109,7 +109,7 @@ final class MutableResultsColumn
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.ResultsColumn#isDefinitelyWritable()
    */
   @Override
@@ -120,7 +120,7 @@ final class MutableResultsColumn
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.ResultsColumn#isReadOnly()
    */
   @Override
@@ -131,7 +131,7 @@ final class MutableResultsColumn
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.ResultsColumn#isSearchable()
    */
   @Override
@@ -142,7 +142,7 @@ final class MutableResultsColumn
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.ResultsColumn#isSigned()
    */
   @Override
@@ -153,7 +153,7 @@ final class MutableResultsColumn
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.ResultsColumn#isWritable()
    */
   @Override

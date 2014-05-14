@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -27,7 +27,7 @@ import schemacrawler.schema.NamedObject;
 import sf.util.Utility;
 
 public enum NamedObjectSort
-  implements Comparator<NamedObject>
+implements Comparator<NamedObject>
 {
 
   /**
@@ -40,7 +40,7 @@ public enum NamedObjectSort
                        final NamedObject namedObject2)
     {
       return Utility.convertForComparison(namedObject1.getFullName())
-        .compareTo(Utility.convertForComparison(namedObject2.getFullName()));
+          .compareTo(Utility.convertForComparison(namedObject2.getFullName()));
     }
   },
 
@@ -71,7 +71,7 @@ public enum NamedObjectSort
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see java.util.Comparator#compare(java.lang.Object,
    *      java.lang.Object)
    */

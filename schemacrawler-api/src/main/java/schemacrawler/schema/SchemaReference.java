@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -27,7 +27,7 @@ import java.util.Map;
 import sf.util.Utility;
 
 public final class SchemaReference
-  implements Schema
+implements Schema
 {
 
   private static final long serialVersionUID = -5309848447599233878L;
@@ -58,7 +58,7 @@ public final class SchemaReference
     else
     {
       return getFullName().replaceAll("\"", "").compareTo(otherSchemaRef
-        .getFullName().replaceAll("\"", ""));
+                                                          .getFullName().replaceAll("\"", ""));
     }
   }
 
@@ -116,8 +116,8 @@ public final class SchemaReference
 
   /**
    * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.NamedObject#getAttribute(java.lang.String)
+   *
+   * @see schemacrawler.schema.NamedObjectWithAttributes#getAttribute(java.lang.String)
    */
   @Override
   public final Object getAttribute(final String name)
@@ -127,8 +127,8 @@ public final class SchemaReference
 
   /**
    * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.NamedObject#getAttribute(java.lang.String,
+   *
+   * @see schemacrawler.schema.NamedObjectWithAttributes#getAttribute(java.lang.String,
    *      java.lang.Object)
    */
   @Override
@@ -154,8 +154,8 @@ public final class SchemaReference
 
   /**
    * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.NamedObject#getAttributes()
+   *
+   * @see schemacrawler.schema.NamedObjectWithAttributes#getAttributes()
    */
   @Override
   public final Map<String, Object> getAttributes()
@@ -200,7 +200,7 @@ public final class SchemaReference
     final int prime = 31;
     int result = 1;
     result = prime * result
-             + (attributeMap == null? 0: attributeMap.hashCode());
+        + (attributeMap == null? 0: attributeMap.hashCode());
     result = prime * result + (catalogName == null? 0: catalogName.hashCode());
     result = prime * result + (schemaName == null? 0: schemaName.hashCode());
     return result;
@@ -208,8 +208,8 @@ public final class SchemaReference
 
   /**
    * {@inheritDoc}
-   * 
-   * @see NamedObject#setAttribute(String, Object)
+   *
+   * @see NamedObjectWithAttributes#setAttribute(String, Object)
    */
   @Override
   public final void setAttribute(final String name, final Object value)
@@ -240,8 +240,8 @@ public final class SchemaReference
       final boolean hasCatalogName = !Utility.isBlank(catalogName);
       final boolean hasSchemaName = !Utility.isBlank(getName());
       fullName = (hasCatalogName? catalogName: "")
-                 + (hasCatalogName && hasSchemaName? ".": "")
-                 + (hasSchemaName? getName(): "");
+          + (hasCatalogName && hasSchemaName? ".": "")
+          + (hasSchemaName? getName(): "");
     }
   }
 

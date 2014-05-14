@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -38,15 +38,15 @@ import sf.util.Utility;
 
 /**
  * Utility to work with java.sql.Types.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public final class JavaSqlTypes
-  implements Map<Integer, JavaSqlType>, Iterable<JavaSqlType>
+implements Map<Integer, JavaSqlType>, Iterable<JavaSqlType>
 {
 
   private static final Logger LOGGER = Logger.getLogger(JavaSqlTypes.class
-    .getName());
+                                                        .getName());
 
   private static Map<String, Integer> createJavaSqlTypesMap()
   {
@@ -62,7 +62,7 @@ public final class JavaSqlTypes
       catch (final SecurityException | IllegalAccessException e)
       {
         LOGGER.log(Level.WARNING, "Could not access java.sql.Types, field "
-                                  + field, e);
+            + field, e);
         // continue
       }
     }
@@ -148,7 +148,7 @@ public final class JavaSqlTypes
     final Map<Integer, JavaSqlType> javaSqlTypes = new HashMap<>();
 
     for (final Entry<String, Integer> javaSqlTypesEntry: javaSqlTypesMap
-      .entrySet())
+        .entrySet())
     {
       if (javaSqlTypesEntry.getKey() != null
           && javaSqlTypesEntry.getValue() != null)
@@ -220,7 +220,7 @@ public final class JavaSqlTypes
   /**
    * Lookup java.sql.Types type, and return more detailed information,
    * including the mapped Java class.
-   * 
+   *
    * @param typeName
    *        java.sql.Types type name
    * @return JavaSqlType type

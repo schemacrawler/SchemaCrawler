@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -23,16 +23,16 @@ package schemacrawler.schema;
 
 /**
  * Represents a column in a database procedure.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public interface ProcedureColumn
-  extends RoutineColumn<Procedure>
+extends RoutineColumn<Procedure>
 {
 
   /**
    * Gets the procedure type.
-   * 
+   *
    * @return Procedure type.
    */
   @Override

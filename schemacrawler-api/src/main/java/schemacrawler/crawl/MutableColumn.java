@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -31,12 +31,12 @@ import schemacrawler.schema.Table;
 /**
  * Represents a column in a database table or routine. Created from
  * metadata returned by a JDBC call.
- * 
+ *
  * @author Sualeh Fatehi
  */
 class MutableColumn
-  extends AbstractColumn<Table>
-  implements Column
+extends AbstractColumn<Table>
+implements Column
 {
 
   private static final long serialVersionUID = 3834591019449528633L;
@@ -54,7 +54,7 @@ class MutableColumn
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Column#getDefaultValue()
    */
   @Override
@@ -65,7 +65,7 @@ class MutableColumn
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Column#getPrivilege(java.lang.String)
    */
   @Override
@@ -76,7 +76,7 @@ class MutableColumn
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see Column#getPrivileges()
    */
   @Override
@@ -87,7 +87,7 @@ class MutableColumn
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Column#getReferencedColumn()
    */
   @Override
@@ -98,7 +98,7 @@ class MutableColumn
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Column#isPartOfForeignKey()
    */
   @Override
@@ -109,7 +109,7 @@ class MutableColumn
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Column#isPartOfPrimaryKey()
    */
   @Override
@@ -120,7 +120,7 @@ class MutableColumn
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Column#isPartOfUniqueIndex()
    */
   @Override

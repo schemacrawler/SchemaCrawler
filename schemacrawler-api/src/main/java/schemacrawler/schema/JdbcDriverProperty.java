@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -25,18 +25,18 @@ import java.util.Collection;
 
 /**
  * Represents a JDBC driver property, and it's value.
- * 
+ *
  * @author sfatehi
  */
 public interface JdbcDriverProperty
-  extends Property
+extends Property
 {
 
   /**
    * Gets the array of possible values if the value for the field
    * <code>DriverPropertyInfo.value</code> may be selected from a
    * particular set of values.
-   * 
+   *
    * @return Available choices for the value of a property
    */
   Collection<String> getChoices();
@@ -47,7 +47,7 @@ public interface JdbcDriverProperty
    * <code>getPropertyInfo</code>, the Java environment, and the
    * driver-supplied default values. This field may be null if no value
    * is known.
-   * 
+   *
    * @return Value of the property
    */
   @Override
@@ -57,7 +57,7 @@ public interface JdbcDriverProperty
    * The <code>required</code> field is <code>true</code> if a value
    * must be supplied for this property during
    * <code>Driver.connect</code> and <code>false</code> otherwise.
-   * 
+   *
    * @return Whether the property is required
    */
   boolean isRequired();

@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -34,37 +34,37 @@ import sf.util.Utility;
 /**
  * A retriever uses database metadata to get the details about a result
  * set.
- * 
+ *
  * @author Sualeh Fatehi
  */
 final class ResultsRetriever
-  extends AbstractRetriever
+extends AbstractRetriever
 {
 
   private final ResultSetMetaData resultsMetaData;
 
   ResultsRetriever(final ResultSet resultSet)
-    throws SQLException
-  {
+      throws SQLException
+      {
     if (resultSet == null)
     {
       throw new SQLException("Cannot retrieve metadata for null results");
     }
     resultsMetaData = resultSet.getMetaData();
-  }
+      }
 
   /**
    * Retrieves a list of columns from the results. There is no attempt
    * to share table objects, since the tables cannot have children that
    * are ResultColumns. Likewise, there is no attempt to share column
    * data types.
-   * 
+   *
    * @return List of columns from the results
    * @throws SchemaCrawlerException
    *         On an exception
    */
   ResultsColumns retrieveResults()
-    throws SQLException
+      throws SQLException
   {
     final JavaSqlTypes javaSqlTypes = new JavaSqlTypes();
     final MutableResultsColumns resultColumns = new MutableResultsColumns("");
@@ -85,7 +85,7 @@ final class ResultsRetriever
       database.addTable(table);
 
       final String databaseSpecificTypeName = resultsMetaData
-        .getColumnTypeName(i);
+          .getColumnTypeName(i);
       final int javaSqlType = resultsMetaData.getColumnType(i);
       final String columnClassName = resultsMetaData.getColumnClassName(i);
       final MutableColumnDataType columnDataType = new MutableColumnDataType(schema,

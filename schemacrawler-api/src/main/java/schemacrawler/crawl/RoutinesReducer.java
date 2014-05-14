@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -57,7 +57,7 @@ class RoutinesReducer
   private Collection<MutableRoutine> doFilter()
   {
     final NamedObjectFilter<Routine> routineFilter = FilterFactory
-      .grepRoutinesFilter(options);
+        .grepRoutinesFilter(options);
     final Set<MutableRoutine> greppedRoutines = new HashSet<>();
     for (final MutableRoutine routine: allRoutines)
     {

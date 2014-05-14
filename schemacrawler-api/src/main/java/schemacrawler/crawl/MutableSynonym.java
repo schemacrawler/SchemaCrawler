@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -28,12 +28,12 @@ import schemacrawler.schema.Synonym;
 /**
  * Represents a database synonym. Created from metadata returned by a
  * JDBC call.
- * 
+ *
  * @author Matt Albrecht, Sualeh Fatehi
  */
 final class MutableSynonym
-  extends AbstractDatabaseObject
-  implements Synonym
+extends AbstractDatabaseObject
+implements Synonym
 {
 
   private static final long serialVersionUID = -5980593047288755771L;

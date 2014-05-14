@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -53,11 +53,11 @@ public enum IndexType
   other(DatabaseMetaData.tableIndexOther);
 
   private static final Logger LOGGER = Logger.getLogger(IndexType.class
-    .getName());
+                                                        .getName());
 
   /**
    * Gets the value from the id.
-   * 
+   *
    * @param id
    *        Id of the enumeration.
    * @return IndexType
@@ -84,7 +84,7 @@ public enum IndexType
 
   /**
    * Gets the id.
-   * 
+   *
    * @return id
    */
   public int getId()

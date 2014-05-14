@@ -26,13 +26,13 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import schemacrawler.schema.NamedObject;
+import schemacrawler.schema.NamedObjectWithAttributes;
 
 public class SimpleLintCollector
   implements LintCollector
 {
 
-  public static Collection<Lint<?>> getLint(final NamedObject namedObject)
+  public static Collection<Lint<?>> getLint(final NamedObjectWithAttributes namedObject)
   {
     if (namedObject == null)
     {
@@ -53,7 +53,7 @@ public class SimpleLintCollector
   }
 
   @Override
-  public void addLint(final NamedObject namedObject, final Lint<?> lint)
+  public void addLint(final NamedObjectWithAttributes namedObject, final Lint<?> lint)
   {
     if (namedObject != null && lint != null
         && namedObject.getFullName().equals(lint.getObjectName()))

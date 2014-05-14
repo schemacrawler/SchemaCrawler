@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -47,18 +47,18 @@ public enum SearchableType
    * Searchable except with where .. like.
    */
   predBasic(DatabaseMetaData.typePredBasic,
-    "searchable except with where .. like"),
-  /**
-   * Searchable.
-   */
-  searchable(DatabaseMetaData.typeSearchable, "searchable");
+      "searchable except with where .. like"),
+      /**
+       * Searchable.
+       */
+      searchable(DatabaseMetaData.typeSearchable, "searchable");
 
   private static final Logger LOGGER = Logger.getLogger(SearchableType.class
-    .getName());
+                                                        .getName());
 
   /**
    * Gets the enum value from the integer.
-   * 
+   *
    * @param id
    *        Id of the integer
    * @return SearchableType
@@ -87,7 +87,7 @@ public enum SearchableType
 
   /**
    * Gets the id.
-   * 
+   *
    * @return id
    */
   public int getId()
@@ -97,7 +97,7 @@ public enum SearchableType
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see Object#toString()
    */
   @Override

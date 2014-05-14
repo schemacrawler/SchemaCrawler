@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -34,12 +34,12 @@ import schemacrawler.schema.Property;
 /**
  * Represents a JDBC driver property, and it's value. Created from
  * metadata returned by a JDBC call, and other sources of information.
- * 
+ *
  * @author Sualeh Fatehi sualeh@hotmail.com
  */
 final class ImmutableJdbcDriverProperty
-  extends AbstractProperty
-  implements JdbcDriverProperty
+extends AbstractProperty
+implements JdbcDriverProperty
 {
 
   private static final long serialVersionUID = 8030156654422512161L;
@@ -75,13 +75,13 @@ final class ImmutableJdbcDriverProperty
     else
     {
       return getName().toLowerCase().compareTo(otherProperty.getName()
-        .toLowerCase());
+                                               .toLowerCase());
     }
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.JdbcDriverProperty#getChoices()
    */
   @Override
@@ -92,7 +92,7 @@ final class ImmutableJdbcDriverProperty
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.JdbcDriverProperty#getDescription()
    */
   @Override
@@ -119,7 +119,7 @@ final class ImmutableJdbcDriverProperty
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.JdbcDriverProperty#isRequired()
    */
   @Override

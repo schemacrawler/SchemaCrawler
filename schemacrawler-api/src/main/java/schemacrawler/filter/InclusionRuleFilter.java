@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -20,13 +20,13 @@
 package schemacrawler.filter;
 
 
-import schemacrawler.schema.NamedObject;
+import schemacrawler.schema.NamedObjectWithAttributes;
 import schemacrawler.schemacrawler.ExcludeAll;
 import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.InclusionRule;
 
-public class InclusionRuleFilter<N extends NamedObject>
-  implements NamedObjectFilter<N>
+public class InclusionRuleFilter<N extends NamedObjectWithAttributes>
+implements NamedObjectFilter<N>
 {
 
   private final InclusionRule inclusionRule;

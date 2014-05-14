@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -30,7 +30,7 @@ import java.util.Set;
 
 /**
  * Configuration properties.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public final class TemplatingUtility
@@ -42,7 +42,7 @@ public final class TemplatingUtility
   /**
    * Expands a template using system properties. Variables in the
    * template are in the form of ${variable}.
-   * 
+   *
    * @param template
    *        Template to expand.
    * @return Expanded template
@@ -55,7 +55,7 @@ public final class TemplatingUtility
   /**
    * Expands a template using variable values in the provided map.
    * Variables in the template are in the form of ${variable}.
-   * 
+   *
    * @param template
    *        Template to expand.
    * @param variablesMap
@@ -102,7 +102,7 @@ public final class TemplatingUtility
         if (delimiterEndPosition > -1)
         {
           delimiterStartPosition = delimiterStartPosition
-                                   + DELIMITER_START.length();
+              + DELIMITER_START.length();
           final String key = template.substring(delimiterStartPosition,
                                                 delimiterEndPosition);
           final String value = variablesMap.get(key);
@@ -131,7 +131,7 @@ public final class TemplatingUtility
   /**
    * Extracts variables from the template. Variables are in the form of
    * ${variable}.
-   * 
+   *
    * @param template
    *        Template to extract variables from.
    * @return Extracted variables
@@ -155,7 +155,7 @@ public final class TemplatingUtility
         keys.add(propertyKey);
         // Destroy key, so we can find the next one
         shrunkTemplate = shrunkTemplate.substring(0, left)
-                         + shrunkTemplate.substring(right + 1);
+            + shrunkTemplate.substring(right + 1);
       }
       else
       {
@@ -171,7 +171,7 @@ public final class TemplatingUtility
    * Does one pass over the values in the map, and expands each as a
    * template, using the rest of the values in the same map. Variables
    * in the template are in the form of ${variable}.
-   * 
+   *
    * @param variablesMap
    *        Map to expand.
    */
@@ -189,7 +189,7 @@ public final class TemplatingUtility
 
   /**
    * Copies properties into a map.
-   * 
+   *
    * @param properties
    *        Properties to copy
    * @return Map of properties and values

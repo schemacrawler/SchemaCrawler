@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -23,11 +23,11 @@ package schemacrawler.schemacrawler;
 /**
  * Include all names, definitions, and other attributes of named
  * objects.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public final class ExcludeAll
-  implements InclusionRule
+implements InclusionRule
 {
 
   private static final long serialVersionUID = -2992724018349021861L;
@@ -46,7 +46,7 @@ public final class ExcludeAll
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schemacrawler.InclusionRule#include(java.lang.String)
    */
   @Override

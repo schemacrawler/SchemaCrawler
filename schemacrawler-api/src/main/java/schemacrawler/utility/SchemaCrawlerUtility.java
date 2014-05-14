@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -32,7 +32,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
 /**
  * SchemaCrawler utility methods.
- * 
+ *
  * @author sfatehi
  */
 public final class SchemaCrawlerUtility
@@ -40,7 +40,7 @@ public final class SchemaCrawlerUtility
 
   public static Database getDatabase(final Connection connection,
                                      final SchemaCrawlerOptions schemaCrawlerOptions)
-    throws SchemaCrawlerException
+                                         throws SchemaCrawlerException
   {
     final SchemaCrawler schemaCrawler = new SchemaCrawler(connection);
     final Database database = schemaCrawler.crawl(schemaCrawlerOptions);

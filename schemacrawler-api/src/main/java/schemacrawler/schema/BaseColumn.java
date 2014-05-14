@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -23,30 +23,30 @@ package schemacrawler.schema;
 
 /**
  * Column for tables and routines.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public interface BaseColumn<P extends DatabaseObjectReference>
-  extends DependantObject<P>, TypedObject<ColumnDataType>
+extends DependantObject<P>, TypedObject<ColumnDataType>
 {
 
   /**
    * Gets the column data type.
-   * 
+   *
    * @return Column data type
    */
   ColumnDataType getColumnDataType();
 
   /**
    * Get the number of fractional digits.
-   * 
+   *
    * @return Number of fractional digits
    */
   int getDecimalDigits();
 
   /**
    * Get the ordinal position of the column in the table, starting at 1.
-   * 
+   *
    * @return Ordinal position of the column in the table, starting at 1
    */
   int getOrdinalPosition();
@@ -55,7 +55,7 @@ public interface BaseColumn<P extends DatabaseObjectReference>
    * Get the column size. For char or date types this is the maximum
    * number of characters, for numeric or decimal types this is
    * precision.
-   * 
+   *
    * @return Column size
    */
   int getSize();
@@ -64,14 +64,14 @@ public interface BaseColumn<P extends DatabaseObjectReference>
    * Gets the width of the column, if the column width is required.
    * (Column width is not significant for column types such as TIME and
    * DATE.)
-   * 
+   *
    * @return Column width as a String
    */
   String getWidth();
 
   /**
    * Whether the column is nullable.
-   * 
+   *
    * @return Whether the column is nullable
    */
   boolean isNullable();

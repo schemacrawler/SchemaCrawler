@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -24,11 +24,11 @@ package schemacrawler.schema;
 /**
  * Represents the dependent of a database object, such as a column or an
  * index, which are dependents of a table.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public interface DependantObject<P extends DatabaseObjectReference & DatabaseObject>
-  extends DatabaseObject, ContainedObject<P>
+extends DatabaseObject, ContainedObject<P>
 {
 
   /**

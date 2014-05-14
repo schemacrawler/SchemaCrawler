@@ -17,48 +17,61 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.schemacrawler;
 
+package schemacrawler.schema;
+
+
+import java.util.Map;
 
 /**
- * Include all names, definitions, and other attributes of named
- * objects.
+ * Represents a named object.
  *
  * @author Sualeh Fatehi
  */
-public final class IncludeAll
-implements InclusionRule
+public interface NamedObjectWithAttributes
+extends NamedObject
 {
 
-  private static final long serialVersionUID = -2992724018349021861L;
-
-  @Override
-  public boolean equals(final Object obj)
-  {
-    return obj instanceof IncludeAll;
-  }
-
-  @Override
-  public int hashCode()
-  {
-    return 1;
-  }
+  /**
+   * Gets an attribute.
+   *
+   * @param name
+   *        Attribute name.
+   * @return Attribute value.
+   */
+  Object getAttribute(String name);
 
   /**
-   * {@inheritDoc}
+   * Gets an attribute.
    *
-   * @see schemacrawler.schemacrawler.InclusionRule#include(java.lang.String)
+   * @param name
+   *        Attribute name.
+   * @return Attribute value.
    */
-  @Override
-  public boolean include(final String text)
-  {
-    return true;
-  }
+  <T> T getAttribute(String name, T defaultValue);
 
-  @Override
-  public String toString()
-  {
-    return getClass().getSimpleName();
-  }
+  /**
+   * Gets all attributes.
+   *
+   * @return Map of attributes
+   */
+  Map<String, Object> getAttributes();
+
+  /**
+   * Getter for remarks.
+   *
+   * @return Remarks
+   */
+  String getRemarks();
+
+  /**
+   * Sets an attribute.
+   *
+   * @param name
+   *        Attribute name
+   * @param value
+   *        Attribute value
+   */
+  void setAttribute(String name, Object value);
 
 }

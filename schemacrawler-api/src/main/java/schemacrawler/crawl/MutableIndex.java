@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -33,12 +33,12 @@ import schemacrawler.utility.CompareUtility;
 
 /**
  * Represents an index on a database table.
- * 
+ *
  * @author Sualeh Fatehi
  */
 class MutableIndex
-  extends AbstractDependantObject<TableReference>
-  implements Index
+extends AbstractDependantObject<TableReference>
+implements Index
 {
 
   private static final long serialVersionUID = 4051326747138079028L;
@@ -109,7 +109,7 @@ class MutableIndex
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see Index#getCardinality()
    */
   @Override
@@ -120,7 +120,7 @@ class MutableIndex
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see Index#getColumns()
    */
   @Override
@@ -131,7 +131,7 @@ class MutableIndex
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Index#getDefinition()
    */
   @Override
@@ -142,7 +142,7 @@ class MutableIndex
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see Index#getIndexType()
    */
   @Override
@@ -153,7 +153,7 @@ class MutableIndex
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see Index#getPages()
    */
   @Override
@@ -164,7 +164,7 @@ class MutableIndex
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.TypedObject#getType()
    */
   @Override
@@ -181,7 +181,7 @@ class MutableIndex
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see Index#isUnique()
    */
   @Override

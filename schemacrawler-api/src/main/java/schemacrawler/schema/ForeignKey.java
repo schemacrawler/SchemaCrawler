@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -25,37 +25,37 @@ import java.util.List;
 
 /**
  * Represents a foreign-key mapping to a primary key in another table.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public interface ForeignKey
-  extends NamedObject
+extends NamedObjectWithAttributes
 {
 
   /**
    * Gets the list of column pairs.
-   * 
+   *
    * @return Column pairs
    */
   List<ForeignKeyColumnReference> getColumnReferences();
 
   /**
    * Gets the deferrability.
-   * 
+   *
    * @return Deferrability
    */
   ForeignKeyDeferrability getDeferrability();
 
   /**
    * Gets the delete rule.
-   * 
+   *
    * @return Delete rule
    */
   ForeignKeyUpdateRule getDeleteRule();
 
   /**
    * Gets the update rule.
-   * 
+   *
    * @return Update rule
    */
   ForeignKeyUpdateRule getUpdateRule();

@@ -25,7 +25,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schema.Database;
-import schemacrawler.schema.NamedObject;
+import schemacrawler.schema.NamedObjectWithAttributes;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Config;
 
@@ -104,7 +104,7 @@ public abstract class BaseLinter
     }
   };
 
-  protected <V extends Serializable> void addLint(final NamedObject namedObject,
+  protected <V extends Serializable> void addLint(final NamedObjectWithAttributes namedObject,
                                                   final String message,
                                                   final V value)
   {

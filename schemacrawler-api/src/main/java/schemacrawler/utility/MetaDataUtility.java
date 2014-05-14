@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -25,7 +25,7 @@ import schemacrawler.schema.Column;
 
 /**
  * SchemaCrawler utility methods.
- * 
+ *
  * @author sfatehi
  */
 public final class MetaDataUtility

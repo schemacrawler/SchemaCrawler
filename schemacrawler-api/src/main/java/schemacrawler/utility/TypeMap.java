@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -32,11 +32,11 @@ import java.util.logging.Logger;
 import sf.util.Utility;
 
 public final class TypeMap
-  implements Map<String, Class<?>>
+implements Map<String, Class<?>>
 {
 
   private static final Logger LOGGER = Logger
-    .getLogger(TypeMap.class.getName());
+      .getLogger(TypeMap.class.getName());
 
   private static Map<String, Class<?>> createDefaultTypeMap()
   {
@@ -166,7 +166,7 @@ public final class TypeMap
    * Gets the Java type mapping for a data type. If no mapping exists,
    * returns null. If a class name is passed in, it overrides the
    * mapping in the type map.
-   * 
+   *
    * @param typeName
    *        Type name to find a mapping for.
    * @param className

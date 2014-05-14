@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -25,16 +25,16 @@ import java.util.List;
 
 /**
  * Represents a database procedure.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public interface Procedure
-  extends Routine
+extends Routine
 {
 
   /**
    * Gets a column by name.
-   * 
+   *
    * @param name
    *        Name
    * @return Column of the procedure
@@ -44,7 +44,7 @@ public interface Procedure
 
   /**
    * Gets the list of columns in ordinal order.
-   * 
+   *
    * @return Columns of the procedure
    */
   @Override
@@ -52,7 +52,7 @@ public interface Procedure
 
   /**
    * Gets the procedure type.
-   * 
+   *
    * @return Procedure type
    */
   @Override

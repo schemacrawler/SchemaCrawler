@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -25,33 +25,33 @@ import java.util.List;
 
 /**
  * Represents an index on a database table.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public interface Index
-  extends DependantObject<TableReference>, TypedObject<IndexType>,
-  DefinedObject
+extends DependantObject<TableReference>, TypedObject<IndexType>,
+DefinedObject
 {
 
   /**
    * Gets the cardinality. When the index type is statistic, then this
    * is the number of rows in the table; otherwise, it is the number of
    * unique values in the index.
-   * 
+   *
    * @return Cardinality
    */
   int getCardinality();
 
   /**
    * Gets the list of columns in ordinal order.
-   * 
+   *
    * @return Columns of the index.
    */
   List<IndexColumn> getColumns();
 
   /**
    * Gets the index type.
-   * 
+   *
    * @return Index type.
    */
   IndexType getIndexType();
@@ -60,14 +60,14 @@ public interface Index
    * Gets the pages. When the index type is statistic, then this is the
    * number of pages used for the table, otherwise it is the number of
    * pages used for the current index.
-   * 
+   *
    * @return Pages
    */
   int getPages();
 
   /**
    * If the index is unique.
-   * 
+   *
    * @return If the index is unique
    */
   boolean isUnique();

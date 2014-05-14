@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import schemacrawler.schema.NamedObject;
+import schemacrawler.schema.NamedObjectWithAttributes;
 import sf.util.ObjectToString;
 import sf.util.Utility;
 
@@ -226,11 +226,11 @@ public final class SimpleLint<V extends Serializable>
       Object valueObject = value;
 
       if (valueClass.isArray()
-          && NamedObject.class.isAssignableFrom(valueClass.getComponentType()))
+          && NamedObjectWithAttributes.class.isAssignableFrom(valueClass.getComponentType()))
       {
         valueObject = Arrays.asList(Arrays.copyOf((Object[]) value,
                                                   ((Object[]) value).length,
-                                                  NamedObject[].class));
+                                                  NamedObjectWithAttributes[].class));
       }
 
       if (Iterable.class.isAssignableFrom(valueObject.getClass()))
@@ -238,9 +238,9 @@ public final class SimpleLint<V extends Serializable>
         final List<String> list = new ArrayList<>();
         for (final Object valuePart: (Iterable<?>) valueObject)
         {
-          if (valuePart instanceof NamedObject)
+          if (valuePart instanceof NamedObjectWithAttributes)
           {
-            list.add(((NamedObject) valuePart).getName());
+            list.add(((NamedObjectWithAttributes) valuePart).getName());
           }
           else
           {
@@ -249,9 +249,9 @@ public final class SimpleLint<V extends Serializable>
         }
         valueObject = list;
       }
-      else if (NamedObject.class.isAssignableFrom(valueClass))
+      else if (NamedObjectWithAttributes.class.isAssignableFrom(valueClass))
       {
-        valueObject = ((NamedObject) valueObject).getName();
+        valueObject = ((NamedObjectWithAttributes) valueObject).getName();
       }
       else
       {

@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -21,19 +21,19 @@ package schemacrawler.schema;
 
 
 public interface RoutineColumn<R extends RoutineReference>
-  extends BaseColumn<R>
+extends BaseColumn<R>
 {
 
   /**
    * Gets the routine column type.
-   * 
+   *
    * @return Routine column type.
    */
   RoutineColumnType getColumnType();
 
   /**
    * Gets the number of decimal digits precision for the column.
-   * 
+   *
    * @return The number of decimal digits precision for the column.
    */
   int getPrecision();

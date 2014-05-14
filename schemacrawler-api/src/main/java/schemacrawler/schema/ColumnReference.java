@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -26,23 +26,23 @@ import java.io.Serializable;
 /**
  * Represents a single column mapping from a primary key column to a
  * foreign key column.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public interface ColumnReference
-  extends Serializable, Comparable<ColumnReference>
+extends Serializable, Comparable<ColumnReference>
 {
 
   /**
    * Gets the foreign key column.
-   * 
+   *
    * @return Foreign key column
    */
   Column getForeignKeyColumn();
 
   /**
    * Gets the primary key column.
-   * 
+   *
    * @return Primary key column
    */
   Column getPrimaryKeyColumn();

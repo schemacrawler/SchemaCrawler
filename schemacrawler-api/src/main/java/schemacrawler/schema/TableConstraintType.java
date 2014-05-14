@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -37,11 +37,11 @@ public enum TableConstraintType
   foreign_key("FOREIGN KEY");
 
   private static final Logger LOGGER = Logger
-    .getLogger(TableConstraintType.class.getName());
+      .getLogger(TableConstraintType.class.getName());
 
   /**
    * Find the enumeration value corresponding to the string.
-   * 
+   *
    * @param value
    *        Sort sequence code.
    * @return Enumeration value
@@ -68,7 +68,7 @@ public enum TableConstraintType
 
   /**
    * Gets the value.
-   * 
+   *
    * @return Value
    */
   public final String getValue()

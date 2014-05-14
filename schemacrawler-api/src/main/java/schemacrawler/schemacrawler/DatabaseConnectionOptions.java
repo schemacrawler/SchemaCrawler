@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -24,7 +24,7 @@ package schemacrawler.schemacrawler;
 import sf.util.Utility;
 
 public final class DatabaseConnectionOptions
-  extends BaseDatabaseConnectionOptions
+extends BaseDatabaseConnectionOptions
 {
 
   private static final long serialVersionUID = -8141436553988174836L;
@@ -33,7 +33,7 @@ public final class DatabaseConnectionOptions
 
   public DatabaseConnectionOptions(final String jdbcDriverClassName,
                                    final String connectionUrl)
-    throws SchemaCrawlerException
+                                       throws SchemaCrawlerException
   {
     if (Utility.isBlank(connectionUrl))
     {

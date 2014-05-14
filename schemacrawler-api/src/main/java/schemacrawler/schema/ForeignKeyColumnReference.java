@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -24,16 +24,16 @@ package schemacrawler.schema;
 /**
  * Represents a single column mapping from a primary key column to a
  * foreign key column.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public interface ForeignKeyColumnReference
-  extends ColumnReference
+extends ColumnReference
 {
 
   /**
    * Gets the sequence in the foreign key.
-   * 
+   *
    * @return Foreign key sequence
    */
   int getKeySequence();
