@@ -729,22 +729,22 @@ FK_PUBLICATION_JOIN,"[foreign key, with no action]"
 FK_WRITER_JOIN,"[foreign key, with no action]"
  1,PUBLIC.FOR_LINT.WRITERS.ID --> WRITERID,""
 ""
-SYS_IDX_PK_EXTRA_PK_10177,[unique index]
+SYS_IDX_PK_EXTRA_PK_10180,[unique index]
 1,ID,ascending
 ""
-SYS_IDX_10183,[non-unique index]
+SYS_IDX_10186,[non-unique index]
 3,PUBLICATIONID,ascending
 ""
-SYS_IDX_10181,[non-unique index]
+SYS_IDX_10184,[non-unique index]
 2,WRITERID,ascending
 ""
-SYS_CT_10174,[check constraint]
+SYS_CT_10177,[check constraint]
 FOR_LINT.EXTRA_PK.ID IS NOT NULL
 ""
-SYS_CT_10175,[check constraint]
+SYS_CT_10178,[check constraint]
 FOR_LINT.EXTRA_PK.WRITERID IS NOT NULL
 ""
-SYS_CT_10176,[check constraint]
+SYS_CT_10179,[check constraint]
 FOR_LINT.EXTRA_PK.PUBLICATIONID IS NOT NULL
 ""
 DELETE,[privilege]
@@ -816,19 +816,19 @@ FK_WRITERS_PUBLICATION,"[foreign key, with no action]"
 FK_PUBLICATIONS_WRITER,"[foreign key, with no action]"
  1,PUBLIC.FOR_LINT.WRITERS.ID --> WRITERID,""
 ""
-SYS_IDX_PK_PUBLICATIONS_10167,[unique index]
+SYS_IDX_PK_PUBLICATIONS_10170,[unique index]
 1,ID,ascending
 ""
-SYS_IDX_10171,[non-unique index]
+SYS_IDX_10174,[non-unique index]
 4,WRITERID,ascending
 ""
-SYS_CT_10164,[check constraint]
+SYS_CT_10167,[check constraint]
 FOR_LINT.PUBLICATIONS.ID IS NOT NULL
 ""
-SYS_CT_10165,[check constraint]
+SYS_CT_10168,[check constraint]
 FOR_LINT.PUBLICATIONS.TITLE IS NOT NULL
 ""
-SYS_CT_10166,[check constraint]
+SYS_CT_10169,[check constraint]
 FOR_LINT.PUBLICATIONS.WRITERID IS NOT NULL
 ""
 DELETE,[privilege]
@@ -885,10 +885,10 @@ FK_WRITER_JOIN,"[foreign key, with no action]"
 FK_PUBLICATIONS_WRITER,"[foreign key, with no action]"
  1,ID --> PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID,""
 ""
-SYS_IDX_PK_WRITERS_10157,[unique index]
+SYS_IDX_PK_WRITERS_10160,[unique index]
 1,ID,ascending
 ""
-SYS_IDX_10185,[non-unique index]
+SYS_IDX_10188,[non-unique index]
 18,PUBLICATION_ID,ascending
 ""
 IDX_A1_WRITERS,[non-unique index]
@@ -912,19 +912,19 @@ IDX_A_WRITERS,[non-unique index]
 CHECK_UPPERCASE_STATE,[check constraint]
 FOR_LINT.WRITERS.STATE=UPPER(FOR_LINT.WRITERS.STATE)
 ""
-SYS_CT_10152,[check constraint]
+SYS_CT_10155,[check constraint]
 FOR_LINT.WRITERS.ID IS NOT NULL
 ""
-SYS_CT_10153,[check constraint]
+SYS_CT_10156,[check constraint]
 FOR_LINT.WRITERS.FIRSTNAME IS NOT NULL
 ""
-SYS_CT_10154,[check constraint]
+SYS_CT_10157,[check constraint]
 FOR_LINT.WRITERS.LASTNAME IS NOT NULL
 ""
-SYS_CT_10155,[check constraint]
+SYS_CT_10158,[check constraint]
 FOR_LINT.WRITERS.ADDRESS2 IS NOT NULL
 ""
-SYS_CT_10156,[check constraint]
+SYS_CT_10159,[check constraint]
 FOR_LINT.WRITERS.PUBLICATION_ID IS NOT NULL
 ""
 DELETE,[privilege]
@@ -963,20 +963,20 @@ FK_SALES_REGIONS,"[foreign key, with no action]"
  1,"POSTALCODE --> PUBLIC.""PUBLISHER SALES"".SALES.POSTALCODE",""
  2,"COUNTRY --> PUBLIC.""PUBLISHER SALES"".SALES.COUNTRY",""
 ""
-SYS_IDX_PK_CUSTOMERS_10140,[unique index]
+SYS_IDX_PK_CUSTOMERS_10143,[unique index]
 3,POSTALCODE,ascending
 4,COUNTRY,ascending
 ""
-SYS_CT_10136,[check constraint]
+SYS_CT_10139,[check constraint]
 """PUBLISHER SALES"".REGIONS.CITY IS NOT NULL"
 ""
-SYS_CT_10137,[check constraint]
+SYS_CT_10140,[check constraint]
 """PUBLISHER SALES"".REGIONS.STATE IS NOT NULL"
 ""
-SYS_CT_10138,[check constraint]
+SYS_CT_10141,[check constraint]
 """PUBLISHER SALES"".REGIONS.POSTALCODE IS NOT NULL"
 ""
-SYS_CT_10139,[check constraint]
+SYS_CT_10142,[check constraint]
 """PUBLISHER SALES"".REGIONS.COUNTRY IS NOT NULL"
 ""
 DELETE,[privilege]
@@ -1015,14 +1015,14 @@ FK_SALES_REGIONS,"[foreign key, with no action]"
 "",[weak association]
 "",PUBLIC.BOOKS.BOOKS.ID --> BOOKID,""
 ""
-SYS_IDX_10150,[non-unique index]
+SYS_IDX_10153,[non-unique index]
 1,POSTALCODE,ascending
 2,COUNTRY,ascending
 ""
-SYS_CT_10145,[check constraint]
+SYS_CT_10148,[check constraint]
 """PUBLISHER SALES"".SALES.POSTALCODE IS NOT NULL"
 ""
-SYS_CT_10146,[check constraint]
+SYS_CT_10149,[check constraint]
 """PUBLISHER SALES"".SALES.COUNTRY IS NOT NULL"
 ""
 DELETE,[privilege]

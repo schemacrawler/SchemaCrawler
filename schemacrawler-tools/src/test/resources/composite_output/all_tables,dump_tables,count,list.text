@@ -17,7 +17,7 @@ Database Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
 database product name                     HSQL Database Engine          
-database product version                  2.3.0                         
+database product version                  2.3.2                         
 database user name                        SA                            
 
 
@@ -25,7 +25,7 @@ JDBC Driver Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
 driver name                               HSQL Database Engine Driver   
-driver version                            2.3.0                         
+driver version                            2.3.2                         
 driver class name                         org.hsqldb.jdbc.JDBCDriver    
 url                                       jdbc:hsqldb:hsql://localhost/schemacrawler
 is JDBC compliant                         true                          
@@ -46,6 +46,7 @@ PUBLIC	BOOKS	BOOKAUTHORS	TABLE	Relationship between books and their authors, alo
 PUBLIC	BOOKS	BOOKS	TABLE	Details for published books	NULL	NULL	NULL	NULL	NULL	MEMORY	false	NULL
 PUBLIC	BOOKS	Global Counts	TABLE	NULL	NULL	NULL	NULL	NULL	NULL	MEMORY	false	NULL
 PUBLIC	BOOKS	PUBLISHERS	TABLE	List of book publishers	NULL	NULL	NULL	NULL	NULL	MEMORY	false	NULL
+PUBLIC	BOOKS	TEMP_AUTHOR_LIST	GLOBAL TEMPORARY	NULL	NULL	NULL	NULL	NULL	NULL	MEMORY	false	DELETE
 PUBLIC	FOR_LINT	EXTRA_PK	TABLE	NULL	NULL	NULL	NULL	NULL	NULL	MEMORY	false	NULL
 PUBLIC	FOR_LINT	Global Counts	TABLE	NULL	NULL	NULL	NULL	NULL	NULL	MEMORY	false	NULL
 PUBLIC	FOR_LINT	PUBLICATIONS	TABLE	NULL	NULL	NULL	NULL	NULL	NULL	MEMORY	false	NULL

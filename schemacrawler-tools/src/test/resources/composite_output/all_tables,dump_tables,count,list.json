@@ -126,6 +126,21 @@
       ],
       [
         "PUBLIC",
+        "BOOKS",
+        "TEMP_AUTHOR_LIST",
+        "GLOBAL TEMPORARY",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "MEMORY",
+        false,
+        "DELETE"
+      ],
+      [
+        "PUBLIC",
         "FOR_LINT",
         "EXTRA_PK",
         "TABLE",

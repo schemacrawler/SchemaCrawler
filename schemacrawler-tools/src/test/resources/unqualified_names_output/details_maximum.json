@@ -874,17 +874,17 @@
         },
         {
           "definition": "FOR_LINT.EXTRA_PK.ID IS NOT NULL",
-          "name": "SYS_CT_10174",
+          "name": "SYS_CT_10177",
           "type": "check"
         },
         {
           "definition": "FOR_LINT.EXTRA_PK.WRITERID IS NOT NULL",
-          "name": "SYS_CT_10175",
+          "name": "SYS_CT_10178",
           "type": "check"
         },
         {
           "definition": "FOR_LINT.EXTRA_PK.PUBLICATIONID IS NOT NULL",
-          "name": "SYS_CT_10176",
+          "name": "SYS_CT_10179",
           "type": "check"
         }
       ],
@@ -1002,7 +1002,7 @@
       "indices": [
         {
           "unique": true,
-          "name": "SYS_IDX_PK_EXTRA_PK_10177",
+          "name": "SYS_IDX_PK_EXTRA_PK_10180",
           "columns": {
             "sortSequence": "ascending",
             "name": "ID"
@@ -1010,7 +1010,7 @@
         },
         {
           "unique": false,
-          "name": "SYS_IDX_10183",
+          "name": "SYS_IDX_10186",
           "columns": {
             "sortSequence": "ascending",
             "name": "PUBLICATIONID"
@@ -1018,7 +1018,7 @@
         },
         {
           "unique": false,
-          "name": "SYS_IDX_10181",
+          "name": "SYS_IDX_10184",
           "columns": {
             "sortSequence": "ascending",
             "name": "WRITERID"
@@ -1113,17 +1113,17 @@
         },
         {
           "definition": "FOR_LINT.PUBLICATIONS.ID IS NOT NULL",
-          "name": "SYS_CT_10164",
+          "name": "SYS_CT_10167",
           "type": "check"
         },
         {
           "definition": "FOR_LINT.PUBLICATIONS.TITLE IS NOT NULL",
-          "name": "SYS_CT_10165",
+          "name": "SYS_CT_10168",
           "type": "check"
         },
         {
           "definition": "FOR_LINT.PUBLICATIONS.WRITERID IS NOT NULL",
-          "name": "SYS_CT_10166",
+          "name": "SYS_CT_10169",
           "type": "check"
         }
       ],
@@ -1300,7 +1300,7 @@
       "indices": [
         {
           "unique": true,
-          "name": "SYS_IDX_PK_PUBLICATIONS_10167",
+          "name": "SYS_IDX_PK_PUBLICATIONS_10170",
           "columns": {
             "sortSequence": "ascending",
             "name": "ID"
@@ -1308,7 +1308,7 @@
         },
         {
           "unique": false,
-          "name": "SYS_IDX_10171",
+          "name": "SYS_IDX_10174",
           "columns": {
             "sortSequence": "ascending",
             "name": "WRITERID"
@@ -1337,27 +1337,27 @@
         },
         {
           "definition": "FOR_LINT.WRITERS.ID IS NOT NULL",
-          "name": "SYS_CT_10152",
-          "type": "check"
-        },
-        {
-          "definition": "FOR_LINT.WRITERS.FIRSTNAME IS NOT NULL",
-          "name": "SYS_CT_10153",
-          "type": "check"
-        },
-        {
-          "definition": "FOR_LINT.WRITERS.LASTNAME IS NOT NULL",
-          "name": "SYS_CT_10154",
-          "type": "check"
-        },
-        {
-          "definition": "FOR_LINT.WRITERS.ADDRESS2 IS NOT NULL",
           "name": "SYS_CT_10155",
           "type": "check"
         },
         {
-          "definition": "FOR_LINT.WRITERS.PUBLICATION_ID IS NOT NULL",
+          "definition": "FOR_LINT.WRITERS.FIRSTNAME IS NOT NULL",
           "name": "SYS_CT_10156",
+          "type": "check"
+        },
+        {
+          "definition": "FOR_LINT.WRITERS.LASTNAME IS NOT NULL",
+          "name": "SYS_CT_10157",
+          "type": "check"
+        },
+        {
+          "definition": "FOR_LINT.WRITERS.ADDRESS2 IS NOT NULL",
+          "name": "SYS_CT_10158",
+          "type": "check"
+        },
+        {
+          "definition": "FOR_LINT.WRITERS.PUBLICATION_ID IS NOT NULL",
+          "name": "SYS_CT_10159",
           "type": "check"
         }
       ],
@@ -1634,7 +1634,7 @@
       "indices": [
         {
           "unique": true,
-          "name": "SYS_IDX_PK_WRITERS_10157",
+          "name": "SYS_IDX_PK_WRITERS_10160",
           "columns": {
             "sortSequence": "ascending",
             "name": "ID"
@@ -1642,7 +1642,7 @@
         },
         {
           "unique": false,
-          "name": "SYS_IDX_10185",
+          "name": "SYS_IDX_10188",
           "columns": {
             "sortSequence": "ascending",
             "name": "PUBLICATION_ID"
@@ -1726,22 +1726,22 @@
         },
         {
           "definition": "\"PUBLISHER SALES\".REGIONS.CITY IS NOT NULL",
-          "name": "SYS_CT_10136",
+          "name": "SYS_CT_10139",
           "type": "check"
         },
         {
           "definition": "\"PUBLISHER SALES\".REGIONS.STATE IS NOT NULL",
-          "name": "SYS_CT_10137",
+          "name": "SYS_CT_10140",
           "type": "check"
         },
         {
           "definition": "\"PUBLISHER SALES\".REGIONS.POSTALCODE IS NOT NULL",
-          "name": "SYS_CT_10138",
+          "name": "SYS_CT_10141",
           "type": "check"
         },
         {
           "definition": "\"PUBLISHER SALES\".REGIONS.COUNTRY IS NOT NULL",
-          "name": "SYS_CT_10139",
+          "name": "SYS_CT_10142",
           "type": "check"
         }
       ],
@@ -1869,7 +1869,7 @@
       ],
       "indices": [{
         "unique": true,
-        "name": "SYS_IDX_PK_CUSTOMERS_10140",
+        "name": "SYS_IDX_PK_CUSTOMERS_10143",
         "columns": [
           {
             "sortSequence": "ascending",
@@ -1897,12 +1897,12 @@
         },
         {
           "definition": "\"PUBLISHER SALES\".SALES.POSTALCODE IS NOT NULL",
-          "name": "SYS_CT_10145",
+          "name": "SYS_CT_10148",
           "type": "check"
         },
         {
           "definition": "\"PUBLISHER SALES\".SALES.COUNTRY IS NOT NULL",
-          "name": "SYS_CT_10146",
+          "name": "SYS_CT_10149",
           "type": "check"
         }
       ],
@@ -2027,7 +2027,7 @@
       ],
       "indices": [{
         "unique": false,
-        "name": "SYS_IDX_10150",
+        "name": "SYS_IDX_10153",
         "columns": [
           {
             "sortSequence": "ascending",
