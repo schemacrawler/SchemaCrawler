@@ -27,7 +27,7 @@ package schemacrawler.schema;
  * @author Sualeh Fatehi
  */
 public interface RoutineReference
-extends DatabaseObjectReference
+  extends DatabaseObjectReference
 {
 
 }

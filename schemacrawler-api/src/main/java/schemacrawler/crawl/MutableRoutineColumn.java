@@ -31,8 +31,8 @@ import schemacrawler.schema.RoutineReference;
  * @author Sualeh Fatehi
  */
 abstract class MutableRoutineColumn<R extends RoutineReference>
-extends AbstractColumn<R>
-implements RoutineColumn<R>
+  extends AbstractColumn<R>
+  implements RoutineColumn<R>
 {
 
   private static final long serialVersionUID = 3546361725629772857L;

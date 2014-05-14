@@ -38,12 +38,12 @@ import sf.util.Utility;
  * @author Sualeh Fatehi
  */
 final class MutablePrivilege<P extends DatabaseObject>
-extends AbstractNamedObject
-implements Privilege<P>
+  extends AbstractNamedObject
+  implements Privilege<P>
 {
 
   private final class PrivilegeGrant
-  implements Grant
+    implements Grant
   {
 
     private static final long serialVersionUID = 356151825191631484L;
@@ -55,11 +55,11 @@ implements Privilege<P>
     PrivilegeGrant(final String grantor,
                    final String grantee,
                    final boolean isGrantable)
-                   {
+    {
       this.grantor = grantor;
       this.grantee = grantee;
       this.isGrantable = isGrantable;
-                   }
+    }
 
     @Override
     public int compareTo(final Grant otherGrant)

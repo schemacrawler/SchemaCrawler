@@ -42,11 +42,11 @@ import sf.util.Utility;
  * @author Sualeh Fatehi
  */
 public final class JavaSqlTypes
-implements Map<Integer, JavaSqlType>, Iterable<JavaSqlType>
+  implements Map<Integer, JavaSqlType>, Iterable<JavaSqlType>
 {
 
   private static final Logger LOGGER = Logger.getLogger(JavaSqlTypes.class
-                                                        .getName());
+    .getName());
 
   private static Map<String, Integer> createJavaSqlTypesMap()
   {
@@ -62,7 +62,7 @@ implements Map<Integer, JavaSqlType>, Iterable<JavaSqlType>
       catch (final SecurityException | IllegalAccessException e)
       {
         LOGGER.log(Level.WARNING, "Could not access java.sql.Types, field "
-            + field, e);
+                                  + field, e);
         // continue
       }
     }
@@ -148,7 +148,7 @@ implements Map<Integer, JavaSqlType>, Iterable<JavaSqlType>
     final Map<Integer, JavaSqlType> javaSqlTypes = new HashMap<>();
 
     for (final Entry<String, Integer> javaSqlTypesEntry: javaSqlTypesMap
-        .entrySet())
+      .entrySet())
     {
       if (javaSqlTypesEntry.getKey() != null
           && javaSqlTypesEntry.getValue() != null)

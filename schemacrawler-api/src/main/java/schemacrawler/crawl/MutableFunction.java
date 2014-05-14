@@ -38,8 +38,8 @@ import schemacrawler.schema.Schema;
  * @author Sualeh Fatehi
  */
 final class MutableFunction
-extends MutableRoutine
-implements Function
+  extends MutableRoutine
+  implements Function
 {
 
   private static final long serialVersionUID = 3906925686089134130L;

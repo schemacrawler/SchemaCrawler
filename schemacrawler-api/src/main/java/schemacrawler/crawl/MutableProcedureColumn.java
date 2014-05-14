@@ -32,8 +32,8 @@ import schemacrawler.schema.ProcedureColumnType;
  * @author Sualeh Fatehi
  */
 final class MutableProcedureColumn
-extends MutableRoutineColumn<Procedure>
-implements ProcedureColumn
+  extends MutableRoutineColumn<Procedure>
+  implements ProcedureColumn
 {
 
   private static final long serialVersionUID = 3546361725629772857L;

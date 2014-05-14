@@ -65,7 +65,7 @@ class TablesReducer
   {
     // Filter for grep
     final NamedObjectFilter<Table> grepFilter = FilterFactory
-        .grepTablesFilter(options);
+      .grepTablesFilter(options);
     final Set<MutableTable> greppedTables = new HashSet<>();
     for (final MutableTable table: allTables)
     {
@@ -95,7 +95,7 @@ class TablesReducer
   private Collection<MutableTable> includeRelatedTables(final TableRelationshipType tableRelationshipType,
                                                         final int depth,
                                                         final Set<MutableTable> greppedTables)
-                                                        {
+  {
     final Set<MutableTable> includedTables = new HashSet<>();
     includedTables.addAll(greppedTables);
 
@@ -104,7 +104,7 @@ class TablesReducer
       for (final MutableTable table: new HashSet<>(includedTables))
       {
         for (final TableReference relatedTable: table
-            .getRelatedTables(tableRelationshipType))
+          .getRelatedTables(tableRelationshipType))
         {
           if (relatedTable instanceof MutableTable)
           {
@@ -115,7 +115,7 @@ class TablesReducer
     }
 
     return includedTables;
-                                                        }
+  }
 
   private void removeForeignKeys()
   {
@@ -125,10 +125,10 @@ class TablesReducer
       for (final ForeignKey fk: table.getExportedForeignKeys())
       {
         for (final ForeignKeyColumnReference fkColumnReference: fk
-            .getColumnReferences())
+          .getColumnReferences())
         {
           final Table referencedTable = fkColumnReference.getForeignKeyColumn()
-              .getParent();
+            .getParent();
           boolean removeFk = false;
           if (!(referencedTable instanceof MutableTable))
           {
@@ -149,10 +149,10 @@ class TablesReducer
             {
               // Replace reference with a column partial
               final ColumnPartial columnPartial = new ColumnPartial(fkColumnReference
-                                                                    .getForeignKeyColumn());
+                .getForeignKeyColumn());
               ((TablePartial) columnPartial.getParent()).addForeignKey(fk);
               ((MutableForeignKeyColumnReference) fkColumnReference)
-              .setForeignKeyColumn(columnPartial);
+                .setForeignKeyColumn(columnPartial);
             }
           }
         }
@@ -161,10 +161,10 @@ class TablesReducer
       for (final ForeignKey fk: table.getImportedForeignKeys())
       {
         for (final ForeignKeyColumnReference fkColumnReference: fk
-            .getColumnReferences())
+          .getColumnReferences())
         {
           final TableReference referencedTable = fkColumnReference
-              .getPrimaryKeyColumn().getParent();
+            .getPrimaryKeyColumn().getParent();
           boolean removeFk = false;
           if (!(referencedTable instanceof MutableTable))
           {
@@ -185,10 +185,10 @@ class TablesReducer
             {
               // Replace reference with a column partial
               final ColumnPartial columnPartial = new ColumnPartial(fkColumnReference
-                                                                    .getPrimaryKeyColumn());
+                .getPrimaryKeyColumn());
               ((TablePartial) columnPartial.getParent()).addForeignKey(fk);
               ((MutableForeignKeyColumnReference) fkColumnReference)
-              .setPrimaryKeyColumn(columnPartial);
+                .setPrimaryKeyColumn(columnPartial);
             }
           }
         }

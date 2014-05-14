@@ -29,8 +29,8 @@ import java.util.List;
  * @author Sualeh Fatehi
  */
 public interface TableConstraint
-extends DependantObject<Table>, TypedObject<TableConstraintType>,
-DefinedObject
+  extends DependantObject<Table>, TypedObject<TableConstraintType>,
+  DefinedObject
 {
 
   /**

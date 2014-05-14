@@ -39,18 +39,18 @@ import schemacrawler.schemacrawler.InformationSchemaViews;
  * @author Sualeh Fatehi
  */
 final class RoutineExtRetriever
-extends AbstractRetriever
+  extends AbstractRetriever
 {
 
   private static final Logger LOGGER = Logger
-      .getLogger(RoutineExtRetriever.class.getName());
+    .getLogger(RoutineExtRetriever.class.getName());
 
   RoutineExtRetriever(final RetrieverConnection retrieverConnection,
                       final MutableDatabase database)
-                          throws SQLException
-                          {
+    throws SQLException
+  {
     super(retrieverConnection, database);
-                          }
+  }
 
   /**
    * Retrieves a routine definitions from the database.
@@ -59,33 +59,33 @@ extends AbstractRetriever
    *         On a SQL exception
    */
   void retrieveRoutineInformation()
-      throws SQLException
+    throws SQLException
   {
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
-        .getInformationSchemaViews();
+      .getInformationSchemaViews();
     if (!informationSchemaViews.hasRoutinesSql())
     {
       LOGGER.log(Level.FINE,
-          "Routine definition SQL statement was not provided");
+                 "Routine definition SQL statement was not provided");
       return;
     }
     final String routineDefinitionsSql = informationSchemaViews
-        .getRoutinesSql();
+      .getRoutinesSql();
 
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
         final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
                                                                            routineDefinitionsSql)))
-                                                                           {
+    {
       while (results.next())
       {
         final String catalogName = quotedName(results
-                                              .getString("ROUTINE_CATALOG"));
+          .getString("ROUTINE_CATALOG"));
         final String schemaName = quotedName(results
-                                             .getString("ROUTINE_SCHEMA"));
+          .getString("ROUTINE_SCHEMA"));
         final String routineName = quotedName(results.getString("ROUTINE_NAME"));
         final String specificName = quotedName(results
-                                               .getString("SPECIFIC_NAME"));
+          .getString("SPECIFIC_NAME"));
 
         final MutableRoutine routine = lookupRoutine(catalogName,
                                                      schemaName,
@@ -94,9 +94,9 @@ extends AbstractRetriever
         if (routine != null)
         {
           LOGGER.log(Level.FINER, "Retrieving routine information: "
-              + routineName);
+                                  + routineName);
           final RoutineBodyType routineBodyType = results
-              .getEnum("ROUTINE_BODY", RoutineBodyType.unknown);
+            .getEnum("ROUTINE_BODY", RoutineBodyType.unknown);
           final String definition = results.getString("ROUTINE_DEFINITION");
 
           routine.setRoutineBodyType(routineBodyType);
@@ -105,7 +105,7 @@ extends AbstractRetriever
           routine.addAttributes(results.getAttributes());
         }
       }
-                                                                           }
+    }
     catch (final Exception e)
     {
       LOGGER.log(Level.WARNING, "Could not retrieve routines", e);

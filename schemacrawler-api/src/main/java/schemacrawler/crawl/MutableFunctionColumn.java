@@ -32,8 +32,8 @@ import schemacrawler.schema.FunctionColumnType;
  * @author Sualeh Fatehi
  */
 final class MutableFunctionColumn
-extends MutableRoutineColumn<Function>
-implements FunctionColumn
+  extends MutableRoutineColumn<Function>
+  implements FunctionColumn
 {
 
   private static final long serialVersionUID = 3546361725629772857L;

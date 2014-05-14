@@ -47,14 +47,14 @@ public enum SearchableType
    * Searchable except with where .. like.
    */
   predBasic(DatabaseMetaData.typePredBasic,
-      "searchable except with where .. like"),
-      /**
-       * Searchable.
-       */
-      searchable(DatabaseMetaData.typeSearchable, "searchable");
+    "searchable except with where .. like"),
+  /**
+   * Searchable.
+   */
+  searchable(DatabaseMetaData.typeSearchable, "searchable");
 
   private static final Logger LOGGER = Logger.getLogger(SearchableType.class
-                                                        .getName());
+    .getName());
 
   /**
    * Gets the enum value from the integer.

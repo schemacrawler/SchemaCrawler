@@ -30,7 +30,7 @@ import java.util.Collection;
  * @author Sualeh Fatehi
  */
 public interface DatabaseInfo
-extends Serializable
+  extends Serializable
 {
 
   /**

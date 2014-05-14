@@ -26,7 +26,7 @@ import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.InclusionRule;
 
 public class InclusionRuleFilter<N extends NamedObjectWithAttributes>
-implements NamedObjectFilter<N>
+  implements NamedObjectFilter<N>
 {
 
   private final InclusionRule inclusionRule;

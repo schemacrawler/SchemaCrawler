@@ -27,7 +27,7 @@ package schemacrawler.schemacrawler;
  * @author Sualeh Fatehi
  */
 public final class IncludeAll
-implements InclusionRule
+  implements InclusionRule
 {
 
   private static final long serialVersionUID = -2992724018349021861L;

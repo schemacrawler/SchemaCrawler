@@ -29,11 +29,11 @@ import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
 class RoutineGrepFilter
-implements NamedObjectFilter<Routine>
+  implements NamedObjectFilter<Routine>
 {
 
   private static final Logger LOGGER = Logger.getLogger(RoutineGrepFilter.class
-                                                        .getName());
+    .getName());
 
   private final boolean invertMatch;
   private final InclusionRule grepColumnInclusionRule;
@@ -104,7 +104,7 @@ implements NamedObjectFilter<Routine>
     }
 
     boolean include = checkIncludeForColumns && includeForColumns
-        || checkIncludeForDefinitions && includeForDefinitions;
+                      || checkIncludeForDefinitions && includeForDefinitions;
     if (invertMatch)
     {
       include = !include;
@@ -113,7 +113,7 @@ implements NamedObjectFilter<Routine>
     if (!include)
     {
       LOGGER.log(Level.FINE, "Removing table " + routine
-                 + " since it does not match the grep pattern");
+                             + " since it does not match the grep pattern");
     }
 
     return include;

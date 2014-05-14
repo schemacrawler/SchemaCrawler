@@ -33,8 +33,8 @@ import schemacrawler.schema.Trigger;
  * @author Sualeh Fatehi
  */
 class MutableTrigger
-extends AbstractDependantObject<Table>
-implements Trigger
+  extends AbstractDependantObject<Table>
+  implements Trigger
 {
 
   private static final long serialVersionUID = -1619291073229701764L;

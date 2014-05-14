@@ -41,8 +41,8 @@ import schemacrawler.schema.TableType;
 import schemacrawler.schema.Trigger;
 
 final class TablePartial
-extends AbstractDatabaseObject
-implements Table
+  extends AbstractDatabaseObject
+  implements Table
 {
 
   private static final long serialVersionUID = -5968964551235088703L;

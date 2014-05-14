@@ -29,7 +29,7 @@ import java.util.logging.Logger;
  * An enumeration wrapper around JDBC procedure types.
  */
 public enum ProcedureReturnType
-implements RoutineReturnType
+  implements RoutineReturnType
 {
 
   /**
@@ -46,7 +46,7 @@ implements RoutineReturnType
   returnsResult(DatabaseMetaData.procedureReturnsResult, "returns result");
 
   private static final Logger LOGGER = Logger
-      .getLogger(ProcedureReturnType.class.getName());
+    .getLogger(ProcedureReturnType.class.getName());
 
   /**
    * Gets the enum value from the integer.

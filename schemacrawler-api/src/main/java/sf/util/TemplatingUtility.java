@@ -102,7 +102,7 @@ public final class TemplatingUtility
         if (delimiterEndPosition > -1)
         {
           delimiterStartPosition = delimiterStartPosition
-              + DELIMITER_START.length();
+                                   + DELIMITER_START.length();
           final String key = template.substring(delimiterStartPosition,
                                                 delimiterEndPosition);
           final String value = variablesMap.get(key);
@@ -155,7 +155,7 @@ public final class TemplatingUtility
         keys.add(propertyKey);
         // Destroy key, so we can find the next one
         shrunkTemplate = shrunkTemplate.substring(0, left)
-            + shrunkTemplate.substring(right + 1);
+                         + shrunkTemplate.substring(right + 1);
       }
       else
       {

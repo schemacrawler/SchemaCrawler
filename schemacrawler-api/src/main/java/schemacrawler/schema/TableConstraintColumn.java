@@ -21,7 +21,7 @@ package schemacrawler.schema;
 
 
 public interface TableConstraintColumn
-extends Column
+  extends Column
 {
 
   /**

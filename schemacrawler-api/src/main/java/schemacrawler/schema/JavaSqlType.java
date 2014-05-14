@@ -28,7 +28,7 @@ import java.io.Serializable;
  * @author Sualeh Fatehi
  */
 public final class JavaSqlType
-implements Serializable, Comparable<JavaSqlType>
+  implements Serializable, Comparable<JavaSqlType>
 {
 
   public enum JavaSqlTypeGroup
@@ -153,9 +153,9 @@ implements Serializable, Comparable<JavaSqlType>
     int result = 1;
     result = prime * result + javaSqlType;
     result = prime * result
-        + (javaSqlTypeGroup == null? 0: javaSqlTypeGroup.hashCode());
+             + (javaSqlTypeGroup == null? 0: javaSqlTypeGroup.hashCode());
     result = prime * result
-        + (javaSqlTypeName == null? 0: javaSqlTypeName.hashCode());
+             + (javaSqlTypeName == null? 0: javaSqlTypeName.hashCode());
     return result;
   }
 

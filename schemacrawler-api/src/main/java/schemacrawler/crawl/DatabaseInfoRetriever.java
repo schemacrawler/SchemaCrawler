@@ -50,19 +50,19 @@ import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
 final class DatabaseInfoRetriever
-extends AbstractRetriever
+  extends AbstractRetriever
 {
 
   private static final Logger LOGGER = Logger
-      .getLogger(DatabaseInfoRetriever.class.getName());
+    .getLogger(DatabaseInfoRetriever.class.getName());
 
   private static final List<String> ignoreMethods = Arrays
-      .asList("getDatabaseProductName",
-              "getDatabaseProductVersion",
-              "getURL",
-              "getUserName",
-              "getDriverName",
-          "getDriverVersion");
+    .asList("getDatabaseProductName",
+            "getDatabaseProductVersion",
+            "getURL",
+            "getUserName",
+            "getDriverName",
+            "getDriverVersion");
 
   /**
    * Checks if a method is a result set method.
@@ -75,7 +75,7 @@ extends AbstractRetriever
   {
     final Class<?> returnType = method.getReturnType();
     final boolean isPropertiesResultSetMethod = returnType
-        .equals(ResultSet.class) && method.getParameterTypes().length == 0;
+      .equals(ResultSet.class) && method.getParameterTypes().length == 0;
     return isPropertiesResultSetMethod;
   }
 
@@ -90,9 +90,9 @@ extends AbstractRetriever
   {
     final Class<?> returnType = method.getReturnType();
     final boolean notPropertyMethod = returnType.equals(ResultSet.class)
-        || returnType.equals(Connection.class)
-        || method.getParameterTypes().length > 0;
-        return !notPropertyMethod;
+                                      || returnType.equals(Connection.class)
+                                      || method.getParameterTypes().length > 0;
+    return !notPropertyMethod;
   }
 
   /**
@@ -105,30 +105,30 @@ extends AbstractRetriever
   private static boolean isDatabasePropertyResultSetType(final Method method)
   {
     final String[] databasePropertyResultSetTypes = new String[] {
-                                                                  "deletesAreDetected",
-                                                                  "insertsAreDetected",
-                                                                  "updatesAreDetected",
-                                                                  "othersDeletesAreVisible",
-                                                                  "othersInsertsAreVisible",
-                                                                  "othersUpdatesAreVisible",
-                                                                  "ownDeletesAreVisible",
-                                                                  "ownInsertsAreVisible",
-                                                                  "ownUpdatesAreVisible",
-                                                                  "supportsResultSetType"
+        "deletesAreDetected",
+        "insertsAreDetected",
+        "updatesAreDetected",
+        "othersDeletesAreVisible",
+        "othersInsertsAreVisible",
+        "othersUpdatesAreVisible",
+        "ownDeletesAreVisible",
+        "ownInsertsAreVisible",
+        "ownUpdatesAreVisible",
+        "supportsResultSetType"
     };
     final boolean isDatabasePropertyResultSetType = Arrays
-        .binarySearch(databasePropertyResultSetTypes, method.getName()) >= 0;
-        return isDatabasePropertyResultSetType;
+      .binarySearch(databasePropertyResultSetTypes, method.getName()) >= 0;
+    return isDatabasePropertyResultSetType;
   }
 
   private static ImmutableDatabaseProperty retrieveResultSetTypeProperty(final DatabaseMetaData dbMetaData,
                                                                          final Method method,
                                                                          final int resultSetType,
                                                                          final String resultSetTypeName)
-                                                                             throws IllegalAccessException, InvocationTargetException
+    throws IllegalAccessException, InvocationTargetException
   {
     final String name = method.getName() + "For" + resultSetTypeName
-        + "ResultSets";
+                        + "ResultSets";
     Boolean propertyValue = null;
     propertyValue = (Boolean) method.invoke(dbMetaData,
                                             Integer.valueOf(resultSetType));
@@ -137,10 +137,10 @@ extends AbstractRetriever
 
   DatabaseInfoRetriever(final RetrieverConnection retrieverConnection,
                         final MutableDatabase database)
-                            throws SQLException
-                            {
+    throws SQLException
+  {
     super(retrieverConnection, database);
-                            }
+  }
 
   /**
    * Provides additional information on the database.
@@ -149,7 +149,7 @@ extends AbstractRetriever
    *         On a SQL exception
    */
   void retrieveAdditionalDatabaseInfo()
-      throws SQLException
+    throws SQLException
   {
     final DatabaseMetaData dbMetaData = getMetaData();
     final MutableDatabaseInfo dbInfo = database.getDatabaseInfo();
@@ -193,8 +193,8 @@ extends AbstractRetriever
           final ResultSet results = (ResultSet) method.invoke(dbMetaData);
           final List<String> resultsList = readResultsVector(results);
           dbProperties
-          .add(new ImmutableDatabaseProperty(method.getName(), resultsList
-                                             .toArray(new String[resultsList.size()])));
+            .add(new ImmutableDatabaseProperty(method.getName(), resultsList
+              .toArray(new String[resultsList.size()])));
         }
         else if (isDatabasePropertyResultSetType(method))
         {
@@ -204,20 +204,20 @@ extends AbstractRetriever
                        "Retrieving database property using method: " + method);
           }
           dbProperties
-          .add(retrieveResultSetTypeProperty(dbMetaData,
-                                             method,
-                                             ResultSet.TYPE_FORWARD_ONLY,
-                                             "TYPE_FORWARD_ONLY"));
+            .add(retrieveResultSetTypeProperty(dbMetaData,
+                                               method,
+                                               ResultSet.TYPE_FORWARD_ONLY,
+                                               "TYPE_FORWARD_ONLY"));
           dbProperties
-          .add(retrieveResultSetTypeProperty(dbMetaData,
-                                             method,
-                                             ResultSet.TYPE_SCROLL_INSENSITIVE,
-                                             "TYPE_SCROLL_INSENSITIVE"));
+            .add(retrieveResultSetTypeProperty(dbMetaData,
+                                               method,
+                                               ResultSet.TYPE_SCROLL_INSENSITIVE,
+                                               "TYPE_SCROLL_INSENSITIVE"));
           dbProperties
-          .add(retrieveResultSetTypeProperty(dbMetaData,
-                                             method,
-                                             ResultSet.TYPE_SCROLL_SENSITIVE,
-                                             "TYPE_SCROLL_SENSITIVE"));
+            .add(retrieveResultSetTypeProperty(dbMetaData,
+                                               method,
+                                               ResultSet.TYPE_SCROLL_SENSITIVE,
+                                               "TYPE_SCROLL_SENSITIVE"));
         }
       }
       catch (final IllegalAccessException | InvocationTargetException e)
@@ -243,7 +243,7 @@ extends AbstractRetriever
    *         On a SQL exception
    */
   void retrieveAdditionalJdbcDriverInfo()
-      throws SQLException
+    throws SQLException
   {
     final DatabaseMetaData dbMetaData = getMetaData();
     final String url = dbMetaData.getURL();
@@ -255,17 +255,17 @@ extends AbstractRetriever
       {
         final Driver jdbcDriver = DriverManager.getDriver(url);
         final DriverPropertyInfo[] propertyInfo = jdbcDriver
-            .getPropertyInfo(url, new Properties());
+          .getPropertyInfo(url, new Properties());
         for (final DriverPropertyInfo driverPropertyInfo: propertyInfo)
         {
           driverInfo
-          .addJdbcDriverProperty(new ImmutableJdbcDriverProperty(driverPropertyInfo));
+            .addJdbcDriverProperty(new ImmutableJdbcDriverProperty(driverPropertyInfo));
         }
       }
       catch (final SQLException e)
       {
         LOGGER
-        .log(Level.WARNING, "Could not obtain JDBC driver information", e);
+          .log(Level.WARNING, "Could not obtain JDBC driver information", e);
       }
     }
 
@@ -283,7 +283,7 @@ extends AbstractRetriever
    *         On a SQL exception
    */
   void retrieveDatabaseInfo()
-      throws SQLException
+    throws SQLException
   {
     final DatabaseMetaData dbMetaData = getMetaData();
 
@@ -301,7 +301,7 @@ extends AbstractRetriever
    *         On a SQL exception
    */
   void retrieveJdbcDriverInfo()
-      throws SQLException
+    throws SQLException
   {
     final DatabaseMetaData dbMetaData = getMetaData();
     final String url = dbMetaData.getURL();
@@ -332,7 +332,7 @@ extends AbstractRetriever
    * @throws SchemaCrawlerException
    */
   void retrieveSystemColumnDataTypes()
-      throws SQLException, SchemaCrawlerException
+    throws SQLException, SchemaCrawlerException
   {
     final Schema systemSchema = new SchemaReference();
 
@@ -340,11 +340,11 @@ extends AbstractRetriever
     final MetadataResultSet results;
 
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
-        .getInformationSchemaViews();
+      .getInformationSchemaViews();
     if (informationSchemaViews.hasOverrideTypeInfoSql())
     {
       final String typeInfoSql = informationSchemaViews
-          .getOverrideTypeInfoSql();
+        .getOverrideTypeInfoSql();
 
       final Connection connection = getDatabaseConnection();
       statement = connection.createStatement();
@@ -363,21 +363,21 @@ extends AbstractRetriever
         final String typeName = results.getString("TYPE_NAME");
         final int dataType = results.getInt("DATA_TYPE", 0);
         LOGGER.log(Level.FINER, String
-                   .format("Retrieving data type: %s (with type id %d)",
-                           typeName,
-                           dataType));
+          .format("Retrieving data type: %s (with type id %d)",
+                  typeName,
+                  dataType));
         final long precision = results.getLong("PRECISION", 0L);
         final String literalPrefix = results.getString("LITERAL_PREFIX");
         final String literalSuffix = results.getString("LITERAL_SUFFIX");
         final String createParameters = results.getString("CREATE_PARAMS");
         final boolean isNullable = results
-            .getInt("NULLABLE", DatabaseMetaData.typeNullableUnknown) == DatabaseMetaData.typeNullable;
+          .getInt("NULLABLE", DatabaseMetaData.typeNullableUnknown) == DatabaseMetaData.typeNullable;
         final boolean isCaseSensitive = results.getBoolean("CASE_SENSITIVE");
         final SearchableType searchable = SearchableType.valueOf(results
-                                                                 .getInt("SEARCHABLE", SearchableType.unknown.ordinal()));
+          .getInt("SEARCHABLE", SearchableType.unknown.ordinal()));
         final boolean isUnsigned = results.getBoolean("UNSIGNED_ATTRIBUTE");
         final boolean isFixedPrecisionScale = results
-            .getBoolean("FIXED_PREC_SCALE");
+          .getBoolean("FIXED_PREC_SCALE");
         final boolean isAutoIncremented = results.getBoolean("AUTO_INCREMENT");
         final String localTypeName = results.getString("LOCAL_TYPE_NAME");
         final int minimumScale = results.getInt("MINIMUM_SCALE", 0);
@@ -424,12 +424,12 @@ extends AbstractRetriever
 
   void retrieveUserDefinedColumnDataTypes(final String catalogName,
                                           final String schemaName)
-                                              throws SQLException
+    throws SQLException
   {
 
     try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-                                                                 .getUDTs(catalogName, schemaName, "%", null));)
-                                                                 {
+      .getUDTs(catalogName, schemaName, "%", null));)
+    {
       while (results.next())
       {
         // "TYPE_CAT", "TYPE_SCHEM"
@@ -442,7 +442,7 @@ extends AbstractRetriever
 
         final Schema schema = new SchemaReference(catalogName, schemaName);
         final ColumnDataType baseType = database
-            .lookupColumnDataTypeByType(baseTypeValue);
+          .lookupColumnDataTypeByType(baseTypeValue);
         final MutableColumnDataType columnDataType = lookupOrCreateColumnDataType(schema,
                                                                                   dataType,
                                                                                   typeName,
@@ -455,7 +455,7 @@ extends AbstractRetriever
 
         database.addColumnDataType(columnDataType);
       }
-                                                                 }
+    }
 
   }
 

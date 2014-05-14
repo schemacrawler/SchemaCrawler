@@ -29,7 +29,7 @@ import java.util.List;
  * @author Sualeh Fatehi
  */
 public interface ForeignKey
-extends NamedObjectWithAttributes
+  extends NamedObjectWithAttributes
 {
 
   /**

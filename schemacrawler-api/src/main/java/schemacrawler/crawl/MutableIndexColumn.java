@@ -13,8 +13,8 @@ import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Table;
 
 final class MutableIndexColumn
-extends AbstractDependantObject<Table>
-implements IndexColumn
+  extends AbstractDependantObject<Table>
+  implements IndexColumn
 {
 
   private static final long serialVersionUID = -6923211341742623556L;

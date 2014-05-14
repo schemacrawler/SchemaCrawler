@@ -31,8 +31,8 @@ import schemacrawler.schema.DatabaseProperty;
 import schemacrawler.schema.Property;
 
 class ImmutableDatabaseProperty
-extends AbstractProperty
-implements DatabaseProperty
+  extends AbstractProperty
+  implements DatabaseProperty
 {
 
   private static final long serialVersionUID = -7150431683440256142L;
@@ -70,7 +70,7 @@ implements DatabaseProperty
     else
     {
       return getDescription().toLowerCase().compareTo(otherDbProperty
-                                                      .getDescription().toLowerCase());
+        .getDescription().toLowerCase());
     }
   }
 

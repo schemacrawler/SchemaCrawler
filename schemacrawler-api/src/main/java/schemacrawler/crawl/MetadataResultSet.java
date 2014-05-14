@@ -46,11 +46,11 @@ import sf.util.Utility;
  * @author Sualeh Fatehi
  */
 final class MetadataResultSet
-implements AutoCloseable
+  implements AutoCloseable
 {
 
   private static final Logger LOGGER = Logger.getLogger(MetadataResultSet.class
-                                                        .getName());
+    .getName());
 
   private static final int FETCHSIZE = 20;
 
@@ -59,8 +59,8 @@ implements AutoCloseable
   private Set<String> readColumns;
 
   MetadataResultSet(final ResultSet resultSet)
-      throws SQLException
-      {
+    throws SQLException
+  {
     if (resultSet == null)
     {
       throw new IllegalArgumentException("Cannot use null results");
@@ -97,7 +97,7 @@ implements AutoCloseable
     this.resultSetColumns = Collections.unmodifiableList(resultSetColumns);
 
     readColumns = new HashSet<>();
-      }
+  }
 
   /**
    * Releases this <code>ResultSet</code> object's database and JDBC
@@ -109,7 +109,7 @@ implements AutoCloseable
    */
   @Override
   public void close()
-      throws SQLException
+    throws SQLException
   {
     results.close();
   }
@@ -143,7 +143,7 @@ implements AutoCloseable
            * database.
            */
           LOGGER.log(Level.WARNING, "Could not read value for column "
-              + columnName, e);
+                                    + columnName, e);
         }
       }
     }
@@ -185,14 +185,14 @@ implements AutoCloseable
           catch (final NumberFormatException e)
           {
             value = stringBooleanValue.equalsIgnoreCase("YES")
-                || Boolean.valueOf(stringBooleanValue).booleanValue();
+                    || Boolean.valueOf(stringBooleanValue).booleanValue();
           }
         }
       }
       catch (final SQLException e)
       {
         LOGGER.log(Level.WARNING, "Could not read boolean value for column "
-            + columnName, e);
+                                  + columnName, e);
       }
     }
     return value;
@@ -257,7 +257,7 @@ implements AutoCloseable
       catch (final SQLException e)
       {
         LOGGER.log(Level.WARNING, "Could not read integer value for column "
-            + columnName, e);
+                                  + columnName, e);
       }
     }
     return value;
@@ -289,7 +289,7 @@ implements AutoCloseable
       catch (final SQLException e)
       {
         LOGGER.log(Level.WARNING, "Could not read long value for column "
-            + columnName, e);
+                                  + columnName, e);
       }
     }
     return value;
@@ -321,7 +321,7 @@ implements AutoCloseable
       catch (final SQLException e)
       {
         LOGGER.log(Level.WARNING, "Could not read short value for column "
-            + columnName, e);
+                                  + columnName, e);
       }
     }
     return value;
@@ -355,7 +355,7 @@ implements AutoCloseable
       catch (final SQLException e)
       {
         LOGGER.log(Level.WARNING, "Could not read string value for column "
-            + columnName, e);
+                                  + columnName, e);
       }
     }
     return value;
@@ -374,7 +374,7 @@ implements AutoCloseable
    *         On a database access error
    */
   boolean next()
-      throws SQLException
+    throws SQLException
   {
     readColumns = new HashSet<>();
     return results.next();
@@ -383,7 +383,7 @@ implements AutoCloseable
   private boolean useColumn(final String columnName)
   {
     final boolean useColumn = columnName != null
-        && resultSetColumns.contains(columnName);
+                              && resultSetColumns.contains(columnName);
     if (useColumn)
     {
       readColumns.add(columnName);

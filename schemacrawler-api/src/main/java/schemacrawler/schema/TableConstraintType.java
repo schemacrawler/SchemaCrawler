@@ -37,7 +37,7 @@ public enum TableConstraintType
   foreign_key("FOREIGN KEY");
 
   private static final Logger LOGGER = Logger
-      .getLogger(TableConstraintType.class.getName());
+    .getLogger(TableConstraintType.class.getName());
 
   /**
    * Find the enumeration value corresponding to the string.

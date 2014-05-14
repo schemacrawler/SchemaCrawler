@@ -39,19 +39,19 @@ public enum ForeignKeyDeferrability
    * Initially deferred.
    */
   initiallyDeferred(DatabaseMetaData.importedKeyInitiallyDeferred,
-      "initially deferred"),
-      /**
-       * Initially immediate.
-       */
-      initiallyImmediate(DatabaseMetaData.importedKeyInitiallyImmediate,
-          "initially immediate"),
-          /**
-           * Not deferrable.
-           */
-          keyNotDeferrable(DatabaseMetaData.importedKeyNotDeferrable, "not deferrable");
+    "initially deferred"),
+  /**
+   * Initially immediate.
+   */
+  initiallyImmediate(DatabaseMetaData.importedKeyInitiallyImmediate,
+    "initially immediate"),
+  /**
+   * Not deferrable.
+   */
+  keyNotDeferrable(DatabaseMetaData.importedKeyNotDeferrable, "not deferrable");
 
   private static final Logger LOGGER = Logger
-      .getLogger(ForeignKeyDeferrability.class.getName());
+    .getLogger(ForeignKeyDeferrability.class.getName());
 
   /**
    * Gets the enum value from the integer.
@@ -63,7 +63,7 @@ public enum ForeignKeyDeferrability
   public static ForeignKeyDeferrability valueOf(final int id)
   {
     for (final ForeignKeyDeferrability fkDeferrability: ForeignKeyDeferrability
-        .values())
+      .values())
     {
       if (fkDeferrability.getId() == id)
       {

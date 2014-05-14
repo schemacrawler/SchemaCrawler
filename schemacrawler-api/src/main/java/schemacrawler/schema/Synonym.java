@@ -27,7 +27,7 @@ package schemacrawler.schema;
  * @author Matt Albrecht, Sualeh Fatehi
  */
 public interface Synonym
-extends DatabaseObject
+  extends DatabaseObject
 {
 
   /**
