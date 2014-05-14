@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -23,11 +23,11 @@ package schemacrawler.schema;
 
 /**
  * Represents a routine in the database.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public interface RoutineReference
-  extends DatabaseObjectReference
+extends DatabaseObjectReference
 {
 
 }

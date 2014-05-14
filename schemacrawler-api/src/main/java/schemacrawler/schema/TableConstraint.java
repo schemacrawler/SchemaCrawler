@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -25,38 +25,38 @@ import java.util.List;
 
 /**
  * Represents a table constraint.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public interface TableConstraint
-  extends DependantObject<Table>, TypedObject<TableConstraintType>,
-  DefinedObject
+extends DependantObject<Table>, TypedObject<TableConstraintType>,
+DefinedObject
 {
 
   /**
    * Gets the list of columns in ordinal order.
-   * 
+   *
    * @return Columns of the table constraint.
    */
   List<TableConstraintColumn> getColumns();
 
   /**
    * Gets the table constraint type.
-   * 
+   *
    * @return Table constraint type
    */
   TableConstraintType getTableConstraintType();
 
   /**
    * Whether the constraint is deferrable.
-   * 
+   *
    * @return Whether the constraint is deferrable
    */
   boolean isDeferrable();
 
   /**
    * Whether the constraint is initially deferred.
-   * 
+   *
    * @return Whether the constraint is initially deferred
    */
   boolean isInitiallyDeferred();

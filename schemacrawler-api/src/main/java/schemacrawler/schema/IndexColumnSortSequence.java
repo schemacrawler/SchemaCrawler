@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -44,11 +44,11 @@ public enum IndexColumnSortSequence
   descending("D");
 
   private static final Logger LOGGER = Logger
-    .getLogger(IndexColumnSortSequence.class.getName());
+      .getLogger(IndexColumnSortSequence.class.getName());
 
   /**
    * Find the enumeration value corresponding to the string.
-   * 
+   *
    * @param code
    *        Sort sequence code.
    * @return Enumeration value
@@ -75,7 +75,7 @@ public enum IndexColumnSortSequence
 
   /**
    * Index sort sequence code.
-   * 
+   *
    * @return Index sort sequence code
    */
   String getCode()

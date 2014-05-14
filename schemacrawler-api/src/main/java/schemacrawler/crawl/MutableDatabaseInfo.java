@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -21,6 +21,8 @@
 package schemacrawler.crawl;
 
 
+import static sf.util.Utility.NEWLINE;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -34,16 +36,14 @@ import schemacrawler.schema.DatabaseProperty;
 /**
  * Database and connection information. Created from metadata returned
  * by a JDBC call, and other sources of information.
- * 
+ *
  * @author Sualeh Fatehi sualeh@hotmail.com
  */
 final class MutableDatabaseInfo
-  implements DatabaseInfo
+implements DatabaseInfo
 {
 
   private static final long serialVersionUID = 4051323422934251828L;
-
-  private static final String NEWLINE = System.getProperty("line.separator");
 
   private String userName;
   private String productName;
@@ -90,7 +90,7 @@ final class MutableDatabaseInfo
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see Object#toString()
    */
   @Override
@@ -98,7 +98,7 @@ final class MutableDatabaseInfo
   {
     final StringBuilder info = new StringBuilder();
     info.append("-- database: ").append(getProductName()).append(' ')
-      .append(getProductVersion()).append(NEWLINE);
+    .append(getProductVersion()).append(NEWLINE);
     return info.toString();
   }
 

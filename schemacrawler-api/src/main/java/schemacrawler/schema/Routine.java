@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -23,12 +23,12 @@ package schemacrawler.schema;
 import java.util.List;
 
 public interface Routine
-  extends RoutineReference, TypedObject<RoutineType>, DefinedObject
+extends RoutineReference, TypedObject<RoutineType>, DefinedObject
 {
 
   /**
    * Gets a column by name.
-   * 
+   *
    * @param name
    *        Name
    * @return Column of the routine
@@ -37,35 +37,35 @@ public interface Routine
 
   /**
    * Gets the list of columns in ordinal order.
-   * 
+   *
    * @return Columns of the routine
    */
   List<? extends RoutineColumn<? extends Routine>> getColumns();
 
   /**
    * Gets the routine type.
-   * 
+   *
    * @return Routine type
    */
   RoutineReturnType getReturnType();
 
   /**
    * Gets the type of the routine body.
-   * 
+   *
    * @return Routine body type
    */
   RoutineBodyType getRoutineBodyType();
 
   /**
    * Gets the routine type.
-   * 
+   *
    * @return Routine type.
    */
   RoutineType getRoutineType();
 
   /**
    * The name which uniquely identifies this routine within its schema.
-   * 
+   *
    * @return Specific name.
    */
   String getSpecificName();

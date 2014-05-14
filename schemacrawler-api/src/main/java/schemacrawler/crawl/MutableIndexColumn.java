@@ -13,8 +13,8 @@ import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Table;
 
 final class MutableIndexColumn
-  extends AbstractDependantObject<Table>
-  implements IndexColumn
+extends AbstractDependantObject<Table>
+implements IndexColumn
 {
 
   private static final long serialVersionUID = -6923211341742623556L;
@@ -66,7 +66,7 @@ final class MutableIndexColumn
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.BaseColumn#getDecimalDigits()
    */
   @Override
@@ -77,7 +77,7 @@ final class MutableIndexColumn
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Column#getDefaultValue()
    */
   @Override
@@ -88,7 +88,7 @@ final class MutableIndexColumn
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.IndexColumn#getIndex()
    */
   @Override
@@ -99,7 +99,7 @@ final class MutableIndexColumn
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.IndexColumn#getIndexOrdinalPosition()
    */
   @Override
@@ -110,7 +110,7 @@ final class MutableIndexColumn
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.BaseColumn#getOrdinalPosition()
    */
   @Override
@@ -121,7 +121,7 @@ final class MutableIndexColumn
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Column#getPrivilege(java.lang.String)
    */
   @Override
@@ -132,7 +132,7 @@ final class MutableIndexColumn
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Column#getPrivileges()
    */
   @Override
@@ -143,7 +143,7 @@ final class MutableIndexColumn
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Column#getReferencedColumn()
    */
   @Override
@@ -154,7 +154,7 @@ final class MutableIndexColumn
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.BaseColumn#getSize()
    */
   @Override
@@ -165,7 +165,7 @@ final class MutableIndexColumn
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.IndexColumn#getSortSequence()
    */
   @Override
@@ -176,7 +176,7 @@ final class MutableIndexColumn
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.TypedObject#getType()
    */
   @Override
@@ -187,7 +187,7 @@ final class MutableIndexColumn
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.BaseColumn#getWidth()
    */
   @Override
@@ -198,7 +198,7 @@ final class MutableIndexColumn
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.BaseColumn#isNullable()
    */
   @Override
@@ -209,7 +209,7 @@ final class MutableIndexColumn
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Column#isPartOfForeignKey()
    */
   @Override
@@ -220,7 +220,7 @@ final class MutableIndexColumn
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Column#isPartOfPrimaryKey()
    */
   @Override
@@ -231,7 +231,7 @@ final class MutableIndexColumn
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Column#isPartOfUniqueIndex()
    */
   @Override

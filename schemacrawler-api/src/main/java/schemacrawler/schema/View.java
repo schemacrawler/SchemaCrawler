@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -23,25 +23,25 @@ package schemacrawler.schema;
 
 /**
  * Represents a view in the database.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public interface View
-  extends Table
+extends Table
 {
 
   /**
    * Type of WITH CHECK OPTION. Is CASCADE if the original view was
    * created by using the WITH CHECK OPTION. Otherwise, NONE is
    * returned.
-   * 
+   *
    * @return Check option.
    */
   CheckOptionType getCheckOption();
 
   /**
    * Specifies whether the view is updatable.
-   * 
+   *
    * @return Whether the view is updatable.
    */
   boolean isUpdatable();

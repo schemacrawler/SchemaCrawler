@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -42,43 +42,43 @@ import sf.util.Utility;
 /**
  * A retriever that uses database metadata to get the extended details
  * about the database synonyms.
- * 
+ *
  * @author Matt Albrecht, Sualeh Fatehi
  */
 final class SynonymRetriever
-  extends AbstractRetriever
+extends AbstractRetriever
 {
 
   private static final Logger LOGGER = Logger.getLogger(SynonymRetriever.class
-    .getName());
+                                                        .getName());
 
   SynonymRetriever(final RetrieverConnection retrieverConnection,
                    final MutableDatabase database)
-    throws SQLException
-  {
+                       throws SQLException
+                       {
     super(retrieverConnection, database);
-  }
+                       }
 
   /**
    * Retrieves the synonym definitions from the database.
-   * 
+   *
    * @param synonymInclusionRule
    *        Rule for including synonyms
    * @throws SQLException
    *         On a SQL exception
    */
   void retrieveSynonymInformation(final InclusionRule synonymInclusionRule)
-    throws SQLException
+      throws SQLException
   {
     final InclusionRuleFilter<Synonym> synonymFilter = new InclusionRuleFilter<>(synonymInclusionRule,
-                                                                                 false);
+        false);
     if (synonymFilter.isExcludeAll())
     {
       return;
     }
 
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
-      .getInformationSchemaViews();
+        .getInformationSchemaViews();
     if (!informationSchemaViews.hasSynonymsSql())
     {
       LOGGER.log(Level.FINE,
@@ -86,7 +86,7 @@ final class SynonymRetriever
       return;
     }
     final String synonymsDefinitionSql = informationSchemaViews
-      .getSynonymsSql();
+        .getSynonymsSql();
 
     final Collection<Schema> schemas = database.getSchemaNames();
 
@@ -95,28 +95,28 @@ final class SynonymRetriever
     try (final Statement statement = connection.createStatement();
         MetadataResultSet results = new MetadataResultSet(executeSql(statement,
                                                                      synonymsDefinitionSql));)
-    {
+                                                                     {
       while (results.next())
       {
         final String catalogName = quotedName(results
-          .getString("SYNONYM_CATALOG"));
+                                              .getString("SYNONYM_CATALOG"));
         final String schemaName = quotedName(results
-          .getString("SYNONYM_SCHEMA"));
+                                             .getString("SYNONYM_SCHEMA"));
         final String synonymName = quotedName(results.getString("SYNONYM_NAME"));
         final String referencedObjectCatalogName = quotedName(results
-          .getString("REFERENCED_OBJECT_CATALOG"));
+                                                              .getString("REFERENCED_OBJECT_CATALOG"));
         final String referencedObjectSchemaName = quotedName(results
-          .getString("REFERENCED_OBJECT_SCHEMA"));
+                                                             .getString("REFERENCED_OBJECT_SCHEMA"));
         final String referencedObjectName = quotedName(results
-          .getString("REFERENCED_OBJECT_NAME"));
+                                                       .getString("REFERENCED_OBJECT_NAME"));
 
         if (Utility.isBlank(referencedObjectName))
         {
           LOGGER.log(Level.FINE, String
-            .format("No reference for synonym, %s.%s.%s",
-                    catalogName,
-                    schemaName,
-                    synonymName));
+                     .format("No reference for synonym, %s.%s.%s",
+                             catalogName,
+                             schemaName,
+                             synonymName));
           continue;
         }
 
@@ -147,7 +147,7 @@ final class SynonymRetriever
         else
         {
           referencedObject = new AbstractDatabaseObject(referencedSchema,
-            referencedObjectName)
+                                                        referencedObjectName)
           {
 
             private static final long serialVersionUID = -2212843304418302122L;
@@ -165,7 +165,7 @@ final class SynonymRetriever
         }
 
       }
-    }
+                                                                     }
     catch (final Exception e)
     {
       LOGGER.log(Level.WARNING, "Could not retrieve synonyms", e);

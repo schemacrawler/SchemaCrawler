@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -23,10 +23,10 @@ package schemacrawler.filter;
 import java.util.ArrayList;
 import java.util.List;
 
-import schemacrawler.schema.NamedObject;
+import schemacrawler.schema.NamedObjectWithAttributes;
 
-class ChainedNamedObjectFilter<N extends NamedObject>
-  implements NamedObjectFilter<N>
+class ChainedNamedObjectFilter<N extends NamedObjectWithAttributes>
+implements NamedObjectFilter<N>
 {
 
   private final List<NamedObjectFilter<N>> filters = new ArrayList<>();

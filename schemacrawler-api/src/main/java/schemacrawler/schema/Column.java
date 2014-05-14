@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -25,23 +25,23 @@ import java.util.Collection;
 
 /**
  * Represents a column in a database table or routine.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public interface Column
-  extends BaseColumn<Table>
+extends BaseColumn<Table>
 {
 
   /**
    * Gets the default data value for the column.
-   * 
+   *
    * @return Default data value for the column
    */
   String getDefaultValue();
 
   /**
    * Gets a privilege by name.
-   * 
+   *
    * @param name
    *        Name
    * @return Privilege.
@@ -50,7 +50,7 @@ public interface Column
 
   /**
    * Gets the list of privileges for the table.
-   * 
+   *
    * @return Privileges for the table
    */
   Collection<Privilege<Column>> getPrivileges();
@@ -58,28 +58,28 @@ public interface Column
   /**
    * Referenced column if this column is part of a foreign key, null
    * otherwise.
-   * 
+   *
    * @return Referenced column
    */
   Column getReferencedColumn();
 
   /**
    * True if this column is part of a foreign key.
-   * 
+   *
    * @return If the column is part of a foreign key
    */
   boolean isPartOfForeignKey();
 
   /**
    * True if this column is a part of primary key.
-   * 
+   *
    * @return If the column is a part of primary key
    */
   boolean isPartOfPrimaryKey();
 
   /**
    * True if this column is a unique index.
-   * 
+   *
    * @return If the column is a unique index
    */
   boolean isPartOfUniqueIndex();

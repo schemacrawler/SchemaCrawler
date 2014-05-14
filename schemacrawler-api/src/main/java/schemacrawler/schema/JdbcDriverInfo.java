@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -26,44 +26,44 @@ import java.util.Collection;
 
 /**
  * JDBC driver information.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public interface JdbcDriverInfo
-  extends Serializable
+extends Serializable
 {
 
   /**
    * Gets the database connection URL.
-   * 
+   *
    * @return Database connection URL
    */
   String getConnectionUrl();
 
   /**
    * Gets the class name of the JDBC driver.
-   * 
+   *
    * @return Class name of the JDBC driver
    */
   String getDriverClassName();
 
   /**
    * Gets the name of the JDBC driver.
-   * 
+   *
    * @return Driver name
    */
   String getDriverName();
 
   /**
    * Gets all the JDBC driver properties, and their values.
-   * 
+   *
    * @return JDBC driver properties
    */
   Collection<JdbcDriverProperty> getDriverProperties();
 
   /**
    * Gets the JDBC driver version.
-   * 
+   *
    * @return Driver version.
    */
   String getDriverVersion();
@@ -74,7 +74,7 @@ public interface JdbcDriverInfo
    * <P>
    * JDBC compliance requires full support for the JDBC API and full
    * support for SQL 92 Entry Level.
-   * 
+   *
    * @return <code>true</code> if this driver is JDBC Compliant;
    *         <code>false</code> otherwise
    */

@@ -37,7 +37,7 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.ForeignKey;
-import schemacrawler.schema.NamedObject;
+import schemacrawler.schema.NamedObjectWithAttributes;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Synonym;
@@ -324,7 +324,7 @@ public final class SchemaDotFormatter
     return tableNameBgColor;
   }
 
-  private String nodeId(final NamedObject namedObject)
+  private String nodeId(final NamedObjectWithAttributes namedObject)
   {
     if (namedObject == null)
     {

@@ -31,7 +31,7 @@ import sf.util.Utility;
  * Version information for this product. Has methods to obtain
  * information about the product, as well as a main method, so it can be
  * called from the command line.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public final class Version
@@ -49,7 +49,7 @@ public final class Version
     try
     {
       final String readLine = new BufferedReader(new StringReader(ABOUT))
-        .readLine();
+      .readLine();
       if (readLine != null)
       {
         productLine = readLine.split(" ");
@@ -57,14 +57,14 @@ public final class Version
       else
       {
         productLine = new String[] {
-            PRODUCTNAME, ""
+                                    PRODUCTNAME, ""
         };
       }
     }
     catch (final IOException e)
     {
       productLine = new String[] {
-          PRODUCTNAME, ""
+                                  PRODUCTNAME, ""
       };
     }
     VERSION = productLine[1];
@@ -72,7 +72,7 @@ public final class Version
 
   /**
    * Information about this product.
-   * 
+   *
    * @return Information about this product.
    */
   public static String about()
@@ -82,7 +82,7 @@ public final class Version
 
   /**
    * Product name.
-   * 
+   *
    * @return Product name.
    */
   public static String getProductName()
@@ -92,7 +92,7 @@ public final class Version
 
   /**
    * Product version number.
-   * 
+   *
    * @return Product version number.
    */
   public static String getVersion()
@@ -102,7 +102,7 @@ public final class Version
 
   /**
    * Main routine. Prints information about this product.
-   * 
+   *
    * @param args
    *        Arguments to the main routine - they are ignored.
    */
@@ -118,7 +118,7 @@ public final class Version
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see Object#toString()
    */
   @Override

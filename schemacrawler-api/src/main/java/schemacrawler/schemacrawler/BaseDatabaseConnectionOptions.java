@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -37,16 +37,16 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 abstract class BaseDatabaseConnectionOptions
-  implements ConnectionOptions
+implements ConnectionOptions
 {
 
   private static final long serialVersionUID = -8141436553988174836L;
 
   private static final Logger LOGGER = Logger
-    .getLogger(BaseDatabaseConnectionOptions.class.getName());
+      .getLogger(BaseDatabaseConnectionOptions.class.getName());
 
   static void loadJdbcDriver(final String jdbcDriverClassName)
-    throws SchemaCrawlerException
+      throws SchemaCrawlerException
   {
     try
     {
@@ -55,7 +55,7 @@ abstract class BaseDatabaseConnectionOptions
     catch (final Exception e)
     {
       throw new SchemaCrawlerException("Could not load JDBC driver, "
-                                       + jdbcDriverClassName, e);
+          + jdbcDriverClassName, e);
     }
   }
 
@@ -65,14 +65,14 @@ abstract class BaseDatabaseConnectionOptions
 
   @Override
   public final Connection getConnection()
-    throws SQLException
+      throws SQLException
   {
     return getConnection(user, password);
   }
 
   @Override
   public final Connection getConnection(final String user, final String password)
-    throws SQLException
+      throws SQLException
   {
     if (user == null)
     {
@@ -92,7 +92,7 @@ abstract class BaseDatabaseConnectionOptions
     {
       throw new SQLException(String.format("Could not connect to database, for user %s",
                                            user),
-                             e);
+                                           e);
     }
 
     final Properties jdbcConnectionProperties = new Properties();
@@ -111,9 +111,9 @@ abstract class BaseDatabaseConnectionOptions
     try
     {
       LOGGER.log(Level.INFO, String
-        .format("Making connection to %s, with user %s", connectionUrl, user));
+                 .format("Making connection to %s, with user %s", connectionUrl, user));
       final Connection connection = DriverManager
-        .getConnection(connectionUrl, jdbcConnectionProperties);
+          .getConnection(connectionUrl, jdbcConnectionProperties);
       return connection;
     }
     catch (final SQLException e)
@@ -122,7 +122,7 @@ abstract class BaseDatabaseConnectionOptions
       throw new SchemaCrawlerSQLException(String.format("Could not connect to %s, with properties %s",
                                                         connectionUrl,
                                                         jdbcConnectionProperties),
-                                          e);
+                                                        e);
     }
   }
 
@@ -149,21 +149,21 @@ abstract class BaseDatabaseConnectionOptions
 
   @Override
   public int getLoginTimeout()
-    throws SQLException
+      throws SQLException
   {
     return 0;
   }
 
   @Override
   public PrintWriter getLogWriter()
-    throws SQLException
+      throws SQLException
   {
     return null;
   }
 
   @Override
   public Logger getParentLogger()
-    throws SQLFeatureNotSupportedException
+      throws SQLFeatureNotSupportedException
   {
     throw new SQLFeatureNotSupportedException("Not supported");
   }
@@ -176,7 +176,7 @@ abstract class BaseDatabaseConnectionOptions
 
   @Override
   public boolean isWrapperFor(final Class<?> iface)
-    throws SQLException
+      throws SQLException
   {
     return false;
   }
@@ -217,14 +217,14 @@ abstract class BaseDatabaseConnectionOptions
 
   @Override
   public void setLoginTimeout(final int seconds)
-    throws SQLException
+      throws SQLException
   {
     throw new SQLFeatureNotSupportedException("Not supported");
   }
 
   @Override
   public void setLogWriter(final PrintWriter out)
-    throws SQLException
+      throws SQLException
   {
     if (out != null)
     {
@@ -249,7 +249,7 @@ abstract class BaseDatabaseConnectionOptions
   {
     final StringBuilder builder = new StringBuilder();
     builder.append("driver=").append(getJdbcDriver().getClass().getName())
-      .append(NEWLINE);
+    .append(NEWLINE);
     builder.append("url=").append(getConnectionUrl()).append(NEWLINE);
     builder.append("user=").append(getUser()).append(NEWLINE);
     return builder.toString();
@@ -257,7 +257,7 @@ abstract class BaseDatabaseConnectionOptions
 
   @Override
   public <T> T unwrap(final Class<T> iface)
-    throws SQLException
+      throws SQLException
   {
     throw new SQLFeatureNotSupportedException("Not supported");
   }

@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -21,6 +21,8 @@
 package schemacrawler.crawl;
 
 
+import static sf.util.Utility.NEWLINE;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -34,16 +36,14 @@ import schemacrawler.schema.JdbcDriverProperty;
 /**
  * JDBC driver information. Created from metadata returned by a JDBC
  * call, and other sources of information.
- * 
+ *
  * @author Sualeh Fatehi sualeh@hotmail.com
  */
 final class MutableJdbcDriverInfo
-  implements JdbcDriverInfo
+implements JdbcDriverInfo
 {
 
   private static final long serialVersionUID = 8030156654422512161L;
-
-  private static final String NEWLINE = System.getProperty("line.separator");
 
   private String driverName;
   private String driverClassName;
@@ -54,7 +54,7 @@ final class MutableJdbcDriverInfo
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.JdbcDriverInfo#getConnectionUrl()
    */
   @Override
@@ -65,7 +65,7 @@ final class MutableJdbcDriverInfo
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.JdbcDriverInfo#getDriverClassName()
    */
   @Override
@@ -76,7 +76,7 @@ final class MutableJdbcDriverInfo
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.JdbcDriverInfo#getDriverName()
    */
   @Override
@@ -87,7 +87,7 @@ final class MutableJdbcDriverInfo
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.JdbcDriverInfo#getDriverProperties()
    */
   @Override
@@ -100,7 +100,7 @@ final class MutableJdbcDriverInfo
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.JdbcDriverInfo#getDriverVersion()
    */
   @Override
@@ -111,7 +111,7 @@ final class MutableJdbcDriverInfo
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.JdbcDriverInfo#isJdbcCompliant()
    */
   @Override
@@ -122,7 +122,7 @@ final class MutableJdbcDriverInfo
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see Object#toString()
    */
   @Override
@@ -130,9 +130,9 @@ final class MutableJdbcDriverInfo
   {
     final StringBuilder info = new StringBuilder();
     info.append("-- driver: ").append(getDriverName()).append(' ')
-      .append(getDriverVersion()).append(NEWLINE);
+    .append(getDriverVersion()).append(NEWLINE);
     info.append("-- driver class: ").append(getDriverClassName())
-      .append(NEWLINE);
+    .append(NEWLINE);
     info.append("-- url: ").append(getConnectionUrl()).append(NEWLINE);
     info.append("-- jdbc compliant: ").append(isJdbcCompliant());
     return info.toString();
@@ -140,7 +140,7 @@ final class MutableJdbcDriverInfo
 
   /**
    * Adds a JDBC driver property.
-   * 
+   *
    * @param jdbcDriverProperty
    *        JDBC driver property
    */

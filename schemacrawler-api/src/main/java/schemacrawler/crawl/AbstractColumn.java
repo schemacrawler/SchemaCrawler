@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -30,12 +30,12 @@ import schemacrawler.schema.NamedObject;
 /**
  * Represents a column in a database for tables and routines. Created
  * from metadata returned by a JDBC call.
- * 
+ *
  * @author Sualeh Fatehi
  */
 abstract class AbstractColumn<P extends DatabaseObjectReference>
-  extends AbstractDependantObject<P>
-  implements BaseColumn<P>
+extends AbstractDependantObject<P>
+implements BaseColumn<P>
 {
 
   private static final long serialVersionUID = -8492662324895309485L;
@@ -79,7 +79,7 @@ abstract class AbstractColumn<P extends DatabaseObjectReference>
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.BaseColumn#getColumnDataType()
    */
   @Override
@@ -90,7 +90,7 @@ abstract class AbstractColumn<P extends DatabaseObjectReference>
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.BaseColumn#getDecimalDigits()
    */
   @Override
@@ -101,7 +101,7 @@ abstract class AbstractColumn<P extends DatabaseObjectReference>
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.BaseColumn#getOrdinalPosition()
    */
   @Override
@@ -112,7 +112,7 @@ abstract class AbstractColumn<P extends DatabaseObjectReference>
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.BaseColumn#getSize()
    */
   @Override
@@ -123,7 +123,7 @@ abstract class AbstractColumn<P extends DatabaseObjectReference>
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.TypedObject#getType()
    */
   @Override
@@ -134,7 +134,7 @@ abstract class AbstractColumn<P extends DatabaseObjectReference>
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.BaseColumn#getWidth()
    */
   @Override
@@ -153,9 +153,9 @@ abstract class AbstractColumn<P extends DatabaseObjectReference>
     }
 
     final JavaSqlTypeGroup sqlDataTypeGroup = columnDataType.getJavaSqlType()
-      .getJavaSqlTypeGroup();
+        .getJavaSqlTypeGroup();
     final boolean needWidth = sqlDataTypeGroup == JavaSqlTypeGroup.character
-                              || sqlDataTypeGroup == JavaSqlTypeGroup.real;
+        || sqlDataTypeGroup == JavaSqlTypeGroup.real;
 
     final StringBuilder columnWidthBuffer = new StringBuilder();
     if (needWidth)
@@ -175,7 +175,7 @@ abstract class AbstractColumn<P extends DatabaseObjectReference>
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.BaseColumn#isNullable()
    */
   @Override
@@ -206,7 +206,7 @@ abstract class AbstractColumn<P extends DatabaseObjectReference>
 
   /**
    * Sets the column size.
-   * 
+   *
    * @param size
    *        Size of the column
    */

@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -35,7 +35,7 @@ import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
 
 public abstract class BaseDatabaseDecorator
-  implements Database
+implements Database
 {
 
   private static final long serialVersionUID = -3953296149824921463L;

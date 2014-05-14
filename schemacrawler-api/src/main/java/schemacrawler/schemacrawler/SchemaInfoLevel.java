@@ -27,7 +27,7 @@ package schemacrawler.schemacrawler;
  * @author Sualeh Fatehi
  */
 public final class SchemaInfoLevel
-  implements Options
+implements Options
 {
 
   private static final long serialVersionUID = -6721986729175552425L;

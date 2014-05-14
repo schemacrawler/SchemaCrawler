@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -48,11 +48,11 @@ public enum ConditionTimingType
   after("AFTER");
 
   private static final Logger LOGGER = Logger
-    .getLogger(ConditionTimingType.class.getName());
+      .getLogger(ConditionTimingType.class.getName());
 
   /**
    * Find the enumeration value corresponding to the string.
-   * 
+   *
    * @param value
    *        Sort sequence code.
    * @return Enumeration value
@@ -79,7 +79,7 @@ public enum ConditionTimingType
 
   /**
    * Gets the value.
-   * 
+   *
    * @return Value
    */
   public final String getValue()

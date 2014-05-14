@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -28,19 +28,19 @@ import schemacrawler.schema.Table;
 
 /**
  * Represents a primary key in a table.
- * 
+ *
  * @author Sualeh Fatehi
  */
 class MutablePrimaryKey
-  extends MutableIndex
-  implements PrimaryKey
+extends MutableIndex
+implements PrimaryKey
 {
 
   private static final long serialVersionUID = -7169206178562782087L;
 
   /**
    * Copies information from an index.
-   * 
+   *
    * @param index
    *        Index
    */
@@ -66,7 +66,7 @@ class MutablePrimaryKey
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see Index#isUnique()
    */
   @Override

@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -22,7 +22,7 @@ package schemacrawler.crawl;
 
 
 public class NotLoadedException
-  extends RuntimeException
+extends RuntimeException
 {
 
   private static final long serialVersionUID = -1745422469189598709L;

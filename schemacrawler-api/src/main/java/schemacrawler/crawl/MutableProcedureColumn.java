@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -28,12 +28,12 @@ import schemacrawler.schema.ProcedureColumnType;
 /**
  * Represents a column in a database procedure. Created from metadata
  * returned by a JDBC call.
- * 
+ *
  * @author Sualeh Fatehi
  */
 final class MutableProcedureColumn
-  extends MutableRoutineColumn<Procedure>
-  implements ProcedureColumn
+extends MutableRoutineColumn<Procedure>
+implements ProcedureColumn
 {
 
   private static final long serialVersionUID = 3546361725629772857L;
@@ -47,7 +47,7 @@ final class MutableProcedureColumn
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see ProcedureColumn#getColumnType()
    */
   @Override

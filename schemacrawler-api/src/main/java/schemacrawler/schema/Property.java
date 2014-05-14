@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -23,26 +23,26 @@ package schemacrawler.schema;
 import java.io.Serializable;
 
 public interface Property
-  extends Serializable, Comparable<Property>
+extends Serializable, Comparable<Property>
 {
 
   /**
    * Gets the description of the property.
-   * 
+   *
    * @return Description
    */
   String getDescription();
 
   /**
    * Gets the name of the property.
-   * 
+   *
    * @return Name
    */
   String getName();
 
   /**
    * Gets the value of the property.
-   * 
+   *
    * @return Value
    */
   Object getValue();

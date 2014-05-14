@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -21,19 +21,19 @@ package schemacrawler.schema;
 
 
 public interface TableConstraintColumn
-  extends Column
+extends Column
 {
 
   /**
    * Gets the table constraint this column belongs to.
-   * 
+   *
    * @return Table constraint
    */
   TableConstraint getTableConstraint();
 
   /**
    * Ordinal position of the column, in the table constraint.
-   * 
+   *
    * @return Ordinal position
    */
   int getTableConstraintOrdinalPosition();

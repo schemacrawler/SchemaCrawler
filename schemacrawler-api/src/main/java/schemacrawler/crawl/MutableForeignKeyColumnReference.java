@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -28,11 +28,11 @@ import schemacrawler.schema.ForeignKeyColumnReference;
 /**
  * Represents a single column mapping from a primary key column to a
  * foreign key column.
- * 
+ *
  * @author Sualeh Fatehi
  */
 final class MutableForeignKeyColumnReference
-  implements ForeignKeyColumnReference
+implements ForeignKeyColumnReference
 {
 
   private static final long serialVersionUID = 3689073962672273464L;
@@ -69,12 +69,12 @@ final class MutableForeignKeyColumnReference
     if (comparison == 0)
     {
       comparison = getPrimaryKeyColumn().getFullName().compareTo(other
-        .getPrimaryKeyColumn().getFullName());
+                                                                 .getPrimaryKeyColumn().getFullName());
     }
     if (comparison == 0)
     {
       comparison = getForeignKeyColumn().getFullName().compareTo(other
-        .getForeignKeyColumn().getFullName());
+                                                                 .getForeignKeyColumn().getFullName());
     }
 
     return comparison;
@@ -82,7 +82,7 @@ final class MutableForeignKeyColumnReference
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.ForeignKeyColumnReference#getForeignKeyColumn()
    */
   @Override
@@ -93,7 +93,7 @@ final class MutableForeignKeyColumnReference
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.ForeignKeyColumnReference#getKeySequence()
    */
   @Override
@@ -104,7 +104,7 @@ final class MutableForeignKeyColumnReference
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.ForeignKeyColumnReference#getPrimaryKeyColumn()
    */
   @Override

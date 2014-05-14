@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -26,11 +26,11 @@ import java.util.regex.Pattern;
 /**
  * Specifies exclusion patterns that can be applied to the names,
  * definitions, and other attributes of named objects.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public final class RegularExpressionInclusionRule
-  implements InclusionRule
+implements InclusionRule
 {
 
   private static final long serialVersionUID = 6274652266761961575L;
@@ -38,7 +38,7 @@ public final class RegularExpressionInclusionRule
 
   /**
    * Set include pattern. Exclude nothing.
-   * 
+   *
    * @param patternInclude
    *        Inclusion pattern. If null, includes everything.
    */
@@ -56,7 +56,7 @@ public final class RegularExpressionInclusionRule
 
   /**
    * Set include pattern. Exclude nothing.
-   * 
+   *
    * @param patternInclude
    *        Inclusion pattern. If null, includes everything.
    */
@@ -101,13 +101,13 @@ public final class RegularExpressionInclusionRule
     final int prime = 31;
     int result = 1;
     result = prime * result
-             + (inclusionRule == null? 0: inclusionRule.hashCode());
+        + (inclusionRule == null? 0: inclusionRule.hashCode());
     return result;
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schemacrawler.InclusionRule#include(java.lang.String)
    */
   @Override
@@ -118,7 +118,7 @@ public final class RegularExpressionInclusionRule
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see java.lang.Object#toString()
    */
   @Override

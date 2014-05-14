@@ -12,8 +12,8 @@ import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.TableConstraintColumn;
 
 final class MutableTableConstraintColumn
-  extends AbstractDependantObject<Table>
-  implements TableConstraintColumn
+extends AbstractDependantObject<Table>
+implements TableConstraintColumn
 {
 
   private static final long serialVersionUID = -6923211341742623556L;
@@ -24,11 +24,11 @@ final class MutableTableConstraintColumn
 
   MutableTableConstraintColumn(final TableConstraint tableConstraint,
                                final MutableColumn column)
-  {
+                               {
     super(column.getParent(), column.getName());
     this.tableConstraint = tableConstraint;
     this.column = column;
-  }
+                               }
 
   /**
    * {@inheritDoc}
@@ -47,7 +47,7 @@ final class MutableTableConstraintColumn
     {
       final MutableTableConstraintColumn other = (MutableTableConstraintColumn) obj;
       comparison = tableConstraintOrdinalPosition
-                   - other.tableConstraintOrdinalPosition;
+          - other.tableConstraintOrdinalPosition;
     }
 
     if (comparison == 0)
@@ -66,7 +66,7 @@ final class MutableTableConstraintColumn
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.BaseColumn#getDecimalDigits()
    */
   @Override
@@ -77,7 +77,7 @@ final class MutableTableConstraintColumn
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Column#getDefaultValue()
    */
   @Override
@@ -88,7 +88,7 @@ final class MutableTableConstraintColumn
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.BaseColumn#getOrdinalPosition()
    */
   @Override
@@ -99,7 +99,7 @@ final class MutableTableConstraintColumn
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Column#getPrivilege(java.lang.String)
    */
   @Override
@@ -110,7 +110,7 @@ final class MutableTableConstraintColumn
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Column#getPrivileges()
    */
   @Override
@@ -121,7 +121,7 @@ final class MutableTableConstraintColumn
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Column#getReferencedColumn()
    */
   @Override
@@ -132,7 +132,7 @@ final class MutableTableConstraintColumn
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.BaseColumn#getSize()
    */
   @Override
@@ -143,7 +143,7 @@ final class MutableTableConstraintColumn
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.TableConstraintColumn#getTableConstraint()
    */
   @Override
@@ -154,7 +154,7 @@ final class MutableTableConstraintColumn
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.TableConstraintColumn#getTableConstraintOrdinalPosition()
    */
   @Override
@@ -165,7 +165,7 @@ final class MutableTableConstraintColumn
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.TypedObject#getType()
    */
   @Override
@@ -176,7 +176,7 @@ final class MutableTableConstraintColumn
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.BaseColumn#getWidth()
    */
   @Override
@@ -187,7 +187,7 @@ final class MutableTableConstraintColumn
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.BaseColumn#isNullable()
    */
   @Override
@@ -198,7 +198,7 @@ final class MutableTableConstraintColumn
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Column#isPartOfForeignKey()
    */
   @Override
@@ -209,7 +209,7 @@ final class MutableTableConstraintColumn
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Column#isPartOfPrimaryKey()
    */
   @Override
@@ -220,7 +220,7 @@ final class MutableTableConstraintColumn
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Column#isPartOfUniqueIndex()()
    */
   @Override

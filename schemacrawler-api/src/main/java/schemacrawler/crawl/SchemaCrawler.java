@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -40,18 +40,18 @@ import schemacrawler.schemacrawler.SchemaInfoLevel;
 /**
  * SchemaCrawler uses database meta-data to get the details about the
  * schema.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public final class SchemaCrawler
 {
 
   private static final Logger LOGGER = Logger.getLogger(SchemaCrawler.class
-    .getName());
+                                                        .getName());
 
   /**
    * Gets the result set columns metadata.
-   * 
+   *
    * @param resultSet
    *        Result set
    * @return Schema
@@ -75,7 +75,7 @@ public final class SchemaCrawler
   private static void crawlColumnDataTypes(final MutableDatabase database,
                                            final RetrieverConnection retrieverConnection,
                                            final SchemaCrawlerOptions options)
-    throws SchemaCrawlerException
+                                               throws SchemaCrawlerException
   {
     try
     {
@@ -105,7 +105,7 @@ public final class SchemaCrawler
   private static void crawlDatabaseInfo(final MutableDatabase database,
                                         final RetrieverConnection retrieverConnection,
                                         final SchemaCrawlerOptions options)
-    throws SchemaCrawlerException
+                                            throws SchemaCrawlerException
   {
     try
     {
@@ -149,7 +149,7 @@ public final class SchemaCrawler
   private static void crawlRoutines(final MutableDatabase database,
                                     final RetrieverConnection retrieverConnection,
                                     final SchemaCrawlerOptions options)
-    throws SchemaCrawlerException
+                                        throws SchemaCrawlerException
   {
     final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
     final boolean retrieveRoutines = infoLevel.isRetrieveRoutines();
@@ -181,7 +181,7 @@ public final class SchemaCrawler
         }
       }
       final NamedObjectList<MutableRoutine> allRoutines = database
-        .getAllRoutines();
+          .getAllRoutines();
       for (final MutableRoutine routine: allRoutines)
       {
         if (infoLevel.isRetrieveRoutineColumns())
@@ -190,16 +190,16 @@ public final class SchemaCrawler
               && routineTypes.contains(RoutineType.procedure))
           {
             retriever
-              .retrieveProcedureColumns((MutableProcedure) routine,
-                                        options.getRoutineColumnInclusionRule());
+            .retrieveProcedureColumns((MutableProcedure) routine,
+                                      options.getRoutineColumnInclusionRule());
           }
 
           if (routine instanceof MutableFunction
               && routineTypes.contains(RoutineType.function))
           {
             retriever
-              .retrieveFunctionColumns((MutableFunction) routine,
-                                       options.getRoutineColumnInclusionRule());
+            .retrieveFunctionColumns((MutableFunction) routine,
+                                     options.getRoutineColumnInclusionRule());
           }
         }
       }
@@ -221,7 +221,7 @@ public final class SchemaCrawler
       {
         final Throwable cause = e.getCause();
         throw new SchemaCrawlerException(e.getMessage() + ": "
-                                         + cause.getMessage(), cause);
+            + cause.getMessage(), cause);
       }
       else
       {
@@ -233,7 +233,7 @@ public final class SchemaCrawler
   private static void crawlSchemas(final MutableDatabase database,
                                    final RetrieverConnection retrieverConnection,
                                    final SchemaCrawlerOptions options)
-    throws SchemaCrawlerException
+                                       throws SchemaCrawlerException
   {
     try
     {
@@ -252,7 +252,7 @@ public final class SchemaCrawler
   private static void crawlSynonyms(final MutableDatabase database,
                                     final RetrieverConnection retrieverConnection,
                                     final SchemaCrawlerOptions options)
-    throws SchemaCrawlerException
+                                        throws SchemaCrawlerException
   {
     final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
     final boolean retrieveSynonyms = infoLevel.isRetrieveSynonymInformation();
@@ -266,7 +266,7 @@ public final class SchemaCrawler
     {
       retrieverExtra = new SynonymRetriever(retrieverConnection, database);
       retrieverExtra.retrieveSynonymInformation(options
-        .getSynonymInclusionRule());
+                                                .getSynonymInclusionRule());
     }
     catch (final SQLException e)
     {
@@ -274,7 +274,7 @@ public final class SchemaCrawler
       {
         final Throwable cause = e.getCause();
         throw new SchemaCrawlerException(e.getMessage() + ": "
-                                         + cause.getMessage(), cause);
+            + cause.getMessage(), cause);
       }
       else
       {
@@ -286,7 +286,7 @@ public final class SchemaCrawler
   private static void crawlTables(final MutableDatabase database,
                                   final RetrieverConnection retrieverConnection,
                                   final SchemaCrawlerOptions options)
-    throws SchemaCrawlerException
+                                      throws SchemaCrawlerException
   {
     final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
     final boolean retrieveTables = infoLevel.isRetrieveTables();
@@ -323,8 +323,8 @@ public final class SchemaCrawler
       if (!infoLevel.isRetrieveForeignKeys())
       {
         LOGGER
-          .log(Level.WARNING,
-               "Foreign-keys are not being retrieved, so tables cannot be sorted using the natural sort order");
+        .log(Level.WARNING,
+             "Foreign-keys are not being retrieved, so tables cannot be sorted using the natural sort order");
       }
 
       for (final MutableTable table: allTables)
@@ -399,7 +399,7 @@ public final class SchemaCrawler
       {
         final Throwable cause = e.getCause();
         throw new SchemaCrawlerException(e.getMessage() + ": "
-                                         + cause.getMessage(), cause);
+            + cause.getMessage(), cause);
       }
       else
       {
@@ -413,14 +413,14 @@ public final class SchemaCrawler
 
   /**
    * Constructs a SchemaCrawler object, from a connection.
-   * 
+   *
    * @param connection
    *        An database connection.
    * @throws SchemaCrawlerException
    *         On a crawler exception
    */
   public SchemaCrawler(final Connection connection)
-    throws SchemaCrawlerException
+      throws SchemaCrawlerException
   {
     if (connection == null)
     {
@@ -431,7 +431,7 @@ public final class SchemaCrawler
 
   /**
    * Crawls the database, to obtain database metadata.
-   * 
+   *
    * @param options
    *        SchemaCrawler options that control what metadata is returned
    * @return Database metadata
@@ -439,7 +439,7 @@ public final class SchemaCrawler
    *         On an exception
    */
   public Database crawl(final SchemaCrawlerOptions options)
-    throws SchemaCrawlerException
+      throws SchemaCrawlerException
   {
     final MutableDatabase database = new MutableDatabase("database");
 

@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -57,11 +57,11 @@ public enum ForeignKeyUpdateRule
   restrict(DatabaseMetaData.importedKeyRestrict, "restrict");
 
   private static final Logger LOGGER = Logger
-    .getLogger(ForeignKeyUpdateRule.class.getName());
+      .getLogger(ForeignKeyUpdateRule.class.getName());
 
   /**
    * Gets the enum value from the integer.
-   * 
+   *
    * @param id
    *        Id of the integer
    * @return ForeignKeyUpdateRule
@@ -90,7 +90,7 @@ public enum ForeignKeyUpdateRule
 
   /**
    * Gets the id.
-   * 
+   *
    * @return id
    */
   public int getId()
@@ -100,7 +100,7 @@ public enum ForeignKeyUpdateRule
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see Object#toString()
    */
   @Override

@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -25,16 +25,16 @@ import java.util.Collection;
 
 /**
  * Database and connection information.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public interface Database
-  extends NamedObject
+extends NamedObjectWithAttributes
 {
 
   /**
    * Gets the column data types defined in the schema, by name.
-   * 
+   *
    * @param name
    *        Name
    * @return Column data types
@@ -43,14 +43,14 @@ public interface Database
 
   /**
    * Gets the column data types
-   * 
+   *
    * @return Column data types
    */
   Collection<ColumnDataType> getColumnDataTypes();
 
   /**
    * Gets the column data types defined in the schema, by name.
-   * 
+   *
    * @return Column data types
    */
   Collection<ColumnDataType> getColumnDataTypes(Schema schema);
@@ -61,7 +61,7 @@ public interface Database
 
   /**
    * Gets a routine by name.
-   * 
+   *
    * @param name
    *        Name
    * @return Routine.
@@ -70,21 +70,21 @@ public interface Database
 
   /**
    * Gets the routine.
-   * 
+   *
    * @return Routines
    */
   Collection<Routine> getRoutines();
 
   /**
    * Gets the routine.
-   * 
+   *
    * @return Routines
    */
   Collection<Routine> getRoutines(Schema schema);
 
   /**
    * Gets a schema by name.
-   * 
+   *
    * @param name
    *        Schema name
    * @return Schema.
@@ -95,14 +95,14 @@ public interface Database
 
   /**
    * Gets the schemas.
-   * 
+   *
    * @return Schemas
    */
   Collection<Schema> getSchemas();
 
   /**
    * Gets the synonym by name.
-   * 
+   *
    * @param name
    *        Name
    * @return Synonym.
@@ -111,21 +111,21 @@ public interface Database
 
   /**
    * Gets the synonyms.
-   * 
+   *
    * @return Synonyms
    */
   Collection<Synonym> getSynonyms();
 
   /**
    * Gets the synonyms.
-   * 
+   *
    * @return Synonyms
    */
   Collection<Synonym> getSynonyms(Schema schema);
 
   /**
    * Gets the column data types defined by the RDBMS system, by name.
-   * 
+   *
    * @param name
    *        Column data type name
    * @return Column data type
@@ -134,14 +134,14 @@ public interface Database
 
   /**
    * Gets the column data types defined by the RDBMS system.
-   * 
+   *
    * @return Column data types
    */
   Collection<ColumnDataType> getSystemColumnDataTypes();
 
   /**
    * Gets a table by name.
-   * 
+   *
    * @param name
    *        Name
    * @return Table.
@@ -150,14 +150,14 @@ public interface Database
 
   /**
    * Gets the tables.
-   * 
+   *
    * @return Tables
    */
   Collection<Table> getTables();
 
   /**
    * Gets the tables.
-   * 
+   *
    * @return Tables
    */
   Collection<Table> getTables(Schema schema);

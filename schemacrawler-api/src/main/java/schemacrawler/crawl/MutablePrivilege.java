@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -34,16 +34,16 @@ import sf.util.Utility;
 
 /**
  * Represents a privilege of a table or column.
- * 
+ *
  * @author Sualeh Fatehi
  */
 final class MutablePrivilege<P extends DatabaseObject>
-  extends AbstractNamedObject
-  implements Privilege<P>
+extends AbstractNamedObject
+implements Privilege<P>
 {
 
   private final class PrivilegeGrant
-    implements Grant
+  implements Grant
   {
 
     private static final long serialVersionUID = 356151825191631484L;
@@ -55,11 +55,11 @@ final class MutablePrivilege<P extends DatabaseObject>
     PrivilegeGrant(final String grantor,
                    final String grantee,
                    final boolean isGrantable)
-    {
+                   {
       this.grantor = grantor;
       this.grantee = grantee;
       this.isGrantable = isGrantable;
-    }
+                   }
 
     @Override
     public int compareTo(final Grant otherGrant)
@@ -92,7 +92,7 @@ final class MutablePrivilege<P extends DatabaseObject>
         return false;
       }
       final PrivilegeGrant other = (PrivilegeGrant) obj;
-      if (!getOuterType().equals(other.getOuterType()))
+      if (!getParent().equals(other.getParent()))
       {
         return false;
       }
@@ -144,11 +144,17 @@ final class MutablePrivilege<P extends DatabaseObject>
     }
 
     @Override
+    public MutablePrivilege<P> getParent()
+    {
+      return MutablePrivilege.this;
+    }
+
+    @Override
     public int hashCode()
     {
       final int prime = 31;
       int result = 1;
-      result = prime * result + getOuterType().hashCode();
+      result = prime * result + getParent().hashCode();
       result = prime * result + (grantee == null? 0: grantee.hashCode());
       result = prime * result + (grantor == null? 0: grantor.hashCode());
       result = prime * result + (isGrantable? 1231: 1237);
@@ -164,11 +170,6 @@ final class MutablePrivilege<P extends DatabaseObject>
       return isGrantable;
     }
 
-    private MutablePrivilege<P> getOuterType()
-    {
-      return MutablePrivilege.this;
-    }
-
   }
 
   private final P parent;
@@ -182,17 +183,18 @@ final class MutablePrivilege<P extends DatabaseObject>
     this.parent = parent;
   }
 
-  public P getParent()
-  {
-    return parent;
-  }
-
   @Override
   public Collection<Grant> getGrants()
   {
     final List<Grant> values = new ArrayList<>(grants);
     Collections.sort(values);
     return values;
+  }
+
+  @Override
+  public P getParent()
+  {
+    return parent;
   }
 
   void addGrant(final String grantor,

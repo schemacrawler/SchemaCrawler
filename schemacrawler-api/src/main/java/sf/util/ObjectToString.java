@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -40,7 +40,7 @@ public final class ObjectToString
 {
 
   private static final Logger LOGGER = Logger.getLogger(ObjectToString.class
-    .getName());
+                                                        .getName());
 
   public static String toString(final Object object)
   {
@@ -80,7 +80,7 @@ public final class ObjectToString
         }
 
         buffer.append(indent(indent)).append("  ").append(fieldName)
-          .append(": ");
+        .append(": ");
         if (fieldType.isPrimitive() || fieldType.isEnum()
             || fieldValue instanceof String || fieldValue == null
             || definesToString(fieldValue))
@@ -112,9 +112,9 @@ public final class ObjectToString
     if (object != null)
     {
       buffer.append(indent(indent)).append(object.getClass().getName())
-        .append('@')
-        .append(Integer.toHexString(System.identityHashCode(object)))
-        .append('[').append(Utility.NEWLINE);
+      .append('@')
+      .append(Integer.toHexString(System.identityHashCode(object)))
+      .append('[').append(Utility.NEWLINE);
     }
   }
 
@@ -129,13 +129,13 @@ public final class ObjectToString
       for (final Map.Entry mapEntry: mapEntries)
       {
         buffer.append(Utility.NEWLINE).append(indent(indent))
-          .append(mapEntry.getKey()).append(": ").append(mapEntry.getValue());
+        .append(mapEntry.getKey()).append(": ").append(mapEntry.getValue());
       }
     }
     else if (Collection.class.isAssignableFrom(objectClass))
     {
       for (final Iterator<?> iterator = ((Collection<?>) object).iterator(); iterator
-        .hasNext();)
+          .hasNext();)
       {
         final Object item = iterator.next();
         buffer.append(item);
@@ -148,7 +148,7 @@ public final class ObjectToString
     else if (objectClass.isArray())
     {
       for (final Iterator<?> iterator = Arrays.asList((Object[]) object)
-        .iterator(); iterator.hasNext();)
+          .iterator(); iterator.hasNext();)
       {
         final Object item = iterator.next();
         buffer.append(item);
@@ -247,7 +247,7 @@ public final class ObjectToString
     }
     // Remove static and transient fields
     for (final Iterator<Field> iterator = allFields.iterator(); iterator
-      .hasNext();)
+        .hasNext();)
     {
       final Field field = iterator.next();
       final int modifiers = field.getModifiers();
@@ -259,14 +259,14 @@ public final class ObjectToString
     }
     // Sort fields
     Collections.sort(allFields, new Comparator<Field>()
-    {
+                     {
 
       @Override
       public int compare(final Field field1, final Field field2)
       {
         return field1.getName().compareTo(field2.getName());
       }
-    });
+                     });
 
     return allFields.toArray(new Field[allFields.size()]);
   }

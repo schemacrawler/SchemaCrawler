@@ -15,11 +15,11 @@ import sf.util.DirectedGraph;
 import sf.util.GraphException;
 
 final class TablesGraph
-  extends DirectedGraph<TableReference>
+extends DirectedGraph<TableReference>
 {
 
   private static final Logger LOGGER = Logger.getLogger(TablesGraph.class
-    .getName());
+                                                        .getName());
 
   TablesGraph(final NamedObjectList<MutableTable> tables)
   {
@@ -34,7 +34,7 @@ final class TablesGraph
       for (final ForeignKey foreignKey: table.getForeignKeys())
       {
         for (final ForeignKeyColumnReference columnReference: foreignKey
-          .getColumnReferences())
+            .getColumnReferences())
         {
           addDirectedEdge(columnReference.getPrimaryKeyColumn().getParent(),
                           columnReference.getForeignKeyColumn().getParent());
