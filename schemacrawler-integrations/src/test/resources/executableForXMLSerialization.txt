@@ -884,7 +884,7 @@ potential schema design issues with lint. The output serves for &#xd;
 database documentation is designed to be diff-ed against other database &#xd;
 schemas. SchemaCrawler also generates schema diagrams.&#xd;
 </schemaCrawlerAbout>
-    <crawlTimestamp>May 14, 2014 12:49 PM</crawlTimestamp>
+    <crawlTimestamp>May 14, 2014 4:43 PM</crawlTimestamp>
     <systemProperties id="186"/>
   </schemaCrawlerInfo>
   <schemas id="187">
@@ -2538,9 +2538,9 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                           <indices id="337">
                             <objects id="338">
                               <entry>
-                                <string>PUBLIC.&quot;PUBLISHER SALES&quot;.SALES.SYS_IDX_10150</string>
+                                <string>PUBLIC.&quot;PUBLISHER SALES&quot;.SALES.SYS_IDX_10153</string>
                                 <index id="339">
-                                  <name>SYS_IDX_10150</name>
+                                  <name>SYS_IDX_10153</name>
                                   <attributeMap id="340">
                                     <entry>
                                       <string>FILTER_CONDITION</string>
@@ -2636,9 +2636,9 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                 </tableConstraint>
                               </entry>
                               <entry>
-                                <string>PUBLIC.&quot;PUBLISHER SALES&quot;.SALES.SYS_CT_10145</string>
+                                <string>PUBLIC.&quot;PUBLISHER SALES&quot;.SALES.SYS_CT_10148</string>
                                 <tableConstraint id="355">
-                                  <name>SYS_CT_10145</name>
+                                  <name>SYS_CT_10148</name>
                                   <attributeMap id="356">
                                     <entry>
                                       <string>TABLE_CATALOG</string>
@@ -2661,9 +2661,9 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                 </tableConstraint>
                               </entry>
                               <entry>
-                                <string>PUBLIC.&quot;PUBLISHER SALES&quot;.SALES.SYS_CT_10146</string>
+                                <string>PUBLIC.&quot;PUBLISHER SALES&quot;.SALES.SYS_CT_10149</string>
                                 <tableConstraint id="360">
-                                  <name>SYS_CT_10146</name>
+                                  <name>SYS_CT_10149</name>
                                   <attributeMap id="361">
                                     <entry>
                                       <string>TABLE_CATALOG</string>
@@ -2818,9 +2818,9 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           <indices id="391">
             <objects id="392">
               <entry>
-                <string>PUBLIC.&quot;PUBLISHER SALES&quot;.REGIONS.SYS_IDX_PK_CUSTOMERS_10140</string>
+                <string>PUBLIC.&quot;PUBLISHER SALES&quot;.REGIONS.SYS_IDX_PK_CUSTOMERS_10143</string>
                 <index id="393">
-                  <name>SYS_IDX_PK_CUSTOMERS_10140</name>
+                  <name>SYS_IDX_PK_CUSTOMERS_10143</name>
                   <attributeMap id="394">
                     <entry>
                       <string>FILTER_CONDITION</string>
@@ -2916,9 +2916,9 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                 </tableConstraint>
               </entry>
               <entry>
-                <string>PUBLIC.&quot;PUBLISHER SALES&quot;.REGIONS.SYS_CT_10136</string>
+                <string>PUBLIC.&quot;PUBLISHER SALES&quot;.REGIONS.SYS_CT_10139</string>
                 <tableConstraint id="409">
-                  <name>SYS_CT_10136</name>
+                  <name>SYS_CT_10139</name>
                   <attributeMap id="410">
                     <entry>
                       <string>TABLE_CATALOG</string>
@@ -2941,9 +2941,9 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                 </tableConstraint>
               </entry>
               <entry>
-                <string>PUBLIC.&quot;PUBLISHER SALES&quot;.REGIONS.SYS_CT_10137</string>
+                <string>PUBLIC.&quot;PUBLISHER SALES&quot;.REGIONS.SYS_CT_10140</string>
                 <tableConstraint id="414">
-                  <name>SYS_CT_10137</name>
+                  <name>SYS_CT_10140</name>
                   <attributeMap id="415">
                     <entry>
                       <string>TABLE_CATALOG</string>
@@ -2966,9 +2966,9 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                 </tableConstraint>
               </entry>
               <entry>
-                <string>PUBLIC.&quot;PUBLISHER SALES&quot;.REGIONS.SYS_CT_10138</string>
+                <string>PUBLIC.&quot;PUBLISHER SALES&quot;.REGIONS.SYS_CT_10141</string>
                 <tableConstraint id="419">
-                  <name>SYS_CT_10138</name>
+                  <name>SYS_CT_10141</name>
                   <attributeMap id="420">
                     <entry>
                       <string>TABLE_CATALOG</string>
@@ -2991,9 +2991,9 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                 </tableConstraint>
               </entry>
               <entry>
-                <string>PUBLIC.&quot;PUBLISHER SALES&quot;.REGIONS.SYS_CT_10139</string>
+                <string>PUBLIC.&quot;PUBLISHER SALES&quot;.REGIONS.SYS_CT_10142</string>
                 <tableConstraint id="424">
-                  <name>SYS_CT_10139</name>
+                  <name>SYS_CT_10142</name>
                   <attributeMap id="425">
                     <entry>
                       <string>TABLE_CATALOG</string>
@@ -9258,9 +9258,9 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                         </index>
                                       </entry>
                                       <entry>
-                                        <string>PUBLIC.FOR_LINT.WRITERS.SYS_IDX_10185</string>
+                                        <string>PUBLIC.FOR_LINT.WRITERS.SYS_IDX_10188</string>
                                         <index id="1154">
-                                          <name>SYS_IDX_10185</name>
+                                          <name>SYS_IDX_10188</name>
                                           <attributeMap id="1155">
                                             <entry>
                                               <string>FILTER_CONDITION</string>
@@ -9314,9 +9314,9 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                         </index>
                                       </entry>
                                       <entry>
-                                        <string>PUBLIC.FOR_LINT.WRITERS.SYS_IDX_PK_WRITERS_10157</string>
+                                        <string>PUBLIC.FOR_LINT.WRITERS.SYS_IDX_PK_WRITERS_10160</string>
                                         <index id="1161">
-                                          <name>SYS_IDX_PK_WRITERS_10157</name>
+                                          <name>SYS_IDX_PK_WRITERS_10160</name>
                                           <attributeMap id="1162">
                                             <entry>
                                               <string>FILTER_CONDITION</string>
@@ -9449,9 +9449,9 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                         </tableConstraint>
                                       </entry>
                                       <entry>
-                                        <string>PUBLIC.FOR_LINT.WRITERS.SYS_CT_10152</string>
+                                        <string>PUBLIC.FOR_LINT.WRITERS.SYS_CT_10155</string>
                                         <tableConstraint id="1185">
-                                          <name>SYS_CT_10152</name>
+                                          <name>SYS_CT_10155</name>
                                           <attributeMap id="1186">
                                             <entry>
                                               <string>TABLE_CATALOG</string>
@@ -9474,9 +9474,9 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                         </tableConstraint>
                                       </entry>
                                       <entry>
-                                        <string>PUBLIC.FOR_LINT.WRITERS.SYS_CT_10153</string>
+                                        <string>PUBLIC.FOR_LINT.WRITERS.SYS_CT_10156</string>
                                         <tableConstraint id="1190">
-                                          <name>SYS_CT_10153</name>
+                                          <name>SYS_CT_10156</name>
                                           <attributeMap id="1191">
                                             <entry>
                                               <string>TABLE_CATALOG</string>
@@ -9499,9 +9499,9 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                         </tableConstraint>
                                       </entry>
                                       <entry>
-                                        <string>PUBLIC.FOR_LINT.WRITERS.SYS_CT_10154</string>
+                                        <string>PUBLIC.FOR_LINT.WRITERS.SYS_CT_10157</string>
                                         <tableConstraint id="1195">
-                                          <name>SYS_CT_10154</name>
+                                          <name>SYS_CT_10157</name>
                                           <attributeMap id="1196">
                                             <entry>
                                               <string>TABLE_CATALOG</string>
@@ -9524,9 +9524,9 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                         </tableConstraint>
                                       </entry>
                                       <entry>
-                                        <string>PUBLIC.FOR_LINT.WRITERS.SYS_CT_10155</string>
+                                        <string>PUBLIC.FOR_LINT.WRITERS.SYS_CT_10158</string>
                                         <tableConstraint id="1200">
-                                          <name>SYS_CT_10155</name>
+                                          <name>SYS_CT_10158</name>
                                           <attributeMap id="1201">
                                             <entry>
                                               <string>TABLE_CATALOG</string>
@@ -9549,9 +9549,9 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                         </tableConstraint>
                                       </entry>
                                       <entry>
-                                        <string>PUBLIC.FOR_LINT.WRITERS.SYS_CT_10156</string>
+                                        <string>PUBLIC.FOR_LINT.WRITERS.SYS_CT_10159</string>
                                         <tableConstraint id="1205">
-                                          <name>SYS_CT_10156</name>
+                                          <name>SYS_CT_10159</name>
                                           <attributeMap id="1206">
                                             <entry>
                                               <string>TABLE_CATALOG</string>
@@ -9730,9 +9730,9 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                       <indices id="1243">
                         <objects id="1244">
                           <entry>
-                            <string>PUBLIC.FOR_LINT.PUBLICATIONS.SYS_IDX_10171</string>
+                            <string>PUBLIC.FOR_LINT.PUBLICATIONS.SYS_IDX_10174</string>
                             <index id="1245">
-                              <name>SYS_IDX_10171</name>
+                              <name>SYS_IDX_10174</name>
                               <attributeMap id="1246">
                                 <entry>
                                   <string>FILTER_CONDITION</string>
@@ -9786,9 +9786,9 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                             </index>
                           </entry>
                           <entry>
-                            <string>PUBLIC.FOR_LINT.PUBLICATIONS.SYS_IDX_PK_PUBLICATIONS_10167</string>
+                            <string>PUBLIC.FOR_LINT.PUBLICATIONS.SYS_IDX_PK_PUBLICATIONS_10170</string>
                             <index id="1252">
-                              <name>SYS_IDX_PK_PUBLICATIONS_10167</name>
+                              <name>SYS_IDX_PK_PUBLICATIONS_10170</name>
                               <attributeMap id="1253">
                                 <entry>
                                   <string>FILTER_CONDITION</string>
@@ -9896,9 +9896,9 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                             </tableConstraint>
                           </entry>
                           <entry>
-                            <string>PUBLIC.FOR_LINT.PUBLICATIONS.SYS_CT_10164</string>
+                            <string>PUBLIC.FOR_LINT.PUBLICATIONS.SYS_CT_10167</string>
                             <tableConstraint id="1271">
-                              <name>SYS_CT_10164</name>
+                              <name>SYS_CT_10167</name>
                               <attributeMap id="1272">
                                 <entry>
                                   <string>TABLE_CATALOG</string>
@@ -9921,9 +9921,9 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                             </tableConstraint>
                           </entry>
                           <entry>
-                            <string>PUBLIC.FOR_LINT.PUBLICATIONS.SYS_CT_10165</string>
+                            <string>PUBLIC.FOR_LINT.PUBLICATIONS.SYS_CT_10168</string>
                             <tableConstraint id="1276">
-                              <name>SYS_CT_10165</name>
+                              <name>SYS_CT_10168</name>
                               <attributeMap id="1277">
                                 <entry>
                                   <string>TABLE_CATALOG</string>
@@ -9946,9 +9946,9 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                             </tableConstraint>
                           </entry>
                           <entry>
-                            <string>PUBLIC.FOR_LINT.PUBLICATIONS.SYS_CT_10166</string>
+                            <string>PUBLIC.FOR_LINT.PUBLICATIONS.SYS_CT_10169</string>
                             <tableConstraint id="1281">
-                              <name>SYS_CT_10166</name>
+                              <name>SYS_CT_10169</name>
                               <attributeMap id="1282">
                                 <entry>
                                   <string>TABLE_CATALOG</string>
@@ -10109,9 +10109,9 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           <indices id="1315">
             <objects id="1316">
               <entry>
-                <string>PUBLIC.FOR_LINT.EXTRA_PK.SYS_IDX_10181</string>
+                <string>PUBLIC.FOR_LINT.EXTRA_PK.SYS_IDX_10184</string>
                 <index id="1317">
-                  <name>SYS_IDX_10181</name>
+                  <name>SYS_IDX_10184</name>
                   <attributeMap id="1318">
                     <entry>
                       <string>FILTER_CONDITION</string>
@@ -10165,9 +10165,9 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                 </index>
               </entry>
               <entry>
-                <string>PUBLIC.FOR_LINT.EXTRA_PK.SYS_IDX_10183</string>
+                <string>PUBLIC.FOR_LINT.EXTRA_PK.SYS_IDX_10186</string>
                 <index id="1324">
-                  <name>SYS_IDX_10183</name>
+                  <name>SYS_IDX_10186</name>
                   <attributeMap id="1325">
                     <entry>
                       <string>FILTER_CONDITION</string>
@@ -10221,9 +10221,9 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                 </index>
               </entry>
               <entry>
-                <string>PUBLIC.FOR_LINT.EXTRA_PK.SYS_IDX_PK_EXTRA_PK_10177</string>
+                <string>PUBLIC.FOR_LINT.EXTRA_PK.SYS_IDX_PK_EXTRA_PK_10180</string>
                 <index id="1331">
-                  <name>SYS_IDX_PK_EXTRA_PK_10177</name>
+                  <name>SYS_IDX_PK_EXTRA_PK_10180</name>
                   <attributeMap id="1332">
                     <entry>
                       <string>FILTER_CONDITION</string>
@@ -10356,9 +10356,9 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                 </tableConstraint>
               </entry>
               <entry>
-                <string>PUBLIC.FOR_LINT.EXTRA_PK.SYS_CT_10174</string>
+                <string>PUBLIC.FOR_LINT.EXTRA_PK.SYS_CT_10177</string>
                 <tableConstraint id="1355">
-                  <name>SYS_CT_10174</name>
+                  <name>SYS_CT_10177</name>
                   <attributeMap id="1356">
                     <entry>
                       <string>TABLE_CATALOG</string>
@@ -10381,9 +10381,9 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                 </tableConstraint>
               </entry>
               <entry>
-                <string>PUBLIC.FOR_LINT.EXTRA_PK.SYS_CT_10175</string>
+                <string>PUBLIC.FOR_LINT.EXTRA_PK.SYS_CT_10178</string>
                 <tableConstraint id="1360">
-                  <name>SYS_CT_10175</name>
+                  <name>SYS_CT_10178</name>
                   <attributeMap id="1361">
                     <entry>
                       <string>TABLE_CATALOG</string>
@@ -10406,9 +10406,9 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                 </tableConstraint>
               </entry>
               <entry>
-                <string>PUBLIC.FOR_LINT.EXTRA_PK.SYS_CT_10176</string>
+                <string>PUBLIC.FOR_LINT.EXTRA_PK.SYS_CT_10179</string>
                 <tableConstraint id="1365">
-                  <name>SYS_CT_10176</name>
+                  <name>SYS_CT_10179</name>
                   <attributeMap id="1366">
                     <entry>
                       <string>TABLE_CATALOG</string>

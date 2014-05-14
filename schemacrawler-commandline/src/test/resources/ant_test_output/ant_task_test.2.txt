@@ -693,13 +693,13 @@ FK_PUBLICATION_JOIN                        [foreign key, with no action]
 FK_WRITER_JOIN                             [foreign key, with no action]
   WRITERS.ID --> WRITERID                                       
 
-SYS_IDX_PK_EXTRA_PK_10177                                 [unique index]
+SYS_IDX_PK_EXTRA_PK_10180                                 [unique index]
   ID                                ascending                   
 
-SYS_IDX_10183                                         [non-unique index]
+SYS_IDX_10186                                         [non-unique index]
   PUBLICATIONID                     ascending                   
 
-SYS_IDX_10181                                         [non-unique index]
+SYS_IDX_10184                                         [non-unique index]
   WRITERID                          ascending                   
 
 DELETE                                                       [privilege]
@@ -771,10 +771,10 @@ FK_WRITERS_PUBLICATION                     [foreign key, with no action]
 FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
   WRITERS.ID --> WRITERID                                       
 
-SYS_IDX_PK_PUBLICATIONS_10167                             [unique index]
+SYS_IDX_PK_PUBLICATIONS_10170                             [unique index]
   ID                                ascending                   
 
-SYS_IDX_10171                                         [non-unique index]
+SYS_IDX_10174                                         [non-unique index]
   WRITERID                          ascending                   
 
 DELETE                                                       [privilege]
@@ -831,10 +831,10 @@ FK_WRITER_JOIN                             [foreign key, with no action]
 FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
   ID --> PUBLICATIONS.WRITERID                                  
 
-SYS_IDX_PK_WRITERS_10157                                  [unique index]
+SYS_IDX_PK_WRITERS_10160                                  [unique index]
   ID                                ascending                   
 
-SYS_IDX_10185                                         [non-unique index]
+SYS_IDX_10188                                         [non-unique index]
   PUBLICATION_ID                    ascending                   
 
 IDX_A1_WRITERS                                        [non-unique index]
@@ -891,7 +891,7 @@ FK_SALES_REGIONS                           [foreign key, with no action]
   POSTALCODE --> SALES.POSTALCODE                               
   COUNTRY --> SALES.COUNTRY                                     
 
-SYS_IDX_PK_CUSTOMERS_10140                                [unique index]
+SYS_IDX_PK_CUSTOMERS_10143                                [unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
 
@@ -931,7 +931,7 @@ FK_SALES_REGIONS                           [foreign key, with no action]
                                                       [weak association]
   BOOKS.ID --> BOOKID                                           
 
-SYS_IDX_10150                                         [non-unique index]
+SYS_IDX_10153                                         [non-unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
 
