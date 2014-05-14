@@ -37,12 +37,12 @@ public final class FileUtility
     {
       final String scriptFileName = file.getName();
       ext = scriptFileName.lastIndexOf('.') == -1
-          ? ""
-            : scriptFileName
-            .substring(scriptFileName
-                       .lastIndexOf('.') + 1,
-                       scriptFileName
-                       .length());
+                                                 ? ""
+                                                 : scriptFileName
+                                                   .substring(scriptFileName
+                                                                .lastIndexOf('.') + 1,
+                                                              scriptFileName
+                                                                .length());
     }
     else
     {

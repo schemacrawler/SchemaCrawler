@@ -29,7 +29,7 @@ import java.util.Collection;
  * @author sfatehi
  */
 public interface JdbcDriverProperty
-extends Property
+  extends Property
 {
 
   /**

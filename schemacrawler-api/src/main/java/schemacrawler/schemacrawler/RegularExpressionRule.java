@@ -34,11 +34,11 @@ import sf.util.Utility;
  * @author Sualeh Fatehi
  */
 public final class RegularExpressionRule
-implements InclusionRule
+  implements InclusionRule
 {
 
   private static final Logger LOGGER = Logger
-      .getLogger(RegularExpressionRule.class.getName());
+    .getLogger(RegularExpressionRule.class.getName());
 
   private static final long serialVersionUID = 3443758881974362293L;
 
@@ -90,7 +90,7 @@ implements InclusionRule
                                final String patternExclude)
   {
     this(patternInclude == null? null: Pattern.compile(patternInclude),
-                               patternExclude == null? null: Pattern.compile(patternExclude));
+         patternExclude == null? null: Pattern.compile(patternExclude));
   }
 
   @Override
@@ -140,9 +140,9 @@ implements InclusionRule
     final int prime = 31;
     int result = 1;
     result = prime * result
-        + (patternExclude == null? 0: patternExclude.hashCode());
+             + (patternExclude == null? 0: patternExclude.hashCode());
     result = prime * result
-        + (patternInclude == null? 0: patternInclude.hashCode());
+             + (patternInclude == null? 0: patternInclude.hashCode());
     return result;
   }
 
@@ -162,12 +162,12 @@ implements InclusionRule
       if (!patternInclude.matcher(text).matches())
       {
         actionMessage = "Excluding \"" + text
-            + "\" since it does not match the include pattern";
+                        + "\" since it does not match the include pattern";
       }
       else if (patternExclude.matcher(text).matches())
       {
         actionMessage = "Excluding \"" + text
-            + "\" since it matches the exclude pattern";
+                        + "\" since it matches the exclude pattern";
       }
       else
       {

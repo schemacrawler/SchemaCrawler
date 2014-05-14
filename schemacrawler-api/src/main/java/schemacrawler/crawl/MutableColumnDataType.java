@@ -37,14 +37,14 @@ import sf.util.Utility;
  * @author Sualeh Fatehi
  */
 final class MutableColumnDataType
-extends AbstractDatabaseObject
-implements ColumnDataType
+  extends AbstractDatabaseObject
+  implements ColumnDataType
 {
 
   private static final long serialVersionUID = 3688503281676530744L;
 
   private static final Logger LOGGER = Logger.getLogger(SchemaCrawler.class
-                                                        .getName());
+    .getName());
 
   private JavaSqlType javaSqlType;
 
@@ -417,7 +417,7 @@ implements ColumnDataType
       catch (final ClassNotFoundException e)
       {
         LOGGER.log(Level.FINE, "Could not load mapped class, "
-            + mappedClassName, e);
+                               + mappedClassName, e);
         javaSqlTypeMappedClass = Object.class;
       }
     }

@@ -40,7 +40,7 @@ import schemacrawler.schema.JdbcDriverProperty;
  * @author Sualeh Fatehi sualeh@hotmail.com
  */
 final class MutableJdbcDriverInfo
-implements JdbcDriverInfo
+  implements JdbcDriverInfo
 {
 
   private static final long serialVersionUID = 8030156654422512161L;
@@ -130,9 +130,9 @@ implements JdbcDriverInfo
   {
     final StringBuilder info = new StringBuilder();
     info.append("-- driver: ").append(getDriverName()).append(' ')
-    .append(getDriverVersion()).append(NEWLINE);
+      .append(getDriverVersion()).append(NEWLINE);
     info.append("-- driver class: ").append(getDriverClassName())
-    .append(NEWLINE);
+      .append(NEWLINE);
     info.append("-- url: ").append(getConnectionUrl()).append(NEWLINE);
     info.append("-- jdbc compliant: ").append(isJdbcCompliant());
     return info.toString();

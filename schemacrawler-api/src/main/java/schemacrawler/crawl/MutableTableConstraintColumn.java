@@ -12,8 +12,8 @@ import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.TableConstraintColumn;
 
 final class MutableTableConstraintColumn
-extends AbstractDependantObject<Table>
-implements TableConstraintColumn
+  extends AbstractDependantObject<Table>
+  implements TableConstraintColumn
 {
 
   private static final long serialVersionUID = -6923211341742623556L;
@@ -24,11 +24,11 @@ implements TableConstraintColumn
 
   MutableTableConstraintColumn(final TableConstraint tableConstraint,
                                final MutableColumn column)
-                               {
+  {
     super(column.getParent(), column.getName());
     this.tableConstraint = tableConstraint;
     this.column = column;
-                               }
+  }
 
   /**
    * {@inheritDoc}
@@ -47,7 +47,7 @@ implements TableConstraintColumn
     {
       final MutableTableConstraintColumn other = (MutableTableConstraintColumn) obj;
       comparison = tableConstraintOrdinalPosition
-          - other.tableConstraintOrdinalPosition;
+                   - other.tableConstraintOrdinalPosition;
     }
 
     if (comparison == 0)

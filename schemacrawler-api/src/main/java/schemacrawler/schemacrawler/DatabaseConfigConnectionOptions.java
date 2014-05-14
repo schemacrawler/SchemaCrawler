@@ -29,7 +29,7 @@ import sf.util.TemplatingUtility;
 import sf.util.Utility;
 
 public final class DatabaseConfigConnectionOptions
-extends BaseDatabaseConnectionOptions
+  extends BaseDatabaseConnectionOptions
 {
 
   private static final long serialVersionUID = -8141436553988174836L;
@@ -46,7 +46,7 @@ extends BaseDatabaseConnectionOptions
   private final Map<String, String> properties;
 
   public DatabaseConfigConnectionOptions(final Map<String, String> properties)
-      throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
     if (properties == null)
     {
@@ -69,7 +69,7 @@ extends BaseDatabaseConnectionOptions
 
     // Check that all required parameters have been substituted
     final Set<String> unmatchedVariables = TemplatingUtility
-        .extractTemplateVariables(connectionUrl);
+      .extractTemplateVariables(connectionUrl);
     if (!unmatchedVariables.isEmpty())
     {
       throw new IllegalArgumentException(String.format("Insufficient parameters for database connection URL: missing %s",

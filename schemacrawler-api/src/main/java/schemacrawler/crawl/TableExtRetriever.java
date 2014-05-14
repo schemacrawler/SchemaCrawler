@@ -48,18 +48,18 @@ import schemacrawler.schemacrawler.InformationSchemaViews;
  * @author Sualeh Fatehi
  */
 final class TableExtRetriever
-extends AbstractRetriever
+  extends AbstractRetriever
 {
 
   private static final Logger LOGGER = Logger.getLogger(TableExtRetriever.class
-                                                        .getName());
+    .getName());
 
   TableExtRetriever(final RetrieverConnection retrieverConnection,
                     final MutableDatabase database)
-                        throws SQLException
-                        {
+    throws SQLException
+  {
     super(retrieverConnection, database);
-                        }
+  }
 
   /**
    * Retrieves additional column attributes from the database.
@@ -68,34 +68,34 @@ extends AbstractRetriever
    *         On a SQL exception
    */
   void retrieveAdditionalColumnAttributes()
-      throws SQLException
+    throws SQLException
   {
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
-        .getInformationSchemaViews();
+      .getInformationSchemaViews();
     if (!informationSchemaViews.hasAdditionalColumnAttributesSql())
     {
       LOGGER.log(Level.FINE,
-          "Additional column attributes SQL statement was not provided");
+                 "Additional column attributes SQL statement was not provided");
       return;
     }
     final String columnAttributesSql = informationSchemaViews
-        .getAdditionalColumnAttributesSql();
+      .getAdditionalColumnAttributesSql();
 
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
         final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
                                                                            columnAttributesSql));)
-                                                                           {
+    {
 
       while (results.next())
       {
         final String catalogName = quotedName(results
-                                              .getString("TABLE_CATALOG"));
+          .getString("TABLE_CATALOG"));
         final String schemaName = quotedName(results.getString("TABLE_SCHEMA"));
         final String tableName = quotedName(results.getString("TABLE_NAME"));
         final String columnName = quotedName(results.getString("COLUMN_NAME"));
         LOGGER.log(Level.FINER, "Retrieving additional column attributes: "
-            + columnName);
+                                + columnName);
 
         final MutableTable table = lookupTable(catalogName,
                                                schemaName,
@@ -113,17 +113,17 @@ extends AbstractRetriever
         if (column == null)
         {
           LOGGER.log(Level.FINE, String
-                     .format("Cannot find column, %s.%s.%s.%s",
-                             catalogName,
-                             schemaName,
-                             tableName,
-                             columnName));
+            .format("Cannot find column, %s.%s.%s.%s",
+                    catalogName,
+                    schemaName,
+                    tableName,
+                    columnName));
           continue;
         }
 
         column.addAttributes(results.getAttributes());
       }
-                                                                           }
+    }
     catch (final Exception e)
     {
       LOGGER.log(Level.WARNING,
@@ -140,33 +140,33 @@ extends AbstractRetriever
    *         On a SQL exception
    */
   void retrieveAdditionalTableAttributes()
-      throws SQLException
+    throws SQLException
   {
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
-        .getInformationSchemaViews();
+      .getInformationSchemaViews();
     if (!informationSchemaViews.hasAdditionalTableAttributesSql())
     {
       LOGGER.log(Level.FINE,
-          "Additional table attributes SQL statement was not provided");
+                 "Additional table attributes SQL statement was not provided");
       return;
     }
     final String tableAttributesSql = informationSchemaViews
-        .getAdditionalTableAttributesSql();
+      .getAdditionalTableAttributesSql();
 
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
         final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
                                                                            tableAttributesSql));)
-                                                                           {
+    {
 
       while (results.next())
       {
         final String catalogName = quotedName(results
-                                              .getString("TABLE_CATALOG"));
+          .getString("TABLE_CATALOG"));
         final String schemaName = quotedName(results.getString("TABLE_SCHEMA"));
         final String tableName = quotedName(results.getString("TABLE_NAME"));
         LOGGER.log(Level.FINER, "Retrieving additional table attributes: "
-            + tableName);
+                                + tableName);
 
         final MutableTable table = lookupTable(catalogName,
                                                schemaName,
@@ -182,7 +182,7 @@ extends AbstractRetriever
 
         table.addAttributes(results.getAttributes());
       }
-                                                                           }
+    }
     catch (final Exception e)
     {
       LOGGER.log(Level.WARNING,
@@ -200,30 +200,30 @@ extends AbstractRetriever
    *         On a SQL exception
    */
   void retrieveIndexInformation()
-      throws SQLException
+    throws SQLException
   {
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
-        .getInformationSchemaViews();
+      .getInformationSchemaViews();
 
     if (!informationSchemaViews.hasExtIndexesSql())
     {
       LOGGER.log(Level.FINE,
-          "Indexes information SQL statement was not provided");
+                 "Indexes information SQL statement was not provided");
       return;
     }
     final String extIndexesInformationSql = informationSchemaViews
-        .getExtIndexesSql();
+      .getExtIndexesSql();
 
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
         final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
                                                                            extIndexesInformationSql));)
-                                                                           {
+    {
 
       while (results.next())
       {
         final String catalogName = quotedName(results
-                                              .getString("INDEX_CATALOG"));
+          .getString("INDEX_CATALOG"));
         final String schemaName = quotedName(results.getString("INDEX_SCHEMA"));
         final String tableName = quotedName(results.getString("TABLE_NAME"));
         final String indexName = quotedName(results.getString("INDEX_NAME"));
@@ -245,11 +245,11 @@ extends AbstractRetriever
         if (index == null)
         {
           LOGGER.log(Level.FINE, String
-                     .format("Cannot find index, %s.%s.%s.%s",
-                             catalogName,
-                             schemaName,
-                             tableName,
-                             indexName));
+            .format("Cannot find index, %s.%s.%s.%s",
+                    catalogName,
+                    schemaName,
+                    tableName,
+                    indexName));
           continue;
         }
 
@@ -259,7 +259,7 @@ extends AbstractRetriever
 
         index.addAttributes(results.getAttributes());
       }
-                                                                           }
+    }
     catch (final Exception e)
     {
       LOGGER.log(Level.WARNING, "Could not retrieve index information", e);
@@ -268,17 +268,17 @@ extends AbstractRetriever
   }
 
   void retrieveTableColumnPrivileges()
-      throws SQLException
+    throws SQLException
   {
     try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-                                                                 .getColumnPrivileges(null, null, "%", "%"));)
-                                                                 {
+      .getColumnPrivileges(null, null, "%", "%"));)
+    {
       createPrivileges(results, true);
-                                                                 }
+    }
     catch (final Exception e)
     {
       LOGGER.log(Level.WARNING, "Could not retrieve table column privileges:"
-          + e.getMessage());
+                                + e.getMessage());
     }
   }
 
@@ -290,12 +290,12 @@ extends AbstractRetriever
    *         On a SQL exception
    */
   void retrieveTableConstraintInformation()
-      throws SQLException
+    throws SQLException
   {
     final Map<String, MutableTableConstraint> tableConstraintsMap = new HashMap<>();
 
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
-        .getInformationSchemaViews();
+      .getInformationSchemaViews();
 
     final Connection connection = getDatabaseConnection();
 
@@ -323,30 +323,30 @@ extends AbstractRetriever
    *         On a SQL exception
    */
   void retrieveTableDefinitions()
-      throws SQLException
+    throws SQLException
   {
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
-        .getInformationSchemaViews();
+      .getInformationSchemaViews();
 
     if (!informationSchemaViews.hasExtTablesSql())
     {
       LOGGER
-      .log(Level.FINE, "Table definitions SQL statement was not provided");
+        .log(Level.FINE, "Table definitions SQL statement was not provided");
       return;
     }
     final String tableDefinitionsInformationSql = informationSchemaViews
-        .getExtTablesSql();
+      .getExtTablesSql();
 
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
         final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
                                                                            tableDefinitionsInformationSql));)
-                                                                           {
+    {
 
       while (results.next())
       {
         final String catalogName = quotedName(results
-                                              .getString("TABLE_CATALOG"));
+          .getString("TABLE_CATALOG"));
         final String schemaName = quotedName(results.getString("TABLE_SCHEMA"));
         final String tableName = quotedName(results.getString("TABLE_NAME"));
 
@@ -369,7 +369,7 @@ extends AbstractRetriever
 
         table.addAttributes(results.getAttributes());
       }
-                                                                           }
+    }
     catch (final Exception e)
     {
       LOGGER.log(Level.WARNING, "Could not retrieve views", e);
@@ -378,13 +378,13 @@ extends AbstractRetriever
   }
 
   void retrieveTablePrivileges()
-      throws SQLException
+    throws SQLException
   {
     try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-                                                                 .getTablePrivileges(null, null, "%"));)
-                                                                 {
+      .getTablePrivileges(null, null, "%"));)
+    {
       createPrivileges(results, false);
-                                                                 }
+    }
     catch (final Exception e)
     {
       LOGGER.log(Level.WARNING, "Could not retrieve table privileges", e);
@@ -399,31 +399,31 @@ extends AbstractRetriever
    *         On a SQL exception
    */
   void retrieveTriggerInformation()
-      throws SQLException
+    throws SQLException
   {
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
-        .getInformationSchemaViews();
+      .getInformationSchemaViews();
     if (!informationSchemaViews.hasTriggerSql())
     {
       LOGGER.log(Level.FINE,
-          "Trigger definition SQL statement was not provided");
+                 "Trigger definition SQL statement was not provided");
       return;
     }
     final String triggerInformationSql = informationSchemaViews
-        .getTriggersSql();
+      .getTriggersSql();
 
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
         final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
                                                                            triggerInformationSql));)
-                                                                           {
+    {
 
       while (results.next())
       {
         final String catalogName = quotedName(results
-                                              .getString("TRIGGER_CATALOG"));
+          .getString("TRIGGER_CATALOG"));
         final String schemaName = quotedName(results
-                                             .getString("TRIGGER_SCHEMA"));
+          .getString("TRIGGER_SCHEMA"));
         final String triggerName = quotedName(results.getString("TRIGGER_NAME"));
         LOGGER.log(Level.FINER, "Retrieving trigger: " + triggerName);
 
@@ -443,19 +443,19 @@ extends AbstractRetriever
         }
 
         final EventManipulationType eventManipulationType = results
-            .getEnum("EVENT_MANIPULATION", EventManipulationType.unknown);
+          .getEnum("EVENT_MANIPULATION", EventManipulationType.unknown);
         final int actionOrder = results.getInt("ACTION_ORDER", 0);
         final String actionCondition = results.getString("ACTION_CONDITION");
         final String actionStatement = results.getString("ACTION_STATEMENT");
         final ActionOrientationType actionOrientation = results
-            .getEnum("ACTION_ORIENTATION", ActionOrientationType.unknown);
+          .getEnum("ACTION_ORIENTATION", ActionOrientationType.unknown);
         String conditionTimingString = results.getString("ACTION_TIMING");
         if (conditionTimingString == null)
         {
           conditionTimingString = results.getString("CONDITION_TIMING");
         }
         final ConditionTimingType conditionTiming = ConditionTimingType
-            .valueOfFromValue(conditionTimingString);
+          .valueOfFromValue(conditionTimingString);
 
         MutableTrigger trigger = table.lookupTrigger(triggerName);
         if (trigger == null)
@@ -474,7 +474,7 @@ extends AbstractRetriever
         table.addTrigger(trigger);
 
       }
-                                                                           }
+    }
     catch (final Exception e)
     {
       LOGGER.log(Level.WARNING, "Could not retrieve triggers", e);
@@ -490,10 +490,10 @@ extends AbstractRetriever
    *         On a SQL exception
    */
   void retrieveViewInformation()
-      throws SQLException
+    throws SQLException
   {
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
-        .getInformationSchemaViews();
+      .getInformationSchemaViews();
 
     if (!informationSchemaViews.hasViewsSql())
     {
@@ -506,12 +506,12 @@ extends AbstractRetriever
     try (final Statement statement = connection.createStatement();
         final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
                                                                            viewInformationSql));)
-                                                                           {
+    {
 
       while (results.next())
       {
         final String catalogName = quotedName(results
-                                              .getString("TABLE_CATALOG"));
+          .getString("TABLE_CATALOG"));
         final String schemaName = quotedName(results.getString("TABLE_SCHEMA"));
         final String viewName = quotedName(results.getString("TABLE_NAME"));
 
@@ -530,7 +530,7 @@ extends AbstractRetriever
         LOGGER.log(Level.FINER, "Retrieving view information: " + viewName);
         final String definition = results.getString("VIEW_DEFINITION");
         final CheckOptionType checkOption = results
-            .getEnum("CHECK_OPTION", CheckOptionType.unknown);
+          .getEnum("CHECK_OPTION", CheckOptionType.unknown);
         final boolean updatable = results.getBoolean("IS_UPDATABLE");
 
         view.appendDefinition(definition);
@@ -539,7 +539,7 @@ extends AbstractRetriever
 
         view.addAttributes(results.getAttributes());
       }
-                                                                           }
+    }
     catch (final Exception e)
     {
       LOGGER.log(Level.WARNING, "Could not retrieve views", e);
@@ -549,7 +549,7 @@ extends AbstractRetriever
 
   private void createPrivileges(final MetadataResultSet results,
                                 final boolean privilegesForColumn)
-                                    throws SQLException
+    throws SQLException
   {
     while (results.next())
     {
@@ -587,7 +587,7 @@ extends AbstractRetriever
       if (privilegesForColumn)
       {
         final MutablePrivilege<Column> columnPrivilege = column
-            .getPrivilege(privilegeName);
+          .getPrivilege(privilegeName);
         if (columnPrivilege == null)
         {
           privilege = new MutablePrivilege<>(column, privilegeName);
@@ -601,7 +601,7 @@ extends AbstractRetriever
       else
       {
         final MutablePrivilege<Table> tablePrivilege = table
-            .getPrivilege(privilegeName);
+          .getPrivilege(privilegeName);
         if (tablePrivilege == null)
         {
           privilege = new MutablePrivilege<>(table, privilegeName);
@@ -632,25 +632,25 @@ extends AbstractRetriever
     if (!informationSchemaViews.hasTableConstraintsSql())
     {
       LOGGER
-      .log(Level.FINE, "Table constraints SQL statement was not provided");
+        .log(Level.FINE, "Table constraints SQL statement was not provided");
       return;
     }
 
     final String tableConstraintsInformationSql = informationSchemaViews
-        .getTableConstraintsSql();
+      .getTableConstraintsSql();
     try (final Statement statement = connection.createStatement();
         final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
                                                                            tableConstraintsInformationSql));)
-                                                                           {
+    {
 
       while (results.next())
       {
         final String catalogName = quotedName(results
-                                              .getString("CONSTRAINT_CATALOG"));
+          .getString("CONSTRAINT_CATALOG"));
         final String schemaName = quotedName(results
-                                             .getString("CONSTRAINT_SCHEMA"));
+          .getString("CONSTRAINT_SCHEMA"));
         final String constraintName = quotedName(results
-                                                 .getString("CONSTRAINT_NAME"));
+          .getString("CONSTRAINT_NAME"));
         LOGGER.log(Level.FINER, "Retrieving constraint: " + constraintName);
         // "TABLE_CATALOG", "TABLE_SCHEMA"
         final String tableName = quotedName(results.getString("TABLE_NAME"));
@@ -670,12 +670,12 @@ extends AbstractRetriever
         final String constraintType = results.getString("CONSTRAINT_TYPE");
         final boolean deferrable = results.getBoolean("IS_DEFERRABLE");
         final boolean initiallyDeferred = results
-            .getBoolean("INITIALLY_DEFERRED");
+          .getBoolean("INITIALLY_DEFERRED");
 
         final MutableTableConstraint tableConstraint = new MutableTableConstraint(table,
                                                                                   constraintName);
         tableConstraint.setTableConstraintType(TableConstraintType
-                                               .valueOfFromValue(constraintType));
+          .valueOfFromValue(constraintType));
         tableConstraint.setDeferrable(deferrable);
         tableConstraint.setInitiallyDeferred(initiallyDeferred);
 
@@ -686,10 +686,10 @@ extends AbstractRetriever
 
         // Add to map, since we will need this later
         final String constraintKey = table.getSchema().getFullName() + "."
-            + constraintName;
+                                     + constraintName;
         tableConstraintsMap.put(constraintKey, tableConstraint);
       }
-                                                                           }
+    }
     catch (final Exception e)
     {
       LOGGER.log(Level.WARNING,
@@ -706,34 +706,34 @@ extends AbstractRetriever
     if (!informationSchemaViews.hasTableConstraintsColumnsSql())
     {
       LOGGER
-      .log(Level.FINE,
-           "Extended table constraints columns SQL statement was not provided");
+        .log(Level.FINE,
+             "Extended table constraints columns SQL statement was not provided");
       return;
     }
     final String tableConstraintsColumnsInformationSql = informationSchemaViews
-        .getTableConstraintsColumnsSql();
+      .getTableConstraintsColumnsSql();
 
     try (final Statement statement = connection.createStatement();
         final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
                                                                            tableConstraintsColumnsInformationSql));)
-                                                                           {
+    {
       while (results.next())
       {
         final String catalogName = quotedName(results
-                                              .getString("CONSTRAINT_CATALOG"));
+          .getString("CONSTRAINT_CATALOG"));
         final String schemaName = quotedName(results
-                                             .getString("CONSTRAINT_SCHEMA"));
+          .getString("CONSTRAINT_SCHEMA"));
         final String constraintName = quotedName(results
-                                                 .getString("CONSTRAINT_NAME"));
+          .getString("CONSTRAINT_NAME"));
         LOGGER.log(Level.FINER, "Retrieving constraint definition: "
-            + constraintName);
+                                + constraintName);
 
         final String constraintKey = new SchemaReference(catalogName,
                                                          schemaName)
-        + "."
-        + constraintName;
+                                     + "."
+                                     + constraintName;
         final MutableTableConstraint tableConstraint = tableConstraintsMap
-            .get(constraintKey);
+          .get(constraintKey);
         if (tableConstraint == null)
         {
           LOGGER.log(Level.FINEST,
@@ -762,11 +762,11 @@ extends AbstractRetriever
         if (column == null)
         {
           LOGGER.log(Level.FINE, String
-                     .format("Cannot find column, %s.%s.%s.%s",
-                             catalogName,
-                             schemaName,
-                             tableName,
-                             columnName));
+            .format("Cannot find column, %s.%s.%s.%s",
+                    catalogName,
+                    schemaName,
+                    tableName,
+                    columnName));
           continue;
         }
         final int ordinalPosition = results.getInt("ORDINAL_POSITION", 0);
@@ -776,7 +776,7 @@ extends AbstractRetriever
 
         tableConstraint.addColumn(constraintColumn);
       }
-                                                                           }
+    }
     catch (final Exception e)
     {
       LOGGER.log(Level.WARNING, "Could not retrieve check constraints", e);
@@ -790,35 +790,35 @@ extends AbstractRetriever
     if (!informationSchemaViews.hasExtTableConstraintsSql())
     {
       LOGGER.log(Level.FINE,
-          "Extended table constraints SQL statement was not provided");
+                 "Extended table constraints SQL statement was not provided");
       return;
     }
     final String extTableConstraintInformationSql = informationSchemaViews
-        .getExtTableConstraintsSql();
+      .getExtTableConstraintsSql();
 
     // Get check constraint definitions
     try (final Statement statement = connection.createStatement();
         final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
                                                                            extTableConstraintInformationSql));)
-                                                                           {
+    {
       while (results.next())
       {
         final String catalogName = quotedName(results
-                                              .getString("CONSTRAINT_CATALOG"));
+          .getString("CONSTRAINT_CATALOG"));
         final String schemaName = quotedName(results
-                                             .getString("CONSTRAINT_SCHEMA"));
+          .getString("CONSTRAINT_SCHEMA"));
         final String constraintName = quotedName(results
-                                                 .getString("CONSTRAINT_NAME"));
+          .getString("CONSTRAINT_NAME"));
         LOGGER.log(Level.FINER, "Retrieving constraint definition: "
-            + constraintName);
+                                + constraintName);
         final String definition = results.getString("CHECK_CLAUSE");
 
         final String constraintKey = new SchemaReference(catalogName,
                                                          schemaName)
-        + "."
-        + constraintName;
+                                     + "."
+                                     + constraintName;
         final MutableTableConstraint tableConstraint = tableConstraintsMap
-            .get(constraintKey);
+          .get(constraintKey);
         if (tableConstraint == null)
         {
           LOGGER.log(Level.FINEST,
@@ -831,7 +831,7 @@ extends AbstractRetriever
         tableConstraint.addAttributes(results.getAttributes());
 
       }
-                                                                           }
+    }
     catch (final Exception e)
     {
       LOGGER.log(Level.WARNING, "Could not retrieve check constraints", e);

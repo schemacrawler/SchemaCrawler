@@ -48,7 +48,7 @@ import sf.util.ObjectToString;
  * @author Sualeh Fatehi
  */
 public final class InformationSchemaViews
-implements Options
+  implements Options
 {
 
   protected enum InformationSchemaKey
@@ -112,7 +112,7 @@ implements Options
           try
           {
             informationSchemaQueries.put(key, informationSchemaViewsSql.get(key
-                                                                            .getLookupKey()));
+              .getLookupKey()));
           }
           catch (final IllegalArgumentException e)
           {

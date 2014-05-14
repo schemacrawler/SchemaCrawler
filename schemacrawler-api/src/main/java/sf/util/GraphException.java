@@ -21,7 +21,7 @@ package sf.util;
 
 
 public class GraphException
-extends Exception
+  extends Exception
 {
 
   private static final long serialVersionUID = 3629161382294452029L;

@@ -6,7 +6,7 @@ import java.sql.Driver;
 import javax.sql.DataSource;
 
 public interface ConnectionOptions
-extends Options, DataSource
+  extends Options, DataSource
 {
 
   String getConnectionUrl();

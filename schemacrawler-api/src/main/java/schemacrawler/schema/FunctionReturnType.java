@@ -29,7 +29,7 @@ import java.util.logging.Logger;
  * An enumeration wrapper around JDBC function types.
  */
 public enum FunctionReturnType
-implements RoutineReturnType
+  implements RoutineReturnType
 {
 
   /**
@@ -46,7 +46,7 @@ implements RoutineReturnType
   returnsTable(DatabaseMetaData.functionReturnsTable, "returns table");
 
   private static final Logger LOGGER = Logger
-      .getLogger(FunctionReturnType.class.getName());
+    .getLogger(FunctionReturnType.class.getName());
 
   /**
    * Gets the enum value from the integer.

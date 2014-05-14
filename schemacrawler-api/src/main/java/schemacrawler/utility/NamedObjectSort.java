@@ -27,7 +27,7 @@ import schemacrawler.schema.NamedObject;
 import sf.util.Utility;
 
 public enum NamedObjectSort
-implements Comparator<NamedObject>
+  implements Comparator<NamedObject>
 {
 
   /**
@@ -40,7 +40,7 @@ implements Comparator<NamedObject>
                        final NamedObject namedObject2)
     {
       return Utility.convertForComparison(namedObject1.getFullName())
-          .compareTo(Utility.convertForComparison(namedObject2.getFullName()));
+        .compareTo(Utility.convertForComparison(namedObject2.getFullName()));
     }
   },
 

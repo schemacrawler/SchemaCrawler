@@ -37,8 +37,8 @@ import schemacrawler.schema.Schema;
  * @author Sualeh Fatehi
  */
 final class MutableProcedure
-extends MutableRoutine
-implements Procedure
+  extends MutableRoutine
+  implements Procedure
 {
 
   private static final long serialVersionUID = 3906925686089134130L;

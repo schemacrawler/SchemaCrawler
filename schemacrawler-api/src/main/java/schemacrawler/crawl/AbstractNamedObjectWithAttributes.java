@@ -34,8 +34,8 @@ import sf.util.Utility;
  * @author Sualeh Fatehi
  */
 abstract class AbstractNamedObjectWithAttributes
-extends AbstractNamedObject
-implements NamedObjectWithAttributes
+  extends AbstractNamedObject
+  implements NamedObjectWithAttributes
 {
 
   private static final long serialVersionUID = -1486322887991472729L;

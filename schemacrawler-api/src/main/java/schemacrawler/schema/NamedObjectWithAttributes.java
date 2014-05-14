@@ -29,7 +29,7 @@ import java.util.Map;
  * @author Sualeh Fatehi
  */
 public interface NamedObjectWithAttributes
-extends NamedObject
+  extends NamedObject
 {
 
   /**

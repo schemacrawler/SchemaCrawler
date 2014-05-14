@@ -40,7 +40,7 @@ import schemacrawler.schema.DatabaseProperty;
  * @author Sualeh Fatehi sualeh@hotmail.com
  */
 final class MutableDatabaseInfo
-implements DatabaseInfo
+  implements DatabaseInfo
 {
 
   private static final long serialVersionUID = 4051323422934251828L;
@@ -98,7 +98,7 @@ implements DatabaseInfo
   {
     final StringBuilder info = new StringBuilder();
     info.append("-- database: ").append(getProductName()).append(' ')
-    .append(getProductVersion()).append(NEWLINE);
+      .append(getProductVersion()).append(NEWLINE);
     return info.toString();
   }
 

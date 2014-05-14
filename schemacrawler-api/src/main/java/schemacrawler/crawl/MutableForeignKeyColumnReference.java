@@ -32,7 +32,7 @@ import schemacrawler.schema.ForeignKeyColumnReference;
  * @author Sualeh Fatehi
  */
 final class MutableForeignKeyColumnReference
-implements ForeignKeyColumnReference
+  implements ForeignKeyColumnReference
 {
 
   private static final long serialVersionUID = 3689073962672273464L;
@@ -69,12 +69,12 @@ implements ForeignKeyColumnReference
     if (comparison == 0)
     {
       comparison = getPrimaryKeyColumn().getFullName().compareTo(other
-                                                                 .getPrimaryKeyColumn().getFullName());
+        .getPrimaryKeyColumn().getFullName());
     }
     if (comparison == 0)
     {
       comparison = getForeignKeyColumn().getFullName().compareTo(other
-                                                                 .getForeignKeyColumn().getFullName());
+        .getForeignKeyColumn().getFullName());
     }
 
     return comparison;

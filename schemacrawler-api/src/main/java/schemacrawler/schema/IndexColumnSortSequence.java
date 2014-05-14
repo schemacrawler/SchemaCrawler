@@ -44,7 +44,7 @@ public enum IndexColumnSortSequence
   descending("D");
 
   private static final Logger LOGGER = Logger
-      .getLogger(IndexColumnSortSequence.class.getName());
+    .getLogger(IndexColumnSortSequence.class.getName());
 
   /**
    * Find the enumeration value corresponding to the string.

@@ -57,7 +57,7 @@ public enum ForeignKeyUpdateRule
   restrict(DatabaseMetaData.importedKeyRestrict, "restrict");
 
   private static final Logger LOGGER = Logger
-      .getLogger(ForeignKeyUpdateRule.class.getName());
+    .getLogger(ForeignKeyUpdateRule.class.getName());
 
   /**
    * Gets the enum value from the integer.

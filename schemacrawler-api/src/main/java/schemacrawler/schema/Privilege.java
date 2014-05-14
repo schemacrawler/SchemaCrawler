@@ -30,11 +30,11 @@ import java.util.Collection;
  * @author Sualeh Fatehi
  */
 public interface Privilege<P extends DatabaseObject>
-extends NamedObject, ContainedObject<P>
+  extends NamedObject, ContainedObject<P>
 {
 
   public interface Grant
-  extends Serializable, Comparable<Grant>, ContainedObject<Privilege<?>>
+    extends Serializable, Comparable<Grant>, ContainedObject<Privilege<?>>
   {
 
     /**

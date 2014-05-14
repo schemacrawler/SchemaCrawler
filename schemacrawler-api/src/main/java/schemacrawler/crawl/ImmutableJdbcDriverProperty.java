@@ -38,8 +38,8 @@ import schemacrawler.schema.Property;
  * @author Sualeh Fatehi sualeh@hotmail.com
  */
 final class ImmutableJdbcDriverProperty
-extends AbstractProperty
-implements JdbcDriverProperty
+  extends AbstractProperty
+  implements JdbcDriverProperty
 {
 
   private static final long serialVersionUID = 8030156654422512161L;
@@ -75,7 +75,7 @@ implements JdbcDriverProperty
     else
     {
       return getName().toLowerCase().compareTo(otherProperty.getName()
-                                               .toLowerCase());
+        .toLowerCase());
     }
   }
 

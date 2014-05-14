@@ -23,7 +23,7 @@ package schemacrawler.schema;
 import java.io.Serializable;
 
 public interface Property
-extends Serializable, Comparable<Property>
+  extends Serializable, Comparable<Property>
 {
 
   /**

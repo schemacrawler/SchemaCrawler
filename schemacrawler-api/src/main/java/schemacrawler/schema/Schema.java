@@ -27,7 +27,7 @@ package schemacrawler.schema;
  * @author Sualeh Fatehi
  */
 public interface Schema
-extends NamedObjectWithAttributes
+  extends NamedObjectWithAttributes
 {
 
   String getCatalogName();

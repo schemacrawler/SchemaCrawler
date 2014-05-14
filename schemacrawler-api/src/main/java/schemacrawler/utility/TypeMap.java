@@ -32,11 +32,11 @@ import java.util.logging.Logger;
 import sf.util.Utility;
 
 public final class TypeMap
-implements Map<String, Class<?>>
+  implements Map<String, Class<?>>
 {
 
   private static final Logger LOGGER = Logger
-      .getLogger(TypeMap.class.getName());
+    .getLogger(TypeMap.class.getName());
 
   private static Map<String, Class<?>> createDefaultTypeMap()
   {

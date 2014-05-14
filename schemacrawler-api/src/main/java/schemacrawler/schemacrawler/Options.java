@@ -29,7 +29,7 @@ import java.io.Serializable;
  * @author Sualeh Fatehi
  */
 public interface Options
-extends Serializable
+  extends Serializable
 {
 
 }

@@ -40,8 +40,8 @@ import schemacrawler.utility.CompareUtility;
  * @author Sualeh Fatehi
  */
 class MutableForeignKey
-extends AbstractNamedObjectWithAttributes
-implements ForeignKey
+  extends AbstractNamedObjectWithAttributes
+  implements ForeignKey
 {
 
   private static final long serialVersionUID = 4121411795974895671L;
@@ -80,7 +80,7 @@ implements ForeignKey
     final ForeignKey other = (ForeignKey) obj;
     final List<ForeignKeyColumnReference> thisColumnReferences = getColumnReferences();
     final List<ForeignKeyColumnReference> otherColumnReferences = other
-        .getColumnReferences();
+      .getColumnReferences();
 
     return CompareUtility.compareLists(thisColumnReferences,
                                        otherColumnReferences);

@@ -35,8 +35,8 @@ import sf.util.Utility;
  * @author Sualeh Fatehi
  */
 abstract class MutableRoutine
-extends AbstractDatabaseObject
-implements Routine
+  extends AbstractDatabaseObject
+  implements Routine
 {
 
   private static final long serialVersionUID = 3906925686089134130L;

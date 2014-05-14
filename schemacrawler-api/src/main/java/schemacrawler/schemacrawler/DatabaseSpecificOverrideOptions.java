@@ -4,7 +4,7 @@ package schemacrawler.schemacrawler;
 import sf.util.Utility;
 
 public class DatabaseSpecificOverrideOptions
-implements Options
+  implements Options
 {
 
   private static final long serialVersionUID = -5593417085363698921L;
@@ -38,17 +38,17 @@ implements Options
     if (configProperties.hasValue(SC_OVERRIDE_SUPPORTS_SCHEMAS))
     {
       setSupportsSchemas(configProperties
-                         .getBooleanValue(SC_OVERRIDE_SUPPORTS_SCHEMAS));
+        .getBooleanValue(SC_OVERRIDE_SUPPORTS_SCHEMAS));
     }
     if (configProperties.hasValue(SC_OVERRIDE_SUPPORTS_CATALOGS))
     {
       setSupportsCatalogs(configProperties
-                          .getBooleanValue(SC_OVERRIDE_SUPPORTS_CATALOGS));
+        .getBooleanValue(SC_OVERRIDE_SUPPORTS_CATALOGS));
     }
     if (configProperties.hasValue(SC_OVERRIDE_SUPPORTS_IDENTIFIER_QUOTE_STRING))
     {
       setIdentifierQuoteString(configProperties
-                               .getStringValue(SC_OVERRIDE_SUPPORTS_IDENTIFIER_QUOTE_STRING, null));
+        .getStringValue(SC_OVERRIDE_SUPPORTS_IDENTIFIER_QUOTE_STRING, null));
     }
   }
 

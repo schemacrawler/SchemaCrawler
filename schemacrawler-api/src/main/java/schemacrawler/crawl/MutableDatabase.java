@@ -44,8 +44,8 @@ import schemacrawler.schema.Table;
  * @author Sualeh Fatehi sualeh@hotmail.com
  */
 final class MutableDatabase
-extends AbstractNamedObjectWithAttributes
-implements Database
+  extends AbstractNamedObjectWithAttributes
+  implements Database
 {
 
   private static final long serialVersionUID = 4051323422934251828L;
@@ -101,7 +101,7 @@ implements Database
   {
     final Collection<ColumnDataType> values = getColumnDataTypes();
     for (final Iterator<ColumnDataType> iterator = values.iterator(); iterator
-        .hasNext();)
+      .hasNext();)
     {
       final ColumnDataType mutableColumnDataType = iterator.next();
       if (!mutableColumnDataType.getSchema().equals(schema))
@@ -160,7 +160,7 @@ implements Database
   {
     final List<Routine> values = new ArrayList<Routine>(routines.values());
     for (final Iterator<Routine> iterator = values.iterator(); iterator
-        .hasNext();)
+      .hasNext();)
     {
       final Routine routine = iterator.next();
       if (!routine.getSchema().equals(schema))
@@ -244,7 +244,7 @@ implements Database
   {
     final Collection<Synonym> values = getSynonyms();
     for (final Iterator<Synonym> iterator = values.iterator(); iterator
-        .hasNext();)
+      .hasNext();)
     {
       final Synonym mutableSynonym = iterator.next();
       if (!mutableSynonym.getSchema().equals(schemaRef))
