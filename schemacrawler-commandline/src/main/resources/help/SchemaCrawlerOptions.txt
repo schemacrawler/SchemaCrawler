@@ -14,8 +14,8 @@
   Optional, defaults to showing all schemas
   
 -tabletypes=<tabletypes>
-  <tabletypes> is a comma-separated list of table types of 
-  TABLE,VIEW,SYSTEM_TABLE,GLOBAL_TEMPORARY,LOCAL_TEMPORARY,ALIAS
+  <tabletypes> is a comma-separated list of table types supported by the
+  database
   Optional, defaults to TABLE,VIEW
   
 -tables=<regular-expression>
