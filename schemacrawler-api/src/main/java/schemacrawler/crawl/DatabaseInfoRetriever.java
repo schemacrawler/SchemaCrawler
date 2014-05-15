@@ -191,7 +191,7 @@ final class DatabaseInfoRetriever
                        "Retrieving database property using method: " + method);
           }
           final ResultSet results = (ResultSet) method.invoke(dbMetaData);
-          final List<String> resultsList = readResultsVector(results);
+          final List<String> resultsList = RetrieverUtility.readResultsVector(results);
           dbProperties
             .add(new ImmutableDatabaseProperty(method.getName(), resultsList
               .toArray(new String[resultsList.size()])));

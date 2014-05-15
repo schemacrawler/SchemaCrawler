@@ -23,11 +23,8 @@ package schemacrawler.crawl;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.JavaSqlType;
@@ -45,36 +42,7 @@ import sf.util.Utility;
 abstract class AbstractRetriever
 {
 
-  /**
-   * Reads a single column result set as a list.
-   *
-   * @param results
-   *        Result set
-   * @return List
-   * @throws SQLException
-   *         On an exception
-   */
-  static List<String> readResultsVector(final ResultSet results)
-    throws SQLException
-  {
-    final List<String> values = new ArrayList<>();
-    try
-    {
-      while (results.next())
-      {
-        final String value = results.getString(1);
-        values.add(value);
-      }
-    }
-    finally
-    {
-      results.close();
-    }
-    return values;
-  }
-
   private final RetrieverConnection retrieverConnection;
-
   final MutableDatabase database;
 
   AbstractRetriever()

@@ -130,7 +130,7 @@ final class SchemaRetriever
     {
       try
       {
-        final List<String> metaDataCatalogNames = readResultsVector(getMetaData()
+        final List<String> metaDataCatalogNames = RetrieverUtility.readResultsVector(getMetaData()
           .getCatalogs());
         for (final String catalogName: metaDataCatalogNames)
         {
