@@ -158,7 +158,7 @@ public final class SchemaDotFormatter
     {
       tableName = table.getFullName();
     }
-    final String tableType = "[" + table.getTableType().toLowerCase() + "]";
+    final String tableType = "[" + table.getTableType() + "]";
 
     final Color tableNameBgColor = getTableNameBgColor(table);
     final int colspan = options.isShowOrdinalNumbers()? 3: 2;

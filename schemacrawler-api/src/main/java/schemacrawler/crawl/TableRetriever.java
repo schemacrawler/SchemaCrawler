@@ -23,6 +23,7 @@ package schemacrawler.crawl;
 
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,6 +37,7 @@ import schemacrawler.schema.IndexType;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.Table;
+import schemacrawler.schema.TableType;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import sf.util.Utility;
@@ -275,6 +277,10 @@ final class TableRetriever
 
     final String[] filteredTableTypes = getRetrieverConnection()
       .getTableTypes().filterUnknown(tableTypes);
+    LOGGER.log(Level.FINER, String
+      .format("Retrieving table types: %s",
+              filteredTableTypes == null? "<<all>>": Arrays
+                .asList(filteredTableTypes)));
 
     try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
       .getTables(unquotedName(catalogName),
@@ -289,7 +295,7 @@ final class TableRetriever
         LOGGER.log(Level.FINER, String.format("Retrieving table: %s.%s",
                                               schemaName,
                                               tableName));
-        final String tableType = results.getString("TABLE_TYPE");
+        final TableType tableType = new TableType(results.getString("TABLE_TYPE"));
         final String remarks = results.getString("REMARKS");
 
         final SchemaReference schemaReference = new SchemaReference(catalogName,
@@ -297,7 +303,7 @@ final class TableRetriever
         final Schema schema = database.getSchema(schemaReference.getFullName());
 
         final MutableTable table;
-        if ("VIEW".equalsIgnoreCase(tableType))
+        if (TableType.VIEW.equals(tableType))
         {
           table = new MutableView(schema, tableName);
         }

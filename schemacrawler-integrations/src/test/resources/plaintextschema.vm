@@ -8,7 +8,7 @@ $database.jdbcDriverInfo
 SET SCHEMA $schema.fullName;
 
 #foreach($table in $database.getTables($schema))
-#if ($table.tableType.toLowerCase() == "table")
+#if ($table.tableType == "table")
 CREATE TABLE $table.name
 (
 #foreach($column in $table.columns)
