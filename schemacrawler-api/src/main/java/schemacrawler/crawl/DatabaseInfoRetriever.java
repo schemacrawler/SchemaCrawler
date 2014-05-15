@@ -86,6 +86,24 @@ final class DatabaseInfoRetriever
    *        Method
    * @return Whether method is a database property
    */
+  private static boolean isDatabasePropertyListMethod(final Method method)
+  {
+    final Class<?> returnType = method.getReturnType();
+    final boolean isDatabasePropertyListMethod = returnType
+      .equals(String.class)
+                                                 && method.getName()
+                                                   .endsWith("s")
+                                                 && method.getParameterTypes().length == 0;
+    return isDatabasePropertyListMethod;
+  }
+
+  /**
+   * Checks if a method is a database property.
+   *
+   * @param method
+   *        Method
+   * @return Whether method is a database property
+   */
   private static boolean isDatabasePropertyMethod(final Method method)
   {
     final Class<?> returnType = method.getReturnType();
@@ -165,21 +183,26 @@ final class DatabaseInfoRetriever
         {
           continue;
         }
-        if (isDatabasePropertyMethod(method))
+        if (isDatabasePropertyListMethod(method))
         {
           if (LOGGER.isLoggable(Level.FINE))
           {
             LOGGER.log(Level.FINER,
                        "Retrieving database property using method: " + method);
           }
-          Object value = method.invoke(dbMetaData);
-          if (value != null && method.getName().endsWith("s")
-              && value instanceof String)
+          final String value = (String) method.invoke(dbMetaData);
+          final String[] list = value == null? new String[0]: value.split(",");
+          dbProperties
+            .add(new ImmutableDatabaseProperty(method.getName(), list));
+        }
+        else if (isDatabasePropertyMethod(method))
+        {
+          if (LOGGER.isLoggable(Level.FINE))
           {
-            // Probably a comma-separated list
-            value = ((String) value).split(",");
+            LOGGER.log(Level.FINER,
+                       "Retrieving database property using method: " + method);
           }
-          // Add to the properties map
+          final Object value = method.invoke(dbMetaData);
           dbProperties.add(new ImmutableDatabaseProperty(method.getName(),
                                                          value));
         }
@@ -191,7 +214,8 @@ final class DatabaseInfoRetriever
                        "Retrieving database property using method: " + method);
           }
           final ResultSet results = (ResultSet) method.invoke(dbMetaData);
-          final List<String> resultsList = RetrieverUtility.readResultsVector(results);
+          final List<String> resultsList = RetrieverUtility
+            .readResultsVector(results);
           dbProperties
             .add(new ImmutableDatabaseProperty(method.getName(), resultsList
               .toArray(new String[resultsList.size()])));
