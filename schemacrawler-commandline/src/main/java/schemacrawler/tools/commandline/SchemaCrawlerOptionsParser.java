@@ -22,6 +22,7 @@
 package schemacrawler.tools.commandline;
 
 
+import static sf.util.Utility.isBlank;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
@@ -36,11 +37,11 @@ import sf.util.clparser.StringOption;
 
 /**
  * Parses the command line.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public final class SchemaCrawlerOptionsParser
-  extends BaseOptionsParser<SchemaCrawlerOptions>
+extends BaseOptionsParser<SchemaCrawlerOptions>
 {
 
   private static final String DEFAULT_TABLE_TYPES = "TABLE,VIEW";
@@ -71,7 +72,7 @@ public final class SchemaCrawlerOptionsParser
 
   @Override
   public SchemaCrawlerOptions getOptions()
-    throws SchemaCrawlerException
+      throws SchemaCrawlerException
   {
     if (hasOptionValue("infolevel"))
     {
@@ -79,7 +80,7 @@ public final class SchemaCrawlerOptionsParser
       {
         final String infoLevel = getStringValue("infolevel");
         final SchemaInfoLevel schemaInfoLevel = InfoLevel.valueOf(infoLevel)
-          .getSchemaInfoLevel();
+            .getSchemaInfoLevel();
         options.setSchemaInfoLevel(schemaInfoLevel);
       }
       catch (final IllegalArgumentException e)
@@ -100,7 +101,15 @@ public final class SchemaCrawlerOptionsParser
 
     if (hasOptionValue("tabletypes"))
     {
-      options.setTableTypesFromString(getStringValue("tabletypes"));
+      final String tabletypes = getStringValue("tabletypes");
+      if (!isBlank(tabletypes))
+      {
+        options.setTableTypesFromString(tabletypes);
+      }
+      else
+      {
+        options.setTableTypesFromString(null);
+      }
     }
 
     if (hasOptionValue("tables"))
