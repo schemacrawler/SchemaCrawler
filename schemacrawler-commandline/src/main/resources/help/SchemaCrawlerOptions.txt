@@ -16,6 +16,7 @@
 -tabletypes=<tabletypes>
   <tabletypes> is a comma-separated list of table types supported by the
   database
+  If no value is specified, all types of tables are shown
   Optional, defaults to TABLE,VIEW
   
 -tables=<regular-expression>
