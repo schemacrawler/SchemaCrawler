@@ -5,7 +5,16 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-     <release version="10.09.01" date="2014-04-25">
+     <release version="10.09.01" date="2014-05-14">
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Fixed table type to be a string, not an enum. See http://sourceforge.net/p/schemacrawler/discussion/495990/thread/09186044
+        for details.
+      ]]></action>       
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Changed the object inheritance of a privilege, so that it is not a database object.
+      ]]></action>       
+     </release>     
+     <release version="10.08.05" date="2014-04-25">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Fixed lint "foreign key with no index" to look at primary keys as well.
       ]]></action>       
