@@ -261,7 +261,7 @@ final class SchemaJsonFormatter
       {
         jsonTable.put("fullName", table.getFullName());
       }
-      jsonTable.put("type", table.getTableType().toLowerCase());
+      jsonTable.put("type", table.getTableType());
 
       if (!isList)
       {

@@ -40,244 +40,81 @@ import schemacrawler.test.utility.TestUtility;
 import schemacrawler.utility.NamedObjectSort;
 
 public class TableTypesTest
-extends BaseDatabaseTest
+  extends BaseDatabaseTest
 {
 
   private static final String TABLE_TYPES_OUTPUT = "table_types/";
 
   @Test
   public void all()
-      throws Exception
+    throws Exception
   {
-
-    final String referenceFile = "all.txt";
-    final File testOutputFile = File.createTempFile("schemacrawler."
-        + referenceFile + ".",
-        ".test");
-    testOutputFile.delete();
-
-    try (final PrintWriter writer = new PrintWriter(testOutputFile, "UTF-8");)
-    {
-
-      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-      schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.standard());
-      schemaCrawlerOptions
-      .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
-      schemaCrawlerOptions.setTableTypesFromString(null);
-
-      final Database database = getDatabase(schemaCrawlerOptions);
-      writeTables(database, writer);
-    }
-
-    final List<String> failures = TestUtility
-        .compareOutput(TABLE_TYPES_OUTPUT + referenceFile, testOutputFile);
-    if (failures.size() > 0)
-    {
-      fail(failures.toString());
-    }
+    test("all.txt", null);
   }
 
   @Test
   public void bad()
-      throws Exception
+    throws Exception
   {
-
-    final String referenceFile = "bad.txt";
-    final File testOutputFile = File.createTempFile("schemacrawler."
-        + referenceFile + ".",
-        ".test");
-    testOutputFile.delete();
-
-    try (final PrintWriter writer = new PrintWriter(testOutputFile, "UTF-8");)
-    {
-
-      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-      schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.standard());
-      schemaCrawlerOptions
-      .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
-      schemaCrawlerOptions.setTableTypesFromString("BAD TABLE TYPE");
-
-      final Database database = getDatabase(schemaCrawlerOptions);
-      writeTables(database, writer);
-    }
-
-    final List<String> failures = TestUtility
-        .compareOutput(TABLE_TYPES_OUTPUT + referenceFile, testOutputFile);
-    if (failures.size() > 0)
-    {
-      fail(failures.toString());
-    }
+    test("bad.txt", "BAD TABLE TYPE");
   }
 
   @Test
   public void defaultTableTypes()
-      throws Exception
+    throws Exception
   {
-
-    final String referenceFile = "default.txt";
-    final File testOutputFile = File.createTempFile("schemacrawler."
-        + referenceFile + ".",
-        ".test");
-    testOutputFile.delete();
-
-    try (final PrintWriter writer = new PrintWriter(testOutputFile, "UTF-8");)
-    {
-
-      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-      schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.standard());
-      schemaCrawlerOptions
-      .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
-      // schemaCrawlerOptions.setTableTypesFromString();
-
-      final Database database = getDatabase(schemaCrawlerOptions);
-      writeTables(database, writer);
-    }
-
-    final List<String> failures = TestUtility
-        .compareOutput(TABLE_TYPES_OUTPUT + referenceFile, testOutputFile);
-    if (failures.size() > 0)
-    {
-      fail(failures.toString());
-    }
+    test("default.txt", "default");
   }
 
   @Test
   public void global_temporary()
-      throws Exception
+    throws Exception
   {
+    test("global_temporary.txt", "GLOBAL TEMPORARY");
+  }
 
-    final String referenceFile = "global_temporary.txt";
-    final File testOutputFile = File.createTempFile("schemacrawler."
-        + referenceFile + ".",
-        ".test");
-    testOutputFile.delete();
-
-    try (final PrintWriter writer = new PrintWriter(testOutputFile, "UTF-8");)
-    {
-
-      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-      schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.standard());
-      schemaCrawlerOptions
-      .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
-      schemaCrawlerOptions.setTableTypesFromString("GLOBAL TEMPORARY");
-
-      final Database database = getDatabase(schemaCrawlerOptions);
-      writeTables(database, writer);
-    }
-
-    final List<String> failures = TestUtility
-        .compareOutput(TABLE_TYPES_OUTPUT + referenceFile, testOutputFile);
-    if (failures.size() > 0)
-    {
-      fail(failures.toString());
-    }
+  @Test
+  public void mixed()
+    throws Exception
+  {
+    test("mixed.txt", " global temporary, view ");
   }
 
   @Test
   public void none()
-      throws Exception
+    throws Exception
   {
-
-    final String referenceFile = "none.txt";
-    final File testOutputFile = File.createTempFile("schemacrawler."
-        + referenceFile + ".",
-        ".test");
-    testOutputFile.delete();
-
-    try (final PrintWriter writer = new PrintWriter(testOutputFile, "UTF-8");)
-    {
-
-      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-      schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.standard());
-      schemaCrawlerOptions
-      .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
-      schemaCrawlerOptions.setTableTypesFromString("");
-
-      final Database database = getDatabase(schemaCrawlerOptions);
-      writeTables(database, writer);
-    }
-
-    final List<String> failures = TestUtility
-        .compareOutput(TABLE_TYPES_OUTPUT + referenceFile, testOutputFile);
-    if (failures.size() > 0)
-    {
-      fail(failures.toString());
-    }
+    test("none.txt", "");
   }
 
   @Test
   public void system()
-      throws Exception
+    throws Exception
   {
-
-    final String referenceFile = "system.txt";
-    final File testOutputFile = File.createTempFile("schemacrawler."
-        + referenceFile + ".",
-        ".test");
-    testOutputFile.delete();
-
-    try (final PrintWriter writer = new PrintWriter(testOutputFile, "UTF-8");)
-    {
-
-      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-      schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.standard());
-      schemaCrawlerOptions
-      .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
-      schemaCrawlerOptions.setTableTypesFromString("SYSTEM TABLE");
-
-      final Database database = getDatabase(schemaCrawlerOptions);
-      writeTables(database, writer);
-    }
-
-    final List<String> failures = TestUtility
-        .compareOutput(TABLE_TYPES_OUTPUT + referenceFile, testOutputFile);
-    if (failures.size() > 0)
-    {
-      fail(failures.toString());
-    }
+    test("system.txt", "SYSTEM TABLE");
   }
 
   @Test
   public void tables()
-      throws Exception
+    throws Exception
   {
-
-    final String referenceFile = "tables.txt";
-    final File testOutputFile = File.createTempFile("schemacrawler."
-        + referenceFile + ".",
-        ".test");
-    testOutputFile.delete();
-
-    try (final PrintWriter writer = new PrintWriter(testOutputFile, "UTF-8");)
-    {
-
-      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-      schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.standard());
-      schemaCrawlerOptions
-      .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
-      schemaCrawlerOptions.setTableTypesFromString("TABLE");
-
-      final Database database = getDatabase(schemaCrawlerOptions);
-      writeTables(database, writer);
-    }
-
-    final List<String> failures = TestUtility
-        .compareOutput(TABLE_TYPES_OUTPUT + referenceFile, testOutputFile);
-    if (failures.size() > 0)
-    {
-      fail(failures.toString());
-    }
+    test("tables.txt", "TABLE");
   }
 
   @Test
   public void views()
-      throws Exception
+    throws Exception
+  {
+    test("views.txt", "VIEW");
+  }
+
+  private void test(final String referenceFile, final String tableTypes)
+    throws Exception
   {
 
-    final String referenceFile = "views.txt";
     final File testOutputFile = File.createTempFile("schemacrawler."
-        + referenceFile + ".",
-        ".test");
+                                                        + referenceFile + ".",
+                                                    ".test");
     testOutputFile.delete();
 
     try (final PrintWriter writer = new PrintWriter(testOutputFile, "UTF-8");)
@@ -286,44 +123,42 @@ extends BaseDatabaseTest
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
       schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.standard());
       schemaCrawlerOptions
-      .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
-      schemaCrawlerOptions.setTableTypesFromString("VIEW");
+        .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
+      if (!"default".equals(tableTypes))
+      {
+        schemaCrawlerOptions.setTableTypesFromString(tableTypes);
+      }
 
       final Database database = getDatabase(schemaCrawlerOptions);
-      writeTables(database, writer);
+      final Schema[] schemas = database.getSchemas().toArray(new Schema[0]);
+      assertEquals("Schema count does not match", 5, schemas.length);
+      for (final Schema schema: schemas)
+      {
+        writer.println(String.format("%s", schema.getFullName()));
+        final Table[] tables = database.getTables(schema).toArray(new Table[0]);
+        Arrays.sort(tables, NamedObjectSort.alphabetical);
+        for (final Table table: tables)
+        {
+          writer.println(String.format("  %s [%s]",
+                                       table.getName(),
+                                       table.getTableType()));
+          final Column[] columns = table.getColumns().toArray(new Column[0]);
+          Arrays.sort(columns);
+          for (final Column column: columns)
+          {
+            writer.println(String.format("    %s [%s]",
+                                         column.getName(),
+                                         column.getColumnDataType()));
+          }
+        }
+      }
     }
 
     final List<String> failures = TestUtility
-        .compareOutput(TABLE_TYPES_OUTPUT + referenceFile, testOutputFile);
+      .compareOutput(TABLE_TYPES_OUTPUT + referenceFile, testOutputFile);
     if (failures.size() > 0)
     {
       fail(failures.toString());
-    }
-  }
-
-  private void writeTables(final Database database, final PrintWriter writer)
-  {
-    final Schema[] schemas = database.getSchemas().toArray(new Schema[0]);
-    assertEquals("Schema count does not match", 5, schemas.length);
-    for (final Schema schema: schemas)
-    {
-      writer.println(String.format("%s", schema.getFullName()));
-      final Table[] tables = database.getTables(schema).toArray(new Table[0]);
-      Arrays.sort(tables, NamedObjectSort.alphabetical);
-      for (final Table table: tables)
-      {
-        writer.println(String.format("  %s [%s]",
-                                     table.getName(),
-                                     table.getTableType()));
-        final Column[] columns = table.getColumns().toArray(new Column[0]);
-        Arrays.sort(columns);
-        for (final Column column: columns)
-        {
-          writer.println(String.format("    %s [%s]",
-                                       column.getName(),
-                                       column.getColumnDataType()));
-        }
-      }
     }
   }
 

@@ -40,6 +40,7 @@ import schemacrawler.schema.Table;
 import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.TableReference;
 import schemacrawler.schema.TableRelationshipType;
+import schemacrawler.schema.TableType;
 import schemacrawler.schema.Trigger;
 
 /**
@@ -62,7 +63,7 @@ class MutableTable
 
   private static final long serialVersionUID = 3257290248802284852L;
 
-  private String tableType; // Default value is NULL
+  private TableType tableType = TableType.UNKNOWN; // Default value
   private MutablePrimaryKey primaryKey;
   private final NamedObjectList<MutableColumn> columns = new NamedObjectList<>();
   private final NamedObjectList<MutableForeignKey> foreignKeys = new NamedObjectList<>();
@@ -295,16 +296,9 @@ class MutableTable
    * @see Table#getTableType()
    */
   @Override
-  public String getTableType()
+  public TableType getTableType()
   {
-    if (tableType == null)
-    {
-      return "UNKNOWN";
-    }
-    else
-    {
-      return tableType;
-    }
+    return tableType;
   }
 
   /**
@@ -335,7 +329,7 @@ class MutableTable
    * @see schemacrawler.schema.TypedObject#getType()
    */
   @Override
-  public final String getType()
+  public final TableType getType()
   {
     return getTableType();
   }
@@ -449,9 +443,16 @@ class MutableTable
     this.sortIndex = sortIndex;
   }
 
-  void setTableType(final String tableType)
+  void setTableType(final TableType tableType)
   {
-    this.tableType = tableType;
+    if (tableType == null)
+    {
+      this.tableType = TableType.UNKNOWN;
+    }
+    else
+    {
+      this.tableType = tableType;
+    }
   }
 
   private Collection<ForeignKey> getForeignKeys(final TableAssociationType tableAssociationType)
