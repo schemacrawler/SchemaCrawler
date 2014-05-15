@@ -23,9 +23,7 @@ package schemacrawler.crawl;
 
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -54,36 +52,6 @@ final class TableRetriever
 
   private static final Logger LOGGER = Logger.getLogger(TableRetriever.class
     .getName());
-
-  /**
-   * Converts an array of table types to an array of their corresponding
-   * string values.
-   *
-   * @param tableTypes
-   *        Array of table types
-   * @return Array of string table types
-   */
-  private static String[] toStrings(final Collection<String> tableTypes)
-  {
-    if (tableTypes == null)
-    {
-      return null;
-    }
-    if (tableTypes.isEmpty())
-    {
-      return new String[0];
-    }
-
-    final List<String> tableTypeStrings = new ArrayList<>(tableTypes.size());
-    for (final String tableType: tableTypes)
-    {
-      if (tableType != null)
-      {
-        tableTypeStrings.add(tableType);
-      }
-    }
-    return tableTypeStrings.toArray(new String[tableTypeStrings.size()]);
-  }
 
   TableRetriever(final RetrieverConnection retrieverConnection,
                  final MutableDatabase database)
@@ -305,11 +273,14 @@ final class TableRetriever
       return;
     }
 
+    final String[] filteredTableTypes = getRetrieverConnection()
+      .getTableTypes().filterUnknown(tableTypes);
+
     try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
       .getTables(unquotedName(catalogName),
                  unquotedName(schemaName),
                  tableNamePattern,
-                 toStrings(tableTypes)));)
+                 filteredTableTypes));)
     {
       while (results.next())
       {
