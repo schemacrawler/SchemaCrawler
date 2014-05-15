@@ -187,7 +187,7 @@
       <answer>
         <p>
           Use the -tabletypes command-line option, without VIEW. For example,
-          you can provide -table_type=TABLE. Further, see the
+          you can provide -tabletypes=TABLE. Further, see the
           <a href="faq.html#commands">details on the command-line options.</a>
         </p>
       </answer>
