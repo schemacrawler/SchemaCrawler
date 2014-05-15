@@ -20,6 +20,8 @@
 package schemacrawler.crawl;
 
 
+import static sf.util.Utility.isBlank;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -46,7 +48,10 @@ class RetrieverUtility
       while (results.next())
       {
         final String value = results.getString(1);
-        values.add(value);
+        if (!results.wasNull() && !isBlank(value))
+        {
+          values.add(value.trim());
+        }
       }
     }
     finally

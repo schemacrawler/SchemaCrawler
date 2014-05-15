@@ -253,7 +253,7 @@ final class SchemaTextFormatter
     {
       tableName = table.getFullName();
     }
-    final String tableType = "[" + table.getTableType().toLowerCase() + "]";
+    final String tableType = "[" + table.getTableType() + "]";
 
     if (isList)
     {

@@ -168,7 +168,7 @@ public final class Query
       tableProperties.put("columns", getColumnsListAsString(columns, false));
       tableProperties.put("orderbycolumns",
                           getColumnsListAsString(columns, true));
-      tableProperties.put("tabletype", table.getTableType());
+      tableProperties.put("tabletype", table.getTableType().toString());
     }
 
     String sql = query;
