@@ -22,7 +22,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.Arrays;
-import java.util.logging.Logger;
 
 import org.junit.Test;
 
@@ -41,9 +40,6 @@ import schemacrawler.test.utility.TestWriter;
 public class SchemaCrawlerGrepTest
   extends BaseDatabaseTest
 {
-
-  private static final Logger LOGGER = Logger
-    .getLogger(SchemaCrawlerGrepTest.class.getName());
 
   @Test
   public void grepColumns()

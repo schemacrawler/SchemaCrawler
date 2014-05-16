@@ -25,7 +25,7 @@ import static sf.util.Utility.isBlank;
 import java.io.Serializable;
 
 public final class TableType
-implements Serializable, Comparable<TableType>
+  implements Serializable, Comparable<TableType>
 {
 
   private static final long serialVersionUID = -8172248482959041873L;
@@ -36,6 +36,10 @@ implements Serializable, Comparable<TableType>
 
   private final String tableType;
 
+  /**
+   * Constructor for table type. This is case-sensitive. A blank string
+   * results in an unknown table type.
+   */
   public TableType(final String tableType)
   {
     if (isBlank(tableType))
@@ -44,7 +48,7 @@ implements Serializable, Comparable<TableType>
     }
     else
     {
-      this.tableType = tableType;
+      this.tableType = tableType.trim();
     }
   }
 
@@ -53,6 +57,11 @@ implements Serializable, Comparable<TableType>
     this(null);
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see java.lang.Comparable#compareTo(java.lang.Object)
+   */
   @Override
   public int compareTo(final TableType other)
   {
@@ -99,7 +108,9 @@ implements Serializable, Comparable<TableType>
   }
 
   /**
-   * @return the tableType
+   * The table type, with the case preserved.
+   * 
+   * @return The table type
    */
   public String getTableType()
   {
@@ -120,6 +131,12 @@ implements Serializable, Comparable<TableType>
     return result;
   }
 
+  /**
+   * Checks if a string is equal to this table type. This is a
+   * case-insensitive check.
+   * 
+   * @return True if the string is the same as this table type
+   */
   public boolean isEqualTo(final String testTableType)
   {
     if (isBlank(testTableType))
