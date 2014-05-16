@@ -7,7 +7,7 @@
   <body>
      <release version="10.09.01" date="2014-05-14">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
-        Fixed table type to be a string, not an enum. See http://sourceforge.net/p/schemacrawler/discussion/495990/thread/09186044
+        Fixed table type to be based on a string, not an enum. See http://sourceforge.net/p/schemacrawler/discussion/495990/thread/09186044
         for details.
       ]]></action>       
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
