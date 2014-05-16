@@ -36,7 +36,7 @@ class TableTypes
 {
 
   private static final Logger LOGGER = Logger.getLogger(TableTypes.class
-                                                        .getName());
+    .getName());
 
   private final Collection<TableType> tableTypes;
 
@@ -49,9 +49,9 @@ class TableTypes
       try
       {
         final ResultSet tableTypesResults = connection.getMetaData()
-            .getTableTypes();
+          .getTableTypes();
         final List<String> tableTypesList = RetrieverUtility
-            .readResultsVector(tableTypesResults);
+          .readResultsVector(tableTypesResults);
         for (final String tableType: tableTypesList)
         {
           tableTypes.add(new TableType(tableType));
@@ -94,16 +94,32 @@ class TableTypes
     final List<String> filteredTableTypes = new ArrayList<>();
     for (final String tableTypeString: tableTypeStrings)
     {
-      for (final TableType tableType: tableTypes)
+      final TableType tableType = lookupTableType(tableTypeString);
+      if (!tableType.equals(TableType.UNKNOWN))
       {
-        if (tableType.isEqualTo(tableTypeString))
-        {
-          filteredTableTypes.add(tableType.getTableType());
-        }
+        filteredTableTypes.add(tableType.getTableType());
       }
     }
     Collections.sort(filteredTableTypes);
     return filteredTableTypes.toArray(new String[filteredTableTypes.size()]);
+  }
+
+  /**
+   * Looks up a table type, from the provided string. Returns unknown if
+   * no match is found.
+   *
+   * @return Matched table type, or unknown
+   */
+  TableType lookupTableType(final String tableTypeString)
+  {
+    for (final TableType tableType: tableTypes)
+    {
+      if (tableType.isEqualTo(tableTypeString))
+      {
+        return tableType;
+      }
+    }
+    return TableType.UNKNOWN;
   }
 
 }

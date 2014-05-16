@@ -275,8 +275,10 @@ final class TableRetriever
       return;
     }
 
-    final String[] filteredTableTypes = getRetrieverConnection()
-      .getTableTypes().filterUnknown(tableTypes);
+    final TableTypes supportedTableTypes = getRetrieverConnection()
+      .getTableTypes();
+    final String[] filteredTableTypes = supportedTableTypes
+      .filterUnknown(tableTypes);
     LOGGER.log(Level.FINER, String
       .format("Retrieving table types: %s",
               filteredTableTypes == null? "<<all>>": Arrays
@@ -295,7 +297,7 @@ final class TableRetriever
         LOGGER.log(Level.FINER, String.format("Retrieving table: %s.%s",
                                               schemaName,
                                               tableName));
-        final TableType tableType = new TableType(results.getString("TABLE_TYPE"));
+        final String tableTypeString = results.getString("TABLE_TYPE");
         final String remarks = results.getString("REMARKS");
 
         final SchemaReference schemaReference = new SchemaReference(catalogName,
@@ -303,7 +305,7 @@ final class TableRetriever
         final Schema schema = database.getSchema(schemaReference.getFullName());
 
         final MutableTable table;
-        if (TableType.VIEW.equals(tableType))
+        if (TableType.VIEW.isEqualTo(tableTypeString))
         {
           table = new MutableView(schema, tableName);
         }
@@ -313,6 +315,8 @@ final class TableRetriever
         }
         if (tableFilter.include(table))
         {
+          final TableType tableType = supportedTableTypes
+            .lookupTableType(tableTypeString);
           table.setTableType(tableType);
           table.setRemarks(remarks);
 
