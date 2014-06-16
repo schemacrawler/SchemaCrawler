@@ -1709,6 +1709,11 @@ hr {
 		<td class='type'>INTEGER, in</td>
 	</tr>
 	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>TWO</td>
+		<td class='type'>INTEGER, in</td>
+	</tr>
+	<tr>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
@@ -1716,7 +1721,7 @@ hr {
 		<td class='description right'>[definition]</td>
 	</tr>
 	<tr>
-		<td colspan='3' class='definition'>CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10130 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN BOOKS.CUSTOMADD(ONE,1)</td>
+		<td colspan='3' class='definition'>CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER,IN TWO INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10128 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN ONE+TWO</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -1726,7 +1731,7 @@ hr {
 		<td class='description right'>[specific name]</td>
 	</tr>
 	<tr>
-		<td colspan='3' class='definition'>CUSTOMADD_10130</td>
+		<td colspan='3' class='definition'>CUSTOMADD_10128</td>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -1744,11 +1749,6 @@ hr {
 		<td class='type'>INTEGER, in</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>TWO</td>
-		<td class='type'>INTEGER, in</td>
-	</tr>
-	<tr>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
@@ -1756,7 +1756,7 @@ hr {
 		<td class='description right'>[definition]</td>
 	</tr>
 	<tr>
-		<td colspan='3' class='definition'>CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER,IN TWO INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10129 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN ONE+TWO</td>
+		<td colspan='3' class='definition'>CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10129 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN BOOKS.CUSTOMADD(ONE,1)</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -1767,6 +1767,41 @@ hr {
 	</tr>
 	<tr>
 		<td colspan='3' class='definition'>CUSTOMADD_10129</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<table>
+  <caption>NEW_PUBLISHER</caption>
+
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[procedure, no result]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>PUBLISHER</td>
+		<td class='type'>CHARACTER VARYING, out</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[definition]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>CREATE PROCEDURE BOOKS.NEW_PUBLISHER(OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10126 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = &apos;New Publisher&apos;</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[specific name]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>NEW_PUBLISHER_10126</td>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -1796,42 +1831,7 @@ hr {
 		<td class='description right'>[definition]</td>
 	</tr>
 	<tr>
-		<td colspan='3' class='definition'>CREATE PROCEDURE BOOKS.NEW_PUBLISHER(IN NEWPUBLISHER VARCHAR(50),OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10128 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = NEWPUBLISHER</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description right'>[specific name]</td>
-	</tr>
-	<tr>
-		<td colspan='3' class='definition'>NEW_PUBLISHER_10128</td>
-	</tr>
-</table>
-<p>&#160;</p>
-
-<table>
-  <caption>NEW_PUBLISHER</caption>
-
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description right'>[procedure, no result]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>PUBLISHER</td>
-		<td class='type'>CHARACTER VARYING, out</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description right'>[definition]</td>
-	</tr>
-	<tr>
-		<td colspan='3' class='definition'>CREATE PROCEDURE BOOKS.NEW_PUBLISHER(OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10127 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = &apos;New Publisher&apos;</td>
+		<td colspan='3' class='definition'>CREATE PROCEDURE BOOKS.NEW_PUBLISHER(IN NEWPUBLISHER VARCHAR(50),OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10127 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = NEWPUBLISHER</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>

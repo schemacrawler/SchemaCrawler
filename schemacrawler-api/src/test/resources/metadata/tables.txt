@@ -348,7 +348,7 @@ o--> PUBLIC.BOOKS.PUBLISHERS [table]
           ~ BUFFER_LENGTH=null
           ~ CHAR_OCTET_LENGTH=0
           ~ GENERATION_EXPRESSION=null
-          ~ IS_AUTOINCREMENT=NO
+          ~ IS_AUTOINCREMENT=YES
           ~ IS_GENERATED=NEVER
           ~ IS_GENERATEDCOLUMN=NO
           ~ IS_NULLABLE=NO
