@@ -1237,21 +1237,7 @@
   },
   "routines": [
     {
-      "definition": "CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10130 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN BOOKS.CUSTOMADD(ONE,1)",
-      "name": "CUSTOMADD",
-      "remarks": "",
-      "parameters": [{
-        "dataType": "INTEGER",
-        "width": "",
-        "type": "in",
-        "databaseSpecificType": "INTEGER"
-      }],
-      "type": "function",
-      "specificName": "CUSTOMADD_10130",
-      "returnType": "does not return a table"
-    },
-    {
-      "definition": "CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER,IN TWO INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10129 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN ONE+TWO",
+      "definition": "CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER,IN TWO INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10128 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN ONE+TWO",
       "name": "CUSTOMADD",
       "remarks": "",
       "parameters": [
@@ -1269,11 +1255,39 @@
         }
       ],
       "type": "function",
+      "specificName": "CUSTOMADD_10128",
+      "returnType": "does not return a table"
+    },
+    {
+      "definition": "CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10129 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN BOOKS.CUSTOMADD(ONE,1)",
+      "name": "CUSTOMADD",
+      "remarks": "",
+      "parameters": [{
+        "dataType": "INTEGER",
+        "width": "",
+        "type": "in",
+        "databaseSpecificType": "INTEGER"
+      }],
+      "type": "function",
       "specificName": "CUSTOMADD_10129",
       "returnType": "does not return a table"
     },
     {
-      "definition": "CREATE PROCEDURE BOOKS.NEW_PUBLISHER(IN NEWPUBLISHER VARCHAR(50),OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10128 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = NEWPUBLISHER",
+      "definition": "CREATE PROCEDURE BOOKS.NEW_PUBLISHER(OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10126 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = 'New Publisher'",
+      "name": "NEW_PUBLISHER",
+      "remarks": "",
+      "parameters": [{
+        "dataType": "VARCHAR",
+        "width": "",
+        "type": "out",
+        "databaseSpecificType": "CHARACTER VARYING"
+      }],
+      "type": "procedure",
+      "specificName": "NEW_PUBLISHER_10126",
+      "returnType": "no result"
+    },
+    {
+      "definition": "CREATE PROCEDURE BOOKS.NEW_PUBLISHER(IN NEWPUBLISHER VARCHAR(50),OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10127 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = NEWPUBLISHER",
       "name": "NEW_PUBLISHER",
       "remarks": "",
       "parameters": [
@@ -1290,20 +1304,6 @@
           "databaseSpecificType": "CHARACTER VARYING"
         }
       ],
-      "type": "procedure",
-      "specificName": "NEW_PUBLISHER_10128",
-      "returnType": "no result"
-    },
-    {
-      "definition": "CREATE PROCEDURE BOOKS.NEW_PUBLISHER(OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10127 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = 'New Publisher'",
-      "name": "NEW_PUBLISHER",
-      "remarks": "",
-      "parameters": [{
-        "dataType": "VARCHAR",
-        "width": "",
-        "type": "out",
-        "databaseSpecificType": "CHARACTER VARYING"
-      }],
       "type": "procedure",
       "specificName": "NEW_PUBLISHER_10127",
       "returnType": "no result"

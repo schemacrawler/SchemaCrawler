@@ -685,9 +685,6 @@ PUBLIC.BOOKS.PUBLISHERS
                                                           [unique index]
   ID                                ascending                   
 
-                                                      [check constraint]
-BOOKS.PUBLISHERS.ID IS NOT NULL
-
 DELETE                                                       [privilege]
   _SYSTEM --> DBA (grantable)                                   
 
@@ -1055,12 +1052,13 @@ PUBLIC.BOOKS.CUSTOMADD
 ------------------------------------------------------------------------
                                      [function, does not return a table]
   ONE                               INTEGER, in                 
+  TWO                               INTEGER, in                 
 
                                                             [definition]
-CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10130 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN BOOKS.CUSTOMADD(ONE,1)
+CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER,IN TWO INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10128 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN ONE+TWO
 
                                                          [specific name]
-CUSTOMADD_10130
+CUSTOMADD_10128
 
 
 
@@ -1068,13 +1066,25 @@ PUBLIC.BOOKS.CUSTOMADD
 ------------------------------------------------------------------------
                                      [function, does not return a table]
   ONE                               INTEGER, in                 
-  TWO                               INTEGER, in                 
 
                                                             [definition]
-CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER,IN TWO INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10129 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN ONE+TWO
+CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10129 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN BOOKS.CUSTOMADD(ONE,1)
 
                                                          [specific name]
 CUSTOMADD_10129
+
+
+
+PUBLIC.BOOKS.NEW_PUBLISHER
+------------------------------------------------------------------------
+                                                  [procedure, no result]
+  PUBLISHER                         CHARACTER VARYING, out      
+
+                                                            [definition]
+CREATE PROCEDURE BOOKS.NEW_PUBLISHER(OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10126 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = 'New Publisher'
+
+                                                         [specific name]
+NEW_PUBLISHER_10126
 
 
 
@@ -1085,20 +1095,7 @@ PUBLIC.BOOKS.NEW_PUBLISHER
   PUBLISHER                         CHARACTER VARYING, out      
 
                                                             [definition]
-CREATE PROCEDURE BOOKS.NEW_PUBLISHER(IN NEWPUBLISHER VARCHAR(50),OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10128 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = NEWPUBLISHER
-
-                                                         [specific name]
-NEW_PUBLISHER_10128
-
-
-
-PUBLIC.BOOKS.NEW_PUBLISHER
-------------------------------------------------------------------------
-                                                  [procedure, no result]
-  PUBLISHER                         CHARACTER VARYING, out      
-
-                                                            [definition]
-CREATE PROCEDURE BOOKS.NEW_PUBLISHER(OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10127 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = 'New Publisher'
+CREATE PROCEDURE BOOKS.NEW_PUBLISHER(IN NEWPUBLISHER VARCHAR(50),OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10127 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = NEWPUBLISHER
 
                                                          [specific name]
 NEW_PUBLISHER_10127

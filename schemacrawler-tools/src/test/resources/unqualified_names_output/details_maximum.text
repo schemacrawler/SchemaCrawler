@@ -449,7 +449,7 @@ PK_AUTHORS                                                 [primary key]
 FK_Z_AUTHOR                                [foreign key, with no action]
   ID --> BOOKAUTHORS.AUTHORID                                   
 
-SYS_IDX_PK_AUTHORS_10098                                  [unique index]
+SYS_IDX_PK_AUTHORS_10097                                  [unique index]
   ID                                ascending                   
 
 IDX_B_AUTHORS                                         [non-unique index]
@@ -468,13 +468,13 @@ TRG_AUTHORS                             [trigger, after delete, per row]
 CHECK_UPPERCASE_STATE                                 [check constraint]
 BOOKS.AUTHORS.STATE=UPPER(BOOKS.AUTHORS.STATE)
 
-SYS_CT_10095                                          [check constraint]
+SYS_CT_10094                                          [check constraint]
 BOOKS.AUTHORS.ID IS NOT NULL
 
-SYS_CT_10096                                          [check constraint]
+SYS_CT_10095                                          [check constraint]
 BOOKS.AUTHORS.FIRSTNAME IS NOT NULL
 
-SYS_CT_10097                                          [check constraint]
+SYS_CT_10096                                          [check constraint]
 BOOKS.AUTHORS.LASTNAME IS NOT NULL
 
 DELETE                                                       [privilege]
@@ -543,20 +543,20 @@ FK_Z_AUTHOR                                [foreign key, with no action]
 FK_Y_BOOK                                  [foreign key, with no action]
   BOOKS.ID --> BOOKID                                           
 
-SYS_IDX_10117                                         [non-unique index]
+SYS_IDX_10116                                         [non-unique index]
   AUTHORID                          ascending                   
 
-SYS_IDX_10115                                         [non-unique index]
+SYS_IDX_10114                                         [non-unique index]
   BOOKID                            ascending                   
 
 UIDX_BOOKAUTHORS                                          [unique index]
   BOOKID                            ascending                   
   AUTHORID                          ascending                   
 
-SYS_CT_10110                                          [check constraint]
+SYS_CT_10109                                          [check constraint]
 BOOKS.BOOKAUTHORS.BOOKID IS NOT NULL
 
-SYS_CT_10111                                          [check constraint]
+SYS_CT_10110                                          [check constraint]
 BOOKS.BOOKAUTHORS.AUTHORID IS NOT NULL
 
 DELETE                                                       [privilege]
@@ -604,16 +604,16 @@ FK_Y_BOOK                                  [foreign key, with no action]
                                                       [weak association]
   PUBLISHERS.ID --> PUBLISHERID                                 
 
-SYS_IDX_PK_BOOKS_10106                                    [unique index]
+SYS_IDX_PK_BOOKS_10105                                    [unique index]
   ID                                ascending                   
 
-SYS_CT_10103                                          [check constraint]
+SYS_CT_10102                                          [check constraint]
 BOOKS.BOOKS.ID IS NOT NULL
 
-SYS_CT_10104                                          [check constraint]
+SYS_CT_10103                                          [check constraint]
 BOOKS.BOOKS.TITLE IS NOT NULL
 
-SYS_CT_10105                                          [check constraint]
+SYS_CT_10104                                          [check constraint]
 BOOKS.BOOKS.PUBLISHERID IS NOT NULL
 
 DELETE                                                       [privilege]
@@ -676,17 +676,14 @@ PUBLISHERS
   ID                                INTEGER not null            
   PUBLISHER                         VARCHAR(255)                
 
-PK_PUBLISHERS                                              [primary key]
+SYS_PK_10092                                               [primary key]
   ID                                ascending                   
 
                                                       [weak association]
   ID --> BOOKS.PUBLISHERID                                      
 
-SYS_IDX_PK_PUBLISHERS_10093                               [unique index]
+SYS_IDX_SYS_PK_10092_10093                                [unique index]
   ID                                ascending                   
-
-SYS_CT_10092                                          [check constraint]
-BOOKS.PUBLISHERS.ID IS NOT NULL
 
 DELETE                                                       [privilege]
   _SYSTEM --> DBA (grantable)                                   
@@ -729,22 +726,22 @@ FK_PUBLICATION_JOIN                        [foreign key, with no action]
 FK_WRITER_JOIN                             [foreign key, with no action]
   WRITERS.ID --> WRITERID                                       
 
-SYS_IDX_PK_EXTRA_PK_10180                                 [unique index]
+SYS_IDX_PK_EXTRA_PK_10179                                 [unique index]
   ID                                ascending                   
 
-SYS_IDX_10186                                         [non-unique index]
+SYS_IDX_10185                                         [non-unique index]
   PUBLICATIONID                     ascending                   
 
-SYS_IDX_10184                                         [non-unique index]
+SYS_IDX_10183                                         [non-unique index]
   WRITERID                          ascending                   
 
-SYS_CT_10177                                          [check constraint]
+SYS_CT_10176                                          [check constraint]
 FOR_LINT.EXTRA_PK.ID IS NOT NULL
 
-SYS_CT_10178                                          [check constraint]
+SYS_CT_10177                                          [check constraint]
 FOR_LINT.EXTRA_PK.WRITERID IS NOT NULL
 
-SYS_CT_10179                                          [check constraint]
+SYS_CT_10178                                          [check constraint]
 FOR_LINT.EXTRA_PK.PUBLICATIONID IS NOT NULL
 
 DELETE                                                       [privilege]
@@ -816,19 +813,19 @@ FK_WRITERS_PUBLICATION                     [foreign key, with no action]
 FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
   WRITERS.ID --> WRITERID                                       
 
-SYS_IDX_PK_PUBLICATIONS_10170                             [unique index]
+SYS_IDX_PK_PUBLICATIONS_10169                             [unique index]
   ID                                ascending                   
 
-SYS_IDX_10174                                         [non-unique index]
+SYS_IDX_10173                                         [non-unique index]
   WRITERID                          ascending                   
 
-SYS_CT_10167                                          [check constraint]
+SYS_CT_10166                                          [check constraint]
 FOR_LINT.PUBLICATIONS.ID IS NOT NULL
 
-SYS_CT_10168                                          [check constraint]
+SYS_CT_10167                                          [check constraint]
 FOR_LINT.PUBLICATIONS.TITLE IS NOT NULL
 
-SYS_CT_10169                                          [check constraint]
+SYS_CT_10168                                          [check constraint]
 FOR_LINT.PUBLICATIONS.WRITERID IS NOT NULL
 
 DELETE                                                       [privilege]
@@ -885,10 +882,10 @@ FK_WRITER_JOIN                             [foreign key, with no action]
 FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
   ID --> PUBLICATIONS.WRITERID                                  
 
-SYS_IDX_PK_WRITERS_10160                                  [unique index]
+SYS_IDX_PK_WRITERS_10159                                  [unique index]
   ID                                ascending                   
 
-SYS_IDX_10188                                         [non-unique index]
+SYS_IDX_10187                                         [non-unique index]
   PUBLICATION_ID                    ascending                   
 
 IDX_A1_WRITERS                                        [non-unique index]
@@ -912,19 +909,19 @@ IDX_A_WRITERS                                         [non-unique index]
 CHECK_UPPERCASE_STATE                                 [check constraint]
 FOR_LINT.WRITERS.STATE=UPPER(FOR_LINT.WRITERS.STATE)
 
-SYS_CT_10155                                          [check constraint]
+SYS_CT_10154                                          [check constraint]
 FOR_LINT.WRITERS.ID IS NOT NULL
 
-SYS_CT_10156                                          [check constraint]
+SYS_CT_10155                                          [check constraint]
 FOR_LINT.WRITERS.FIRSTNAME IS NOT NULL
 
-SYS_CT_10157                                          [check constraint]
+SYS_CT_10156                                          [check constraint]
 FOR_LINT.WRITERS.LASTNAME IS NOT NULL
 
-SYS_CT_10158                                          [check constraint]
+SYS_CT_10157                                          [check constraint]
 FOR_LINT.WRITERS.ADDRESS2 IS NOT NULL
 
-SYS_CT_10159                                          [check constraint]
+SYS_CT_10158                                          [check constraint]
 FOR_LINT.WRITERS.PUBLICATION_ID IS NOT NULL
 
 DELETE                                                       [privilege]
@@ -963,20 +960,20 @@ FK_SALES_REGIONS                           [foreign key, with no action]
   POSTALCODE --> SALES.POSTALCODE                               
   COUNTRY --> SALES.COUNTRY                                     
 
-SYS_IDX_PK_CUSTOMERS_10143                                [unique index]
+SYS_IDX_PK_CUSTOMERS_10142                                [unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
 
-SYS_CT_10139                                          [check constraint]
+SYS_CT_10138                                          [check constraint]
 "PUBLISHER SALES".REGIONS.CITY IS NOT NULL
 
-SYS_CT_10140                                          [check constraint]
+SYS_CT_10139                                          [check constraint]
 "PUBLISHER SALES".REGIONS.STATE IS NOT NULL
 
-SYS_CT_10141                                          [check constraint]
+SYS_CT_10140                                          [check constraint]
 "PUBLISHER SALES".REGIONS.POSTALCODE IS NOT NULL
 
-SYS_CT_10142                                          [check constraint]
+SYS_CT_10141                                          [check constraint]
 "PUBLISHER SALES".REGIONS.COUNTRY IS NOT NULL
 
 DELETE                                                       [privilege]
@@ -1015,14 +1012,14 @@ FK_SALES_REGIONS                           [foreign key, with no action]
                                                       [weak association]
   BOOKS.ID --> BOOKID                                           
 
-SYS_IDX_10153                                         [non-unique index]
+SYS_IDX_10152                                         [non-unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
 
-SYS_CT_10148                                          [check constraint]
+SYS_CT_10147                                          [check constraint]
 "PUBLISHER SALES".SALES.POSTALCODE IS NOT NULL
 
-SYS_CT_10149                                          [check constraint]
+SYS_CT_10148                                          [check constraint]
 "PUBLISHER SALES".SALES.COUNTRY IS NOT NULL
 
 DELETE                                                       [privilege]
@@ -1055,12 +1052,13 @@ CUSTOMADD
 ------------------------------------------------------------------------
                                      [function, does not return a table]
   ONE                               INTEGER, in                 
+  TWO                               INTEGER, in                 
 
                                                             [definition]
-CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10130 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN BOOKS.CUSTOMADD(ONE,1)
+CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER,IN TWO INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10128 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN ONE+TWO
 
                                                          [specific name]
-CUSTOMADD_10130
+CUSTOMADD_10128
 
 
 
@@ -1068,13 +1066,25 @@ CUSTOMADD
 ------------------------------------------------------------------------
                                      [function, does not return a table]
   ONE                               INTEGER, in                 
-  TWO                               INTEGER, in                 
 
                                                             [definition]
-CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER,IN TWO INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10129 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN ONE+TWO
+CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10129 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN BOOKS.CUSTOMADD(ONE,1)
 
                                                          [specific name]
 CUSTOMADD_10129
+
+
+
+NEW_PUBLISHER
+------------------------------------------------------------------------
+                                                  [procedure, no result]
+  PUBLISHER                         CHARACTER VARYING, out      
+
+                                                            [definition]
+CREATE PROCEDURE BOOKS.NEW_PUBLISHER(OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10126 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = 'New Publisher'
+
+                                                         [specific name]
+NEW_PUBLISHER_10126
 
 
 
@@ -1085,20 +1095,7 @@ NEW_PUBLISHER
   PUBLISHER                         CHARACTER VARYING, out      
 
                                                             [definition]
-CREATE PROCEDURE BOOKS.NEW_PUBLISHER(IN NEWPUBLISHER VARCHAR(50),OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10128 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = NEWPUBLISHER
-
-                                                         [specific name]
-NEW_PUBLISHER_10128
-
-
-
-NEW_PUBLISHER
-------------------------------------------------------------------------
-                                                  [procedure, no result]
-  PUBLISHER                         CHARACTER VARYING, out      
-
-                                                            [definition]
-CREATE PROCEDURE BOOKS.NEW_PUBLISHER(OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10127 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = 'New Publisher'
+CREATE PROCEDURE BOOKS.NEW_PUBLISHER(IN NEWPUBLISHER VARCHAR(50),OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10127 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = NEWPUBLISHER
 
                                                          [specific name]
 NEW_PUBLISHER_10127
