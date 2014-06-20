@@ -36,7 +36,7 @@ import sf.util.ObjectToString;
  * @author Sualeh Fatehi
  */
 public final class SchemaCrawlerOptions
-  implements Options
+implements Options
 {
 
   private static final long serialVersionUID = -3557794862382066029L;
@@ -76,6 +76,7 @@ public final class SchemaCrawlerOptions
   private InclusionRule routineInclusionRule;
   private InclusionRule routineColumnInclusionRule;
   private InclusionRule synonymInclusionRule;
+  private InclusionRule sequenceInclusionRule;
 
   private InclusionRule grepColumnInclusionRule;
   private InclusionRule grepRoutineColumnInclusionRule;
@@ -109,6 +110,8 @@ public final class SchemaCrawlerOptions
     routineColumnInclusionRule = new IncludeAll();
 
     synonymInclusionRule = new IncludeAll();
+
+    sequenceInclusionRule = new IncludeAll();
   }
 
   /**
@@ -134,56 +137,56 @@ public final class SchemaCrawlerOptions
     databaseSpecificOverrideOptions = new DatabaseSpecificOverrideOptions(config);
 
     schemaInclusionRule = new RegularExpressionRule(configProperties
-                                                      .getStringValue(SC_SCHEMA_PATTERN_INCLUDE,
-                                                                      null),
-                                                    configProperties
-                                                      .getStringValue(SC_SCHEMA_PATTERN_EXCLUDE,
-                                                                      null));
+                                                    .getStringValue(SC_SCHEMA_PATTERN_INCLUDE,
+                                                                    null),
+                                                                    configProperties
+                                                                    .getStringValue(SC_SCHEMA_PATTERN_EXCLUDE,
+                                                                                    null));
 
     tableInclusionRule = new RegularExpressionRule(configProperties
-                                                     .getStringValue(SC_TABLE_PATTERN_INCLUDE,
-                                                                     null),
-                                                   configProperties
-                                                     .getStringValue(SC_TABLE_PATTERN_EXCLUDE,
-                                                                     null));
+                                                   .getStringValue(SC_TABLE_PATTERN_INCLUDE,
+                                                                   null),
+                                                                   configProperties
+                                                                   .getStringValue(SC_TABLE_PATTERN_EXCLUDE,
+                                                                                   null));
     columnInclusionRule = new RegularExpressionRule(configProperties
-                                                      .getStringValue(SC_COLUMN_PATTERN_INCLUDE,
-                                                                      null),
-                                                    configProperties
-                                                      .getStringValue(SC_COLUMN_PATTERN_EXCLUDE,
-                                                                      null));
+                                                    .getStringValue(SC_COLUMN_PATTERN_INCLUDE,
+                                                                    null),
+                                                                    configProperties
+                                                                    .getStringValue(SC_COLUMN_PATTERN_EXCLUDE,
+                                                                                    null));
 
     routineInclusionRule = new RegularExpressionRule(configProperties
-                                                       .getStringValue(SC_ROUTINE_PATTERN_INCLUDE,
-                                                                       null),
-                                                     configProperties
-                                                       .getStringValue(SC_ROUTINE_PATTERN_EXCLUDE,
-                                                                       null));
+                                                     .getStringValue(SC_ROUTINE_PATTERN_INCLUDE,
+                                                                     null),
+                                                                     configProperties
+                                                                     .getStringValue(SC_ROUTINE_PATTERN_EXCLUDE,
+                                                                                     null));
     routineColumnInclusionRule = new RegularExpressionRule(configProperties
-                                                             .getStringValue(SC_ROUTINE_COLUMN_PATTERN_INCLUDE,
-                                                                             null),
-                                                           configProperties
-                                                             .getStringValue(SC_ROUTINE_COLUMN_PATTERN_EXCLUDE,
-                                                                             null));
+                                                           .getStringValue(SC_ROUTINE_COLUMN_PATTERN_INCLUDE,
+                                                                           null),
+                                                                           configProperties
+                                                                           .getStringValue(SC_ROUTINE_COLUMN_PATTERN_EXCLUDE,
+                                                                                           null));
 
     grepColumnInclusionRule = new RegularExpressionRule(configProperties
-                                                          .getStringValue(SC_GREP_COLUMN_PATTERN_INCLUDE,
-                                                                          null),
-                                                        configProperties
-                                                          .getStringValue(SC_GREP_COLUMN_PATTERN_EXCLUDE,
-                                                                          null));
+                                                        .getStringValue(SC_GREP_COLUMN_PATTERN_INCLUDE,
+                                                                        null),
+                                                                        configProperties
+                                                                        .getStringValue(SC_GREP_COLUMN_PATTERN_EXCLUDE,
+                                                                                        null));
     grepRoutineColumnInclusionRule = new RegularExpressionRule(configProperties
-                                                                 .getStringValue(SC_GREP_ROUTINE_COLUMN_PATTERN_INCLUDE,
-                                                                                 null),
-                                                               configProperties
-                                                                 .getStringValue(SC_GREP_ROUTINE_COLUMN_PATTERN_EXCLUDE,
-                                                                                 null));
+                                                               .getStringValue(SC_GREP_ROUTINE_COLUMN_PATTERN_INCLUDE,
+                                                                               null),
+                                                                               configProperties
+                                                                               .getStringValue(SC_GREP_ROUTINE_COLUMN_PATTERN_EXCLUDE,
+                                                                                               null));
     grepDefinitionInclusionRule = new RegularExpressionRule(configProperties
-                                                              .getStringValue(SC_GREP_DEFINITION_PATTERN_INCLUDE,
-                                                                              null),
-                                                            configProperties
-                                                              .getStringValue(SC_GREP_DEFINITION_PATTERN_EXCLUDE,
-                                                                              null));
+                                                            .getStringValue(SC_GREP_DEFINITION_PATTERN_INCLUDE,
+                                                                            null),
+                                                                            configProperties
+                                                                            .getStringValue(SC_GREP_DEFINITION_PATTERN_EXCLUDE,
+                                                                                            null));
     grepInvertMatch = configProperties.getBooleanValue(SC_GREP_INVERT_MATCH);
     grepOnlyMatching = configProperties.getBooleanValue(SC_GREP_ONLY_MATCHING);
   }
@@ -310,6 +313,16 @@ public final class SchemaCrawlerOptions
   }
 
   /**
+   * Gets the sequence inclusion rule.
+   *
+   * @return Sequence inclusion rule.
+   */
+  public InclusionRule getSequenceInclusionRule()
+  {
+    return sequenceInclusionRule;
+  }
+
+  /**
    * Gets the synonym inclusion rule.
    *
    * @return Synonym inclusion rule.
@@ -342,7 +355,7 @@ public final class SchemaCrawlerOptions
   /**
    * Returns the table types requested for output. This can be null, if
    * all supported table types are required in the output.
-   * 
+   *
    * @return All table types requested for output
    */
   public Collection<String> getTableTypes()
@@ -568,7 +581,7 @@ public final class SchemaCrawlerOptions
         for (final String routineTypeString: routineTypeStrings)
         {
           routineTypes.add(RoutineType.valueOf(routineTypeString
-            .toLowerCase(Locale.ENGLISH)));
+                                               .toLowerCase(Locale.ENGLISH)));
         }
       }
     }
@@ -599,6 +612,21 @@ public final class SchemaCrawlerOptions
   public void setSchemaInfoLevel(final SchemaInfoLevel schemaInfoLevel)
   {
     this.schemaInfoLevel = schemaInfoLevel;
+  }
+
+  /**
+   * Sets the sequence inclusion rule.
+   *
+   * @param sequenceInclusionRule
+   *        Sequence inclusion rule
+   */
+  public void setSequenceInclusionRule(final InclusionRule sequenceInclusionRule)
+  {
+    if (sequenceInclusionRule == null)
+    {
+      throw new IllegalArgumentException("Cannot use null value in a setter");
+    }
+    this.sequenceInclusionRule = sequenceInclusionRule;
   }
 
   /**

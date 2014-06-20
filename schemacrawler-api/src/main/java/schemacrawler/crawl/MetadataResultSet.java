@@ -251,6 +251,10 @@ final class MetadataResultSet
         value = results.getInt(columnName);
         if (results.wasNull())
         {
+          LOGGER.log(Level.WARNING, String
+            .format("NULL long value for column %s, so using default %d",
+                    columnName,
+                    defaultValue));
           value = defaultValue;
         }
       }
@@ -283,6 +287,10 @@ final class MetadataResultSet
         value = results.getLong(columnName);
         if (results.wasNull())
         {
+          LOGGER.log(Level.WARNING, String
+            .format("NULL long value for column %s, so using default %d",
+                    columnName,
+                    defaultValue));
           value = defaultValue;
         }
       }
@@ -315,6 +323,10 @@ final class MetadataResultSet
         value = results.getShort(columnName);
         if (results.wasNull())
         {
+          LOGGER.log(Level.WARNING, String
+            .format("NULL long value for column %s, so using default %d",
+                    columnName,
+                    defaultValue));
           value = defaultValue;
         }
       }
@@ -344,6 +356,9 @@ final class MetadataResultSet
         value = results.getString(columnName);
         if (results.wasNull())
         {
+          LOGGER.log(Level.WARNING, String
+            .format("NULL long value for column %s, so using null string",
+                    columnName));
           value = null;
         }
 

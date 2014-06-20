@@ -34,6 +34,7 @@ import schemacrawler.schema.Database;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaReference;
+import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
 
@@ -44,8 +45,8 @@ import schemacrawler.schema.Table;
  * @author Sualeh Fatehi sualeh@hotmail.com
  */
 final class MutableDatabase
-  extends AbstractNamedObjectWithAttributes
-  implements Database
+extends AbstractNamedObjectWithAttributes
+implements Database
 {
 
   private static final long serialVersionUID = 4051323422934251828L;
@@ -58,6 +59,7 @@ final class MutableDatabase
   private final NamedObjectList<MutableTable> tables = new NamedObjectList<>();
   private final NamedObjectList<MutableRoutine> routines = new NamedObjectList<>();
   private final NamedObjectList<MutableSynonym> synonyms = new NamedObjectList<>();
+  private final NamedObjectList<MutableSequence> sequences = new NamedObjectList<>();
 
   MutableDatabase(final String name)
   {
@@ -101,7 +103,7 @@ final class MutableDatabase
   {
     final Collection<ColumnDataType> values = getColumnDataTypes();
     for (final Iterator<ColumnDataType> iterator = values.iterator(); iterator
-      .hasNext();)
+        .hasNext();)
     {
       final ColumnDataType mutableColumnDataType = iterator.next();
       if (!mutableColumnDataType.getSchema().equals(schema))
@@ -160,7 +162,7 @@ final class MutableDatabase
   {
     final List<Routine> values = new ArrayList<Routine>(routines.values());
     for (final Iterator<Routine> iterator = values.iterator(); iterator
-      .hasNext();)
+        .hasNext();)
     {
       final Routine routine = iterator.next();
       if (!routine.getSchema().equals(schema))
@@ -216,6 +218,53 @@ final class MutableDatabase
 
   /**
    * {@inheritDoc}
+   *
+   * @see schemacrawler.schema.Database#getSequence(schemacrawler.schema.Schema,
+   *      java.lang.String)
+   */
+  @Override
+  public MutableSequence getSequence(final Schema schemaRef, final String name)
+  {
+    return sequences.lookup(schemaRef, name);
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * @see schemacrawler.schema.Schema#getSequences()
+   */
+  @Override
+  public Collection<Sequence> getSequences()
+  {
+    return new ArrayList<Sequence>(sequences.values());
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * @see schemacrawler.schema.Database#getSequences(schemacrawler.schema.Schema)
+   */
+  @Override
+  public Collection<Sequence> getSequences(final Schema schemaRef)
+  {
+    final Collection<Sequence> values = getSequences();
+    for (final Iterator<Sequence> iterator = values.iterator(); iterator
+        .hasNext();)
+    {
+      final Sequence mutableSequence = iterator.next();
+      if (!mutableSequence.getSchema().equals(schemaRef))
+      {
+        iterator.remove();
+      }
+    }
+    return values;
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * @see schemacrawler.schema.Database#getSynonym(schemacrawler.schema.Schema,
+   *      java.lang.String)
    */
   @Override
   public MutableSynonym getSynonym(final Schema schemaRef, final String name)
@@ -226,7 +275,7 @@ final class MutableDatabase
   /**
    * {@inheritDoc}
    *
-   * @see schemacrawler.schema.Schema#getRoutines()
+   * @see schemacrawler.schema.Database#getSynonyms()
    */
   @Override
   public Collection<Synonym> getSynonyms()
@@ -244,7 +293,7 @@ final class MutableDatabase
   {
     final Collection<Synonym> values = getSynonyms();
     for (final Iterator<Synonym> iterator = values.iterator(); iterator
-      .hasNext();)
+        .hasNext();)
     {
       final Synonym mutableSynonym = iterator.next();
       if (!mutableSynonym.getSchema().equals(schemaRef))
@@ -344,6 +393,11 @@ final class MutableDatabase
     return addSchema(new SchemaReference(catalogName, schemaName));
   }
 
+  void addSequence(final MutableSequence sequence)
+  {
+    sequences.add(sequence);
+  }
+
   void addSynonym(final MutableSynonym synonym)
   {
     synonyms.add(synonym);
@@ -357,6 +411,11 @@ final class MutableDatabase
   NamedObjectList<MutableRoutine> getAllRoutines()
   {
     return routines;
+  }
+
+  NamedObjectList<MutableSequence> getAllSequences()
+  {
+    return sequences;
   }
 
   NamedObjectList<MutableSynonym> getAllSynonyms()
