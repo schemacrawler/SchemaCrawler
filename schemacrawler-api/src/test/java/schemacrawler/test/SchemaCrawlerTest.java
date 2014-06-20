@@ -42,6 +42,7 @@ import schemacrawler.schema.EventManipulationType;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaReference;
+import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableConstraint;
@@ -244,6 +245,44 @@ public class SchemaCrawlerTest
   }
 
   @Test
+  public void sequences()
+    throws Exception
+  {
+    final TestWriter out = new TestWriter();
+
+    final InformationSchemaViews informationSchemaViews = new InformationSchemaViews();
+    informationSchemaViews
+      .setSequencesSql("SELECT * FROM INFORMATION_SCHEMA.SEQUENCES");
+
+    final SchemaInfoLevel minimum = SchemaInfoLevel.minimum();
+    minimum.setRetrieveSequenceInformation(true);
+
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+    schemaCrawlerOptions.setSchemaInfoLevel(minimum);
+    schemaCrawlerOptions.setInformationSchemaViews(informationSchemaViews);
+    schemaCrawlerOptions.setSequenceInclusionRule(new IncludeAll());
+
+    final Database database = getDatabase(schemaCrawlerOptions);
+    final Schema schema = database.getSchema("PUBLIC.BOOKS");
+    assertNotNull("BOOKS Schema not found", schema);
+    final Sequence[] sequences = database.getSequences(schema)
+      .toArray(new Sequence[0]);
+    assertEquals("Sequence count does not match", 1, sequences.length);
+    for (final Sequence sequence: sequences)
+    {
+      assertNotNull(sequence);
+      out.println("sequence: " + sequence.getName());
+      out.println("  increment: " + sequence.getIncrement());
+      out.println("  minimum value: " + sequence.getMinimumValue());
+      out.println("  maximum value: " + sequence.getMaximumValue());
+      out.println("  cycle?: " + sequence.isCycle());
+    }
+
+    out.close();
+    out.assertEquals(TestUtility.currentMethodFullName());
+  }
+
+  @Test
   public void synonyms()
     throws Exception
   {
@@ -251,29 +290,29 @@ public class SchemaCrawlerTest
 
     final InformationSchemaViews informationSchemaViews = new InformationSchemaViews();
     informationSchemaViews
-      .setSynonymSql("SELECT LIMIT 1 3                                  \n"
-                     + "  TABLE_CATALOG AS SYNONYM_CATALOG,             \n"
-                     + "  TABLE_SCHEMA AS SYNONYM_SCHEMA,               \n"
-                     + "  TABLE_NAME AS SYNONYM_NAME,                   \n"
-                     + "  TABLE_CATALOG AS REFERENCED_OBJECT_CATALOG,   \n"
-                     + "  TABLE_SCHEMA AS REFERENCED_OBJECT_SCHEMA,     \n"
-                     + "  TABLE_NAME AS REFERENCED_OBJECT_NAME          \n"
-                     + "FROM                                            \n"
-                     + "  INFORMATION_SCHEMA.TABLES                     \n"
-                     + "WHERE                                           \n"
-                     + "  TABLE_SCHEMA = 'BOOKS'                        \n"
-                     + "UNION                                           \n"
-                     + "SELECT LIMIT 1 3                                \n"
-                     + "  'PUBLIC' AS SYNONYM_CATALOG,                  \n"
-                     + "  'BOOKS' AS SYNONYM_SCHEMA,                    \n"
-                     + "  TABLE_NAME AS SYNONYM_NAME,                   \n"
-                     + "  TABLE_CATALOG AS REFERENCED_OBJECT_CATALOG,   \n"
-                     + "  TABLE_SCHEMA AS REFERENCED_OBJECT_SCHEMA,     \n"
-                     + "  TABLE_NAME + '1' AS REFERENCED_OBJECT_NAME    \n"
-                     + "FROM                                            \n"
-                     + "  INFORMATION_SCHEMA.TABLES                     \n"
-                     + "WHERE                                           \n"
-                     + "  TABLE_SCHEMA != 'BOOKS'                       ");
+      .setSynonymsSql("SELECT LIMIT 1 3                                  \n"
+                      + "  TABLE_CATALOG AS SYNONYM_CATALOG,             \n"
+                      + "  TABLE_SCHEMA AS SYNONYM_SCHEMA,               \n"
+                      + "  TABLE_NAME AS SYNONYM_NAME,                   \n"
+                      + "  TABLE_CATALOG AS REFERENCED_OBJECT_CATALOG,   \n"
+                      + "  TABLE_SCHEMA AS REFERENCED_OBJECT_SCHEMA,     \n"
+                      + "  TABLE_NAME AS REFERENCED_OBJECT_NAME          \n"
+                      + "FROM                                            \n"
+                      + "  INFORMATION_SCHEMA.TABLES                     \n"
+                      + "WHERE                                           \n"
+                      + "  TABLE_SCHEMA = 'BOOKS'                        \n"
+                      + "UNION                                           \n"
+                      + "SELECT LIMIT 1 3                                \n"
+                      + "  'PUBLIC' AS SYNONYM_CATALOG,                  \n"
+                      + "  'BOOKS' AS SYNONYM_SCHEMA,                    \n"
+                      + "  TABLE_NAME AS SYNONYM_NAME,                   \n"
+                      + "  TABLE_CATALOG AS REFERENCED_OBJECT_CATALOG,   \n"
+                      + "  TABLE_SCHEMA AS REFERENCED_OBJECT_SCHEMA,     \n"
+                      + "  TABLE_NAME + '1' AS REFERENCED_OBJECT_NAME    \n"
+                      + "FROM                                            \n"
+                      + "  INFORMATION_SCHEMA.TABLES                     \n"
+                      + "WHERE                                           \n"
+                      + "  TABLE_SCHEMA != 'BOOKS'                       ");
 
     final SchemaInfoLevel minimum = SchemaInfoLevel.minimum();
     minimum.setRetrieveSynonymInformation(true);

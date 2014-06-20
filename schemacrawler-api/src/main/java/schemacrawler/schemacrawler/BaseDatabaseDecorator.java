@@ -31,6 +31,7 @@ import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaCrawlerInfo;
+import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
 
@@ -163,6 +164,40 @@ public abstract class BaseDatabaseDecorator
   public Collection<Schema> getSchemas()
   {
     return database.getSchemas();
+  }
+
+  /**
+   * @param schema
+   * @param name
+   * @return
+   * @see schemacrawler.schema.Database#getSequence(schemacrawler.schema.Schema,
+   *      java.lang.String)
+   */
+  @Override
+  public Sequence getSequence(final Schema schema, final String name)
+  {
+    return database.getSequence(schema, name);
+  }
+
+  /**
+   * @return
+   * @see schemacrawler.schema.Database#getSequences()
+   */
+  @Override
+  public Collection<Sequence> getSequences()
+  {
+    return database.getSequences();
+  }
+
+  /**
+   * @param schema
+   * @return
+   * @see schemacrawler.schema.Database#getSequences(schemacrawler.schema.Schema)
+   */
+  @Override
+  public Collection<Sequence> getSequences(final Schema schema)
+  {
+    return database.getSequences(schema);
   }
 
   @Override
