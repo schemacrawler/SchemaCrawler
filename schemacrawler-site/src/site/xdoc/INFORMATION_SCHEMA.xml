@@ -309,6 +309,48 @@ hsqldb.select.INFORMATION_SCHEMA.VIEWS=\
 					</tbody>
 				</table>
 			</subsection>
+			
+            <subsection name="INFORMATION_SCHEMA.SEQUENCES">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Column name</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>SEQUENCE_CATALOG</td>
+                            <td>The name of the catalog containing the sequence.</td>
+                        </tr>
+                        <tr>
+                            <td>SEQUENCE_SCHEMA</td>
+                            <td>The name of the schema containing the sequence.</td>
+                        </tr>
+                        <tr>
+                            <td>MINIMUM_VALUE</td>
+                            <td>Minimum value of the sequence.</td>
+                        </tr>
+                        <tr>
+                            <td>MAXIMUM_VALUE</td>
+                            <td>Maximum value of the sequence.</td>
+                        </tr>   
+                        <tr>
+                            <td>INCREMENT</td>
+                            <td>
+                                The increment for the sequence.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>CYCLE_OPTION</td>
+                            <td>
+                                One of: YES = the sequence continues to generate values after reaching its maximum value; NO = the sequence does not generate values after reaching its maximum value.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </subsection>   
+            			
 			<subsection name="INFORMATION_SCHEMA.TABLE_CONSTRAINTS">
 				<table>
 					<thead>

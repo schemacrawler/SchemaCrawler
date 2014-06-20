@@ -283,6 +283,40 @@ public final class SchemaCrawler
     }
   }
 
+  private static void crawlSequences(final MutableDatabase database,
+                                     final RetrieverConnection retrieverConnection,
+                                     final SchemaCrawlerOptions options)
+    throws SchemaCrawlerException
+  {
+    final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
+    final boolean retrieveSequences = infoLevel.isRetrieveSequenceInformation();
+    if (!retrieveSequences)
+    {
+      return;
+    }
+
+    final SequenceRetriever retrieverExtra;
+    try
+    {
+      retrieverExtra = new SequenceRetriever(retrieverConnection, database);
+      retrieverExtra.retrieveSequenceInformation(options
+        .getSequenceInclusionRule());
+    }
+    catch (final SQLException e)
+    {
+      if (e instanceof SchemaCrawlerSQLException)
+      {
+        final Throwable cause = e.getCause();
+        throw new SchemaCrawlerException(e.getMessage() + ": "
+                                         + cause.getMessage(), cause);
+      }
+      else
+      {
+        throw new SchemaCrawlerException("Exception retrieving schemas", e);
+      }
+    }
+  }
+
   private static void crawlTables(final MutableDatabase database,
                                   final RetrieverConnection retrieverConnection,
                                   final SchemaCrawlerOptions options)
@@ -460,6 +494,7 @@ public final class SchemaCrawler
       crawlTables(database, retrieverConnection, schemaCrawlerOptions);
       crawlRoutines(database, retrieverConnection, schemaCrawlerOptions);
       crawlSynonyms(database, retrieverConnection, schemaCrawlerOptions);
+      crawlSequences(database, retrieverConnection, schemaCrawlerOptions);
 
       return database;
     }

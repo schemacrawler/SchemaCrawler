@@ -31,6 +31,7 @@ import static schemacrawler.schemacrawler.InformationSchemaViews.InformationSche
 import static schemacrawler.schemacrawler.InformationSchemaViews.InformationSchemaKey.OVERRIDE_TYPE_INFO;
 import static schemacrawler.schemacrawler.InformationSchemaViews.InformationSchemaKey.ROUTINES;
 import static schemacrawler.schemacrawler.InformationSchemaViews.InformationSchemaKey.SCHEMATA;
+import static schemacrawler.schemacrawler.InformationSchemaViews.InformationSchemaKey.SEQUENCES;
 import static schemacrawler.schemacrawler.InformationSchemaViews.InformationSchemaKey.TABLE_CONSTRAINTS;
 import static schemacrawler.schemacrawler.InformationSchemaViews.InformationSchemaKey.TRIGGERS;
 import static schemacrawler.schemacrawler.InformationSchemaViews.InformationSchemaKey.VIEWS;
@@ -54,19 +55,20 @@ public final class InformationSchemaViews
   protected enum InformationSchemaKey
   {
 
-    EXT_TABLES("select.INFORMATION_SCHEMA.EXT_TABLES"),
-    VIEWS("select.INFORMATION_SCHEMA.VIEWS"),
-    EXT_INDEXES("select.INFORMATION_SCHEMA.EXT_INDEXES"),
-    TRIGGERS("select.INFORMATION_SCHEMA.TRIGGERS"),
-    TABLE_CONSTRAINTS("select.INFORMATION_SCHEMA.TABLE_CONSTRAINTS"),
+    ADDITIONAL_COLUMN_ATTRIBUTES("select.ADDITIONAL_COLUMN_ATTRIBUTES"),
+    ADDITIONAL_TABLE_ATTRIBUTES("select.ADDITIONAL_TABLE_ATTRIBUTES"),
     CONSTRAINT_COLUMN_USAGE("select.INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE"),
+    EXT_INDEXES("select.INFORMATION_SCHEMA.EXT_INDEXES"),
+    EXT_SYNONYMS("select.INFORMATION_SCHEMA.EXT_SYNONYMS"),
+    EXT_TABLES("select.INFORMATION_SCHEMA.EXT_TABLES"),
     EXT_TABLE_CONSTRAINTS("select.INFORMATION_SCHEMA.EXT_TABLE_CONSTRAINTS"),
+    OVERRIDE_TYPE_INFO("select.OVERRIDE_TYPE_INFO"),
     ROUTINES("select.INFORMATION_SCHEMA.ROUTINES"),
     SCHEMATA("select.INFORMATION_SCHEMA.SCHEMATA"),
-    EXT_SYNONYMS("select.INFORMATION_SCHEMA.EXT_SYNONYMS"),
-    OVERRIDE_TYPE_INFO("select.OVERRIDE_TYPE_INFO"),
-    ADDITIONAL_TABLE_ATTRIBUTES("select.ADDITIONAL_TABLE_ATTRIBUTES"),
-    ADDITIONAL_COLUMN_ATTRIBUTES("select.ADDITIONAL_COLUMN_ATTRIBUTES");
+    SEQUENCES("select.SEQUENCES"),
+    TABLE_CONSTRAINTS("select.INFORMATION_SCHEMA.TABLE_CONSTRAINTS"),
+    TRIGGERS("select.INFORMATION_SCHEMA.TRIGGERS"),
+    VIEWS("select.INFORMATION_SCHEMA.VIEWS");
 
     private final String lookupKey;
 
@@ -208,6 +210,16 @@ public final class InformationSchemaViews
   }
 
   /**
+   * Gets the sequences SQL from the additional configuration.
+   *
+   * @return Sequences SQL.
+   */
+  public String getSequencesSql()
+  {
+    return informationSchemaQueries.get(SEQUENCES);
+  }
+
+  /**
    * Gets the synonyms SQL from the additional configuration.
    *
    * @return Synonyms SQL.
@@ -296,6 +308,11 @@ public final class InformationSchemaViews
   public boolean hasSchemataSql()
   {
     return informationSchemaQueries.containsKey(SCHEMATA);
+  }
+
+  public boolean hasSequencesSql()
+  {
+    return informationSchemaQueries.containsKey(SEQUENCES);
   }
 
   public boolean hasSynonymsSql()
@@ -413,12 +430,23 @@ public final class InformationSchemaViews
   }
 
   /**
+   * Sets the sequences SQL.
+   *
+   * @param sql
+   *        Sequences SQL.
+   */
+  public void setSequencesSql(final String sql)
+  {
+    informationSchemaQueries.put(SEQUENCES, sql);
+  }
+
+  /**
    * Sets the synonym SQL.
    *
    * @param sql
-   *        Synonym SQL.
+   *        Synonyms SQL.
    */
-  public void setSynonymSql(final String sql)
+  public void setSynonymsSql(final String sql)
   {
     informationSchemaQueries.put(EXT_SYNONYMS, sql);
   }

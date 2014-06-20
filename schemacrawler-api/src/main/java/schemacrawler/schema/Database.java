@@ -29,7 +29,7 @@ import java.util.Collection;
  * @author Sualeh Fatehi
  */
 public interface Database
-  extends NamedObjectWithAttributes
+extends NamedObjectWithAttributes
 {
 
   /**
@@ -99,6 +99,29 @@ public interface Database
    * @return Schemas
    */
   Collection<Schema> getSchemas();
+
+  /**
+   * Gets the sequence by name.
+   *
+   * @param name
+   *        Name
+   * @return Sequence.
+   */
+  Sequence getSequence(Schema schema, String name);
+
+  /**
+   * Gets the sequences.
+   *
+   * @return Sequences
+   */
+  Collection<Sequence> getSequences();
+
+  /**
+   * Gets the sequences.
+   *
+   * @return Sequences
+   */
+  Collection<Sequence> getSequences(Schema schema);
 
   /**
    * Gets the synonym by name.

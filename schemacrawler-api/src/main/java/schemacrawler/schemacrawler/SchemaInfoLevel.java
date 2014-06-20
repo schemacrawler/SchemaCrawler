@@ -27,7 +27,7 @@ package schemacrawler.schemacrawler;
  * @author Sualeh Fatehi
  */
 public final class SchemaInfoLevel
-  implements Options
+implements Options
 {
 
   private static final long serialVersionUID = -6721986729175552425L;
@@ -59,6 +59,7 @@ public final class SchemaInfoLevel
   public static SchemaInfoLevel maximum()
   {
     final SchemaInfoLevel maximum = detailed();
+    maximum.setRetrieveSequenceInformation(true);
     maximum.setRetrieveSynonymInformation(true);
     maximum.setRetrieveAdditionalDatabaseInfo(true);
     maximum.setRetrieveAdditionalJdbcDriverInfo(true);
@@ -127,6 +128,7 @@ public final class SchemaInfoLevel
   private boolean retrieveTableColumnPrivileges;
   private boolean retrieveTriggerInformation;
   private boolean retrieveSynonymInformation;
+  private boolean retrieveSequenceInformation;
   private boolean retrieveTableColumns;
   private boolean retrieveAdditionalTableAttributes;
   private boolean retrieveAdditionalColumnAttributes;
@@ -210,6 +212,11 @@ public final class SchemaInfoLevel
   public boolean isRetrieveSchemaCrawlerInfo()
   {
     return retrieveSchemaCrawlerInfo;
+  }
+
+  public boolean isRetrieveSequenceInformation()
+  {
+    return retrieveSequenceInformation;
   }
 
   public boolean isRetrieveSynonymInformation()
@@ -335,6 +342,11 @@ public final class SchemaInfoLevel
   public void setRetrieveSchemaCrawlerInfo(final boolean retrieveSchemaCrawlerInfo)
   {
     this.retrieveSchemaCrawlerInfo = retrieveSchemaCrawlerInfo;
+  }
+
+  public void setRetrieveSequenceInformation(final boolean retrieveSequenceInformation)
+  {
+    this.retrieveSequenceInformation = retrieveSequenceInformation;
   }
 
   public void setRetrieveSynonymInformation(final boolean retrieveSynonymInformation)
