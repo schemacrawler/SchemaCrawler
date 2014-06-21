@@ -113,7 +113,7 @@
 					</li>
 				</ul>
 				<p>SchemaCrawler goes beyond what is available using JDBC, and can
-					provide information on database triggers and database synonyms as
+					provide information on database triggers, sequences and synonyms as
 					well.</p>
 				<p>
 					<img src="http://www.gnu.org/graphics/lgplv3-88x31.png" alt="LGPL" />
