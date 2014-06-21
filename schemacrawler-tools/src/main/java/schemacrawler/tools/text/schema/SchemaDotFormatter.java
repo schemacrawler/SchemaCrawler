@@ -40,6 +40,7 @@ import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.NamedObjectWithAttributes;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Schema;
+import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -125,6 +126,17 @@ public final class SchemaDotFormatter
    */
   @Override
   public void handle(final Routine routine)
+  {
+  }
+
+  /**
+   * Provides information on the database schema.
+   *
+   * @param sequence
+   *        Sequence metadata.
+   */
+  @Override
+  public void handle(final Sequence sequence)
   {
   }
 
@@ -228,6 +240,18 @@ public final class SchemaDotFormatter
 
   @Override
   public void handleRoutinesStart()
+    throws SchemaCrawlerException
+  {
+  }
+
+  @Override
+  public void handleSequencesEnd()
+    throws SchemaCrawlerException
+  {
+  }
+
+  @Override
+  public void handleSequencesStart()
     throws SchemaCrawlerException
   {
   }

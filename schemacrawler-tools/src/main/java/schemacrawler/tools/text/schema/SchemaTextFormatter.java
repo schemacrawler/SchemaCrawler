@@ -46,6 +46,7 @@ import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Privilege.Grant;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.RoutineColumn;
+import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableConstraint;
@@ -169,6 +170,56 @@ final class SchemaTextFormatter
           printDefinition("specific name", "", routine.getSpecificName());
         }
         printDefinition("remarks", "", routine.getRemarks());
+      }
+
+      out.println(formattingHelper.createObjectEnd());
+    }
+
+    out.flush();
+
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handle(schemacrawler.schema.Sequence)
+   */
+  @Override
+  public void handle(final Sequence sequence)
+  {
+    final String sequenceName;
+    if (options.isShowUnqualifiedNames())
+    {
+      sequenceName = sequence.getName();
+    }
+    else
+    {
+      sequenceName = sequence.getFullName();
+    }
+    final String sequenceType = "[sequence]";
+
+    if (isList)
+    {
+      out.println(formattingHelper.createNameValueRow(sequenceName,
+                                                      sequenceType,
+                                                      Alignment.right));
+    }
+    else
+    {
+      out.println(formattingHelper.createObjectStart(""));
+      out.println(formattingHelper.createNameRow(sequenceName, sequenceType));
+      out.println(formattingHelper.createDetailRow("", "increment", String
+        .valueOf(sequence.getIncrement())));
+      out.println(formattingHelper.createDetailRow("", "minimum value", String
+        .valueOf(sequence.getMinimumValue())));
+      out.println(formattingHelper.createDetailRow("", "maximum value", String
+        .valueOf(sequence.getMaximumValue())));
+      out.println(formattingHelper.createDetailRow("", "cycle", String
+        .valueOf(sequence.isCycle())));
+
+      if (isVerbose)
+      {
+        printDefinition("remarks", "", sequence.getRemarks());
       }
 
       out.println(formattingHelper.createObjectEnd());
@@ -371,6 +422,39 @@ final class SchemaTextFormatter
   {
     out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
                                               "Routines"));
+
+    if (isList)
+    {
+      out.append(formattingHelper.createObjectStart(""));
+    }
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handleSequencesEnd()
+   */
+  @Override
+  public void handleSequencesEnd()
+    throws SchemaCrawlerException
+  {
+    if (isList)
+    {
+      out.append(formattingHelper.createObjectEnd());
+    }
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handleSequencesStart()
+   */
+  @Override
+  public void handleSequencesStart()
+    throws SchemaCrawlerException
+  {
+    out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
+                                              "Sequences"));
 
     if (isList)
     {
