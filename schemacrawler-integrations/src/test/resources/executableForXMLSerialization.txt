@@ -884,7 +884,7 @@ potential schema design issues with lint. The output serves for &#xd;
 database documentation is designed to be diff-ed against other database &#xd;
 schemas. SchemaCrawler also generates schema diagrams.&#xd;
 </schemaCrawlerAbout>
-    <crawlTimestamp>Jun 21, 2014 1:05 PM</crawlTimestamp>
+    <crawlTimestamp>Jun 21, 2014 3:35 PM</crawlTimestamp>
     <systemProperties id="186"/>
   </schemaCrawlerInfo>
   <schemas id="187">
@@ -17027,6 +17027,113 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
     <objects id="1543"/>
   </synonyms>
   <sequences id="1544">
-    <objects id="1545"/>
+    <objects id="1545">
+      <entry>
+        <string>PUBLIC.BOOKS.PUBLISHER_ID_SEQ</string>
+        <schemacrawler.crawl.MutableSequence id="1546">
+          <name>PUBLISHER_ID_SEQ</name>
+          <attributeMap id="1547">
+            <entry>
+              <string>DATA_TYPE</string>
+              <string>INTEGER</string>
+            </entry>
+            <entry>
+              <string>DECLARED_DATA_TYPE</string>
+              <string>INTEGER</string>
+            </entry>
+            <entry>
+              <string>DECLARED_NUMERIC_PRECISION</string>
+              <long>32</long>
+            </entry>
+            <entry>
+              <string>DECLARED_NUMERIC_SCALE</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>NEXT_VALUE</string>
+              <string>0</string>
+            </entry>
+            <entry>
+              <string>NUMERIC_PRECISION</string>
+              <long>32</long>
+            </entry>
+            <entry>
+              <string>NUMERIC_PRECISION_RADIX</string>
+              <long>2</long>
+            </entry>
+            <entry>
+              <string>NUMERIC_SCALE</string>
+              <long>0</long>
+            </entry>
+            <entry>
+              <string>START_WITH</string>
+              <string>0</string>
+            </entry>
+          </attributeMap>
+          <schema class="schema" id="1548">
+            <catalogName>PUBLIC</catalogName>
+            <schemaName>BOOKS</schemaName>
+            <attributeMap id="1549"/>
+          </schema>
+          <minimumValue>-2147483648</minimumValue>
+          <maximumValue>2147483647</maximumValue>
+          <increment>1</increment>
+          <cycle>false</cycle>
+        </schemacrawler.crawl.MutableSequence>
+      </entry>
+      <entry>
+        <string>PUBLIC.SYSTEM_LOBS.LOB_ID</string>
+        <schemacrawler.crawl.MutableSequence id="1550">
+          <name>LOB_ID</name>
+          <attributeMap id="1551">
+            <entry>
+              <string>DATA_TYPE</string>
+              <string>BIGINT</string>
+            </entry>
+            <entry>
+              <string>DECLARED_DATA_TYPE</string>
+              <string>BIGINT</string>
+            </entry>
+            <entry>
+              <string>DECLARED_NUMERIC_PRECISION</string>
+              <long>64</long>
+            </entry>
+            <entry>
+              <string>DECLARED_NUMERIC_SCALE</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>NEXT_VALUE</string>
+              <string>4</string>
+            </entry>
+            <entry>
+              <string>NUMERIC_PRECISION</string>
+              <long>64</long>
+            </entry>
+            <entry>
+              <string>NUMERIC_PRECISION_RADIX</string>
+              <long>2</long>
+            </entry>
+            <entry>
+              <string>NUMERIC_SCALE</string>
+              <long>0</long>
+            </entry>
+            <entry>
+              <string>START_WITH</string>
+              <string>1</string>
+            </entry>
+          </attributeMap>
+          <schema class="schema" id="1552">
+            <catalogName>PUBLIC</catalogName>
+            <schemaName>SYSTEM_LOBS</schemaName>
+            <attributeMap id="1553"/>
+          </schema>
+          <minimumValue>-9223372036854775808</minimumValue>
+          <maximumValue>9223372036854775807</maximumValue>
+          <increment>1</increment>
+          <cycle>false</cycle>
+        </schemacrawler.crawl.MutableSequence>
+      </entry>
+    </objects>
   </sequences>
 </database>
