@@ -25,6 +25,7 @@ import java.util.Collection;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Database;
 import schemacrawler.schema.Routine;
+import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -84,6 +85,7 @@ public class SchemaTraverser
     final Collection<Table> tables = database.getTables();
     final Collection<Routine> routines = database.getRoutines();
     final Collection<Synonym> synonyms = database.getSynonyms();
+    final Collection<Sequence> sequences = database.getSequences();
 
     if (!columnDataTypes.isEmpty())
     {
@@ -113,6 +115,16 @@ public class SchemaTraverser
         handler.handle(routine);
       }
       handler.handleRoutinesEnd();
+    }
+
+    if (!sequences.isEmpty())
+    {
+      handler.handleSequencesStart();
+      for (final Sequence sequence: sequences)
+      {
+        handler.handle(sequence);
+      }
+      handler.handleSequencesEnd();
     }
 
     if (!synonyms.isEmpty())
