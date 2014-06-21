@@ -552,3 +552,25 @@ CREATE PROCEDURE SYSTEM_LOBS.DIVIDE_BLOCK(IN B_OFFSET INTEGER,IN L_ID BIGINT) SP
 
 
 
+
+Sequences
+========================================================================
+
+
+
+PUBLIC.BOOKS.PUBLISHER_ID_SEQ                                 [sequence]
+  increment                         1                           
+  minimum value                     -2147483648                 
+  maximum value                     2147483647                  
+  cycle                             false                       
+
+
+
+PUBLIC.SYSTEM_LOBS.LOB_ID                                     [sequence]
+  increment                         1                           
+  minimum value                     -9223372036854775808        
+  maximum value                     9223372036854775807         
+  cycle                             false                       
+
+
+

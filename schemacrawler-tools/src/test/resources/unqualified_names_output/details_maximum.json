@@ -3272,6 +3272,22 @@
     "driverName": "HSQL Database Engine Driver",
     "url": "jdbc:hsqldb:hsql://localhost/schemacrawler"
   },
+  "sequences": [
+    {
+      "cycle": false,
+      "maximumValue": 2147483647,
+      "increment": 1,
+      "minimumValue": -2147483648,
+      "name": "PUBLISHER_ID_SEQ"
+    },
+    {
+      "cycle": false,
+      "maximumValue": 9223372036854775807,
+      "increment": 1,
+      "minimumValue": -9223372036854775808,
+      "name": "LOB_ID"
+    }
+  ],
   "routines": [
     {
       "definition": "CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER,IN TWO INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10128 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN ONE+TWO",
