@@ -1,0 +1,3 @@
+[submodule "schemacrawler-docs"]
+	path = schemacrawler-docs
+	url = https://sualeh@bitbucket.org/sualeh/schemacrawler-docs.git
