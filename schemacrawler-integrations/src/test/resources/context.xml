@@ -137,6 +137,20 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
             ]]>
       </value>
     </property>
+    <property name="sequencesSql">
+      <value>
+        <![CDATA[              
+            SELECT 
+              *
+            FROM 
+              INFORMATION_SCHEMA.SEQUENCES 
+            ORDER BY 
+              SEQUENCE_CATALOG, 
+              SEQUENCE_SCHEMA, 
+              SEQUENCE_NAME
+            ]]>
+      </value>
+    </property>
   </bean>
 
   <bean
