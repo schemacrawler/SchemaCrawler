@@ -58,7 +58,7 @@ public class TestBundledDistributions
         "-g",
         testConfigFile.getAbsolutePath(),
         "-command=details,dump,count,hsqldb.tables",
-        "-infolevel=standard",
+        "-infolevel=maximum",
         "-outputfile=" + testOutputFile
     });
 
