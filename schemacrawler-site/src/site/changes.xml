@@ -5,6 +5,11 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+     <release version="10.09.02" date="2014-06-22">
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added support for sequences.
+      ]]></action>         
+     </release>   
      <release version="10.09.01" date="2014-05-14">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Fixed table type to be based on a string, not an enum. See http://sourceforge.net/p/schemacrawler/discussion/495990/thread/09186044
