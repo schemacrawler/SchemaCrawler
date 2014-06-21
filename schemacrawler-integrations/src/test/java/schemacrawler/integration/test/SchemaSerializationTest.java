@@ -38,6 +38,7 @@ import org.junit.Test;
 
 import schemacrawler.schema.Database;
 import schemacrawler.schema.Schema;
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.test.utility.BaseDatabaseTest;
@@ -51,7 +52,9 @@ public class SchemaSerializationTest
   public void schemaSerializationWithXStream()
     throws Exception
   {
-    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+    final Config config = Config
+      .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
 
     final Database database = getDatabase(schemaCrawlerOptions);
