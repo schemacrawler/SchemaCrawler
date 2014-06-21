@@ -429,3 +429,12 @@ PUBLIC.SYSTEM_LOBS.DELETE_UNUSED_LOBS,"[procedure, no result]"
 PUBLIC.SYSTEM_LOBS.DIVIDE_BLOCK,"[procedure, no result]"
 
 
+
+Sequences
+========================================================================
+
+
+PUBLIC.BOOKS.PUBLISHER_ID_SEQ,[sequence]
+PUBLIC.SYSTEM_LOBS.LOB_ID,[sequence]
+
+

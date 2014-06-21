@@ -364,6 +364,8 @@ public class SchemaCrawlerOutputTest
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
       schemaCrawlerOptions.setTableInclusionRule(new ExcludeAll());
       schemaCrawlerOptions.setRoutineInclusionRule(new IncludeAll());
+      schemaCrawlerOptions.setSequenceInclusionRule(new ExcludeAll());
+      schemaCrawlerOptions.setSynonymInclusionRule(new ExcludeAll());
       schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
 
       final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(SchemaTextDetailType.details
