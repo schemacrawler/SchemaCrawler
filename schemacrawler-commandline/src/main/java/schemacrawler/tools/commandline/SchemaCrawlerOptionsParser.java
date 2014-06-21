@@ -24,6 +24,7 @@ package schemacrawler.tools.commandline;
 
 import static sf.util.Utility.isBlank;
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.ExcludeAll;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
@@ -41,7 +42,7 @@ import sf.util.clparser.StringOption;
  * @author Sualeh Fatehi
  */
 public final class SchemaCrawlerOptionsParser
-extends BaseOptionsParser<SchemaCrawlerOptions>
+  extends BaseOptionsParser<SchemaCrawlerOptions>
 {
 
   private static final String DEFAULT_TABLE_TYPES = "TABLE,VIEW";
@@ -57,6 +58,7 @@ extends BaseOptionsParser<SchemaCrawlerOptions>
           new StringOption("tables", null),
           new StringOption("excludecolumns", null),
           new StringOption("synonyms", null),
+          new StringOption("sequences", null),
           new StringOption("routinetypes", DEFAULT_ROUTINE_TYPES),
           new StringOption("routines", null),
           new StringOption("excludeinout", null),
@@ -72,7 +74,7 @@ extends BaseOptionsParser<SchemaCrawlerOptions>
 
   @Override
   public SchemaCrawlerOptions getOptions()
-      throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
     if (hasOptionValue("infolevel"))
     {
@@ -80,7 +82,7 @@ extends BaseOptionsParser<SchemaCrawlerOptions>
       {
         final String infoLevel = getStringValue("infolevel");
         final SchemaInfoLevel schemaInfoLevel = InfoLevel.valueOf(infoLevel)
-            .getSchemaInfoLevel();
+          .getSchemaInfoLevel();
         options.setSchemaInfoLevel(schemaInfoLevel);
       }
       catch (final IllegalArgumentException e)
@@ -143,6 +145,20 @@ extends BaseOptionsParser<SchemaCrawlerOptions>
     {
       final InclusionRule synonymInclusionRule = new RegularExpressionInclusionRule(getStringValue("synonyms"));
       options.setSynonymInclusionRule(synonymInclusionRule);
+    }
+    else
+    {
+      options.setSynonymInclusionRule(new ExcludeAll());
+    }
+
+    if (hasOptionValue("sequences"))
+    {
+      final InclusionRule sequenceInclusionRule = new RegularExpressionInclusionRule(getStringValue("sequences"));
+      options.setSequenceInclusionRule(sequenceInclusionRule);
+    }
+    else
+    {
+      options.setSequenceInclusionRule(new ExcludeAll());
     }
 
     if (hasOptionValue("invert-match"))

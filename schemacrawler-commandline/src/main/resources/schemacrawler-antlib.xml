@@ -64,7 +64,11 @@
       name="synonyms"
       description="Regular expression to select synonyms"
       default=".*"/>
-      
+    <attribute
+      name="sequences"
+      description="Regular expression to select sequences"
+      default=".*"/>
+            
     <!-- Grep Options -->  
     
     <attribute
@@ -193,6 +197,7 @@
         <arg value="-routines=@{routines}"/>
         <arg value="-excludeinout=@{excludeinout}"/>
         <arg value="-synonyms=@{synonyms}"/>
+        <arg value="-sequences=@{sequences}"/>
         <arg value="-grepcolumns=@{grepcolumns}"/>
         <arg value="-grepinout=@{grepinout}"/>
         <arg value="-grepdef=@{grepdef}"/>

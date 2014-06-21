@@ -66,8 +66,17 @@
   matches any synonyms whose names start with C or P
   Synonyms that do not match the pattern are not displayed
   Use -synonyms= to omit synonyms
-  Optional, defaults to showing all synonyms
-          
+  Optional, defaults to showing no synonyms
+
+-sequences=<regular-expression>
+  <regular-expression> is a regular expression to match fully qualified sequence 
+  names, in the form "CATALOGNAME.SCHEMANAME.SEQUENCENAME" - for example, 
+  -sequences=.*\.C.*|.*\.P.*
+  matches any sequences whose names start with C or P
+  Synonyms that do not match the pattern are not displayed
+  Use -sequences= to omit sequences
+  Optional, defaults to showing no sequences
+            
 --- Grep Options ---
     
 -grepcolumns=<regular-expression>
