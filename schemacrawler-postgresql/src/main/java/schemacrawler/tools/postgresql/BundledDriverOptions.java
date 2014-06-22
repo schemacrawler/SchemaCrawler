@@ -20,6 +20,10 @@
 package schemacrawler.tools.postgresql;
 
 
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.sql.DriverManager;
+
 public final class BundledDriverOptions
   extends schemacrawler.tools.options.BundledDriverOptions
 {
@@ -31,6 +35,9 @@ public final class BundledDriverOptions
     super("SchemaCrawler for PostgreSQL",
           "/help/Connections.postgresql.txt",
           "/schemacrawler-postgresql.config.properties");
+
+    DriverManager
+      .setLogWriter(new PrintWriter(new OutputStreamWriter(System.err)));
   }
 
 }
