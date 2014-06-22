@@ -23,6 +23,7 @@ package schemacrawler.crawl;
 
 import static sf.util.DatabaseUtility.executeSql;
 
+import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -102,10 +103,8 @@ final class SequenceRetriever
           .getString("SEQUENCE_SCHEMA"));
         final String sequenceName = quotedName(results
           .getString("SEQUENCE_NAME"));
-        final long minimumValue = results.getLong("MINIMUM_VALUE",
-                                                  Long.MIN_VALUE);
-        final long maximumValue = results.getLong("MAXIMUM_VALUE",
-                                                  Long.MAX_VALUE);
+        final BigInteger minimumValue = results.getBigInteger("MINIMUM_VALUE");
+        final BigInteger maximumValue = results.getBigInteger("MAXIMUM_VALUE");
         final long increment = results.getLong("INCREMENT", 1);
         final boolean cycle = results.getBoolean("CYCLE_OPTION");
 

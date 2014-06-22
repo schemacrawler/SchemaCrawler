@@ -21,6 +21,8 @@
 package schemacrawler.crawl;
 
 
+import java.math.BigInteger;
+
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Sequence;
 
@@ -37,8 +39,8 @@ final class MutableSequence
 
   private static final long serialVersionUID = -4774695374454532899L;
 
-  private long minimumValue;
-  private long maximumValue;
+  private BigInteger minimumValue;
+  private BigInteger maximumValue;
   private long increment;
   private boolean cycle;
 
@@ -64,7 +66,7 @@ final class MutableSequence
    * @see schemacrawler.schema.Sequence#getMaximumValue()
    */
   @Override
-  public long getMaximumValue()
+  public BigInteger getMaximumValue()
   {
     return maximumValue;
   }
@@ -75,7 +77,7 @@ final class MutableSequence
    * @see schemacrawler.schema.Sequence#getMinimumValue()
    */
   @Override
-  public long getMinimumValue()
+  public BigInteger getMinimumValue()
   {
     return minimumValue;
   }
@@ -101,12 +103,12 @@ final class MutableSequence
     this.increment = increment;
   }
 
-  void setMaximumValue(final long maximumValue)
+  void setMaximumValue(final BigInteger maximumValue)
   {
     this.maximumValue = maximumValue;
   }
 
-  void setMinimumValue(final long minimumValue)
+  void setMinimumValue(final BigInteger minimumValue)
   {
     this.minimumValue = minimumValue;
   }

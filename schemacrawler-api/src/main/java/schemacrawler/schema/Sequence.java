@@ -21,6 +21,8 @@
 package schemacrawler.schema;
 
 
+import java.math.BigInteger;
+
 /**
  * Represents a database sequence.
  *
@@ -42,14 +44,14 @@ public interface Sequence
    *
    * @return Maximum value of the sequence.
    */
-  long getMaximumValue();
+  BigInteger getMaximumValue();
 
   /**
    * Gets the minimum value of the sequence.
    *
    * @return Minimum value of the sequence.
    */
-  long getMinimumValue();
+  BigInteger getMinimumValue();
 
   /**
    * Indicates whether or not the sequence can continue to generate
