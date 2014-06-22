@@ -20,6 +20,7 @@
 package schemacrawler.tools.options;
 
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -223,7 +224,7 @@ public final class OutputWriter
         description = "<writer>";
         LOGGER.log(Level.INFO, "Output to provided writer");
       }
-      return writer;
+      return new BufferedWriter(writer);
     }
     catch (final Exception e)
     {
