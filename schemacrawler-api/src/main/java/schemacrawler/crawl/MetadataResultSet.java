@@ -21,6 +21,7 @@
 package schemacrawler.crawl;
 
 
+import java.math.BigInteger;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -150,6 +151,27 @@ final class MetadataResultSet
     return attributes;
   }
 
+  BigInteger getBigInteger(final String columnName)
+  {
+    String stringBigInteger = getString(columnName);
+    if (Utility.isBlank(stringBigInteger))
+    {
+      return null;
+    }
+    stringBigInteger = stringBigInteger.replaceAll("[, ]", stringBigInteger);
+    BigInteger value;
+    try
+    {
+      value = new BigInteger(stringBigInteger);
+    }
+    catch (final Exception e)
+    {
+      LOGGER.log(Level.WARNING, "Could not get big integer value", e);
+      return null;
+    }
+    return value;
+  }
+
   /**
    * Checks if the value of a column from the result set evaluates to
    * true.
@@ -252,7 +274,7 @@ final class MetadataResultSet
         if (results.wasNull())
         {
           LOGGER.log(Level.WARNING, String
-            .format("NULL long value for column %s, so using default %d",
+            .format("NULL int value for column %s, so using default %d",
                     columnName,
                     defaultValue));
           value = defaultValue;
@@ -324,7 +346,7 @@ final class MetadataResultSet
         if (results.wasNull())
         {
           LOGGER.log(Level.WARNING, String
-            .format("NULL long value for column %s, so using default %d",
+            .format("NULL short value for column %s, so using default %d",
                     columnName,
                     defaultValue));
           value = defaultValue;
@@ -357,7 +379,7 @@ final class MetadataResultSet
         if (results.wasNull())
         {
           LOGGER.log(Level.WARNING, String
-            .format("NULL long value for column %s, so using null string",
+            .format("NULL value for column %s, so using null string",
                     columnName));
           value = null;
         }
