@@ -105,7 +105,8 @@ final class SequenceRetriever
           .getString("SEQUENCE_NAME"));
         final BigInteger minimumValue = results.getBigInteger("MINIMUM_VALUE");
         final BigInteger maximumValue = results.getBigInteger("MAXIMUM_VALUE");
-        final long increment = results.getLong("INCREMENT", 1);
+        final BigInteger increment = results.getBigInteger("INCREMENT");
+        final long longIncrement = increment == null? 1L: increment.longValue();
         final boolean cycle = results.getBoolean("CYCLE_OPTION");
 
         final Schema schema = new SchemaReference(catalogName, schemaName);
@@ -118,7 +119,7 @@ final class SequenceRetriever
                                                              sequenceName);
         sequence.setMaximumValue(maximumValue);
         sequence.setMinimumValue(minimumValue);
-        sequence.setIncrement(increment);
+        sequence.setIncrement(longIncrement);
         sequence.setCycle(cycle);
 
         sequence.addAttributes(results.getAttributes());
