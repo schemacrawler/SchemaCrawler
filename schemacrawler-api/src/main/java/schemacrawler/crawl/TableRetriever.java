@@ -113,6 +113,9 @@ final class TableRetriever
           final int decimalDigits = results.getInt("DECIMAL_DIGITS", 0);
           final boolean isNullable = results
             .getInt("NULLABLE", DatabaseMetaData.columnNullableUnknown) == DatabaseMetaData.columnNullable;
+          final boolean isAutoIncremented = results
+            .getBoolean("IS_AUTOINCREMENT");
+          final boolean isGenerated = results.getBoolean("IS_GENERATEDCOLUMN");
           final String remarks = results.getString("REMARKS");
 
           column.setOrdinalPosition(ordinalPosition);
@@ -120,8 +123,10 @@ final class TableRetriever
             .getSchema(), dataType, typeName));
           column.setSize(size);
           column.setDecimalDigits(decimalDigits);
-          column.setRemarks(remarks);
           column.setNullable(isNullable);
+          column.setAutoIncremented(isAutoIncremented);
+          column.setGenerated(isGenerated);
+          column.setRemarks(remarks);
           if (defaultValue != null)
           {
             column.setDefaultValue(defaultValue);

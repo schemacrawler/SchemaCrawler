@@ -42,6 +42,8 @@ class MutableColumn
   private static final long serialVersionUID = 3834591019449528633L;
 
   private String defaultValue;
+  private boolean isAutoIncremented;
+  private boolean isGenerated;
   private boolean isPartOfPrimaryKey;
   private boolean isPartOfUniqueIndex;
   private Column referencedColumn;
@@ -97,6 +99,24 @@ class MutableColumn
   }
 
   /**
+   * @return the isAutoIncremented
+   */
+  @Override
+  public boolean isAutoIncremented()
+  {
+    return isAutoIncremented;
+  }
+
+  /**
+   * @return the isGenerated
+   */
+  @Override
+  public boolean isGenerated()
+  {
+    return isGenerated;
+  }
+
+  /**
    * {@inheritDoc}
    *
    * @see schemacrawler.schema.Column#isPartOfForeignKey()
@@ -134,9 +154,27 @@ class MutableColumn
     privileges.add(privilege);
   }
 
+  /**
+   * @param isAutoIncremented
+   *        the isAutoIncremented to set
+   */
+  void setAutoIncremented(final boolean isAutoIncremented)
+  {
+    this.isAutoIncremented = isAutoIncremented;
+  }
+
   void setDefaultValue(final String defaultValue)
   {
     this.defaultValue = defaultValue;
+  }
+
+  /**
+   * @param isGenerated
+   *        the isGenerated to set
+   */
+  void setGenerated(final boolean isGenerated)
+  {
+    this.isGenerated = isGenerated;
   }
 
   void setPartOfPrimaryKey(final boolean partOfPrimaryKey)

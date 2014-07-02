@@ -197,6 +197,26 @@ final class MutableIndexColumn
   }
 
   /**
+   * @return
+   * @see schemacrawler.schema.Column#isAutoIncremented()
+   */
+  @Override
+  public boolean isAutoIncremented()
+  {
+    return column.isAutoIncremented();
+  }
+
+  /**
+   * @return
+   * @see schemacrawler.schema.Column#isGenerated()
+   */
+  @Override
+  public boolean isGenerated()
+  {
+    return column.isGenerated();
+  }
+
+  /**
    * {@inheritDoc}
    *
    * @see schemacrawler.schema.BaseColumn#isNullable()
