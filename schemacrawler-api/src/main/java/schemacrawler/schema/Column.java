@@ -29,7 +29,7 @@ import java.util.Collection;
  * @author Sualeh Fatehi
  */
 public interface Column
-  extends BaseColumn<Table>
+extends BaseColumn<Table>
 {
 
   /**
@@ -62,6 +62,20 @@ public interface Column
    * @return Referenced column
    */
   Column getReferencedColumn();
+
+  /**
+   * True if this column is auto-incremented.
+   *
+   * @return If the column is auto-incremented
+   */
+  boolean isAutoIncremented();
+
+  /**
+   * True if this column is a generated column.
+   *
+   * @return If the column is a generated column
+   */
+  boolean isGenerated();
 
   /**
    * True if this column is part of a foreign key.

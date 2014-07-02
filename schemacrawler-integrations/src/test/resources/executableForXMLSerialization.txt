@@ -884,7 +884,7 @@ potential schema design issues with lint. The output serves for &#xd;
 database documentation is designed to be diff-ed against other database &#xd;
 schemas. SchemaCrawler also generates schema diagrams.&#xd;
 </schemaCrawlerAbout>
-    <crawlTimestamp>Jun 21, 2014 3:35 PM</crawlTimestamp>
+    <crawlTimestamp>Jul 1, 2014 10:58 PM</crawlTimestamp>
     <systemProperties id="186"/>
   </schemaCrawlerInfo>
   <schemas id="187">
@@ -1876,14 +1876,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                           <int>50</int>
                         </entry>
                         <entry>
-                          <string>IS_AUTOINCREMENT</string>
-                          <string>NO</string>
-                        </entry>
-                        <entry>
-                          <string>IS_GENERATEDCOLUMN</string>
-                          <string>NO</string>
-                        </entry>
-                        <entry>
                           <string>IS_NULLABLE</string>
                           <string>NO</string>
                         </entry>
@@ -1923,6 +1915,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                       <size>50</size>
                       <decimalDigits>0</decimalDigits>
                       <nullable>false</nullable>
+                      <isAutoIncremented>false</isAutoIncremented>
+                      <isGenerated>false</isGenerated>
                       <isPartOfPrimaryKey>true</isPartOfPrimaryKey>
                       <isPartOfUniqueIndex>true</isPartOfUniqueIndex>
                       <privileges id="289">
@@ -1952,14 +1946,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                         <entry>
                           <string>CHAR_OCTET_LENGTH</string>
                           <int>10</int>
-                        </entry>
-                        <entry>
-                          <string>IS_AUTOINCREMENT</string>
-                          <string>NO</string>
-                        </entry>
-                        <entry>
-                          <string>IS_GENERATEDCOLUMN</string>
-                          <string>NO</string>
                         </entry>
                         <entry>
                           <string>IS_NULLABLE</string>
@@ -2001,6 +1987,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                       <size>10</size>
                       <decimalDigits>0</decimalDigits>
                       <nullable>false</nullable>
+                      <isAutoIncremented>false</isAutoIncremented>
+                      <isGenerated>false</isGenerated>
                       <isPartOfPrimaryKey>true</isPartOfPrimaryKey>
                       <isPartOfUniqueIndex>true</isPartOfUniqueIndex>
                       <privileges id="295">
@@ -2035,14 +2023,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                     <entry>
                       <string>CHAR_OCTET_LENGTH</string>
                       <int>50</int>
-                    </entry>
-                    <entry>
-                      <string>IS_AUTOINCREMENT</string>
-                      <string>NO</string>
-                    </entry>
-                    <entry>
-                      <string>IS_GENERATEDCOLUMN</string>
-                      <string>NO</string>
                     </entry>
                     <entry>
                       <string>IS_NULLABLE</string>
@@ -2084,6 +2064,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   <size>50</size>
                   <decimalDigits>0</decimalDigits>
                   <nullable>false</nullable>
+                  <isAutoIncremented>false</isAutoIncremented>
+                  <isGenerated>false</isGenerated>
                   <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                   <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
                   <privileges id="302">
@@ -2112,14 +2094,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                     <entry>
                       <string>CHAR_OCTET_LENGTH</string>
                       <int>2</int>
-                    </entry>
-                    <entry>
-                      <string>IS_AUTOINCREMENT</string>
-                      <string>NO</string>
-                    </entry>
-                    <entry>
-                      <string>IS_GENERATEDCOLUMN</string>
-                      <string>NO</string>
                     </entry>
                     <entry>
                       <string>IS_NULLABLE</string>
@@ -2161,6 +2135,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   <size>2</size>
                   <decimalDigits>0</decimalDigits>
                   <nullable>false</nullable>
+                  <isAutoIncremented>false</isAutoIncremented>
+                  <isGenerated>false</isGenerated>
                   <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                   <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
                   <privileges id="306">
@@ -2195,14 +2171,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                           <entry>
                             <string>CHAR_OCTET_LENGTH</string>
                             <int>10</int>
-                          </entry>
-                          <entry>
-                            <string>IS_AUTOINCREMENT</string>
-                            <string>NO</string>
-                          </entry>
-                          <entry>
-                            <string>IS_GENERATEDCOLUMN</string>
-                            <string>NO</string>
                           </entry>
                           <entry>
                             <string>IS_NULLABLE</string>
@@ -2261,14 +2229,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                       <int>0</int>
                                     </entry>
                                     <entry>
-                                      <string>IS_AUTOINCREMENT</string>
-                                      <string>NO</string>
-                                    </entry>
-                                    <entry>
-                                      <string>IS_GENERATEDCOLUMN</string>
-                                      <string>NO</string>
-                                    </entry>
-                                    <entry>
                                       <string>IS_NULLABLE</string>
                                       <string>YES</string>
                                     </entry>
@@ -2308,6 +2268,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                   <size>32</size>
                                   <decimalDigits>0</decimalDigits>
                                   <nullable>true</nullable>
+                                  <isAutoIncremented>false</isAutoIncremented>
+                                  <isGenerated>false</isGenerated>
                                   <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                                   <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
                                   <privileges id="322">
@@ -2328,14 +2290,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                     <entry>
                                       <string>CHAR_OCTET_LENGTH</string>
                                       <int>50</int>
-                                    </entry>
-                                    <entry>
-                                      <string>IS_AUTOINCREMENT</string>
-                                      <string>NO</string>
-                                    </entry>
-                                    <entry>
-                                      <string>IS_GENERATEDCOLUMN</string>
-                                      <string>NO</string>
                                     </entry>
                                     <entry>
                                       <string>IS_NULLABLE</string>
@@ -2377,6 +2331,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                   <size>50</size>
                                   <decimalDigits>0</decimalDigits>
                                   <nullable>false</nullable>
+                                  <isAutoIncremented>false</isAutoIncremented>
+                                  <isGenerated>false</isGenerated>
                                   <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                                   <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
                                   <referencedColumn class="column" reference="287"/>
@@ -2398,14 +2354,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                     <entry>
                                       <string>CHAR_OCTET_LENGTH</string>
                                       <int>0</int>
-                                    </entry>
-                                    <entry>
-                                      <string>IS_AUTOINCREMENT</string>
-                                      <string>NO</string>
-                                    </entry>
-                                    <entry>
-                                      <string>IS_GENERATEDCOLUMN</string>
-                                      <string>NO</string>
                                     </entry>
                                     <entry>
                                       <string>IS_NULLABLE</string>
@@ -2447,6 +2395,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                   <size>10</size>
                                   <decimalDigits>0</decimalDigits>
                                   <nullable>true</nullable>
+                                  <isAutoIncremented>false</isAutoIncremented>
+                                  <isGenerated>false</isGenerated>
                                   <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                                   <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
                                   <privileges id="330">
@@ -2471,14 +2421,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                     <entry>
                                       <string>CHAR_OCTET_LENGTH</string>
                                       <int>0</int>
-                                    </entry>
-                                    <entry>
-                                      <string>IS_AUTOINCREMENT</string>
-                                      <string>NO</string>
-                                    </entry>
-                                    <entry>
-                                      <string>IS_GENERATEDCOLUMN</string>
-                                      <string>NO</string>
                                     </entry>
                                     <entry>
                                       <string>IS_NULLABLE</string>
@@ -2520,6 +2462,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                   <size>64</size>
                                   <decimalDigits>0</decimalDigits>
                                   <nullable>true</nullable>
+                                  <isAutoIncremented>false</isAutoIncremented>
+                                  <isGenerated>false</isGenerated>
                                   <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                                   <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
                                   <privileges id="334">
@@ -2794,6 +2738,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                         <size>10</size>
                         <decimalDigits>0</decimalDigits>
                         <nullable>false</nullable>
+                        <isAutoIncremented>false</isAutoIncremented>
+                        <isGenerated>false</isGenerated>
                         <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                         <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
                         <referencedColumn class="column" reference="293"/>
@@ -3149,14 +3095,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                       <int>0</int>
                     </entry>
                     <entry>
-                      <string>IS_AUTOINCREMENT</string>
-                      <string>NO</string>
-                    </entry>
-                    <entry>
-                      <string>IS_GENERATEDCOLUMN</string>
-                      <string>NO</string>
-                    </entry>
-                    <entry>
                       <string>IS_NULLABLE</string>
                       <string>YES</string>
                     </entry>
@@ -3196,6 +3134,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   <size>32</size>
                   <decimalDigits>0</decimalDigits>
                   <nullable>true</nullable>
+                  <isAutoIncremented>false</isAutoIncremented>
+                  <isGenerated>false</isGenerated>
                   <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                   <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
                   <privileges id="459">
@@ -3350,14 +3290,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                           <int>0</int>
                         </entry>
                         <entry>
-                          <string>IS_AUTOINCREMENT</string>
-                          <string>NO</string>
-                        </entry>
-                        <entry>
-                          <string>IS_GENERATEDCOLUMN</string>
-                          <string>NO</string>
-                        </entry>
-                        <entry>
                           <string>IS_NULLABLE</string>
                           <string>NO</string>
                         </entry>
@@ -3397,6 +3329,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                       <size>32</size>
                       <decimalDigits>0</decimalDigits>
                       <nullable>false</nullable>
+                      <isAutoIncremented>false</isAutoIncremented>
+                      <isGenerated>false</isGenerated>
                       <isPartOfPrimaryKey>true</isPartOfPrimaryKey>
                       <isPartOfUniqueIndex>true</isPartOfUniqueIndex>
                       <privileges id="500">
@@ -3431,14 +3365,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                     <entry>
                       <string>CHAR_OCTET_LENGTH</string>
                       <int>255</int>
-                    </entry>
-                    <entry>
-                      <string>IS_AUTOINCREMENT</string>
-                      <string>NO</string>
-                    </entry>
-                    <entry>
-                      <string>IS_GENERATEDCOLUMN</string>
-                      <string>NO</string>
                     </entry>
                     <entry>
                       <string>IS_NULLABLE</string>
@@ -3480,6 +3406,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   <size>255</size>
                   <decimalDigits>0</decimalDigits>
                   <nullable>true</nullable>
+                  <isAutoIncremented>false</isAutoIncremented>
+                  <isGenerated>false</isGenerated>
                   <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                   <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
                   <privileges id="507">
@@ -3500,14 +3428,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                     <entry>
                       <string>CHAR_OCTET_LENGTH</string>
                       <int>255</int>
-                    </entry>
-                    <entry>
-                      <string>IS_AUTOINCREMENT</string>
-                      <string>NO</string>
-                    </entry>
-                    <entry>
-                      <string>IS_GENERATEDCOLUMN</string>
-                      <string>NO</string>
                     </entry>
                     <entry>
                       <string>IS_NULLABLE</string>
@@ -3549,6 +3469,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   <size>255</size>
                   <decimalDigits>0</decimalDigits>
                   <nullable>true</nullable>
+                  <isAutoIncremented>false</isAutoIncremented>
+                  <isGenerated>false</isGenerated>
                   <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                   <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
                   <privileges id="511">
@@ -3569,14 +3491,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                     <entry>
                       <string>CHAR_OCTET_LENGTH</string>
                       <int>50</int>
-                    </entry>
-                    <entry>
-                      <string>IS_AUTOINCREMENT</string>
-                      <string>NO</string>
-                    </entry>
-                    <entry>
-                      <string>IS_GENERATEDCOLUMN</string>
-                      <string>NO</string>
                     </entry>
                     <entry>
                       <string>IS_NULLABLE</string>
@@ -3618,6 +3532,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   <size>50</size>
                   <decimalDigits>0</decimalDigits>
                   <nullable>true</nullable>
+                  <isAutoIncremented>false</isAutoIncremented>
+                  <isGenerated>false</isGenerated>
                   <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                   <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
                   <privileges id="515">
@@ -3638,14 +3554,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                     <entry>
                       <string>CHAR_OCTET_LENGTH</string>
                       <int>50</int>
-                    </entry>
-                    <entry>
-                      <string>IS_AUTOINCREMENT</string>
-                      <string>NO</string>
-                    </entry>
-                    <entry>
-                      <string>IS_GENERATEDCOLUMN</string>
-                      <string>NO</string>
                     </entry>
                     <entry>
                       <string>IS_NULLABLE</string>
@@ -3687,6 +3595,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   <size>50</size>
                   <decimalDigits>0</decimalDigits>
                   <nullable>true</nullable>
+                  <isAutoIncremented>false</isAutoIncremented>
+                  <isGenerated>false</isGenerated>
                   <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                   <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
                   <privileges id="519">
@@ -3707,14 +3617,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                     <entry>
                       <string>CHAR_OCTET_LENGTH</string>
                       <int>20</int>
-                    </entry>
-                    <entry>
-                      <string>IS_AUTOINCREMENT</string>
-                      <string>NO</string>
-                    </entry>
-                    <entry>
-                      <string>IS_GENERATEDCOLUMN</string>
-                      <string>NO</string>
                     </entry>
                     <entry>
                       <string>IS_NULLABLE</string>
@@ -3756,6 +3658,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   <size>20</size>
                   <decimalDigits>0</decimalDigits>
                   <nullable>false</nullable>
+                  <isAutoIncremented>false</isAutoIncremented>
+                  <isGenerated>false</isGenerated>
                   <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                   <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
                   <privileges id="523">
@@ -3780,14 +3684,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                     <entry>
                       <string>CHAR_OCTET_LENGTH</string>
                       <int>20</int>
-                    </entry>
-                    <entry>
-                      <string>IS_AUTOINCREMENT</string>
-                      <string>NO</string>
-                    </entry>
-                    <entry>
-                      <string>IS_GENERATEDCOLUMN</string>
-                      <string>NO</string>
                     </entry>
                     <entry>
                       <string>IS_NULLABLE</string>
@@ -3829,6 +3725,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   <size>20</size>
                   <decimalDigits>0</decimalDigits>
                   <nullable>false</nullable>
+                  <isAutoIncremented>false</isAutoIncremented>
+                  <isGenerated>false</isGenerated>
                   <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                   <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
                   <privileges id="527">
@@ -3849,14 +3747,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                     <entry>
                       <string>CHAR_OCTET_LENGTH</string>
                       <int>10</int>
-                    </entry>
-                    <entry>
-                      <string>IS_AUTOINCREMENT</string>
-                      <string>NO</string>
-                    </entry>
-                    <entry>
-                      <string>IS_GENERATEDCOLUMN</string>
-                      <string>NO</string>
                     </entry>
                     <entry>
                       <string>IS_NULLABLE</string>
@@ -3898,6 +3788,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   <size>10</size>
                   <decimalDigits>0</decimalDigits>
                   <nullable>true</nullable>
+                  <isAutoIncremented>false</isAutoIncremented>
+                  <isGenerated>false</isGenerated>
                   <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                   <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
                   <privileges id="531">
@@ -3918,14 +3810,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                     <entry>
                       <string>CHAR_OCTET_LENGTH</string>
                       <int>2</int>
-                    </entry>
-                    <entry>
-                      <string>IS_AUTOINCREMENT</string>
-                      <string>NO</string>
-                    </entry>
-                    <entry>
-                      <string>IS_GENERATEDCOLUMN</string>
-                      <string>NO</string>
                     </entry>
                     <entry>
                       <string>IS_NULLABLE</string>
@@ -3967,6 +3851,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   <size>2</size>
                   <decimalDigits>0</decimalDigits>
                   <nullable>true</nullable>
+                  <isAutoIncremented>false</isAutoIncremented>
+                  <isGenerated>false</isGenerated>
                   <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                   <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
                   <privileges id="535">
@@ -4001,14 +3887,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                           <entry>
                             <string>CHAR_OCTET_LENGTH</string>
                             <int>0</int>
-                          </entry>
-                          <entry>
-                            <string>IS_AUTOINCREMENT</string>
-                            <string>NO</string>
-                          </entry>
-                          <entry>
-                            <string>IS_GENERATEDCOLUMN</string>
-                            <string>NO</string>
                           </entry>
                           <entry>
                             <string>IS_NULLABLE</string>
@@ -4067,14 +3945,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                       <int>1073741824</int>
                                     </entry>
                                     <entry>
-                                      <string>IS_AUTOINCREMENT</string>
-                                      <string>NO</string>
-                                    </entry>
-                                    <entry>
-                                      <string>IS_GENERATEDCOLUMN</string>
-                                      <string>NO</string>
-                                    </entry>
-                                    <entry>
                                       <string>IS_NULLABLE</string>
                                       <string>YES</string>
                                     </entry>
@@ -4114,6 +3984,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                   <size>1073741824</size>
                                   <decimalDigits>0</decimalDigits>
                                   <nullable>true</nullable>
+                                  <isAutoIncremented>false</isAutoIncremented>
+                                  <isGenerated>false</isGenerated>
                                   <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                                   <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
                                   <privileges id="551">
@@ -4138,14 +4010,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                     <entry>
                                       <string>CHAR_OCTET_LENGTH</string>
                                       <int>0</int>
-                                    </entry>
-                                    <entry>
-                                      <string>IS_AUTOINCREMENT</string>
-                                      <string>NO</string>
-                                    </entry>
-                                    <entry>
-                                      <string>IS_GENERATEDCOLUMN</string>
-                                      <string>NO</string>
                                     </entry>
                                     <entry>
                                       <string>IS_NULLABLE</string>
@@ -4187,6 +4051,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                   <size>32</size>
                                   <decimalDigits>0</decimalDigits>
                                   <nullable>false</nullable>
+                                  <isAutoIncremented>false</isAutoIncremented>
+                                  <isGenerated>false</isGenerated>
                                   <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                                   <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
                                   <referencedColumn class="column" id="555">
@@ -4200,14 +4066,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                       <entry>
                                         <string>CHAR_OCTET_LENGTH</string>
                                         <int>0</int>
-                                      </entry>
-                                      <entry>
-                                        <string>IS_AUTOINCREMENT</string>
-                                        <string>NO</string>
-                                      </entry>
-                                      <entry>
-                                        <string>IS_GENERATEDCOLUMN</string>
-                                        <string>NO</string>
                                       </entry>
                                       <entry>
                                         <string>IS_NULLABLE</string>
@@ -4294,14 +4152,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                                   <int>255</int>
                                                 </entry>
                                                 <entry>
-                                                  <string>IS_AUTOINCREMENT</string>
-                                                  <string>NO</string>
-                                                </entry>
-                                                <entry>
-                                                  <string>IS_GENERATEDCOLUMN</string>
-                                                  <string>NO</string>
-                                                </entry>
-                                                <entry>
                                                   <string>IS_NULLABLE</string>
                                                   <string>YES</string>
                                                 </entry>
@@ -4341,6 +4191,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                               <size>255</size>
                                               <decimalDigits>0</decimalDigits>
                                               <nullable>true</nullable>
+                                              <isAutoIncremented>false</isAutoIncremented>
+                                              <isGenerated>false</isGenerated>
                                               <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                                               <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
                                               <privileges id="570">
@@ -4365,14 +4217,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                                 <entry>
                                                   <string>CHAR_OCTET_LENGTH</string>
                                                   <int>0</int>
-                                                </entry>
-                                                <entry>
-                                                  <string>IS_AUTOINCREMENT</string>
-                                                  <string>NO</string>
-                                                </entry>
-                                                <entry>
-                                                  <string>IS_GENERATEDCOLUMN</string>
-                                                  <string>NO</string>
                                                 </entry>
                                                 <entry>
                                                   <string>IS_NULLABLE</string>
@@ -4414,6 +4258,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                               <size>64</size>
                                               <decimalDigits>0</decimalDigits>
                                               <nullable>true</nullable>
+                                              <isAutoIncremented>false</isAutoIncremented>
+                                              <isGenerated>false</isGenerated>
                                               <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                                               <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
                                               <privileges id="574">
@@ -4434,14 +4280,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                                 <entry>
                                                   <string>CHAR_OCTET_LENGTH</string>
                                                   <int>0</int>
-                                                </entry>
-                                                <entry>
-                                                  <string>IS_AUTOINCREMENT</string>
-                                                  <string>NO</string>
-                                                </entry>
-                                                <entry>
-                                                  <string>IS_GENERATEDCOLUMN</string>
-                                                  <string>NO</string>
                                                 </entry>
                                                 <entry>
                                                   <string>IS_NULLABLE</string>
@@ -4483,6 +4321,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                               <size>10</size>
                                               <decimalDigits>0</decimalDigits>
                                               <nullable>true</nullable>
+                                              <isAutoIncremented>false</isAutoIncremented>
+                                              <isGenerated>false</isGenerated>
                                               <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                                               <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
                                               <privileges id="578">
@@ -4503,14 +4343,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                                 <entry>
                                                   <string>CHAR_OCTET_LENGTH</string>
                                                   <int>0</int>
-                                                </entry>
-                                                <entry>
-                                                  <string>IS_AUTOINCREMENT</string>
-                                                  <string>NO</string>
-                                                </entry>
-                                                <entry>
-                                                  <string>IS_GENERATEDCOLUMN</string>
-                                                  <string>NO</string>
                                                 </entry>
                                                 <entry>
                                                   <string>IS_NULLABLE</string>
@@ -4552,6 +4384,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                               <size>32</size>
                                               <decimalDigits>0</decimalDigits>
                                               <nullable>false</nullable>
+                                              <isAutoIncremented>false</isAutoIncremented>
+                                              <isGenerated>false</isGenerated>
                                               <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                                               <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
                                               <privileges id="582">
@@ -4572,14 +4406,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                                 <entry>
                                                   <string>CHAR_OCTET_LENGTH</string>
                                                   <int>255</int>
-                                                </entry>
-                                                <entry>
-                                                  <string>IS_AUTOINCREMENT</string>
-                                                  <string>NO</string>
-                                                </entry>
-                                                <entry>
-                                                  <string>IS_GENERATEDCOLUMN</string>
-                                                  <string>NO</string>
                                                 </entry>
                                                 <entry>
                                                   <string>IS_NULLABLE</string>
@@ -4621,6 +4447,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                               <size>255</size>
                                               <decimalDigits>0</decimalDigits>
                                               <nullable>false</nullable>
+                                              <isAutoIncremented>false</isAutoIncremented>
+                                              <isGenerated>false</isGenerated>
                                               <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                                               <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
                                               <privileges id="586">
@@ -4925,6 +4753,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                     <size>32</size>
                                     <decimalDigits>0</decimalDigits>
                                     <nullable>false</nullable>
+                                    <isAutoIncremented>false</isAutoIncremented>
+                                    <isGenerated>false</isGenerated>
                                     <isPartOfPrimaryKey>true</isPartOfPrimaryKey>
                                     <isPartOfUniqueIndex>true</isPartOfUniqueIndex>
                                     <privileges id="648">
@@ -5344,6 +5174,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                         <size>32</size>
                         <decimalDigits>0</decimalDigits>
                         <nullable>false</nullable>
+                        <isAutoIncremented>false</isAutoIncremented>
+                        <isGenerated>false</isGenerated>
                         <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                         <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
                         <referencedColumn class="column" reference="498"/>
@@ -5905,14 +5737,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                       <int>20</int>
                     </entry>
                     <entry>
-                      <string>IS_AUTOINCREMENT</string>
-                      <string>NO</string>
-                    </entry>
-                    <entry>
-                      <string>IS_GENERATEDCOLUMN</string>
-                      <string>NO</string>
-                    </entry>
-                    <entry>
                       <string>IS_NULLABLE</string>
                       <string>YES</string>
                     </entry>
@@ -5952,6 +5776,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   <size>20</size>
                   <decimalDigits>0</decimalDigits>
                   <nullable>true</nullable>
+                  <isAutoIncremented>false</isAutoIncremented>
+                  <isGenerated>false</isGenerated>
                   <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                   <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
                   <privileges id="818">
@@ -5972,14 +5798,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                     <entry>
                       <string>CHAR_OCTET_LENGTH</string>
                       <int>0</int>
-                    </entry>
-                    <entry>
-                      <string>IS_AUTOINCREMENT</string>
-                      <string>NO</string>
-                    </entry>
-                    <entry>
-                      <string>IS_GENERATEDCOLUMN</string>
-                      <string>NO</string>
                     </entry>
                     <entry>
                       <string>IS_NULLABLE</string>
@@ -6021,6 +5839,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   <size>32</size>
                   <decimalDigits>0</decimalDigits>
                   <nullable>true</nullable>
+                  <isAutoIncremented>false</isAutoIncremented>
+                  <isGenerated>false</isGenerated>
                   <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                   <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
                   <privileges id="822">
@@ -6041,14 +5861,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                     <entry>
                       <string>CHAR_OCTET_LENGTH</string>
                       <int>20</int>
-                    </entry>
-                    <entry>
-                      <string>IS_AUTOINCREMENT</string>
-                      <string>NO</string>
-                    </entry>
-                    <entry>
-                      <string>IS_GENERATEDCOLUMN</string>
-                      <string>NO</string>
                     </entry>
                     <entry>
                       <string>IS_NULLABLE</string>
@@ -6090,6 +5902,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   <size>20</size>
                   <decimalDigits>0</decimalDigits>
                   <nullable>true</nullable>
+                  <isAutoIncremented>false</isAutoIncremented>
+                  <isGenerated>false</isGenerated>
                   <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                   <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
                   <privileges id="826">
@@ -6254,14 +6068,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                           <int>0</int>
                         </entry>
                         <entry>
-                          <string>IS_AUTOINCREMENT</string>
-                          <string>YES</string>
-                        </entry>
-                        <entry>
-                          <string>IS_GENERATEDCOLUMN</string>
-                          <string>NO</string>
-                        </entry>
-                        <entry>
                           <string>IS_NULLABLE</string>
                           <string>NO</string>
                         </entry>
@@ -6301,6 +6107,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                       <size>32</size>
                       <decimalDigits>0</decimalDigits>
                       <nullable>false</nullable>
+                      <isAutoIncremented>true</isAutoIncremented>
+                      <isGenerated>false</isGenerated>
                       <isPartOfPrimaryKey>true</isPartOfPrimaryKey>
                       <isPartOfUniqueIndex>true</isPartOfUniqueIndex>
                       <privileges id="867">
@@ -6339,14 +6147,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                     <entry>
                       <string>CHAR_OCTET_LENGTH</string>
                       <int>255</int>
-                    </entry>
-                    <entry>
-                      <string>IS_AUTOINCREMENT</string>
-                      <string>NO</string>
-                    </entry>
-                    <entry>
-                      <string>IS_GENERATEDCOLUMN</string>
-                      <string>NO</string>
                     </entry>
                     <entry>
                       <string>IS_NULLABLE</string>
@@ -6388,6 +6188,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   <size>255</size>
                   <decimalDigits>0</decimalDigits>
                   <nullable>true</nullable>
+                  <isAutoIncremented>false</isAutoIncremented>
+                  <isGenerated>false</isGenerated>
                   <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                   <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
                   <privileges id="874">
@@ -6615,14 +6417,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                       <int>0</int>
                     </entry>
                     <entry>
-                      <string>IS_AUTOINCREMENT</string>
-                      <string>NO</string>
-                    </entry>
-                    <entry>
-                      <string>IS_GENERATEDCOLUMN</string>
-                      <string>NO</string>
-                    </entry>
-                    <entry>
                       <string>IS_NULLABLE</string>
                       <string>YES</string>
                     </entry>
@@ -6662,6 +6456,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   <size>32</size>
                   <decimalDigits>0</decimalDigits>
                   <nullable>true</nullable>
+                  <isAutoIncremented>false</isAutoIncremented>
+                  <isGenerated>false</isGenerated>
                   <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                   <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
                   <privileges id="923">
@@ -6816,14 +6612,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                           <int>0</int>
                         </entry>
                         <entry>
-                          <string>IS_AUTOINCREMENT</string>
-                          <string>NO</string>
-                        </entry>
-                        <entry>
-                          <string>IS_GENERATEDCOLUMN</string>
-                          <string>NO</string>
-                        </entry>
-                        <entry>
                           <string>IS_NULLABLE</string>
                           <string>NO</string>
                         </entry>
@@ -6863,6 +6651,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                       <size>32</size>
                       <decimalDigits>0</decimalDigits>
                       <nullable>false</nullable>
+                      <isAutoIncremented>false</isAutoIncremented>
+                      <isGenerated>false</isGenerated>
                       <isPartOfPrimaryKey>true</isPartOfPrimaryKey>
                       <isPartOfUniqueIndex>true</isPartOfUniqueIndex>
                       <privileges id="964">
@@ -6901,14 +6691,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                     <entry>
                       <string>CHAR_OCTET_LENGTH</string>
                       <int>0</int>
-                    </entry>
-                    <entry>
-                      <string>IS_AUTOINCREMENT</string>
-                      <string>NO</string>
-                    </entry>
-                    <entry>
-                      <string>IS_GENERATEDCOLUMN</string>
-                      <string>NO</string>
                     </entry>
                     <entry>
                       <string>IS_NULLABLE</string>
@@ -6950,6 +6732,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   <size>32</size>
                   <decimalDigits>0</decimalDigits>
                   <nullable>false</nullable>
+                  <isAutoIncremented>false</isAutoIncremented>
+                  <isGenerated>false</isGenerated>
                   <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                   <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
                   <referencedColumn class="column" id="971">
@@ -6963,14 +6747,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                       <entry>
                         <string>CHAR_OCTET_LENGTH</string>
                         <int>0</int>
-                      </entry>
-                      <entry>
-                        <string>IS_AUTOINCREMENT</string>
-                        <string>NO</string>
-                      </entry>
-                      <entry>
-                        <string>IS_GENERATEDCOLUMN</string>
-                        <string>NO</string>
                       </entry>
                       <entry>
                         <string>IS_NULLABLE</string>
@@ -7057,14 +6833,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                   <int>1073741824</int>
                                 </entry>
                                 <entry>
-                                  <string>IS_AUTOINCREMENT</string>
-                                  <string>NO</string>
-                                </entry>
-                                <entry>
-                                  <string>IS_GENERATEDCOLUMN</string>
-                                  <string>NO</string>
-                                </entry>
-                                <entry>
                                   <string>IS_NULLABLE</string>
                                   <string>YES</string>
                                 </entry>
@@ -7104,6 +6872,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                               <size>1073741824</size>
                               <decimalDigits>0</decimalDigits>
                               <nullable>true</nullable>
+                              <isAutoIncremented>false</isAutoIncremented>
+                              <isGenerated>false</isGenerated>
                               <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                               <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
                               <privileges id="986">
@@ -7124,14 +6894,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                 <entry>
                                   <string>CHAR_OCTET_LENGTH</string>
                                   <int>255</int>
-                                </entry>
-                                <entry>
-                                  <string>IS_AUTOINCREMENT</string>
-                                  <string>NO</string>
-                                </entry>
-                                <entry>
-                                  <string>IS_GENERATEDCOLUMN</string>
-                                  <string>NO</string>
                                 </entry>
                                 <entry>
                                   <string>IS_NULLABLE</string>
@@ -7173,6 +6935,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                               <size>255</size>
                               <decimalDigits>0</decimalDigits>
                               <nullable>true</nullable>
+                              <isAutoIncremented>false</isAutoIncremented>
+                              <isGenerated>false</isGenerated>
                               <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                               <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
                               <privileges id="990">
@@ -7197,14 +6961,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                 <entry>
                                   <string>CHAR_OCTET_LENGTH</string>
                                   <int>1073741824</int>
-                                </entry>
-                                <entry>
-                                  <string>IS_AUTOINCREMENT</string>
-                                  <string>NO</string>
-                                </entry>
-                                <entry>
-                                  <string>IS_GENERATEDCOLUMN</string>
-                                  <string>NO</string>
                                 </entry>
                                 <entry>
                                   <string>IS_NULLABLE</string>
@@ -7246,6 +7002,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                               <size>1073741824</size>
                               <decimalDigits>0</decimalDigits>
                               <nullable>true</nullable>
+                              <isAutoIncremented>false</isAutoIncremented>
+                              <isGenerated>false</isGenerated>
                               <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                               <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
                               <privileges id="994">
@@ -7266,14 +7024,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                 <entry>
                                   <string>CHAR_OCTET_LENGTH</string>
                                   <int>0</int>
-                                </entry>
-                                <entry>
-                                  <string>IS_AUTOINCREMENT</string>
-                                  <string>NO</string>
-                                </entry>
-                                <entry>
-                                  <string>IS_GENERATEDCOLUMN</string>
-                                  <string>NO</string>
                                 </entry>
                                 <entry>
                                   <string>IS_NULLABLE</string>
@@ -7315,6 +7065,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                               <size>64</size>
                               <decimalDigits>0</decimalDigits>
                               <nullable>true</nullable>
+                              <isAutoIncremented>false</isAutoIncremented>
+                              <isGenerated>false</isGenerated>
                               <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                               <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
                               <privileges id="998">
@@ -7335,14 +7087,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                 <entry>
                                   <string>CHAR_OCTET_LENGTH</string>
                                   <int>0</int>
-                                </entry>
-                                <entry>
-                                  <string>IS_AUTOINCREMENT</string>
-                                  <string>NO</string>
-                                </entry>
-                                <entry>
-                                  <string>IS_GENERATEDCOLUMN</string>
-                                  <string>NO</string>
                                 </entry>
                                 <entry>
                                   <string>IS_NULLABLE</string>
@@ -7384,6 +7128,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                               <size>10</size>
                               <decimalDigits>0</decimalDigits>
                               <nullable>true</nullable>
+                              <isAutoIncremented>false</isAutoIncremented>
+                              <isGenerated>false</isGenerated>
                               <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                               <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
                               <privileges id="1002">
@@ -7404,14 +7150,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                 <entry>
                                   <string>CHAR_OCTET_LENGTH</string>
                                   <int>255</int>
-                                </entry>
-                                <entry>
-                                  <string>IS_AUTOINCREMENT</string>
-                                  <string>NO</string>
-                                </entry>
-                                <entry>
-                                  <string>IS_GENERATEDCOLUMN</string>
-                                  <string>NO</string>
                                 </entry>
                                 <entry>
                                   <string>IS_NULLABLE</string>
@@ -7453,6 +7191,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                               <size>255</size>
                               <decimalDigits>0</decimalDigits>
                               <nullable>false</nullable>
+                              <isAutoIncremented>false</isAutoIncremented>
+                              <isGenerated>false</isGenerated>
                               <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                               <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
                               <privileges id="1006">
@@ -7473,14 +7213,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                 <entry>
                                   <string>CHAR_OCTET_LENGTH</string>
                                   <int>0</int>
-                                </entry>
-                                <entry>
-                                  <string>IS_AUTOINCREMENT</string>
-                                  <string>NO</string>
-                                </entry>
-                                <entry>
-                                  <string>IS_GENERATEDCOLUMN</string>
-                                  <string>NO</string>
                                 </entry>
                                 <entry>
                                   <string>IS_NULLABLE</string>
@@ -7522,6 +7254,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                               <size>64</size>
                               <decimalDigits>0</decimalDigits>
                               <nullable>false</nullable>
+                              <isAutoIncremented>false</isAutoIncremented>
+                              <isGenerated>false</isGenerated>
                               <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                               <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
                               <referencedColumn class="column" id="1010">
@@ -7535,14 +7269,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                   <entry>
                                     <string>CHAR_OCTET_LENGTH</string>
                                     <int>0</int>
-                                  </entry>
-                                  <entry>
-                                    <string>IS_AUTOINCREMENT</string>
-                                    <string>NO</string>
-                                  </entry>
-                                  <entry>
-                                    <string>IS_GENERATEDCOLUMN</string>
-                                    <string>NO</string>
                                   </entry>
                                   <entry>
                                     <string>IS_NULLABLE</string>
@@ -7629,14 +7355,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                               <int>255</int>
                                             </entry>
                                             <entry>
-                                              <string>IS_AUTOINCREMENT</string>
-                                              <string>NO</string>
-                                            </entry>
-                                            <entry>
-                                              <string>IS_GENERATEDCOLUMN</string>
-                                              <string>NO</string>
-                                            </entry>
-                                            <entry>
                                               <string>IS_NULLABLE</string>
                                               <string>YES</string>
                                             </entry>
@@ -7676,6 +7394,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                           <size>255</size>
                                           <decimalDigits>0</decimalDigits>
                                           <nullable>true</nullable>
+                                          <isAutoIncremented>false</isAutoIncremented>
+                                          <isGenerated>false</isGenerated>
                                           <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                                           <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
                                           <privileges id="1025">
@@ -7696,14 +7416,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                             <entry>
                                               <string>CHAR_OCTET_LENGTH</string>
                                               <int>255</int>
-                                            </entry>
-                                            <entry>
-                                              <string>IS_AUTOINCREMENT</string>
-                                              <string>NO</string>
-                                            </entry>
-                                            <entry>
-                                              <string>IS_GENERATEDCOLUMN</string>
-                                              <string>NO</string>
                                             </entry>
                                             <entry>
                                               <string>IS_NULLABLE</string>
@@ -7746,6 +7458,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                           <decimalDigits>0</decimalDigits>
                                           <nullable>false</nullable>
                                           <defaultValue>NULL</defaultValue>
+                                          <isAutoIncremented>false</isAutoIncremented>
+                                          <isGenerated>false</isGenerated>
                                           <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                                           <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
                                           <privileges id="1029">
@@ -7766,14 +7480,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                             <entry>
                                               <string>CHAR_OCTET_LENGTH</string>
                                               <int>50</int>
-                                            </entry>
-                                            <entry>
-                                              <string>IS_AUTOINCREMENT</string>
-                                              <string>NO</string>
-                                            </entry>
-                                            <entry>
-                                              <string>IS_GENERATEDCOLUMN</string>
-                                              <string>NO</string>
                                             </entry>
                                             <entry>
                                               <string>IS_NULLABLE</string>
@@ -7815,6 +7521,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                           <size>50</size>
                                           <decimalDigits>0</decimalDigits>
                                           <nullable>true</nullable>
+                                          <isAutoIncremented>false</isAutoIncremented>
+                                          <isGenerated>false</isGenerated>
                                           <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                                           <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
                                           <privileges id="1033">
@@ -7835,14 +7543,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                             <entry>
                                               <string>CHAR_OCTET_LENGTH</string>
                                               <int>50</int>
-                                            </entry>
-                                            <entry>
-                                              <string>IS_AUTOINCREMENT</string>
-                                              <string>NO</string>
-                                            </entry>
-                                            <entry>
-                                              <string>IS_GENERATEDCOLUMN</string>
-                                              <string>NO</string>
                                             </entry>
                                             <entry>
                                               <string>IS_NULLABLE</string>
@@ -7885,6 +7585,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                           <decimalDigits>0</decimalDigits>
                                           <nullable>true</nullable>
                                           <defaultValue>NULL</defaultValue>
+                                          <isAutoIncremented>false</isAutoIncremented>
+                                          <isGenerated>false</isGenerated>
                                           <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                                           <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
                                           <privileges id="1037">
@@ -7905,14 +7607,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                             <entry>
                                               <string>CHAR_OCTET_LENGTH</string>
                                               <int>10</int>
-                                            </entry>
-                                            <entry>
-                                              <string>IS_AUTOINCREMENT</string>
-                                              <string>NO</string>
-                                            </entry>
-                                            <entry>
-                                              <string>IS_GENERATEDCOLUMN</string>
-                                              <string>NO</string>
                                             </entry>
                                             <entry>
                                               <string>IS_NULLABLE</string>
@@ -7954,6 +7648,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                           <size>10</size>
                                           <decimalDigits>0</decimalDigits>
                                           <nullable>true</nullable>
+                                          <isAutoIncremented>false</isAutoIncremented>
+                                          <isGenerated>false</isGenerated>
                                           <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                                           <isPartOfUniqueIndex>true</isPartOfUniqueIndex>
                                           <privileges id="1041">
@@ -7974,14 +7670,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                             <entry>
                                               <string>CHAR_OCTET_LENGTH</string>
                                               <int>0</int>
-                                            </entry>
-                                            <entry>
-                                              <string>IS_AUTOINCREMENT</string>
-                                              <string>NO</string>
-                                            </entry>
-                                            <entry>
-                                              <string>IS_GENERATEDCOLUMN</string>
-                                              <string>NO</string>
                                             </entry>
                                             <entry>
                                               <string>IS_NULLABLE</string>
@@ -8023,6 +7711,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                           <size>32</size>
                                           <decimalDigits>0</decimalDigits>
                                           <nullable>true</nullable>
+                                          <isAutoIncremented>false</isAutoIncremented>
+                                          <isGenerated>false</isGenerated>
                                           <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                                           <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
                                           <privileges id="1045">
@@ -8043,14 +7733,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                             <entry>
                                               <string>CHAR_OCTET_LENGTH</string>
                                               <int>10</int>
-                                            </entry>
-                                            <entry>
-                                              <string>IS_AUTOINCREMENT</string>
-                                              <string>NO</string>
-                                            </entry>
-                                            <entry>
-                                              <string>IS_GENERATEDCOLUMN</string>
-                                              <string>NO</string>
                                             </entry>
                                             <entry>
                                               <string>IS_NULLABLE</string>
@@ -8092,6 +7774,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                           <size>10</size>
                                           <decimalDigits>0</decimalDigits>
                                           <nullable>true</nullable>
+                                          <isAutoIncremented>false</isAutoIncremented>
+                                          <isGenerated>false</isGenerated>
                                           <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                                           <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
                                           <privileges id="1049">
@@ -8112,14 +7796,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                             <entry>
                                               <string>CHAR_OCTET_LENGTH</string>
                                               <int>0</int>
-                                            </entry>
-                                            <entry>
-                                              <string>IS_AUTOINCREMENT</string>
-                                              <string>NO</string>
-                                            </entry>
-                                            <entry>
-                                              <string>IS_GENERATEDCOLUMN</string>
-                                              <string>NO</string>
                                             </entry>
                                             <entry>
                                               <string>IS_NULLABLE</string>
@@ -8161,6 +7837,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                           <size>32</size>
                                           <decimalDigits>0</decimalDigits>
                                           <nullable>true</nullable>
+                                          <isAutoIncremented>false</isAutoIncremented>
+                                          <isGenerated>false</isGenerated>
                                           <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                                           <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
                                           <privileges id="1053">
@@ -8181,14 +7859,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                             <entry>
                                               <string>CHAR_OCTET_LENGTH</string>
                                               <int>20</int>
-                                            </entry>
-                                            <entry>
-                                              <string>IS_AUTOINCREMENT</string>
-                                              <string>NO</string>
-                                            </entry>
-                                            <entry>
-                                              <string>IS_GENERATEDCOLUMN</string>
-                                              <string>NO</string>
                                             </entry>
                                             <entry>
                                               <string>IS_NULLABLE</string>
@@ -8230,6 +7900,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                           <size>20</size>
                                           <decimalDigits>0</decimalDigits>
                                           <nullable>false</nullable>
+                                          <isAutoIncremented>false</isAutoIncremented>
+                                          <isGenerated>false</isGenerated>
                                           <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                                           <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
                                           <privileges id="1057">
@@ -8250,14 +7922,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                             <entry>
                                               <string>CHAR_OCTET_LENGTH</string>
                                               <int>10</int>
-                                            </entry>
-                                            <entry>
-                                              <string>IS_AUTOINCREMENT</string>
-                                              <string>NO</string>
-                                            </entry>
-                                            <entry>
-                                              <string>IS_GENERATEDCOLUMN</string>
-                                              <string>NO</string>
                                             </entry>
                                             <entry>
                                               <string>IS_NULLABLE</string>
@@ -8299,6 +7963,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                           <size>10</size>
                                           <decimalDigits>0</decimalDigits>
                                           <nullable>true</nullable>
+                                          <isAutoIncremented>false</isAutoIncremented>
+                                          <isGenerated>false</isGenerated>
                                           <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                                           <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
                                           <privileges id="1061">
@@ -8319,14 +7985,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                             <entry>
                                               <string>CHAR_OCTET_LENGTH</string>
                                               <int>10</int>
-                                            </entry>
-                                            <entry>
-                                              <string>IS_AUTOINCREMENT</string>
-                                              <string>NO</string>
-                                            </entry>
-                                            <entry>
-                                              <string>IS_GENERATEDCOLUMN</string>
-                                              <string>NO</string>
                                             </entry>
                                             <entry>
                                               <string>IS_NULLABLE</string>
@@ -8368,6 +8026,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                           <size>10</size>
                                           <decimalDigits>0</decimalDigits>
                                           <nullable>true</nullable>
+                                          <isAutoIncremented>false</isAutoIncremented>
+                                          <isGenerated>false</isGenerated>
                                           <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                                           <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
                                           <privileges id="1065">
@@ -8392,14 +8052,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                             <entry>
                                               <string>CHAR_OCTET_LENGTH</string>
                                               <int>20</int>
-                                            </entry>
-                                            <entry>
-                                              <string>IS_AUTOINCREMENT</string>
-                                              <string>NO</string>
-                                            </entry>
-                                            <entry>
-                                              <string>IS_GENERATEDCOLUMN</string>
-                                              <string>NO</string>
                                             </entry>
                                             <entry>
                                               <string>IS_NULLABLE</string>
@@ -8441,6 +8093,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                           <size>20</size>
                                           <decimalDigits>0</decimalDigits>
                                           <nullable>false</nullable>
+                                          <isAutoIncremented>false</isAutoIncremented>
+                                          <isGenerated>false</isGenerated>
                                           <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                                           <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
                                           <privileges id="1069">
@@ -8461,14 +8115,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                             <entry>
                                               <string>CHAR_OCTET_LENGTH</string>
                                               <int>10</int>
-                                            </entry>
-                                            <entry>
-                                              <string>IS_AUTOINCREMENT</string>
-                                              <string>NO</string>
-                                            </entry>
-                                            <entry>
-                                              <string>IS_GENERATEDCOLUMN</string>
-                                              <string>NO</string>
                                             </entry>
                                             <entry>
                                               <string>IS_NULLABLE</string>
@@ -8510,6 +8156,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                           <size>10</size>
                                           <decimalDigits>0</decimalDigits>
                                           <nullable>true</nullable>
+                                          <isAutoIncremented>false</isAutoIncremented>
+                                          <isGenerated>false</isGenerated>
                                           <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                                           <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
                                           <privileges id="1073">
@@ -8530,14 +8178,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                             <entry>
                                               <string>CHAR_OCTET_LENGTH</string>
                                               <int>15</int>
-                                            </entry>
-                                            <entry>
-                                              <string>IS_AUTOINCREMENT</string>
-                                              <string>NO</string>
-                                            </entry>
-                                            <entry>
-                                              <string>IS_GENERATEDCOLUMN</string>
-                                              <string>NO</string>
                                             </entry>
                                             <entry>
                                               <string>IS_NULLABLE</string>
@@ -8579,6 +8219,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                           <size>15</size>
                                           <decimalDigits>0</decimalDigits>
                                           <nullable>true</nullable>
+                                          <isAutoIncremented>false</isAutoIncremented>
+                                          <isGenerated>false</isGenerated>
                                           <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                                           <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
                                           <privileges id="1077">
@@ -8599,14 +8241,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                             <entry>
                                               <string>CHAR_OCTET_LENGTH</string>
                                               <int>10</int>
-                                            </entry>
-                                            <entry>
-                                              <string>IS_AUTOINCREMENT</string>
-                                              <string>NO</string>
-                                            </entry>
-                                            <entry>
-                                              <string>IS_GENERATEDCOLUMN</string>
-                                              <string>NO</string>
                                             </entry>
                                             <entry>
                                               <string>IS_NULLABLE</string>
@@ -8648,6 +8282,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                           <size>10</size>
                                           <decimalDigits>0</decimalDigits>
                                           <nullable>true</nullable>
+                                          <isAutoIncremented>false</isAutoIncremented>
+                                          <isGenerated>false</isGenerated>
                                           <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                                           <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
                                           <privileges id="1081">
@@ -8668,14 +8304,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                             <entry>
                                               <string>CHAR_OCTET_LENGTH</string>
                                               <int>0</int>
-                                            </entry>
-                                            <entry>
-                                              <string>IS_AUTOINCREMENT</string>
-                                              <string>NO</string>
-                                            </entry>
-                                            <entry>
-                                              <string>IS_GENERATEDCOLUMN</string>
-                                              <string>NO</string>
                                             </entry>
                                             <entry>
                                               <string>IS_NULLABLE</string>
@@ -8717,6 +8345,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                           <size>64</size>
                                           <decimalDigits>0</decimalDigits>
                                           <nullable>false</nullable>
+                                          <isAutoIncremented>false</isAutoIncremented>
+                                          <isGenerated>false</isGenerated>
                                           <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                                           <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
                                           <referencedColumn class="column" reference="971"/>
@@ -8738,14 +8368,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                             <entry>
                                               <string>CHAR_OCTET_LENGTH</string>
                                               <int>2</int>
-                                            </entry>
-                                            <entry>
-                                              <string>IS_AUTOINCREMENT</string>
-                                              <string>NO</string>
-                                            </entry>
-                                            <entry>
-                                              <string>IS_GENERATEDCOLUMN</string>
-                                              <string>NO</string>
                                             </entry>
                                             <entry>
                                               <string>IS_NULLABLE</string>
@@ -8787,6 +8409,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                           <size>2</size>
                                           <decimalDigits>0</decimalDigits>
                                           <nullable>true</nullable>
+                                          <isAutoIncremented>false</isAutoIncremented>
+                                          <isGenerated>false</isGenerated>
                                           <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                                           <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
                                           <privileges id="1089">
@@ -8867,14 +8491,6 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                                     <int>0</int>
                                                   </entry>
                                                   <entry>
-                                                    <string>IS_AUTOINCREMENT</string>
-                                                    <string>NO</string>
-                                                  </entry>
-                                                  <entry>
-                                                    <string>IS_GENERATEDCOLUMN</string>
-                                                    <string>NO</string>
-                                                  </entry>
-                                                  <entry>
                                                     <string>IS_NULLABLE</string>
                                                     <string>NO</string>
                                                   </entry>
@@ -8914,6 +8530,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                                 <size>64</size>
                                                 <decimalDigits>0</decimalDigits>
                                                 <nullable>false</nullable>
+                                                <isAutoIncremented>false</isAutoIncremented>
+                                                <isGenerated>false</isGenerated>
                                                 <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
                                                 <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
                                                 <referencedColumn class="column" reference="1010"/>
@@ -9659,6 +9277,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                 <size>64</size>
                                 <decimalDigits>0</decimalDigits>
                                 <nullable>false</nullable>
+                                <isAutoIncremented>false</isAutoIncremented>
+                                <isGenerated>false</isGenerated>
                                 <isPartOfPrimaryKey>true</isPartOfPrimaryKey>
                                 <isPartOfUniqueIndex>true</isPartOfUniqueIndex>
                                 <privileges id="1230">
@@ -10056,6 +9676,8 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                     <size>32</size>
                     <decimalDigits>0</decimalDigits>
                     <nullable>false</nullable>
+                    <isAutoIncremented>false</isAutoIncremented>
+                    <isGenerated>false</isGenerated>
                     <isPartOfPrimaryKey>true</isPartOfPrimaryKey>
                     <isPartOfUniqueIndex>true</isPartOfUniqueIndex>
                     <privileges id="1306">

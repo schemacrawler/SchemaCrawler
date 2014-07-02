@@ -4,9 +4,7 @@ o--> PUBLIC.BOOKS.AUTHORS [table]
           ~ BUFFER_LENGTH=null
           ~ CHAR_OCTET_LENGTH=0
           ~ GENERATION_EXPRESSION=null
-          ~ IS_AUTOINCREMENT=NO
           ~ IS_GENERATED=NEVER
-          ~ IS_GENERATEDCOLUMN=NO
           ~ IS_NULLABLE=NO
           ~ NUM_PREC_RADIX=2
           ~ SCOPE_CATALOG=null
@@ -19,9 +17,7 @@ o--> PUBLIC.BOOKS.AUTHORS [table]
           ~ BUFFER_LENGTH=null
           ~ CHAR_OCTET_LENGTH=20
           ~ GENERATION_EXPRESSION=null
-          ~ IS_AUTOINCREMENT=NO
           ~ IS_GENERATED=NEVER
-          ~ IS_GENERATEDCOLUMN=NO
           ~ IS_NULLABLE=NO
           ~ NUM_PREC_RADIX=null
           ~ SCOPE_CATALOG=null
@@ -34,9 +30,7 @@ o--> PUBLIC.BOOKS.AUTHORS [table]
           ~ BUFFER_LENGTH=null
           ~ CHAR_OCTET_LENGTH=20
           ~ GENERATION_EXPRESSION=null
-          ~ IS_AUTOINCREMENT=NO
           ~ IS_GENERATED=NEVER
-          ~ IS_GENERATEDCOLUMN=NO
           ~ IS_NULLABLE=NO
           ~ NUM_PREC_RADIX=null
           ~ SCOPE_CATALOG=null
@@ -49,9 +43,7 @@ o--> PUBLIC.BOOKS.AUTHORS [table]
           ~ BUFFER_LENGTH=null
           ~ CHAR_OCTET_LENGTH=255
           ~ GENERATION_EXPRESSION=null
-          ~ IS_AUTOINCREMENT=NO
           ~ IS_GENERATED=NEVER
-          ~ IS_GENERATEDCOLUMN=NO
           ~ IS_NULLABLE=YES
           ~ NUM_PREC_RADIX=null
           ~ SCOPE_CATALOG=null
@@ -64,9 +56,7 @@ o--> PUBLIC.BOOKS.AUTHORS [table]
           ~ BUFFER_LENGTH=null
           ~ CHAR_OCTET_LENGTH=255
           ~ GENERATION_EXPRESSION=null
-          ~ IS_AUTOINCREMENT=NO
           ~ IS_GENERATED=NEVER
-          ~ IS_GENERATEDCOLUMN=NO
           ~ IS_NULLABLE=YES
           ~ NUM_PREC_RADIX=null
           ~ SCOPE_CATALOG=null
@@ -79,9 +69,7 @@ o--> PUBLIC.BOOKS.AUTHORS [table]
           ~ BUFFER_LENGTH=null
           ~ CHAR_OCTET_LENGTH=50
           ~ GENERATION_EXPRESSION=null
-          ~ IS_AUTOINCREMENT=NO
           ~ IS_GENERATED=NEVER
-          ~ IS_GENERATEDCOLUMN=NO
           ~ IS_NULLABLE=YES
           ~ NUM_PREC_RADIX=null
           ~ SCOPE_CATALOG=null
@@ -94,9 +82,7 @@ o--> PUBLIC.BOOKS.AUTHORS [table]
           ~ BUFFER_LENGTH=null
           ~ CHAR_OCTET_LENGTH=2
           ~ GENERATION_EXPRESSION=null
-          ~ IS_AUTOINCREMENT=NO
           ~ IS_GENERATED=NEVER
-          ~ IS_GENERATEDCOLUMN=NO
           ~ IS_NULLABLE=YES
           ~ NUM_PREC_RADIX=null
           ~ SCOPE_CATALOG=null
@@ -109,9 +95,7 @@ o--> PUBLIC.BOOKS.AUTHORS [table]
           ~ BUFFER_LENGTH=null
           ~ CHAR_OCTET_LENGTH=10
           ~ GENERATION_EXPRESSION=null
-          ~ IS_AUTOINCREMENT=NO
           ~ IS_GENERATED=NEVER
-          ~ IS_GENERATEDCOLUMN=NO
           ~ IS_NULLABLE=YES
           ~ NUM_PREC_RADIX=null
           ~ SCOPE_CATALOG=null
@@ -124,9 +108,7 @@ o--> PUBLIC.BOOKS.AUTHORS [table]
           ~ BUFFER_LENGTH=null
           ~ CHAR_OCTET_LENGTH=50
           ~ GENERATION_EXPRESSION=null
-          ~ IS_AUTOINCREMENT=NO
           ~ IS_GENERATED=NEVER
-          ~ IS_GENERATEDCOLUMN=NO
           ~ IS_NULLABLE=YES
           ~ NUM_PREC_RADIX=null
           ~ SCOPE_CATALOG=null
@@ -145,9 +127,7 @@ o--> PUBLIC.BOOKS.AUTHORSLIST [view]
           ~ BUFFER_LENGTH=null
           ~ CHAR_OCTET_LENGTH=0
           ~ GENERATION_EXPRESSION=null
-          ~ IS_AUTOINCREMENT=NO
           ~ IS_GENERATED=NEVER
-          ~ IS_GENERATEDCOLUMN=NO
           ~ IS_NULLABLE=YES
           ~ NUM_PREC_RADIX=2
           ~ SCOPE_CATALOG=null
@@ -160,9 +140,7 @@ o--> PUBLIC.BOOKS.AUTHORSLIST [view]
           ~ BUFFER_LENGTH=null
           ~ CHAR_OCTET_LENGTH=20
           ~ GENERATION_EXPRESSION=null
-          ~ IS_AUTOINCREMENT=NO
           ~ IS_GENERATED=NEVER
-          ~ IS_GENERATEDCOLUMN=NO
           ~ IS_NULLABLE=YES
           ~ NUM_PREC_RADIX=null
           ~ SCOPE_CATALOG=null
@@ -175,9 +153,7 @@ o--> PUBLIC.BOOKS.AUTHORSLIST [view]
           ~ BUFFER_LENGTH=null
           ~ CHAR_OCTET_LENGTH=20
           ~ GENERATION_EXPRESSION=null
-          ~ IS_AUTOINCREMENT=NO
           ~ IS_GENERATED=NEVER
-          ~ IS_GENERATEDCOLUMN=NO
           ~ IS_NULLABLE=YES
           ~ NUM_PREC_RADIX=null
           ~ SCOPE_CATALOG=null
@@ -192,9 +168,7 @@ o--> PUBLIC.BOOKS.BOOKAUTHORS [table]
           ~ BUFFER_LENGTH=null
           ~ CHAR_OCTET_LENGTH=0
           ~ GENERATION_EXPRESSION=null
-          ~ IS_AUTOINCREMENT=NO
           ~ IS_GENERATED=NEVER
-          ~ IS_GENERATEDCOLUMN=NO
           ~ IS_NULLABLE=NO
           ~ NUM_PREC_RADIX=2
           ~ SCOPE_CATALOG=null
@@ -207,9 +181,7 @@ o--> PUBLIC.BOOKS.BOOKAUTHORS [table]
           ~ BUFFER_LENGTH=null
           ~ CHAR_OCTET_LENGTH=0
           ~ GENERATION_EXPRESSION=null
-          ~ IS_AUTOINCREMENT=NO
           ~ IS_GENERATED=NEVER
-          ~ IS_GENERATEDCOLUMN=NO
           ~ IS_NULLABLE=NO
           ~ NUM_PREC_RADIX=2
           ~ SCOPE_CATALOG=null
@@ -222,9 +194,7 @@ o--> PUBLIC.BOOKS.BOOKAUTHORS [table]
           ~ BUFFER_LENGTH=null
           ~ CHAR_OCTET_LENGTH=1073741824
           ~ GENERATION_EXPRESSION=null
-          ~ IS_AUTOINCREMENT=NO
           ~ IS_GENERATED=NEVER
-          ~ IS_GENERATEDCOLUMN=NO
           ~ IS_NULLABLE=YES
           ~ NUM_PREC_RADIX=null
           ~ SCOPE_CATALOG=null
@@ -239,9 +209,7 @@ o--> PUBLIC.BOOKS.BOOKS [table]
           ~ BUFFER_LENGTH=null
           ~ CHAR_OCTET_LENGTH=0
           ~ GENERATION_EXPRESSION=null
-          ~ IS_AUTOINCREMENT=NO
           ~ IS_GENERATED=NEVER
-          ~ IS_GENERATEDCOLUMN=NO
           ~ IS_NULLABLE=NO
           ~ NUM_PREC_RADIX=2
           ~ SCOPE_CATALOG=null
@@ -254,9 +222,7 @@ o--> PUBLIC.BOOKS.BOOKS [table]
           ~ BUFFER_LENGTH=null
           ~ CHAR_OCTET_LENGTH=255
           ~ GENERATION_EXPRESSION=null
-          ~ IS_AUTOINCREMENT=NO
           ~ IS_GENERATED=NEVER
-          ~ IS_GENERATEDCOLUMN=NO
           ~ IS_NULLABLE=NO
           ~ NUM_PREC_RADIX=null
           ~ SCOPE_CATALOG=null
@@ -269,9 +235,7 @@ o--> PUBLIC.BOOKS.BOOKS [table]
           ~ BUFFER_LENGTH=null
           ~ CHAR_OCTET_LENGTH=255
           ~ GENERATION_EXPRESSION=null
-          ~ IS_AUTOINCREMENT=NO
           ~ IS_GENERATED=NEVER
-          ~ IS_GENERATEDCOLUMN=NO
           ~ IS_NULLABLE=YES
           ~ NUM_PREC_RADIX=null
           ~ SCOPE_CATALOG=null
@@ -284,9 +248,7 @@ o--> PUBLIC.BOOKS.BOOKS [table]
           ~ BUFFER_LENGTH=null
           ~ CHAR_OCTET_LENGTH=0
           ~ GENERATION_EXPRESSION=null
-          ~ IS_AUTOINCREMENT=NO
           ~ IS_GENERATED=NEVER
-          ~ IS_GENERATEDCOLUMN=NO
           ~ IS_NULLABLE=NO
           ~ NUM_PREC_RADIX=2
           ~ SCOPE_CATALOG=null
@@ -299,9 +261,7 @@ o--> PUBLIC.BOOKS.BOOKS [table]
           ~ BUFFER_LENGTH=null
           ~ CHAR_OCTET_LENGTH=0
           ~ GENERATION_EXPRESSION=null
-          ~ IS_AUTOINCREMENT=NO
           ~ IS_GENERATED=NEVER
-          ~ IS_GENERATEDCOLUMN=NO
           ~ IS_NULLABLE=YES
           ~ NUM_PREC_RADIX=null
           ~ SCOPE_CATALOG=null
@@ -314,9 +274,7 @@ o--> PUBLIC.BOOKS.BOOKS [table]
           ~ BUFFER_LENGTH=null
           ~ CHAR_OCTET_LENGTH=0
           ~ GENERATION_EXPRESSION=null
-          ~ IS_AUTOINCREMENT=NO
           ~ IS_GENERATED=NEVER
-          ~ IS_GENERATEDCOLUMN=NO
           ~ IS_NULLABLE=YES
           ~ NUM_PREC_RADIX=2
           ~ SCOPE_CATALOG=null
@@ -331,9 +289,7 @@ o--> PUBLIC.BOOKS."Global Counts" [table]
           ~ BUFFER_LENGTH=null
           ~ CHAR_OCTET_LENGTH=0
           ~ GENERATION_EXPRESSION=null
-          ~ IS_AUTOINCREMENT=NO
           ~ IS_GENERATED=NEVER
-          ~ IS_GENERATEDCOLUMN=NO
           ~ IS_NULLABLE=YES
           ~ NUM_PREC_RADIX=2
           ~ SCOPE_CATALOG=null
@@ -348,9 +304,7 @@ o--> PUBLIC.BOOKS.PUBLISHERS [table]
           ~ BUFFER_LENGTH=null
           ~ CHAR_OCTET_LENGTH=0
           ~ GENERATION_EXPRESSION=null
-          ~ IS_AUTOINCREMENT=YES
           ~ IS_GENERATED=NEVER
-          ~ IS_GENERATEDCOLUMN=NO
           ~ IS_NULLABLE=NO
           ~ NUM_PREC_RADIX=2
           ~ SCOPE_CATALOG=null
@@ -363,9 +317,7 @@ o--> PUBLIC.BOOKS.PUBLISHERS [table]
           ~ BUFFER_LENGTH=null
           ~ CHAR_OCTET_LENGTH=255
           ~ GENERATION_EXPRESSION=null
-          ~ IS_AUTOINCREMENT=NO
           ~ IS_GENERATED=NEVER
-          ~ IS_GENERATEDCOLUMN=NO
           ~ IS_NULLABLE=YES
           ~ NUM_PREC_RADIX=null
           ~ SCOPE_CATALOG=null
@@ -380,9 +332,7 @@ o--> PUBLIC."PUBLISHER SALES".REGIONS [table]
           ~ BUFFER_LENGTH=null
           ~ CHAR_OCTET_LENGTH=50
           ~ GENERATION_EXPRESSION=null
-          ~ IS_AUTOINCREMENT=NO
           ~ IS_GENERATED=NEVER
-          ~ IS_GENERATEDCOLUMN=NO
           ~ IS_NULLABLE=NO
           ~ NUM_PREC_RADIX=null
           ~ SCOPE_CATALOG=null
@@ -395,9 +345,7 @@ o--> PUBLIC."PUBLISHER SALES".REGIONS [table]
           ~ BUFFER_LENGTH=null
           ~ CHAR_OCTET_LENGTH=2
           ~ GENERATION_EXPRESSION=null
-          ~ IS_AUTOINCREMENT=NO
           ~ IS_GENERATED=NEVER
-          ~ IS_GENERATEDCOLUMN=NO
           ~ IS_NULLABLE=NO
           ~ NUM_PREC_RADIX=null
           ~ SCOPE_CATALOG=null
@@ -410,9 +358,7 @@ o--> PUBLIC."PUBLISHER SALES".REGIONS [table]
           ~ BUFFER_LENGTH=null
           ~ CHAR_OCTET_LENGTH=10
           ~ GENERATION_EXPRESSION=null
-          ~ IS_AUTOINCREMENT=NO
           ~ IS_GENERATED=NEVER
-          ~ IS_GENERATEDCOLUMN=NO
           ~ IS_NULLABLE=NO
           ~ NUM_PREC_RADIX=null
           ~ SCOPE_CATALOG=null
@@ -425,9 +371,7 @@ o--> PUBLIC."PUBLISHER SALES".REGIONS [table]
           ~ BUFFER_LENGTH=null
           ~ CHAR_OCTET_LENGTH=50
           ~ GENERATION_EXPRESSION=null
-          ~ IS_AUTOINCREMENT=NO
           ~ IS_GENERATED=NEVER
-          ~ IS_GENERATEDCOLUMN=NO
           ~ IS_NULLABLE=NO
           ~ NUM_PREC_RADIX=null
           ~ SCOPE_CATALOG=null
@@ -442,9 +386,7 @@ o--> PUBLIC."PUBLISHER SALES".SALES [table]
           ~ BUFFER_LENGTH=null
           ~ CHAR_OCTET_LENGTH=10
           ~ GENERATION_EXPRESSION=null
-          ~ IS_AUTOINCREMENT=NO
           ~ IS_GENERATED=NEVER
-          ~ IS_GENERATEDCOLUMN=NO
           ~ IS_NULLABLE=NO
           ~ NUM_PREC_RADIX=null
           ~ SCOPE_CATALOG=null
@@ -457,9 +399,7 @@ o--> PUBLIC."PUBLISHER SALES".SALES [table]
           ~ BUFFER_LENGTH=null
           ~ CHAR_OCTET_LENGTH=50
           ~ GENERATION_EXPRESSION=null
-          ~ IS_AUTOINCREMENT=NO
           ~ IS_GENERATED=NEVER
-          ~ IS_GENERATEDCOLUMN=NO
           ~ IS_NULLABLE=NO
           ~ NUM_PREC_RADIX=null
           ~ SCOPE_CATALOG=null
@@ -472,9 +412,7 @@ o--> PUBLIC."PUBLISHER SALES".SALES [table]
           ~ BUFFER_LENGTH=null
           ~ CHAR_OCTET_LENGTH=0
           ~ GENERATION_EXPRESSION=null
-          ~ IS_AUTOINCREMENT=NO
           ~ IS_GENERATED=NEVER
-          ~ IS_GENERATEDCOLUMN=NO
           ~ IS_NULLABLE=YES
           ~ NUM_PREC_RADIX=2
           ~ SCOPE_CATALOG=null
@@ -487,9 +425,7 @@ o--> PUBLIC."PUBLISHER SALES".SALES [table]
           ~ BUFFER_LENGTH=null
           ~ CHAR_OCTET_LENGTH=0
           ~ GENERATION_EXPRESSION=null
-          ~ IS_AUTOINCREMENT=NO
           ~ IS_GENERATED=NEVER
-          ~ IS_GENERATEDCOLUMN=NO
           ~ IS_NULLABLE=YES
           ~ NUM_PREC_RADIX=null
           ~ SCOPE_CATALOG=null
@@ -502,9 +438,7 @@ o--> PUBLIC."PUBLISHER SALES".SALES [table]
           ~ BUFFER_LENGTH=null
           ~ CHAR_OCTET_LENGTH=0
           ~ GENERATION_EXPRESSION=null
-          ~ IS_AUTOINCREMENT=NO
           ~ IS_GENERATED=NEVER
-          ~ IS_GENERATEDCOLUMN=NO
           ~ IS_NULLABLE=YES
           ~ NUM_PREC_RADIX=2
           ~ SCOPE_CATALOG=null

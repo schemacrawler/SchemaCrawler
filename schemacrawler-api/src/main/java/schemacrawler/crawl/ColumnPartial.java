@@ -29,8 +29,8 @@ import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Table;
 
 final class ColumnPartial
-  extends AbstractDependantObject<Table>
-  implements Column
+extends AbstractDependantObject<Table>
+implements Column
 {
 
   private static final long serialVersionUID = 502720342852782630L;
@@ -105,6 +105,28 @@ final class ColumnPartial
 
   @Override
   public String getWidth()
+  {
+    throw new NotLoadedException();
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * @see schemacrawler.schema.Column#isAutoIncremented()
+   */
+  @Override
+  public boolean isAutoIncremented()
+  {
+    throw new NotLoadedException();
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * @see schemacrawler.schema.Column#isGenerated()
+   */
+  @Override
+  public boolean isGenerated()
   {
     throw new NotLoadedException();
   }
