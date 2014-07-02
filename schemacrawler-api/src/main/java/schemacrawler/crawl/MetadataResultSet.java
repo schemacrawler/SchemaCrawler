@@ -191,11 +191,14 @@ final class MetadataResultSet
         final String stringBooleanValue;
         if (results.wasNull() || booleanValue == null)
         {
+          LOGGER.log(Level.FINE, String
+            .format("NULL value for column %s, so evaluating to 'false'",
+                    columnName));
           stringBooleanValue = null;
         }
         else
         {
-          stringBooleanValue = String.valueOf(booleanValue);
+          stringBooleanValue = String.valueOf(booleanValue).trim();
         }
         if (!Utility.isBlank(stringBooleanValue))
         {
