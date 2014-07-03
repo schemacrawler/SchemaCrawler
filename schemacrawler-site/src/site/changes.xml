@@ -5,7 +5,12 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-     <release version="10.09.02" date="2014-06-22">
+     <release version="10.10.02" date="2014-07-02">
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added support for auto-incremented columns, and generated columns.
+      ]]></action>         
+     </release>    
+     <release version="10.10.01" date="2014-06-22">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Added support for sequences.
       ]]></action>         
