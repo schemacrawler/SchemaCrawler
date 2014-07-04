@@ -11,3 +11,4 @@ workspace
 /schemacrawler/*.bnd
 /schemacrawler-docs/*.xml
 /schemacrawler-docs/schemacrawler.config.properties.1
+/schemacrawler/src/assembly/schemacrawler.pom.asc
