@@ -4,10 +4,10 @@
   xsi:schemaLocation="http://maven.apache.org/DECORATION/1.0.0 http://maven.apache.org/xsd/decoration-1.0.0.xsd"
   name="SchemaCrawler">
   <skin>
-    <groupId>com.sourcesense.maven</groupId>
-    <artifactId>maven-skin</artifactId>
-    <version>1.0.0</version>
-  </skin>
+    <groupId>org.apache.maven.skins</groupId>
+    <artifactId>maven-fluido-skin</artifactId>
+    <version>1.3.0</version>
+  </skin> 
   <version />
   <bannerLeft>
     <name>SchemaCrawler</name>
