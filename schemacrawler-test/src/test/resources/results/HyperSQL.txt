@@ -10,7 +10,7 @@ SchemaCrawler Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
 product name                          SchemaCrawler
-product version                       10.10.02
+product version                       10.10.03
 
 
 Database Information
