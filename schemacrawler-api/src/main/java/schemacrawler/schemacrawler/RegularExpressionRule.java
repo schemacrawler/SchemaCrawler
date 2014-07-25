@@ -200,7 +200,7 @@ public final class RegularExpressionRule
   @Override
   public String toString()
   {
-    return String.format("%s@%h-include::%s::-exclude::%s::]",
+    return String.format("%s@%h-include/%s/-exclude/%s/]",
                          getClass().getSimpleName(),
                          System.identityHashCode(this),
                          patternInclude.pattern(),

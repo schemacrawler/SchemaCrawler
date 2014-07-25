@@ -29,10 +29,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
     id="schemaCrawlerOptions"
     class="schemacrawler.schemacrawler.SchemaCrawlerOptions"
   >
-    <property name="tableInclusionRule">
-      <bean class="schemacrawler.schemacrawler.IncludeAll"/>
-    </property>
-    <property name="columnInclusionRule">
+    <property name="sequenceInclusionRule">
       <bean class="schemacrawler.schemacrawler.IncludeAll"/>
     </property>
     <property name="tableTypes">

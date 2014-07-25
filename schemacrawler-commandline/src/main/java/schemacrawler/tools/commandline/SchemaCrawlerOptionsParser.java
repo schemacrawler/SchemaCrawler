@@ -23,8 +23,11 @@ package schemacrawler.tools.commandline;
 
 
 import static sf.util.Utility.isBlank;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.ExcludeAll;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
@@ -44,6 +47,9 @@ import sf.util.clparser.StringOption;
 public final class SchemaCrawlerOptionsParser
   extends BaseOptionsParser<SchemaCrawlerOptions>
 {
+
+  private static final Logger LOGGER = Logger
+    .getLogger(SchemaCrawlerOptionsParser.class.getName());
 
   private static final String DEFAULT_TABLE_TYPES = "TABLE,VIEW";
   private static final String DEFAULT_ROUTINE_TYPES = "PROCEDURE,FUNCTION";
@@ -78,15 +84,16 @@ public final class SchemaCrawlerOptionsParser
   {
     if (hasOptionValue("infolevel"))
     {
+      final String infoLevel = getStringValue("infolevel");
       try
       {
-        final String infoLevel = getStringValue("infolevel");
         final SchemaInfoLevel schemaInfoLevel = InfoLevel.valueOf(infoLevel)
           .getSchemaInfoLevel();
         options.setSchemaInfoLevel(schemaInfoLevel);
       }
       catch (final IllegalArgumentException e)
       {
+        LOGGER.log(Level.INFO, "Unknown infolevel, " + infoLevel);
         options.setSchemaInfoLevel(SchemaInfoLevel.standard());
       }
     }
@@ -98,6 +105,9 @@ public final class SchemaCrawlerOptionsParser
     if (hasOptionValue("schemas"))
     {
       final InclusionRule schemaInclusionRule = new RegularExpressionInclusionRule(getStringValue("schemas"));
+      logOverride("schemas",
+                  options.getSchemaInclusionRule(),
+                  schemaInclusionRule);
       options.setSchemaInclusionRule(schemaInclusionRule);
     }
 
@@ -117,11 +127,15 @@ public final class SchemaCrawlerOptionsParser
     if (hasOptionValue("tables"))
     {
       final InclusionRule tableInclusionRule = new RegularExpressionInclusionRule(getStringValue("tables"));
+      logOverride("tables", options.getTableInclusionRule(), tableInclusionRule);
       options.setTableInclusionRule(tableInclusionRule);
     }
     if (hasOptionValue("excludecolumns"))
     {
       final InclusionRule columnInclusionRule = new RegularExpressionExclusionRule(getStringValue("excludecolumns"));
+      logOverride("excludecolumns",
+                  options.getColumnInclusionRule(),
+                  columnInclusionRule);
       options.setColumnInclusionRule(columnInclusionRule);
     }
 
@@ -133,32 +147,36 @@ public final class SchemaCrawlerOptionsParser
     if (hasOptionValue("routines"))
     {
       final InclusionRule routineInclusionRule = new RegularExpressionInclusionRule(getStringValue("routines"));
+      logOverride("routines",
+                  options.getRoutineInclusionRule(),
+                  routineInclusionRule);
       options.setRoutineInclusionRule(routineInclusionRule);
     }
     if (hasOptionValue("excludeinout"))
     {
       final InclusionRule routineColumnInclusionRule = new RegularExpressionExclusionRule(getStringValue("excludeinout"));
+      logOverride("excludeinout",
+                  options.getRoutineColumnInclusionRule(),
+                  routineColumnInclusionRule);
       options.setRoutineColumnInclusionRule(routineColumnInclusionRule);
     }
 
     if (hasOptionValue("synonyms"))
     {
       final InclusionRule synonymInclusionRule = new RegularExpressionInclusionRule(getStringValue("synonyms"));
+      logOverride("synonyms",
+                  options.getSynonymInclusionRule(),
+                  synonymInclusionRule);
       options.setSynonymInclusionRule(synonymInclusionRule);
-    }
-    else
-    {
-      options.setSynonymInclusionRule(new ExcludeAll());
     }
 
     if (hasOptionValue("sequences"))
     {
       final InclusionRule sequenceInclusionRule = new RegularExpressionInclusionRule(getStringValue("sequences"));
+      logOverride("sequences",
+                  options.getSequenceInclusionRule(),
+                  sequenceInclusionRule);
       options.setSequenceInclusionRule(sequenceInclusionRule);
-    }
-    else
-    {
-      options.setSequenceInclusionRule(new ExcludeAll());
     }
 
     if (hasOptionValue("invert-match"))
@@ -222,6 +240,17 @@ public final class SchemaCrawlerOptionsParser
     }
 
     return options;
+  }
+
+  private void logOverride(final String inclusionRuleName,
+                           final InclusionRule oldSchemaInclusionRule,
+                           final InclusionRule schemaInclusionRule)
+  {
+    LOGGER.log(Level.INFO, String
+      .format("Overriding %s inclusion rule from command-line, to %s, from %s",
+              inclusionRuleName,
+              schemaInclusionRule,
+              oldSchemaInclusionRule));
   }
 
 }
