@@ -111,6 +111,7 @@ public class SchemaCrawlerOutputTest
           .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
         final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
         schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
+        schemaCrawlerOptions.setSequenceInclusionRule(new IncludeAll());
 
         final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
         executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
@@ -164,6 +165,7 @@ public class SchemaCrawlerOutputTest
         .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
       schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
+      schemaCrawlerOptions.setSequenceInclusionRule(new IncludeAll());
 
       final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(SchemaTextDetailType.details
                                                                              + ","
@@ -219,6 +221,7 @@ public class SchemaCrawlerOutputTest
           .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
         final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
         schemaCrawlerOptions.setSchemaInfoLevel(infoLevel.getSchemaInfoLevel());
+        schemaCrawlerOptions.setSequenceInclusionRule(new IncludeAll());
 
         final Executable executable = new SchemaCrawlerExecutable(schemaTextDetailType
           .name());
@@ -263,6 +266,7 @@ public class SchemaCrawlerOutputTest
         .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
       schemaCrawlerOptions.setSchemaInfoLevel(infoLevel.getSchemaInfoLevel());
+      schemaCrawlerOptions.setSequenceInclusionRule(new IncludeAll());
 
       final Executable executable = new SchemaCrawlerExecutable(schemaTextDetailType
         .name());
@@ -311,6 +315,7 @@ public class SchemaCrawlerOutputTest
         .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
       schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
+      schemaCrawlerOptions.setSequenceInclusionRule(new IncludeAll());
 
       final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(SchemaTextDetailType.details
                                                                              + ","
@@ -416,6 +421,7 @@ public class SchemaCrawlerOutputTest
         .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
       schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
+      schemaCrawlerOptions.setSequenceInclusionRule(new IncludeAll());
 
       final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(SchemaTextDetailType.details
                                                                              + ","

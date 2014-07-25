@@ -49,10 +49,6 @@ public final class Config
   implements Options
 {
 
-  private static final long serialVersionUID = 8720699738076915453L;
-
-  private static final Logger LOGGER = Logger.getLogger(Config.class.getName());
-
   /**
    * Loads the SchemaCrawler configuration, and override configuration,
    * from properties files.
@@ -186,6 +182,10 @@ public final class Config
     return propertiesMap;
   }
 
+  private static final long serialVersionUID = 8720699738076915453L;
+
+  private static final Logger LOGGER = Logger.getLogger(Config.class.getName());
+
   /**
    * Creates an empty config.
    */
@@ -265,6 +265,23 @@ public final class Config
       }
     }
     return enumValue;
+  }
+
+  public RegularExpressionRule getInclusionRule(final String includePatternProperty,
+                                                final String excludePatternProperty)
+  {
+    return new RegularExpressionRule(getStringValue(includePatternProperty,
+                                                    null),
+                                     getStringValue(excludePatternProperty,
+                                                    null));
+  }
+
+  public RegularExpressionRule getInclusionRuleDefaultExclude(final String includePatternProperty,
+                                                              final String excludePatternProperty)
+  {
+    return new RegularExpressionRule(getStringValue(includePatternProperty, ""),
+                                     getStringValue(excludePatternProperty,
+                                                    ".*"));
   }
 
   /**
