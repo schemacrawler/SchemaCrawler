@@ -89,11 +89,11 @@ final class DataResultSet
     return rows.next();
   }
 
-  public List row()
+  public List<Object> row()
     throws SQLException
   {
     final int columnCount = resultsColumns.size();
-    final List currentRow = new ArrayList(columnCount);
+    final List<Object> currentRow = new ArrayList<>(columnCount);
     for (int i = 0; i < columnCount; i++)
     {
       currentRow.add(getColumnData(i));

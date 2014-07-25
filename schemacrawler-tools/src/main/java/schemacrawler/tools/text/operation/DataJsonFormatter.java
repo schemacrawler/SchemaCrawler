@@ -211,7 +211,7 @@ final class DataJsonFormatter
     final JSONArray jsonRows = new JSONArray();
     while (dataRows.next())
     {
-      final List currentRow = dataRows.row();
+      final List<Object> currentRow = dataRows.row();
       jsonRows.put(new JSONArray(currentRow));
     }
     return jsonRows;
