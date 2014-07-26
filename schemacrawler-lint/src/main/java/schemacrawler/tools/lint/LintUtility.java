@@ -20,48 +20,10 @@
 package schemacrawler.tools.lint;
 
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-
-import schemacrawler.schema.ForeignKey;
-import schemacrawler.schema.ForeignKeyColumnReference;
-import schemacrawler.schema.Index;
-import schemacrawler.schema.IndexColumn;
 
 public class LintUtility
 {
-
-  public static final List<String> columns(final Index index)
-  {
-    if (index == null)
-    {
-      return Collections.emptyList();
-    }
-
-    final List<String> columnNames = new ArrayList<>();
-    for (final IndexColumn indexColumn: index.getColumns())
-    {
-      columnNames.add(indexColumn.getFullName());
-    }
-    return columnNames;
-  }
-
-  public static final List<String> foreignKeyColumns(final ForeignKey foreignKey)
-  {
-    if (foreignKey == null)
-    {
-      return Collections.emptyList();
-    }
-
-    final List<String> columnNames = new ArrayList<>();
-    for (final ForeignKeyColumnReference columnReference: foreignKey
-      .getColumnReferences())
-    {
-      columnNames.add(columnReference.getForeignKeyColumn().getFullName());
-    }
-    return columnNames;
-  }
 
   public static final <E> boolean listStartsWith(final List<E> main,
                                                  final List<E> sub)
