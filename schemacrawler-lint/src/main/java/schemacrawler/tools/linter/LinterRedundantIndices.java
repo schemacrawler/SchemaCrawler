@@ -20,7 +20,6 @@
 package schemacrawler.tools.linter;
 
 
-import static schemacrawler.tools.lint.LintUtility.columns;
 import static schemacrawler.tools.lint.LintUtility.listStartsWith;
 
 import java.util.Collection;
@@ -36,6 +35,7 @@ import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
 import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.LintSeverity;
+import schemacrawler.utility.MetaDataUtility;
 
 public class LinterRedundantIndices
   extends BaseLinter
@@ -81,7 +81,7 @@ public class LinterRedundantIndices
     final Map<Index, List<String>> indexColumns = new HashMap<>(indices.size());
     for (final Index index: indices)
     {
-      indexColumns.put(index, columns(index));
+      indexColumns.put(index, MetaDataUtility.columnNames(index));
     }
 
     for (final Entry<Index, List<String>> indexColumnEntry1: indexColumns

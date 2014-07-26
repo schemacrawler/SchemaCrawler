@@ -5,7 +5,7 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-     <release version="10.10.03" date="2014-07-06">
+     <release version="10.10.04" date="2014-07-06">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Added support for include and exclude expressions for synonyms and sequences in config properties files.
       ]]></action>         

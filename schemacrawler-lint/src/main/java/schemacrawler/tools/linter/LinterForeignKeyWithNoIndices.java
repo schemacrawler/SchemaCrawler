@@ -20,24 +20,22 @@
 package schemacrawler.tools.linter;
 
 
-import static schemacrawler.tools.lint.LintUtility.columns;
-import static schemacrawler.tools.lint.LintUtility.foreignKeyColumns;
 import static schemacrawler.tools.lint.LintUtility.listStartsWith;
+import static schemacrawler.utility.MetaDataUtility.allIndexCoumnNames;
+import static schemacrawler.utility.MetaDataUtility.foreignKeyColumnNames;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import schemacrawler.schema.ForeignKey;
-import schemacrawler.schema.Index;
-import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
 import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.LintSeverity;
 
 public class LinterForeignKeyWithNoIndices
-extends BaseLinter
+  extends BaseLinter
 {
 
   public LinterForeignKeyWithNoIndices()
@@ -72,31 +70,15 @@ extends BaseLinter
     }
   }
 
-  private Collection<List<String>> allIndexCoumns(final Table table)
-  {
-    final List<List<String>> allIndexCoumns = new ArrayList<>();
-
-    final PrimaryKey primaryKey = table.getPrimaryKey();
-    final List<String> pkColumns = columns(primaryKey);
-    allIndexCoumns.add(pkColumns);
-
-    for (final Index index: table.getIndices())
-    {
-      final List<String> indexColumns = columns(index);
-      allIndexCoumns.add(indexColumns);
-    }
-    return allIndexCoumns;
-  }
-
   private List<ForeignKey> findForeignKeysWithoutIndices(final Table table)
   {
     final List<ForeignKey> foreignKeysWithoutIndices = new ArrayList<>();
     if (!(table instanceof View))
     {
-      final Collection<List<String>> allIndexCoumns = allIndexCoumns(table);
+      final Collection<List<String>> allIndexCoumns = allIndexCoumnNames(table);
       for (final ForeignKey foreignKey: table.getImportedForeignKeys())
       {
-        final List<String> foreignKeyColumns = foreignKeyColumns(foreignKey);
+        final List<String> foreignKeyColumns = foreignKeyColumnNames(foreignKey);
         boolean hasIndex = false;
         for (final List<String> indexColumns: allIndexCoumns)
         {
