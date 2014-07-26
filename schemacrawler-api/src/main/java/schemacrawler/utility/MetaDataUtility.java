@@ -21,7 +21,18 @@
 package schemacrawler.utility;
 
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
 import schemacrawler.schema.Column;
+import schemacrawler.schema.ForeignKey;
+import schemacrawler.schema.ForeignKeyColumnReference;
+import schemacrawler.schema.Index;
+import schemacrawler.schema.IndexColumn;
+import schemacrawler.schema.PrimaryKey;
+import schemacrawler.schema.Table;
 
 /**
  * SchemaCrawler utility methods.
@@ -37,6 +48,42 @@ public final class MetaDataUtility
     zero_one,
     zero_many,
     one_one;
+  }
+
+  public static Collection<List<String>> allIndexCoumnNames(final Table table)
+  {
+    return indexCoumnNames(table, false);
+  }
+
+  public static final List<String> columnNames(final Index index)
+  {
+    if (index == null)
+    {
+      return Collections.emptyList();
+    }
+
+    final List<String> columnNames = new ArrayList<>();
+    for (final IndexColumn indexColumn: index.getColumns())
+    {
+      columnNames.add(indexColumn.getFullName());
+    }
+    return columnNames;
+  }
+
+  public static final List<String> foreignKeyColumnNames(final ForeignKey foreignKey)
+  {
+    if (foreignKey == null)
+    {
+      return Collections.emptyList();
+    }
+
+    final List<String> columnNames = new ArrayList<>();
+    for (final ForeignKeyColumnReference columnReference: foreignKey
+        .getColumnReferences())
+    {
+      columnNames.add(columnReference.getForeignKeyColumn().getFullName());
+    }
+    return columnNames;
   }
 
   public static Connectivity getConnectivity(final Column fkColumn)
@@ -70,6 +117,33 @@ public final class MetaDataUtility
       return Connectivity.zero_many;
     }
   }
+
+  public static Collection<List<String>> uniqueIndexCoumnNames(final Table table)
+  {
+    return indexCoumnNames(table, true);
+  }
+
+  private static Collection<List<String>> indexCoumnNames(final Table table,
+                                                          final boolean includeUniqueOnly)
+                                                          {
+    final List<List<String>> allIndexCoumns = new ArrayList<>();
+
+    final PrimaryKey primaryKey = table.getPrimaryKey();
+    final List<String> pkColumns = columnNames(primaryKey);
+    allIndexCoumns.add(pkColumns);
+
+    for (final Index index: table.getIndices())
+    {
+      if (includeUniqueOnly && !index.isUnique())
+      {
+        continue;
+      }
+
+      final List<String> indexColumns = columnNames(index);
+      allIndexCoumns.add(indexColumns);
+    }
+    return allIndexCoumns;
+                                                          }
 
   private MetaDataUtility()
   {
