@@ -355,12 +355,12 @@
         },
         {
           "definition": "BOOKS.BOOKAUTHORS.BOOKID IS NOT NULL",
-          "name": "SYS_CT_10109",
+          "name": "SYS_CT_10111",
           "type": "check"
         },
         {
           "definition": "BOOKS.BOOKAUTHORS.AUTHORID IS NOT NULL",
-          "name": "SYS_CT_10110",
+          "name": "SYS_CT_10112",
           "type": "check"
         }
       ],
@@ -471,7 +471,7 @@
       "indices": [
         {
           "unique": false,
-          "name": "SYS_IDX_10116",
+          "name": "SYS_IDX_10118",
           "columns": {
             "sortSequence": "ascending",
             "name": "AUTHORID"
@@ -479,7 +479,7 @@
         },
         {
           "unique": false,
-          "name": "SYS_IDX_10114",
+          "name": "SYS_IDX_10116",
           "columns": {
             "sortSequence": "ascending",
             "name": "BOOKID"
@@ -518,6 +518,10 @@
       ],
       "tableConstraints": [
         {
+          "name": "FK_PREVIOUSEDITION",
+          "type": "foreign_key"
+        },
+        {
           "name": "PK_BOOKS",
           "type": "primary_key"
         },
@@ -537,15 +541,26 @@
           "type": "check"
         }
       ],
-      "foreignKeys": [{
-        "updateRule": "no action",
-        "columnReferences": [{
-          "pkColumn": "PUBLIC.BOOKS.BOOKS.ID",
-          "fkColumn": "PUBLIC.BOOKS.BOOKAUTHORS.BOOKID"
-        }],
-        "deleteRule": "no action",
-        "name": "FK_Y_BOOK"
-      }],
+      "foreignKeys": [
+        {
+          "updateRule": "no action",
+          "columnReferences": [{
+            "pkColumn": "PUBLIC.BOOKS.BOOKS.ID",
+            "fkColumn": "PUBLIC.BOOKS.BOOKAUTHORS.BOOKID"
+          }],
+          "deleteRule": "no action",
+          "name": "FK_Y_BOOK"
+        },
+        {
+          "updateRule": "no action",
+          "columnReferences": [{
+            "pkColumn": "PUBLIC.BOOKS.BOOKS.ID",
+            "fkColumn": "PUBLIC.BOOKS.BOOKS.PREVIOUSEDITIONID"
+          }],
+          "deleteRule": "no action",
+          "name": "FK_PREVIOUSEDITION"
+        }
+      ],
       "primaryKey": {
         "unique": true,
         "name": "PK_BOOKS",
@@ -615,6 +630,16 @@
           "nullable": true,
           "databaseSpecificType": "DOUBLE",
           "size": 64
+        },
+        {
+          "dataType": "INTEGER",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "PREVIOUSEDITIONID",
+          "remarks": "",
+          "nullable": true,
+          "databaseSpecificType": "INTEGER",
+          "size": 32
         }
       ],
       "privileges": [
@@ -667,14 +692,32 @@
           }
         }
       ],
-      "indices": [{
-        "unique": true,
-        "name": "SYS_IDX_PK_BOOKS_10105",
-        "columns": {
-          "sortSequence": "ascending",
-          "name": "ID"
+      "indices": [
+        {
+          "unique": true,
+          "name": "SYS_IDX_PK_BOOKS_10105",
+          "columns": {
+            "sortSequence": "ascending",
+            "name": "ID"
+          }
+        },
+        {
+          "unique": true,
+          "name": "UIDX_PREVIOUSEDITION",
+          "columns": {
+            "sortSequence": "ascending",
+            "name": "PREVIOUSEDITIONID"
+          }
+        },
+        {
+          "unique": false,
+          "name": "SYS_IDX_10109",
+          "columns": {
+            "sortSequence": "ascending",
+            "name": "PREVIOUSEDITIONID"
+          }
         }
-      }],
+      ],
       "remarks": "Details for published books",
       "triggers": [],
       "fullName": "PUBLIC.BOOKS.BOOKS",
@@ -873,17 +916,17 @@
         },
         {
           "definition": "FOR_LINT.EXTRA_PK.ID IS NOT NULL",
-          "name": "SYS_CT_10176",
+          "name": "SYS_CT_10178",
           "type": "check"
         },
         {
           "definition": "FOR_LINT.EXTRA_PK.WRITERID IS NOT NULL",
-          "name": "SYS_CT_10177",
+          "name": "SYS_CT_10179",
           "type": "check"
         },
         {
           "definition": "FOR_LINT.EXTRA_PK.PUBLICATIONID IS NOT NULL",
-          "name": "SYS_CT_10178",
+          "name": "SYS_CT_10180",
           "type": "check"
         }
       ],
@@ -1001,7 +1044,7 @@
       "indices": [
         {
           "unique": true,
-          "name": "SYS_IDX_PK_EXTRA_PK_10179",
+          "name": "SYS_IDX_PK_EXTRA_PK_10181",
           "columns": {
             "sortSequence": "ascending",
             "name": "ID"
@@ -1009,7 +1052,7 @@
         },
         {
           "unique": false,
-          "name": "SYS_IDX_10185",
+          "name": "SYS_IDX_10187",
           "columns": {
             "sortSequence": "ascending",
             "name": "PUBLICATIONID"
@@ -1017,7 +1060,7 @@
         },
         {
           "unique": false,
-          "name": "SYS_IDX_10183",
+          "name": "SYS_IDX_10185",
           "columns": {
             "sortSequence": "ascending",
             "name": "WRITERID"
@@ -1114,17 +1157,17 @@
         },
         {
           "definition": "FOR_LINT.PUBLICATIONS.ID IS NOT NULL",
-          "name": "SYS_CT_10166",
+          "name": "SYS_CT_10168",
           "type": "check"
         },
         {
           "definition": "FOR_LINT.PUBLICATIONS.TITLE IS NOT NULL",
-          "name": "SYS_CT_10167",
+          "name": "SYS_CT_10169",
           "type": "check"
         },
         {
           "definition": "FOR_LINT.PUBLICATIONS.WRITERID IS NOT NULL",
-          "name": "SYS_CT_10168",
+          "name": "SYS_CT_10170",
           "type": "check"
         }
       ],
@@ -1301,7 +1344,7 @@
       "indices": [
         {
           "unique": true,
-          "name": "SYS_IDX_PK_PUBLICATIONS_10169",
+          "name": "SYS_IDX_PK_PUBLICATIONS_10171",
           "columns": {
             "sortSequence": "ascending",
             "name": "ID"
@@ -1309,7 +1352,7 @@
         },
         {
           "unique": false,
-          "name": "SYS_IDX_10173",
+          "name": "SYS_IDX_10175",
           "columns": {
             "sortSequence": "ascending",
             "name": "WRITERID"
@@ -1339,27 +1382,27 @@
         },
         {
           "definition": "FOR_LINT.WRITERS.ID IS NOT NULL",
-          "name": "SYS_CT_10154",
-          "type": "check"
-        },
-        {
-          "definition": "FOR_LINT.WRITERS.FIRSTNAME IS NOT NULL",
-          "name": "SYS_CT_10155",
-          "type": "check"
-        },
-        {
-          "definition": "FOR_LINT.WRITERS.LASTNAME IS NOT NULL",
           "name": "SYS_CT_10156",
           "type": "check"
         },
         {
-          "definition": "FOR_LINT.WRITERS.ADDRESS2 IS NOT NULL",
+          "definition": "FOR_LINT.WRITERS.FIRSTNAME IS NOT NULL",
           "name": "SYS_CT_10157",
           "type": "check"
         },
         {
-          "definition": "FOR_LINT.WRITERS.PUBLICATION_ID IS NOT NULL",
+          "definition": "FOR_LINT.WRITERS.LASTNAME IS NOT NULL",
           "name": "SYS_CT_10158",
+          "type": "check"
+        },
+        {
+          "definition": "FOR_LINT.WRITERS.ADDRESS2 IS NOT NULL",
+          "name": "SYS_CT_10159",
+          "type": "check"
+        },
+        {
+          "definition": "FOR_LINT.WRITERS.PUBLICATION_ID IS NOT NULL",
+          "name": "SYS_CT_10160",
           "type": "check"
         }
       ],
@@ -1636,7 +1679,7 @@
       "indices": [
         {
           "unique": true,
-          "name": "SYS_IDX_PK_WRITERS_10159",
+          "name": "SYS_IDX_PK_WRITERS_10161",
           "columns": {
             "sortSequence": "ascending",
             "name": "ID"
@@ -1644,7 +1687,7 @@
         },
         {
           "unique": false,
-          "name": "SYS_IDX_10187",
+          "name": "SYS_IDX_10189",
           "columns": {
             "sortSequence": "ascending",
             "name": "PUBLICATION_ID"
@@ -1729,22 +1772,22 @@
         },
         {
           "definition": "\"PUBLISHER SALES\".REGIONS.CITY IS NOT NULL",
-          "name": "SYS_CT_10138",
-          "type": "check"
-        },
-        {
-          "definition": "\"PUBLISHER SALES\".REGIONS.STATE IS NOT NULL",
-          "name": "SYS_CT_10139",
-          "type": "check"
-        },
-        {
-          "definition": "\"PUBLISHER SALES\".REGIONS.POSTALCODE IS NOT NULL",
           "name": "SYS_CT_10140",
           "type": "check"
         },
         {
-          "definition": "\"PUBLISHER SALES\".REGIONS.COUNTRY IS NOT NULL",
+          "definition": "\"PUBLISHER SALES\".REGIONS.STATE IS NOT NULL",
           "name": "SYS_CT_10141",
+          "type": "check"
+        },
+        {
+          "definition": "\"PUBLISHER SALES\".REGIONS.POSTALCODE IS NOT NULL",
+          "name": "SYS_CT_10142",
+          "type": "check"
+        },
+        {
+          "definition": "\"PUBLISHER SALES\".REGIONS.COUNTRY IS NOT NULL",
+          "name": "SYS_CT_10143",
           "type": "check"
         }
       ],
@@ -1872,7 +1915,7 @@
       ],
       "indices": [{
         "unique": true,
-        "name": "SYS_IDX_PK_CUSTOMERS_10142",
+        "name": "SYS_IDX_PK_CUSTOMERS_10144",
         "columns": [
           {
             "sortSequence": "ascending",
@@ -1901,12 +1944,12 @@
         },
         {
           "definition": "\"PUBLISHER SALES\".SALES.POSTALCODE IS NOT NULL",
-          "name": "SYS_CT_10147",
+          "name": "SYS_CT_10149",
           "type": "check"
         },
         {
           "definition": "\"PUBLISHER SALES\".SALES.COUNTRY IS NOT NULL",
-          "name": "SYS_CT_10148",
+          "name": "SYS_CT_10150",
           "type": "check"
         }
       ],
@@ -2031,7 +2074,7 @@
       ],
       "indices": [{
         "unique": false,
-        "name": "SYS_IDX_10152",
+        "name": "SYS_IDX_10154",
         "columns": [
           {
             "sortSequence": "ascending",
@@ -3304,7 +3347,22 @@
   ],
   "routines": [
     {
-      "definition": "CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER,IN TWO INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10128 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN ONE+TWO",
+      "definition": "CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10131 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN BOOKS.CUSTOMADD(ONE,1)",
+      "name": "CUSTOMADD",
+      "remarks": "",
+      "parameters": [{
+        "dataType": "INTEGER",
+        "width": "",
+        "type": "in",
+        "databaseSpecificType": "INTEGER"
+      }],
+      "fullName": "PUBLIC.BOOKS.CUSTOMADD",
+      "type": "function",
+      "specificName": "CUSTOMADD_10131",
+      "returnType": "does not return a table"
+    },
+    {
+      "definition": "CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER,IN TWO INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10130 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN ONE+TWO",
       "name": "CUSTOMADD",
       "remarks": "",
       "parameters": [
@@ -3323,26 +3381,11 @@
       ],
       "fullName": "PUBLIC.BOOKS.CUSTOMADD",
       "type": "function",
-      "specificName": "CUSTOMADD_10128",
+      "specificName": "CUSTOMADD_10130",
       "returnType": "does not return a table"
     },
     {
-      "definition": "CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10129 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN BOOKS.CUSTOMADD(ONE,1)",
-      "name": "CUSTOMADD",
-      "remarks": "",
-      "parameters": [{
-        "dataType": "INTEGER",
-        "width": "",
-        "type": "in",
-        "databaseSpecificType": "INTEGER"
-      }],
-      "fullName": "PUBLIC.BOOKS.CUSTOMADD",
-      "type": "function",
-      "specificName": "CUSTOMADD_10129",
-      "returnType": "does not return a table"
-    },
-    {
-      "definition": "CREATE PROCEDURE BOOKS.NEW_PUBLISHER(OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10126 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = 'New Publisher'",
+      "definition": "CREATE PROCEDURE BOOKS.NEW_PUBLISHER(OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10128 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = 'New Publisher'",
       "name": "NEW_PUBLISHER",
       "remarks": "",
       "parameters": [{
@@ -3353,11 +3396,11 @@
       }],
       "fullName": "PUBLIC.BOOKS.NEW_PUBLISHER",
       "type": "procedure",
-      "specificName": "NEW_PUBLISHER_10126",
+      "specificName": "NEW_PUBLISHER_10128",
       "returnType": "no result"
     },
     {
-      "definition": "CREATE PROCEDURE BOOKS.NEW_PUBLISHER(IN NEWPUBLISHER VARCHAR(50),OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10127 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = NEWPUBLISHER",
+      "definition": "CREATE PROCEDURE BOOKS.NEW_PUBLISHER(IN NEWPUBLISHER VARCHAR(50),OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10129 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = NEWPUBLISHER",
       "name": "NEW_PUBLISHER",
       "remarks": "",
       "parameters": [
@@ -3376,7 +3419,7 @@
       ],
       "fullName": "PUBLIC.BOOKS.NEW_PUBLISHER",
       "type": "procedure",
-      "specificName": "NEW_PUBLISHER_10127",
+      "specificName": "NEW_PUBLISHER_10129",
       "returnType": "no result"
     },
     {
@@ -4128,7 +4171,8 @@
         "DESCRIPTION",
         "PUBLISHERID",
         "PUBLICATIONDATE",
-        "PRICE"
+        "PRICE",
+        "PREVIOUSEDITIONID"
       ],
       "rows": [
         [
@@ -4137,7 +4181,8 @@
           "Dis Parturient Montes, Nascetur Ridiculus Mus.",
           18,
           "2000-10-27",
-          69.99
+          69.99,
+          null
         ],
         [
           2,
@@ -4145,7 +4190,8 @@
           "Eu, Euismod Ac, Fermentum Vel,",
           20,
           "2002-05-09",
-          27.99
+          27.99,
+          null
         ],
         [
           3,
@@ -4153,7 +4199,8 @@
           "Sem Ut Cursus Luctus, Ipsum Leo Elementum Sem, Vitae Aliquam Eros Turpis Non Enim.",
           15,
           "2006-04-14",
-          37.99
+          37.99,
+          null
         ],
         [
           4,
@@ -4161,7 +4208,8 @@
           "Rhoncus. Nullam Velit Dui, Semper Et, Lacinia Vitae, Sodales At,",
           1,
           "2007-05-21",
-          64.99
+          64.99,
+          null
         ],
         [
           5,
@@ -4169,7 +4217,8 @@
           "Risus A Ultricies Adipiscing, Enim Mi Tempor Lorem, Eget Mollis Lectus Pede",
           7,
           "2010-05-14",
-          83.99
+          83.99,
+          null
         ],
         [
           6,
@@ -4177,7 +4226,8 @@
           "Tristique Pellentesque, Tellus Sem Mollis Dui,",
           13,
           "2009-07-17",
-          31.99
+          31.99,
+          null
         ],
         [
           7,
@@ -4185,7 +4235,8 @@
           "Vel, Faucibus Id, Libero. Donec Consectetuer Mauris Id Sapien. Cras Dolor Dolor, Tempus Non, Lacinia",
           7,
           "1999-06-09",
-          76.99
+          76.99,
+          null
         ],
         [
           8,
@@ -4193,7 +4244,8 @@
           "Turpis. Nulla Aliquet. Proin Velit. Sed Malesuada Augue Ut",
           7,
           "2009-01-24",
-          30.99
+          30.99,
+          null
         ],
         [
           9,
@@ -4201,7 +4253,8 @@
           "Est, Mollis Non, Cursus Non, Egestas A, Dui. Cras Pellentesque. Sed Dictum.",
           1,
           "2004-06-25",
-          69.99
+          69.99,
+          null
         ],
         [
           10,
@@ -4209,7 +4262,8 @@
           "Et Ultrices Posuere Cubilia Curae Phasellus Ornare. Fusce Mollis. Duis Sit Amet Diam Eu Dolor Egestas Rhoncus.",
           19,
           "2005-11-14",
-          34.99
+          34.99,
+          null
         ],
         [
           11,
@@ -4217,7 +4271,8 @@
           "Egestas. Duis Ac Arcu. Nunc Mauris.",
           5,
           "2003-10-19",
-          89.99
+          89.99,
+          null
         ],
         [
           12,
@@ -4225,7 +4280,8 @@
           "Est Mauris, Rhoncus Id, Mollis",
           5,
           "2002-05-04",
-          64.99
+          64.99,
+          null
         ],
         [
           13,
@@ -4233,7 +4289,8 @@
           "Fusce Mollis. Duis Sit Amet Diam Eu Dolor Egestas Rhoncus. Proin Nisl Sem, Consequat Nec,",
           8,
           "2005-08-03",
-          25.99
+          25.99,
+          null
         ],
         [
           14,
@@ -4241,7 +4298,8 @@
           "Suspendisse Dui. Fusce Diam Nunc, Ullamcorper Eu, Euismod Ac, Fermentum Vel, Mauris. Integer Sem Elit, Pharetra",
           2,
           "2009-02-09",
-          84.99
+          84.99,
+          null
         ],
         [
           15,
@@ -4249,7 +4307,8 @@
           "Elit, Pellentesque A, Facilisis Non, Bibendum Sed, Est. Nunc Laoreet Lectus Quis Massa. Mauris Vestibulum, Neque Sed",
           20,
           "2001-08-28",
-          77.99
+          77.99,
+          null
         ],
         [
           16,
@@ -4257,7 +4316,8 @@
           "Cursus Purus. Nullam",
           6,
           "2003-08-30",
-          47.99
+          47.99,
+          null
         ],
         [
           17,
@@ -4265,7 +4325,8 @@
           "Ornare, Lectus Ante Dictum Mi, Ac Mattis Velit Justo Nec Ante. Maecenas Mi Felis, Adipiscing Fringilla, Porttitor Vulputate, Posuere Vulputate,",
           17,
           "2005-06-24",
-          36.99
+          36.99,
+          null
         ],
         [
           18,
@@ -4273,7 +4334,8 @@
           "Facilisi. Sed Neque. Sed",
           18,
           "2008-01-28",
-          63.99
+          63.99,
+          null
         ],
         [
           19,
@@ -4281,7 +4343,8 @@
           "Rutrum. Fusce Dolor Quam, Elementum At, Egestas A, Scelerisque Sed, Sapien.",
           5,
           "2006-08-23",
-          67.99
+          67.99,
+          null
         ],
         [
           20,
@@ -4289,7 +4352,8 @@
           "Sociis Natoque Penatibus Et Magnis Dis Parturient",
           5,
           "2002-09-29",
-          43.99
+          43.99,
+          null
         ]
       ]
     },

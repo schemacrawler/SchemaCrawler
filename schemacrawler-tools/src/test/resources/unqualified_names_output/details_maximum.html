@@ -2121,7 +2121,7 @@ hr {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_10116</td>
+		<td colspan='2' class='name'>SYS_IDX_10118</td>
 		<td class='description right'>[non-unique index]</td>
 	</tr>
 	<tr>
@@ -2133,7 +2133,7 @@ hr {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_10114</td>
+		<td colspan='2' class='name'>SYS_IDX_10116</td>
 		<td class='description right'>[non-unique index]</td>
 	</tr>
 	<tr>
@@ -2162,7 +2162,7 @@ hr {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_CT_10109</td>
+		<td colspan='2' class='name'>SYS_CT_10111</td>
 		<td class='description right'>[check constraint]</td>
 	</tr>
 	<tr>
@@ -2172,7 +2172,7 @@ hr {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_CT_10110</td>
+		<td colspan='2' class='name'>SYS_CT_10112</td>
 		<td class='description right'>[check constraint]</td>
 	</tr>
 	<tr>
@@ -2301,6 +2301,11 @@ hr {
 		<td class='type'>DOUBLE(64, 0)</td>
 	</tr>
 	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>PREVIOUSEDITIONID</td>
+		<td class='type'>INTEGER</td>
+	</tr>
+	<tr>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
@@ -2322,6 +2327,18 @@ hr {
 	<tr>
 		<td class='ordinal'></td>
 		<td class='subname'>ID &#8594; BOOKAUTHORS.BOOKID</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>FK_PREVIOUSEDITION</td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>ID &#8594; PREVIOUSEDITIONID</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -2358,6 +2375,30 @@ hr {
 	<tr>
 		<td class='ordinal'></td>
 		<td class='subname'>ID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>UIDX_PREVIOUSEDITION</td>
+		<td class='description right'>[unique index]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>PREVIOUSEDITIONID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_IDX_10109</td>
+		<td class='description right'>[non-unique index]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>PREVIOUSEDITIONID</td>
 		<td class='type'>ascending</td>
 	</tr>
 	<tr>
@@ -2802,7 +2843,7 @@ hr {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_PK_EXTRA_PK_10179</td>
+		<td colspan='2' class='name'>SYS_IDX_PK_EXTRA_PK_10181</td>
 		<td class='description right'>[unique index]</td>
 	</tr>
 	<tr>
@@ -2814,7 +2855,7 @@ hr {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_10185</td>
+		<td colspan='2' class='name'>SYS_IDX_10187</td>
 		<td class='description right'>[non-unique index]</td>
 	</tr>
 	<tr>
@@ -2826,7 +2867,7 @@ hr {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_10183</td>
+		<td colspan='2' class='name'>SYS_IDX_10185</td>
 		<td class='description right'>[non-unique index]</td>
 	</tr>
 	<tr>
@@ -2838,7 +2879,7 @@ hr {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_CT_10176</td>
+		<td colspan='2' class='name'>SYS_CT_10178</td>
 		<td class='description right'>[check constraint]</td>
 	</tr>
 	<tr>
@@ -2848,7 +2889,7 @@ hr {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_CT_10177</td>
+		<td colspan='2' class='name'>SYS_CT_10179</td>
 		<td class='description right'>[check constraint]</td>
 	</tr>
 	<tr>
@@ -2858,7 +2899,7 @@ hr {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_CT_10178</td>
+		<td colspan='2' class='name'>SYS_CT_10180</td>
 		<td class='description right'>[check constraint]</td>
 	</tr>
 	<tr>
@@ -3125,7 +3166,7 @@ hr {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_PK_PUBLICATIONS_10169</td>
+		<td colspan='2' class='name'>SYS_IDX_PK_PUBLICATIONS_10171</td>
 		<td class='description right'>[unique index]</td>
 	</tr>
 	<tr>
@@ -3137,7 +3178,7 @@ hr {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_10173</td>
+		<td colspan='2' class='name'>SYS_IDX_10175</td>
 		<td class='description right'>[non-unique index]</td>
 	</tr>
 	<tr>
@@ -3149,7 +3190,7 @@ hr {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_CT_10166</td>
+		<td colspan='2' class='name'>SYS_CT_10168</td>
 		<td class='description right'>[check constraint]</td>
 	</tr>
 	<tr>
@@ -3159,7 +3200,7 @@ hr {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_CT_10167</td>
+		<td colspan='2' class='name'>SYS_CT_10169</td>
 		<td class='description right'>[check constraint]</td>
 	</tr>
 	<tr>
@@ -3169,7 +3210,7 @@ hr {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_CT_10168</td>
+		<td colspan='2' class='name'>SYS_CT_10170</td>
 		<td class='description right'>[check constraint]</td>
 	</tr>
 	<tr>
@@ -3399,7 +3440,7 @@ hr {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_PK_WRITERS_10159</td>
+		<td colspan='2' class='name'>SYS_IDX_PK_WRITERS_10161</td>
 		<td class='description right'>[unique index]</td>
 	</tr>
 	<tr>
@@ -3411,7 +3452,7 @@ hr {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_10187</td>
+		<td colspan='2' class='name'>SYS_IDX_10189</td>
 		<td class='description right'>[non-unique index]</td>
 	</tr>
 	<tr>
@@ -3511,7 +3552,7 @@ hr {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_CT_10154</td>
+		<td colspan='2' class='name'>SYS_CT_10156</td>
 		<td class='description right'>[check constraint]</td>
 	</tr>
 	<tr>
@@ -3521,7 +3562,7 @@ hr {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_CT_10155</td>
+		<td colspan='2' class='name'>SYS_CT_10157</td>
 		<td class='description right'>[check constraint]</td>
 	</tr>
 	<tr>
@@ -3531,7 +3572,7 @@ hr {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_CT_10156</td>
+		<td colspan='2' class='name'>SYS_CT_10158</td>
 		<td class='description right'>[check constraint]</td>
 	</tr>
 	<tr>
@@ -3541,7 +3582,7 @@ hr {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_CT_10157</td>
+		<td colspan='2' class='name'>SYS_CT_10159</td>
 		<td class='description right'>[check constraint]</td>
 	</tr>
 	<tr>
@@ -3551,7 +3592,7 @@ hr {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_CT_10158</td>
+		<td colspan='2' class='name'>SYS_CT_10160</td>
 		<td class='description right'>[check constraint]</td>
 	</tr>
 	<tr>
@@ -3697,7 +3738,7 @@ hr {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_PK_CUSTOMERS_10142</td>
+		<td colspan='2' class='name'>SYS_IDX_PK_CUSTOMERS_10144</td>
 		<td class='description right'>[unique index]</td>
 	</tr>
 	<tr>
@@ -3714,7 +3755,7 @@ hr {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_CT_10138</td>
+		<td colspan='2' class='name'>SYS_CT_10140</td>
 		<td class='description right'>[check constraint]</td>
 	</tr>
 	<tr>
@@ -3724,7 +3765,7 @@ hr {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_CT_10139</td>
+		<td colspan='2' class='name'>SYS_CT_10141</td>
 		<td class='description right'>[check constraint]</td>
 	</tr>
 	<tr>
@@ -3734,7 +3775,7 @@ hr {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_CT_10140</td>
+		<td colspan='2' class='name'>SYS_CT_10142</td>
 		<td class='description right'>[check constraint]</td>
 	</tr>
 	<tr>
@@ -3744,7 +3785,7 @@ hr {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_CT_10141</td>
+		<td colspan='2' class='name'>SYS_CT_10143</td>
 		<td class='description right'>[check constraint]</td>
 	</tr>
 	<tr>
@@ -3890,7 +3931,7 @@ hr {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_10152</td>
+		<td colspan='2' class='name'>SYS_IDX_10154</td>
 		<td class='description right'>[non-unique index]</td>
 	</tr>
 	<tr>
@@ -3907,7 +3948,7 @@ hr {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_CT_10147</td>
+		<td colspan='2' class='name'>SYS_CT_10149</td>
 		<td class='description right'>[check constraint]</td>
 	</tr>
 	<tr>
@@ -3917,7 +3958,7 @@ hr {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_CT_10148</td>
+		<td colspan='2' class='name'>SYS_CT_10150</td>
 		<td class='description right'>[check constraint]</td>
 	</tr>
 	<tr>
@@ -4014,11 +4055,6 @@ hr {
 		<td class='type'>INTEGER, in</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>TWO</td>
-		<td class='type'>INTEGER, in</td>
-	</tr>
-	<tr>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
@@ -4026,7 +4062,7 @@ hr {
 		<td class='description right'>[definition]</td>
 	</tr>
 	<tr>
-		<td colspan='3' class='definition'>CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER,IN TWO INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10128 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN ONE+TWO</td>
+		<td colspan='3' class='definition'>CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10131 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN BOOKS.CUSTOMADD(ONE,1)</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -4036,7 +4072,7 @@ hr {
 		<td class='description right'>[specific name]</td>
 	</tr>
 	<tr>
-		<td colspan='3' class='definition'>CUSTOMADD_10128</td>
+		<td colspan='3' class='definition'>CUSTOMADD_10131</td>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -4054,6 +4090,11 @@ hr {
 		<td class='type'>INTEGER, in</td>
 	</tr>
 	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>TWO</td>
+		<td class='type'>INTEGER, in</td>
+	</tr>
+	<tr>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
@@ -4061,7 +4102,7 @@ hr {
 		<td class='description right'>[definition]</td>
 	</tr>
 	<tr>
-		<td colspan='3' class='definition'>CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10129 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN BOOKS.CUSTOMADD(ONE,1)</td>
+		<td colspan='3' class='definition'>CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER,IN TWO INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10130 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN ONE+TWO</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -4071,7 +4112,7 @@ hr {
 		<td class='description right'>[specific name]</td>
 	</tr>
 	<tr>
-		<td colspan='3' class='definition'>CUSTOMADD_10129</td>
+		<td colspan='3' class='definition'>CUSTOMADD_10130</td>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -4096,7 +4137,7 @@ hr {
 		<td class='description right'>[definition]</td>
 	</tr>
 	<tr>
-		<td colspan='3' class='definition'>CREATE PROCEDURE BOOKS.NEW_PUBLISHER(OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10126 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = &apos;New Publisher&apos;</td>
+		<td colspan='3' class='definition'>CREATE PROCEDURE BOOKS.NEW_PUBLISHER(OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10128 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = &apos;New Publisher&apos;</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -4106,7 +4147,7 @@ hr {
 		<td class='description right'>[specific name]</td>
 	</tr>
 	<tr>
-		<td colspan='3' class='definition'>NEW_PUBLISHER_10126</td>
+		<td colspan='3' class='definition'>NEW_PUBLISHER_10128</td>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -4136,7 +4177,7 @@ hr {
 		<td class='description right'>[definition]</td>
 	</tr>
 	<tr>
-		<td colspan='3' class='definition'>CREATE PROCEDURE BOOKS.NEW_PUBLISHER(IN NEWPUBLISHER VARCHAR(50),OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10127 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = NEWPUBLISHER</td>
+		<td colspan='3' class='definition'>CREATE PROCEDURE BOOKS.NEW_PUBLISHER(IN NEWPUBLISHER VARCHAR(50),OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10129 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = NEWPUBLISHER</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -4146,7 +4187,7 @@ hr {
 		<td class='description right'>[specific name]</td>
 	</tr>
 	<tr>
-		<td colspan='3' class='definition'>NEW_PUBLISHER_10127</td>
+		<td colspan='3' class='definition'>NEW_PUBLISHER_10129</td>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -5121,6 +5162,7 @@ hr {
 		<th>PUBLISHERID</th>
 		<th>PUBLICATIONDATE</th>
 		<th>PRICE</th>
+		<th>PREVIOUSEDITIONID</th>
 	</tr>
 	<tr>
 		<td class='data_number'>1</td>
@@ -5129,6 +5171,7 @@ hr {
 		<td class='data_number'>18</td>
 		<td>2000-10-27</td>
 		<td class='data_number'>69.99</td>
+		<td class='data_null'>NULL</td>
 	</tr>
 	<tr>
 		<td class='data_number'>2</td>
@@ -5137,6 +5180,7 @@ hr {
 		<td class='data_number'>20</td>
 		<td>2002-05-09</td>
 		<td class='data_number'>27.99</td>
+		<td class='data_null'>NULL</td>
 	</tr>
 	<tr>
 		<td class='data_number'>3</td>
@@ -5145,6 +5189,7 @@ hr {
 		<td class='data_number'>15</td>
 		<td>2006-04-14</td>
 		<td class='data_number'>37.99</td>
+		<td class='data_null'>NULL</td>
 	</tr>
 	<tr>
 		<td class='data_number'>4</td>
@@ -5153,6 +5198,7 @@ hr {
 		<td class='data_number'>1</td>
 		<td>2007-05-21</td>
 		<td class='data_number'>64.99</td>
+		<td class='data_null'>NULL</td>
 	</tr>
 	<tr>
 		<td class='data_number'>5</td>
@@ -5161,6 +5207,7 @@ hr {
 		<td class='data_number'>7</td>
 		<td>2010-05-14</td>
 		<td class='data_number'>83.99</td>
+		<td class='data_null'>NULL</td>
 	</tr>
 	<tr>
 		<td class='data_number'>6</td>
@@ -5169,6 +5216,7 @@ hr {
 		<td class='data_number'>13</td>
 		<td>2009-07-17</td>
 		<td class='data_number'>31.99</td>
+		<td class='data_null'>NULL</td>
 	</tr>
 	<tr>
 		<td class='data_number'>7</td>
@@ -5177,6 +5225,7 @@ hr {
 		<td class='data_number'>7</td>
 		<td>1999-06-09</td>
 		<td class='data_number'>76.99</td>
+		<td class='data_null'>NULL</td>
 	</tr>
 	<tr>
 		<td class='data_number'>8</td>
@@ -5185,6 +5234,7 @@ hr {
 		<td class='data_number'>7</td>
 		<td>2009-01-24</td>
 		<td class='data_number'>30.99</td>
+		<td class='data_null'>NULL</td>
 	</tr>
 	<tr>
 		<td class='data_number'>9</td>
@@ -5193,6 +5243,7 @@ hr {
 		<td class='data_number'>1</td>
 		<td>2004-06-25</td>
 		<td class='data_number'>69.99</td>
+		<td class='data_null'>NULL</td>
 	</tr>
 	<tr>
 		<td class='data_number'>10</td>
@@ -5201,6 +5252,7 @@ hr {
 		<td class='data_number'>19</td>
 		<td>2005-11-14</td>
 		<td class='data_number'>34.99</td>
+		<td class='data_null'>NULL</td>
 	</tr>
 	<tr>
 		<td class='data_number'>11</td>
@@ -5209,6 +5261,7 @@ hr {
 		<td class='data_number'>5</td>
 		<td>2003-10-19</td>
 		<td class='data_number'>89.99</td>
+		<td class='data_null'>NULL</td>
 	</tr>
 	<tr>
 		<td class='data_number'>12</td>
@@ -5217,6 +5270,7 @@ hr {
 		<td class='data_number'>5</td>
 		<td>2002-05-04</td>
 		<td class='data_number'>64.99</td>
+		<td class='data_null'>NULL</td>
 	</tr>
 	<tr>
 		<td class='data_number'>13</td>
@@ -5225,6 +5279,7 @@ hr {
 		<td class='data_number'>8</td>
 		<td>2005-08-03</td>
 		<td class='data_number'>25.99</td>
+		<td class='data_null'>NULL</td>
 	</tr>
 	<tr>
 		<td class='data_number'>14</td>
@@ -5233,6 +5288,7 @@ hr {
 		<td class='data_number'>2</td>
 		<td>2009-02-09</td>
 		<td class='data_number'>84.99</td>
+		<td class='data_null'>NULL</td>
 	</tr>
 	<tr>
 		<td class='data_number'>15</td>
@@ -5241,6 +5297,7 @@ hr {
 		<td class='data_number'>20</td>
 		<td>2001-08-28</td>
 		<td class='data_number'>77.99</td>
+		<td class='data_null'>NULL</td>
 	</tr>
 	<tr>
 		<td class='data_number'>16</td>
@@ -5249,6 +5306,7 @@ hr {
 		<td class='data_number'>6</td>
 		<td>2003-08-30</td>
 		<td class='data_number'>47.99</td>
+		<td class='data_null'>NULL</td>
 	</tr>
 	<tr>
 		<td class='data_number'>17</td>
@@ -5257,6 +5315,7 @@ hr {
 		<td class='data_number'>17</td>
 		<td>2005-06-24</td>
 		<td class='data_number'>36.99</td>
+		<td class='data_null'>NULL</td>
 	</tr>
 	<tr>
 		<td class='data_number'>18</td>
@@ -5265,6 +5324,7 @@ hr {
 		<td class='data_number'>18</td>
 		<td>2008-01-28</td>
 		<td class='data_number'>63.99</td>
+		<td class='data_null'>NULL</td>
 	</tr>
 	<tr>
 		<td class='data_number'>19</td>
@@ -5273,6 +5333,7 @@ hr {
 		<td class='data_number'>5</td>
 		<td>2006-08-23</td>
 		<td class='data_number'>67.99</td>
+		<td class='data_null'>NULL</td>
 	</tr>
 	<tr>
 		<td class='data_number'>20</td>
@@ -5281,6 +5342,7 @@ hr {
 		<td class='data_number'>5</td>
 		<td>2002-09-29</td>
 		<td class='data_number'>43.99</td>
+		<td class='data_null'>NULL</td>
 	</tr>
 </table>
 <p>&#160;</p>

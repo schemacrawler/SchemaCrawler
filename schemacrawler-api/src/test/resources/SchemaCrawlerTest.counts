@@ -24,12 +24,12 @@ schema: PUBLIC.BOOKS
     # exported: 2
     # privileges: 6
   table: PUBLIC.BOOKS.BOOKS
-    # columns: 6
-    # constraints: 4
-    # indices: 1
-    # foreign keys: 1
-    # imported foreign keys: 1
-    # exported: 0
+    # columns: 7
+    # constraints: 5
+    # indices: 3
+    # foreign keys: 2
+    # imported foreign keys: 2
+    # exported: 1
     # privileges: 6
   table: PUBLIC.BOOKS."Global Counts"
     # columns: 1

@@ -486,7 +486,10 @@ final class TableRetriever
             table.addIndex(index);
           }
 
-          column.setPartOfUniqueIndex(uniqueIndex);
+          if (uniqueIndex)
+          {
+            column.setPartOfUniqueIndex(uniqueIndex);
+          }
           final MutableIndexColumn indexColumn = new MutableIndexColumn(index,
                                                                         column);
           indexColumn.setIndexOrdinalPosition(ordinalPosition);

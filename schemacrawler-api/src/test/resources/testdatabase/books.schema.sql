@@ -31,7 +31,9 @@ CREATE TABLE Books
   PublisherId INTEGER NOT NULL,
   PublicationDate DATE,
   Price FLOAT,
-  CONSTRAINT PK_Books PRIMARY KEY (Id)
+  PreviousEditionId INTEGER,  
+  CONSTRAINT PK_Books PRIMARY KEY (Id),
+  CONSTRAINT FK_PreviousEdition FOREIGN KEY (PreviousEditionId) REFERENCES Books (Id)
 )
 ;
 
@@ -56,6 +58,8 @@ CREATE VIEW AuthorsList AS SELECT Id, FirstName, LastName FROM Authors
 ;
 
 -- Indices
+CREATE UNIQUE INDEX UIDX_PreviousEdition ON Books(PreviousEditionId)
+;
 CREATE UNIQUE INDEX UIDX_BookAuthors ON BookAuthors(BookId, AuthorId)
 ;
 CREATE INDEX IDX_B_Authors ON Authors(LastName, FirstName)

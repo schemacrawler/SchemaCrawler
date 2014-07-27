@@ -283,6 +283,19 @@ o--> PUBLIC.BOOKS.BOOKS [table]
           ~ SOURCE_DATA_TYPE=null
           ~ SQL_DATA_TYPE=8
           ~ SQL_DATETIME_SUB=null
+   o--> PUBLIC.BOOKS.BOOKS.PREVIOUSEDITIONID [INTEGER]
+          ~ BUFFER_LENGTH=null
+          ~ CHAR_OCTET_LENGTH=0
+          ~ GENERATION_EXPRESSION=null
+          ~ IS_GENERATED=NEVER
+          ~ IS_NULLABLE=YES
+          ~ NUM_PREC_RADIX=2
+          ~ SCOPE_CATALOG=null
+          ~ SCOPE_SCHEMA=null
+          ~ SCOPE_TABLE=null
+          ~ SOURCE_DATA_TYPE=null
+          ~ SQL_DATA_TYPE=4
+          ~ SQL_DATETIME_SUB=null
 o--> PUBLIC.BOOKS."Global Counts" [table]
       ~ COMMIT_ACTION=null
    o--> PUBLIC.BOOKS."Global Counts"."Global Count" [INTEGER]

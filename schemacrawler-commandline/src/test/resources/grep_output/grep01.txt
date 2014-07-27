@@ -15,6 +15,7 @@ PUBLIC.BOOKS.BOOKS
   PUBLISHERID                       INTEGER not null            
   PUBLICATIONDATE                   DATE                        
   PRICE                             DOUBLE(64, 0)               
+  PREVIOUSEDITIONID                 INTEGER                     
 
 PK_BOOKS                                                   [primary key]
   ID                                ascending                   
@@ -22,8 +23,17 @@ PK_BOOKS                                                   [primary key]
 FK_Y_BOOK                                  [foreign key, with no action]
   ID --> PUBLIC.BOOKS.BOOKAUTHORS.BOOKID                              
 
+FK_PREVIOUSEDITION                         [foreign key, with no action]
+  ID --> PREVIOUSEDITIONID                                      
+
 SYS_IDX_PK_BOOKS_10105                                    [unique index]
   ID                                ascending                   
+
+UIDX_PREVIOUSEDITION                                      [unique index]
+  PREVIOUSEDITIONID                 ascending                   
+
+SYS_IDX_10109                                         [non-unique index]
+  PREVIOUSEDITIONID                 ascending                   
 
 SYS_CT_10102                                          [check constraint]
 BOOKS.BOOKS.ID IS NOT NULL
@@ -69,19 +79,19 @@ FK_WRITERS_PUBLICATION                     [foreign key, with no action]
 FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
   PUBLIC.FOR_LINT.WRITERS.ID --> WRITERID                              
 
-SYS_IDX_PK_PUBLICATIONS_10169                             [unique index]
+SYS_IDX_PK_PUBLICATIONS_10171                             [unique index]
   ID                                ascending                   
 
-SYS_IDX_10173                                         [non-unique index]
+SYS_IDX_10175                                         [non-unique index]
   WRITERID                          ascending                   
 
-SYS_CT_10166                                          [check constraint]
+SYS_CT_10168                                          [check constraint]
 FOR_LINT.PUBLICATIONS.ID IS NOT NULL
 
-SYS_CT_10167                                          [check constraint]
+SYS_CT_10169                                          [check constraint]
 FOR_LINT.PUBLICATIONS.TITLE IS NOT NULL
 
-SYS_CT_10168                                          [check constraint]
+SYS_CT_10170                                          [check constraint]
 FOR_LINT.PUBLICATIONS.WRITERID IS NOT NULL
 
 
