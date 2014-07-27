@@ -226,7 +226,10 @@ public class DirectedGraph<T extends Comparable<? super T>>
    */
   public void addDirectedEdge(final T from, final T to)
   {
-    edges.add(new DirectedEdge(addVertex(from), addVertex(to)));
+    if (!from.equals(to))
+    {
+      edges.add(new DirectedEdge(addVertex(from), addVertex(to)));
+    }
   }
 
   /**
@@ -309,8 +312,8 @@ public class DirectedGraph<T extends Comparable<? super T>>
   }
 
   public List<T> topologicalSort()
-    throws GraphException
-  {
+      throws GraphException
+      {
     if (containsCycle())
     {
       throw new GraphException("Graph contains a cycle, so cannot be topologically sorted");
@@ -329,7 +332,7 @@ public class DirectedGraph<T extends Comparable<? super T>>
 
       // Remove unattached nodes
       for (final Iterator<Vertex> iterator = vertices.iterator(); iterator
-        .hasNext();)
+          .hasNext();)
       {
         final Vertex vertex = iterator.next();
         if (isUnattachedNode(vertex, edges))
@@ -364,7 +367,7 @@ public class DirectedGraph<T extends Comparable<? super T>>
     }
 
     return sortedValues;
-  }
+      }
 
   private Collection<Vertex> clearTraversalStates()
   {
@@ -380,7 +383,7 @@ public class DirectedGraph<T extends Comparable<? super T>>
                             final Collection<DirectedEdge> edges)
   {
     for (final Iterator<DirectedEdge> iterator = edges.iterator(); iterator
-      .hasNext();)
+        .hasNext();)
     {
       final DirectedEdge edge = iterator.next();
       if (edge.isFrom(vertex))

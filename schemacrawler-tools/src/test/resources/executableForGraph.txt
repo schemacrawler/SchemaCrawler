@@ -10,7 +10,7 @@ digraph SchemaCrawler_Diagram {
 	</tr>
 	<tr>
 		<td align='right'>Generated on:</td>
-		<td align='left'>Apr 2, 2014 8:44 PM</td>
+		<td align='left'>Jul 27, 2014 3:29 PM</td>
 	</tr>
 	<tr>
 		<td align='right'>Database:</td>
@@ -24,8 +24,6 @@ digraph SchemaCrawler_Diagram {
 		labeljust=r,
 		labelloc=b,
 		nodesep=0.18,
-		overlap=false,
-		packmode="node",
 		rankdir=RL,
 		ranksep=0.46
 	];
@@ -34,7 +32,7 @@ digraph SchemaCrawler_Diagram {
 		label="\N",
 		shape=plaintext
 	];
-	edge [arrowsize=0.6,
+	edge [arrowsize=0.8,
 		fontname=Helvetica,
 		fontsize=8
 	];
@@ -114,34 +112,11 @@ digraph SchemaCrawler_Diagram {
 	</tr>
       </table>
     >];
-	authors_dba8a1ff:"id_ecfc5f6a.start":w -> bookauthors_aa4376:"authorid_19681b5e.end":e	 [arrowhead=crowodot,
-		arrowtail=teetee,
+	bookauthors_aa4376:"authorid_19681b5e.start":w -> authors_dba8a1ff:"id_ecfc5f6a.end":e	 [arrowhead=teetee,
+		arrowtail=teeodot,
 		dir=both,
 		label=<FK_Z_AUTHOR>,
 		style=solid];
-	authorslist_b29d331d	 [label=<
-      <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#555555">
-	<tr>
-		<td colspan='2' bgcolor='#96C2FA' align='left'><b><i>PUBLIC.BOOKS.AUTHORSLIST</i></b></td>
-		<td bgcolor='#96C2FA' align='right'>[view]</td>
-	</tr>
-	<tr>
-		<td port='id_837fd18c.start' align='left'>ID</td>
-		<td align='left'> </td>
-		<td port='id_837fd18c.end' align='right'>INTEGER</td>
-	</tr>
-	<tr>
-		<td port='firstname_d3258b8a.start' align='left'>FIRSTNAME</td>
-		<td align='left'> </td>
-		<td port='firstname_d3258b8a.end' align='right'>VARCHAR(20)</td>
-	</tr>
-	<tr>
-		<td port='lastname_b7deb1d2.start' align='left'>LASTNAME</td>
-		<td align='left'> </td>
-		<td port='lastname_b7deb1d2.end' align='right'>VARCHAR(20)</td>
-	</tr>
-      </table>
-    >];
 	books_afd2ba21	 [label=<
       <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#555555">
 	<tr>
@@ -178,12 +153,45 @@ digraph SchemaCrawler_Diagram {
 		<td align='left'> </td>
 		<td port='price_7619831c.end' align='right'>DOUBLE(64, 0)</td>
 	</tr>
+	<tr>
+		<td port='previouseditionid_8c50cb95.start' align='left'>PREVIOUSEDITIONID</td>
+		<td align='left'> </td>
+		<td port='previouseditionid_8c50cb95.end' align='right'>INTEGER</td>
+	</tr>
       </table>
     >];
-	books_afd2ba21:"id_bb8abc08.start":w -> bookauthors_aa4376:"bookid_931bd73c.end":e	 [arrowhead=crowodot,
-		arrowtail=teetee,
+	bookauthors_aa4376:"bookid_931bd73c.start":w -> books_afd2ba21:"id_bb8abc08.end":e	 [arrowhead=teetee,
+		arrowtail=teeodot,
 		dir=both,
 		label=<FK_Y_BOOK>,
+		style=solid];
+	authorslist_b29d331d	 [label=<
+      <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#555555">
+	<tr>
+		<td colspan='2' bgcolor='#96C2FA' align='left'><b><i>PUBLIC.BOOKS.AUTHORSLIST</i></b></td>
+		<td bgcolor='#96C2FA' align='right'>[view]</td>
+	</tr>
+	<tr>
+		<td port='id_837fd18c.start' align='left'>ID</td>
+		<td align='left'> </td>
+		<td port='id_837fd18c.end' align='right'>INTEGER</td>
+	</tr>
+	<tr>
+		<td port='firstname_d3258b8a.start' align='left'>FIRSTNAME</td>
+		<td align='left'> </td>
+		<td port='firstname_d3258b8a.end' align='right'>VARCHAR(20)</td>
+	</tr>
+	<tr>
+		<td port='lastname_b7deb1d2.start' align='left'>LASTNAME</td>
+		<td align='left'> </td>
+		<td port='lastname_b7deb1d2.end' align='right'>VARCHAR(20)</td>
+	</tr>
+      </table>
+    >];
+	books_afd2ba21:"previouseditionid_8c50cb95.start":w -> books_afd2ba21:"id_bb8abc08.end":e	 [arrowhead=teetee,
+		arrowtail=teeodot,
+		dir=both,
+		label=<FK_PREVIOUSEDITION>,
 		style=solid];
 	globalcounts_2ab3635a	 [label=<
       <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#555555">
@@ -239,19 +247,6 @@ digraph SchemaCrawler_Diagram {
 	</tr>
       </table>
     >];
-	globalcounts_986b8a53	 [label=<
-      <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#555555">
-	<tr>
-		<td colspan='2' bgcolor='#BFFA96' align='left'><b><i>PUBLIC.FOR_LINT.&quot;Global Counts&quot;</i></b></td>
-		<td bgcolor='#BFFA96' align='right'>[table]</td>
-	</tr>
-	<tr>
-		<td port='globalcount_9be78829.start' align='left'>&quot;Global Count&quot;</td>
-		<td align='left'> </td>
-		<td port='globalcount_9be78829.end' align='right'>INTEGER</td>
-	</tr>
-      </table>
-    >];
 	publications_949377f7	 [label=<
       <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#555555">
 	<tr>
@@ -300,8 +295,8 @@ digraph SchemaCrawler_Diagram {
 	</tr>
       </table>
     >];
-	publications_949377f7:"id_f5162672.start":w -> extra_pk_334890da:"publicationid_d4d93213.end":e	 [arrowhead=crowodot,
-		arrowtail=teetee,
+	extra_pk_334890da:"publicationid_d4d93213.start":w -> publications_949377f7:"id_f5162672.end":e	 [arrowhead=teetee,
+		arrowtail=crowodot,
 		dir=both,
 		label=<FK_PUBLICATION_JOIN>,
 		style=solid];
@@ -403,20 +398,33 @@ digraph SchemaCrawler_Diagram {
 	</tr>
       </table>
     >];
-	publications_949377f7:"id_f5162672.start":w -> writers_bf84ac10:"publication_id_b1bcb5cc.end":e	 [arrowhead=crowodot,
-		arrowtail=teetee,
-		dir=both,
-		label=<FK_WRITERS_PUBLICATION>,
-		style=solid];
-	writers_bf84ac10:"id_3033cfb9.start":w -> extra_pk_334890da:"writerid_b8c70762.end":e	 [arrowhead=crowodot,
-		arrowtail=teetee,
+	extra_pk_334890da:"writerid_b8c70762.start":w -> writers_bf84ac10:"id_3033cfb9.end":e	 [arrowhead=teetee,
+		arrowtail=crowodot,
 		dir=both,
 		label=<FK_WRITER_JOIN>,
 		style=solid];
-	writers_bf84ac10:"id_3033cfb9.start":w -> publications_949377f7:"writerid_1c21d0e5.end":e	 [arrowhead=crowodot,
-		arrowtail=teetee,
+	globalcounts_986b8a53	 [label=<
+      <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#555555">
+	<tr>
+		<td colspan='2' bgcolor='#BFFA96' align='left'><b><i>PUBLIC.FOR_LINT.&quot;Global Counts&quot;</i></b></td>
+		<td bgcolor='#BFFA96' align='right'>[table]</td>
+	</tr>
+	<tr>
+		<td port='globalcount_9be78829.start' align='left'>&quot;Global Count&quot;</td>
+		<td align='left'> </td>
+		<td port='globalcount_9be78829.end' align='right'>INTEGER</td>
+	</tr>
+      </table>
+    >];
+	publications_949377f7:"writerid_1c21d0e5.start":w -> writers_bf84ac10:"id_3033cfb9.end":e	 [arrowhead=teetee,
+		arrowtail=crowodot,
 		dir=both,
 		label=<FK_PUBLICATIONS_WRITER>,
+		style=solid];
+	writers_bf84ac10:"publication_id_b1bcb5cc.start":w -> publications_949377f7:"id_f5162672.end":e	 [arrowhead=teetee,
+		arrowtail=crowodot,
+		dir=both,
+		label=<FK_WRITERS_PUBLICATION>,
 		style=solid];
 	regions_bc895c48	 [label=<
       <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#555555">
@@ -479,13 +487,13 @@ digraph SchemaCrawler_Diagram {
 	</tr>
       </table>
     >];
-	regions_bc895c48:"postalcode_9b2bfe9e.start":w -> sales_20be6f95:"postalcode_738bc931.end":e	 [arrowhead=crowodot,
-		arrowtail=teetee,
+	sales_20be6f95:"postalcode_738bc931.start":w -> regions_bc895c48:"postalcode_9b2bfe9e.end":e	 [arrowhead=teetee,
+		arrowtail=crowodot,
 		dir=both,
 		label=<FK_SALES_REGIONS>,
 		style=solid];
-	regions_bc895c48:"country_7d0587d0.start":w -> sales_20be6f95:"country_890cfe1d.end":e	 [arrowhead=crowodot,
-		arrowtail=teetee,
+	sales_20be6f95:"country_890cfe1d.start":w -> regions_bc895c48:"country_7d0587d0.end":e	 [arrowhead=teetee,
+		arrowtail=crowodot,
 		dir=both,
 		label=<FK_SALES_REGIONS>,
 		style=solid];

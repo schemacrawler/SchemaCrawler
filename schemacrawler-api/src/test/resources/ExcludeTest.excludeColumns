@@ -57,6 +57,9 @@ schema: PUBLIC.BOOKS
     column: PUBLIC.BOOKS.BOOKS.PRICE
       database type: DOUBLE
       type: DOUBLE
+    column: PUBLIC.BOOKS.BOOKS.PREVIOUSEDITIONID
+      database type: INTEGER
+      type: INTEGER
   table: PUBLIC.BOOKS."Global Counts"
     column: PUBLIC.BOOKS."Global Counts"."Global Count"
       database type: INTEGER
