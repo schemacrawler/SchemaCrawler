@@ -19,6 +19,6 @@ digraph "SchemaCrawler_Diagram" {
   edge [
     fontname="Helvetica"
     fontsize="8"  
-    arrowsize="0.6"
+    arrowsize="0.8"
   ];
 
