@@ -32,6 +32,7 @@ o--> BOOKS
      o--> PUBLISHERID
      o--> PUBLICATIONDATE
      o--> PRICE
+     o--> PREVIOUSEDITIONID
 o--> "Global Counts"
      o--> "Global Count"
 o--> PUBLISHERS

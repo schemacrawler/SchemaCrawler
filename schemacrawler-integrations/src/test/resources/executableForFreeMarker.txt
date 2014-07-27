@@ -25,6 +25,7 @@ UTF-8: ¥ · £ · € · $ · ¢ · ₡ · ₢ · ₣ · ₤ · ₥ · ₦ · �
  - PUBLIC.BOOKS.BOOKS.PUBLISHERID
  - PUBLIC.BOOKS.BOOKS.PUBLICATIONDATE
  - PUBLIC.BOOKS.BOOKS.PRICE
+ - PUBLIC.BOOKS.BOOKS.PREVIOUSEDITIONID
 - PUBLIC.BOOKS."Global Counts"
  - PUBLIC.BOOKS."Global Counts"."Global Count"
 - PUBLIC.BOOKS.PUBLISHERS

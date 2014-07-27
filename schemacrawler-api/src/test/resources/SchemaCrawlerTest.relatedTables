@@ -11,9 +11,9 @@
     # child tables: []
     # parent tables: [PUBLIC.BOOKS.AUTHORS, PUBLIC.BOOKS.BOOKS]
   table: PUBLIC.BOOKS.BOOKS
-    # columns: 6
-    # child tables: [PUBLIC.BOOKS.BOOKAUTHORS]
-    # parent tables: []
+    # columns: 7
+    # child tables: [PUBLIC.BOOKS.BOOKAUTHORS, PUBLIC.BOOKS.BOOKS]
+    # parent tables: [PUBLIC.BOOKS.BOOKS]
   table: PUBLIC.BOOKS."Global Counts"
     # columns: 1
     # child tables: []

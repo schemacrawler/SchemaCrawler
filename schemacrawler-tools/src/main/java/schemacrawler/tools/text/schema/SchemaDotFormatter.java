@@ -385,12 +385,13 @@ public final class SchemaDotFormatter
 
     return String
       .format("  %s:w -> %s:e [label=<%s> style=\"%s\" dir=\"both\" arrowhead=\"%s\" arrowtail=\"%s\"];%n",
-              pkPortIds[0],
-              fkPortIds[1],
+              fkPortIds[0],
+              pkPortIds[1],
               options.isHideForeignKeyNames()? "": associationName,
               style,
-              fkSymbol,
-              pkSymbol);
+              pkSymbol,
+              fkSymbol);
+
   }
 
   private void printForeignKeys(final Table table)

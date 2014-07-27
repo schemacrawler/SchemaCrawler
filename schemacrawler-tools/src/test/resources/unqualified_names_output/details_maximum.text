@@ -543,20 +543,20 @@ FK_Z_AUTHOR                                [foreign key, with no action]
 FK_Y_BOOK                                  [foreign key, with no action]
   BOOKS.ID --> BOOKID                                           
 
-SYS_IDX_10116                                         [non-unique index]
+SYS_IDX_10118                                         [non-unique index]
   AUTHORID                          ascending                   
 
-SYS_IDX_10114                                         [non-unique index]
+SYS_IDX_10116                                         [non-unique index]
   BOOKID                            ascending                   
 
 UIDX_BOOKAUTHORS                                          [unique index]
   BOOKID                            ascending                   
   AUTHORID                          ascending                   
 
-SYS_CT_10109                                          [check constraint]
+SYS_CT_10111                                          [check constraint]
 BOOKS.BOOKAUTHORS.BOOKID IS NOT NULL
 
-SYS_CT_10110                                          [check constraint]
+SYS_CT_10112                                          [check constraint]
 BOOKS.BOOKAUTHORS.AUTHORID IS NOT NULL
 
 DELETE                                                       [privilege]
@@ -591,12 +591,16 @@ BOOKS
   PUBLISHERID                       INTEGER not null            
   PUBLICATIONDATE                   DATE                        
   PRICE                             DOUBLE(64, 0)               
+  PREVIOUSEDITIONID                 INTEGER                     
 
 PK_BOOKS                                                   [primary key]
   ID                                ascending                   
 
 FK_Y_BOOK                                  [foreign key, with no action]
   ID --> BOOKAUTHORS.BOOKID                                     
+
+FK_PREVIOUSEDITION                         [foreign key, with no action]
+  ID --> PREVIOUSEDITIONID                                      
 
                                                       [weak association]
   ID --> SALES.BOOKID                                           
@@ -606,6 +610,12 @@ FK_Y_BOOK                                  [foreign key, with no action]
 
 SYS_IDX_PK_BOOKS_10105                                    [unique index]
   ID                                ascending                   
+
+UIDX_PREVIOUSEDITION                                      [unique index]
+  PREVIOUSEDITIONID                 ascending                   
+
+SYS_IDX_10109                                         [non-unique index]
+  PREVIOUSEDITIONID                 ascending                   
 
 SYS_CT_10102                                          [check constraint]
 BOOKS.BOOKS.ID IS NOT NULL
@@ -726,22 +736,22 @@ FK_PUBLICATION_JOIN                        [foreign key, with no action]
 FK_WRITER_JOIN                             [foreign key, with no action]
   WRITERS.ID --> WRITERID                                       
 
-SYS_IDX_PK_EXTRA_PK_10179                                 [unique index]
+SYS_IDX_PK_EXTRA_PK_10181                                 [unique index]
   ID                                ascending                   
 
-SYS_IDX_10185                                         [non-unique index]
+SYS_IDX_10187                                         [non-unique index]
   PUBLICATIONID                     ascending                   
 
-SYS_IDX_10183                                         [non-unique index]
+SYS_IDX_10185                                         [non-unique index]
   WRITERID                          ascending                   
 
-SYS_CT_10176                                          [check constraint]
+SYS_CT_10178                                          [check constraint]
 FOR_LINT.EXTRA_PK.ID IS NOT NULL
 
-SYS_CT_10177                                          [check constraint]
+SYS_CT_10179                                          [check constraint]
 FOR_LINT.EXTRA_PK.WRITERID IS NOT NULL
 
-SYS_CT_10178                                          [check constraint]
+SYS_CT_10180                                          [check constraint]
 FOR_LINT.EXTRA_PK.PUBLICATIONID IS NOT NULL
 
 DELETE                                                       [privilege]
@@ -813,19 +823,19 @@ FK_WRITERS_PUBLICATION                     [foreign key, with no action]
 FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
   WRITERS.ID --> WRITERID                                       
 
-SYS_IDX_PK_PUBLICATIONS_10169                             [unique index]
+SYS_IDX_PK_PUBLICATIONS_10171                             [unique index]
   ID                                ascending                   
 
-SYS_IDX_10173                                         [non-unique index]
+SYS_IDX_10175                                         [non-unique index]
   WRITERID                          ascending                   
 
-SYS_CT_10166                                          [check constraint]
+SYS_CT_10168                                          [check constraint]
 FOR_LINT.PUBLICATIONS.ID IS NOT NULL
 
-SYS_CT_10167                                          [check constraint]
+SYS_CT_10169                                          [check constraint]
 FOR_LINT.PUBLICATIONS.TITLE IS NOT NULL
 
-SYS_CT_10168                                          [check constraint]
+SYS_CT_10170                                          [check constraint]
 FOR_LINT.PUBLICATIONS.WRITERID IS NOT NULL
 
 DELETE                                                       [privilege]
@@ -882,10 +892,10 @@ FK_WRITER_JOIN                             [foreign key, with no action]
 FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
   ID --> PUBLICATIONS.WRITERID                                  
 
-SYS_IDX_PK_WRITERS_10159                                  [unique index]
+SYS_IDX_PK_WRITERS_10161                                  [unique index]
   ID                                ascending                   
 
-SYS_IDX_10187                                         [non-unique index]
+SYS_IDX_10189                                         [non-unique index]
   PUBLICATION_ID                    ascending                   
 
 IDX_A1_WRITERS                                        [non-unique index]
@@ -909,19 +919,19 @@ IDX_A_WRITERS                                         [non-unique index]
 CHECK_UPPERCASE_STATE                                 [check constraint]
 FOR_LINT.WRITERS.STATE=UPPER(FOR_LINT.WRITERS.STATE)
 
-SYS_CT_10154                                          [check constraint]
+SYS_CT_10156                                          [check constraint]
 FOR_LINT.WRITERS.ID IS NOT NULL
 
-SYS_CT_10155                                          [check constraint]
+SYS_CT_10157                                          [check constraint]
 FOR_LINT.WRITERS.FIRSTNAME IS NOT NULL
 
-SYS_CT_10156                                          [check constraint]
+SYS_CT_10158                                          [check constraint]
 FOR_LINT.WRITERS.LASTNAME IS NOT NULL
 
-SYS_CT_10157                                          [check constraint]
+SYS_CT_10159                                          [check constraint]
 FOR_LINT.WRITERS.ADDRESS2 IS NOT NULL
 
-SYS_CT_10158                                          [check constraint]
+SYS_CT_10160                                          [check constraint]
 FOR_LINT.WRITERS.PUBLICATION_ID IS NOT NULL
 
 DELETE                                                       [privilege]
@@ -960,20 +970,20 @@ FK_SALES_REGIONS                           [foreign key, with no action]
   POSTALCODE --> SALES.POSTALCODE                               
   COUNTRY --> SALES.COUNTRY                                     
 
-SYS_IDX_PK_CUSTOMERS_10142                                [unique index]
+SYS_IDX_PK_CUSTOMERS_10144                                [unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
 
-SYS_CT_10138                                          [check constraint]
+SYS_CT_10140                                          [check constraint]
 "PUBLISHER SALES".REGIONS.CITY IS NOT NULL
 
-SYS_CT_10139                                          [check constraint]
+SYS_CT_10141                                          [check constraint]
 "PUBLISHER SALES".REGIONS.STATE IS NOT NULL
 
-SYS_CT_10140                                          [check constraint]
+SYS_CT_10142                                          [check constraint]
 "PUBLISHER SALES".REGIONS.POSTALCODE IS NOT NULL
 
-SYS_CT_10141                                          [check constraint]
+SYS_CT_10143                                          [check constraint]
 "PUBLISHER SALES".REGIONS.COUNTRY IS NOT NULL
 
 DELETE                                                       [privilege]
@@ -1012,14 +1022,14 @@ FK_SALES_REGIONS                           [foreign key, with no action]
                                                       [weak association]
   BOOKS.ID --> BOOKID                                           
 
-SYS_IDX_10152                                         [non-unique index]
+SYS_IDX_10154                                         [non-unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
 
-SYS_CT_10147                                          [check constraint]
+SYS_CT_10149                                          [check constraint]
 "PUBLISHER SALES".SALES.POSTALCODE IS NOT NULL
 
-SYS_CT_10148                                          [check constraint]
+SYS_CT_10150                                          [check constraint]
 "PUBLISHER SALES".SALES.COUNTRY IS NOT NULL
 
 DELETE                                                       [privilege]
@@ -1052,13 +1062,12 @@ CUSTOMADD
 ------------------------------------------------------------------------
                                      [function, does not return a table]
   ONE                               INTEGER, in                 
-  TWO                               INTEGER, in                 
 
                                                             [definition]
-CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER,IN TWO INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10128 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN ONE+TWO
+CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10131 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN BOOKS.CUSTOMADD(ONE,1)
 
                                                          [specific name]
-CUSTOMADD_10128
+CUSTOMADD_10131
 
 
 
@@ -1066,12 +1075,13 @@ CUSTOMADD
 ------------------------------------------------------------------------
                                      [function, does not return a table]
   ONE                               INTEGER, in                 
+  TWO                               INTEGER, in                 
 
                                                             [definition]
-CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10129 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN BOOKS.CUSTOMADD(ONE,1)
+CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER,IN TWO INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10130 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN ONE+TWO
 
                                                          [specific name]
-CUSTOMADD_10129
+CUSTOMADD_10130
 
 
 
@@ -1081,10 +1091,10 @@ NEW_PUBLISHER
   PUBLISHER                         CHARACTER VARYING, out      
 
                                                             [definition]
-CREATE PROCEDURE BOOKS.NEW_PUBLISHER(OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10126 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = 'New Publisher'
+CREATE PROCEDURE BOOKS.NEW_PUBLISHER(OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10128 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = 'New Publisher'
 
                                                          [specific name]
-NEW_PUBLISHER_10126
+NEW_PUBLISHER_10128
 
 
 
@@ -1095,10 +1105,10 @@ NEW_PUBLISHER
   PUBLISHER                         CHARACTER VARYING, out      
 
                                                             [definition]
-CREATE PROCEDURE BOOKS.NEW_PUBLISHER(IN NEWPUBLISHER VARCHAR(50),OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10127 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = NEWPUBLISHER
+CREATE PROCEDURE BOOKS.NEW_PUBLISHER(IN NEWPUBLISHER VARCHAR(50),OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10129 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = NEWPUBLISHER
 
                                                          [specific name]
-NEW_PUBLISHER_10127
+NEW_PUBLISHER_10129
 
 
 
@@ -1363,27 +1373,27 @@ BOOKID	AUTHORID	UPDATE
 
 BOOKS
 ------------------------------------------------------------------------
-ID	TITLE	DESCRIPTION	PUBLISHERID	PUBLICATIONDATE	PRICE
-1	Neque. In Ornare Sagittis	Dis Parturient Montes, Nascetur Ridiculus Mus.	18	2000-10-27	69.99
-2	Duis Dignissim Tempor Arcu.	Eu, Euismod Ac, Fermentum Vel,	20	2002-05-09	27.99
-3	Lacinia Orci, Consectetuer Euismod Est	Sem Ut Cursus Luctus, Ipsum Leo Elementum Sem, Vitae Aliquam Eros Turpis Non Enim.	15	2006-04-14	37.99
-4	Vitae Sodales	Rhoncus. Nullam Velit Dui, Semper Et, Lacinia Vitae, Sodales At,	1	2007-05-21	64.99
-5	Posuere Cubilia Curae Phasellus Ornare.	Risus A Ultricies Adipiscing, Enim Mi Tempor Lorem, Eget Mollis Lectus Pede	7	2010-05-14	83.99
-6	Tincidunt Aliquam Arcu.	Tristique Pellentesque, Tellus Sem Mollis Dui,	13	2009-07-17	31.99
-7	Auctor Quis, Tristique	Vel, Faucibus Id, Libero. Donec Consectetuer Mauris Id Sapien. Cras Dolor Dolor, Tempus Non, Lacinia	7	1999-06-09	76.99
-8	Sem. Nulla Interdum. Curabitur	Turpis. Nulla Aliquet. Proin Velit. Sed Malesuada Augue Ut	7	2009-01-24	30.99
-9	Lobortis Ultrices. Vivamus Rhoncus.	Est, Mollis Non, Cursus Non, Egestas A, Dui. Cras Pellentesque. Sed Dictum.	1	2004-06-25	69.99
-10	Quisque Purus Sapien, Gravida	Et Ultrices Posuere Cubilia Curae Phasellus Ornare. Fusce Mollis. Duis Sit Amet Diam Eu Dolor Egestas Rhoncus.	19	2005-11-14	34.99
-11	Phasellus	Egestas. Duis Ac Arcu. Nunc Mauris.	5	2003-10-19	89.99
-12	Non Massa Non	Est Mauris, Rhoncus Id, Mollis	5	2002-05-04	64.99
-13	Gravida Mauris Ut Mi. Duis	Fusce Mollis. Duis Sit Amet Diam Eu Dolor Egestas Rhoncus. Proin Nisl Sem, Consequat Nec,	8	2005-08-03	25.99
-14	Auctor Vitae,	Suspendisse Dui. Fusce Diam Nunc, Ullamcorper Eu, Euismod Ac, Fermentum Vel, Mauris. Integer Sem Elit, Pharetra	2	2009-02-09	84.99
-15	Ultrices Posuere Cubilia	Elit, Pellentesque A, Facilisis Non, Bibendum Sed, Est. Nunc Laoreet Lectus Quis Massa. Mauris Vestibulum, Neque Sed	20	2001-08-28	77.99
-16	Vitae, Aliquet Nec, Imperdiet	Cursus Purus. Nullam	6	2003-08-30	47.99
-17	Parturient Montes, Nascetur Ridiculus	Ornare, Lectus Ante Dictum Mi, Ac Mattis Velit Justo Nec Ante. Maecenas Mi Felis, Adipiscing Fringilla, Porttitor Vulputate, Posuere Vulputate,	17	2005-06-24	36.99
-18	Lacus. Etiam Bibendum	Facilisi. Sed Neque. Sed	18	2008-01-28	63.99
-19	Luctus Lobortis.	Rutrum. Fusce Dolor Quam, Elementum At, Egestas A, Scelerisque Sed, Sapien.	5	2006-08-23	67.99
-20	Dui, In Sodales Elit Erat	Sociis Natoque Penatibus Et Magnis Dis Parturient	5	2002-09-29	43.99
+ID	TITLE	DESCRIPTION	PUBLISHERID	PUBLICATIONDATE	PRICE	PREVIOUSEDITIONID
+1	Neque. In Ornare Sagittis	Dis Parturient Montes, Nascetur Ridiculus Mus.	18	2000-10-27	69.99	NULL
+2	Duis Dignissim Tempor Arcu.	Eu, Euismod Ac, Fermentum Vel,	20	2002-05-09	27.99	NULL
+3	Lacinia Orci, Consectetuer Euismod Est	Sem Ut Cursus Luctus, Ipsum Leo Elementum Sem, Vitae Aliquam Eros Turpis Non Enim.	15	2006-04-14	37.99	NULL
+4	Vitae Sodales	Rhoncus. Nullam Velit Dui, Semper Et, Lacinia Vitae, Sodales At,	1	2007-05-21	64.99	NULL
+5	Posuere Cubilia Curae Phasellus Ornare.	Risus A Ultricies Adipiscing, Enim Mi Tempor Lorem, Eget Mollis Lectus Pede	7	2010-05-14	83.99	NULL
+6	Tincidunt Aliquam Arcu.	Tristique Pellentesque, Tellus Sem Mollis Dui,	13	2009-07-17	31.99	NULL
+7	Auctor Quis, Tristique	Vel, Faucibus Id, Libero. Donec Consectetuer Mauris Id Sapien. Cras Dolor Dolor, Tempus Non, Lacinia	7	1999-06-09	76.99	NULL
+8	Sem. Nulla Interdum. Curabitur	Turpis. Nulla Aliquet. Proin Velit. Sed Malesuada Augue Ut	7	2009-01-24	30.99	NULL
+9	Lobortis Ultrices. Vivamus Rhoncus.	Est, Mollis Non, Cursus Non, Egestas A, Dui. Cras Pellentesque. Sed Dictum.	1	2004-06-25	69.99	NULL
+10	Quisque Purus Sapien, Gravida	Et Ultrices Posuere Cubilia Curae Phasellus Ornare. Fusce Mollis. Duis Sit Amet Diam Eu Dolor Egestas Rhoncus.	19	2005-11-14	34.99	NULL
+11	Phasellus	Egestas. Duis Ac Arcu. Nunc Mauris.	5	2003-10-19	89.99	NULL
+12	Non Massa Non	Est Mauris, Rhoncus Id, Mollis	5	2002-05-04	64.99	NULL
+13	Gravida Mauris Ut Mi. Duis	Fusce Mollis. Duis Sit Amet Diam Eu Dolor Egestas Rhoncus. Proin Nisl Sem, Consequat Nec,	8	2005-08-03	25.99	NULL
+14	Auctor Vitae,	Suspendisse Dui. Fusce Diam Nunc, Ullamcorper Eu, Euismod Ac, Fermentum Vel, Mauris. Integer Sem Elit, Pharetra	2	2009-02-09	84.99	NULL
+15	Ultrices Posuere Cubilia	Elit, Pellentesque A, Facilisis Non, Bibendum Sed, Est. Nunc Laoreet Lectus Quis Massa. Mauris Vestibulum, Neque Sed	20	2001-08-28	77.99	NULL
+16	Vitae, Aliquet Nec, Imperdiet	Cursus Purus. Nullam	6	2003-08-30	47.99	NULL
+17	Parturient Montes, Nascetur Ridiculus	Ornare, Lectus Ante Dictum Mi, Ac Mattis Velit Justo Nec Ante. Maecenas Mi Felis, Adipiscing Fringilla, Porttitor Vulputate, Posuere Vulputate,	17	2005-06-24	36.99	NULL
+18	Lacus. Etiam Bibendum	Facilisi. Sed Neque. Sed	18	2008-01-28	63.99	NULL
+19	Luctus Lobortis.	Rutrum. Fusce Dolor Quam, Elementum At, Egestas A, Scelerisque Sed, Sapien.	5	2006-08-23	67.99	NULL
+20	Dui, In Sodales Elit Erat	Sociis Natoque Penatibus Et Magnis Dis Parturient	5	2002-09-29	43.99	NULL
 
 
 

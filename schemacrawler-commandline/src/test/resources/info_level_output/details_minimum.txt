@@ -132,7 +132,7 @@ PUBLIC.BOOKS.CUSTOMADD
                                      [function, does not return a table]
 
                                                          [specific name]
-CUSTOMADD_10128
+CUSTOMADD_10131
 
 
 
@@ -141,7 +141,7 @@ PUBLIC.BOOKS.CUSTOMADD
                                      [function, does not return a table]
 
                                                          [specific name]
-CUSTOMADD_10129
+CUSTOMADD_10130
 
 
 
@@ -150,7 +150,7 @@ PUBLIC.BOOKS.NEW_PUBLISHER
                                                   [procedure, no result]
 
                                                          [specific name]
-NEW_PUBLISHER_10126
+NEW_PUBLISHER_10128
 
 
 
@@ -159,7 +159,7 @@ PUBLIC.BOOKS.NEW_PUBLISHER
                                                   [procedure, no result]
 
                                                          [specific name]
-NEW_PUBLISHER_10127
+NEW_PUBLISHER_10129
 
 
 

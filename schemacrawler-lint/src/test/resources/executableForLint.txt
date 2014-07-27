@@ -61,9 +61,21 @@ PUBLIC.BOOKS.BOOKAUTHORS
                                                                  [table]
 
                                                             [lint, high]
-	redundant index	SYS_IDX_10114
+	redundant index	SYS_IDX_10116
                                                           [lint, medium]
 	spaces in name, or reserved word	"UPDATE"
+
+
+
+PUBLIC.BOOKS.BOOKS
+------------------------------------------------------------------------
+                                                                 [table]
+
+                                                            [lint, high]
+	redundant index	SYS_IDX_10109
+	redundant index	UIDX_PREVIOUSEDITION
+                                                          [lint, medium]
+	unique index with nullable columns	UIDX_PREVIOUSEDITION
 
 
 

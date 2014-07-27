@@ -9,9 +9,10 @@ schema: PUBLIC.BOOKS
   table: PUBLIC.BOOKS.BOOKAUTHORS
     constraint: FK_Y_BOOK
     constraint: FK_Z_AUTHOR
-    constraint: SYS_CT_10109
-    constraint: SYS_CT_10110
+    constraint: SYS_CT_10111
+    constraint: SYS_CT_10112
   table: PUBLIC.BOOKS.BOOKS
+    constraint: FK_PREVIOUSEDITION
     constraint: PK_BOOKS
     constraint: SYS_CT_10102
     constraint: SYS_CT_10103
@@ -24,36 +25,36 @@ schema: PUBLIC.FOR_LINT
     constraint: FK_PUBLICATION_JOIN
     constraint: FK_WRITER_JOIN
     constraint: PK_EXTRA_PK
-    constraint: SYS_CT_10176
-    constraint: SYS_CT_10177
     constraint: SYS_CT_10178
+    constraint: SYS_CT_10179
+    constraint: SYS_CT_10180
   table: PUBLIC.FOR_LINT."Global Counts"
   table: PUBLIC.FOR_LINT.PUBLICATIONS
     constraint: FK_PUBLICATIONS_WRITER
     constraint: PK_PUBLICATIONS
-    constraint: SYS_CT_10166
-    constraint: SYS_CT_10167
     constraint: SYS_CT_10168
+    constraint: SYS_CT_10169
+    constraint: SYS_CT_10170
   table: PUBLIC.FOR_LINT.WRITERS
     constraint: CHECK_UPPERCASE_STATE
     constraint: FK_WRITERS_PUBLICATION
     constraint: PK_WRITERS
-    constraint: SYS_CT_10154
-    constraint: SYS_CT_10155
     constraint: SYS_CT_10156
     constraint: SYS_CT_10157
     constraint: SYS_CT_10158
+    constraint: SYS_CT_10159
+    constraint: SYS_CT_10160
 schema: PUBLIC.INFORMATION_SCHEMA
 schema: PUBLIC.PUBLIC
 schema: PUBLIC."PUBLISHER SALES"
   table: PUBLIC."PUBLISHER SALES".REGIONS
     constraint: PK_CUSTOMERS
-    constraint: SYS_CT_10138
-    constraint: SYS_CT_10139
     constraint: SYS_CT_10140
     constraint: SYS_CT_10141
+    constraint: SYS_CT_10142
+    constraint: SYS_CT_10143
   table: PUBLIC."PUBLISHER SALES".SALES
     constraint: FK_SALES_REGIONS
-    constraint: SYS_CT_10147
-    constraint: SYS_CT_10148
+    constraint: SYS_CT_10149
+    constraint: SYS_CT_10150
 schema: PUBLIC.SYSTEM_LOBS

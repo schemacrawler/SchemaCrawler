@@ -85,27 +85,27 @@ AUTHORID	BOOKID	UPDATE
 
 PUBLIC.BOOKS.BOOKS
 ------------------------------------------------------------------------
-DESCRIPTION	ID	PRICE	PUBLICATIONDATE	PUBLISHERID	TITLE
-Cursus Purus. Nullam	16	47.99	2003-08-30	6	Vitae, Aliquet Nec, Imperdiet
-Dis Parturient Montes, Nascetur Ridiculus Mus.	1	69.99	2000-10-27	18	Neque. In Ornare Sagittis
-Egestas. Duis Ac Arcu. Nunc Mauris.	11	89.99	2003-10-19	5	Phasellus
-Elit, Pellentesque A, Facilisis Non, Bibendum Sed, Est. Nunc Laoreet Lectus Quis Massa. Mauris Vestibulum, Neque Sed	15	77.99	2001-08-28	20	Ultrices Posuere Cubilia
-Est Mauris, Rhoncus Id, Mollis	12	64.99	2002-05-04	5	Non Massa Non
-Est, Mollis Non, Cursus Non, Egestas A, Dui. Cras Pellentesque. Sed Dictum.	9	69.99	2004-06-25	1	Lobortis Ultrices. Vivamus Rhoncus.
-Et Ultrices Posuere Cubilia Curae Phasellus Ornare. Fusce Mollis. Duis Sit Amet Diam Eu Dolor Egestas Rhoncus.	10	34.99	2005-11-14	19	Quisque Purus Sapien, Gravida
-Eu, Euismod Ac, Fermentum Vel,	2	27.99	2002-05-09	20	Duis Dignissim Tempor Arcu.
-Facilisi. Sed Neque. Sed	18	63.99	2008-01-28	18	Lacus. Etiam Bibendum
-Fusce Mollis. Duis Sit Amet Diam Eu Dolor Egestas Rhoncus. Proin Nisl Sem, Consequat Nec,	13	25.99	2005-08-03	8	Gravida Mauris Ut Mi. Duis
-Ornare, Lectus Ante Dictum Mi, Ac Mattis Velit Justo Nec Ante. Maecenas Mi Felis, Adipiscing Fringilla, Porttitor Vulputate, Posuere Vulputate,	17	36.99	2005-06-24	17	Parturient Montes, Nascetur Ridiculus
-Rhoncus. Nullam Velit Dui, Semper Et, Lacinia Vitae, Sodales At,	4	64.99	2007-05-21	1	Vitae Sodales
-Risus A Ultricies Adipiscing, Enim Mi Tempor Lorem, Eget Mollis Lectus Pede	5	83.99	2010-05-14	7	Posuere Cubilia Curae Phasellus Ornare.
-Rutrum. Fusce Dolor Quam, Elementum At, Egestas A, Scelerisque Sed, Sapien.	19	67.99	2006-08-23	5	Luctus Lobortis.
-Sem Ut Cursus Luctus, Ipsum Leo Elementum Sem, Vitae Aliquam Eros Turpis Non Enim.	3	37.99	2006-04-14	15	Lacinia Orci, Consectetuer Euismod Est
-Sociis Natoque Penatibus Et Magnis Dis Parturient	20	43.99	2002-09-29	5	Dui, In Sodales Elit Erat
-Suspendisse Dui. Fusce Diam Nunc, Ullamcorper Eu, Euismod Ac, Fermentum Vel, Mauris. Integer Sem Elit, Pharetra	14	84.99	2009-02-09	2	Auctor Vitae,
-Tristique Pellentesque, Tellus Sem Mollis Dui,	6	31.99	2009-07-17	13	Tincidunt Aliquam Arcu.
-Turpis. Nulla Aliquet. Proin Velit. Sed Malesuada Augue Ut	8	30.99	2009-01-24	7	Sem. Nulla Interdum. Curabitur
-Vel, Faucibus Id, Libero. Donec Consectetuer Mauris Id Sapien. Cras Dolor Dolor, Tempus Non, Lacinia	7	76.99	1999-06-09	7	Auctor Quis, Tristique
+DESCRIPTION	ID	PREVIOUSEDITIONID	PRICE	PUBLICATIONDATE	PUBLISHERID	TITLE
+Cursus Purus. Nullam	16	NULL	47.99	2003-08-30	6	Vitae, Aliquet Nec, Imperdiet
+Dis Parturient Montes, Nascetur Ridiculus Mus.	1	NULL	69.99	2000-10-27	18	Neque. In Ornare Sagittis
+Egestas. Duis Ac Arcu. Nunc Mauris.	11	NULL	89.99	2003-10-19	5	Phasellus
+Elit, Pellentesque A, Facilisis Non, Bibendum Sed, Est. Nunc Laoreet Lectus Quis Massa. Mauris Vestibulum, Neque Sed	15	NULL	77.99	2001-08-28	20	Ultrices Posuere Cubilia
+Est Mauris, Rhoncus Id, Mollis	12	NULL	64.99	2002-05-04	5	Non Massa Non
+Est, Mollis Non, Cursus Non, Egestas A, Dui. Cras Pellentesque. Sed Dictum.	9	NULL	69.99	2004-06-25	1	Lobortis Ultrices. Vivamus Rhoncus.
+Et Ultrices Posuere Cubilia Curae Phasellus Ornare. Fusce Mollis. Duis Sit Amet Diam Eu Dolor Egestas Rhoncus.	10	NULL	34.99	2005-11-14	19	Quisque Purus Sapien, Gravida
+Eu, Euismod Ac, Fermentum Vel,	2	NULL	27.99	2002-05-09	20	Duis Dignissim Tempor Arcu.
+Facilisi. Sed Neque. Sed	18	NULL	63.99	2008-01-28	18	Lacus. Etiam Bibendum
+Fusce Mollis. Duis Sit Amet Diam Eu Dolor Egestas Rhoncus. Proin Nisl Sem, Consequat Nec,	13	NULL	25.99	2005-08-03	8	Gravida Mauris Ut Mi. Duis
+Ornare, Lectus Ante Dictum Mi, Ac Mattis Velit Justo Nec Ante. Maecenas Mi Felis, Adipiscing Fringilla, Porttitor Vulputate, Posuere Vulputate,	17	NULL	36.99	2005-06-24	17	Parturient Montes, Nascetur Ridiculus
+Rhoncus. Nullam Velit Dui, Semper Et, Lacinia Vitae, Sodales At,	4	NULL	64.99	2007-05-21	1	Vitae Sodales
+Risus A Ultricies Adipiscing, Enim Mi Tempor Lorem, Eget Mollis Lectus Pede	5	NULL	83.99	2010-05-14	7	Posuere Cubilia Curae Phasellus Ornare.
+Rutrum. Fusce Dolor Quam, Elementum At, Egestas A, Scelerisque Sed, Sapien.	19	NULL	67.99	2006-08-23	5	Luctus Lobortis.
+Sem Ut Cursus Luctus, Ipsum Leo Elementum Sem, Vitae Aliquam Eros Turpis Non Enim.	3	NULL	37.99	2006-04-14	15	Lacinia Orci, Consectetuer Euismod Est
+Sociis Natoque Penatibus Et Magnis Dis Parturient	20	NULL	43.99	2002-09-29	5	Dui, In Sodales Elit Erat
+Suspendisse Dui. Fusce Diam Nunc, Ullamcorper Eu, Euismod Ac, Fermentum Vel, Mauris. Integer Sem Elit, Pharetra	14	NULL	84.99	2009-02-09	2	Auctor Vitae,
+Tristique Pellentesque, Tellus Sem Mollis Dui,	6	NULL	31.99	2009-07-17	13	Tincidunt Aliquam Arcu.
+Turpis. Nulla Aliquet. Proin Velit. Sed Malesuada Augue Ut	8	NULL	30.99	2009-01-24	7	Sem. Nulla Interdum. Curabitur
+Vel, Faucibus Id, Libero. Donec Consectetuer Mauris Id Sapien. Cras Dolor Dolor, Tempus Non, Lacinia	7	NULL	76.99	1999-06-09	7	Auctor Quis, Tristique
 
 
 

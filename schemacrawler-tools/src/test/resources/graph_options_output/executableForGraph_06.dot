@@ -6,8 +6,6 @@ digraph "SchemaCrawler_Diagram" {
     rankdir="RL"
     fontname="Helvetica"
     fontsize="8"
-    packmode="node"
-    overlap="false"
   ];
   
   node [
@@ -19,7 +17,7 @@ digraph "SchemaCrawler_Diagram" {
   edge [
     fontname="Helvetica"
     fontsize="8"  
-    arrowsize="0.6"
+    arrowsize="0.8"
   ];
 
 
@@ -32,7 +30,7 @@ digraph "SchemaCrawler_Diagram" {
 	</tr>
 	<tr>
 		<td align='right'>Generated on:</td>
-		<td align='left'>Apr 2, 2014 8:38 PM</td>
+		<td align='left'>Jul 27, 2014 3:29 PM</td>
 	</tr>
 	<tr>
 		<td align='right'>Database:</td>

@@ -93,10 +93,10 @@ FK_Z_AUTHOR                                [foreign key, with no action]
 FK_Y_BOOK                                  [foreign key, with no action]
   PUBLIC.BOOKS.BOOKS.ID --> BOOKID                              
 
-SYS_IDX_10116                                         [non-unique index]
+SYS_IDX_10118                                         [non-unique index]
   AUTHORID                          ascending                   
 
-SYS_IDX_10114                                         [non-unique index]
+SYS_IDX_10116                                         [non-unique index]
   BOOKID                            ascending                   
 
 UIDX_BOOKAUTHORS                                          [unique index]
@@ -114,6 +114,7 @@ PUBLIC.BOOKS.BOOKS
   PUBLISHERID                       INTEGER not null            
   PUBLICATIONDATE                   DATE                        
   PRICE                             DOUBLE(64, 0)               
+  PREVIOUSEDITIONID                 INTEGER                     
 
 PK_BOOKS                                                   [primary key]
   ID                                ascending                   
@@ -121,8 +122,17 @@ PK_BOOKS                                                   [primary key]
 FK_Y_BOOK                                  [foreign key, with no action]
   ID --> PUBLIC.BOOKS.BOOKAUTHORS.BOOKID                              
 
+FK_PREVIOUSEDITION                         [foreign key, with no action]
+  ID --> PREVIOUSEDITIONID                                      
+
 SYS_IDX_PK_BOOKS_10105                                    [unique index]
   ID                                ascending                   
+
+UIDX_PREVIOUSEDITION                                      [unique index]
+  PREVIOUSEDITIONID                 ascending                   
+
+SYS_IDX_10109                                         [non-unique index]
+  PREVIOUSEDITIONID                 ascending                   
 
 
 
@@ -163,13 +173,13 @@ FK_PUBLICATION_JOIN                        [foreign key, with no action]
 FK_WRITER_JOIN                             [foreign key, with no action]
   PUBLIC.FOR_LINT.WRITERS.ID --> WRITERID                              
 
-SYS_IDX_PK_EXTRA_PK_10179                                 [unique index]
+SYS_IDX_PK_EXTRA_PK_10181                                 [unique index]
   ID                                ascending                   
 
-SYS_IDX_10185                                         [non-unique index]
+SYS_IDX_10187                                         [non-unique index]
   PUBLICATIONID                     ascending                   
 
-SYS_IDX_10183                                         [non-unique index]
+SYS_IDX_10185                                         [non-unique index]
   WRITERID                          ascending                   
 
 
@@ -205,10 +215,10 @@ FK_WRITERS_PUBLICATION                     [foreign key, with no action]
 FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
   PUBLIC.FOR_LINT.WRITERS.ID --> WRITERID                              
 
-SYS_IDX_PK_PUBLICATIONS_10169                             [unique index]
+SYS_IDX_PK_PUBLICATIONS_10171                             [unique index]
   ID                                ascending                   
 
-SYS_IDX_10173                                         [non-unique index]
+SYS_IDX_10175                                         [non-unique index]
   WRITERID                          ascending                   
 
 
@@ -247,10 +257,10 @@ FK_WRITER_JOIN                             [foreign key, with no action]
 FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
   ID --> PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID                              
 
-SYS_IDX_PK_WRITERS_10159                                  [unique index]
+SYS_IDX_PK_WRITERS_10161                                  [unique index]
   ID                                ascending                   
 
-SYS_IDX_10187                                         [non-unique index]
+SYS_IDX_10189                                         [non-unique index]
   PUBLICATION_ID                    ascending                   
 
 IDX_A1_WRITERS                                        [non-unique index]
@@ -289,7 +299,7 @@ FK_SALES_REGIONS                           [foreign key, with no action]
   POSTALCODE --> PUBLIC."PUBLISHER SALES".SALES.POSTALCODE                              
   COUNTRY --> PUBLIC."PUBLISHER SALES".SALES.COUNTRY                              
 
-SYS_IDX_PK_CUSTOMERS_10142                                [unique index]
+SYS_IDX_PK_CUSTOMERS_10144                                [unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
 
@@ -308,7 +318,7 @@ FK_SALES_REGIONS                           [foreign key, with no action]
   PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE --> POSTALCODE                              
   PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY --> COUNTRY                              
 
-SYS_IDX_10152                                         [non-unique index]
+SYS_IDX_10154                                         [non-unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
 
@@ -324,7 +334,6 @@ PUBLIC.BOOKS.CUSTOMADD
 ------------------------------------------------------------------------
                                      [function, does not return a table]
   ONE                               INTEGER, in                 
-  TWO                               INTEGER, in                 
 
 
 
@@ -332,6 +341,7 @@ PUBLIC.BOOKS.CUSTOMADD
 ------------------------------------------------------------------------
                                      [function, does not return a table]
   ONE                               INTEGER, in                 
+  TWO                               INTEGER, in                 
 
 
 
