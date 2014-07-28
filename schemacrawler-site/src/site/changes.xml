@@ -5,7 +5,15 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-     <release version="10.10.04" date="2014-07-06">
+     <release version="10.10.04" date="2014-07-27">
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Fixed bug with cardinality in diagrams, when a foreign key is only a part of the primary key of a table.
+      ]]></action> 
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Fixed -sequences command-line argument, and got it to work correctly with the properties file.
+      ]]></action>      
+     </release>    
+     <release version="10.10.03" date="2014-07-06">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Added support for include and exclude expressions for synonyms and sequences in config properties files.
       ]]></action>         
