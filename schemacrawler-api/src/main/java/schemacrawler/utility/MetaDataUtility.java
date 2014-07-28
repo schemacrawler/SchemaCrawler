@@ -86,7 +86,8 @@ public final class MetaDataUtility
     return columnNames;
   }
 
-  public static Connectivity getConnectivity(final Column fkColumn)
+  public static Connectivity getConnectivity(final Column fkColumn,
+                                             final boolean isForeignKeyUnique)
   {
     if (fkColumn == null)
     {
@@ -103,19 +104,29 @@ public final class MetaDataUtility
     {
       isColumnReference = true;
     }
+
+    final Connectivity connectivity;
     if (isColumnReference)
     {
-      return Connectivity.unknown;
+      connectivity = Connectivity.unknown;
     }
-
-    if (fkColumn.isPartOfPrimaryKey() || fkColumn.isPartOfUniqueIndex())
+    else if (isForeignKeyUnique)
     {
-      return Connectivity.zero_one;
+      connectivity = Connectivity.zero_one;
     }
     else
     {
-      return Connectivity.zero_many;
+      connectivity = Connectivity.zero_many;
     }
+    return connectivity;
+  }
+
+  public static boolean isForeignKeyUnique(final ForeignKey foreignKey,
+                                           final Table table)
+  {
+    final Collection<List<String>> uniqueIndexCoumnNames = uniqueIndexCoumnNames(table);
+    final List<String> foreignKeyColumnNames = foreignKeyColumnNames(foreignKey);
+    return uniqueIndexCoumnNames.contains(foreignKeyColumnNames);
   }
 
   public static Collection<List<String>> uniqueIndexCoumnNames(final Table table)

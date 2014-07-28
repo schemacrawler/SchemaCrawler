@@ -10,7 +10,7 @@ digraph SchemaCrawler_Diagram {
 	</tr>
 	<tr>
 		<td align='right'>Generated on:</td>
-		<td align='left'>Jul 27, 2014 3:29 PM</td>
+		<td align='left'>Jul 27, 2014 9:24 PM</td>
 	</tr>
 	<tr>
 		<td align='right'>Database:</td>
@@ -113,7 +113,7 @@ digraph SchemaCrawler_Diagram {
       </table>
     >];
 	bookauthors_aa4376:"authorid_19681b5e.start":w -> authors_dba8a1ff:"id_ecfc5f6a.end":e	 [arrowhead=teetee,
-		arrowtail=teeodot,
+		arrowtail=crowodot,
 		dir=both,
 		label=<FK_Z_AUTHOR>,
 		style=solid];
@@ -161,7 +161,7 @@ digraph SchemaCrawler_Diagram {
       </table>
     >];
 	bookauthors_aa4376:"bookid_931bd73c.start":w -> books_afd2ba21:"id_bb8abc08.end":e	 [arrowhead=teetee,
-		arrowtail=teeodot,
+		arrowtail=crowodot,
 		dir=both,
 		label=<FK_Y_BOOK>,
 		style=solid];
