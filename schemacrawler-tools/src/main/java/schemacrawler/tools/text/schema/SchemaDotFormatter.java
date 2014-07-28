@@ -23,6 +23,7 @@ package schemacrawler.tools.text.schema;
 
 
 import static schemacrawler.utility.MetaDataUtility.getConnectivity;
+import static schemacrawler.utility.MetaDataUtility.isForeignKeyUnique;
 import static sf.util.Utility.convertForComparison;
 import static sf.util.Utility.isBlank;
 
@@ -362,7 +363,8 @@ public final class SchemaDotFormatter
   }
 
   private String printColumnReference(final String associationName,
-                                      final ColumnReference columnReference)
+                                      final ColumnReference columnReference,
+                                      boolean isForeignKeyUnique)
   {
     final Column primaryKeyColumn = columnReference.getPrimaryKeyColumn();
     final Column foreignKeyColumn = columnReference.getForeignKeyColumn();
@@ -370,7 +372,8 @@ public final class SchemaDotFormatter
     final String[] pkPortIds = getPortIds(primaryKeyColumn);
     final String[] fkPortIds = getPortIds(foreignKeyColumn);
 
-    final Connectivity connectivity = getConnectivity(foreignKeyColumn);
+    final Connectivity connectivity = getConnectivity(foreignKeyColumn,
+                                                      isForeignKeyUnique);
     final String pkSymbol = "teetee";
     final String fkSymbol = arrowhead(connectivity);
     final String style;
@@ -398,13 +401,15 @@ public final class SchemaDotFormatter
   {
     for (final ForeignKey foreignKey: table.getForeignKeys())
     {
+      boolean isForeignKeyUnique = isForeignKeyUnique(foreignKey, table);
       for (final ColumnReference columnReference: foreignKey
         .getColumnReferences())
       {
         if (table.equals(columnReference.getPrimaryKeyColumn().getParent()))
         {
-          out
-            .write(printColumnReference(foreignKey.getName(), columnReference));
+          out.write(printColumnReference(foreignKey.getName(),
+                                         columnReference,
+                                         isForeignKeyUnique));
         }
       }
     }
@@ -485,7 +490,7 @@ public final class SchemaDotFormatter
       .getWeakAssociations(table);
     for (final ColumnReference weakAssociation: weakAssociations)
     {
-      out.write(printColumnReference("", weakAssociation));
+      out.write(printColumnReference("", weakAssociation, false));
     }
   }
 
