@@ -491,7 +491,10 @@ public final class SchemaDotFormatter
       .getWeakAssociations(table);
     for (final ColumnReference weakAssociation: weakAssociations)
     {
-      out.write(printColumnReference("", weakAssociation, false));
+      if (table.equals(weakAssociation.getPrimaryKeyColumn().getParent()))
+      {
+        out.write(printColumnReference("", weakAssociation, false));
+      }
     }
   }
 
