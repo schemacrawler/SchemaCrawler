@@ -3,18 +3,18 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/DECORATION/1.0.0 http://maven.apache.org/xsd/decoration-1.0.0.xsd"
   name="SchemaCrawler">
-  <skin>
-    <groupId>org.apache.maven.skins</groupId>
-    <artifactId>maven-fluido-skin</artifactId>
-    <version>1.3.0</version>
-  </skin> 
+   <skin>
+     <groupId>com.sourcesense.maven</groupId>
+     <artifactId>maven-skin</artifactId>
+     <version>1.0.0</version>
+  </skin>
   <version />
   <bannerLeft>
     <name>SchemaCrawler</name>
-	<!--
+    <!-- 
     <src>images/schemacrawler.png</src>
     <href>http://sourceforge.net/projects/schemacrawler</href>
-	-->
+     -->
   </bannerLeft>
   <bannerRight>
     <name>SourceForge</name>
@@ -24,7 +24,7 @@
   </bannerRight>
   <poweredBy>  
     <logo name="Maven" href="http://maven.apache.org/" img="http://maven.apache.org/images/logos/maven-button-1.png" />
-    <logo name="Support SchemaCrawler" href="http://sourceforge.net/donate/index.php?group_id=148383" img="http://images.sourceforge.net/images/project-support.jpg" />
+    <logo name="Support SchemaCrawler" href="http://sourceforge.net/p/schemacrawler/donate/" img="http://images.sourceforge.net/images/project-support.jpg" />
   </poweredBy>
   <body>
     <head>
@@ -50,14 +50,14 @@
 	  <link rel="stylesheet" href="./css/sc.css" />
     </head>
     <links>
-      <item name="Donations" href="http://sourceforge.net/donate/index.php?group_id=148383" />
+      <item name="Donations" href="http://sourceforge.net/p/schemacrawler/donate/" />
       <item name="Download" href="http://sourceforge.net/projects/schemacrawler/files/" />
     </links>
     <menu name="SchemaCrawler">
       <item name="About SchemaCrawler" href="index.html" />
       <item name="Readme" href="readme.html" />
       <item name="Who Uses" href="who-uses.html" />
-      <item name="Support SchemaCrawler" href="http://sourceforge.net/donate/index.php?group_id=148383" />
+      <item name="Support SchemaCrawler" href="http://sourceforge.net/p/schemacrawler/donate/" />
       <item name="Change History" href="changes-report.html" />      
       <item name="Database-specific Distributions" href="bundled.html" />
       <item name="Download" href="http://sourceforge.net/projects/schemacrawler/files/" />
