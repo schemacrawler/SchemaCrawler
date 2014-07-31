@@ -110,7 +110,8 @@ final class DataResultSet
   private Object getColumnData(final int i)
     throws SQLException
   {
-    final int javaSqlType = resultsColumns.get(i).getColumnDataType().getType();
+    final int javaSqlType = resultsColumns.get(i).getColumnDataType()
+      .getJavaSqlType().getJavaSqlType();
     Object columnData;
     if (javaSqlType == Types.CLOB)
     {

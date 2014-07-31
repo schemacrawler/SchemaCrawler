@@ -34,7 +34,7 @@ class ColumnDataTypes
     MutableColumnDataType columnDataType = null;
     for (final MutableColumnDataType currentColumnDataType: this)
     {
-      if (type == currentColumnDataType.getType())
+      if (type == currentColumnDataType.getJavaSqlType().getJavaSqlType())
       {
         columnDataType = currentColumnDataType;
         if (columnDataType.getSchema().equals(systemSchema))

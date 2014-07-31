@@ -67,8 +67,8 @@ import schemacrawler.utility.NamedObjectSort;
  * @author Sualeh Fatehi
  */
 final class SchemaJsonFormatter
-extends BaseJsonFormatter<SchemaTextOptions>
-implements SchemaTraversalHandler
+  extends BaseJsonFormatter<SchemaTextOptions>
+  implements SchemaTraversalHandler
 {
 
   private final boolean isVerbose;
@@ -89,18 +89,18 @@ implements SchemaTraversalHandler
   SchemaJsonFormatter(final SchemaTextDetailType schemaTextDetailType,
                       final SchemaTextOptions options,
                       final OutputOptions outputOptions)
-                          throws SchemaCrawlerException
-                          {
+    throws SchemaCrawlerException
+  {
     super(options,
           schemaTextDetailType == SchemaTextDetailType.details,
           outputOptions);
     isVerbose = schemaTextDetailType == SchemaTextDetailType.details;
     isList = schemaTextDetailType == SchemaTextDetailType.list;
-                          }
+  }
 
   @Override
   public void handle(final ColumnDataType columnDataType)
-      throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
     if (printVerboseDatabaseInfo && isVerbose)
     {
@@ -121,10 +121,10 @@ implements SchemaTraversalHandler
         jsonColumnDataType.put("databaseSpecificTypeName",
                                databaseSpecificTypeName);
         jsonColumnDataType
-        .put("basedOn", columnDataType.getBaseType() == null? ""
+          .put("basedOn", columnDataType.getBaseType() == null? ""
                                                               : columnDataType
-                                                              .getBaseType()
-                                                              .getName());
+                                                                .getBaseType()
+                                                                .getName());
         jsonColumnDataType.put("userDefined", columnDataType.isUserDefined());
         jsonColumnDataType.put("createParameters",
                                columnDataType.getCreateParameters());
@@ -132,7 +132,7 @@ implements SchemaTraversalHandler
         jsonColumnDataType.put("autoIncrementable",
                                columnDataType.isAutoIncrementable());
         jsonColumnDataType.put("searchable", columnDataType.getSearchable()
-                               .toString());
+          .toString());
       }
       catch (final JSONException e)
       {
@@ -171,9 +171,9 @@ implements SchemaTraversalHandler
         jsonRoutine.put("parameters", jsonParameters);
 
         final List<? extends RoutineColumn<? extends Routine>> columns = routine
-            .getColumns();
+          .getColumns();
         Collections.sort(columns, NamedObjectSort.getNamedObjectSort(options
-                                                                     .isAlphabeticalSortForRoutineColumns()));
+          .isAlphabeticalSortForRoutineColumns()));
         for (final RoutineColumn<?> column: columns)
         {
           jsonParameters.put(handleRoutineColumn(column));
@@ -233,7 +233,7 @@ implements SchemaTraversalHandler
     catch (final JSONException e)
     {
       LOGGER
-      .log(Level.FINER, "Error outputting Sequence: " + e.getMessage(), e);
+        .log(Level.FINER, "Error outputting Sequence: " + e.getMessage(), e);
     }
 
   }
@@ -308,7 +308,7 @@ implements SchemaTraversalHandler
         jsonTable.put("columns", jsonColumns);
         final List<Column> columns = table.getColumns();
         Collections.sort(columns, NamedObjectSort.getNamedObjectSort(options
-                                                                     .isAlphabeticalSortForTableColumns()));
+          .isAlphabeticalSortForTableColumns()));
         for (final Column column: columns)
         {
           jsonColumns.put(handleTableColumn(column));
@@ -320,7 +320,7 @@ implements SchemaTraversalHandler
         if (isVerbose)
         {
           final Collection<ColumnReference> weakAssociationsCollection = DatabaseWithAssociations
-              .getWeakAssociations(table);
+            .getWeakAssociations(table);
           final List<ColumnReference> weakAssociations = new ArrayList<>(weakAssociationsCollection);
           Collections.sort(weakAssociations);
           jsonTable.put("weakAssociations",
@@ -332,7 +332,7 @@ implements SchemaTraversalHandler
         final Collection<Index> indicesCollection = table.getIndices();
         final List<Index> indices = new ArrayList<>(indicesCollection);
         Collections.sort(indices, NamedObjectSort.getNamedObjectSort(options
-                                                                     .isAlphabeticalSortForIndexes()));
+          .isAlphabeticalSortForIndexes()));
         for (final Index index: indices)
         {
           jsonIndices.put(handleIndex(index));
@@ -348,10 +348,10 @@ implements SchemaTraversalHandler
         final JSONArray jsonTableConstraints = new JSONArray();
         jsonTable.put("tableConstraints", jsonTableConstraints);
         final Collection<TableConstraint> tableConstraintsCollection = table
-            .getTableConstraints();
+          .getTableConstraints();
         final List<TableConstraint> tableConstraints = new ArrayList<>(tableConstraintsCollection);
         Collections.sort(tableConstraints, NamedObjectSort
-                         .getNamedObjectSort(options.isAlphabeticalSortForIndexes()));
+          .getNamedObjectSort(options.isAlphabeticalSortForIndexes()));
         for (final TableConstraint tableConstraint: tableConstraints)
         {
           jsonTableConstraints.put(handleTableConstraint(tableConstraint));
@@ -400,49 +400,49 @@ implements SchemaTraversalHandler
 
   @Override
   public void handleRoutinesEnd()
-      throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
   }
 
   @Override
   public void handleRoutinesStart()
-      throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
   }
 
   @Override
   public void handleSequencesEnd()
-      throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
   }
 
   @Override
   public void handleSequencesStart()
-      throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
   }
 
   @Override
   public void handleSynonymsEnd()
-      throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
   }
 
   @Override
   public void handleSynonymsStart()
-      throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
   }
 
   @Override
   public void handleTablesEnd()
-      throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
   }
 
   @Override
   public void handleTablesStart()
-      throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
   }
 
@@ -481,7 +481,7 @@ implements SchemaTraversalHandler
             && options.isShowOrdinalNumbers())
         {
           final int keySequence = ((ForeignKeyColumnReference) columnReference)
-              .getKeySequence();
+            .getKeySequence();
           jsonColumnReference.put("keySequence", keySequence);
         }
         jsonColumnReferences.put(jsonColumnReference);
@@ -501,7 +501,7 @@ implements SchemaTraversalHandler
     final JSONArray jsonFks = new JSONArray();
     final List<ForeignKey> foreignKeys = new ArrayList<>(foreignKeysCollection);
     Collections.sort(foreignKeys, NamedObjectSort.getNamedObjectSort(options
-                                                                     .isAlphabeticalSortForForeignKeys()));
+      .isAlphabeticalSortForForeignKeys()));
     for (final ForeignKey foreignKey: foreignKeys)
     {
       if (foreignKey != null)
@@ -528,7 +528,7 @@ implements SchemaTraversalHandler
           }
 
           final List<ForeignKeyColumnReference> columnReferences = foreignKey
-              .getColumnReferences();
+            .getColumnReferences();
           jsonFk.put("columnReferences",
                      handleColumnReferences(columnReferences));
         }
@@ -595,9 +595,10 @@ implements SchemaTraversalHandler
 
     try
     {
-      jsonColumn.put("dataType", column.getColumnDataType().getTypeName());
+      jsonColumn.put("dataType", column.getColumnDataType().getJavaSqlType()
+        .getJavaSqlTypeName());
       jsonColumn.put("databaseSpecificType", column.getColumnDataType()
-                     .getDatabaseSpecificTypeName());
+        .getDatabaseSpecificTypeName());
       jsonColumn.put("width", column.getWidth());
       jsonColumn.put("type", column.getColumnType().toString());
       if (options.isShowOrdinalNumbers())
@@ -625,13 +626,14 @@ implements SchemaTraversalHandler
       if (column instanceof IndexColumn)
       {
         jsonColumn.put("sortSequence", ((IndexColumn) column).getSortSequence()
-                       .name());
+          .name());
       }
       else
       {
-        jsonColumn.put("dataType", column.getColumnDataType().getTypeName());
+        jsonColumn.put("dataType", column.getColumnDataType().getJavaSqlType()
+          .getJavaSqlTypeName());
         jsonColumn.put("databaseSpecificType", column.getColumnDataType()
-                       .getDatabaseSpecificTypeName());
+          .getDatabaseSpecificTypeName());
         jsonColumn.put("width", column.getWidth());
         jsonColumn.put("size", column.getSize());
         jsonColumn.put("decimalDigits", column.getDecimalDigits());
@@ -673,17 +675,17 @@ implements SchemaTraversalHandler
       }
 
       final TableConstraintType tableConstraintType = tableConstraint
-          .getTableConstraintType();
+        .getTableConstraintType();
       if (tableConstraintType != TableConstraintType.unknown)
       {
         jsonTableConstraint.put("type", tableConstraintType.toString());
       }
 
       for (final TableConstraintColumn tableConstraintColumn: tableConstraint
-          .getColumns())
+        .getColumns())
       {
         jsonTableConstraint
-        .accumulate("columns", handleTableColumn(tableConstraintColumn));
+          .accumulate("columns", handleTableColumn(tableConstraintColumn));
       }
       if (tableConstraint.hasDefinition())
       {
@@ -718,9 +720,9 @@ implements SchemaTraversalHandler
           }
 
           final ConditionTimingType conditionTiming = trigger
-              .getConditionTiming();
+            .getConditionTiming();
           final EventManipulationType eventManipulationType = trigger
-              .getEventManipulationType();
+            .getEventManipulationType();
           if (conditionTiming != null
               && conditionTiming != ConditionTimingType.unknown
               && eventManipulationType != null

@@ -270,8 +270,10 @@ final class WeakAssociationsAnalyzer
                     .getColumnDataType();
                   final ColumnDataType pkColumnType = pkColumn
                     .getColumnDataType();
-                  if (pkColumnType != null && fkColumnType != null
-                      && fkColumnType.getType() == pkColumnType.getType())
+                  if (pkColumnType != null
+                      && fkColumnType != null
+                      && fkColumnType.getJavaSqlType().getJavaSqlTypeName() == pkColumnType
+                        .getJavaSqlType().getJavaSqlTypeName())
                   {
                     addWeakAssociation(fkColumn, pkColumn);
                   }

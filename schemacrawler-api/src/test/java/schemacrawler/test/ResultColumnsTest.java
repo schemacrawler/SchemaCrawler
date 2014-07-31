@@ -78,7 +78,9 @@ public class ResultColumnsTest
         out.println("column: " + column.getFullName());
         out.println("  database type: "
                     + column.getColumnDataType().getDatabaseSpecificTypeName());
-        out.println("  type: " + column.getColumnDataType().getTypeName());
+        out.println("  type: "
+                    + column.getColumnDataType().getJavaSqlType()
+                      .getJavaSqlTypeName());
       }
     }
 
