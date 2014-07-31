@@ -12,3 +12,8 @@ workspace
 /schemacrawler-docs/*.xml
 /schemacrawler-docs/schemacrawler.config.properties.1
 /schemacrawler/src/assembly/schemacrawler.pom.asc
+/schemacrawler-api/.settings/com.atlassian.clover.eclipse.core.prefs
+/schemacrawler-commandline/.settings/com.atlassian.clover.eclipse.core.prefs
+/schemacrawler-integrations/.settings/com.atlassian.clover.eclipse.core.prefs
+/schemacrawler-lint/.settings/com.atlassian.clover.eclipse.core.prefs
+/schemacrawler-tools/.settings/com.atlassian.clover.eclipse.core.prefs
