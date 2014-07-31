@@ -55,25 +55,10 @@
 			src="http://prezi.com/embed/sljesacs5cwd/?bgcolor=ffffff&amp;lock_to_path=0&amp;autoplay=0&amp;autohide_ctrls=0&amp;features=undefined&amp;disabled_features=undefined"
 			width="550" height="400" frameBorder="0"></iframe>      
       </subsection>
-    </section>
-    <section name="Presentations">
-      <subsection name="Sualeh's Presentation at NEJUG">
-        <iframe width="560" height="345" src="http://www.youtube.com/embed/zYPfOzImuTk"
-          frameborder="0"></iframe>
-      </subsection>
       <subsection name="Explore Your Database With SchemaCrawler">
-        <iframe width="560" height="345" src="http://www.youtube.com/embed/CqLPUwtBOnE"
+        <iframe width="560" height="345" src="http://vimeo.com/sualehfatehi/schemacrawler-explore"
           frameborder="0"></iframe>
       </subsection>      
-    </section>
-    <section name="Tutorials">
-      <subsection name="Fred Forester's Tutorial">
-        <p>
-          Fred Forester's tutorial on using SchemaCrawler to explore an unknown schema.
-        </p>
-        <iframe width="560" height="345" src="http://www.youtube.com/embed/iWwDGjTW05c"
-          frameborder="0"></iframe>
-      </subsection>
     </section>
         <footer>
             <p>
