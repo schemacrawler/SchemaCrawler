@@ -25,6 +25,7 @@ package schemacrawler.tools.integration.graph;
 import static schemacrawler.test.utility.TestUtility.currentMethodName;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.junit.Test;
 
@@ -33,12 +34,14 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.test.utility.BaseExecutableTest;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
+import sf.util.Utility;
 
 public class GraphExecutableOptionsTest
   extends BaseExecutableTest
 {
 
   private static final String GRAPH_OPTIONS_OUTPUT = "graph_options_output/";
+  private static final boolean GENERATE_FOR_SITE = false;
 
   @Test
   public void executableForGraph_00()
@@ -213,7 +216,22 @@ public class GraphExecutableOptionsTest
 
     // Check diagram
     final File testDiagramFile = executeExecutable(executable, "png");
+    saveDiagramForSite(testMethodName, testDiagramFile);
     checkDiagramFile(testDiagramFile);
   }
 
+  private void saveDiagramForSite(final String testMethodName,
+                                  final File testDiagramFile)
+    throws IOException
+  {
+    if (GENERATE_FOR_SITE)
+    {
+      final String buildDirectory = System.getProperty("buildDirectory");
+      final File siteImages = new File(buildDirectory,
+                                       "../../schemacrawler-site/src/site/resources/images")
+        .getCanonicalFile();
+      final File siteImage = new File(siteImages, testMethodName + ".png");
+      Utility.copyFile(testDiagramFile, siteImage);
+    }
+  }
 }
