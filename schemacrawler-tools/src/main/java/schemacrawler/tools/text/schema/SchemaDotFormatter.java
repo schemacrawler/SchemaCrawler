@@ -446,7 +446,8 @@ public final class SchemaDotFormatter
         .getDatabaseSpecificTypeName();
       if (options.isShowStandardColumnTypeNames())
       {
-        columnTypeName = column.getColumnDataType().getTypeName();
+        columnTypeName = column.getColumnDataType().getJavaSqlType()
+          .getJavaSqlTypeName();
       }
       final String columnType = columnTypeName + column.getWidth();
       final String nullable = column.isNullable()? "": " not null";
