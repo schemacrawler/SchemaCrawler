@@ -54,34 +54,26 @@ import com.google.gson.stream.JsonToken;
 public final class TestUtility
 {
 
-  private final static Pattern[] neuters = {
-      Pattern.compile("url +jdbc:.*"),
-      Pattern.compile("database product version.*"),
-      Pattern.compile("driver version.*"),
-      Pattern.compile(".*[A-Za-z]+ \\d+\\, 2014 \\d+:\\d+ [AP]M.*")
-  // Apr 2, 2014 8:38 PM
-  };
-
   public static List<String> compareOutput(final String referenceFile,
                                            final File testOutputFile)
-    throws Exception
-  {
+                                               throws Exception
+                                               {
     return compareOutput(referenceFile, testOutputFile, null);
-  }
+                                               }
 
   public static List<String> compareOutput(final String referenceFile,
                                            final File testOutputFile,
                                            final Charset encoding,
                                            final String outputFormat)
-    throws Exception
-  {
+                                               throws Exception
+                                               {
 
     if (testOutputFile == null || !testOutputFile.exists()
         || !testOutputFile.isFile() || !testOutputFile.canRead()
         || testOutputFile.length() == 0)
     {
       return Collections.singletonList("Output file not created - "
-                                       + testOutputFile.getAbsolutePath());
+          + testOutputFile.getAbsolutePath());
     }
 
     final List<String> failures = new ArrayList<>();
@@ -116,8 +108,8 @@ public final class TestUtility
       {
         final String buildDirectory = System.getProperty("buildDirectory");
         testOutputLocalFile = new File(new File(buildDirectory,
-                                                "unit_tests_results_output"),
-                                       referenceFile);
+            "unit_tests_results_output"),
+            referenceFile);
       }
       testOutputLocalFile.getParentFile().mkdirs();
       testOutputLocalFile.delete();
@@ -130,14 +122,14 @@ public final class TestUtility
         }
 
         failures.add("Actual output in "
-                     + testOutputLocalFile.getAbsolutePath());
+            + testOutputLocalFile.getAbsolutePath());
         System.err.println(testOutputLocalFile.getAbsolutePath());
       }
       else
       {
         failures
-          .add("Output does not match; could not rename file; see actual output in "
-               + testOutputFile.getAbsolutePath());
+        .add("Output does not match; could not rename file; see actual output in "
+            + testOutputFile.getAbsolutePath());
       }
     }
     else
@@ -146,27 +138,27 @@ public final class TestUtility
     }
 
     return failures;
-  }
+                                               }
 
   public static List<String> compareOutput(final String referenceFile,
                                            final File testOutputFile,
                                            final String outputFormat)
-    throws Exception
-  {
+                                               throws Exception
+                                               {
     return compareOutput(referenceFile,
                          testOutputFile,
                          Charset.defaultCharset(),
                          null);
-  }
+                                               }
 
   public static File copyResourceToTempFile(final String resource)
-    throws IOException
+      throws IOException
   {
     try (final InputStream resourceStream = Utility.class
-      .getResourceAsStream(resource);)
-    {
+        .getResourceAsStream(resource);)
+        {
       return writeToTempFile(resourceStream);
-    }
+        }
   }
 
   public static String currentMethodFullName()
@@ -174,7 +166,7 @@ public final class TestUtility
     final StackTraceElement ste = currentMethodStackTraceElement();
     final String className = ste.getClassName();
     return className.substring(className.lastIndexOf('.') + 1) + "."
-           + ste.getMethodName();
+    + ste.getMethodName();
   }
 
   public static String currentMethodName()
@@ -184,7 +176,7 @@ public final class TestUtility
   }
 
   public static Reader readerForFile(final File file, final Charset encoding)
-    throws IOException
+      throws IOException
   {
     final InputStream inputStream = new FileInputStream(file);
     final Reader reader;
@@ -203,10 +195,10 @@ public final class TestUtility
 
   public static Reader readerForResource(final String resource,
                                          final Charset encoding)
-    throws IOException
+                                             throws IOException
   {
     final InputStream inputStream = TestUtility.class
-      .getResourceAsStream("/" + resource);
+        .getResourceAsStream("/" + resource);
     final Reader reader;
     if (inputStream != null)
     {
@@ -228,10 +220,23 @@ public final class TestUtility
     return reader;
   }
 
+  public static File targetDir(final Class<?> clazz)
+      throws IOException
+  {
+    final String relPath = clazz.getProtectionDomain().getCodeSource()
+        .getLocation().getFile().replace("%20", " ");
+    final File targetDir = new File(relPath, "../../target").getCanonicalFile();
+    if (!targetDir.exists())
+    {
+      targetDir.mkdirs();
+    }
+    return targetDir;
+  }
+
   private static boolean contentEquals(final Reader expectedInputReader,
                                        final Reader actualInputReader,
                                        final Pattern... ignoreLinePatterns)
-    throws Exception
+                                           throws Exception
   {
     if (expectedInputReader == null || actualInputReader == null)
     {
@@ -240,7 +245,7 @@ public final class TestUtility
 
     try (final BufferedReader expectedBufferedReader = new BufferedReader(expectedInputReader);
         final BufferedReader actualBufferedReader = new BufferedReader(actualInputReader);)
-    {
+        {
       String expectedline;
       while ((expectedline = expectedBufferedReader.readLine()) != null)
       {
@@ -276,19 +281,19 @@ public final class TestUtility
       }
 
       return true;
-    }
+        }
   }
 
   private static StackTraceElement currentMethodStackTraceElement()
   {
     final StackTraceElement[] stackTrace = Thread.currentThread()
-      .getStackTrace();
+        .getStackTrace();
     for (int i = 0; i < stackTrace.length; i++)
     {
       final StackTraceElement stackTraceElement = stackTrace[i];
       if (stackTraceElement.getClassName().equals(TestUtility.class.getName())
           && stackTraceElement.getMethodName()
-            .equals("currentMethodStackTraceElement"))
+          .equals("currentMethodStackTraceElement"))
       {
         return stackTrace[i + 2];
       }
@@ -299,7 +304,7 @@ public final class TestUtility
 
   private static void fastChannelCopy(final ReadableByteChannel src,
                                       final WritableByteChannel dest)
-    throws IOException
+                                          throws IOException
   {
     final ByteBuffer buffer = ByteBuffer.allocateDirect(16 * 1024);
     while (src.read(buffer) != -1)
@@ -323,18 +328,18 @@ public final class TestUtility
 
   private static boolean validateJSON(final File testOutputFile,
                                       final List<String> failures)
-    throws FileNotFoundException, SAXException, IOException
+                                          throws FileNotFoundException, SAXException, IOException
   {
     final JsonElement jsonElement;
     try (final Reader reader = new BufferedReader(new FileReader(testOutputFile));
         final JsonReader jsonReader = new JsonReader(reader);)
-    {
+        {
       jsonElement = new JsonParser().parse(jsonReader);
       if (jsonReader.peek() != JsonToken.END_DOCUMENT)
       {
         failures.add("JSON document was not fully consumed.");
       }
-    }
+        }
     catch (final Exception e)
     {
       failures.add(e.getMessage());
@@ -365,12 +370,12 @@ public final class TestUtility
 
   private static boolean validateXHTML(final File testOutputFile,
                                        final List<String> failures)
-    throws Exception
+                                           throws Exception
   {
     final DOCTYPEChanger xhtmlReader = new DOCTYPEChanger(new FileReader(testOutputFile));
     xhtmlReader.setRootElement("html");
     xhtmlReader
-      .setSystemIdentifier("http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd");
+    .setSystemIdentifier("http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd");
     xhtmlReader.setPublicIdentifier("-//W3C//DTD XHTML 1.0 Strict//EN");
     xhtmlReader.setReplace(true);
 
@@ -388,7 +393,7 @@ public final class TestUtility
   }
 
   private static File writeToTempFile(final InputStream resourceStream)
-    throws IOException, FileNotFoundException
+      throws IOException, FileNotFoundException
   {
     final File tempFile = File.createTempFile("SchemaCrawler", ".dat");
     tempFile.deleteOnExit();
@@ -401,6 +406,14 @@ public final class TestUtility
 
     return tempFile;
   }
+
+  private final static Pattern[] neuters = {
+                                            Pattern.compile("url +jdbc:.*"),
+                                            Pattern.compile("database product version.*"),
+                                            Pattern.compile("driver version.*"),
+                                            Pattern.compile(".*[A-Za-z]+ \\d+\\, 2014 \\d+:\\d+ [AP]M.*")
+                                            // Apr 2, 2014 8:38 PM
+  };
 
   private TestUtility()
   {

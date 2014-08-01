@@ -33,6 +33,7 @@ import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.test.utility.BaseExecutableTest;
+import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import sf.util.Utility;
 
@@ -41,7 +42,6 @@ public class GraphExecutableOptionsTest
 {
 
   private static final String GRAPH_OPTIONS_OUTPUT = "graph_options_output/";
-  private static final boolean GENERATE_FOR_SITE = false;
 
   @Test
   public void executableForGraph_00()
@@ -216,22 +216,19 @@ public class GraphExecutableOptionsTest
 
     // Check diagram
     final File testDiagramFile = executeExecutable(executable, "png");
-    saveDiagramForSite(testMethodName, testDiagramFile);
+    saveDiagram(testMethodName, testDiagramFile);
     checkDiagramFile(testDiagramFile);
   }
 
-  private void saveDiagramForSite(final String testMethodName,
-                                  final File testDiagramFile)
+  private void saveDiagram(final String testMethodName,
+                           final File testDiagramFile)
     throws IOException
   {
-    if (GENERATE_FOR_SITE)
-    {
-      final String buildDirectory = System.getProperty("buildDirectory");
-      final File siteImages = new File(buildDirectory,
-                                       "../../schemacrawler-site/src/site/resources/images")
-        .getCanonicalFile();
-      final File siteImage = new File(siteImages, testMethodName + ".png");
-      Utility.copyFile(testDiagramFile, siteImage);
-    }
+    final File diagramDir = new File(TestUtility.targetDir(GraphExecutableOptionsTest.class),
+                                     GRAPH_OPTIONS_OUTPUT);
+    diagramDir.mkdirs();
+    Utility.copyFile(testDiagramFile, new File(diagramDir, testMethodName
+                                                           + ".png"));
   }
+
 }
