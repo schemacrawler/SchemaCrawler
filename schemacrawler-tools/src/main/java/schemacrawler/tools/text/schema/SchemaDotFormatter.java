@@ -362,10 +362,16 @@ public final class SchemaDotFormatter
     }
   }
 
-  private String printColumnReference(final String associationName,
+  private String printColumnReference(Table table,
+                                      final String associationName,
                                       final ColumnReference columnReference,
                                       boolean isForeignKeyUnique)
   {
+    if (!table.equals(columnReference.getPrimaryKeyColumn().getParent()))
+    {
+      return "";
+    }
+
     final Column primaryKeyColumn = columnReference.getPrimaryKeyColumn();
     final Column foreignKeyColumn = columnReference.getForeignKeyColumn();
 
@@ -405,12 +411,10 @@ public final class SchemaDotFormatter
       for (final ColumnReference columnReference: foreignKey
         .getColumnReferences())
       {
-        if (table.equals(columnReference.getPrimaryKeyColumn().getParent()))
-        {
-          out.write(printColumnReference(foreignKey.getName(),
-                                         columnReference,
-                                         isForeignKeyUnique));
-        }
+        out.write(printColumnReference(table,
+                                       foreignKey.getName(),
+                                       columnReference,
+                                       isForeignKeyUnique));
       }
     }
   }
@@ -491,7 +495,7 @@ public final class SchemaDotFormatter
       .getWeakAssociations(table);
     for (final ColumnReference weakAssociation: weakAssociations)
     {
-      out.write(printColumnReference("", weakAssociation, false));
+      out.write(printColumnReference(table, "", weakAssociation, false));
     }
   }
 
