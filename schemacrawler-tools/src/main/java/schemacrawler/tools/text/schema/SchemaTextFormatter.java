@@ -539,7 +539,8 @@ final class SchemaTextFormatter
     {
       databaseSpecificTypeName = columnDataType.getFullName();
     }
-    final String typeName = columnDataType.getTypeName();
+    final String typeName = columnDataType.getJavaSqlType()
+      .getJavaSqlTypeName();
     final String userDefined = negate(columnDataType.isUserDefined(),
                                       "user defined");
     final String nullable = negate(columnDataType.isNullable(), "nullable");
@@ -798,7 +799,8 @@ final class SchemaTextFormatter
       final String columnTypeName;
       if (options.isShowStandardColumnTypeNames())
       {
-        columnTypeName = column.getColumnDataType().getTypeName();
+        columnTypeName = column.getColumnDataType().getJavaSqlType()
+          .getJavaSqlTypeName();
       }
       else
       {
@@ -848,7 +850,8 @@ final class SchemaTextFormatter
           .getDatabaseSpecificTypeName();
         if (options.isShowStandardColumnTypeNames())
         {
-          columnTypeName = column.getColumnDataType().getTypeName();
+          columnTypeName = column.getColumnDataType().getJavaSqlType()
+            .getJavaSqlTypeName();
         }
         final String columnType = columnTypeName + column.getWidth();
         final String nullable = column.isNullable()? "": " not null";

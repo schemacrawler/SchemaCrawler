@@ -77,8 +77,9 @@ public class ExcludeTest
           out.println("      database type: "
                       + column.getColumnDataType()
                         .getDatabaseSpecificTypeName());
-          out
-            .println("      type: " + column.getColumnDataType().getTypeName());
+          out.println("      type: "
+                      + column.getColumnDataType().getJavaSqlType()
+                        .getJavaSqlTypeName());
         }
       }
     }
@@ -86,5 +87,4 @@ public class ExcludeTest
     out.close();
     out.assertEquals(TestUtility.currentMethodFullName());
   }
-
 }

@@ -207,43 +207,12 @@ final class MutableColumnDataType
   /**
    * {@inheritDoc}
    *
-   * @see schemacrawler.schema.ColumnDataType#getType()
-   */
-  @Override
-  @Deprecated
-  public int getType()
-  {
-    return javaSqlType.getJavaSqlType();
-  }
-
-  @Override
-  @Deprecated
-  public String getTypeClassName()
-  {
-    return getTypeMappedClass().getCanonicalName();
-  }
-
-  /**
-   * {@inheritDoc}
-   *
    * @see schemacrawler.schema.ColumnDataType#getTypeMappedClass()
    */
   @Override
   public Class<?> getTypeMappedClass()
   {
     return javaSqlTypeMappedClass;
-  }
-
-  /**
-   * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.ColumnDataType#getTypeName()
-   */
-  @Override
-  @Deprecated
-  public String getTypeName()
-  {
-    return javaSqlType.getJavaSqlTypeName();
   }
 
   /**
