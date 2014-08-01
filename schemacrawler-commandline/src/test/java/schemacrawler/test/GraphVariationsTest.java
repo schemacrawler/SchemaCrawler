@@ -79,6 +79,22 @@ public class GraphVariationsTest
     run(args, config, new File(directory, "diagram_ordinals.png"));
   }
 
+  @Test
+  public void diagram_alphabetical()
+    throws Exception
+  {
+    final Map<String, String> args = new HashMap<String, String>();
+    args.put("infolevel", "maximum");
+    args.put("portablenames", "true");
+    args.put("sortcolumns", "true");
+    args.put("tables", ".*");
+    args.put("routines", "");
+
+    final Map<String, String> config = new HashMap<>();
+
+    run(args, config, new File(directory, "diagram_alphabetical.png"));
+  }
+
   private File createConfig(final Map<String, String> config)
     throws IOException
   {
