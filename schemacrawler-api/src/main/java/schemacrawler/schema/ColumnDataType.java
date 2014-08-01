@@ -116,38 +116,11 @@ public interface ColumnDataType
   SearchableType getSearchable();
 
   /**
-   * Gets the java.sql.Types type.
-   *
-   * @return java.sql.Types type
-   * @see #getJavaSqlType()
-   */
-  @Deprecated
-  int getType();
-
-  /**
-   * Gets the Java class name for the type.
-   *
-   * @return The Java class name for the type
-   * @see #getTypeMappedClass()
-   */
-  @Deprecated
-  String getTypeClassName();
-
-  /**
    * Gets the Java class mapped to the type.
    *
    * @return The Java class mapped to the type
    */
   Class<?> getTypeMappedClass();
-
-  /**
-   * Gets the java.sql.Types type name.
-   *
-   * @return java.sql.Types type name
-   * @see #getJavaSqlType()
-   */
-  @Deprecated
-  String getTypeName();
 
   /**
    * Whether the data type is auto-incrementable.
