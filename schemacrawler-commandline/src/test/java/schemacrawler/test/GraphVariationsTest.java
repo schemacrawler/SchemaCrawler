@@ -1,6 +1,8 @@
 package schemacrawler.test;
 
 
+import static schemacrawler.test.utility.TestUtility.currentMethodName;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -23,17 +25,6 @@ public class GraphVariationsTest
 
   private File directory;
 
-  @Before
-  public void setupDirectory()
-    throws IOException
-  {
-    directory = new File(GraphVariationsTest.class.getProtectionDomain()
-                           .getCodeSource().getLocation().getFile()
-                           .replace("%20", " "),
-                         "../../../schemacrawler-site/src/site/resources/images")
-      .getCanonicalFile();
-  }
-
   @Test
   public void diagram()
     throws Exception
@@ -45,11 +36,11 @@ public class GraphVariationsTest
 
     final Map<String, String> config = new HashMap<>();
 
-    run(args, config, new File(directory, "diagram.png"));
+    run(args, config, new File(directory, currentMethodName() + ".png"));
   }
 
   @Test
-  public void diagram_portablenames()
+  public void diagram_2_portablenames()
     throws Exception
   {
     final Map<String, String> args = new HashMap<String, String>();
@@ -60,15 +51,15 @@ public class GraphVariationsTest
 
     final Map<String, String> config = new HashMap<>();
 
-    run(args, config, new File(directory, "diagram_portablenames.png"));
+    run(args, config, new File(directory, currentMethodName() + ".png"));
   }
 
   @Test
-  public void diagram_ordinals()
+  public void diagram_3_ordinals()
     throws Exception
   {
     final Map<String, String> args = new HashMap<String, String>();
-    args.put("infolevel", "maximum");
+    args.put("infolevel", "standard");
     args.put("portablenames", "true");
     args.put("tables", ".*");
     args.put("routines", "");
@@ -76,15 +67,15 @@ public class GraphVariationsTest
     final Map<String, String> config = new HashMap<>();
     config.put("schemacrawler.format.show_ordinal_numbers", "true");
 
-    run(args, config, new File(directory, "diagram_ordinals.png"));
+    run(args, config, new File(directory, currentMethodName() + ".png"));
   }
 
   @Test
-  public void diagram_alphabetical()
+  public void diagram_4_alphabetical()
     throws Exception
   {
     final Map<String, String> args = new HashMap<String, String>();
-    args.put("infolevel", "maximum");
+    args.put("infolevel", "standard");
     args.put("portablenames", "true");
     args.put("sortcolumns", "true");
     args.put("tables", ".*");
@@ -92,7 +83,53 @@ public class GraphVariationsTest
 
     final Map<String, String> config = new HashMap<>();
 
-    run(args, config, new File(directory, "diagram_alphabetical.png"));
+    run(args, config, new File(directory, currentMethodName() + ".png"));
+  }
+
+  @Test
+  public void diagram_5_grep()
+    throws Exception
+  {
+    final Map<String, String> args = new HashMap<String, String>();
+    args.put("infolevel", "maximum");
+    args.put("portablenames", "true");
+    args.put("grepcolumns", ".*\\.BOOKS\\..*\\.ID");
+    args.put("tables", ".*");
+    args.put("tabletypes", "TABLE");
+    args.put("routines", "");
+
+    final Map<String, String> config = new HashMap<>();
+
+    run(args, config, new File(directory, currentMethodName() + ".png"));
+  }
+
+  @Test
+  public void diagram_6_grep_onlymatching()
+    throws Exception
+  {
+    final Map<String, String> args = new HashMap<String, String>();
+    args.put("infolevel", "maximum");
+    args.put("portablenames", "true");
+    args.put("grepcolumns", ".*\\.BOOKS\\..*\\.ID");
+    args.put("only-matching", "true");
+    args.put("tables", ".*");
+    args.put("tabletypes", "TABLE");
+    args.put("routines", "");
+
+    final Map<String, String> config = new HashMap<>();
+
+    run(args, config, new File(directory, currentMethodName() + ".png"));
+  }
+
+  @Before
+  public void setupDirectory()
+    throws IOException
+  {
+    directory = new File(GraphVariationsTest.class.getProtectionDomain()
+                           .getCodeSource().getLocation().getFile()
+                           .replace("%20", " "),
+                         "../../../schemacrawler-site/src/site/resources/images")
+      .getCanonicalFile();
   }
 
   private File createConfig(final Map<String, String> config)
@@ -108,7 +145,7 @@ public class GraphVariationsTest
 
   private void run(final Map<String, String> args,
                    final Map<String, String> config,
-                   File outputFile)
+                   final File outputFile)
     throws Exception
   {
     outputFile.delete();
