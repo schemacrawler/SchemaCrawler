@@ -5,7 +5,15 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-     <release version="10.10.05" date="2014-07-27">
+     <release version="10.10.05" date="2014-08-04">
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Fixed bug with weak associations in diagrams being drawn twice.
+      ]]></action> 
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added more variations of diagrams to website.
+      ]]></action>             
+     </release>    
+     <release version="10.10.04" date="2014-07-27">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Fixed bug with cardinality in diagrams, when a foreign key is only a part of the primary key of a table.
       ]]></action> 
