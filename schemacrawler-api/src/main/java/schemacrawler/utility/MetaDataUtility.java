@@ -33,6 +33,7 @@ import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Table;
+import sf.util.Utility;
 
 /**
  * SchemaCrawler utility methods.

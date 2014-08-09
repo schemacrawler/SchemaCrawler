@@ -22,6 +22,8 @@
 package schemacrawler.tools.text.schema;
 
 
+import static sf.util.Utility.isBlank;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -34,6 +36,7 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.ConditionTimingType;
+import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.DefinedObject;
 import schemacrawler.schema.EventManipulationType;
 import schemacrawler.schema.ForeignKey;
@@ -61,7 +64,6 @@ import schemacrawler.tools.text.utility.Alignment;
 import schemacrawler.tools.text.utility.TextFormattingHelper.DocumentHeaderType;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
 import schemacrawler.utility.NamedObjectSort;
-import sf.util.Utility;
 
 /**
  * Text formatting of schema.
@@ -159,6 +161,7 @@ final class SchemaTextFormatter
     {
       out.println(formattingHelper.createObjectStart(routineName));
       out.println(formattingHelper.createNameRow("", routineType));
+      printRemarks(routine);
 
       printRoutineColumns(routine.getColumns());
       printDefinition(routine);
@@ -169,7 +172,6 @@ final class SchemaTextFormatter
         {
           printDefinition("specific name", "", routine.getSpecificName());
         }
-        printDefinition("remarks", "", routine.getRemarks());
       }
 
       out.println(formattingHelper.createObjectEnd());
@@ -208,6 +210,8 @@ final class SchemaTextFormatter
     {
       out.println(formattingHelper.createObjectStart(""));
       out.println(formattingHelper.createNameRow(sequenceName, sequenceType));
+      printRemarks(sequence);
+
       out.println(formattingHelper.createDetailRow("", "increment", String
         .valueOf(sequence.getIncrement())));
       out.println(formattingHelper.createDetailRow("", "minimum value", String
@@ -216,11 +220,6 @@ final class SchemaTextFormatter
         .valueOf(sequence.getMaximumValue())));
       out.println(formattingHelper.createDetailRow("", "cycle", String
         .valueOf(sequence.isCycle())));
-
-      if (isVerbose)
-      {
-        printDefinition("remarks", "", sequence.getRemarks());
-      }
 
       out.println(formattingHelper.createObjectEnd());
     }
@@ -258,6 +257,7 @@ final class SchemaTextFormatter
     {
       out.println(formattingHelper.createObjectStart(synonymName));
       out.println(formattingHelper.createNameRow("", synonymType));
+      printRemarks(synonym);
 
       final String referencedObjectName;
       if (options.isShowUnqualifiedNames())
@@ -274,11 +274,6 @@ final class SchemaTextFormatter
                                                          .createArrow()
                                                        + referencedObjectName,
                                                    ""));
-
-      if (isVerbose)
-      {
-        printDefinition("remarks", "", synonym.getRemarks());
-      }
 
       out.println(formattingHelper.createObjectEnd());
     }
@@ -316,6 +311,7 @@ final class SchemaTextFormatter
     {
       out.println(formattingHelper.createObjectStart(tableName));
       out.println(formattingHelper.createNameRow("", tableType));
+      printRemarks(table);
 
       final List<Column> columns = table.getColumns();
       printTableColumns(columns);
@@ -333,38 +329,6 @@ final class SchemaTextFormatter
       if (isVerbose)
       {
         printPrivileges(table.getPrivileges());
-
-        final String tableRemarks = table.getRemarks();
-        boolean hasColumnRemarks = false;
-        for (final Column column: columns)
-        {
-          final String remarks = column.getRemarks();
-          if (!Utility.isBlank(remarks))
-          {
-            hasColumnRemarks = true;
-            break;
-          }
-        }
-
-        if (Utility.isBlank(tableRemarks) && hasColumnRemarks)
-        {
-          out.println(formattingHelper.createEmptyRow());
-          out.println(formattingHelper.createNameRow("", "[remarks]"));
-        }
-        else
-        {
-          printDefinition("remarks", "", tableRemarks);
-        }
-        for (final Column column: columns)
-        {
-          final String remarks = column.getRemarks();
-          if (!Utility.isBlank(remarks))
-          {
-            out.println(formattingHelper.createDetailRow("",
-                                                         column.getName(),
-                                                         remarks));
-          }
-        }
       }
       out.println(formattingHelper.createObjectEnd());
     }
@@ -635,12 +599,12 @@ final class SchemaTextFormatter
                                final String name,
                                final String definition)
   {
-    if (Utility.isBlank(definition))
+    if (isBlank(definition))
     {
       return;
     }
     final String definitionName;
-    if (Utility.isBlank(name))
+    if (isBlank(name))
     {
       definitionName = "";
     }
@@ -757,7 +721,7 @@ final class SchemaTextFormatter
       {
         pkName = name;
       }
-      if (Utility.isBlank(pkName))
+      if (isBlank(pkName))
       {
         pkName = "";
       }
@@ -784,6 +748,18 @@ final class SchemaTextFormatter
                                      + (grant.isGrantable()? " (grantable)": "");
           out.println(formattingHelper.createDetailRow("", grantedFrom, ""));
         }
+      }
+    }
+  }
+
+  private void printRemarks(final DatabaseObject object)
+  {
+    if (isVerbose)
+    {
+      final String remarks = object.getRemarks();
+      if (!isBlank(remarks))
+      {
+        out.println(formattingHelper.createDefinitionRow(remarks));
       }
     }
   }
@@ -866,6 +842,16 @@ final class SchemaTextFormatter
       out.println(formattingHelper.createDetailRow(ordinalNumberString,
                                                    columnName,
                                                    columnDetails));
+
+      if (isVerbose)
+      {
+        final String remarks = column.getRemarks();
+        if (!isBlank(remarks))
+        {
+          out.println(formattingHelper.createDetailRow("", "", remarks));
+        }
+      }
+
     }
   }
 
@@ -953,11 +939,11 @@ final class SchemaTextFormatter
 
         out.println(formattingHelper.createNameRow(triggerName, triggerType));
 
-        if (!Utility.isBlank(actionCondition))
+        if (!isBlank(actionCondition))
         {
           out.println(formattingHelper.createDescriptionRow(actionCondition));
         }
-        if (!Utility.isBlank(actionStatement))
+        if (!isBlank(actionStatement))
         {
           out.println(formattingHelper.createDescriptionRow(actionStatement));
         }
