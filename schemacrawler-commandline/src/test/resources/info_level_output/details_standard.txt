@@ -238,6 +238,7 @@ Tables
 PUBLIC.BOOKS.AUTHORS
 ------------------------------------------------------------------------
                                                                  [table]
+Contact details for book authors
   ID                                INTEGER not null            
   FIRSTNAME                         VARCHAR(20) not null        
   LASTNAME                          VARCHAR(20) not null        
@@ -267,9 +268,6 @@ IDX_A_AUTHORS                                         [non-unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
 
-                                                               [remarks]
-Contact details for book authors
-
 
 
 PUBLIC.BOOKS.AUTHORSLIST
@@ -284,6 +282,7 @@ PUBLIC.BOOKS.AUTHORSLIST
 PUBLIC.BOOKS.BOOKAUTHORS
 ------------------------------------------------------------------------
                                                                  [table]
+Relationship between books and their authors, along with the latest updated information
   BOOKID                            INTEGER not null            
   AUTHORID                          INTEGER not null            
   "UPDATE"                          CLOB                        
@@ -304,20 +303,24 @@ UIDX_BOOKAUTHORS                                          [unique index]
   BOOKID                            ascending                   
   AUTHORID                          ascending                   
 
-                                                               [remarks]
-Relationship between books and their authors, along with the latest updated information
-
 
 
 PUBLIC.BOOKS.BOOKS
 ------------------------------------------------------------------------
                                                                  [table]
+Details for published books
   ID                                INTEGER not null            
+                                    Unique (internal) id for book
   TITLE                             VARCHAR(255) not null       
+                                    Book title                  
   DESCRIPTION                       VARCHAR(255)                
+                                    Book description            
   PUBLISHERID                       INTEGER not null            
+                                    Foreign key to the book publisher
   PUBLICATIONDATE                   DATE                        
+                                    Book publication date       
   PRICE                             DOUBLE(64, 0)               
+                                    Current price for the book  
   PREVIOUSEDITIONID                 INTEGER                     
 
 PK_BOOKS                                                   [primary key]
@@ -338,15 +341,6 @@ UIDX_PREVIOUSEDITION                                      [unique index]
 SYS_IDX_10109                                         [non-unique index]
   PREVIOUSEDITIONID                 ascending                   
 
-                                                               [remarks]
-Details for published books
-  ID                                Unique (internal) id for book
-  TITLE                             Book title                  
-  DESCRIPTION                       Book description            
-  PUBLISHERID                       Foreign key to the book publisher
-  PUBLICATIONDATE                   Book publication date       
-  PRICE                             Current price for the book  
-
 
 
 PUBLIC.BOOKS."Global Counts"
@@ -359,19 +353,17 @@ PUBLIC.BOOKS."Global Counts"
 PUBLIC.BOOKS.PUBLISHERS
 ------------------------------------------------------------------------
                                                                  [table]
+List of book publishers
   ID                                INTEGER not null            
+                                    Unique (internal) id for book publisher
   PUBLISHER                         VARCHAR(255)                
+                                    Name of book publisher      
 
 SYS_PK_10092                                               [primary key]
   ID                                ascending                   
 
 SYS_IDX_SYS_PK_10092_10093                                [unique index]
   ID                                ascending                   
-
-                                                               [remarks]
-List of book publishers
-  ID                                Unique (internal) id for book publisher
-  PUBLISHER                         Name of book publisher      
 
 
 

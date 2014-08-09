@@ -433,6 +433,7 @@ Tables
 PUBLIC.BOOKS.AUTHORS
 ------------------------------------------------------------------------
                                                                  [table]
+Contact details for book authors
   ID                                INTEGER not null            
   FIRSTNAME                         VARCHAR(20) not null        
   LASTNAME                          VARCHAR(20) not null        
@@ -480,9 +481,6 @@ TRIGGER                                                      [privilege]
 UPDATE                                                       [privilege]
   _SYSTEM --> DBA (grantable)                                   
 
-                                                               [remarks]
-Contact details for book authors
-
 
 
 PUBLIC.BOOKS.AUTHORSLIST
@@ -515,6 +513,7 @@ UPDATE                                                       [privilege]
 PUBLIC.BOOKS.BOOKAUTHORS
 ------------------------------------------------------------------------
                                                                  [table]
+Relationship between books and their authors, along with the latest updated information
   BOOKID                            INTEGER not null            
   AUTHORID                          INTEGER not null            
   "UPDATE"                          CLOB                        
@@ -553,20 +552,24 @@ TRIGGER                                                      [privilege]
 UPDATE                                                       [privilege]
   _SYSTEM --> DBA (grantable)                                   
 
-                                                               [remarks]
-Relationship between books and their authors, along with the latest updated information
-
 
 
 PUBLIC.BOOKS.BOOKS
 ------------------------------------------------------------------------
                                                                  [table]
+Details for published books
   ID                                INTEGER not null            
+                                    Unique (internal) id for book
   TITLE                             VARCHAR(255) not null       
+                                    Book title                  
   DESCRIPTION                       VARCHAR(255)                
+                                    Book description            
   PUBLISHERID                       INTEGER not null            
+                                    Foreign key to the book publisher
   PUBLICATIONDATE                   DATE                        
+                                    Book publication date       
   PRICE                             DOUBLE(64, 0)               
+                                    Current price for the book  
   PREVIOUSEDITIONID                 INTEGER                     
 
 PK_BOOKS                                                   [primary key]
@@ -611,15 +614,6 @@ TRIGGER                                                      [privilege]
 UPDATE                                                       [privilege]
   _SYSTEM --> DBA (grantable)                                   
 
-                                                               [remarks]
-Details for published books
-  ID                                Unique (internal) id for book
-  TITLE                             Book title                  
-  DESCRIPTION                       Book description            
-  PUBLISHERID                       Foreign key to the book publisher
-  PUBLICATIONDATE                   Book publication date       
-  PRICE                             Current price for the book  
-
 
 
 PUBLIC.BOOKS."Global Counts"
@@ -650,8 +644,11 @@ UPDATE                                                       [privilege]
 PUBLIC.BOOKS.PUBLISHERS
 ------------------------------------------------------------------------
                                                                  [table]
+List of book publishers
   ID                                INTEGER not null            
+                                    Unique (internal) id for book publisher
   PUBLISHER                         VARCHAR(255)                
+                                    Name of book publisher      
 
 SYS_PK_10092                                               [primary key]
   ID                                ascending                   
@@ -679,11 +676,6 @@ TRIGGER                                                      [privilege]
 
 UPDATE                                                       [privilege]
   _SYSTEM --> DBA (grantable)                                   
-
-                                                               [remarks]
-List of book publishers
-  ID                                Unique (internal) id for book publisher
-  PUBLISHER                         Name of book publisher      
 
 
 
