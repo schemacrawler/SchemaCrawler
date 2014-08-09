@@ -9,6 +9,7 @@ Tables
 PUBLIC.BOOKS.AUTHORS
 ------------------------------------------------------------------------
                                                                  [table]
+Contact details for book authors
   ID                                INTEGER not null            
   FIRSTNAME                         VARCHAR(20) not null        
   LASTNAME                          VARCHAR(20) not null        
@@ -52,9 +53,6 @@ BOOKS.AUTHORS.FIRSTNAME IS NOT NULL
 
 SYS_CT_10096                                          [check constraint]
 BOOKS.AUTHORS.LASTNAME IS NOT NULL
-
-                                                               [remarks]
-Contact details for book authors
 
 
 

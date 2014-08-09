@@ -80,7 +80,7 @@ abstract class BaseTextFormattingHelper
   public String createDescriptionRow(final String description)
   {
     final TableRow row = new TableRow(outputFormat);
-    row.add(newTableCell("", "ordinal", outputFormat));
+    row.add(newTableCell("", "spacer", outputFormat));
     row.add(new TableCell(description,
                           0,
                           Alignment.inherit,
@@ -109,7 +109,7 @@ abstract class BaseTextFormattingHelper
     final TableRow row = new TableRow(outputFormat);
     if (sf.util.Utility.isBlank(ordinal))
     {
-      row.add(newTableCell("", "ordinal", outputFormat));
+      row.add(newTableCell("", "spacer", outputFormat));
     }
     else
     {
@@ -117,7 +117,7 @@ abstract class BaseTextFormattingHelper
                             2,
                             Alignment.inherit,
                             false,
-                            "ordinal",
+                            "spacer",
                             Color.white,
                             1,
                             outputFormat));
@@ -223,11 +223,13 @@ abstract class BaseTextFormattingHelper
     final int nameWidth = 40;
     final int valueWidth = 70 - nameWidth;
 
-    final Alignment alignmentForValue = valueAlignment == null? Alignment.inherit
+    final Alignment alignmentForValue = valueAlignment == null
+                                                              ? Alignment.inherit
                                                               : valueAlignment;
     final String valueStyle = "property_value"
-                              + (alignmentForValue == Alignment.inherit? ""
-                                                                    : " right");
+                              + (alignmentForValue == Alignment.inherit
+                                                                       ? ""
+                                                                       : " right");
 
     final TableRow row = new TableRow(outputFormat);
     row.add(new TableCell(name,
