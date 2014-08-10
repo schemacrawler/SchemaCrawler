@@ -199,13 +199,16 @@ public final class SchemaDotFormatter
                           1)).toString());
     out.println();
 
-    final String remarks = table.getRemarks();
-    if (!Utility.isBlank(remarks))
+    if (isVerbose)
     {
-      out.append(new TableRow(OutputFormat.html)
-        .add(newTableCell(remarks, Alignment.left, false, Color.white, 3))
-        .toString());
-      out.println();
+      final String remarks = table.getRemarks();
+      if (!Utility.isBlank(remarks))
+      {
+        out.append(new TableRow(OutputFormat.html)
+          .add(newTableCell(remarks, Alignment.left, false, Color.white, 3))
+          .toString());
+        out.println();
+      }
     }
 
     if (!isList)
@@ -490,22 +493,26 @@ public final class SchemaDotFormatter
       row.lastCell().addAttribute("port", nodeId(column) + ".end");
       out.println(row.toString());
 
-      final String remarks = column.getRemarks();
-      if (!Utility.isBlank(remarks))
+      if (isVerbose)
       {
-        final TableRow remarksRow = new TableRow(OutputFormat.html);
-        if (options.isShowOrdinalNumbers())
+        final String remarks = column.getRemarks();
+        if (!Utility.isBlank(remarks))
         {
-          remarksRow.add(newTableCell("",
-                                      Alignment.right,
-                                      false,
-                                      Color.white,
-                                      1));
+          final TableRow remarksRow = new TableRow(OutputFormat.html);
+          if (options.isShowOrdinalNumbers())
+          {
+            remarksRow.add(newTableCell("",
+                                        Alignment.right,
+                                        false,
+                                        Color.white,
+                                        1));
+          }
+          remarksRow
+            .add(newTableCell("", Alignment.left, false, Color.white, 1))
+            .add(newTableCell(" ", Alignment.left, false, Color.white, 1))
+            .add(newTableCell(remarks, Alignment.left, false, Color.white, 1));
+          out.println(remarksRow.toString());
         }
-        remarksRow.add(newTableCell("", Alignment.left, false, Color.white, 1))
-          .add(newTableCell(" ", Alignment.left, false, Color.white, 1))
-          .add(newTableCell(remarks, Alignment.left, false, Color.white, 1));
-        out.println(remarksRow.toString());
       }
 
     }
