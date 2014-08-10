@@ -30,7 +30,7 @@ digraph "SchemaCrawler_Diagram" {
 	</tr>
 	<tr>
 		<td align='right'>Generated on:</td>
-		<td align='left'>Jul 27, 2014 3:29 PM</td>
+		<td align='left'>Aug 9, 2014 10:57 PM</td>
 	</tr>
 	<tr>
 		<td align='right'>Database:</td>
@@ -52,6 +52,9 @@ digraph "SchemaCrawler_Diagram" {
 	<tr>
 		<td colspan='2' bgcolor='#96C2FA' align='left'><b><i>PUBLIC.BOOKS.AUTHORS</i></b></td>
 		<td bgcolor='#96C2FA' align='right'>[table]</td>
+	</tr>
+	<tr>
+		<td colspan='3' align='left'>Contact details for book authors</td>
 	</tr>
       </table>
     >
@@ -81,6 +84,9 @@ digraph "SchemaCrawler_Diagram" {
 		<td colspan='2' bgcolor='#96C2FA' align='left'><b><i>PUBLIC.BOOKS.BOOKAUTHORS</i></b></td>
 		<td bgcolor='#96C2FA' align='right'>[table]</td>
 	</tr>
+	<tr>
+		<td colspan='3' align='left'>Relationship between books and their authors, along with the latest updated information</td>
+	</tr>
       </table>
     >
   ];
@@ -94,6 +100,9 @@ digraph "SchemaCrawler_Diagram" {
 	<tr>
 		<td colspan='2' bgcolor='#96C2FA' align='left'><b><i>PUBLIC.BOOKS.BOOKS</i></b></td>
 		<td bgcolor='#96C2FA' align='right'>[table]</td>
+	</tr>
+	<tr>
+		<td colspan='3' align='left'>Details for published books</td>
 	</tr>
       </table>
     >
@@ -122,6 +131,9 @@ digraph "SchemaCrawler_Diagram" {
 	<tr>
 		<td colspan='2' bgcolor='#96C2FA' align='left'><b><i>PUBLIC.BOOKS.PUBLISHERS</i></b></td>
 		<td bgcolor='#96C2FA' align='right'>[table]</td>
+	</tr>
+	<tr>
+		<td colspan='3' align='left'>List of book publishers</td>
 	</tr>
       </table>
     >
