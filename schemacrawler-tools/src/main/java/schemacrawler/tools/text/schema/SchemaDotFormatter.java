@@ -54,6 +54,7 @@ import schemacrawler.tools.text.utility.TableRow;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
 import schemacrawler.utility.MetaDataUtility.Connectivity;
 import schemacrawler.utility.NamedObjectSort;
+import sf.util.Utility;
 
 /**
  * GraphViz DOT formatting of schema.
@@ -184,17 +185,28 @@ public final class SchemaDotFormatter
       .append("      <table border=\"1\" cellborder=\"0\" cellpadding=\"2\" cellspacing=\"0\" bgcolor=\"white\" color=\"#555555\">")
       .println();
 
-    final TableRow row = new TableRow(OutputFormat.html);
-    row.add(newTableCell(tableName,
-                         Alignment.left,
-                         true,
-                         tableNameBgColor,
-                         colspan));
-    row
-      .add(newTableCell(tableType, Alignment.right, false, tableNameBgColor, 1));
-
-    out.append(row.toString());
+    out
+      .append(new TableRow(OutputFormat.html)
+        .add(newTableCell(tableName,
+                          Alignment.left,
+                          true,
+                          tableNameBgColor,
+                          colspan))
+        .add(newTableCell(tableType,
+                          Alignment.right,
+                          false,
+                          tableNameBgColor,
+                          1)).toString());
     out.println();
+
+    final String remarks = table.getRemarks();
+    if (!Utility.isBlank(remarks))
+    {
+      out.append(new TableRow(OutputFormat.html)
+        .add(newTableCell(remarks, Alignment.left, false, Color.white, 3))
+        .toString());
+      out.println();
+    }
 
     if (!isList)
     {
@@ -465,22 +477,37 @@ public final class SchemaDotFormatter
                              Color.white,
                              1));
       }
-      row.add(newTableCell(column.getName(),
-                           Alignment.left,
-                           emphasize,
-                           Color.white,
-                           1));
-      row.add(newTableCell(" ", Alignment.left, false, Color.white, 1));
-      row.add(newTableCell(columnDetails,
-                           Alignment.right,
-                           false,
-                           Color.white,
-                           1));
+      row
+        .add(newTableCell(column.getName(),
+                          Alignment.left,
+                          emphasize,
+                          Color.white,
+                          1))
+        .add(newTableCell(" ", Alignment.left, false, Color.white, 1))
+        .add(newTableCell(columnDetails, Alignment.left, false, Color.white, 1));
 
       row.firstCell().addAttribute("port", nodeId(column) + ".start");
       row.lastCell().addAttribute("port", nodeId(column) + ".end");
-
       out.println(row.toString());
+
+      final String remarks = column.getRemarks();
+      if (!Utility.isBlank(remarks))
+      {
+        final TableRow remarksRow = new TableRow(OutputFormat.html);
+        if (options.isShowOrdinalNumbers())
+        {
+          remarksRow.add(newTableCell("",
+                                      Alignment.right,
+                                      false,
+                                      Color.white,
+                                      1));
+        }
+        remarksRow.add(newTableCell("", Alignment.left, false, Color.white, 1))
+          .add(newTableCell(" ", Alignment.left, false, Color.white, 1))
+          .add(newTableCell(remarks, Alignment.left, false, Color.white, 1));
+        out.println(remarksRow.toString());
+      }
+
     }
 
   }
