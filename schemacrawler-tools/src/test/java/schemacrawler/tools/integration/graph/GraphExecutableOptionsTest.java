@@ -22,10 +22,15 @@
 package schemacrawler.tools.integration.graph;
 
 
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static schemacrawler.test.utility.TestUtility.currentMethodName;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
@@ -39,6 +44,7 @@ public class GraphExecutableOptionsTest
 {
 
   private static final String GRAPH_OPTIONS_OUTPUT = "graph_options_output/";
+  private File directory;
 
   @Test
   public void executableForGraph_00()
@@ -213,7 +219,22 @@ public class GraphExecutableOptionsTest
 
     // Check diagram
     final File testDiagramFile = executeExecutable(executable, "png");
+    Files
+      .copy(testDiagramFile.toPath(),
+            Paths.get(directory.getCanonicalPath(), testMethodName + ".png"),
+            REPLACE_EXISTING);
     checkDiagramFile(testDiagramFile);
+  }
+
+  @Before
+  public void setupDirectory()
+    throws IOException
+  {
+    directory = new File(this.getClass().getProtectionDomain().getCodeSource()
+                           .getLocation().getFile().replace("%20", " "),
+                         "../../../schemacrawler-docs/graphs")
+      .getCanonicalFile();
+    directory.mkdirs();
   }
 
 }

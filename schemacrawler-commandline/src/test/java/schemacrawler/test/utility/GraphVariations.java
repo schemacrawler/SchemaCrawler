@@ -150,9 +150,8 @@ public class GraphVariations
   public void setupDirectory()
     throws IOException
   {
-    directory = new File(GraphVariations.class.getProtectionDomain()
-                           .getCodeSource().getLocation().getFile()
-                           .replace("%20", " "),
+    directory = new File(this.getClass().getProtectionDomain().getCodeSource()
+                           .getLocation().getFile().replace("%20", " "),
                          "../../../schemacrawler-site/src/site/resources/images")
       .getCanonicalFile();
   }
