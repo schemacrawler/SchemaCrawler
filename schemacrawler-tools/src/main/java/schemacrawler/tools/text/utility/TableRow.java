@@ -46,9 +46,10 @@ public final class TableRow
     cells = new ArrayList<>();
   }
 
-  public void add(final TableCell cell)
+  public TableRow add(final TableCell cell)
   {
     cells.add(cell);
+    return this;
   }
 
   public TableCell firstCell()

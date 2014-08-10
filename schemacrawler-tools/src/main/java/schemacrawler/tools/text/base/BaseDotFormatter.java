@@ -199,4 +199,5 @@ public abstract class BaseDotFormatter<O extends BaseTextOptions>
                          colspan,
                          OutputFormat.html);
   }
+
 }
