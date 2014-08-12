@@ -10,38 +10,38 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.options.OutputOptions;
 
 class ExecutableCommandProvider
-implements CommandProvider
+  implements CommandProvider
 {
 
   private static final Logger LOGGER = Logger
-      .getLogger(ExecutableCommandProvider.class.getName());
+    .getLogger(ExecutableCommandProvider.class.getName());
 
   private final String command;
   private final String executableClassName;
 
   ExecutableCommandProvider(final String command,
                             final String executableClassName)
-                            {
+  {
     this.command = command;
     this.executableClassName = executableClassName;
-                            }
+  }
 
   @Override
   public Executable configureNewExecutable(final SchemaCrawlerOptions schemaCrawlerOptions,
                                            final OutputOptions outputOptions)
-                                               throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
 
     Class<? extends Executable> commandExecutableClass;
     try
     {
       commandExecutableClass = (Class<? extends Executable>) Class
-          .forName(executableClassName);
+        .forName(executableClassName);
     }
     catch (final ClassNotFoundException e)
     {
       throw new SchemaCrawlerException("Could not load class "
-          + executableClassName, e);
+                                       + executableClassName, e);
     }
 
     Executable executable;
@@ -52,20 +52,20 @@ implements CommandProvider
     catch (final Exception e)
     {
       LOGGER.log(Level.FINE, "Could not instantiate " + executableClassName
-                 + " using the default constructor");
+                             + " using the default constructor");
       try
       {
         final Constructor<? extends Executable> constructor = commandExecutableClass
-            .getConstructor(new Class[] {
-                                         String.class
-            });
+          .getConstructor(new Class[] {
+            String.class
+          });
         executable = constructor.newInstance(command);
       }
       catch (final Exception e1)
       {
         throw new SchemaCrawlerException("Could not instantiate executable for command '"
-            + command + "'",
-            e1);
+                                             + command + "'",
+                                         e1);
       }
     }
 

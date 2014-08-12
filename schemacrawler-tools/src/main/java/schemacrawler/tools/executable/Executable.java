@@ -19,7 +19,7 @@ public interface Executable
    *         On an exception
    */
   void execute(Connection connection)
-      throws Exception;
+    throws Exception;
 
   Config getAdditionalConfiguration();
 

@@ -105,10 +105,8 @@ extends BaseStagedExecutable
     }
   }
 
-  private SchemaTraversalHandler getSchemaTraversalHandler()
-      throws SchemaCrawlerException
+  private SchemaTextDetailType getSchemaTextDetailType()
   {
-    final SchemaTraversalHandler formatter;
     SchemaTextDetailType schemaTextDetailType;
     try
     {
@@ -118,6 +116,14 @@ extends BaseStagedExecutable
     {
       schemaTextDetailType = SchemaTextDetailType.schema;
     }
+    return schemaTextDetailType;
+  }
+
+  private SchemaTraversalHandler getSchemaTraversalHandler()
+      throws SchemaCrawlerException
+  {
+    final SchemaTextDetailType schemaTextDetailType = getSchemaTextDetailType();
+    final SchemaTraversalHandler formatter;
 
     final OutputFormat outputFormat = outputOptions.getOutputFormat();
     if (outputFormat == OutputFormat.json)

@@ -34,7 +34,7 @@ class SchemaExecutableCommandProvider
     final Executable executable;
     if (isGraph)
     {
-      executable = new GraphExecutable();
+      executable = new GraphExecutable(getCommand());
     }
     else
     {
