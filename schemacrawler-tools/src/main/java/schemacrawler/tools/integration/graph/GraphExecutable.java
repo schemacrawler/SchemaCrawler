@@ -21,6 +21,11 @@
 package schemacrawler.tools.integration.graph;
 
 
+import static java.nio.file.Files.copy;
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
+import static sf.util.Utility.isBlank;
+import static sf.util.Utility.readResourceFully;
+
 import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
@@ -40,7 +45,6 @@ import schemacrawler.tools.text.schema.SchemaDotFormatter;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
 import schemacrawler.tools.traversal.SchemaTraverser;
-import sf.util.Utility;
 
 /**
  * Main executor for the graphing integration.
@@ -110,7 +114,7 @@ public final class GraphExecutable
     }
     catch (final Exception e)
     {
-      System.out.println(Utility.readResourceFully("/dot.error.txt"));
+      System.out.println(readResourceFully("/dot.error.txt"));
       throw e;
     }
   }
@@ -151,7 +155,7 @@ public final class GraphExecutable
     final Iterator<String> iterator = command.iterator();
     while (iterator.hasNext())
     {
-      if (Utility.isBlank(iterator.next()))
+      if (isBlank(iterator.next()))
       {
         iterator.remove();
       }
@@ -168,7 +172,9 @@ public final class GraphExecutable
 
     if (graphOutputOptions.getGraphOutputFormat() == GraphOutputFormat.echo)
     {
-      Utility.copyFile(dotFile, graphOutputOptions.getDiagramFile());
+      copy(dotFile.toPath(),
+           graphOutputOptions.getDiagramFile().toPath(),
+           REPLACE_EXISTING);
       return;
     }
 
@@ -180,7 +186,7 @@ public final class GraphExecutable
     final int exitCode = processExecutor.execute();
 
     final String processOutput = processExecutor.getProcessOutput();
-    if (!Utility.isBlank(processOutput))
+    if (!isBlank(processOutput))
     {
       LOGGER.log(Level.INFO, processOutput);
     }
@@ -191,7 +197,7 @@ public final class GraphExecutable
                                           exitCode,
                                           processError));
     }
-    if (!Utility.isBlank(processError))
+    if (!isBlank(processError))
     {
       LOGGER.log(Level.WARNING, processError);
     }
