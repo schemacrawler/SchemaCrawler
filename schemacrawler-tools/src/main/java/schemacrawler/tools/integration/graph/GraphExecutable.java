@@ -52,7 +52,7 @@ import schemacrawler.tools.traversal.SchemaTraverser;
  * @author Sualeh Fatehi
  */
 public final class GraphExecutable
-  extends BaseStagedExecutable
+extends BaseStagedExecutable
 {
 
   static final String COMMAND = "graph";
@@ -60,11 +60,16 @@ public final class GraphExecutable
   private GraphOptions graphOptions;
 
   private static final Logger LOGGER = Logger.getLogger(GraphExecutable.class
-    .getName());
+                                                        .getName());
 
   public GraphExecutable()
   {
     super(COMMAND);
+  }
+
+  public GraphExecutable(final String command)
+  {
+    super(command);
   }
 
   /**
@@ -72,14 +77,14 @@ public final class GraphExecutable
    */
   @Override
   public void executeOn(final Database db, final Connection connection)
-    throws Exception
+      throws Exception
   {
     // Determine what decorators to apply to the database
     InfoLevel infoLevel;
     try
     {
       infoLevel = InfoLevel.valueOf(schemaCrawlerOptions.getSchemaInfoLevel()
-        .getTag());
+                                    .getTag());
     }
     catch (final Exception e)
     {
@@ -141,7 +146,7 @@ public final class GraphExecutable
   private List<String> createDiagramCommand(final GraphOptions graphOptions,
                                             final GraphOutputOptions graphOutputOptions,
                                             final File dotFile)
-  {
+                                            {
     final List<String> command = new ArrayList<>();
     command.add("dot");
 
@@ -162,12 +167,12 @@ public final class GraphExecutable
     }
 
     return command;
-  }
+                                            }
 
   private void generateDiagram(final GraphOptions graphOptions,
                                final GraphOutputOptions graphOutputOptions,
                                final File dotFile)
-    throws IOException
+                                   throws IOException
   {
 
     if (graphOutputOptions.getGraphOutputFormat() == GraphOutputFormat.echo)
@@ -203,13 +208,31 @@ public final class GraphExecutable
     }
   }
 
+  private SchemaTextDetailType getSchemaTextDetailType()
+  {
+    SchemaTextDetailType schemaTextDetailType;
+    try
+    {
+      schemaTextDetailType = SchemaTextDetailType.valueOf(command);
+    }
+    catch (final IllegalArgumentException e)
+    {
+      schemaTextDetailType = null;
+    }
+    return schemaTextDetailType;
+  }
+
   private SchemaTraversalHandler getSchemaTraversalHandler(final File dotFile)
-    throws SchemaCrawlerException
+      throws SchemaCrawlerException
   {
     final SchemaTraversalHandler formatter;
     final GraphOptions graphOptions = getGraphOptions();
-    final SchemaTextDetailType schemaTextDetailType = graphOptions
-      .getSchemaTextDetailType();
+
+    SchemaTextDetailType schemaTextDetailType = getSchemaTextDetailType();
+    if (schemaTextDetailType == null)
+    {
+      schemaTextDetailType = graphOptions.getSchemaTextDetailType();
+    }
 
     formatter = new SchemaDotFormatter(schemaTextDetailType,
                                        graphOptions,
