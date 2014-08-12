@@ -8,14 +8,13 @@ import schemacrawler.tools.integration.graph.GraphOutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.schema.SchemaTextExecutable;
 
-class SchemaTextExecutableCommandProvider
+class SchemaExecutableCommandProvider
   extends ExecutableCommandProvider
 {
 
-  public SchemaTextExecutableCommandProvider(final String command,
-                                             final String executableClassName)
+  public SchemaExecutableCommandProvider(final String command)
   {
-    super(command, executableClassName);
+    super(command, "");
   }
 
   @Override
