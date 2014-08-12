@@ -128,9 +128,18 @@ extends BaseStagedExecutable
     }
     else
     {
-      formatter = new SchemaTextFormatter(schemaTextDetailType,
-                                          schemaTextOptions,
-                                          outputOptions);
+      if (schemaTextDetailType == SchemaTextDetailType.list)
+      {
+        formatter = new SchemaTextListFormatter(schemaTextDetailType,
+                                                schemaTextOptions,
+                                                outputOptions);
+      }
+      else
+      {
+        formatter = new SchemaTextFormatter(schemaTextDetailType,
+                                            schemaTextOptions,
+                                            outputOptions);
+      }
     }
 
     return formatter;
