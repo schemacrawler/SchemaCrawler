@@ -8,12 +8,12 @@ import schemacrawler.tools.options.OutputOptions;
 public interface CommandProvider
 {
 
-  String getCommand();
-
-  String getHelpResource();
-
   Executable configureNewExecutable(SchemaCrawlerOptions schemaCrawlerOptions,
                                     OutputOptions outputOptions)
     throws SchemaCrawlerException;
+
+  String getCommand();
+
+  String getHelpResource();
 
 }
