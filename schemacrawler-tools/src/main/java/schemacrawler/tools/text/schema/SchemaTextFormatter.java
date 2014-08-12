@@ -60,7 +60,6 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.analysis.associations.DatabaseWithAssociations;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.BaseTabularFormatter;
-import schemacrawler.tools.text.utility.Alignment;
 import schemacrawler.tools.text.utility.TextFormattingHelper.DocumentHeaderType;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
 import schemacrawler.utility.NamedObjectSort;
@@ -86,7 +85,6 @@ final class SchemaTextFormatter
   }
 
   private final boolean isVerbose;
-  private final boolean isList;
 
   /**
    * Text formatting of schema.
@@ -109,7 +107,6 @@ final class SchemaTextFormatter
           schemaTextDetailType == SchemaTextDetailType.details,
           outputOptions);
     isVerbose = schemaTextDetailType == SchemaTextDetailType.details;
-    isList = schemaTextDetailType == SchemaTextDetailType.list;
   }
 
   /**
@@ -151,31 +148,22 @@ final class SchemaTextFormatter
     }
     final String routineType = "[" + routineTypeDetail + "]";
 
-    if (isList)
-    {
-      out.println(formattingHelper.createNameValueRow(routineName,
-                                                      routineType,
-                                                      Alignment.right));
-    }
-    else
-    {
-      out.println(formattingHelper.createObjectStart(routineName));
-      out.println(formattingHelper.createNameRow("", routineType));
-      printRemarks(routine);
+    out.println(formattingHelper.createObjectStart(routineName));
+    out.println(formattingHelper.createNameRow("", routineType));
+    printRemarks(routine);
 
-      printRoutineColumns(routine.getColumns());
-      printDefinition(routine);
+    printRoutineColumns(routine.getColumns());
+    printDefinition(routine);
 
-      if (isVerbose)
+    if (isVerbose)
+    {
+      if (!options.isHideRoutineSpecificNames())
       {
-        if (!options.isHideRoutineSpecificNames())
-        {
-          printDefinition("specific name", "", routine.getSpecificName());
-        }
+        printDefinition("specific name", "", routine.getSpecificName());
       }
-
-      out.println(formattingHelper.createObjectEnd());
     }
+
+    out.println(formattingHelper.createObjectEnd());
 
     out.flush();
 
@@ -200,29 +188,20 @@ final class SchemaTextFormatter
     }
     final String sequenceType = "[sequence]";
 
-    if (isList)
-    {
-      out.println(formattingHelper.createNameValueRow(sequenceName,
-                                                      sequenceType,
-                                                      Alignment.right));
-    }
-    else
-    {
-      out.println(formattingHelper.createObjectStart(""));
-      out.println(formattingHelper.createNameRow(sequenceName, sequenceType));
-      printRemarks(sequence);
+    out.println(formattingHelper.createObjectStart(""));
+    out.println(formattingHelper.createNameRow(sequenceName, sequenceType));
+    printRemarks(sequence);
 
-      out.println(formattingHelper.createDetailRow("", "increment", String
-        .valueOf(sequence.getIncrement())));
-      out.println(formattingHelper.createDetailRow("", "minimum value", String
-        .valueOf(sequence.getMinimumValue())));
-      out.println(formattingHelper.createDetailRow("", "maximum value", String
-        .valueOf(sequence.getMaximumValue())));
-      out.println(formattingHelper.createDetailRow("", "cycle", String
-        .valueOf(sequence.isCycle())));
+    out.println(formattingHelper.createDetailRow("", "increment", String
+      .valueOf(sequence.getIncrement())));
+    out.println(formattingHelper.createDetailRow("", "minimum value", String
+      .valueOf(sequence.getMinimumValue())));
+    out.println(formattingHelper.createDetailRow("", "maximum value", String
+      .valueOf(sequence.getMaximumValue())));
+    out.println(formattingHelper.createDetailRow("", "cycle", String
+      .valueOf(sequence.isCycle())));
 
-      out.println(formattingHelper.createObjectEnd());
-    }
+    out.println(formattingHelper.createObjectEnd());
 
     out.flush();
 
@@ -247,36 +226,27 @@ final class SchemaTextFormatter
     }
     final String synonymType = "[synonym]";
 
-    if (isList)
+    out.println(formattingHelper.createObjectStart(synonymName));
+    out.println(formattingHelper.createNameRow("", synonymType));
+    printRemarks(synonym);
+
+    final String referencedObjectName;
+    if (options.isShowUnqualifiedNames())
     {
-      out.println(formattingHelper.createNameValueRow(synonymName,
-                                                      synonymType,
-                                                      Alignment.right));
+      referencedObjectName = synonym.getReferencedObject().getName();
     }
     else
     {
-      out.println(formattingHelper.createObjectStart(synonymName));
-      out.println(formattingHelper.createNameRow("", synonymType));
-      printRemarks(synonym);
-
-      final String referencedObjectName;
-      if (options.isShowUnqualifiedNames())
-      {
-        referencedObjectName = synonym.getReferencedObject().getName();
-      }
-      else
-      {
-        referencedObjectName = synonym.getReferencedObject().getFullName();
-      }
-      out.println(formattingHelper.createDetailRow("",
-                                                   synonym.getName()
-                                                       + formattingHelper
-                                                         .createArrow()
-                                                       + referencedObjectName,
-                                                   ""));
-
-      out.println(formattingHelper.createObjectEnd());
+      referencedObjectName = synonym.getReferencedObject().getFullName();
     }
+    out.println(formattingHelper.createDetailRow("",
+                                                 synonym.getName()
+                                                     + formattingHelper
+                                                       .createArrow()
+                                                     + referencedObjectName,
+                                                 ""));
+
+    out.println(formattingHelper.createObjectEnd());
 
     out.flush();
 
@@ -301,37 +271,29 @@ final class SchemaTextFormatter
     }
     final String tableType = "[" + table.getTableType() + "]";
 
-    if (isList)
-    {
-      out.println(formattingHelper.createNameValueRow(tableName,
-                                                      tableType,
-                                                      Alignment.right));
-    }
-    else
-    {
-      out.println(formattingHelper.createObjectStart(tableName));
-      out.println(formattingHelper.createNameRow("", tableType));
-      printRemarks(table);
+    out.println(formattingHelper.createObjectStart(tableName));
+    out.println(formattingHelper.createNameRow("", tableType));
+    printRemarks(table);
 
-      final List<Column> columns = table.getColumns();
-      printTableColumns(columns);
+    final List<Column> columns = table.getColumns();
+    printTableColumns(columns);
 
-      printPrimaryKey(table.getPrimaryKey());
-      printForeignKeys(table);
-      if (isVerbose)
-      {
-        printWeakAssociations(table);
-      }
-      printIndices(table.getIndices());
-      printDefinition(table);
-      printTriggers(table.getTriggers());
-      printTableConstraints(table.getTableConstraints());
-      if (isVerbose)
-      {
-        printPrivileges(table.getPrivileges());
-      }
-      out.println(formattingHelper.createObjectEnd());
+    printPrimaryKey(table.getPrimaryKey());
+    printForeignKeys(table);
+    if (isVerbose)
+    {
+      printWeakAssociations(table);
     }
+    printIndices(table.getIndices());
+    printDefinition(table);
+    printTriggers(table.getTriggers());
+    printTableConstraints(table.getTableConstraints());
+    if (isVerbose)
+    {
+      printPrivileges(table.getPrivileges());
+    }
+    out.println(formattingHelper.createObjectEnd());
+
     out.flush();
   }
 
@@ -369,10 +331,6 @@ final class SchemaTextFormatter
   public void handleRoutinesEnd()
     throws SchemaCrawlerException
   {
-    if (isList)
-    {
-      out.append(formattingHelper.createObjectEnd());
-    }
   }
 
   /**
@@ -386,11 +344,6 @@ final class SchemaTextFormatter
   {
     out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
                                               "Routines"));
-
-    if (isList)
-    {
-      out.append(formattingHelper.createObjectStart(""));
-    }
   }
 
   /**
@@ -402,10 +355,6 @@ final class SchemaTextFormatter
   public void handleSequencesEnd()
     throws SchemaCrawlerException
   {
-    if (isList)
-    {
-      out.append(formattingHelper.createObjectEnd());
-    }
   }
 
   /**
@@ -419,11 +368,6 @@ final class SchemaTextFormatter
   {
     out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
                                               "Sequences"));
-
-    if (isList)
-    {
-      out.append(formattingHelper.createObjectStart(""));
-    }
   }
 
   /**
@@ -435,10 +379,6 @@ final class SchemaTextFormatter
   public void handleSynonymsEnd()
     throws SchemaCrawlerException
   {
-    if (isList)
-    {
-      out.append(formattingHelper.createObjectEnd());
-    }
   }
 
   /**
@@ -452,11 +392,6 @@ final class SchemaTextFormatter
   {
     out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
                                               "Synonyms"));
-
-    if (isList)
-    {
-      out.append(formattingHelper.createObjectStart(""));
-    }
   }
 
   /**
@@ -468,10 +403,6 @@ final class SchemaTextFormatter
   public void handleTablesEnd()
     throws SchemaCrawlerException
   {
-    if (isList)
-    {
-      out.append(formattingHelper.createObjectEnd());
-    }
   }
 
   /**
@@ -485,11 +416,6 @@ final class SchemaTextFormatter
   {
     out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
                                               "Tables"));
-
-    if (isList)
-    {
-      out.append(formattingHelper.createObjectStart(""));
-    }
   }
 
   private void printColumnDataType(final ColumnDataType columnDataType)

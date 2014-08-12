@@ -21,15 +21,11 @@ package sf.util;
 
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
-import java.nio.channels.FileChannel;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Handler;
@@ -112,23 +108,6 @@ public final class Utility
       textWithoutQuotes = text;
     }
     return textWithoutQuotes;
-  }
-
-  public static void copyFile(final File sourceFile, final File destFile)
-    throws IOException
-  {
-    if (!destFile.exists())
-    {
-      destFile.createNewFile();
-    }
-
-    try (final FileInputStream fileInputStream = new FileInputStream(sourceFile);
-        final FileOutputStream fileOutputStream = new FileOutputStream(destFile);
-        final FileChannel source = fileInputStream.getChannel();
-        final FileChannel destination = fileOutputStream.getChannel();)
-    {
-      destination.transferFrom(source, 0, source.size());
-    }
   }
 
   /**
