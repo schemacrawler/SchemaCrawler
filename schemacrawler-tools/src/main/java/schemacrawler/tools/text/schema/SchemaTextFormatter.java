@@ -70,8 +70,8 @@ import schemacrawler.utility.NamedObjectSort;
  * @author Sualeh Fatehi
  */
 final class SchemaTextFormatter
-  extends BaseTabularFormatter<SchemaTextOptions>
-  implements SchemaTraversalHandler
+extends BaseTabularFormatter<SchemaTextOptions>
+implements SchemaTraversalHandler
 {
 
   private static String negate(final boolean positive, final String text)
@@ -101,13 +101,13 @@ final class SchemaTextFormatter
   SchemaTextFormatter(final SchemaTextDetailType schemaTextDetailType,
                       final SchemaTextOptions options,
                       final OutputOptions outputOptions)
-    throws SchemaCrawlerException
-  {
+                          throws SchemaCrawlerException
+                          {
     super(options,
           schemaTextDetailType == SchemaTextDetailType.details,
           outputOptions);
     isVerbose = schemaTextDetailType == SchemaTextDetailType.details;
-  }
+                          }
 
   /**
    * {@inheritDoc}
@@ -116,7 +116,7 @@ final class SchemaTextFormatter
    */
   @Override
   public void handle(final ColumnDataType columnDataType)
-    throws SchemaCrawlerException
+      throws SchemaCrawlerException
   {
     if (printVerboseDatabaseInfo && isVerbose)
     {
@@ -193,13 +193,13 @@ final class SchemaTextFormatter
     printRemarks(sequence);
 
     out.println(formattingHelper.createDetailRow("", "increment", String
-      .valueOf(sequence.getIncrement())));
+                                                 .valueOf(sequence.getIncrement())));
     out.println(formattingHelper.createDetailRow("", "minimum value", String
-      .valueOf(sequence.getMinimumValue())));
+                                                 .valueOf(sequence.getMinimumValue())));
     out.println(formattingHelper.createDetailRow("", "maximum value", String
-      .valueOf(sequence.getMaximumValue())));
+                                                 .valueOf(sequence.getMaximumValue())));
     out.println(formattingHelper.createDetailRow("", "cycle", String
-      .valueOf(sequence.isCycle())));
+                                                 .valueOf(sequence.isCycle())));
 
     out.println(formattingHelper.createObjectEnd());
 
@@ -241,9 +241,9 @@ final class SchemaTextFormatter
     }
     out.println(formattingHelper.createDetailRow("",
                                                  synonym.getName()
-                                                     + formattingHelper
-                                                       .createArrow()
-                                                     + referencedObjectName,
+                                                 + formattingHelper
+                                                 .createArrow()
+                                                 + referencedObjectName,
                                                  ""));
 
     out.println(formattingHelper.createObjectEnd());
@@ -318,7 +318,7 @@ final class SchemaTextFormatter
     if (printVerboseDatabaseInfo && isVerbose)
     {
       out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
-                                                "Data Types"));
+          "Data Types"));
     }
   }
 
@@ -329,7 +329,7 @@ final class SchemaTextFormatter
    */
   @Override
   public void handleRoutinesEnd()
-    throws SchemaCrawlerException
+      throws SchemaCrawlerException
   {
   }
 
@@ -340,10 +340,10 @@ final class SchemaTextFormatter
    */
   @Override
   public void handleRoutinesStart()
-    throws SchemaCrawlerException
+      throws SchemaCrawlerException
   {
     out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
-                                              "Routines"));
+        "Routines"));
   }
 
   /**
@@ -353,7 +353,7 @@ final class SchemaTextFormatter
    */
   @Override
   public void handleSequencesEnd()
-    throws SchemaCrawlerException
+      throws SchemaCrawlerException
   {
   }
 
@@ -364,10 +364,10 @@ final class SchemaTextFormatter
    */
   @Override
   public void handleSequencesStart()
-    throws SchemaCrawlerException
+      throws SchemaCrawlerException
   {
     out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
-                                              "Sequences"));
+        "Sequences"));
   }
 
   /**
@@ -377,7 +377,7 @@ final class SchemaTextFormatter
    */
   @Override
   public void handleSynonymsEnd()
-    throws SchemaCrawlerException
+      throws SchemaCrawlerException
   {
   }
 
@@ -388,10 +388,10 @@ final class SchemaTextFormatter
    */
   @Override
   public void handleSynonymsStart()
-    throws SchemaCrawlerException
+      throws SchemaCrawlerException
   {
     out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
-                                              "Synonyms"));
+        "Synonyms"));
   }
 
   /**
@@ -401,7 +401,7 @@ final class SchemaTextFormatter
    */
   @Override
   public void handleTablesEnd()
-    throws SchemaCrawlerException
+      throws SchemaCrawlerException
   {
   }
 
@@ -412,10 +412,10 @@ final class SchemaTextFormatter
    */
   @Override
   public void handleTablesStart()
-    throws SchemaCrawlerException
+      throws SchemaCrawlerException
   {
     out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
-                                              "Tables"));
+        "Tables"));
   }
 
   private void printColumnDataType(final ColumnDataType columnDataType)
@@ -430,12 +430,12 @@ final class SchemaTextFormatter
       databaseSpecificTypeName = columnDataType.getFullName();
     }
     final String typeName = columnDataType.getJavaSqlType()
-      .getJavaSqlTypeName();
+        .getJavaSqlTypeName();
     final String userDefined = negate(columnDataType.isUserDefined(),
-                                      "user defined");
+        "user defined");
     final String nullable = negate(columnDataType.isNullable(), "nullable");
     final String autoIncrementable = negate(columnDataType.isAutoIncrementable(),
-                                            "auto-incrementable");
+        "auto-incrementable");
     String definedWith = "defined with ";
     if (columnDataType.getCreateParameters() == null)
     {
@@ -446,14 +446,14 @@ final class SchemaTextFormatter
       definedWith = definedWith + columnDataType.getCreateParameters();
     }
     out.println(formattingHelper.createNameRow(databaseSpecificTypeName,
-                                               "[data type]"));
+        "[data type]"));
     out.println(formattingHelper.createDetailRow("", "based on", typeName));
     out.println(formattingHelper.createDescriptionRow(userDefined));
     out.println(formattingHelper.createDescriptionRow(definedWith));
     out.println(formattingHelper.createDescriptionRow(nullable));
     out.println(formattingHelper.createDescriptionRow(autoIncrementable));
     out.println(formattingHelper.createDescriptionRow(columnDataType
-      .getSearchable().toString()));
+                                                      .getSearchable().toString()));
   }
 
   private void printColumnReferences(final String tableName,
@@ -496,14 +496,14 @@ final class SchemaTextFormatter
           && options.isShowOrdinalNumbers())
       {
         final int keySequence = ((ForeignKeyColumnReference) columnReference)
-          .getKeySequence();
+            .getKeySequence();
         keySequenceString = String.format("%2d", keySequence);
       }
       out.println(formattingHelper.createDetailRow(keySequenceString,
                                                    pkColumnName
-                                                       + formattingHelper
-                                                         .createArrow()
-                                                       + fkColumnName,
+                                                   + formattingHelper
+                                                   .createArrow()
+                                                   + fkColumnName,
                                                    ""));
     }
   }
@@ -518,7 +518,7 @@ final class SchemaTextFormatter
     out.println(formattingHelper.createEmptyRow());
     out.println(formattingHelper.createNameRow("", "[definition]"));
     out.println(formattingHelper.createDefinitionRow(definedObject
-      .getDefinition()));
+                                                     .getDefinition()));
   }
 
   private void printDefinition(final String heading,
@@ -540,7 +540,7 @@ final class SchemaTextFormatter
     }
     out.println(formattingHelper.createEmptyRow());
     out.println(formattingHelper.createNameRow(definitionName, "[" + heading
-                                                               + "]"));
+                                               + "]"));
     out.println(formattingHelper.createDefinitionRow(definition));
   }
 
@@ -550,7 +550,7 @@ final class SchemaTextFormatter
     final Collection<ForeignKey> foreignKeysCollection = table.getForeignKeys();
     final List<ForeignKey> foreignKeys = new ArrayList<>(foreignKeysCollection);
     Collections.sort(foreignKeys, NamedObjectSort.getNamedObjectSort(options
-      .isAlphabeticalSortForForeignKeys()));
+                                                                     .isAlphabeticalSortForForeignKeys()));
 
     for (final ForeignKey foreignKey: foreignKeys)
     {
@@ -593,7 +593,7 @@ final class SchemaTextFormatter
         final String fkDetails = "[foreign key" + ruleString + "]";
         out.println(formattingHelper.createNameRow(fkName, fkDetails));
         printColumnReferences(tableName, foreignKey.getColumnReferences()
-          .toArray(new ColumnReference[0]));
+                              .toArray(new ColumnReference[0]));
       }
     }
   }
@@ -602,7 +602,7 @@ final class SchemaTextFormatter
   {
     final List<Index> indices = new ArrayList<>(indicesCollection);
     Collections.sort(indices, NamedObjectSort.getNamedObjectSort(options
-      .isAlphabeticalSortForIndexes()));
+                                                                 .isAlphabeticalSortForIndexes()));
 
     for (final Index index: indices)
     {
@@ -622,14 +622,14 @@ final class SchemaTextFormatter
           indexTypeString = indexType.toString() + " ";
         }
         final String indexDetails = "[" + (index.isUnique()? "": "non-")
-                                    + "unique " + indexTypeString + "index]";
+            + "unique " + indexTypeString + "index]";
         out.println(formattingHelper.createNameRow(indexName, indexDetails));
         printTableColumns(index.getColumns());
 
         if (index.hasDefinition())
         {
           out.println(formattingHelper.createDefinitionRow(index
-            .getDefinition()));
+                                                           .getDefinition()));
         }
       }
     }
@@ -665,13 +665,13 @@ final class SchemaTextFormatter
       {
         out.println(formattingHelper.createEmptyRow());
         out.println(formattingHelper.createNameRow(privilege.getName(),
-                                                   "[privilege]"));
+            "[privilege]"));
         for (final Grant grant: privilege.getGrants())
         {
           final String grantedFrom = grant.getGrantor()
-                                     + formattingHelper.createArrow()
-                                     + grant.getGrantee()
-                                     + (grant.isGrantable()? " (grantable)": "");
+              + formattingHelper.createArrow()
+              + grant.getGrantee()
+              + (grant.isGrantable()? " (grantable)": "");
           out.println(formattingHelper.createDetailRow("", grantedFrom, ""));
         }
       }
@@ -680,13 +680,10 @@ final class SchemaTextFormatter
 
   private void printRemarks(final DatabaseObject object)
   {
-    if (isVerbose)
+    final String remarks = object.getRemarks();
+    if (!isBlank(remarks))
     {
-      final String remarks = object.getRemarks();
-      if (!isBlank(remarks))
-      {
-        out.println(formattingHelper.createDefinitionRow(remarks));
-      }
+      out.println(formattingHelper.createDefinitionRow(remarks));
     }
   }
 
@@ -694,7 +691,7 @@ final class SchemaTextFormatter
   {
 
     Collections.sort(columns, NamedObjectSort.getNamedObjectSort(options
-      .isAlphabeticalSortForRoutineColumns()));
+                                                                 .isAlphabeticalSortForRoutineColumns()));
 
     for (final RoutineColumn<?> column: columns)
     {
@@ -702,12 +699,12 @@ final class SchemaTextFormatter
       if (options.isShowStandardColumnTypeNames())
       {
         columnTypeName = column.getColumnDataType().getJavaSqlType()
-          .getJavaSqlTypeName();
+            .getJavaSqlTypeName();
       }
       else
       {
         columnTypeName = column.getColumnDataType()
-          .getDatabaseSpecificTypeName();
+            .getDatabaseSpecificTypeName();
       }
       final StringBuilder columnType = new StringBuilder();
       columnType.append(columnTypeName).append(column.getWidth());
@@ -727,11 +724,20 @@ final class SchemaTextFormatter
     }
   }
 
+  private void printTableColumnRemarks(final Column column)
+  {
+    final String remarks = column.getRemarks();
+    if (!isBlank(remarks))
+    {
+      out.println(formattingHelper.createDetailRow("", "", remarks));
+    }
+  }
+
   private void printTableColumns(final List<? extends Column> columns)
   {
 
     Collections.sort(columns, NamedObjectSort.getNamedObjectSort(options
-      .isAlphabeticalSortForTableColumns()));
+                                                                 .isAlphabeticalSortForTableColumns()));
 
     for (final Column column: columns)
     {
@@ -749,11 +755,11 @@ final class SchemaTextFormatter
       else
       {
         String columnTypeName = column.getColumnDataType()
-          .getDatabaseSpecificTypeName();
+            .getDatabaseSpecificTypeName();
         if (options.isShowStandardColumnTypeNames())
         {
           columnTypeName = column.getColumnDataType().getJavaSqlType()
-            .getJavaSqlTypeName();
+              .getJavaSqlTypeName();
         }
         final String columnType = columnTypeName + column.getWidth();
         final String nullable = column.isNullable()? "": " not null";
@@ -769,14 +775,7 @@ final class SchemaTextFormatter
                                                    columnName,
                                                    columnDetails));
 
-      if (isVerbose)
-      {
-        final String remarks = column.getRemarks();
-        if (!isBlank(remarks))
-        {
-          out.println(formattingHelper.createDetailRow("", "", remarks));
-        }
-      }
+      printTableColumnRemarks(column);
 
     }
   }
@@ -785,7 +784,7 @@ final class SchemaTextFormatter
   {
     final List<TableConstraint> constraints = new ArrayList<>(constraintsCollection);
     Collections.sort(constraints, NamedObjectSort.getNamedObjectSort(options
-      .isAlphabeticalSortForIndexes()));
+                                                                     .isAlphabeticalSortForIndexes()));
 
     for (final TableConstraint constraint: constraints)
     {
@@ -797,13 +796,13 @@ final class SchemaTextFormatter
           constraintName = constraint.getName();
         }
         final String constraintType = constraint.getTableConstraintType()
-          .getValue().toLowerCase();
+            .getValue().toLowerCase();
 
         // Show only check or unique constraints, or any constraint that
         // has a definition
         if (!(EnumSet.of(TableConstraintType.check, TableConstraintType.unique)
-          .contains(constraint.getTableConstraintType()) || constraint
-          .hasDefinition()))
+            .contains(constraint.getTableConstraintType()) || constraint
+            .hasDefinition()))
         {
           continue;
         }
@@ -816,7 +815,7 @@ final class SchemaTextFormatter
         if (constraint.hasDefinition())
         {
           out.println(formattingHelper.createDefinitionRow(constraint
-            .getDefinition()));
+                                                           .getDefinition()));
         }
 
       }
@@ -831,9 +830,9 @@ final class SchemaTextFormatter
       {
         String timing = "";
         final ConditionTimingType conditionTiming = trigger
-          .getConditionTiming();
+            .getConditionTiming();
         final EventManipulationType eventManipulationType = trigger
-          .getEventManipulationType();
+            .getEventManipulationType();
         if (conditionTiming != null
             && conditionTiming != ConditionTimingType.unknown
             && eventManipulationType != null
@@ -881,7 +880,7 @@ final class SchemaTextFormatter
   {
     final String tableName = table.getName();
     final Collection<ColumnReference> weakAssociationsCollection = DatabaseWithAssociations
-      .getWeakAssociations(table);
+        .getWeakAssociations(table);
     final List<ColumnReference> weakAssociations = new ArrayList<>(weakAssociationsCollection);
     Collections.sort(weakAssociations);
     for (final ColumnReference weakAssociation: weakAssociations)

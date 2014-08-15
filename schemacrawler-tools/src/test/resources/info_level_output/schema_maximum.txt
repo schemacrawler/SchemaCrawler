@@ -40,6 +40,7 @@ Tables
 PUBLIC.BOOKS.AUTHORS
 ------------------------------------------------------------------------
                                                                  [table]
+Contact details for book authors
   ID                                INTEGER not null            
   FIRSTNAME                         VARCHAR(20) not null        
   LASTNAME                          VARCHAR(20) not null        
@@ -101,6 +102,7 @@ SELECT ID,FIRSTNAME,LASTNAME FROM BOOKS.AUTHORS
 PUBLIC.BOOKS.BOOKAUTHORS
 ------------------------------------------------------------------------
                                                                  [table]
+Relationship between books and their authors, along with the latest updated information
   BOOKID                            INTEGER not null            
   AUTHORID                          INTEGER not null            
   "UPDATE"                          CLOB                        
@@ -132,12 +134,19 @@ BOOKS.BOOKAUTHORS.AUTHORID IS NOT NULL
 PUBLIC.BOOKS.BOOKS
 ------------------------------------------------------------------------
                                                                  [table]
+Details for published books
   ID                                INTEGER not null            
+                                    Unique (internal) id for book
   TITLE                             VARCHAR(255) not null       
+                                    Book title                  
   DESCRIPTION                       VARCHAR(255)                
+                                    Book description            
   PUBLISHERID                       INTEGER not null            
+                                    Foreign key to the book publisher
   PUBLICATIONDATE                   DATE                        
+                                    Book publication date       
   PRICE                             DOUBLE(64, 0)               
+                                    Current price for the book  
   PREVIOUSEDITIONID                 INTEGER                     
 
 PK_BOOKS                                                   [primary key]
@@ -179,8 +188,11 @@ PUBLIC.BOOKS."Global Counts"
 PUBLIC.BOOKS.PUBLISHERS
 ------------------------------------------------------------------------
                                                                  [table]
+List of book publishers
   ID                                INTEGER not null            
+                                    Unique (internal) id for book publisher
   PUBLISHER                         VARCHAR(255)                
+                                    Name of book publisher      
 
 SYS_PK_10092                                               [primary key]
   ID                                ascending                   

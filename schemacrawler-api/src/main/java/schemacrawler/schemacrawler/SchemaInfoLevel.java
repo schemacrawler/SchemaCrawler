@@ -27,7 +27,7 @@ package schemacrawler.schemacrawler;
  * @author Sualeh Fatehi
  */
 public final class SchemaInfoLevel
-implements Options
+  implements Options
 {
 
   private static final long serialVersionUID = -6721986729175552425L;
@@ -41,12 +41,12 @@ implements Options
   {
     final SchemaInfoLevel detailed = standard();
     detailed.setRetrieveUserDefinedColumnDataTypes(true);
-    detailed.setRetrieveRoutineInformation(true);
-    detailed.setRetrieveTableConstraintInformation(true);
     detailed.setRetrieveTriggerInformation(true);
+    detailed.setRetrieveTableConstraintInformation(true);
     detailed.setRetrieveTableDefinitionsInformation(true);
-    detailed.setRetrieveViewInformation(true);
     detailed.setRetrieveIndexInformation(true);
+    detailed.setRetrieveViewInformation(true);
+    detailed.setRetrieveRoutineInformation(true);
     detailed.setTag("detailed");
     return detailed;
   }
@@ -59,14 +59,14 @@ implements Options
   public static SchemaInfoLevel maximum()
   {
     final SchemaInfoLevel maximum = detailed();
-    maximum.setRetrieveSequenceInformation(true);
-    maximum.setRetrieveSynonymInformation(true);
     maximum.setRetrieveAdditionalDatabaseInfo(true);
     maximum.setRetrieveAdditionalJdbcDriverInfo(true);
     maximum.setRetrieveTablePrivileges(true);
     maximum.setRetrieveTableColumnPrivileges(true);
     maximum.setRetrieveAdditionalTableAttributes(true);
     maximum.setRetrieveAdditionalColumnAttributes(true);
+    maximum.setRetrieveSequenceInformation(true);
+    maximum.setRetrieveSynonymInformation(true);
     maximum.setTag("maximum");
     return maximum;
   }

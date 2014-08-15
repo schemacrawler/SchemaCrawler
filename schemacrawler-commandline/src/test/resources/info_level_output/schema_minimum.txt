@@ -17,7 +17,7 @@ Database Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
 database product name                     HSQL Database Engine          
-database product version                  2.3.0                         
+database product version                  2.3.2                         
 database user name                        SA                            
 
 
@@ -25,7 +25,7 @@ JDBC Driver Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
 driver name                               HSQL Database Engine Driver   
-driver version                            2.3.0                         
+driver version                            2.3.2                         
 driver class name                         org.hsqldb.jdbc.JDBCDriver    
 url                                       jdbc:hsqldb:hsql://localhost/schemacrawler
 is JDBC compliant                         true                          
@@ -40,18 +40,21 @@ Tables
 PUBLIC.BOOKS.AUTHORS
 ------------------------------------------------------------------------
                                                                  [table]
+Contact details for book authors
 
 
 
 PUBLIC.BOOKS.BOOKAUTHORS
 ------------------------------------------------------------------------
                                                                  [table]
+Relationship between books and their authors, along with the latest updated information
 
 
 
 PUBLIC.BOOKS.BOOKS
 ------------------------------------------------------------------------
                                                                  [table]
+Details for published books
 
 
 
@@ -64,6 +67,7 @@ PUBLIC.BOOKS."Global Counts"
 PUBLIC.BOOKS.PUBLISHERS
 ------------------------------------------------------------------------
                                                                  [table]
+List of book publishers
 
 
 
