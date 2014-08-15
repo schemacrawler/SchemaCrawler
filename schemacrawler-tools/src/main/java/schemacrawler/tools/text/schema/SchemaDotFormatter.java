@@ -54,7 +54,6 @@ import schemacrawler.tools.text.utility.TableRow;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
 import schemacrawler.utility.MetaDataUtility.Connectivity;
 import schemacrawler.utility.NamedObjectSort;
-import sf.util.Utility;
 
 /**
  * GraphViz DOT formatting of schema.
@@ -199,17 +198,7 @@ public final class SchemaDotFormatter
                           1)).toString());
     out.println();
 
-    if (isVerbose)
-    {
-      final String remarks = table.getRemarks();
-      if (!Utility.isBlank(remarks))
-      {
-        out.append(new TableRow(OutputFormat.html)
-          .add(newTableCell(remarks, Alignment.left, false, Color.white, 3))
-          .toString());
-        out.println();
-      }
-    }
+    printTableRemarks(table);
 
     if (!isList)
     {
@@ -379,7 +368,7 @@ public final class SchemaDotFormatter
 
   private String printColumnReference(final String associationName,
                                       final ColumnReference columnReference,
-                                      boolean isForeignKeyUnique)
+                                      final boolean isForeignKeyUnique)
   {
     final Column primaryKeyColumn = columnReference.getPrimaryKeyColumn();
     final Column foreignKeyColumn = columnReference.getForeignKeyColumn();
@@ -416,7 +405,7 @@ public final class SchemaDotFormatter
   {
     for (final ForeignKey foreignKey: table.getForeignKeys())
     {
-      boolean isForeignKeyUnique = isForeignKeyUnique(foreignKey, table);
+      final boolean isForeignKeyUnique = isForeignKeyUnique(foreignKey, table);
       for (final ColumnReference columnReference: foreignKey
         .getColumnReferences())
       {
@@ -449,6 +438,24 @@ public final class SchemaDotFormatter
     out.write(columnNode);
 
     return nodeId;
+  }
+
+  private void printTableColumnRemarks(final Column column)
+  {
+    final String remarks = column.getRemarks();
+    if (!isBlank(remarks))
+    {
+      final TableRow remarksRow = new TableRow(OutputFormat.html);
+      if (options.isShowOrdinalNumbers())
+      {
+        remarksRow
+          .add(newTableCell("", Alignment.right, false, Color.white, 1));
+      }
+      remarksRow.add(newTableCell("", Alignment.left, false, Color.white, 1))
+        .add(newTableCell(" ", Alignment.left, false, Color.white, 1))
+        .add(newTableCell(remarks, Alignment.left, false, Color.white, 1));
+      out.println(remarksRow.toString());
+    }
   }
 
   private void printTableColumns(final List<Column> columns)
@@ -493,30 +500,20 @@ public final class SchemaDotFormatter
       row.lastCell().addAttribute("port", nodeId(column) + ".end");
       out.println(row.toString());
 
-      if (isVerbose)
-      {
-        final String remarks = column.getRemarks();
-        if (!Utility.isBlank(remarks))
-        {
-          final TableRow remarksRow = new TableRow(OutputFormat.html);
-          if (options.isShowOrdinalNumbers())
-          {
-            remarksRow.add(newTableCell("",
-                                        Alignment.right,
-                                        false,
-                                        Color.white,
-                                        1));
-          }
-          remarksRow
-            .add(newTableCell("", Alignment.left, false, Color.white, 1))
-            .add(newTableCell(" ", Alignment.left, false, Color.white, 1))
-            .add(newTableCell(remarks, Alignment.left, false, Color.white, 1));
-          out.println(remarksRow.toString());
-        }
-      }
-
+      printTableColumnRemarks(column);
     }
+  }
 
+  private void printTableRemarks(final Table table)
+  {
+    final String remarks = table.getRemarks();
+    if (!isBlank(remarks))
+    {
+      out.append(new TableRow(OutputFormat.html)
+        .add(newTableCell(remarks, Alignment.left, false, Color.white, 3))
+        .toString());
+      out.println();
+    }
   }
 
   private void printWeakAssociations(final Table table)
