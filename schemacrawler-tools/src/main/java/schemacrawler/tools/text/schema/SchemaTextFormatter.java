@@ -85,6 +85,7 @@ final class SchemaTextFormatter
   }
 
   private final boolean isVerbose;
+  private final boolean isList;
 
   /**
    * Text formatting of schema.
@@ -107,6 +108,7 @@ final class SchemaTextFormatter
           schemaTextDetailType == SchemaTextDetailType.details,
           outputOptions);
     isVerbose = schemaTextDetailType == SchemaTextDetailType.details;
+    isList = schemaTextDetailType == SchemaTextDetailType.list;
   }
 
   /**
@@ -152,8 +154,11 @@ final class SchemaTextFormatter
     out.println(formattingHelper.createNameRow("", routineType));
     printRemarks(routine);
 
-    printRoutineColumns(routine.getColumns());
-    printDefinition(routine);
+    if (!isList)
+    {
+      printRoutineColumns(routine.getColumns());
+      printDefinition(routine);
+    }
 
     if (isVerbose)
     {
@@ -192,14 +197,17 @@ final class SchemaTextFormatter
     out.println(formattingHelper.createNameRow(sequenceName, sequenceType));
     printRemarks(sequence);
 
-    out.println(formattingHelper.createDetailRow("", "increment", String
-      .valueOf(sequence.getIncrement())));
-    out.println(formattingHelper.createDetailRow("", "minimum value", String
-      .valueOf(sequence.getMinimumValue())));
-    out.println(formattingHelper.createDetailRow("", "maximum value", String
-      .valueOf(sequence.getMaximumValue())));
-    out.println(formattingHelper.createDetailRow("", "cycle", String
-      .valueOf(sequence.isCycle())));
+    if (!isList)
+    {
+      out.println(formattingHelper.createDetailRow("", "increment", String
+        .valueOf(sequence.getIncrement())));
+      out.println(formattingHelper.createDetailRow("", "minimum value", String
+        .valueOf(sequence.getMinimumValue())));
+      out.println(formattingHelper.createDetailRow("", "maximum value", String
+        .valueOf(sequence.getMaximumValue())));
+      out.println(formattingHelper.createDetailRow("", "cycle", String
+        .valueOf(sequence.isCycle())));
+    }
 
     out.println(formattingHelper.createObjectEnd());
 
@@ -230,21 +238,24 @@ final class SchemaTextFormatter
     out.println(formattingHelper.createNameRow("", synonymType));
     printRemarks(synonym);
 
-    final String referencedObjectName;
-    if (options.isShowUnqualifiedNames())
+    if (!isList)
     {
-      referencedObjectName = synonym.getReferencedObject().getName();
+      final String referencedObjectName;
+      if (options.isShowUnqualifiedNames())
+      {
+        referencedObjectName = synonym.getReferencedObject().getName();
+      }
+      else
+      {
+        referencedObjectName = synonym.getReferencedObject().getFullName();
+      }
+      out.println(formattingHelper.createDetailRow("",
+                                                   synonym.getName()
+                                                       + formattingHelper
+                                                         .createArrow()
+                                                       + referencedObjectName,
+                                                   ""));
     }
-    else
-    {
-      referencedObjectName = synonym.getReferencedObject().getFullName();
-    }
-    out.println(formattingHelper.createDetailRow("",
-                                                 synonym.getName()
-                                                     + formattingHelper
-                                                       .createArrow()
-                                                     + referencedObjectName,
-                                                 ""));
 
     out.println(formattingHelper.createObjectEnd());
 
@@ -275,23 +286,27 @@ final class SchemaTextFormatter
     out.println(formattingHelper.createNameRow("", tableType));
     printRemarks(table);
 
-    final List<Column> columns = table.getColumns();
-    printTableColumns(columns);
+    if (!isList)
+    {
+      final List<Column> columns = table.getColumns();
+      printTableColumns(columns);
 
-    printPrimaryKey(table.getPrimaryKey());
-    printForeignKeys(table);
-    if (isVerbose)
-    {
-      printWeakAssociations(table);
+      printPrimaryKey(table.getPrimaryKey());
+      printForeignKeys(table);
+      if (isVerbose)
+      {
+        printWeakAssociations(table);
+      }
+      printIndices(table.getIndices());
+      printDefinition(table);
+      printTriggers(table.getTriggers());
+      printTableConstraints(table.getTableConstraints());
+      if (isVerbose)
+      {
+        printPrivileges(table.getPrivileges());
+      }
     }
-    printIndices(table.getIndices());
-    printDefinition(table);
-    printTriggers(table.getTriggers());
-    printTableConstraints(table.getTableConstraints());
-    if (isVerbose)
-    {
-      printPrivileges(table.getPrivileges());
-    }
+
     out.println(formattingHelper.createObjectEnd());
 
     out.flush();
