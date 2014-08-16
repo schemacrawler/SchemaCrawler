@@ -5,18 +5,81 @@ Tables
 ========================================================================
 
 
-AUTHORS                                                          [table]
-AUTHORSLIST                                                       [view]
-BOOKAUTHORS                                                      [table]
-BOOKS                                                            [table]
-"Global Counts"                                                  [table]
-PUBLISHERS                                                       [table]
-EXTRA_PK                                                         [table]
-"Global Counts"                                                  [table]
-PUBLICATIONS                                                     [table]
-WRITERS                                                          [table]
-REGIONS                                                          [table]
-SALES                                                            [table]
+
+AUTHORS
+------------------------------------------------------------------------
+                                                                 [table]
+Contact details for book authors
+
+
+
+AUTHORSLIST
+------------------------------------------------------------------------
+                                                                  [view]
+
+
+
+BOOKAUTHORS
+------------------------------------------------------------------------
+                                                                 [table]
+Relationship between books and their authors, along with the latest updated information
+
+
+
+BOOKS
+------------------------------------------------------------------------
+                                                                 [table]
+Details for published books
+
+
+
+"Global Counts"
+------------------------------------------------------------------------
+                                                                 [table]
+
+
+
+PUBLISHERS
+------------------------------------------------------------------------
+                                                                 [table]
+List of book publishers
+
+
+
+EXTRA_PK
+------------------------------------------------------------------------
+                                                                 [table]
+
+
+
+"Global Counts"
+------------------------------------------------------------------------
+                                                                 [table]
+
+
+
+PUBLICATIONS
+------------------------------------------------------------------------
+                                                                 [table]
+
+
+
+WRITERS
+------------------------------------------------------------------------
+                                                                 [table]
+
+
+
+REGIONS
+------------------------------------------------------------------------
+                                                                 [table]
+
+
+
+SALES
+------------------------------------------------------------------------
+                                                                 [table]
+
 
 
 
@@ -24,19 +87,88 @@ Routines
 ========================================================================
 
 
-CUSTOMADD                                 [function, does not return a table]
-CUSTOMADD                                 [function, does not return a table]
-NEW_PUBLISHER                                     [procedure, no result]
-NEW_PUBLISHER                                     [procedure, no result]
-ALLOC_BLOCKS                                      [procedure, no result]
-ALLOC_SINGLE_BLOCK                                [procedure, no result]
-CONVERT_BLOCK                                     [procedure, no result]
-CREATE_EMPTY_BLOCK                                [procedure, no result]
-DELETE_BLOCKS                                     [procedure, no result]
-DELETE_LOB                                        [procedure, no result]
-DELETE_UNUSED                                     [procedure, no result]
-DELETE_UNUSED_LOBS                                [procedure, no result]
-DIVIDE_BLOCK                                      [procedure, no result]
-MERGE_EMPTY_BLOCKS                                [procedure, no result]
+
+CUSTOMADD
+------------------------------------------------------------------------
+                                     [function, does not return a table]
+
+
+
+CUSTOMADD
+------------------------------------------------------------------------
+                                     [function, does not return a table]
+
+
+
+NEW_PUBLISHER
+------------------------------------------------------------------------
+                                                  [procedure, no result]
+
+
+
+NEW_PUBLISHER
+------------------------------------------------------------------------
+                                                  [procedure, no result]
+
+
+
+ALLOC_BLOCKS
+------------------------------------------------------------------------
+                                                  [procedure, no result]
+
+
+
+ALLOC_SINGLE_BLOCK
+------------------------------------------------------------------------
+                                                  [procedure, no result]
+
+
+
+CONVERT_BLOCK
+------------------------------------------------------------------------
+                                                  [procedure, no result]
+
+
+
+CREATE_EMPTY_BLOCK
+------------------------------------------------------------------------
+                                                  [procedure, no result]
+
+
+
+DELETE_BLOCKS
+------------------------------------------------------------------------
+                                                  [procedure, no result]
+
+
+
+DELETE_LOB
+------------------------------------------------------------------------
+                                                  [procedure, no result]
+
+
+
+DELETE_UNUSED
+------------------------------------------------------------------------
+                                                  [procedure, no result]
+
+
+
+DELETE_UNUSED_LOBS
+------------------------------------------------------------------------
+                                                  [procedure, no result]
+
+
+
+DIVIDE_BLOCK
+------------------------------------------------------------------------
+                                                  [procedure, no result]
+
+
+
+MERGE_EMPTY_BLOCKS
+------------------------------------------------------------------------
+                                                  [procedure, no result]
+
 
 
