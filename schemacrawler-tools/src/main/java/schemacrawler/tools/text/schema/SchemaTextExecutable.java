@@ -38,7 +38,7 @@ import schemacrawler.tools.traversal.SchemaTraverser;
  * @author Sualeh Fatehi
  */
 public final class SchemaTextExecutable
-extends BaseStagedExecutable
+  extends BaseStagedExecutable
 {
 
   private SchemaTextOptions schemaTextOptions;
@@ -50,7 +50,7 @@ extends BaseStagedExecutable
 
   @Override
   public void executeOn(final Database db, final Connection connection)
-      throws Exception
+    throws Exception
   {
     loadSchemaTextOptions();
     checkOutputFormat();
@@ -59,7 +59,7 @@ extends BaseStagedExecutable
     try
     {
       infoLevel = InfoLevel.valueOf(schemaCrawlerOptions.getSchemaInfoLevel()
-                                    .getTag());
+        .getTag());
     }
     catch (final Exception e)
     {
@@ -101,7 +101,7 @@ extends BaseStagedExecutable
     if (!outputOptions.hasOutputFormat())
     {
       throw new IllegalArgumentException("Unknown output format: "
-          + outputOptions.getOutputFormatValue());
+                                         + outputOptions.getOutputFormatValue());
     }
   }
 
@@ -120,7 +120,7 @@ extends BaseStagedExecutable
   }
 
   private SchemaTraversalHandler getSchemaTraversalHandler()
-      throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
     final SchemaTextDetailType schemaTextDetailType = getSchemaTextDetailType();
     final SchemaTraversalHandler formatter;

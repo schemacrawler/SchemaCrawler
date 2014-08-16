@@ -26,33 +26,33 @@ import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.text.base.BaseTextOptions;
 
 public class SchemaTextOptions
-extends BaseTextOptions
+  extends BaseTextOptions
 {
 
   private static final long serialVersionUID = -8133661515343358712L;
 
   private static final String SHOW_ORDINAL_NUMBERS = SCHEMACRAWLER_FORMAT_PREFIX
-      + "show_ordinal_numbers";
+                                                     + "show_ordinal_numbers";
   private static final String SHOW_STANDARD_COLUMN_TYPE_NAMES = SCHEMACRAWLER_FORMAT_PREFIX
-      + "show_standard_column_type_names";
+                                                                + "show_standard_column_type_names";
 
   private static final String HIDE_PRIMARY_KEY_NAMES = SCHEMACRAWLER_FORMAT_PREFIX
-      + "hide_primarykey_names";
+                                                       + "hide_primarykey_names";
   private static final String HIDE_FOREIGN_KEY_NAMES = SCHEMACRAWLER_FORMAT_PREFIX
-      + "hide_foreignkey_names";
+                                                       + "hide_foreignkey_names";
   private static final String HIDE_INDEX_NAMES = SCHEMACRAWLER_FORMAT_PREFIX
-      + "hide_index_names";
+                                                 + "hide_index_names";
   private static final String HIDE_CONSTRAINT_NAMES = SCHEMACRAWLER_FORMAT_PREFIX
-      + "hide_constraint_names";
+                                                      + "hide_constraint_names";
   private static final String HIDE_TRIGGER_NAMES = SCHEMACRAWLER_FORMAT_PREFIX
-      + "hide_trigger_names";
+                                                   + "hide_trigger_names";
   private static final String HIDE_ROUTINE_SPECIFIC_NAMES = SCHEMACRAWLER_FORMAT_PREFIX
-      + "hide_routine_specific_names";
+                                                            + "hide_routine_specific_names";
 
   private static final String SC_SORT_ALPHABETICALLY_TABLE_INDEXES = SCHEMACRAWLER_FORMAT_PREFIX
-      + "sort_alphabetically.table_indices";
+                                                                     + "sort_alphabetically.table_indices";
   private static final String SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS = SCHEMACRAWLER_FORMAT_PREFIX
-      + "sort_alphabetically.table_foreignkeys";
+                                                                         + "sort_alphabetically.table_foreignkeys";
 
   /**
    * Creates the default SchemaTextOptions.

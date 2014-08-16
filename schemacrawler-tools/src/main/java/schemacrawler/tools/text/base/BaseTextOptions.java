@@ -25,7 +25,7 @@ import schemacrawler.schemacrawler.BaseConfigOptions;
 import schemacrawler.schemacrawler.Config;
 
 public abstract class BaseTextOptions
-extends BaseConfigOptions
+  extends BaseConfigOptions
 {
 
   private static final long serialVersionUID = -8133661515343358712L;
@@ -33,25 +33,25 @@ extends BaseConfigOptions
   protected static final String SCHEMACRAWLER_FORMAT_PREFIX = "schemacrawler.format.";
 
   private static final String NO_HEADER = SCHEMACRAWLER_FORMAT_PREFIX
-      + "no_header";
+                                          + "no_header";
   private static final String NO_FOOTER = SCHEMACRAWLER_FORMAT_PREFIX
-      + "no_footer";
+                                          + "no_footer";
   private static final String NO_INFO = SCHEMACRAWLER_FORMAT_PREFIX + "no_info";
   private static final String APPEND_OUTPUT = SCHEMACRAWLER_FORMAT_PREFIX
-      + "append_output";
+                                              + "append_output";
 
   private static final String SHOW_UNQUALIFIED_NAMES = SCHEMACRAWLER_FORMAT_PREFIX
-      + "show_unqualified_names";
+                                                       + "show_unqualified_names";
 
   private static final String SC_SORT_ALPHABETICALLY_TABLES = SCHEMACRAWLER_FORMAT_PREFIX
-      + "sort_alphabetically.tables";
+                                                              + "sort_alphabetically.tables";
   private static final String SC_SORT_ALPHABETICALLY_TABLE_COLUMNS = SCHEMACRAWLER_FORMAT_PREFIX
-      + "sort_alphabetically.table_columns";
+                                                                     + "sort_alphabetically.table_columns";
 
   private static final String SC_SORT_ALPHABETICALLY_ROUTINES = SCHEMACRAWLER_FORMAT_PREFIX
-      + "sort_alphabetically.routines";
+                                                                + "sort_alphabetically.routines";
   private static final String SC_SORT_ALPHABETICALLY_ROUTINE_COLUMNS = SCHEMACRAWLER_FORMAT_PREFIX
-      + "sort_alphabetically.routine_columns";
+                                                                       + "sort_alphabetically.routine_columns";
 
   protected BaseTextOptions()
   {

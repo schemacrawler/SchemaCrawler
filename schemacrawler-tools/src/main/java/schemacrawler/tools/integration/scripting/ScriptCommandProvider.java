@@ -26,7 +26,7 @@ import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.options.OutputOptions;
 
 public class ScriptCommandProvider
-implements CommandProvider
+  implements CommandProvider
 {
 
   @Override

@@ -25,7 +25,7 @@ import java.awt.Color;
 import schemacrawler.tools.options.OutputFormat;
 
 public final class TableHeaderCell
-extends TableCell
+  extends TableCell
 {
 
   public TableHeaderCell(final String text,
