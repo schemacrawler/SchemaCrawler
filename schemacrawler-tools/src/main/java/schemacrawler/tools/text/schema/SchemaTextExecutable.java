@@ -134,18 +134,9 @@ public final class SchemaTextExecutable
     }
     else
     {
-      if (schemaTextDetailType == SchemaTextDetailType.list)
-      {
-        formatter = new SchemaTextListFormatter(schemaTextDetailType,
-                                                schemaTextOptions,
-                                                outputOptions);
-      }
-      else
-      {
-        formatter = new SchemaTextFormatter(schemaTextDetailType,
-                                            schemaTextOptions,
-                                            outputOptions);
-      }
+      formatter = new SchemaTextFormatter(schemaTextDetailType,
+                                          schemaTextOptions,
+                                          outputOptions);
     }
 
     return formatter;

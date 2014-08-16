@@ -5,11 +5,37 @@ Tables
 ========================================================================
 
 
-BOOKS                                                            [table]
-"Global Counts"                                                  [table]
-PUBLISHERS                                                       [table]
-"Global Counts"                                                  [table]
-WRITERS                                                          [table]
+
+BOOKS
+------------------------------------------------------------------------
+                                                                 [table]
+Details for published books
+
+
+
+"Global Counts"
+------------------------------------------------------------------------
+                                                                 [table]
+
+
+
+PUBLISHERS
+------------------------------------------------------------------------
+                                                                 [table]
+List of book publishers
+
+
+
+"Global Counts"
+------------------------------------------------------------------------
+                                                                 [table]
+
+
+
+WRITERS
+------------------------------------------------------------------------
+                                                                 [table]
+
 
 
 
@@ -17,15 +43,59 @@ Routines
 ========================================================================
 
 
-NEW_PUBLISHER                                     [procedure, no result]
-NEW_PUBLISHER                                     [procedure, no result]
-CONVERT_BLOCK                                     [procedure, no result]
-DELETE_BLOCKS                                     [procedure, no result]
-DELETE_LOB                                        [procedure, no result]
-DELETE_UNUSED                                     [procedure, no result]
-DELETE_UNUSED_LOBS                                [procedure, no result]
-DIVIDE_BLOCK                                      [procedure, no result]
-MERGE_EMPTY_BLOCKS                                [procedure, no result]
+
+NEW_PUBLISHER
+------------------------------------------------------------------------
+                                                  [procedure, no result]
+
+
+
+NEW_PUBLISHER
+------------------------------------------------------------------------
+                                                  [procedure, no result]
+
+
+
+CONVERT_BLOCK
+------------------------------------------------------------------------
+                                                  [procedure, no result]
+
+
+
+DELETE_BLOCKS
+------------------------------------------------------------------------
+                                                  [procedure, no result]
+
+
+
+DELETE_LOB
+------------------------------------------------------------------------
+                                                  [procedure, no result]
+
+
+
+DELETE_UNUSED
+------------------------------------------------------------------------
+                                                  [procedure, no result]
+
+
+
+DELETE_UNUSED_LOBS
+------------------------------------------------------------------------
+                                                  [procedure, no result]
+
+
+
+DIVIDE_BLOCK
+------------------------------------------------------------------------
+                                                  [procedure, no result]
+
+
+
+MERGE_EMPTY_BLOCKS
+------------------------------------------------------------------------
+                                                  [procedure, no result]
+
 
 
 
@@ -33,7 +103,12 @@ Sequences
 ========================================================================
 
 
+
 PUBLISHER_ID_SEQ                                              [sequence]
+
+
+
 LOB_ID                                                        [sequence]
+
 
 

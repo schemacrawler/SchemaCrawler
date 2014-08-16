@@ -5,7 +5,12 @@ Sequences
 ========================================================================
 
 
+
 PUBLISHER_ID_SEQ                                              [sequence]
+
+
+
 LOB_ID                                                        [sequence]
+
 
 
