@@ -85,7 +85,7 @@ final class SchemaTextFormatter
   }
 
   private final boolean isVerbose;
-  private final boolean isList;
+  private final boolean isBrief;
 
   /**
    * Text formatting of schema.
@@ -108,7 +108,7 @@ final class SchemaTextFormatter
           schemaTextDetailType == SchemaTextDetailType.details,
           outputOptions);
     isVerbose = schemaTextDetailType == SchemaTextDetailType.details;
-    isList = schemaTextDetailType == SchemaTextDetailType.list;
+    isBrief = schemaTextDetailType == SchemaTextDetailType.brief;
   }
 
   /**
@@ -154,7 +154,7 @@ final class SchemaTextFormatter
     out.println(formattingHelper.createNameRow("", routineType));
     printRemarks(routine);
 
-    if (!isList)
+    if (!isBrief)
     {
       printRoutineColumns(routine.getColumns());
       printDefinition(routine);
@@ -197,7 +197,7 @@ final class SchemaTextFormatter
     out.println(formattingHelper.createNameRow(sequenceName, sequenceType));
     printRemarks(sequence);
 
-    if (!isList)
+    if (!isBrief)
     {
       out.println(formattingHelper.createDetailRow("", "increment", String
         .valueOf(sequence.getIncrement())));
@@ -238,7 +238,7 @@ final class SchemaTextFormatter
     out.println(formattingHelper.createNameRow("", synonymType));
     printRemarks(synonym);
 
-    if (!isList)
+    if (!isBrief)
     {
       final String referencedObjectName;
       if (options.isShowUnqualifiedNames())
@@ -286,7 +286,7 @@ final class SchemaTextFormatter
     out.println(formattingHelper.createNameRow("", tableType));
     printRemarks(table);
 
-    if (!isList)
+    if (!isBrief)
     {
       final List<Column> columns = table.getColumns();
       printTableColumns(columns);

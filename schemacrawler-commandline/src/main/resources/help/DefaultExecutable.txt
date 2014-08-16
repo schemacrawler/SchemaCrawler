@@ -2,12 +2,13 @@
 
 -c=<command> (short for -command=<command>)
   Where <command> may be:
-    list
-      Shows only table, view and procedure names  
+    brief
+      Shows basic schema information, for tables, views and routines, 
+      columns, primary keys, and foreign keys 
     schema
       Shows the commonly needed detail of the schema, including details of 
-      tables, views and procedures, columns, primary keys, indexes, 
-      and foreign keys
+      tables, views and routines, columns, primary keys, indexes, foreign 
+      keys, and triggers
     details
       Shows maximum possible detail of the schema, including privileges, and 
       details of privileges, triggers, and check constraints
@@ -56,7 +57,7 @@
 -portablenames=<boolean>
   Allows for easy comparison between databases, by hiding
   foreign key names, constraint names, trigger names, 
-  specific names for procedures, or index and primary key names, 
+  specific names for routines, or index and primary key names, 
   and not showing the fully-qualified table name
   <boolean> can be true or false
   Optional, defaults to false
