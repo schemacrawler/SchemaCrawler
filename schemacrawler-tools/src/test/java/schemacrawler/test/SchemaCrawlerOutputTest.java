@@ -85,9 +85,9 @@ public class SchemaCrawlerOutputTest
     final String[] commands = new String[] {
         SchemaTextDetailType.details + "," + Operation.count + ","
             + Operation.dump,
-        SchemaTextDetailType.list + "," + Operation.count,
+        SchemaTextDetailType.brief + "," + Operation.count,
         queryCommand1 + "," + queryCommand2 + "," + Operation.count + ","
-            + SchemaTextDetailType.list,
+            + SchemaTextDetailType.brief,
     };
 
     final List<String> failures = new ArrayList<>();

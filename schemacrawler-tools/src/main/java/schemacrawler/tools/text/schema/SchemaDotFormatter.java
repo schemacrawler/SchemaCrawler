@@ -85,7 +85,7 @@ public final class SchemaDotFormatter
   }
 
   private final boolean isVerbose;
-  private final boolean isList;
+  private final boolean isBrief;
   private final Map<Schema, Color> colorMap;
 
   /**
@@ -109,7 +109,7 @@ public final class SchemaDotFormatter
           schemaTextDetailType == SchemaTextDetailType.details,
           outputOptions);
     isVerbose = schemaTextDetailType == SchemaTextDetailType.details;
-    isList = schemaTextDetailType == SchemaTextDetailType.list;
+    isBrief = schemaTextDetailType == SchemaTextDetailType.brief;
     colorMap = new HashMap<>();
   }
 
@@ -200,7 +200,7 @@ public final class SchemaDotFormatter
 
     printTableRemarks(table);
 
-    if (!isList)
+    if (!isBrief)
     {
       final List<Column> columns = table.getColumns();
       printTableColumns(columns);
@@ -211,7 +211,7 @@ public final class SchemaDotFormatter
     out.append("  ];").println();
     out.println();
 
-    if (!isList)
+    if (!isBrief)
     {
       printForeignKeys(table);
 

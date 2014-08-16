@@ -42,9 +42,9 @@
           </li>
           <li>
             To start with, run
-            <span class="code">sc.cmd -infolevel=minimum -command=list</span>
+            <span class="code">sc.cmd -infolevel=minimum -command=brief</span>
             (or
-            <span class="code">sc.sh -infolevel=minimum -command=list</span>
+            <span class="code">sc.sh -infolevel=minimum -command=brief</span>
             on Unix); typically, connection parameters would need to provided,
             but in the examples, these are built into the sc.cmd and sc.sh scripts
           </li>
