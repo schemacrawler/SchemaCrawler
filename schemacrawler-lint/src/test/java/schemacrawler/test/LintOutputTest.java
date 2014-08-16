@@ -63,8 +63,8 @@ public class LintOutputTest
            "SELECT TOP 5 ${orderbycolumns} FROM ${table} ORDER BY ${orderbycolumns}");
 
     final String[] commands = new String[] {
-        SchemaTextDetailType.list + "," + Operation.count + "," + "lint",
-        queryCommand1 + "," + SchemaTextDetailType.list + "," + "lint",
+        SchemaTextDetailType.brief + "," + Operation.count + "," + "lint",
+        queryCommand1 + "," + SchemaTextDetailType.brief + "," + "lint",
     };
 
     final List<String> failures = new ArrayList<>();

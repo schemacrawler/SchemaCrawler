@@ -52,7 +52,7 @@
           on Windows). Detailed command-line help will be displayed.
         </p>
         <p>
-          SchemaCrawler can produce listings, and standard, or verbose details of your schema. The list schema option
+          SchemaCrawler can produce listings, and standard, or verbose details of your schema. The brief schema option
           gives you
           just table, view, stored procedure and function names. The standard schema option gives you the column names and
           primary keys.

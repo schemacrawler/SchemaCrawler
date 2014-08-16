@@ -30,13 +30,13 @@
 				<p>
 					To find tables with certain names, run SchemaCrawler with
 					command-line options similar to
-					<code>-infolevel=standard -command=list -grepcolumns=.*\..*CUSTOMER.*\..*</code>
+					<code>-infolevel=standard -command=brief -grepcolumns=.*\..*CUSTOMER.*\..*</code>
 					This will find table with names that have "CUSTOMER" in them.
 				</p>
 				<p>
 					To find tables with certain column names, run SchemaCrawler with
 					command-line options similar to
-					<code>-infolevel=standard -command=list -grepcolumns=.*\.CUSTOMER_ID</code>
+					<code>-infolevel=standard -command=brief -grepcolumns=.*\.CUSTOMER_ID</code>
 					This will find all
 					tables that have a CUSTOMER_ID column.
 				</p>

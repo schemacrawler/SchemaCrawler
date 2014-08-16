@@ -72,7 +72,7 @@ final class SchemaJsonFormatter
 {
 
   private final boolean isVerbose;
-  private final boolean isList;
+  private final boolean isBrief;
 
   /**
    * Text formatting of schema.
@@ -95,7 +95,7 @@ final class SchemaJsonFormatter
           schemaTextDetailType == SchemaTextDetailType.details,
           outputOptions);
     isVerbose = schemaTextDetailType == SchemaTextDetailType.details;
-    isList = schemaTextDetailType == SchemaTextDetailType.list;
+    isBrief = schemaTextDetailType == SchemaTextDetailType.brief;
   }
 
   @Override
@@ -165,7 +165,7 @@ final class SchemaJsonFormatter
       jsonRoutine.put("type", routine.getRoutineType());
       jsonRoutine.put("returnType", routine.getReturnType());
 
-      if (!isList)
+      if (!isBrief)
       {
         final JSONArray jsonParameters = new JSONArray();
         jsonRoutine.put("parameters", jsonParameters);
@@ -302,7 +302,7 @@ final class SchemaJsonFormatter
       }
       jsonTable.put("type", table.getTableType());
 
-      if (!isList)
+      if (!isBrief)
       {
         final JSONArray jsonColumns = new JSONArray();
         jsonTable.put("columns", jsonColumns);

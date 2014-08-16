@@ -122,7 +122,7 @@ public class CommandLineTest
     args.put("password", "");
     args.put("noinfo", "true");
     args.put("infolevel", "maximum");
-    args.put("command", "list");
+    args.put("command", "brief");
     args.put("outputformat", "text");
     args.put("outputfile", testOutputFile.getAbsolutePath());
 

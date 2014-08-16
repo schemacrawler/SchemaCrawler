@@ -91,7 +91,7 @@ public class SchemaCrawlerTextCommandsOutputTest
   public void schemaOutput()
     throws Exception
   {
-    textOutputTest(SchemaTextDetailType.list.name(), new Config());
+    textOutputTest(SchemaTextDetailType.brief.name(), new Config());
   }
 
   @Test
@@ -112,7 +112,7 @@ public class SchemaCrawlerTextCommandsOutputTest
   public void streamedOutput()
     throws Exception
   {
-    final String command = SchemaTextDetailType.list.name();
+    final String command = SchemaTextDetailType.brief.name();
 
     final String referenceFile = command + ".txt";
     final File testOutputFile = File.createTempFile("schemacrawler."

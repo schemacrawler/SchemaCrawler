@@ -71,7 +71,7 @@ public class SchemaCrawlerXmlOutputTest
 
     checkValidXmlOutput(Operation.count.name(), failures);
     checkValidXmlOutput(Operation.dump.name(), failures);
-    checkValidXmlOutput(SchemaTextDetailType.list.name(), failures);
+    checkValidXmlOutput(SchemaTextDetailType.brief.name(), failures);
     checkValidXmlOutput(SchemaTextDetailType.schema.name(), failures);
     checkValidXmlOutput(SchemaTextDetailType.details.name(), failures);
 

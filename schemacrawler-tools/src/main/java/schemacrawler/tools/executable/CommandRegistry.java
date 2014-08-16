@@ -50,7 +50,7 @@ public final class CommandRegistry
   {
 
     final List<CommandProvider> commandProviders = new ArrayList<CommandProvider>(Arrays
-      .asList(new SchemaExecutableCommandProvider("list"),
+      .asList(new SchemaExecutableCommandProvider("brief"),
               new SchemaExecutableCommandProvider("schema"),
               new SchemaExecutableCommandProvider("details"),
 

@@ -126,7 +126,7 @@ public class GraphExecutableOptionsTest
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
     final GraphOptions graphOptions = new GraphOptions();
-    graphOptions.setSchemaTextDetailType(SchemaTextDetailType.list);
+    graphOptions.setSchemaTextDetailType(SchemaTextDetailType.brief);
 
     executableGraph(schemaCrawlerOptions, graphOptions, currentMethodName());
   }
