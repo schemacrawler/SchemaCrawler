@@ -3,6 +3,7 @@
   "tables": [
     {
       "weakAssociations": [],
+      "definition": "",
       "tableConstraints": [
         {
           "definition": "BOOKS.AUTHORS.STATE=UPPER(BOOKS.AUTHORS.STATE)",
@@ -10,6 +11,7 @@
           "type": "check"
         },
         {
+          "definition": "",
           "name": "PK_AUTHORS",
           "type": "primary_key"
         },
@@ -40,6 +42,7 @@
       }],
       "primaryKey": {
         "unique": true,
+        "definition": "",
         "name": "PK_AUTHORS",
         "columns": {
           "sortSequence": "ascending",
@@ -53,8 +56,8 @@
           "decimalDigits": 0,
           "width": "",
           "name": "ID",
-          "remarks": "",
           "nullable": false,
+          "remarks": "",
           "databaseSpecificType": "INTEGER",
           "size": 32
         },
@@ -63,8 +66,8 @@
           "decimalDigits": 0,
           "width": "(20)",
           "name": "FIRSTNAME",
-          "remarks": "",
           "nullable": false,
+          "remarks": "",
           "databaseSpecificType": "VARCHAR",
           "size": 20
         },
@@ -73,8 +76,8 @@
           "decimalDigits": 0,
           "width": "(20)",
           "name": "LASTNAME",
-          "remarks": "",
           "nullable": false,
+          "remarks": "",
           "databaseSpecificType": "VARCHAR",
           "size": 20
         },
@@ -83,8 +86,8 @@
           "decimalDigits": 0,
           "width": "(255)",
           "name": "ADDRESS1",
-          "remarks": "",
           "nullable": true,
+          "remarks": "",
           "databaseSpecificType": "VARCHAR",
           "size": 255
         },
@@ -93,8 +96,8 @@
           "decimalDigits": 0,
           "width": "(255)",
           "name": "ADDRESS2",
-          "remarks": "",
           "nullable": true,
+          "remarks": "",
           "databaseSpecificType": "VARCHAR",
           "size": 255
         },
@@ -103,8 +106,8 @@
           "decimalDigits": 0,
           "width": "(50)",
           "name": "CITY",
-          "remarks": "",
           "nullable": true,
+          "remarks": "",
           "databaseSpecificType": "VARCHAR",
           "size": 50
         },
@@ -113,8 +116,8 @@
           "decimalDigits": 0,
           "width": "(2)",
           "name": "STATE",
-          "remarks": "",
           "nullable": true,
+          "remarks": "",
           "databaseSpecificType": "VARCHAR",
           "size": 2
         },
@@ -123,8 +126,8 @@
           "decimalDigits": 0,
           "width": "(10)",
           "name": "POSTALCODE",
-          "remarks": "",
           "nullable": true,
+          "remarks": "",
           "databaseSpecificType": "VARCHAR",
           "size": 10
         },
@@ -133,8 +136,8 @@
           "decimalDigits": 0,
           "width": "(50)",
           "name": "COUNTRY",
-          "remarks": "",
           "nullable": true,
+          "remarks": "",
           "databaseSpecificType": "VARCHAR",
           "size": 50
         }
@@ -192,6 +195,7 @@
       "indices": [
         {
           "unique": true,
+          "definition": "",
           "name": "SYS_IDX_PK_AUTHORS_10097",
           "columns": {
             "sortSequence": "ascending",
@@ -200,6 +204,7 @@
         },
         {
           "unique": false,
+          "definition": "",
           "name": "IDX_B_AUTHORS",
           "columns": [
             {
@@ -214,6 +219,7 @@
         },
         {
           "unique": false,
+          "definition": "",
           "name": "IDX_A_AUTHORS",
           "columns": [
             {
@@ -259,8 +265,8 @@
           "decimalDigits": 0,
           "width": "",
           "name": "ID",
-          "remarks": "",
           "nullable": true,
+          "remarks": "",
           "databaseSpecificType": "INTEGER",
           "size": 32
         },
@@ -269,8 +275,8 @@
           "decimalDigits": 0,
           "width": "(20)",
           "name": "FIRSTNAME",
-          "remarks": "",
           "nullable": true,
+          "remarks": "",
           "databaseSpecificType": "VARCHAR",
           "size": 20
         },
@@ -279,8 +285,8 @@
           "decimalDigits": 0,
           "width": "(20)",
           "name": "LASTNAME",
-          "remarks": "",
           "nullable": true,
+          "remarks": "",
           "databaseSpecificType": "VARCHAR",
           "size": 20
         }
@@ -342,12 +348,15 @@
     },
     {
       "weakAssociations": [],
+      "definition": "",
       "tableConstraints": [
         {
+          "definition": "",
           "name": "FK_Y_BOOK",
           "type": "foreign_key"
         },
         {
+          "definition": "",
           "name": "FK_Z_AUTHOR",
           "type": "foreign_key"
         },
@@ -390,8 +399,8 @@
           "decimalDigits": 0,
           "width": "",
           "name": "BOOKID",
-          "remarks": "",
           "nullable": false,
+          "remarks": "",
           "databaseSpecificType": "INTEGER",
           "size": 32
         },
@@ -400,8 +409,8 @@
           "decimalDigits": 0,
           "width": "",
           "name": "AUTHORID",
-          "remarks": "",
           "nullable": false,
+          "remarks": "",
           "databaseSpecificType": "INTEGER",
           "size": 32
         },
@@ -410,8 +419,8 @@
           "decimalDigits": 0,
           "width": "",
           "name": "\"UPDATE\"",
-          "remarks": "",
           "nullable": true,
+          "remarks": "",
           "databaseSpecificType": "CLOB",
           "size": 1073741824
         }
@@ -469,6 +478,7 @@
       "indices": [
         {
           "unique": false,
+          "definition": "",
           "name": "SYS_IDX_10118",
           "columns": {
             "sortSequence": "ascending",
@@ -477,6 +487,7 @@
         },
         {
           "unique": false,
+          "definition": "",
           "name": "SYS_IDX_10116",
           "columns": {
             "sortSequence": "ascending",
@@ -485,6 +496,7 @@
         },
         {
           "unique": true,
+          "definition": "",
           "name": "UIDX_BOOKAUTHORS",
           "columns": [
             {
@@ -513,12 +525,15 @@
           "fkColumn": "BOOKS.PUBLISHERID"
         }
       ],
+      "definition": "",
       "tableConstraints": [
         {
+          "definition": "",
           "name": "FK_PREVIOUSEDITION",
           "type": "foreign_key"
         },
         {
+          "definition": "",
           "name": "PK_BOOKS",
           "type": "primary_key"
         },
@@ -560,6 +575,7 @@
       ],
       "primaryKey": {
         "unique": true,
+        "definition": "",
         "name": "PK_BOOKS",
         "columns": {
           "sortSequence": "ascending",
@@ -573,8 +589,8 @@
           "decimalDigits": 0,
           "width": "",
           "name": "ID",
-          "remarks": "Unique (internal) id for book",
           "nullable": false,
+          "remarks": "Unique (internal) id for book",
           "databaseSpecificType": "INTEGER",
           "size": 32
         },
@@ -583,8 +599,8 @@
           "decimalDigits": 0,
           "width": "(255)",
           "name": "TITLE",
-          "remarks": "Book title",
           "nullable": false,
+          "remarks": "Book title",
           "databaseSpecificType": "VARCHAR",
           "size": 255
         },
@@ -593,8 +609,8 @@
           "decimalDigits": 0,
           "width": "(255)",
           "name": "DESCRIPTION",
-          "remarks": "Book description",
           "nullable": true,
+          "remarks": "Book description",
           "databaseSpecificType": "VARCHAR",
           "size": 255
         },
@@ -603,8 +619,8 @@
           "decimalDigits": 0,
           "width": "",
           "name": "PUBLISHERID",
-          "remarks": "Foreign key to the book publisher",
           "nullable": false,
+          "remarks": "Foreign key to the book publisher",
           "databaseSpecificType": "INTEGER",
           "size": 32
         },
@@ -613,8 +629,8 @@
           "decimalDigits": 0,
           "width": "",
           "name": "PUBLICATIONDATE",
-          "remarks": "Book publication date",
           "nullable": true,
+          "remarks": "Book publication date",
           "databaseSpecificType": "DATE",
           "size": 10
         },
@@ -623,8 +639,8 @@
           "decimalDigits": 0,
           "width": "(64, 0)",
           "name": "PRICE",
-          "remarks": "Current price for the book",
           "nullable": true,
+          "remarks": "Current price for the book",
           "databaseSpecificType": "DOUBLE",
           "size": 64
         },
@@ -633,8 +649,8 @@
           "decimalDigits": 0,
           "width": "",
           "name": "PREVIOUSEDITIONID",
-          "remarks": "",
           "nullable": true,
+          "remarks": "",
           "databaseSpecificType": "INTEGER",
           "size": 32
         }
@@ -692,6 +708,7 @@
       "indices": [
         {
           "unique": true,
+          "definition": "",
           "name": "SYS_IDX_PK_BOOKS_10105",
           "columns": {
             "sortSequence": "ascending",
@@ -700,6 +717,7 @@
         },
         {
           "unique": true,
+          "definition": "",
           "name": "UIDX_PREVIOUSEDITION",
           "columns": {
             "sortSequence": "ascending",
@@ -708,6 +726,7 @@
         },
         {
           "unique": false,
+          "definition": "",
           "name": "SYS_IDX_10109",
           "columns": {
             "sortSequence": "ascending",
@@ -721,6 +740,7 @@
     },
     {
       "weakAssociations": [],
+      "definition": "",
       "tableConstraints": [],
       "foreignKeys": [],
       "primaryKey": {},
@@ -730,8 +750,8 @@
         "decimalDigits": 0,
         "width": "",
         "name": "\"Global Count\"",
-        "remarks": "",
         "nullable": true,
+        "remarks": "",
         "databaseSpecificType": "INTEGER",
         "size": 32
       }],
@@ -795,13 +815,16 @@
         "pkColumn": "PUBLISHERS.ID",
         "fkColumn": "BOOKS.PUBLISHERID"
       }],
+      "definition": "",
       "tableConstraints": [{
+        "definition": "",
         "name": "SYS_PK_10092",
         "type": "primary_key"
       }],
       "foreignKeys": [],
       "primaryKey": {
         "unique": true,
+        "definition": "",
         "name": "SYS_PK_10092",
         "columns": {
           "sortSequence": "ascending",
@@ -815,8 +838,8 @@
           "decimalDigits": 0,
           "width": "",
           "name": "ID",
-          "remarks": "Unique (internal) id for book publisher",
           "nullable": false,
+          "remarks": "Unique (internal) id for book publisher",
           "databaseSpecificType": "INTEGER",
           "size": 32
         },
@@ -825,8 +848,8 @@
           "decimalDigits": 0,
           "width": "(255)",
           "name": "PUBLISHER",
-          "remarks": "Name of book publisher",
           "nullable": true,
+          "remarks": "Name of book publisher",
           "databaseSpecificType": "VARCHAR",
           "size": 255
         }
@@ -883,6 +906,7 @@
       ],
       "indices": [{
         "unique": true,
+        "definition": "",
         "name": "SYS_IDX_SYS_PK_10092_10093",
         "columns": {
           "sortSequence": "ascending",
@@ -895,16 +919,20 @@
     },
     {
       "weakAssociations": [],
+      "definition": "",
       "tableConstraints": [
         {
+          "definition": "",
           "name": "FK_PUBLICATION_JOIN",
           "type": "foreign_key"
         },
         {
+          "definition": "",
           "name": "FK_WRITER_JOIN",
           "type": "foreign_key"
         },
         {
+          "definition": "",
           "name": "PK_EXTRA_PK",
           "type": "primary_key"
         },
@@ -946,6 +974,7 @@
       ],
       "primaryKey": {
         "unique": true,
+        "definition": "",
         "name": "PK_EXTRA_PK",
         "columns": {
           "sortSequence": "ascending",
@@ -959,8 +988,8 @@
           "decimalDigits": 0,
           "width": "",
           "name": "ID",
-          "remarks": "",
           "nullable": false,
+          "remarks": "",
           "databaseSpecificType": "INTEGER",
           "size": 32
         },
@@ -969,8 +998,8 @@
           "decimalDigits": 0,
           "width": "",
           "name": "WRITERID",
-          "remarks": "",
           "nullable": false,
+          "remarks": "",
           "databaseSpecificType": "BIGINT",
           "size": 64
         },
@@ -979,8 +1008,8 @@
           "decimalDigits": 0,
           "width": "",
           "name": "PUBLICATIONID",
-          "remarks": "",
           "nullable": false,
+          "remarks": "",
           "databaseSpecificType": "INTEGER",
           "size": 32
         }
@@ -1038,6 +1067,7 @@
       "indices": [
         {
           "unique": true,
+          "definition": "",
           "name": "SYS_IDX_PK_EXTRA_PK_10181",
           "columns": {
             "sortSequence": "ascending",
@@ -1046,6 +1076,7 @@
         },
         {
           "unique": false,
+          "definition": "",
           "name": "SYS_IDX_10187",
           "columns": {
             "sortSequence": "ascending",
@@ -1054,6 +1085,7 @@
         },
         {
           "unique": false,
+          "definition": "",
           "name": "SYS_IDX_10185",
           "columns": {
             "sortSequence": "ascending",
@@ -1067,6 +1099,7 @@
     },
     {
       "weakAssociations": [],
+      "definition": "",
       "tableConstraints": [],
       "foreignKeys": [],
       "primaryKey": {},
@@ -1076,8 +1109,8 @@
         "decimalDigits": 0,
         "width": "",
         "name": "\"Global Count\"",
-        "remarks": "",
         "nullable": true,
+        "remarks": "",
         "databaseSpecificType": "INTEGER",
         "size": 32
       }],
@@ -1138,12 +1171,15 @@
     },
     {
       "weakAssociations": [],
+      "definition": "",
       "tableConstraints": [
         {
+          "definition": "",
           "name": "FK_PUBLICATIONS_WRITER",
           "type": "foreign_key"
         },
         {
+          "definition": "",
           "name": "PK_PUBLICATIONS",
           "type": "primary_key"
         },
@@ -1194,6 +1230,7 @@
       ],
       "primaryKey": {
         "unique": true,
+        "definition": "",
         "name": "PK_PUBLICATIONS",
         "columns": {
           "sortSequence": "ascending",
@@ -1207,8 +1244,8 @@
           "decimalDigits": 0,
           "width": "",
           "name": "ID",
-          "remarks": "",
           "nullable": false,
+          "remarks": "",
           "databaseSpecificType": "INTEGER",
           "size": 32
         },
@@ -1217,8 +1254,8 @@
           "decimalDigits": 0,
           "width": "(255)",
           "name": "TITLE",
-          "remarks": "",
           "nullable": false,
+          "remarks": "",
           "databaseSpecificType": "VARCHAR",
           "size": 255
         },
@@ -1227,8 +1264,8 @@
           "decimalDigits": 0,
           "width": "(255)",
           "name": "DESCRIPTION",
-          "remarks": "",
           "nullable": true,
+          "remarks": "",
           "databaseSpecificType": "VARCHAR",
           "size": 255
         },
@@ -1237,8 +1274,8 @@
           "decimalDigits": 0,
           "width": "",
           "name": "WRITERID",
-          "remarks": "",
           "nullable": false,
+          "remarks": "",
           "databaseSpecificType": "BIGINT",
           "size": 64
         },
@@ -1247,8 +1284,8 @@
           "decimalDigits": 0,
           "width": "",
           "name": "PUBLICATIONDATE",
-          "remarks": "",
           "nullable": true,
+          "remarks": "",
           "databaseSpecificType": "DATE",
           "size": 10
         },
@@ -1257,8 +1294,8 @@
           "decimalDigits": 0,
           "width": "(64, 0)",
           "name": "PRICE",
-          "remarks": "",
           "nullable": true,
+          "remarks": "",
           "databaseSpecificType": "DOUBLE",
           "size": 64
         },
@@ -1267,8 +1304,8 @@
           "decimalDigits": 0,
           "width": "",
           "name": "\"UPDATE\"",
-          "remarks": "",
           "nullable": true,
+          "remarks": "",
           "databaseSpecificType": "CLOB",
           "size": 1073741824
         },
@@ -1277,8 +1314,8 @@
           "decimalDigits": 0,
           "width": "",
           "name": "PRESS_RELEASE",
-          "remarks": "",
           "nullable": true,
+          "remarks": "",
           "databaseSpecificType": "CLOB",
           "size": 1073741824
         }
@@ -1336,6 +1373,7 @@
       "indices": [
         {
           "unique": true,
+          "definition": "",
           "name": "SYS_IDX_PK_PUBLICATIONS_10171",
           "columns": {
             "sortSequence": "ascending",
@@ -1344,6 +1382,7 @@
         },
         {
           "unique": false,
+          "definition": "",
           "name": "SYS_IDX_10175",
           "columns": {
             "sortSequence": "ascending",
@@ -1357,6 +1396,7 @@
     },
     {
       "weakAssociations": [],
+      "definition": "",
       "tableConstraints": [
         {
           "definition": "FOR_LINT.WRITERS.STATE=UPPER(FOR_LINT.WRITERS.STATE)",
@@ -1364,10 +1404,12 @@
           "type": "check"
         },
         {
+          "definition": "",
           "name": "FK_WRITERS_PUBLICATION",
           "type": "foreign_key"
         },
         {
+          "definition": "",
           "name": "PK_WRITERS",
           "type": "primary_key"
         },
@@ -1428,6 +1470,7 @@
       ],
       "primaryKey": {
         "unique": true,
+        "definition": "",
         "name": "PK_WRITERS",
         "columns": {
           "sortSequence": "ascending",
@@ -1441,8 +1484,8 @@
           "decimalDigits": 0,
           "width": "",
           "name": "ID",
-          "remarks": "",
           "nullable": false,
+          "remarks": "",
           "databaseSpecificType": "BIGINT",
           "size": 64
         },
@@ -1451,8 +1494,8 @@
           "decimalDigits": 0,
           "width": "(20)",
           "name": "FIRSTNAME",
-          "remarks": "",
           "nullable": false,
+          "remarks": "",
           "databaseSpecificType": "VARCHAR",
           "size": 20
         },
@@ -1461,8 +1504,8 @@
           "decimalDigits": 0,
           "width": "(20)",
           "name": "LASTNAME",
-          "remarks": "",
           "nullable": false,
+          "remarks": "",
           "databaseSpecificType": "VARCHAR",
           "size": 20
         },
@@ -1471,8 +1514,8 @@
           "decimalDigits": 0,
           "width": "(255)",
           "name": "ADDRESS1",
-          "remarks": "",
           "nullable": true,
+          "remarks": "",
           "databaseSpecificType": "VARCHAR",
           "size": 255
         },
@@ -1481,8 +1524,8 @@
           "decimalDigits": 0,
           "width": "(255)",
           "name": "ADDRESS2",
-          "remarks": "",
           "nullable": false,
+          "remarks": "",
           "databaseSpecificType": "VARCHAR",
           "size": 255
         },
@@ -1491,8 +1534,8 @@
           "decimalDigits": 0,
           "width": "(50)",
           "name": "CITY",
-          "remarks": "",
           "nullable": true,
+          "remarks": "",
           "databaseSpecificType": "VARCHAR",
           "size": 50
         },
@@ -1501,8 +1544,8 @@
           "decimalDigits": 0,
           "width": "(2)",
           "name": "STATE",
-          "remarks": "",
           "nullable": true,
+          "remarks": "",
           "databaseSpecificType": "VARCHAR",
           "size": 2
         },
@@ -1511,8 +1554,8 @@
           "decimalDigits": 0,
           "width": "(10)",
           "name": "POSTALCODE",
-          "remarks": "",
           "nullable": true,
+          "remarks": "",
           "databaseSpecificType": "VARCHAR",
           "size": 10
         },
@@ -1521,8 +1564,8 @@
           "decimalDigits": 0,
           "width": "(50)",
           "name": "COUNTRY",
-          "remarks": "",
           "nullable": true,
+          "remarks": "",
           "databaseSpecificType": "VARCHAR",
           "size": 50
         },
@@ -1531,8 +1574,8 @@
           "decimalDigits": 0,
           "width": "(10)",
           "name": "PHONE1",
-          "remarks": "",
           "nullable": true,
+          "remarks": "",
           "databaseSpecificType": "VARCHAR",
           "size": 10
         },
@@ -1541,8 +1584,8 @@
           "decimalDigits": 0,
           "width": "(15)",
           "name": "PHONE2",
-          "remarks": "",
           "nullable": true,
+          "remarks": "",
           "databaseSpecificType": "VARCHAR",
           "size": 15
         },
@@ -1551,8 +1594,8 @@
           "decimalDigits": 0,
           "width": "(10)",
           "name": "EMAIL1",
-          "remarks": "",
           "nullable": true,
+          "remarks": "",
           "databaseSpecificType": "VARCHAR",
           "size": 10
         },
@@ -1561,8 +1604,8 @@
           "decimalDigits": 0,
           "width": "",
           "name": "EMAIL2",
-          "remarks": "",
           "nullable": true,
+          "remarks": "",
           "databaseSpecificType": "INTEGER",
           "size": 32
         },
@@ -1571,8 +1614,8 @@
           "decimalDigits": 0,
           "width": "(10)",
           "name": "FAX",
-          "remarks": "",
           "nullable": true,
+          "remarks": "",
           "databaseSpecificType": "VARCHAR",
           "size": 10
         },
@@ -1581,8 +1624,8 @@
           "decimalDigits": 0,
           "width": "",
           "name": "FAX3",
-          "remarks": "",
           "nullable": true,
+          "remarks": "",
           "databaseSpecificType": "INTEGER",
           "size": 32
         },
@@ -1591,8 +1634,8 @@
           "decimalDigits": 0,
           "width": "(10)",
           "name": "HOMEEMAIL11",
-          "remarks": "",
           "nullable": true,
+          "remarks": "",
           "databaseSpecificType": "VARCHAR",
           "size": 10
         },
@@ -1601,8 +1644,8 @@
           "decimalDigits": 0,
           "width": "(10)",
           "name": "HOMEEMAIL12",
-          "remarks": "",
           "nullable": true,
+          "remarks": "",
           "databaseSpecificType": "VARCHAR",
           "size": 10
         },
@@ -1611,8 +1654,8 @@
           "decimalDigits": 0,
           "width": "",
           "name": "PUBLICATION_ID",
-          "remarks": "",
           "nullable": false,
+          "remarks": "",
           "databaseSpecificType": "BIGINT",
           "size": 64
         }
@@ -1670,6 +1713,7 @@
       "indices": [
         {
           "unique": true,
+          "definition": "",
           "name": "SYS_IDX_PK_WRITERS_10161",
           "columns": {
             "sortSequence": "ascending",
@@ -1678,6 +1722,7 @@
         },
         {
           "unique": false,
+          "definition": "",
           "name": "SYS_IDX_10189",
           "columns": {
             "sortSequence": "ascending",
@@ -1686,6 +1731,7 @@
         },
         {
           "unique": false,
+          "definition": "",
           "name": "IDX_A1_WRITERS",
           "columns": [
             {
@@ -1700,6 +1746,7 @@
         },
         {
           "unique": true,
+          "definition": "",
           "name": "IDX_U_WRITERS",
           "columns": [
             {
@@ -1714,6 +1761,7 @@
         },
         {
           "unique": false,
+          "definition": "",
           "name": "IDX_B_WRITERS",
           "columns": [
             {
@@ -1728,6 +1776,7 @@
         },
         {
           "unique": false,
+          "definition": "",
           "name": "IDX_A_WRITERS",
           "columns": [
             {
@@ -1755,8 +1804,10 @@
     },
     {
       "weakAssociations": [],
+      "definition": "",
       "tableConstraints": [
         {
+          "definition": "",
           "name": "PK_CUSTOMERS",
           "type": "primary_key"
         },
@@ -1798,6 +1849,7 @@
       }],
       "primaryKey": {
         "unique": true,
+        "definition": "",
         "name": "PK_CUSTOMERS",
         "columns": [
           {
@@ -1817,8 +1869,8 @@
           "decimalDigits": 0,
           "width": "(50)",
           "name": "CITY",
-          "remarks": "",
           "nullable": false,
+          "remarks": "",
           "databaseSpecificType": "VARCHAR",
           "size": 50
         },
@@ -1827,8 +1879,8 @@
           "decimalDigits": 0,
           "width": "(2)",
           "name": "STATE",
-          "remarks": "",
           "nullable": false,
+          "remarks": "",
           "databaseSpecificType": "VARCHAR",
           "size": 2
         },
@@ -1837,8 +1889,8 @@
           "decimalDigits": 0,
           "width": "(10)",
           "name": "POSTALCODE",
-          "remarks": "",
           "nullable": false,
+          "remarks": "",
           "databaseSpecificType": "VARCHAR",
           "size": 10
         },
@@ -1847,8 +1899,8 @@
           "decimalDigits": 0,
           "width": "(50)",
           "name": "COUNTRY",
-          "remarks": "",
           "nullable": false,
+          "remarks": "",
           "databaseSpecificType": "VARCHAR",
           "size": 50
         }
@@ -1905,6 +1957,7 @@
       ],
       "indices": [{
         "unique": true,
+        "definition": "",
         "name": "SYS_IDX_PK_CUSTOMERS_10144",
         "columns": [
           {
@@ -1926,8 +1979,10 @@
         "pkColumn": "BOOKS.ID",
         "fkColumn": "SALES.BOOKID"
       }],
+      "definition": "",
       "tableConstraints": [
         {
+          "definition": "",
           "name": "FK_SALES_REGIONS",
           "type": "foreign_key"
         },
@@ -1965,8 +2020,8 @@
           "decimalDigits": 0,
           "width": "(10)",
           "name": "POSTALCODE",
-          "remarks": "",
           "nullable": false,
+          "remarks": "",
           "databaseSpecificType": "VARCHAR",
           "size": 10
         },
@@ -1975,8 +2030,8 @@
           "decimalDigits": 0,
           "width": "(50)",
           "name": "COUNTRY",
-          "remarks": "",
           "nullable": false,
+          "remarks": "",
           "databaseSpecificType": "VARCHAR",
           "size": 50
         },
@@ -1985,8 +2040,8 @@
           "decimalDigits": 0,
           "width": "",
           "name": "BOOKID",
-          "remarks": "",
           "nullable": true,
+          "remarks": "",
           "databaseSpecificType": "INTEGER",
           "size": 32
         },
@@ -1995,8 +2050,8 @@
           "decimalDigits": 0,
           "width": "",
           "name": "PERIODENDDATE",
-          "remarks": "",
           "nullable": true,
+          "remarks": "",
           "databaseSpecificType": "DATE",
           "size": 10
         },
@@ -2005,8 +2060,8 @@
           "decimalDigits": 0,
           "width": "(64, 0)",
           "name": "TOTALAMOUNT",
-          "remarks": "",
           "nullable": true,
+          "remarks": "",
           "databaseSpecificType": "DOUBLE",
           "size": 64
         }
@@ -2063,6 +2118,7 @@
       ],
       "indices": [{
         "unique": false,
+        "definition": "",
         "name": "SYS_IDX_10154",
         "columns": [
           {

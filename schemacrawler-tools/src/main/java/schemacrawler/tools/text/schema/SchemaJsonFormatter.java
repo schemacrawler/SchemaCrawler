@@ -32,6 +32,8 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.ConditionTimingType;
+import schemacrawler.schema.DatabaseObject;
+import schemacrawler.schema.DefinedObject;
 import schemacrawler.schema.EventManipulationType;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnReference;
@@ -164,6 +166,7 @@ final class SchemaJsonFormatter
       }
       jsonRoutine.put("type", routine.getRoutineType());
       jsonRoutine.put("returnType", routine.getReturnType());
+      printRemarks(routine, jsonRoutine);
 
       if (!isBrief)
       {
@@ -178,10 +181,7 @@ final class SchemaJsonFormatter
         {
           jsonParameters.put(handleRoutineColumn(column));
         }
-        if (routine.hasDefinition())
-        {
-          jsonRoutine.put("definition", routine.getDefinition());
-        }
+        printDefinition(routine, jsonRoutine);
 
         if (isVerbose)
         {
@@ -189,7 +189,6 @@ final class SchemaJsonFormatter
           {
             jsonRoutine.put("specificName", routine.getSpecificName());
           }
-          jsonRoutine.put("remarks", routine.getRemarks());
         }
       }
     }
@@ -219,15 +218,14 @@ final class SchemaJsonFormatter
       {
         jsonSequence.put("fullName", sequence.getFullName());
       }
+      printRemarks(sequence, jsonSequence);
 
-      jsonSequence.put("increment", sequence.getIncrement());
-      jsonSequence.put("minimumValue", sequence.getMinimumValue());
-      jsonSequence.put("maximumValue", sequence.getMaximumValue());
-      jsonSequence.put("cycle", sequence.isCycle());
-
-      if (isVerbose)
+      if (!isBrief)
       {
-        jsonSequence.put("remarks", sequence.getRemarks());
+        jsonSequence.put("increment", sequence.getIncrement());
+        jsonSequence.put("minimumValue", sequence.getMinimumValue());
+        jsonSequence.put("maximumValue", sequence.getMaximumValue());
+        jsonSequence.put("cycle", sequence.isCycle());
       }
     }
     catch (final JSONException e)
@@ -257,20 +255,20 @@ final class SchemaJsonFormatter
       {
         jsonSynonym.put("fullName", synonym.getFullName());
       }
-      final String referencedObjectName;
-      if (options.isShowUnqualifiedNames())
-      {
-        referencedObjectName = synonym.getReferencedObject().getName();
-      }
-      else
-      {
-        referencedObjectName = synonym.getReferencedObject().getFullName();
-      }
-      jsonSynonym.put("referencedObject", referencedObjectName);
+      printRemarks(synonym, jsonSynonym);
 
-      if (isVerbose)
+      if (!isBrief)
       {
-        jsonSynonym.put("remarks", synonym.getRemarks());
+        final String referencedObjectName;
+        if (options.isShowUnqualifiedNames())
+        {
+          referencedObjectName = synonym.getReferencedObject().getName();
+        }
+        else
+        {
+          referencedObjectName = synonym.getReferencedObject().getFullName();
+        }
+        jsonSynonym.put("referencedObject", referencedObjectName);
       }
     }
     catch (final JSONException e)
@@ -301,6 +299,7 @@ final class SchemaJsonFormatter
         jsonTable.put("fullName", table.getFullName());
       }
       jsonTable.put("type", table.getTableType());
+      printRemarks(table, jsonTable);
 
       if (!isBrief)
       {
@@ -337,11 +336,7 @@ final class SchemaJsonFormatter
         {
           jsonIndices.put(handleIndex(index));
         }
-
-        if (table.hasDefinition())
-        {
-          jsonTable.put("definition", table.getDefinition());
-        }
+        printDefinition(table, jsonTable);
 
         jsonTable.put("triggers", handleTriggers(table.getTriggers()));
 
@@ -377,8 +372,6 @@ final class SchemaJsonFormatter
               }
             }
           }
-
-          jsonTable.put("remarks", table.getRemarks());
         }
       }
     }
@@ -576,10 +569,7 @@ final class SchemaJsonFormatter
       {
         jsonIndex.accumulate("columns", handleTableColumn(indexColumn));
       }
-      if (index.hasDefinition())
-      {
-        jsonIndex.put("definition", index.getDefinition());
-      }
+      printDefinition(index, jsonIndex);
     }
     catch (final JSONException e)
     {
@@ -622,6 +612,7 @@ final class SchemaJsonFormatter
     try
     {
       jsonColumn.put("name", column.getName());
+      printRemarks(column, jsonColumn);
 
       if (column instanceof IndexColumn)
       {
@@ -643,10 +634,6 @@ final class SchemaJsonFormatter
       if (options.isShowOrdinalNumbers())
       {
         jsonColumn.put("ordinal", column.getOrdinalPosition());
-      }
-      if (isVerbose)
-      {
-        jsonColumn.put("remarks", column.getRemarks());
       }
     }
     catch (final JSONException e)
@@ -687,10 +674,7 @@ final class SchemaJsonFormatter
         jsonTableConstraint
           .accumulate("columns", handleTableColumn(tableConstraintColumn));
       }
-      if (tableConstraint.hasDefinition())
-      {
-        jsonTableConstraint.put("definition", tableConstraint.getDefinition());
-      }
+      printDefinition(tableConstraint, jsonTableConstraint);
     }
     catch (final JSONException e)
     {
@@ -744,6 +728,26 @@ final class SchemaJsonFormatter
       }
     }
     return jsonTriggers;
+  }
+
+  private void printDefinition(final DefinedObject definedObject,
+                               final JSONObject jsonObject)
+    throws JSONException
+  {
+    if (!isVerbose)
+    {
+      return;
+    }
+    // Print empty string, if value is not available
+    jsonObject.put("definition", definedObject.getDefinition());
+  }
+
+  private void printRemarks(final DatabaseObject object,
+                            final JSONObject jsonObject)
+    throws JSONException
+  {
+    // Print empty string, if value is not available
+    jsonObject.put("remarks", object.getRemarks());
   }
 
 }

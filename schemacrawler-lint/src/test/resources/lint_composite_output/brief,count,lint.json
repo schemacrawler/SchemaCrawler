@@ -3,21 +3,25 @@
   "tables": [
     {
       "name": "EXTRA_PK",
+      "remarks": "",
       "fullName": "PUBLIC.FOR_LINT.EXTRA_PK",
       "type": "table"
     },
     {
       "name": "\"Global Counts\"",
+      "remarks": "",
       "fullName": "PUBLIC.FOR_LINT.\"Global Counts\"",
       "type": "table"
     },
     {
       "name": "PUBLICATIONS",
+      "remarks": "",
       "fullName": "PUBLIC.FOR_LINT.PUBLICATIONS",
       "type": "table"
     },
     {
       "name": "WRITERS",
+      "remarks": "",
       "fullName": "PUBLIC.FOR_LINT.WRITERS",
       "type": "table"
     }
