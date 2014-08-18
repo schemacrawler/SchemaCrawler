@@ -157,7 +157,6 @@ final class SchemaTextFormatter
     if (!isBrief)
     {
       printRoutineColumns(routine.getColumns());
-      printDefinition(routine);
     }
 
     if (isVerbose)
@@ -166,6 +165,7 @@ final class SchemaTextFormatter
       {
         printDefinition("specific name", "", routine.getSpecificName());
       }
+      printDefinition(routine);
     }
 
     out.println(formattingHelper.createObjectEnd());
@@ -298,12 +298,12 @@ final class SchemaTextFormatter
         printWeakAssociations(table);
       }
       printIndices(table.getIndices());
-      printDefinition(table);
       printTriggers(table.getTriggers());
       printTableConstraints(table.getTableConstraints());
       if (isVerbose)
       {
         printPrivileges(table.getPrivileges());
+        printDefinition(table);
       }
     }
 
@@ -639,12 +639,19 @@ final class SchemaTextFormatter
         final String indexDetails = "[" + (index.isUnique()? "": "non-")
                                     + "unique " + indexTypeString + "index]";
         out.println(formattingHelper.createNameRow(indexName, indexDetails));
-        printTableColumns(index.getColumns());
 
-        if (index.hasDefinition())
+        if (!isBrief)
         {
-          out.println(formattingHelper.createDefinitionRow(index
-            .getDefinition()));
+          printTableColumns(index.getColumns());
+        }
+
+        if (isVerbose)
+        {
+          if (index.hasDefinition())
+          {
+            out.println(formattingHelper.createDefinitionRow(index
+              .getDefinition()));
+          }
         }
       }
     }
@@ -695,11 +702,11 @@ final class SchemaTextFormatter
 
   private void printRemarks(final DatabaseObject object)
   {
-    final String remarks = object.getRemarks();
-    if (!isBlank(remarks))
+    if (object == null || !object.hasRemarks())
     {
-      out.println(formattingHelper.createDefinitionRow(remarks));
+      return;
     }
+    out.println(formattingHelper.createDefinitionRow(object.getRemarks()));
   }
 
   private void printRoutineColumns(final List<? extends RoutineColumn<?>> columns)
@@ -741,11 +748,11 @@ final class SchemaTextFormatter
 
   private void printTableColumnRemarks(final Column column)
   {
-    final String remarks = column.getRemarks();
-    if (!isBlank(remarks))
+    if (column == null || !column.hasRemarks())
     {
-      out.println(formattingHelper.createDetailRow("", "", remarks));
+      return;
     }
+    out.println(formattingHelper.createDetailRow("", "", column.getRemarks()));
   }
 
   private void printTableColumns(final List<? extends Column> columns)
@@ -825,12 +832,19 @@ final class SchemaTextFormatter
         out.println(formattingHelper.createEmptyRow());
         out.println(formattingHelper.createNameRow(constraintName,
                                                    constraintDetails));
-        printTableColumns(constraint.getColumns());
 
-        if (constraint.hasDefinition())
+        if (!isBrief)
         {
-          out.println(formattingHelper.createDefinitionRow(constraint
-            .getDefinition()));
+          printTableColumns(constraint.getColumns());
+        }
+
+        if (isVerbose)
+        {
+          if (constraint.hasDefinition())
+          {
+            out.println(formattingHelper.createDefinitionRow(constraint
+              .getDefinition()));
+          }
         }
 
       }

@@ -112,6 +112,17 @@ abstract class AbstractNamedObjectWithAttributes
   /**
    * {@inheritDoc}
    *
+   * @see schemacrawler.schema.NamedObjectWithAttributes#hasRemarks()
+   */
+  @Override
+  public boolean hasRemarks()
+  {
+    return remarks != null && !remarks.isEmpty();
+  }
+
+  /**
+   * {@inheritDoc}
+   *
    * @see NamedObjectWithAttributes#setAttribute(String, Object)
    */
   @Override

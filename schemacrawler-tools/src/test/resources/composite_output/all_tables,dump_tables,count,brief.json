@@ -2742,79 +2742,83 @@
   "tables": [
     {
       "name": "AUTHORS",
+      "remarks": "Contact details for book authors",
       "fullName": "PUBLIC.BOOKS.AUTHORS",
       "type": "table"
     },
     {
       "name": "AUTHORSLIST",
+      "remarks": "",
       "fullName": "PUBLIC.BOOKS.AUTHORSLIST",
       "type": "view"
     },
     {
       "name": "BOOKAUTHORS",
+      "remarks": "Relationship between books and their authors, along with the latest updated information",
       "fullName": "PUBLIC.BOOKS.BOOKAUTHORS",
       "type": "table"
     },
     {
       "name": "BOOKS",
+      "remarks": "Details for published books",
       "fullName": "PUBLIC.BOOKS.BOOKS",
       "type": "table"
     },
     {
       "name": "\"Global Counts\"",
+      "remarks": "",
       "fullName": "PUBLIC.BOOKS.\"Global Counts\"",
       "type": "table"
     },
     {
       "name": "PUBLISHERS",
+      "remarks": "List of book publishers",
       "fullName": "PUBLIC.BOOKS.PUBLISHERS",
       "type": "table"
     },
     {
       "name": "EXTRA_PK",
+      "remarks": "",
       "fullName": "PUBLIC.FOR_LINT.EXTRA_PK",
       "type": "table"
     },
     {
       "name": "\"Global Counts\"",
+      "remarks": "",
       "fullName": "PUBLIC.FOR_LINT.\"Global Counts\"",
       "type": "table"
     },
     {
       "name": "PUBLICATIONS",
+      "remarks": "",
       "fullName": "PUBLIC.FOR_LINT.PUBLICATIONS",
       "type": "table"
     },
     {
       "name": "WRITERS",
+      "remarks": "",
       "fullName": "PUBLIC.FOR_LINT.WRITERS",
       "type": "table"
     },
     {
       "name": "REGIONS",
+      "remarks": "",
       "fullName": "PUBLIC.\"PUBLISHER SALES\".REGIONS",
       "type": "table"
     },
     {
       "name": "SALES",
+      "remarks": "",
       "fullName": "PUBLIC.\"PUBLISHER SALES\".SALES",
       "type": "table"
     }
   ],
   "sequences": [
     {
-      "cycle": false,
-      "maximumValue": 2147483647,
-      "increment": 1,
-      "minimumValue": -2147483648,
       "name": "PUBLISHER_ID_SEQ",
       "fullName": "PUBLIC.BOOKS.PUBLISHER_ID_SEQ"
     },
     {
-      "cycle": false,
-      "maximumValue": 9223372036854775807,
-      "increment": 1,
-      "minimumValue": -9223372036854775808,
       "name": "LOB_ID",
       "fullName": "PUBLIC.SYSTEM_LOBS.LOB_ID"
     }
@@ -2822,78 +2826,91 @@
   "routines": [
     {
       "name": "CUSTOMADD",
+      "remarks": "",
       "fullName": "PUBLIC.BOOKS.CUSTOMADD",
       "type": "function",
       "returnType": "does not return a table"
     },
     {
       "name": "CUSTOMADD",
+      "remarks": "",
       "fullName": "PUBLIC.BOOKS.CUSTOMADD",
       "type": "function",
       "returnType": "does not return a table"
     },
     {
       "name": "NEW_PUBLISHER",
+      "remarks": "",
       "fullName": "PUBLIC.BOOKS.NEW_PUBLISHER",
       "type": "procedure",
       "returnType": "no result"
     },
     {
       "name": "NEW_PUBLISHER",
+      "remarks": "",
       "fullName": "PUBLIC.BOOKS.NEW_PUBLISHER",
       "type": "procedure",
       "returnType": "no result"
     },
     {
       "name": "ALLOC_BLOCKS",
+      "remarks": "",
       "fullName": "PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS",
       "type": "procedure",
       "returnType": "no result"
     },
     {
       "name": "ALLOC_SINGLE_BLOCK",
+      "remarks": "",
       "fullName": "PUBLIC.SYSTEM_LOBS.ALLOC_SINGLE_BLOCK",
       "type": "procedure",
       "returnType": "no result"
     },
     {
       "name": "CONVERT_BLOCK",
+      "remarks": "",
       "fullName": "PUBLIC.SYSTEM_LOBS.CONVERT_BLOCK",
       "type": "procedure",
       "returnType": "no result"
     },
     {
       "name": "CREATE_EMPTY_BLOCK",
+      "remarks": "",
       "fullName": "PUBLIC.SYSTEM_LOBS.CREATE_EMPTY_BLOCK",
       "type": "procedure",
       "returnType": "no result"
     },
     {
       "name": "DELETE_BLOCKS",
+      "remarks": "",
       "fullName": "PUBLIC.SYSTEM_LOBS.DELETE_BLOCKS",
       "type": "procedure",
       "returnType": "no result"
     },
     {
       "name": "DELETE_LOB",
+      "remarks": "",
       "fullName": "PUBLIC.SYSTEM_LOBS.DELETE_LOB",
       "type": "procedure",
       "returnType": "no result"
     },
     {
       "name": "DELETE_UNUSED",
+      "remarks": "",
       "fullName": "PUBLIC.SYSTEM_LOBS.DELETE_UNUSED",
       "type": "procedure",
       "returnType": "no result"
     },
     {
       "name": "DELETE_UNUSED_LOBS",
+      "remarks": "",
       "fullName": "PUBLIC.SYSTEM_LOBS.DELETE_UNUSED_LOBS",
       "type": "procedure",
       "returnType": "no result"
     },
     {
       "name": "DIVIDE_BLOCK",
+      "remarks": "",
       "fullName": "PUBLIC.SYSTEM_LOBS.DIVIDE_BLOCK",
       "type": "procedure",
       "returnType": "no result"

@@ -33,7 +33,6 @@ import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Table;
-import sf.util.Utility;
 
 /**
  * SchemaCrawler utility methods.
@@ -80,7 +79,7 @@ public final class MetaDataUtility
 
     final List<String> columnNames = new ArrayList<>();
     for (final ForeignKeyColumnReference columnReference: foreignKey
-        .getColumnReferences())
+      .getColumnReferences())
     {
       columnNames.add(columnReference.getForeignKeyColumn().getFullName());
     }
@@ -137,7 +136,7 @@ public final class MetaDataUtility
 
   private static Collection<List<String>> indexCoumnNames(final Table table,
                                                           final boolean includeUniqueOnly)
-                                                          {
+  {
     final List<List<String>> allIndexCoumns = new ArrayList<>();
 
     final PrimaryKey primaryKey = table.getPrimaryKey();
@@ -155,7 +154,7 @@ public final class MetaDataUtility
       allIndexCoumns.add(indexColumns);
     }
     return allIndexCoumns;
-                                                          }
+  }
 
   private MetaDataUtility()
   {
