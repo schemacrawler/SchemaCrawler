@@ -245,7 +245,7 @@ final class TableRetriever
         final MutableColumn column = table.getColumn(columnName);
         if (column != null)
         {
-          column.setPartOfPrimaryKey(true);
+          column.markAsPartOfPrimaryKey();
           final MutableIndexColumn indexColumn = new MutableIndexColumn(primaryKey,
                                                                         column);
           indexColumn.setSortSequence(IndexColumnSortSequence.ascending);
@@ -486,10 +486,7 @@ final class TableRetriever
             table.addIndex(index);
           }
 
-          if (uniqueIndex)
-          {
-            column.setPartOfUniqueIndex(uniqueIndex);
-          }
+          column.markAsPartOfIndex();
           final MutableIndexColumn indexColumn = new MutableIndexColumn(index,
                                                                         column);
           indexColumn.setIndexOrdinalPosition(ordinalPosition);

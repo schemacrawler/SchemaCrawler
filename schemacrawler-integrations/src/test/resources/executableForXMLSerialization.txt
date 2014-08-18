@@ -884,7 +884,7 @@ potential schema design issues with lint. The output serves for &#xd;
 database documentation is designed to be diff-ed against other database &#xd;
 schemas. SchemaCrawler also generates schema diagrams.&#xd;
 </schemaCrawlerAbout>
-    <crawlTimestamp>Jul 27, 2014 3:44 PM</crawlTimestamp>
+    <crawlTimestamp>Aug 18, 2014 12:18 AM</crawlTimestamp>
     <systemProperties id="186"/>
   </schemaCrawlerInfo>
   <schemas id="187">
@@ -1918,7 +1918,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                       <isAutoIncremented>false</isAutoIncremented>
                       <isGenerated>false</isGenerated>
                       <isPartOfPrimaryKey>true</isPartOfPrimaryKey>
-                      <isPartOfUniqueIndex>true</isPartOfUniqueIndex>
+                      <isPartOfIndex>true</isPartOfIndex>
                       <privileges id="289">
                         <objects id="290"/>
                       </privileges>
@@ -1990,7 +1990,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                       <isAutoIncremented>false</isAutoIncremented>
                       <isGenerated>false</isGenerated>
                       <isPartOfPrimaryKey>true</isPartOfPrimaryKey>
-                      <isPartOfUniqueIndex>true</isPartOfUniqueIndex>
+                      <isPartOfIndex>true</isPartOfIndex>
                       <privileges id="295">
                         <objects id="296"/>
                       </privileges>
@@ -2067,7 +2067,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   <isAutoIncremented>false</isAutoIncremented>
                   <isGenerated>false</isGenerated>
                   <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
-                  <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
+                  <isPartOfIndex>false</isPartOfIndex>
                   <privileges id="302">
                     <objects id="303"/>
                   </privileges>
@@ -2138,7 +2138,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   <isAutoIncremented>false</isAutoIncremented>
                   <isGenerated>false</isGenerated>
                   <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
-                  <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
+                  <isPartOfIndex>false</isPartOfIndex>
                   <privileges id="306">
                     <objects id="307"/>
                   </privileges>
@@ -2271,7 +2271,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                   <isAutoIncremented>false</isAutoIncremented>
                                   <isGenerated>false</isGenerated>
                                   <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
-                                  <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
+                                  <isPartOfIndex>false</isPartOfIndex>
                                   <privileges id="322">
                                     <objects id="323"/>
                                   </privileges>
@@ -2334,7 +2334,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                   <isAutoIncremented>false</isAutoIncremented>
                                   <isGenerated>false</isGenerated>
                                   <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
-                                  <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
+                                  <isPartOfIndex>true</isPartOfIndex>
                                   <referencedColumn class="column" reference="287"/>
                                   <privileges id="326">
                                     <objects id="327"/>
@@ -2398,7 +2398,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                   <isAutoIncremented>false</isAutoIncremented>
                                   <isGenerated>false</isGenerated>
                                   <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
-                                  <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
+                                  <isPartOfIndex>false</isPartOfIndex>
                                   <privileges id="330">
                                     <objects id="331"/>
                                   </privileges>
@@ -2465,7 +2465,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                   <isAutoIncremented>false</isAutoIncremented>
                                   <isGenerated>false</isGenerated>
                                   <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
-                                  <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
+                                  <isPartOfIndex>false</isPartOfIndex>
                                   <privileges id="334">
                                     <objects id="335"/>
                                   </privileges>
@@ -2741,7 +2741,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                         <isAutoIncremented>false</isAutoIncremented>
                         <isGenerated>false</isGenerated>
                         <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
-                        <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
+                        <isPartOfIndex>true</isPartOfIndex>
                         <referencedColumn class="column" reference="293"/>
                         <privileges id="389">
                           <objects id="390"/>
@@ -3137,7 +3137,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   <isAutoIncremented>false</isAutoIncremented>
                   <isGenerated>false</isGenerated>
                   <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
-                  <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
+                  <isPartOfIndex>false</isPartOfIndex>
                   <privileges id="459">
                     <objects id="460"/>
                   </privileges>
@@ -3332,7 +3332,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                       <isAutoIncremented>false</isAutoIncremented>
                       <isGenerated>false</isGenerated>
                       <isPartOfPrimaryKey>true</isPartOfPrimaryKey>
-                      <isPartOfUniqueIndex>true</isPartOfUniqueIndex>
+                      <isPartOfIndex>true</isPartOfIndex>
                       <privileges id="500">
                         <objects id="501"/>
                       </privileges>
@@ -3409,7 +3409,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   <isAutoIncremented>false</isAutoIncremented>
                   <isGenerated>false</isGenerated>
                   <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
-                  <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
+                  <isPartOfIndex>false</isPartOfIndex>
                   <privileges id="507">
                     <objects id="508"/>
                   </privileges>
@@ -3472,7 +3472,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   <isAutoIncremented>false</isAutoIncremented>
                   <isGenerated>false</isGenerated>
                   <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
-                  <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
+                  <isPartOfIndex>false</isPartOfIndex>
                   <privileges id="511">
                     <objects id="512"/>
                   </privileges>
@@ -3535,7 +3535,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   <isAutoIncremented>false</isAutoIncremented>
                   <isGenerated>false</isGenerated>
                   <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
-                  <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
+                  <isPartOfIndex>true</isPartOfIndex>
                   <privileges id="515">
                     <objects id="516"/>
                   </privileges>
@@ -3598,7 +3598,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   <isAutoIncremented>false</isAutoIncremented>
                   <isGenerated>false</isGenerated>
                   <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
-                  <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
+                  <isPartOfIndex>true</isPartOfIndex>
                   <privileges id="519">
                     <objects id="520"/>
                   </privileges>
@@ -3661,7 +3661,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   <isAutoIncremented>false</isAutoIncremented>
                   <isGenerated>false</isGenerated>
                   <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
-                  <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
+                  <isPartOfIndex>true</isPartOfIndex>
                   <privileges id="523">
                     <objects id="524"/>
                   </privileges>
@@ -3728,7 +3728,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   <isAutoIncremented>false</isAutoIncremented>
                   <isGenerated>false</isGenerated>
                   <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
-                  <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
+                  <isPartOfIndex>true</isPartOfIndex>
                   <privileges id="527">
                     <objects id="528"/>
                   </privileges>
@@ -3791,7 +3791,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   <isAutoIncremented>false</isAutoIncremented>
                   <isGenerated>false</isGenerated>
                   <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
-                  <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
+                  <isPartOfIndex>true</isPartOfIndex>
                   <privileges id="531">
                     <objects id="532"/>
                   </privileges>
@@ -3854,7 +3854,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   <isAutoIncremented>false</isAutoIncremented>
                   <isGenerated>false</isGenerated>
                   <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
-                  <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
+                  <isPartOfIndex>true</isPartOfIndex>
                   <privileges id="535">
                     <objects id="536"/>
                   </privileges>
@@ -3987,7 +3987,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                   <isAutoIncremented>false</isAutoIncremented>
                                   <isGenerated>false</isGenerated>
                                   <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
-                                  <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
+                                  <isPartOfIndex>false</isPartOfIndex>
                                   <privileges id="551">
                                     <objects id="552"/>
                                   </privileges>
@@ -4054,7 +4054,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                   <isAutoIncremented>false</isAutoIncremented>
                                   <isGenerated>false</isGenerated>
                                   <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
-                                  <isPartOfUniqueIndex>true</isPartOfUniqueIndex>
+                                  <isPartOfIndex>true</isPartOfIndex>
                                   <referencedColumn class="column" id="555">
                                     <name>ID</name>
                                     <remarks>Unique (internal) id for book</remarks>
@@ -4194,7 +4194,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                               <isAutoIncremented>false</isAutoIncremented>
                                               <isGenerated>false</isGenerated>
                                               <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
-                                              <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
+                                              <isPartOfIndex>false</isPartOfIndex>
                                               <privileges id="570">
                                                 <objects id="571"/>
                                               </privileges>
@@ -4261,7 +4261,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                               <isAutoIncremented>false</isAutoIncremented>
                                               <isGenerated>false</isGenerated>
                                               <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
-                                              <isPartOfUniqueIndex>true</isPartOfUniqueIndex>
+                                              <isPartOfIndex>true</isPartOfIndex>
                                               <referencedColumn class="column" reference="555"/>
                                               <privileges id="574">
                                                 <objects id="575"/>
@@ -4325,7 +4325,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                               <isAutoIncremented>false</isAutoIncremented>
                                               <isGenerated>false</isGenerated>
                                               <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
-                                              <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
+                                              <isPartOfIndex>false</isPartOfIndex>
                                               <privileges id="578">
                                                 <objects id="579"/>
                                               </privileges>
@@ -4388,7 +4388,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                               <isAutoIncremented>false</isAutoIncremented>
                                               <isGenerated>false</isGenerated>
                                               <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
-                                              <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
+                                              <isPartOfIndex>false</isPartOfIndex>
                                               <privileges id="582">
                                                 <objects id="583"/>
                                               </privileges>
@@ -4451,7 +4451,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                               <isAutoIncremented>false</isAutoIncremented>
                                               <isGenerated>false</isGenerated>
                                               <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
-                                              <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
+                                              <isPartOfIndex>false</isPartOfIndex>
                                               <privileges id="586">
                                                 <objects id="587"/>
                                               </privileges>
@@ -4514,7 +4514,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                               <isAutoIncremented>false</isAutoIncremented>
                                               <isGenerated>false</isGenerated>
                                               <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
-                                              <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
+                                              <isPartOfIndex>false</isPartOfIndex>
                                               <privileges id="590">
                                                 <objects id="591"/>
                                               </privileges>
@@ -4979,7 +4979,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                     <isAutoIncremented>false</isAutoIncremented>
                                     <isGenerated>false</isGenerated>
                                     <isPartOfPrimaryKey>true</isPartOfPrimaryKey>
-                                    <isPartOfUniqueIndex>true</isPartOfUniqueIndex>
+                                    <isPartOfIndex>true</isPartOfIndex>
                                     <privileges id="675">
                                       <objects id="676"/>
                                     </privileges>
@@ -5400,7 +5400,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                         <isAutoIncremented>false</isAutoIncremented>
                         <isGenerated>false</isGenerated>
                         <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
-                        <isPartOfUniqueIndex>true</isPartOfUniqueIndex>
+                        <isPartOfIndex>true</isPartOfIndex>
                         <referencedColumn class="column" reference="498"/>
                         <privileges id="751">
                           <objects id="752"/>
@@ -6002,7 +6002,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   <isAutoIncremented>false</isAutoIncremented>
                   <isGenerated>false</isGenerated>
                   <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
-                  <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
+                  <isPartOfIndex>false</isPartOfIndex>
                   <privileges id="845">
                     <objects id="846"/>
                   </privileges>
@@ -6065,7 +6065,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   <isAutoIncremented>false</isAutoIncremented>
                   <isGenerated>false</isGenerated>
                   <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
-                  <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
+                  <isPartOfIndex>false</isPartOfIndex>
                   <privileges id="849">
                     <objects id="850"/>
                   </privileges>
@@ -6128,7 +6128,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   <isAutoIncremented>false</isAutoIncremented>
                   <isGenerated>false</isGenerated>
                   <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
-                  <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
+                  <isPartOfIndex>false</isPartOfIndex>
                   <privileges id="853">
                     <objects id="854"/>
                   </privileges>
@@ -6333,7 +6333,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                       <isAutoIncremented>true</isAutoIncremented>
                       <isGenerated>false</isGenerated>
                       <isPartOfPrimaryKey>true</isPartOfPrimaryKey>
-                      <isPartOfUniqueIndex>true</isPartOfUniqueIndex>
+                      <isPartOfIndex>true</isPartOfIndex>
                       <privileges id="894">
                         <objects id="895"/>
                       </privileges>
@@ -6414,7 +6414,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   <isAutoIncremented>false</isAutoIncremented>
                   <isGenerated>false</isGenerated>
                   <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
-                  <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
+                  <isPartOfIndex>false</isPartOfIndex>
                   <privileges id="901">
                     <objects id="902"/>
                   </privileges>
@@ -6682,7 +6682,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   <isAutoIncremented>false</isAutoIncremented>
                   <isGenerated>false</isGenerated>
                   <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
-                  <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
+                  <isPartOfIndex>false</isPartOfIndex>
                   <privileges id="950">
                     <objects id="951"/>
                   </privileges>
@@ -6877,7 +6877,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                       <isAutoIncremented>false</isAutoIncremented>
                       <isGenerated>false</isGenerated>
                       <isPartOfPrimaryKey>true</isPartOfPrimaryKey>
-                      <isPartOfUniqueIndex>true</isPartOfUniqueIndex>
+                      <isPartOfIndex>true</isPartOfIndex>
                       <privileges id="991">
                         <objects id="992"/>
                       </privileges>
@@ -6958,7 +6958,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                   <isAutoIncremented>false</isAutoIncremented>
                   <isGenerated>false</isGenerated>
                   <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
-                  <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
+                  <isPartOfIndex>true</isPartOfIndex>
                   <referencedColumn class="column" id="998">
                     <name>ID</name>
                     <remarks></remarks>
@@ -7098,7 +7098,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                               <isAutoIncremented>false</isAutoIncremented>
                               <isGenerated>false</isGenerated>
                               <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
-                              <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
+                              <isPartOfIndex>false</isPartOfIndex>
                               <privileges id="1013">
                                 <objects id="1014"/>
                               </privileges>
@@ -7161,7 +7161,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                               <isAutoIncremented>false</isAutoIncremented>
                               <isGenerated>false</isGenerated>
                               <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
-                              <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
+                              <isPartOfIndex>false</isPartOfIndex>
                               <privileges id="1017">
                                 <objects id="1018"/>
                               </privileges>
@@ -7228,7 +7228,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                               <isAutoIncremented>false</isAutoIncremented>
                               <isGenerated>false</isGenerated>
                               <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
-                              <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
+                              <isPartOfIndex>false</isPartOfIndex>
                               <privileges id="1021">
                                 <objects id="1022"/>
                               </privileges>
@@ -7291,7 +7291,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                               <isAutoIncremented>false</isAutoIncremented>
                               <isGenerated>false</isGenerated>
                               <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
-                              <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
+                              <isPartOfIndex>false</isPartOfIndex>
                               <privileges id="1025">
                                 <objects id="1026"/>
                               </privileges>
@@ -7354,7 +7354,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                               <isAutoIncremented>false</isAutoIncremented>
                               <isGenerated>false</isGenerated>
                               <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
-                              <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
+                              <isPartOfIndex>false</isPartOfIndex>
                               <privileges id="1029">
                                 <objects id="1030"/>
                               </privileges>
@@ -7417,7 +7417,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                               <isAutoIncremented>false</isAutoIncremented>
                               <isGenerated>false</isGenerated>
                               <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
-                              <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
+                              <isPartOfIndex>false</isPartOfIndex>
                               <privileges id="1033">
                                 <objects id="1034"/>
                               </privileges>
@@ -7480,7 +7480,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                               <isAutoIncremented>false</isAutoIncremented>
                               <isGenerated>false</isGenerated>
                               <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
-                              <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
+                              <isPartOfIndex>true</isPartOfIndex>
                               <referencedColumn class="column" id="1037">
                                 <name>ID</name>
                                 <remarks></remarks>
@@ -7620,7 +7620,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                           <isAutoIncremented>false</isAutoIncremented>
                                           <isGenerated>false</isGenerated>
                                           <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
-                                          <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
+                                          <isPartOfIndex>false</isPartOfIndex>
                                           <privileges id="1052">
                                             <objects id="1053"/>
                                           </privileges>
@@ -7684,7 +7684,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                           <isAutoIncremented>false</isAutoIncremented>
                                           <isGenerated>false</isGenerated>
                                           <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
-                                          <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
+                                          <isPartOfIndex>false</isPartOfIndex>
                                           <privileges id="1056">
                                             <objects id="1057"/>
                                           </privileges>
@@ -7747,7 +7747,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                           <isAutoIncremented>false</isAutoIncremented>
                                           <isGenerated>false</isGenerated>
                                           <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
-                                          <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
+                                          <isPartOfIndex>true</isPartOfIndex>
                                           <privileges id="1060">
                                             <objects id="1061"/>
                                           </privileges>
@@ -7811,7 +7811,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                           <isAutoIncremented>false</isAutoIncremented>
                                           <isGenerated>false</isGenerated>
                                           <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
-                                          <isPartOfUniqueIndex>true</isPartOfUniqueIndex>
+                                          <isPartOfIndex>true</isPartOfIndex>
                                           <privileges id="1064">
                                             <objects id="1065"/>
                                           </privileges>
@@ -7874,7 +7874,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                           <isAutoIncremented>false</isAutoIncremented>
                                           <isGenerated>false</isGenerated>
                                           <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
-                                          <isPartOfUniqueIndex>true</isPartOfUniqueIndex>
+                                          <isPartOfIndex>true</isPartOfIndex>
                                           <privileges id="1068">
                                             <objects id="1069"/>
                                           </privileges>
@@ -7937,7 +7937,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                           <isAutoIncremented>false</isAutoIncremented>
                                           <isGenerated>false</isGenerated>
                                           <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
-                                          <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
+                                          <isPartOfIndex>false</isPartOfIndex>
                                           <privileges id="1072">
                                             <objects id="1073"/>
                                           </privileges>
@@ -8000,7 +8000,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                           <isAutoIncremented>false</isAutoIncremented>
                                           <isGenerated>false</isGenerated>
                                           <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
-                                          <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
+                                          <isPartOfIndex>false</isPartOfIndex>
                                           <privileges id="1076">
                                             <objects id="1077"/>
                                           </privileges>
@@ -8063,7 +8063,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                           <isAutoIncremented>false</isAutoIncremented>
                                           <isGenerated>false</isGenerated>
                                           <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
-                                          <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
+                                          <isPartOfIndex>false</isPartOfIndex>
                                           <privileges id="1080">
                                             <objects id="1081"/>
                                           </privileges>
@@ -8126,7 +8126,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                           <isAutoIncremented>false</isAutoIncremented>
                                           <isGenerated>false</isGenerated>
                                           <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
-                                          <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
+                                          <isPartOfIndex>true</isPartOfIndex>
                                           <privileges id="1084">
                                             <objects id="1085"/>
                                           </privileges>
@@ -8189,7 +8189,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                           <isAutoIncremented>false</isAutoIncremented>
                                           <isGenerated>false</isGenerated>
                                           <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
-                                          <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
+                                          <isPartOfIndex>false</isPartOfIndex>
                                           <privileges id="1088">
                                             <objects id="1089"/>
                                           </privileges>
@@ -8252,7 +8252,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                           <isAutoIncremented>false</isAutoIncremented>
                                           <isGenerated>false</isGenerated>
                                           <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
-                                          <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
+                                          <isPartOfIndex>false</isPartOfIndex>
                                           <privileges id="1092">
                                             <objects id="1093"/>
                                           </privileges>
@@ -8319,7 +8319,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                           <isAutoIncremented>false</isAutoIncremented>
                                           <isGenerated>false</isGenerated>
                                           <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
-                                          <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
+                                          <isPartOfIndex>true</isPartOfIndex>
                                           <privileges id="1096">
                                             <objects id="1097"/>
                                           </privileges>
@@ -8382,7 +8382,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                           <isAutoIncremented>false</isAutoIncremented>
                                           <isGenerated>false</isGenerated>
                                           <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
-                                          <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
+                                          <isPartOfIndex>false</isPartOfIndex>
                                           <privileges id="1100">
                                             <objects id="1101"/>
                                           </privileges>
@@ -8445,7 +8445,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                           <isAutoIncremented>false</isAutoIncremented>
                                           <isGenerated>false</isGenerated>
                                           <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
-                                          <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
+                                          <isPartOfIndex>false</isPartOfIndex>
                                           <privileges id="1104">
                                             <objects id="1105"/>
                                           </privileges>
@@ -8508,7 +8508,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                           <isAutoIncremented>false</isAutoIncremented>
                                           <isGenerated>false</isGenerated>
                                           <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
-                                          <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
+                                          <isPartOfIndex>true</isPartOfIndex>
                                           <privileges id="1108">
                                             <objects id="1109"/>
                                           </privileges>
@@ -8571,7 +8571,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                           <isAutoIncremented>false</isAutoIncremented>
                                           <isGenerated>false</isGenerated>
                                           <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
-                                          <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
+                                          <isPartOfIndex>true</isPartOfIndex>
                                           <referencedColumn class="column" reference="998"/>
                                           <privileges id="1112">
                                             <objects id="1113"/>
@@ -8635,7 +8635,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                           <isAutoIncremented>false</isAutoIncremented>
                                           <isGenerated>false</isGenerated>
                                           <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
-                                          <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
+                                          <isPartOfIndex>true</isPartOfIndex>
                                           <privileges id="1116">
                                             <objects id="1117"/>
                                           </privileges>
@@ -8756,7 +8756,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                                 <isAutoIncremented>false</isAutoIncremented>
                                                 <isGenerated>false</isGenerated>
                                                 <isPartOfPrimaryKey>false</isPartOfPrimaryKey>
-                                                <isPartOfUniqueIndex>false</isPartOfUniqueIndex>
+                                                <isPartOfIndex>true</isPartOfIndex>
                                                 <referencedColumn class="column" reference="1037"/>
                                                 <privileges id="1134">
                                                   <objects id="1135"/>
@@ -9503,7 +9503,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                 <isAutoIncremented>false</isAutoIncremented>
                                 <isGenerated>false</isGenerated>
                                 <isPartOfPrimaryKey>true</isPartOfPrimaryKey>
-                                <isPartOfUniqueIndex>true</isPartOfUniqueIndex>
+                                <isPartOfIndex>true</isPartOfIndex>
                                 <privileges id="1257">
                                   <objects id="1258"/>
                                 </privileges>
@@ -9902,7 +9902,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                     <isAutoIncremented>false</isAutoIncremented>
                     <isGenerated>false</isGenerated>
                     <isPartOfPrimaryKey>true</isPartOfPrimaryKey>
-                    <isPartOfUniqueIndex>true</isPartOfUniqueIndex>
+                    <isPartOfIndex>true</isPartOfIndex>
                     <privileges id="1333">
                       <objects id="1334"/>
                     </privileges>

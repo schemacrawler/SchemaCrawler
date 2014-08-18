@@ -252,12 +252,12 @@ final class MutableIndexColumn
   /**
    * {@inheritDoc}
    *
-   * @see schemacrawler.schema.Column#isPartOfUniqueIndex()
+   * @see schemacrawler.schema.Column#isPartOfIndex()
    */
   @Override
-  public boolean isPartOfUniqueIndex()
+  public boolean isPartOfIndex()
   {
-    return column.isPartOfUniqueIndex();
+    return column.isPartOfIndex();
   }
 
   void setIndexOrdinalPosition(final int indexOrdinalPosition)

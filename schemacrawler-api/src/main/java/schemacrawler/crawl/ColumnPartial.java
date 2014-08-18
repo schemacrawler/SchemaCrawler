@@ -150,7 +150,7 @@ implements Column
   }
 
   @Override
-  public boolean isPartOfUniqueIndex()
+  public boolean isPartOfIndex()
   {
     throw new NotLoadedException();
   }

@@ -182,6 +182,41 @@ hr {
 	<tr>
 		<td colspan='3' class='definition'>Contact details for book authors</td>
 	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ID</td>
+		<td class='type'>INTEGER not null</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>FIRSTNAME</td>
+		<td class='type'>VARCHAR(20) not null</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>LASTNAME</td>
+		<td class='type'>VARCHAR(20) not null</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>CITY</td>
+		<td class='type'>VARCHAR(50)</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>STATE</td>
+		<td class='type'>VARCHAR(2)</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>POSTALCODE</td>
+		<td class='type'>VARCHAR(10)</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>COUNTRY</td>
+		<td class='type'>VARCHAR(50)</td>
+	</tr>
 </table>
 <p>&#160;</p>
 
@@ -205,6 +240,16 @@ hr {
 	<tr>
 		<td colspan='3' class='definition'>Relationship between books and their authors, along with the latest updated information</td>
 	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>BOOKID</td>
+		<td class='type'>INTEGER not null</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>AUTHORID</td>
+		<td class='type'>INTEGER not null</td>
+	</tr>
 </table>
 <p>&#160;</p>
 
@@ -217,6 +262,21 @@ hr {
 	</tr>
 	<tr>
 		<td colspan='3' class='definition'>Details for published books</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ID</td>
+		<td class='type'>INTEGER not null</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'></td>
+		<td class='type'>Unique (internal) id for book</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>PREVIOUSEDITIONID</td>
+		<td class='type'>INTEGER</td>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -241,6 +301,16 @@ hr {
 	<tr>
 		<td colspan='3' class='definition'>List of book publishers</td>
 	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ID</td>
+		<td class='type'>INTEGER not null</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'></td>
+		<td class='type'>Unique (internal) id for book publisher</td>
+	</tr>
 </table>
 <p>&#160;</p>
 
@@ -250,6 +320,21 @@ hr {
 	<tr>
 		<td colspan='2' class='name'></td>
 		<td class='description right'>[table]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ID</td>
+		<td class='type'>INTEGER not null</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>WRITERID</td>
+		<td class='type'>BIGINT not null</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>PUBLICATIONID</td>
+		<td class='type'>INTEGER not null</td>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -271,6 +356,16 @@ hr {
 		<td colspan='2' class='name'></td>
 		<td class='description right'>[table]</td>
 	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ID</td>
+		<td class='type'>INTEGER not null</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>WRITERID</td>
+		<td class='type'>BIGINT not null</td>
+	</tr>
 </table>
 <p>&#160;</p>
 
@@ -280,6 +375,51 @@ hr {
 	<tr>
 		<td colspan='2' class='name'></td>
 		<td class='description right'>[table]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ID</td>
+		<td class='type'>BIGINT not null</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>FIRSTNAME</td>
+		<td class='type'>VARCHAR(20) not null</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>LASTNAME</td>
+		<td class='type'>VARCHAR(20) not null</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>CITY</td>
+		<td class='type'>VARCHAR(50)</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>STATE</td>
+		<td class='type'>VARCHAR(2)</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>POSTALCODE</td>
+		<td class='type'>VARCHAR(10)</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>COUNTRY</td>
+		<td class='type'>VARCHAR(50)</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>EMAIL1</td>
+		<td class='type'>VARCHAR(10)</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>PUBLICATION_ID</td>
+		<td class='type'>BIGINT not null</td>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -291,6 +431,16 @@ hr {
 		<td colspan='2' class='name'></td>
 		<td class='description right'>[table]</td>
 	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>POSTALCODE</td>
+		<td class='type'>VARCHAR(10) not null</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>COUNTRY</td>
+		<td class='type'>VARCHAR(50) not null</td>
+	</tr>
 </table>
 <p>&#160;</p>
 
@@ -300,6 +450,16 @@ hr {
 	<tr>
 		<td colspan='2' class='name'></td>
 		<td class='description right'>[table]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>POSTALCODE</td>
+		<td class='type'>VARCHAR(10) not null</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>COUNTRY</td>
+		<td class='type'>VARCHAR(50) not null</td>
 	</tr>
 </table>
 <p>&#160;</p>
