@@ -96,6 +96,6 @@ extends BaseColumn<Table>
    *
    * @return If the column is a unique index
    */
-  boolean isPartOfUniqueIndex();
+  boolean isPartOfIndex();
 
 }

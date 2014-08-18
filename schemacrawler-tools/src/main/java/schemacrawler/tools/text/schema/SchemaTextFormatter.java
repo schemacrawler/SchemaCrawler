@@ -286,11 +286,11 @@ final class SchemaTextFormatter
     out.println(formattingHelper.createNameRow("", tableType));
     printRemarks(table);
 
+    final List<Column> columns = table.getColumns();
+    printTableColumns(columns);
+
     if (!isBrief)
     {
-      final List<Column> columns = table.getColumns();
-      printTableColumns(columns);
-
       printPrimaryKey(table.getPrimaryKey());
       printForeignKeys(table);
       if (isVerbose)
@@ -763,6 +763,12 @@ final class SchemaTextFormatter
 
     for (final Column column: columns)
     {
+      if (isBrief && !column.isPartOfPrimaryKey()
+          && !column.isPartOfForeignKey() && !column.isPartOfIndex())
+      {
+        continue;
+      }
+
       final String columnName = column.getName();
 
       final String columnDetails;

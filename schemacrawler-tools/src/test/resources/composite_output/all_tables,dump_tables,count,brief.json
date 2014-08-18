@@ -2742,72 +2742,391 @@
   "tables": [
     {
       "name": "AUTHORS",
+      "columns": [
+        {
+          "dataType": "INTEGER",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "ID",
+          "nullable": false,
+          "remarks": "",
+          "databaseSpecificType": "INTEGER",
+          "size": 32
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(20)",
+          "name": "FIRSTNAME",
+          "nullable": false,
+          "remarks": "",
+          "databaseSpecificType": "VARCHAR",
+          "size": 20
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(20)",
+          "name": "LASTNAME",
+          "nullable": false,
+          "remarks": "",
+          "databaseSpecificType": "VARCHAR",
+          "size": 20
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(50)",
+          "name": "CITY",
+          "nullable": true,
+          "remarks": "",
+          "databaseSpecificType": "VARCHAR",
+          "size": 50
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(2)",
+          "name": "STATE",
+          "nullable": true,
+          "remarks": "",
+          "databaseSpecificType": "VARCHAR",
+          "size": 2
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(10)",
+          "name": "POSTALCODE",
+          "nullable": true,
+          "remarks": "",
+          "databaseSpecificType": "VARCHAR",
+          "size": 10
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(50)",
+          "name": "COUNTRY",
+          "nullable": true,
+          "remarks": "",
+          "databaseSpecificType": "VARCHAR",
+          "size": 50
+        }
+      ],
       "remarks": "Contact details for book authors",
       "fullName": "PUBLIC.BOOKS.AUTHORS",
       "type": "table"
     },
     {
       "name": "AUTHORSLIST",
+      "columns": [],
       "remarks": "",
       "fullName": "PUBLIC.BOOKS.AUTHORSLIST",
       "type": "view"
     },
     {
       "name": "BOOKAUTHORS",
+      "columns": [
+        {
+          "dataType": "INTEGER",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "BOOKID",
+          "nullable": false,
+          "remarks": "",
+          "databaseSpecificType": "INTEGER",
+          "size": 32
+        },
+        {
+          "dataType": "INTEGER",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "AUTHORID",
+          "nullable": false,
+          "remarks": "",
+          "databaseSpecificType": "INTEGER",
+          "size": 32
+        }
+      ],
       "remarks": "Relationship between books and their authors, along with the latest updated information",
       "fullName": "PUBLIC.BOOKS.BOOKAUTHORS",
       "type": "table"
     },
     {
       "name": "BOOKS",
+      "columns": [
+        {
+          "dataType": "INTEGER",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "ID",
+          "nullable": false,
+          "remarks": "Unique (internal) id for book",
+          "databaseSpecificType": "INTEGER",
+          "size": 32
+        },
+        {
+          "dataType": "INTEGER",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "PREVIOUSEDITIONID",
+          "nullable": true,
+          "remarks": "",
+          "databaseSpecificType": "INTEGER",
+          "size": 32
+        }
+      ],
       "remarks": "Details for published books",
       "fullName": "PUBLIC.BOOKS.BOOKS",
       "type": "table"
     },
     {
       "name": "\"Global Counts\"",
+      "columns": [],
       "remarks": "",
       "fullName": "PUBLIC.BOOKS.\"Global Counts\"",
       "type": "table"
     },
     {
       "name": "PUBLISHERS",
+      "columns": [{
+        "dataType": "INTEGER",
+        "decimalDigits": 0,
+        "width": "",
+        "name": "ID",
+        "nullable": false,
+        "remarks": "Unique (internal) id for book publisher",
+        "databaseSpecificType": "INTEGER",
+        "size": 32
+      }],
       "remarks": "List of book publishers",
       "fullName": "PUBLIC.BOOKS.PUBLISHERS",
       "type": "table"
     },
     {
       "name": "EXTRA_PK",
+      "columns": [
+        {
+          "dataType": "INTEGER",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "ID",
+          "nullable": false,
+          "remarks": "",
+          "databaseSpecificType": "INTEGER",
+          "size": 32
+        },
+        {
+          "dataType": "BIGINT",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "WRITERID",
+          "nullable": false,
+          "remarks": "",
+          "databaseSpecificType": "BIGINT",
+          "size": 64
+        },
+        {
+          "dataType": "INTEGER",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "PUBLICATIONID",
+          "nullable": false,
+          "remarks": "",
+          "databaseSpecificType": "INTEGER",
+          "size": 32
+        }
+      ],
       "remarks": "",
       "fullName": "PUBLIC.FOR_LINT.EXTRA_PK",
       "type": "table"
     },
     {
       "name": "\"Global Counts\"",
+      "columns": [],
       "remarks": "",
       "fullName": "PUBLIC.FOR_LINT.\"Global Counts\"",
       "type": "table"
     },
     {
       "name": "PUBLICATIONS",
+      "columns": [
+        {
+          "dataType": "INTEGER",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "ID",
+          "nullable": false,
+          "remarks": "",
+          "databaseSpecificType": "INTEGER",
+          "size": 32
+        },
+        {
+          "dataType": "BIGINT",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "WRITERID",
+          "nullable": false,
+          "remarks": "",
+          "databaseSpecificType": "BIGINT",
+          "size": 64
+        }
+      ],
       "remarks": "",
       "fullName": "PUBLIC.FOR_LINT.PUBLICATIONS",
       "type": "table"
     },
     {
       "name": "WRITERS",
+      "columns": [
+        {
+          "dataType": "BIGINT",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "ID",
+          "nullable": false,
+          "remarks": "",
+          "databaseSpecificType": "BIGINT",
+          "size": 64
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(20)",
+          "name": "FIRSTNAME",
+          "nullable": false,
+          "remarks": "",
+          "databaseSpecificType": "VARCHAR",
+          "size": 20
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(20)",
+          "name": "LASTNAME",
+          "nullable": false,
+          "remarks": "",
+          "databaseSpecificType": "VARCHAR",
+          "size": 20
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(50)",
+          "name": "CITY",
+          "nullable": true,
+          "remarks": "",
+          "databaseSpecificType": "VARCHAR",
+          "size": 50
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(2)",
+          "name": "STATE",
+          "nullable": true,
+          "remarks": "",
+          "databaseSpecificType": "VARCHAR",
+          "size": 2
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(10)",
+          "name": "POSTALCODE",
+          "nullable": true,
+          "remarks": "",
+          "databaseSpecificType": "VARCHAR",
+          "size": 10
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(50)",
+          "name": "COUNTRY",
+          "nullable": true,
+          "remarks": "",
+          "databaseSpecificType": "VARCHAR",
+          "size": 50
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(10)",
+          "name": "EMAIL1",
+          "nullable": true,
+          "remarks": "",
+          "databaseSpecificType": "VARCHAR",
+          "size": 10
+        },
+        {
+          "dataType": "BIGINT",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "PUBLICATION_ID",
+          "nullable": false,
+          "remarks": "",
+          "databaseSpecificType": "BIGINT",
+          "size": 64
+        }
+      ],
       "remarks": "",
       "fullName": "PUBLIC.FOR_LINT.WRITERS",
       "type": "table"
     },
     {
       "name": "REGIONS",
+      "columns": [
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(10)",
+          "name": "POSTALCODE",
+          "nullable": false,
+          "remarks": "",
+          "databaseSpecificType": "VARCHAR",
+          "size": 10
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(50)",
+          "name": "COUNTRY",
+          "nullable": false,
+          "remarks": "",
+          "databaseSpecificType": "VARCHAR",
+          "size": 50
+        }
+      ],
       "remarks": "",
       "fullName": "PUBLIC.\"PUBLISHER SALES\".REGIONS",
       "type": "table"
     },
     {
       "name": "SALES",
+      "columns": [
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(10)",
+          "name": "POSTALCODE",
+          "nullable": false,
+          "remarks": "",
+          "databaseSpecificType": "VARCHAR",
+          "size": 10
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(50)",
+          "name": "COUNTRY",
+          "nullable": false,
+          "remarks": "",
+          "databaseSpecificType": "VARCHAR",
+          "size": 50
+        }
+      ],
       "remarks": "",
       "fullName": "PUBLIC.\"PUBLISHER SALES\".SALES",
       "type": "table"

@@ -400,6 +400,13 @@ PUBLIC.BOOKS.AUTHORS
 ------------------------------------------------------------------------
                                                                  [table]
 Contact details for book authors
+  ID                                INTEGER not null            
+  FIRSTNAME                         VARCHAR(20) not null        
+  LASTNAME                          VARCHAR(20) not null        
+  CITY                              VARCHAR(50)                 
+  STATE                             VARCHAR(2)                  
+  POSTALCODE                        VARCHAR(10)                 
+  COUNTRY                           VARCHAR(50)                 
 
 
 
@@ -413,6 +420,8 @@ PUBLIC.BOOKS.BOOKAUTHORS
 ------------------------------------------------------------------------
                                                                  [table]
 Relationship between books and their authors, along with the latest updated information
+  BOOKID                            INTEGER not null            
+  AUTHORID                          INTEGER not null            
 
 
 
@@ -420,6 +429,9 @@ PUBLIC.BOOKS.BOOKS
 ------------------------------------------------------------------------
                                                                  [table]
 Details for published books
+  ID                                INTEGER not null            
+                                    Unique (internal) id for book
+  PREVIOUSEDITIONID                 INTEGER                     
 
 
 
@@ -433,12 +445,17 @@ PUBLIC.BOOKS.PUBLISHERS
 ------------------------------------------------------------------------
                                                                  [table]
 List of book publishers
+  ID                                INTEGER not null            
+                                    Unique (internal) id for book publisher
 
 
 
 PUBLIC.FOR_LINT.EXTRA_PK
 ------------------------------------------------------------------------
                                                                  [table]
+  ID                                INTEGER not null            
+  WRITERID                          BIGINT not null             
+  PUBLICATIONID                     INTEGER not null            
 
 
 
@@ -451,24 +468,39 @@ PUBLIC.FOR_LINT."Global Counts"
 PUBLIC.FOR_LINT.PUBLICATIONS
 ------------------------------------------------------------------------
                                                                  [table]
+  ID                                INTEGER not null            
+  WRITERID                          BIGINT not null             
 
 
 
 PUBLIC.FOR_LINT.WRITERS
 ------------------------------------------------------------------------
                                                                  [table]
+  ID                                BIGINT not null             
+  FIRSTNAME                         VARCHAR(20) not null        
+  LASTNAME                          VARCHAR(20) not null        
+  CITY                              VARCHAR(50)                 
+  STATE                             VARCHAR(2)                  
+  POSTALCODE                        VARCHAR(10)                 
+  COUNTRY                           VARCHAR(50)                 
+  EMAIL1                            VARCHAR(10)                 
+  PUBLICATION_ID                    BIGINT not null             
 
 
 
 PUBLIC."PUBLISHER SALES".REGIONS
 ------------------------------------------------------------------------
                                                                  [table]
+  POSTALCODE                        VARCHAR(10) not null        
+  COUNTRY                           VARCHAR(50) not null        
 
 
 
 PUBLIC."PUBLISHER SALES".SALES
 ------------------------------------------------------------------------
                                                                  [table]
+  POSTALCODE                        VARCHAR(10) not null        
+  COUNTRY                           VARCHAR(50) not null        
 
 
 

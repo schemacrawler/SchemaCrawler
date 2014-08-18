@@ -200,11 +200,8 @@ public final class SchemaDotFormatter
 
     printTableRemarks(table);
 
-    if (!isBrief)
-    {
-      final List<Column> columns = table.getColumns();
-      printTableColumns(columns);
-    }
+    final List<Column> columns = table.getColumns();
+    printTableColumns(columns);
 
     out.append("      </table>").println();
     out.append("    >").println();
@@ -468,6 +465,12 @@ public final class SchemaDotFormatter
       .isAlphabeticalSortForTableColumns()));
     for (final Column column: columns)
     {
+      if (isBrief && !column.isPartOfPrimaryKey()
+          && !column.isPartOfForeignKey() && !column.isPartOfIndex())
+      {
+        continue;
+      }
+
       String columnTypeName = column.getColumnDataType()
         .getDatabaseSpecificTypeName();
       if (options.isShowStandardColumnTypeNames())
