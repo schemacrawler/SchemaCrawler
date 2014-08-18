@@ -40,6 +40,9 @@ Tables
 PUBLIC.FOR_LINT.EXTRA_PK
 ------------------------------------------------------------------------
 "",[table]
+"",ID,INTEGER not null
+"",WRITERID,BIGINT not null
+"",PUBLICATIONID,INTEGER not null
 
 
 
@@ -52,12 +55,23 @@ PUBLIC.FOR_LINT."Global Counts"
 PUBLIC.FOR_LINT.PUBLICATIONS
 ------------------------------------------------------------------------
 "",[table]
+"",ID,INTEGER not null
+"",WRITERID,BIGINT not null
 
 
 
 PUBLIC.FOR_LINT.WRITERS
 ------------------------------------------------------------------------
 "",[table]
+"",ID,BIGINT not null
+"",FIRSTNAME,VARCHAR(20) not null
+"",LASTNAME,VARCHAR(20) not null
+"",CITY,VARCHAR(50)
+"",STATE,VARCHAR(2)
+"",POSTALCODE,VARCHAR(10)
+"",COUNTRY,VARCHAR(50)
+"",EMAIL1,VARCHAR(10)
+"",PUBLICATION_ID,BIGINT not null
 
 
 
