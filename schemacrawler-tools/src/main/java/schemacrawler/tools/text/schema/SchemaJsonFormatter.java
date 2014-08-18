@@ -301,18 +301,23 @@ final class SchemaJsonFormatter
       jsonTable.put("type", table.getTableType());
       printRemarks(table, jsonTable);
 
+      final JSONArray jsonColumns = new JSONArray();
+      jsonTable.put("columns", jsonColumns);
+      final List<Column> columns = table.getColumns();
+      Collections.sort(columns, NamedObjectSort.getNamedObjectSort(options
+        .isAlphabeticalSortForTableColumns()));
+      for (final Column column: columns)
+      {
+        if (isBrief && !column.isPartOfPrimaryKey()
+            && !column.isPartOfForeignKey() && !column.isPartOfIndex())
+        {
+          continue;
+        }
+        jsonColumns.put(handleTableColumn(column));
+      }
+
       if (!isBrief)
       {
-        final JSONArray jsonColumns = new JSONArray();
-        jsonTable.put("columns", jsonColumns);
-        final List<Column> columns = table.getColumns();
-        Collections.sort(columns, NamedObjectSort.getNamedObjectSort(options
-          .isAlphabeticalSortForTableColumns()));
-        for (final Column column: columns)
-        {
-          jsonColumns.put(handleTableColumn(column));
-        }
-
         jsonTable.put("primaryKey", handleIndex(table.getPrimaryKey()));
         jsonTable.put("foreignKeys", handleForeignKeys(table.getForeignKeys()));
 

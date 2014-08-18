@@ -244,9 +244,9 @@ final class MutableTableConstraintColumn
    * @see schemacrawler.schema.Column#isPartOfUniqueIndex()()
    */
   @Override
-  public boolean isPartOfUniqueIndex()
+  public boolean isPartOfIndex()
   {
-    return column.isPartOfUniqueIndex();
+    return column.isPartOfIndex();
   }
 
   void setTableConstraintOrdinalPosition(final int indexOrdinalPosition)
