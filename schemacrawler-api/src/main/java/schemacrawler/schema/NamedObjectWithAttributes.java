@@ -65,6 +65,13 @@ public interface NamedObjectWithAttributes
   String getRemarks();
 
   /**
+   * Whether remarks are available.
+   *
+   * @return Remarks
+   */
+  boolean hasRemarks();
+
+  /**
    * Sets an attribute.
    *
    * @param name

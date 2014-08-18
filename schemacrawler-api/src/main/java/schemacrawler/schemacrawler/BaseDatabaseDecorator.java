@@ -249,6 +249,12 @@ public abstract class BaseDatabaseDecorator
   }
 
   @Override
+  public boolean hasRemarks()
+  {
+    return database.hasRemarks();
+  }
+
+  @Override
   public void setAttribute(final String name, final Object value)
   {
     database.setAttribute(name, value);

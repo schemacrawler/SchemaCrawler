@@ -442,20 +442,24 @@ public final class SchemaDotFormatter
 
   private void printTableColumnRemarks(final Column column)
   {
-    final String remarks = column.getRemarks();
-    if (!isBlank(remarks))
+    if (column == null || !column.hasRemarks())
     {
-      final TableRow remarksRow = new TableRow(OutputFormat.html);
-      if (options.isShowOrdinalNumbers())
-      {
-        remarksRow
-          .add(newTableCell("", Alignment.right, false, Color.white, 1));
-      }
-      remarksRow.add(newTableCell("", Alignment.left, false, Color.white, 1))
-        .add(newTableCell(" ", Alignment.left, false, Color.white, 1))
-        .add(newTableCell(remarks, Alignment.left, false, Color.white, 1));
-      out.println(remarksRow.toString());
+      return;
     }
+    final TableRow remarksRow = new TableRow(OutputFormat.html);
+    if (options.isShowOrdinalNumbers())
+    {
+      remarksRow.add(newTableCell("", Alignment.right, false, Color.white, 1));
+    }
+    remarksRow
+      .add(newTableCell("", Alignment.left, false, Color.white, 1))
+      .add(newTableCell(" ", Alignment.left, false, Color.white, 1))
+      .add(newTableCell(column.getRemarks(),
+                        Alignment.left,
+                        false,
+                        Color.white,
+                        1));
+    out.println(remarksRow.toString());
   }
 
   private void printTableColumns(final List<Column> columns)
@@ -506,14 +510,13 @@ public final class SchemaDotFormatter
 
   private void printTableRemarks(final Table table)
   {
-    final String remarks = table.getRemarks();
-    if (!isBlank(remarks))
+    if (table == null || !table.hasRemarks())
     {
-      out.append(new TableRow(OutputFormat.html)
-        .add(newTableCell(remarks, Alignment.left, false, Color.white, 3))
-        .toString());
-      out.println();
+      return;
     }
+    out.append(new TableRow(OutputFormat.html).add(newTableCell(table
+      .getRemarks(), Alignment.left, false, Color.white, 3)).toString());
+    out.println();
   }
 
   private void printWeakAssociations(final Table table)

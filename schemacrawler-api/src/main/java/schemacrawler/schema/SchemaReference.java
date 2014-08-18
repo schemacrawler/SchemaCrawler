@@ -209,6 +209,17 @@ public final class SchemaReference
   /**
    * {@inheritDoc}
    *
+   * @see schemacrawler.schema.NamedObjectWithAttributes#hasRemarks()
+   */
+  @Override
+  public boolean hasRemarks()
+  {
+    return false;
+  }
+
+  /**
+   * {@inheritDoc}
+   *
    * @see NamedObjectWithAttributes#setAttribute(String, Object)
    */
   @Override
