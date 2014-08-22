@@ -1,0 +1,1561 @@
+[
+{
+  "tables": [
+    {
+      "tableConstraints": [],
+      "foreignKeys": [{
+        "updateRule": "no action",
+        "columnReferences": [{
+          "pkColumn": "PUBLIC.BOOKS.AUTHORS.ID",
+          "fkColumn": "PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID"
+        }],
+        "deleteRule": "no action",
+        "name": "FK_Z_AUTHOR"
+      }],
+      "primaryKey": {
+        "unique": true,
+        "name": "PK_AUTHORS",
+        "columns": {
+          "sortSequence": "ascending",
+          "name": "ID"
+        }
+      },
+      "name": "AUTHORS",
+      "columns": [
+        {
+          "dataType": "INTEGER",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "ID",
+          "nullable": false,
+          "remarks": "",
+          "databaseSpecificType": "INTEGER",
+          "size": 32
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(20)",
+          "name": "FIRSTNAME",
+          "nullable": false,
+          "remarks": "",
+          "databaseSpecificType": "VARCHAR",
+          "size": 20
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(20)",
+          "name": "LASTNAME",
+          "nullable": false,
+          "remarks": "",
+          "databaseSpecificType": "VARCHAR",
+          "size": 20
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(255)",
+          "name": "ADDRESS1",
+          "nullable": true,
+          "remarks": "",
+          "databaseSpecificType": "VARCHAR",
+          "size": 255
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(255)",
+          "name": "ADDRESS2",
+          "nullable": true,
+          "remarks": "",
+          "databaseSpecificType": "VARCHAR",
+          "size": 255
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(50)",
+          "name": "CITY",
+          "nullable": true,
+          "remarks": "",
+          "databaseSpecificType": "VARCHAR",
+          "size": 50
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(2)",
+          "name": "STATE",
+          "nullable": true,
+          "remarks": "",
+          "databaseSpecificType": "VARCHAR",
+          "size": 2
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(10)",
+          "name": "POSTALCODE",
+          "nullable": true,
+          "remarks": "",
+          "databaseSpecificType": "VARCHAR",
+          "size": 10
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(50)",
+          "name": "COUNTRY",
+          "nullable": true,
+          "remarks": "",
+          "databaseSpecificType": "VARCHAR",
+          "size": 50
+        }
+      ],
+      "indices": [
+        {
+          "unique": true,
+          "name": "SYS_IDX_PK_AUTHORS_10097",
+          "columns": {
+            "sortSequence": "ascending",
+            "name": "ID"
+          }
+        },
+        {
+          "unique": false,
+          "name": "IDX_B_AUTHORS",
+          "columns": [
+            {
+              "sortSequence": "ascending",
+              "name": "LASTNAME"
+            },
+            {
+              "sortSequence": "ascending",
+              "name": "FIRSTNAME"
+            }
+          ]
+        },
+        {
+          "unique": false,
+          "name": "IDX_A_AUTHORS",
+          "columns": [
+            {
+              "sortSequence": "ascending",
+              "name": "CITY"
+            },
+            {
+              "sortSequence": "ascending",
+              "name": "STATE"
+            },
+            {
+              "sortSequence": "ascending",
+              "name": "POSTALCODE"
+            },
+            {
+              "sortSequence": "ascending",
+              "name": "COUNTRY"
+            }
+          ]
+        }
+      ],
+      "remarks": "Contact details for book authors",
+      "triggers": [],
+      "fullName": "PUBLIC.BOOKS.AUTHORS",
+      "type": "table"
+    },
+    {
+      "tableConstraints": [],
+      "foreignKeys": [],
+      "primaryKey": {},
+      "name": "AUTHORSLIST",
+      "columns": [
+        {
+          "dataType": "INTEGER",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "ID",
+          "nullable": true,
+          "remarks": "",
+          "databaseSpecificType": "INTEGER",
+          "size": 32
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(20)",
+          "name": "FIRSTNAME",
+          "nullable": true,
+          "remarks": "",
+          "databaseSpecificType": "VARCHAR",
+          "size": 20
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(20)",
+          "name": "LASTNAME",
+          "nullable": true,
+          "remarks": "",
+          "databaseSpecificType": "VARCHAR",
+          "size": 20
+        }
+      ],
+      "indices": [],
+      "remarks": "",
+      "triggers": [],
+      "fullName": "PUBLIC.BOOKS.AUTHORSLIST",
+      "type": "view"
+    },
+    {
+      "tableConstraints": [],
+      "foreignKeys": [
+        {
+          "updateRule": "no action",
+          "columnReferences": [{
+            "pkColumn": "PUBLIC.BOOKS.AUTHORS.ID",
+            "fkColumn": "PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID"
+          }],
+          "deleteRule": "no action",
+          "name": "FK_Z_AUTHOR"
+        },
+        {
+          "updateRule": "no action",
+          "columnReferences": [{
+            "pkColumn": "PUBLIC.BOOKS.BOOKS.ID",
+            "fkColumn": "PUBLIC.BOOKS.BOOKAUTHORS.BOOKID"
+          }],
+          "deleteRule": "no action",
+          "name": "FK_Y_BOOK"
+        }
+      ],
+      "primaryKey": {},
+      "name": "BOOKAUTHORS",
+      "columns": [
+        {
+          "dataType": "INTEGER",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "BOOKID",
+          "nullable": false,
+          "remarks": "",
+          "databaseSpecificType": "INTEGER",
+          "size": 32
+        },
+        {
+          "dataType": "INTEGER",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "AUTHORID",
+          "nullable": false,
+          "remarks": "",
+          "databaseSpecificType": "INTEGER",
+          "size": 32
+        },
+        {
+          "dataType": "CLOB",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "\"UPDATE\"",
+          "nullable": true,
+          "remarks": "",
+          "databaseSpecificType": "CLOB",
+          "size": 1073741824
+        }
+      ],
+      "indices": [
+        {
+          "unique": false,
+          "name": "SYS_IDX_10118",
+          "columns": {
+            "sortSequence": "ascending",
+            "name": "AUTHORID"
+          }
+        },
+        {
+          "unique": false,
+          "name": "SYS_IDX_10116",
+          "columns": {
+            "sortSequence": "ascending",
+            "name": "BOOKID"
+          }
+        },
+        {
+          "unique": true,
+          "name": "UIDX_BOOKAUTHORS",
+          "columns": [
+            {
+              "sortSequence": "ascending",
+              "name": "BOOKID"
+            },
+            {
+              "sortSequence": "ascending",
+              "name": "AUTHORID"
+            }
+          ]
+        }
+      ],
+      "remarks": "Relationship between books and their authors, along with the latest updated information",
+      "triggers": [],
+      "fullName": "PUBLIC.BOOKS.BOOKAUTHORS",
+      "type": "table"
+    },
+    {
+      "tableConstraints": [],
+      "foreignKeys": [
+        {
+          "updateRule": "no action",
+          "columnReferences": [{
+            "pkColumn": "PUBLIC.BOOKS.BOOKS.ID",
+            "fkColumn": "PUBLIC.BOOKS.BOOKAUTHORS.BOOKID"
+          }],
+          "deleteRule": "no action",
+          "name": "FK_Y_BOOK"
+        },
+        {
+          "updateRule": "no action",
+          "columnReferences": [{
+            "pkColumn": "PUBLIC.BOOKS.BOOKS.ID",
+            "fkColumn": "PUBLIC.BOOKS.BOOKS.PREVIOUSEDITIONID"
+          }],
+          "deleteRule": "no action",
+          "name": "FK_PREVIOUSEDITION"
+        }
+      ],
+      "primaryKey": {
+        "unique": true,
+        "name": "PK_BOOKS",
+        "columns": {
+          "sortSequence": "ascending",
+          "name": "ID"
+        }
+      },
+      "name": "BOOKS",
+      "columns": [
+        {
+          "dataType": "INTEGER",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "ID",
+          "nullable": false,
+          "remarks": "Unique (internal) id for book",
+          "databaseSpecificType": "INTEGER",
+          "size": 32
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(255)",
+          "name": "TITLE",
+          "nullable": false,
+          "remarks": "Book title",
+          "databaseSpecificType": "VARCHAR",
+          "size": 255
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(255)",
+          "name": "DESCRIPTION",
+          "nullable": true,
+          "remarks": "Book description",
+          "databaseSpecificType": "VARCHAR",
+          "size": 255
+        },
+        {
+          "dataType": "INTEGER",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "PUBLISHERID",
+          "nullable": false,
+          "remarks": "Foreign key to the book publisher",
+          "databaseSpecificType": "INTEGER",
+          "size": 32
+        },
+        {
+          "dataType": "DATE",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "PUBLICATIONDATE",
+          "nullable": true,
+          "remarks": "Book publication date",
+          "databaseSpecificType": "DATE",
+          "size": 10
+        },
+        {
+          "dataType": "DOUBLE",
+          "decimalDigits": 0,
+          "width": "(64, 0)",
+          "name": "PRICE",
+          "nullable": true,
+          "remarks": "Current price for the book",
+          "databaseSpecificType": "DOUBLE",
+          "size": 64
+        },
+        {
+          "dataType": "INTEGER",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "PREVIOUSEDITIONID",
+          "nullable": true,
+          "remarks": "",
+          "databaseSpecificType": "INTEGER",
+          "size": 32
+        }
+      ],
+      "indices": [
+        {
+          "unique": true,
+          "name": "SYS_IDX_PK_BOOKS_10105",
+          "columns": {
+            "sortSequence": "ascending",
+            "name": "ID"
+          }
+        },
+        {
+          "unique": true,
+          "name": "UIDX_PREVIOUSEDITION",
+          "columns": {
+            "sortSequence": "ascending",
+            "name": "PREVIOUSEDITIONID"
+          }
+        },
+        {
+          "unique": false,
+          "name": "SYS_IDX_10109",
+          "columns": {
+            "sortSequence": "ascending",
+            "name": "PREVIOUSEDITIONID"
+          }
+        }
+      ],
+      "remarks": "Details for published books",
+      "triggers": [],
+      "fullName": "PUBLIC.BOOKS.BOOKS",
+      "type": "table"
+    },
+    {
+      "tableConstraints": [],
+      "foreignKeys": [],
+      "primaryKey": {},
+      "name": "\"Global Counts\"",
+      "columns": [{
+        "dataType": "INTEGER",
+        "decimalDigits": 0,
+        "width": "",
+        "name": "\"Global Count\"",
+        "nullable": true,
+        "remarks": "",
+        "databaseSpecificType": "INTEGER",
+        "size": 32
+      }],
+      "indices": [],
+      "remarks": "",
+      "triggers": [],
+      "fullName": "PUBLIC.BOOKS.\"Global Counts\"",
+      "type": "table"
+    },
+    {
+      "tableConstraints": [],
+      "foreignKeys": [],
+      "primaryKey": {
+        "unique": true,
+        "name": "SYS_PK_10092",
+        "columns": {
+          "sortSequence": "ascending",
+          "name": "ID"
+        }
+      },
+      "name": "PUBLISHERS",
+      "columns": [
+        {
+          "dataType": "INTEGER",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "ID",
+          "nullable": false,
+          "remarks": "Unique (internal) id for book publisher",
+          "databaseSpecificType": "INTEGER",
+          "size": 32
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(255)",
+          "name": "PUBLISHER",
+          "nullable": true,
+          "remarks": "Name of book publisher",
+          "databaseSpecificType": "VARCHAR",
+          "size": 255
+        }
+      ],
+      "indices": [{
+        "unique": true,
+        "name": "SYS_IDX_SYS_PK_10092_10093",
+        "columns": {
+          "sortSequence": "ascending",
+          "name": "ID"
+        }
+      }],
+      "remarks": "List of book publishers",
+      "triggers": [],
+      "fullName": "PUBLIC.BOOKS.PUBLISHERS",
+      "type": "table"
+    },
+    {
+      "tableConstraints": [],
+      "foreignKeys": [
+        {
+          "updateRule": "no action",
+          "columnReferences": [{
+            "pkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.ID",
+            "fkColumn": "PUBLIC.FOR_LINT.EXTRA_PK.PUBLICATIONID"
+          }],
+          "deleteRule": "no action",
+          "name": "FK_PUBLICATION_JOIN"
+        },
+        {
+          "updateRule": "no action",
+          "columnReferences": [{
+            "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
+            "fkColumn": "PUBLIC.FOR_LINT.EXTRA_PK.WRITERID"
+          }],
+          "deleteRule": "no action",
+          "name": "FK_WRITER_JOIN"
+        }
+      ],
+      "primaryKey": {
+        "unique": true,
+        "name": "PK_EXTRA_PK",
+        "columns": {
+          "sortSequence": "ascending",
+          "name": "ID"
+        }
+      },
+      "name": "EXTRA_PK",
+      "columns": [
+        {
+          "dataType": "INTEGER",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "ID",
+          "nullable": false,
+          "remarks": "",
+          "databaseSpecificType": "INTEGER",
+          "size": 32
+        },
+        {
+          "dataType": "BIGINT",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "WRITERID",
+          "nullable": false,
+          "remarks": "",
+          "databaseSpecificType": "BIGINT",
+          "size": 64
+        },
+        {
+          "dataType": "INTEGER",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "PUBLICATIONID",
+          "nullable": false,
+          "remarks": "",
+          "databaseSpecificType": "INTEGER",
+          "size": 32
+        }
+      ],
+      "indices": [
+        {
+          "unique": true,
+          "name": "SYS_IDX_PK_EXTRA_PK_10181",
+          "columns": {
+            "sortSequence": "ascending",
+            "name": "ID"
+          }
+        },
+        {
+          "unique": false,
+          "name": "SYS_IDX_10187",
+          "columns": {
+            "sortSequence": "ascending",
+            "name": "PUBLICATIONID"
+          }
+        },
+        {
+          "unique": false,
+          "name": "SYS_IDX_10185",
+          "columns": {
+            "sortSequence": "ascending",
+            "name": "WRITERID"
+          }
+        }
+      ],
+      "remarks": "",
+      "triggers": [],
+      "fullName": "PUBLIC.FOR_LINT.EXTRA_PK",
+      "type": "table"
+    },
+    {
+      "tableConstraints": [],
+      "foreignKeys": [],
+      "primaryKey": {},
+      "name": "\"Global Counts\"",
+      "columns": [{
+        "dataType": "INTEGER",
+        "decimalDigits": 0,
+        "width": "",
+        "name": "\"Global Count\"",
+        "nullable": true,
+        "remarks": "",
+        "databaseSpecificType": "INTEGER",
+        "size": 32
+      }],
+      "indices": [],
+      "remarks": "",
+      "triggers": [],
+      "fullName": "PUBLIC.FOR_LINT.\"Global Counts\"",
+      "type": "table"
+    },
+    {
+      "tableConstraints": [],
+      "foreignKeys": [
+        {
+          "updateRule": "no action",
+          "columnReferences": [{
+            "pkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.ID",
+            "fkColumn": "PUBLIC.FOR_LINT.EXTRA_PK.PUBLICATIONID"
+          }],
+          "deleteRule": "no action",
+          "name": "FK_PUBLICATION_JOIN"
+        },
+        {
+          "updateRule": "no action",
+          "columnReferences": [{
+            "pkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.ID",
+            "fkColumn": "PUBLIC.FOR_LINT.WRITERS.PUBLICATION_ID"
+          }],
+          "deleteRule": "no action",
+          "name": "FK_WRITERS_PUBLICATION"
+        },
+        {
+          "updateRule": "no action",
+          "columnReferences": [{
+            "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
+            "fkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID"
+          }],
+          "deleteRule": "no action",
+          "name": "FK_PUBLICATIONS_WRITER"
+        }
+      ],
+      "primaryKey": {
+        "unique": true,
+        "name": "PK_PUBLICATIONS",
+        "columns": {
+          "sortSequence": "ascending",
+          "name": "ID"
+        }
+      },
+      "name": "PUBLICATIONS",
+      "columns": [
+        {
+          "dataType": "INTEGER",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "ID",
+          "nullable": false,
+          "remarks": "",
+          "databaseSpecificType": "INTEGER",
+          "size": 32
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(255)",
+          "name": "TITLE",
+          "nullable": false,
+          "remarks": "",
+          "databaseSpecificType": "VARCHAR",
+          "size": 255
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(255)",
+          "name": "DESCRIPTION",
+          "nullable": true,
+          "remarks": "",
+          "databaseSpecificType": "VARCHAR",
+          "size": 255
+        },
+        {
+          "dataType": "BIGINT",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "WRITERID",
+          "nullable": false,
+          "remarks": "",
+          "databaseSpecificType": "BIGINT",
+          "size": 64
+        },
+        {
+          "dataType": "DATE",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "PUBLICATIONDATE",
+          "nullable": true,
+          "remarks": "",
+          "databaseSpecificType": "DATE",
+          "size": 10
+        },
+        {
+          "dataType": "DOUBLE",
+          "decimalDigits": 0,
+          "width": "(64, 0)",
+          "name": "PRICE",
+          "nullable": true,
+          "remarks": "",
+          "databaseSpecificType": "DOUBLE",
+          "size": 64
+        },
+        {
+          "dataType": "CLOB",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "\"UPDATE\"",
+          "nullable": true,
+          "remarks": "",
+          "databaseSpecificType": "CLOB",
+          "size": 1073741824
+        },
+        {
+          "dataType": "CLOB",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "PRESS_RELEASE",
+          "nullable": true,
+          "remarks": "",
+          "databaseSpecificType": "CLOB",
+          "size": 1073741824
+        }
+      ],
+      "indices": [
+        {
+          "unique": true,
+          "name": "SYS_IDX_PK_PUBLICATIONS_10171",
+          "columns": {
+            "sortSequence": "ascending",
+            "name": "ID"
+          }
+        },
+        {
+          "unique": false,
+          "name": "SYS_IDX_10175",
+          "columns": {
+            "sortSequence": "ascending",
+            "name": "WRITERID"
+          }
+        }
+      ],
+      "remarks": "",
+      "triggers": [],
+      "fullName": "PUBLIC.FOR_LINT.PUBLICATIONS",
+      "type": "table"
+    },
+    {
+      "tableConstraints": [],
+      "foreignKeys": [
+        {
+          "updateRule": "no action",
+          "columnReferences": [{
+            "pkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.ID",
+            "fkColumn": "PUBLIC.FOR_LINT.WRITERS.PUBLICATION_ID"
+          }],
+          "deleteRule": "no action",
+          "name": "FK_WRITERS_PUBLICATION"
+        },
+        {
+          "updateRule": "no action",
+          "columnReferences": [{
+            "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
+            "fkColumn": "PUBLIC.FOR_LINT.EXTRA_PK.WRITERID"
+          }],
+          "deleteRule": "no action",
+          "name": "FK_WRITER_JOIN"
+        },
+        {
+          "updateRule": "no action",
+          "columnReferences": [{
+            "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
+            "fkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID"
+          }],
+          "deleteRule": "no action",
+          "name": "FK_PUBLICATIONS_WRITER"
+        }
+      ],
+      "primaryKey": {
+        "unique": true,
+        "name": "PK_WRITERS",
+        "columns": {
+          "sortSequence": "ascending",
+          "name": "ID"
+        }
+      },
+      "name": "WRITERS",
+      "columns": [
+        {
+          "dataType": "BIGINT",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "ID",
+          "nullable": false,
+          "remarks": "",
+          "databaseSpecificType": "BIGINT",
+          "size": 64
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(20)",
+          "name": "FIRSTNAME",
+          "nullable": false,
+          "remarks": "",
+          "databaseSpecificType": "VARCHAR",
+          "size": 20
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(20)",
+          "name": "LASTNAME",
+          "nullable": false,
+          "remarks": "",
+          "databaseSpecificType": "VARCHAR",
+          "size": 20
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(255)",
+          "name": "ADDRESS1",
+          "nullable": true,
+          "remarks": "",
+          "databaseSpecificType": "VARCHAR",
+          "size": 255
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(255)",
+          "name": "ADDRESS2",
+          "nullable": false,
+          "remarks": "",
+          "databaseSpecificType": "VARCHAR",
+          "size": 255
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(50)",
+          "name": "CITY",
+          "nullable": true,
+          "remarks": "",
+          "databaseSpecificType": "VARCHAR",
+          "size": 50
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(2)",
+          "name": "STATE",
+          "nullable": true,
+          "remarks": "",
+          "databaseSpecificType": "VARCHAR",
+          "size": 2
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(10)",
+          "name": "POSTALCODE",
+          "nullable": true,
+          "remarks": "",
+          "databaseSpecificType": "VARCHAR",
+          "size": 10
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(50)",
+          "name": "COUNTRY",
+          "nullable": true,
+          "remarks": "",
+          "databaseSpecificType": "VARCHAR",
+          "size": 50
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(10)",
+          "name": "PHONE1",
+          "nullable": true,
+          "remarks": "",
+          "databaseSpecificType": "VARCHAR",
+          "size": 10
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(15)",
+          "name": "PHONE2",
+          "nullable": true,
+          "remarks": "",
+          "databaseSpecificType": "VARCHAR",
+          "size": 15
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(10)",
+          "name": "EMAIL1",
+          "nullable": true,
+          "remarks": "",
+          "databaseSpecificType": "VARCHAR",
+          "size": 10
+        },
+        {
+          "dataType": "INTEGER",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "EMAIL2",
+          "nullable": true,
+          "remarks": "",
+          "databaseSpecificType": "INTEGER",
+          "size": 32
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(10)",
+          "name": "FAX",
+          "nullable": true,
+          "remarks": "",
+          "databaseSpecificType": "VARCHAR",
+          "size": 10
+        },
+        {
+          "dataType": "INTEGER",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "FAX3",
+          "nullable": true,
+          "remarks": "",
+          "databaseSpecificType": "INTEGER",
+          "size": 32
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(10)",
+          "name": "HOMEEMAIL11",
+          "nullable": true,
+          "remarks": "",
+          "databaseSpecificType": "VARCHAR",
+          "size": 10
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(10)",
+          "name": "HOMEEMAIL12",
+          "nullable": true,
+          "remarks": "",
+          "databaseSpecificType": "VARCHAR",
+          "size": 10
+        },
+        {
+          "dataType": "BIGINT",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "PUBLICATION_ID",
+          "nullable": false,
+          "remarks": "",
+          "databaseSpecificType": "BIGINT",
+          "size": 64
+        }
+      ],
+      "indices": [
+        {
+          "unique": true,
+          "name": "SYS_IDX_PK_WRITERS_10161",
+          "columns": {
+            "sortSequence": "ascending",
+            "name": "ID"
+          }
+        },
+        {
+          "unique": false,
+          "name": "SYS_IDX_10189",
+          "columns": {
+            "sortSequence": "ascending",
+            "name": "PUBLICATION_ID"
+          }
+        },
+        {
+          "unique": false,
+          "name": "IDX_A1_WRITERS",
+          "columns": [
+            {
+              "sortSequence": "ascending",
+              "name": "CITY"
+            },
+            {
+              "sortSequence": "ascending",
+              "name": "STATE"
+            }
+          ]
+        },
+        {
+          "unique": true,
+          "name": "IDX_U_WRITERS",
+          "columns": [
+            {
+              "sortSequence": "ascending",
+              "name": "EMAIL1"
+            },
+            {
+              "sortSequence": "ascending",
+              "name": "COUNTRY"
+            }
+          ]
+        },
+        {
+          "unique": false,
+          "name": "IDX_B_WRITERS",
+          "columns": [
+            {
+              "sortSequence": "ascending",
+              "name": "LASTNAME"
+            },
+            {
+              "sortSequence": "ascending",
+              "name": "FIRSTNAME"
+            }
+          ]
+        },
+        {
+          "unique": false,
+          "name": "IDX_A_WRITERS",
+          "columns": [
+            {
+              "sortSequence": "ascending",
+              "name": "CITY"
+            },
+            {
+              "sortSequence": "ascending",
+              "name": "STATE"
+            },
+            {
+              "sortSequence": "ascending",
+              "name": "POSTALCODE"
+            },
+            {
+              "sortSequence": "ascending",
+              "name": "COUNTRY"
+            }
+          ]
+        }
+      ],
+      "remarks": "",
+      "triggers": [],
+      "fullName": "PUBLIC.FOR_LINT.WRITERS",
+      "type": "table"
+    },
+    {
+      "tableConstraints": [],
+      "foreignKeys": [{
+        "updateRule": "no action",
+        "columnReferences": [
+          {
+            "pkColumn": "PUBLIC.\"PUBLISHER SALES\".REGIONS.POSTALCODE",
+            "fkColumn": "PUBLIC.\"PUBLISHER SALES\".SALES.POSTALCODE"
+          },
+          {
+            "pkColumn": "PUBLIC.\"PUBLISHER SALES\".REGIONS.COUNTRY",
+            "fkColumn": "PUBLIC.\"PUBLISHER SALES\".SALES.COUNTRY"
+          }
+        ],
+        "deleteRule": "no action",
+        "name": "FK_SALES_REGIONS"
+      }],
+      "primaryKey": {
+        "unique": true,
+        "name": "PK_CUSTOMERS",
+        "columns": [
+          {
+            "sortSequence": "ascending",
+            "name": "POSTALCODE"
+          },
+          {
+            "sortSequence": "ascending",
+            "name": "COUNTRY"
+          }
+        ]
+      },
+      "name": "REGIONS",
+      "columns": [
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(50)",
+          "name": "CITY",
+          "nullable": false,
+          "remarks": "",
+          "databaseSpecificType": "VARCHAR",
+          "size": 50
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(2)",
+          "name": "STATE",
+          "nullable": false,
+          "remarks": "",
+          "databaseSpecificType": "VARCHAR",
+          "size": 2
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(10)",
+          "name": "POSTALCODE",
+          "nullable": false,
+          "remarks": "",
+          "databaseSpecificType": "VARCHAR",
+          "size": 10
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(50)",
+          "name": "COUNTRY",
+          "nullable": false,
+          "remarks": "",
+          "databaseSpecificType": "VARCHAR",
+          "size": 50
+        }
+      ],
+      "indices": [{
+        "unique": true,
+        "name": "SYS_IDX_PK_CUSTOMERS_10144",
+        "columns": [
+          {
+            "sortSequence": "ascending",
+            "name": "POSTALCODE"
+          },
+          {
+            "sortSequence": "ascending",
+            "name": "COUNTRY"
+          }
+        ]
+      }],
+      "remarks": "",
+      "triggers": [],
+      "fullName": "PUBLIC.\"PUBLISHER SALES\".REGIONS",
+      "type": "table"
+    },
+    {
+      "tableConstraints": [],
+      "foreignKeys": [{
+        "updateRule": "no action",
+        "columnReferences": [
+          {
+            "pkColumn": "PUBLIC.\"PUBLISHER SALES\".REGIONS.POSTALCODE",
+            "fkColumn": "PUBLIC.\"PUBLISHER SALES\".SALES.POSTALCODE"
+          },
+          {
+            "pkColumn": "PUBLIC.\"PUBLISHER SALES\".REGIONS.COUNTRY",
+            "fkColumn": "PUBLIC.\"PUBLISHER SALES\".SALES.COUNTRY"
+          }
+        ],
+        "deleteRule": "no action",
+        "name": "FK_SALES_REGIONS"
+      }],
+      "primaryKey": {},
+      "name": "SALES",
+      "columns": [
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(10)",
+          "name": "POSTALCODE",
+          "nullable": false,
+          "remarks": "",
+          "databaseSpecificType": "VARCHAR",
+          "size": 10
+        },
+        {
+          "dataType": "VARCHAR",
+          "decimalDigits": 0,
+          "width": "(50)",
+          "name": "COUNTRY",
+          "nullable": false,
+          "remarks": "",
+          "databaseSpecificType": "VARCHAR",
+          "size": 50
+        },
+        {
+          "dataType": "INTEGER",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "BOOKID",
+          "nullable": true,
+          "remarks": "",
+          "databaseSpecificType": "INTEGER",
+          "size": 32
+        },
+        {
+          "dataType": "DATE",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "PERIODENDDATE",
+          "nullable": true,
+          "remarks": "",
+          "databaseSpecificType": "DATE",
+          "size": 10
+        },
+        {
+          "dataType": "DOUBLE",
+          "decimalDigits": 0,
+          "width": "(64, 0)",
+          "name": "TOTALAMOUNT",
+          "nullable": true,
+          "remarks": "",
+          "databaseSpecificType": "DOUBLE",
+          "size": 64
+        }
+      ],
+      "indices": [{
+        "unique": false,
+        "name": "SYS_IDX_10154",
+        "columns": [
+          {
+            "sortSequence": "ascending",
+            "name": "POSTALCODE"
+          },
+          {
+            "sortSequence": "ascending",
+            "name": "COUNTRY"
+          }
+        ]
+      }],
+      "remarks": "",
+      "triggers": [],
+      "fullName": "PUBLIC.\"PUBLISHER SALES\".SALES",
+      "type": "table"
+    }
+  ],
+  "databaseInfo": {
+    "databaseProductName": "HSQL Database Engine",
+    "databaseUserName": "SA",
+    "databaseProductVersion": "2.3.2"
+  },
+  "schemaCrawlerInfo": {
+    "productVersion": "10.10.05",
+    "productName": "SchemaCrawler"
+  },
+  "jdbcDriverInfo": {
+    "isJDBCCompliant": "true",
+    "driverClassName": "org.hsqldb.jdbc.JDBCDriver",
+    "driverVersion": "2.3.2",
+    "driverName": "HSQL Database Engine Driver",
+    "url": "jdbc:hsqldb:hsql://localhost/schemacrawler"
+  },
+  "routines": [
+    {
+      "name": "CUSTOMADD",
+      "remarks": "",
+      "parameters": [{
+        "dataType": "INTEGER",
+        "width": "",
+        "type": "in",
+        "databaseSpecificType": "INTEGER"
+      }],
+      "fullName": "PUBLIC.BOOKS.CUSTOMADD",
+      "type": "function",
+      "returnType": "does not return a table"
+    },
+    {
+      "name": "CUSTOMADD",
+      "remarks": "",
+      "parameters": [
+        {
+          "dataType": "INTEGER",
+          "width": "",
+          "type": "in",
+          "databaseSpecificType": "INTEGER"
+        },
+        {
+          "dataType": "INTEGER",
+          "width": "",
+          "type": "in",
+          "databaseSpecificType": "INTEGER"
+        }
+      ],
+      "fullName": "PUBLIC.BOOKS.CUSTOMADD",
+      "type": "function",
+      "returnType": "does not return a table"
+    },
+    {
+      "name": "NEW_PUBLISHER",
+      "remarks": "",
+      "parameters": [{
+        "dataType": "VARCHAR",
+        "width": "",
+        "type": "out",
+        "databaseSpecificType": "CHARACTER VARYING"
+      }],
+      "fullName": "PUBLIC.BOOKS.NEW_PUBLISHER",
+      "type": "procedure",
+      "returnType": "no result"
+    },
+    {
+      "name": "NEW_PUBLISHER",
+      "remarks": "",
+      "parameters": [
+        {
+          "dataType": "VARCHAR",
+          "width": "",
+          "type": "in",
+          "databaseSpecificType": "CHARACTER VARYING"
+        },
+        {
+          "dataType": "VARCHAR",
+          "width": "",
+          "type": "out",
+          "databaseSpecificType": "CHARACTER VARYING"
+        }
+      ],
+      "fullName": "PUBLIC.BOOKS.NEW_PUBLISHER",
+      "type": "procedure",
+      "returnType": "no result"
+    },
+    {
+      "name": "ALLOC_BLOCKS",
+      "remarks": "",
+      "parameters": [
+        {
+          "dataType": "INTEGER",
+          "width": "",
+          "type": "in",
+          "databaseSpecificType": "INTEGER"
+        },
+        {
+          "dataType": "INTEGER",
+          "width": "",
+          "type": "in",
+          "databaseSpecificType": "INTEGER"
+        },
+        {
+          "dataType": "BIGINT",
+          "width": "",
+          "type": "in",
+          "databaseSpecificType": "BIGINT"
+        }
+      ],
+      "fullName": "PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS",
+      "type": "procedure",
+      "returnType": "no result"
+    },
+    {
+      "name": "ALLOC_SINGLE_BLOCK",
+      "remarks": "",
+      "parameters": [
+        {
+          "dataType": "INTEGER",
+          "width": "",
+          "type": "in",
+          "databaseSpecificType": "INTEGER"
+        },
+        {
+          "dataType": "INTEGER",
+          "width": "",
+          "type": "in",
+          "databaseSpecificType": "INTEGER"
+        },
+        {
+          "dataType": "BIGINT",
+          "width": "",
+          "type": "in",
+          "databaseSpecificType": "BIGINT"
+        }
+      ],
+      "fullName": "PUBLIC.SYSTEM_LOBS.ALLOC_SINGLE_BLOCK",
+      "type": "procedure",
+      "returnType": "no result"
+    },
+    {
+      "name": "CONVERT_BLOCK",
+      "remarks": "",
+      "parameters": [
+        {
+          "dataType": "INTEGER",
+          "width": "",
+          "type": "in",
+          "databaseSpecificType": "INTEGER"
+        },
+        {
+          "dataType": "INTEGER",
+          "width": "",
+          "type": "in",
+          "databaseSpecificType": "INTEGER"
+        },
+        {
+          "dataType": "INTEGER",
+          "width": "",
+          "type": "in",
+          "databaseSpecificType": "INTEGER"
+        },
+        {
+          "dataType": "BIGINT",
+          "width": "",
+          "type": "in",
+          "databaseSpecificType": "BIGINT"
+        }
+      ],
+      "fullName": "PUBLIC.SYSTEM_LOBS.CONVERT_BLOCK",
+      "type": "procedure",
+      "returnType": "no result"
+    },
+    {
+      "name": "CREATE_EMPTY_BLOCK",
+      "remarks": "",
+      "parameters": [
+        {
+          "dataType": "INTEGER",
+          "width": "",
+          "type": "in/ out",
+          "databaseSpecificType": "INTEGER"
+        },
+        {
+          "dataType": "INTEGER",
+          "width": "",
+          "type": "in",
+          "databaseSpecificType": "INTEGER"
+        }
+      ],
+      "fullName": "PUBLIC.SYSTEM_LOBS.CREATE_EMPTY_BLOCK",
+      "type": "procedure",
+      "returnType": "no result"
+    },
+    {
+      "name": "DELETE_BLOCKS",
+      "remarks": "",
+      "parameters": [
+        {
+          "dataType": "BIGINT",
+          "width": "",
+          "type": "in",
+          "databaseSpecificType": "BIGINT"
+        },
+        {
+          "dataType": "INTEGER",
+          "width": "",
+          "type": "in",
+          "databaseSpecificType": "INTEGER"
+        },
+        {
+          "dataType": "INTEGER",
+          "width": "",
+          "type": "in",
+          "databaseSpecificType": "INTEGER"
+        },
+        {
+          "dataType": "BIGINT",
+          "width": "",
+          "type": "in",
+          "databaseSpecificType": "BIGINT"
+        }
+      ],
+      "fullName": "PUBLIC.SYSTEM_LOBS.DELETE_BLOCKS",
+      "type": "procedure",
+      "returnType": "no result"
+    },
+    {
+      "name": "DELETE_LOB",
+      "remarks": "",
+      "parameters": [
+        {
+          "dataType": "BIGINT",
+          "width": "",
+          "type": "in",
+          "databaseSpecificType": "BIGINT"
+        },
+        {
+          "dataType": "BIGINT",
+          "width": "",
+          "type": "in",
+          "databaseSpecificType": "BIGINT"
+        }
+      ],
+      "fullName": "PUBLIC.SYSTEM_LOBS.DELETE_LOB",
+      "type": "procedure",
+      "returnType": "no result"
+    },
+    {
+      "name": "DELETE_UNUSED",
+      "remarks": "",
+      "parameters": [{
+        "dataType": "ARRAY",
+        "width": "",
+        "type": "in",
+        "databaseSpecificType": "BIGINT ARRAY"
+      }],
+      "fullName": "PUBLIC.SYSTEM_LOBS.DELETE_UNUSED",
+      "type": "procedure",
+      "returnType": "no result"
+    },
+    {
+      "name": "DELETE_UNUSED_LOBS",
+      "remarks": "",
+      "parameters": [{
+        "dataType": "BIGINT",
+        "width": "",
+        "type": "in",
+        "databaseSpecificType": "BIGINT"
+      }],
+      "fullName": "PUBLIC.SYSTEM_LOBS.DELETE_UNUSED_LOBS",
+      "type": "procedure",
+      "returnType": "no result"
+    },
+    {
+      "name": "DIVIDE_BLOCK",
+      "remarks": "",
+      "parameters": [
+        {
+          "dataType": "INTEGER",
+          "width": "",
+          "type": "in",
+          "databaseSpecificType": "INTEGER"
+        },
+        {
+          "dataType": "BIGINT",
+          "width": "",
+          "type": "in",
+          "databaseSpecificType": "BIGINT"
+        }
+      ],
+      "fullName": "PUBLIC.SYSTEM_LOBS.DIVIDE_BLOCK",
+      "type": "procedure",
+      "returnType": "no result"
+    },
+    {
+      "name": "MERGE_EMPTY_BLOCKS",
+      "remarks": "",
+      "parameters": [],
+      "fullName": "PUBLIC.SYSTEM_LOBS.MERGE_EMPTY_BLOCKS",
+      "type": "procedure",
+      "returnType": "no result"
+    }
+  ]
+}]

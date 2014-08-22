@@ -21,6 +21,8 @@
 package schemacrawler.schemacrawler;
 
 
+import static sf.util.Utility.isBlank;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -37,7 +39,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import sf.util.ObjectToString;
-import sf.util.Utility;
 
 /**
  * Configuration properties.
@@ -64,7 +65,7 @@ public final class Config
     {
       for (final String configFilename: configFilenames)
       {
-        if (!Utility.isBlank(configFilename))
+        if (!isBlank(configFilename))
         {
           configProperties = loadProperties(configProperties,
                                             new File(configFilename));
@@ -87,7 +88,7 @@ public final class Config
     Properties configProperties = new Properties();
 
     final InputStream stream;
-    if (!Utility.isBlank(resource))
+    if (!isBlank(resource))
     {
       stream = Config.class.getResourceAsStream(resource);
     }
@@ -267,21 +268,42 @@ public final class Config
     return enumValue;
   }
 
-  public RegularExpressionRule getInclusionRule(final String includePatternProperty,
-                                                final String excludePatternProperty)
+  public InclusionRule getInclusionRule(final String includePatternProperty,
+                                        final String excludePatternProperty)
   {
-    return new RegularExpressionRule(getStringValue(includePatternProperty,
-                                                    null),
-                                     getStringValue(excludePatternProperty,
-                                                    null));
+    final InclusionRule inclusionRule = getInclusionRuleOrNull(includePatternProperty,
+                                                               excludePatternProperty);
+    if (inclusionRule == null)
+    {
+      return new IncludeAll();
+    }
+    else
+    {
+      return inclusionRule;
+    }
   }
 
-  public RegularExpressionRule getInclusionRuleDefaultExclude(final String includePatternProperty,
-                                                              final String excludePatternProperty)
+  public InclusionRule getInclusionRuleDefaultExclude(final String includePatternProperty,
+                                                      final String excludePatternProperty)
   {
     return new RegularExpressionRule(getStringValue(includePatternProperty, ""),
                                      getStringValue(excludePatternProperty,
                                                     ".*"));
+  }
+
+  public InclusionRule getInclusionRuleOrNull(final String includePatternProperty,
+                                              final String excludePatternProperty)
+  {
+    final String includePattern = getStringValue(includePatternProperty, null);
+    final String excludePattern = getStringValue(excludePatternProperty, null);
+    if (isBlank(includePattern) && isBlank(excludePattern))
+    {
+      return null;
+    }
+    else
+    {
+      return new RegularExpressionRule(includePattern, excludePattern);
+    }
   }
 
   /**

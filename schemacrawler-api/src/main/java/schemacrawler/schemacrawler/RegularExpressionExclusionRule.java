@@ -34,6 +34,7 @@ public final class RegularExpressionExclusionRule
 {
 
   private static final long serialVersionUID = 6274652266761961575L;
+
   private final InclusionRule inclusionRule;
 
   /**
