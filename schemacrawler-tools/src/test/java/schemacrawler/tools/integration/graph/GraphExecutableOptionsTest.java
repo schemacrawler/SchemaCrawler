@@ -213,7 +213,7 @@ public class GraphExecutableOptionsTest
     // Check DOT file
     final String referenceFileName = testMethodName;
     executeExecutableAndCheckForOutputFile(executable,
-                                           "echo",
+                                           GraphOutputFormat.scdot.getFormat(),
                                            GRAPH_OPTIONS_OUTPUT
                                                + referenceFileName + ".dot");
 

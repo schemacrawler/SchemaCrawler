@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 public enum GraphOutputFormat
 {
 
-  echo("echo", "SchemaCrawler generated format"),
+  scdot("scdot", "SchemaCrawler generated format"),
   bmp("bmp", "Windows Bitmap Format"),
   canon("canon", "DOT"),
   dot("dot", "DOT"),

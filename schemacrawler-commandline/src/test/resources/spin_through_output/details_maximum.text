@@ -21,6 +21,167 @@ database product version                  2.3.2
 database user name                        SA                            
 
 
+Database Characteristics
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
+
+all procedures are callable               true                          
+all tables are selectable                 true                          
+auto commit failure closes all result sets  false                         
+catalog separator                         .                             
+catalog term                              CATALOG                       
+catalogs                                  PUBLIC                        
+client info properties                    files_readonly, hsqldb.applog, hsqldb.cache_file_scale, hsqldb.cache_free_count, hsqldb.cache_rows, hsqldb.cache_size, hsqldb.default_table_type, hsqldb.defrag_limit, hsqldb.digest, hsqldb.files_check, hsqldb.files_space, hsqldb.full_log_replay, hsqldb.inc_backup, hsqldb.large_data, hsqldb.lob_compressed, hsqldb.lob_file_scale, hsqldb.lock_file, hsqldb.log_data, hsqldb.log_size, hsqldb.nio_data_file, hsqldb.nio_max_size, hsqldb.result_max_memory_rows, hsqldb.script_format, hsqldb.sqllog, hsqldb.temp_directory, hsqldb.tx, hsqldb.tx_conflict_rollback, hsqldb.tx_level, hsqldb.write_delay, hsqldb.write_delay_millis, jdbc.translate_tti_types, readonly, runtime.gc_interval, sql.avg_scale, sql.compare_in_locale, sql.concat_nulls, sql.convert_trunc, sql.double_nan, sql.enforce_names, sql.enforce_refs, sql.enforce_size, sql.enforce_tdc_delete, sql.enforce_tdc_update, sql.enforce_types, sql.ignore_case, sql.longvar_is_lob, sql.nulls_first, sql.nulls_order, sql.pad_space, sql.ref_integrity, sql.regular_names, sql.syntax_db2, sql.syntax_mss, sql.syntax_mys, sql.syntax_ora, sql.syntax_pgs, sql.unique_nulls, textdb.all_quoted, textdb.cache_rows, textdb.cache_scale, textdb.cache_size, textdb.cache_size_scale, textdb.encoding, textdb.fs, textdb.ignore_first, textdb.lvs, textdb.quoted, textdb.vs
+data definition causes transaction commit  true                          
+data definition ignored in transactions   false                         
+database major version                    2                             
+database minor version                    3                             
+default transaction isolation             2                             
+deletes are detected for TYPE_FORWARD_ONLY result sets  false                         
+deletes are detected for TYPE_SCROLL_INSENSITIVE result sets  false                         
+deletes are detected for TYPE_SCROLL_SENSITIVE result sets  false                         
+does max row size include blobs           true                          
+driver major version                      2                             
+driver minor version                      3                             
+extra name characters                                                   
+generated key always returned             true                          
+identifier quote string                   "                             
+inserts are detected for TYPE_FORWARD_ONLY result sets  false                         
+inserts are detected for TYPE_SCROLL_INSENSITIVE result sets  false                         
+inserts are detected for TYPE_SCROLL_SENSITIVE result sets  false                         
+is catalog at start                       true                          
+is read only                              false                         
+JDBC major version                        4                             
+JDBC minor version                        0                             
+locators update copy                      false                         
+max binary literal length                 0                             
+max catalog name length                   128                           
+max char literal length                   0                             
+max column name length                    128                           
+max columns in group by                   0                             
+max columns in index                      0                             
+max columns in order by                   0                             
+max columns in select                     0                             
+max columns in table                      0                             
+max connections                           0                             
+max cursor name length                    128                           
+max index length                          0                             
+max procedure name length                 128                           
+max row size                              0                             
+max schema name length                    128                           
+max statement length                      0                             
+max statements                            0                             
+max table name length                     128                           
+max tables in select                      0                             
+max user name length                      128                           
+null plus non null is null                true                          
+nulls are sorted at end                   false                         
+nulls are sorted at start                 true                          
+nulls are sorted high                     false                         
+nulls are sorted low                      false                         
+numeric functions                         ABS, ACOS, ASIN, ATAN, ATAN2, BITAND, BITOR, BITXOR, CEILING, COS, COT, DEGREES, EXP, FLOOR, LOG, LOG10, MOD, PI, POWER, RADIANS, RAND, ROUND, ROUNDMAGIC, SIGN, SIN, SQRT, TAN, TRUNCATE
+others inserts are visible for TYPE_FORWARD_ONLY result sets  false                         
+others inserts are visible for TYPE_SCROLL_INSENSITIVE result sets  false                         
+others inserts are visible for TYPE_SCROLL_SENSITIVE result sets  false                         
+others updates are visible for TYPE_FORWARD_ONLY result sets  false                         
+others updates are visible for TYPE_SCROLL_INSENSITIVE result sets  false                         
+others updates are visible for TYPE_SCROLL_SENSITIVE result sets  false                         
+own deletes are visible for TYPE_FORWARD_ONLY result sets  false                         
+own deletes are visible for TYPE_SCROLL_INSENSITIVE result sets  false                         
+own deletes are visible for TYPE_SCROLL_SENSITIVE result sets  false                         
+own inserts are visible for TYPE_FORWARD_ONLY result sets  false                         
+own inserts are visible for TYPE_SCROLL_INSENSITIVE result sets  false                         
+own inserts are visible for TYPE_SCROLL_SENSITIVE result sets  false                         
+own updates are visible for TYPE_FORWARD_ONLY result sets  false                         
+own updates are visible for TYPE_SCROLL_INSENSITIVE result sets  false                         
+own updates are visible for TYPE_SCROLL_SENSITIVE result sets  false                         
+procedure term                            PROCEDURE                     
+result set holdability                    1                             
+row id lifetime                           ROWID_UNSUPPORTED             
+schema term                               SCHEMA                        
+schemas                                   BOOKS, FOR_LINT, INFORMATION_SCHEMA, PUBLIC, PUBLISHER SALES, SYSTEM_LOBS
+search string escape                      \                             
+SQL keywords                                                            
+SQL state type                            2                             
+stores lower case identifiers             false                         
+stores lower case quoted identifiers      false                         
+stores mixed case identifiers             false                         
+stores mixed case quoted identifiers      false                         
+stores upper case identifiers             true                          
+stores upper case quoted identifiers      false                         
+string functions                          ASCII, CHAR, CONCAT, DIFFERENCE, HEXTORAW, INSERT, LCASE, LEFT, LENGTH, LOCATE, LTRIM, RAWTOHEX, REPEAT, REPLACE, RIGHT, RTRIM, SOUNDEX, SPACE, SUBSTR, UCASE
+supports alter table with add column      true                          
+supports alter table with drop column     true                          
+supports ANSI92 entry level SQL           true                          
+supports ANSI92 full SQL                  true                          
+supports ANSI92 intermediate SQL          true                          
+supports batch updates                    true                          
+supports catalogs in data manipulation    true                          
+supports catalogs in index definitions    true                          
+supports catalogs in privilege definitions  true                          
+supports catalogs in procedure calls      true                          
+supports catalogs in table definitions    true                          
+supports column aliasing                  true                          
+supports convert                          true                          
+supports core SQL grammar                 true                          
+supports correlated subqueries            true                          
+supports data definition and data manipulation transactions  false                         
+supports data manipulation transactions only  true                          
+supports different table correlation names  false                         
+supports expressions in order by          true                          
+supports extended SQL grammar             true                          
+supports full outer joins                 true                          
+supports get generated keys               true                          
+supports group by                         true                          
+supports group by beyond select           true                          
+supports group by unrelated               true                          
+supports integrity enhancement facility   true                          
+supports like escape clause               true                          
+supports limited outer joins              true                          
+supports minimum SQL grammar              true                          
+supports mixed case identifiers           false                         
+supports mixed case quoted identifiers    true                          
+supports multiple open results            true                          
+supports multiple result sets             true                          
+supports multiple transactions            true                          
+supports named parameters                 true                          
+supports non nullable columns             true                          
+supports open cursors across commit       true                          
+supports open cursors across rollback     false                         
+supports open statements across commit    true                          
+supports open statements across rollback  true                          
+supports order by unrelated               true                          
+supports outer joins                      true                          
+supports positioned delete                true                          
+supports positioned update                true                          
+supports result set type for TYPE_FORWARD_ONLY result sets  true                          
+supports result set type for TYPE_SCROLL_INSENSITIVE result sets  true                          
+supports result set type for TYPE_SCROLL_SENSITIVE result sets  false                         
+supports savepoints                       true                          
+supports schemas in data manipulation     true                          
+supports schemas in index definitions     true                          
+supports schemas in privilege definitions  true                          
+supports schemas in procedure calls       true                          
+supports schemas in table definitions     true                          
+supports select for update                true                          
+supports statement pooling                true                          
+supports stored functions using call syntax  true                          
+supports stored procedures                true                          
+supports subqueries in comparisons        true                          
+supports subqueries in exists             true                          
+supports subqueries in ins                true                          
+supports subqueries in quantifieds        true                          
+supports table correlation names          true                          
+supports transactions                     true                          
+supports union                            true                          
+supports union all                        true                          
+system functions                          DATABASE, IFNULL, USER        
+table types                               GLOBAL TEMPORARY, SYSTEM TABLE, TABLE, VIEW
+time date functions                       CURDATE, CURTIME, DATEDIFF, DAYNAME, DAYOFMONTH, DAYOFWEEK, DAYOFYEAR, HOUR, MINUTE, MONTH, MONTHNAME, NOW, QUARTER, SECOND, SECONDS_SINCE_MIDNIGHT, TIMESTAMPADD, TIMESTAMPDIFF, TO_CHAR, WEEK, YEAR
+type info                                 BIT, TINYINT, BIGINT, VARBINARY, BINARY, CHARACTER, NUMERIC, DECIMAL, INTEGER, SMALLINT, DOUBLE, FLOAT, REAL, NVARCHAR, VARCHAR, BOOLEAN, DATE, TIME, TIMESTAMP, OTHER, BLOB, CLOB
+uses local file per table                 false                         
+uses local files                          false                         
+
+
 JDBC Driver Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
@@ -29,6 +190,40 @@ driver version                            2.3.2
 driver class name                         org.hsqldb.jdbc.JDBCDriver    
 url                                       jdbc:hsqldb:hsql://localhost/schemacrawler
 is JDBC compliant                         true                          
+
+
+JDBC Driver Properties
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
+
+default_schema                                         [driver property]
+  
+  not required; choices [false, true]
+  value                             false                       
+
+get_column_name                                        [driver property]
+  
+  not required; choices [false, true]
+  value                             true                        
+
+ifexists                                               [driver property]
+  
+  not required; choices [false, true]
+  value                             false                       
+
+password                                               [driver property]
+  
+  required
+  value                             NULL                        
+
+shutdown                                               [driver property]
+  
+  not required; choices [false, true]
+  value                             false                       
+
+user                                                   [driver property]
+  
+  required
+  value                             NULL                        
 
 
 
@@ -283,6 +478,24 @@ BOOKS.AUTHORS.FIRSTNAME IS NOT NULL
 SYS_CT_10096                                          [check constraint]
 BOOKS.AUTHORS.LASTNAME IS NOT NULL
 
+DELETE                                                       [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+INSERT                                                       [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+REFERENCES                                                   [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+SELECT                                                       [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+TRIGGER                                                      [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+UPDATE                                                       [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
 
 
 PUBLIC.BOOKS.AUTHORSLIST
@@ -291,6 +504,24 @@ PUBLIC.BOOKS.AUTHORSLIST
   ID                                INTEGER                     
   FIRSTNAME                         VARCHAR(20)                 
   LASTNAME                          VARCHAR(20)                 
+
+DELETE                                                       [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+INSERT                                                       [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+REFERENCES                                                   [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+SELECT                                                       [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+TRIGGER                                                      [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+UPDATE                                                       [privilege]
+  _SYSTEM --> DBA (grantable)                                   
 
                                                             [definition]
 SELECT ID,FIRSTNAME,LASTNAME FROM BOOKS.AUTHORS
@@ -327,6 +558,24 @@ BOOKS.BOOKAUTHORS.BOOKID IS NOT NULL
 SYS_CT_10112                                          [check constraint]
 BOOKS.BOOKAUTHORS.AUTHORID IS NOT NULL
 
+DELETE                                                       [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+INSERT                                                       [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+REFERENCES                                                   [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+SELECT                                                       [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+TRIGGER                                                      [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+UPDATE                                                       [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
 
 
 PUBLIC.BOOKS.BOOKS
@@ -356,6 +605,12 @@ FK_Y_BOOK                                  [foreign key, with no action]
 FK_PREVIOUSEDITION                         [foreign key, with no action]
   ID --> PREVIOUSEDITIONID                                      
 
+                                                      [weak association]
+  ID --> PUBLIC."PUBLISHER SALES".SALES.BOOKID                              
+
+                                                      [weak association]
+  PUBLIC.BOOKS.PUBLISHERS.ID --> PUBLISHERID                              
+
 SYS_IDX_PK_BOOKS_10105                                    [unique index]
   ID                                ascending                   
 
@@ -374,12 +629,48 @@ BOOKS.BOOKS.TITLE IS NOT NULL
 SYS_CT_10104                                          [check constraint]
 BOOKS.BOOKS.PUBLISHERID IS NOT NULL
 
+DELETE                                                       [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+INSERT                                                       [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+REFERENCES                                                   [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+SELECT                                                       [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+TRIGGER                                                      [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+UPDATE                                                       [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
 
 
 PUBLIC.BOOKS."Global Counts"
 ------------------------------------------------------------------------
                                                                  [table]
   "Global Count"                    INTEGER                     
+
+DELETE                                                       [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+INSERT                                                       [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+REFERENCES                                                   [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+SELECT                                                       [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+TRIGGER                                                      [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+UPDATE                                                       [privilege]
+  _SYSTEM --> DBA (grantable)                                   
 
 
 
@@ -395,8 +686,29 @@ List of book publishers
 SYS_PK_10092                                               [primary key]
   ID                                ascending                   
 
+                                                      [weak association]
+  ID --> PUBLIC.BOOKS.BOOKS.PUBLISHERID                              
+
 SYS_IDX_SYS_PK_10092_10093                                [unique index]
   ID                                ascending                   
+
+DELETE                                                       [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+INSERT                                                       [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+REFERENCES                                                   [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+SELECT                                                       [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+TRIGGER                                                      [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+UPDATE                                                       [privilege]
+  _SYSTEM --> DBA (grantable)                                   
 
 
 
@@ -434,12 +746,48 @@ FOR_LINT.EXTRA_PK.WRITERID IS NOT NULL
 SYS_CT_10180                                          [check constraint]
 FOR_LINT.EXTRA_PK.PUBLICATIONID IS NOT NULL
 
+DELETE                                                       [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+INSERT                                                       [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+REFERENCES                                                   [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+SELECT                                                       [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+TRIGGER                                                      [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+UPDATE                                                       [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
 
 
 PUBLIC.FOR_LINT."Global Counts"
 ------------------------------------------------------------------------
                                                                  [table]
   "Global Count"                    INTEGER                     
+
+DELETE                                                       [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+INSERT                                                       [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+REFERENCES                                                   [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+SELECT                                                       [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+TRIGGER                                                      [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+UPDATE                                                       [privilege]
+  _SYSTEM --> DBA (grantable)                                   
 
 
 
@@ -481,6 +829,24 @@ FOR_LINT.PUBLICATIONS.TITLE IS NOT NULL
 
 SYS_CT_10170                                          [check constraint]
 FOR_LINT.PUBLICATIONS.WRITERID IS NOT NULL
+
+DELETE                                                       [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+INSERT                                                       [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+REFERENCES                                                   [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+SELECT                                                       [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+TRIGGER                                                      [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+UPDATE                                                       [privilege]
+  _SYSTEM --> DBA (grantable)                                   
 
 
 
@@ -560,6 +926,24 @@ FOR_LINT.WRITERS.ADDRESS2 IS NOT NULL
 SYS_CT_10160                                          [check constraint]
 FOR_LINT.WRITERS.PUBLICATION_ID IS NOT NULL
 
+DELETE                                                       [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+INSERT                                                       [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+REFERENCES                                                   [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+SELECT                                                       [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+TRIGGER                                                      [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+UPDATE                                                       [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
 
 
 PUBLIC."PUBLISHER SALES".REGIONS
@@ -594,6 +978,24 @@ SYS_CT_10142                                          [check constraint]
 SYS_CT_10143                                          [check constraint]
 "PUBLISHER SALES".REGIONS.COUNTRY IS NOT NULL
 
+DELETE                                                       [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+INSERT                                                       [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+REFERENCES                                                   [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+SELECT                                                       [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+TRIGGER                                                      [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+UPDATE                                                       [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
 
 
 PUBLIC."PUBLISHER SALES".SALES
@@ -609,6 +1011,9 @@ FK_SALES_REGIONS                           [foreign key, with no action]
   PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE --> POSTALCODE                              
   PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY --> COUNTRY                              
 
+                                                      [weak association]
+  PUBLIC.BOOKS.BOOKS.ID --> BOOKID                              
+
 SYS_IDX_10154                                         [non-unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
@@ -618,6 +1023,24 @@ SYS_CT_10149                                          [check constraint]
 
 SYS_CT_10150                                          [check constraint]
 "PUBLISHER SALES".SALES.COUNTRY IS NOT NULL
+
+DELETE                                                       [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+INSERT                                                       [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+REFERENCES                                                   [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+SELECT                                                       [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+TRIGGER                                                      [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+UPDATE                                                       [privilege]
+  _SYSTEM --> DBA (grantable)                                   
 
 
 
@@ -808,6 +1231,40 @@ DIVIDE_BLOCK_10065
 
                                                             [definition]
 CREATE PROCEDURE SYSTEM_LOBS.DIVIDE_BLOCK(IN B_OFFSET INTEGER,IN L_ID BIGINT) SPECIFIC DIVIDE_BLOCK_10065 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE BL_ADDR INT DEFAULT NULL;DECLARE BL_COUNT INT DEFAULT NULL;DECLARE BL_OFFSET INT DEFAULT NULL;SET(BL_ADDR,BL_COUNT,BL_OFFSET)=(SELECT BLOCK_ADDR,BLOCK_COUNT,BLOCK_OFFSET FROM SYSTEM_LOBS.LOBS WHERE LOBS.LOB_ID=L_ID AND B_OFFSET>BLOCK_OFFSET AND B_OFFSET<BLOCK_OFFSET+BLOCK_COUNT);IF BL_ADDR IS NULL THEN SIGNAL SQLSTATE'45000';END IF;DELETE FROM SYSTEM_LOBS.LOBS WHERE BLOCK_ADDR=BL_ADDR;INSERT INTO SYSTEM_LOBS.LOBS(BLOCK_ADDR,BLOCK_COUNT,BLOCK_OFFSET,LOB_ID) VALUES(BL_ADDR,B_OFFSET-BL_OFFSET,BL_OFFSET,L_ID);INSERT INTO SYSTEM_LOBS.LOBS(BLOCK_ADDR,BLOCK_COUNT,BLOCK_OFFSET,LOB_ID) VALUES(BL_ADDR+B_OFFSET-BL_OFFSET,BL_OFFSET+BL_COUNT-B_OFFSET,B_OFFSET,L_ID);END
+
+
+
+PUBLIC.SYSTEM_LOBS.MERGE_EMPTY_BLOCKS
+------------------------------------------------------------------------
+                                                  [procedure, no result]
+
+                                                         [specific name]
+MERGE_EMPTY_BLOCKS_10078
+
+                                                            [definition]
+CREATE PROCEDURE SYSTEM_LOBS.MERGE_EMPTY_BLOCKS() SPECIFIC MERGE_EMPTY_BLOCKS_10078 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE BL_BASE_ADDR INT DEFAULT-1;DECLARE BL_BASE_COUNT INT;DECLARE BL_ADDR INT;DECLARE BL_COUNT INT;REPEAT SET BL_BASE_COUNT=NULL;SET(BL_BASE_ADDR,BL_BASE_COUNT)=(SELECT BLOCK_ADDR,BLOCK_COUNT FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_ADDR>BL_BASE_ADDR ORDER BY BLOCK_ADDR FETCH 1 ROW ONLY);IF BL_BASE_COUNT IS NOT NULL THEN REPEAT SET BL_ADDR=NULL;SET(BL_ADDR,BL_COUNT)=(SELECT BLOCK_ADDR,BLOCK_COUNT FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_ADDR=BL_BASE_ADDR+BL_BASE_COUNT);IF BL_ADDR IS NOT NULL THEN SET BL_BASE_COUNT=BL_BASE_COUNT+BL_COUNT;END IF;UNTIL BL_ADDR IS NULL END REPEAT;DELETE FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_ADDR>=BL_BASE_ADDR AND BLOCK_ADDR<BL_BASE_ADDR+BL_BASE_COUNT;INSERT INTO SYSTEM_LOBS.BLOCKS(BLOCK_ADDR,BLOCK_COUNT,TX_ID) VALUES BL_BASE_ADDR,BL_BASE_COUNT,0;END IF;UNTIL BL_BASE_COUNT IS NULL END REPEAT;END
+
+
+
+
+Sequences
+========================================================================
+
+
+
+PUBLIC.BOOKS.PUBLISHER_ID_SEQ                                 [sequence]
+  increment                         1                           
+  minimum value                     -2147483648                 
+  maximum value                     2147483647                  
+  cycle                             false                       
+
+
+
+PUBLIC.SYSTEM_LOBS.LOB_ID                                     [sequence]
+  increment                         1                           
+  minimum value                     -9223372036854775808        
+  maximum value                     9223372036854775807         
+  cycle                             false                       
 
 
 
