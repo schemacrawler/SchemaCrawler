@@ -3,7 +3,6 @@ package schemacrawler.test;
 
 import static org.junit.Assert.fail;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
-import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
 
 import java.io.File;
 import java.io.PrintWriter;
@@ -25,59 +24,7 @@ public class SchemaCrawlerCommandLineToolsTest
   extends BaseDatabaseTest
 {
 
-  private static final String INFO_LEVEL_OUTPUT = "info_level_output/";
   private static final String GREP_OUTPUT = "grep_output/";
-
-  @Test
-  public void compareInfoLevelOutput()
-    throws Exception
-  {
-    final List<String> failures = new ArrayList<>();
-
-    final File additionalProperties = copyResourceToTempFile("/hsqldb.INFORMATION_SCHEMA.config.properties");
-
-    for (final InfoLevel infoLevel: InfoLevel.values())
-    {
-      if (infoLevel == InfoLevel.unknown)
-      {
-        continue;
-      }
-      for (final SchemaTextDetailType schemaTextDetailType: SchemaTextDetailType
-        .values())
-      {
-
-        final String referenceFile = schemaTextDetailType + "_" + infoLevel
-                                     + ".txt";
-
-        final File testOutputFile = File.createTempFile("schemacrawler."
-                                                            + referenceFile
-                                                            + ".",
-                                                        ".test");
-        testOutputFile.delete();
-
-        final OutputFormat outputFormat = OutputFormat.text;
-        Main.main(new String[] {
-            "-driver=org.hsqldb.jdbc.JDBCDriver",
-            "-url=jdbc:hsqldb:hsql://localhost/schemacrawler",
-            "-user=sa",
-            "-password=",
-            "-g=" + additionalProperties.getAbsolutePath(),
-            "-infolevel=" + infoLevel,
-            "-command=" + schemaTextDetailType,
-            "-outputformat=" + outputFormat,
-            "-outputfile=" + testOutputFile.getAbsolutePath(),
-        });
-
-        failures.addAll(compareOutput(INFO_LEVEL_OUTPUT + referenceFile,
-                                      testOutputFile,
-                                      outputFormat.name()));
-      }
-    }
-    if (failures.size() > 0)
-    {
-      fail(failures.toString());
-    }
-  }
 
   @Test
   public void grep()

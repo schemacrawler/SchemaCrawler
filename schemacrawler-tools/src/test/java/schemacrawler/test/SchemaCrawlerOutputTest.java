@@ -54,7 +54,6 @@ public class SchemaCrawlerOutputTest
   extends BaseDatabaseTest
 {
 
-  private static final String INFO_LEVEL_OUTPUT = "info_level_output/";
   private static final String COMPOSITE_OUTPUT = "composite_output/";
   private static final String ORDINAL_OUTPUT = "ordinal_output/";
   private static final String JSON_OUTPUT = "json_output/";
@@ -181,58 +180,6 @@ public class SchemaCrawlerOutputTest
                                         + referenceFile,
                                     testOutputFile,
                                     outputFormat.name()));
-    }
-    if (failures.size() > 0)
-    {
-      fail(failures.toString());
-    }
-  }
-
-  @Test
-  public void compareInfoLevelOutput()
-    throws Exception
-  {
-    FileUtils.deleteDirectory(new File("./target/unit_tests_results_output",
-                                       INFO_LEVEL_OUTPUT));
-
-    final List<String> failures = new ArrayList<>();
-    for (final InfoLevel infoLevel: InfoLevel.values())
-    {
-      if (infoLevel == InfoLevel.unknown)
-      {
-        continue;
-      }
-      for (final SchemaTextDetailType schemaTextDetailType: SchemaTextDetailType
-        .values())
-      {
-        final String referenceFile = schemaTextDetailType + "_" + infoLevel
-                                     + ".txt";
-
-        final File testOutputFile = File.createTempFile("schemacrawler."
-                                                            + referenceFile
-                                                            + ".",
-                                                        ".test");
-        testOutputFile.delete();
-
-        final OutputOptions outputOptions = new OutputOptions(OutputFormat.text.name(),
-                                                              testOutputFile);
-
-        final Config config = Config
-          .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
-        final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
-        schemaCrawlerOptions.setSchemaInfoLevel(infoLevel.getSchemaInfoLevel());
-        schemaCrawlerOptions.setSequenceInclusionRule(new IncludeAll());
-
-        final Executable executable = new SchemaCrawlerExecutable(schemaTextDetailType
-          .name());
-        executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-        executable.setOutputOptions(outputOptions);
-        executable.execute(getConnection());
-
-        failures.addAll(compareOutput(INFO_LEVEL_OUTPUT + referenceFile,
-                                      testOutputFile,
-                                      outputOptions.getOutputFormat().name()));
-      }
     }
     if (failures.size() > 0)
     {

@@ -58,7 +58,7 @@ public class GraphOutputOptions
     }
     catch (final IllegalArgumentException e)
     {
-      outputFormat = GraphOutputFormat.echo;
+      outputFormat = GraphOutputFormat.scdot;
     }
     return outputFormat;
   }

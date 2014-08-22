@@ -1,0 +1,205 @@
+[
+{
+  "tables": [
+    {
+      "name": "AUTHORS",
+      "columns": [],
+      "remarks": "Contact details for book authors",
+      "fullName": "PUBLIC.BOOKS.AUTHORS",
+      "type": "table"
+    },
+    {
+      "name": "BOOKAUTHORS",
+      "columns": [],
+      "remarks": "Relationship between books and their authors, along with the latest updated information",
+      "fullName": "PUBLIC.BOOKS.BOOKAUTHORS",
+      "type": "table"
+    },
+    {
+      "name": "BOOKS",
+      "columns": [],
+      "remarks": "Details for published books",
+      "fullName": "PUBLIC.BOOKS.BOOKS",
+      "type": "table"
+    },
+    {
+      "name": "\"Global Counts\"",
+      "columns": [],
+      "remarks": "",
+      "fullName": "PUBLIC.BOOKS.\"Global Counts\"",
+      "type": "table"
+    },
+    {
+      "name": "PUBLISHERS",
+      "columns": [],
+      "remarks": "List of book publishers",
+      "fullName": "PUBLIC.BOOKS.PUBLISHERS",
+      "type": "table"
+    },
+    {
+      "name": "EXTRA_PK",
+      "columns": [],
+      "remarks": "",
+      "fullName": "PUBLIC.FOR_LINT.EXTRA_PK",
+      "type": "table"
+    },
+    {
+      "name": "\"Global Counts\"",
+      "columns": [],
+      "remarks": "",
+      "fullName": "PUBLIC.FOR_LINT.\"Global Counts\"",
+      "type": "table"
+    },
+    {
+      "name": "PUBLICATIONS",
+      "columns": [],
+      "remarks": "",
+      "fullName": "PUBLIC.FOR_LINT.PUBLICATIONS",
+      "type": "table"
+    },
+    {
+      "name": "WRITERS",
+      "columns": [],
+      "remarks": "",
+      "fullName": "PUBLIC.FOR_LINT.WRITERS",
+      "type": "table"
+    },
+    {
+      "name": "REGIONS",
+      "columns": [],
+      "remarks": "",
+      "fullName": "PUBLIC.\"PUBLISHER SALES\".REGIONS",
+      "type": "table"
+    },
+    {
+      "name": "SALES",
+      "columns": [],
+      "remarks": "",
+      "fullName": "PUBLIC.\"PUBLISHER SALES\".SALES",
+      "type": "table"
+    },
+    {
+      "name": "AUTHORSLIST",
+      "columns": [],
+      "remarks": "",
+      "fullName": "PUBLIC.BOOKS.AUTHORSLIST",
+      "type": "view"
+    }
+  ],
+  "databaseInfo": {
+    "databaseProductName": "HSQL Database Engine",
+    "databaseUserName": "SA",
+    "databaseProductVersion": "2.3.2"
+  },
+  "schemaCrawlerInfo": {
+    "productVersion": "10.10.05",
+    "productName": "SchemaCrawler"
+  },
+  "jdbcDriverInfo": {
+    "isJDBCCompliant": "true",
+    "driverClassName": "org.hsqldb.jdbc.JDBCDriver",
+    "driverVersion": "2.3.2",
+    "driverName": "HSQL Database Engine Driver",
+    "url": "jdbc:hsqldb:hsql://localhost/schemacrawler"
+  },
+  "routines": [
+    {
+      "name": "CUSTOMADD",
+      "remarks": "",
+      "fullName": "PUBLIC.BOOKS.CUSTOMADD",
+      "type": "function",
+      "returnType": "does not return a table"
+    },
+    {
+      "name": "CUSTOMADD",
+      "remarks": "",
+      "fullName": "PUBLIC.BOOKS.CUSTOMADD",
+      "type": "function",
+      "returnType": "does not return a table"
+    },
+    {
+      "name": "NEW_PUBLISHER",
+      "remarks": "",
+      "fullName": "PUBLIC.BOOKS.NEW_PUBLISHER",
+      "type": "procedure",
+      "returnType": "no result"
+    },
+    {
+      "name": "NEW_PUBLISHER",
+      "remarks": "",
+      "fullName": "PUBLIC.BOOKS.NEW_PUBLISHER",
+      "type": "procedure",
+      "returnType": "no result"
+    },
+    {
+      "name": "ALLOC_BLOCKS",
+      "remarks": "",
+      "fullName": "PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS",
+      "type": "procedure",
+      "returnType": "no result"
+    },
+    {
+      "name": "ALLOC_SINGLE_BLOCK",
+      "remarks": "",
+      "fullName": "PUBLIC.SYSTEM_LOBS.ALLOC_SINGLE_BLOCK",
+      "type": "procedure",
+      "returnType": "no result"
+    },
+    {
+      "name": "CONVERT_BLOCK",
+      "remarks": "",
+      "fullName": "PUBLIC.SYSTEM_LOBS.CONVERT_BLOCK",
+      "type": "procedure",
+      "returnType": "no result"
+    },
+    {
+      "name": "CREATE_EMPTY_BLOCK",
+      "remarks": "",
+      "fullName": "PUBLIC.SYSTEM_LOBS.CREATE_EMPTY_BLOCK",
+      "type": "procedure",
+      "returnType": "no result"
+    },
+    {
+      "name": "DELETE_BLOCKS",
+      "remarks": "",
+      "fullName": "PUBLIC.SYSTEM_LOBS.DELETE_BLOCKS",
+      "type": "procedure",
+      "returnType": "no result"
+    },
+    {
+      "name": "DELETE_LOB",
+      "remarks": "",
+      "fullName": "PUBLIC.SYSTEM_LOBS.DELETE_LOB",
+      "type": "procedure",
+      "returnType": "no result"
+    },
+    {
+      "name": "DELETE_UNUSED",
+      "remarks": "",
+      "fullName": "PUBLIC.SYSTEM_LOBS.DELETE_UNUSED",
+      "type": "procedure",
+      "returnType": "no result"
+    },
+    {
+      "name": "DELETE_UNUSED_LOBS",
+      "remarks": "",
+      "fullName": "PUBLIC.SYSTEM_LOBS.DELETE_UNUSED_LOBS",
+      "type": "procedure",
+      "returnType": "no result"
+    },
+    {
+      "name": "DIVIDE_BLOCK",
+      "remarks": "",
+      "fullName": "PUBLIC.SYSTEM_LOBS.DIVIDE_BLOCK",
+      "type": "procedure",
+      "returnType": "no result"
+    },
+    {
+      "name": "MERGE_EMPTY_BLOCKS",
+      "remarks": "",
+      "fullName": "PUBLIC.SYSTEM_LOBS.MERGE_EMPTY_BLOCKS",
+      "type": "procedure",
+      "returnType": "no result"
+    }
+  ]
+}]

@@ -175,7 +175,7 @@ public final class GraphExecutable
     throws IOException
   {
 
-    if (graphOutputOptions.getGraphOutputFormat() == GraphOutputFormat.echo)
+    if (graphOutputOptions.getGraphOutputFormat() == GraphOutputFormat.scdot)
     {
       copy(dotFile.toPath(),
            graphOutputOptions.getDiagramFile().toPath(),
