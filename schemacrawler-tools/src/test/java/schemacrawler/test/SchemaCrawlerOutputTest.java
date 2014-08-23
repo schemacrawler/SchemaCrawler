@@ -36,6 +36,7 @@ import org.junit.Test;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.ExcludeAll;
 import schemacrawler.schemacrawler.IncludeAll;
+import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.test.utility.BaseDatabaseTest;
@@ -109,6 +110,8 @@ public class SchemaCrawlerOutputTest
         final Config config = Config
           .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
         final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
+        schemaCrawlerOptions
+          .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS"));
         schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
         schemaCrawlerOptions.setSequenceInclusionRule(new IncludeAll());
 
@@ -164,6 +167,8 @@ public class SchemaCrawlerOutputTest
         .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
       schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
+      schemaCrawlerOptions
+        .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS"));
       schemaCrawlerOptions.setSequenceInclusionRule(new IncludeAll());
 
       final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(SchemaTextDetailType.details
@@ -213,6 +218,8 @@ public class SchemaCrawlerOutputTest
         .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
       schemaCrawlerOptions.setSchemaInfoLevel(infoLevel.getSchemaInfoLevel());
+      schemaCrawlerOptions
+        .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS"));
       schemaCrawlerOptions.setSequenceInclusionRule(new IncludeAll());
 
       final Executable executable = new SchemaCrawlerExecutable(schemaTextDetailType
@@ -262,6 +269,8 @@ public class SchemaCrawlerOutputTest
         .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
       schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
+      schemaCrawlerOptions
+        .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS"));
       schemaCrawlerOptions.setSequenceInclusionRule(new IncludeAll());
 
       final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(SchemaTextDetailType.details
@@ -314,6 +323,8 @@ public class SchemaCrawlerOutputTest
       final Config config = Config
         .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
+      schemaCrawlerOptions
+        .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS"));
       schemaCrawlerOptions.setTableInclusionRule(new ExcludeAll());
       schemaCrawlerOptions.setRoutineInclusionRule(new IncludeAll());
       schemaCrawlerOptions.setSequenceInclusionRule(new ExcludeAll());
@@ -368,6 +379,8 @@ public class SchemaCrawlerOutputTest
         .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
       schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
+      schemaCrawlerOptions
+        .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS"));
       schemaCrawlerOptions.setSequenceInclusionRule(new IncludeAll());
 
       final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(SchemaTextDetailType.details

@@ -175,60 +175,6 @@ PUBLIC.BOOKS.NEW_PUBLISHER
 
 
 
-PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS
-------------------------------------------------------------------------
-"","[procedure, no result]"
-
-
-
-PUBLIC.SYSTEM_LOBS.ALLOC_SINGLE_BLOCK
-------------------------------------------------------------------------
-"","[procedure, no result]"
-
-
-
-PUBLIC.SYSTEM_LOBS.CONVERT_BLOCK
-------------------------------------------------------------------------
-"","[procedure, no result]"
-
-
-
-PUBLIC.SYSTEM_LOBS.CREATE_EMPTY_BLOCK
-------------------------------------------------------------------------
-"","[procedure, no result]"
-
-
-
-PUBLIC.SYSTEM_LOBS.DELETE_BLOCKS
-------------------------------------------------------------------------
-"","[procedure, no result]"
-
-
-
-PUBLIC.SYSTEM_LOBS.DELETE_LOB
-------------------------------------------------------------------------
-"","[procedure, no result]"
-
-
-
-PUBLIC.SYSTEM_LOBS.DELETE_UNUSED
-------------------------------------------------------------------------
-"","[procedure, no result]"
-
-
-
-PUBLIC.SYSTEM_LOBS.DELETE_UNUSED_LOBS
-------------------------------------------------------------------------
-"","[procedure, no result]"
-
-
-
-PUBLIC.SYSTEM_LOBS.DIVIDE_BLOCK
-------------------------------------------------------------------------
-"","[procedure, no result]"
-
-
-
 
 Sequences
 ========================================================================
@@ -236,10 +182,6 @@ Sequences
 
 
 PUBLIC.BOOKS.PUBLISHER_ID_SEQ,[sequence]
-
-
-
-PUBLIC.SYSTEM_LOBS.LOB_ID,[sequence]
 
 
 
