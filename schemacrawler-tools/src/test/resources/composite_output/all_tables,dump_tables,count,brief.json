@@ -3132,16 +3132,10 @@
       "type": "table"
     }
   ],
-  "sequences": [
-    {
-      "name": "PUBLISHER_ID_SEQ",
-      "fullName": "PUBLIC.BOOKS.PUBLISHER_ID_SEQ"
-    },
-    {
-      "name": "LOB_ID",
-      "fullName": "PUBLIC.SYSTEM_LOBS.LOB_ID"
-    }
-  ],
+  "sequences": {
+    "name": "PUBLISHER_ID_SEQ",
+    "fullName": "PUBLIC.BOOKS.PUBLISHER_ID_SEQ"
+  },
   "routines": [
     {
       "name": "CUSTOMADD",
@@ -3168,69 +3162,6 @@
       "name": "NEW_PUBLISHER",
       "remarks": "",
       "fullName": "PUBLIC.BOOKS.NEW_PUBLISHER",
-      "type": "procedure",
-      "returnType": "no result"
-    },
-    {
-      "name": "ALLOC_BLOCKS",
-      "remarks": "",
-      "fullName": "PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS",
-      "type": "procedure",
-      "returnType": "no result"
-    },
-    {
-      "name": "ALLOC_SINGLE_BLOCK",
-      "remarks": "",
-      "fullName": "PUBLIC.SYSTEM_LOBS.ALLOC_SINGLE_BLOCK",
-      "type": "procedure",
-      "returnType": "no result"
-    },
-    {
-      "name": "CONVERT_BLOCK",
-      "remarks": "",
-      "fullName": "PUBLIC.SYSTEM_LOBS.CONVERT_BLOCK",
-      "type": "procedure",
-      "returnType": "no result"
-    },
-    {
-      "name": "CREATE_EMPTY_BLOCK",
-      "remarks": "",
-      "fullName": "PUBLIC.SYSTEM_LOBS.CREATE_EMPTY_BLOCK",
-      "type": "procedure",
-      "returnType": "no result"
-    },
-    {
-      "name": "DELETE_BLOCKS",
-      "remarks": "",
-      "fullName": "PUBLIC.SYSTEM_LOBS.DELETE_BLOCKS",
-      "type": "procedure",
-      "returnType": "no result"
-    },
-    {
-      "name": "DELETE_LOB",
-      "remarks": "",
-      "fullName": "PUBLIC.SYSTEM_LOBS.DELETE_LOB",
-      "type": "procedure",
-      "returnType": "no result"
-    },
-    {
-      "name": "DELETE_UNUSED",
-      "remarks": "",
-      "fullName": "PUBLIC.SYSTEM_LOBS.DELETE_UNUSED",
-      "type": "procedure",
-      "returnType": "no result"
-    },
-    {
-      "name": "DELETE_UNUSED_LOBS",
-      "remarks": "",
-      "fullName": "PUBLIC.SYSTEM_LOBS.DELETE_UNUSED_LOBS",
-      "type": "procedure",
-      "returnType": "no result"
-    },
-    {
-      "name": "DIVIDE_BLOCK",
-      "remarks": "",
-      "fullName": "PUBLIC.SYSTEM_LOBS.DIVIDE_BLOCK",
       "type": "procedure",
       "returnType": "no result"
     }
