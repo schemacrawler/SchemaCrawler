@@ -10,7 +10,7 @@ BOOKS
 ------------------------------------------------------------------------
                                                                  [table]
 Details for published books
-  ID                                INTEGER not null            
+  ID                                INTEGER NOT NULL            
                                     Unique (internal) id for book
   PREVIOUSEDITIONID                 INTEGER                     
 
@@ -26,7 +26,7 @@ PUBLISHERS
 ------------------------------------------------------------------------
                                                                  [table]
 List of book publishers
-  ID                                INTEGER not null            
+  ID                                INTEGER NOT NULL            
                                     Unique (internal) id for book publisher
 
 
@@ -40,15 +40,15 @@ List of book publishers
 WRITERS
 ------------------------------------------------------------------------
                                                                  [table]
-  ID                                BIGINT not null             
-  FIRSTNAME                         VARCHAR(20) not null        
-  LASTNAME                          VARCHAR(20) not null        
+  ID                                BIGINT NOT NULL             
+  FIRSTNAME                         VARCHAR(20) NOT NULL        
+  LASTNAME                          VARCHAR(20) NOT NULL        
   CITY                              VARCHAR(50)                 
   STATE                             VARCHAR(2)                  
   POSTALCODE                        VARCHAR(10)                 
   COUNTRY                           VARCHAR(50)                 
   EMAIL1                            VARCHAR(10)                 
-  PUBLICATION_ID                    BIGINT not null             
+  PUBLICATION_ID                    BIGINT NOT NULL             
 
 
 

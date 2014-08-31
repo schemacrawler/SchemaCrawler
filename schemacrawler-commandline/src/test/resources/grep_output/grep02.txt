@@ -10,9 +10,9 @@ PUBLIC.BOOKS.AUTHORS
 ------------------------------------------------------------------------
                                                                  [table]
 Contact details for book authors
-  ID                                INTEGER not null            
-  FIRSTNAME                         VARCHAR(20) not null        
-  LASTNAME                          VARCHAR(20) not null        
+  ID                                INTEGER NOT NULL            
+  FIRSTNAME                         VARCHAR(20) NOT NULL        
+  LASTNAME                          VARCHAR(20) NOT NULL        
   ADDRESS1                          VARCHAR(255)                
   ADDRESS2                          VARCHAR(255)                
   CITY                              VARCHAR(50)                 
@@ -71,11 +71,11 @@ SELECT ID,FIRSTNAME,LASTNAME FROM BOOKS.AUTHORS
 PUBLIC.FOR_LINT.WRITERS
 ------------------------------------------------------------------------
                                                                  [table]
-  ID                                BIGINT not null             
-  FIRSTNAME                         VARCHAR(20) not null        
-  LASTNAME                          VARCHAR(20) not null        
+  ID                                BIGINT NOT NULL             
+  FIRSTNAME                         VARCHAR(20) NOT NULL        
+  LASTNAME                          VARCHAR(20) NOT NULL        
   ADDRESS1                          VARCHAR(255)                
-  ADDRESS2                          VARCHAR(255) not null       
+  ADDRESS2                          VARCHAR(255) NOT NULL       
   CITY                              VARCHAR(50)                 
   STATE                             VARCHAR(2)                  
   POSTALCODE                        VARCHAR(10)                 
@@ -88,7 +88,7 @@ PUBLIC.FOR_LINT.WRITERS
   FAX3                              INTEGER                     
   HOMEEMAIL11                       VARCHAR(10)                 
   HOMEEMAIL12                       VARCHAR(10)                 
-  PUBLICATION_ID                    BIGINT not null             
+  PUBLICATION_ID                    BIGINT NOT NULL             
 
 PK_WRITERS                                                 [primary key]
   ID                                ascending                   

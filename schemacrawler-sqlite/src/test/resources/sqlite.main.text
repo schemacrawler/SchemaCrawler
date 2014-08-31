@@ -27,7 +27,7 @@ JDBC Driver Information
 driver name                               SQLiteJDBC                    
 driver version                            native                        
 driver class name                         org.sqlite.JDBC               
-url                                       jdbc:sqlite:C:\Users\SUALEH~1\AppData\Local\Temp\SchemaCrawler4086642381817693122.dat
+url                                       jdbc:sqlite:C:\Users\SUALEH~1\AppData\Local\Temp\SchemaCrawler6910989603752972800.dat
 is JDBC compliant                         false                         
 
 
@@ -150,9 +150,9 @@ Tables
 Authors
 ------------------------------------------------------------------------
                                                                  [table]
-  Id                                INTEGER not null            
-  FirstName                         VARCHAR(20) not null        
-  LastName                          VARCHAR(20) not null        
+  Id                                INTEGER NOT NULL            
+  FirstName                         VARCHAR(20) NOT NULL        
+  LastName                          VARCHAR(20) NOT NULL        
   Address1                          VARCHAR(255)                
   Address2                          VARCHAR(255)                
   City                              VARCHAR(50)                 
@@ -187,10 +187,10 @@ END
 Books
 ------------------------------------------------------------------------
                                                                  [table]
-  Id                                INTEGER not null            
-  Title                             VARCHAR(255) not null       
+  Id                                INTEGER NOT NULL            
+  Title                             VARCHAR(255) NOT NULL       
   Description                       VARCHAR(255)                
-  PublisherId                       INTEGER not null            
+  PublisherId                       INTEGER NOT NULL            
   PublicationDate                   DATE                        
   Price                             FLOAT                       
 
@@ -212,7 +212,7 @@ SC_7B63FF1F_ED9945D3                       [foreign key, with no action]
 Publishers
 ------------------------------------------------------------------------
                                                                  [table]
-  Id                                INTEGER not null            
+  Id                                INTEGER NOT NULL            
   Publisher                         VARCHAR(255)                
 
 PK_Publishers                                              [primary key]
@@ -223,8 +223,8 @@ PK_Publishers                                              [primary key]
 BookAuthors
 ------------------------------------------------------------------------
                                                                  [table]
-  BookId                            INTEGER not null            
-  AuthorId                          INTEGER not null            
+  BookId                            INTEGER NOT NULL            
+  AuthorId                          INTEGER NOT NULL            
   "UPDATE"                          CLOB                        
 
 SC_1D623CC1_CA52CC35                       [foreign key, with no action]

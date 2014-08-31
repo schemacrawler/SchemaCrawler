@@ -42,19 +42,6 @@ import java.util.regex.Pattern;
 public final class Utility
 {
 
-  private static final Logger LOGGER = Logger
-    .getLogger(Utility.class.getName());
-
-  /**
-   * System specific line separator character.
-   */
-  public static final String NEWLINE = System.getProperty("line.separator");
-
-  private static final Pattern containsWhitespacePattern = Pattern
-    .compile(".*\\s.*");
-  private static final Pattern isAllWhitespacePattern = Pattern
-    .compile("^\\s*$");
-
   public static String commonPrefix(final String string1, final String string2)
   {
     final int index = indexOfDifference(string1, string2);
@@ -121,6 +108,18 @@ public final class Utility
   {
     return text == null || text.isEmpty()
            || isAllWhitespacePattern.matcher(text).matches();
+  }
+
+  /**
+   * Checks if the text is all lowercase.
+   *
+   * @param text
+   *        Text to check.
+   * @return Whether the string is all lowercase.
+   */
+  public static boolean isLowerCase(final String text)
+  {
+    return text != null && text.equals(text.toLowerCase());
   }
 
   public static String readFully(final InputStream stream)
@@ -234,6 +233,20 @@ public final class Utility
     }
     return -1;
   }
+
+  private static final Logger LOGGER = Logger
+    .getLogger(Utility.class.getName());
+
+  /**
+   * System specific line separator character.
+   */
+  public static final String NEWLINE = System.getProperty("line.separator");
+
+  private static final Pattern containsWhitespacePattern = Pattern
+    .compile(".*\\s.*");
+
+  private static final Pattern isAllWhitespacePattern = Pattern
+    .compile("^\\s*$");
 
   private Utility()
   { // Prevent instantiation

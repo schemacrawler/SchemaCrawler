@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -36,7 +36,7 @@ import sf.util.ObjectToString;
 
 /**
  * Text formatting of schema.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public abstract class BaseTabularFormatter<O extends BaseTextOptions>
@@ -53,7 +53,7 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions>
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.tools.traversal.DataTraversalHandler#begin()
    */
   @Override
@@ -67,7 +67,7 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions>
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.tools.traversal.SchemaTraversalHandler#end()
    */
   @Override
