@@ -26,7 +26,7 @@ import org.apache.tools.ant.BuildFileTest;
 import org.apache.tools.ant.Project;
 import org.junit.Test;
 
-import schemacrawler.test.utility.TestDatabaseUtility;
+import schemacrawler.test.utility.TestDatabase;
 import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.options.OutputFormat;
 
@@ -42,15 +42,14 @@ public class AntSpringTaskTest
   {
     final File buildFile = TestUtility.copyResourceToTempFile("/build.xml");
     configureProject(buildFile.getAbsolutePath());
+
+    TestDatabase.initialize();
   }
 
   @Test
   public void testAntTask()
     throws Exception
   {
-
-    TestDatabaseUtility.initialize();
-
     final String referenceFile = "ant_task_test.txt";
     final File testOutputFile = new File("scOutput.txt");
     testOutputFile.delete();

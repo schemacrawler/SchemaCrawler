@@ -30,7 +30,7 @@ digraph "SchemaCrawler_Diagram" {
 	</tr>
 	<tr>
 		<td align='right'>Generated on:</td>
-		<td align='left'>Aug 22, 2014 10:55 PM</td>
+		<td align='left'>Aug 31, 2014 4:43 PM</td>
 	</tr>
 	<tr>
 		<td align='right'>Database:</td>
@@ -59,17 +59,17 @@ digraph "SchemaCrawler_Diagram" {
 	<tr>
 		<td port='id_ecfc5f6a.start' align='left'><b><i>ID</i></b></td>
 		<td align='left'> </td>
-		<td port='id_ecfc5f6a.end' align='left'>INTEGER not null</td>
+		<td port='id_ecfc5f6a.end' align='left'>INTEGER NOT NULL</td>
 	</tr>
 	<tr>
 		<td port='firstname_212547ec.start' align='left'>FIRSTNAME</td>
 		<td align='left'> </td>
-		<td port='firstname_212547ec.end' align='left'>VARCHAR(20) not null</td>
+		<td port='firstname_212547ec.end' align='left'>VARCHAR(20) NOT NULL</td>
 	</tr>
 	<tr>
 		<td port='lastname_c2a4e130.start' align='left'>LASTNAME</td>
 		<td align='left'> </td>
-		<td port='lastname_c2a4e130.end' align='left'>VARCHAR(20) not null</td>
+		<td port='lastname_c2a4e130.end' align='left'>VARCHAR(20) NOT NULL</td>
 	</tr>
 	<tr>
 		<td port='city_9f5f8ffa.start' align='left'>CITY</td>
@@ -125,12 +125,12 @@ digraph "SchemaCrawler_Diagram" {
 	<tr>
 		<td port='bookid_931bd73c.start' align='left'>BOOKID</td>
 		<td align='left'> </td>
-		<td port='bookid_931bd73c.end' align='left'>INTEGER not null</td>
+		<td port='bookid_931bd73c.end' align='left'>INTEGER NOT NULL</td>
 	</tr>
 	<tr>
 		<td port='authorid_19681b5e.start' align='left'>AUTHORID</td>
 		<td align='left'> </td>
-		<td port='authorid_19681b5e.end' align='left'>INTEGER not null</td>
+		<td port='authorid_19681b5e.end' align='left'>INTEGER NOT NULL</td>
 	</tr>
       </table>
     >
@@ -152,7 +152,7 @@ digraph "SchemaCrawler_Diagram" {
 	<tr>
 		<td port='id_bb8abc08.start' align='left'><b><i>ID</i></b></td>
 		<td align='left'> </td>
-		<td port='id_bb8abc08.end' align='left'>INTEGER not null</td>
+		<td port='id_bb8abc08.end' align='left'>INTEGER NOT NULL</td>
 	</tr>
 	<tr>
 		<td align='left'></td>
@@ -198,7 +198,7 @@ digraph "SchemaCrawler_Diagram" {
 	<tr>
 		<td port='id_6fc9dd09.start' align='left'><b><i>ID</i></b></td>
 		<td align='left'> </td>
-		<td port='id_6fc9dd09.end' align='left'>INTEGER not null</td>
+		<td port='id_6fc9dd09.end' align='left'>INTEGER NOT NULL</td>
 	</tr>
 	<tr>
 		<td align='left'></td>
@@ -222,17 +222,17 @@ digraph "SchemaCrawler_Diagram" {
 	<tr>
 		<td port='id_e9913eaf.start' align='left'><b><i>ID</i></b></td>
 		<td align='left'> </td>
-		<td port='id_e9913eaf.end' align='left'>INTEGER not null</td>
+		<td port='id_e9913eaf.end' align='left'>INTEGER NOT NULL</td>
 	</tr>
 	<tr>
 		<td port='writerid_b8c70762.start' align='left'>WRITERID</td>
 		<td align='left'> </td>
-		<td port='writerid_b8c70762.end' align='left'>BIGINT not null</td>
+		<td port='writerid_b8c70762.end' align='left'>BIGINT NOT NULL</td>
 	</tr>
 	<tr>
 		<td port='publicationid_d4d93213.start' align='left'>PUBLICATIONID</td>
 		<td align='left'> </td>
-		<td port='publicationid_d4d93213.end' align='left'>INTEGER not null</td>
+		<td port='publicationid_d4d93213.end' align='left'>INTEGER NOT NULL</td>
 	</tr>
       </table>
     >
@@ -265,12 +265,12 @@ digraph "SchemaCrawler_Diagram" {
 	<tr>
 		<td port='id_f5162672.start' align='left'><b><i>ID</i></b></td>
 		<td align='left'> </td>
-		<td port='id_f5162672.end' align='left'>INTEGER not null</td>
+		<td port='id_f5162672.end' align='left'>INTEGER NOT NULL</td>
 	</tr>
 	<tr>
 		<td port='writerid_1c21d0e5.start' align='left'>WRITERID</td>
 		<td align='left'> </td>
-		<td port='writerid_1c21d0e5.end' align='left'>BIGINT not null</td>
+		<td port='writerid_1c21d0e5.end' align='left'>BIGINT NOT NULL</td>
 	</tr>
       </table>
     >
@@ -289,17 +289,17 @@ digraph "SchemaCrawler_Diagram" {
 	<tr>
 		<td port='id_3033cfb9.start' align='left'><b><i>ID</i></b></td>
 		<td align='left'> </td>
-		<td port='id_3033cfb9.end' align='left'>BIGINT not null</td>
+		<td port='id_3033cfb9.end' align='left'>BIGINT NOT NULL</td>
 	</tr>
 	<tr>
 		<td port='firstname_b42cb0bd.start' align='left'>FIRSTNAME</td>
 		<td align='left'> </td>
-		<td port='firstname_b42cb0bd.end' align='left'>VARCHAR(20) not null</td>
+		<td port='firstname_b42cb0bd.end' align='left'>VARCHAR(20) NOT NULL</td>
 	</tr>
 	<tr>
 		<td port='lastname_8d949a3f.start' align='left'>LASTNAME</td>
 		<td align='left'> </td>
-		<td port='lastname_8d949a3f.end' align='left'>VARCHAR(20) not null</td>
+		<td port='lastname_8d949a3f.end' align='left'>VARCHAR(20) NOT NULL</td>
 	</tr>
 	<tr>
 		<td port='city_f27c2889.start' align='left'>CITY</td>
@@ -329,7 +329,7 @@ digraph "SchemaCrawler_Diagram" {
 	<tr>
 		<td port='publication_id_b1bcb5cc.start' align='left'>PUBLICATION_ID</td>
 		<td align='left'> </td>
-		<td port='publication_id_b1bcb5cc.end' align='left'>BIGINT not null</td>
+		<td port='publication_id_b1bcb5cc.end' align='left'>BIGINT NOT NULL</td>
 	</tr>
       </table>
     >
@@ -348,12 +348,12 @@ digraph "SchemaCrawler_Diagram" {
 	<tr>
 		<td port='postalcode_9b2bfe9e.start' align='left'><b><i>POSTALCODE</i></b></td>
 		<td align='left'> </td>
-		<td port='postalcode_9b2bfe9e.end' align='left'>VARCHAR(10) not null</td>
+		<td port='postalcode_9b2bfe9e.end' align='left'>VARCHAR(10) NOT NULL</td>
 	</tr>
 	<tr>
 		<td port='country_7d0587d0.start' align='left'><b><i>COUNTRY</i></b></td>
 		<td align='left'> </td>
-		<td port='country_7d0587d0.end' align='left'>VARCHAR(50) not null</td>
+		<td port='country_7d0587d0.end' align='left'>VARCHAR(50) NOT NULL</td>
 	</tr>
       </table>
     >
@@ -372,12 +372,12 @@ digraph "SchemaCrawler_Diagram" {
 	<tr>
 		<td port='postalcode_738bc931.start' align='left'>POSTALCODE</td>
 		<td align='left'> </td>
-		<td port='postalcode_738bc931.end' align='left'>VARCHAR(10) not null</td>
+		<td port='postalcode_738bc931.end' align='left'>VARCHAR(10) NOT NULL</td>
 	</tr>
 	<tr>
 		<td port='country_890cfe1d.start' align='left'>COUNTRY</td>
 		<td align='left'> </td>
-		<td port='country_890cfe1d.end' align='left'>VARCHAR(50) not null</td>
+		<td port='country_890cfe1d.end' align='left'>VARCHAR(50) NOT NULL</td>
 	</tr>
       </table>
     >

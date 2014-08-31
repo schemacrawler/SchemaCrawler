@@ -38,6 +38,8 @@ import org.junit.runner.JUnitCore;
 
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.tools.options.InfoLevel;
+import schemacrawler.tools.text.schema.SchemaTextDetailType;
 
 public class GraphVariations
   extends BaseDatabaseTest
@@ -144,6 +146,34 @@ public class GraphVariations
     final Map<String, String> config = new HashMap<>();
 
     run(args, config, new File(directory, currentMethodName() + ".png"));
+  }
+
+  @Test
+  public void spinThroughMain()
+    throws Exception
+  {
+    for (final InfoLevel infoLevel: InfoLevel.values())
+    {
+      if (infoLevel == InfoLevel.unknown)
+      {
+        continue;
+      }
+      for (final SchemaTextDetailType schemaTextDetailType: SchemaTextDetailType
+        .values())
+      {
+        final Map<String, String> args = new HashMap<String, String>();
+        args.put("infolevel", infoLevel.toString());
+        args.put("command", schemaTextDetailType.toString());
+
+        final Map<String, String> config = new HashMap<>();
+
+        run(args,
+            config,
+            new File(directory, String.format("diagram_%s_%s.png",
+                                              schemaTextDetailType,
+                                              infoLevel)));
+      }
+    }
   }
 
   @Before

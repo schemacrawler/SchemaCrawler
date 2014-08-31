@@ -1,6 +1,8 @@
 package schemacrawler.tools.text.base;
 
 
+import static sf.util.Utility.isLowerCase;
+
 import java.io.PrintWriter;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -54,6 +56,13 @@ public abstract class BaseFormatter<O extends BaseTextOptions>
 
     out = new PrintWriter(new OutputWriter(outputOptions,
                                            options.isAppendOutput()), true);
+  }
+
+  protected String columnNullable(final String columnTypeName,
+                                  final boolean isNullable)
+  {
+    return isNullable? "": isLowerCase(columnTypeName)? " not null"
+                                                      : " NOT NULL";
   }
 
 }

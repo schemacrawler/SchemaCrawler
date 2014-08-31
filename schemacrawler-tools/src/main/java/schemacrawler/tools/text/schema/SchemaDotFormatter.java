@@ -479,7 +479,8 @@ public final class SchemaDotFormatter
           .getJavaSqlTypeName();
       }
       final String columnType = columnTypeName + column.getWidth();
-      final String nullable = column.isNullable()? "": " not null";
+      final String nullable = columnNullable(columnTypeName,
+                                             column.isNullable());
       final String columnDetails = columnType + nullable;
       final boolean emphasize = column.isPartOfPrimaryKey();
 

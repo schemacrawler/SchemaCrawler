@@ -42,7 +42,7 @@ import schemacrawler.tools.text.utility.org.json.JSONObject;
 
 /**
  * Text formatting of schema.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public abstract class BaseJsonFormatter<O extends BaseTextOptions>

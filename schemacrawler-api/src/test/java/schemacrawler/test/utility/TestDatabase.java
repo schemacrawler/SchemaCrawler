@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -41,44 +41,37 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 
 /**
  * Sets up a database schema for tests and examples.
- * 
+ *
  * @author sfatehi
  */
 public class TestDatabase
 {
 
-  private static final Logger LOGGER = Logger.getLogger(TestDatabase.class
-    .getName());
-
-  private static final String serverFileStem = "hsqldb.schemacrawler";
+  public static void initialize()
+  {
+    if (!initialized)
+    {
+      run(false);
+      initialized = true;
+    }
+  }
 
   /**
    * Starts up a test database in server mode.
-   * 
+   *
    * @param args
    *        Command line arguments
    * @throws Exception
    *         Exception
    */
   public static void main(final String[] args)
-    throws Exception
   {
-    final TestDatabase testDatabase = new TestDatabase("jdbc:hsqldb:hsql://localhost/schemacrawler");
-    testDatabase.trace = true;
-    Runtime.getRuntime().addShutdownHook(new Thread()
-    {
-      @Override
-      public void run()
-      {
-        testDatabase.stop();
-      }
-    });
-    testDatabase.start();
+    run(true);
   }
 
   /**
    * Delete files from the previous run of the database server.
-   * 
+   *
    * @param stem
    *        File stem
    */
@@ -111,17 +104,49 @@ public class TestDatabase
     }
   }
 
-  private final String url;
-  private boolean trace;
+  private static void run(final boolean trace)
+  {
+    try
+    {
+      final TestDatabase testDatabase = new TestDatabase(CONNECTION_STRING,
+                                                         trace);
+      Runtime.getRuntime().addShutdownHook(new Thread()
+      {
+        @Override
+        public void run()
+        {
+          testDatabase.stop();
+        }
+      });
+      testDatabase.start();
+    }
+    catch (final Exception e)
+    {
+      e.printStackTrace();
+      System.exit(1);
+    }
+  }
 
-  public TestDatabase(final String url)
+  private static final Logger LOGGER = Logger.getLogger(TestDatabase.class
+    .getName());
+
+  public static final String CONNECTION_STRING = "jdbc:hsqldb:hsql://localhost/schemacrawler";
+  private static final String serverFileStem = "hsqldb.schemacrawler";
+
+  public static boolean initialized;
+
+  private final String url;
+  private final boolean trace;
+
+  public TestDatabase(final String url, final boolean trace)
   {
     this.url = url;
+    this.trace = trace;
   }
 
   /**
    * Load driver, and create database, schema and data.
-   * 
+   *
    * @throws SchemaCrawlerException
    *         On an exception
    */

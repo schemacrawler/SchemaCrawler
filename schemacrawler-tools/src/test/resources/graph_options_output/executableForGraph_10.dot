@@ -30,7 +30,7 @@ digraph "SchemaCrawler_Diagram" {
 	</tr>
 	<tr>
 		<td align='right'>Generated on:</td>
-		<td align='left'>Aug 9, 2014 10:57 PM</td>
+		<td align='left'>Aug 31, 2014 4:38 PM</td>
 	</tr>
 	<tr>
 		<td align='right'>Database:</td>
@@ -56,22 +56,22 @@ digraph "SchemaCrawler_Diagram" {
 	<tr>
 		<td port='city_2c74db51.start' align='left'>CITY</td>
 		<td align='left'> </td>
-		<td port='city_2c74db51.end' align='left'>VARCHAR(50) not null</td>
+		<td port='city_2c74db51.end' align='left'>VARCHAR(50) NOT NULL</td>
 	</tr>
 	<tr>
 		<td port='state_630cbf4b.start' align='left'>STATE</td>
 		<td align='left'> </td>
-		<td port='state_630cbf4b.end' align='left'>VARCHAR(2) not null</td>
+		<td port='state_630cbf4b.end' align='left'>VARCHAR(2) NOT NULL</td>
 	</tr>
 	<tr>
 		<td port='postalcode_9b2bfe9e.start' align='left'><b><i>POSTALCODE</i></b></td>
 		<td align='left'> </td>
-		<td port='postalcode_9b2bfe9e.end' align='left'>VARCHAR(10) not null</td>
+		<td port='postalcode_9b2bfe9e.end' align='left'>VARCHAR(10) NOT NULL</td>
 	</tr>
 	<tr>
 		<td port='country_7d0587d0.start' align='left'><b><i>COUNTRY</i></b></td>
 		<td align='left'> </td>
-		<td port='country_7d0587d0.end' align='left'>VARCHAR(50) not null</td>
+		<td port='country_7d0587d0.end' align='left'>VARCHAR(50) NOT NULL</td>
 	</tr>
       </table>
     >

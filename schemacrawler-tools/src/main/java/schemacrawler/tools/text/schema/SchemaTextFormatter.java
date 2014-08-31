@@ -782,15 +782,20 @@ final class SchemaTextFormatter
       }
       else
       {
-        String columnTypeName = column.getColumnDataType()
-          .getDatabaseSpecificTypeName();
+        final String columnTypeName;
         if (options.isShowStandardColumnTypeNames())
         {
           columnTypeName = column.getColumnDataType().getJavaSqlType()
             .getJavaSqlTypeName();
         }
+        else
+        {
+          columnTypeName = column.getColumnDataType()
+            .getDatabaseSpecificTypeName();
+        }
         final String columnType = columnTypeName + column.getWidth();
-        final String nullable = column.isNullable()? "": " not null";
+        final String nullable = columnNullable(columnTypeName,
+                                               column.isNullable());
         columnDetails = columnType + nullable;
       }
 

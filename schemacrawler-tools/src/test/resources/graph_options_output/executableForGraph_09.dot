@@ -30,7 +30,7 @@ digraph "SchemaCrawler_Diagram" {
 	</tr>
 	<tr>
 		<td align='right'>Generated on:</td>
-		<td align='left'>Aug 9, 2014 10:57 PM</td>
+		<td align='left'>Aug 31, 2014 4:38 PM</td>
 	</tr>
 	<tr>
 		<td align='right'>Database:</td>
@@ -59,7 +59,7 @@ digraph "SchemaCrawler_Diagram" {
 	<tr>
 		<td port='id_bb8abc08.start' align='left'><b><i>ID</i></b></td>
 		<td align='left'> </td>
-		<td port='id_bb8abc08.end' align='left'>INTEGER not null</td>
+		<td port='id_bb8abc08.end' align='left'>INTEGER NOT NULL</td>
 	</tr>
 	<tr>
 		<td align='left'></td>
@@ -69,7 +69,7 @@ digraph "SchemaCrawler_Diagram" {
 	<tr>
 		<td port='title_764df42b.start' align='left'>TITLE</td>
 		<td align='left'> </td>
-		<td port='title_764df42b.end' align='left'>VARCHAR(255) not null</td>
+		<td port='title_764df42b.end' align='left'>VARCHAR(255) NOT NULL</td>
 	</tr>
 	<tr>
 		<td align='left'></td>
@@ -89,7 +89,7 @@ digraph "SchemaCrawler_Diagram" {
 	<tr>
 		<td port='publisherid_3413fbaa.start' align='left'>PUBLISHERID</td>
 		<td align='left'> </td>
-		<td port='publisherid_3413fbaa.end' align='left'>INTEGER not null</td>
+		<td port='publisherid_3413fbaa.end' align='left'>INTEGER NOT NULL</td>
 	</tr>
 	<tr>
 		<td align='left'></td>
