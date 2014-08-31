@@ -50,7 +50,7 @@ public abstract class BaseDatabaseTest
   static
   {
     connectionOptions = createConnectionOptions();
-    TestDatabaseUtility.initialize();
+    TestDatabase.initialize();
   }
 
   @BeforeClass
@@ -84,7 +84,7 @@ public abstract class BaseDatabaseTest
     try
     {
       final DatabaseConnectionOptions connectionOptions = new DatabaseConnectionOptions("org.hsqldb.jdbc.JDBCDriver",
-                                                                                        TestDatabaseUtility.url);
+                                                                                        TestDatabase.CONNECTION_STRING);
       connectionOptions.setUser("sa");
       connectionOptions.setPassword("");
 

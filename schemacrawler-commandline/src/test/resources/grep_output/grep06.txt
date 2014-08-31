@@ -10,9 +10,9 @@ PUBLIC.BOOKS.AUTHORS
 ------------------------------------------------------------------------
                                                                  [table]
 Contact details for book authors
-  ID                                INTEGER not null            
-  FIRSTNAME                         VARCHAR(20) not null        
-  LASTNAME                          VARCHAR(20) not null        
+  ID                                INTEGER NOT NULL            
+  FIRSTNAME                         VARCHAR(20) NOT NULL        
+  LASTNAME                          VARCHAR(20) NOT NULL        
   ADDRESS1                          VARCHAR(255)                
   ADDRESS2                          VARCHAR(255)                
   CITY                              VARCHAR(50)                 
@@ -60,13 +60,13 @@ PUBLIC.BOOKS.BOOKS
 ------------------------------------------------------------------------
                                                                  [table]
 Details for published books
-  ID                                INTEGER not null            
+  ID                                INTEGER NOT NULL            
                                     Unique (internal) id for book
-  TITLE                             VARCHAR(255) not null       
+  TITLE                             VARCHAR(255) NOT NULL       
                                     Book title                  
   DESCRIPTION                       VARCHAR(255)                
                                     Book description            
-  PUBLISHERID                       INTEGER not null            
+  PUBLISHERID                       INTEGER NOT NULL            
                                     Foreign key to the book publisher
   PUBLICATIONDATE                   DATE                        
                                     Book publication date       
@@ -106,10 +106,10 @@ BOOKS.BOOKS.PUBLISHERID IS NOT NULL
 PUBLIC.FOR_LINT.PUBLICATIONS
 ------------------------------------------------------------------------
                                                                  [table]
-  ID                                INTEGER not null            
-  TITLE                             VARCHAR(255) not null       
+  ID                                INTEGER NOT NULL            
+  TITLE                             VARCHAR(255) NOT NULL       
   DESCRIPTION                       VARCHAR(255)                
-  WRITERID                          BIGINT not null             
+  WRITERID                          BIGINT NOT NULL             
   PUBLICATIONDATE                   DATE                        
   PRICE                             DOUBLE(64, 0)               
   "UPDATE"                          CLOB                        

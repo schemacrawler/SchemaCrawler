@@ -426,9 +426,9 @@ PUBLIC.BOOKS.AUTHORS
 ------------------------------------------------------------------------
                                                                  [table]
 Contact details for book authors
-  ID                                INTEGER not null            
-  FIRSTNAME                         VARCHAR(20) not null        
-  LASTNAME                          VARCHAR(20) not null        
+  ID                                INTEGER NOT NULL            
+  FIRSTNAME                         VARCHAR(20) NOT NULL        
+  LASTNAME                          VARCHAR(20) NOT NULL        
   ADDRESS1                          VARCHAR(255)                
   ADDRESS2                          VARCHAR(255)                
   CITY                              VARCHAR(50)                 
@@ -524,8 +524,8 @@ PUBLIC.BOOKS.BOOKAUTHORS
 ------------------------------------------------------------------------
                                                                  [table]
 Relationship between books and their authors, along with the latest updated information
-  BOOKID                            INTEGER not null            
-  AUTHORID                          INTEGER not null            
+  BOOKID                            INTEGER NOT NULL            
+  AUTHORID                          INTEGER NOT NULL            
   "UPDATE"                          CLOB                        
 
 FK_Z_AUTHOR                                [foreign key, with no action]
@@ -574,13 +574,13 @@ PUBLIC.BOOKS.BOOKS
 ------------------------------------------------------------------------
                                                                  [table]
 Details for published books
-  ID                                INTEGER not null            
+  ID                                INTEGER NOT NULL            
                                     Unique (internal) id for book
-  TITLE                             VARCHAR(255) not null       
+  TITLE                             VARCHAR(255) NOT NULL       
                                     Book title                  
   DESCRIPTION                       VARCHAR(255)                
                                     Book description            
-  PUBLISHERID                       INTEGER not null            
+  PUBLISHERID                       INTEGER NOT NULL            
                                     Foreign key to the book publisher
   PUBLICATIONDATE                   DATE                        
                                     Book publication date       
@@ -670,7 +670,7 @@ PUBLIC.BOOKS.PUBLISHERS
 ------------------------------------------------------------------------
                                                                  [table]
 List of book publishers
-  ID                                INTEGER not null            
+  ID                                INTEGER NOT NULL            
                                     Unique (internal) id for book publisher
   PUBLISHER                         VARCHAR(255)                
                                     Name of book publisher      
@@ -707,9 +707,9 @@ UPDATE                                                       [privilege]
 PUBLIC.FOR_LINT.EXTRA_PK
 ------------------------------------------------------------------------
                                                                  [table]
-  ID                                INTEGER not null            
-  WRITERID                          BIGINT not null             
-  PUBLICATIONID                     INTEGER not null            
+  ID                                INTEGER NOT NULL            
+  WRITERID                          BIGINT NOT NULL             
+  PUBLICATIONID                     INTEGER NOT NULL            
 
 PK_EXTRA_PK                                                [primary key]
   ID                                ascending                   
@@ -786,10 +786,10 @@ UPDATE                                                       [privilege]
 PUBLIC.FOR_LINT.PUBLICATIONS
 ------------------------------------------------------------------------
                                                                  [table]
-  ID                                INTEGER not null            
-  TITLE                             VARCHAR(255) not null       
+  ID                                INTEGER NOT NULL            
+  TITLE                             VARCHAR(255) NOT NULL       
   DESCRIPTION                       VARCHAR(255)                
-  WRITERID                          BIGINT not null             
+  WRITERID                          BIGINT NOT NULL             
   PUBLICATIONDATE                   DATE                        
   PRICE                             DOUBLE(64, 0)               
   "UPDATE"                          CLOB                        
@@ -845,11 +845,11 @@ UPDATE                                                       [privilege]
 PUBLIC.FOR_LINT.WRITERS
 ------------------------------------------------------------------------
                                                                  [table]
-  ID                                BIGINT not null             
-  FIRSTNAME                         VARCHAR(20) not null        
-  LASTNAME                          VARCHAR(20) not null        
+  ID                                BIGINT NOT NULL             
+  FIRSTNAME                         VARCHAR(20) NOT NULL        
+  LASTNAME                          VARCHAR(20) NOT NULL        
   ADDRESS1                          VARCHAR(255)                
-  ADDRESS2                          VARCHAR(255) not null       
+  ADDRESS2                          VARCHAR(255) NOT NULL       
   CITY                              VARCHAR(50)                 
   STATE                             VARCHAR(2)                  
   POSTALCODE                        VARCHAR(10)                 
@@ -862,7 +862,7 @@ PUBLIC.FOR_LINT.WRITERS
   FAX3                              INTEGER                     
   HOMEEMAIL11                       VARCHAR(10)                 
   HOMEEMAIL12                       VARCHAR(10)                 
-  PUBLICATION_ID                    BIGINT not null             
+  PUBLICATION_ID                    BIGINT NOT NULL             
 
 PK_WRITERS                                                 [primary key]
   ID                                ascending                   
@@ -941,10 +941,10 @@ UPDATE                                                       [privilege]
 PUBLIC."PUBLISHER SALES".REGIONS
 ------------------------------------------------------------------------
                                                                  [table]
-  CITY                              VARCHAR(50) not null        
-  STATE                             VARCHAR(2) not null         
-  POSTALCODE                        VARCHAR(10) not null        
-  COUNTRY                           VARCHAR(50) not null        
+  CITY                              VARCHAR(50) NOT NULL        
+  STATE                             VARCHAR(2) NOT NULL         
+  POSTALCODE                        VARCHAR(10) NOT NULL        
+  COUNTRY                           VARCHAR(50) NOT NULL        
 
 PK_CUSTOMERS                                               [primary key]
   POSTALCODE                        ascending                   
@@ -993,8 +993,8 @@ UPDATE                                                       [privilege]
 PUBLIC."PUBLISHER SALES".SALES
 ------------------------------------------------------------------------
                                                                  [table]
-  POSTALCODE                        VARCHAR(10) not null        
-  COUNTRY                           VARCHAR(50) not null        
+  POSTALCODE                        VARCHAR(10) NOT NULL        
+  COUNTRY                           VARCHAR(50) NOT NULL        
   BOOKID                            INTEGER                     
   PERIODENDDATE                     DATE                        
   TOTALAMOUNT                       DOUBLE(64, 0)               

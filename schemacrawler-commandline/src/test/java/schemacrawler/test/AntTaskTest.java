@@ -29,7 +29,7 @@ import org.apache.tools.ant.BuildFileTest;
 import org.apache.tools.ant.Project;
 import org.junit.Test;
 
-import schemacrawler.test.utility.TestDatabaseUtility;
+import schemacrawler.test.utility.TestDatabase;
 import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.options.OutputFormat;
 
@@ -48,7 +48,7 @@ public class AntTaskTest
     buildFile = TestUtility.copyResourceToTempFile("/build.xml");
     configureProject(buildFile.getAbsolutePath());
 
-    TestDatabaseUtility.initialize();
+    TestDatabase.initialize();
   }
 
   @Test
@@ -74,8 +74,6 @@ public class AntTaskTest
       .setProperty("schemacrawler.table.pattern.exclude", ".*A.*");
     configProperties.store(new FileWriter(configFile), "testAntTask2");
     setAntProjectProperty("config", configFile.getAbsolutePath());
-
-    TestDatabaseUtility.initialize();
 
     final String referenceFile = "ant_task_test.2.txt";
     ant(referenceFile);
