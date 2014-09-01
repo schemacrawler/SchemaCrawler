@@ -27,6 +27,7 @@ PUBLISHERS
                                                                  [table]
 List of book publishers
   ID                                INTEGER NOT NULL            
+                                    auto-incremented            
                                     Unique (internal) id for book publisher
 
 

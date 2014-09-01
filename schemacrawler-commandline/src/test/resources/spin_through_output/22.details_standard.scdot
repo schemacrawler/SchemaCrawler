@@ -30,7 +30,7 @@ digraph "SchemaCrawler_Diagram" {
 	</tr>
 	<tr>
 		<td align='right'>Generated on:</td>
-		<td align='left'>Aug 31, 2014 4:42 PM</td>
+		<td align='left'>Aug 31, 2014 11:23 PM</td>
 	</tr>
 	<tr>
 		<td align='right'>Database:</td>
@@ -287,6 +287,11 @@ digraph "SchemaCrawler_Diagram" {
 		<td port='id_6fc9dd09.start' align='left'><b><i>ID</i></b></td>
 		<td align='left'> </td>
 		<td port='id_6fc9dd09.end' align='left'>INTEGER NOT NULL</td>
+	</tr>
+	<tr>
+		<td align='left'></td>
+		<td align='left'> </td>
+		<td align='left'>auto-incremented</td>
 	</tr>
 	<tr>
 		<td align='left'></td>

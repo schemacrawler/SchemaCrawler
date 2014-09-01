@@ -634,6 +634,7 @@ final class SchemaJsonFormatter
         jsonColumn.put("size", column.getSize());
         jsonColumn.put("decimalDigits", column.getDecimalDigits());
         jsonColumn.put("nullable", column.isNullable());
+        jsonColumn.put("autoIncremented", column.isAutoIncremented());
       }
 
       if (options.isShowOrdinalNumbers())

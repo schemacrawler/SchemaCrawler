@@ -746,6 +746,15 @@ final class SchemaTextFormatter
     }
   }
 
+  private void printTableColumnAutoIncremented(final Column column)
+  {
+    if (column == null || !column.isAutoIncremented())
+    {
+      return;
+    }
+    out.println(formattingHelper.createDetailRow("", "", "auto-incremented"));
+  }
+
   private void printTableColumnRemarks(final Column column)
   {
     if (column == null || !column.hasRemarks())
@@ -808,6 +817,7 @@ final class SchemaTextFormatter
                                                    columnName,
                                                    columnDetails));
 
+      printTableColumnAutoIncremented(column);
       printTableColumnRemarks(column);
 
     }

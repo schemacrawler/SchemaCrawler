@@ -157,15 +157,18 @@ PUBLIC.BOOKS.PUBLISHERS
                                                                  [table]
 List of book publishers
   ID                                INTEGER NOT NULL            
+                                    auto-incremented            
                                     Unique (internal) id for book publisher
   PUBLISHER                         VARCHAR(255)                
                                     Name of book publisher      
 
 SYS_PK_10092                                               [primary key]
   ID                                ascending                   
+                                    auto-incremented            
 
 SYS_IDX_SYS_PK_10092_10093                                [unique index]
   ID                                ascending                   
+                                    auto-incremented            
 
 
 
