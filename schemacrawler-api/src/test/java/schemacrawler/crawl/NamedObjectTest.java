@@ -29,6 +29,8 @@ import schemacrawler.schema.TableType;
 public class NamedObjectTest
 {
 
+  public static final TableType TABLE = new TableType("TABLE");
+
   @Test
   public void tableNames()
   {
@@ -49,7 +51,7 @@ public class NamedObjectTest
       for (final String tableName: tableNames)
       {
         table = new MutableTable(schema, tableName);
-        table.setTableType(TableType.TABLE);
+        table.setTableType(TABLE);
         tables.add(table);
       }
     }

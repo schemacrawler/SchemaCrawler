@@ -23,7 +23,6 @@ package schemacrawler.crawl;
 
 import schemacrawler.schema.CheckOptionType;
 import schemacrawler.schema.Schema;
-import schemacrawler.schema.TableType;
 import schemacrawler.schema.View;
 
 /**
@@ -57,17 +56,6 @@ class MutableView
 
   /**
    * {@inheritDoc}
-   *
-   * @see View#getTableType()
-   */
-  @Override
-  public TableType getTableType()
-  {
-    return TableType.VIEW;
-  }
-
-  /**
-   * {@inheritDoc}
    */
   @Override
   public boolean isUpdatable()
@@ -78,15 +66,6 @@ class MutableView
   void setCheckOption(final CheckOptionType checkOption)
   {
     this.checkOption = checkOption;
-  }
-
-  @Override
-  void setTableType(final TableType type)
-  {
-    if (!TableType.VIEW.equals(type))
-    {
-      throw new UnsupportedOperationException("Cannot reset view type");
-    }
   }
 
   void setUpdatable(final boolean updatable)
