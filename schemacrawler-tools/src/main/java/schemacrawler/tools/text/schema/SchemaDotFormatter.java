@@ -437,6 +437,28 @@ public final class SchemaDotFormatter
     return nodeId;
   }
 
+  private void printTableColumnAutoIncremented(final Column column)
+  {
+    if (column == null || !column.isAutoIncremented())
+    {
+      return;
+    }
+    final TableRow remarksRow = new TableRow(OutputFormat.html);
+    if (options.isShowOrdinalNumbers())
+    {
+      remarksRow.add(newTableCell("", Alignment.right, false, Color.white, 1));
+    }
+    remarksRow
+      .add(newTableCell("", Alignment.left, false, Color.white, 1))
+      .add(newTableCell(" ", Alignment.left, false, Color.white, 1))
+      .add(newTableCell("auto-incremented",
+                        Alignment.left,
+                        false,
+                        Color.white,
+                        1));
+    out.println(remarksRow.toString());
+  }
+
   private void printTableColumnRemarks(final Column column)
   {
     if (column == null || !column.hasRemarks())
@@ -471,12 +493,16 @@ public final class SchemaDotFormatter
         continue;
       }
 
-      String columnTypeName = column.getColumnDataType()
-        .getDatabaseSpecificTypeName();
+      final String columnTypeName;
       if (options.isShowStandardColumnTypeNames())
       {
         columnTypeName = column.getColumnDataType().getJavaSqlType()
           .getJavaSqlTypeName();
+      }
+      else
+      {
+        columnTypeName = column.getColumnDataType()
+          .getDatabaseSpecificTypeName();
       }
       final String columnType = columnTypeName + column.getWidth();
       final String nullable = columnNullable(columnTypeName,
@@ -508,6 +534,7 @@ public final class SchemaDotFormatter
       row.lastCell().addAttribute("port", nodeId(column) + ".end");
       out.println(row.toString());
 
+      printTableColumnAutoIncremented(column);
       printTableColumnRemarks(column);
     }
   }

@@ -267,6 +267,11 @@ digraph "SchemaCrawler_Diagram" {
 	<tr>
 		<td align='left'></td>
 		<td align='left'> </td>
+		<td align='left'>auto-incremented</td>
+	</tr>
+	<tr>
+		<td align='left'></td>
+		<td align='left'> </td>
 		<td align='left'>Unique (internal) id for book publisher</td>
 	</tr>
 	<tr>

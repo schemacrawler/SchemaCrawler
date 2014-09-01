@@ -671,18 +671,21 @@ PUBLIC.BOOKS.PUBLISHERS
 "",[table]
 List of book publishers
 "",ID,INTEGER NOT NULL
+"","",auto-incremented
 "","",Unique (internal) id for book publisher
 "",PUBLISHER,VARCHAR(255)
 "","",Name of book publisher
 ""
 "",[primary key]
 "",ID,ascending
+"","",auto-incremented
 ""
 "",[weak association]
 "",ID --> PUBLIC.BOOKS.BOOKS.PUBLISHERID,""
 ""
 "",[unique index]
 "",ID,ascending
+"","",auto-incremented
 ""
 DELETE,[privilege]
 "",_SYSTEM --> DBA (grantable),""

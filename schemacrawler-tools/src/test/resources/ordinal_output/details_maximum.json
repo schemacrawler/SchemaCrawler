@@ -22,6 +22,7 @@
           "ordinal": 1,
           "nullable": false,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "INTEGER",
           "size": 32
         },
@@ -33,6 +34,7 @@
           "ordinal": 2,
           "nullable": false,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "VARCHAR",
           "size": 20
         },
@@ -44,6 +46,7 @@
           "ordinal": 3,
           "nullable": false,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "VARCHAR",
           "size": 20
         },
@@ -55,6 +58,7 @@
           "ordinal": 4,
           "nullable": true,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "VARCHAR",
           "size": 255
         },
@@ -66,6 +70,7 @@
           "ordinal": 5,
           "nullable": true,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "VARCHAR",
           "size": 255
         },
@@ -77,6 +82,7 @@
           "ordinal": 6,
           "nullable": true,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "VARCHAR",
           "size": 50
         },
@@ -88,6 +94,7 @@
           "ordinal": 7,
           "nullable": true,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "VARCHAR",
           "size": 2
         },
@@ -99,6 +106,7 @@
           "ordinal": 8,
           "nullable": true,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "VARCHAR",
           "size": 10
         },
@@ -110,6 +118,7 @@
           "ordinal": 9,
           "nullable": true,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "VARCHAR",
           "size": 50
         }
@@ -283,6 +292,7 @@
           "ordinal": 1,
           "nullable": true,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "INTEGER",
           "size": 32
         },
@@ -294,6 +304,7 @@
           "ordinal": 2,
           "nullable": true,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "VARCHAR",
           "size": 20
         },
@@ -305,6 +316,7 @@
           "ordinal": 3,
           "nullable": true,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "VARCHAR",
           "size": 20
         }
@@ -402,6 +414,7 @@
           "ordinal": 1,
           "nullable": false,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "INTEGER",
           "size": 32
         },
@@ -413,6 +426,7 @@
           "ordinal": 2,
           "nullable": false,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "INTEGER",
           "size": 32
         },
@@ -424,6 +438,7 @@
           "ordinal": 3,
           "nullable": true,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "CLOB",
           "size": 1073741824
         }
@@ -580,6 +595,7 @@
           "ordinal": 1,
           "nullable": false,
           "remarks": "Unique (internal) id for book",
+          "autoIncremented": false,
           "databaseSpecificType": "INTEGER",
           "size": 32
         },
@@ -591,6 +607,7 @@
           "ordinal": 2,
           "nullable": false,
           "remarks": "Book title",
+          "autoIncremented": false,
           "databaseSpecificType": "VARCHAR",
           "size": 255
         },
@@ -602,6 +619,7 @@
           "ordinal": 3,
           "nullable": true,
           "remarks": "Book description",
+          "autoIncremented": false,
           "databaseSpecificType": "VARCHAR",
           "size": 255
         },
@@ -613,6 +631,7 @@
           "ordinal": 4,
           "nullable": false,
           "remarks": "Foreign key to the book publisher",
+          "autoIncremented": false,
           "databaseSpecificType": "INTEGER",
           "size": 32
         },
@@ -624,6 +643,7 @@
           "ordinal": 5,
           "nullable": true,
           "remarks": "Book publication date",
+          "autoIncremented": false,
           "databaseSpecificType": "DATE",
           "size": 10
         },
@@ -635,6 +655,7 @@
           "ordinal": 6,
           "nullable": true,
           "remarks": "Current price for the book",
+          "autoIncremented": false,
           "databaseSpecificType": "DOUBLE",
           "size": 64
         },
@@ -646,6 +667,7 @@
           "ordinal": 7,
           "nullable": true,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "INTEGER",
           "size": 32
         }
@@ -796,6 +818,7 @@
         "ordinal": 1,
         "nullable": true,
         "remarks": "",
+        "autoIncremented": false,
         "databaseSpecificType": "INTEGER",
         "size": 32
       }],
@@ -871,6 +894,7 @@
           "ordinal": 1,
           "nullable": false,
           "remarks": "Unique (internal) id for book publisher",
+          "autoIncremented": true,
           "databaseSpecificType": "INTEGER",
           "size": 32
         },
@@ -882,6 +906,7 @@
           "ordinal": 2,
           "nullable": true,
           "remarks": "Name of book publisher",
+          "autoIncremented": false,
           "databaseSpecificType": "VARCHAR",
           "size": 255
         }
@@ -1004,6 +1029,7 @@
           "ordinal": 1,
           "nullable": false,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "INTEGER",
           "size": 32
         },
@@ -1015,6 +1041,7 @@
           "ordinal": 2,
           "nullable": false,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "BIGINT",
           "size": 64
         },
@@ -1026,6 +1053,7 @@
           "ordinal": 3,
           "nullable": false,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "INTEGER",
           "size": 32
         }
@@ -1172,6 +1200,7 @@
         "ordinal": 1,
         "nullable": true,
         "remarks": "",
+        "autoIncremented": false,
         "databaseSpecificType": "INTEGER",
         "size": 32
       }],
@@ -1278,6 +1307,7 @@
           "ordinal": 1,
           "nullable": false,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "INTEGER",
           "size": 32
         },
@@ -1289,6 +1319,7 @@
           "ordinal": 2,
           "nullable": false,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "VARCHAR",
           "size": 255
         },
@@ -1300,6 +1331,7 @@
           "ordinal": 3,
           "nullable": true,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "VARCHAR",
           "size": 255
         },
@@ -1311,6 +1343,7 @@
           "ordinal": 4,
           "nullable": false,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "BIGINT",
           "size": 64
         },
@@ -1322,6 +1355,7 @@
           "ordinal": 5,
           "nullable": true,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "DATE",
           "size": 10
         },
@@ -1333,6 +1367,7 @@
           "ordinal": 6,
           "nullable": true,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "DOUBLE",
           "size": 64
         },
@@ -1344,6 +1379,7 @@
           "ordinal": 7,
           "nullable": true,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "CLOB",
           "size": 1073741824
         },
@@ -1355,6 +1391,7 @@
           "ordinal": 8,
           "nullable": true,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "CLOB",
           "size": 1073741824
         }
@@ -1518,6 +1555,7 @@
           "ordinal": 1,
           "nullable": false,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "BIGINT",
           "size": 64
         },
@@ -1529,6 +1567,7 @@
           "ordinal": 2,
           "nullable": false,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "VARCHAR",
           "size": 20
         },
@@ -1540,6 +1579,7 @@
           "ordinal": 3,
           "nullable": false,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "VARCHAR",
           "size": 20
         },
@@ -1551,6 +1591,7 @@
           "ordinal": 4,
           "nullable": true,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "VARCHAR",
           "size": 255
         },
@@ -1562,6 +1603,7 @@
           "ordinal": 5,
           "nullable": false,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "VARCHAR",
           "size": 255
         },
@@ -1573,6 +1615,7 @@
           "ordinal": 6,
           "nullable": true,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "VARCHAR",
           "size": 50
         },
@@ -1584,6 +1627,7 @@
           "ordinal": 7,
           "nullable": true,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "VARCHAR",
           "size": 2
         },
@@ -1595,6 +1639,7 @@
           "ordinal": 8,
           "nullable": true,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "VARCHAR",
           "size": 10
         },
@@ -1606,6 +1651,7 @@
           "ordinal": 9,
           "nullable": true,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "VARCHAR",
           "size": 50
         },
@@ -1617,6 +1663,7 @@
           "ordinal": 10,
           "nullable": true,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "VARCHAR",
           "size": 10
         },
@@ -1628,6 +1675,7 @@
           "ordinal": 11,
           "nullable": true,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "VARCHAR",
           "size": 15
         },
@@ -1639,6 +1687,7 @@
           "ordinal": 12,
           "nullable": true,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "VARCHAR",
           "size": 10
         },
@@ -1650,6 +1699,7 @@
           "ordinal": 13,
           "nullable": true,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "INTEGER",
           "size": 32
         },
@@ -1661,6 +1711,7 @@
           "ordinal": 14,
           "nullable": true,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "VARCHAR",
           "size": 10
         },
@@ -1672,6 +1723,7 @@
           "ordinal": 15,
           "nullable": true,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "INTEGER",
           "size": 32
         },
@@ -1683,6 +1735,7 @@
           "ordinal": 16,
           "nullable": true,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "VARCHAR",
           "size": 10
         },
@@ -1694,6 +1747,7 @@
           "ordinal": 17,
           "nullable": true,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "VARCHAR",
           "size": 10
         },
@@ -1705,6 +1759,7 @@
           "ordinal": 18,
           "nullable": false,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "BIGINT",
           "size": 64
         }
@@ -1946,6 +2001,7 @@
           "ordinal": 1,
           "nullable": false,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "VARCHAR",
           "size": 50
         },
@@ -1957,6 +2013,7 @@
           "ordinal": 2,
           "nullable": false,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "VARCHAR",
           "size": 2
         },
@@ -1968,6 +2025,7 @@
           "ordinal": 3,
           "nullable": false,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "VARCHAR",
           "size": 10
         },
@@ -1979,6 +2037,7 @@
           "ordinal": 4,
           "nullable": false,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "VARCHAR",
           "size": 50
         }
@@ -2129,6 +2188,7 @@
           "ordinal": 1,
           "nullable": false,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "VARCHAR",
           "size": 10
         },
@@ -2140,6 +2200,7 @@
           "ordinal": 2,
           "nullable": false,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "VARCHAR",
           "size": 50
         },
@@ -2151,6 +2212,7 @@
           "ordinal": 3,
           "nullable": true,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "INTEGER",
           "size": 32
         },
@@ -2162,6 +2224,7 @@
           "ordinal": 4,
           "nullable": true,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "DATE",
           "size": 10
         },
@@ -2173,6 +2236,7 @@
           "ordinal": 5,
           "nullable": true,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "DOUBLE",
           "size": 64
         }
