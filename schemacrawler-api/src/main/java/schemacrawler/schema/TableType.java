@@ -31,8 +31,6 @@ public final class TableType
   private static final long serialVersionUID = -8172248482959041873L;
 
   public static final TableType UNKNOWN = new TableType();
-  public static final TableType TABLE = new TableType("TABLE");
-  public static final TableType VIEW = new TableType("VIEW");
 
   private final String tableType;
 
@@ -59,7 +57,7 @@ public final class TableType
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see java.lang.Comparable#compareTo(java.lang.Object)
    */
   @Override
@@ -109,7 +107,7 @@ public final class TableType
 
   /**
    * The table type, with the case preserved.
-   * 
+   *
    * @return The table type
    */
   public String getTableType()
@@ -134,7 +132,7 @@ public final class TableType
   /**
    * Checks if a string is equal to this table type. This is a
    * case-insensitive check.
-   * 
+   *
    * @return True if the string is the same as this table type
    */
   public boolean isEqualTo(final String testTableType)
@@ -144,6 +142,11 @@ public final class TableType
       return false;
     }
     return tableType.equalsIgnoreCase(testTableType.trim());
+  }
+
+  public boolean isView()
+  {
+    return tableType.toUpperCase().contains("VIEW");
   }
 
   /**
