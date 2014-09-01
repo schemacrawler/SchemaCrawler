@@ -309,8 +309,11 @@ final class TableRetriever
                                                                     schemaName);
         final Schema schema = database.getSchema(schemaReference.getFullName());
 
+        final TableType tableType = supportedTableTypes
+          .lookupTableType(tableTypeString);
+
         final MutableTable table;
-        if (TableType.VIEW.isEqualTo(tableTypeString))
+        if (tableType.isView())
         {
           table = new MutableView(schema, tableName);
         }
@@ -320,8 +323,6 @@ final class TableRetriever
         }
         if (tableFilter.include(table))
         {
-          final TableType tableType = supportedTableTypes
-            .lookupTableType(tableTypeString);
           table.setTableType(tableType);
           table.setRemarks(remarks);
 
