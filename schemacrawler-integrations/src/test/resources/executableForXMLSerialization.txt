@@ -884,7 +884,7 @@ potential schema design issues with lint. The output serves for &#xd;
 database documentation is designed to be diff-ed against other database &#xd;
 schemas. SchemaCrawler also generates schema diagrams.&#xd;
 </schemaCrawlerAbout>
-    <crawlTimestamp>Aug 18, 2014 12:18 AM</crawlTimestamp>
+    <crawlTimestamp>Sep 1, 2014 12:01 AM</crawlTimestamp>
     <systemProperties id="186"/>
   </schemaCrawlerInfo>
   <schemas id="187">
@@ -5941,7 +5941,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           </attributeMap>
           <schema class="schema" reference="188"/>
           <tableType id="840">
-            <tableType>UNKNOWN</tableType>
+            <tableType>VIEW</tableType>
           </tableType>
           <columns id="841">
             <objects id="842">
