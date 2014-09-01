@@ -2750,6 +2750,7 @@
           "name": "ID",
           "nullable": false,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "INTEGER",
           "size": 32
         },
@@ -2760,6 +2761,7 @@
           "name": "FIRSTNAME",
           "nullable": false,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "VARCHAR",
           "size": 20
         },
@@ -2770,6 +2772,7 @@
           "name": "LASTNAME",
           "nullable": false,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "VARCHAR",
           "size": 20
         },
@@ -2780,6 +2783,7 @@
           "name": "CITY",
           "nullable": true,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "VARCHAR",
           "size": 50
         },
@@ -2790,6 +2794,7 @@
           "name": "STATE",
           "nullable": true,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "VARCHAR",
           "size": 2
         },
@@ -2800,6 +2805,7 @@
           "name": "POSTALCODE",
           "nullable": true,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "VARCHAR",
           "size": 10
         },
@@ -2810,6 +2816,7 @@
           "name": "COUNTRY",
           "nullable": true,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "VARCHAR",
           "size": 50
         }
@@ -2835,6 +2842,7 @@
           "name": "BOOKID",
           "nullable": false,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "INTEGER",
           "size": 32
         },
@@ -2845,6 +2853,7 @@
           "name": "AUTHORID",
           "nullable": false,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "INTEGER",
           "size": 32
         }
@@ -2863,6 +2872,7 @@
           "name": "ID",
           "nullable": false,
           "remarks": "Unique (internal) id for book",
+          "autoIncremented": false,
           "databaseSpecificType": "INTEGER",
           "size": 32
         },
@@ -2873,6 +2883,7 @@
           "name": "PREVIOUSEDITIONID",
           "nullable": true,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "INTEGER",
           "size": 32
         }
@@ -2897,6 +2908,7 @@
         "name": "ID",
         "nullable": false,
         "remarks": "Unique (internal) id for book publisher",
+        "autoIncremented": true,
         "databaseSpecificType": "INTEGER",
         "size": 32
       }],
@@ -2914,6 +2926,7 @@
           "name": "ID",
           "nullable": false,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "INTEGER",
           "size": 32
         },
@@ -2924,6 +2937,7 @@
           "name": "WRITERID",
           "nullable": false,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "BIGINT",
           "size": 64
         },
@@ -2934,6 +2948,7 @@
           "name": "PUBLICATIONID",
           "nullable": false,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "INTEGER",
           "size": 32
         }
@@ -2959,6 +2974,7 @@
           "name": "ID",
           "nullable": false,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "INTEGER",
           "size": 32
         },
@@ -2969,6 +2985,7 @@
           "name": "WRITERID",
           "nullable": false,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "BIGINT",
           "size": 64
         }
@@ -2987,6 +3004,7 @@
           "name": "ID",
           "nullable": false,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "BIGINT",
           "size": 64
         },
@@ -2997,6 +3015,7 @@
           "name": "FIRSTNAME",
           "nullable": false,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "VARCHAR",
           "size": 20
         },
@@ -3007,6 +3026,7 @@
           "name": "LASTNAME",
           "nullable": false,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "VARCHAR",
           "size": 20
         },
@@ -3017,6 +3037,7 @@
           "name": "CITY",
           "nullable": true,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "VARCHAR",
           "size": 50
         },
@@ -3027,6 +3048,7 @@
           "name": "STATE",
           "nullable": true,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "VARCHAR",
           "size": 2
         },
@@ -3037,6 +3059,7 @@
           "name": "POSTALCODE",
           "nullable": true,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "VARCHAR",
           "size": 10
         },
@@ -3047,6 +3070,7 @@
           "name": "COUNTRY",
           "nullable": true,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "VARCHAR",
           "size": 50
         },
@@ -3057,6 +3081,7 @@
           "name": "EMAIL1",
           "nullable": true,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "VARCHAR",
           "size": 10
         },
@@ -3067,6 +3092,7 @@
           "name": "PUBLICATION_ID",
           "nullable": false,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "BIGINT",
           "size": 64
         }
@@ -3085,6 +3111,7 @@
           "name": "POSTALCODE",
           "nullable": false,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "VARCHAR",
           "size": 10
         },
@@ -3095,6 +3122,7 @@
           "name": "COUNTRY",
           "nullable": false,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "VARCHAR",
           "size": 50
         }
@@ -3113,6 +3141,7 @@
           "name": "POSTALCODE",
           "nullable": false,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "VARCHAR",
           "size": 10
         },
@@ -3123,6 +3152,7 @@
           "name": "COUNTRY",
           "nullable": false,
           "remarks": "",
+          "autoIncremented": false,
           "databaseSpecificType": "VARCHAR",
           "size": 50
         }
