@@ -14,6 +14,15 @@ Details for published books
                                     Unique (internal) id for book
   PREVIOUSEDITIONID                 INTEGER                     
 
+PK_BOOKS                                                   [primary key]
+  ID                                ascending                   
+
+FK_Y_BOOK                                  [foreign key, with no action]
+  ID --> BOOKAUTHORS.BOOKID                                     
+
+FK_PREVIOUSEDITION                         [foreign key, with no action]
+  ID --> PREVIOUSEDITIONID                                      
+
 
 
 "Global Counts"
@@ -29,6 +38,10 @@ List of book publishers
   ID                                INTEGER NOT NULL            
                                     auto-incremented            
                                     Unique (internal) id for book publisher
+
+SYS_PK_10092                                               [primary key]
+  ID                                ascending                   
+                                    auto-incremented            
 
 
 
@@ -50,6 +63,18 @@ WRITERS
   COUNTRY                           VARCHAR(50)                 
   EMAIL1                            VARCHAR(10)                 
   PUBLICATION_ID                    BIGINT NOT NULL             
+
+PK_WRITERS                                                 [primary key]
+  ID                                ascending                   
+
+FK_WRITERS_PUBLICATION                     [foreign key, with no action]
+  PUBLICATIONS.ID --> PUBLICATION_ID                              
+
+FK_WRITER_JOIN                             [foreign key, with no action]
+  ID --> EXTRA_PK.WRITERID                                      
+
+FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
+  ID --> PUBLICATIONS.WRITERID                                  
 
 
 

@@ -289,10 +289,11 @@ final class SchemaTextFormatter
     final List<Column> columns = table.getColumns();
     printTableColumns(columns);
 
+    printPrimaryKey(table.getPrimaryKey());
+    printForeignKeys(table);
+
     if (!isBrief)
     {
-      printPrimaryKey(table.getPrimaryKey());
-      printForeignKeys(table);
       if (isVerbose)
       {
         printWeakAssociations(table);
@@ -772,8 +773,7 @@ final class SchemaTextFormatter
 
     for (final Column column: columns)
     {
-      if (isBrief && !column.isPartOfPrimaryKey()
-          && !column.isPartOfForeignKey() && !column.isPartOfIndex())
+      if (isBrief && !isColumnSignificant(column))
       {
         continue;
       }

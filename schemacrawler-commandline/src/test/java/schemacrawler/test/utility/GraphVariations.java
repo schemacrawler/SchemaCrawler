@@ -38,8 +38,6 @@ import org.junit.runner.JUnitCore;
 
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.tools.options.InfoLevel;
-import schemacrawler.tools.text.schema.SchemaTextDetailType;
 
 public class GraphVariations
   extends BaseDatabaseTest
@@ -58,8 +56,6 @@ public class GraphVariations
   {
     final Map<String, String> args = new HashMap<String, String>();
     args.put("infolevel", "maximum");
-    args.put("tables", ".*");
-    args.put("routines", "");
 
     final Map<String, String> config = new HashMap<>();
 
@@ -73,8 +69,6 @@ public class GraphVariations
     final Map<String, String> args = new HashMap<String, String>();
     args.put("infolevel", "maximum");
     args.put("portablenames", "true");
-    args.put("tables", ".*");
-    args.put("routines", "");
 
     final Map<String, String> config = new HashMap<>();
 
@@ -82,14 +76,26 @@ public class GraphVariations
   }
 
   @Test
-  public void diagram_3_ordinals()
+  public void diagram_3_important_columns()
+    throws Exception
+  {
+    final Map<String, String> args = new HashMap<String, String>();
+    args.put("infolevel", "standard");
+    args.put("command", "brief");
+    args.put("portablenames", "true");
+
+    final Map<String, String> config = new HashMap<>();
+
+    run(args, config, new File(directory, currentMethodName() + ".png"));
+  }
+
+  @Test
+  public void diagram_4_ordinals()
     throws Exception
   {
     final Map<String, String> args = new HashMap<String, String>();
     args.put("infolevel", "standard");
     args.put("portablenames", "true");
-    args.put("tables", ".*");
-    args.put("routines", "");
 
     final Map<String, String> config = new HashMap<>();
     config.put("schemacrawler.format.show_ordinal_numbers", "true");
@@ -98,15 +104,13 @@ public class GraphVariations
   }
 
   @Test
-  public void diagram_4_alphabetical()
+  public void diagram_5_alphabetical()
     throws Exception
   {
     final Map<String, String> args = new HashMap<String, String>();
     args.put("infolevel", "standard");
     args.put("portablenames", "true");
     args.put("sortcolumns", "true");
-    args.put("tables", ".*");
-    args.put("routines", "");
 
     final Map<String, String> config = new HashMap<>();
 
@@ -114,16 +118,14 @@ public class GraphVariations
   }
 
   @Test
-  public void diagram_5_grep()
+  public void diagram_6_grep()
     throws Exception
   {
     final Map<String, String> args = new HashMap<String, String>();
     args.put("infolevel", "maximum");
     args.put("portablenames", "true");
     args.put("grepcolumns", ".*\\.BOOKS\\..*\\.ID");
-    args.put("tables", ".*");
     args.put("tabletypes", "TABLE");
-    args.put("routines", "");
 
     final Map<String, String> config = new HashMap<>();
 
@@ -131,7 +133,7 @@ public class GraphVariations
   }
 
   @Test
-  public void diagram_6_grep_onlymatching()
+  public void diagram_7_grep_onlymatching()
     throws Exception
   {
     final Map<String, String> args = new HashMap<String, String>();
@@ -139,41 +141,11 @@ public class GraphVariations
     args.put("portablenames", "true");
     args.put("grepcolumns", ".*\\.BOOKS\\..*\\.ID");
     args.put("only-matching", "true");
-    args.put("tables", ".*");
     args.put("tabletypes", "TABLE");
-    args.put("routines", "");
 
     final Map<String, String> config = new HashMap<>();
 
     run(args, config, new File(directory, currentMethodName() + ".png"));
-  }
-
-  @Test
-  public void spinThroughMain()
-    throws Exception
-  {
-    for (final InfoLevel infoLevel: InfoLevel.values())
-    {
-      if (infoLevel == InfoLevel.unknown)
-      {
-        continue;
-      }
-      for (final SchemaTextDetailType schemaTextDetailType: SchemaTextDetailType
-        .values())
-      {
-        final Map<String, String> args = new HashMap<String, String>();
-        args.put("infolevel", infoLevel.toString());
-        args.put("command", schemaTextDetailType.toString());
-
-        final Map<String, String> config = new HashMap<>();
-
-        run(args,
-            config,
-            new File(directory, String.format("diagram_%s_%s.png",
-                                              schemaTextDetailType,
-                                              infoLevel)));
-      }
-    }
   }
 
   @Before
@@ -208,7 +180,12 @@ public class GraphVariations
     args.put("url", "jdbc:hsqldb:hsql://localhost/schemacrawler");
     args.put("user", "sa");
     args.put("password", "");
-    args.put("command", "graph");
+    args.put("tables", ".*");
+    args.put("routines", "");
+    if (!args.containsKey("command"))
+    {
+      args.put("command", "graph");
+    }
     args.put("outputformat", "png");
     args.put("outputfile", outputFile.getAbsolutePath());
 

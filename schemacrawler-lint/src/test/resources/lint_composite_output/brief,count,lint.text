@@ -44,6 +44,15 @@ PUBLIC.FOR_LINT.EXTRA_PK
   WRITERID                          BIGINT NOT NULL             
   PUBLICATIONID                     INTEGER NOT NULL            
 
+PK_EXTRA_PK                                                [primary key]
+  ID                                ascending                   
+
+FK_PUBLICATION_JOIN                        [foreign key, with no action]
+  PUBLIC.FOR_LINT.PUBLICATIONS.ID --> PUBLICATIONID                              
+
+FK_WRITER_JOIN                             [foreign key, with no action]
+  PUBLIC.FOR_LINT.WRITERS.ID --> WRITERID                              
+
 
 
 PUBLIC.FOR_LINT."Global Counts"
@@ -57,6 +66,18 @@ PUBLIC.FOR_LINT.PUBLICATIONS
                                                                  [table]
   ID                                INTEGER NOT NULL            
   WRITERID                          BIGINT NOT NULL             
+
+PK_PUBLICATIONS                                            [primary key]
+  ID                                ascending                   
+
+FK_PUBLICATION_JOIN                        [foreign key, with no action]
+  ID --> PUBLIC.FOR_LINT.EXTRA_PK.PUBLICATIONID                              
+
+FK_WRITERS_PUBLICATION                     [foreign key, with no action]
+  ID --> PUBLIC.FOR_LINT.WRITERS.PUBLICATION_ID                              
+
+FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
+  PUBLIC.FOR_LINT.WRITERS.ID --> WRITERID                              
 
 
 
@@ -72,6 +93,18 @@ PUBLIC.FOR_LINT.WRITERS
   COUNTRY                           VARCHAR(50)                 
   EMAIL1                            VARCHAR(10)                 
   PUBLICATION_ID                    BIGINT NOT NULL             
+
+PK_WRITERS                                                 [primary key]
+  ID                                ascending                   
+
+FK_WRITERS_PUBLICATION                     [foreign key, with no action]
+  PUBLIC.FOR_LINT.PUBLICATIONS.ID --> PUBLICATION_ID                              
+
+FK_WRITER_JOIN                             [foreign key, with no action]
+  ID --> PUBLIC.FOR_LINT.EXTRA_PK.WRITERID                              
+
+FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
+  ID --> PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID                              
 
 
 

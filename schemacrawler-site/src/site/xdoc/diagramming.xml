@@ -111,26 +111,38 @@ schemacrawler.format.show_unqualified_names=true
 						</td>
 						<td>
 							<p>
-								Show column ordinals, by setting configuration option
-								<code>schemacrawler.format.show_ordinal_numbers=true</code>
-								in the configuration file.
+								Show significant columns, such as primary and foreign key columns, 
+                                and columns that are part of unique indexes. Use the
+                                <code>-infolevel=standard -command=brief</code>
+                                command line option.
 							</p>
-							<a href="images/diagram_3_ordinals.png" rel="lightbox"
+							<a href="images/diagram_3_important_columns.png" rel="lightbox"
 								title="SchemaCrawler database diagram">
-								<img src="images/diagram_2_portablenames.png" width="200" />
+								<img src="images/diagram_3_important_columns.png" width="200" />
 							</a>
 						</td>
 					</tr>
 					<tr>
+                        <td>
+                            <p>
+                                Show column ordinals, by setting configuration option
+                                <code>schemacrawler.format.show_ordinal_numbers=true</code>
+                                in the configuration file.
+                            </p>
+                            <a href="images/diagram_4_ordinals.png" rel="lightbox"
+                                title="SchemaCrawler database diagram">
+                                <img src="images/diagram_4_ordinals.png.png" width="200" />
+                            </a>
+                        </td>
 						<td>
 							<p>
 								Display columns in alphabetical order, using the
 								<code>-sortcolumns</code>
 								command line option.
 							</p>
-							<a href="images/diagram_4_alphabetical.png" rel="lightbox"
+							<a href="images/diagram_5_alphabetical.png" rel="lightbox"
 								title="SchemaCrawler database diagram">
-								<img src="images/diagram_4_alphabetical.png" width="200" />
+								<img src="images/diagram_5_alphabetical.png" width="200" />
 							</a>
 						</td>
 						<td></td>
@@ -142,9 +154,9 @@ schemacrawler.format.show_unqualified_names=true
 								<code>-grepcolumns=.*\\.BOOKS\\..*\\.ID</code>
 								as a command line option.
 							</p>
-							<a href="images/diagram_5_grep.png" rel="lightbox"
+							<a href="images/diagram_6_grep.png" rel="lightbox"
 								title="SchemaCrawler database diagram">
-								<img src="images/diagram_5_grep.png" width="200" />
+								<img src="images/diagram_6_grep.png" width="200" />
 							</a>
 						</td>
 						<td>
@@ -155,9 +167,9 @@ schemacrawler.format.show_unqualified_names=true
 								<code>-only-matching</code>
 								as command line options.
 							</p>
-							<a href="images/diagram_6_grep_onlymatching.png" rel="lightbox"
+							<a href="images/diagram_7_grep_onlymatching.png" rel="lightbox"
 								title="SchemaCrawler database diagram">
-								<img src="images/diagram_6_grep_onlymatching.png" width="200" />
+								<img src="images/diagram_7_grep_onlymatching.png" width="200" />
 							</a>
 						</td>
 					</tr>

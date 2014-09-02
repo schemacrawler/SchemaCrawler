@@ -208,14 +208,11 @@ public final class SchemaDotFormatter
     out.append("  ];").println();
     out.println();
 
-    if (!isBrief)
-    {
-      printForeignKeys(table);
+    printForeignKeys(table);
 
-      if (isVerbose)
-      {
-        printWeakAssociations(table);
-      }
+    if (isVerbose)
+    {
+      printWeakAssociations(table);
     }
 
     out.println();
@@ -487,8 +484,7 @@ public final class SchemaDotFormatter
       .isAlphabeticalSortForTableColumns()));
     for (final Column column: columns)
     {
-      if (isBrief && !column.isPartOfPrimaryKey()
-          && !column.isPartOfForeignKey() && !column.isPartOfIndex())
+      if (isBrief && !isColumnSignificant(column))
       {
         continue;
       }

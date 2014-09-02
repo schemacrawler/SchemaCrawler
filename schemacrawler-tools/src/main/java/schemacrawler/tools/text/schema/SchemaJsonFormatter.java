@@ -308,19 +308,17 @@ final class SchemaJsonFormatter
         .isAlphabeticalSortForTableColumns()));
       for (final Column column: columns)
       {
-        if (isBrief && !column.isPartOfPrimaryKey()
-            && !column.isPartOfForeignKey() && !column.isPartOfIndex())
+        if (isBrief && !isColumnSignificant(column))
         {
           continue;
         }
         jsonColumns.put(handleTableColumn(column));
       }
 
+      jsonTable.put("primaryKey", handleIndex(table.getPrimaryKey()));
+      jsonTable.put("foreignKeys", handleForeignKeys(table.getForeignKeys()));
       if (!isBrief)
       {
-        jsonTable.put("primaryKey", handleIndex(table.getPrimaryKey()));
-        jsonTable.put("foreignKeys", handleForeignKeys(table.getForeignKeys()));
-
         if (isVerbose)
         {
           final Collection<ColumnReference> weakAssociationsCollection = DatabaseWithAssociations
