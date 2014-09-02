@@ -2,6 +2,34 @@
 {
   "tables": [
     {
+      "foreignKeys": [
+        {
+          "updateRule": "no action",
+          "columnReferences": [{
+            "pkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.ID",
+            "fkColumn": "PUBLIC.FOR_LINT.EXTRA_PK.PUBLICATIONID"
+          }],
+          "deleteRule": "no action",
+          "name": "FK_PUBLICATION_JOIN"
+        },
+        {
+          "updateRule": "no action",
+          "columnReferences": [{
+            "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
+            "fkColumn": "PUBLIC.FOR_LINT.EXTRA_PK.WRITERID"
+          }],
+          "deleteRule": "no action",
+          "name": "FK_WRITER_JOIN"
+        }
+      ],
+      "primaryKey": {
+        "unique": true,
+        "name": "PK_EXTRA_PK",
+        "columns": {
+          "sortSequence": "ascending",
+          "name": "ID"
+        }
+      },
       "name": "EXTRA_PK",
       "columns": [
         {
@@ -43,6 +71,8 @@
       "type": "table"
     },
     {
+      "foreignKeys": [],
+      "primaryKey": {},
       "name": "\"Global Counts\"",
       "columns": [],
       "remarks": "",
@@ -50,6 +80,43 @@
       "type": "table"
     },
     {
+      "foreignKeys": [
+        {
+          "updateRule": "no action",
+          "columnReferences": [{
+            "pkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.ID",
+            "fkColumn": "PUBLIC.FOR_LINT.EXTRA_PK.PUBLICATIONID"
+          }],
+          "deleteRule": "no action",
+          "name": "FK_PUBLICATION_JOIN"
+        },
+        {
+          "updateRule": "no action",
+          "columnReferences": [{
+            "pkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.ID",
+            "fkColumn": "PUBLIC.FOR_LINT.WRITERS.PUBLICATION_ID"
+          }],
+          "deleteRule": "no action",
+          "name": "FK_WRITERS_PUBLICATION"
+        },
+        {
+          "updateRule": "no action",
+          "columnReferences": [{
+            "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
+            "fkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID"
+          }],
+          "deleteRule": "no action",
+          "name": "FK_PUBLICATIONS_WRITER"
+        }
+      ],
+      "primaryKey": {
+        "unique": true,
+        "name": "PK_PUBLICATIONS",
+        "columns": {
+          "sortSequence": "ascending",
+          "name": "ID"
+        }
+      },
       "name": "PUBLICATIONS",
       "columns": [
         {
@@ -80,6 +147,43 @@
       "type": "table"
     },
     {
+      "foreignKeys": [
+        {
+          "updateRule": "no action",
+          "columnReferences": [{
+            "pkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.ID",
+            "fkColumn": "PUBLIC.FOR_LINT.WRITERS.PUBLICATION_ID"
+          }],
+          "deleteRule": "no action",
+          "name": "FK_WRITERS_PUBLICATION"
+        },
+        {
+          "updateRule": "no action",
+          "columnReferences": [{
+            "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
+            "fkColumn": "PUBLIC.FOR_LINT.EXTRA_PK.WRITERID"
+          }],
+          "deleteRule": "no action",
+          "name": "FK_WRITER_JOIN"
+        },
+        {
+          "updateRule": "no action",
+          "columnReferences": [{
+            "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
+            "fkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID"
+          }],
+          "deleteRule": "no action",
+          "name": "FK_PUBLICATIONS_WRITER"
+        }
+      ],
+      "primaryKey": {
+        "unique": true,
+        "name": "PK_WRITERS",
+        "columns": {
+          "sortSequence": "ascending",
+          "name": "ID"
+        }
+      },
       "name": "WRITERS",
       "columns": [
         {

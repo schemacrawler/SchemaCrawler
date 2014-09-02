@@ -5,6 +5,7 @@ import static sf.util.Utility.isLowerCase;
 
 import java.io.PrintWriter;
 
+import schemacrawler.schema.Column;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
@@ -63,6 +64,13 @@ public abstract class BaseFormatter<O extends BaseTextOptions>
   {
     return isNullable? "": isLowerCase(columnTypeName)? " not null"
                                                       : " NOT NULL";
+  }
+
+  protected boolean isColumnSignificant(final Column column)
+  {
+    return column != null
+           && (column.isPartOfPrimaryKey() || column.isPartOfForeignKey() || column
+             .isPartOfIndex());
   }
 
 }

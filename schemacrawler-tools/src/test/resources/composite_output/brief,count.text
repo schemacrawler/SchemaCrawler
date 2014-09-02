@@ -49,6 +49,12 @@ Contact details for book authors
   POSTALCODE                        VARCHAR(10)                 
   COUNTRY                           VARCHAR(50)                 
 
+PK_AUTHORS                                                 [primary key]
+  ID                                ascending                   
+
+FK_Z_AUTHOR                                [foreign key, with no action]
+  ID --> PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID                              
+
 
 
 PUBLIC.BOOKS.AUTHORSLIST
@@ -64,6 +70,12 @@ Relationship between books and their authors, along with the latest updated info
   BOOKID                            INTEGER NOT NULL            
   AUTHORID                          INTEGER NOT NULL            
 
+FK_Z_AUTHOR                                [foreign key, with no action]
+  PUBLIC.BOOKS.AUTHORS.ID --> AUTHORID                              
+
+FK_Y_BOOK                                  [foreign key, with no action]
+  PUBLIC.BOOKS.BOOKS.ID --> BOOKID                              
+
 
 
 PUBLIC.BOOKS.BOOKS
@@ -73,6 +85,15 @@ Details for published books
   ID                                INTEGER NOT NULL            
                                     Unique (internal) id for book
   PREVIOUSEDITIONID                 INTEGER                     
+
+PK_BOOKS                                                   [primary key]
+  ID                                ascending                   
+
+FK_Y_BOOK                                  [foreign key, with no action]
+  ID --> PUBLIC.BOOKS.BOOKAUTHORS.BOOKID                              
+
+FK_PREVIOUSEDITION                         [foreign key, with no action]
+  ID --> PREVIOUSEDITIONID                                      
 
 
 
@@ -90,6 +111,10 @@ List of book publishers
                                     auto-incremented            
                                     Unique (internal) id for book publisher
 
+SYS_PK_10092                                               [primary key]
+  ID                                ascending                   
+                                    auto-incremented            
+
 
 
 PUBLIC.FOR_LINT.EXTRA_PK
@@ -98,6 +123,15 @@ PUBLIC.FOR_LINT.EXTRA_PK
   ID                                INTEGER NOT NULL            
   WRITERID                          BIGINT NOT NULL             
   PUBLICATIONID                     INTEGER NOT NULL            
+
+PK_EXTRA_PK                                                [primary key]
+  ID                                ascending                   
+
+FK_PUBLICATION_JOIN                        [foreign key, with no action]
+  PUBLIC.FOR_LINT.PUBLICATIONS.ID --> PUBLICATIONID                              
+
+FK_WRITER_JOIN                             [foreign key, with no action]
+  PUBLIC.FOR_LINT.WRITERS.ID --> WRITERID                              
 
 
 
@@ -112,6 +146,18 @@ PUBLIC.FOR_LINT.PUBLICATIONS
                                                                  [table]
   ID                                INTEGER NOT NULL            
   WRITERID                          BIGINT NOT NULL             
+
+PK_PUBLICATIONS                                            [primary key]
+  ID                                ascending                   
+
+FK_PUBLICATION_JOIN                        [foreign key, with no action]
+  ID --> PUBLIC.FOR_LINT.EXTRA_PK.PUBLICATIONID                              
+
+FK_WRITERS_PUBLICATION                     [foreign key, with no action]
+  ID --> PUBLIC.FOR_LINT.WRITERS.PUBLICATION_ID                              
+
+FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
+  PUBLIC.FOR_LINT.WRITERS.ID --> WRITERID                              
 
 
 
@@ -128,6 +174,18 @@ PUBLIC.FOR_LINT.WRITERS
   EMAIL1                            VARCHAR(10)                 
   PUBLICATION_ID                    BIGINT NOT NULL             
 
+PK_WRITERS                                                 [primary key]
+  ID                                ascending                   
+
+FK_WRITERS_PUBLICATION                     [foreign key, with no action]
+  PUBLIC.FOR_LINT.PUBLICATIONS.ID --> PUBLICATION_ID                              
+
+FK_WRITER_JOIN                             [foreign key, with no action]
+  ID --> PUBLIC.FOR_LINT.EXTRA_PK.WRITERID                              
+
+FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
+  ID --> PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID                              
+
 
 
 PUBLIC."PUBLISHER SALES".REGIONS
@@ -136,6 +194,14 @@ PUBLIC."PUBLISHER SALES".REGIONS
   POSTALCODE                        VARCHAR(10) NOT NULL        
   COUNTRY                           VARCHAR(50) NOT NULL        
 
+PK_CUSTOMERS                                               [primary key]
+  POSTALCODE                        ascending                   
+  COUNTRY                           ascending                   
+
+FK_SALES_REGIONS                           [foreign key, with no action]
+  POSTALCODE --> PUBLIC."PUBLISHER SALES".SALES.POSTALCODE                              
+  COUNTRY --> PUBLIC."PUBLISHER SALES".SALES.COUNTRY                              
+
 
 
 PUBLIC."PUBLISHER SALES".SALES
@@ -143,6 +209,10 @@ PUBLIC."PUBLISHER SALES".SALES
                                                                  [table]
   POSTALCODE                        VARCHAR(10) NOT NULL        
   COUNTRY                           VARCHAR(50) NOT NULL        
+
+FK_SALES_REGIONS                           [foreign key, with no action]
+  PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE --> POSTALCODE                              
+  PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY --> COUNTRY                              
 
 
 

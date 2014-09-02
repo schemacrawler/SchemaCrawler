@@ -30,7 +30,7 @@ digraph "SchemaCrawler_Diagram" {
 	</tr>
 	<tr>
 		<td align='right'>Generated on:</td>
-		<td align='left'>Aug 31, 2014 11:23 PM</td>
+		<td align='left'>Sep 1, 2014 6:12 PM</td>
 	</tr>
 	<tr>
 		<td align='right'>Database:</td>
@@ -95,6 +95,7 @@ digraph "SchemaCrawler_Diagram" {
     >
   ];
 
+  "bookauthors_aa4376":"authorid_19681b5e.start":w -> "authors_dba8a1ff":"id_ecfc5f6a.end":e [label=<FK_Z_AUTHOR> style="solid" dir="both" arrowhead="teetee" arrowtail="crowodot"];
 
 
   /* PUBLIC.BOOKS.AUTHORSLIST -=-=-=-=-=-=-=-=-=-=-=-=-=- */
@@ -168,6 +169,8 @@ digraph "SchemaCrawler_Diagram" {
     >
   ];
 
+  "bookauthors_aa4376":"bookid_931bd73c.start":w -> "books_afd2ba21":"id_bb8abc08.end":e [label=<FK_Y_BOOK> style="solid" dir="both" arrowhead="teetee" arrowtail="crowodot"];
+  "books_afd2ba21":"previouseditionid_8c50cb95.start":w -> "books_afd2ba21":"id_bb8abc08.end":e [label=<FK_PREVIOUSEDITION> style="solid" dir="both" arrowhead="teetee" arrowtail="teeodot"];
 
 
   /* PUBLIC.BOOKS."Global Counts" -=-=-=-=-=-=-=-=-=-=-=-=-=- */
@@ -281,6 +284,8 @@ digraph "SchemaCrawler_Diagram" {
     >
   ];
 
+  "extra_pk_334890da":"publicationid_d4d93213.start":w -> "publications_949377f7":"id_f5162672.end":e [label=<FK_PUBLICATION_JOIN> style="solid" dir="both" arrowhead="teetee" arrowtail="crowodot"];
+  "writers_bf84ac10":"publication_id_b1bcb5cc.start":w -> "publications_949377f7":"id_f5162672.end":e [label=<FK_WRITERS_PUBLICATION> style="solid" dir="both" arrowhead="teetee" arrowtail="crowodot"];
 
 
   /* PUBLIC.FOR_LINT.WRITERS -=-=-=-=-=-=-=-=-=-=-=-=-=- */
@@ -340,6 +345,8 @@ digraph "SchemaCrawler_Diagram" {
     >
   ];
 
+  "extra_pk_334890da":"writerid_b8c70762.start":w -> "writers_bf84ac10":"id_3033cfb9.end":e [label=<FK_WRITER_JOIN> style="solid" dir="both" arrowhead="teetee" arrowtail="crowodot"];
+  "publications_949377f7":"writerid_1c21d0e5.start":w -> "writers_bf84ac10":"id_3033cfb9.end":e [label=<FK_PUBLICATIONS_WRITER> style="solid" dir="both" arrowhead="teetee" arrowtail="crowodot"];
 
 
   /* PUBLIC."PUBLISHER SALES".REGIONS -=-=-=-=-=-=-=-=-=-=-=-=-=- */
@@ -364,6 +371,8 @@ digraph "SchemaCrawler_Diagram" {
     >
   ];
 
+  "sales_20be6f95":"postalcode_738bc931.start":w -> "regions_bc895c48":"postalcode_9b2bfe9e.end":e [label=<FK_SALES_REGIONS> style="solid" dir="both" arrowhead="teetee" arrowtail="crowodot"];
+  "sales_20be6f95":"country_890cfe1d.start":w -> "regions_bc895c48":"country_7d0587d0.end":e [label=<FK_SALES_REGIONS> style="solid" dir="both" arrowhead="teetee" arrowtail="crowodot"];
 
 
   /* PUBLIC."PUBLISHER SALES".SALES -=-=-=-=-=-=-=-=-=-=-=-=-=- */
