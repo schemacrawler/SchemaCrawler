@@ -132,6 +132,13 @@ public final class SchemaTextExecutable
                                           schemaTextOptions,
                                           outputOptions);
     }
+    else if (schemaTextDetailType == SchemaTextDetailType.list)
+    {
+      formatter = new SchemaListFormatter(schemaTextDetailType,
+                                          schemaTextOptions,
+                                          outputOptions);
+    }
+
     else
     {
       formatter = new SchemaTextFormatter(schemaTextDetailType,
