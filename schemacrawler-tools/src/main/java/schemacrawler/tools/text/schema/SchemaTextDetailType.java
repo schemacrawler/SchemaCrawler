@@ -26,18 +26,8 @@ package schemacrawler.tools.text.schema;
  */
 public enum SchemaTextDetailType
 {
-
-  /**
-   * No column detail.
-   */
   brief,
-  /**
-   * Standard column detail.
-   */
   schema,
-  /**
-   * Maximum column detail, everything supported by SchemaCrawler.
-   */
-  details
-
+  details,
+  list,
 }
