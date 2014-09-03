@@ -174,7 +174,7 @@ public class InputReader
     try
     {
       final String inputSource = outputOptions.getOutputFormatValue();
-      if (outputOptions.getOutputFormat() == OutputFormat.text)
+      if (outputOptions.hasOutputFormat())
       {
         throw new SchemaCrawlerException("No script file provided");
       }

@@ -23,7 +23,7 @@ package schemacrawler.tools.text.utility;
 
 import static sf.util.Utility.NEWLINE;
 import static sf.util.Utility.isBlank;
-import schemacrawler.tools.options.OutputFormat;
+import schemacrawler.tools.options.TextOutputFormat;
 
 /**
  * Methods to format entire rows of output as text.
@@ -40,7 +40,7 @@ public class PlainTextFormattingHelper
    * @param outputFormat
    *        Output format - text or CSV.
    */
-  public PlainTextFormattingHelper(final OutputFormat outputFormat)
+  public PlainTextFormattingHelper(final TextOutputFormat outputFormat)
   {
     super(outputFormat);
   }

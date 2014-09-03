@@ -56,7 +56,7 @@ public class OutputOptions
    */
   public OutputOptions()
   {
-    this(OutputFormat.text.name());
+    this(TextOutputFormat.text.getFormat());
   }
 
   public OutputOptions(final Config config)
@@ -167,16 +167,15 @@ public class OutputOptions
    */
   public OutputFormat getOutputFormat()
   {
-    OutputFormat outputFormat;
-    try
+    final OutputFormat outputFormat = getTextOutputFormat();
+    if (outputFormat == null)
     {
-      outputFormat = OutputFormat.valueOf(outputFormatValue);
+      return TextOutputFormat.text;
     }
-    catch (final IllegalArgumentException e)
+    else
     {
-      outputFormat = null;
+      return outputFormat;
     }
-    return outputFormat;
   }
 
   /**
@@ -201,7 +200,7 @@ public class OutputOptions
    */
   public boolean hasOutputFormat()
   {
-    return getOutputFormat() != null;
+    return getTextOutputFormat() != null;
   }
 
   public boolean isConsoleOutput()
@@ -286,6 +285,20 @@ public class OutputOptions
   public String toString()
   {
     return ObjectToString.toString(this);
+  }
+
+  private OutputFormat getTextOutputFormat()
+  {
+    TextOutputFormat outputFormat;
+    try
+    {
+      outputFormat = TextOutputFormat.valueOf(outputFormatValue);
+    }
+    catch (final IllegalArgumentException e)
+    {
+      outputFormat = null;
+    }
+    return outputFormat;
   }
 
 }

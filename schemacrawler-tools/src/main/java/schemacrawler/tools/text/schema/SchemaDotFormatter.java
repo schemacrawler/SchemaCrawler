@@ -46,7 +46,7 @@ import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.analysis.associations.DatabaseWithAssociations;
-import schemacrawler.tools.options.OutputFormat;
+import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.BaseDotFormatter;
 import schemacrawler.tools.text.utility.Alignment;
@@ -185,7 +185,7 @@ public final class SchemaDotFormatter
       .println();
 
     out
-      .append(new TableRow(OutputFormat.html)
+      .append(new TableRow(TextOutputFormat.html)
         .add(newTableCell(tableName,
                           Alignment.left,
                           true,
@@ -440,7 +440,7 @@ public final class SchemaDotFormatter
     {
       return;
     }
-    final TableRow remarksRow = new TableRow(OutputFormat.html);
+    final TableRow remarksRow = new TableRow(TextOutputFormat.html);
     if (options.isShowOrdinalNumbers())
     {
       remarksRow.add(newTableCell("", Alignment.right, false, Color.white, 1));
@@ -462,7 +462,7 @@ public final class SchemaDotFormatter
     {
       return;
     }
-    final TableRow remarksRow = new TableRow(OutputFormat.html);
+    final TableRow remarksRow = new TableRow(TextOutputFormat.html);
     if (options.isShowOrdinalNumbers())
     {
       remarksRow.add(newTableCell("", Alignment.right, false, Color.white, 1));
@@ -506,7 +506,7 @@ public final class SchemaDotFormatter
       final String columnDetails = columnType + nullable;
       final boolean emphasize = column.isPartOfPrimaryKey();
 
-      final TableRow row = new TableRow(OutputFormat.html);
+      final TableRow row = new TableRow(TextOutputFormat.html);
       if (options.isShowOrdinalNumbers())
       {
         final String ordinalNumberString = String.valueOf(column
@@ -541,7 +541,7 @@ public final class SchemaDotFormatter
     {
       return;
     }
-    out.append(new TableRow(OutputFormat.html).add(newTableCell(table
+    out.append(new TableRow(TextOutputFormat.html).add(newTableCell(table
       .getRemarks(), Alignment.left, false, Color.white, 3)).toString());
     out.println();
   }

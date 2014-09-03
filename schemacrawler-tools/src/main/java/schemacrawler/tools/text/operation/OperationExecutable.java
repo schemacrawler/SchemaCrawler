@@ -37,6 +37,7 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseStagedExecutable;
 import schemacrawler.tools.options.OutputFormat;
+import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.traversal.DataTraversalHandler;
 
 /**
@@ -131,8 +132,9 @@ public final class OperationExecutable
   {
     if (!outputOptions.hasOutputFormat())
     {
-      throw new IllegalArgumentException("Unknown output format: "
-                                         + outputOptions.getOutputFormatValue());
+      LOGGER.log(Level.CONFIG,
+                 "Unknown output format: "
+                     + outputOptions.getOutputFormatValue());
     }
   }
 
@@ -144,7 +146,7 @@ public final class OperationExecutable
     final OperationOptions operationOptions = getOperationOptions();
     final DataTraversalHandler formatter;
     final OutputFormat outputFormat = outputOptions.getOutputFormat();
-    if (outputFormat == OutputFormat.json)
+    if (outputFormat == TextOutputFormat.json)
     {
       formatter = new DataJsonFormatter(operation,
                                         operationOptions,

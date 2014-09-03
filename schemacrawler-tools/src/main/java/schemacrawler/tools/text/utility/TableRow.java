@@ -27,7 +27,7 @@ import static sf.util.Utility.NEWLINE;
 import java.util.ArrayList;
 import java.util.List;
 
-import schemacrawler.tools.options.OutputFormat;
+import schemacrawler.tools.options.TextOutputFormat;
 
 /**
  * Represents an HTML table row.
@@ -37,10 +37,10 @@ import schemacrawler.tools.options.OutputFormat;
 public final class TableRow
 {
 
-  private final OutputFormat outputFormat;
+  private final TextOutputFormat outputFormat;
   private final List<TableCell> cells;
 
-  public TableRow(final OutputFormat outputFormat)
+  public TableRow(final TextOutputFormat outputFormat)
   {
     this.outputFormat = outputFormat;
     cells = new ArrayList<>();
@@ -78,7 +78,7 @@ public final class TableRow
   @Override
   public String toString()
   {
-    if (outputFormat == OutputFormat.html)
+    if (outputFormat == TextOutputFormat.html)
     {
       return toHtmlString();
     }

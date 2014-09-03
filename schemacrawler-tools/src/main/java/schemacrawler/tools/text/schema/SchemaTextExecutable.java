@@ -22,6 +22,8 @@ package schemacrawler.tools.text.schema;
 
 
 import java.sql.Connection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import schemacrawler.schema.Database;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -29,6 +31,7 @@ import schemacrawler.tools.analysis.associations.DatabaseWithAssociations;
 import schemacrawler.tools.executable.BaseStagedExecutable;
 import schemacrawler.tools.options.InfoLevel;
 import schemacrawler.tools.options.OutputFormat;
+import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
 import schemacrawler.tools.traversal.SchemaTraverser;
 
@@ -40,6 +43,9 @@ import schemacrawler.tools.traversal.SchemaTraverser;
 public final class SchemaTextExecutable
   extends BaseStagedExecutable
 {
+
+  private static final Logger LOGGER = Logger
+    .getLogger(SchemaTextExecutable.class.getName());
 
   private SchemaTextOptions schemaTextOptions;
 
@@ -100,8 +106,9 @@ public final class SchemaTextExecutable
   {
     if (!outputOptions.hasOutputFormat())
     {
-      throw new IllegalArgumentException("Unknown output format: "
-                                         + outputOptions.getOutputFormatValue());
+      LOGGER.log(Level.CONFIG,
+                 "Unknown output format: "
+                     + outputOptions.getOutputFormatValue());
     }
   }
 
@@ -126,7 +133,7 @@ public final class SchemaTextExecutable
     final SchemaTraversalHandler formatter;
 
     final OutputFormat outputFormat = outputOptions.getOutputFormat();
-    if (outputFormat == OutputFormat.json)
+    if (outputFormat == TextOutputFormat.json)
     {
       formatter = new SchemaJsonFormatter(schemaTextDetailType,
                                           schemaTextOptions,

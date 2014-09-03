@@ -18,6 +18,7 @@ import schemacrawler.Main;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.tools.options.InfoLevel;
 import schemacrawler.tools.options.OutputFormat;
+import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 
 public class SchemaCrawlerCommandLineToolsTest
@@ -74,7 +75,7 @@ public class SchemaCrawlerCommandLineToolsTest
         .createTempFile("schemacrawler." + referenceFile + ".", ".test");
       testOutputFile.delete();
 
-      final OutputFormat outputFormat = OutputFormat.text;
+      final OutputFormat outputFormat = TextOutputFormat.text;
 
       final List<String> args = new ArrayList<>(Arrays.asList(new String[] {
           "-driver=org.hsqldb.jdbc.JDBCDriver",
@@ -84,7 +85,7 @@ public class SchemaCrawlerCommandLineToolsTest
           "-g=" + additionalProperties.getAbsolutePath(),
           "-infolevel=" + infoLevel,
           "-command=" + schemaTextDetailType,
-          "-outputformat=" + outputFormat,
+          "-outputformat=" + outputFormat.getFormat(),
           "-outputfile=" + testOutputFile.getAbsolutePath(),
           "-noinfo",
       }));
@@ -94,7 +95,7 @@ public class SchemaCrawlerCommandLineToolsTest
 
       failures.addAll(compareOutput(GREP_OUTPUT + referenceFile,
                                     testOutputFile,
-                                    outputFormat.name()));
+                                    outputFormat.getFormat()));
     }
 
     if (failures.size() > 0)

@@ -23,7 +23,7 @@ package schemacrawler.tools.text.utility;
 
 import java.awt.Color;
 
-import schemacrawler.tools.options.OutputFormat;
+import schemacrawler.tools.options.TextOutputFormat;
 
 /**
  * Methods to format entire rows of output as HTML.
@@ -49,9 +49,9 @@ abstract class BaseTextFormattingHelper
     return dashedSeparator.toString();
   }
 
-  private final OutputFormat outputFormat;
+  private final TextOutputFormat outputFormat;
 
-  BaseTextFormattingHelper(final OutputFormat outputFormat)
+  BaseTextFormattingHelper(final TextOutputFormat outputFormat)
   {
     this.outputFormat = outputFormat;
   }
@@ -260,10 +260,10 @@ abstract class BaseTextFormattingHelper
   @Override
   public String createRow(final Object... columnData)
   {
-    OutputFormat outputFormat = this.outputFormat;
-    if (outputFormat == OutputFormat.text)
+    TextOutputFormat outputFormat = this.outputFormat;
+    if (outputFormat == TextOutputFormat.text)
     {
-      outputFormat = OutputFormat.tsv;
+      outputFormat = TextOutputFormat.tsv;
     }
     final TableRow row = new TableRow(outputFormat);
     for (final Object element: columnData)
@@ -298,10 +298,10 @@ abstract class BaseTextFormattingHelper
   @Override
   public String createRowHeader(final String... columnNames)
   {
-    OutputFormat outputFormat = this.outputFormat;
-    if (outputFormat == OutputFormat.text)
+    TextOutputFormat outputFormat = this.outputFormat;
+    if (outputFormat == TextOutputFormat.text)
     {
-      outputFormat = OutputFormat.tsv;
+      outputFormat = TextOutputFormat.tsv;
     }
     final TableRow row = new TableRow(outputFormat);
     for (final String columnName: columnNames)
@@ -321,7 +321,7 @@ abstract class BaseTextFormattingHelper
 
   private TableCell newTableCell(final String text,
                                  final String styleClass,
-                                 final OutputFormat outputFormat)
+                                 final TextOutputFormat outputFormat)
   {
     return new TableCell(text,
                          0,

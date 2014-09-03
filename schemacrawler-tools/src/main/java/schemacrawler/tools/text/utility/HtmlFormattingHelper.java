@@ -23,7 +23,7 @@ package schemacrawler.tools.text.utility;
 
 import static sf.util.Utility.NEWLINE;
 import static sf.util.Utility.isBlank;
-import schemacrawler.tools.options.OutputFormat;
+import schemacrawler.tools.options.TextOutputFormat;
 import sf.util.Utility;
 
 /**
@@ -57,7 +57,7 @@ public final class HtmlFormattingHelper
            + NEWLINE + "<body>" + NEWLINE;
   }
 
-  public HtmlFormattingHelper(final OutputFormat outputFormat)
+  public HtmlFormattingHelper(final TextOutputFormat outputFormat)
   {
     super(outputFormat);
   }
