@@ -11,6 +11,7 @@ import java.util.List;
 import org.junit.Test;
 
 import schemacrawler.tools.options.OutputFormat;
+import schemacrawler.tools.options.TextOutputFormat;
 
 public class TestSqliteDistribution
 {
@@ -19,8 +20,8 @@ public class TestSqliteDistribution
   public void testSqliteMain()
     throws Exception
   {
-    final OutputFormat outputFormat = OutputFormat.text;
-    final String referenceFile = "sqlite.main" + "." + outputFormat.name();
+    final OutputFormat outputFormat = TextOutputFormat.text;
+    final String referenceFile = "sqlite.main" + "." + outputFormat.getFormat();
     final File testOutputFile = File.createTempFile("schemacrawler."
                                                         + referenceFile + ".",
                                                     ".test");
@@ -36,7 +37,7 @@ public class TestSqliteDistribution
 
     final List<String> failures = compareOutput(referenceFile,
                                                 testOutputFile,
-                                                outputFormat.name());
+                                                outputFormat.getFormat());
     if (failures.size() > 0)
     {
       fail(failures.toString());

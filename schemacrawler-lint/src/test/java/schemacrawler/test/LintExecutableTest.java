@@ -35,6 +35,7 @@ import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.commandline.SchemaCrawlerCommandLine;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputFormat;
+import schemacrawler.tools.options.TextOutputFormat;
 
 public class LintExecutableTest
   extends BaseExecutableTest
@@ -57,7 +58,7 @@ public class LintExecutableTest
   public void commandlineLintReport()
     throws Exception
   {
-    executeCommandlineAndCheckForOutputFile(OutputFormat.text.name(),
+    executeCommandlineAndCheckForOutputFile(TextOutputFormat.text,
                                             "executableForLint");
   }
 
@@ -67,7 +68,7 @@ public class LintExecutableTest
   {
     useLinterConfigFile();
 
-    executeCommandlineAndCheckForOutputFile(OutputFormat.text.name(),
+    executeCommandlineAndCheckForOutputFile(TextOutputFormat.text,
                                             "executableForLintWithConfig");
 
     removeLinterConfig();
@@ -77,7 +78,7 @@ public class LintExecutableTest
   public void executableLintReport()
     throws Exception
   {
-    executeExecutableAndCheckForOutputFile(OutputFormat.text.name(),
+    executeExecutableAndCheckForOutputFile(TextOutputFormat.text,
                                            "executableForLint");
   }
 
@@ -87,13 +88,13 @@ public class LintExecutableTest
   {
     useLinterConfigFile();
 
-    executeExecutableAndCheckForOutputFile(OutputFormat.text.name(),
+    executeExecutableAndCheckForOutputFile(TextOutputFormat.text,
                                            "executableForLintWithConfig");
 
     removeLinterConfig();
   }
 
-  private void executeCommandlineAndCheckForOutputFile(final String outputFormatValue,
+  private void executeCommandlineAndCheckForOutputFile(final OutputFormat outputFormat,
                                                        final String referenceFileName)
     throws Exception
   {
@@ -107,7 +108,7 @@ public class LintExecutableTest
                                                                               "-infolevel=standard",
                                                                               "-sortcolumns=true",
                                                                               "-outputformat="
-                                                                                  + outputFormatValue,
+                                                                                  + outputFormat.getFormat(),
                                                                               "-outputfile="
                                                                                   + testOutputFile
                                                                                     .getAbsolutePath());
@@ -122,12 +123,12 @@ public class LintExecutableTest
     }
   }
 
-  private void executeExecutableAndCheckForOutputFile(final String outputFormatValue,
+  private void executeExecutableAndCheckForOutputFile(final OutputFormat outputFormat,
                                                       final String referenceFileName)
     throws Exception
   {
     executeExecutableAndCheckForOutputFile(new SchemaCrawlerExecutable("lint"),
-                                           outputFormatValue,
+                                           outputFormat.getFormat(),
                                            referenceFileName + ".txt");
   }
 

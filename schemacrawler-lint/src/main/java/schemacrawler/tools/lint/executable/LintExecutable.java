@@ -32,6 +32,7 @@ import schemacrawler.tools.executable.BaseStagedExecutable;
 import schemacrawler.tools.lint.LintedDatabase;
 import schemacrawler.tools.lint.LinterConfigs;
 import schemacrawler.tools.options.OutputFormat;
+import schemacrawler.tools.options.TextOutputFormat;
 import sf.util.Utility;
 
 public class LintExecutable
@@ -106,7 +107,7 @@ extends BaseStagedExecutable
     final LintOptions lintOptions = getLintOptions();
 
     final OutputFormat outputFormat = outputOptions.getOutputFormat();
-    if (outputFormat == OutputFormat.json)
+    if (outputFormat == TextOutputFormat.json)
     {
       formatter = new LintJsonFormatter(lintOptions, outputOptions);
     }

@@ -35,8 +35,8 @@ import org.junit.Test;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.base.BaseTextOptionsBuilder;
 import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
@@ -127,7 +127,7 @@ public class SchemaCrawlerTextCommandsOutputTest
     assertTrue(!dummyOutputFile.exists());
 
     final Writer writer = new PrintWriter(testOutputFile, "UTF-8");
-    final OutputOptions outputOptions = new OutputOptions(OutputFormat.text.name(),
+    final OutputOptions outputOptions = new OutputOptions(TextOutputFormat.text.getFormat(),
                                                           dummyOutputFile);
     outputOptions.setWriter(writer);
 
@@ -147,7 +147,7 @@ public class SchemaCrawlerTextCommandsOutputTest
     final List<String> failures = compareOutput(COMMAND_OUTPUT + referenceFile,
                                                 testOutputFile,
                                                 outputOptions.getOutputFormat()
-                                                  .name());
+                                                  .getFormat());
     if (failures.size() > 0)
     {
       fail(failures.toString());
@@ -163,7 +163,7 @@ public class SchemaCrawlerTextCommandsOutputTest
                                                     ".test");
     testOutputFile.delete();
 
-    final OutputOptions outputOptions = new OutputOptions(OutputFormat.text.name(),
+    final OutputOptions outputOptions = new OutputOptions(TextOutputFormat.text.getFormat(),
                                                           testOutputFile);
 
     final BaseTextOptionsBuilder baseTextOptions = new BaseTextOptionsBuilder(config);
@@ -180,7 +180,7 @@ public class SchemaCrawlerTextCommandsOutputTest
     final List<String> failures = compareOutput(COMMAND_OUTPUT + referenceFile,
                                                 testOutputFile,
                                                 outputOptions.getOutputFormat()
-                                                  .name());
+                                                  .getFormat());
     if (failures.size() > 0)
     {
       fail(failures.toString());

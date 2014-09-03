@@ -29,7 +29,7 @@ import org.junit.Test;
 
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import schemacrawler.tools.options.OutputFormat;
+import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 import sf.util.ObjectToString;
 
@@ -104,7 +104,7 @@ public class SchemaCrawlerSystemOutputTest
     final SchemaCrawlerOptions schemaCrawlerOptions = createOptions(dataSourceName,
                                                                     schemaInclusion);
 
-    final OutputOptions outputOptions = new OutputOptions(OutputFormat.text.name(),
+    final OutputOptions outputOptions = new OutputOptions(TextOutputFormat.text.getFormat(),
                                                           testOutputFile);
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
@@ -115,7 +115,7 @@ public class SchemaCrawlerSystemOutputTest
     final List<String> failures = compareOutput(COMMAND_OUTPUT + referenceFile,
                                                 testOutputFile,
                                                 outputOptions.getOutputFormat()
-                                                  .name());
+                                                  .getFormat());
     if (failures.size() > 0)
     {
       return failures.toString();

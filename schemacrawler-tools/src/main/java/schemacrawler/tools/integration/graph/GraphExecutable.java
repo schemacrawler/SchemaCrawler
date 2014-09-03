@@ -152,7 +152,7 @@ public final class GraphExecutable
 
     command.addAll(graphOptions.getGraphVizOpts());
     command.add("-T");
-    command.add(graphOutputOptions.getGraphOutputFormat().getFormat());
+    command.add(graphOutputOptions.getOutputFormat().getFormat());
     command.add("-o");
     command.add(graphOutputOptions.getDiagramFile().getAbsolutePath());
     command.add(dotFile.getAbsolutePath());
@@ -175,7 +175,7 @@ public final class GraphExecutable
     throws IOException
   {
 
-    if (graphOutputOptions.getGraphOutputFormat() == GraphOutputFormat.scdot)
+    if (graphOutputOptions.getOutputFormat() == GraphOutputFormat.scdot)
     {
       copy(dotFile.toPath(),
            graphOutputOptions.getDiagramFile().toPath(),

@@ -37,8 +37,8 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
@@ -90,7 +90,7 @@ public class SchemaCrawlerXmlOutputTest
                                                         + referenceFile + ".",
                                                     ".test");
 
-    final OutputOptions outputOptions = new OutputOptions(OutputFormat.html.name(),
+    final OutputOptions outputOptions = new OutputOptions(TextOutputFormat.html.getFormat(),
                                                           testOutputFile);
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
@@ -110,7 +110,7 @@ public class SchemaCrawlerXmlOutputTest
 
     failures.addAll(compareOutput(XML_OUTPUT + referenceFile,
                                   testOutputFile,
-                                  OutputFormat.html.name()));
+                                  TextOutputFormat.html.getFormat()));
   }
 
 }

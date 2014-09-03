@@ -24,8 +24,8 @@ package schemacrawler.tools.commandline;
 import java.io.File;
 
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.options.TextOutputFormat;
 import sf.util.Utility;
 import sf.util.clparser.StringOption;
 
@@ -42,7 +42,7 @@ public final class OutputOptionsParser
 
   public OutputOptionsParser(final Config config)
   {
-    super(new StringOption("outputformat", OutputFormat.text.toString()),
+    super(new StringOption("outputformat", TextOutputFormat.text.getFormat()),
           new StringOption('o', "outputfile", ""));
 
     outputOptions = new OutputOptions(config);

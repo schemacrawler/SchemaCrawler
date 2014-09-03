@@ -21,11 +21,42 @@
 package schemacrawler.tools.options;
 
 
-public interface OutputFormat
+/**
+ * Enumeration for text format type.
+ */
+public enum TextOutputFormat
+  implements OutputFormat
 {
 
-  public String getDescription();
+  text("Plain text format"),
+  html("HyperText Markup Language (HTML) format"),
+  csv("Comma-separated values (CSV) format"),
+  tsv("Tab-separated values (TSV) format"),
+  json("JavaScript Object Notation (JSON) format"), ;
 
-  public String getFormat();
+  private final String description;
+
+  private TextOutputFormat(final String description)
+  {
+    this.description = description;
+  }
+
+  @Override
+  public String getDescription()
+  {
+    return description;
+  }
+
+  @Override
+  public String getFormat()
+  {
+    return name();
+  }
+
+  @Override
+  public String toString()
+  {
+    return String.format("%s - %s", getFormat(), description);
+  }
 
 }

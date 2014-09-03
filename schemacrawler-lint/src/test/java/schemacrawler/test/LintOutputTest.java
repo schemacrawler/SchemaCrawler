@@ -41,6 +41,7 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.InfoLevel;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 
@@ -69,11 +70,11 @@ public class LintOutputTest
 
     final List<String> failures = new ArrayList<>();
     for (final OutputFormat outputFormat: EnumSet.complementOf(EnumSet
-      .of(OutputFormat.tsv)))
+      .of(TextOutputFormat.tsv)))
     {
       for (final String command: commands)
       {
-        final String referenceFile = command + "." + outputFormat.name();
+        final String referenceFile = command + "." + outputFormat.getFormat();
 
         final File testOutputFile = File.createTempFile("schemacrawler."
                                                             + referenceFile
@@ -81,7 +82,7 @@ public class LintOutputTest
                                                         ".test");
         testOutputFile.delete();
 
-        final OutputOptions outputOptions = new OutputOptions(outputFormat.name(),
+        final OutputOptions outputOptions = new OutputOptions(outputFormat.getFormat(),
                                                               testOutputFile);
 
         final Config config = Config
@@ -99,7 +100,7 @@ public class LintOutputTest
 
         failures.addAll(compareOutput(COMPOSITE_OUTPUT + referenceFile,
                                       testOutputFile,
-                                      outputFormat.name()));
+                                      outputFormat.getFormat()));
       }
     }
     if (failures.size() > 0)
@@ -122,7 +123,7 @@ public class LintOutputTest
                                                     ".test");
     testOutputFile.delete();
 
-    final OutputOptions outputOptions = new OutputOptions(OutputFormat.json.name(),
+    final OutputOptions outputOptions = new OutputOptions(TextOutputFormat.json.getFormat(),
                                                           testOutputFile);
 
     final Config config = Config
@@ -139,7 +140,7 @@ public class LintOutputTest
 
     failures.addAll(compareOutput(JSON_OUTPUT + referenceFile,
                                   testOutputFile,
-                                  outputOptions.getOutputFormat().name()));
+                                  outputOptions.getOutputFormat().getFormat()));
 
     if (failures.size() > 0)
     {
@@ -160,7 +161,7 @@ public class LintOutputTest
                                                     ".test");
     testOutputFile.delete();
 
-    final OutputOptions outputOptions = new OutputOptions(OutputFormat.text.name(),
+    final OutputOptions outputOptions = new OutputOptions(TextOutputFormat.text.getFormat(),
                                                           testOutputFile);
 
     final Config config = Config
@@ -177,7 +178,7 @@ public class LintOutputTest
 
     failures.addAll(compareOutput(TEXT_OUTPUT + referenceFile,
                                   testOutputFile,
-                                  outputOptions.getOutputFormat().name()));
+                                  outputOptions.getOutputFormat().getFormat()));
 
     if (failures.size() > 0)
     {

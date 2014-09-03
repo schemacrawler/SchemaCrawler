@@ -26,6 +26,7 @@ import schemacrawler.tools.integration.graph.GraphOutputFormat;
 import schemacrawler.tools.options.InfoLevel;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 
 public class SpinThroughTest
@@ -41,11 +42,11 @@ public class SpinThroughTest
   }
 
   private static final String SPIN_THROUGH_OUTPUT = "spin_through_output/";
-  private static final String[] outputFormats = new String[] {
-      OutputFormat.text.name(),
-      OutputFormat.html.name(),
-      OutputFormat.json.name(),
-      GraphOutputFormat.scdot.name()
+  private static final OutputFormat[] outputFormats = new OutputFormat[] {
+      TextOutputFormat.text,
+      TextOutputFormat.html,
+      TextOutputFormat.json,
+      GraphOutputFormat.scdot
   };
   private File hsqldbProperties;
 
@@ -68,7 +69,7 @@ public class SpinThroughTest
       {
         continue;
       }
-      for (final String outputFormat: outputFormats)
+      for (final OutputFormat outputFormat: outputFormats)
       {
         for (final SchemaTextDetailType schemaTextDetailType: SchemaTextDetailType
           .values())
@@ -80,7 +81,7 @@ public class SpinThroughTest
                                                      infoLevel,
                                                      outputFormat);
 
-          final OutputOptions outputOptions = new OutputOptions(outputFormat,
+          final OutputOptions outputOptions = new OutputOptions(outputFormat.getFormat(),
                                                                 testOutputFile);
 
           final Config config = Config.load(hsqldbProperties.getAbsolutePath());
@@ -98,7 +99,7 @@ public class SpinThroughTest
 
           failures.addAll(compareOutput(SPIN_THROUGH_OUTPUT + referenceFile,
                                         testOutputFile,
-                                        outputFormat));
+                                        outputFormat.getFormat()));
         }
       }
     }
@@ -122,7 +123,7 @@ public class SpinThroughTest
         continue;
       }
 
-      for (final String outputFormat: outputFormats)
+      for (final OutputFormat outputFormat: outputFormats)
       {
         for (final SchemaTextDetailType schemaTextDetailType: SchemaTextDetailType
           .values())
@@ -144,13 +145,13 @@ public class SpinThroughTest
               "-synonyms=.*",
               "-infolevel=" + infoLevel,
               "-command=" + schemaTextDetailType,
-              "-outputformat=" + outputFormat,
+              "-outputformat=" + outputFormat.getFormat(),
               "-outputfile=" + testOutputFile.getAbsolutePath(),
           });
 
           failures.addAll(compareOutput(SPIN_THROUGH_OUTPUT + referenceFile,
                                         testOutputFile,
-                                        outputFormat));
+                                        outputFormat.getFormat()));
         }
       }
     }
@@ -162,11 +163,11 @@ public class SpinThroughTest
 
   private File createTempFile(final SchemaTextDetailType schemaTextDetailType,
                               final InfoLevel infoLevel,
-                              final String outputFormat)
+                              final OutputFormat outputFormat)
   {
     return org.apache.tools.ant.util.FileUtils.getFileUtils()
       .createTempFile(String.format("%s.%s", schemaTextDetailType, infoLevel),
-                      outputFormat,
+                      outputFormat.getFormat(),
                       null,
                       true,
                       false);
@@ -174,14 +175,14 @@ public class SpinThroughTest
 
   private String referenceFile(final SchemaTextDetailType schemaTextDetailType,
                                final InfoLevel infoLevel,
-                               final String outputFormat)
+                               final OutputFormat outputFormat)
   {
     final String referenceFile = String.format("%d%d.%s_%s.%s",
                                                schemaTextDetailType.ordinal(),
                                                infoLevel.ordinal(),
                                                schemaTextDetailType,
                                                infoLevel,
-                                               outputFormat);
+                                               outputFormat.getFormat());
     return referenceFile;
   }
 
