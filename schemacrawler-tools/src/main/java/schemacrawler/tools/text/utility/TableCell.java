@@ -27,7 +27,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import schemacrawler.tools.options.OutputFormat;
+import schemacrawler.tools.options.TextOutputFormat;
 
 /**
  * Represents an HTML table row.
@@ -81,7 +81,7 @@ public class TableCell
     return sb.toString();
   }
 
-  private final OutputFormat outputFormat;
+  private final TextOutputFormat outputFormat;
   private final String styleClass;
   private final int colSpan;
   private final int characterWidth;
@@ -98,7 +98,7 @@ public class TableCell
                    final String styleClass,
                    final Color bgColor,
                    final int colSpan,
-                   final OutputFormat outputFormat)
+                   final TextOutputFormat outputFormat)
   {
     this.outputFormat = outputFormat;
     this.colSpan = colSpan;
@@ -124,7 +124,7 @@ public class TableCell
   @Override
   public String toString()
   {
-    if (outputFormat == OutputFormat.html)
+    if (outputFormat == TextOutputFormat.html)
     {
       return toHtmlString();
     }
@@ -203,11 +203,11 @@ public class TableCell
   {
     final String value = text == null? "NULL": text;
 
-    if (outputFormat == OutputFormat.csv)
+    if (outputFormat == TextOutputFormat.csv)
     {
       return escapeAndQuoteCsv(value);
     }
-    else if (outputFormat == OutputFormat.tsv)
+    else if (outputFormat == TextOutputFormat.tsv)
     {
       return String.valueOf(value);
     }

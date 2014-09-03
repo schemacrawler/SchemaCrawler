@@ -10,6 +10,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputWriter;
+import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.utility.HtmlFormattingHelper;
 import schemacrawler.tools.text.utility.PlainTextFormattingHelper;
 import schemacrawler.tools.text.utility.TextFormattingHelper;
@@ -46,13 +47,13 @@ public abstract class BaseFormatter<O extends BaseTextOptions>
 
     this.outputOptions = outputOptions;
     final OutputFormat outputFormat = outputOptions.getOutputFormat();
-    if (outputFormat == OutputFormat.html)
+    if (outputFormat == TextOutputFormat.html)
     {
-      formattingHelper = new HtmlFormattingHelper(outputFormat);
+      formattingHelper = new HtmlFormattingHelper((TextOutputFormat) outputFormat);
     }
     else
     {
-      formattingHelper = new PlainTextFormattingHelper(outputFormat);
+      formattingHelper = new PlainTextFormattingHelper((TextOutputFormat) outputFormat);
     }
 
     out = new PrintWriter(new OutputWriter(outputOptions,

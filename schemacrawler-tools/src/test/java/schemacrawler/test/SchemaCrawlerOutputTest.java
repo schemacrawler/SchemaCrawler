@@ -45,6 +45,7 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.InfoLevel;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.base.BaseTextOptions;
 import schemacrawler.tools.text.base.BaseTextOptionsBuilder;
 import schemacrawler.tools.text.operation.Operation;
@@ -92,11 +93,11 @@ public class SchemaCrawlerOutputTest
 
     final List<String> failures = new ArrayList<>();
     for (final OutputFormat outputFormat: EnumSet.complementOf(EnumSet
-      .of(OutputFormat.tsv)))
+      .of(TextOutputFormat.tsv)))
     {
       for (final String command: commands)
       {
-        final String referenceFile = command + "." + outputFormat.name();
+        final String referenceFile = command + "." + outputFormat.getFormat();
 
         final File testOutputFile = File.createTempFile("schemacrawler."
                                                             + referenceFile
@@ -104,7 +105,7 @@ public class SchemaCrawlerOutputTest
                                                         ".test");
         testOutputFile.delete();
 
-        final OutputOptions outputOptions = new OutputOptions(outputFormat.name(),
+        final OutputOptions outputOptions = new OutputOptions(outputFormat.getFormat(),
                                                               testOutputFile);
 
         final Config config = Config
@@ -123,7 +124,7 @@ public class SchemaCrawlerOutputTest
 
         failures.addAll(compareOutput(COMPOSITE_OUTPUT + referenceFile,
                                       testOutputFile,
-                                      outputFormat.name()));
+                                      outputFormat.getFormat()));
       }
     }
     if (failures.size() > 0)
@@ -152,15 +153,16 @@ public class SchemaCrawlerOutputTest
     textOptions.setHideConstraintNames(true);
 
     for (final OutputFormat outputFormat: EnumSet.complementOf(EnumSet
-      .of(OutputFormat.tsv)))
+      .of(TextOutputFormat.tsv)))
     {
-      final String referenceFile = "details_maximum." + outputFormat.name();
+      final String referenceFile = "details_maximum."
+                                   + outputFormat.getFormat();
 
       final File testOutputFile = File
         .createTempFile("schemacrawler." + referenceFile + ".", ".test");
       testOutputFile.delete();
 
-      final OutputOptions outputOptions = new OutputOptions(outputFormat.name(),
+      final OutputOptions outputOptions = new OutputOptions(outputFormat.getFormat(),
                                                             testOutputFile);
 
       final Config config = Config
@@ -184,7 +186,7 @@ public class SchemaCrawlerOutputTest
       failures.addAll(compareOutput(HIDE_CONSTRAINT_NAMES_OUTPUT
                                         + referenceFile,
                                     testOutputFile,
-                                    outputFormat.name()));
+                                    outputFormat.getFormat()));
     }
     if (failures.size() > 0)
     {
@@ -211,7 +213,8 @@ public class SchemaCrawlerOutputTest
         .createTempFile("schemacrawler." + referenceFile + ".", ".test");
       testOutputFile.delete();
 
-      final OutputOptions outputOptions = new OutputOptions(OutputFormat.json.name(),
+      final OutputOptions outputOptions = new OutputOptions(TextOutputFormat.json
+                                                              .getFormat(),
                                                             testOutputFile);
 
       final Config config = Config
@@ -228,9 +231,10 @@ public class SchemaCrawlerOutputTest
       executable.setOutputOptions(outputOptions);
       executable.execute(getConnection());
 
-      failures.addAll(compareOutput(JSON_OUTPUT + referenceFile,
-                                    testOutputFile,
-                                    outputOptions.getOutputFormat().name()));
+      failures
+        .addAll(compareOutput(JSON_OUTPUT + referenceFile,
+                              testOutputFile,
+                              outputOptions.getOutputFormat().getFormat()));
     }
     if (failures.size() > 0)
     {
@@ -254,15 +258,16 @@ public class SchemaCrawlerOutputTest
     textOptions.setShowOrdinalNumbers(true);
 
     for (final OutputFormat outputFormat: EnumSet.complementOf(EnumSet
-      .of(OutputFormat.tsv)))
+      .of(TextOutputFormat.tsv)))
     {
-      final String referenceFile = "details_maximum." + outputFormat.name();
+      final String referenceFile = "details_maximum."
+                                   + outputFormat.getFormat();
 
       final File testOutputFile = File
         .createTempFile("schemacrawler." + referenceFile + ".", ".test");
       testOutputFile.delete();
 
-      final OutputOptions outputOptions = new OutputOptions(outputFormat.name(),
+      final OutputOptions outputOptions = new OutputOptions(outputFormat.getFormat(),
                                                             testOutputFile);
 
       final Config config = Config
@@ -285,7 +290,7 @@ public class SchemaCrawlerOutputTest
 
       failures.addAll(compareOutput(ORDINAL_OUTPUT + referenceFile,
                                     testOutputFile,
-                                    outputFormat.name()));
+                                    outputFormat.getFormat()));
     }
     if (failures.size() > 0)
     {
@@ -309,15 +314,15 @@ public class SchemaCrawlerOutputTest
     textOptions.setShowUnqualifiedNames(true);
 
     for (final OutputFormat outputFormat: EnumSet.complementOf(EnumSet
-      .of(OutputFormat.tsv)))
+      .of(TextOutputFormat.tsv)))
     {
-      final String referenceFile = "routines." + outputFormat.name();
+      final String referenceFile = "routines." + outputFormat.getFormat();
 
       final File testOutputFile = File
         .createTempFile("schemacrawler." + referenceFile + ".", ".test");
       testOutputFile.delete();
 
-      final OutputOptions outputOptions = new OutputOptions(outputFormat.name(),
+      final OutputOptions outputOptions = new OutputOptions(outputFormat.getFormat(),
                                                             testOutputFile);
 
       final Config config = Config
@@ -340,7 +345,7 @@ public class SchemaCrawlerOutputTest
 
       failures.addAll(compareOutput(ROUTINES_OUTPUT + referenceFile,
                                     testOutputFile,
-                                    outputFormat.name()));
+                                    outputFormat.getFormat()));
     }
     if (failures.size() > 0)
     {
@@ -364,15 +369,16 @@ public class SchemaCrawlerOutputTest
     textOptions.setShowUnqualifiedNames(true);
 
     for (final OutputFormat outputFormat: EnumSet.complementOf(EnumSet
-      .of(OutputFormat.tsv)))
+      .of(TextOutputFormat.tsv)))
     {
-      final String referenceFile = "details_maximum." + outputFormat.name();
+      final String referenceFile = "details_maximum."
+                                   + outputFormat.getFormat();
 
       final File testOutputFile = File
         .createTempFile("schemacrawler." + referenceFile + ".", ".test");
       testOutputFile.delete();
 
-      final OutputOptions outputOptions = new OutputOptions(outputFormat.name(),
+      final OutputOptions outputOptions = new OutputOptions(outputFormat.getFormat(),
                                                             testOutputFile);
 
       final Config config = Config
@@ -395,7 +401,7 @@ public class SchemaCrawlerOutputTest
 
       failures.addAll(compareOutput(UNQUALIFIED_NAMES_OUTPUT + referenceFile,
                                     testOutputFile,
-                                    outputFormat.name()));
+                                    outputFormat.getFormat()));
     }
     if (failures.size() > 0)
     {

@@ -4,7 +4,10 @@ package schemacrawler.tools.integration.graph;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import schemacrawler.tools.options.OutputFormat;
+
 public enum GraphOutputFormat
+  implements OutputFormat
 {
 
   scdot("scdot", "SchemaCrawler generated format"),
@@ -69,15 +72,16 @@ public enum GraphOutputFormat
    */
   public static GraphOutputFormat fromFormat(final String format)
   {
-    for (final GraphOutputFormat graphFormat: GraphOutputFormat.values())
+    final GraphOutputFormat graphFormat = fromFormatOrNull(format);
+    if (graphFormat == null)
     {
-      if (graphFormat.getFormat().equalsIgnoreCase(format))
-      {
-        return graphFormat;
-      }
+      LOGGER.log(Level.CONFIG, "Unknown format, " + format);
+      return png;
     }
-    LOGGER.log(Level.FINE, "Unknown format, " + format);
-    return png;
+    else
+    {
+      return graphFormat;
+    }
   }
 
   /**
@@ -87,14 +91,19 @@ public enum GraphOutputFormat
    */
   public static boolean isGraphOutputFormat(final String format)
   {
+    return fromFormatOrNull(format) != null;
+  }
+
+  private static GraphOutputFormat fromFormatOrNull(final String format)
+  {
     for (final GraphOutputFormat graphFormat: GraphOutputFormat.values())
     {
       if (graphFormat.getFormat().equalsIgnoreCase(format))
       {
-        return true;
+        return graphFormat;
       }
     }
-    return false;
+    return null;
   }
 
   private final String format;
@@ -109,11 +118,13 @@ public enum GraphOutputFormat
     this.description = description;
   }
 
+  @Override
   public String getDescription()
   {
     return description;
   }
 
+  @Override
   public String getFormat()
   {
     return format;

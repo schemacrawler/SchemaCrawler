@@ -22,6 +22,7 @@ import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.tools.hsqldb.BundledDriverOptions;
 import schemacrawler.tools.options.InfoLevel;
 import schemacrawler.tools.options.OutputFormat;
+import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.utility.SchemaCrawlerUtility;
 
 public class TestBundledDistributions
@@ -44,8 +45,8 @@ public class TestBundledDistributions
       properties.store(writer, "testHsqldbMain");
     }
 
-    final OutputFormat outputFormat = OutputFormat.text;
-    final String referenceFile = "hsqldb.main" + "." + outputFormat.name();
+    final OutputFormat outputFormat = TextOutputFormat.text;
+    final String referenceFile = "hsqldb.main" + "." + outputFormat.getFormat();
     final File testOutputFile = File.createTempFile("schemacrawler."
                                                         + referenceFile + ".",
                                                     ".test");
@@ -64,7 +65,7 @@ public class TestBundledDistributions
 
     final List<String> failures = compareOutput(referenceFile,
                                                 testOutputFile,
-                                                outputFormat.name());
+                                                outputFormat.getFormat());
     if (failures.size() > 0)
     {
       fail(failures.toString());

@@ -34,6 +34,7 @@ import org.junit.Test;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.tools.integration.spring.Main;
 import schemacrawler.tools.options.OutputFormat;
+import schemacrawler.tools.options.TextOutputFormat;
 
 public class SpringIntegrationCommandLineTest
   extends BaseDatabaseTest
@@ -52,14 +53,14 @@ public class SpringIntegrationCommandLineTest
     final File testOutputFile = new File("scOutput.txt");
     testOutputFile.delete();
 
-    final OutputFormat outputFormat = OutputFormat.text;
+    final OutputFormat outputFormat = TextOutputFormat.text;
     Main.main(new String[] {
         "-c", contextFile.getAbsolutePath(), "-x=" + executableName,
     });
 
     failures.addAll(compareOutput(referenceFile,
                                   testOutputFile,
-                                  outputFormat.name()));
+                                  outputFormat.getFormat()));
     if (failures.size() > 0)
     {
       fail(failures.toString());

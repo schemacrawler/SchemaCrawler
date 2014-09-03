@@ -22,7 +22,7 @@ package schemacrawler.tools.text.utility;
 
 import java.awt.Color;
 
-import schemacrawler.tools.options.OutputFormat;
+import schemacrawler.tools.options.TextOutputFormat;
 
 public final class TableHeaderCell
   extends TableCell
@@ -35,7 +35,7 @@ public final class TableHeaderCell
                          final String styleClass,
                          final Color bgColor,
                          final int colSpan,
-                         final OutputFormat outputFormat)
+                         final TextOutputFormat outputFormat)
   {
     super(text,
           characterWidth,

@@ -6,7 +6,6 @@ import java.io.Writer;
 import java.nio.charset.Charset;
 import java.util.UUID;
 
-import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 
 public class GraphOutputOptions
@@ -25,7 +24,7 @@ public class GraphOutputOptions
   /**
    * Gets the diagram file. If no output filename is provided, then a
    * default name is constructed using the file extension.
-   * 
+   *
    * @return Diagram file
    */
   public File getDiagramFile()
@@ -35,32 +34,13 @@ public class GraphOutputOptions
     if (diagramOutputFile == null)
     {
       diagramFile = new File(".", "schemacrawler." + UUID.randomUUID() + "."
-                                  + getGraphOutputFormat().getFormat());
+                                  + getOutputFormat().getFormat());
     }
     else
     {
       diagramFile = diagramOutputFile;
     }
     return diagramFile;
-  }
-
-  /**
-   * Graph output format.
-   *
-   * @return Graph output format
-   */
-  public GraphOutputFormat getGraphOutputFormat()
-  {
-    GraphOutputFormat outputFormat;
-    try
-    {
-      outputFormat = GraphOutputFormat.valueOf(getOutputFormatValue());
-    }
-    catch (final IllegalArgumentException e)
-    {
-      outputFormat = GraphOutputFormat.scdot;
-    }
-    return outputFormat;
   }
 
   @Override
@@ -82,9 +62,18 @@ public class GraphOutputOptions
   }
 
   @Override
-  public OutputFormat getOutputFormat()
+  public GraphOutputFormat getOutputFormat()
   {
-    return outputOptions.getOutputFormat();
+    final GraphOutputFormat graphOutputFormat;
+    if (!outputOptions.hasOutputFormat())
+    {
+      graphOutputFormat = GraphOutputFormat.fromFormat(getOutputFormatValue());
+    }
+    else
+    {
+      graphOutputFormat = GraphOutputFormat.png;
+    }
+    return graphOutputFormat;
   }
 
   @Override
@@ -102,7 +91,8 @@ public class GraphOutputOptions
   @Override
   public boolean hasOutputFormat()
   {
-    return outputOptions.hasOutputFormat();
+    return GraphOutputFormat.isGraphOutputFormat(outputOptions
+      .getOutputFormatValue());
   }
 
   @Override
