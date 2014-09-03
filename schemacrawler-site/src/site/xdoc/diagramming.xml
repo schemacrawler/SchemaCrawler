@@ -175,7 +175,7 @@ schemacrawler.format.show_unqualified_names=true
 					</tr>
 				</table>
 			</subsection>
-			<subsection>
+			<subsection name="SchemaCrawler Diagrams in Use">
 				<p>
 					Schemacrawler database diagrams in use at the Scrum meeting at
 					the Software Development Departement of <a href="http://www.noumea.nc/">La Ville de Nouméa</a>.
