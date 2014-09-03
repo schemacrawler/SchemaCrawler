@@ -5,7 +5,7 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-     <release version="10.10.05" date="2014-08-04">
+     <release version="11.01.01" date="2014-08-04">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Fixed bug with weak associations in diagrams being drawn twice.
       ]]></action> 
