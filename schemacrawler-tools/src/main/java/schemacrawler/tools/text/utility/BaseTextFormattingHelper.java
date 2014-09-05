@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -21,23 +21,20 @@
 package schemacrawler.tools.text.utility;
 
 
+import static sf.util.Utility.isBlank;
+
 import java.awt.Color;
 
 import schemacrawler.tools.options.TextOutputFormat;
 
 /**
  * Methods to format entire rows of output as HTML.
- * 
+ *
  * @author Sualeh Fatehi
  */
 abstract class BaseTextFormattingHelper
   implements TextFormattingHelper
 {
-
-  /**
-   * System specific line separator character.
-   */
-  static final String DASHED_SEPARATOR = separator("-");
 
   static String separator(final String pattern)
   {
@@ -48,6 +45,11 @@ abstract class BaseTextFormattingHelper
     }
     return dashedSeparator.toString();
   }
+
+  /**
+   * System specific line separator character.
+   */
+  static final String DASHED_SEPARATOR = separator("-");
 
   private final TextOutputFormat outputFormat;
 
@@ -73,7 +75,7 @@ abstract class BaseTextFormattingHelper
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see TextFormattingHelper#createDescriptionRow(java.lang.String)
    */
   @Override
@@ -94,7 +96,7 @@ abstract class BaseTextFormattingHelper
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see TextFormattingHelper#createDetailRow(java.lang.String,
    *      java.lang.String, java.lang.String)
    */
@@ -103,11 +105,26 @@ abstract class BaseTextFormattingHelper
                                 final String subName,
                                 final String type)
   {
+    return createDetailRow(ordinal, subName, type, false);
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * @see schemacrawler.tools.text.utility.TextFormattingHelper#createDetailRow(java.lang.String,
+   *      java.lang.String, java.lang.String, boolean)
+   */
+  @Override
+  public String createDetailRow(final String ordinal,
+                                final String subName,
+                                final String type,
+                                final boolean emphasize)
+  {
     final int subNameWidth = 32;
     final int typeWidth = 28;
 
     final TableRow row = new TableRow(outputFormat);
-    if (sf.util.Utility.isBlank(ordinal))
+    if (isBlank(ordinal))
     {
       row.add(newTableCell("", "spacer", outputFormat));
     }
@@ -125,7 +142,7 @@ abstract class BaseTextFormattingHelper
     row.add(new TableCell(subName,
                           subNameWidth,
                           Alignment.inherit,
-                          false,
+                          emphasize,
                           "subname",
                           Color.white,
                           1,
@@ -143,7 +160,7 @@ abstract class BaseTextFormattingHelper
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see TextFormattingHelper#createEmptyRow()
    */
   @Override
@@ -163,7 +180,7 @@ abstract class BaseTextFormattingHelper
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.tools.text.utility.TextFormattingHelper#createNameRow(java.lang.String,
    *      java.lang.String)
    */
@@ -211,7 +228,7 @@ abstract class BaseTextFormattingHelper
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see TextFormattingHelper#createNameValueRow(java.lang.String,
    *      java.lang.String, Alignment)
    */
@@ -253,7 +270,7 @@ abstract class BaseTextFormattingHelper
 
   /**
    * Called to handle the row output.
-   * 
+   *
    * @param columnData
    *        Column data
    */
@@ -291,7 +308,7 @@ abstract class BaseTextFormattingHelper
   /**
    * Called to handle the header output. Handler to be implemented by
    * subclass.
-   * 
+   *
    * @param columnNames
    *        Column names
    */

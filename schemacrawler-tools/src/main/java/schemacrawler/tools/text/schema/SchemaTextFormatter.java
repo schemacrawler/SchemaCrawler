@@ -781,6 +781,8 @@ final class SchemaTextFormatter
       final String columnName = column.getName();
 
       final String columnDetails;
+
+      boolean emphasize = false;
       if (column instanceof IndexColumn)
       {
         columnDetails = ((IndexColumn) column).getSortSequence().name();
@@ -806,6 +808,7 @@ final class SchemaTextFormatter
         final String nullable = columnNullable(columnTypeName,
                                                column.isNullable());
         columnDetails = columnType + nullable;
+        emphasize = column.isPartOfPrimaryKey();
       }
 
       String ordinalNumberString = "";
@@ -815,7 +818,8 @@ final class SchemaTextFormatter
       }
       out.println(formattingHelper.createDetailRow(ordinalNumberString,
                                                    columnName,
-                                                   columnDetails));
+                                                   columnDetails,
+                                                   emphasize));
 
       printTableColumnAutoIncremented(column);
       printTableColumnRemarks(column);
