@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -23,7 +23,7 @@ package schemacrawler.tools.text.utility;
 
 /**
  * Methods to format entire rows of output.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public interface TextFormattingHelper
@@ -39,14 +39,14 @@ public interface TextFormattingHelper
 
   /**
    * Creates an arrow symbol.
-   * 
+   *
    * @return Arrow symbol
    */
   String createArrow();
 
   /**
    * Creates a definition row.
-   * 
+   *
    * @param definition
    *        Definition
    * @return Row as a string
@@ -55,7 +55,7 @@ public interface TextFormattingHelper
 
   /**
    * Creates a description row with a blank spacer cells.
-   * 
+   *
    * @param description
    *        Description
    * @return Row as a string
@@ -64,7 +64,7 @@ public interface TextFormattingHelper
 
   /**
    * Creates a detail row, with four fields.
-   * 
+   *
    * @param ordinal
    *        Ordinal value
    * @param subName
@@ -76,29 +76,47 @@ public interface TextFormattingHelper
   String createDetailRow(String ordinal, String subName, String type);
 
   /**
+   * Creates a detail row, with four fields. The name can be emphasized.
+   *
+   * @param ordinal
+   *        Ordinal value
+   * @param subName
+   *        Name
+   * @param type
+   *        Type
+   * @param emphasize
+   *        Emphasize name.
+   * @return Row as a string
+   */
+  String createDetailRow(String ordinal,
+                         String subName,
+                         String type,
+                         boolean emphasize);
+
+  /**
    * Document end.
-   * 
+   *
    * @return Document end
    */
   String createDocumentEnd();
 
   /**
    * Document start.
-   * 
+   *
    * @return Document start
    */
   String createDocumentStart();
 
   /**
    * Create an empty row.
-   * 
+   *
    * @return Row as a string
    */
   String createEmptyRow();
 
   /**
    * Creates a section header.
-   * 
+   *
    * @param type
    *        Type of header
    * @param header
@@ -109,7 +127,7 @@ public interface TextFormattingHelper
 
   /**
    * Create a name and description row.
-   * 
+   *
    * @param name
    *        Name
    * @param description
@@ -120,7 +138,7 @@ public interface TextFormattingHelper
 
   /**
    * Create a name and value row.
-   * 
+   *
    * @param name
    *        Name
    * @param value
@@ -133,14 +151,14 @@ public interface TextFormattingHelper
 
   /**
    * Database object end.
-   * 
+   *
    * @return Database object end
    */
   String createObjectEnd();
 
   /**
    * Database object start.
-   * 
+   *
    * @param name
    *        Object name
    * @return Database object start
@@ -149,7 +167,7 @@ public interface TextFormattingHelper
 
   /**
    * Creates a row of data.
-   * 
+   *
    * @param columnData
    *        Column data
    * @return Row of data
@@ -158,7 +176,7 @@ public interface TextFormattingHelper
 
   /**
    * Creates a header row for data.
-   * 
+   *
    * @param columnNames
    *        Column names
    * @return Header row for data
