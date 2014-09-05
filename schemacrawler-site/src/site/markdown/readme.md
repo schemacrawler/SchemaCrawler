@@ -22,14 +22,14 @@ read the [how-tos] section.
 In order to use SchemaCrawler in your [Apache Maven] projects, add a dependency to SchemaCrawler in your pom.xml.
 
 <div class="source"><pre>
-<dependencies>
+&lt;dependencies&gt;
   ...
-  <dependency>
-    <groupId>net.sourceforge.schemacrawler</groupId>
-    <artifactId>schemacrawler</artifactId>
-    <version>11.01.01</version>
-  </dependency>
-</dependencies>
+  &lt;dependency&gt;
+    &lt;groupId&gt;net.sourceforge.schemacrawler&lt;/groupId&gt;
+    &lt;artifactId&gt;schemacrawler&lt;/artifactId&gt;
+    &lt;version&gt;10.10.05&lt;/version&gt;
+  &lt;/dependency&gt;
+&lt;/dependencies&gt;
 </pre></div>
 
 ## OSGi
