@@ -1,6 +1,4 @@
-# About SchemaCrawler
-
-## SchemaCrawler
+# SchemaCrawler
 
 SchemaCrawler is a free database schema discovery and comprehension tool.
 SchemaCrawler has a good mix useful features for data governance. You can
