@@ -23,8 +23,6 @@
       img="http://maven.apache.org/images/logos/maven-button-1.png" />
     <logo name="Support SchemaCrawler" href="http://sourceforge.net/p/schemacrawler/donate/"
       img="http://images.sourceforge.net/images/project-support.jpg" />
-    <logo name="LGPL" href="http://www.gnu.org/licenses/lgpl-3.0.txt"
-      img="http://www.gnu.org/graphics/lgplv3-88x31.png" />
   </poweredBy>
   <body>
     <head>
