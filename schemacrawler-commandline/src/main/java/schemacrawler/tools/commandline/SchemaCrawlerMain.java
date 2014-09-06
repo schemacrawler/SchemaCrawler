@@ -31,10 +31,10 @@ public class SchemaCrawlerMain
 {
 
   private static final Logger LOGGER = Logger.getLogger(SchemaCrawlerMain.class
-                                                        .getName());
+    .getName());
 
   public static void main(final String[] args)
-      throws Exception
+    throws Exception
   {
     main(args, new BundledDriverOptions()
     {
@@ -45,7 +45,7 @@ public class SchemaCrawlerMain
 
   public static void main(final String[] args,
                           final BundledDriverOptions bundledDriverOptions)
-                              throws Exception
+    throws Exception
   {
     if (bundledDriverOptions == null)
     {
@@ -57,7 +57,7 @@ public class SchemaCrawlerMain
     final ApplicationOptionsParser applicationOptionsParser = new ApplicationOptionsParser();
     remainingArgs = applicationOptionsParser.parse(remainingArgs);
     final ApplicationOptions applicationOptions = applicationOptionsParser
-        .getOptions();
+      .getOptions();
 
     if (applicationOptions.isShowHelp())
     {

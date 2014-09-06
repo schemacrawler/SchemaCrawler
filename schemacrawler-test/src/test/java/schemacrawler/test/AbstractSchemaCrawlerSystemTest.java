@@ -98,7 +98,7 @@ public abstract class AbstractSchemaCrawlerSystemTest
   }
 
   protected Catalog retrieveDatabase(final String dataSourceName,
-                                      final SchemaCrawlerOptions schemaCrawlerOptions)
+                                     final SchemaCrawlerOptions schemaCrawlerOptions)
     throws Exception
   {
     final Connection connection = connect(dataSourceName);

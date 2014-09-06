@@ -59,8 +59,7 @@ public class SchemaCrawlerSystemTest
       infoLevel.setRetrieveRoutines(false);
       schemaCrawlerOptions.setSchemaInfoLevel(infoLevel);
 
-      final Catalog catalog = retrieveDatabase(dataSource,
-                                                 schemaCrawlerOptions);
+      final Catalog catalog = retrieveDatabase(dataSource, schemaCrawlerOptions);
       final Schema[] schemas = (Schema[]) catalog.getSchemas().toArray();
       assertEquals("Incorrect number of schemas for " + dataSource + ": "
                    + Arrays.toString(schemas), schemaCounts[i], schemas.length);
@@ -177,13 +176,13 @@ public class SchemaCrawlerSystemTest
   }
 
   private Catalog retrieveDatabase(final String dataSourceName,
-                                    final String schemaInclusion)
+                                   final String schemaInclusion)
     throws Exception
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = createOptions(dataSourceName,
                                                                     schemaInclusion);
     final Catalog catalog = retrieveDatabase(dataSourceName,
-                                               schemaCrawlerOptions);
+                                             schemaCrawlerOptions);
     return catalog;
   }
 
@@ -274,8 +273,7 @@ public class SchemaCrawlerSystemTest
   {
     try
     {
-      final Catalog catalog = retrieveDatabase(dataSourceName,
-                                                 schemaInclusion);
+      final Catalog catalog = retrieveDatabase(dataSourceName, schemaInclusion);
       final Schema schema = retrieveSchema(schemaInclusion, catalog);
       tables(dataSourceName, schema, quote, catalog);
       counts(dataSourceName, schema, catalog);

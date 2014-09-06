@@ -36,7 +36,7 @@ import sf.util.ObjectToString;
  * @author Sualeh Fatehi
  */
 public final class SchemaCrawlerOptions
-implements Options
+  implements Options
 {
 
   private static final long serialVersionUID = -3557794862382066029L;
@@ -139,34 +139,34 @@ implements Options
     databaseSpecificOverrideOptions = new DatabaseSpecificOverrideOptions(config);
 
     schemaInclusionRule = configProperties
-        .getInclusionRule(SC_SCHEMA_PATTERN_INCLUDE, SC_SCHEMA_PATTERN_EXCLUDE);
+      .getInclusionRule(SC_SCHEMA_PATTERN_INCLUDE, SC_SCHEMA_PATTERN_EXCLUDE);
     synonymInclusionRule = configProperties
-        .getInclusionRuleDefaultExclude(SC_SYNONYM_PATTERN_INCLUDE,
-                                        SC_SYNONYM_PATTERN_EXCLUDE);
+      .getInclusionRuleDefaultExclude(SC_SYNONYM_PATTERN_INCLUDE,
+                                      SC_SYNONYM_PATTERN_EXCLUDE);
     sequenceInclusionRule = configProperties
-        .getInclusionRuleDefaultExclude(SC_SEQUENCE_PATTERN_INCLUDE,
-                                        SC_SEQUENCE_PATTERN_EXCLUDE);
+      .getInclusionRuleDefaultExclude(SC_SEQUENCE_PATTERN_INCLUDE,
+                                      SC_SEQUENCE_PATTERN_EXCLUDE);
 
     tableInclusionRule = configProperties
-        .getInclusionRule(SC_TABLE_PATTERN_INCLUDE, SC_TABLE_PATTERN_EXCLUDE);
+      .getInclusionRule(SC_TABLE_PATTERN_INCLUDE, SC_TABLE_PATTERN_EXCLUDE);
     columnInclusionRule = configProperties
-        .getInclusionRule(SC_COLUMN_PATTERN_INCLUDE, SC_COLUMN_PATTERN_EXCLUDE);
+      .getInclusionRule(SC_COLUMN_PATTERN_INCLUDE, SC_COLUMN_PATTERN_EXCLUDE);
 
     routineInclusionRule = configProperties
-        .getInclusionRule(SC_ROUTINE_PATTERN_INCLUDE, SC_ROUTINE_PATTERN_EXCLUDE);
+      .getInclusionRule(SC_ROUTINE_PATTERN_INCLUDE, SC_ROUTINE_PATTERN_EXCLUDE);
     routineColumnInclusionRule = configProperties
-        .getInclusionRule(SC_ROUTINE_COLUMN_PATTERN_INCLUDE,
-                          SC_ROUTINE_COLUMN_PATTERN_EXCLUDE);
+      .getInclusionRule(SC_ROUTINE_COLUMN_PATTERN_INCLUDE,
+                        SC_ROUTINE_COLUMN_PATTERN_EXCLUDE);
 
     grepColumnInclusionRule = configProperties
-        .getInclusionRuleOrNull(SC_GREP_COLUMN_PATTERN_INCLUDE,
-                                SC_GREP_COLUMN_PATTERN_EXCLUDE);
+      .getInclusionRuleOrNull(SC_GREP_COLUMN_PATTERN_INCLUDE,
+                              SC_GREP_COLUMN_PATTERN_EXCLUDE);
     grepRoutineColumnInclusionRule = configProperties
-        .getInclusionRuleOrNull(SC_GREP_ROUTINE_COLUMN_PATTERN_INCLUDE,
-                                SC_GREP_ROUTINE_COLUMN_PATTERN_EXCLUDE);
+      .getInclusionRuleOrNull(SC_GREP_ROUTINE_COLUMN_PATTERN_INCLUDE,
+                              SC_GREP_ROUTINE_COLUMN_PATTERN_EXCLUDE);
     grepDefinitionInclusionRule = configProperties
-        .getInclusionRuleOrNull(SC_GREP_DEFINITION_PATTERN_INCLUDE,
-                                SC_GREP_DEFINITION_PATTERN_EXCLUDE);
+      .getInclusionRuleOrNull(SC_GREP_DEFINITION_PATTERN_INCLUDE,
+                              SC_GREP_DEFINITION_PATTERN_EXCLUDE);
 
     grepInvertMatch = configProperties.getBooleanValue(SC_GREP_INVERT_MATCH);
     grepOnlyMatching = configProperties.getBooleanValue(SC_GREP_ONLY_MATCHING);
@@ -562,7 +562,7 @@ implements Options
         for (final String routineTypeString: routineTypeStrings)
         {
           routineTypes.add(RoutineType.valueOf(routineTypeString
-                                               .toLowerCase(Locale.ENGLISH)));
+            .toLowerCase(Locale.ENGLISH)));
         }
       }
     }

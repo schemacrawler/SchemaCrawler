@@ -226,11 +226,13 @@ public final class SimpleLint<V extends Serializable>
       Object valueObject = value;
 
       if (valueClass.isArray()
-          && NamedObjectWithAttributes.class.isAssignableFrom(valueClass.getComponentType()))
+          && NamedObjectWithAttributes.class.isAssignableFrom(valueClass
+            .getComponentType()))
       {
-        valueObject = Arrays.asList(Arrays.copyOf((Object[]) value,
-                                                  ((Object[]) value).length,
-                                                  NamedObjectWithAttributes[].class));
+        valueObject = Arrays.asList(Arrays
+          .copyOf((Object[]) value,
+                  ((Object[]) value).length,
+                  NamedObjectWithAttributes[].class));
       }
 
       if (Iterable.class.isAssignableFrom(valueObject.getClass()))

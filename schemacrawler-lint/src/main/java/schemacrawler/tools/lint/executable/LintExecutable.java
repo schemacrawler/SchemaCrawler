@@ -36,11 +36,11 @@ import schemacrawler.tools.options.TextOutputFormat;
 import sf.util.Utility;
 
 public class LintExecutable
-extends BaseStagedExecutable
+  extends BaseStagedExecutable
 {
 
   private static final Logger LOGGER = Logger.getLogger(LintExecutable.class
-                                                        .getName());
+    .getName());
 
   public static final String COMMAND = "lint";
   private static final String CONFIG_LINTER_CONFIGS_FILE = "schemacrawer.linter_configs.file";
@@ -73,7 +73,7 @@ extends BaseStagedExecutable
 
   @Override
   public void executeOn(final Catalog db, final Connection connection)
-      throws Exception
+    throws Exception
   {
     final LinterConfigs linterConfigs = readLinterConfigs();
     final LintedCatalog catalog = new LintedCatalog(db, linterConfigs);
@@ -101,7 +101,7 @@ extends BaseStagedExecutable
   }
 
   private LintTraversalHandler getSchemaTraversalHandler()
-      throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
     final LintTraversalHandler formatter;
     final LintOptions lintOptions = getLintOptions();
@@ -141,7 +141,7 @@ extends BaseStagedExecutable
     catch (final Exception e)
     {
       LOGGER.log(Level.WARNING, "Could not load linter configs from file "
-          + linterConfigsFile, e);
+                                + linterConfigsFile, e);
       return linterConfigs;
     }
   }
