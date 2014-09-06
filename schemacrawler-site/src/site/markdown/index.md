@@ -16,6 +16,34 @@ convenience is [bundled with drivers](bundled.html) for some commonly used
 RDBMS systems. SchemaCrawler works with any operating system that supports
 Java 7 or better.
 
+## SchemaCrawler Command Line
+
+SchemaCrawler comes with a set of command line tools that allow database
+metadata to be output as [plain text,](snapshot-examples/snapshot.txt) 
+[comma-separated text (CSV),](snapshot-examples/snapshot.csv) [HTML5,](snapshot-examples/snapshot.html) or 
+[JavaScript object notation (JSON).](snapshot-examples/snapshot.json) 
+The HTML5 output is a combination of valid XML (that
+can be manipulated by XML tools or XSLT), and HTML that can be viewed in a
+browser. All formats are designed to be easy to
+[diff](http://en.wikipedia.org/wiki/Diff) , or find differences with other
+schemas that may have been output in the same format.
+
+SchemaCrawler has [grep](schemacrawler_grep.html) functionality that allows
+you to search for table and column names using regular expressions.
+SchemaCrawler is capable of creating entity-relationship diagrams in [DOT format,](http://www.graphviz.org/doc/info/lang.html ) which
+[GraphViz](http://www.graphviz.org/) can convert into [schema diagrams.](diagramming.html) SchemaCrawler has powerful scripting ability,
+using JavaScript, Groovy, Ruby or Python. A live connection is provided to the
+script context to allow you to select from or even modify your database.
+Examples are provided for all of these with the
+[download](http://sourceforge.net/projects/schemacrawler/files/).
+
+SchemaCrawler is integrated with, and allows you to write templates to
+generate SQL scripts or any other text output, using templating engines, such
+as [Apache Velocity](http://velocity.apache.org/) or
+[&lt;FreeMarker&gt;](http://freemarker.org/) . However, you will need to download
+Apache Velocity or &lt;FreeMarker&gt; separately, since these are not part of the
+SchemaCrawler download.
+
 ## SchemaCrawler API
 
 SchemaCrawler is also a Java API that makes working with database metadata as
@@ -85,31 +113,16 @@ for (final Schema schema: catalog.getSchemas())
 }
 </pre></div>
         
-
-## SchemaCrawler Command Line
-
-SchemaCrawler comes with a set of command line tools that allow database
-metadata to be output as [plain text,](snapshot-examples/snapshot.txt) 
-[comma-separated text (CSV),](snapshot-examples/snapshot.csv) [HTML5,](snapshot-examples/snapshot.html) or 
-[JavaScript object notation (JSON).](snapshot-examples/snapshot.json) 
-The HTML5 output is a combination of valid XML (that
-can be manipulated by XML tools or XSLT), and HTML that can be viewed in a
-browser. All formats are designed to be easy to
-[diff](http://en.wikipedia.org/wiki/Diff) , or find differences with other
-schemas that may have been output in the same format.
-
-SchemaCrawler has [grep](schemacrawler_grep.html) functionality that allows
-you to search for table and column names using regular expressions.
-SchemaCrawler is capable of creating entity-relationship diagrams in [DOT format,](http://www.graphviz.org/doc/info/lang.html ) which
-[GraphViz](http://www.graphviz.org/) can convert into [schema diagrams.](diagramming.html) SchemaCrawler has powerful scripting ability,
-using JavaScript, Groovy, Ruby or Python. A live connection is provided to the
-script context to allow you to select from or even modify your database.
-Examples are provided for all of these with the
-[download](http://sourceforge.net/projects/schemacrawler/files/).
-
-SchemaCrawler is integrated with, and allows you to write templates to
-generate SQL scripts or any other text output, using templating engines, such
-as [Apache Velocity](http://velocity.apache.org/) or
-[&lt;FreeMarker&gt;](http://freemarker.org/) . However, you will need to download
-Apache Velocity or &lt;FreeMarker&gt; separately, since these are not part of the
-SchemaCrawler download.
+SchemaCrawler provides metadata for the following database objects:       
+- Column data types
+- Tables and views
+  - Columns
+  - Primary keys
+  - Indexes
+  - Table constraints
+  - Triggers
+  - Foreign keys
+- Routines, including functions and stored procedures
+- Sequences
+- Synonyms
+- Privileges and grants
