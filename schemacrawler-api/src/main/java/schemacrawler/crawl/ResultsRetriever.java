@@ -68,7 +68,7 @@ final class ResultsRetriever
   {
     final JavaSqlTypes javaSqlTypes = new JavaSqlTypes();
     final MutableResultsColumns resultColumns = new MutableResultsColumns("");
-    final MutableDatabase database = new MutableDatabase("results");
+    final MutableCatalog catalog = new MutableCatalog("results");
     final int columnCount = resultsMetaData.getColumnCount();
     for (int i = 1; i <= columnCount; i++)
     {
@@ -80,9 +80,9 @@ final class ResultsRetriever
         tableName = "";
       }
 
-      final Schema schema = database.addSchema(catalogName, schemaName);
+      final Schema schema = catalog.addSchema(catalogName, schemaName);
       final MutableTable table = new MutableTable(schema, tableName);
-      database.addTable(table);
+      catalog.addTable(table);
 
       final String databaseSpecificTypeName = resultsMetaData
         .getColumnTypeName(i);

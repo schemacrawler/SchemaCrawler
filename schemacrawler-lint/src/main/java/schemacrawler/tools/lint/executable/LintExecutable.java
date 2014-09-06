@@ -25,11 +25,11 @@ import java.sql.Connection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.schema.Database;
+import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseStagedExecutable;
-import schemacrawler.tools.lint.LintedDatabase;
+import schemacrawler.tools.lint.LintedCatalog;
 import schemacrawler.tools.lint.LinterConfigs;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
@@ -72,25 +72,25 @@ extends BaseStagedExecutable
   }
 
   @Override
-  public void executeOn(final Database db, final Connection connection)
+  public void executeOn(final Catalog db, final Connection connection)
       throws Exception
   {
     final LinterConfigs linterConfigs = readLinterConfigs();
-    final LintedDatabase database = new LintedDatabase(db, linterConfigs);
+    final LintedCatalog catalog = new LintedCatalog(db, linterConfigs);
 
     final LintTraversalHandler formatter = getSchemaTraversalHandler();
 
     formatter.begin();
 
     formatter.handleInfoStart();
-    formatter.handle(database.getSchemaCrawlerInfo());
-    formatter.handle(database.getDatabaseInfo());
-    formatter.handle(database.getJdbcDriverInfo());
+    formatter.handle(catalog.getSchemaCrawlerInfo());
+    formatter.handle(catalog.getDatabaseInfo());
+    formatter.handle(catalog.getJdbcDriverInfo());
     formatter.handleInfoEnd();
 
     formatter.handleStart();
-    formatter.handle(database);
-    for (final Table table: database.getTables())
+    formatter.handle(catalog);
+    for (final Table table: catalog.getTables())
     {
       formatter.handle(table);
     }

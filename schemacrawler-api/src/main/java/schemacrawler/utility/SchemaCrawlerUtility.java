@@ -25,7 +25,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 
 import schemacrawler.crawl.SchemaCrawler;
-import schemacrawler.schema.Database;
+import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ResultsColumns;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -38,13 +38,13 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 public final class SchemaCrawlerUtility
 {
 
-  public static Database getDatabase(final Connection connection,
-                                     final SchemaCrawlerOptions schemaCrawlerOptions)
+  public static Catalog getCatalog(final Connection connection,
+                                   final SchemaCrawlerOptions schemaCrawlerOptions)
     throws SchemaCrawlerException
   {
     final SchemaCrawler schemaCrawler = new SchemaCrawler(connection);
-    final Database database = schemaCrawler.crawl(schemaCrawlerOptions);
-    return database;
+    final Catalog catalog = schemaCrawler.crawl(schemaCrawlerOptions);
+    return catalog;
   }
 
   public static ResultsColumns getResultColumns(final ResultSet resultSet)

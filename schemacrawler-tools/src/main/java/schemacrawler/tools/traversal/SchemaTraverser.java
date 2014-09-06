@@ -22,8 +22,8 @@ package schemacrawler.tools.traversal;
 
 import java.util.Collection;
 
+import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ColumnDataType;
-import schemacrawler.schema.Database;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
@@ -33,12 +33,12 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 public class SchemaTraverser
 {
 
-  private Database database;
+  private Catalog catalog;
   private SchemaTraversalHandler handler;
 
-  public Database getDatabase()
+  public Catalog getCatalog()
   {
-    return database;
+    return catalog;
   }
 
   public SchemaTraversalHandler getHandler()
@@ -46,13 +46,13 @@ public class SchemaTraverser
     return handler;
   }
 
-  public void setDatabase(final Database database)
+  public void setCatalog(final Catalog catalog)
   {
-    if (database == null)
+    if (catalog == null)
     {
-      throw new IllegalArgumentException("No database provided");
+      throw new IllegalArgumentException("No catalog provided");
     }
-    this.database = database;
+    this.catalog = catalog;
   }
 
   public void setHandler(final SchemaTraversalHandler handler)
@@ -67,7 +67,7 @@ public class SchemaTraverser
   public final void traverse()
     throws SchemaCrawlerException
   {
-    if (database == null || handler == null)
+    if (catalog == null || handler == null)
     {
       throw new SchemaCrawlerException("Cannot traverse database");
     }
@@ -75,17 +75,17 @@ public class SchemaTraverser
     handler.begin();
 
     handler.handleInfoStart();
-    handler.handle(database.getSchemaCrawlerInfo());
-    handler.handle(database.getDatabaseInfo());
-    handler.handle(database.getJdbcDriverInfo());
+    handler.handle(catalog.getSchemaCrawlerInfo());
+    handler.handle(catalog.getDatabaseInfo());
+    handler.handle(catalog.getJdbcDriverInfo());
     handler.handleInfoEnd();
 
-    final Collection<ColumnDataType> columnDataTypes = database
+    final Collection<ColumnDataType> columnDataTypes = catalog
       .getColumnDataTypes();
-    final Collection<Table> tables = database.getTables();
-    final Collection<Routine> routines = database.getRoutines();
-    final Collection<Synonym> synonyms = database.getSynonyms();
-    final Collection<Sequence> sequences = database.getSequences();
+    final Collection<Table> tables = catalog.getTables();
+    final Collection<Routine> routines = catalog.getRoutines();
+    final Collection<Synonym> synonyms = catalog.getSynonyms();
+    final Collection<Sequence> sequences = catalog.getSequences();
 
     if (!columnDataTypes.isEmpty())
     {

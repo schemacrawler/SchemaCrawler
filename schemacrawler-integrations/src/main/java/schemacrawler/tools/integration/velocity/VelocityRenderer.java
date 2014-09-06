@@ -38,7 +38,7 @@ import org.apache.velocity.runtime.log.JdkLogChute;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.apache.velocity.runtime.resource.loader.FileResourceLoader;
 
-import schemacrawler.schema.Database;
+import schemacrawler.schema.Catalog;
 import schemacrawler.tools.executable.BaseStagedExecutable;
 import schemacrawler.tools.options.OutputWriter;
 
@@ -74,8 +74,7 @@ public final class VelocityRenderer
    * {@inheritDoc}
    */
   @Override
-  public final void executeOn(final Database database,
-                              final Connection connection)
+  public final void executeOn(final Catalog catalog, final Connection connection)
     throws Exception
   {
     // Set the file path, in case the template is a file template
@@ -122,7 +121,7 @@ public final class VelocityRenderer
     ve.init(p);
 
     final Context context = new VelocityContext();
-    context.put("database", database);
+    context.put("catalog", catalog);
 
     try (final Writer writer = new OutputWriter(outputOptions);)
     {

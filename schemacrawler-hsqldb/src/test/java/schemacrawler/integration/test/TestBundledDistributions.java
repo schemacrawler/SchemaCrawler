@@ -14,7 +14,7 @@ import java.util.Properties;
 
 import org.junit.Test;
 
-import schemacrawler.schema.Database;
+import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -85,16 +85,16 @@ public class TestBundledDistributions
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new BundledDriverOptions()
       .getSchemaCrawlerOptions(InfoLevel.maximum);
-    final Database database = SchemaCrawlerUtility
-      .getDatabase(getConnection(), schemaCrawlerOptions);
-    assertNotNull(database);
+    final Catalog catalog = SchemaCrawlerUtility
+      .getCatalog(getConnection(), schemaCrawlerOptions);
+    assertNotNull(catalog);
 
-    assertEquals(6, database.getSchemas().size());
-    final Schema schema = database.getSchema("PUBLIC.BOOKS");
+    assertEquals(6, catalog.getSchemas().size());
+    final Schema schema = catalog.getSchema("PUBLIC.BOOKS");
     assertNotNull(schema);
 
-    assertEquals(6, database.getTables(schema).size());
-    final Table table = database.getTable(schema, "AUTHORS");
+    assertEquals(6, catalog.getTables(schema).size());
+    final Table table = catalog.getTable(schema, "AUTHORS");
     assertNotNull(table);
 
     assertEquals(1, table.getTriggers().size());

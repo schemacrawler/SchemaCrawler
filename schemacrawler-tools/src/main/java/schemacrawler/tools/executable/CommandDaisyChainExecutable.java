@@ -3,7 +3,7 @@ package schemacrawler.tools.executable;
 
 import java.sql.Connection;
 
-import schemacrawler.schema.Database;
+import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.text.base.BaseTextOptionsBuilder;
@@ -19,7 +19,7 @@ public final class CommandDaisyChainExecutable
   }
 
   @Override
-  public void executeOn(final Database database, final Connection connection)
+  public void executeOn(final Catalog catalog, final Connection connection)
     throws Exception
   {
     // Commands are processed at execution time. That is, after
@@ -72,7 +72,7 @@ public final class CommandDaisyChainExecutable
 
     }
 
-    executeChain(database, connection);
+    executeChain(catalog, connection);
 
   }
 

@@ -24,7 +24,7 @@ import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.schema.Database;
+import schemacrawler.schema.Catalog;
 import schemacrawler.schema.NamedObjectWithAttributes;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Config;
@@ -40,7 +40,7 @@ public abstract class BaseLinter
 
   private LintSeverity severity = LintSeverity.medium;
 
-  private Database database;
+  private Catalog catalog;
 
   @Override
   public void config(final LinterConfig linterConfig)
@@ -71,21 +71,21 @@ public abstract class BaseLinter
   }
 
   @Override
-  public final void lint(final Database database)
+  public final void lint(final Catalog catalog)
   {
-    if (database == null)
+    if (catalog == null)
     {
       throw new IllegalArgumentException("No database provided");
     }
 
-    this.database = database;
+    this.catalog = catalog;
     start();
-    for (final Table table: database.getTables())
+    for (final Table table: catalog.getTables())
     {
       lint(table);
     }
     end();
-    this.database = null;
+    this.catalog = null;
 
   }
 
@@ -122,9 +122,9 @@ public abstract class BaseLinter
   protected <V extends Serializable> void addLint(final String message,
                                                   final V value)
   {
-    if (database != null)
+    if (catalog != null)
     {
-      addLint(database, message, value);
+      addLint(catalog, message, value);
     }
   }
 

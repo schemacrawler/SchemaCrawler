@@ -5,15 +5,15 @@ if (typeof println != 'function') {
 
 var printDb = function()
 {
-  println(database.schemaCrawlerInfo);
-  println(database.databaseInfo);
-  println(database.jdbcDriverInfo);
+  println(catalog.schemaCrawlerInfo);
+  println(catalog.databaseInfo);
+  println(catalog.jdbcDriverInfo);
 
-  var schemas = database.schemas.toArray();
+  var schemas = catalog.schemas.toArray();
   for ( var i = 0; i < schemas.length; i++)
   {
     println(schemas[i].fullName);
-    var tables = database.getTables(schemas[i]).toArray();
+    var tables = catalog.getTables(schemas[i]).toArray();
     for ( var j = 0; j < tables.length; j++)
     {
       println("o--> " + tables[j].name);

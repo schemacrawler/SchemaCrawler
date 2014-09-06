@@ -25,8 +25,8 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
+import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
-import schemacrawler.schema.Database;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.Schema;
@@ -113,11 +113,11 @@ public class SortingTest
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
-    final Database database = getDatabase(schemaCrawlerOptions);
+    final Catalog catalog = getCatalog(schemaCrawlerOptions);
     final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
     assertNotNull("Schema not found", schema);
 
-    final Table table = database.getTable(schema, tableName);
+    final Table table = catalog.getTable(schema, tableName);
     assertNotNull("Table " + tableName + " not found", table);
     if (table.getName().equals(tableName))
     {
@@ -145,11 +145,11 @@ public class SortingTest
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
-    final Database database = getDatabase(schemaCrawlerOptions);
+    final Catalog catalog = getCatalog(schemaCrawlerOptions);
     final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
     assertNotNull("Schema not found", schema);
 
-    final Table[] tables = database.getTables(schema).toArray(new Table[0]);
+    final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
     assertEquals("Table count does not match", 6, tables.length);
     for (final Table table: tables)
     {
@@ -180,9 +180,9 @@ public class SortingTest
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
-    final Database database = getDatabase(schemaCrawlerOptions);
+    final Catalog catalog = getCatalog(schemaCrawlerOptions);
     final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
-    final Table[] tables = database.getTables(schema).toArray(new Table[0]);
+    final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
     assertEquals("Table count does not match", 6, tables.length);
     for (final Table table: tables)
     {

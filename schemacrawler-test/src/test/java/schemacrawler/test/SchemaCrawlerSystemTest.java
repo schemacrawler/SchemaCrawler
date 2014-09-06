@@ -28,7 +28,7 @@ import java.util.regex.Pattern;
 
 import org.junit.Test;
 
-import schemacrawler.schema.Database;
+import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -59,9 +59,9 @@ public class SchemaCrawlerSystemTest
       infoLevel.setRetrieveRoutines(false);
       schemaCrawlerOptions.setSchemaInfoLevel(infoLevel);
 
-      final Database database = retrieveDatabase(dataSource,
+      final Catalog catalog = retrieveDatabase(dataSource,
                                                  schemaCrawlerOptions);
-      final Schema[] schemas = (Schema[]) database.getSchemas().toArray();
+      final Schema[] schemas = (Schema[]) catalog.getSchemas().toArray();
       assertEquals("Incorrect number of schemas for " + dataSource + ": "
                    + Arrays.toString(schemas), schemaCounts[i], schemas.length);
     }
@@ -144,7 +144,7 @@ public class SchemaCrawlerSystemTest
 
   private void counts(final String dataSourceName,
                       final Schema schema,
-                      final Database database)
+                      final Catalog catalog)
     throws Exception
   {
 
@@ -156,7 +156,7 @@ public class SchemaCrawlerSystemTest
         1, 0, 2, 1, 0, 0
     };
 
-    final Table[] tables = database.getTables(schema).toArray(new Table[0]);
+    final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
     assertEquals(dataSourceName + " table count does not match",
                  tableColumnCounts.length,
                  tables.length);
@@ -176,23 +176,23 @@ public class SchemaCrawlerSystemTest
     }
   }
 
-  private Database retrieveDatabase(final String dataSourceName,
+  private Catalog retrieveDatabase(final String dataSourceName,
                                     final String schemaInclusion)
     throws Exception
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = createOptions(dataSourceName,
                                                                     schemaInclusion);
-    final Database database = retrieveDatabase(dataSourceName,
+    final Catalog catalog = retrieveDatabase(dataSourceName,
                                                schemaCrawlerOptions);
-    return database;
+    return catalog;
   }
 
   private Schema retrieveSchema(final String schemaInclusion,
-                                final Database database)
+                                final Catalog catalog)
     throws Exception
   {
 
-    final Schema[] schemas = (Schema[]) database.getSchemas().toArray();
+    final Schema[] schemas = (Schema[]) catalog.getSchemas().toArray();
     final Schema schema;
     if (schemas == null || schemas.length == 0)
     {
@@ -224,14 +224,14 @@ public class SchemaCrawlerSystemTest
                                 final String schemaInclusion)
     throws Exception
   {
-    final Database database = retrieveDatabase(dataSourceName, schemaInclusion);
-    return retrieveSchema(schemaInclusion, database);
+    final Catalog catalog = retrieveDatabase(dataSourceName, schemaInclusion);
+    return retrieveSchema(schemaInclusion, catalog);
   }
 
   private void tables(final String dataSourceName,
                       final Schema schema,
                       final String quote,
-                      final Database database)
+                      final Catalog catalog)
     throws Exception
   {
     if (schema == null)
@@ -251,7 +251,7 @@ public class SchemaCrawlerSystemTest
         "TABLE", "VIEW", "TABLE", "TABLE", "TABLE", "TABLE"
     };
 
-    final Table[] tables = database.getTables(schema).toArray(new Table[0]);
+    final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
     assertEquals(dataSourceName + " table count does not match - "
                      + ObjectToString.toString(tables),
                  tableNames.length,
@@ -274,11 +274,11 @@ public class SchemaCrawlerSystemTest
   {
     try
     {
-      final Database database = retrieveDatabase(dataSourceName,
+      final Catalog catalog = retrieveDatabase(dataSourceName,
                                                  schemaInclusion);
-      final Schema schema = retrieveSchema(schemaInclusion, database);
-      tables(dataSourceName, schema, quote, database);
-      counts(dataSourceName, schema, database);
+      final Schema schema = retrieveSchema(schemaInclusion, catalog);
+      tables(dataSourceName, schema, quote, catalog);
+      counts(dataSourceName, schema, catalog);
       return null;
     }
     catch (final Exception e)

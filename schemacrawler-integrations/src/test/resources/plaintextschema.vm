@@ -1,13 +1,13 @@
 UTF-8: ¥ · £ · € · $ · ¢ · ₡ · ₢ · ₣ · ₤ · ₥ · ₦ · ₧ · ₨ · ₩ · ₪ · ₫ · ₭ · ₮ · ₯
 
-$database.schemaCrawlerInfo
-$database.databaseInfo
-$database.jdbcDriverInfo
+$catalog.schemaCrawlerInfo
+$catalog.databaseInfo
+$catalog.jdbcDriverInfo
 
-#foreach($schema in $database.schemas)
+#foreach($schema in $catalog.schemas)
 SET SCHEMA $schema.fullName;
 
-#foreach($table in $database.getTables($schema))
+#foreach($table in $catalog.getTables($schema))
 #if ($table.tableType == "table")
 CREATE TABLE $table.name
 (

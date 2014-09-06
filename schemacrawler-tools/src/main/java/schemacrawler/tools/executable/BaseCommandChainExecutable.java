@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.schema.Database;
+import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
 abstract class BaseCommandChainExecutable
@@ -81,7 +81,7 @@ abstract class BaseCommandChainExecutable
     }
   }
 
-  protected final void executeChain(final Database database,
+  protected final void executeChain(final Catalog catalog,
                                     final Connection connection)
     throws Exception
   {
@@ -95,7 +95,7 @@ abstract class BaseCommandChainExecutable
     {
       if (executable instanceof BaseStagedExecutable)
       {
-        ((BaseStagedExecutable) executable).executeOn(database, connection);
+        ((BaseStagedExecutable) executable).executeOn(catalog, connection);
       }
     }
   }

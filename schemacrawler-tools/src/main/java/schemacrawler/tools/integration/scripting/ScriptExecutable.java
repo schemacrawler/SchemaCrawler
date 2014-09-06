@@ -36,7 +36,7 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineFactory;
 import javax.script.ScriptEngineManager;
 
-import schemacrawler.schema.Database;
+import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseStagedExecutable;
 import schemacrawler.tools.executable.CommandChainExecutable;
@@ -68,8 +68,7 @@ public final class ScriptExecutable
    * {@inheritDoc}
    */
   @Override
-  public final void executeOn(final Database database,
-                              final Connection connection)
+  public final void executeOn(final Catalog catalog, final Connection connection)
     throws Exception
   {
 
@@ -132,7 +131,7 @@ public final class ScriptExecutable
     {
       // Set up the context
       scriptEngine.getContext().setWriter(writer);
-      scriptEngine.put("database", database);
+      scriptEngine.put("catalog", catalog);
       scriptEngine.put("connection", connection);
       scriptEngine.put("chain", chain);
 
