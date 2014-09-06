@@ -53,7 +53,8 @@ public class SimpleLintCollector
   }
 
   @Override
-  public void addLint(final NamedObjectWithAttributes namedObject, final Lint<?> lint)
+  public void addLint(final NamedObjectWithAttributes namedObject,
+                      final Lint<?> lint)
   {
     if (namedObject != null && lint != null
         && namedObject.getFullName().equals(lint.getObjectName()))

@@ -549,9 +549,8 @@ final class TableRetriever
                                               schemaName);
     if (schema != null)
     {
-      Table table = catalog.getTable(new SchemaReference(catalogName,
-                                                          schemaName),
-                                      tableName);
+      Table table = catalog
+        .getTable(new SchemaReference(catalogName, schemaName), tableName);
       if (table != null)
       {
         column = table.getColumn(columnName);

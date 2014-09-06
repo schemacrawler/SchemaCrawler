@@ -39,8 +39,7 @@ public final class LintedCatalog
 
   private final LintCollector collector;
 
-  public LintedCatalog(final Catalog catalog,
-                        final LinterConfigs linterConfigs)
+  public LintedCatalog(final Catalog catalog, final LinterConfigs linterConfigs)
     throws SchemaCrawlerException
   {
     super(catalog);

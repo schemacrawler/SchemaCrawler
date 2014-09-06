@@ -41,11 +41,11 @@ import sf.util.ObjectToString;
  * @author Sualeh Fatehi
  */
 public final class OfflineSnapshotCommandLine
-implements CommandLine
+  implements CommandLine
 {
 
   private static final Logger LOGGER = Logger
-      .getLogger(OfflineSnapshotCommandLine.class.getName());
+    .getLogger(OfflineSnapshotCommandLine.class.getName());
 
   private final String command;
   private final Config config;
@@ -54,8 +54,8 @@ implements CommandLine
   private final OfflineSnapshotOptions offlineSnapshotOptions;
 
   OfflineSnapshotCommandLine(final String... args)
-      throws SchemaCrawlerException
-      {
+    throws SchemaCrawlerException
+  {
     if (args == null || args.length == 0)
     {
       throw new SchemaCrawlerException("No command line arguments provided");
@@ -102,13 +102,13 @@ implements CommandLine
     if (remainingArgs.length > 0)
     {
       LOGGER.log(Level.INFO, "Too many command line arguments provided: "
-          + ObjectToString.toString(remainingArgs));
+                             + ObjectToString.toString(remainingArgs));
     }
-      }
+  }
 
   @Override
   public void execute()
-      throws Exception
+    throws Exception
   {
     final OfflineSnapshotExecutable executable = new OfflineSnapshotExecutable(command);
     initialize(executable);

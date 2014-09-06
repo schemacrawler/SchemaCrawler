@@ -108,7 +108,8 @@ public class LintExecutableTest
                                                                               "-infolevel=standard",
                                                                               "-sortcolumns=true",
                                                                               "-outputformat="
-                                                                                  + outputFormat.getFormat(),
+                                                                                  + outputFormat
+                                                                                    .getFormat(),
                                                                               "-outputfile="
                                                                                   + testOutputFile
                                                                                     .getAbsolutePath());
