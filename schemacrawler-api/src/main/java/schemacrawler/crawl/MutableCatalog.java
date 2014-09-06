@@ -45,8 +45,8 @@ import schemacrawler.schema.Table;
  * @author Sualeh Fatehi sualeh@hotmail.com
  */
 final class MutableCatalog
-extends AbstractNamedObjectWithAttributes
-implements Catalog
+  extends AbstractNamedObjectWithAttributes
+  implements Catalog
 {
 
   private static final long serialVersionUID = 4051323422934251828L;
@@ -103,7 +103,7 @@ implements Catalog
   {
     final Collection<ColumnDataType> values = getColumnDataTypes();
     for (final Iterator<ColumnDataType> iterator = values.iterator(); iterator
-        .hasNext();)
+      .hasNext();)
     {
       final ColumnDataType mutableColumnDataType = iterator.next();
       if (!mutableColumnDataType.getSchema().equals(schema))
@@ -162,7 +162,7 @@ implements Catalog
   {
     final List<Routine> values = new ArrayList<Routine>(routines.values());
     for (final Iterator<Routine> iterator = values.iterator(); iterator
-        .hasNext();)
+      .hasNext();)
     {
       final Routine routine = iterator.next();
       if (!routine.getSchema().equals(schema))
@@ -249,7 +249,7 @@ implements Catalog
   {
     final Collection<Sequence> values = getSequences();
     for (final Iterator<Sequence> iterator = values.iterator(); iterator
-        .hasNext();)
+      .hasNext();)
     {
       final Sequence mutableSequence = iterator.next();
       if (!mutableSequence.getSchema().equals(schemaRef))
@@ -293,7 +293,7 @@ implements Catalog
   {
     final Collection<Synonym> values = getSynonyms();
     for (final Iterator<Synonym> iterator = values.iterator(); iterator
-        .hasNext();)
+      .hasNext();)
     {
       final Synonym mutableSynonym = iterator.next();
       if (!mutableSynonym.getSchema().equals(schemaRef))

@@ -36,7 +36,7 @@ import sf.util.Utility;
  * @author Sualeh Fatehi
  */
 public final class OfflineSnapshotOptions
-implements Options
+  implements Options
 {
 
   private static final long serialVersionUID = 5202680507264097856L;
@@ -61,7 +61,7 @@ implements Options
     }
 
     setInputEncoding(configProperties
-                     .getStringValue(SC_INPUT_ENCODING, "UTF-8"));
+      .getStringValue(SC_INPUT_ENCODING, "UTF-8"));
   }
 
   /**

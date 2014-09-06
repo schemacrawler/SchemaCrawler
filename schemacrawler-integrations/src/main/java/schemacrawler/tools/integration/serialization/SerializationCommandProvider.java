@@ -26,7 +26,7 @@ import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.options.OutputOptions;
 
 public class SerializationCommandProvider
-implements CommandProvider
+  implements CommandProvider
 {
 
   @Override

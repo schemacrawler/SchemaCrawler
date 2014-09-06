@@ -65,7 +65,7 @@ public class LintTest
       .size());
 
     final LintedCatalog lintedDatabase = new LintedCatalog(catalog,
-                                                             new LinterConfigs());
+                                                           new LinterConfigs());
     final LintCollector lintCollector = lintedDatabase.getCollector();
     assertEquals(23, lintCollector.size());
 

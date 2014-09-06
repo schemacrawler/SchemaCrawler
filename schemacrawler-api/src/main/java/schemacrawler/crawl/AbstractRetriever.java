@@ -235,7 +235,7 @@ abstract class AbstractRetriever
     if (schema != null)
     {
       table = catalog.getTable(new SchemaReference(catalogName, schemaName),
-                                tableName);
+                               tableName);
     }
     return table;
   }
