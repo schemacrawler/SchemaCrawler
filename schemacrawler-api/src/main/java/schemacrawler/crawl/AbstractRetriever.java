@@ -43,7 +43,7 @@ abstract class AbstractRetriever
 {
 
   private final RetrieverConnection retrieverConnection;
-  final MutableDatabase database;
+  final MutableCatalog catalog;
 
   AbstractRetriever()
     throws SQLException
@@ -52,11 +52,11 @@ abstract class AbstractRetriever
   }
 
   AbstractRetriever(final RetrieverConnection retrieverConnection,
-                    final MutableDatabase database)
+                    final MutableCatalog catalog)
     throws SQLException
   {
     this.retrieverConnection = retrieverConnection;
-    this.database = database;
+    this.catalog = catalog;
   }
 
   /**
@@ -120,7 +120,7 @@ abstract class AbstractRetriever
 
   Collection<Schema> getSchemas()
   {
-    return database.getSchemas();
+    return catalog.getSchemas();
   }
 
   /**
@@ -162,11 +162,11 @@ abstract class AbstractRetriever
                                                      final String databaseSpecificTypeName,
                                                      final String mappedClassName)
   {
-    MutableColumnDataType columnDataType = database
+    MutableColumnDataType columnDataType = catalog
       .getColumnDataType(schema, databaseSpecificTypeName);
     if (columnDataType == null)
     {
-      columnDataType = database
+      columnDataType = catalog
         .getSystemColumnDataType(databaseSpecificTypeName);
     }
     // Create new data type, if needed
@@ -196,7 +196,7 @@ abstract class AbstractRetriever
         columnDataType.setTypeMappedClass(mappedClassName);
       }
 
-      database.addColumnDataType(columnDataType);
+      catalog.addColumnDataType(columnDataType);
     }
     return columnDataType;
   }
@@ -219,7 +219,7 @@ abstract class AbstractRetriever
       {
         routineLookupName = routineName;
       }
-      routine = (MutableRoutine) database
+      routine = (MutableRoutine) catalog
         .getRoutine(new SchemaReference(catalogName, schemaName),
                     routineLookupName);
     }
@@ -234,7 +234,7 @@ abstract class AbstractRetriever
     final Schema schema = new SchemaReference(catalogName, schemaName);
     if (schema != null)
     {
-      table = database.getTable(new SchemaReference(catalogName, schemaName),
+      table = catalog.getTable(new SchemaReference(catalogName, schemaName),
                                 tableName);
     }
     return table;

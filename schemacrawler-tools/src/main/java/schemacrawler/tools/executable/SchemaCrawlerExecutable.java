@@ -5,7 +5,7 @@ import java.sql.Connection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.schema.Database;
+import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.text.operation.OperationExecutable;
 
@@ -33,7 +33,7 @@ public final class SchemaCrawlerExecutable
   }
 
   @Override
-  public void executeOn(final Database database, final Connection connection)
+  public void executeOn(final Catalog catalog, final Connection connection)
     throws Exception
   {
     final Commands commands = new Commands(getCommand());
@@ -86,7 +86,7 @@ public final class SchemaCrawlerExecutable
 
     executable.setAdditionalConfiguration(additionalConfiguration);
 
-    executable.executeOn(database, connection);
+    executable.executeOn(catalog, connection);
   }
 
 }

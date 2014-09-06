@@ -53,10 +53,10 @@ final class SynonymRetriever
     .getName());
 
   SynonymRetriever(final RetrieverConnection retrieverConnection,
-                   final MutableDatabase database)
+                   final MutableCatalog catalog)
     throws SQLException
   {
-    super(retrieverConnection, database);
+    super(retrieverConnection, catalog);
   }
 
   /**
@@ -88,7 +88,7 @@ final class SynonymRetriever
     final String synonymsDefinitionSql = informationSchemaViews
       .getSynonymsSql();
 
-    final Collection<Schema> schemas = database.getSchemaNames();
+    final Collection<Schema> schemas = catalog.getSchemaNames();
 
     final Connection connection = getDatabaseConnection();
 
@@ -161,7 +161,7 @@ final class SynonymRetriever
 
         if (synonymFilter.include(synonym))
         {
-          database.addSynonym(synonym);
+          catalog.addSynonym(synonym);
         }
 
       }

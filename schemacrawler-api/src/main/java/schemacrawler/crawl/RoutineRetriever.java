@@ -56,10 +56,10 @@ final class RoutineRetriever
     .getName());
 
   RoutineRetriever(final RetrieverConnection retrieverConnection,
-                   final MutableDatabase database)
+                   final MutableCatalog catalog)
     throws SQLException
   {
-    super(retrieverConnection, database);
+    super(retrieverConnection, catalog);
   }
 
   void retrieveFunctionColumns(final MutableFunction function,
@@ -180,7 +180,7 @@ final class RoutineRetriever
           function.setRemarks(remarks);
           function.addAttributes(results.getAttributes());
 
-          database.addRoutine(function);
+          catalog.addRoutine(function);
         }
       }
     }
@@ -306,7 +306,7 @@ final class RoutineRetriever
           procedure.setRemarks(remarks);
           procedure.addAttributes(results.getAttributes());
 
-          database.addRoutine(procedure);
+          catalog.addRoutine(procedure);
         }
       }
     }

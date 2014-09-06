@@ -31,7 +31,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.schema.Database;
+import schemacrawler.schema.Catalog;
 import schemacrawler.tools.executable.BaseStagedExecutable;
 import schemacrawler.tools.options.OutputWriter;
 import freemarker.cache.ClassTemplateLoader;
@@ -64,8 +64,7 @@ public final class FreeMarkerRenderer
    * {@inheritDoc}
    */
   @Override
-  public final void executeOn(final Database database,
-                              final Connection connection)
+  public final void executeOn(final Catalog catalog, final Connection connection)
     throws Exception
   {
     // Set the file path, in case the template is a file template
@@ -104,7 +103,7 @@ public final class FreeMarkerRenderer
 
     // Create the root hash
     final Map<String, Object> objectMap = new HashMap<>();
-    objectMap.put("database", database);
+    objectMap.put("catalog", catalog);
 
     try (final Writer writer = new OutputWriter(outputOptions);)
     {

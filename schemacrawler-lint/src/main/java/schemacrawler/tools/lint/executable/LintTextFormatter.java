@@ -31,7 +31,7 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.lint.Lint;
 import schemacrawler.tools.lint.LintSeverity;
-import schemacrawler.tools.lint.LintedDatabase;
+import schemacrawler.tools.lint.LintedCatalog;
 import schemacrawler.tools.lint.SimpleLintCollector;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.BaseTabularFormatter;
@@ -50,10 +50,10 @@ final class LintTextFormatter
   }
 
   @Override
-  public void handle(final LintedDatabase database)
+  public void handle(final LintedCatalog catalog)
     throws SchemaCrawlerException
   {
-    final Collection<Lint<?>> lints = SimpleLintCollector.getLint(database);
+    final Collection<Lint<?>> lints = SimpleLintCollector.getLint(catalog);
     if (lints != null && !lints.isEmpty())
     {
       out.println(formattingHelper.createObjectStart("Database"));

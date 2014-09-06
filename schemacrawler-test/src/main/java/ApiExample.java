@@ -3,7 +3,7 @@ import java.sql.Connection;
 import javax.sql.DataSource;
 
 import schemacrawler.schema.Column;
-import schemacrawler.schema.Database;
+import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
@@ -35,13 +35,13 @@ public final class ApiExample
       .setSchemaInclusionRule(new RegularExpressionInclusionRule("PUBLIC.BOOKS"));
 
     // Get the schema definition
-    final Database database = SchemaCrawlerUtility.getDatabase(connection,
+    final Catalog catalog = SchemaCrawlerUtility.getCatalog(connection,
                                                                options);
 
-    for (final Schema schema: database.getSchemas())
+    for (final Schema schema: catalog.getSchemas())
     {
       System.out.println(schema);
-      for (final Table table: database.getTables(schema))
+      for (final Table table: catalog.getTables(schema))
       {
         System.out.print("o--> " + table);
         if (table instanceof View)

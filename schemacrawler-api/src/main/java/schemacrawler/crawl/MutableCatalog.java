@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.Set;
 
 import schemacrawler.schema.ColumnDataType;
-import schemacrawler.schema.Database;
+import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaReference;
@@ -44,9 +44,9 @@ import schemacrawler.schema.Table;
  *
  * @author Sualeh Fatehi sualeh@hotmail.com
  */
-final class MutableDatabase
+final class MutableCatalog
 extends AbstractNamedObjectWithAttributes
-implements Database
+implements Catalog
 {
 
   private static final long serialVersionUID = 4051323422934251828L;
@@ -61,7 +61,7 @@ implements Database
   private final NamedObjectList<MutableSynonym> synonyms = new NamedObjectList<>();
   private final NamedObjectList<MutableSequence> sequences = new NamedObjectList<>();
 
-  MutableDatabase(final String name)
+  MutableCatalog(final String name)
   {
     super(name);
     databaseInfo = new MutableDatabaseInfo();
@@ -85,7 +85,7 @@ implements Database
   /**
    * {@inheritDoc}
    *
-   * @see schemacrawler.schema.Database#getSystemColumnDataTypes()
+   * @see schemacrawler.schema.Catalog#getSystemColumnDataTypes()
    */
   @Override
   public Collection<ColumnDataType> getColumnDataTypes()
@@ -96,7 +96,7 @@ implements Database
   /**
    * {@inheritDoc}
    *
-   * @see schemacrawler.schema.Database#getSystemColumnDataTypes()
+   * @see schemacrawler.schema.Catalog#getSystemColumnDataTypes()
    */
   @Override
   public Collection<ColumnDataType> getColumnDataTypes(final Schema schema)
@@ -123,7 +123,7 @@ implements Database
   /**
    * {@inheritDoc}
    *
-   * @see schemacrawler.schema.Database#getJdbcDriverInfo()
+   * @see schemacrawler.schema.Catalog#getJdbcDriverInfo()
    */
   @Override
   public MutableJdbcDriverInfo getJdbcDriverInfo()
@@ -176,7 +176,7 @@ implements Database
   /**
    * {@inheritDoc}
    *
-   * @see schemacrawler.schema.Database#getSchema(java.lang.String)
+   * @see schemacrawler.schema.Catalog#getSchema(java.lang.String)
    */
   @Override
   public Schema getSchema(final String name)
@@ -195,7 +195,7 @@ implements Database
   /**
    * {@inheritDoc}
    *
-   * @see schemacrawler.schema.Database#getSchemaCrawlerInfo()
+   * @see schemacrawler.schema.Catalog#getSchemaCrawlerInfo()
    */
   @Override
   public MutableSchemaCrawlerInfo getSchemaCrawlerInfo()
@@ -206,7 +206,7 @@ implements Database
   /**
    * {@inheritDoc}
    *
-   * @see schemacrawler.schema.Database#getSchemas()
+   * @see schemacrawler.schema.Catalog#getSchemas()
    */
   @Override
   public Collection<Schema> getSchemas()
@@ -219,7 +219,7 @@ implements Database
   /**
    * {@inheritDoc}
    *
-   * @see schemacrawler.schema.Database#getSequence(schemacrawler.schema.Schema,
+   * @see schemacrawler.schema.Catalog#getSequence(schemacrawler.schema.Schema,
    *      java.lang.String)
    */
   @Override
@@ -242,7 +242,7 @@ implements Database
   /**
    * {@inheritDoc}
    *
-   * @see schemacrawler.schema.Database#getSequences(schemacrawler.schema.Schema)
+   * @see schemacrawler.schema.Catalog#getSequences(schemacrawler.schema.Schema)
    */
   @Override
   public Collection<Sequence> getSequences(final Schema schemaRef)
@@ -263,7 +263,7 @@ implements Database
   /**
    * {@inheritDoc}
    *
-   * @see schemacrawler.schema.Database#getSynonym(schemacrawler.schema.Schema,
+   * @see schemacrawler.schema.Catalog#getSynonym(schemacrawler.schema.Schema,
    *      java.lang.String)
    */
   @Override
@@ -275,7 +275,7 @@ implements Database
   /**
    * {@inheritDoc}
    *
-   * @see schemacrawler.schema.Database#getSynonyms()
+   * @see schemacrawler.schema.Catalog#getSynonyms()
    */
   @Override
   public Collection<Synonym> getSynonyms()
@@ -307,7 +307,7 @@ implements Database
   /**
    * {@inheritDoc}
    *
-   * @see schemacrawler.schema.Database#getSystemColumnDataType(java.lang.String)
+   * @see schemacrawler.schema.Catalog#getSystemColumnDataType(java.lang.String)
    */
   @Override
   public MutableColumnDataType getSystemColumnDataType(final String name)
@@ -318,7 +318,7 @@ implements Database
   /**
    * {@inheritDoc}
    *
-   * @see schemacrawler.schema.Database#getSystemColumnDataTypes()
+   * @see schemacrawler.schema.Catalog#getSystemColumnDataTypes()
    */
   @Override
   public Collection<ColumnDataType> getSystemColumnDataTypes()

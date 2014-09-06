@@ -56,10 +56,10 @@ final class TableRetriever
     .getName());
 
   TableRetriever(final RetrieverConnection retrieverConnection,
-                 final MutableDatabase database)
+                 final MutableCatalog catalog)
     throws SQLException
   {
-    super(retrieverConnection, database);
+    super(retrieverConnection, catalog);
   }
 
   void retrieveColumns(final MutableTable table,
@@ -307,7 +307,7 @@ final class TableRetriever
 
         final SchemaReference schemaReference = new SchemaReference(catalogName,
                                                                     schemaName);
-        final Schema schema = database.getSchema(schemaReference.getFullName());
+        final Schema schema = catalog.getSchema(schemaReference.getFullName());
 
         final TableType tableType = supportedTableTypes
           .lookupTableType(tableTypeString);
@@ -326,7 +326,7 @@ final class TableRetriever
           table.setTableType(tableType);
           table.setRemarks(remarks);
 
-          database.addTable(table);
+          catalog.addTable(table);
         }
       }
     }
@@ -549,7 +549,7 @@ final class TableRetriever
                                               schemaName);
     if (schema != null)
     {
-      Table table = database.getTable(new SchemaReference(catalogName,
+      Table table = catalog.getTable(new SchemaReference(catalogName,
                                                           schemaName),
                                       tableName);
       if (table != null)

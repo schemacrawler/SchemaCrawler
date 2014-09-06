@@ -21,7 +21,7 @@
 package schemacrawler.tools.analysis.associations;
 
 
-import static schemacrawler.tools.analysis.associations.DatabaseWithAssociations.addWeakAssociationToTable;
+import static schemacrawler.tools.analysis.associations.CatalogWithAssociations.addWeakAssociationToTable;
 
 import java.util.ArrayList;
 import java.util.Collection;

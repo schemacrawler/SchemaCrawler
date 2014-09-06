@@ -25,9 +25,9 @@ import java.sql.Connection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.schema.Database;
+import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.analysis.associations.DatabaseWithAssociations;
+import schemacrawler.tools.analysis.associations.CatalogWithAssociations;
 import schemacrawler.tools.executable.BaseStagedExecutable;
 import schemacrawler.tools.options.InfoLevel;
 import schemacrawler.tools.options.OutputFormat;
@@ -55,7 +55,7 @@ public final class SchemaTextExecutable
   }
 
   @Override
-  public void executeOn(final Database db, final Connection connection)
+  public void executeOn(final Catalog db, final Connection connection)
     throws Exception
   {
     loadSchemaTextOptions();
@@ -72,20 +72,20 @@ public final class SchemaTextExecutable
       infoLevel = InfoLevel.unknown;
     }
 
-    final Database database;
+    final Catalog catalog;
     if (infoLevel == InfoLevel.maximum)
     {
-      database = new DatabaseWithAssociations(db);
+      catalog = new CatalogWithAssociations(db);
     }
     else
     {
-      database = db;
+      catalog = db;
     }
 
     final SchemaTraversalHandler formatter = getSchemaTraversalHandler();
 
     final SchemaTraverser traverser = new SchemaTraverser();
-    traverser.setDatabase(database);
+    traverser.setCatalog(catalog);
     traverser.setHandler(formatter);
     traverser.traverse();
 

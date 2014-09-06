@@ -45,7 +45,7 @@ import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.analysis.associations.DatabaseWithAssociations;
+import schemacrawler.tools.analysis.associations.CatalogWithAssociations;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.BaseDotFormatter;
@@ -548,7 +548,7 @@ public final class SchemaDotFormatter
 
   private void printWeakAssociations(final Table table)
   {
-    final Collection<ColumnReference> weakAssociations = DatabaseWithAssociations
+    final Collection<ColumnReference> weakAssociations = CatalogWithAssociations
       .getWeakAssociations(table);
     for (final ColumnReference weakAssociation: weakAssociations)
     {

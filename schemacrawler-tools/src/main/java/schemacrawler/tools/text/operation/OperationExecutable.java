@@ -32,7 +32,7 @@ import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.schema.Database;
+import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseStagedExecutable;
@@ -71,7 +71,7 @@ public final class OperationExecutable
   }
 
   @Override
-  public void executeOn(final Database database, final Connection connection)
+  public void executeOn(final Catalog catalog, final Connection connection)
     throws Exception
   {
     loadOperationOptions();
@@ -86,14 +86,14 @@ public final class OperationExecutable
       handler.begin();
 
       handler.handleInfoStart();
-      handler.handle(database.getSchemaCrawlerInfo());
-      handler.handle(database.getDatabaseInfo());
-      handler.handle(database.getJdbcDriverInfo());
+      handler.handle(catalog.getSchemaCrawlerInfo());
+      handler.handle(catalog.getDatabaseInfo());
+      handler.handle(catalog.getJdbcDriverInfo());
       handler.handleInfoEnd();
 
       if (query.isQueryOver())
       {
-        final Collection<Table> tables = database.getTables();
+        final Collection<Table> tables = catalog.getTables();
 
         for (final Table table: tables)
         {

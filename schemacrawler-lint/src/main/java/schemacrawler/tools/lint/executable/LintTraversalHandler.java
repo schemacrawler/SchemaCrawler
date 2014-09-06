@@ -3,14 +3,14 @@ package schemacrawler.tools.lint.executable;
 
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.lint.LintedDatabase;
+import schemacrawler.tools.lint.LintedCatalog;
 import schemacrawler.tools.traversal.TraversalHandler;
 
 public interface LintTraversalHandler
   extends TraversalHandler
 {
 
-  void handle(final LintedDatabase database)
+  void handle(final LintedCatalog catalog)
     throws SchemaCrawlerException;
 
   void handle(final Table table)

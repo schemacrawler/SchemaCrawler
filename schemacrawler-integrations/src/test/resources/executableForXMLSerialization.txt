@@ -1,5 +1,5 @@
-<database id="1">
-  <name>database</name>
+<catalog id="1">
+  <name>catalog</name>
   <attributeMap id="2"/>
   <databaseInfo id="3">
     <userName>SA</userName>
@@ -884,7 +884,7 @@ potential schema design issues with lint. The output serves for &#xd;
 database documentation is designed to be diff-ed against other database &#xd;
 schemas. SchemaCrawler also generates schema diagrams.&#xd;
 </schemaCrawlerAbout>
-    <crawlTimestamp>Sep 1, 2014 12:01 AM</crawlTimestamp>
+    <crawlTimestamp>Sep 5, 2014 10:35 PM</crawlTimestamp>
     <systemProperties id="186"/>
   </schemaCrawlerInfo>
   <schemas id="187">
@@ -16981,4 +16981,4 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
       </entry>
     </objects>
   </sequences>
-</database>
+</catalog>

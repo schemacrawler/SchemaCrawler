@@ -50,10 +50,10 @@ final class SchemaRetriever
   private final boolean supportsSchemas;
 
   SchemaRetriever(final RetrieverConnection retrieverConnection,
-                  final MutableDatabase database)
+                  final MutableCatalog catalog)
     throws SQLException
   {
-    super(retrieverConnection, database);
+    super(retrieverConnection, catalog);
 
     supportsCatalogs = retrieverConnection.isSupportsCatalogs();
     supportsSchemas = retrieverConnection.isSupportsSchemas();
@@ -105,14 +105,14 @@ final class SchemaRetriever
     // reference cache
     for (final SchemaReference schemaRef: schemaRefs)
     {
-      database.addSchema(schemaRef);
+      catalog.addSchema(schemaRef);
     }
 
     // Add an empty schema reference for databases that do not support
     // neither catalogs nor schemas
     if (!supportsCatalogs && !supportsSchemas)
     {
-      database.addSchema(new SchemaReference(null, null));
+      catalog.addSchema(new SchemaReference(null, null));
     }
 
   }

@@ -28,7 +28,7 @@ import java.util.Collection;
  *
  * @author Sualeh Fatehi
  */
-public interface Database
+public interface Catalog
 extends NamedObjectWithAttributes
 {
 

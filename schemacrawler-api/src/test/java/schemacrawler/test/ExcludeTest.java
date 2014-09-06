@@ -26,8 +26,8 @@ import java.util.logging.Logger;
 
 import org.junit.Test;
 
+import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
-import schemacrawler.schema.Database;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
@@ -57,13 +57,13 @@ public class ExcludeTest
     schemaCrawlerOptions
       .setColumnInclusionRule(new RegularExpressionExclusionRule(".*\\..*\\.ID"));
 
-    final Database database = getDatabase(schemaCrawlerOptions);
-    final Schema[] schemas = database.getSchemas().toArray(new Schema[0]);
+    final Catalog catalog = getCatalog(schemaCrawlerOptions);
+    final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
     assertEquals("Schema count does not match", 5, schemas.length);
     for (final Schema schema: schemas)
     {
       out.println("schema: " + schema.getFullName());
-      final Table[] tables = database.getTables(schema).toArray(new Table[0]);
+      final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
       Arrays.sort(tables, NamedObjectSort.alphabetical);
       for (final Table table: tables)
       {

@@ -36,8 +36,8 @@ import java.util.TreeMap;
 
 import org.junit.Test;
 
+import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
-import schemacrawler.schema.Database;
 import schemacrawler.schema.EventManipulationType;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Schema;
@@ -74,11 +74,11 @@ public class SchemaCrawlerTest
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
 
-    final Database database = getDatabase(schemaCrawlerOptions);
-    assertNotNull(database);
-    final Schema schema = database.getSchema("PUBLIC.BOOKS");
+    final Catalog catalog = getCatalog(schemaCrawlerOptions);
+    assertNotNull(catalog);
+    final Schema schema = catalog.getSchema("PUBLIC.BOOKS");
     assertNotNull(schema);
-    final Table table = database.getTable(schema, "AUTHORS");
+    final Table table = catalog.getTable(schema, "AUTHORS");
     assertNotNull(table);
     assertNull(table.getColumn(null));
     assertNull(table.getColumn(""));
@@ -104,13 +104,13 @@ public class SchemaCrawlerTest
     schemaCrawlerOptions
       .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
 
-    final Database database = getDatabase(schemaCrawlerOptions);
-    final Schema[] schemas = database.getSchemas().toArray(new Schema[0]);
+    final Catalog catalog = getCatalog(schemaCrawlerOptions);
+    final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
     assertEquals("Schema count does not match", 5, schemas.length);
     for (final Schema schema: schemas)
     {
       out.println("schema: " + schema.getFullName());
-      final Table[] tables = database.getTables(schema).toArray(new Table[0]);
+      final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
       Arrays.sort(tables, NamedObjectSort.alphabetical);
       for (final Table table: tables)
       {
@@ -141,8 +141,8 @@ public class SchemaCrawlerTest
     schemaCrawlerOptions
       .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
 
-    final Database database = getDatabase(schemaCrawlerOptions);
-    final Table[] tables = database.getTables().toArray(new Table[0]);
+    final Catalog catalog = getCatalog(schemaCrawlerOptions);
+    final Table[] tables = catalog.getTables().toArray(new Table[0]);
     assertEquals("Table count does not match", 8, tables.length);
     Arrays.sort(tables, NamedObjectSort.alphabetical);
     for (final Table table: tables)
@@ -170,8 +170,8 @@ public class SchemaCrawlerTest
     schemaCrawlerOptions
       .setTableInclusionRule(new RegularExpressionInclusionRule(".*\\.AUTHORS"));
 
-    final Database database = getDatabase(schemaCrawlerOptions);
-    final Table[] tables = database.getTables().toArray(new Table[0]);
+    final Catalog catalog = getCatalog(schemaCrawlerOptions);
+    final Table[] tables = catalog.getTables().toArray(new Table[0]);
     assertEquals("Table count does not match", 1, tables.length);
     Arrays.sort(tables, NamedObjectSort.alphabetical);
     for (final Table table: tables)
@@ -201,9 +201,9 @@ public class SchemaCrawlerTest
     schemaCrawlerOptions.setInformationSchemaViews(informationSchemaViews);
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
 
-    final Database database = getDatabase(schemaCrawlerOptions);
+    final Catalog catalog = getCatalog(schemaCrawlerOptions);
     final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
-    final Routine[] routines = database.getRoutines(schema)
+    final Routine[] routines = catalog.getRoutines(schema)
       .toArray(new Routine[0]);
     assertEquals("Wrong number of routines", 4, routines.length);
     for (final Routine routine: routines)
@@ -220,26 +220,26 @@ public class SchemaCrawlerTest
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.detailed());
-    final Database database = getDatabase(schemaCrawlerOptions);
+    final Catalog catalog = getCatalog(schemaCrawlerOptions);
     final Schema schema1 = new SchemaReference("PUBLIC", "BOOKS");
     assertTrue("Could not find any tables",
-               database.getTables(schema1).size() > 0);
-    assertEquals("Wrong number of routines", 4, database.getRoutines(schema1)
+               catalog.getTables(schema1).size() > 0);
+    assertEquals("Wrong number of routines", 4, catalog.getRoutines(schema1)
       .size());
 
     final Schema schema2 = new SchemaReference("PUBLIC", "BOOKS");
 
     assertEquals("Schema not not match", schema1, schema2);
     assertEquals("Tables do not match",
-                 database.getTables(schema1),
-                 database.getTables(schema2));
+                 catalog.getTables(schema1),
+                 catalog.getTables(schema2));
     assertEquals("Routines do not match",
-                 database.getRoutines(schema1),
-                 database.getRoutines(schema2));
+                 catalog.getRoutines(schema1),
+                 catalog.getRoutines(schema2));
 
     // Try negative test
-    final Table table1 = database.getTables(schema1).toArray(new Table[0])[0];
-    final Table table2 = database.getTables(schema1).toArray(new Table[0])[1];
+    final Table table1 = catalog.getTables(schema1).toArray(new Table[0])[0];
+    final Table table2 = catalog.getTables(schema1).toArray(new Table[0])[1];
     assertFalse("Tables should not be equal", table1.equals(table2));
 
   }
@@ -262,10 +262,10 @@ public class SchemaCrawlerTest
     schemaCrawlerOptions.setInformationSchemaViews(informationSchemaViews);
     schemaCrawlerOptions.setSequenceInclusionRule(new IncludeAll());
 
-    final Database database = getDatabase(schemaCrawlerOptions);
-    final Schema schema = database.getSchema("PUBLIC.BOOKS");
+    final Catalog catalog = getCatalog(schemaCrawlerOptions);
+    final Schema schema = catalog.getSchema("PUBLIC.BOOKS");
     assertNotNull("BOOKS Schema not found", schema);
-    final Sequence[] sequences = database.getSequences(schema)
+    final Sequence[] sequences = catalog.getSequences(schema)
       .toArray(new Sequence[0]);
     assertEquals("Sequence count does not match", 1, sequences.length);
     for (final Sequence sequence: sequences)
@@ -322,10 +322,10 @@ public class SchemaCrawlerTest
     schemaCrawlerOptions.setInformationSchemaViews(informationSchemaViews);
     schemaCrawlerOptions.setSynonymInclusionRule(new IncludeAll());
 
-    final Database database = getDatabase(schemaCrawlerOptions);
-    final Schema schema = database.getSchema("PUBLIC.BOOKS");
+    final Catalog catalog = getCatalog(schemaCrawlerOptions);
+    final Schema schema = catalog.getSchema("PUBLIC.BOOKS");
     assertNotNull("BOOKS Schema not found", schema);
-    final Synonym[] synonyms = database.getSynonyms(schema)
+    final Synonym[] synonyms = catalog.getSynonyms(schema)
       .toArray(new Synonym[0]);
     assertEquals("Synonym count does not match", 6, synonyms.length);
     for (final Synonym synonym: synonyms)
@@ -356,13 +356,13 @@ public class SchemaCrawlerTest
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
     schemaCrawlerOptions.setInformationSchemaViews(informationSchemaViews);
 
-    final Database database = getDatabase(schemaCrawlerOptions);
-    final Schema[] schemas = database.getSchemas().toArray(new Schema[0]);
+    final Catalog catalog = getCatalog(schemaCrawlerOptions);
+    final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
     assertEquals("Schema count does not match", 6, schemas.length);
     for (final Schema schema: schemas)
     {
       out.println("schema: " + schema.getFullName());
-      final Table[] tables = database.getTables(schema).toArray(new Table[0]);
+      final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
       for (final Table table: tables)
       {
         out.println("  table: " + table.getFullName());
@@ -400,12 +400,12 @@ public class SchemaCrawlerTest
       schemaCrawlerOptions
         .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
 
-      final Database database = getDatabase(schemaCrawlerOptions);
-      final Schema[] schemas = database.getSchemas().toArray(new Schema[0]);
+      final Catalog catalog = getCatalog(schemaCrawlerOptions);
+      final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
       assertEquals("Schema count does not match", 5, schemas.length);
       for (final Schema schema: schemas)
       {
-        final Table[] tables = database.getTables(schema).toArray(new Table[0]);
+        final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
         Arrays.sort(tables, NamedObjectSort.alphabetical);
         for (final Table table: tables)
         {
@@ -468,8 +468,8 @@ public class SchemaCrawlerTest
     schemaCrawlerOptions
       .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
 
-    final Database database = getDatabase(schemaCrawlerOptions);
-    final Schema[] schemas = database.getSchemas().toArray(new Schema[0]);
+    final Catalog catalog = getCatalog(schemaCrawlerOptions);
+    final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
     assertEquals("Schema count does not match", 5, schemas.length);
     final Schema schema = schemas[0];
 
@@ -480,14 +480,14 @@ public class SchemaCrawlerTest
       {
         final String tableName2 = tableNames[j];
         assertEquals(tableName1 + " <--> " + tableName2,
-                     Math.signum(database.getTable(schema, tableName1)
-                       .compareTo(database.getTable(schema, tableName2))),
+                     Math.signum(catalog.getTable(schema, tableName1)
+                       .compareTo(catalog.getTable(schema, tableName2))),
                      Math.signum(i - j),
                      1e-100);
       }
     }
 
-    final Table[] tables = database.getTables(schema).toArray(new Table[0]);
+    final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
     for (int i = 0; i < 10; i++)
     {
       for (int tableIdx = 0; tableIdx < tables.length; tableIdx++)
@@ -524,9 +524,9 @@ public class SchemaCrawlerTest
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setInformationSchemaViews(informationSchemaViews);
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
-    final Database database = getDatabase(schemaCrawlerOptions);
+    final Catalog catalog = getCatalog(schemaCrawlerOptions);
     final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
-    final Table[] tables = database.getTables(schema).toArray(new Table[0]);
+    final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
     boolean foundTrigger = false;
     for (final Table table: tables)
     {
@@ -557,9 +557,9 @@ public class SchemaCrawlerTest
     schemaCrawlerOptions.setInformationSchemaViews(informationSchemaViews);
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
 
-    final Database database = getDatabase(schemaCrawlerOptions);
+    final Catalog catalog = getCatalog(schemaCrawlerOptions);
     final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
-    final View view = (View) database.getTable(schema, "AUTHORSLIST");
+    final View view = (View) catalog.getTable(schema, "AUTHORSLIST");
     assertNotNull("View not found", view);
     assertNotNull("View definition not found", view.getDefinition());
     assertFalse("View definition not found", view.getDefinition().trim()

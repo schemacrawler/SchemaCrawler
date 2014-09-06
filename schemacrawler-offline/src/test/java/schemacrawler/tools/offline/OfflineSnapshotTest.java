@@ -35,14 +35,14 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import schemacrawler.schema.Database;
+import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.test.utility.BaseExecutableTest;
 import schemacrawler.test.utility.TestUtility;
-import schemacrawler.tools.integration.serialization.XmlDatabase;
+import schemacrawler.tools.integration.serialization.XmlSerializedCatalog;
 import schemacrawler.tools.options.OutputOptions;
 
 public class OfflineSnapshotTest
@@ -107,25 +107,25 @@ public class OfflineSnapshotTest
   }
 
   @Before
-  public void serializeDatabase()
+  public void serializeCatalog()
     throws SchemaCrawlerException, IOException
   {
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
 
-    final Database database = getDatabase(schemaCrawlerOptions);
-    assertNotNull("Could not obtain database", database);
-    assertTrue("Could not find any schemas", database.getSchemas().size() > 0);
+    final Catalog catalog = getCatalog(schemaCrawlerOptions);
+    assertNotNull("Could not obtain catalog", catalog);
+    assertTrue("Could not find any schemas", catalog.getSchemas().size() > 0);
 
-    final Schema schema = database.getSchema("PUBLIC.BOOKS");
+    final Schema schema = catalog.getSchema("PUBLIC.BOOKS");
     assertNotNull("Could not obtain schema", schema);
-    assertEquals("Unexpected number of tables in the schema", 6, database
+    assertEquals("Unexpected number of tables in the schema", 6, catalog
       .getTables(schema).size());
 
     serializedDatabaseFile = File.createTempFile("schemacrawler.", ".ser");
 
-    final XmlDatabase xmlDatabase = new XmlDatabase(database);
+    final XmlSerializedCatalog xmlDatabase = new XmlSerializedCatalog(catalog);
     final Writer writer = new FileWriter(serializedDatabaseFile);
     xmlDatabase.save(writer);
     writer.close();

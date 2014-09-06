@@ -1,7 +1,7 @@
 print "WARNING: DROPPING ALL TABLES. RESTART THE DATABASE SERVER TO GET THEM BACK"
 
 statement = connection.createStatement()
-for table in database.tables:
+for table in catalog.tables:
   try:
     sql = "DROP " + table.type.toString() + " " + table.fullName
     print "Executing SQL: " + sql

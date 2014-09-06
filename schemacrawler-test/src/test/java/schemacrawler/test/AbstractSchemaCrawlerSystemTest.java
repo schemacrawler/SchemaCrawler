@@ -27,7 +27,7 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import schemacrawler.schema.Database;
+import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
@@ -97,16 +97,16 @@ public abstract class AbstractSchemaCrawlerSystemTest
     return schemaCrawlerOptions;
   }
 
-  protected Database retrieveDatabase(final String dataSourceName,
+  protected Catalog retrieveDatabase(final String dataSourceName,
                                       final SchemaCrawlerOptions schemaCrawlerOptions)
     throws Exception
   {
     final Connection connection = connect(dataSourceName);
     try
     {
-      final Database database = SchemaCrawlerUtility
-        .getDatabase(connection, schemaCrawlerOptions);
-      return database;
+      final Catalog catalog = SchemaCrawlerUtility
+        .getCatalog(connection, schemaCrawlerOptions);
+      return catalog;
     }
     catch (final Exception e)
     {

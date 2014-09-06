@@ -23,7 +23,7 @@ package schemacrawler.tools.executable;
 import java.io.File;
 import java.sql.Connection;
 
-import schemacrawler.schema.Database;
+import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputOptions;
 
@@ -65,10 +65,10 @@ public final class CommandChainExecutable
   }
 
   @Override
-  public void executeOn(final Database database, final Connection connection)
+  public void executeOn(final Catalog catalog, final Connection connection)
     throws Exception
   {
-    executeChain(database, connection);
+    executeChain(catalog, connection);
   }
 
 }

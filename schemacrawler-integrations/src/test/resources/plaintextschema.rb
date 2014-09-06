@@ -1,10 +1,10 @@
-puts $database.schemaCrawlerInfo
+puts $catalog.schemaCrawlerInfo
 puts ''
-puts $database.databaseInfo
+puts $catalog.databaseInfo
 puts ''
-puts $database.jdbcDriverInfo
+puts $catalog.jdbcDriverInfo
 
-for table in $database.tables
+for table in $catalog.tables
   puts ''
   puts table.fullName
   for column in table.columns

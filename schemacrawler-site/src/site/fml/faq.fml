@@ -177,7 +177,7 @@
       <question> What is SchemaCrawler Grep? </question>
       <answer>
         <p>
-          SchemaCrawler Grep is a set of SchemaCrawler command-line options that allow you to search your database for
+          SchemaCrawler Grep is a set of SchemaCrawler command-line options that allow you to search your database schema for
           tables and columns that match a regular expression, much like the standard
           <a href="http://en.wikipedia.org/wiki/Grep">grep</a>
           tool.
@@ -218,7 +218,7 @@
         <p>
           SchemaCrawler can analyze and
           <a href="http://en.wikipedia.org/wiki/Lint_(software)">lint</a>
-          your database to find potential issues. SchemaCrawler Lint can be run using the
+          your database schema design to find potential issues. SchemaCrawler Lint can be run using the
           <code>-command=lint</code>
           command-line option.
         </p>
@@ -234,7 +234,7 @@
       <answer>
         <p>
           Weak associations are inferred associations between tables, similar to foreign keys, even if there is no
-          foreign key defined in the database between the tables. Ruby on Rails table schemes are supported, as well as
+          foreign key defined in the database schema between the tables. Ruby on Rails table schemes are supported, as well as
           other simple naming conventions. Table name prefixes are automatically detected. Weak associations are output
           in the graphs as a dotted line, and are also output in the text formats.
         </p>

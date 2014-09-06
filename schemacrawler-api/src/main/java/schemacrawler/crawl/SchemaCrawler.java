@@ -28,7 +28,7 @@ import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.schema.Database;
+import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ResultsColumns;
 import schemacrawler.schema.RoutineType;
 import schemacrawler.schema.Schema;
@@ -72,7 +72,7 @@ public final class SchemaCrawler
     return resultColumns;
   }
 
-  private static void crawlColumnDataTypes(final MutableDatabase database,
+  private static void crawlColumnDataTypes(final MutableCatalog catalog,
                                            final RetrieverConnection retrieverConnection,
                                            final SchemaCrawlerOptions options)
     throws SchemaCrawlerException
@@ -81,7 +81,7 @@ public final class SchemaCrawler
     {
       final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
       final DatabaseInfoRetriever retriever = new DatabaseInfoRetriever(retrieverConnection,
-                                                                        database);
+                                                                        catalog);
       if (infoLevel.isRetrieveColumnDataTypes())
       {
         retriever.retrieveSystemColumnDataTypes();
@@ -102,7 +102,7 @@ public final class SchemaCrawler
     }
   }
 
-  private static void crawlDatabaseInfo(final MutableDatabase database,
+  private static void crawlDatabaseInfo(final MutableCatalog catalog,
                                         final RetrieverConnection retrieverConnection,
                                         final SchemaCrawlerOptions options)
     throws SchemaCrawlerException
@@ -112,7 +112,7 @@ public final class SchemaCrawler
 
       final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
       final DatabaseInfoRetriever retriever = new DatabaseInfoRetriever(retrieverConnection,
-                                                                        database);
+                                                                        catalog);
 
       if (infoLevel.isRetrieveSchemaCrawlerInfo())
       {
@@ -146,7 +146,7 @@ public final class SchemaCrawler
     }
   }
 
-  private static void crawlRoutines(final MutableDatabase database,
+  private static void crawlRoutines(final MutableCatalog catalog,
                                     final RetrieverConnection retrieverConnection,
                                     final SchemaCrawlerOptions options)
     throws SchemaCrawlerException
@@ -162,8 +162,8 @@ public final class SchemaCrawler
     final RoutineExtRetriever retrieverExtra;
     try
     {
-      retriever = new RoutineRetriever(retrieverConnection, database);
-      retrieverExtra = new RoutineExtRetriever(retrieverConnection, database);
+      retriever = new RoutineRetriever(retrieverConnection, catalog);
+      retrieverExtra = new RoutineExtRetriever(retrieverConnection, catalog);
       final Collection<RoutineType> routineTypes = options.getRoutineTypes();
       for (final Schema schema: retriever.getSchemas())
       {
@@ -180,7 +180,7 @@ public final class SchemaCrawler
                                       options.getRoutineInclusionRule());
         }
       }
-      final NamedObjectList<MutableRoutine> allRoutines = database
+      final NamedObjectList<MutableRoutine> allRoutines = catalog
         .getAllRoutines();
       for (final MutableRoutine routine: allRoutines)
       {
@@ -230,7 +230,7 @@ public final class SchemaCrawler
     }
   }
 
-  private static void crawlSchemas(final MutableDatabase database,
+  private static void crawlSchemas(final MutableCatalog catalog,
                                    final RetrieverConnection retrieverConnection,
                                    final SchemaCrawlerOptions options)
     throws SchemaCrawlerException
@@ -238,7 +238,7 @@ public final class SchemaCrawler
     try
     {
       final SchemaRetriever retriever = new SchemaRetriever(retrieverConnection,
-                                                            database);
+                                                            catalog);
 
       retriever.retrieveSchemas(options.getSchemaInclusionRule());
     }
@@ -249,7 +249,7 @@ public final class SchemaCrawler
     }
   }
 
-  private static void crawlSynonyms(final MutableDatabase database,
+  private static void crawlSynonyms(final MutableCatalog catalog,
                                     final RetrieverConnection retrieverConnection,
                                     final SchemaCrawlerOptions options)
     throws SchemaCrawlerException
@@ -264,7 +264,7 @@ public final class SchemaCrawler
     final SynonymRetriever retrieverExtra;
     try
     {
-      retrieverExtra = new SynonymRetriever(retrieverConnection, database);
+      retrieverExtra = new SynonymRetriever(retrieverConnection, catalog);
       retrieverExtra.retrieveSynonymInformation(options
         .getSynonymInclusionRule());
     }
@@ -283,7 +283,7 @@ public final class SchemaCrawler
     }
   }
 
-  private static void crawlSequences(final MutableDatabase database,
+  private static void crawlSequences(final MutableCatalog catalog,
                                      final RetrieverConnection retrieverConnection,
                                      final SchemaCrawlerOptions options)
     throws SchemaCrawlerException
@@ -298,7 +298,7 @@ public final class SchemaCrawler
     final SequenceRetriever retrieverExtra;
     try
     {
-      retrieverExtra = new SequenceRetriever(retrieverConnection, database);
+      retrieverExtra = new SequenceRetriever(retrieverConnection, catalog);
       retrieverExtra.retrieveSequenceInformation(options
         .getSequenceInclusionRule());
     }
@@ -317,7 +317,7 @@ public final class SchemaCrawler
     }
   }
 
-  private static void crawlTables(final MutableDatabase database,
+  private static void crawlTables(final MutableCatalog catalog,
                                   final RetrieverConnection retrieverConnection,
                                   final SchemaCrawlerOptions options)
     throws SchemaCrawlerException
@@ -333,8 +333,8 @@ public final class SchemaCrawler
     final TableExtRetriever retrieverExtra;
     try
     {
-      retriever = new TableRetriever(retrieverConnection, database);
-      retrieverExtra = new TableExtRetriever(retrieverConnection, database);
+      retriever = new TableRetriever(retrieverConnection, catalog);
+      retrieverExtra = new TableExtRetriever(retrieverConnection, catalog);
 
       for (final Schema schema: retriever.getSchemas())
       {
@@ -345,7 +345,7 @@ public final class SchemaCrawler
                                  options.getTableInclusionRule());
       }
 
-      final NamedObjectList<MutableTable> allTables = database.getAllTables();
+      final NamedObjectList<MutableTable> allTables = catalog.getAllTables();
       for (final MutableTable table: allTables)
       {
         if (infoLevel.isRetrieveTableColumns())
@@ -472,10 +472,10 @@ public final class SchemaCrawler
    * @throws SchemaCrawlerException
    *         On an exception
    */
-  public Database crawl(final SchemaCrawlerOptions options)
+  public Catalog crawl(final SchemaCrawlerOptions options)
     throws SchemaCrawlerException
   {
-    final MutableDatabase database = new MutableDatabase("database");
+    final MutableCatalog catalog = new MutableCatalog("catalog");
 
     RetrieverConnection retrieverConnection = null;
     try
@@ -488,15 +488,15 @@ public final class SchemaCrawler
       retrieverConnection = new RetrieverConnection(connection,
                                                     schemaCrawlerOptions);
 
-      crawlSchemas(database, retrieverConnection, schemaCrawlerOptions);
-      crawlDatabaseInfo(database, retrieverConnection, schemaCrawlerOptions);
-      crawlColumnDataTypes(database, retrieverConnection, schemaCrawlerOptions);
-      crawlTables(database, retrieverConnection, schemaCrawlerOptions);
-      crawlRoutines(database, retrieverConnection, schemaCrawlerOptions);
-      crawlSynonyms(database, retrieverConnection, schemaCrawlerOptions);
-      crawlSequences(database, retrieverConnection, schemaCrawlerOptions);
+      crawlSchemas(catalog, retrieverConnection, schemaCrawlerOptions);
+      crawlDatabaseInfo(catalog, retrieverConnection, schemaCrawlerOptions);
+      crawlColumnDataTypes(catalog, retrieverConnection, schemaCrawlerOptions);
+      crawlTables(catalog, retrieverConnection, schemaCrawlerOptions);
+      crawlRoutines(catalog, retrieverConnection, schemaCrawlerOptions);
+      crawlSynonyms(catalog, retrieverConnection, schemaCrawlerOptions);
+      crawlSequences(catalog, retrieverConnection, schemaCrawlerOptions);
 
-      return database;
+      return catalog;
     }
     catch (final SQLException e)
     {

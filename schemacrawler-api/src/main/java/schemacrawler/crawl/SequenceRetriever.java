@@ -52,10 +52,10 @@ final class SequenceRetriever
     .getName());
 
   SequenceRetriever(final RetrieverConnection retrieverConnection,
-                    final MutableDatabase database)
+                    final MutableCatalog catalog)
     throws SQLException
   {
-    super(retrieverConnection, database);
+    super(retrieverConnection, catalog);
   }
 
   /**
@@ -87,7 +87,7 @@ final class SequenceRetriever
     final String sequencesDefinitionSql = informationSchemaViews
       .getSequencesSql();
 
-    final Collection<Schema> schemas = database.getSchemaNames();
+    final Collection<Schema> schemas = catalog.getSchemaNames();
 
     final Connection connection = getDatabaseConnection();
 
@@ -126,7 +126,7 @@ final class SequenceRetriever
 
         if (sequenceFilter.include(sequence))
         {
-          database.addSequence(sequence);
+          catalog.addSequence(sequence);
         }
 
       }

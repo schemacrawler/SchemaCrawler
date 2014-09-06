@@ -25,12 +25,12 @@ import java.sql.Connection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.schema.Database;
+import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseExecutable;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.executable.StagedExecutable;
-import schemacrawler.tools.integration.serialization.XmlDatabase;
+import schemacrawler.tools.integration.serialization.XmlSerializedCatalog;
 
 /**
  * A SchemaCrawler tools executable unit.
@@ -38,12 +38,12 @@ import schemacrawler.tools.integration.serialization.XmlDatabase;
  * @author Sualeh Fatehi
  */
 public class OfflineSnapshotExecutable
-extends BaseExecutable
-implements StagedExecutable
+  extends BaseExecutable
+  implements StagedExecutable
 {
 
   private static final Logger LOGGER = Logger
-      .getLogger(OfflineSnapshotExecutable.class.getName());
+    .getLogger(OfflineSnapshotExecutable.class.getName());
 
   private OfflineSnapshotOptions offlineSnapshotOptions;
 
@@ -59,18 +59,18 @@ implements StagedExecutable
    */
   @Override
   public final void execute(final Connection connection)
-      throws Exception
+    throws Exception
   {
     checkConnection(connection);
 
-    final Database database = loadDatabase();
+    final Catalog catalog = loadCatalog();
 
-    executeOn(database, connection);
+    executeOn(catalog, connection);
   }
 
   @Override
-  public void executeOn(final Database database, final Connection connection)
-      throws Exception
+  public void executeOn(final Catalog catalog, final Connection connection)
+    throws Exception
   {
     loadOfflineSnapshotOptions();
     checkConnection(connection);
@@ -79,7 +79,7 @@ implements StagedExecutable
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setAdditionalConfiguration(additionalConfiguration);
     executable.setOutputOptions(outputOptions);
-    executable.executeOn(database, connection);
+    executable.executeOn(catalog, connection);
   }
 
   public OfflineSnapshotOptions getOfflineSnapshotOptions()
@@ -108,16 +108,16 @@ implements StagedExecutable
     if (connection != null)
     {
       LOGGER
-      .log(Level.CONFIG,
-          "No database connection should be provided for the offline snapshot");
+        .log(Level.CONFIG,
+             "No database connection should be provided for the offline snapshot");
     }
   }
 
-  private Database loadDatabase()
-      throws SchemaCrawlerException
+  private Catalog loadCatalog()
+    throws SchemaCrawlerException
   {
     final InputReader snapshotReader = new InputReader(offlineSnapshotOptions);
-    final XmlDatabase xmlDatabase = new XmlDatabase(snapshotReader);
+    final XmlSerializedCatalog xmlDatabase = new XmlSerializedCatalog(snapshotReader);
     return xmlDatabase;
   }
 

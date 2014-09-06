@@ -24,7 +24,7 @@ package schemacrawler.tools.integration.serialization;
 import java.io.Writer;
 import java.sql.Connection;
 
-import schemacrawler.schema.Database;
+import schemacrawler.schema.Catalog;
 import schemacrawler.tools.executable.BaseStagedExecutable;
 import schemacrawler.tools.options.OutputWriter;
 
@@ -53,13 +53,13 @@ public final class SerializationExecutable
    * {@inheritDoc}
    */
   @Override
-  public void executeOn(final Database db, final Connection connection)
+  public void executeOn(final Catalog db, final Connection connection)
     throws Exception
   {
-    final SerializableDatabase database = new XmlDatabase(db);
+    final SerializableCatalog catalog = new XmlSerializedCatalog(db);
     try (final Writer writer = new OutputWriter(outputOptions);)
     {
-      database.save(writer);
+      catalog.save(writer);
     }
   }
 

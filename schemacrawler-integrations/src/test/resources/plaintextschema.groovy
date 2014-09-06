@@ -1,8 +1,8 @@
-println database.schemaCrawlerInfo
-println database.databaseInfo
-println database.jdbcDriverInfo
+println catalog.schemaCrawlerInfo
+println catalog.databaseInfo
+println catalog.jdbcDriverInfo
 
-for (table in database.tables)
+for (table in catalog.tables)
 {
   println ''
   println table.fullName
