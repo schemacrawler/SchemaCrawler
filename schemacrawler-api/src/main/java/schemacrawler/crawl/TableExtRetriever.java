@@ -55,10 +55,10 @@ final class TableExtRetriever
     .getName());
 
   TableExtRetriever(final RetrieverConnection retrieverConnection,
-                    final MutableDatabase database)
+                    final MutableCatalog catalog)
     throws SQLException
   {
-    super(retrieverConnection, database);
+    super(retrieverConnection, catalog);
   }
 
   /**

@@ -20,7 +20,7 @@
 package schemacrawler.tools.lint;
 
 
-import schemacrawler.schema.Database;
+import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
 public interface Linter
@@ -38,7 +38,7 @@ public interface Linter
 
   String getSummary();
 
-  void lint(Database database)
+  void lint(Catalog catalog)
     throws SchemaCrawlerException;
 
   void setLintCollector(LintCollector lintCollector);

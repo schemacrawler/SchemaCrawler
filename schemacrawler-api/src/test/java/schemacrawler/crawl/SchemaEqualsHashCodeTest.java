@@ -15,7 +15,7 @@ public class SchemaEqualsHashCodeTest
   @Test
   public void equalsContract()
   {
-    EqualsVerifier.forClass(MutableDatabase.class).verify();
+    EqualsVerifier.forClass(MutableCatalog.class).verify();
     EqualsVerifier.forClass(SchemaReference.class).verify();
     EqualsVerifier.forClass(MutableTable.class).verify();
     EqualsVerifier.forClass(MutablePrimaryKey.class).verify();

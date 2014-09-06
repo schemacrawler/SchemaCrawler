@@ -23,8 +23,8 @@ package schemacrawler.schemacrawler;
 import java.util.Collection;
 import java.util.Map;
 
+import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ColumnDataType;
-import schemacrawler.schema.Database;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.NamedObject;
@@ -35,81 +35,81 @@ import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
 
-public abstract class BaseDatabaseDecorator
-  implements Database
+public abstract class BaseCatalogDecorator
+  implements Catalog
 {
 
   private static final long serialVersionUID = -3953296149824921463L;
 
-  protected final Database database;
+  protected final Catalog catalog;
 
-  public BaseDatabaseDecorator(final Database database)
+  public BaseCatalogDecorator(final Catalog catalog)
   {
-    if (database == null)
+    if (catalog == null)
     {
-      throw new IllegalArgumentException("No database provided");
+      throw new IllegalArgumentException("No catalog provided");
     }
-    this.database = database;
+    this.catalog = catalog;
   }
 
   @Override
   public int compareTo(final NamedObject o)
   {
-    return database.compareTo(o);
+    return catalog.compareTo(o);
   }
 
   @Override
   public Object getAttribute(final String name)
   {
-    return database.getAttribute(name);
+    return catalog.getAttribute(name);
   }
 
   @Override
   public <T> T getAttribute(final String name, final T defaultValue)
   {
-    return database.getAttribute(name, defaultValue);
+    return catalog.getAttribute(name, defaultValue);
   }
 
   @Override
   public Map<String, Object> getAttributes()
   {
-    return database.getAttributes();
+    return catalog.getAttributes();
   }
 
   @Override
   public ColumnDataType getColumnDataType(final Schema schema, final String name)
   {
-    return database.getColumnDataType(schema, name);
+    return catalog.getColumnDataType(schema, name);
   }
 
   @Override
   public Collection<ColumnDataType> getColumnDataTypes()
   {
-    return database.getColumnDataTypes();
+    return catalog.getColumnDataTypes();
   }
 
   @Override
   public Collection<ColumnDataType> getColumnDataTypes(final Schema schema)
   {
-    return database.getColumnDataTypes(schema);
+    return catalog.getColumnDataTypes(schema);
   }
 
   @Override
   public DatabaseInfo getDatabaseInfo()
   {
-    return database.getDatabaseInfo();
+    return catalog.getDatabaseInfo();
   }
 
   @Override
   public String getFullName()
   {
-    return database.getFullName();
+    return catalog.getFullName();
   }
 
   @Override
   public JdbcDriverInfo getJdbcDriverInfo()
   {
-    return database.getJdbcDriverInfo();
+    return catalog.getJdbcDriverInfo();
   }
 
   @Override
@@ -121,143 +121,143 @@ public abstract class BaseDatabaseDecorator
   @Override
   public String getName()
   {
-    return database.getName();
+    return catalog.getName();
   }
 
   @Override
   public String getRemarks()
   {
-    return database.getRemarks();
+    return catalog.getRemarks();
   }
 
   @Override
   public Routine getRoutine(final Schema schema, final String name)
   {
-    return database.getRoutine(schema, name);
+    return catalog.getRoutine(schema, name);
   }
 
   @Override
   public Collection<Routine> getRoutines()
   {
-    return database.getRoutines();
+    return catalog.getRoutines();
   }
 
   @Override
   public Collection<Routine> getRoutines(final Schema schema)
   {
-    return database.getRoutines(schema);
+    return catalog.getRoutines(schema);
   }
 
   @Override
   public Schema getSchema(final String name)
   {
-    return database.getSchema(name);
+    return catalog.getSchema(name);
   }
 
   @Override
   public SchemaCrawlerInfo getSchemaCrawlerInfo()
   {
-    return database.getSchemaCrawlerInfo();
+    return catalog.getSchemaCrawlerInfo();
   }
 
   @Override
   public Collection<Schema> getSchemas()
   {
-    return database.getSchemas();
+    return catalog.getSchemas();
   }
 
   /**
    * @param schema
    * @param name
    * @return
-   * @see schemacrawler.schema.Database#getSequence(schemacrawler.schema.Schema,
+   * @see schemacrawler.schema.Catalog#getSequence(schemacrawler.schema.Schema,
    *      java.lang.String)
    */
   @Override
   public Sequence getSequence(final Schema schema, final String name)
   {
-    return database.getSequence(schema, name);
+    return catalog.getSequence(schema, name);
   }
 
   /**
    * @return
-   * @see schemacrawler.schema.Database#getSequences()
+   * @see schemacrawler.schema.Catalog#getSequences()
    */
   @Override
   public Collection<Sequence> getSequences()
   {
-    return database.getSequences();
+    return catalog.getSequences();
   }
 
   /**
    * @param schema
    * @return
-   * @see schemacrawler.schema.Database#getSequences(schemacrawler.schema.Schema)
+   * @see schemacrawler.schema.Catalog#getSequences(schemacrawler.schema.Schema)
    */
   @Override
   public Collection<Sequence> getSequences(final Schema schema)
   {
-    return database.getSequences(schema);
+    return catalog.getSequences(schema);
   }
 
   @Override
   public Synonym getSynonym(final Schema schema, final String name)
   {
-    return database.getSynonym(schema, name);
+    return catalog.getSynonym(schema, name);
   }
 
   @Override
   public Collection<Synonym> getSynonyms()
   {
-    return database.getSynonyms();
+    return catalog.getSynonyms();
   }
 
   @Override
   public Collection<Synonym> getSynonyms(final Schema schema)
   {
-    return database.getSynonyms(schema);
+    return catalog.getSynonyms(schema);
   }
 
   @Override
   public ColumnDataType getSystemColumnDataType(final String name)
   {
-    return database.getSystemColumnDataType(name);
+    return catalog.getSystemColumnDataType(name);
   }
 
   @Override
   public Collection<ColumnDataType> getSystemColumnDataTypes()
   {
-    return database.getSystemColumnDataTypes();
+    return catalog.getSystemColumnDataTypes();
   }
 
   @Override
   public Table getTable(final Schema schema, final String name)
   {
-    return database.getTable(schema, name);
+    return catalog.getTable(schema, name);
   }
 
   @Override
   public Collection<Table> getTables()
   {
-    return database.getTables();
+    return catalog.getTables();
   }
 
   @Override
   public Collection<Table> getTables(final Schema schema)
   {
-    return database.getTables(schema);
+    return catalog.getTables(schema);
   }
 
   @Override
   public boolean hasRemarks()
   {
-    return database.hasRemarks();
+    return catalog.hasRemarks();
   }
 
   @Override
   public void setAttribute(final String name, final Object value)
   {
-    database.setAttribute(name, value);
+    catalog.setAttribute(name, value);
   }
 
 }

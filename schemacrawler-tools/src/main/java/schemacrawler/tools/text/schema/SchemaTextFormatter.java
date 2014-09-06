@@ -57,7 +57,7 @@ import schemacrawler.schema.TableConstraintColumn;
 import schemacrawler.schema.TableConstraintType;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.analysis.associations.DatabaseWithAssociations;
+import schemacrawler.tools.analysis.associations.CatalogWithAssociations;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.BaseTabularFormatter;
 import schemacrawler.tools.text.utility.TextFormattingHelper.DocumentHeaderType;
@@ -933,7 +933,7 @@ final class SchemaTextFormatter
   private void printWeakAssociations(final Table table)
   {
     final String tableName = table.getName();
-    final Collection<ColumnReference> weakAssociationsCollection = DatabaseWithAssociations
+    final Collection<ColumnReference> weakAssociationsCollection = CatalogWithAssociations
       .getWeakAssociations(table);
     final List<ColumnReference> weakAssociations = new ArrayList<>(weakAssociationsCollection);
     Collections.sort(weakAssociations);

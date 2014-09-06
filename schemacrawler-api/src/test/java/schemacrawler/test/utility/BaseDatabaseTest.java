@@ -35,7 +35,7 @@ import javax.imageio.ImageIO;
 import org.custommonkey.xmlunit.XMLUnit;
 import org.junit.BeforeClass;
 
-import schemacrawler.schema.Database;
+import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.DatabaseConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -118,12 +118,12 @@ public abstract class BaseDatabaseTest
     }
   }
 
-  protected Database getDatabase(final SchemaCrawlerOptions schemaCrawlerOptions)
+  protected Catalog getCatalog(final SchemaCrawlerOptions schemaCrawlerOptions)
     throws SchemaCrawlerException
   {
-    final Database database = SchemaCrawlerUtility
-      .getDatabase(getConnection(), schemaCrawlerOptions);
-    return database;
+    final Catalog catalog = SchemaCrawlerUtility
+      .getCatalog(getConnection(), schemaCrawlerOptions);
+    return catalog;
   }
 
   protected DatabaseConnectionOptions getDatabaseConnectionOptions()

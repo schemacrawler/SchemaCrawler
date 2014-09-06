@@ -154,10 +154,10 @@ final class DatabaseInfoRetriever
   }
 
   DatabaseInfoRetriever(final RetrieverConnection retrieverConnection,
-                        final MutableDatabase database)
+                        final MutableCatalog catalog)
     throws SQLException
   {
-    super(retrieverConnection, database);
+    super(retrieverConnection, catalog);
   }
 
   /**
@@ -170,7 +170,7 @@ final class DatabaseInfoRetriever
     throws SQLException
   {
     final DatabaseMetaData dbMetaData = getMetaData();
-    final MutableDatabaseInfo dbInfo = database.getDatabaseInfo();
+    final MutableDatabaseInfo dbInfo = catalog.getDatabaseInfo();
 
     final Collection<ImmutableDatabaseProperty> dbProperties = new ArrayList<>();
 
@@ -272,7 +272,7 @@ final class DatabaseInfoRetriever
     final DatabaseMetaData dbMetaData = getMetaData();
     final String url = dbMetaData.getURL();
 
-    final MutableJdbcDriverInfo driverInfo = database.getJdbcDriverInfo();
+    final MutableJdbcDriverInfo driverInfo = catalog.getJdbcDriverInfo();
     if (driverInfo != null)
     {
       try
@@ -297,7 +297,7 @@ final class DatabaseInfoRetriever
 
   void retrieveAdditionalSchemaCrawlerInfo()
   {
-    database.getSchemaCrawlerInfo().setAdditionalSchemaCrawlerInfo();
+    catalog.getSchemaCrawlerInfo().setAdditionalSchemaCrawlerInfo();
   }
 
   /**
@@ -311,7 +311,7 @@ final class DatabaseInfoRetriever
   {
     final DatabaseMetaData dbMetaData = getMetaData();
 
-    final MutableDatabaseInfo dbInfo = database.getDatabaseInfo();
+    final MutableDatabaseInfo dbInfo = catalog.getDatabaseInfo();
 
     dbInfo.setUserName(dbMetaData.getUserName());
     dbInfo.setProductName(dbMetaData.getDatabaseProductName());
@@ -330,7 +330,7 @@ final class DatabaseInfoRetriever
     final DatabaseMetaData dbMetaData = getMetaData();
     final String url = dbMetaData.getURL();
 
-    final MutableJdbcDriverInfo driverInfo = database.getJdbcDriverInfo();
+    final MutableJdbcDriverInfo driverInfo = catalog.getJdbcDriverInfo();
     if (driverInfo != null)
     {
       driverInfo.setDriverName(dbMetaData.getDriverName());
@@ -345,7 +345,7 @@ final class DatabaseInfoRetriever
 
   void retrieveSchemaCrawlerInfo()
   {
-    database.getSchemaCrawlerInfo().setSchemaCrawlerInfo();
+    catalog.getSchemaCrawlerInfo().setSchemaCrawlerInfo();
   }
 
   /**
@@ -430,7 +430,7 @@ final class DatabaseInfoRetriever
 
         columnDataType.addAttributes(results.getAttributes());
 
-        database.addColumnDataType(columnDataType);
+        catalog.addColumnDataType(columnDataType);
       }
     }
     finally
@@ -465,7 +465,7 @@ final class DatabaseInfoRetriever
         final short baseTypeValue = results.getShort("BASE_TYPE", (short) 0);
 
         final Schema schema = new SchemaReference(catalogName, schemaName);
-        final ColumnDataType baseType = database
+        final ColumnDataType baseType = catalog
           .lookupColumnDataTypeByType(baseTypeValue);
         final MutableColumnDataType columnDataType = lookupOrCreateColumnDataType(schema,
                                                                                   dataType,
@@ -477,7 +477,7 @@ final class DatabaseInfoRetriever
 
         columnDataType.addAttributes(results.getAttributes());
 
-        database.addColumnDataType(columnDataType);
+        catalog.addColumnDataType(columnDataType);
       }
     }
 

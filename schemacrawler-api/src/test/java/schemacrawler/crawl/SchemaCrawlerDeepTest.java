@@ -25,7 +25,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import schemacrawler.schema.Column;
-import schemacrawler.schema.Database;
+import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.Privilege;
@@ -48,23 +48,23 @@ public class SchemaCrawlerDeepTest
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
 
-    final Database database = getDatabase(schemaCrawlerOptions);
+    final Catalog catalog = getCatalog(schemaCrawlerOptions);
 
     final Schema systemSchema = new SchemaReference("PUBLIC", "SYSTEM_LOBS");
-    assertTrue("Should not find any tables", database.getTables(systemSchema)
+    assertTrue("Should not find any tables", catalog.getTables(systemSchema)
       .size() == 0);
     assertEquals("Could not find all routines",
                  10,
-                 database.getRoutines(systemSchema).size());
+                 catalog.getRoutines(systemSchema).size());
 
     final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
-    assertEquals("Could not find any tables", 6, database.getTables(schema)
+    assertEquals("Could not find any tables", 6, catalog.getTables(schema)
       .size());
-    assertEquals("Wrong number of routines", 4, database.getRoutines(schema)
+    assertEquals("Wrong number of routines", 4, catalog.getRoutines(schema)
       .size());
 
     // Try negative test
-    final Table table0 = (Table) database.getTables(schema).toArray()[0];
+    final Table table0 = (Table) catalog.getTables(schema).toArray()[0];
     assertTrue("Could not find any columns", table0.getColumns().size() > 0);
 
     final MutableTable table1 = new MutableTable(table0.getSchema(),

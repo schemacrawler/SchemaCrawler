@@ -31,7 +31,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import schemacrawler.schema.Database;
+import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -39,7 +39,7 @@ import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.lint.Lint;
 import schemacrawler.tools.lint.LintCollector;
-import schemacrawler.tools.lint.LintedDatabase;
+import schemacrawler.tools.lint.LintedCatalog;
 import schemacrawler.tools.lint.LinterConfigs;
 
 public class LintTest
@@ -56,15 +56,15 @@ public class LintTest
     schemaCrawlerOptions
       .setSchemaInclusionRule(new RegularExpressionInclusionRule(".*FOR_LINT"));
 
-    final Database database = getDatabase(schemaCrawlerOptions);
-    assertNotNull(database);
-    assertEquals(1, database.getSchemas().size());
-    final Schema schema = database.getSchema("PUBLIC.FOR_LINT");
+    final Catalog catalog = getCatalog(schemaCrawlerOptions);
+    assertNotNull(catalog);
+    assertEquals(1, catalog.getSchemas().size());
+    final Schema schema = catalog.getSchema("PUBLIC.FOR_LINT");
     assertNotNull("FOR_LINT schema not found", schema);
-    assertEquals("FOR_LINT tables not found", 4, database.getTables(schema)
+    assertEquals("FOR_LINT tables not found", 4, catalog.getTables(schema)
       .size());
 
-    final LintedDatabase lintedDatabase = new LintedDatabase(database,
+    final LintedCatalog lintedDatabase = new LintedCatalog(catalog,
                                                              new LinterConfigs());
     final LintCollector lintCollector = lintedDatabase.getCollector();
     assertEquals(23, lintCollector.size());

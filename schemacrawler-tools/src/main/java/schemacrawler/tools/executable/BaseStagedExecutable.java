@@ -24,7 +24,7 @@ package schemacrawler.tools.executable;
 import java.sql.Connection;
 
 import schemacrawler.crawl.SchemaCrawler;
-import schemacrawler.schema.Database;
+import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
 /**
@@ -57,9 +57,9 @@ public abstract class BaseStagedExecutable
     }
 
     final SchemaCrawler crawler = new SchemaCrawler(connection);
-    final Database database = crawler.crawl(schemaCrawlerOptions);
+    final Catalog catalog = crawler.crawl(schemaCrawlerOptions);
 
-    executeOn(database, connection);
+    executeOn(catalog, connection);
   }
 
 }

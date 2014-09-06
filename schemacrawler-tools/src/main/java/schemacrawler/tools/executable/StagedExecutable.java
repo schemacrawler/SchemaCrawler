@@ -23,7 +23,7 @@ package schemacrawler.tools.executable;
 
 import java.sql.Connection;
 
-import schemacrawler.schema.Database;
+import schemacrawler.schema.Catalog;
 
 /**
  * A SchemaCrawler tools executable unit.
@@ -42,7 +42,7 @@ public interface StagedExecutable
    * @throws Exception
    *         On an exception
    */
-  void executeOn(Database database, Connection connection)
+  void executeOn(Catalog catalog, Connection connection)
     throws Exception;
 
 }

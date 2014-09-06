@@ -46,10 +46,10 @@ final class RoutineExtRetriever
     .getLogger(RoutineExtRetriever.class.getName());
 
   RoutineExtRetriever(final RetrieverConnection retrieverConnection,
-                      final MutableDatabase database)
+                      final MutableCatalog catalog)
     throws SQLException
   {
-    super(retrieverConnection, database);
+    super(retrieverConnection, catalog);
   }
 
   /**

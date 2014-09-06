@@ -70,11 +70,11 @@ final SchemaCrawlerOptions options = new SchemaCrawlerOptions();
 // time taken to crawl the schema
 options.setSchemaInfoLevel(SchemaInfoLevel.standard());
 
-final Database database = SchemaCrawlerUtility.getDatabase(connection, options);
-for (final Schema schema: database.getSchemas())
+final Catalog catalog = SchemaCrawlerUtility.getCatalog(connection, options);
+for (final Schema schema: catalog.getSchemas())
 {
   System.out.println(schema);
-  for (final Table table: database.getTables(schema))
+  for (final Table table: catalog.getTables(schema))
   {
     System.out.print(&quot;o--&gt; &quot; + table);
     for (final Column column: table.getColumns())

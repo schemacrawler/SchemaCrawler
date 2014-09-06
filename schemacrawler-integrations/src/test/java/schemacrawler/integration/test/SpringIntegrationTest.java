@@ -32,7 +32,7 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import schemacrawler.schema.Database;
+import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaReference;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -73,9 +73,9 @@ public class SpringIntegrationTest
     final SchemaCrawlerOptions schemaCrawlerOptions = (SchemaCrawlerOptions) appContext
       .getBean("schemaCrawlerOptions");
 
-    final Database database = getDatabase(schemaCrawlerOptions);
+    final Catalog catalog = getCatalog(schemaCrawlerOptions);
     final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
-    assertEquals("Unexpected number of tables in the schema", 6, database
+    assertEquals("Unexpected number of tables in the schema", 6, catalog
       .getTables(schema).size());
   }
 

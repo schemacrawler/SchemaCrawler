@@ -28,8 +28,8 @@ import java.util.List;
 
 import org.junit.Test;
 
+import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
-import schemacrawler.schema.Database;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
@@ -129,13 +129,13 @@ public class TableTypesTest
         schemaCrawlerOptions.setTableTypesFromString(tableTypes);
       }
 
-      final Database database = getDatabase(schemaCrawlerOptions);
-      final Schema[] schemas = database.getSchemas().toArray(new Schema[0]);
+      final Catalog catalog = getCatalog(schemaCrawlerOptions);
+      final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
       assertEquals("Schema count does not match", 5, schemas.length);
       for (final Schema schema: schemas)
       {
         writer.println(String.format("%s", schema.getFullName()));
-        final Table[] tables = database.getTables(schema).toArray(new Table[0]);
+        final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
         Arrays.sort(tables, NamedObjectSort.alphabetical);
         for (final Table table: tables)
         {
