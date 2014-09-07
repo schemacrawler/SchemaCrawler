@@ -154,6 +154,19 @@
         </p>
       </answer>
     </faq>
+    <faq id="include-significant-columns">
+      <question>
+        How to include only significant columns - that is, columns that are part of a primary key or unique index,
+        or columns that are foreign keys
+      </question>
+      <answer>
+        <p>
+          Re-run SchemaCrawler with the
+          <code>-infolevel=standard -command=brief</code>
+          command line options.
+        </p>
+      </answer>
+    </faq>    
     <faq id="excluded-tables-or-columns">
       <question>
         How to include or exclude certain tables or columns
@@ -210,7 +223,7 @@
     </faq>
     <faq id="excluded-functions">
       <question>
-        How to exclude database function from the output
+        How to exclude database functions from the output
       </question>
       <answer>
         <p>
