@@ -23,6 +23,7 @@ package schemacrawler.tools.options;
 import java.sql.Connection;
 
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Options;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -53,24 +54,34 @@ public abstract class BundledDriverOptions
 
   private final HelpOptions helpOptions;
   private final String configResource;
+  private final String informationSchemaViewsResource;
 
   protected BundledDriverOptions()
   {
     helpOptions = new HelpOptions();
     configResource = null;
+    informationSchemaViewsResource = null;
   }
 
   protected BundledDriverOptions(final String title,
                                  final String helpResource,
-                                 final String configResource)
+                                 final String configResource,
+                                 final String informationSchemaViewsResource)
   {
     helpOptions = new HelpOptions(title, helpResource);
     this.configResource = configResource;
+    this.informationSchemaViewsResource = informationSchemaViewsResource;
   }
 
   public final Config getConfig()
   {
-    return Config.loadResource(configResource);
+    final Config config = Config.loadResource(configResource);
+
+    InformationSchemaViews informationSchemaViews = new InformationSchemaViews();
+    informationSchemaViews.loadResource(informationSchemaViewsResource);
+    config.putAll(informationSchemaViews.toConfig());
+
+    return config;
   }
 
   public final HelpOptions getHelpOptions()

@@ -30,7 +30,8 @@ public final class BundledDriverOptions
   {
     super("SchemaCrawler for SQLite",
           "/help/Connections.sqlite.txt",
-          "/schemacrawler-sqlite.config.properties");
+          "/schemacrawler-sqlite.config.properties",
+          "/sqlite.information_schema");
   }
 
 }

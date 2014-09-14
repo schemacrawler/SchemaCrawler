@@ -30,7 +30,8 @@ public final class BundledDriverOptions
   {
     super("SchemaCrawler for Microsoft SQL Server",
           "/help/Connections.sqlserver.txt",
-          "/schemacrawler-sqlserver.config.properties");
+          "/schemacrawler-sqlserver.config.properties",
+          "/sqlserver.information_schema");
   }
 
 }
