@@ -33,7 +33,8 @@ public final class BundledDriverOptions
   {
     super("SchemaCrawler for Oracle",
           "/help/Connections.oracle.txt",
-          "/schemacrawler-oracle.config.properties");
+          "/schemacrawler-oracle.config.properties",
+          "/oracle.information_schema");
   }
 
   @Override

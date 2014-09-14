@@ -30,7 +30,8 @@ public final class BundledDriverOptions
   {
     super("SchemaCrawler for Sybase IQ",
           "/help/Connections.sybaseiq.txt",
-          "/schemacrawler-sybaseiq.config.properties");
+          "/schemacrawler-sybaseiq.config.properties",
+          null);
   }
 
 }

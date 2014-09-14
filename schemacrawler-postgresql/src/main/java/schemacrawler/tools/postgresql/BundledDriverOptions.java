@@ -34,7 +34,8 @@ public final class BundledDriverOptions
   {
     super("SchemaCrawler for PostgreSQL",
           "/help/Connections.postgresql.txt",
-          "/schemacrawler-postgresql.config.properties");
+          "/schemacrawler-postgresql.config.properties",
+          "/postgresql.information_schema");
 
     DriverManager
       .setLogWriter(new PrintWriter(new OutputStreamWriter(System.err)));

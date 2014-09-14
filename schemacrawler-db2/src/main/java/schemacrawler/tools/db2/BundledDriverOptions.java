@@ -30,7 +30,8 @@ public final class BundledDriverOptions
   {
     super("SchemaCrawler for IBM DB2",
           "/help/Connections.db2.txt",
-          "/schemacrawler-db2.config.properties");
+          "/schemacrawler-db2.config.properties",
+          "/db2.information_schema");
   }
 
 }

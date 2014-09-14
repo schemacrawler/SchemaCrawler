@@ -30,7 +30,8 @@ public final class BundledDriverOptions
   {
     super("SchemaCrawler for HyperSQL",
           "/help/Connections.hsqldb.txt",
-          "/schemacrawler-hsqldb.config.properties");
+          "/schemacrawler-hsqldb.config.properties",
+          "/hsqldb.information_schema");
   }
 
 }
