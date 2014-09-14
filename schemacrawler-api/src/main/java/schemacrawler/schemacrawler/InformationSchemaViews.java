@@ -35,6 +35,8 @@ import static schemacrawler.schemacrawler.InformationSchemaViews.InformationSche
 import static schemacrawler.schemacrawler.InformationSchemaViews.InformationSchemaKey.TABLE_CONSTRAINTS;
 import static schemacrawler.schemacrawler.InformationSchemaViews.InformationSchemaKey.TRIGGERS;
 import static schemacrawler.schemacrawler.InformationSchemaViews.InformationSchemaKey.VIEWS;
+import static sf.util.Utility.isBlank;
+import static sf.util.Utility.readResourceFully;
 
 import java.sql.DatabaseMetaData;
 import java.util.HashMap;
@@ -80,6 +82,11 @@ public final class InformationSchemaViews
     public String getLookupKey()
     {
       return lookupKey;
+    }
+
+    public String getResource()
+    {
+      return name() + ".sql";
     }
 
   }
@@ -341,6 +348,33 @@ public final class InformationSchemaViews
   }
 
   /**
+   * Information schema views from a map.
+   *
+   * @param informationSchemaViewsSql
+   *        Map of information schema view definitions.
+   */
+  public void loadResource(final String classpath)
+  {
+    for (final InformationSchemaKey key: InformationSchemaKey.values())
+    {
+      final String resource;
+      if (classpath == null)
+      {
+        resource = key.getResource();
+      }
+      else
+      {
+        resource = String.format("%s/%s", classpath, key.getResource());
+      }
+      final String sql = readResourceFully(resource);
+      if (!isBlank(sql))
+      {
+        informationSchemaQueries.put(key, sql);
+      }
+    }
+  }
+
+  /**
    * Sets the additional attributes SQL for columns.
    *
    * @param sql
@@ -493,6 +527,18 @@ public final class InformationSchemaViews
   public void setViewsSql(final String sql)
   {
     informationSchemaQueries.put(VIEWS, sql);
+  }
+
+  public Config toConfig()
+  {
+    final Config config = new Config();
+    for (final Map.Entry<InformationSchemaKey, String> sqlEntry: informationSchemaQueries
+      .entrySet())
+    {
+      config.put(sqlEntry.getKey().getLookupKey(), sqlEntry.getValue());
+    }
+
+    return config;
   }
 
   @Override

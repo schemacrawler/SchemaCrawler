@@ -30,7 +30,8 @@ public final class BundledDriverOptions
   {
     super("SchemaCrawler for Apache Derby",
           "/help/Connections.derby.txt",
-          "/schemacrawler-derby.config.properties");
+          "/schemacrawler-derby.config.properties",
+          "/derby.information_schema");
   }
 
 }

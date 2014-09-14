@@ -30,7 +30,8 @@ public final class BundledDriverOptions
   {
     super("SchemaCrawler for MySQL",
           "/help/Connections.mysql.txt",
-          "/schemacrawler-mysql.config.properties");
+          "/schemacrawler-mysql.config.properties",
+          "/mysql.information_schema");
   }
 
 }
