@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<artifactId>schemacrawler-all</artifactId>
-		<groupId>net.sourceforge.schemacrawler</groupId>
+		<groupId>us.fatehi</groupId>
 		<version>11.01.01</version>
 	</parent>
 	<artifactId>schemacrawler-offline</artifactId>
@@ -18,19 +18,19 @@
 	</licenses>
 	<dependencies>
 		<dependency>
-			<groupId>net.sourceforge.schemacrawler</groupId>
+			<groupId>us.fatehi</groupId>
 			<artifactId>schemacrawler-integrations</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>net.sourceforge.schemacrawler</groupId>
+			<groupId>us.fatehi</groupId>
 			<artifactId>schemacrawler-api</artifactId>
 			<version>${project.version}</version>
 			<type>test-jar</type>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>net.sourceforge.schemacrawler</groupId>
+			<groupId>us.fatehi</groupId>
 			<artifactId>schemacrawler-tools</artifactId>
 			<version>${project.version}</version>
 			<type>test-jar</type>
