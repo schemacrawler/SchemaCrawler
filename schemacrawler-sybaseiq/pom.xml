@@ -5,7 +5,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>net.sourceforge.schemacrawler</groupId>
+		<groupId>us.fatehi</groupId>
 		<artifactId>schemacrawler-all</artifactId>
 		<version>11.01.01</version>
 	</parent>
@@ -20,7 +20,7 @@
 	</licenses>
 	<dependencies>
 		<dependency>
-			<groupId>net.sourceforge.schemacrawler</groupId>
+			<groupId>us.fatehi</groupId>
 			<artifactId>schemacrawler-integrations</artifactId>
 			<version>${project.version}</version>
 		</dependency>

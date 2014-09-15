@@ -5,7 +5,7 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>net.sourceforge.schemacrawler</groupId>
+    <groupId>us.fatehi</groupId>
     <artifactId>schemacrawler-all</artifactId>
     <version>11.01.01</version>
   </parent>
@@ -14,61 +14,61 @@
   <name>SchemaCrawler Test</name>
   <dependencies>
     <dependency>
-      <groupId>net.sourceforge.schemacrawler</groupId>
+      <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-tools</artifactId>
       <version>${project.version}</version>
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>net.sourceforge.schemacrawler</groupId>
+      <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-integrations</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
-      <groupId>net.sourceforge.schemacrawler</groupId>
+      <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-api</artifactId>
       <version>${project.version}</version>
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>    
     <dependency>
-      <groupId>net.sourceforge.schemacrawler</groupId>
+      <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-sqlserver</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
-      <groupId>net.sourceforge.schemacrawler</groupId>
+      <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-oracle</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
-      <groupId>net.sourceforge.schemacrawler</groupId>
+      <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-db2</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
-      <groupId>net.sourceforge.schemacrawler</groupId>
+      <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-mysql</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
-      <groupId>net.sourceforge.schemacrawler</groupId>
+      <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-postgresql</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
-      <groupId>net.sourceforge.schemacrawler</groupId>
+      <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-sqlite</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
-      <groupId>net.sourceforge.schemacrawler</groupId>
+      <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-derby</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
-      <groupId>net.sourceforge.schemacrawler</groupId>
+      <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-hsqldb</artifactId>
       <version>${project.version}</version>
     </dependency>

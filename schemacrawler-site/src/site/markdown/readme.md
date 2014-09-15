@@ -25,7 +25,7 @@ In order to use SchemaCrawler in your [Apache Maven] projects, add a dependency 
 &lt;dependencies&gt;
   ...
   &lt;dependency&gt;
-    &lt;groupId&gt;net.sourceforge.schemacrawler&lt;/groupId&gt;
+    &lt;groupId&gt;us.fatehi&lt;/groupId&gt;
     &lt;artifactId&gt;schemacrawler&lt;/artifactId&gt;
     &lt;version&gt;10.10.05&lt;/version&gt;
   &lt;/dependency&gt;

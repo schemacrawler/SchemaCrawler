@@ -6,7 +6,7 @@
   <prerequisites>
     <maven>3.2.1</maven>
   </prerequisites>  
-  <groupId>net.sourceforge.schemacrawler</groupId>
+  <groupId>us.fatehi</groupId>
   <artifactId>schemacrawler-all</artifactId>
   <packaging>pom</packaging>
   <version>11.01.01</version>

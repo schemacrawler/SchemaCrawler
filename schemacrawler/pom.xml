@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>net.sourceforge.schemacrawler</groupId>
+    <groupId>us.fatehi</groupId>
     <artifactId>schemacrawler-all</artifactId>
     <version>11.01.01</version>
   </parent>
@@ -12,49 +12,49 @@
   <name>SchemaCrawler Distribution</name>
   <dependencies>
     <dependency>
-      <groupId>net.sourceforge.schemacrawler</groupId>
+      <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-generic</artifactId>
       <version>${project.version}</version>
       <scope>provided</scope>
     </dependency>  
     <dependency>
-      <groupId>net.sourceforge.schemacrawler</groupId>
+      <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-db2</artifactId>
       <version>${project.version}</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>net.sourceforge.schemacrawler</groupId>
+      <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-derby</artifactId>
       <version>${project.version}</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>net.sourceforge.schemacrawler</groupId>
+      <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-mysql</artifactId>
       <version>${project.version}</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>net.sourceforge.schemacrawler</groupId>
+      <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-oracle</artifactId>
       <version>${project.version}</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>net.sourceforge.schemacrawler</groupId>
+      <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-postgresql</artifactId>
       <version>${project.version}</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>net.sourceforge.schemacrawler</groupId>
+      <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-sqlite</artifactId>
       <version>${project.version}</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>net.sourceforge.schemacrawler</groupId>
+      <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-sqlserver</artifactId>
       <version>${project.version}</version>
       <scope>provided</scope>
@@ -148,7 +148,7 @@
               <sources>target/schemacrawler-${project.version}-sources.jar</sources>
               <javadoc>target/schemacrawler-${project.version}-javadoc.jar</javadoc>
               <repositoryLayout>default</repositoryLayout>
-              <groupId>net.sourceforge.schemacrawler</groupId>
+              <groupId>us.fatehi</groupId>
               <artifactId>schemacrawler</artifactId>
               <packaging>jar</packaging>
               <version>${project.version}</version>
@@ -179,7 +179,7 @@
               <repositoryId>sonatype-nexus</repositoryId>
               <repositoryLayout>default</repositoryLayout>
               <url>http://oss.sonatype.org/service/local/staging/deploy/maven2</url>
-              <groupId>net.sourceforge.schemacrawler</groupId>
+              <groupId>us.fatehi</groupId>
               <artifactId>schemacrawler</artifactId>
               <packaging>jar</packaging>
               <version>${project.version}</version>
