@@ -6,7 +6,7 @@
 >
   <parent>
     <artifactId>schemacrawler-all</artifactId>
-    <groupId>net.sourceforge.schemacrawler</groupId>
+    <groupId>us.fatehi</groupId>
     <version>11.01.01</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>

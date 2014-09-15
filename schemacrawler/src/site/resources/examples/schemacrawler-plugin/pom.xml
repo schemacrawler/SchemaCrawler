@@ -22,12 +22,12 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>net.sourceforge.schemacrawler</groupId>
+			<groupId>us.fatehi</groupId>
 			<artifactId>schemacrawler</artifactId>
 			<version>${schemacrawler.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>net.sourceforge.schemacrawler</groupId>
+			<groupId>us.fatehi</groupId>
 			<artifactId>schemacrawler-lint</artifactId>
 			<version>${schemacrawler.version}</version>
 		</dependency>

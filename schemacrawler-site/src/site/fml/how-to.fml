@@ -510,7 +510,7 @@ for (final Schema schema: catalog.getSchemas())
 <dependencies>
   ...
   <dependency>
-    <groupId>net.sourceforge.schemacrawler</groupId>
+    <groupId>us.fatehi</groupId>
     <artifactId>schemacrawler</artifactId>
     <version>11.01.01</version>
   </dependency>
