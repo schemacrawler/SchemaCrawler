@@ -5,6 +5,20 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+     <release version="11.11.01" date="2014-09-21">
+      <action dev="Sualeh Fatehi" type="update"><![CDATA[
+        Changed Maven groupId to us.fatehi.
+      ]]></action> 
+      <action dev="Sualeh Fatehi" type="update"><![CDATA[
+        Renamed Database class to Catalog.
+      ]]></action>    
+      <action dev="Sualeh Fatehi" type="update"><![CDATA[
+        Changed all output formats to include table and column remarks whenever available.
+      ]]></action>  
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Indicate auto-incremented columns in graph and other output.
+      ]]></action>                      
+     </release>    
      <release version="10.10.05" date="2014-08-04">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Fixed bug with weak associations in diagrams being drawn twice.
