@@ -7,10 +7,10 @@
     <maven>3.2.1</maven>
   </prerequisites>  
   <groupId>us.fatehi</groupId>
-  <artifactId>schemacrawler-all</artifactId>
+  <artifactId>schemacrawler-parent</artifactId>
   <packaging>pom</packaging>
   <version>11.01.01</version>
-  <name>SchemaCrawler [All]</name>
+  <name>SchemaCrawler [Parent]</name>
   <description>SchemaCrawler is an open-source Java API that makes working with database metadata as easy as working with plain old Java objects. SchemaCrawler is also a database schema discovery and comprehension tool. You can search for database schema objects using regular expressions, and output the schema and data in a readable text format. You can find potential schema design issues with lint. The output serves for database documentation is designed to be diff-ed against other database schemas. SchemaCrawler can generate schema diagrams.</description>
   <url>http://schemacrawler.sourceforge.net</url>
   <inceptionYear>2003</inceptionYear>
