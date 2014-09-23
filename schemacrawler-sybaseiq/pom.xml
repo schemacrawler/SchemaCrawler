@@ -6,7 +6,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>us.fatehi</groupId>
-		<artifactId>schemacrawler-all</artifactId>
+		<artifactId>schemacrawler-parent</artifactId>
 		<version>11.01.01</version>
 	</parent>
 	<artifactId>schemacrawler-sybaseiq</artifactId>
