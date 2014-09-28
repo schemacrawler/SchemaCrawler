@@ -17,8 +17,8 @@ Database Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
 database product name                     MySQL                         
-database product version                  5.5.15                        
-database user name                        root@192.168.60.1             
+database product version                  5.6.19                        
+database user name                        schemacrawler@71.232.162.65   
 
 
 Database Characteristics
@@ -29,12 +29,12 @@ all tables are selectable                 false
 auto commit failure closes all result sets  false                         
 catalog separator                         .                             
 catalog term                              database                      
-catalogs                                  information_schema, books, mysql, performance_schema, publisher sales, test
+catalogs                                  information_schema, BOOKS, PUBLISHER SALES, innodb, mysql, performance_schema, schemacrawler
 client info properties                                                  
 data definition causes transaction commit  true                          
 data definition ignored in transactions   false                         
 database major version                    5                             
-database minor version                    5                             
+database minor version                    6                             
 default transaction isolation             2                             
 deletes are detected for TYPE_FORWARD_ONLY result sets  false                         
 deletes are detected for TYPE_SCROLL_INSENSITIVE result sets  false                         
@@ -186,9 +186,9 @@ JDBC Driver Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
 driver name                               MySQL Connector Java          
-driver version                            mysql-connector-java-5.1.30 ( Revision: alexander.soklakov@oracle.com-20140310090514-8xt1yoht5ksg2e7c )
+driver version                            mysql-connector-java-5.1.31 ( Revision: alexander.soklakov@oracle.com-20140520065950-groqzzbvxprqdmnz )
 driver class name                         com.mysql.jdbc.Driver         
-url                                       jdbc:mysql://192.168.60.129:3306/books?logger=Jdk14Logger&dumpQueriesOnException=true&dumpMetadataOnColumnNotFound=true&profileSQL=true&maxQuerySizeToLog=4096
+url                                       jdbc:mysql://scmysql.cdf972bn8znp.us-east-1.rds.amazonaws.com:3306/schemacrawler?logger=Jdk14Logger&dumpQueriesOnException=true&dumpMetadataOnColumnNotFound=true&profileSQL=true&maxQuerySizeToLog=4096
 is JDBC compliant                         false                         
 
 
@@ -212,6 +212,11 @@ allowMultiQueries                                      [driver property]
 
 allowNanAndInf                                         [driver property]
   Should the driver allow NaN or +/- INF values in PreparedStatement.setDouble()?
+  not required; choices [false, no, true, yes]
+  value                             false                       
+
+allowPublicKeyRetrieval                                [driver property]
+  Allows special handshake roundtrip to get server RSA public key directly from server.
   not required; choices [false, no, true, yes]
   value                             false                       
 
@@ -378,7 +383,7 @@ createDatabaseIfNotExist                               [driver property]
 DBNAME                                                 [driver property]
   Database name
   not required
-  value                             books                       
+  value                             schemacrawler               
 
 defaultAuthenticationPlugin                            [driver property]
   Name of a class implementing com.mysql.jdbc.AuthenticationPlugin which will be used as the default authentication plugin (see below). It is an error to use a class which is not listed in "authenticationPlugins" nor it is one of the built-in plugins. It is an error to set as default a plugin which was disabled with "disabledAuthenticationPlugins" property. It is an error to set this value to null or the empty string (i.e. there must be at least a valid default authentication plugin specified for the connection, meeting all constraints listed above).
@@ -498,7 +503,7 @@ holdResultsOpenOverStatementClose                      [driver property]
 HOST                                                   [driver property]
   Hostname of MySQL Server
   required
-  value                             192.168.60.129              
+  value                             scmysql.cdf972bn8znp.us-east-1.rds.amazonaws.com
 
 ignoreNonTxTables                                      [driver property]
   Ignore non-transactional table warning for rollback? (defaults to 'false').
@@ -801,7 +806,7 @@ reportMetricsIntervalMillis                            [driver property]
   value                             30000                       
 
 requireSSL                                             [driver property]
-  Require SSL connection if useSSL=true? (defaults to 'false').
+  Require server support of SSL connection if useSSL=true? (defaults to 'false').
   not required; choices [false, no, true, yes]
   value                             false                       
 
@@ -826,7 +831,7 @@ retriesAllDown                                         [driver property]
   value                             120                         
 
 rewriteBatchedStatements                               [driver property]
-  Should the driver use multiqueries (irregardless of the setting of "allowMultiQueries") as well as rewriting of prepared statements for INSERT into multi-value inserts when executeBatch() is called? Notice that this has the potential for SQL injection if using plain java.sql.Statements and your code doesn't sanitize input correctly. Notice that for prepared statements, server-side prepared statements can not currently take advantage of this rewrite option, and that if you don't specify stream lengths when using PreparedStatement.set*Stream(), the driver won't be able to determine the optimum number of parameters per batch and you might receive an error from the driver that the resultant packet is too large. Statement.getGeneratedKeys() for these rewritten statements only works when the entire batch includes INSERT statements. Please be aware using rewriteBatchedStatements=true with INSERT .. ON DUPLICATE KEY UPDATE that for rewritten statement server returns only one value as sum of all affected (or found) rows in batch and it isn't possible to map it correctly to initial statements; in this case driver returns the total result as a result of each batch statement, i.e. the only unambiguous result is 0.
+  Should the driver use multiqueries (irregardless of the setting of "allowMultiQueries") as well as rewriting of prepared statements for INSERT into multi-value inserts when executeBatch() is called? Notice that this has the potential for SQL injection if using plain java.sql.Statements and your code doesn't sanitize input correctly. Notice that for prepared statements, server-side prepared statements can not currently take advantage of this rewrite option, and that if you don't specify stream lengths when using PreparedStatement.set*Stream(), the driver won't be able to determine the optimum number of parameters per batch and you might receive an error from the driver that the resultant packet is too large. Statement.getGeneratedKeys() for these rewritten statements only works when the entire batch includes INSERT statements. Please be aware using rewriteBatchedStatements=true with INSERT .. ON DUPLICATE KEY UPDATE that for rewritten statement server returns only one value as sum of all affected (or found) rows in batch and it isn't possible to map it correctly to initial statements; in this case driver returns 0 as a result of each batch statement if total count was 0, and the Statement.SUCCESS_NO_INFO as a result of each batch statement if total count was > 0.
   not required; choices [false, no, true, yes]
   value                             false                       
 
@@ -864,6 +869,11 @@ serverConfigCacheFactory                               [driver property]
   Name of a class implementing com.mysql.jdbc.CacheAdapterFactory<String, Map<String, String>>, which will be used to create caches for MySQL server configuration values
   not required
   value                             com.mysql.jdbc.PerVmServerConfigCacheFactory
+
+serverRSAPublicKeyFile                                 [driver property]
+  File path to the server RSA public key file for sha256_password authentication. If not specified, the public key will be retrieved from the server.
+  not required
+  value                             NULL                        
 
 serverTimezone                                         [driver property]
   Override detection/mapping of timezone. Used when timezone from server doesn't map to Java timezone
@@ -1498,12 +1508,12 @@ Tables
 
 
 
-books.authors
+BOOKS.Authors
 ------------------------------------------------------------------------
                                                                  [table]
-  Id                                INT not null                
-  FirstName                         VARCHAR(20) not null        
-  LastName                          VARCHAR(20) not null        
+  Id                                INT NOT NULL                
+  FirstName                         VARCHAR(20) NOT NULL        
+  LastName                          VARCHAR(20) NOT NULL        
   Address1                          VARCHAR(255)                
   Address2                          VARCHAR(255)                
   City                              VARCHAR(50)                 
@@ -1514,11 +1524,8 @@ books.authors
 `PRIMARY`                                                  [primary key]
   Id                                ascending                   
 
-FK_Z_Author2                               [foreign key, with no action]
-  Id --> books.BookAuthors2.AuthorId                              
-
 FK_Z_Author                                [foreign key, with no action]
-  Id --> books.bookauthors.AuthorId                              
+  Id --> BOOKS.BookAuthors.AuthorId                              
 
 IDX_B_Authors                                         [non-unique index]
   LastName                          ascending                   
@@ -1530,65 +1537,105 @@ IDX_A_Authors                                         [non-unique index]
   PostalCode                        ascending                   
   Country                           ascending                   
 
+TRG_Authors                             [trigger, after delete, per row]
+  UPDATE Publishers SET Publisher = 'Jacob' WHERE Publisher = 'John'
 
 
-books.books
+
+BOOKS.Books
 ------------------------------------------------------------------------
                                                                  [table]
-  Id                                INT not null                
-  Title                             VARCHAR(255) not null       
+  Id                                INT NOT NULL                
+  Title                             VARCHAR(255) NOT NULL       
   Description                       VARCHAR(255)                
-  PublisherId                       INT not null                
+  PublisherId                       INT NOT NULL                
   PublicationDate                   DATE                        
   Price                             FLOAT(12, 0)                
+  PreviousEditionId                 INT                         
 
 `PRIMARY`                                                  [primary key]
   Id                                ascending                   
 
-FK_Y_Book2                                 [foreign key, with no action]
-  Id --> books.BookAuthors2.BookId                              
-
 FK_Y_Book                                  [foreign key, with no action]
-  Id --> books.bookauthors.BookId                               
+  Id --> BOOKS.BookAuthors.BookId                               
+
+FK_PreviousEdition                         [foreign key, with no action]
+  Id --> PreviousEditionId                                      
 
                                                       [weak association]
-  books.publishers.Id --> PublisherId                              
+  BOOKS.Publishers.Id --> PublisherId                              
+
+UIDX_PreviousEdition                                      [unique index]
+  PreviousEditionId                 ascending                   
+
+UIDX_PreviousEdition                                 [unique constraint]
 
 
 
-books.`global counts`
+BOOKS.`Global Counts`
 ------------------------------------------------------------------------
                                                                  [table]
   `Global Count`                    INT                         
 
 
 
-books.publishers
+BOOKS.Publishers
 ------------------------------------------------------------------------
                                                                  [table]
-  Id                                INT not null                
+  Id                                INT NOT NULL                
+                                    auto-incremented            
   Publisher                         VARCHAR(255)                
 
 `PRIMARY`                                                  [primary key]
   Id                                ascending                   
+                                    auto-incremented            
 
                                                       [weak association]
-  Id --> books.books.PublisherId                                
+  Id --> BOOKS.Books.PublisherId                                
 
 
 
-books.bookauthors
+BOOKS.schema_version
 ------------------------------------------------------------------------
                                                                  [table]
-  BookId                            INT not null                
-  AuthorId                          INT not null                
+  version_rank                      INT NOT NULL                
+  installed_rank                    INT NOT NULL                
+  version                           VARCHAR(50) NOT NULL        
+  description                       VARCHAR(200) NOT NULL       
+  type                              VARCHAR(20) NOT NULL        
+  script                            VARCHAR(1000) NOT NULL      
+  checksum                          INT                         
+  installed_by                      VARCHAR(100) NOT NULL       
+  installed_on                      TIMESTAMP NOT NULL          
+  execution_time                    INT NOT NULL                
+  success                           BIT NOT NULL                
+
+`PRIMARY`                                                  [primary key]
+  version                           ascending                   
+
+schema_version_ir_idx                                 [non-unique index]
+  installed_rank                    ascending                   
+
+schema_version_s_idx                                  [non-unique index]
+  success                           ascending                   
+
+schema_version_vr_idx                                 [non-unique index]
+  version_rank                      ascending                   
+
+
+
+BOOKS.BookAuthors
+------------------------------------------------------------------------
+                                                                 [table]
+  BookId                            INT NOT NULL                
+  AuthorId                          INT NOT NULL                
   `UPDATE`                          TEXT(65535)                 
 
 FK_Z_Author                                [foreign key, with no action]
-  books.authors.Id --> AuthorId                                 
+  BOOKS.Authors.Id --> AuthorId                                 
 
 FK_Y_Book                                  [foreign key, with no action]
-  books.books.Id --> BookId                                     
+  BOOKS.Books.Id --> BookId                                     
 
 FK_Z_Author                                           [non-unique index]
   AuthorId                          ascending                   
@@ -1601,39 +1648,15 @@ UIDX_BookAuthors                                     [unique constraint]
 
 
 
-books.BookAuthors2
-------------------------------------------------------------------------
-                                                                 [table]
-  BookId                            INT not null                
-  AuthorId                          INT not null                
-  `UPDATE`                          TEXT(65535)                 
-
-FK_Z_Author2                               [foreign key, with no action]
-  books.authors.Id --> AuthorId                                 
-
-FK_Y_Book2                                 [foreign key, with no action]
-  books.books.Id --> BookId                                     
-
-FK_Z_Author2                                          [non-unique index]
-  AuthorId                          ascending                   
-
-UIDX_BookAuthors2                                         [unique index]
-  BookId                            ascending                   
-  AuthorId                          ascending                   
-
-UIDX_BookAuthors2                                    [unique constraint]
-
-
-
-books.authorslist
+BOOKS.AuthorsList
 ------------------------------------------------------------------------
                                                                   [view]
-  Id                                INT not null                
-  FirstName                         VARCHAR(20) not null        
-  LastName                          VARCHAR(20) not null        
+  Id                                INT NOT NULL                
+  FirstName                         VARCHAR(20) NOT NULL        
+  LastName                          VARCHAR(20) NOT NULL        
 
                                                             [definition]
-select `books`.`authors`.`Id` AS `Id`,`books`.`authors`.`FirstName` AS `FirstName`,`books`.`authors`.`LastName` AS `LastName` from `books`.`authors`
+select `BOOKS`.`Authors`.`Id` AS `Id`,`BOOKS`.`Authors`.`FirstName` AS `FirstName`,`BOOKS`.`Authors`.`LastName` AS `LastName` from `BOOKS`.`Authors`
 
 
 
@@ -1643,31 +1666,31 @@ Routines
 
 
 
-books.CustomAdd
+BOOKS.CustomAdd
 ------------------------------------------------------------------------
                                      [function, does not return a table]
                                     INT, unknown                
   One                               INT, in                     
-
-                                                            [definition]
-RETURN CustomAdd(One, 1)
+  Two                               INT, in                     
 
                                                          [specific name]
 CustomAdd
 
+                                                            [definition]
+RETURN One + Two
 
 
-books.New_Publisher
+
+BOOKS.New_Publisher
 ------------------------------------------------------------------------
                                                   [procedure, no result]
-  NewPublisher                      VARCHAR(50), in             
   Publisher                         VARCHAR(50), out            
-
-                                                            [definition]
-SET Publisher = NewPublisher
 
                                                          [specific name]
 New_Publisher
+
+                                                            [definition]
+SET Publisher = 'New Publisher'
 
 
 
