@@ -97,7 +97,7 @@ procedure term                            procedure
 result set holdability                    1                             
 row id lifetime                           ROWID_VALID_FOREVER           
 schema term                               schema                        
-schemas                                   APPQOSSYS, CTXSYS, DBSNMP, DIP, OUTLN, RDSADMIN, SCHEMACRAWLER, SYS, SYSTEM
+schemas                                   APPQOSSYS, BOOKS, CTXSYS, DBSNMP, DIP, OUTLN, PUBLISHER SALES, RDSADMIN, SCHEMACRAWLER, SYS, SYSTEM
 search string escape                      /                             
 SQL keywords                              ACCESS,  ADD,  ALTER,  AUDIT,  CLUSTER,  COLUMN,  COMMENT,  COMPRESS,  CONNECT,  DATE,  DROP,  EXCLUSIVE,  FILE,  IDENTIFIED,  IMMEDIATE,  INCREMENT,  INDEX,  INITIAL,  INTERSECT,  LEVEL,  LOCK,  LONG,  MAXEXTENTS,  MINUS,  MODE,  NOAUDIT,  NOCOMPRESS,  NOWAIT,  NUMBER,  OFFLINE,  ONLINE,  PCTFREE,  PRIOR,  all_PL_SQL_reserved_ words
 SQL state type                            0                             
@@ -187,7 +187,7 @@ JDBC Driver Information
 driver name                               Oracle JDBC driver            
 driver version                            11.2.0.3.0                    
 driver class name                         oracle.jdbc.OracleDriver      
-url                                       jdbc:oracle:thin:@//schemacrawler.cdf972bn8znp.us-east-1.rds.amazonaws.com:1521/ORCL
+url                                       jdbc:oracle:thin:@//scoracle.cdf972bn8znp.us-east-1.rds.amazonaws.com:1521/ORCL
 is JDBC compliant                         true                          
 
 
@@ -812,6 +812,22 @@ VARCHAR2                                                     [data type]
   not auto-incrementable
   searchable
 
+TIMESTAMP(6)                                                 [data type]
+  based on                          TIMESTAMP                   
+  not user defined
+  defined with 
+  not nullable
+  not auto-incrementable
+  unknown
+
+VALID_STRING                                                 [data type]
+  based on                          NULL                        
+  user defined
+  defined with 
+  not nullable
+  not auto-incrementable
+  unknown
+
 
 
 Tables
@@ -822,9 +838,10 @@ Tables
 AUTHORS
 ------------------------------------------------------------------------
                                                                  [table]
-  ID                                NUMBER(38, 0) not null      
-  FIRSTNAME                         VARCHAR2(20) not null       
-  LASTNAME                          VARCHAR2(20) not null       
+Contact details for book authors
+  ID                                NUMBER(38, 0) NOT NULL      
+  FIRSTNAME                         VARCHAR2(20) NOT NULL       
+  LASTNAME                          VARCHAR2(20) NOT NULL       
   ADDRESS1                          VARCHAR2(255)               
   ADDRESS2                          VARCHAR2(255)               
   CITY                              VARCHAR2(50)                
@@ -852,19 +869,6 @@ CREATE INDEX "IDX_B_AUTHORS" ON "AUTHORS" ("LASTNAME", "FIRSTNAME")
 CREATE INDEX "IDX_A_AUTHORS" ON "AUTHORS" ("CITY", "STATE", "POSTALCODE", "COUNTRY") 
   ;
 
-                                                            [definition]
-CREATE TABLE "AUTHORS" 
-   (	"ID" NUMBER(*,0), 
-	"FIRSTNAME" VARCHAR2(20 BYTE), 
-	"LASTNAME" VARCHAR2(20 BYTE), 
-	"ADDRESS1" VARCHAR2(255 BYTE), 
-	"ADDRESS2" VARCHAR2(255 BYTE), 
-	"CITY" VARCHAR2(50 BYTE), 
-	"STATE" VARCHAR2(2 BYTE), 
-	"POSTALCODE" VARCHAR2(10 BYTE), 
-	"COUNTRY" VARCHAR2(50 BYTE)
-   ) ;
-
                                         [trigger, after delete, per row]
   BEGIN UPDATE Publishers SET Publisher = 'Jacob' WHERE Publisher = 'John'
 ;; END;
@@ -890,20 +894,38 @@ ALTER TABLE "AUTHORS" MODIFY ("FIRSTNAME" NOT NULL ENABLE);
   LASTNAME                                                      
 ALTER TABLE "AUTHORS" MODIFY ("LASTNAME" NOT NULL ENABLE);
 
-                                                               [remarks]
-Contact details for book authors
+                                                            [definition]
+CREATE TABLE "AUTHORS" 
+   (	"ID" NUMBER(*,0), 
+	"FIRSTNAME" VARCHAR2(20 BYTE), 
+	"LASTNAME" VARCHAR2(20 BYTE), 
+	"ADDRESS1" VARCHAR2(255 BYTE), 
+	"ADDRESS2" VARCHAR2(255 BYTE), 
+	"CITY" VARCHAR2(50 BYTE), 
+	"STATE" VARCHAR2(2 BYTE), 
+	"POSTALCODE" VARCHAR2(10 BYTE), 
+	"COUNTRY" VARCHAR2(50 BYTE)
+   ) ;
 
 
 
 BOOKS
 ------------------------------------------------------------------------
                                                                  [table]
-  ID                                NUMBER(38, 0) not null      
-  TITLE                             VARCHAR2(255) not null      
+Details for published books
+  ID                                NUMBER(38, 0) NOT NULL      
+                                    Unique (internal) id for book
+  TITLE                             VARCHAR2(255) NOT NULL      
+                                    Book title                  
   DESCRIPTION                       VARCHAR2(255)               
-  PUBLISHERID                       NUMBER(38, 0) not null      
+                                    Book description            
+  PUBLISHERID                       NUMBER(38, 0) NOT NULL      
+                                    Foreign key to the book publisher
   PUBLICATIONDATE                   DATE                        
+                                    Book publication date       
   PRICE                             FLOAT(126, 0)               
+                                    Current price for the book  
+  PREVIOUSEDITIONID                 NUMBER(38, 0)               
 
                                                            [primary key]
   ID                                unknown                     
@@ -911,18 +933,21 @@ BOOKS
                                        [foreign key, on delete restrict]
   ID --> BOOKAUTHORS.BOOKID                                     
 
+                                       [foreign key, on delete restrict]
+  ID --> PREVIOUSEDITIONID                                      
+
                                                       [weak association]
   PUBLISHERS.ID --> PUBLISHERID                                 
 
-                                                            [definition]
-CREATE TABLE "BOOKS" 
-   (	"ID" NUMBER(*,0), 
-	"TITLE" VARCHAR2(255 BYTE), 
-	"DESCRIPTION" VARCHAR2(255 BYTE), 
-	"PUBLISHERID" NUMBER(*,0), 
-	"PUBLICATIONDATE" DATE, 
-	"PRICE" FLOAT(126)
-   ) ;
+                                                [unique clustered index]
+  PREVIOUSEDITIONID                 unknown                     
+CREATE UNIQUE INDEX "UIDX_PREVIOUSEDITION" ON "BOOKS" ("PREVIOUSEDITIONID") 
+  ;
+
+                                                [foreign key constraint]
+  PREVIOUSEDITIONID                                             
+ALTER TABLE "BOOKS" ADD CONSTRAINT "FK_PREVIOUSEDITION" FOREIGN KEY ("PREVIOUSEDITIONID")
+	  REFERENCES "BOOKS" ("ID") ENABLE;
 
                                                 [primary key constraint]
   ID                                                            
@@ -941,14 +966,16 @@ ALTER TABLE "BOOKS" MODIFY ("TITLE" NOT NULL ENABLE);
   PUBLISHERID                                                   
 ALTER TABLE "BOOKS" MODIFY ("PUBLISHERID" NOT NULL ENABLE);
 
-                                                               [remarks]
-Details for published books
-  ID                                Unique (internal) id for book
-  TITLE                             Book title                  
-  DESCRIPTION                       Book description            
-  PUBLISHERID                       Foreign key to the book publisher
-  PUBLICATIONDATE                   Book publication date       
-  PRICE                             Current price for the book  
+                                                            [definition]
+CREATE TABLE "BOOKS" 
+   (	"ID" NUMBER(*,0), 
+	"TITLE" VARCHAR2(255 BYTE), 
+	"DESCRIPTION" VARCHAR2(255 BYTE), 
+	"PUBLISHERID" NUMBER(*,0), 
+	"PUBLICATIONDATE" DATE, 
+	"PRICE" FLOAT(126), 
+	"PREVIOUSEDITIONID" NUMBER(*,0)
+   ) ;
 
 
 
@@ -967,8 +994,11 @@ CREATE TABLE "Global Counts"
 PUBLISHERS
 ------------------------------------------------------------------------
                                                                  [table]
-  ID                                NUMBER(38, 0) not null      
+List of book publishers
+  ID                                NUMBER(38, 0) NOT NULL      
+                                    Unique (internal) id for book publisher
   PUBLISHER                         VARCHAR2(255)               
+                                    Name of book publisher      
 
                                                            [primary key]
   ID                                unknown                     
@@ -976,40 +1006,123 @@ PUBLISHERS
                                                       [weak association]
   ID --> BOOKS.PUBLISHERID                                      
 
+                                                [primary key constraint]
+  ID                                                            
+ALTER TABLE "PUBLISHERS" ADD PRIMARY KEY ("ID")
+  USING INDEX  ENABLE;
+
                                                             [definition]
 CREATE TABLE "PUBLISHERS" 
    (	"ID" NUMBER(*,0), 
 	"PUBLISHER" VARCHAR2(255 BYTE)
    ) ;
 
+
+
+schema_version
+------------------------------------------------------------------------
+                                                                 [table]
+  version_rank                      NUMBER(38, 0) NOT NULL      
+  installed_rank                    NUMBER(38, 0) NOT NULL      
+  version                           VARCHAR2(50) NOT NULL       
+  description                       VARCHAR2(200) NOT NULL      
+  type                              VARCHAR2(20) NOT NULL       
+  script                            VARCHAR2(1000) NOT NULL     
+  checksum                          NUMBER(38, 0)               
+  installed_by                      VARCHAR2(100) NOT NULL      
+  installed_on                      TIMESTAMP(6) NOT NULL       
+  execution_time                    NUMBER(38, 0) NOT NULL      
+  success                           NUMBER(1, 0) NOT NULL       
+
+                                                           [primary key]
+  version                           unknown                     
+
+                                            [non-unique clustered index]
+  installed_rank                    unknown                     
+CREATE INDEX "schema_version_ir_idx" ON "schema_version" ("installed_rank") 
+  ;
+
+                                            [non-unique clustered index]
+  success                           unknown                     
+CREATE INDEX "schema_version_s_idx" ON "schema_version" ("success") 
+  ;
+
+                                            [non-unique clustered index]
+  version_rank                      unknown                     
+CREATE INDEX "schema_version_vr_idx" ON "schema_version" ("version_rank") 
+  ;
+
                                                 [primary key constraint]
-  ID                                                            
-ALTER TABLE "PUBLISHERS" ADD PRIMARY KEY ("ID")
+  version                                                       
+ALTER TABLE "schema_version" ADD CONSTRAINT "schema_version_pk" PRIMARY KEY ("version")
   USING INDEX  ENABLE;
 
-                                                               [remarks]
-List of book publishers
-  ID                                Unique (internal) id for book publisher
-  PUBLISHER                         Name of book publisher      
+                                                      [check constraint]
+  version_rank                                                  
+ALTER TABLE "schema_version" MODIFY ("version_rank" NOT NULL ENABLE);
+
+                                                      [check constraint]
+  installed_rank                                                
+ALTER TABLE "schema_version" MODIFY ("installed_rank" NOT NULL ENABLE);
+
+                                                      [check constraint]
+  version                                                       
+ALTER TABLE "schema_version" MODIFY ("version" NOT NULL ENABLE);
+
+                                                      [check constraint]
+  description                                                   
+ALTER TABLE "schema_version" MODIFY ("description" NOT NULL ENABLE);
+
+                                                      [check constraint]
+  type                                                          
+ALTER TABLE "schema_version" MODIFY ("type" NOT NULL ENABLE);
+
+                                                      [check constraint]
+  script                                                        
+ALTER TABLE "schema_version" MODIFY ("script" NOT NULL ENABLE);
+
+                                                      [check constraint]
+  installed_by                                                  
+ALTER TABLE "schema_version" MODIFY ("installed_by" NOT NULL ENABLE);
+
+                                                      [check constraint]
+  installed_on                                                  
+ALTER TABLE "schema_version" MODIFY ("installed_on" NOT NULL ENABLE);
+
+                                                      [check constraint]
+  execution_time                                                
+ALTER TABLE "schema_version" MODIFY ("execution_time" NOT NULL ENABLE);
+
+                                                      [check constraint]
+  success                                                       
+ALTER TABLE "schema_version" MODIFY ("success" NOT NULL ENABLE);
+
+                                                            [definition]
+CREATE TABLE "schema_version" 
+   (	"version_rank" NUMBER(*,0), 
+	"installed_rank" NUMBER(*,0), 
+	"version" VARCHAR2(50 BYTE), 
+	"description" VARCHAR2(200 BYTE), 
+	"type" VARCHAR2(20 BYTE), 
+	"script" VARCHAR2(1000 BYTE), 
+	"checksum" NUMBER(*,0), 
+	"installed_by" VARCHAR2(100 BYTE), 
+	"installed_on" TIMESTAMP (6) DEFAULT CURRENT_TIMESTAMP, 
+	"execution_time" NUMBER(*,0), 
+	"success" NUMBER(1,0)
+   ) ;
 
 
 
 TEMP_AUTHOR_LIST
 ------------------------------------------------------------------------
                                                                  [table]
-  ID                                NUMBER(38, 0) not null      
-  FIRSTNAME                         VARCHAR2(20) not null       
-  LASTNAME                          VARCHAR2(20) not null       
+  ID                                NUMBER(38, 0) NOT NULL      
+  FIRSTNAME                         VARCHAR2(20) NOT NULL       
+  LASTNAME                          VARCHAR2(20) NOT NULL       
 
                                                            [primary key]
   ID                                unknown                     
-
-                                                            [definition]
-CREATE GLOBAL TEMPORARY TABLE "TEMP_AUTHOR_LIST" 
-   (	"ID" NUMBER(*,0), 
-	"FIRSTNAME" VARCHAR2(20 BYTE), 
-	"LASTNAME" VARCHAR2(20 BYTE)
-   ) ON COMMIT DELETE ROWS ;
 
                                                 [primary key constraint]
   ID                                                            
@@ -1027,13 +1140,21 @@ ALTER TABLE "TEMP_AUTHOR_LIST" MODIFY ("FIRSTNAME" NOT NULL ENABLE);
   LASTNAME                                                      
 ALTER TABLE "TEMP_AUTHOR_LIST" MODIFY ("LASTNAME" NOT NULL ENABLE);
 
+                                                            [definition]
+CREATE GLOBAL TEMPORARY TABLE "TEMP_AUTHOR_LIST" 
+   (	"ID" NUMBER(*,0), 
+	"FIRSTNAME" VARCHAR2(20 BYTE), 
+	"LASTNAME" VARCHAR2(20 BYTE)
+   ) ON COMMIT DELETE ROWS ;
+
 
 
 BOOKAUTHORS
 ------------------------------------------------------------------------
                                                                  [table]
-  BOOKID                            NUMBER(38, 0) not null      
-  AUTHORID                          NUMBER(38, 0) not null      
+Relationship between books and their authors, along with the latest updated information
+  BOOKID                            NUMBER(38, 0) NOT NULL      
+  AUTHORID                          NUMBER(38, 0) NOT NULL      
   "UPDATE"                          CLOB                        
 
                                        [foreign key, on delete restrict]
@@ -1047,13 +1168,6 @@ BOOKAUTHORS
   AUTHORID                          unknown                     
 CREATE UNIQUE INDEX "UIDX_BOOKAUTHORS" ON "BOOKAUTHORS" ("BOOKID", "AUTHORID") 
   ;
-
-                                                            [definition]
-CREATE TABLE "BOOKAUTHORS" 
-   (	"BOOKID" NUMBER(*,0), 
-	"AUTHORID" NUMBER(*,0), 
-	"UPDATE" CLOB
-   ) ;
 
                                                 [foreign key constraint]
   BOOKID                                                        
@@ -1073,17 +1187,21 @@ ALTER TABLE "BOOKAUTHORS" MODIFY ("BOOKID" NOT NULL ENABLE);
   AUTHORID                                                      
 ALTER TABLE "BOOKAUTHORS" MODIFY ("AUTHORID" NOT NULL ENABLE);
 
-                                                               [remarks]
-Relationship between books and their authors, along with the latest updated information
+                                                            [definition]
+CREATE TABLE "BOOKAUTHORS" 
+   (	"BOOKID" NUMBER(*,0), 
+	"AUTHORID" NUMBER(*,0), 
+	"UPDATE" CLOB
+   ) ;
 
 
 
 AUTHORSLIST
 ------------------------------------------------------------------------
                                                                   [view]
-  ID                                NUMBER(38, 0) not null      
-  FIRSTNAME                         VARCHAR2(20) not null       
-  LASTNAME                          VARCHAR2(20) not null       
+  ID                                NUMBER(38, 0) NOT NULL      
+  FIRSTNAME                         VARCHAR2(20) NOT NULL       
+  LASTNAME                          VARCHAR2(20) NOT NULL       
 
                                                             [definition]
 SELECT Id, FirstName, LastName FROM Authors
@@ -1096,36 +1214,10 @@ Routines
 
 
 
-CUSTOMADD
-------------------------------------------------------------------------
-                                              [function, result unknown]
-
-                                                               [remarks]
-Standalone function
-
-
-
 NEW_PUBLISHER
 ------------------------------------------------------------------------
                                                   [procedure, no result]
-
-                                                               [remarks]
 Standalone procedure or function
-
-
-
-SQUIRREL_GET_ERROR_OFFSET
-------------------------------------------------------------------------
-                                              [function, result unknown]
-  NULL                              NUMBER(22, 22), return      
-  QUERY                             VARCHAR2, in                
-
-                                                            [definition]
-CREATE OR REPLACE FUNCTION "SQUIRREL_GET_ERROR_OFFSET" (query IN varchar2) return number authid current_user is      l_theCursor     integer default dbms_sql.open_cursor;      l_status        integer; begin          begin          dbms_sql.parse(  l_theCursor, query, dbms_sql.native );          exception                  when others then l_status := dbms_sql.last_error_position;          end;          dbms_sql.close_cursor( l_theCursor );          return l_status; end; 
-/
-
-                                                               [remarks]
-Standalone function
 
 
 
