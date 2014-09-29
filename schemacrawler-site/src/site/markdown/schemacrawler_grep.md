@@ -1,4 +1,4 @@
-## SchemaCrawler Grep
+# SchemaCrawler Grep
 
 SchemaCrawler is a command-line tool that allows you to search your database
 for tables and columns that match a regular expression, much like the standard
