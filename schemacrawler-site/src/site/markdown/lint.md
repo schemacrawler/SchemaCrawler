@@ -36,6 +36,7 @@ use `-Dschemacrawer.linter_configs.file=[path]`.
 SchemaCrawler Lint has a number of lint checks built-in. These are prioritized
 as critical, high, medium and low. The results are shown on the lint report.
 The checks are:
+
 - Tables with incrementing column names, for example, a table with column names like CONTACT1, CONTACT2 
   and so on can indicate de-normalization.  
   Additionally, SchemaCrawler Lint will check that the data-types of all incrementing columns are the same, 
@@ -61,6 +62,7 @@ The checks are:
 
 SchemaCrawler Lint is very easily extended for custom database schema checks.
 The main districution has example code. In order to add your own lint checks,
+
 - Create a class that extends `schemacrawler.tools.lint.Linter`. 
   It is easiest to extend `schemacrawler.tools.lint.BaseLinter` , since you get 
   convenient `addLint` methods 

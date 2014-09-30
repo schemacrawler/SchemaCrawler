@@ -7,6 +7,7 @@ SchemaCrawler questions from users.
 -  How [database administrators](http://dba.stackexchange.com/search?q=schemacrawler) use SchemaCrawler. 
 -  How [system administrators](http://serverfault.com/search?q=schemacrawler) use SchemaCrawler. 
 -  How [programmers](http://stackoverflow.com/search?q=schemacrawler) use SchemaCrawler. 
+-  How [software testers](http://sqa.stackexchange.com/search?q=schemacrawler) use SchemaCrawler. 
 
 ## Companies
 
@@ -14,7 +15,7 @@ SchemaCrawler database diagrams in use at the Scrum meeting at the Software
 Development Departement of [La Ville de Noumea.](http://www.noumea.nc/)
 Photograph courtesy of Adrien Sales.
 
-<a href="images/SchemaCrawler_Noumea.jpg" rel="lightbox" title="Schemacrawler database diagrams in use">                    
+<a href="images/SchemaCrawler_Noumea.jpg" data-toggle="lightbox" title="Schemacrawler database diagrams in use">                    
   <img src="images/SchemaCrawler_Noumea.jpg" width="200" alt="Schemacrawler database diagrams in use" />
 </a>
 
