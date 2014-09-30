@@ -5,7 +5,7 @@
   padding-left: 62px;
 }
 
-body, td, select, input, p, code, pre, tt, li, li a, strong { 
+body, td, select, input, p, li, strong { 
   font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
   font-size: 0.9rem;
   line-height: 1.4rem; 
