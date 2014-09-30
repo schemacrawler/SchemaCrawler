@@ -2,11 +2,22 @@
 <project xmlns="http://maven.apache.org/DECORATION/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/DECORATION/1.0.0 http://maven.apache.org/xsd/decoration-1.0.0.xsd"
   name="SchemaCrawler">
-  <skin>
-    <groupId>com.sourcesense.maven</groupId>
-    <artifactId>maven-skin</artifactId>
-    <version>1.0.0</version>
-  </skin>
+<skin>
+  <groupId>lt.velykis.maven.skins</groupId>
+  <artifactId>reflow-maven-skin</artifactId>
+  <version>1.1.1</version>
+</skin>
+  <custom>
+    <reflowSkin>
+      <theme>bootswatch-united</theme>
+      <highlightJs>true</highlightJs>
+      <brand>
+        <name>SchemaCrawler</name>
+        <href>http://schemacrawler.sourceforge.net/</href>
+      </brand>
+      <slogan>Free database schema discovery and comprehension tool</slogan>
+    </reflowSkin>
+  </custom>
   <version />
   <bannerLeft>
     <name>SchemaCrawler</name>
@@ -36,7 +47,7 @@
         document.getElementsByTagName('script')[0];
         s.parentNode.insertBefore(ga, s); })(); 
       </script>
-      <script src="js/jquery-1.7.2.min.js"></script>
+      <script src="js/jquery-1.11.1.min.js"></script>
       <script src="js/lightbox.js"></script>
       <link rel="stylesheet" href="css/lightbox.css" />
       <link rel="stylesheet" href="./css/sc.css" />

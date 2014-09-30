@@ -87,7 +87,7 @@ schemacrawler.format.show_unqualified_names=true
 					download.
 				</p>
 				<p>
-					<a href="images/diagram.png" rel="lightbox" title="SchemaCrawler database diagram">
+					<a href="images/diagram.png" data-toggle="lightbox" title="SchemaCrawler database diagram">
 						<img src="images/diagram.png" width="200" />
 					</a>
 				</p>
@@ -104,7 +104,7 @@ schemacrawler.format.show_unqualified_names=true
 								<code>-portablenames</code>
 								command line option.
 							</p>
-							<a href="images/diagram_2_portablenames.png" rel="lightbox"
+							<a href="images/diagram_2_portablenames.png" data-toggle="lightbox"
 								title="SchemaCrawler database diagram">
 								<img src="images/diagram_2_portablenames.png" width="200" />
 							</a>
@@ -116,7 +116,7 @@ schemacrawler.format.show_unqualified_names=true
                                 <code>-infolevel=standard -command=brief</code>
                                 command line option.
 							</p>
-							<a href="images/diagram_3_important_columns.png" rel="lightbox"
+							<a href="images/diagram_3_important_columns.png" data-toggle="lightbox"
 								title="SchemaCrawler database diagram">
 								<img src="images/diagram_3_important_columns.png" width="200" />
 							</a>
@@ -129,7 +129,7 @@ schemacrawler.format.show_unqualified_names=true
                                 <code>schemacrawler.format.show_ordinal_numbers=true</code>
                                 in the configuration file.
                             </p>
-                            <a href="images/diagram_4_ordinals.png" rel="lightbox"
+                            <a href="images/diagram_4_ordinals.png" data-toggle="lightbox"
                                 title="SchemaCrawler database diagram">
                                 <img src="images/diagram_4_ordinals.png" width="200" />
                             </a>
@@ -140,12 +140,11 @@ schemacrawler.format.show_unqualified_names=true
 								<code>-sortcolumns</code>
 								command line option.
 							</p>
-							<a href="images/diagram_5_alphabetical.png" rel="lightbox"
+							<a href="images/diagram_5_alphabetical.png" data-toggle="lightbox"
 								title="SchemaCrawler database diagram">
 								<img src="images/diagram_5_alphabetical.png" width="200" />
 							</a>
 						</td>
-						<td></td>
 					</tr>
 					<tr>
 						<td>
@@ -154,7 +153,7 @@ schemacrawler.format.show_unqualified_names=true
 								<code>-grepcolumns=.*\\.BOOKS\\..*\\.ID</code>
 								as a command line option.
 							</p>
-							<a href="images/diagram_6_grep.png" rel="lightbox"
+							<a href="images/diagram_6_grep.png" data-toggle="lightbox"
 								title="SchemaCrawler database diagram">
 								<img src="images/diagram_6_grep.png" width="200" />
 							</a>
@@ -167,7 +166,7 @@ schemacrawler.format.show_unqualified_names=true
 								<code>-only-matching</code>
 								as command line options.
 							</p>
-							<a href="images/diagram_7_grep_onlymatching.png" rel="lightbox"
+							<a href="images/diagram_7_grep_onlymatching.png" data-toggle="lightbox"
 								title="SchemaCrawler database diagram">
 								<img src="images/diagram_7_grep_onlymatching.png" width="200" />
 							</a>
@@ -181,7 +180,7 @@ schemacrawler.format.show_unqualified_names=true
 					the Software Development Departement of <a href="http://www.noumea.nc/">La Ville de Nouméa</a>.
 					Photograph courtesy of Adrien Sales. 
 				</p>
-				<a href="images/SchemaCrawler_Noumea.jpg" rel="lightbox"
+				<a href="images/SchemaCrawler_Noumea.jpg" data-toggle="lightbox"
 					title="Schemacrawler database diagrams in use">
 					<img src="images/SchemaCrawler_Noumea.jpg" width="200" />
 				</a>

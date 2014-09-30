@@ -5,25 +5,16 @@
   padding-left: 62px;
 }
 
-#wrapper {
-    background-image: none;
-}
-
-dl {
-  border: none;
-  background-color: #F4F4F4;
-}
-
 body, td, select, input, p, code, pre, tt, li, li a, strong { 
-  font-family: "Segoe UI","Segoe WP",Arial,Sans-Serif;
-  font-size: 1.0rem;
+  font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
+  font-size: 0.9rem;
   line-height: 1.4rem; 
   color: rgb(16,16,16);
 }
 
 code, pre, tt {
   font-family: 'Lucida Console', Monaco, 'Courier New', monospace;  
-  font-size: 1.0rem;
+  font-size: 0.9rem;
   line-height: 1.4rem; 
   color: rgb(16,16,16);
 }
@@ -34,8 +25,12 @@ hr {
   color: Silver;
 }
 
+p { 
+  margin-bottom: 0.5rem;   
+}
+
 h1,h2,h3 {
-  font-family: "Segoe UI Light","Segoe WP Light","Segoe WP","Segoe UI",Arial,Sans-Serif;
+  margin-top: 1.0rem;  
   margin-bottom: 0.5rem;   
 }
   
