@@ -16,6 +16,12 @@
         Changed all output formats to include table and column remarks whenever available.
       ]]></action>  
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added command-line option options to show significant columns, such as primary and 
+        foreign key columns, and columns that are part of unique indexes. Use the 
+        `-infolevel=standard -command=brief` 
+        command-line options.
+      ]]></action>        
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Indicate auto-incremented columns in graph and other output.
       ]]></action>                      
      </release>    
