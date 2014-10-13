@@ -20,11 +20,11 @@ following script, which attempts to drop all the tables in the database.
 <div class="source"><pre> 
 var dropTables = function()
 {
-  println(database.schemaCrawlerInfo);
-  println(database.databaseInfo);
-  println(database.jdbcDriverInfo);
+  println(catalog.schemaCrawlerInfo);
+  println(catalog.databaseInfo);
+  println(catalog.jdbcDriverInfo);
   var statement = connection.createStatement();
-  var tables = database.tables.toArray();
+  var tables = catalog.tables.toArray();
   for ( var i = (tables.length - 1); i &gt;= 0; i--)
   {
     var table = tables[i];
