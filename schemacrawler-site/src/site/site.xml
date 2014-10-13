@@ -9,13 +9,13 @@
 </skin>
   <custom>
     <reflowSkin>
-      <theme>bootswatch-united</theme>
-      <highlightJs>true</highlightJs>
       <brand>
         <name>SchemaCrawler</name>
         <href>http://schemacrawler.sourceforge.net/</href>
       </brand>
       <slogan>Free database schema discovery and comprehension tool</slogan>
+      <highlightJs>true</highlightJs>
+      <html5Anchor>false</html5Anchor>
     </reflowSkin>
   </custom>
   <version />
