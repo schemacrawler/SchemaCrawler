@@ -61,7 +61,7 @@ The checks are:
 ## Lint Extensions
 
 SchemaCrawler Lint is very easily extended for custom database schema checks.
-The main districution has example code. In order to add your own lint checks,
+The main distribution has example code. In order to add your own lint checks,
 
 - Create a class that extends `schemacrawler.tools.lint.Linter`. 
   It is easiest to extend `schemacrawler.tools.lint.BaseLinter` , since you get 
