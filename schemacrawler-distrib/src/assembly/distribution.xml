@@ -54,7 +54,7 @@
         <attribute name="Product" value="SchemaCrawler" />
         <attribute name="Version" value="${SchemaCrawler.version}" />
         <attribute name="Author" value="Sualeh Fatehi sualeh@hotmail.com" />
-        <attribute name="Copyright" value="(c) 2003-2014, Sualeh Fatehi" />
+        <attribute name="Copyright" value="(c) 2000-2014, Sualeh Fatehi" />
         <attribute name="Main-Class" value="schemacrawler.Main" />
       </manifest>
       <zipfileset dir="${SchemaCrawler.home}/schemacrawler-api/target/classes" />
