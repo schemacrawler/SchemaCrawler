@@ -165,7 +165,7 @@
         <artifactId>maven-gpg-plugin</artifactId>
         <version>1.1</version>
         <configuration>
-		  <useAgent>true</useAgent>
+          <useAgent>true</useAgent>
           <skip>${skip.signing.artifacts}</skip>
         </configuration>
         <executions>
@@ -174,7 +174,7 @@
             <phase>deploy</phase>
             <configuration>
               <file>target/schemacrawler-${project.version}.jar</file>
-			  <generatePom>false</generatePom>
+              <generatePom>false</generatePom>
               <pomFile>src/assembly/schemacrawler.pom</pomFile>
               <repositoryId>sonatype-nexus</repositoryId>
               <repositoryLayout>default</repositoryLayout>
