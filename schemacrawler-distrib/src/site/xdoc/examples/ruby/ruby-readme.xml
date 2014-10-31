@@ -1,0 +1,82 @@
+<!DOCTYPE document PUBLIC "-//Apache Software Foundation//DTD XDOC 1.0//EN"
+  "http://maven.apache.org/dtd/xdoc_1_0.dtd">
+<document>
+  <properties>
+    <title>SchemaCrawler - Ruby Integration Example</title>
+    <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
+  </properties>
+  <body>
+    <section name="SchemaCrawler - Ruby Scripting Example">
+      <subsection name="Description">
+        <p>
+          SchemaCrawler allows scripting with database
+          metadata, using Ruby. This example shows how to script
+          with
+          Ruby.
+        </p>
+      </subsection>
+      <subsection name="How to Run">
+        <ol>
+          <li>
+            Install
+            <a href="http://ant.apache.org/">ant,</a>
+            and make sure that ant is on your
+            path
+          </li>
+          <li>
+            Make sure that
+            <span class="code">java</span>
+            is on your
+            <span class="code">PATH</span>
+          </li>
+          <li>
+            Start the database server by running the
+            <span class="code">StartDatabaseServer</span>
+            script from the
+            distribution directory
+          </li>
+          <li>
+            Start a command shell in the
+            <span class="code">ruby</span>
+            example directory
+          </li>
+          <li>
+            Run
+            <span class="code">ruby_setup.cmd</span>
+            (or
+            <span class="code">ruby_setup.sh</span>
+            on Unix) to download and setup Ruby scripting support
+          </li>
+          <li>
+            Run
+            <span class="code">ruby.cmd tables.rb
+            </span>
+            (or
+            <span class="code">ruby.sh tables.rb
+            </span>
+            on
+            Unix)
+          </li>          
+        </ol>
+      </subsection>
+      <subsection name="How to Experiment">
+        <ol>
+          <li>
+            Run
+            <span class="code">ruby.cmd droptables.rb
+            </span>
+            (or
+            <span class="code">ruby.sh droptables.rb
+            </span>
+            on
+            Unix). (In order to restore the database, restart the database server.)
+          </li>        
+          <li>
+            Try modifying the Ruby in the *.rb files
+            to do different things. You also have access to a live database connection.
+          </li>
+        </ol>
+      </subsection>
+    </section>
+  </body>
+</document>

@@ -72,7 +72,7 @@
     
     <module>schemacrawler-docs</module>
     <module>schemacrawler-site</module>
-    <module>schemacrawler</module>
+    <module>schemacrawler-distrib</module>
   </modules>
   <dependencies>
     <dependency>
