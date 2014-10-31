@@ -2,9 +2,9 @@
 <project name="schemacrawler" default="make-distribution" basedir=".">
 
   <property name="distribution.assembly"
-            location="${SchemaCrawler.home}/schemacrawler/src/assembly" />
+            location="${SchemaCrawler.home}/schemacrawler-distrib/src/assembly" />
   <property name="distribution.target"
-            location="${SchemaCrawler.home}/schemacrawler/target" />
+            location="${SchemaCrawler.home}/schemacrawler-distrib/target" />
   <property name="schemacrawler.distribution.jar"
             value="${distribution.target}/schemacrawler-${SchemaCrawler.version}.jar" />
   <property name="schemacrawler.distribution.sources.jar"
@@ -54,7 +54,7 @@
         <attribute name="Product" value="SchemaCrawler" />
         <attribute name="Version" value="${SchemaCrawler.version}" />
         <attribute name="Author" value="Sualeh Fatehi sualeh@hotmail.com" />
-        <attribute name="Copyright" value="(c) 2003-2012, Sualeh Fatehi" />
+        <attribute name="Copyright" value="(c) 2003-2014, Sualeh Fatehi" />
         <attribute name="Main-Class" value="schemacrawler.Main" />
       </manifest>
       <zipfileset dir="${SchemaCrawler.home}/schemacrawler-api/target/classes" />
