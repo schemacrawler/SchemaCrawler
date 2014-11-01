@@ -17,3 +17,4 @@ workspace
 /schemacrawler-integrations/.settings/com.atlassian.clover.eclipse.core.prefs
 /schemacrawler-lint/.settings/com.atlassian.clover.eclipse.core.prefs
 /schemacrawler-tools/.settings/com.atlassian.clover.eclipse.core.prefs
+/schemacrawler-distrib/*.bnd
