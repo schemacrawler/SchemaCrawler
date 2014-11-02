@@ -7,12 +7,17 @@
   <parent>
     <groupId>us.fatehi</groupId>
     <artifactId>schemacrawler-parent</artifactId>
-    <version>11.01.01</version>
+    <version>11.01.02</version>
   </parent>
   <artifactId>schemacrawler-lint</artifactId>
   <packaging>jar</packaging>
   <name>SchemaCrawler Lint</name>
   <dependencies>
+    <dependency>
+      <groupId>us.fatehi</groupId>
+      <artifactId>schemacrawler</artifactId>
+      <version>${project.version}</version>
+    </dependency>  
     <dependency>
       <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-api</artifactId>
@@ -24,27 +29,9 @@
       <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-tools</artifactId>
       <version>${project.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>us.fatehi</groupId>
-      <artifactId>schemacrawler-tools</artifactId>
-      <version>${project.version}</version>
       <type>test-jar</type>
       <scope>test</scope>
-    </dependency>    
-    <dependency>
-      <groupId>us.fatehi</groupId>
-      <artifactId>schemacrawler-commandline</artifactId>
-      <version>${project.version}</version>
-      <scope>test</scope>
-    </dependency>   
-    <dependency>
-      <groupId>us.fatehi</groupId>
-      <artifactId>schemacrawler</artifactId>
-      <version>${project.version}</version>
-      <scope>provided</scope>
-    </dependency>     
+    </dependency> 
   </dependencies>
   <build>
     <plugins>

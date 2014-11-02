@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>us.fatehi</groupId>
 		<artifactId>schemacrawler-parent</artifactId>
-		<version>11.01.01</version>
+		<version>11.01.02</version>
 	</parent>
 	<artifactId>schemacrawler-sybaseiq</artifactId>
 	<packaging>jar</packaging>
@@ -21,7 +21,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>us.fatehi</groupId>
-			<artifactId>schemacrawler-integrations</artifactId>
+			<artifactId>schemacrawler</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
