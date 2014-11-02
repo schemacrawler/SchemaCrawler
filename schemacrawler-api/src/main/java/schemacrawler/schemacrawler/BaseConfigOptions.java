@@ -60,11 +60,14 @@ public abstract class BaseConfigOptions
                                     final String propertyName,
                                     final boolean defaultValue)
   {
-    if (config == null)
+    if (config == null || !config.hasValue(propertyName))
     {
       return defaultValue;
     }
-    return config.getBooleanValue(propertyName);
+    else
+    {
+      return config.getBooleanValue(propertyName);
+    }
   }
 
   protected boolean getBooleanValue(final String propertyName)

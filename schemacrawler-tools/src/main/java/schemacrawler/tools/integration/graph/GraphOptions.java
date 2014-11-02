@@ -36,6 +36,8 @@ public class GraphOptions
 
   private static final long serialVersionUID = -5850945398335496207L;
 
+  private static final String GRAPH_SHOW_PRIMARY_KEY_CARDINALITY = "schemacrawler.graph.show.primarykey.cardinality";
+  private static final String GRAPH_SHOW_FOREIGN_KEY_CARDINALITY = "schemacrawler.graph.show.foreignkey.cardinality";
   private static final String GRAPH_DETAILS = "schemacrawler.graph.details";
   private static final String GRAPH_GRAPHVIZ_OPTS = "schemacrawler.graph.graphviz_opts";
   private static final String SC_GRAPHVIZ_OPTS = "SC_GRAPHVIZ_OPTS";
@@ -52,6 +54,13 @@ public class GraphOptions
   public GraphOptions(final Config config)
   {
     super(config);
+
+    setShowPrimaryKeyCardinality(getBooleanValue(config,
+                                                 GRAPH_SHOW_PRIMARY_KEY_CARDINALITY,
+                                                 true));
+    setShowForeignKeyCardinality(getBooleanValue(config,
+                                                 GRAPH_SHOW_FOREIGN_KEY_CARDINALITY,
+                                                 true));
 
     setSchemaTextDetailType(getEnumValue(config,
                                          GRAPH_DETAILS,
@@ -73,6 +82,16 @@ public class GraphOptions
     return getEnumValue(GRAPH_DETAILS, SchemaTextDetailType.details);
   }
 
+  public boolean isShowForeignKeyCardinality()
+  {
+    return getBooleanValue(GRAPH_SHOW_FOREIGN_KEY_CARDINALITY);
+  }
+
+  public boolean isShowPrimaryKeyCardinality()
+  {
+    return getBooleanValue(GRAPH_SHOW_PRIMARY_KEY_CARDINALITY);
+  }
+
   public void setGraphVizOpts(final String graphVizOpts)
   {
     if (graphVizOpts == null)
@@ -89,6 +108,16 @@ public class GraphOptions
       throw new IllegalArgumentException("Cannot use null value in a setter");
     }
     setEnumValue(GRAPH_DETAILS, schemaTextDetailType);
+  }
+
+  public void setShowForeignKeyCardinality(final boolean showFkCardinality)
+  {
+    setBooleanValue(GRAPH_SHOW_FOREIGN_KEY_CARDINALITY, showFkCardinality);
+  }
+
+  public void setShowPrimaryKeyCardinality(final boolean showPkCardinality)
+  {
+    setBooleanValue(GRAPH_SHOW_PRIMARY_KEY_CARDINALITY, showPkCardinality);
   }
 
   private String readGraphVizOpts(final Config config)
