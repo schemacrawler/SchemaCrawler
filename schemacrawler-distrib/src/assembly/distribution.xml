@@ -12,10 +12,10 @@
   <property name="schemacrawler.distribution.javadoc.jar"
             value="${distribution.target}/schemacrawler-${SchemaCrawler.version}-javadoc.jar" />
   <property name="schemacrawler.api-tests.jar"
-  	        value="${SchemaCrawler.home}/schemacrawler-api/target/schemacrawler-api-${SchemaCrawler.version}-tests.jar" />	
+  	        value="${SchemaCrawler.home}/schemacrawler-api/target/schemacrawler-api-${SchemaCrawler.version}-tests.jar" />
   <property name="schemacrawler.lint.jar"
             value="${SchemaCrawler.home}/schemacrawler-lint/target/schemacrawler-lint-${SchemaCrawler.version}.jar" />
-			
+
   <available file="gpl-3.0.txt" property="available.gpl-3.0.txt"/>
   <available file="lgpl-3.0.txt" property="available.lgpl-3.0.txt"/>
   <available file="bnd-1.50.0.jar" property="available.bnd.jar"/>
@@ -34,22 +34,28 @@
 
 
   <target name="download-tools" depends="download-gpl,download-lgpl,download-bnd-tool"/>
-  
+
   <target name="download-gpl" unless="available.gpl-3.0.txt">
-    <get src="http://www.gnu.org/licenses/gpl-3.0.txt" dest="gpl-3.0.txt" usetimestamp="true" />    
+    <get src="http://www.gnu.org/licenses/gpl-3.0.txt" dest="gpl-3.0.txt" usetimestamp="true" />
   </target>
 
   <target name="download-lgpl" unless="available.lgpl-3.0.txt">
     <get src="http://www.gnu.org/licenses/lgpl-3.0.txt" dest="lgpl-3.0.txt" usetimestamp="true" />
   </target>
-  
+
   <target name="download-bnd-tool" unless="available.bnd.jar">
-    <get src="http://repo1.maven.org/maven2/biz/aQute/bnd/1.50.0/bnd-1.50.0.jar" dest="bnd-1.50.0.jar" usetimestamp="true" />    
-  </target>  
+    <get src="http://repo1.maven.org/maven2/biz/aQute/bnd/1.50.0/bnd-1.50.0.jar" dest="bnd-1.50.0.jar" usetimestamp="true" />
+  </target>
 
   <target name="make-super-jar">
-	  
-    <jar destfile="${schemacrawler.distribution.jar}" index="true">
+
+    <copy file="${SchemaCrawler.home}/schemacrawler/target/schemacrawler-${SchemaCrawler.version}-jar-with-dependencies.jar"
+          tofile="${schemacrawler.distribution.jar}" />
+
+    <jar destfile="${schemacrawler.distribution.jar}"
+      index="true"
+      update="true"
+      whenmanifestonly="create" >
       <manifest>
         <attribute name="Product" value="SchemaCrawler" />
         <attribute name="Version" value="${SchemaCrawler.version}" />
@@ -57,17 +63,13 @@
         <attribute name="Copyright" value="(c) 2000-2014, Sualeh Fatehi" />
         <attribute name="Main-Class" value="schemacrawler.Main" />
       </manifest>
-      <zipfileset dir="${SchemaCrawler.home}/schemacrawler-api/target/classes" />
-      <zipfileset dir="${SchemaCrawler.home}/schemacrawler-commandline/target/classes" />
-      <zipfileset dir="${SchemaCrawler.home}/schemacrawler-tools/target/classes" />
-      <zipfileset dir="${SchemaCrawler.home}/schemacrawler-integrations/target/classes" />
     </jar>
 
-    <taskdef 
+    <taskdef
 		resource="aQute/bnd/ant/taskdef.properties"
-		classpath="bnd-1.50.0.jar"/> 	
+		classpath="bnd-1.50.0.jar"/>
     <copy file="${distribution.assembly}/schemacrawler.bnd"
-          tofile="./schemacrawler-${SchemaCrawler.version}.bnd" />	
+          tofile="./schemacrawler-${SchemaCrawler.version}.bnd" />
     <bndwrap output="${distribution.target}">
         <fileset dir="${distribution.target}" includes="*.jar" />
     </bndwrap>
@@ -75,7 +77,7 @@
         <fileset dir="${distribution.target}" includes="*.bar" />
         <mapper type="glob" from="*.bar" to="*.jar" />
     </move>
-	  
+
     <jar destfile="${schemacrawler.distribution.sources.jar}" index="true">
       <manifest>
         <attribute name="Product" value="SchemaCrawler" />
@@ -136,13 +138,13 @@
       <fileset dir="${SchemaCrawler.home}/schemacrawler-site/src/site/resources">
         <include name="schemacrawler-linter-configs.xml" />
       </fileset>
-    </copy>   	
+    </copy>
     <copy todir="${examples.staging.dir}/spring">
       <fileset dir="${SchemaCrawler.home}/schemacrawler-integrations/src/test/resources">
         <include name="*.xml" />
       </fileset>
     </copy>
-  	
+
     <!-- Unzip the SchemaCrawler distribution for HyperSQL, for use in the examples -->
     <unzip
       src="${distribution.target}/schemacrawler-hsqldb-${SchemaCrawler.version}-distrib.zip"
@@ -151,7 +153,7 @@
           tofile="${examples.staging.dir}/_schemacrawler" />
     <copy file="${schemacrawler.api-tests.jar}"
           todir="${examples.staging.dir}/_schemacrawler/lib" />
-  	
+
   	<!-- 2. CREATE BINARY DISTRIBUTION FROM THE STAGED EXAMPLES -->
 
     <!-- Create zip file for distribution -->
@@ -161,14 +163,14 @@
                   prefix="${examples.stem}"
                   defaultexcludes="yes" />
     </zip>
-    
-    <move 
+
+    <move
       todir="${distribution.target}/${examples.stem}">
         <fileset dir="${examples.staging.dir}">
           <include name="**/*" />
-        </fileset>    	
+        </fileset>
     </move>
-  	
+
   </target>
 
 
@@ -227,13 +229,13 @@
                   prefix="${website.zip.prefix}/apidocs"
                   defaultexcludes="yes">
         <include name="**/*.*" />
-      </zipfileset> 	  
+      </zipfileset>
     </zip>
-	
-	<unzip 
-		src="${distribution.target}/${website.zip.prefix}.zip" 
+
+	<unzip
+		src="${distribution.target}/${website.zip.prefix}.zip"
 		dest="${distribution.target}"/>
-  
+
   </target>
 
   <target name="make-database-distributions">
@@ -267,7 +269,7 @@
 
 
   <macrodef name="create-db-distribution">
-  	
+
     <attribute name="database" />
   	<attribute name="license" />
 
@@ -309,7 +311,7 @@
         <zipfileset file="${schemacrawler.distribution.jar}"
                     prefix="schemacrawler-@{database}-${SchemaCrawler.version}/lib" />
         <zipfileset file="${schemacrawler.lint.jar}"
-                    prefix="schemacrawler-@{database}-${SchemaCrawler.version}/lib" />      	
+                    prefix="schemacrawler-@{database}-${SchemaCrawler.version}/lib" />
       </zip>
 
       <delete dir="${distribution.target}/@{database}-distrib" />

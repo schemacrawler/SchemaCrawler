@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="var" path="M2_REPO/com/google/code/gson/gson/2.2.4/gson-2.2.4.jar" sourcepath="M2_REPO/com/google/code/gson/gson/2.2.4/gson-2.2.4-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/C:/Users/Sualeh%20Fatehi/.m2/repository/com/google/code/gson/gson/2.2.4/gson-2.2.4-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="M2_REPO/com/google/guava/guava-annotations/r03/guava-annotations-r03.jar" sourcepath="M2_REPO/com/google/guava/guava-annotations/r03/guava-annotations-r03-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/C:/Users/Sualeh%20Fatehi/.m2/repository/com/google/guava/guava-annotations/r03/guava-annotations-r03-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="M2_REPO/com/google/guava/guava-base/r03/guava-base-r03.jar" sourcepath="M2_REPO/com/google/guava/guava-base/r03/guava-base-r03-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/C:/Users/Sualeh%20Fatehi/.m2/repository/com/google/guava/guava-base/r03/guava-base-r03-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="M2_REPO/com/google/guava/guava-collections/r03/guava-collections-r03.jar" sourcepath="M2_REPO/com/google/guava/guava-collections/r03/guava-collections-r03-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/C:/Users/Sualeh%20Fatehi/.m2/repository/com/google/guava/guava-collections/r03/guava-collections-r03-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="M2_REPO/com/google/guava/guava-primitives/r03/guava-primitives-r03.jar" sourcepath="M2_REPO/com/google/guava/guava-primitives/r03/guava-primitives-r03-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/C:/Users/Sualeh%20Fatehi/.m2/repository/com/google/guava/guava-primitives/r03/guava-primitives-r03-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="M2_REPO/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar" sourcepath="M2_REPO/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/C:/Users/Sualeh%20Fatehi/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="M2_REPO/org/hsqldb/hsqldb/2.3.2/hsqldb-2.3.2-jdk6debug.jar"/>
+	<classpathentry kind="var" path="M2_REPO/junit/junit/4.11/junit-4.11.jar" sourcepath="M2_REPO/junit/junit/4.11/junit-4.11-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/C:/Users/Sualeh%20Fatehi/.m2/repository/junit/junit/4.11/junit-4.11-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="M2_REPO/us/fatehi/schemacrawler-api/11.01.02/schemacrawler-api-11.01.02.jar" sourcepath="M2_REPO/us/fatehi/schemacrawler-api/11.01.02/schemacrawler-api-11.01.02-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/C:/Users/Sualeh%20Fatehi/.m2/repository/us/fatehi/schemacrawler-api/11.01.02/schemacrawler-api-11.01.02-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="M2_REPO/us/fatehi/schemacrawler-commandline/11.01.02/schemacrawler-commandline-11.01.02.jar" sourcepath="M2_REPO/us/fatehi/schemacrawler-commandline/11.01.02/schemacrawler-commandline-11.01.02-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/C:/Users/Sualeh%20Fatehi/.m2/repository/us/fatehi/schemacrawler-commandline/11.01.02/schemacrawler-commandline-11.01.02-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="M2_REPO/us/fatehi/schemacrawler-integrations/11.01.02/schemacrawler-integrations-11.01.02.jar" sourcepath="M2_REPO/us/fatehi/schemacrawler-integrations/11.01.02/schemacrawler-integrations-11.01.02-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/C:/Users/Sualeh%20Fatehi/.m2/repository/us/fatehi/schemacrawler-integrations/11.01.02/schemacrawler-integrations-11.01.02-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="M2_REPO/us/fatehi/schemacrawler-tools/11.01.02/schemacrawler-tools-11.01.02.jar" sourcepath="M2_REPO/us/fatehi/schemacrawler-tools/11.01.02/schemacrawler-tools-11.01.02-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/C:/Users/Sualeh%20Fatehi/.m2/repository/us/fatehi/schemacrawler-tools/11.01.02/schemacrawler-tools-11.01.02-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="M2_REPO/xmlunit/xmlunit/1.5/xmlunit-1.5.jar" sourcepath="M2_REPO/xmlunit/xmlunit/1.5/xmlunit-1.5-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/C:/Users/Sualeh%20Fatehi/.m2/repository/xmlunit/xmlunit/1.5/xmlunit-1.5-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" output="target/classes" path="src/main/java">
+		<attributes>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" output="target/test-classes" path="src/test/java">
+		<attributes>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="output" path="target/classes"/>
+</classpath>
