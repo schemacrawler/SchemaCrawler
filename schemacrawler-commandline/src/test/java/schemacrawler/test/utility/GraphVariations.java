@@ -208,6 +208,7 @@ public class GraphVariations
     }
 
     Main.main(argsList.toArray(new String[argsList.size()]));
+    System.out.println(outputFile.getAbsolutePath());
   }
 
 }

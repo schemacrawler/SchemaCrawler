@@ -46,8 +46,9 @@ import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.analysis.associations.CatalogWithAssociations;
-import schemacrawler.tools.options.TextOutputFormat;
+import schemacrawler.tools.integration.graph.GraphOptions;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.base.BaseDotFormatter;
 import schemacrawler.tools.text.utility.Alignment;
 import schemacrawler.tools.text.utility.TableRow;
@@ -372,8 +373,27 @@ public final class SchemaDotFormatter
 
     final Connectivity connectivity = getConnectivity(foreignKeyColumn,
                                                       isForeignKeyUnique);
-    final String pkSymbol = "teetee";
-    final String fkSymbol = arrowhead(connectivity);
+    final GraphOptions graphOptions = (GraphOptions) options;
+    final String pkSymbol;
+    if (graphOptions.isShowPrimaryKeyCardinality())
+    {
+      pkSymbol = "teetee";
+    }
+    else
+    {
+      pkSymbol = "none";
+    }
+
+    final String fkSymbol;
+    if (graphOptions.isShowForeignKeyCardinality())
+    {
+      fkSymbol = arrowhead(connectivity);
+    }
+    else
+    {
+      fkSymbol = "none";
+    }
+
     final String style;
     if (isBlank(associationName))
     {
