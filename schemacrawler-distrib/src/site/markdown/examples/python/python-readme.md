@@ -9,8 +9,8 @@ example shows how to script with Python.
 2. Make sure that java is on your PATH
 3. Start the database server by running the StartDatabaseServer script from the distribution directory 
 4. Start a command shell in the python example directory 
-5. Run python_setup.cmd (or python_setup.sh on Unix) to download and setup Python scripting support 
-6. Run python.cmd tables.py  (or python.sh tables.py  on Unix) 
+5. Run `python_setup.cmd` (or `python_setup.sh` on Unix) to download and setup Python scripting support 
+6. Run `python.cmd tables.py` (or `python.sh tables.py` on Unix) 
 
 ## How to Experiment
 1. Run `python.cmd droptables.py` (or `python.sh droptables.py` on Unix). 

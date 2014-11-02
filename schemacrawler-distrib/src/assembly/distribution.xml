@@ -141,7 +141,7 @@
     </copy>
     <copy todir="${examples.staging.dir}/spring">
       <fileset dir="${SchemaCrawler.home}/schemacrawler-integrations/src/test/resources">
-        <include name="*.xml" />
+        <include name="context.xml" />
       </fileset>
     </copy>
 
