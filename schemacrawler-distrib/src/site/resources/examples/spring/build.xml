@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<project name="Spring Integration"
+         default="spring">
+
+  <description>SchemaCrawler integration with the Spring Framework.</description>
+
+  <target name="spring">
+
+    <!-- Step 1.
+      Define the ant tasks (macros) that come with SchemaCrawler
+    -->
+    <typedef resource="schemacrawler-integrations-antlib.xml"
+             classpath="../_schemacrawler/lib/schemacrawler-11.01.02.jar" />
+
+    <!-- Step 2.
+      Define the classpath to the database driver, and Spring
+    -->
+    <path id="schemacrawler-classpath">
+      <fileset dir="../_schemacrawler/lib">
+        <include name="*.jar" />
+      </fileset>
+      <fileset dir="./lib">
+        <include name="*.jar" />
+      </fileset>
+    </path>
+
+    <!-- Step 3.
+      Use an ant task that uses the <schemacrawler-spring> macro
+    -->
+    <schemacrawler-spring schemacrawler-classpath="schemacrawler-classpath"
+                          context-file="context.xml"
+                          executable="executableForSchema"
+                          datasource="datasource" />
+  	
+    <echo message="Created output in scOutput.txt"/>
+  	
+  </target>
+
+</project>
