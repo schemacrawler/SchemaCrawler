@@ -95,8 +95,7 @@ public final class VelocityRenderer
 
     // Set up Velocity resource loaders for loading from the
     // classpath, as well as the file system
-    // http://jakarta.apache.org/velocity/docs/developer-guide.html#
-    // Configuring%20Resource%20Loaders
+    // http://velocity.apache.org/engine/releases/velocity-1.7/developer-guide.html#Configuring_Resource_Loaders
     final String fileResourceLoader = "file";
     final String classpathResourceLoader = "classpath";
     final Properties p = new Properties();
