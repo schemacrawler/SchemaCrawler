@@ -1,17 +1,15 @@
 <?xml version="1.0"?>
-<project
-  name="Velocity"
-  default="velocity">
+<project name="Python Integration"
+         default="python">
 
-  <description>Velocity - Integration of SchemaCrawler with Apache Velocity.</description>
-  <property environment="env"/>
+  <description>SchemaCrawler integration with Python.</description>
 
   <target name="dependencies_download">
 
     <!--
       Set up Apache Ivy to download dependencies
     -->
-    <property name="ivy.install.version" value="2.1.0" />
+    <property name="ivy.install.version" value="2.4.0-rc1" />
     <property name="ivy.jar.dir" location=".." />
     <property name="ivy.jar.file" location="${ivy.jar.dir}/ivy.jar" />
     <get src="http://repo1.maven.org/maven2/org/apache/ivy/ivy/${ivy.install.version}/ivy-${ivy.install.version}.jar"
@@ -28,6 +26,6 @@
 
   </target>
 
-  <target name="velocity" depends="dependencies_download" />
-
+  <target name="python" depends="dependencies_download"/>
+  
 </project>

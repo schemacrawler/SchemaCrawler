@@ -1,1 +1,1 @@
-ant -f python.xml $*
+ant -f python_setup.xml $*
