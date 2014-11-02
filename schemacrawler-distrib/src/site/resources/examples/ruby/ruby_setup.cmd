@@ -1,1 +1,1 @@
-@ant -f ruby.xml %*
+@ant -f ruby_setup.xml %*

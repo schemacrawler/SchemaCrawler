@@ -1,15 +1,17 @@
 <?xml version="1.0"?>
-<project name="Spring Integration"
-         default="spring">
+<project
+  name="Velocity"
+  default="velocity">
 
-  <description>SchemaCrawler integration with the Spring Framework.</description>
+  <description>Velocity - Integration of SchemaCrawler with Apache Velocity.</description>
+  <property environment="env"/>
 
   <target name="dependencies_download">
 
     <!--
       Set up Apache Ivy to download dependencies
     -->
-    <property name="ivy.install.version" value="2.1.0" />
+    <property name="ivy.install.version" value="2.4.0-rc1" />
     <property name="ivy.jar.dir" location=".." />
     <property name="ivy.jar.file" location="${ivy.jar.dir}/ivy.jar" />
     <get src="http://repo1.maven.org/maven2/org/apache/ivy/ivy/${ivy.install.version}/ivy-${ivy.install.version}.jar"
@@ -26,7 +28,6 @@
 
   </target>
 
-
-  <target name="spring" depends="dependencies_download" />
+  <target name="velocity" depends="dependencies_download" />
 
 </project>

@@ -1,1 +1,1 @@
-ant -f spring.xml $*
+ant -f spring_setup.xml $*

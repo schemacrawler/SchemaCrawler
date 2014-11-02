@@ -1,15 +1,15 @@
 <?xml version="1.0"?>
-<project name="Groovy Integration"
-         default="groovy">
+<project name="Spring Integration"
+         default="spring">
 
-  <description>SchemaCrawler integration with Groovy.</description>
+  <description>SchemaCrawler integration with the Spring Framework.</description>
 
   <target name="dependencies_download">
 
     <!--
       Set up Apache Ivy to download dependencies
     -->
-    <property name="ivy.install.version" value="2.2.0" />
+    <property name="ivy.install.version" value="2.4.0-rc1" />
     <property name="ivy.jar.dir" location=".." />
     <property name="ivy.jar.file" location="${ivy.jar.dir}/ivy.jar" />
     <get src="http://repo1.maven.org/maven2/org/apache/ivy/ivy/${ivy.install.version}/ivy-${ivy.install.version}.jar"
@@ -26,6 +26,7 @@
 
   </target>
 
-  <target name="groovy" depends="dependencies_download" />
-  
+
+  <target name="spring" depends="dependencies_download" />
+
 </project>
