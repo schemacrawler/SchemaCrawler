@@ -11,6 +11,7 @@ any of the SchemaCrawler functionality.
 4. Start a command shell in the spring example directory 
 5. Run `spring_setup.cmd` (or `spring_setup.sh` on Unix) to download and setup Spring Framework support 
 6. Run `spring.cmd` (or `spring.sh` on Unix) to see Spring integration 
+7. Check the output in scOutput.txt
 
 ## How to Experiment
 1. Study the Spring beans in `context.xml` , and modify the ant task in `spring.xml` to use different executable. 

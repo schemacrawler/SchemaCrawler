@@ -1,1 +1,1 @@
-@ant -f velocity.xml %*
+@ant -f velocity_setup.xml %*
