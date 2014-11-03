@@ -148,6 +148,21 @@ public class GraphVariations
     run(args, config, new File(directory, currentMethodName() + ".png"));
   }
 
+  @Test
+  public void diagram_8_no_cardinality()
+    throws Exception
+  {
+    final Map<String, String> args = new HashMap<String, String>();
+    args.put("infolevel", "standard");
+    args.put("portablenames", "true");
+
+    final Map<String, String> config = new HashMap<>();
+    config.put("schemacrawler.graph.show.primarykey.cardinality", "false");
+    config.put("schemacrawler.graph.show.foreignkey.cardinality", "false");
+
+    run(args, config, new File(directory, currentMethodName() + ".png"));
+  }
+
   @Before
   public void setupDirectory()
     throws IOException
