@@ -33,7 +33,7 @@ schemacrawler.format.show_unqualified_names=true
 
 For more details, see the diagram example in the
 [SchemaCrawler examples](https://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20Examples/)
-ownload.
+download.
 
 <a href="images/diagram.png" data-toggle="lightbox" title="SchemaCrawler database diagram">
 <img src="images/diagram.png" width="200" />
@@ -44,30 +44,37 @@ ownload.
 SchemaCrawler offers several options to change what you see on the database diagram. Here are a few variations:
 
 - Suppress schema names and foreign key names, using the `-portablenames` command line option.
+<br />
 <a href="images/diagram_2_portablenames.png" data-toggle="lightbox" title="SchemaCrawler database diagram">
 <img src="images/diagram_2_portablenames.png" width="200" />
 </a>
 - Show significant columns, such as primary and foreign key columns, and columns that are part of unique indexes. Use the `-infolevel=standard -command=brief `command line option.
+<br />
 <a href="images/diagram_3_important_columns.png" data-toggle="lightbox" title="SchemaCrawler database diagram">
 <img src="images/diagram_3_important_columns.png" width="200" />
 </a>
 - Show column ordinals, by setting configuration option `schemacrawler.format.show_ordinal_numbers=true` in the configuration file.
+<br />
 <a href="images/diagram_4_ordinals.png" data-toggle="lightbox" title="SchemaCrawler database diagram">
 <img src="images/diagram_4_ordinals.png" width="200" />
 </a>
 - Display columns in alphabetical order, using the `-sortcolumns` command line option.
+<br />
 <a href="images/diagram_5_alphabetical.png" data-toggle="lightbox" title="SchemaCrawler database diagram">
 <img src="images/diagram_5_alphabetical.png" width="200" />
 </a>
 - Grep for columns, and also display outgoing relationships, using `-grepcolumns=.*\\.BOOKS\\..*\\.ID` as a command line option.
+<br />
 <a href="images/diagram_6_grep.png" data-toggle="lightbox" title="SchemaCrawler database diagram">
 <img src="images/diagram_6_grep.png" width="200" />
 </a>
 - Grep for columns, but only show matching tables, using -grepcolumns=.*\\.BOOKS\\..*\\.ID and -only-matching as command line options.
+<br />
 <a href="images/diagram_7_grep_onlymatching.png" data-toggle="lightbox" title="SchemaCrawler database diagram">
 <img src="images/diagram_7_grep_onlymatching.png" width="200" />
 </a>
-- Do not show cardinality on the diagrams, to avoid clutter.
+- Do not show cardinality on the diagrams, to avoid clutter. Set configuration option `schemacrawler.graph.show.primarykey.cardinality=false` and `schemacrawler.graph.show.foreignkey.cardinality=false` in the configuration file.
+<br />
 <a href="images/diagram_8_no_cardinality.png" data-toggle="lightbox" title="SchemaCrawler database diagram">
 <img src="images/diagram_8_no_cardinality.png" width="200" />
 </a>
