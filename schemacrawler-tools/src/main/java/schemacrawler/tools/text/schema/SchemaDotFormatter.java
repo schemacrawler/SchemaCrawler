@@ -285,7 +285,7 @@ public final class SchemaDotFormatter
     switch (connectivity)
     {
       case unknown:
-        return "vee";
+        return "box";
       case zero_one:
         return "teeodot";
       case zero_many:
@@ -293,7 +293,7 @@ public final class SchemaDotFormatter
       case one_one:
         return "teetee";
       default:
-        return "vee";
+        return "box";
     }
   }
 
