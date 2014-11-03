@@ -72,6 +72,10 @@
     <module>schemacrawler-sqlserver</module>
     <module>schemacrawler-sybaseiq</module>
     
+    <module>schemacrawler-archetype-maven-project</module>
+    <module>schemacrawler-archetype-plugin-command</module>
+    <module>schemacrawler-archetype-plugin-lint</module>
+    
     <module>schemacrawler-docs</module>
     <module>schemacrawler-site</module>
     <module>schemacrawler-distrib</module>
