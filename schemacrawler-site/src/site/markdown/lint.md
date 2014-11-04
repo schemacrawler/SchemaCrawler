@@ -1,7 +1,5 @@
 # SchemaCrawler Lint
 
-## SchemaCrawler Lint
-
 SchemaCrawler can analyze and
 [lint](http://en.wikipedia.org/wiki/Lint_\(software\)) your database to find
 potential issues. SchemaCrawler Lint can be run using the 
