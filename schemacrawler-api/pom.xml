@@ -7,7 +7,7 @@
   <parent>
     <artifactId>schemacrawler-parent</artifactId>
     <groupId>us.fatehi</groupId>
-    <version>11.01.02</version>
+    <version>11.02.01</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>schemacrawler-api</artifactId>

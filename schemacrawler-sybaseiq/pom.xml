@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>us.fatehi</groupId>
 		<artifactId>schemacrawler-parent</artifactId>
-		<version>11.01.02</version>
+		<version>11.02.01</version>
 	</parent>
 	<artifactId>schemacrawler-sybaseiq</artifactId>
 	<packaging>jar</packaging>
