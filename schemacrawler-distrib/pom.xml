@@ -120,33 +120,22 @@
         </dependencies>
       </plugin>
       <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>build-helper-maven-plugin</artifactId>
-        <version>1.8</version>
-        <executions>
-          <execution>
-            <id>attach-artifacts</id>
-            <phase>package</phase>
-            <goals>
-              <goal>attach-artifact</goal>
-            </goals>
-            <configuration>
-              <artifacts>
-                <artifact>
-                  <file>target/schemacrawler-${project.version}-sources.jar</file>
-                  <type>jar</type>
-                  <classifier>sources</classifier>
-                </artifact>
-                <artifact>
-                  <file>target/schemacrawler-${project.version}-javadoc.jar</file>
-                  <type>jar</type>
-                  <classifier>javadoc</classifier>
-                </artifact>
-              </artifacts>
-            </configuration>
-          </execution>
-        </executions>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-install-plugin</artifactId>
+        <version>2.5.2</version>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+      </plugin>      
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <version>2.8.1</version>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
       </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-install-plugin</artifactId>
@@ -171,11 +160,11 @@
             </goals>
           </execution>
         </executions>
-      </plugin>
+      </plugin>        
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-gpg-plugin</artifactId>
-        <version>1.1</version>
+        <version>1.5</version>
         <configuration>
           <useAgent>true</useAgent>
           <skip>${skip.signing.artifacts}</skip>
@@ -188,6 +177,8 @@
               <file>target/schemacrawler-${project.version}.jar</file>
               <generatePom>false</generatePom>
               <pomFile>src/assembly/schemacrawler.pom</pomFile>
+              <sources>target/schemacrawler-${project.version}-sources.jar</sources>
+              <javadoc>target/schemacrawler-${project.version}-javadoc.jar</javadoc>              
               <repositoryId>sonatype-nexus</repositoryId>
               <repositoryLayout>default</repositoryLayout>
               <url>http://oss.sonatype.org/service/local/staging/deploy/maven2</url>
@@ -201,7 +192,7 @@
             </goals>
           </execution>
         </executions>
-      </plugin>
+      </plugin> 
     </plugins>
   </build>
 </project>
