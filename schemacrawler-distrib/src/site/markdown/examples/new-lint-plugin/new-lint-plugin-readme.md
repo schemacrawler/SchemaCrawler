@@ -14,6 +14,7 @@ You can use these archetypes to very quickly create a new SchemaCrawler lint plu
 5. Check the output your new Apache Maven project
 6. Build your lint jar file, using `mvn package`
 7. Copy the your lint jar file into the SchemaCrawler lib directory
+8. When you run the lint command, your new linter will be included
 
 ## How to Experiment
 1. Modify the example code, and get it doing what you need it to do. 
