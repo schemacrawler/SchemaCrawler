@@ -5,7 +5,6 @@
   <artifactId>${artifactId}</artifactId>
   <version>${version}</version>
   <name>New Project Using SchemaCrawler</name>
-  <url>http://www.example.com</url>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
