@@ -1,4 +1,4 @@
-# SchemaCrawler HTML Output
+# SchemaCrawler Output
 
 SchemaCrawler generates clean HTML and text output. You can filter out tables, views, columns, stored procedure and functions based on regular expressions, using grep functionality.
 

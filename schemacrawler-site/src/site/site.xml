@@ -66,11 +66,12 @@
       <item name="Support SchemaCrawler" href="http://sourceforge.net/p/schemacrawler/donate/" />
     </menu>
     <menu name="Special Features">
-      <item name="HTML Output" href="output.html" />
-      <item name="SchemaCrawler Grep" href="schemacrawler_grep.html" />
-      <item name="Database Diagramming" href="diagramming.html" />
-      <item name="Database Scripting" href="scripting.html" />
-      <item name="SchemaCrawler Lint" href="lint.html" />
+      <item name="Text Output" href="output.html" />
+      <item name="Grep" href="schemacrawler_grep.html" />
+      <item name="Diagramming" href="diagramming.html" />
+      <item name="Scripting" href="scripting.html" />
+      <item name="Lint" href="lint.html" />
+      <item name="Plugins" href="plugins.html" />
       <item name="Using INFORMATION_SCHEMA Views" href="INFORMATION_SCHEMA.html" />
     </menu>
     <menu name="Resources">
