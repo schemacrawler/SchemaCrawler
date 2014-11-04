@@ -36,24 +36,24 @@
 			<attribute name="javadoc_location" value="jar:file:/C:/Users/Sualeh%20Fatehi/.m2/repository/junit/junit/4.11/junit-4.11-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="var" path="M2_REPO/us/fatehi/schemacrawler-api/11.01.02/schemacrawler-api-11.01.02.jar" sourcepath="M2_REPO/us/fatehi/schemacrawler-api/11.01.02/schemacrawler-api-11.01.02-sources.jar">
+	<classpathentry kind="var" path="M2_REPO/us/fatehi/schemacrawler-api/11.02.01/schemacrawler-api-11.02.01.jar" sourcepath="M2_REPO/us/fatehi/schemacrawler-api/11.02.01/schemacrawler-api-11.02.01-sources.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:file:/C:/Users/Sualeh%20Fatehi/.m2/repository/us/fatehi/schemacrawler-api/11.01.02/schemacrawler-api-11.01.02-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:file:/C:/Users/Sualeh%20Fatehi/.m2/repository/us/fatehi/schemacrawler-api/11.02.01/schemacrawler-api-11.02.01-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="var" path="M2_REPO/us/fatehi/schemacrawler-commandline/11.01.02/schemacrawler-commandline-11.01.02.jar" sourcepath="M2_REPO/us/fatehi/schemacrawler-commandline/11.01.02/schemacrawler-commandline-11.01.02-sources.jar">
+	<classpathentry kind="var" path="M2_REPO/us/fatehi/schemacrawler-commandline/11.02.01/schemacrawler-commandline-11.02.01.jar" sourcepath="M2_REPO/us/fatehi/schemacrawler-commandline/11.02.01/schemacrawler-commandline-11.02.01-sources.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:file:/C:/Users/Sualeh%20Fatehi/.m2/repository/us/fatehi/schemacrawler-commandline/11.01.02/schemacrawler-commandline-11.01.02-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:file:/C:/Users/Sualeh%20Fatehi/.m2/repository/us/fatehi/schemacrawler-commandline/11.02.01/schemacrawler-commandline-11.02.01-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="var" path="M2_REPO/us/fatehi/schemacrawler-integrations/11.01.02/schemacrawler-integrations-11.01.02.jar" sourcepath="M2_REPO/us/fatehi/schemacrawler-integrations/11.01.02/schemacrawler-integrations-11.01.02-sources.jar">
+	<classpathentry kind="var" path="M2_REPO/us/fatehi/schemacrawler-integrations/11.02.01/schemacrawler-integrations-11.02.01.jar" sourcepath="M2_REPO/us/fatehi/schemacrawler-integrations/11.02.01/schemacrawler-integrations-11.02.01-sources.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:file:/C:/Users/Sualeh%20Fatehi/.m2/repository/us/fatehi/schemacrawler-integrations/11.01.02/schemacrawler-integrations-11.01.02-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:file:/C:/Users/Sualeh%20Fatehi/.m2/repository/us/fatehi/schemacrawler-integrations/11.02.01/schemacrawler-integrations-11.02.01-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="var" path="M2_REPO/us/fatehi/schemacrawler-tools/11.01.02/schemacrawler-tools-11.01.02.jar" sourcepath="M2_REPO/us/fatehi/schemacrawler-tools/11.01.02/schemacrawler-tools-11.01.02-sources.jar">
+	<classpathentry kind="var" path="M2_REPO/us/fatehi/schemacrawler-tools/11.02.01/schemacrawler-tools-11.02.01.jar" sourcepath="M2_REPO/us/fatehi/schemacrawler-tools/11.02.01/schemacrawler-tools-11.02.01-sources.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:file:/C:/Users/Sualeh%20Fatehi/.m2/repository/us/fatehi/schemacrawler-tools/11.01.02/schemacrawler-tools-11.01.02-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:file:/C:/Users/Sualeh%20Fatehi/.m2/repository/us/fatehi/schemacrawler-tools/11.02.01/schemacrawler-tools-11.02.01-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="var" path="M2_REPO/xmlunit/xmlunit/1.5/xmlunit-1.5.jar" sourcepath="M2_REPO/xmlunit/xmlunit/1.5/xmlunit-1.5-sources.jar">
