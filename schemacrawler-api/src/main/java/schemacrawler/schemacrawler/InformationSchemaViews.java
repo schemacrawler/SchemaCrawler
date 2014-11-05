@@ -353,7 +353,7 @@ public final class InformationSchemaViews
    * @param informationSchemaViewsSql
    *        Map of information schema view definitions.
    */
-  public void loadResource(final String classpath)
+  public void loadResourceFolder(final String classpath)
   {
     for (final InformationSchemaKey key: InformationSchemaKey.values())
     {
