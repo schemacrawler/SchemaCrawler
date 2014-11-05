@@ -12,7 +12,7 @@
   <property name="schemacrawler.distribution.javadoc.jar"
             value="${distribution.target}/schemacrawler-${SchemaCrawler.version}-javadoc.jar" />
   <property name="schemacrawler.api-tests.jar"
-  	        value="${SchemaCrawler.home}/schemacrawler-api/target/schemacrawler-api-${SchemaCrawler.version}-tests.jar" />
+            value="${SchemaCrawler.home}/schemacrawler-api/target/schemacrawler-api-${SchemaCrawler.version}-tests.jar" />
   <property name="schemacrawler.lint.jar"
             value="${SchemaCrawler.home}/schemacrawler-lint/target/schemacrawler-lint-${SchemaCrawler.version}.jar" />
 
@@ -66,8 +66,8 @@
     </jar>
 
     <taskdef
-		resource="aQute/bnd/ant/taskdef.properties"
-		classpath="bnd-1.50.0.jar"/>
+    resource="aQute/bnd/ant/taskdef.properties"
+    classpath="bnd-1.50.0.jar"/>
     <copy file="${distribution.assembly}/schemacrawler.bnd"
           tofile="./schemacrawler-${SchemaCrawler.version}.bnd" />
     <bndwrap output="${distribution.target}">
@@ -106,7 +106,7 @@
               location="${distribution.target}/site/examples" />
     <mkdir dir="${examples.staging.dir}" />
 
-  	<!-- 1. STAGE FOR EXAMPLES -->
+    <!-- 1. STAGE FOR EXAMPLES -->
 
     <!-- Copy licenses -->
     <copy file="lgpl-3.0.txt"
@@ -154,7 +154,7 @@
     <copy file="${schemacrawler.api-tests.jar}"
           todir="${examples.staging.dir}/_schemacrawler/lib" />
 
-  	<!-- 2. CREATE BINARY DISTRIBUTION FROM THE STAGED EXAMPLES -->
+    <!-- 2. CREATE BINARY DISTRIBUTION FROM THE STAGED EXAMPLES -->
 
     <!-- Create zip file for distribution -->
     <delete file="${distribution.target}/${examples.stem}.zip" />
@@ -191,7 +191,7 @@
         <exclude name="differencer/**/*" />
         <exclude name="**/.*/*" />
         <exclude name="**/*.jar" />
-      	<exclude name="**/*.launch" />
+        <exclude name="**/*.launch" />
         <exclude name="**/*.lob" />
         <exclude name="**/*.log" />
         <exclude name="**/*.lck" />
@@ -200,8 +200,8 @@
         <exclude name="*.html" />
         <exclude name="workspace/**" />
         <exclude name="*.epf" />
-		<exclude name=".git" />
-		<exclude name="**/.svn" />
+    <exclude name=".git" />
+    <exclude name="**/.svn" />
       </zipfileset>
     </zip>
 
@@ -232,17 +232,20 @@
       </zipfileset>
     </zip>
 
-	<unzip
-		src="${distribution.target}/${website.zip.prefix}.zip"
-		dest="${distribution.target}"/>
+  <unzip
+    src="${distribution.target}/${website.zip.prefix}.zip"
+    dest="${distribution.target}"/>
+  <move
+    file="${distribution.target}/${website.zip.prefix}"
+    tofile="${distribution.target}/website"/>
 
   </target>
 
   <target name="make-database-distributions">
 
-  	<create-db-distribution database="offline" license="lgpl-3.0" />
-	<create-db-distribution database="generic" license="lgpl-3.0" />
-  	<create-db-distribution database="db2" license="lgpl-3.0" />
+    <create-db-distribution database="offline" license="lgpl-3.0" />
+    <create-db-distribution database="generic" license="lgpl-3.0" />
+    <create-db-distribution database="db2" license="lgpl-3.0" />
     <create-db-distribution database="derby" license="gpl-3.0" />
     <create-db-distribution database="hsqldb" license="gpl-3.0" />
     <create-db-distribution database="mysql" license="gpl-3.0" />
@@ -250,7 +253,7 @@
     <create-db-distribution database="postgresql" license="gpl-3.0" />
     <create-db-distribution database="sqlserver" license="gpl-3.0" />
     <create-db-distribution database="sqlite" license="gpl-3.0" />
-  	<create-db-distribution database="sybaseiq" license="lgpl-3.0" />
+    <create-db-distribution database="sybaseiq" license="lgpl-3.0" />
 
   </target>
 
@@ -271,7 +274,7 @@
   <macrodef name="create-db-distribution">
 
     <attribute name="database" />
-  	<attribute name="license" />
+    <attribute name="license" />
 
     <sequential>
 
