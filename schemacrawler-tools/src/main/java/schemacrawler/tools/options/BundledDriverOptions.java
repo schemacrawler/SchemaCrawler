@@ -54,23 +54,23 @@ public abstract class BundledDriverOptions
 
   private final HelpOptions helpOptions;
   private final String configResource;
-  private final String informationSchemaViewsResource;
+  private final String informationSchemaViewsResourceFolder;
 
   protected BundledDriverOptions()
   {
     helpOptions = new HelpOptions();
     configResource = null;
-    informationSchemaViewsResource = null;
+    informationSchemaViewsResourceFolder = null;
   }
 
   protected BundledDriverOptions(final String title,
                                  final String helpResource,
                                  final String configResource,
-                                 final String informationSchemaViewsResource)
+                                 final String informationSchemaViewsResourceFolder)
   {
     helpOptions = new HelpOptions(title, helpResource);
     this.configResource = configResource;
-    this.informationSchemaViewsResource = informationSchemaViewsResource;
+    this.informationSchemaViewsResourceFolder = informationSchemaViewsResourceFolder;
   }
 
   public final Config getConfig()
@@ -78,7 +78,7 @@ public abstract class BundledDriverOptions
     final Config config = Config.loadResource(configResource);
 
     InformationSchemaViews informationSchemaViews = new InformationSchemaViews();
-    informationSchemaViews.loadResource(informationSchemaViewsResource);
+    informationSchemaViews.loadResourceFolder(informationSchemaViewsResourceFolder);
     config.putAll(informationSchemaViews.toConfig());
 
     return config;
