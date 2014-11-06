@@ -17,21 +17,34 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.tools.sybaseiq;
+package schemacrawler.tools.sqlserver;
 
 
-public final class BundledDriverOptions
-  extends schemacrawler.tools.options.BundledDriverOptions
+import schemacrawler.tools.options.DatabaseConnector;
+
+public final class SqlServerDatabaseConnector
+  extends DatabaseConnector
 {
 
-  private static final long serialVersionUID = 788422181303398180L;
+  private static final long serialVersionUID = -7476413718092201219L;
 
-  public BundledDriverOptions()
+  public SqlServerDatabaseConnector()
   {
-    super("SchemaCrawler for Sybase IQ",
-          "/help/Connections.sybaseiq.txt",
-          "/schemacrawler-sybaseiq.config.properties",
-          null);
+    super("/help/Connections.sqlserver.txt",
+          "/schemacrawler-sqlserver.config.properties",
+          "/sqlserver.information_schema");
+  }
+
+  @Override
+  public String getDatabaseSystemIdentifier()
+  {
+    return "sqlserver";
+  }
+
+  @Override
+  public String getDatabaseSystemName()
+  {
+    return "Microsoft SQL Server";
   }
 
 }

@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -17,21 +17,34 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.tools.sqlserver;
+package schemacrawler.tools.sqlite;
 
 
-public final class BundledDriverOptions
-  extends schemacrawler.tools.options.BundledDriverOptions
+import schemacrawler.tools.options.DatabaseConnector;
+
+public final class SQLiteDatabaseConnector
+  extends DatabaseConnector
 {
 
-  private static final long serialVersionUID = -7476413718092201219L;
+  private static final long serialVersionUID = 7181719520243423090L;
 
-  public BundledDriverOptions()
+  public SQLiteDatabaseConnector()
   {
-    super("SchemaCrawler for Microsoft SQL Server",
-          "/help/Connections.sqlserver.txt",
-          "/schemacrawler-sqlserver.config.properties",
-          "/sqlserver.information_schema");
+    super("/help/Connections.sqlite.txt",
+          "/schemacrawler-sqlite.config.properties",
+          "/sqlite.information_schema");
+  }
+
+  @Override
+  public String getDatabaseSystemIdentifier()
+  {
+    return "sqlite";
+  }
+
+  @Override
+  public String getDatabaseSystemName()
+  {
+    return "SQLite";
   }
 
 }

@@ -25,7 +25,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.tools.options.ApplicationOptions;
-import schemacrawler.tools.options.BundledDriverOptions;
+import schemacrawler.tools.options.DatabaseConnector;
 
 public class SchemaCrawlerMain
 {
@@ -36,22 +36,13 @@ public class SchemaCrawlerMain
   public static void main(final String[] args)
     throws Exception
   {
-    main(args, new BundledDriverOptions()
-    {
-
-      private static final long serialVersionUID = 1352308748762219275L;
-    });
+    main(args, null);
   }
 
   public static void main(final String[] args,
-                          final BundledDriverOptions bundledDriverOptions)
+                          final DatabaseConnector databaseConnector)
     throws Exception
   {
-    if (bundledDriverOptions == null)
-    {
-      throw new IllegalArgumentException("No bundled driver options provided");
-    }
-
     String[] remainingArgs = args;
 
     final ApplicationOptionsParser applicationOptionsParser = new ApplicationOptionsParser();
@@ -63,7 +54,7 @@ public class SchemaCrawlerMain
     {
       final boolean showVersionOnly = applicationOptions.isShowVersionOnly();
       final CommandLine helpCommandLine = new SchemaCrawlerHelpCommandLine(remainingArgs,
-                                                                           bundledDriverOptions
+                                                                           databaseConnector
                                                                              .getHelpOptions(),
                                                                            showVersionOnly);
       helpCommandLine.execute();
@@ -73,7 +64,7 @@ public class SchemaCrawlerMain
     applicationOptions.applyApplicationLogLevel();
     LOGGER.log(Level.CONFIG, "Command line: " + Arrays.toString(args));
 
-    final CommandLine commandLine = new SchemaCrawlerCommandLine(bundledDriverOptions,
+    final CommandLine commandLine = new SchemaCrawlerCommandLine(databaseConnector,
                                                                  remainingArgs);
     commandLine.execute();
   }

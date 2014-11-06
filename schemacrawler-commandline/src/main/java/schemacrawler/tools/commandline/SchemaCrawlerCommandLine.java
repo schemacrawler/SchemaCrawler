@@ -32,7 +32,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import schemacrawler.tools.options.BundledDriverOptions;
+import schemacrawler.tools.options.DatabaseConnector;
 import schemacrawler.tools.options.OutputOptions;
 import sf.util.ObjectToString;
 
@@ -53,13 +53,13 @@ public final class SchemaCrawlerCommandLine
   private final SchemaCrawlerOptions schemaCrawlerOptions;
   private final OutputOptions outputOptions;
   private final ConnectionOptions connectionOptions;
-  private final BundledDriverOptions bundledDriverOptions;
+  private final DatabaseConnector databaseConnector;
 
-  public SchemaCrawlerCommandLine(final BundledDriverOptions bundledDriverOptions,
+  public SchemaCrawlerCommandLine(final DatabaseConnector databaseConnector,
                                   final String... args)
     throws SchemaCrawlerException
   {
-    this(bundledDriverOptions, null, args);
+    this(databaseConnector, null, args);
   }
 
   public SchemaCrawlerCommandLine(final ConnectionOptions connectionOptions,
@@ -69,7 +69,7 @@ public final class SchemaCrawlerCommandLine
     this(null, connectionOptions, args);
   }
 
-  private SchemaCrawlerCommandLine(final BundledDriverOptions bundledDriverOptions,
+  private SchemaCrawlerCommandLine(final DatabaseConnector databaseConnector,
                                    final ConnectionOptions connectionOptions,
                                    final String... args)
     throws SchemaCrawlerException
@@ -89,20 +89,31 @@ public final class SchemaCrawlerCommandLine
     }
     command = commandParser.getOptions().toString();
 
-    if (bundledDriverOptions != null)
+    if (databaseConnector == null)
     {
-      this.bundledDriverOptions = bundledDriverOptions;
+      this.databaseConnector = new DatabaseConnector()
+      {
+
+        private static final long serialVersionUID = 1352308748762219275L;
+
+        @Override
+        public String getDatabaseSystemIdentifier()
+        {
+          return "generic";
+        }
+
+        @Override
+        public String getDatabaseSystemName()
+        {
+          return "Generic Database System";
+        }
+      };
     }
     else
     {
-      this.bundledDriverOptions = new BundledDriverOptions()
-      {
-
-        private static final long serialVersionUID = -8917733124364175122L;
-      };
+      this.databaseConnector = databaseConnector;
     }
-
-    config = this.bundledDriverOptions.getConfig();
+    config = this.databaseConnector.getConfig();
 
     if (remainingArgs.length > 0)
     {
@@ -122,7 +133,7 @@ public final class SchemaCrawlerCommandLine
     {
       this.connectionOptions = connectionOptions;
     }
-    else if (this.bundledDriverOptions.hasConfig())
+    else if (this.databaseConnector.hasConfig())
     {
       final BaseDatabaseConnectionOptionsParser bundledDriverConnectionOptionsParser = new BundledDriverConnectionOptionsParser(config);
       remainingArgs = bundledDriverConnectionOptionsParser.parse(remainingArgs);
@@ -159,7 +170,7 @@ public final class SchemaCrawlerCommandLine
 
     Executable executableForList;
 
-    executableForList = bundledDriverOptions.newPreExecutable();
+    executableForList = databaseConnector.newPreExecutable();
     initialize(executableForList);
     executables.add(executableForList);
 
@@ -167,7 +178,7 @@ public final class SchemaCrawlerCommandLine
     initialize(executableForList);
     executables.add(executableForList);
 
-    executableForList = bundledDriverOptions.newPostExecutable();
+    executableForList = databaseConnector.newPostExecutable();
     initialize(executableForList);
     executables.add(executableForList);
 

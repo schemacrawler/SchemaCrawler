@@ -30,7 +30,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.BaseExecutable;
 import schemacrawler.tools.executable.Executable;
 
-public abstract class BundledDriverOptions
+public abstract class DatabaseConnector
   implements Options
 {
 
@@ -56,19 +56,20 @@ public abstract class BundledDriverOptions
   private final String configResource;
   private final String informationSchemaViewsResourceFolder;
 
-  protected BundledDriverOptions()
+  protected DatabaseConnector()
   {
     helpOptions = new HelpOptions();
     configResource = null;
     informationSchemaViewsResourceFolder = null;
   }
 
-  protected BundledDriverOptions(final String title,
-                                 final String helpResource,
-                                 final String configResource,
-                                 final String informationSchemaViewsResourceFolder)
+  protected DatabaseConnector(final String helpResource,
+                           final String configResource,
+                           final String informationSchemaViewsResourceFolder)
   {
-    helpOptions = new HelpOptions(title, helpResource);
+    helpOptions = new HelpOptions(String.format("SchemaCrawler for %s",
+                                                getDatabaseSystemName()),
+                                  helpResource);
     this.configResource = configResource;
     this.informationSchemaViewsResourceFolder = informationSchemaViewsResourceFolder;
   }
@@ -78,7 +79,8 @@ public abstract class BundledDriverOptions
     final Config config = Config.loadResource(configResource);
 
     InformationSchemaViews informationSchemaViews = new InformationSchemaViews();
-    informationSchemaViews.loadResourceFolder(informationSchemaViewsResourceFolder);
+    informationSchemaViews
+      .loadResourceFolder(informationSchemaViewsResourceFolder);
     config.putAll(informationSchemaViews.toConfig());
 
     return config;
@@ -115,5 +117,9 @@ public abstract class BundledDriverOptions
   {
     return new NoOpExecutable("no-op");
   }
+
+  public abstract String getDatabaseSystemIdentifier();
+
+  public abstract String getDatabaseSystemName();
 
 }

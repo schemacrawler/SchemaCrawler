@@ -40,7 +40,7 @@ public final class Main
   {
     try
     {
-      SchemaCrawlerMain.main(args, new BundledDriverOptions());
+      SchemaCrawlerMain.main(args, new MySQLDatabaseConnector());
     }
     catch (final Exception e)
     {

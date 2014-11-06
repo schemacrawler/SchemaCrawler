@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -17,21 +17,34 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.tools.mysql;
+package schemacrawler.tools.hsqldb;
 
 
-public final class BundledDriverOptions
-  extends schemacrawler.tools.options.BundledDriverOptions
+import schemacrawler.tools.options.DatabaseConnector;
+
+public final class HyperSQLDatabaseConnector
+  extends DatabaseConnector
 {
 
-  private static final long serialVersionUID = -7803359491065121373L;
+  private static final long serialVersionUID = -5375420328749193859L;
 
-  public BundledDriverOptions()
+  public HyperSQLDatabaseConnector()
   {
-    super("SchemaCrawler for MySQL",
-          "/help/Connections.mysql.txt",
-          "/schemacrawler-mysql.config.properties",
-          "/mysql.information_schema");
+    super("/help/Connections.hsqldb.txt",
+          "/schemacrawler-hsqldb.config.properties",
+          "/hsqldb.information_schema");
+  }
+
+  @Override
+  public String getDatabaseSystemIdentifier()
+  {
+    return "hsqldb";
+  }
+
+  @Override
+  public String getDatabaseSystemName()
+  {
+    return "HyperSQL DataBase";
   }
 
 }

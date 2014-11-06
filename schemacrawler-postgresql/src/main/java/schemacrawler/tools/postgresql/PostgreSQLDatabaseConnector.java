@@ -17,21 +17,41 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.tools.derby;
+package schemacrawler.tools.postgresql;
 
 
-public final class BundledDriverOptions
-  extends schemacrawler.tools.options.BundledDriverOptions
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.sql.DriverManager;
+
+import schemacrawler.tools.options.DatabaseConnector;
+
+public final class PostgreSQLDatabaseConnector
+  extends DatabaseConnector
 {
 
-  private static final long serialVersionUID = 4987749348963852650L;
+  private static final long serialVersionUID = 5722302374017415049L;
 
-  public BundledDriverOptions()
+  public PostgreSQLDatabaseConnector()
   {
-    super("SchemaCrawler for Apache Derby",
-          "/help/Connections.derby.txt",
-          "/schemacrawler-derby.config.properties",
-          "/derby.information_schema");
+    super("/help/Connections.postgresql.txt",
+          "/schemacrawler-postgresql.config.properties",
+          "/postgresql.information_schema");
+
+    DriverManager
+      .setLogWriter(new PrintWriter(new OutputStreamWriter(System.err)));
+  }
+
+  @Override
+  public String getDatabaseSystemIdentifier()
+  {
+    return "postgresql";
+  }
+
+  @Override
+  public String getDatabaseSystemName()
+  {
+    return "PostgreSQL";
   }
 
 }
