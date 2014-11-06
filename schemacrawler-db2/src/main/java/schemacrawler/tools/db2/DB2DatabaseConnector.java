@@ -1,4 +1,4 @@
-/*
+/* 
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -17,21 +17,34 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.tools.hsqldb;
+package schemacrawler.tools.db2;
 
 
-public final class BundledDriverOptions
-  extends schemacrawler.tools.options.BundledDriverOptions
+import schemacrawler.tools.options.DatabaseConnector;
+
+public final class DB2DatabaseConnector
+  extends DatabaseConnector
 {
 
-  private static final long serialVersionUID = -5375420328749193859L;
+  private static final long serialVersionUID = 788422181303398180L;
 
-  public BundledDriverOptions()
+  public DB2DatabaseConnector()
   {
-    super("SchemaCrawler for HyperSQL",
-          "/help/Connections.hsqldb.txt",
-          "/schemacrawler-hsqldb.config.properties",
-          "/hsqldb.information_schema");
+    super("/help/Connections.db2.txt",
+          "/schemacrawler-db2.config.properties",
+          "/db2.information_schema");
+  }
+
+  @Override
+  public String getDatabaseSystemIdentifier()
+  {
+    return "db2";
+  }
+
+  @Override
+  public String getDatabaseSystemName()
+  {
+    return "IBM DB2";
   }
 
 }

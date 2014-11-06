@@ -17,28 +17,34 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.tools.postgresql;
+package schemacrawler.tools.mysql;
 
 
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.sql.DriverManager;
+import schemacrawler.tools.options.DatabaseConnector;
 
-public final class BundledDriverOptions
-  extends schemacrawler.tools.options.BundledDriverOptions
+public final class MySQLDatabaseConnector
+  extends DatabaseConnector
 {
 
-  private static final long serialVersionUID = 5722302374017415049L;
+  private static final long serialVersionUID = -7803359491065121373L;
 
-  public BundledDriverOptions()
+  public MySQLDatabaseConnector()
   {
-    super("SchemaCrawler for PostgreSQL",
-          "/help/Connections.postgresql.txt",
-          "/schemacrawler-postgresql.config.properties",
-          "/postgresql.information_schema");
+    super("/help/Connections.mysql.txt",
+          "/schemacrawler-mysql.config.properties",
+          "/mysql.information_schema");
+  }
 
-    DriverManager
-      .setLogWriter(new PrintWriter(new OutputStreamWriter(System.err)));
+  @Override
+  public String getDatabaseSystemIdentifier()
+  {
+    return "mysql";
+  }
+
+  @Override
+  public String getDatabaseSystemName()
+  {
+    return "MySQL";
   }
 
 }

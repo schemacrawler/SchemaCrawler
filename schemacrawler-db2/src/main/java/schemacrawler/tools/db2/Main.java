@@ -40,7 +40,7 @@ public final class Main
   {
     try
     {
-      SchemaCrawlerMain.main(args, new BundledDriverOptions());
+      SchemaCrawlerMain.main(args, new DB2DatabaseConnector());
     }
     catch (final Exception e)
     {

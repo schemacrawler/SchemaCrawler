@@ -1,4 +1,4 @@
-/*
+/* 
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -17,21 +17,43 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.tools.sqlite;
+package schemacrawler.tools.oracle;
 
 
-public final class BundledDriverOptions
-  extends schemacrawler.tools.options.BundledDriverOptions
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.executable.Executable;
+import schemacrawler.tools.options.DatabaseConnector;
+
+public final class OracleDatabaseConnector
+  extends DatabaseConnector
 {
 
-  private static final long serialVersionUID = 7181719520243423090L;
+  private static final long serialVersionUID = -8607886464063312321L;
 
-  public BundledDriverOptions()
+  public OracleDatabaseConnector()
   {
-    super("SchemaCrawler for SQLite",
-          "/help/Connections.sqlite.txt",
-          "/schemacrawler-sqlite.config.properties",
-          "/sqlite.information_schema");
+    super("/help/Connections.oracle.txt",
+          "/schemacrawler-oracle.config.properties",
+          "/oracle.information_schema");
+  }
+
+  @Override
+  public Executable newPreExecutable()
+    throws SchemaCrawlerException
+  {
+    return new OraclePreExecutable();
+  }
+
+  @Override
+  public String getDatabaseSystemIdentifier()
+  {
+    return "oracle";
+  }
+
+  @Override
+  public String getDatabaseSystemName()
+  {
+    return "Oracle";
   }
 
 }
