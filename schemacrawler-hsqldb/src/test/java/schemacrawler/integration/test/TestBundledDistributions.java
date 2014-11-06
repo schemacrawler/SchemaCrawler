@@ -19,7 +19,7 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseDatabaseTest;
-import schemacrawler.tools.hsqldb.BundledDriverOptions;
+import schemacrawler.tools.hsqldb.HyperSQLDatabaseConnector;
 import schemacrawler.tools.options.InfoLevel;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
@@ -83,7 +83,7 @@ public class TestBundledDistributions
     throws Exception
   {
 
-    final SchemaCrawlerOptions schemaCrawlerOptions = new BundledDriverOptions()
+    final SchemaCrawlerOptions schemaCrawlerOptions = new HyperSQLDatabaseConnector()
       .getSchemaCrawlerOptions(InfoLevel.maximum);
     final Catalog catalog = SchemaCrawlerUtility
       .getCatalog(getConnection(), schemaCrawlerOptions);

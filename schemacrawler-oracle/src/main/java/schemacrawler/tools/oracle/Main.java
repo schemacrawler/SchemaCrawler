@@ -41,7 +41,7 @@ public final class Main
     System.setProperty("oracle.jdbc.Trace", "true");
     try
     {
-      SchemaCrawlerMain.main(args, new BundledDriverOptions());
+      SchemaCrawlerMain.main(args, new OracleDatabaseConnector());
     }
     catch (final Exception e)
     {

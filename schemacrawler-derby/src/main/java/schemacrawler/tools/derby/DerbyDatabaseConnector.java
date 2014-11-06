@@ -17,31 +17,34 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.tools.oracle;
+package schemacrawler.tools.derby;
 
 
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.executable.Executable;
+import schemacrawler.tools.options.DatabaseConnector;
 
-public final class BundledDriverOptions
-  extends schemacrawler.tools.options.BundledDriverOptions
+public final class DerbyDatabaseConnector
+  extends DatabaseConnector
 {
 
-  private static final long serialVersionUID = -8607886464063312321L;
+  private static final long serialVersionUID = 4987749348963852650L;
 
-  public BundledDriverOptions()
+  public DerbyDatabaseConnector()
   {
-    super("SchemaCrawler for Oracle",
-          "/help/Connections.oracle.txt",
-          "/schemacrawler-oracle.config.properties",
-          "/oracle.information_schema");
+    super("/help/Connections.derby.txt",
+          "/schemacrawler-derby.config.properties",
+          "/derby.information_schema");
   }
 
   @Override
-  public Executable newPreExecutable()
-    throws SchemaCrawlerException
+  public String getDatabaseSystemIdentifier()
   {
-    return new OraclePreExecutable();
+    return "derby";
+  }
+
+  @Override
+  public String getDatabaseSystemName()
+  {
+    return "Apache Derby";
   }
 
 }

@@ -40,7 +40,7 @@ public final class Main
   {
     try
     {
-      final BundledDriverOptions bundledDriverOptions = new BundledDriverOptions();
+      final DerbyDatabaseConnector bundledDriverOptions = new DerbyDatabaseConnector();
       SchemaCrawlerMain.main(args, bundledDriverOptions);
     }
     catch (final Exception e)
