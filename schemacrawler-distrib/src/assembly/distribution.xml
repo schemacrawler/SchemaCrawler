@@ -244,7 +244,6 @@
   <target name="make-database-distributions">
 
     <create-db-distribution database="offline" license="lgpl-3.0" />
-    <create-db-distribution database="generic" license="lgpl-3.0" />
     <create-db-distribution database="db2" license="lgpl-3.0" />
     <create-db-distribution database="derby" license="gpl-3.0" />
     <create-db-distribution database="hsqldb" license="gpl-3.0" />
