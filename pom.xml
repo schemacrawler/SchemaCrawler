@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
   <prerequisites>
     <maven>3.2.1</maven>
-  </prerequisites>  
+  </prerequisites>
   <groupId>us.fatehi</groupId>
   <artifactId>schemacrawler-parent</artifactId>
   <packaging>pom</packaging>
@@ -57,11 +57,10 @@
     <module>schemacrawler-commandline</module>
     <module>schemacrawler-integrations</module>
     <module>schemacrawler</module>
-    
+
     <module>schemacrawler-lint</module>
-    
-    <module>schemacrawler-offline</module>    
-    <module>schemacrawler-generic</module>
+
+    <module>schemacrawler-offline</module>
     <module>schemacrawler-db2</module>
     <module>schemacrawler-derby</module>
     <module>schemacrawler-hsqldb</module>
@@ -71,11 +70,11 @@
     <module>schemacrawler-sqlite</module>
     <module>schemacrawler-sqlserver</module>
     <module>schemacrawler-sybaseiq</module>
-    
+
     <module>schemacrawler-archetype-maven-project</module>
     <module>schemacrawler-archetype-plugin-command</module>
     <module>schemacrawler-archetype-plugin-lint</module>
-    
+
     <module>schemacrawler-docs</module>
     <module>schemacrawler-site</module>
     <module>schemacrawler-distrib</module>
@@ -98,13 +97,13 @@
      <artifactId>gson</artifactId>
      <version>2.3</version>
      <scope>test</scope>
-  </dependency>    
+  </dependency>
   <dependency>
     <groupId>com.google.guava</groupId>
     <artifactId>guava-collections</artifactId>
     <version>r03</version>
     <scope>test</scope>
-  </dependency> 
+  </dependency>
     <dependency>
       <groupId>org.hsqldb</groupId>
       <artifactId>hsqldb</artifactId>
@@ -119,7 +118,7 @@
     <skip.signing.artifacts>true</skip.signing.artifacts>
   </properties>
   <build>
-    <plugins>  
+    <plugins>
       <plugin>
         <inherited>true</inherited>
         <groupId>org.apache.maven.plugins</groupId>
@@ -154,15 +153,15 @@
             <artifactId>surefire-junit47</artifactId>
             <version>2.12.4</version>
           </dependency>
-        </dependencies>        
+        </dependencies>
         <configuration>
           <runOrder>random</runOrder>
           <workingDirectory>${java.io.tmpdir}</workingDirectory>
           <systemPropertyVariables>
             <buildDirectory>${project.build.directory}</buildDirectory>
-          </systemPropertyVariables>          
-        </configuration>        
-      </plugin>   
+          </systemPropertyVariables>
+        </configuration>
+      </plugin>
       <plugin>
         <inherited>true</inherited>
         <groupId>org.apache.maven.plugins</groupId>
