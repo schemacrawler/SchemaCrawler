@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -17,45 +17,37 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.tools.oracle;
+
+package schemacrawler.tools.commandline;
 
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.executable.Executable;
+import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.options.DatabaseConnector;
+import sf.util.clparser.StringOption;
 
-public final class OracleDatabaseConnector
-  extends DatabaseConnector
+/**
+ * Parses the command line.
+ *
+ * @author Sualeh Fatehi
+ */
+public final class DatabaseConnectorParser
+  extends BaseOptionsParser<DatabaseConnector>
 {
 
-  private static final long serialVersionUID = -8607886464063312321L;
-
-  public OracleDatabaseConnector()
+  public DatabaseConnectorParser()
   {
-    super("/help/Connections.oracle.txt",
-          "/schemacrawler-oracle.config.properties",
-          "/oracle.information_schema");
-
-    System.setProperty("oracle.jdbc.Trace", "true");
+    super(new StringOption("server", null));
   }
 
   @Override
-  public Executable newPreExecutable()
+  public DatabaseConnector getOptions()
     throws SchemaCrawlerException
   {
-    return new OraclePreExecutable();
-  }
-
-  @Override
-  public String getDatabaseSystemIdentifier()
-  {
-    return "oracle";
-  }
-
-  @Override
-  public String getDatabaseSystemName()
-  {
-    return "Oracle";
+    final DatabaseConnectorRegistry registry = new DatabaseConnectorRegistry();
+    final DatabaseConnector databaseConnector = registry
+      .lookupDatabaseSystemIdentifier(getStringValue("server"));
+    return databaseConnector;
   }
 
 }
