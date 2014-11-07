@@ -45,7 +45,6 @@
 					<archive>
 						<index>true</index>
 						<manifest>
-							<mainClass>schemacrawler.tools.sqlserver.Main</mainClass>
 							<addClasspath>true</addClasspath>
 						</manifest>
 						<manifestEntries>

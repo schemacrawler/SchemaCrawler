@@ -41,7 +41,6 @@
           <archive>
             <index>true</index>
             <manifest>
-              <mainClass>schemacrawler.tools.sybaseiq.Main</mainClass>
               <addClasspath>true</addClasspath>
             </manifest>
             <manifestEntries>

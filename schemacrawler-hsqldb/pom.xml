@@ -47,7 +47,6 @@
           <archive>
             <index>true</index>
             <manifest>
-              <mainClass>schemacrawler.tools.hsqldb.Main</mainClass>
               <addClasspath>true</addClasspath>
             </manifest>
             <manifestEntries>
