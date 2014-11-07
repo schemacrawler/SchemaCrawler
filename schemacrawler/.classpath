@@ -14,5 +14,17 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/SchemaCrawler - 2 - Tools"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/SchemaCrawler - 3 - Commandline"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/SchemaCrawler - 4 - Integrations"/>
+	<classpathentry kind="src" output="target/classes" path="src/main/java">
+		<attributes>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" output="target/test-classes" path="src/test/java">
+		<attributes>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
