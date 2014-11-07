@@ -3,6 +3,7 @@ package schemacrawler.integration.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
 
@@ -18,8 +19,9 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.server.hsqldb.HyperSQLDatabaseConnector;
 import schemacrawler.test.utility.BaseDatabaseTest;
-import schemacrawler.tools.hsqldb.HyperSQLDatabaseConnector;
+import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.options.InfoLevel;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
@@ -101,6 +103,14 @@ public class TestBundledDistributions
     assertEquals(1, table.getTriggers().size());
     assertNotNull(table.getTrigger("TRG_AUTHORS"));
 
+  }
+
+  @Test
+  public void testPlugin_hsqldb()
+    throws Exception
+  {
+    final DatabaseConnectorRegistry registry = new DatabaseConnectorRegistry();
+    assertTrue(registry.hasDatabaseSystemIdentifier("hsqldb"));
   }
 
 }
