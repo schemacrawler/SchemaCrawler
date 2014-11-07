@@ -30,17 +30,7 @@ import schemacrawler.tools.options.DatabaseConnector;
 public class SchemaCrawlerMain
 {
 
-  private static final Logger LOGGER = Logger.getLogger(SchemaCrawlerMain.class
-    .getName());
-
   public static void main(final String[] args)
-    throws Exception
-  {
-    main(args, null);
-  }
-
-  public static void main(final String[] args,
-                          final DatabaseConnector databaseConnector)
     throws Exception
   {
     String[] remainingArgs = args;
@@ -50,7 +40,15 @@ public class SchemaCrawlerMain
     final ApplicationOptions applicationOptions = applicationOptionsParser
       .getOptions();
 
-    if (applicationOptions.isShowHelp())
+    final DatabaseConnectorParser databaseConnectorParser = new DatabaseConnectorParser();
+    remainingArgs = databaseConnectorParser.parse(remainingArgs);
+    final DatabaseConnector databaseConnector = databaseConnectorParser
+      .getOptions();
+
+    final boolean showHelp = args == null || args.length == 0
+                             || applicationOptions.isShowHelp();
+
+    if (showHelp)
     {
       final boolean showVersionOnly = applicationOptions.isShowVersionOnly();
       final CommandLine helpCommandLine = new SchemaCrawlerHelpCommandLine(remainingArgs,
@@ -68,6 +66,9 @@ public class SchemaCrawlerMain
                                                                  remainingArgs);
     commandLine.execute();
   }
+
+  private static final Logger LOGGER = Logger.getLogger(SchemaCrawlerMain.class
+    .getName());
 
   private SchemaCrawlerMain()
   {

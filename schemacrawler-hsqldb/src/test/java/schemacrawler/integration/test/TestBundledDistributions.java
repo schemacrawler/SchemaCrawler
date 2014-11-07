@@ -52,7 +52,8 @@ public class TestBundledDistributions
                                                     ".test");
     testOutputFile.delete();
 
-    schemacrawler.tools.hsqldb.Main.main(new String[] {
+    schemacrawler.Main.main(new String[] {
+        "-server=hsqldb",
         "-database=schemacrawler",
         "-user=sa",
         "-password=",
