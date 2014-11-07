@@ -57,6 +57,8 @@ abstract class BaseDatabaseConnectionOptions
       throw new SchemaCrawlerException("Could not load JDBC driver, "
                                        + jdbcDriverClassName, e);
     }
+
+    DriverManager.setLogWriter(null);
   }
 
   private Map<String, String> connectionProperties;
