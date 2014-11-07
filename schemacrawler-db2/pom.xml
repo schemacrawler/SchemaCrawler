@@ -41,7 +41,6 @@
           <archive>
             <index>true</index>
             <manifest>
-              <mainClass>schemacrawler.tools.db2.Main</mainClass>
               <addClasspath>true</addClasspath>
             </manifest>
             <manifestEntries>

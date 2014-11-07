@@ -41,7 +41,6 @@
           <archive>
             <index>true</index>
             <manifest>
-              <mainClass>schemacrawler.tools.oracle.Main</mainClass>
               <addClasspath>true</addClasspath>
             </manifest>
             <manifestEntries>

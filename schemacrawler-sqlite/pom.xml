@@ -59,7 +59,6 @@
           <archive>
             <index>true</index>
             <manifest>
-              <mainClass>schemacrawler.tools.sqlite.Main</mainClass>
               <addClasspath>true</addClasspath>
             </manifest>
             <manifestEntries>
