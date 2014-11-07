@@ -277,8 +277,8 @@
             tofile="${schemacrawler.complete-distribution}/sc_@{database}.sh" />
       -->
 
-      <copy file="DRIVER.LICENSE.txt"
-            tofile="${SchemaCrawler.home}/schemacrawler-@{database}/DRIVER.LICENSE-@{database}.txt"
+      <copy file="${SchemaCrawler.home}/schemacrawler-@{database}/DRIVER.LICENSE.txt"
+            tofile="${schemacrawler.complete-distribution}/DRIVER.LICENSE-@{database}.txt"            
             failonerror="false" />
 
     </sequential>

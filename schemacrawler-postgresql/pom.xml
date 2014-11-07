@@ -38,7 +38,6 @@
 					<archive>
 						<index>true</index>
 						<manifest>
-							<mainClass>schemacrawler.tools.postgresql.Main</mainClass>
 							<addClasspath>true</addClasspath>
 						</manifest>
 						<manifestEntries>
