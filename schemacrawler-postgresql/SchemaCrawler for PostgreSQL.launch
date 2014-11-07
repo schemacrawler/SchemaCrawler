@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
-<listEntry value="/SchemaCrawler for PostgreSQL/src/main/java/schemacrawler/tools/postgresql/Main.java"/>
+<listEntry value="/SchemaCrawler for PostgreSQL"/>
 </listAttribute>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
-<listEntry value="1"/>
+<listEntry value="4"/>
 </listAttribute>
 <booleanAttribute key="org.eclipse.debug.core.appendEnvironmentVariables" value="true"/>
 <stringAttribute key="org.eclipse.jdt.launching.CLASSPATH_PROVIDER" value="org.eclipse.m2e.launchconfig.classpathProvider"/>
 <stringAttribute key="org.eclipse.jdt.launching.JRE_CONTAINER" value="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
-<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="schemacrawler.tools.postgresql.Main"/>
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="schemacrawler.server.postgresql.Main"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-host=192.168.60.129&#13;&#10;-database=books&#13;&#10;-user=books&#13;&#10;-password=books&#13;&#10;-infolevel=maximum&#13;&#10;-command=details&#13;&#10;-o sc_postgresql.txt"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="SchemaCrawler for PostgreSQL"/>
 <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.m2e.launchconfig.sourcepathProvider"/>
