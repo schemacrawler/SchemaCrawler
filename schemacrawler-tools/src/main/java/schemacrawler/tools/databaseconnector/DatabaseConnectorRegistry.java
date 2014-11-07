@@ -44,6 +44,24 @@ import schemacrawler.tools.options.DatabaseConnector;
 public final class DatabaseConnectorRegistry
 {
 
+  private static final class UknownDatabaseConnector
+    extends DatabaseConnector
+  {
+    private static final long serialVersionUID = 266517436698945865L;
+
+    @Override
+    public String getDatabaseSystemIdentifier()
+    {
+      return "unknown";
+    }
+
+    @Override
+    public String getDatabaseSystemName()
+    {
+      return "Relational Database";
+    }
+  }
+
   private static Map<String, DatabaseConnector> loadDatabaseConnectorRegistry()
     throws SchemaCrawlerException
   {
@@ -95,6 +113,18 @@ public final class DatabaseConnectorRegistry
       .keySet());
     Collections.sort(availableDatabaseConnectors);
     return availableDatabaseConnectors;
+  }
+
+  public DatabaseConnector lookupDatabaseSystemIdentifier(final String databaseSystemIdentifier)
+  {
+    if (hasDatabaseSystemIdentifier(databaseSystemIdentifier))
+    {
+      return databaseConnectorRegistry.get(databaseSystemIdentifier);
+    }
+    else
+    {
+      return new UknownDatabaseConnector();
+    }
   }
 
 }

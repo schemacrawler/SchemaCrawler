@@ -28,7 +28,8 @@ public class TestSqliteDistribution
     testOutputFile.delete();
 
     final File sqliteDbFile = copyResourceToTempFile("/sc.db");
-    schemacrawler.tools.sqlite.Main.main(new String[] {
+    schemacrawler.Main.main(new String[] {
+        "-server=sqlite",
         "-database=" + sqliteDbFile.getAbsolutePath(),
         "-command=details,dump,count",
         "-infolevel=detailed",
