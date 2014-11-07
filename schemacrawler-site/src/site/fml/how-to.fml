@@ -46,14 +46,14 @@
             <tr>
               <td valign="top">
                 <ul>
-                  <li>schemacrawler.tools.db2.Main</li>
-                  <li>schemacrawler.tools.derby.Main</li>
-                  <li>schemacrawler.tools.hsqldb.Main</li>
-                  <li>schemacrawler.tools.mysql.Main</li>
-                  <li>schemacrawler.tools.oracle.Main</li>
-                  <li>schemacrawler.tools.postgresql.Main</li>
-                  <li>schemacrawler.tools.sqlite.Main</li>
-                  <li>schemacrawler.tools.sqlserver.Main</li>
+                  <li>schemacrawler.server.db2.Main</li>
+                  <li>schemacrawler.server.derby.Main</li>
+                  <li>schemacrawler.server.hsqldb.Main</li>
+                  <li>schemacrawler.server.mysql.Main</li>
+                  <li>schemacrawler.server.oracle.Main</li>
+                  <li>schemacrawler.server.postgresql.Main</li>
+                  <li>schemacrawler.server.sqlite.Main</li>
+                  <li>schemacrawler.server.sqlserver.Main</li>
                 </ul>
               </td>
               <td valign="top">

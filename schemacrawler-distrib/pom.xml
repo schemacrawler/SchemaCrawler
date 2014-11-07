@@ -70,7 +70,7 @@
                   <artifactId>schemacrawler-lint</artifactId>
                   <version>${project.version}</version>
                   <overWrite>true</overWrite>
-                  <outputDirectory>${project.build.directory}/full-distrib/lib</outputDirectory>
+                  <outputDirectory>${project.build.directory}/_complete-distribution/lib</outputDirectory>
                 </artifactItem>
                 
                 <artifactItem>
@@ -78,70 +78,70 @@
                   <artifactId>schemacrawler-offline</artifactId>
                   <version>${project.version}</version>
                   <overWrite>true</overWrite>
-                  <outputDirectory>${project.build.directory}/full-distrib/lib</outputDirectory>
+                  <outputDirectory>${project.build.directory}/_complete-distribution/lib</outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>us.fatehi</groupId>
                   <artifactId>schemacrawler-db2</artifactId>
                   <version>${project.version}</version>
                   <overWrite>true</overWrite>
-                  <outputDirectory>${project.build.directory}/full-distrib/lib</outputDirectory>
+                  <outputDirectory>${project.build.directory}/_complete-distribution/lib</outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>us.fatehi</groupId>
                   <artifactId>schemacrawler-derby</artifactId>
                   <version>${project.version}</version>
                   <overWrite>true</overWrite>
-                  <outputDirectory>${project.build.directory}/full-distrib/lib</outputDirectory>
+                  <outputDirectory>${project.build.directory}/_complete-distribution/lib</outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>us.fatehi</groupId>
                   <artifactId>schemacrawler-hsqldb</artifactId>
                   <version>${project.version}</version>
                   <overWrite>true</overWrite>
-                  <outputDirectory>${project.build.directory}/full-distrib/lib</outputDirectory>
+                  <outputDirectory>${project.build.directory}/_complete-distribution/lib</outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>us.fatehi</groupId>
                   <artifactId>schemacrawler-oracle</artifactId>
                   <version>${project.version}</version>
                   <overWrite>true</overWrite>
-                  <outputDirectory>${project.build.directory}/full-distrib/lib</outputDirectory>
+                  <outputDirectory>${project.build.directory}/_complete-distribution/lib</outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>us.fatehi</groupId>
                   <artifactId>schemacrawler-db2</artifactId>
                   <version>${project.version}</version>
                   <overWrite>true</overWrite>
-                  <outputDirectory>${project.build.directory}/full-distrib/lib</outputDirectory>
+                  <outputDirectory>${project.build.directory}/_complete-distribution/lib</outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>us.fatehi</groupId>
                   <artifactId>schemacrawler-postgresql</artifactId>
                   <version>${project.version}</version>
                   <overWrite>true</overWrite>
-                  <outputDirectory>${project.build.directory}/full-distrib/lib</outputDirectory>
+                  <outputDirectory>${project.build.directory}/_complete-distribution/lib</outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>us.fatehi</groupId>
                   <artifactId>schemacrawler-sqlite</artifactId>
                   <version>${project.version}</version>
                   <overWrite>true</overWrite>
-                  <outputDirectory>${project.build.directory}/full-distrib/lib</outputDirectory>
+                  <outputDirectory>${project.build.directory}/_complete-distribution/lib</outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>us.fatehi</groupId>
                   <artifactId>schemacrawler-sqlserver</artifactId>
                   <version>${project.version}</version>
                   <overWrite>true</overWrite>
-                  <outputDirectory>${project.build.directory}/full-distrib/lib</outputDirectory>
+                  <outputDirectory>${project.build.directory}/_complete-distribution/lib</outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>us.fatehi</groupId>
                   <artifactId>schemacrawler-sybaseiq</artifactId>
                   <version>${project.version}</version>
                   <overWrite>true</overWrite>
-                  <outputDirectory>${project.build.directory}/full-distrib/lib</outputDirectory>
+                  <outputDirectory>${project.build.directory}/_complete-distribution/lib</outputDirectory>
                 </artifactItem>
     
                 <artifactItem>
@@ -150,7 +150,7 @@
                   <version>RELEASE</version>
                   <type>jar</type>
                   <overWrite>false</overWrite>
-                  <outputDirectory>${project.build.directory}/full-distrib/lib/</outputDirectory>
+                  <outputDirectory>${project.build.directory}/_complete-distribution/lib/</outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>mysql</groupId>
@@ -158,7 +158,7 @@
                   <version>5.1.34</version>
                   <type>jar</type>
                   <overWrite>false</overWrite>
-                  <outputDirectory>${project.build.directory}/full-distrib/lib/</outputDirectory>
+                  <outputDirectory>${project.build.directory}/_complete-distribution/lib/</outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>net.sourceforge.jtds</groupId>
@@ -166,7 +166,7 @@
                   <version>RELEASE</version>
                   <type>jar</type>
                   <overWrite>false</overWrite>
-                  <outputDirectory>${project.build.directory}/full-distrib/lib/</outputDirectory>
+                  <outputDirectory>${project.build.directory}/_complete-distribution/lib/</outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>org.apache.derby</groupId>
@@ -174,7 +174,7 @@
                   <version>RELEASE</version>
                   <type>jar</type>
                   <overWrite>false</overWrite>
-                  <outputDirectory>${project.build.directory}/full-distrib/lib/</outputDirectory>
+                  <outputDirectory>${project.build.directory}/_complete-distribution/lib/</outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>org.hsqldb</groupId>
@@ -182,7 +182,7 @@
                   <version>${hsqldb.version}</version>
                   <type>jar</type>
                   <overWrite>false</overWrite>
-                  <outputDirectory>${project.build.directory}/full-distrib/lib/</outputDirectory>
+                  <outputDirectory>${project.build.directory}/_complete-distribution/lib/</outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>org.xerial</groupId>
@@ -190,7 +190,7 @@
                   <version>${sqlite.version}</version>
                   <type>jar</type>
                   <overWrite>false</overWrite>
-                  <outputDirectory>${project.build.directory}/full-distrib/lib/</outputDirectory>
+                  <outputDirectory>${project.build.directory}/_complete-distribution/lib/</outputDirectory>
                 </artifactItem>
                 
                 <artifactItem>
@@ -199,7 +199,7 @@
                   <version>${xstream.version}</version>
                   <type>jar</type>
                   <overWrite>false</overWrite>
-                  <outputDirectory>${project.build.directory}/full-distrib/lib/</outputDirectory>
+                  <outputDirectory>${project.build.directory}/_complete-distribution/lib/</outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>xpp3</groupId>
@@ -207,7 +207,7 @@
                   <version>${xpp3_min.version}</version>
                   <type>jar</type>
                   <overWrite>false</overWrite>
-                  <outputDirectory>${project.build.directory}/full-distrib/lib/</outputDirectory>
+                  <outputDirectory>${project.build.directory}/_complete-distribution/lib/</outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>xmlpull</groupId>
@@ -215,11 +215,11 @@
                   <version>${xmlpull.version}</version>
                   <type>jar</type>
                   <overWrite>false</overWrite>
-                  <outputDirectory>${project.build.directory}/full-distrib/lib/</outputDirectory>
+                  <outputDirectory>${project.build.directory}/_complete-distribution/lib/</outputDirectory>
                 </artifactItem>
                 
               </artifactItems>
-              <outputDirectory>${project.build.directory}/full-distrib/lib</outputDirectory>
+              <outputDirectory>${project.build.directory}/_complete-distribution/lib</outputDirectory>
               <overWriteReleases>false</overWriteReleases>
               <overWriteSnapshots>true</overWriteSnapshots>
             </configuration>
