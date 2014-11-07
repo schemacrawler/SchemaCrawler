@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>us.fatehi</groupId>
 		<artifactId>schemacrawler-parent</artifactId>
-		<version>11.02.01</version>
+		<version>11.03.01</version>
 	</parent>
 	<artifactId>schemacrawler-sqlserver</artifactId>
 	<packaging>jar</packaging>
@@ -32,7 +32,7 @@
 		<dependency>
 			<groupId>net.sourceforge.jtds</groupId>
 			<artifactId>jtds</artifactId>
-			<version>1.3.1</version>
+			<version>RELEASE</version>
 		</dependency>
 	</dependencies>
 	<build>
