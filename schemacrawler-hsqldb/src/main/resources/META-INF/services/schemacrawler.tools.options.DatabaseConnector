@@ -1,1 +1,1 @@
-schemacrawler.tools.hsqldb.HyperSQLDatabaseConnector
+schemacrawler.server.hsqldb.HyperSQLDatabaseConnector
