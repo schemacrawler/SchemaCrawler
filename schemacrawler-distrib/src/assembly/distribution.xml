@@ -26,7 +26,6 @@
             make-super-jar,
             make-database-distributions,
             make-examples,
-            make-source-distribution,
             make-website-distribution,
             cleanup-distribution
             "
@@ -49,6 +48,8 @@
 
   <target name="make-super-jar">
 
+  	<!-- Build super-jar -->
+  	
     <copy file="${SchemaCrawler.home}/schemacrawler/target/schemacrawler-${SchemaCrawler.version}-jar-with-dependencies.jar"
           tofile="${schemacrawler.distribution.jar}" />
 
@@ -78,12 +79,14 @@
         <mapper type="glob" from="*.bar" to="*.jar" />
     </move>
 
+  	<!-- Build sources jar -->
+  	
     <jar destfile="${schemacrawler.distribution.sources.jar}" index="true">
       <manifest>
         <attribute name="Product" value="SchemaCrawler" />
         <attribute name="Version" value="${SchemaCrawler.version}" />
         <attribute name="Author" value="Sualeh Fatehi sualeh@hotmail.com" />
-        <attribute name="Copyright" value="(c) 2003-2011, Sualeh Fatehi" />
+        <attribute name="Copyright" value="(c) 2000-2014, Sualeh Fatehi" />
         <attribute name="Main-Class" value="schemacrawler.Main" />
       </manifest>
       <zipfileset src="${SchemaCrawler.home}/schemacrawler-api/target/schemacrawler-api-${SchemaCrawler.version}-sources.jar" />
@@ -92,9 +95,23 @@
       <zipfileset src="${SchemaCrawler.home}/schemacrawler-integrations/target/schemacrawler-integrations-${SchemaCrawler.version}-sources.jar" />
     </jar>
 
+  	<!-- Build javadoc jar -->
+  	
     <copy file="${SchemaCrawler.home}/schemacrawler-api/target/schemacrawler-api-${SchemaCrawler.version}-javadoc.jar"
           tofile="${schemacrawler.distribution.javadoc.jar}" />
-
+    <jar destfile="${schemacrawler.distribution.javadoc.jar}"
+      index="true"
+      update="true"
+      whenmanifestonly="create" >
+      <manifest>
+        <attribute name="Product" value="SchemaCrawler" />
+        <attribute name="Version" value="${SchemaCrawler.version}" />
+        <attribute name="Author" value="Sualeh Fatehi sualeh@hotmail.com" />
+        <attribute name="Copyright" value="(c) 2000-2014, Sualeh Fatehi" />
+        <attribute name="Main-Class" value="schemacrawler.Main" />
+      </manifest>
+    </jar>
+      	
   </target>
 
 
@@ -170,40 +187,6 @@
           <include name="**/*" />
         </fileset>
     </move>
-
-  </target>
-
-
-  <target name="make-source-distribution">
-
-    <property name="source.zip.prefix"
-              value="schemacrawler-${SchemaCrawler.version}-src" />
-    <delete file="${distribution.target}/${source.zip.prefix}.zip" />
-    <zip destfile="${distribution.target}/${source.zip.prefix}.zip">
-      <zipfileset dir="${SchemaCrawler.home}"
-                  prefix="${source.zip.prefix}"
-                  defaultexcludes="yes">
-        <exclude name="${distribution.target}" />
-        <exclude name="${distribution.target}/*" />
-        <exclude name="**/target" />
-        <exclude name="**/target/**/*" />
-        <exclude name="differencer" />
-        <exclude name="differencer/**/*" />
-        <exclude name="**/.*/*" />
-        <exclude name="**/*.jar" />
-        <exclude name="**/*.launch" />
-        <exclude name="**/*.lob" />
-        <exclude name="**/*.log" />
-        <exclude name="**/*.lck" />
-        <exclude name="**/*.ser" />
-        <exclude name="**/*.zip" />
-        <exclude name="*.html" />
-        <exclude name="workspace/**" />
-        <exclude name="*.epf" />
-    <exclude name=".git" />
-    <exclude name="**/.svn" />
-      </zipfileset>
-    </zip>
 
   </target>
 
