@@ -44,7 +44,7 @@ import schemacrawler.tools.options.DatabaseConnector;
 public final class DatabaseConnectorRegistry
 {
 
-  private static final class UknownDatabaseConnector
+  public static final class UknownDatabaseConnector
     extends DatabaseConnector
   {
     private static final long serialVersionUID = 266517436698945865L;
@@ -67,6 +67,7 @@ public final class DatabaseConnectorRegistry
   {
 
     final Map<String, DatabaseConnector> databaseConnectorRegistry = new HashMap<>();
+
     try
     {
       final ServiceLoader<DatabaseConnector> serviceLoader = ServiceLoader
