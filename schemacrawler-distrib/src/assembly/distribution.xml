@@ -129,8 +129,6 @@
     <!-- Stage examples -->
     <copy file="${SchemaCrawler.home}/schemacrawler-test/src/main/java/ApiExample.java"
           todir="${examples.staging.dir}/api" />
-    <copy file="${SchemaCrawler.home}/schemacrawler-test/src/main/java/ApiExample.java"
-          todir="${examples.staging.dir}/maven-project/src/main/java" />
 
     <!-- Copy config files -->
     <copy todir="${examples.staging.dir}/db-specific-query">
