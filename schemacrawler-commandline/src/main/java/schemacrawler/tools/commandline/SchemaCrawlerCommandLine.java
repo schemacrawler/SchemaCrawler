@@ -59,24 +59,13 @@ public final class SchemaCrawlerCommandLine
                                   final String... args)
     throws SchemaCrawlerException
   {
-    this(databaseConnector, null, args);
-  }
-
-  public SchemaCrawlerCommandLine(final ConnectionOptions connectionOptions,
-                                  final String... args)
-    throws SchemaCrawlerException
-  {
-    this(null, connectionOptions, args);
-  }
-
-  private SchemaCrawlerCommandLine(final DatabaseConnector databaseConnector,
-                                   final ConnectionOptions connectionOptions,
-                                   final String... args)
-    throws SchemaCrawlerException
-  {
     if (args == null || args.length == 0)
     {
       throw new SchemaCrawlerException("No command line arguments provided");
+    }
+    if (databaseConnector == null)
+    {
+      throw new SchemaCrawlerException("No database connector provided");
     }
 
     String[] remainingArgs = args;
@@ -89,30 +78,7 @@ public final class SchemaCrawlerCommandLine
     }
     command = commandParser.getOptions().toString();
 
-    if (databaseConnector == null)
-    {
-      this.databaseConnector = new DatabaseConnector()
-      {
-
-        private static final long serialVersionUID = 1352308748762219275L;
-
-        @Override
-        public String getDatabaseSystemIdentifier()
-        {
-          return "generic";
-        }
-
-        @Override
-        public String getDatabaseSystemName()
-        {
-          return "Generic Database System";
-        }
-      };
-    }
-    else
-    {
-      this.databaseConnector = databaseConnector;
-    }
+    this.databaseConnector = databaseConnector;
     config = this.databaseConnector.getConfig();
 
     if (remainingArgs.length > 0)
@@ -129,11 +95,7 @@ public final class SchemaCrawlerCommandLine
       config.putAll(additionalConfigParser.getOptions());
     }
 
-    if (connectionOptions != null)
-    {
-      this.connectionOptions = connectionOptions;
-    }
-    else if (this.databaseConnector.hasConfig())
+    if (this.databaseConnector.hasConfig())
     {
       final BaseDatabaseConnectionOptionsParser bundledDriverConnectionOptionsParser = new BundledDriverConnectionOptionsParser(config);
       remainingArgs = bundledDriverConnectionOptionsParser.parse(remainingArgs);

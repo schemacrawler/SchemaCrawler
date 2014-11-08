@@ -25,7 +25,10 @@ import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -33,6 +36,7 @@ import org.junit.Test;
 import schemacrawler.test.utility.BaseExecutableTest;
 import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.commandline.SchemaCrawlerCommandLine;
+import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry.UknownDatabaseConnector;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
@@ -103,16 +107,28 @@ public class LintExecutableTest
                                                     ".test");
     testOutputFile.delete();
 
-    final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(getDatabaseConnectionOptions(),
-                                                                              "-command=lint",
-                                                                              "-infolevel=standard",
-                                                                              "-sortcolumns=true",
-                                                                              "-outputformat="
-                                                                                  + outputFormat
-                                                                                    .getFormat(),
-                                                                              "-outputfile="
-                                                                                  + testOutputFile
-                                                                                    .getAbsolutePath());
+    final Map<String, String> args = new HashMap<>();
+    args.put("driver", "org.hsqldb.jdbc.JDBCDriver");
+    args.put("url", "jdbc:hsqldb:hsql://localhost/schemacrawler");
+    args.put("user", "sa");
+    args.put("password", "");
+
+    args.put("infolevel", "standard");
+    args.put("command", "lint");
+    args.put("sortcolumns", "true");
+    args.put("outputformat", outputFormat
+             .getFormat());
+    args.put("outputfile", testOutputFile.getAbsolutePath());
+
+    final List<String> argsList = new ArrayList<>();
+    for (final Map.Entry<String, String> arg: args.entrySet())
+    {
+      argsList.add(String.format("-%s=%s", arg.getKey(), arg.getValue()));
+    }
+
+    final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(new UknownDatabaseConnector(),
+                                                                              argsList
+                                                                                .toArray(new String[0]));
     commandLine.execute();
 
     final List<String> failures = TestUtility.compareOutput(referenceFileName
