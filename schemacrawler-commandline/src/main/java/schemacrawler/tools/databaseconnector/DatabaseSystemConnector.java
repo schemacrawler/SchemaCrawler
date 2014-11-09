@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -17,21 +17,20 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.tools.options;
+package schemacrawler.tools.databaseconnector;
 
 
 import java.sql.Connection;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.InformationSchemaViews;
-import schemacrawler.schemacrawler.Options;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.BaseExecutable;
 import schemacrawler.tools.executable.Executable;
+import schemacrawler.tools.options.InfoLevel;
 
-public abstract class DatabaseConnector
-  implements Options
+public class DatabaseSystemConnector
 {
 
   private final class NoOpExecutable
@@ -50,26 +49,18 @@ public abstract class DatabaseConnector
     }
   }
 
-  private static final long serialVersionUID = 2160456864554076419L;
-
-  private final HelpOptions helpOptions;
   private final String configResource;
   private final String informationSchemaViewsResourceFolder;
 
-  protected DatabaseConnector()
+  public DatabaseSystemConnector()
   {
-    helpOptions = new HelpOptions();
     configResource = null;
     informationSchemaViewsResourceFolder = null;
   }
 
-  protected DatabaseConnector(final String helpResource,
-                           final String configResource,
-                           final String informationSchemaViewsResourceFolder)
+  protected DatabaseSystemConnector(final String configResource,
+                                    final String informationSchemaViewsResourceFolder)
   {
-    helpOptions = new HelpOptions(String.format("SchemaCrawler for %s",
-                                                getDatabaseSystemName()),
-                                  helpResource);
     this.configResource = configResource;
     this.informationSchemaViewsResourceFolder = informationSchemaViewsResourceFolder;
   }
@@ -78,17 +69,12 @@ public abstract class DatabaseConnector
   {
     final Config config = Config.loadResource(configResource);
 
-    InformationSchemaViews informationSchemaViews = new InformationSchemaViews();
+    final InformationSchemaViews informationSchemaViews = new InformationSchemaViews();
     informationSchemaViews
       .loadResourceFolder(informationSchemaViewsResourceFolder);
     config.putAll(informationSchemaViews.toConfig());
 
     return config;
-  }
-
-  public final HelpOptions getHelpOptions()
-  {
-    return helpOptions;
   }
 
   public final SchemaCrawlerOptions getSchemaCrawlerOptions(final InfoLevel infoLevel)
@@ -117,9 +103,5 @@ public abstract class DatabaseConnector
   {
     return new NoOpExecutable("no-op");
   }
-
-  public abstract String getDatabaseSystemIdentifier();
-
-  public abstract String getDatabaseSystemName();
 
 }

@@ -36,7 +36,7 @@ import org.junit.Test;
 import schemacrawler.test.utility.BaseExecutableTest;
 import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.commandline.SchemaCrawlerCommandLine;
-import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry.UknownDatabaseConnector;
+import schemacrawler.tools.databaseconnector.DatabaseSystemConnector;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
@@ -116,8 +116,7 @@ public class LintExecutableTest
     args.put("infolevel", "standard");
     args.put("command", "lint");
     args.put("sortcolumns", "true");
-    args.put("outputformat", outputFormat
-             .getFormat());
+    args.put("outputformat", outputFormat.getFormat());
     args.put("outputfile", testOutputFile.getAbsolutePath());
 
     final List<String> argsList = new ArrayList<>();
@@ -126,7 +125,7 @@ public class LintExecutableTest
       argsList.add(String.format("-%s=%s", arg.getKey(), arg.getValue()));
     }
 
-    final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(new UknownDatabaseConnector(),
+    final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(new DatabaseSystemConnector(),
                                                                               argsList
                                                                                 .toArray(new String[0]));
     commandLine.execute();

@@ -20,31 +20,19 @@
 package schemacrawler.server.sqlserver;
 
 
-import schemacrawler.tools.options.DatabaseConnector;
+import schemacrawler.tools.databaseconnector.DatabaseConnector;
+import schemacrawler.tools.options.DatabaseServerType;
 
 public final class SqlServerDatabaseConnector
   extends DatabaseConnector
 {
 
-  private static final long serialVersionUID = -7476413718092201219L;
-
   public SqlServerDatabaseConnector()
   {
-    super("/help/Connections.sqlserver.txt",
+    super(new DatabaseServerType("sqlserver", "Microsoft SQL Server"),
+          "/help/Connections.sqlserver.txt",
           "/schemacrawler-sqlserver.config.properties",
           "/sqlserver.information_schema");
-  }
-
-  @Override
-  public String getDatabaseSystemIdentifier()
-  {
-    return "sqlserver";
-  }
-
-  @Override
-  public String getDatabaseSystemName()
-  {
-    return "Microsoft SQL Server";
   }
 
 }

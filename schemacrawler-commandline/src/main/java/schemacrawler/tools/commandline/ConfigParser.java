@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -26,7 +26,7 @@ import sf.util.clparser.StringOption;
 
 /**
  * Parses the command line.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public class ConfigParser

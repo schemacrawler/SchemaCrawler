@@ -66,9 +66,6 @@ public final class ProcessExecutor
 
   }
 
-  private static final Logger LOGGER = Logger.getLogger(ProcessExecutor.class
-    .getName());
-
   static private String createCommandLine(final List<String> command)
   {
     final StringBuilder sb = new StringBuilder();
@@ -94,6 +91,9 @@ public final class ProcessExecutor
     }
     return sb.toString();
   }
+
+  private static final Logger LOGGER = Logger.getLogger(ProcessExecutor.class
+    .getName());
 
   private final List<String> command;
   private String processOutput;

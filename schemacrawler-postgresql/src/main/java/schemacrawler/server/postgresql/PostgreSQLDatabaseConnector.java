@@ -24,34 +24,22 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.sql.DriverManager;
 
-import schemacrawler.tools.options.DatabaseConnector;
+import schemacrawler.tools.databaseconnector.DatabaseConnector;
+import schemacrawler.tools.options.DatabaseServerType;
 
 public final class PostgreSQLDatabaseConnector
   extends DatabaseConnector
 {
 
-  private static final long serialVersionUID = 5722302374017415049L;
-
   public PostgreSQLDatabaseConnector()
   {
-    super("/help/Connections.postgresql.txt",
+    super(new DatabaseServerType("postgresql", "PostgreSQL"),
+          "/help/Connections.postgresql.txt",
           "/schemacrawler-postgresql.config.properties",
           "/postgresql.information_schema");
 
     DriverManager
       .setLogWriter(new PrintWriter(new OutputStreamWriter(System.err)));
-  }
-
-  @Override
-  public String getDatabaseSystemIdentifier()
-  {
-    return "postgresql";
-  }
-
-  @Override
-  public String getDatabaseSystemName()
-  {
-    return "PostgreSQL";
   }
 
 }

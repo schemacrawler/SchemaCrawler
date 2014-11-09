@@ -20,31 +20,19 @@
 package schemacrawler.server.derby;
 
 
-import schemacrawler.tools.options.DatabaseConnector;
+import schemacrawler.tools.databaseconnector.DatabaseConnector;
+import schemacrawler.tools.options.DatabaseServerType;
 
 public final class DerbyDatabaseConnector
   extends DatabaseConnector
 {
 
-  private static final long serialVersionUID = 4987749348963852650L;
-
   public DerbyDatabaseConnector()
   {
-    super("/help/Connections.derby.txt",
+    super(new DatabaseServerType("derby", "Apache Derby"),
+          "/help/Connections.derby.txt",
           "/schemacrawler-derby.config.properties",
           "/derby.information_schema");
-  }
-
-  @Override
-  public String getDatabaseSystemIdentifier()
-  {
-    return "derby";
-  }
-
-  @Override
-  public String getDatabaseSystemName()
-  {
-    return "Apache Derby";
   }
 
 }

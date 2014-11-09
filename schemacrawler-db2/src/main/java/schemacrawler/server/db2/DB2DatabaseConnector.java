@@ -20,31 +20,19 @@
 package schemacrawler.server.db2;
 
 
-import schemacrawler.tools.options.DatabaseConnector;
+import schemacrawler.tools.databaseconnector.DatabaseConnector;
+import schemacrawler.tools.options.DatabaseServerType;
 
 public final class DB2DatabaseConnector
   extends DatabaseConnector
 {
 
-  private static final long serialVersionUID = 788422181303398180L;
-
   public DB2DatabaseConnector()
   {
-    super("/help/Connections.db2.txt",
+    super(new DatabaseServerType("db2", "IBM DB2"),
+          "/help/Connections.db2.txt",
           "/schemacrawler-db2.config.properties",
           "/db2.information_schema");
-  }
-
-  @Override
-  public String getDatabaseSystemIdentifier()
-  {
-    return "db2";
-  }
-
-  @Override
-  public String getDatabaseSystemName()
-  {
-    return "IBM DB2";
   }
 
 }

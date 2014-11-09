@@ -36,7 +36,7 @@ import org.junit.Test;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.commandline.SchemaCrawlerCommandLine;
-import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry.UknownDatabaseConnector;
+import schemacrawler.tools.databaseconnector.DatabaseSystemConnector;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.integration.freemarker.FreeMarkerRenderer;
 import schemacrawler.tools.integration.velocity.VelocityRenderer;
@@ -109,7 +109,7 @@ public class IntegrationTest
       argsList.add(String.format("-%s=%s", arg.getKey(), arg.getValue()));
     }
 
-    final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(new UknownDatabaseConnector(),
+    final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(new DatabaseSystemConnector(),
                                                                               argsList
                                                                                 .toArray(new String[0]));
     commandLine.execute();

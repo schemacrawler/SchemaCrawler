@@ -87,7 +87,7 @@ public class TestBundledDistributions
   {
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new HyperSQLDatabaseConnector()
-      .getSchemaCrawlerOptions(InfoLevel.maximum);
+      .getDatabaseSystemConnector().getSchemaCrawlerOptions(InfoLevel.maximum);
     final Catalog catalog = SchemaCrawlerUtility
       .getCatalog(getConnection(), schemaCrawlerOptions);
     assertNotNull(catalog);

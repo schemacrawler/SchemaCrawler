@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -26,7 +26,7 @@ import java.util.Map;
 
 /**
  * HTML escapes entities.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public final class Entities
@@ -442,7 +442,7 @@ public final class Entities
 
   /**
    * HTML escapes the characters in some text.
-   * 
+   *
    * @param text
    *        Text to escape.
    * @return HTML-escaped text

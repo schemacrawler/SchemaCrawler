@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -35,7 +35,7 @@ import schemacrawler.tools.traversal.DataTraversalHandler;
 
 /**
  * Text formatting of data.
- * 
+ *
  * @author Sualeh Fatehi
  */
 final class DataTextFormatter
@@ -48,7 +48,7 @@ final class DataTextFormatter
 
   /**
    * Text formatting of data.
-   * 
+   *
    * @param operation
    *        Options for text formatting of data
    * @param options
@@ -67,7 +67,7 @@ final class DataTextFormatter
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @throws SchemaCrawlerException
    * @see schemacrawler.tools.traversal.DataTraversalHandler#end()
    */
@@ -85,7 +85,7 @@ final class DataTextFormatter
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.tools.traversal.DataTraversalHandler#handleData(schemacrawler.tools.text.operation.Query,
    *      java.sql.ResultSet)
    */
@@ -108,7 +108,7 @@ final class DataTextFormatter
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.tools.traversal.DataTraversalHandler#handleData(schemacrawler.schema.Table,
    *      java.sql.ResultSet)
    */
@@ -153,7 +153,7 @@ final class DataTextFormatter
 
   /**
    * Handles an aggregate operation, such as a count, for a given table.
-   * 
+   *
    * @param title
    *        Title
    * @param results

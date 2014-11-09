@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -54,7 +54,7 @@ public enum Operation
 
   /**
    * Operation description.
-   * 
+   *
    * @return Operation description
    */
   public String getDescription()
@@ -64,7 +64,7 @@ public enum Operation
 
   /**
    * Query.
-   * 
+   *
    * @return Query
    */
   public Query getQuery()
@@ -74,7 +74,7 @@ public enum Operation
 
   /**
    * Message format for the counts.
-   * 
+   *
    * @param number
    *        Number value in the message
    * @return Message format for the counts

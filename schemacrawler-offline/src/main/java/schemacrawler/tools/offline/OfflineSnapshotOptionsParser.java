@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -27,7 +27,7 @@ import sf.util.clparser.StringOption;
 
 /**
  * Parses the command line.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public final class OfflineSnapshotOptionsParser
@@ -38,7 +38,7 @@ public final class OfflineSnapshotOptionsParser
 
   public OfflineSnapshotOptionsParser(final Config config)
   {
-    super(new StringOption('i', "inputfile", ""));
+    super(new StringOption("database", ""));
 
     options = new OfflineSnapshotOptions(config);
   }
@@ -47,7 +47,7 @@ public final class OfflineSnapshotOptionsParser
   public OfflineSnapshotOptions getOptions()
   {
 
-    final String inputSource = getStringValue("inputfile");
+    final String inputSource = getStringValue("database");
     options.setInputSource(inputSource);
 
     return options;

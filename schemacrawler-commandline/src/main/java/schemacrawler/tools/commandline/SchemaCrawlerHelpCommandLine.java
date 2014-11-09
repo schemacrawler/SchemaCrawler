@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -27,7 +27,7 @@ import sf.util.Utility;
 
 /**
  * Utility for parsing the SchemaCrawler command line.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public final class SchemaCrawlerHelpCommandLine
@@ -53,7 +53,7 @@ public final class SchemaCrawlerHelpCommandLine
   /**
    * Loads objects from command line options. Optionally loads the
    * config from the classpath.
-   * 
+   *
    * @param args
    *        Command line arguments.
    * @param helpOptions
@@ -96,7 +96,7 @@ public final class SchemaCrawlerHelpCommandLine
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.tools.commandline.CommandLine#execute()
    */
   @Override

@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -30,7 +30,7 @@ import sf.util.clparser.StringOption;
 
 /**
  * Options for the command line.
- * 
+ *
  * @author sfatehi
  */
 final class BundledDriverConnectionOptionsParser
