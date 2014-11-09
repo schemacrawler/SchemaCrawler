@@ -9,12 +9,35 @@ The first thing to try is the [SchemaCrawler examples].
 Several examples on how to use SchemaCrawler on the command-line, as an [ant] task or [Maven] plugin, 
 as an API, how to script your database using JavaScript, [Groovy],
 [Ruby] or [Python], how to create database diagrams with [Graphviz], how to integrate with the 
-[Spring Framework], and how to use the [Apache Velocity] (templating) integration are provided with the 
+[Spring Framework], and how to use the [Apache Velocity] templating integration are provided with the 
 [SchemaCrawler examples] download.
 
 ## How-tos
 Once you start getting comfortable with SchemaCrawler, and need to know more about how to do things, 
 read the [how-tos] section.
+
+# Installation
+
+## Pre-requisites for Installation
+
+- Install the latest version of [Java](https://www.java.com/)
+- Optionally, install [GraphViz](http://www.graphviz.org/), if you want to create database diagrams
+- Optionally, install [Apache any](http://ant.apache.org/) and [Apache Maven](http://maven.apache.org/), 
+  if you want to try out the examples
+
+## Cross-platform Install
+Installing SchemaCrawler is as simple as unzipping a file. First, 
+[download SchemaCrawler](https://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20Examples/),
+and unzip it into a directory. You will have an examples folder, and with it, the SchemaCrawler
+distribution, in a directory called `_schemacrawler`. You can make a copy of this `_schemacrawler`
+directory to any location on your hard-disk, and rename the directory to something appropriate.
+Then, put this directory on your PATH. Once you open a command shell, you can run SchemaCrawler
+using `sc.cmd` (or `sc.sh` on Unix).
+
+## Installing From the Debian Package
+Download the [Debian schemacrawler package](), and install it using
+`sudo dpkg -i schemacrawler-11.03.01.deb`. SchemaCrawler gets installed in `/opt/schemacrawler`.
+You can run SchemaCrawler using the `schemacrawler` command, which will be on the PATH.
 
 # Using SchemaCrawler in Your Projects
 
@@ -56,8 +79,8 @@ source directory, and install them locally.
 
 # Acknowledgements
 
-## Clover
-SchemaCrawler is grateful to Atlassian for providing a license for [Clover].
+- SchemaCrawler is grateful to Adrien Sales for developing the Debian package.
+- SchemaCrawler is grateful to Atlassian for providing a license for [Clover].
 
 
 [FAQs]: faq.html
