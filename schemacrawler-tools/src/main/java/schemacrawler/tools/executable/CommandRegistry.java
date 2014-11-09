@@ -27,6 +27,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.ServiceLoader;
@@ -43,6 +44,7 @@ import schemacrawler.tools.options.OutputOptions;
  * @author Sualeh Fatehi
  */
 public final class CommandRegistry
+  implements Iterable<String>
 {
 
   private static Map<String, CommandProvider> loadCommandRegistry()
@@ -122,11 +124,10 @@ public final class CommandRegistry
     return commandRegistry.containsKey(command);
   }
 
-  public Collection<String> lookupAvailableCommands()
+  @Override
+  public Iterator<String> iterator()
   {
-    final List<String> availableCommands = new ArrayList<>(commandRegistry.keySet());
-    Collections.sort(availableCommands);
-    return availableCommands;
+    return lookupAvailableCommands().iterator();
   }
 
   Executable configureNewExecutable(final String command,
@@ -147,6 +148,13 @@ public final class CommandRegistry
 
     return commandProvider.configureNewExecutable(schemaCrawlerOptions,
                                                   outputOptions);
+  }
+
+  private Collection<String> lookupAvailableCommands()
+  {
+    final List<String> availableCommands = new ArrayList<>(commandRegistry.keySet());
+    Collections.sort(availableCommands);
+    return availableCommands;
   }
 
 }
