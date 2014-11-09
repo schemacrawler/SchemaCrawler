@@ -30,7 +30,7 @@ import sf.util.Utility;
 /**
  * Version information for this product. Has methods to obtain
  * information about the product, as well as a main method, so it can be
- * called from the command line.
+ * called from the command-line.
  *
  * @author Sualeh Fatehi
  */

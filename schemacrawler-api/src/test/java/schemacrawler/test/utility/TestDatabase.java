@@ -60,7 +60,7 @@ public class TestDatabase
    * Starts up a test database in server mode.
    *
    * @param args
-   *        Command line arguments
+   *        Command-line arguments
    * @throws Exception
    *         Exception
    */

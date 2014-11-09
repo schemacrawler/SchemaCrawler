@@ -25,7 +25,7 @@ import schemacrawler.tools.commandline.BaseOptionsParser;
 import sf.util.clparser.StringOption;
 
 /**
- * Options for the command line.
+ * Options for the command-line.
  * 
  * @author sfatehi
  */
@@ -34,7 +34,7 @@ final class SpringOptionsParser
 {
 
   /**
-   * Parses the command line into options.
+   * Parses the command-line into options.
    * 
    * @param args
    *        Command-line arguments

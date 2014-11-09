@@ -26,7 +26,7 @@ import schemacrawler.tools.options.HelpOptions;
 import sf.util.Utility;
 
 /**
- * Utility for parsing the SchemaCrawler command line.
+ * Utility for parsing the SchemaCrawler command-line.
  *
  * @author Sualeh Fatehi
  */
@@ -51,7 +51,7 @@ public final class SchemaCrawlerHelpCommandLine
   private final HelpOptions helpOptions;
 
   /**
-   * Loads objects from command line options. Optionally loads the
+   * Loads objects from command-line options. Optionally loads the
    * config from the classpath.
    *
    * @param args
@@ -70,7 +70,7 @@ public final class SchemaCrawlerHelpCommandLine
   {
     if (args == null)
     {
-      throw new IllegalArgumentException("No command line arguments provided");
+      throw new IllegalArgumentException("No command-line arguments provided");
     }
 
     if (helpOptions == null)

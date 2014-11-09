@@ -37,7 +37,7 @@ import schemacrawler.tools.options.OutputOptions;
 import sf.util.ObjectToString;
 
 /**
- * Utility for parsing the SchemaCrawler command line.
+ * Utility for parsing the SchemaCrawler command-line.
  *
  * @author Sualeh Fatehi
  */
@@ -61,7 +61,7 @@ public final class SchemaCrawlerCommandLine
   {
     if (args == null || args.length == 0)
     {
-      throw new SchemaCrawlerException("No command line arguments provided");
+      throw new SchemaCrawlerException("No command-line arguments provided");
     }
     if (dbSystemConnector == null)
     {
@@ -118,7 +118,7 @@ public final class SchemaCrawlerCommandLine
 
     if (remainingArgs.length > 0)
     {
-      LOGGER.log(Level.INFO, "Too many command line arguments provided: "
+      LOGGER.log(Level.INFO, "Too many command-line arguments provided: "
                              + ObjectToString.toString(remainingArgs));
     }
   }

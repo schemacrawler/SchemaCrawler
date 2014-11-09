@@ -41,7 +41,7 @@ command-line options:
 - -host - specifies the database server host; it is optional, and defaults to localhost
 - -port - specifies the database server port; it is optional, and defaults to the default port for the server type
 
-For example, a typical command line for SchemaCrawler for Microsoft SQL Server looks like:  
+For example, a typical command-line for SchemaCrawler for Microsoft SQL Server looks like:  
 `-server=sqlserver -host=localhost -port=1433 -database=schemacrawler -schemas=schemacrawler.dbo 
 -user=schemacrawler -password=schemacrawler`
 

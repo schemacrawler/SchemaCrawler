@@ -29,7 +29,7 @@ import sf.util.clparser.BooleanOption;
 import sf.util.clparser.StringOption;
 
 /**
- * Parses the command line.
+ * Parses the command-line.
  *
  * @author Sualeh Fatehi
  */

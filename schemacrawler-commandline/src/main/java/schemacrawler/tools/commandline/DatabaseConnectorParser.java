@@ -27,7 +27,7 @@ import schemacrawler.tools.options.DatabaseServerType;
 import sf.util.clparser.StringOption;
 
 /**
- * Parses the command line.
+ * Parses the command-line.
  *
  * @author Sualeh Fatehi
  */
