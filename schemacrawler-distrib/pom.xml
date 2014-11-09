@@ -294,7 +294,58 @@
             </goals>
           </execution>
         </executions>
-      </plugin>        
+      </plugin> 
+      
+      <plugin>
+        <artifactId>jdeb</artifactId>
+        <groupId>org.vafer</groupId>
+        <version>1.3</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>jdeb</goal>
+            </goals>
+            <configuration>
+              <skipPOMs>false</skipPOMs>
+              <dataSet>
+                <!-- Complete distribution -->
+                <data>
+                  <src>${project.build.directory}/_examples/_schemacrawler</src>
+                  <type>directory</type>
+                  <mapper>
+                    <type>perm</type>
+                    <prefix>/opt/schemacrawler-${project.version}/</prefix>
+                  </mapper>                  
+                </data>
+                <!-- Command-line -->
+                <data>
+                  <src>${project.build.directory}/_examples/_schemacrawler/sc.sh</src>                  
+                  <type>file</type>
+                  <mapper>
+                    <type>perm</type>
+                    <filemode>755</filemode>
+                    <prefix>/opt/schemacrawler-${project.version}/</prefix>
+                  </mapper>
+                </data>            
+                <!-- Symbolic links -->
+                <data>
+                  <type>link</type>
+                  <linkName>/opt/schemacrawler</linkName>
+                  <linkTarget>/opt/schemacrawler-${project.version}</linkTarget> 
+                  <symlink>true</symlink>
+                </data>
+                <data>
+                  <type>link</type>
+                  <linkName>/usr/bin/schemacrawler</linkName>
+                  <linkTarget>/opt/schemacrawler-${project.version}/sc.sh</linkTarget> 
+                  <symlink>true</symlink>
+                </data>
+              </dataSet>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>      
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-gpg-plugin</artifactId>
