@@ -27,11 +27,11 @@ import sf.util.clparser.CommandLineParser;
 import sf.util.clparser.Option;
 
 /**
- * Parses the command line.
+ * Parses the command-line.
  *
  * @author Sualeh Fatehi
  * @param <O>
- *        Options to be parsed from the command line.
+ *        Options to be parsed from the command-line.
  */
 public abstract class BaseOptionsParser<O extends Options>
   extends CommandLineParser

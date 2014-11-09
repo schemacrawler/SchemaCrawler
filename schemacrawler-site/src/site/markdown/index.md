@@ -16,11 +16,12 @@ convenience is [bundled with drivers](bundled.html) for some commonly used
 RDBMS systems. SchemaCrawler works with any operating system that supports
 Java 7 or better.
 
-Support SchemaCrawler by making a [donation](http://sourceforge.net/donate/index.php?group_id=148383).
+Consider supporting SchemaCrawler by making a 
+[donation](http://sourceforge.net/donate/index.php?group_id=148383).
 
 ## SchemaCrawler Command Line
 
-SchemaCrawler comes with a set of command line tools that allow database
+SchemaCrawler comes with a set of command-line tools that allow database
 metadata to be output as [plain text,](snapshot-examples/snapshot.txt) 
 [comma-separated text (CSV),](snapshot-examples/snapshot.csv) [HTML5,](snapshot-examples/snapshot.html) or 
 [JavaScript object notation (JSON).](snapshot-examples/snapshot.json) 

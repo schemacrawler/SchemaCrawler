@@ -42,7 +42,7 @@ public final class Main
    * schema.
    * 
    * @param args
-   *        Arguments passed into the program from the command line.
+   *        Arguments passed into the program from the command-line.
    * @throws Exception
    */
   public static void main(final String[] args)
