@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -20,7 +20,6 @@
 package schemacrawler.tools.lint;
 
 
-import java.util.ServiceLoader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -45,9 +44,11 @@ public final class LintedCatalog
     super(catalog);
 
     collector = new SimpleLintCollector();
-    final ServiceLoader<Linter> lintLoaders = ServiceLoader.load(Linter.class);
-    for (final Linter linter: lintLoaders)
+
+    final LinterRegistry registry = new LinterRegistry();
+    for (final String linterId: registry)
     {
+      final Linter linter = registry.lookupLinter(linterId);
       LOGGER.log(Level.FINE,
                  String.format("Linting with %s", linter.getClass().getName()));
       linter.setLintCollector(collector);
