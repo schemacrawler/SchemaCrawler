@@ -8,8 +8,8 @@ The command example demonstrates the use of SchemaCrawler from the shell command
 2. Start the database server by running the StartDatabaseServer script from the distribution directory 
 3. Start a command shell in the SchemaCrawler distribution directory, that is, the `_schemacrawler` directory. 
 4. Run `sc.cmd -help` (or `sc.sh -help` on Unix), to give you a list of available command-line options 
-5. To start with, run `sc.cmd -server=hsqldb -database=schemacrawler -infolevel=minimum -command=brief` 
-   (or `sc.sh -server=hsqldb -database=schemacrawler -infolevel=minimum -command=brief` on Unix)
+5. To start with, run `sc.cmd -server=hsqldb -database=schemacrawler -password= -infolevel=minimum -command=list` 
+   (or `sc.sh -server=hsqldb -database=schemacrawler -password= -infolevel=minimum -command=list` on Unix)
 
 ## How to Experiment
 1. Take a look at the SchemaCrawler grep example, in the [grep](../grep/grep-readme.html) example directory. 

@@ -7,9 +7,9 @@ a regular expression.
 ## How to Run
 1. Follow the instructions in the [commandline](../commandline/commandline-readme.html) example. 
 2. To find tables with certain column names, run `sc.cmd -server=hsqldb -database=schemacrawler -infolevel=standard -command=details -routines= -grepcolumns=.*\\.PUBLISHER` 
-   (or `sc.sh -server=hsqldb -database=schemacrawler -infolevel=standard -command=details -routines= -grepcolumns=.*\\.PUBLISHER` on Unix) 
+   (or `sc.sh -server=hsqldb -database=schemacrawler -password= -infolevel=standard -command=details -routines= -grepcolumns=.*\\.PUBLISHER` on Unix) 
 3. To find routines with certain parameter names, run `sc.cmd -server=hsqldb -database=schemacrawler -infolevel=standard -command=schema -tables= -grepinout=.*\\.B_OFFSET` 
-   (or `sc.sh -server=hsqldb -database=schemacrawler -infolevel=standard -command=schema -tables= -grepinout=.*\\.B_OFFSET` on Unix) 
+   (or `sc.sh -server=hsqldb -database=schemacrawler -password= -infolevel=standard -command=schema -tables= -grepinout=.*\\.B_OFFSET` on Unix) 
 
 ## How to Experiment
 1. Try grep for columns in tables that match a pattern.
