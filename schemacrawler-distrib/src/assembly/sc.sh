@@ -1,1 +1,2 @@
-java -classpath lib/*:. schemacrawler.Main $*
+#!/bin/sh
+java -cp $(echo ./lib/*.jar | tr ' ' ':') schemacrawler.Main $*
