@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -26,7 +26,7 @@ import schemacrawler.tools.text.base.BaseTextOptions;
 
 /**
  * Operator options.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public final class OperationOptions
@@ -48,7 +48,7 @@ public final class OperationOptions
 
   /**
    * Operator options from properties. Constructor.
-   * 
+   *
    * @param config
    *        Config
    */
@@ -60,7 +60,7 @@ public final class OperationOptions
 
   /**
    * Whether to show LOBs.
-   * 
+   *
    * @return Whether to show LOBs.
    */
   public boolean isShowLobs()
@@ -70,7 +70,7 @@ public final class OperationOptions
 
   /**
    * Whether to show LOBs.
-   * 
+   *
    * @param showLobs
    *        Whether to show LOBs
    */

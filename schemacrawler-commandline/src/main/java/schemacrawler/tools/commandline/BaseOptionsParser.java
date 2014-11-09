@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -28,7 +28,7 @@ import sf.util.clparser.Option;
 
 /**
  * Parses the command line.
- * 
+ *
  * @author Sualeh Fatehi
  * @param <O>
  *        Options to be parsed from the command line.

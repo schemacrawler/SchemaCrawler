@@ -4,7 +4,7 @@ package schemacrawler.tools.text.utility.org.json;
 /**
  * The JSONException is thrown by the JSON.org classes when things are
  * amiss.
- * 
+ *
  * @author JSON.org
  * @version 2010-12-24
  */
@@ -16,7 +16,7 @@ public class JSONException
 
   /**
    * Constructs a JSONException with an explanatory message.
-   * 
+   *
    * @param message
    *        Detail about the reason for the exception.
    */

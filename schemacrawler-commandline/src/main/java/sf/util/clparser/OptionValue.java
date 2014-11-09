@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -23,7 +23,7 @@ package sf.util.clparser;
 
 /**
  * Representation of a command-line option.
- * 
+ *
  * @author Sualeh Fatehi
  * @param <T>
  *        Option type

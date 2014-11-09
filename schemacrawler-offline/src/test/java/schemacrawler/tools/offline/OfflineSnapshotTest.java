@@ -30,7 +30,10 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -60,17 +63,22 @@ public class OfflineSnapshotTest
                                                     + "details" + ".", ".test");
     testOutputFile.delete();
 
-    final OfflineSnapshotCommandLine commandLine = new OfflineSnapshotCommandLine("-inputfile",
-                                                                                  serializedDatabaseFile
-                                                                                    .getAbsolutePath(),
-                                                                                  "-command="
-                                                                                      + "details",
-                                                                                  "-infolevel=maximum",
-                                                                                  "-outputformat="
-                                                                                      + "text",
-                                                                                  "-outputfile",
-                                                                                  testOutputFile
-                                                                                    .getAbsolutePath());
+    final Map<String, String> args = new HashMap<>();
+    args.put("database", serializedDatabaseFile.getAbsolutePath());
+
+    args.put("infolevel", "maximum");
+    args.put("command", "details");
+    args.put("outputformat", "text");
+    args.put("outputfile", testOutputFile.getAbsolutePath());
+
+    final List<String> argsList = new ArrayList<>();
+    for (final Map.Entry<String, String> arg: args.entrySet())
+    {
+      argsList.add(String.format("-%s=%s", arg.getKey(), arg.getValue()));
+    }
+
+    final OfflineSnapshotCommandLine commandLine = new OfflineSnapshotCommandLine(argsList
+      .toArray(new String[0]));
     commandLine.execute();
 
     final List<String> failures = TestUtility

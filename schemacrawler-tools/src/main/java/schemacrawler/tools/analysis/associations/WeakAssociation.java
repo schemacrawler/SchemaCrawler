@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -26,7 +26,7 @@ import schemacrawler.schema.ColumnReference;
 /**
  * Represents a single column mapping from a primary key column to a
  * foreign key column.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public final class WeakAssociation
@@ -102,7 +102,7 @@ public final class WeakAssociation
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.ForeignKeyColumnReference#getForeignKeyColumn()
    */
   @Override
@@ -113,7 +113,7 @@ public final class WeakAssociation
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.ForeignKeyColumnReference#getPrimaryKeyColumn()
    */
   @Override

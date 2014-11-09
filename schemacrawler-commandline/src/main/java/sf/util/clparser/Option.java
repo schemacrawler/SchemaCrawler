@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -23,7 +23,7 @@ package sf.util.clparser;
 
 /**
  * Representation of a command-line option.
- * 
+ *
  * @author Sualeh Fatehi
  * @param <T>
  *        Option type
@@ -35,28 +35,28 @@ public interface Option<T>
 
   /**
    * Gets the long form of the switch for the option.
-   * 
+   *
    * @return Long form of the switch
    */
   String getLongForm();
 
   /**
    * Gets the short form of the switch for the option.
-   * 
+   *
    * @return Short form of the switch
    */
   String getShortForm();
 
   /**
    * Whether the option has the long form of the switch.
-   * 
+   *
    * @return Whether the option has the long form of the switch
    */
   boolean hasLongForm();
 
   /**
    * Whether the option has the short form of the switch.
-   * 
+   *
    * @return Whether the option has the short form of the switch
    */
   boolean hasShortForm();

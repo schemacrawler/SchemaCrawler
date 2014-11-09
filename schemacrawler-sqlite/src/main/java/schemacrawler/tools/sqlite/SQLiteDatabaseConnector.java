@@ -20,31 +20,19 @@
 package schemacrawler.tools.sqlite;
 
 
-import schemacrawler.tools.options.DatabaseConnector;
+import schemacrawler.tools.databaseconnector.DatabaseConnector;
+import schemacrawler.tools.options.DatabaseServerType;
 
 public final class SQLiteDatabaseConnector
   extends DatabaseConnector
 {
 
-  private static final long serialVersionUID = 7181719520243423090L;
-
   public SQLiteDatabaseConnector()
   {
-    super("/help/Connections.sqlite.txt",
+    super(new DatabaseServerType("sqlite", "SQLite"),
+          "/help/Connections.sqlite.txt",
           "/schemacrawler-sqlite.config.properties",
           "/sqlite.information_schema");
-  }
-
-  @Override
-  public String getDatabaseSystemIdentifier()
-  {
-    return "sqlite";
-  }
-
-  @Override
-  public String getDatabaseSystemName()
-  {
-    return "SQLite";
   }
 
 }

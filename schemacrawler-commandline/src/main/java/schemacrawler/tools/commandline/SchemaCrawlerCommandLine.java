@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -30,15 +30,15 @@ import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.tools.databaseconnector.DatabaseSystemConnector;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import schemacrawler.tools.options.DatabaseConnector;
 import schemacrawler.tools.options.OutputOptions;
 import sf.util.ObjectToString;
 
 /**
  * Utility for parsing the SchemaCrawler command line.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public final class SchemaCrawlerCommandLine
@@ -53,9 +53,9 @@ public final class SchemaCrawlerCommandLine
   private final SchemaCrawlerOptions schemaCrawlerOptions;
   private final OutputOptions outputOptions;
   private final ConnectionOptions connectionOptions;
-  private final DatabaseConnector databaseConnector;
+  private final DatabaseSystemConnector dbSystemConnector;
 
-  public SchemaCrawlerCommandLine(final DatabaseConnector databaseConnector,
+  public SchemaCrawlerCommandLine(final DatabaseSystemConnector dbSystemConnector,
                                   final String... args)
     throws SchemaCrawlerException
   {
@@ -63,7 +63,7 @@ public final class SchemaCrawlerCommandLine
     {
       throw new SchemaCrawlerException("No command line arguments provided");
     }
-    if (databaseConnector == null)
+    if (dbSystemConnector == null)
     {
       throw new SchemaCrawlerException("No database connector provided");
     }
@@ -78,8 +78,8 @@ public final class SchemaCrawlerCommandLine
     }
     command = commandParser.getOptions().toString();
 
-    this.databaseConnector = databaseConnector;
-    config = this.databaseConnector.getConfig();
+    this.dbSystemConnector = dbSystemConnector;
+    config = this.dbSystemConnector.getConfig();
 
     if (remainingArgs.length > 0)
     {
@@ -95,18 +95,17 @@ public final class SchemaCrawlerCommandLine
       config.putAll(additionalConfigParser.getOptions());
     }
 
-    if (this.databaseConnector.hasConfig())
+    if (this.dbSystemConnector.hasConfig())
     {
       final BaseDatabaseConnectionOptionsParser bundledDriverConnectionOptionsParser = new BundledDriverConnectionOptionsParser(config);
       remainingArgs = bundledDriverConnectionOptionsParser.parse(remainingArgs);
-      this.connectionOptions = bundledDriverConnectionOptionsParser
-        .getOptions();
+      connectionOptions = bundledDriverConnectionOptionsParser.getOptions();
     }
     else
     {
       final CommandLineConnectionOptionsParser commandLineConnectionOptionsParser = new CommandLineConnectionOptionsParser(config);
       remainingArgs = commandLineConnectionOptionsParser.parse(remainingArgs);
-      this.connectionOptions = commandLineConnectionOptionsParser.getOptions();
+      connectionOptions = commandLineConnectionOptionsParser.getOptions();
     }
 
     final SchemaCrawlerOptionsParser schemaCrawlerOptionsParser = new SchemaCrawlerOptionsParser(config);
@@ -132,7 +131,7 @@ public final class SchemaCrawlerCommandLine
 
     Executable executableForList;
 
-    executableForList = databaseConnector.newPreExecutable();
+    executableForList = dbSystemConnector.newPreExecutable();
     initialize(executableForList);
     executables.add(executableForList);
 
@@ -140,7 +139,7 @@ public final class SchemaCrawlerCommandLine
     initialize(executableForList);
     executables.add(executableForList);
 
-    executableForList = databaseConnector.newPostExecutable();
+    executableForList = dbSystemConnector.newPostExecutable();
     initialize(executableForList);
     executables.add(executableForList);
 

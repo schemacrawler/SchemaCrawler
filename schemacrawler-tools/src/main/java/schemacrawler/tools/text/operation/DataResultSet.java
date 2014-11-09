@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -46,7 +46,7 @@ import schemacrawler.utility.SchemaCrawlerUtility;
 
 /**
  * Text formatting of data.
- * 
+ *
  * @author Sualeh Fatehi
  */
 final class DataResultSet
@@ -299,7 +299,7 @@ final class DataResultSet
   /**
    * Reads data from an input stream into a string. Default system
    * encoding is assumed.
-   * 
+   *
    * @param columnData
    *        Column data object returned by JDBC
    * @return A string with the contents of the LOB

@@ -20,31 +20,19 @@
 package schemacrawler.server.sybaseiq;
 
 
-import schemacrawler.tools.options.DatabaseConnector;
+import schemacrawler.tools.databaseconnector.DatabaseConnector;
+import schemacrawler.tools.options.DatabaseServerType;
 
 public final class SybaseIQDatabaseConnector
   extends DatabaseConnector
 {
 
-  private static final long serialVersionUID = 788422181303398180L;
-
   public SybaseIQDatabaseConnector()
   {
-    super("/help/Connections.sybaseiq.txt",
+    super(new DatabaseServerType("sybaseiq", "SAP Sybase IQ"),
+          "/help/Connections.sybaseiq.txt",
           "/schemacrawler-sybaseiq.config.properties",
           null);
-  }
-
-  @Override
-  public String getDatabaseSystemIdentifier()
-  {
-    return "sybaseiq";
-  }
-
-  @Override
-  public String getDatabaseSystemName()
-  {
-    return "SAP Sybase IQ";
   }
 
 }

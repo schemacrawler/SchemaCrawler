@@ -23,7 +23,7 @@ package schemacrawler.tools.commandline;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
-import schemacrawler.tools.options.DatabaseConnector;
+import schemacrawler.tools.options.DatabaseServerType;
 import sf.util.clparser.StringOption;
 
 /**
@@ -32,7 +32,7 @@ import sf.util.clparser.StringOption;
  * @author Sualeh Fatehi
  */
 public final class DatabaseConnectorParser
-  extends BaseOptionsParser<DatabaseConnector>
+  extends BaseOptionsParser<DatabaseServerType>
 {
 
   public DatabaseConnectorParser()
@@ -41,12 +41,13 @@ public final class DatabaseConnectorParser
   }
 
   @Override
-  public DatabaseConnector getOptions()
+  public DatabaseServerType getOptions()
     throws SchemaCrawlerException
   {
     final DatabaseConnectorRegistry registry = new DatabaseConnectorRegistry();
-    final DatabaseConnector databaseConnector = registry
-      .lookupDatabaseSystemIdentifier(getStringValue("server"));
+    final DatabaseServerType databaseConnector = registry
+      .lookupDatabaseSystemIdentifier(getStringValue("server"))
+      .getDatabaseServerType();
     return databaseConnector;
   }
 

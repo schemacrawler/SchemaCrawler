@@ -116,7 +116,7 @@ final class WeakAssociationsAnalyzer
 
   /**
    * Finds table prefixes. A prefix ends with "_".
-   * 
+   *
    * @param tables
    *        Tables
    * @return Table name prefixes
