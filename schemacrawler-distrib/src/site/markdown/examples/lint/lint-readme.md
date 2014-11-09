@@ -6,8 +6,8 @@ below to run SchemaCrawler Lint.
 
 ## How to Run
 1. Follow the instructions in the [commandline](../commandline/commandline-readme.html) example 
-2. To find schema design issues, run `sc.cmd -server=hsqldb -database=schemacrawler -infolevel=standard -command=lint` 
-   (or `sc.sh -server=hsqldb -database=schemacrawler -infolevel=standard -command=lint` on Unix) 
+2. To find schema design issues, run `sc.cmd -server=hsqldb -database=schemacrawler -password= -infolevel=standard -command=lint` 
+   (or `sc.sh -server=hsqldb -database=schemacrawler -password= -infolevel=standard -command=lint` on Unix) 
 
 ## How to Experiment
 1. Create the SchemaCrawler Lint report in HTML5 and JSON formats. 
