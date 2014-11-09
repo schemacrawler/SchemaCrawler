@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.ServiceLoader;
@@ -42,6 +43,7 @@ import schemacrawler.tools.options.DatabaseServerType;
  * @author Sualeh Fatehi
  */
 public final class DatabaseConnectorRegistry
+  implements Iterable<String>
 {
 
   private static Map<String, DatabaseConnector> loadDatabaseConnectorRegistry()
@@ -98,12 +100,10 @@ public final class DatabaseConnectorRegistry
     return databaseConnectorRegistry.containsKey(databaseSystemIdentifier);
   }
 
-  public Collection<String> lookupAvailableDatabaseConnectors()
+  @Override
+  public Iterator<String> iterator()
   {
-    final List<String> availableDatabaseConnectors = new ArrayList<>(databaseConnectorRegistry
-      .keySet());
-    Collections.sort(availableDatabaseConnectors);
-    return availableDatabaseConnectors;
+    return lookupAvailableDatabaseConnectors().iterator();
   }
 
   public DatabaseConnector lookupDatabaseSystemIdentifier(final String databaseSystemIdentifier)
@@ -116,6 +116,14 @@ public final class DatabaseConnectorRegistry
     {
       return uknownDatabaseConnector;
     }
+  }
+
+  private Collection<String> lookupAvailableDatabaseConnectors()
+  {
+    final List<String> availableDatabaseConnectors = new ArrayList<>(databaseConnectorRegistry
+      .keySet());
+    Collections.sort(availableDatabaseConnectors);
+    return availableDatabaseConnectors;
   }
 
 }
