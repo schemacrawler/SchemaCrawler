@@ -88,7 +88,8 @@
       <question> What databases does SchemaCrawler work with? </question>
       <answer>
         <p> SchemaCrawler supports any database for which there is a JDBC database driver available. SchemaCrawler has
-          been tested with various databases, and JDBC drivers.
+          been tested with various databases, and JDBC drivers. For more information, see <a href="database-support.html">Database System
+          Support.</a>
         </p>
       </answer>
     </faq>
@@ -129,11 +130,7 @@
         </p>
         <p>
           <i>
-            For more details, see scripting example in the
-          <a href="https://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20Examples/">SchemaCrawler examples</a>
-          download, in the
-            <code>examples\maven-project</code>
-            directory.
+            For more details, see the <a href="plugins.html">plugins</a> page.
           </i>
         </p>
         <p>
@@ -159,6 +156,11 @@
           <a href="#whats-schemacrawler-grep">grep</a>
           functionality.
         </p>
+        <p>
+          <i>
+            For more details, see the <a href="diagramming.html">diagramming</a> page.
+          </i>
+        </p>        
       </answer>
     </faq>
     <faq id="diagram-output">
@@ -185,7 +187,7 @@
       </answer>
     </faq>
     <faq id="grep-output">
-      <question> What does SchemaCrawler output look like? </question>
+      <question> What does SchemaCrawler Grep output look like? </question>
       <answer>
         <p> SchemaCrawler Grep output is the same as the SchemaCrawler text output. </p>
       </answer>
@@ -223,9 +225,9 @@
           command-line option.
         </p>
         <p>
-          For more details, look at the
+          <i>For more details, look at the
           <a href="lint.html">SchemaCrawler Lint</a>
-          page.
+          page.</i>
         </p>
       </answer>
     </faq>
