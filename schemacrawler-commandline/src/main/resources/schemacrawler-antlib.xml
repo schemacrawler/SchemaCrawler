@@ -9,7 +9,11 @@
       default="${schemacrawler-classpath}"/>
 
     <!-- Connection Options -->
-    
+  
+    <attribute
+      name="server"
+      description="Database server"
+      default=""/>    
     <attribute
       name="driver"
       description="JDBC driver class name"
@@ -183,6 +187,7 @@
         </classpath>
         <arg value="-g=@{config}"/>
         <arg value="-p=@{additional-config}"/>
+        <arg value="-server=@{server}"/>
         <arg value="-driver=@{driver}"/>
         <arg value="-url=@{url}"/>
         <arg value="-user=@{user}"/>
