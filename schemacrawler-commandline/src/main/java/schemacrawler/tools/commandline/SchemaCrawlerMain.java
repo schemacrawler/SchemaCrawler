@@ -54,7 +54,10 @@ public class SchemaCrawlerMain
       .lookupDatabaseSystemIdentifier(dbServerType
         .getDatabaseSystemIdentifier());
 
-    final boolean showHelp = args == null || args.length == 0
+    final boolean showHelp = args == null
+                             || args.length == 0
+                             || (args.length == 1 && SchemaCrawlerMain.class
+                               .getCanonicalName().equals(args[0]))
                              || applicationOptions.isShowHelp();
 
     final CommandLine commandLine;

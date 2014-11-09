@@ -218,6 +218,7 @@
       <fileset dir="${distribution.assembly}">
         <include name="sc.cmd" />
         <include name="sc.sh" />
+        <include name="schemacrawler.sh" />
       </fileset>
     </copy>
 

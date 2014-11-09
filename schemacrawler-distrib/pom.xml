@@ -10,7 +10,7 @@
   <artifactId>schemacrawler-distrib</artifactId>
   <packaging>pom</packaging>
   <name>SchemaCrawler Distribution</name>
-  
+
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.7</maven.compiler.source>
@@ -18,8 +18,8 @@
     <sqlite.version>3.7.8</sqlite.version>
     <xmlpull.version>1.1.3.1</xmlpull.version>
     <xpp3_min.version>1.1.4c</xpp3_min.version>
-    <xstream.version>1.4.7</xstream.version>    
-  </properties>  
+    <xstream.version>1.4.7</xstream.version>
+  </properties>
   <build>
     <plugins>
       <plugin>
@@ -37,7 +37,7 @@
               <artifactId>velocity</artifactId>
               <version>1.7</version>
             </dependency>
-        </dependencies>         
+        </dependencies>
         <executions>
           <execution>
             <id>site</id>
@@ -72,7 +72,7 @@
                   <overWrite>true</overWrite>
                   <outputDirectory>${project.build.directory}/_complete-distribution/lib</outputDirectory>
                 </artifactItem>
-                
+
                 <artifactItem>
                   <groupId>us.fatehi</groupId>
                   <artifactId>schemacrawler-offline</artifactId>
@@ -110,6 +110,13 @@
                 </artifactItem>
                 <artifactItem>
                   <groupId>us.fatehi</groupId>
+                  <artifactId>schemacrawler-mysql</artifactId>
+                  <version>${project.version}</version>
+                  <overWrite>true</overWrite>
+                  <outputDirectory>${project.build.directory}/_complete-distribution/lib</outputDirectory>
+                </artifactItem>                
+                <artifactItem>
+                  <groupId>us.fatehi</groupId>
                   <artifactId>schemacrawler-db2</artifactId>
                   <version>${project.version}</version>
                   <overWrite>true</overWrite>
@@ -143,7 +150,7 @@
                   <overWrite>true</overWrite>
                   <outputDirectory>${project.build.directory}/_complete-distribution/lib</outputDirectory>
                 </artifactItem>
-    
+
                 <artifactItem>
                   <groupId>org.postgresql</groupId>
                   <artifactId>postgresql</artifactId>
@@ -192,7 +199,7 @@
                   <overWrite>false</overWrite>
                   <outputDirectory>${project.build.directory}/_complete-distribution/lib/</outputDirectory>
                 </artifactItem>
-                
+
                 <artifactItem>
                   <groupId>com.thoughtworks.xstream</groupId>
                   <artifactId>xstream</artifactId>
@@ -217,7 +224,7 @@
                   <overWrite>false</overWrite>
                   <outputDirectory>${project.build.directory}/_complete-distribution/lib/</outputDirectory>
                 </artifactItem>
-                
+
               </artifactItems>
               <outputDirectory>${project.build.directory}/_complete-distribution/lib</outputDirectory>
               <overWriteReleases>false</overWriteReleases>
@@ -225,7 +232,7 @@
             </configuration>
           </execution>
         </executions>
-      </plugin>      
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-antrun-plugin</artifactId>
@@ -260,7 +267,7 @@
         <configuration>
           <skip>true</skip>
         </configuration>
-      </plugin>      
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-deploy-plugin</artifactId>
@@ -294,8 +301,8 @@
             </goals>
           </execution>
         </executions>
-      </plugin> 
-      
+      </plugin>
+
       <plugin>
         <artifactId>jdeb</artifactId>
         <groupId>org.vafer</groupId>
@@ -307,6 +314,7 @@
               <goal>jdeb</goal>
             </goals>
             <configuration>
+              <deb>${project.build.directory}/schemacrawler-${project.version}.deb</deb>
               <skipPOMs>false</skipPOMs>
               <dataSet>
                 <!-- Complete distribution -->
@@ -315,37 +323,39 @@
                   <type>directory</type>
                   <mapper>
                     <type>perm</type>
+                    <filemode>644</filemode>
+                    <dirmode>755</dirmode>
                     <prefix>/opt/schemacrawler-${project.version}/</prefix>
-                  </mapper>                  
+                  </mapper>
                 </data>
                 <!-- Command-line -->
                 <data>
-                  <src>${project.build.directory}/_examples/_schemacrawler/sc.sh</src>                  
+                  <src>${project.build.directory}/_examples/_schemacrawler/schemacrawler.sh</src>
                   <type>file</type>
                   <mapper>
                     <type>perm</type>
                     <filemode>755</filemode>
                     <prefix>/opt/schemacrawler-${project.version}/</prefix>
                   </mapper>
-                </data>            
+                </data>
                 <!-- Symbolic links -->
                 <data>
                   <type>link</type>
                   <linkName>/opt/schemacrawler</linkName>
-                  <linkTarget>/opt/schemacrawler-${project.version}</linkTarget> 
+                  <linkTarget>/opt/schemacrawler-${project.version}</linkTarget>
                   <symlink>true</symlink>
                 </data>
                 <data>
                   <type>link</type>
                   <linkName>/usr/bin/schemacrawler</linkName>
-                  <linkTarget>/opt/schemacrawler-${project.version}/sc.sh</linkTarget> 
+                  <linkTarget>/opt/schemacrawler-${project.version}/schemacrawler.sh</linkTarget>
                   <symlink>true</symlink>
                 </data>
               </dataSet>
             </configuration>
           </execution>
         </executions>
-      </plugin>      
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-gpg-plugin</artifactId>
@@ -363,7 +373,7 @@
               <generatePom>false</generatePom>
               <pomFile>src/assembly/schemacrawler.pom</pomFile>
               <sources>target/schemacrawler-${project.version}-sources.jar</sources>
-              <javadoc>target/schemacrawler-${project.version}-javadoc.jar</javadoc>              
+              <javadoc>target/schemacrawler-${project.version}-javadoc.jar</javadoc>
               <repositoryId>sonatype-nexus</repositoryId>
               <repositoryLayout>default</repositoryLayout>
               <url>http://oss.sonatype.org/service/local/staging/deploy/maven2</url>
@@ -377,7 +387,7 @@
             </goals>
           </execution>
         </executions>
-      </plugin> 
+      </plugin>
     </plugins>
   </build>
 </project>
