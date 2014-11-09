@@ -16,6 +16,8 @@ convenience is [bundled with drivers](bundled.html) for some commonly used
 RDBMS systems. SchemaCrawler works with any operating system that supports
 Java 7 or better.
 
+Support SchemaCrawler by making a [donation](http://sourceforge.net/donate/index.php?group_id=148383).
+
 ## SchemaCrawler Command Line
 
 SchemaCrawler comes with a set of command line tools that allow database
@@ -127,3 +129,4 @@ SchemaCrawler provides metadata for the following database objects:
 * Sequences
 * Synonyms
 * Privileges and grants
+
