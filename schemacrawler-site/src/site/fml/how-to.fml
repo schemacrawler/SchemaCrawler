@@ -131,7 +131,7 @@
         <p>
           Re-run SchemaCrawler with the
           <code>-infolevel=standard -command=brief</code>
-          command line options.
+          command-line options.
         </p>
       </answer>
     </faq>    
@@ -340,7 +340,7 @@ schemacrawler.format.hide_constraint_names=false
           to execute SQL against your
           database.
           Run SchemaCrawler with
-          the command line options -
+          the command-line options -
           <code>-command script -outputformat &lt;your script file&gt;</code>
           . See the example in the
           <code>examples\javascript</code>
@@ -359,7 +359,7 @@ schemacrawler.format.hide_constraint_names=false
           to allow for templated ouput. Put Velocity on your classpath, and
           create your template, and
           run SchemaCrawler
-          with the command line
+          with the command-line
           options -
           <code>-command script -outputformat &lt;your script file&gt;</code>
           .

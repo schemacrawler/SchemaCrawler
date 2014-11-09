@@ -255,7 +255,7 @@
         Weak associations are returned sorted.
       ]]></action> 
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
-        Added ability to specify additional command line options for GraphViz, using
+        Added ability to specify additional command-line options for GraphViz, using
         either Java system properties, or environmental variables.
       ]]></action>                           
     </release>    
@@ -424,7 +424,7 @@
     </release>
     <release version="8.5.1" date="2011-01-28">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
-        Re-organized command line code, including grep command line.
+        Re-organized command-line code, including grep command-line.
       ]]></action>
     </release>
     <release version="8.5" date="2011-01-28">
@@ -443,7 +443,7 @@
     </release>
     <release version="8.4" date="2010-12-23">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
-        Simplified commands - list_objects is now simply list. Removed the -show_stored_procedures command line option - simply use -proedures=
+        Simplified commands - list_objects is now simply list. Removed the -show_stored_procedures command-line option - simply use -proedures=
       ]]></action>
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Fixed issue with obtaining PostgreSQL tables.
@@ -452,7 +452,7 @@
         Fixed issue with obtaining Derby foreign keys.
       ]]></action>
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
-        Made -infolevel a required command line argument.
+        Made -infolevel a required command-line argument.
       ]]></action>
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Use Maven 3.0 in the build.
@@ -482,10 +482,10 @@
     </release>
     <release version="8.3.1" date="2010-07-18">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
-        Added new command line option, -urlx, to pass JDBC URL properties to bundled distributions.
+        Added new command-line option, -urlx, to pass JDBC URL properties to bundled distributions.
       ]]></action>
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
-        Added details on the "main" command line in the how-to section of the website.
+        Added details on the "main" command-line in the how-to section of the website.
       ]]></action>
     </release>
     <release version="8.3" date="2010-07-15">
@@ -548,7 +548,7 @@
     </release>
     <release version="7.6" date="2009-12-03">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
-        Fixed specification of Oracle SID using the -database command line switch, as well as
+        Fixed specification of Oracle SID using the -database command-line switch, as well as
         spcification of port number. 
       ]]></action>
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
@@ -576,8 +576,8 @@
         to the JavaScript context for this purpose.
       ]]></action>
       <action dev="Sualeh Fatehi" type="update"><![CDATA[
-        Removed command line switch, -schemapattern, and the schemapattern option. Use
-        the -schemas command line switch instead.
+        Removed command-line switch, -schemapattern, and the schemapattern option. Use
+        the -schemas command-line switch instead.
       ]]></action>
       <action dev="Sualeh Fatehi" type="update"><![CDATA[
         Added sections to SchemaCrawler output, to make it more readable.
@@ -662,9 +662,9 @@
         all of the database metadata, and containing catalog and schema objects.
       ]]></action>
       <action dev="Sualeh Fatehi" type="update"><![CDATA[
-        To allow for more control on table selection, the -tables command line parameter
+        To allow for more control on table selection, the -tables command-line parameter
         matches to the fully qualified table name, CATALOG.SCHEMA.TABLENAME.
-        Similarly for the -routines command line parameter.
+        Similarly for the -routines command-line parameter.
       ]]></action>
     </release>
     <release version="6.4" date="2009-05-10">
@@ -686,7 +686,7 @@
         including graphing, will use filtering and grep options.
       ]]></action>
       <action dev="Sualeh Fatehi" type="update"><![CDATA[
-        SchemaCrawler command line option help has been re-written. New command-line
+        SchemaCrawler command-line option help has been re-written. New command-line
         options are available.
       ]]></action>
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
@@ -791,12 +791,12 @@
     </release>
     <release version="5.4" date="2007-12-15">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
-        Added new command line
+        Added new command-line
         switch,
         -schemapattern, for specifying schema
         patterns when a
         connection is
-        specified from the command line.
+        specified from the command-line.
 			]]></action>
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Added object attributes
@@ -899,7 +899,7 @@
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Commonly available
         SchemaCrawler
-        command line argument for setting the
+        command-line argument for setting the
         log
         level.
 			]]></action>
@@ -929,7 +929,7 @@
       ]]></action>
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Fixed error message on a bad
-        command line. Added a general -help option.
+        command-line. Added a general -help option.
       ]]></action>
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Added new schema grep
@@ -947,7 +947,7 @@
         provding
         database connection options directly on
         the
-        command line.
+        command-line.
 			]]></action>
       <action dev="Sualeh Fatehi" type="update"><![CDATA[
         Updated ant task to
@@ -1031,7 +1031,7 @@
         generation of schema reports
       ]]></action>
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
-        Added command line option to
+        Added command-line option to
         provide database connection information
       ]]></action>
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
@@ -1119,7 +1119,7 @@
         Velocity templating, and JUNG graphs
       ]]></action>
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
-        New command line option to
+        New command-line option to
         specify
         the output file name
       ]]></action>

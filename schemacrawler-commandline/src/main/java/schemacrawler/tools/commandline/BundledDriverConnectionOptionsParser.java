@@ -29,7 +29,7 @@ import sf.util.clparser.NumberOption;
 import sf.util.clparser.StringOption;
 
 /**
- * Options for the command line.
+ * Options for the command-line.
  *
  * @author sfatehi
  */

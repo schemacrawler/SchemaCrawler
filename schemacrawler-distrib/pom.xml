@@ -18,7 +18,7 @@
     <sqlite.version>3.7.8</sqlite.version>
     <xmlpull.version>1.1.3.1</xmlpull.version>
     <xpp3_min.version>1.1.4c</xpp3_min.version>
-    <xstream.version>1.4.4</xstream.version>    
+    <xstream.version>1.4.7</xstream.version>    
   </properties>  
   <build>
     <plugins>

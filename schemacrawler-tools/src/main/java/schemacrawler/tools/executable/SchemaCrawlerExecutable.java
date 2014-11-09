@@ -15,7 +15,7 @@ import schemacrawler.tools.text.operation.OperationExecutable;
  * command. If the command is not a known command,
  * SchemaCrawlerExecutable will check if it is a query configured in the
  * properties. If not, it will assume that a query is specified on the
- * command line, and execute that.
+ * command-line, and execute that.
  *
  * @author Sualeh Fatehi
  */
