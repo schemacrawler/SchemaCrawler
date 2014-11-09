@@ -33,7 +33,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.options.DatabaseConnector;
+import schemacrawler.tools.options.DatabaseServerType;
 
 /**
  * Registry for mapping database connectors from DatabaseConnector-line
@@ -43,24 +43,6 @@ import schemacrawler.tools.options.DatabaseConnector;
  */
 public final class DatabaseConnectorRegistry
 {
-
-  public static final class UknownDatabaseConnector
-    extends DatabaseConnector
-  {
-    private static final long serialVersionUID = 266517436698945865L;
-
-    @Override
-    public String getDatabaseSystemIdentifier()
-    {
-      return "unknown";
-    }
-
-    @Override
-    public String getDatabaseSystemName()
-    {
-      return "Relational Database";
-    }
-  }
 
   private static Map<String, DatabaseConnector> loadDatabaseConnectorRegistry()
     throws SchemaCrawlerException
@@ -75,7 +57,7 @@ public final class DatabaseConnectorRegistry
       for (final DatabaseConnector databaseConnector: serviceLoader)
       {
         final String databaseSystemIdentifier = databaseConnector
-          .getDatabaseSystemIdentifier();
+          .getDatabaseServerType().getDatabaseSystemIdentifier();
         LOGGER.log(Level.FINER, "Loading database connector, "
                                 + databaseSystemIdentifier + "="
                                 + databaseConnector.getClass().getName());
@@ -91,6 +73,14 @@ public final class DatabaseConnectorRegistry
 
     return databaseConnectorRegistry;
   }
+
+  private static final DatabaseConnector uknownDatabaseConnector = new DatabaseConnector(new DatabaseServerType("unknown",
+                                                                                                                null),
+    null,
+    null,
+    null)
+  {
+  };
 
   private static final Logger LOGGER = Logger
     .getLogger(DatabaseConnectorRegistry.class.getName());
@@ -124,7 +114,7 @@ public final class DatabaseConnectorRegistry
     }
     else
     {
-      return new UknownDatabaseConnector();
+      return uknownDatabaseConnector;
     }
   }
 

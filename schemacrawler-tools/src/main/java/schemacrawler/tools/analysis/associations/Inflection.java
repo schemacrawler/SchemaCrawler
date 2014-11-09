@@ -13,14 +13,109 @@ import java.util.regex.Pattern;
  * Copied from <a
  * href='http://code.google.com/p/rogueweb/'>rogueweb</a>'s port of
  * Rails to Java.
- * 
+ *
  * @author Anthony Eden
  */
 public class Inflection
 {
 
+  /**
+   * Return true if the word is uncountable.
+   *
+   * @param word
+   *        The word
+   * @return True if it is uncountable
+   */
+  public static boolean isUncountable(final String word)
+  {
+    for (final String w: uncountable)
+    {
+      if (w.equalsIgnoreCase(word))
+      {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Return the pluralized version of a word.
+   *
+   * @param word
+   *        The word
+   * @return The pluralized word
+   */
+  public static String pluralize(final String word)
+  {
+    if (Inflection.isUncountable(word))
+    {
+      return word;
+    }
+
+    for (final Inflection inflection: plural)
+    {
+      if (inflection.match(word))
+      {
+        return inflection.replace(word);
+      }
+    }
+    return word;
+  }
+
+  /**
+   * Return the singularized version of a word.
+   *
+   * @param word
+   *        The word
+   * @return The singularized word
+   */
+  public static String singularize(final String word)
+  {
+    if (Inflection.isUncountable(word))
+    {
+      return word;
+    }
+
+    for (final Inflection inflection: singular)
+    {
+      // System.out.println(word + " matches " + inflection.pattern +
+      // "? (ignore case: " + inflection.ignoreCase + ")");
+      if (inflection.match(word))
+      {
+        // System.out.println("match!");
+        return inflection.replace(word);
+      }
+    }
+    return word;
+  }
+
+  private static void irregular(final String s, final String p)
+  {
+    plural("(" + s.substring(0, 1) + ")" + s.substring(1) + "$",
+           "$1" + p.substring(1));
+    singular("(" + p.substring(0, 1) + ")" + p.substring(1) + "$",
+             "$1" + s.substring(1));
+  }
+
+  private static void plural(final String pattern, final String replacement)
+  {
+    plural.add(0, new Inflection(pattern, replacement));
+  }
+
+  private static void singular(final String pattern, final String replacement)
+  {
+    singular.add(0, new Inflection(pattern, replacement));
+  }
+
+  private static void uncountable(final String word)
+  {
+    uncountable.add(word);
+  }
+
   private static final List<Inflection> plural = new ArrayList<Inflection>();
+
   private static final List<Inflection> singular = new ArrayList<Inflection>();
+
   private static final List<String> uncountable = new ArrayList<String>();
 
   static
@@ -93,99 +188,6 @@ public class Inflection
     // Collections.reverse(plural);
   }
 
-  /**
-   * Return true if the word is uncountable.
-   * 
-   * @param word
-   *        The word
-   * @return True if it is uncountable
-   */
-  public static boolean isUncountable(final String word)
-  {
-    for (final String w: uncountable)
-    {
-      if (w.equalsIgnoreCase(word))
-      {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  /**
-   * Return the pluralized version of a word.
-   * 
-   * @param word
-   *        The word
-   * @return The pluralized word
-   */
-  public static String pluralize(final String word)
-  {
-    if (Inflection.isUncountable(word))
-    {
-      return word;
-    }
-
-    for (final Inflection inflection: plural)
-    {
-      if (inflection.match(word))
-      {
-        return inflection.replace(word);
-      }
-    }
-    return word;
-  }
-
-  /**
-   * Return the singularized version of a word.
-   * 
-   * @param word
-   *        The word
-   * @return The singularized word
-   */
-  public static String singularize(final String word)
-  {
-    if (Inflection.isUncountable(word))
-    {
-      return word;
-    }
-
-    for (final Inflection inflection: singular)
-    {
-      // System.out.println(word + " matches " + inflection.pattern +
-      // "? (ignore case: " + inflection.ignoreCase + ")");
-      if (inflection.match(word))
-      {
-        // System.out.println("match!");
-        return inflection.replace(word);
-      }
-    }
-    return word;
-  }
-
-  private static void irregular(final String s, final String p)
-  {
-    plural("(" + s.substring(0, 1) + ")" + s.substring(1) + "$",
-           "$1" + p.substring(1));
-    singular("(" + p.substring(0, 1) + ")" + p.substring(1) + "$",
-             "$1" + s.substring(1));
-  }
-
-  private static void plural(final String pattern, final String replacement)
-  {
-    plural.add(0, new Inflection(pattern, replacement));
-  }
-
-  private static void singular(final String pattern, final String replacement)
-  {
-    singular.add(0, new Inflection(pattern, replacement));
-  }
-
-  private static void uncountable(final String word)
-  {
-    uncountable.add(word);
-  }
-
   private final String pattern;
 
   private final String replacement;
@@ -213,7 +215,7 @@ public class Inflection
 
   /**
    * Does the given word match?
-   * 
+   *
    * @param word
    *        The word
    * @return True if it matches the inflection pattern
@@ -230,7 +232,7 @@ public class Inflection
 
   /**
    * Replace the word with its pattern.
-   * 
+   *
    * @param word
    *        The word
    * @return The result

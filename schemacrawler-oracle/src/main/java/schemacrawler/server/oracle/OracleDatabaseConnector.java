@@ -21,41 +21,40 @@ package schemacrawler.server.oracle;
 
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.databaseconnector.DatabaseConnector;
+import schemacrawler.tools.databaseconnector.DatabaseSystemConnector;
 import schemacrawler.tools.executable.Executable;
-import schemacrawler.tools.options.DatabaseConnector;
+import schemacrawler.tools.options.DatabaseServerType;
 
 public final class OracleDatabaseConnector
   extends DatabaseConnector
 {
 
-  private static final long serialVersionUID = -8607886464063312321L;
+  private static final class OracleDatabaseSystemConnector
+    extends DatabaseSystemConnector
+  {
+    private OracleDatabaseSystemConnector(String configResource,
+                                          String informationSchemaViewsResourceFolder)
+    {
+      super(configResource, informationSchemaViewsResourceFolder);
+    }
+
+    @Override
+    public Executable newPreExecutable()
+      throws SchemaCrawlerException
+    {
+      return new OraclePreExecutable();
+    }
+  }
 
   public OracleDatabaseConnector()
   {
-    super("/help/Connections.oracle.txt",
-          "/schemacrawler-oracle.config.properties",
-          "/oracle.information_schema");
+    super(new DatabaseServerType("oracle", "Oracle"),
+          "/help/Connections.oracle.txt",
+          new OracleDatabaseSystemConnector("/schemacrawler-oracle.config.properties",
+                                            "/oracle.information_schema"));
 
     System.setProperty("oracle.jdbc.Trace", "true");
-  }
-
-  @Override
-  public Executable newPreExecutable()
-    throws SchemaCrawlerException
-  {
-    return new OraclePreExecutable();
-  }
-
-  @Override
-  public String getDatabaseSystemIdentifier()
-  {
-    return "oracle";
-  }
-
-  @Override
-  public String getDatabaseSystemName()
-  {
-    return "Oracle";
   }
 
 }

@@ -38,17 +38,15 @@ import sf.util.Utility;
 
 /**
  * A SQL query. May be parameterized with ant-like variable references.
- * 
+ *
  * @author sfatehi
  */
 public final class Query
   implements Serializable
 {
 
-  private static final long serialVersionUID = 2820769346069413473L;
-
   private static String getColumnsListAsString(final List<Column> columns,
-                                               boolean omitLargeObjectColumns)
+                                               final boolean omitLargeObjectColumns)
   {
     final StringBuilder buffer = new StringBuilder();
     for (int i = 0; i < columns.size(); i++)
@@ -68,13 +66,15 @@ public final class Query
     return buffer.toString();
   }
 
+  private static final long serialVersionUID = 2820769346069413473L;
+
   private final String name;
   private final String query;
 
   /**
    * Definition of a query, including a name, and parameterized or
    * regular SQL.
-   * 
+   *
    * @param name
    *        Query name.
    * @param query
@@ -101,7 +101,7 @@ public final class Query
 
   /**
    * Gets the query name.
-   * 
+   *
    * @return Query name
    */
   public String getName()
@@ -111,7 +111,7 @@ public final class Query
 
   /**
    * Gets the query SQL.
-   * 
+   *
    * @return Query SQL
    */
   public String getQuery()
@@ -122,7 +122,7 @@ public final class Query
   /**
    * Determines if this query has substitutable parameters, and whether
    * it should be run once for each table.
-   * 
+   *
    * @return If the query is to be run over each table
    */
   public boolean isQueryOver()
@@ -133,7 +133,7 @@ public final class Query
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see java.lang.Object#toString()
    */
   @Override
@@ -144,7 +144,7 @@ public final class Query
 
   /**
    * Gets the query with parameters substituted.
-   * 
+   *
    * @param table
    *        Table information
    * @return Ready-to-execute quer
@@ -155,7 +155,7 @@ public final class Query
     final Map<String, String> tableProperties = new HashMap<>();
     if (table != null)
     {
-      NamedObjectSort columnsSort = NamedObjectSort
+      final NamedObjectSort columnsSort = NamedObjectSort
         .getNamedObjectSort(isAlphabeticalSortForTableColumns);
       final List<Column> columns = table.getColumns();
       Collections.sort(columns, columnsSort);

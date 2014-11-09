@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -28,21 +28,12 @@ import sf.util.Utility;
 
 /**
  * Methods to format entire rows of output as HTML.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public final class HtmlFormattingHelper
   extends BaseTextFormattingHelper
 {
-
-  /**
-   * HTML footer.
-   */
-  private static final String HTML_FOOTER = "</body>" + NEWLINE + "</html>";
-  /**
-   * HTML header.
-   */
-  private static final String HTML_HEADER = htmlHeader();
 
   private static String htmlHeader()
   {
@@ -56,6 +47,16 @@ public final class HtmlFormattingHelper
            + styleSheet + NEWLINE + "  </style>" + NEWLINE + "</head>"
            + NEWLINE + "<body>" + NEWLINE;
   }
+
+  /**
+   * HTML footer.
+   */
+  private static final String HTML_FOOTER = "</body>" + NEWLINE + "</html>";
+
+  /**
+   * HTML header.
+   */
+  private static final String HTML_HEADER = htmlHeader();
 
   public HtmlFormattingHelper(final TextOutputFormat outputFormat)
   {

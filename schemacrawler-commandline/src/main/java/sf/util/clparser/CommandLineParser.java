@@ -29,7 +29,7 @@ import java.util.Map;
 
 /**
  * Command-line options parser.
- * 
+ *
  * @author Steve Purcell, Sualeh Fatehi
  */
 public class CommandLineParser
@@ -113,7 +113,7 @@ public class CommandLineParser
    * Extract the options and non-option arguments from the given list of
    * command-line arguments. The default locale is used for parsing
    * options whose values might be locale-specific.
-   * 
+   *
    * @param args
    *        Command line arguments
    */
@@ -189,7 +189,7 @@ public class CommandLineParser
 
   /**
    * Add the specified Option to the list of accepted options.
-   * 
+   *
    * @param option
    *        Option to add
    */

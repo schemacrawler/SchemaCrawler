@@ -59,17 +59,6 @@ public final class OperationExecutable
     super(command);
   }
 
-  public final OperationOptions getOperationOptions()
-  {
-    loadOperationOptions();
-    return operationOptions;
-  }
-
-  public final void setOperationOptions(final OperationOptions operationOptions)
-  {
-    this.operationOptions = operationOptions;
-  }
-
   @Override
   public void executeOn(final Catalog catalog, final Connection connection)
     throws Exception
@@ -126,6 +115,17 @@ public final class OperationExecutable
     {
       throw new SchemaCrawlerException("Cannot perform operation", e);
     }
+  }
+
+  public final OperationOptions getOperationOptions()
+  {
+    loadOperationOptions();
+    return operationOptions;
+  }
+
+  public final void setOperationOptions(final OperationOptions operationOptions)
+  {
+    this.operationOptions = operationOptions;
   }
 
   private void checkOutputFormat()
@@ -206,7 +206,7 @@ public final class OperationExecutable
 
   private void loadOperationOptions()
   {
-    if (this.operationOptions == null)
+    if (operationOptions == null)
     {
       operationOptions = new OperationOptions(additionalConfiguration);
     }

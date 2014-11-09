@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -23,7 +23,7 @@ package sf.util.clparser;
 
 /**
  * Representation of a command-line option.
- * 
+ *
  * @author Sualeh Fatehi
  * @param <T>
  *        Option type
@@ -115,7 +115,7 @@ public abstract class BaseOption<T>
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see Option#getDefaultValue()
    */
   @Override
@@ -126,7 +126,7 @@ public abstract class BaseOption<T>
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see Option#getLongForm()
    */
   @Override
@@ -137,7 +137,7 @@ public abstract class BaseOption<T>
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see Option#getShortForm()
    */
   @Override
@@ -160,7 +160,7 @@ public abstract class BaseOption<T>
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see Option#hasLongForm()
    */
   @Override
@@ -171,7 +171,7 @@ public abstract class BaseOption<T>
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see Option#hasShortForm()
    */
   @Override
@@ -182,7 +182,7 @@ public abstract class BaseOption<T>
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see java.lang.Object#toString()
    */
   @Override

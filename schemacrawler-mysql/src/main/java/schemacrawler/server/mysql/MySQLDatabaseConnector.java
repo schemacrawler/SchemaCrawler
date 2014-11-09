@@ -20,31 +20,19 @@
 package schemacrawler.server.mysql;
 
 
-import schemacrawler.tools.options.DatabaseConnector;
+import schemacrawler.tools.databaseconnector.DatabaseConnector;
+import schemacrawler.tools.options.DatabaseServerType;
 
 public final class MySQLDatabaseConnector
   extends DatabaseConnector
 {
 
-  private static final long serialVersionUID = -7803359491065121373L;
-
   public MySQLDatabaseConnector()
   {
-    super("/help/Connections.mysql.txt",
+    super(new DatabaseServerType("mysql", "MySQL"),
+          "/help/Connections.mysql.txt",
           "/schemacrawler-mysql.config.properties",
           "/mysql.information_schema");
-  }
-
-  @Override
-  public String getDatabaseSystemIdentifier()
-  {
-    return "mysql";
-  }
-
-  @Override
-  public String getDatabaseSystemName()
-  {
-    return "MySQL";
   }
 
 }

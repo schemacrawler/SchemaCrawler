@@ -17,22 +17,31 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.server.hsqldb;
+package schemacrawler.tools.offline;
 
 
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.commandline.CommandLine;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.options.DatabaseServerType;
 
-public final class HyperSQLDatabaseConnector
+public final class OfflineDatabaseConnector
   extends DatabaseConnector
 {
 
-  public HyperSQLDatabaseConnector()
+  public OfflineDatabaseConnector()
   {
-    super(new DatabaseServerType("hsqldb", "HyperSQL DataBase"),
-          "/help/Connections.hsqldb.txt",
-          "/schemacrawler-hsqldb.config.properties",
-          "/hsqldb.information_schema");
+    super(new DatabaseServerType("offline", "Offline Snapshot"),
+          "/help/Connections.offline.txt",
+          null,
+          null);
+  }
+
+  @Override
+  public CommandLine newCommandLine(final String[] args)
+    throws SchemaCrawlerException
+  {
+    return new OfflineSnapshotCommandLine(args);
   }
 
 }

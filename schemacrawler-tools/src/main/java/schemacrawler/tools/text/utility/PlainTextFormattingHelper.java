@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -27,7 +27,7 @@ import schemacrawler.tools.options.TextOutputFormat;
 
 /**
  * Methods to format entire rows of output as text.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public class PlainTextFormattingHelper
@@ -36,7 +36,7 @@ public class PlainTextFormattingHelper
 
   /**
    * Constructor.
-   * 
+   *
    * @param outputFormat
    *        Output format - text or CSV.
    */

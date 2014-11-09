@@ -24,8 +24,10 @@ import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import schemacrawler.tools.databaseconnector.DatabaseConnector;
+import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.options.ApplicationOptions;
-import schemacrawler.tools.options.DatabaseConnector;
+import schemacrawler.tools.options.DatabaseServerType;
 
 public class SchemaCrawlerMain
 {
@@ -40,30 +42,32 @@ public class SchemaCrawlerMain
     final ApplicationOptions applicationOptions = applicationOptionsParser
       .getOptions();
 
+    applicationOptions.applyApplicationLogLevel();
+    LOGGER.log(Level.CONFIG, "Command line: " + Arrays.toString(args));
+
     final DatabaseConnectorParser databaseConnectorParser = new DatabaseConnectorParser();
     remainingArgs = databaseConnectorParser.parse(remainingArgs);
-    final DatabaseConnector databaseConnector = databaseConnectorParser
+    final DatabaseServerType dbServerType = databaseConnectorParser
       .getOptions();
+    final DatabaseConnectorRegistry registry = new DatabaseConnectorRegistry();
+    final DatabaseConnector dbConnector = registry
+      .lookupDatabaseSystemIdentifier(dbServerType
+        .getDatabaseSystemIdentifier());
 
     final boolean showHelp = args == null || args.length == 0
                              || applicationOptions.isShowHelp();
 
+    final CommandLine commandLine;
     if (showHelp)
     {
       final boolean showVersionOnly = applicationOptions.isShowVersionOnly();
-      final CommandLine helpCommandLine = new SchemaCrawlerHelpCommandLine(remainingArgs,
-                                                                           databaseConnector
-                                                                             .getHelpOptions(),
-                                                                           showVersionOnly);
-      helpCommandLine.execute();
-      return;
+      commandLine = dbConnector.newHelpCommandLine(remainingArgs,
+                                                   showVersionOnly);
     }
-
-    applicationOptions.applyApplicationLogLevel();
-    LOGGER.log(Level.CONFIG, "Command line: " + Arrays.toString(args));
-
-    final CommandLine commandLine = new SchemaCrawlerCommandLine(databaseConnector,
-                                                                 remainingArgs);
+    else
+    {
+      commandLine = dbConnector.newCommandLine(remainingArgs);
+    }
     commandLine.execute();
   }
 
