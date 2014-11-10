@@ -24,7 +24,7 @@ will be generated for you.
 You can create a new SchemaCrawler command, and plug it into the SchemaCrawler framework. 
 To generate your new SchemaCrawler command plugin project, run: 
 
-`mvn archetype:generate -DgroupId=com.mycompany.app -DartifactId=my-plugin 
+`mvn archetype:generate -DgroupId=com.mycompany.app -DartifactId=my-command-plugin 
   -DarchetypeGroupId=us.fatehi -DarchetypeArtifactId=schemacrawler-archetype-plugin-command 
   -DinteractiveMode=false`
 
@@ -40,7 +40,7 @@ the SchemaCrawler lib directory.
 You can create a new SchemaCrawler linter, and plug it into the SchemaCrawler framework. 
 To generate your new SchemaCrawler lint plugin project, run: 
  
-`mvn archetype:generate -DgroupId=com.mycompany.app -DartifactId=my-plugin 
+`mvn archetype:generate -DgroupId=com.mycompany.app -DartifactId=my-lint-plugin 
   -DarchetypeGroupId=us.fatehi -DarchetypeArtifactId=schemacrawler-archetype-plugin-lint 
   -DinteractiveMode=false`
 
