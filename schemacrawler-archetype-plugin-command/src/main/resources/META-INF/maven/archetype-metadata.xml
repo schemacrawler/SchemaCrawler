@@ -21,5 +21,11 @@
         <include>**/*.CommandProvider</include>
       </includes>
     </fileSet>
+    <fileSet filtered="true" encoding="UTF-8">
+      <directory>src/test/java</directory>
+      <includes>
+        <include>**/*.java</include>
+      </includes>
+    </fileSet>    
   </fileSets>
 </archetype-descriptor>
