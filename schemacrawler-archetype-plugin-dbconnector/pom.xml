@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<parent>
+		<artifactId>schemacrawler-parent</artifactId>
+		<groupId>us.fatehi</groupId>
+		<version>11.03.01</version>
+	</parent>
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>schemacrawler-archetype-plugin-dbconnector</artifactId>
+  <packaging>maven-archetype</packaging>
+  <name>Maven Archetype for SchemaCrawler Database Connector Plugin</name>
+  <build>
+    <extensions>
+      <extension>
+        <groupId>org.apache.maven.archetype</groupId>
+        <artifactId>archetype-packaging</artifactId>
+        <version>2.2</version>
+      </extension>
+    </extensions>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-archetype-plugin</artifactId>
+          <version>2.2</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+</project>
