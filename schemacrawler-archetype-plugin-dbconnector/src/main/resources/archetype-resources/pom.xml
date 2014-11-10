@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>${groupId}</groupId>
   <artifactId>${artifactId}</artifactId>
   <version>${version}</version>
-  <name>Additional SchemaCrawler Lint</name>
+  <name>Additional SchemaCrawler Database Connector</name>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -13,14 +13,8 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.hsqldb</groupId>
-      <artifactId>hsqldb</artifactId>
-      <version>2.3.2</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
       <groupId>us.fatehi</groupId>
-      <artifactId>schemacrawler-lint</artifactId>
+      <artifactId>schemacrawler</artifactId>
       <version>${schemacrawler.version}</version>
     </dependency>
   </dependencies>
