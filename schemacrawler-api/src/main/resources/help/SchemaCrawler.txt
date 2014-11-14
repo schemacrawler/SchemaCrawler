@@ -1,7 +1,7 @@
-SchemaCrawler 11.03.01
-Copyright (c) 2000-2014, Sualeh Fatehi.
+Database schema discovery and comprehension tool
+Version 11.03.01
+Copyright (c) 2000-2014, Sualeh Fatehi <sualeh@hotmail.com>.
 
-SchemaCrawler is a database schema discovery and comprehension tool. 
 You can search for database schema objects using regular expressions, 
 and output the schema and data in a readable text format. You can find 
 potential schema design issues with lint. The output serves for 

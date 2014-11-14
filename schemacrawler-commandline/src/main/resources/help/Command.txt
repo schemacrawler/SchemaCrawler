@@ -1,6 +1,6 @@
 --- Command ---
 
 -c=<command> (short for -command=<command>)
-  Where <command> is a SchemaCrawler command. For a list of available commands,
-  re-run SchemaCrawler with:
+  Where <command> is a SchemaCrawler command.   
+  For help on a command, re-run SchemaCrawler with:
   -help -c=<command>

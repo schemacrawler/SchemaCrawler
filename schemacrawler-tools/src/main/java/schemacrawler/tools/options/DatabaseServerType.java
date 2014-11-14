@@ -32,6 +32,12 @@ public final class DatabaseServerType
   private final String databaseSystemIdentifier;
   private final String databaseSystemName;
 
+  public DatabaseServerType()
+  {
+    this.databaseSystemIdentifier = null;
+    this.databaseSystemName = null;
+  }
+
   public DatabaseServerType(final String databaseSystemIdentifier,
                             final String databaseSystemName)
   {
@@ -41,6 +47,10 @@ public final class DatabaseServerType
     }
     this.databaseSystemIdentifier = databaseSystemIdentifier;
 
+    if (isBlank(databaseSystemName))
+    {
+      throw new IllegalArgumentException("No database system name provided");
+    }
     this.databaseSystemName = databaseSystemName;
   }
 
@@ -54,9 +64,9 @@ public final class DatabaseServerType
     return databaseSystemName;
   }
 
-  public boolean hasDatabaseSystemName()
+  public boolean isUnknownDatabaseSystem()
   {
-    return !isBlank(databaseSystemName);
+    return databaseSystemIdentifier == null;
   }
 
 }

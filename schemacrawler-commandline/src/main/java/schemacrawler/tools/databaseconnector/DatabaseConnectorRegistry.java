@@ -76,8 +76,7 @@ public final class DatabaseConnectorRegistry
     return databaseConnectorRegistry;
   }
 
-  private static final DatabaseConnector uknownDatabaseConnector = new DatabaseConnector(new DatabaseServerType("unknown",
-                                                                                                                null),
+  private static final DatabaseConnector uknownDatabaseConnector = new DatabaseConnector(new DatabaseServerType(),
     null,
     null,
     null)
@@ -93,6 +92,17 @@ public final class DatabaseConnectorRegistry
     throws SchemaCrawlerException
   {
     databaseConnectorRegistry = loadDatabaseConnectorRegistry();
+  }
+
+  public boolean hasDatabaseSystemIdentifier(final DatabaseServerType databaseServerType)
+  {
+    if (databaseServerType == null
+        || databaseServerType.isUnknownDatabaseSystem())
+    {
+      return false;
+    }
+    return databaseConnectorRegistry.containsKey(databaseServerType
+      .getDatabaseSystemIdentifier());
   }
 
   public boolean hasDatabaseSystemIdentifier(final String databaseSystemIdentifier)
