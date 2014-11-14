@@ -45,7 +45,7 @@ public class SchemaCrawlerMain
     applicationOptions.applyApplicationLogLevel();
     LOGGER.log(Level.CONFIG, "Command line: " + Arrays.toString(args));
 
-    final DatabaseConnectorParser databaseConnectorParser = new DatabaseConnectorParser();
+    final DatabaseServerTypeParser databaseConnectorParser = new DatabaseServerTypeParser();
     remainingArgs = databaseConnectorParser.parse(remainingArgs);
     final DatabaseServerType dbServerType = databaseConnectorParser
       .getOptions();

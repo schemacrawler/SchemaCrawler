@@ -121,7 +121,7 @@ public final class CommandRegistry
 
   public boolean hasCommand(final String command)
   {
-    return commandRegistry.containsKey(command);
+    return command != null && commandRegistry.containsKey(command);
   }
 
   @Override
