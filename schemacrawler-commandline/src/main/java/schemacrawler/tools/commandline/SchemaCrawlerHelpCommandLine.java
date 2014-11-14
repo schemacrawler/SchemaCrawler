@@ -22,7 +22,6 @@ package schemacrawler.tools.commandline;
 
 import static sf.util.Utility.isBlank;
 import static sf.util.Utility.readResourceFully;
-import schemacrawler.Version;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.executable.CommandRegistry;
@@ -113,14 +112,10 @@ public final class SchemaCrawlerHelpCommandLine
   {
     final CommandRegistry commandRegistry = new CommandRegistry();
 
-    System.out.print(Version.getProductName());
-    if (dbServerType == null || dbServerType.isUnknownDatabaseSystem())
+    if (dbServerType != null && !dbServerType.isUnknownDatabaseSystem())
     {
-      System.out.println();
-    }
-    else
-    {
-      System.out.println(" for " + dbServerType.getDatabaseSystemName());
+      System.out.println("SchemaCrawler for "
+                         + dbServerType.getDatabaseSystemName());
     }
     showHelp("/help/SchemaCrawler.txt");
     System.out.println();
