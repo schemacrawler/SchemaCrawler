@@ -95,22 +95,23 @@ public abstract class DatabaseConnector
 
   private HelpOptions buildHelpOptions(final String helpResource)
   {
+    final HelpOptions helpOptions;
     final boolean hasDatabaseServerName = dbServerType != null
                                           && dbServerType
                                             .hasDatabaseSystemName();
-    final String helpTitle;
     if (hasDatabaseServerName)
     {
-      helpTitle = String.format("SchemaCrawler for %s",
-                                dbServerType.getDatabaseSystemName());
+      final String helpTitle = String.format("SchemaCrawler for %s",
+                                             dbServerType
+                                               .getDatabaseSystemName());
+      helpOptions = new HelpOptions(helpTitle, helpResource);
 
     }
     else
     {
-      helpTitle = String.format("SchemaCrawler");
+      return new HelpOptions();
     }
 
-    return new HelpOptions(helpTitle, helpResource);
+    return helpOptions;
   }
-
 }

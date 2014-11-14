@@ -31,11 +31,11 @@ import sf.util.clparser.StringOption;
  *
  * @author Sualeh Fatehi
  */
-public final class DatabaseConnectorParser
+public final class DatabaseServerTypeParser
   extends BaseOptionsParser<DatabaseServerType>
 {
 
-  public DatabaseConnectorParser()
+  public DatabaseServerTypeParser()
   {
     super(new StringOption("server", null));
   }
