@@ -20,10 +20,12 @@
 package schemacrawler.tools.commandline;
 
 
+import static sf.util.Utility.isBlank;
+import static sf.util.Utility.readResourceFully;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.CommandRegistry;
+import schemacrawler.tools.options.DatabaseServerType;
 import schemacrawler.tools.options.HelpOptions;
-import sf.util.Utility;
 
 /**
  * Utility for parsing the SchemaCrawler command-line.
@@ -36,17 +38,18 @@ public final class SchemaCrawlerHelpCommandLine
 
   private static void showHelp(final String helpResource)
   {
-    if (sf.util.Utility.isBlank(helpResource)
+    if (isBlank(helpResource)
         || SchemaCrawlerHelpCommandLine.class.getResource(helpResource) == null)
     {
       return;
     }
 
-    final String helpText = Utility.readResourceFully(helpResource);
+    final String helpText = readResourceFully(helpResource);
     System.out.println(helpText);
   }
 
   private final String command;
+  private final DatabaseServerType server;
   private final boolean showVersionOnly;
   private final HelpOptions helpOptions;
 
@@ -81,15 +84,25 @@ public final class SchemaCrawlerHelpCommandLine
 
     this.showVersionOnly = showVersionOnly;
 
+    DatabaseServerType server = null;
+    if (args.length != 0)
+    {
+      final DatabaseServerTypeParser parser = new DatabaseServerTypeParser();
+      parser.parse(args);
+      server = parser.getOptions();
+    }
+    this.server = server;
+
     String command = null;
     if (args.length != 0)
     {
-      final CommandParser commandParser = new CommandParser();
-      commandParser.parse(args);
-      if (commandParser.hasOptions())
+      final CommandParser parser = new CommandParser();
+      parser.parse(args);
+      if (parser.hasOptions())
       {
-        command = commandParser.getOptions().toString();
+        command = parser.getOptions().toString();
       }
+      if (isBlank(command)) command = null;
     }
     this.command = command;
   }
@@ -104,10 +117,6 @@ public final class SchemaCrawlerHelpCommandLine
     throws SchemaCrawlerException
   {
     final CommandRegistry commandRegistry = new CommandRegistry();
-    if (command != null && !commandRegistry.hasCommand(command))
-    {
-      throw new SchemaCrawlerException("Unknown command, " + command);
-    }
 
     System.out.println(helpOptions.getTitle());
     showHelp("/help/SchemaCrawler.txt");
@@ -121,7 +130,7 @@ public final class SchemaCrawlerHelpCommandLine
     showHelp("/help/SchemaCrawlerOptions.txt");
     showHelp("/help/Config.txt");
     showHelp("/help/ApplicationOptions.txt");
-    if (command == null)
+    if (commandRegistry.hasCommand(command))
     {
       showHelp("/help/Command.txt");
       System.out.println("  Available commands are: ");
