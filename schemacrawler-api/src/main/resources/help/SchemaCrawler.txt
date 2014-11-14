@@ -1,5 +1,5 @@
+SchemaCrawler 11.03.01
 Database schema discovery and comprehension tool
-Version 11.03.01
 Copyright (c) 2000-2014, Sualeh Fatehi <sualeh@hotmail.com>.
 
 You can search for database schema objects using regular expressions, 
