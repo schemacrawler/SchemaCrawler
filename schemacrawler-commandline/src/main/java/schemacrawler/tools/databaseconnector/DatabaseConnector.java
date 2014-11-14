@@ -20,23 +20,23 @@
 package schemacrawler.tools.databaseconnector;
 
 
+import static sf.util.Utility.isBlank;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.commandline.CommandLine;
 import schemacrawler.tools.commandline.SchemaCrawlerCommandLine;
 import schemacrawler.tools.commandline.SchemaCrawlerHelpCommandLine;
 import schemacrawler.tools.options.DatabaseServerType;
-import schemacrawler.tools.options.HelpOptions;
 
 public abstract class DatabaseConnector
 {
 
   private final DatabaseServerType dbServerType;
 
-  private final HelpOptions helpOptions;
+  private final String connectionHelpResource;
   private final DatabaseSystemConnector dbSystemConnector;
 
   protected DatabaseConnector(final DatabaseServerType dbServerType,
-                              final String helpResource,
+                              final String connectionHelpResource,
                               final DatabaseSystemConnector dbSystemConnector)
   {
     if (dbServerType == null)
@@ -45,12 +45,17 @@ public abstract class DatabaseConnector
     }
     this.dbServerType = dbServerType;
 
-    helpOptions = buildHelpOptions(helpResource);
+    if (isBlank(connectionHelpResource))
+    {
+      throw new IllegalArgumentException("No connection help resource provided");
+    }
+    this.connectionHelpResource = connectionHelpResource;
+
     this.dbSystemConnector = dbSystemConnector;
   }
 
   protected DatabaseConnector(final DatabaseServerType dbServerType,
-                              final String helpResource,
+                              final String connectionHelpResource,
                               final String configResource,
                               final String informationSchemaViewsResourceFolder)
   {
@@ -60,7 +65,8 @@ public abstract class DatabaseConnector
     }
     this.dbServerType = dbServerType;
 
-    helpOptions = buildHelpOptions(helpResource);
+    this.connectionHelpResource = connectionHelpResource;
+
     dbSystemConnector = new DatabaseSystemConnector(configResource,
                                                     informationSchemaViewsResourceFolder);
   }
@@ -75,11 +81,6 @@ public abstract class DatabaseConnector
     return dbSystemConnector;
   }
 
-  public HelpOptions getHelpOptions()
-  {
-    return helpOptions;
-  }
-
   public CommandLine newCommandLine(final String[] args)
     throws SchemaCrawlerException
   {
@@ -90,28 +91,10 @@ public abstract class DatabaseConnector
                                         final boolean showVersionOnly)
     throws SchemaCrawlerException
   {
-    return new SchemaCrawlerHelpCommandLine(args, helpOptions, showVersionOnly);
+    return new SchemaCrawlerHelpCommandLine(args,
+                                            dbServerType,
+                                            connectionHelpResource,
+                                            showVersionOnly);
   }
 
-  private HelpOptions buildHelpOptions(final String helpResource)
-  {
-    final HelpOptions helpOptions;
-    final boolean hasDatabaseServerName = dbServerType != null
-                                          && dbServerType
-                                            .hasDatabaseSystemName();
-    if (hasDatabaseServerName)
-    {
-      final String helpTitle = String.format("SchemaCrawler for %s",
-                                             dbServerType
-                                               .getDatabaseSystemName());
-      helpOptions = new HelpOptions(helpTitle, helpResource);
-
-    }
-    else
-    {
-      return new HelpOptions();
-    }
-
-    return helpOptions;
-  }
 }
