@@ -22,10 +22,11 @@ package schemacrawler.tools.commandline;
 
 import static sf.util.Utility.isBlank;
 import static sf.util.Utility.readResourceFully;
+import schemacrawler.Version;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.executable.CommandRegistry;
 import schemacrawler.tools.options.DatabaseServerType;
-import schemacrawler.tools.options.HelpOptions;
 
 /**
  * Utility for parsing the SchemaCrawler command-line.
@@ -49,9 +50,9 @@ public final class SchemaCrawlerHelpCommandLine
   }
 
   private final String command;
-  private final DatabaseServerType server;
   private final boolean showVersionOnly;
-  private final HelpOptions helpOptions;
+  private final String connectionHelpResource;
+  private final DatabaseServerType dbServerType;
 
   /**
    * Loads objects from command-line options. Optionally loads the
@@ -59,7 +60,9 @@ public final class SchemaCrawlerHelpCommandLine
    *
    * @param args
    *        Command line arguments.
-   * @param helpOptions
+   * @param dbServerType
+   *        Database server type.
+   * @param connectionHelpResource
    *        Help options.
    * @param configResource
    *        Config resource.
@@ -67,7 +70,8 @@ public final class SchemaCrawlerHelpCommandLine
    *         On an exception
    */
   public SchemaCrawlerHelpCommandLine(final String[] args,
-                                      final HelpOptions helpOptions,
+                                      final DatabaseServerType dbServerType,
+                                      final String connectionHelpResource,
                                       final boolean showVersionOnly)
     throws SchemaCrawlerException
   {
@@ -76,22 +80,8 @@ public final class SchemaCrawlerHelpCommandLine
       throw new IllegalArgumentException("No command-line arguments provided");
     }
 
-    if (helpOptions == null)
-    {
-      throw new SchemaCrawlerException("No help options provided");
-    }
-    this.helpOptions = helpOptions;
-
+    this.connectionHelpResource = connectionHelpResource;
     this.showVersionOnly = showVersionOnly;
-
-    DatabaseServerType server = null;
-    if (args.length != 0)
-    {
-      final DatabaseServerTypeParser parser = new DatabaseServerTypeParser();
-      parser.parse(args);
-      server = parser.getOptions();
-    }
-    this.server = server;
 
     String command = null;
     if (args.length != 0)
@@ -102,9 +92,14 @@ public final class SchemaCrawlerHelpCommandLine
       {
         command = parser.getOptions().toString();
       }
-      if (isBlank(command)) command = null;
+      if (isBlank(command))
+      {
+        command = null;
+      }
     }
     this.command = command;
+
+    this.dbServerType = dbServerType;
   }
 
   /**
@@ -118,7 +113,15 @@ public final class SchemaCrawlerHelpCommandLine
   {
     final CommandRegistry commandRegistry = new CommandRegistry();
 
-    System.out.println(helpOptions.getTitle());
+    System.out.print(Version.getProductName());
+    if (dbServerType == null || dbServerType.isUnknownDatabaseSystem())
+    {
+      System.out.println();
+    }
+    else
+    {
+      System.out.println(" for " + dbServerType.getDatabaseSystemName());
+    }
     showHelp("/help/SchemaCrawler.txt");
     System.out.println();
     if (showVersionOnly)
@@ -126,18 +129,33 @@ public final class SchemaCrawlerHelpCommandLine
       System.exit(0);
     }
 
-    showHelp(helpOptions.getHelpResource());
+    if (isBlank(connectionHelpResource))
+    {
+      final DatabaseConnectorRegistry databaseConnectorRegistry = new DatabaseConnectorRegistry();
+      showHelp("/help/Connections.txt");
+      System.out.println("  Available servers are: ");
+      for (final String availableServer: databaseConnectorRegistry)
+      {
+        System.out.println("    " + availableServer);
+      }
+      System.out.println();
+    }
+    else
+    {
+      showHelp(connectionHelpResource);
+    }
     showHelp("/help/SchemaCrawlerOptions.txt");
     showHelp("/help/Config.txt");
     showHelp("/help/ApplicationOptions.txt");
-    if (commandRegistry.hasCommand(command))
+    if (!commandRegistry.hasCommand(command))
     {
       showHelp("/help/Command.txt");
       System.out.println("  Available commands are: ");
       for (final String availableCommand: commandRegistry)
       {
-        System.out.println("  " + availableCommand);
+        System.out.println("    " + availableCommand);
       }
+      System.out.println();
     }
     else
     {

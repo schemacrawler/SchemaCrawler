@@ -11,3 +11,12 @@
 
 -password=<password>
   Database password.
+
+For connecting to specific databases, use
+
+-server=<database system identifier>
+  Where <database system identifier> is a database where
+  a SchemaCrawler plugin is available.   
+  For help on server specific connection options, 
+  re-run SchemaCrawler with:
+  -help -server=<database system identifier>
