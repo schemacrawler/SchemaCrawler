@@ -22,6 +22,8 @@
 package schemacrawler.tools.integration.scripting;
 
 
+import static sf.util.Utility.isBlank;
+
 import java.io.File;
 import java.io.Reader;
 import java.io.Writer;
@@ -37,6 +39,7 @@ import javax.script.ScriptEngineFactory;
 import javax.script.ScriptEngineManager;
 
 import schemacrawler.schema.Catalog;
+import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseStagedExecutable;
 import schemacrawler.tools.executable.CommandChainExecutable;
@@ -73,7 +76,15 @@ public final class ScriptExecutable
   {
 
     final String scriptFileName = outputOptions.getOutputFormatValue();
+    if (isBlank(scriptFileName))
+    {
+      throw new SchemaCrawlerCommandLineException("No script specified");
+    }
     final File scriptFile = new File(scriptFileName);
+    if (!scriptFile.exists() || !scriptFile.canRead())
+    {
+      throw new SchemaCrawlerCommandLineException("No script specified");
+    }
 
     // Create a new instance of the engine
     final ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
