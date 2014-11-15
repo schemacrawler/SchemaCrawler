@@ -5,10 +5,8 @@
                    "http://ant.apache.org/ivy/schemas/ivy.xsd">
 	<info organisation="schemacrawler" module="schemacrawler-spring" />
 	<dependencies>
-		<dependency org="org.apache.velocity" name="velocity" rev="1.5" />
-		<dependency org="org.freemarker" name="freemarker" rev="2.3.16" />
-		<dependency org="org.springframework" name="spring-context" rev="2.5.6" />
-		<dependency org="org.springframework" name="spring-jdbc" rev="2.5.6" />
+		<dependency org="org.springframework" name="spring-context" rev="4.1.2.RELEASE" />
+		<dependency org="org.springframework" name="spring-jdbc" rev="4.1.2.RELEASE" />
 
 		<exclude org="javax.ejb"/>
 		<exclude org="javax.jms"/>

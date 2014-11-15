@@ -319,7 +319,7 @@
               <dataSet>
                 <!-- Complete distribution -->
                 <data>
-                  <src>${project.build.directory}/_examples/_schemacrawler</src>
+                  <src>${project.build.directory}/_main-distribution/_schemacrawler</src>
                   <type>directory</type>
                   <mapper>
                     <type>perm</type>
@@ -330,7 +330,7 @@
                 </data>
                 <!-- Command-line -->
                 <data>
-                  <src>${project.build.directory}/_examples/_schemacrawler/schemacrawler.sh</src>
+                  <src>${project.build.directory}/_main-distribution/_schemacrawler/schemacrawler.sh</src>
                   <type>file</type>
                   <mapper>
                     <type>perm</type>

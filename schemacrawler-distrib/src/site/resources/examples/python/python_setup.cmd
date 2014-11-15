@@ -1,1 +1,0 @@
-@ant -f python_setup.xml %*
