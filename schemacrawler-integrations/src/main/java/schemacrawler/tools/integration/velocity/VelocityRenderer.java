@@ -135,7 +135,7 @@ public final class VelocityRenderer
                                                templateEncoding);
       template.merge(context, writer);
     }
-    catch (ResourceNotFoundException e)
+    catch (final ResourceNotFoundException e)
     {
       throw new SchemaCrawlerCommandLineException("No template specified", e);
     }
