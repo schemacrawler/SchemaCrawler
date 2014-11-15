@@ -24,6 +24,7 @@ import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.options.ApplicationOptions;
@@ -56,8 +57,9 @@ public class SchemaCrawlerMain
 
     final boolean showHelp = args == null
                              || args.length == 0
-                             || (args.length == 1 && SchemaCrawlerMain.class
-                               .getCanonicalName().equals(args[0]))
+                             || args.length == 1
+                             && SchemaCrawlerMain.class.getCanonicalName()
+                               .equals(args[0])
                              || applicationOptions.isShowHelp();
 
     final CommandLine commandLine;
@@ -71,7 +73,18 @@ public class SchemaCrawlerMain
     {
       commandLine = dbConnector.newCommandLine(remainingArgs);
     }
-    commandLine.execute();
+
+    try
+    {
+      commandLine.execute();
+    }
+    catch (final SchemaCrawlerCommandLineException e)
+    {
+      final String errorMessage = e.getMessage();
+      System.err.println(errorMessage);
+      System.err.println("Re-run SchemaCrawler with the -? option for help");
+      LOGGER.log(Level.SEVERE, "Command line: " + Arrays.toString(args), e);
+    }
   }
 
   private static final Logger LOGGER = Logger.getLogger(SchemaCrawlerMain.class
