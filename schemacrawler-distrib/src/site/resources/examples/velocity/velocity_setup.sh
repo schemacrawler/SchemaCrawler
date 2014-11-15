@@ -1,1 +1,0 @@
-ant -f velocity_setup.xml $*
