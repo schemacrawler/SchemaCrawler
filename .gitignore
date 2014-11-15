@@ -18,3 +18,4 @@ workspace
 /schemacrawler-lint/.settings/com.atlassian.clover.eclipse.core.prefs
 /schemacrawler-tools/.settings/com.atlassian.clover.eclipse.core.prefs
 /schemacrawler-distrib/*.bnd
+/schemacrawler-distrib/*.jar
