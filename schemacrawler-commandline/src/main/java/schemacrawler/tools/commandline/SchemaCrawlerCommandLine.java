@@ -73,10 +73,6 @@ public final class SchemaCrawlerCommandLine
 
     final CommandParser commandParser = new CommandParser();
     remainingArgs = commandParser.parse(remainingArgs);
-    if (!commandParser.hasOptions())
-    {
-      throw new SchemaCrawlerCommandLineException("No command specified");
-    }
     command = commandParser.getOptions().toString();
 
     this.dbSystemConnector = dbSystemConnector;

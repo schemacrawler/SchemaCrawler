@@ -31,6 +31,7 @@ import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
+import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
@@ -99,7 +100,7 @@ public final class SchemaCrawlerOptionsParser
     }
     else
     {
-      throw new SchemaCrawlerException("No infolevel specified");
+      throw new SchemaCrawlerCommandLineException("No infolevel specified");
     }
 
     if (hasOptionValue("schemas"))
