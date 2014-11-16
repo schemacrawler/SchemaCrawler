@@ -37,19 +37,16 @@ class TablesReducer
 {
 
   private final SchemaCrawlerOptions options;
-  private final NamedObjectList<MutableTable> allTables;
 
-  public TablesReducer(final SchemaCrawlerOptions options,
-                       final NamedObjectList<MutableTable> allTables)
+  public TablesReducer(final SchemaCrawlerOptions options)
   {
     this.options = options;
-    this.allTables = allTables;
   }
 
-  public void filter()
+  public void filter(final NamedObjectList<MutableTable> allTables)
   {
 
-    final Collection<MutableTable> filteredTables = doFilter();
+    final Collection<MutableTable> filteredTables = doFilter(allTables);
     for (final MutableTable table: allTables)
     {
       if (!filteredTables.contains(table))
@@ -58,10 +55,10 @@ class TablesReducer
       }
     }
 
-    removeForeignKeys();
+    removeForeignKeys(allTables);
   }
 
-  private Collection<MutableTable> doFilter()
+  private Collection<MutableTable> doFilter(final NamedObjectList<MutableTable> allTables)
   {
     // Filter for grep
     final NamedObjectFilter<Table> grepFilter = FilterFactory
@@ -117,7 +114,7 @@ class TablesReducer
     return includedTables;
   }
 
-  private void removeForeignKeys()
+  private void removeForeignKeys(final NamedObjectList<MutableTable> allTables)
   {
 
     for (final MutableTable table: allTables)
