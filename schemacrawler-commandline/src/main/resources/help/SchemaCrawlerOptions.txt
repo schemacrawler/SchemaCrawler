@@ -76,7 +76,7 @@
   Synonyms that do not match the pattern are not displayed
   Use -sequences= to omit sequences
   Optional, defaults to showing no sequences
-            
+
 --- Grep Options ---
     
 -grepcolumns=<regular-expression>
