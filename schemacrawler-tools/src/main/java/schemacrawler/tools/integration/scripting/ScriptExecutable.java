@@ -24,7 +24,6 @@ package schemacrawler.tools.integration.scripting;
 
 import static sf.util.Utility.isBlank;
 
-import java.io.File;
 import java.io.Reader;
 import java.io.Writer;
 import java.sql.Connection;
@@ -45,7 +44,6 @@ import schemacrawler.tools.executable.BaseStagedExecutable;
 import schemacrawler.tools.executable.CommandChainExecutable;
 import schemacrawler.tools.options.InputReader;
 import schemacrawler.tools.options.OutputWriter;
-import sf.util.FileUtility;
 import sf.util.ObjectToString;
 
 /**
@@ -56,6 +54,26 @@ import sf.util.ObjectToString;
 public final class ScriptExecutable
   extends BaseStagedExecutable
 {
+
+  public static String getFileExtension(final String scriptFileName)
+  {
+    final String ext;
+    if (scriptFileName != null)
+    {
+      ext = scriptFileName.lastIndexOf('.') == -1
+                                                 ? ""
+                                                 : scriptFileName
+                                                   .substring(scriptFileName
+                                                                .lastIndexOf('.') + 1,
+                                                              scriptFileName
+                                                                .length());
+    }
+    else
+    {
+      ext = "";
+    }
+    return ext;
+  }
 
   private static final Logger LOGGER = Logger.getLogger(ScriptExecutable.class
     .getName());
@@ -80,11 +98,6 @@ public final class ScriptExecutable
     {
       throw new SchemaCrawlerCommandLineException("No script specified");
     }
-    final File scriptFile = new File(scriptFileName);
-    if (!scriptFile.exists() || !scriptFile.canRead())
-    {
-      throw new SchemaCrawlerCommandLineException("No script specified");
-    }
 
     // Create a new instance of the engine
     final ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
@@ -101,7 +114,7 @@ public final class ScriptExecutable
                 engineFactory.getLanguageName(),
                 engineFactory.getLanguageVersion()));
       final List<String> extensions = engineFactory.getExtensions();
-      if (extensions.contains(FileUtility.getFileExtension(scriptFile)))
+      if (extensions.contains(getFileExtension(scriptFileName)))
       {
         scriptEngineFactory = engineFactory;
         break;
@@ -160,4 +173,5 @@ public final class ScriptExecutable
     }
 
   }
+
 }

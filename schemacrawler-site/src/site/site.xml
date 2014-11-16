@@ -71,6 +71,7 @@
       <item name="Diagramming" href="diagramming.html" />
       <item name="Scripting" href="scripting.html" />
       <item name="Lint" href="lint.html" />
+      <item name="Offline Snapshots" href="offline.html" />
       <item name="Plugins" href="plugins.html" />
       <item name="Using INFORMATION_SCHEMA Views" href="INFORMATION_SCHEMA.html" />
     </menu>
