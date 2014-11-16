@@ -33,18 +33,15 @@ class RoutinesReducer
 {
 
   private final SchemaCrawlerOptions options;
-  private final NamedObjectList<MutableRoutine> allRoutines;
 
-  public RoutinesReducer(final SchemaCrawlerOptions options,
-                         final NamedObjectList<MutableRoutine> allRoutines)
+  public RoutinesReducer(final SchemaCrawlerOptions options)
   {
     this.options = options;
-    this.allRoutines = allRoutines;
   }
 
-  public void filter()
+  public void filter(final NamedObjectList<MutableRoutine> allRoutines)
   {
-    final Collection<MutableRoutine> filteredRoutines = doFilter();
+    final Collection<MutableRoutine> filteredRoutines = doFilter(allRoutines);
     for (final MutableRoutine routine: allRoutines)
     {
       if (!filteredRoutines.contains(routine))
@@ -54,7 +51,7 @@ class RoutinesReducer
     }
   }
 
-  private Collection<MutableRoutine> doFilter()
+  private Collection<MutableRoutine> doFilter(final NamedObjectList<MutableRoutine> allRoutines)
   {
     final NamedObjectFilter<Routine> routineFilter = FilterFactory
       .grepRoutinesFilter(options);
@@ -69,4 +66,5 @@ class RoutinesReducer
 
     return greppedRoutines;
   }
+
 }
