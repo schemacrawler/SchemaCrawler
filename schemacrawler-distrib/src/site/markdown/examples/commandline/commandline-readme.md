@@ -14,6 +14,7 @@ The command example demonstrates the use of SchemaCrawler from the shell command
 ## How to Experiment
 1. Take a look at the SchemaCrawler grep example, in the [grep](../grep/grep-readme.html) example directory. 
 2. Take a look at the SchemaCrawler lint example, in the [lint](../lint/lint-readme.html) example directory. 
+3. Take a look at the SchemaCrawler offline snapshot example, in the [offline](../offline/offline-readme.html) example directory. 
 3. Try using different SchemaCrawler command-line options.
 4. Try running an arbitrary query, with a query command `"-command=SELECT * FROM PUBLIC.BOOKS.AUTHORS"`. 
    (The quotes are required.) 
