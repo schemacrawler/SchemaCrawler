@@ -21,13 +21,12 @@ package schemacrawler.crawl;
 
 
 import static schemacrawler.filter.FilterFactory.grepRoutinesFilter;
-import static schemacrawler.filter.FilterFactory.routineFilter;
 
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import schemacrawler.filter.ChainedNamedObjectFilter;
+import schemacrawler.filter.NamedObjectFilter;
 import schemacrawler.schema.Routine;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
@@ -55,20 +54,18 @@ class RoutinesReducer
 
   private Collection<MutableRoutine> doFilter(final NamedObjectList<MutableRoutine> allRoutines)
   {
-    final ChainedNamedObjectFilter<Routine> routineFilter = new ChainedNamedObjectFilter<>();
-    routineFilter.add(routineFilter(options));
-    routineFilter.add(grepRoutinesFilter(options));
+    final NamedObjectFilter<Routine> routineFilter = grepRoutinesFilter(options);
 
-    final Set<MutableRoutine> greppedRoutines = new HashSet<>();
+    final Set<MutableRoutine> filteredRoutines = new HashSet<>();
     for (final MutableRoutine routine: allRoutines)
     {
       if (routineFilter.include(routine))
       {
-        greppedRoutines.add(routine);
+        filteredRoutines.add(routine);
       }
     }
 
-    return greppedRoutines;
+    return filteredRoutines;
   }
 
 }
