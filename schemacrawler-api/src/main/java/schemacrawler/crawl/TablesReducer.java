@@ -20,12 +20,14 @@
 package schemacrawler.crawl;
 
 
+import static schemacrawler.filter.FilterFactory.grepTablesFilter;
+import static schemacrawler.filter.FilterFactory.tableFilter;
+
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import schemacrawler.filter.FilterFactory;
-import schemacrawler.filter.NamedObjectFilter;
+import schemacrawler.filter.ChainedNamedObjectFilter;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.Table;
@@ -60,13 +62,16 @@ class TablesReducer
 
   private Collection<MutableTable> doFilter(final NamedObjectList<MutableTable> allTables)
   {
-    // Filter for grep
-    final NamedObjectFilter<Table> grepFilter = FilterFactory
-      .grepTablesFilter(options);
+    // Filter for tables inclusion patterns (since we may be looping
+    // over offline data), and grep patterns
+    final ChainedNamedObjectFilter<Table> tableFilter = new ChainedNamedObjectFilter<>();
+    tableFilter.add(tableFilter(options));
+    tableFilter.add(grepTablesFilter(options));
+
     final Set<MutableTable> greppedTables = new HashSet<>();
     for (final MutableTable table: allTables)
     {
-      if (grepFilter.include(table))
+      if (tableFilter.include(table))
       {
         greppedTables.add(table);
       }
