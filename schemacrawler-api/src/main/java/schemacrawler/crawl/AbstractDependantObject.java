@@ -40,10 +40,6 @@ abstract class AbstractDependantObject<P extends DatabaseObjectReference & Datab
   private static final long serialVersionUID = -4327208866052082457L;
 
   private final P parent;
-  private transient String fullName;
-  private transient String shortName;
-
-  private transient int hashCode;
 
   AbstractDependantObject(final P parent, final String name)
   {
@@ -94,8 +90,21 @@ abstract class AbstractDependantObject<P extends DatabaseObjectReference & Datab
   @Override
   public String getFullName()
   {
-    buildFullName();
-    return fullName;
+    final StringBuilder buffer = new StringBuilder();
+    if (parent != null)
+    {
+      final String parentFullName = parent.getFullName();
+      if (!isBlank(parentFullName))
+      {
+        buffer.append(parentFullName).append('.');
+      }
+    }
+    final String quotedName = getName();
+    if (!isBlank(quotedName))
+    {
+      buffer.append(quotedName);
+    }
+    return buffer.toString();
   }
 
   /**
@@ -112,8 +121,21 @@ abstract class AbstractDependantObject<P extends DatabaseObjectReference & Datab
   @Override
   public final String getShortName()
   {
-    buildShortName();
-    return shortName;
+    final StringBuilder buffer = new StringBuilder();
+    if (parent != null)
+    {
+      final String parentName = parent.getName();
+      if (!isBlank(parentName))
+      {
+        buffer.append(parentName).append('.');
+      }
+    }
+    final String quotedName = getName();
+    if (!isBlank(quotedName))
+    {
+      buffer.append(quotedName);
+    }
+    return buffer.toString();
   }
 
   /**
@@ -124,64 +146,11 @@ abstract class AbstractDependantObject<P extends DatabaseObjectReference & Datab
   @Override
   public int hashCode()
   {
-    buildHashCode();
-    return hashCode;
-  }
-
-  private void buildFullName()
-  {
-    if (fullName == null)
-    {
-      final StringBuilder buffer = new StringBuilder();
-      if (parent != null)
-      {
-        final String parentFullName = parent.getFullName();
-        if (!isBlank(parentFullName))
-        {
-          buffer.append(parentFullName).append('.');
-        }
-      }
-      final String quotedName = getName();
-      if (!isBlank(quotedName))
-      {
-        buffer.append(quotedName);
-      }
-      fullName = buffer.toString();
-    }
-  }
-
-  private void buildHashCode()
-  {
-    if (hashCode == 0)
-    {
-      final int prime = 31;
-      int result = super.hashCode();
-      result = prime * result + (parent == null? 0: parent.hashCode());
-      result = prime * result + super.hashCode();
-      hashCode = result;
-    }
-  }
-
-  private void buildShortName()
-  {
-    if (shortName == null)
-    {
-      final StringBuilder buffer = new StringBuilder();
-      if (parent != null)
-      {
-        final String parentName = parent.getName();
-        if (!isBlank(parentName))
-        {
-          buffer.append(parentName).append('.');
-        }
-      }
-      final String quotedName = getName();
-      if (!isBlank(quotedName))
-      {
-        buffer.append(quotedName);
-      }
-      shortName = buffer.toString();
-    }
+    final int prime = 31;
+    int result = super.hashCode();
+    result = prime * result + (parent == null? 0: parent.hashCode());
+    result = prime * result + super.hashCode();
+    return result;
   }
 
 }

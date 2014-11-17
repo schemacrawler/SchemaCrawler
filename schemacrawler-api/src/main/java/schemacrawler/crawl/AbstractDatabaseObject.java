@@ -39,8 +39,6 @@ abstract class AbstractDatabaseObject
   private static final long serialVersionUID = 3099561832386790624L;
 
   private final Schema schema;
-  private transient String fullName;
-  private transient int hashCode;
 
   AbstractDatabaseObject(final Schema schema, final String name)
   {
@@ -112,8 +110,18 @@ abstract class AbstractDatabaseObject
   @Override
   public String getFullName()
   {
-    buildFullName();
-    return fullName;
+    final StringBuilder buffer = new StringBuilder();
+    final String schemaFullName = schema.getFullName();
+    if (schema != null && !Utility.isBlank(schemaFullName))
+    {
+      buffer.append(schemaFullName).append('.');
+    }
+    final String quotedName = getName();
+    if (!Utility.isBlank(quotedName))
+    {
+      buffer.append(quotedName);
+    }
+    return buffer.toString();
   }
 
   @Override
@@ -130,39 +138,11 @@ abstract class AbstractDatabaseObject
   @Override
   public int hashCode()
   {
-    buildHashCode();
-    return hashCode;
-  }
-
-  private void buildFullName()
-  {
-    if (fullName == null)
-    {
-      final StringBuilder buffer = new StringBuilder();
-      final String schemaFullName = schema.getFullName();
-      if (schema != null && !Utility.isBlank(schemaFullName))
-      {
-        buffer.append(schemaFullName).append('.');
-      }
-      final String quotedName = getName();
-      if (!Utility.isBlank(quotedName))
-      {
-        buffer.append(quotedName);
-      }
-      fullName = buffer.toString();
-    }
-  }
-
-  private void buildHashCode()
-  {
-    if (hashCode == 0)
-    {
-      final int prime = 31;
-      int result = super.hashCode();
-      result = prime * result + (schema == null? 0: schema.hashCode());
-      result = prime * result + super.hashCode();
-      hashCode = result;
-    }
+    final int prime = 31;
+    int result = super.hashCode();
+    result = prime * result + (schema == null? 0: schema.hashCode());
+    result = prime * result + super.hashCode();
+    return result;
   }
 
 }
