@@ -52,12 +52,9 @@ class ImmutableDatabaseProperty
     acronyms = Collections.unmodifiableSet(acronymsMap.entrySet());
   }
 
-  private transient String description;
-
   ImmutableDatabaseProperty(final String name, final Object value)
   {
     super(name, (Serializable) value);
-    buildDescription();
   }
 
   @Override
@@ -80,7 +77,44 @@ class ImmutableDatabaseProperty
   @Override
   public String getDescription()
   {
-    buildDescription();
+    final String get = "get";
+    String description = getName();
+    if (description.startsWith(get))
+    {
+      description = description.substring(get.length());
+    }
+
+    for (final Entry<String, String> acronym: acronyms)
+    {
+      description = description
+        .replaceAll(acronym.getKey(), acronym.getValue());
+    }
+
+    final int strLen = description.length();
+    final StringBuilder buffer = new StringBuilder(strLen);
+    for (int i = 0; i < strLen; i++)
+    {
+      final char ch = description.charAt(i);
+      if (Character.isUpperCase(ch) || Character.isTitleCase(ch))
+      {
+        buffer.append(' ').append(Character.toLowerCase(ch));
+      }
+      else
+      {
+        buffer.append(ch);
+      }
+    }
+    description = buffer.toString();
+
+    for (final Entry<String, String> acronym: acronyms)
+    {
+      description = description.replaceAll(acronym.getValue().toLowerCase(),
+                                           acronym.getKey());
+      description = description
+        .replaceAll(acronym.getValue(), acronym.getKey());
+    }
+
+    description = description.trim();
     return description;
   }
 
@@ -88,51 +122,6 @@ class ImmutableDatabaseProperty
   public String toString()
   {
     return getDescription() + " = " + getValue();
-  }
-
-  private void buildDescription()
-  {
-    if (description == null)
-    {
-      final String get = "get";
-      description = getName();
-      if (description.startsWith(get))
-      {
-        description = description.substring(get.length());
-      }
-
-      for (final Entry<String, String> acronym: acronyms)
-      {
-        description = description.replaceAll(acronym.getKey(),
-                                             acronym.getValue());
-      }
-
-      final int strLen = description.length();
-      final StringBuilder buffer = new StringBuilder(strLen);
-      for (int i = 0; i < strLen; i++)
-      {
-        final char ch = description.charAt(i);
-        if (Character.isUpperCase(ch) || Character.isTitleCase(ch))
-        {
-          buffer.append(' ').append(Character.toLowerCase(ch));
-        }
-        else
-        {
-          buffer.append(ch);
-        }
-      }
-      description = buffer.toString();
-
-      for (final Entry<String, String> acronym: acronyms)
-      {
-        description = description.replaceAll(acronym.getValue().toLowerCase(),
-                                             acronym.getKey());
-        description = description.replaceAll(acronym.getValue(),
-                                             acronym.getKey());
-      }
-
-      description = description.trim();
-    }
   }
 
 }
