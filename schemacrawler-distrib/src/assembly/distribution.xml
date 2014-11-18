@@ -20,29 +20,37 @@
 
   <available file="lgpl-3.0.txt" property="available.lgpl-3.0.txt"/>
   <available file="bnd-1.50.0.jar" property="available.bnd.jar"/>
+  <available file="ivy-2.4.0-rc1.jar" property="available.ivy.jar"/>
 
   <target name="make-distribution"
           depends="
             download-tools,
             make-super-jar,
             make-super-distribution,
-            make-examples,
+            make-main-distribution,
             make-website-distribution,
             cleanup-distribution
           "
           description="Package all sub-project jars into the distributable jar" />
 
 
-  <target name="download-tools" depends="download-lgpl,download-bnd-tool"/>
+  <target name="download-tools" depends="download-lgpl,download-bnd-tool,download-ivy"/>
 
   <target name="download-lgpl" unless="available.lgpl-3.0.txt">
-    <get src="http://www.gnu.org/licenses/lgpl-3.0.txt" dest="lgpl-3.0.txt" usetimestamp="true" />
+    <get src="http://www.gnu.org/licenses/lgpl-3.0.txt" 
+    	 dest="lgpl-3.0.txt" usetimestamp="true" />
   </target>
 
   <target name="download-bnd-tool" unless="available.bnd.jar">
-    <get src="http://repo1.maven.org/maven2/biz/aQute/bnd/1.50.0/bnd-1.50.0.jar" dest="bnd-1.50.0.jar" usetimestamp="true" />
+    <get src="http://repo1.maven.org/maven2/biz/aQute/bnd/1.50.0/bnd-1.50.0.jar" 
+    	 dest="bnd-1.50.0.jar" usetimestamp="true" />
   </target>
 
+  <target name="download-ivy" unless="available.ivy.jar">
+    <get src="http://repo1.maven.org/maven2/org/apache/ivy/ivy/2.4.0-rc1/ivy-2.4.0-rc1.jar" 
+    	 dest="ivy-2.4.0-rc1.jar" usetimestamp="true" />
+  </target>
+	
   <target name="make-super-jar">
 
     <!-- Build super-jar -->
@@ -112,46 +120,57 @@
   </target>
 
 
-  <target name="make-examples">
+  <target name="make-main-distribution">
 
-    <property name="examples.stem"
-              value="schemacrawler-${SchemaCrawler.version}-examples" />
-    <property name="examples.staging.dir"
-              location="${distribution.target}/site/examples" />
-    <mkdir dir="${examples.staging.dir}" />
+    <mkdir dir="${distribution.target}/site" />
+    <property name="main-distribution.staging.dir"
+              location="${distribution.target}/_main-distribution" />
+  	<move 
+  		file="${distribution.target}/site" 
+  		tofile="${main-distribution.staging.dir}"/>
+    <delete dir="${main-distribution.staging.dir}/css" />
+  	<delete dir="${main-distribution.staging.dir}/images" />
+    	
+    <property name="main-distribution.stem"
+              value="schemacrawler-${SchemaCrawler.version}-main" />
+
 
     <!-- 1. STAGE FOR EXAMPLES -->
 
     <!-- Copy licenses -->
     <copy file="lgpl-3.0.txt"
-          tofile="${examples.staging.dir}/LICENSE.txt" />
-
+          tofile="${main-distribution.staging.dir}/LICENSE.txt" />
+ 
+  	<!-- Copy Apache Ant Ivy -->
+    <copy file="ivy-2.4.0-rc1.jar"
+          tofile="${main-distribution.staging.dir}/_ivy/ivy-2.4.0-rc1.jar" />  	
+  	
     <!-- Stage examples -->
     <copy file="${SchemaCrawler.home}/schemacrawler-test/src/main/java/ApiExample.java"
-          todir="${examples.staging.dir}/api" />
+          todir="${main-distribution.staging.dir}/examples/api" />
 
     <!-- Copy config files -->
-    <copy todir="${examples.staging.dir}/db-specific-query">
+    <copy todir="${main-distribution.staging.dir}/examples/db-specific-query">
       <fileset dir="${SchemaCrawler.home}/schemacrawler-site/src/site/resources/config">
         <include name="*config*.properties" />
       </fileset>
     </copy>
-    <copy todir="${examples.staging.dir}/user-defined-query">
+    <copy todir="${main-distribution.staging.dir}/examples/user-defined-query">
       <fileset dir="${SchemaCrawler.home}/schemacrawler-site/src/site/resources/config">
         <include name="*config*.properties" />
       </fileset>
     </copy>
-    <copy todir="${examples.staging.dir}/velocity">
+    <copy todir="${main-distribution.staging.dir}/examples/velocity">
       <fileset dir="${SchemaCrawler.home}/schemacrawler-site/src/site/resources/config">
         <include name="*config*.properties" />
       </fileset>
     </copy>
-    <copy todir="${examples.staging.dir}/lint">
+    <copy todir="${main-distribution.staging.dir}/examples/lint">
       <fileset dir="${SchemaCrawler.home}/schemacrawler-site/src/site/resources">
         <include name="schemacrawler-linter-configs.xml" />
       </fileset>
     </copy>
-    <copy todir="${examples.staging.dir}/spring">
+    <copy todir="${main-distribution.staging.dir}/examples/spring">
       <fileset dir="${SchemaCrawler.home}/schemacrawler-integrations/src/test/resources">
         <include name="context.xml" />
       </fileset>
@@ -159,22 +178,17 @@
 
     <move
       file="${schemacrawler.complete-distribution}"
-      tofile="${examples.staging.dir}/_schemacrawler" />
+      tofile="${main-distribution.staging.dir}/_schemacrawler" />
 
     <!-- 2. CREATE BINARY DISTRIBUTION FROM THE STAGED EXAMPLES -->
 
     <!-- Create zip file for distribution -->
-    <delete file="${distribution.target}/${examples.stem}.zip" />
-    <zip destfile="${distribution.target}/${examples.stem}.zip">
-      <zipfileset dir="${examples.staging.dir}"
-                  prefix="${examples.stem}"
+    <delete file="${distribution.target}/${main-distribution.stem}.zip" />
+    <zip destfile="${distribution.target}/${main-distribution.stem}.zip">
+      <zipfileset dir="${main-distribution.staging.dir}"
+                  prefix="${main-distribution.stem}"
                   defaultexcludes="yes" />
     </zip>
-
-  	<!-- Leave the unzipped directory around for testing -->
-    <move
-      file="${examples.staging.dir}"
-      tofile="${distribution.target}/_examples" />
 
   </target>
 

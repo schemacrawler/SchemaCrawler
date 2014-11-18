@@ -33,12 +33,14 @@ import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.context.Context;
+import org.apache.velocity.exception.ResourceNotFoundException;
 import org.apache.velocity.runtime.RuntimeConstants;
 import org.apache.velocity.runtime.log.JdkLogChute;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.apache.velocity.runtime.resource.loader.FileResourceLoader;
 
 import schemacrawler.schema.Catalog;
+import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
 import schemacrawler.tools.executable.BaseStagedExecutable;
 import schemacrawler.tools.options.OutputWriter;
 
@@ -132,6 +134,10 @@ public final class VelocityRenderer
       final Template template = ve.getTemplate(templateLocation,
                                                templateEncoding);
       template.merge(context, writer);
+    }
+    catch (final ResourceNotFoundException e)
+    {
+      throw new SchemaCrawlerCommandLineException("No template specified", e);
     }
 
   }

@@ -1,4 +1,4 @@
-SchemaCrawler 11.03.01
+SchemaCrawler 12.01.01
 Database schema discovery and comprehension tool
 Copyright (c) 2000-2014, Sualeh Fatehi <sualeh@hotmail.com>.
 

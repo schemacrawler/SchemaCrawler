@@ -17,42 +17,28 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package sf.util;
 
+package schemacrawler.schemacrawler;
 
-import java.io.File;
 
 /**
- * Utility methods.
- *
- * @author Sualeh Fatehi
+ * Exception for the SchemaCrawler.
  */
-public final class FileUtility
+public class SchemaCrawlerCommandLineException
+  extends SchemaCrawlerException
 {
 
-  public static String getFileExtension(final File file)
+  private static final long serialVersionUID = 3592960063630720921L;
+
+  public SchemaCrawlerCommandLineException(final String message)
   {
-    final String ext;
-    if (file != null)
-    {
-      final String scriptFileName = file.getName();
-      ext = scriptFileName.lastIndexOf('.') == -1
-                                                 ? ""
-                                                 : scriptFileName
-                                                   .substring(scriptFileName
-                                                                .lastIndexOf('.') + 1,
-                                                              scriptFileName
-                                                                .length());
-    }
-    else
-    {
-      ext = "";
-    }
-    return ext;
+    super(message);
   }
 
-  private FileUtility()
-  { // Prevent instantiation
+  public SchemaCrawlerCommandLineException(final String message,
+                                           final Throwable cause)
+  {
+    super(message + ": " + cause.getMessage(), cause);
   }
 
 }

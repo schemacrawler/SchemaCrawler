@@ -1,1 +1,0 @@
-ant -f groovy_setup.xml $*

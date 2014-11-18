@@ -5,7 +5,7 @@
                    "http://ant.apache.org/ivy/schemas/ivy.xsd">
 	<info organisation="schemacrawler" module="schemacrawler-groovy" />
 	<dependencies>
-		<dependency org="org.codehaus.groovy" name="groovy-all" rev="2.0.2" />
+		<dependency org="org.codehaus.groovy" name="groovy-all" rev="2.3.7" />
 		
         <exclude type="sources" ext="jar"/>
         <exclude type="test" ext="jar"/>

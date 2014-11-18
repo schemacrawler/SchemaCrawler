@@ -34,7 +34,6 @@ public final class SchemaReference
 
   private final String catalogName;
   private final String schemaName;
-  private transient String fullName;
   private final Map<String, Object> attributeMap = new HashMap<>();
 
   public SchemaReference()
@@ -172,7 +171,11 @@ public final class SchemaReference
   @Override
   public String getFullName()
   {
-    buildFullName();
+    final boolean hasCatalogName = !Utility.isBlank(catalogName);
+    final boolean hasSchemaName = !Utility.isBlank(getName());
+    final String fullName = (hasCatalogName? catalogName: "")
+                            + (hasCatalogName && hasSchemaName? ".": "")
+                            + (hasSchemaName? getName(): "");
     return fullName;
   }
 
@@ -242,18 +245,6 @@ public final class SchemaReference
   public String toString()
   {
     return getFullName();
-  }
-
-  private void buildFullName()
-  {
-    if (fullName == null)
-    {
-      final boolean hasCatalogName = !Utility.isBlank(catalogName);
-      final boolean hasSchemaName = !Utility.isBlank(getName());
-      fullName = (hasCatalogName? catalogName: "")
-                 + (hasCatalogName && hasSchemaName? ".": "")
-                 + (hasSchemaName? getName(): "");
-    }
   }
 
 }

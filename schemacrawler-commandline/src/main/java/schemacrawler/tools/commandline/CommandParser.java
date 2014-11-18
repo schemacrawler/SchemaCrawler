@@ -21,6 +21,7 @@
 package schemacrawler.tools.commandline;
 
 
+import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.Command;
 import sf.util.Utility;
@@ -50,7 +51,7 @@ public final class CommandParser
     }
     else
     {
-      throw new SchemaCrawlerException("No command specified");
+      throw new SchemaCrawlerCommandLineException("No command specified");
     }
   }
 
