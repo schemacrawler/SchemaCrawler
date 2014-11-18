@@ -598,10 +598,10 @@ FK_PREVIOUSEDITION                         [foreign key, with no action]
   ID <-- PREVIOUSEDITIONID                                      
 
                                                       [weak association]
-  ID <-- SALES.BOOKID                                           
+  ID <~~ SALES.BOOKID                                           
 
                                                       [weak association]
-  PUBLISHERID --> PUBLISHERS.ID                                 
+  PUBLISHERID ~~> PUBLISHERS.ID                                 
 
 SYS_IDX_PK_BOOKS_10105                                    [unique index]
   ID                                ascending                   
@@ -681,7 +681,7 @@ SYS_PK_10092                                               [primary key]
                                     auto-incremented            
 
                                                       [weak association]
-  ID <-- BOOKS.PUBLISHERID                                      
+  ID <~~ BOOKS.PUBLISHERID                                      
 
 SYS_IDX_SYS_PK_10092_10093                                [unique index]
   ID                                ascending                   
@@ -1007,7 +1007,7 @@ FK_SALES_REGIONS                           [foreign key, with no action]
   COUNTRY --> REGIONS.COUNTRY                                   
 
                                                       [weak association]
-  BOOKID --> BOOKS.ID                                           
+  BOOKID ~~> BOOKS.ID                                           
 
 SYS_IDX_10154                                         [non-unique index]
   POSTALCODE                        ascending                   

@@ -66,13 +66,25 @@ public final class HtmlFormattingHelper
   @Override
   public String createRightArrow()
   {
-    return " \u21E8 ";
+    return "\u2192";
   }
 
   @Override
   public String createLeftArrow()
   {
-    return " \u21E6 ";
+    return "\u2190";
+  }
+
+  @Override
+  public String createWeakRightArrow()
+  {
+    return "\u21dd";
+  }
+
+  @Override
+  public String createWeakLeftArrow()
+  {
+    return "\u21dc";
   }
 
   /**

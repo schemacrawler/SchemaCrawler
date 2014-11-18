@@ -249,12 +249,11 @@ final class SchemaTextFormatter
       {
         referencedObjectName = synonym.getReferencedObject().getFullName();
       }
-      out.println(formattingHelper.createDetailRow("",
-                                                   synonym.getName()
-                                                       + formattingHelper
-                                                         .createRightArrow()
-                                                       + referencedObjectName,
-                                                   ""));
+      out.println(formattingHelper.createDetailRow("", String
+        .format("%s %s %s",
+                synonym.getName(),
+                formattingHelper.createRightArrow(),
+                referencedObjectName), ""));
     }
 
     out.println(formattingHelper.createObjectEnd());
@@ -472,7 +471,8 @@ final class SchemaTextFormatter
       .getSearchable().toString()));
   }
 
-  private void printColumnReferences(final String tableName,
+  private void printColumnReferences(final boolean isForeignKey,
+                                     final String tableName,
                                      final ColumnReference... columnReferences)
   {
     for (final ColumnReference columnReference: columnReferences)
@@ -519,24 +519,28 @@ final class SchemaTextFormatter
         keySequenceString = String.format("%2d", keySequence);
       }
 
+      final String relationship;
       if (isIncoming)
       {
-        out.println(formattingHelper.createDetailRow(keySequenceString,
-                                                     pkColumnName
-                                                         + formattingHelper
-                                                           .createLeftArrow()
-                                                         + fkColumnName,
-                                                     ""));
+        relationship = String.format("%s %s %s",
+                                     pkColumnName,
+                                     isForeignKey? formattingHelper
+                                       .createLeftArrow(): formattingHelper
+                                       .createWeakLeftArrow(),
+                                     fkColumnName);
       }
       else
       {
-        out.println(formattingHelper.createDetailRow(keySequenceString,
-                                                     fkColumnName
-                                                         + formattingHelper
-                                                           .createRightArrow()
-                                                         + pkColumnName,
-                                                     ""));
+        relationship = String.format("%s %s %s",
+                                     fkColumnName,
+                                     isForeignKey? formattingHelper
+                                       .createRightArrow(): formattingHelper
+                                       .createWeakRightArrow(),
+                                     pkColumnName);
       }
+      out.println(formattingHelper.createDetailRow(keySequenceString,
+                                                   relationship,
+                                                   ""));
     }
   }
 
@@ -624,7 +628,7 @@ final class SchemaTextFormatter
         }
         final String fkDetails = "[foreign key" + ruleString + "]";
         out.println(formattingHelper.createNameRow(fkName, fkDetails));
-        printColumnReferences(tableName, foreignKey.getColumnReferences()
+        printColumnReferences(true, tableName, foreignKey.getColumnReferences()
           .toArray(new ColumnReference[0]));
       }
     }
@@ -707,10 +711,9 @@ final class SchemaTextFormatter
                                                    "[privilege]"));
         for (final Grant grant: privilege.getGrants())
         {
-          final String grantedFrom = grant.getGrantor()
-                                     + formattingHelper.createRightArrow()
-                                     + grant.getGrantee()
-                                     + (grant.isGrantable()? " (grantable)": "");
+          final String grantedFrom = String.format("%s %s %s%s", grant
+            .getGrantor(), formattingHelper.createRightArrow(), grant
+            .getGrantee(), (grant.isGrantable()? " (grantable)": ""));
           out.println(formattingHelper.createDetailRow("", grantedFrom, ""));
         }
       }
@@ -957,7 +960,7 @@ final class SchemaTextFormatter
     {
       out.println(formattingHelper.createEmptyRow());
       out.println(formattingHelper.createNameRow("", "[weak association]"));
-      printColumnReferences(tableName, weakAssociation);
+      printColumnReferences(false, tableName, weakAssociation);
     }
   }
 
