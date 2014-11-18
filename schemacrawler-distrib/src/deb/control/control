@@ -7,17 +7,16 @@ Recommends: graphviz
 Maintainer: Sualeh Fatehi <sualeh@hotmail.com>
 Uploaders: Adrien.Sales <Adrien.Sales@gmail.com>
 Description: Schemacrawler
- Schemacrawler (http://schemacrawler.sourceforge.net/) is a free database schema
- discovery and comprehension tool.
- 
- SchemaCrawler has a good mix useful features for data governance. You can search
- for database schema objects using regular expressions, and output the schema
- and data in a readable text format. The output serves for database
- documentation, and is designed to be diff-ed against other database schemas.
- 
- SchemaCrawler also generates schema diagrams (and hence depends on graphviz).
- 
- You can execute scripts in any standard scripting language against your database.
- 
- You can find potential schema design issues with lint.
+  Free database schema discovery and comprehension tool
+  
+  Schemacrawler (http://schemacrawler.sourceforge.net/) has a good mix 
+  useful features for data governance. You can search for database schema 
+  objects using regular expressions, and output the schema and data in a 
+  readable text format. The output serves for database documentation, and 
+  is designed to be diff-ed against other database schemas. 
+
+  SchemaCrawler also generates schema diagrams (and hence depends on 
+  graphviz). You can execute scripts in any standard scripting language 
+  against your database, and find potential schema design issues with 
+  lint. 
 Homepage: http://schemacrawler.sourceforge.net/
