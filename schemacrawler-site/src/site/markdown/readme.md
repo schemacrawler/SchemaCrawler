@@ -36,7 +36,7 @@ using `sc.cmd` (or `sc.sh` on Unix).
 
 ## Installing From the Debian Package
 Download the [Debian schemacrawler package](), and install it using
-`sudo dpkg -i schemacrawler-11.03.01.deb`. SchemaCrawler gets installed in `/opt/schemacrawler`.
+`sudo dpkg -i schemacrawler-12.01.01.deb`. SchemaCrawler gets installed in `/opt/schemacrawler`.
 You can run SchemaCrawler using the `schemacrawler` command, which will be on the PATH.
 
 # Using SchemaCrawler in Your Projects
@@ -50,7 +50,7 @@ In order to use SchemaCrawler in your [Apache Maven] projects, add a dependency 
   &lt;dependency&gt;
     &lt;groupId&gt;us.fatehi&lt;/groupId&gt;
     &lt;artifactId&gt;schemacrawler&lt;/artifactId&gt;
-    &lt;version&gt;11.03.01&lt;/version&gt;
+    &lt;version&gt;12.01.01&lt;/version&gt;
   &lt;/dependency&gt;
 &lt;/dependencies&gt;
 </pre></div>

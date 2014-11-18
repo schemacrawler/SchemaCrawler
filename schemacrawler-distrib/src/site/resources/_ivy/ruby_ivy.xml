@@ -3,9 +3,9 @@
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:noNamespaceSchemaLocation=
                    "http://ant.apache.org/ivy/schemas/ivy.xsd">
-	<info organisation="schemacrawler" module="schemacrawler-groovy" />
+	<info organisation="schemacrawler" module="schemacrawler-ruby" />
 	<dependencies>
-		<dependency org="org.jruby" name="jruby" rev="1.7.0.preview2" />
+		<dependency org="org.jruby" name="jruby" rev="1.7.16.1" />
 		
         <exclude type="sources" ext="jar"/>
         <exclude type="test" ext="jar"/>

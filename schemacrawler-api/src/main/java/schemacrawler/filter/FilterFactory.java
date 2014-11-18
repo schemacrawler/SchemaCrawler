@@ -51,6 +51,30 @@ public class FilterFactory
     }
   }
 
+  public static NamedObjectFilter<Routine> routineFilter(final SchemaCrawlerOptions options)
+  {
+    if (options != null)
+    {
+      return new RoutineFilter(options);
+    }
+    else
+    {
+      return new PassthroughFilter<Routine>();
+    }
+  }
+
+  public static NamedObjectFilter<Table> tableFilter(final SchemaCrawlerOptions options)
+  {
+    if (options != null)
+    {
+      return new TableFilter(options);
+    }
+    else
+    {
+      return new PassthroughFilter<Table>();
+    }
+  }
+
   private FilterFactory()
   {
   }

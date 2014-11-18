@@ -20,11 +20,12 @@
 package schemacrawler.crawl;
 
 
+import static schemacrawler.filter.FilterFactory.grepRoutinesFilter;
+
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import schemacrawler.filter.FilterFactory;
 import schemacrawler.filter.NamedObjectFilter;
 import schemacrawler.schema.Routine;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -33,18 +34,15 @@ class RoutinesReducer
 {
 
   private final SchemaCrawlerOptions options;
-  private final NamedObjectList<MutableRoutine> allRoutines;
 
-  public RoutinesReducer(final SchemaCrawlerOptions options,
-                         final NamedObjectList<MutableRoutine> allRoutines)
+  public RoutinesReducer(final SchemaCrawlerOptions options)
   {
     this.options = options;
-    this.allRoutines = allRoutines;
   }
 
-  public void filter()
+  public void filter(final NamedObjectList<MutableRoutine> allRoutines)
   {
-    final Collection<MutableRoutine> filteredRoutines = doFilter();
+    final Collection<MutableRoutine> filteredRoutines = doFilter(allRoutines);
     for (final MutableRoutine routine: allRoutines)
     {
       if (!filteredRoutines.contains(routine))
@@ -54,19 +52,20 @@ class RoutinesReducer
     }
   }
 
-  private Collection<MutableRoutine> doFilter()
+  private Collection<MutableRoutine> doFilter(final NamedObjectList<MutableRoutine> allRoutines)
   {
-    final NamedObjectFilter<Routine> routineFilter = FilterFactory
-      .grepRoutinesFilter(options);
-    final Set<MutableRoutine> greppedRoutines = new HashSet<>();
+    final NamedObjectFilter<Routine> routineFilter = grepRoutinesFilter(options);
+
+    final Set<MutableRoutine> filteredRoutines = new HashSet<>();
     for (final MutableRoutine routine: allRoutines)
     {
       if (routineFilter.include(routine))
       {
-        greppedRoutines.add(routine);
+        filteredRoutines.add(routine);
       }
     }
 
-    return greppedRoutines;
+    return filteredRoutines;
   }
+
 }

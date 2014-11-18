@@ -1,13 +1,18 @@
-# SchemaCrawler - Velocity Example
+# SchemaCrawler - Apache Velocity Templating Example
 
 ## Description
 The command example demonstrates the integration of SchemaCrawler with Apache Velocity.
 
+## How to Setup
+1. Make sure that java is on your PATH
+2. Start a command shell in the `ivy` directory 
+3. Run `download.cmd velocity` (or `download.sh velocity` on Unix) to
+   install Apache Velocity templating support 
+
 ## How to Run
-1. Install [ant](http://ant.apache.org/), and make sure that ant is on your path 
-2. Make sure that java is on your PATH
-3. Start the database server by running the StartDatabaseServer script from the distribution directory 
-4. Start a command shell in the velocity example directory 
+1. Make sure that java is on your PATH
+2. Start the database server by running the StartDatabaseServer script from the distribution directory 
+3. Start a command shell in the `velocity` example directory
 5. Run `velocity.cmd tables.vm` (or `velocity.sh tables.vm` on Unix) 
 
 ## How to Experiment

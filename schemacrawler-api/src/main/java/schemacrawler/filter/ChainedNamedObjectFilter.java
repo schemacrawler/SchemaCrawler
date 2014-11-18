@@ -23,9 +23,9 @@ package schemacrawler.filter;
 import java.util.ArrayList;
 import java.util.List;
 
-import schemacrawler.schema.NamedObjectWithAttributes;
+import schemacrawler.schema.NamedObject;
 
-class ChainedNamedObjectFilter<N extends NamedObjectWithAttributes>
+public class ChainedNamedObjectFilter<N extends NamedObject>
   implements NamedObjectFilter<N>
 {
 
@@ -36,15 +36,15 @@ class ChainedNamedObjectFilter<N extends NamedObjectWithAttributes>
   {
     for (final NamedObjectFilter<N> filter: filters)
     {
-      if (filter.include(namedObject))
+      if (!filter.include(namedObject))
       {
-        return true;
+        return false;
       }
     }
-    return false;
+    return true;
   }
 
-  void add(final NamedObjectFilter<N> filter)
+  public void add(final NamedObjectFilter<N> filter)
   {
     if (filter != null)
     {

@@ -21,7 +21,18 @@
 package schemacrawler;
 
 
-import schemacrawler.tools.commandline.SchemaCrawlerMain;
+import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
+import schemacrawler.tools.commandline.ApplicationOptionsParser;
+import schemacrawler.tools.commandline.CommandLine;
+import schemacrawler.tools.commandline.DatabaseServerTypeParser;
+import schemacrawler.tools.databaseconnector.DatabaseConnector;
+import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
+import schemacrawler.tools.options.ApplicationOptions;
+import schemacrawler.tools.options.DatabaseServerType;
 
 /**
  * Main class that takes arguments for a database for crawling a schema.
@@ -29,19 +40,58 @@ import schemacrawler.tools.commandline.SchemaCrawlerMain;
 public final class Main
 {
 
-  /**
-   * Get connection parameters, and creates a connection, and crawls the
-   * schema.
-   *
-   * @param args
-   *        Arguments passed into the program from the command-line.
-   * @throws Exception
-   *         On an exception
-   */
+  private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
+
   public static void main(final String[] args)
     throws Exception
   {
-    SchemaCrawlerMain.main(args);
+    String[] remainingArgs = args;
+
+    final ApplicationOptionsParser applicationOptionsParser = new ApplicationOptionsParser();
+    remainingArgs = applicationOptionsParser.parse(remainingArgs);
+    final ApplicationOptions applicationOptions = applicationOptionsParser
+      .getOptions();
+
+    applicationOptions.applyApplicationLogLevel();
+    LOGGER.log(Level.CONFIG, "Command line: " + Arrays.toString(args));
+
+    final DatabaseServerTypeParser databaseConnectorParser = new DatabaseServerTypeParser();
+    remainingArgs = databaseConnectorParser.parse(remainingArgs);
+    final DatabaseServerType dbServerType = databaseConnectorParser
+      .getOptions();
+    final DatabaseConnectorRegistry registry = new DatabaseConnectorRegistry();
+    final DatabaseConnector dbConnector = registry
+      .lookupDatabaseSystemIdentifier(dbServerType
+        .getDatabaseSystemIdentifier());
+
+    final boolean showHelp = args == null || args.length == 0
+                             || args.length == 1
+                             && Main.class.getCanonicalName().equals(args[0])
+                             || applicationOptions.isShowHelp();
+
+    final CommandLine commandLine;
+    if (showHelp)
+    {
+      final boolean showVersionOnly = applicationOptions.isShowVersionOnly();
+      commandLine = dbConnector.newHelpCommandLine(remainingArgs,
+                                                   showVersionOnly);
+    }
+    else
+    {
+      commandLine = dbConnector.newCommandLine(remainingArgs);
+    }
+
+    try
+    {
+      commandLine.execute();
+    }
+    catch (final SchemaCrawlerCommandLineException e)
+    {
+      final String errorMessage = e.getMessage();
+      System.err.println(errorMessage);
+      System.err.println("Re-run SchemaCrawler with the -? option for help");
+      LOGGER.log(Level.SEVERE, "Command line: " + Arrays.toString(args), e);
+    }
   }
 
   private Main()

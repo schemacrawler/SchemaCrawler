@@ -1809,7 +1809,7 @@
     }
   ],
   "schemaCrawlerInfo": {
-    "productVersion": "11.03.01",
+    "productVersion": "12.01.01",
     "productName": "SchemaCrawler"
   },
   "jdbcDriverInfo": {

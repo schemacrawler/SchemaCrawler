@@ -24,6 +24,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.commandline.AdditionalConfigParser;
@@ -58,17 +59,13 @@ public final class OfflineSnapshotCommandLine
   {
     if (args == null || args.length == 0)
     {
-      throw new SchemaCrawlerException("No command-line arguments provided");
+      throw new SchemaCrawlerCommandLineException("No command-line arguments provided");
     }
 
     String[] remainingArgs = args;
 
     final CommandParser commandParser = new CommandParser();
     remainingArgs = commandParser.parse(remainingArgs);
-    if (!commandParser.hasOptions())
-    {
-      throw new SchemaCrawlerException("No command specified");
-    }
     command = commandParser.getOptions().toString();
 
     config = new Config();
