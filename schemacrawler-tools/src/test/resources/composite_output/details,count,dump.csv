@@ -598,10 +598,10 @@ FK_PREVIOUSEDITION,"[foreign key, with no action]"
 "",ID <-- PREVIOUSEDITIONID,""
 ""
 "",[weak association]
-"","ID <-- PUBLIC.""PUBLISHER SALES"".SALES.BOOKID",""
+"","ID <~~ PUBLIC.""PUBLISHER SALES"".SALES.BOOKID",""
 ""
 "",[weak association]
-"",PUBLISHERID --> PUBLIC.BOOKS.PUBLISHERS.ID,""
+"",PUBLISHERID ~~> PUBLIC.BOOKS.PUBLISHERS.ID,""
 ""
 SYS_IDX_PK_BOOKS_10105,[unique index]
 "",ID,ascending
@@ -681,7 +681,7 @@ SYS_PK_10092,[primary key]
 "","",auto-incremented
 ""
 "",[weak association]
-"",ID <-- PUBLIC.BOOKS.BOOKS.PUBLISHERID,""
+"",ID <~~ PUBLIC.BOOKS.BOOKS.PUBLISHERID,""
 ""
 SYS_IDX_SYS_PK_10092_10093,[unique index]
 "",ID,ascending
@@ -1007,7 +1007,7 @@ FK_SALES_REGIONS,"[foreign key, with no action]"
 "","COUNTRY --> PUBLIC.""PUBLISHER SALES"".REGIONS.COUNTRY",""
 ""
 "",[weak association]
-"",BOOKID --> PUBLIC.BOOKS.BOOKS.ID,""
+"",BOOKID ~~> PUBLIC.BOOKS.BOOKS.ID,""
 ""
 SYS_IDX_10154,[non-unique index]
 "",POSTALCODE,ascending

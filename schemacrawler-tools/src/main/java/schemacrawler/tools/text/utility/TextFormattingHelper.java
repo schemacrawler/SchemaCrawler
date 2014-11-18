@@ -52,6 +52,20 @@ public interface TextFormattingHelper
   String createLeftArrow();
 
   /**
+   * Creates an arrow symbol.
+   *
+   * @return Arrow symbol
+   */
+  String createWeakRightArrow();
+
+  /**
+   * Creates an arrow symbol.
+   *
+   * @return Arrow symbol
+   */
+  String createWeakLeftArrow();
+
+  /**
    * Creates a definition row.
    *
    * @param definition

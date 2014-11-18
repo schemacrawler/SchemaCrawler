@@ -48,13 +48,25 @@ public class PlainTextFormattingHelper
   @Override
   public String createRightArrow()
   {
-    return " --> ";
+    return "-->";
   }
 
   @Override
   public String createLeftArrow()
   {
-    return " <-- ";
+    return "<--";
+  }
+
+  @Override
+  public String createWeakRightArrow()
+  {
+    return "~~>";
+  }
+
+  @Override
+  public String createWeakLeftArrow()
+  {
+    return "<~~";
   }
 
   /**
