@@ -440,7 +440,7 @@ PK_AUTHORS,[primary key]
 1,ID,ascending
 ""
 FK_Z_AUTHOR,"[foreign key, with no action]"
- 1,ID --> PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID,""
+ 1,ID <-- PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID,""
 ""
 SYS_IDX_PK_AUTHORS_10097,[unique index]
 1,ID,ascending
@@ -529,10 +529,10 @@ PUBLIC.BOOKS.BOOKAUTHORS
 3,"""UPDATE""",CLOB
 ""
 FK_Z_AUTHOR,"[foreign key, with no action]"
- 1,PUBLIC.BOOKS.AUTHORS.ID --> AUTHORID,""
+ 1,AUTHORID --> PUBLIC.BOOKS.AUTHORS.ID,""
 ""
 FK_Y_BOOK,"[foreign key, with no action]"
- 1,PUBLIC.BOOKS.BOOKS.ID --> BOOKID,""
+ 1,BOOKID --> PUBLIC.BOOKS.BOOKS.ID,""
 ""
 SYS_IDX_10118,[non-unique index]
 2,AUTHORID,ascending
@@ -592,16 +592,16 @@ PK_BOOKS,[primary key]
 1,ID,ascending
 ""
 FK_Y_BOOK,"[foreign key, with no action]"
- 1,ID --> PUBLIC.BOOKS.BOOKAUTHORS.BOOKID,""
+ 1,ID <-- PUBLIC.BOOKS.BOOKAUTHORS.BOOKID,""
 ""
 FK_PREVIOUSEDITION,"[foreign key, with no action]"
- 1,ID --> PREVIOUSEDITIONID,""
+ 1,ID <-- PREVIOUSEDITIONID,""
 ""
 "",[weak association]
-"","ID --> PUBLIC.""PUBLISHER SALES"".SALES.BOOKID",""
+"","ID <-- PUBLIC.""PUBLISHER SALES"".SALES.BOOKID",""
 ""
 "",[weak association]
-"",PUBLIC.BOOKS.PUBLISHERS.ID --> PUBLISHERID,""
+"",PUBLISHERID --> PUBLIC.BOOKS.PUBLISHERS.ID,""
 ""
 SYS_IDX_PK_BOOKS_10105,[unique index]
 1,ID,ascending
@@ -681,7 +681,7 @@ SYS_PK_10092,[primary key]
 "","",auto-incremented
 ""
 "",[weak association]
-"",ID --> PUBLIC.BOOKS.BOOKS.PUBLISHERID,""
+"",ID <-- PUBLIC.BOOKS.BOOKS.PUBLISHERID,""
 ""
 SYS_IDX_SYS_PK_10092_10093,[unique index]
 1,ID,ascending
@@ -718,10 +718,10 @@ PK_EXTRA_PK,[primary key]
 1,ID,ascending
 ""
 FK_PUBLICATION_JOIN,"[foreign key, with no action]"
- 1,PUBLIC.FOR_LINT.PUBLICATIONS.ID --> PUBLICATIONID,""
+ 1,PUBLICATIONID --> PUBLIC.FOR_LINT.PUBLICATIONS.ID,""
 ""
 FK_WRITER_JOIN,"[foreign key, with no action]"
- 1,PUBLIC.FOR_LINT.WRITERS.ID --> WRITERID,""
+ 1,WRITERID --> PUBLIC.FOR_LINT.WRITERS.ID,""
 ""
 SYS_IDX_PK_EXTRA_PK_10181,[unique index]
 1,ID,ascending
@@ -802,13 +802,13 @@ PK_PUBLICATIONS,[primary key]
 1,ID,ascending
 ""
 FK_PUBLICATION_JOIN,"[foreign key, with no action]"
- 1,ID --> PUBLIC.FOR_LINT.EXTRA_PK.PUBLICATIONID,""
+ 1,ID <-- PUBLIC.FOR_LINT.EXTRA_PK.PUBLICATIONID,""
 ""
 FK_WRITERS_PUBLICATION,"[foreign key, with no action]"
- 1,ID --> PUBLIC.FOR_LINT.WRITERS.PUBLICATION_ID,""
+ 1,ID <-- PUBLIC.FOR_LINT.WRITERS.PUBLICATION_ID,""
 ""
 FK_PUBLICATIONS_WRITER,"[foreign key, with no action]"
- 1,PUBLIC.FOR_LINT.WRITERS.ID --> WRITERID,""
+ 1,WRITERID --> PUBLIC.FOR_LINT.WRITERS.ID,""
 ""
 SYS_IDX_PK_PUBLICATIONS_10171,[unique index]
 1,ID,ascending
@@ -871,13 +871,13 @@ PK_WRITERS,[primary key]
 1,ID,ascending
 ""
 FK_WRITERS_PUBLICATION,"[foreign key, with no action]"
- 1,PUBLIC.FOR_LINT.PUBLICATIONS.ID --> PUBLICATION_ID,""
+ 1,PUBLICATION_ID --> PUBLIC.FOR_LINT.PUBLICATIONS.ID,""
 ""
 FK_WRITER_JOIN,"[foreign key, with no action]"
- 1,ID --> PUBLIC.FOR_LINT.EXTRA_PK.WRITERID,""
+ 1,ID <-- PUBLIC.FOR_LINT.EXTRA_PK.WRITERID,""
 ""
 FK_PUBLICATIONS_WRITER,"[foreign key, with no action]"
- 1,ID --> PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID,""
+ 1,ID <-- PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID,""
 ""
 SYS_IDX_PK_WRITERS_10161,[unique index]
 1,ID,ascending
@@ -954,8 +954,8 @@ PK_CUSTOMERS,[primary key]
 4,COUNTRY,ascending
 ""
 FK_SALES_REGIONS,"[foreign key, with no action]"
- 1,"POSTALCODE --> PUBLIC.""PUBLISHER SALES"".SALES.POSTALCODE",""
- 2,"COUNTRY --> PUBLIC.""PUBLISHER SALES"".SALES.COUNTRY",""
+ 1,"POSTALCODE <-- PUBLIC.""PUBLISHER SALES"".SALES.POSTALCODE",""
+ 2,"COUNTRY <-- PUBLIC.""PUBLISHER SALES"".SALES.COUNTRY",""
 ""
 SYS_IDX_PK_CUSTOMERS_10144,[unique index]
 3,POSTALCODE,ascending
@@ -1003,11 +1003,11 @@ PUBLIC."PUBLISHER SALES".SALES
 5,TOTALAMOUNT,"DOUBLE(64, 0)"
 ""
 FK_SALES_REGIONS,"[foreign key, with no action]"
- 1,"PUBLIC.""PUBLISHER SALES"".REGIONS.POSTALCODE --> POSTALCODE",""
- 2,"PUBLIC.""PUBLISHER SALES"".REGIONS.COUNTRY --> COUNTRY",""
+ 1,"POSTALCODE --> PUBLIC.""PUBLISHER SALES"".REGIONS.POSTALCODE",""
+ 2,"COUNTRY --> PUBLIC.""PUBLISHER SALES"".REGIONS.COUNTRY",""
 ""
 "",[weak association]
-"",PUBLIC.BOOKS.BOOKS.ID --> BOOKID,""
+"",BOOKID --> PUBLIC.BOOKS.BOOKS.ID,""
 ""
 SYS_IDX_10154,[non-unique index]
 1,POSTALCODE,ascending
