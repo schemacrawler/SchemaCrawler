@@ -24,7 +24,7 @@ PK_AUTHORS                                                 [primary key]
   ID                                ascending                   
 
 FK_Z_AUTHOR                                [foreign key, with no action]
-  ID --> PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID                              
+  ID <-- PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID                              
 
 SYS_IDX_PK_AUTHORS_10097                                  [unique index]
   ID                                ascending                   
@@ -94,13 +94,13 @@ PK_WRITERS                                                 [primary key]
   ID                                ascending                   
 
 FK_WRITERS_PUBLICATION                     [foreign key, with no action]
-  PUBLIC.FOR_LINT.PUBLICATIONS.ID --> PUBLICATION_ID                              
+  PUBLICATION_ID --> PUBLIC.FOR_LINT.PUBLICATIONS.ID                              
 
 FK_WRITER_JOIN                             [foreign key, with no action]
-  ID --> PUBLIC.FOR_LINT.EXTRA_PK.WRITERID                              
+  ID <-- PUBLIC.FOR_LINT.EXTRA_PK.WRITERID                              
 
 FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
-  ID --> PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID                              
+  ID <-- PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID                              
 
 SYS_IDX_PK_WRITERS_10161                                  [unique index]
   ID                                ascending                   

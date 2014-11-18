@@ -252,7 +252,7 @@ final class SchemaTextFormatter
       out.println(formattingHelper.createDetailRow("",
                                                    synonym.getName()
                                                        + formattingHelper
-                                                         .createArrow()
+                                                         .createRightArrow()
                                                        + referencedObjectName,
                                                    ""));
     }
@@ -483,9 +483,12 @@ final class SchemaTextFormatter
       final String fkColumnName;
       pkColumn = columnReference.getPrimaryKeyColumn();
       fkColumn = columnReference.getForeignKeyColumn();
+
+      boolean isIncoming = false;
       if (pkColumn.getParent().getName().equals(tableName))
       {
         pkColumnName = pkColumn.getName();
+        isIncoming = true;
       }
       else if (options.isShowUnqualifiedNames())
       {
@@ -515,12 +518,25 @@ final class SchemaTextFormatter
           .getKeySequence();
         keySequenceString = String.format("%2d", keySequence);
       }
-      out.println(formattingHelper.createDetailRow(keySequenceString,
-                                                   pkColumnName
-                                                       + formattingHelper
-                                                         .createArrow()
-                                                       + fkColumnName,
-                                                   ""));
+
+      if (isIncoming)
+      {
+        out.println(formattingHelper.createDetailRow(keySequenceString,
+                                                     pkColumnName
+                                                         + formattingHelper
+                                                           .createLeftArrow()
+                                                         + fkColumnName,
+                                                     ""));
+      }
+      else
+      {
+        out.println(formattingHelper.createDetailRow(keySequenceString,
+                                                     fkColumnName
+                                                         + formattingHelper
+                                                           .createRightArrow()
+                                                         + pkColumnName,
+                                                     ""));
+      }
     }
   }
 
@@ -692,7 +708,7 @@ final class SchemaTextFormatter
         for (final Grant grant: privilege.getGrants())
         {
           final String grantedFrom = grant.getGrantor()
-                                     + formattingHelper.createArrow()
+                                     + formattingHelper.createRightArrow()
                                      + grant.getGrantee()
                                      + (grant.isGrantable()? " (grantable)": "");
           out.println(formattingHelper.createDetailRow("", grantedFrom, ""));
