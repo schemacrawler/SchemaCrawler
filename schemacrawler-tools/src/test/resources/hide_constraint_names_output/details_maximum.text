@@ -440,7 +440,7 @@ Contact details for book authors
   ID                                ascending                   
 
                                            [foreign key, with no action]
-  ID --> PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID                              
+  ID <-- PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID                              
 
                                                           [unique index]
   ID                                ascending                   
@@ -529,10 +529,10 @@ Relationship between books and their authors, along with the latest updated info
   "UPDATE"                          CLOB                        
 
                                            [foreign key, with no action]
-  PUBLIC.BOOKS.AUTHORS.ID --> AUTHORID                              
+  AUTHORID --> PUBLIC.BOOKS.AUTHORS.ID                              
 
                                            [foreign key, with no action]
-  PUBLIC.BOOKS.BOOKS.ID --> BOOKID                              
+  BOOKID --> PUBLIC.BOOKS.BOOKS.ID                              
 
                                                       [non-unique index]
   AUTHORID                          ascending                   
@@ -592,16 +592,16 @@ Details for published books
   ID                                ascending                   
 
                                            [foreign key, with no action]
-  ID --> PUBLIC.BOOKS.BOOKAUTHORS.BOOKID                              
+  ID <-- PUBLIC.BOOKS.BOOKAUTHORS.BOOKID                              
 
                                            [foreign key, with no action]
-  ID --> PREVIOUSEDITIONID                                      
+  ID <-- PREVIOUSEDITIONID                                      
 
                                                       [weak association]
-  ID --> PUBLIC."PUBLISHER SALES".SALES.BOOKID                              
+  ID <-- PUBLIC."PUBLISHER SALES".SALES.BOOKID                              
 
                                                       [weak association]
-  PUBLIC.BOOKS.PUBLISHERS.ID --> PUBLISHERID                              
+  PUBLISHERID --> PUBLIC.BOOKS.PUBLISHERS.ID                              
 
                                                           [unique index]
   ID                                ascending                   
@@ -681,7 +681,7 @@ List of book publishers
                                     auto-incremented            
 
                                                       [weak association]
-  ID --> PUBLIC.BOOKS.BOOKS.PUBLISHERID                              
+  ID <-- PUBLIC.BOOKS.BOOKS.PUBLISHERID                              
 
                                                           [unique index]
   ID                                ascending                   
@@ -718,10 +718,10 @@ PUBLIC.FOR_LINT.EXTRA_PK
   ID                                ascending                   
 
                                            [foreign key, with no action]
-  PUBLIC.FOR_LINT.PUBLICATIONS.ID --> PUBLICATIONID                              
+  PUBLICATIONID --> PUBLIC.FOR_LINT.PUBLICATIONS.ID                              
 
                                            [foreign key, with no action]
-  PUBLIC.FOR_LINT.WRITERS.ID --> WRITERID                              
+  WRITERID --> PUBLIC.FOR_LINT.WRITERS.ID                              
 
                                                           [unique index]
   ID                                ascending                   
@@ -802,13 +802,13 @@ PUBLIC.FOR_LINT.PUBLICATIONS
   ID                                ascending                   
 
                                            [foreign key, with no action]
-  ID --> PUBLIC.FOR_LINT.EXTRA_PK.PUBLICATIONID                              
+  ID <-- PUBLIC.FOR_LINT.EXTRA_PK.PUBLICATIONID                              
 
                                            [foreign key, with no action]
-  ID --> PUBLIC.FOR_LINT.WRITERS.PUBLICATION_ID                              
+  ID <-- PUBLIC.FOR_LINT.WRITERS.PUBLICATION_ID                              
 
                                            [foreign key, with no action]
-  PUBLIC.FOR_LINT.WRITERS.ID --> WRITERID                              
+  WRITERID --> PUBLIC.FOR_LINT.WRITERS.ID                              
 
                                                           [unique index]
   ID                                ascending                   
@@ -871,13 +871,13 @@ PUBLIC.FOR_LINT.WRITERS
   ID                                ascending                   
 
                                            [foreign key, with no action]
-  PUBLIC.FOR_LINT.PUBLICATIONS.ID --> PUBLICATION_ID                              
+  PUBLICATION_ID --> PUBLIC.FOR_LINT.PUBLICATIONS.ID                              
 
                                            [foreign key, with no action]
-  ID --> PUBLIC.FOR_LINT.EXTRA_PK.WRITERID                              
+  ID <-- PUBLIC.FOR_LINT.EXTRA_PK.WRITERID                              
 
                                            [foreign key, with no action]
-  ID --> PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID                              
+  ID <-- PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID                              
 
                                                           [unique index]
   ID                                ascending                   
@@ -954,8 +954,8 @@ PUBLIC."PUBLISHER SALES".REGIONS
   COUNTRY                           ascending                   
 
                                            [foreign key, with no action]
-  POSTALCODE --> PUBLIC."PUBLISHER SALES".SALES.POSTALCODE                              
-  COUNTRY --> PUBLIC."PUBLISHER SALES".SALES.COUNTRY                              
+  POSTALCODE <-- PUBLIC."PUBLISHER SALES".SALES.POSTALCODE                              
+  COUNTRY <-- PUBLIC."PUBLISHER SALES".SALES.COUNTRY                              
 
                                                           [unique index]
   POSTALCODE                        ascending                   
@@ -1003,11 +1003,11 @@ PUBLIC."PUBLISHER SALES".SALES
   TOTALAMOUNT                       DOUBLE(64, 0)               
 
                                            [foreign key, with no action]
-  PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE --> POSTALCODE                              
-  PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY --> COUNTRY                              
+  POSTALCODE --> PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE                              
+  COUNTRY --> PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY                              
 
                                                       [weak association]
-  PUBLIC.BOOKS.BOOKS.ID --> BOOKID                              
+  BOOKID --> PUBLIC.BOOKS.BOOKS.ID                              
 
                                                       [non-unique index]
   POSTALCODE                        ascending                   

@@ -64,9 +64,15 @@ public final class HtmlFormattingHelper
   }
 
   @Override
-  public String createArrow()
+  public String createRightArrow()
   {
-    return " \u2192 ";
+    return " \u21E8 ";
+  }
+
+  @Override
+  public String createLeftArrow()
+  {
+    return " \u21E6 ";
   }
 
   /**

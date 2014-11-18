@@ -42,7 +42,14 @@ public interface TextFormattingHelper
    *
    * @return Arrow symbol
    */
-  String createArrow();
+  String createRightArrow();
+
+  /**
+   * Creates an arrow symbol.
+   *
+   * @return Arrow symbol
+   */
+  String createLeftArrow();
 
   /**
    * Creates a definition row.

@@ -22,7 +22,7 @@ Contact details for book authors
   ID                                ascending                   
 
                                            [foreign key, with no action]
-  ID --> BOOKAUTHORS.AUTHORID                                   
+  ID <-- BOOKAUTHORS.AUTHORID                                   
 
 
 
@@ -40,10 +40,10 @@ Relationship between books and their authors, along with the latest updated info
   AUTHORID                          INTEGER NOT NULL            
 
                                            [foreign key, with no action]
-  AUTHORS.ID --> AUTHORID                                       
+  AUTHORID --> AUTHORS.ID                                       
 
                                            [foreign key, with no action]
-  BOOKS.ID --> BOOKID                                           
+  BOOKID --> BOOKS.ID                                           
 
 
 
@@ -59,10 +59,10 @@ Details for published books
   ID                                ascending                   
 
                                            [foreign key, with no action]
-  ID --> BOOKAUTHORS.BOOKID                                     
+  ID <-- BOOKAUTHORS.BOOKID                                     
 
                                            [foreign key, with no action]
-  ID --> PREVIOUSEDITIONID                                      
+  ID <-- PREVIOUSEDITIONID                                      
 
 
 
@@ -97,10 +97,10 @@ EXTRA_PK
   ID                                ascending                   
 
                                            [foreign key, with no action]
-  PUBLICATIONS.ID --> PUBLICATIONID                              
+  PUBLICATIONID --> PUBLICATIONS.ID                              
 
                                            [foreign key, with no action]
-  WRITERS.ID --> WRITERID                                       
+  WRITERID --> WRITERS.ID                                       
 
 
 
@@ -120,13 +120,13 @@ PUBLICATIONS
   ID                                ascending                   
 
                                            [foreign key, with no action]
-  ID --> EXTRA_PK.PUBLICATIONID                                 
+  ID <-- EXTRA_PK.PUBLICATIONID                                 
 
                                            [foreign key, with no action]
-  ID --> WRITERS.PUBLICATION_ID                                 
+  ID <-- WRITERS.PUBLICATION_ID                                 
 
                                            [foreign key, with no action]
-  WRITERS.ID --> WRITERID                                       
+  WRITERID --> WRITERS.ID                                       
 
 
 
@@ -147,13 +147,13 @@ WRITERS
   ID                                ascending                   
 
                                            [foreign key, with no action]
-  PUBLICATIONS.ID --> PUBLICATION_ID                              
+  PUBLICATION_ID --> PUBLICATIONS.ID                              
 
                                            [foreign key, with no action]
-  ID --> EXTRA_PK.WRITERID                                      
+  ID <-- EXTRA_PK.WRITERID                                      
 
                                            [foreign key, with no action]
-  ID --> PUBLICATIONS.WRITERID                                  
+  ID <-- PUBLICATIONS.WRITERID                                  
 
 
 
@@ -168,8 +168,8 @@ REGIONS
   COUNTRY                           ascending                   
 
                                            [foreign key, with no action]
-  POSTALCODE --> SALES.POSTALCODE                               
-  COUNTRY --> SALES.COUNTRY                                     
+  POSTALCODE <-- SALES.POSTALCODE                               
+  COUNTRY <-- SALES.COUNTRY                                     
 
 
 
@@ -180,8 +180,8 @@ SALES
   COUNTRY                           VARCHAR(50) NOT NULL        
 
                                            [foreign key, with no action]
-  REGIONS.POSTALCODE --> POSTALCODE                              
-  REGIONS.COUNTRY --> COUNTRY                                   
+  POSTALCODE --> REGIONS.POSTALCODE                              
+  COUNTRY --> REGIONS.COUNTRY                                   
 
 
 

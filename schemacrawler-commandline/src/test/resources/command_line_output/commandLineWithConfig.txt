@@ -18,10 +18,10 @@ PK_BOOKS                                                   [primary key]
   ID                                ascending                   
 
 FK_Y_BOOK                                  [foreign key, with no action]
-  ID --> BOOKAUTHORS.BOOKID                                     
+  ID <-- BOOKAUTHORS.BOOKID                                     
 
 FK_PREVIOUSEDITION                         [foreign key, with no action]
-  ID --> PREVIOUSEDITIONID                                      
+  ID <-- PREVIOUSEDITIONID                                      
 
 
 
@@ -68,13 +68,13 @@ PK_WRITERS                                                 [primary key]
   ID                                ascending                   
 
 FK_WRITERS_PUBLICATION                     [foreign key, with no action]
-  PUBLICATIONS.ID --> PUBLICATION_ID                              
+  PUBLICATION_ID --> PUBLICATIONS.ID                              
 
 FK_WRITER_JOIN                             [foreign key, with no action]
-  ID --> EXTRA_PK.WRITERID                                      
+  ID <-- EXTRA_PK.WRITERID                                      
 
 FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
-  ID --> PUBLICATIONS.WRITERID                                  
+  ID <-- PUBLICATIONS.WRITERID                                  
 
 
 
