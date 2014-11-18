@@ -1,1 +1,0 @@
-ant -f ruby_setup.xml $*

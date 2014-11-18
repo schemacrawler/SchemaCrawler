@@ -11,7 +11,18 @@ SchemaCrawler questions from users.
 
 ## Companies
 
-SchemaCrawler database diagrams in use at the Scrum meeting at the Software
+- Architect at Nestlé Nespresso SA: 
+"I run a daily cron to export the content (metadata and data) of a 
+schema, and I compare it to another reference schema to check which 
+changes have been made to the data. The schema contains configuration 
+values for our system (domains, ports, datasources, database connection 
+strings, usernames...) and it's paramount to allow all architects to 
+change those data without losing control of what is being done. 
+SchemaCrawler is the only tool that I found that could export both 
+metadata and data in a predictable way, so that I can compare (diff) 2 
+schemas without getting false alerts." 
+
+- SchemaCrawler database diagrams in use at the Scrum meeting at the Software
 Development Departement of [La Ville de Noumea.](http://www.noumea.nc/)
 Photograph courtesy of Adrien Sales.
 

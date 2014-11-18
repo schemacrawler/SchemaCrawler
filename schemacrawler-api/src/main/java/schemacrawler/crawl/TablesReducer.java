@@ -20,11 +20,12 @@
 package schemacrawler.crawl;
 
 
+import static schemacrawler.filter.FilterFactory.grepTablesFilter;
+
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import schemacrawler.filter.FilterFactory;
 import schemacrawler.filter.NamedObjectFilter;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnReference;
@@ -37,19 +38,16 @@ class TablesReducer
 {
 
   private final SchemaCrawlerOptions options;
-  private final NamedObjectList<MutableTable> allTables;
 
-  public TablesReducer(final SchemaCrawlerOptions options,
-                       final NamedObjectList<MutableTable> allTables)
+  public TablesReducer(final SchemaCrawlerOptions options)
   {
     this.options = options;
-    this.allTables = allTables;
   }
 
-  public void filter()
+  public void filter(final NamedObjectList<MutableTable> allTables)
   {
 
-    final Collection<MutableTable> filteredTables = doFilter();
+    final Collection<MutableTable> filteredTables = doFilter(allTables);
     for (final MutableTable table: allTables)
     {
       if (!filteredTables.contains(table))
@@ -58,18 +56,19 @@ class TablesReducer
       }
     }
 
-    removeForeignKeys();
+    removeForeignKeys(allTables);
   }
 
-  private Collection<MutableTable> doFilter()
+  private Collection<MutableTable> doFilter(final NamedObjectList<MutableTable> allTables)
   {
-    // Filter for grep
-    final NamedObjectFilter<Table> grepFilter = FilterFactory
-      .grepTablesFilter(options);
+    // Filter for tables inclusion patterns (since we may be looping
+    // over offline data), and grep patterns
+    final NamedObjectFilter<Table> tableFilter = grepTablesFilter(options);
+
     final Set<MutableTable> greppedTables = new HashSet<>();
     for (final MutableTable table: allTables)
     {
-      if (grepFilter.include(table))
+      if (tableFilter.include(table))
       {
         greppedTables.add(table);
       }
@@ -117,7 +116,7 @@ class TablesReducer
     return includedTables;
   }
 
-  private void removeForeignKeys()
+  private void removeForeignKeys(final NamedObjectList<MutableTable> allTables)
   {
 
     for (final MutableTable table: allTables)

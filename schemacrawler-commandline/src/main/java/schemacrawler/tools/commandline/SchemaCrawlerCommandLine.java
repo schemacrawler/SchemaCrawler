@@ -28,6 +28,7 @@ import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.ConnectionOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.databaseconnector.DatabaseSystemConnector;
@@ -61,21 +62,17 @@ public final class SchemaCrawlerCommandLine
   {
     if (args == null || args.length == 0)
     {
-      throw new SchemaCrawlerException("No command-line arguments provided");
+      throw new SchemaCrawlerCommandLineException("No command-line arguments provided");
     }
     if (dbSystemConnector == null)
     {
-      throw new SchemaCrawlerException("No database connector provided");
+      throw new SchemaCrawlerCommandLineException("No database connector provided");
     }
 
     String[] remainingArgs = args;
 
     final CommandParser commandParser = new CommandParser();
     remainingArgs = commandParser.parse(remainingArgs);
-    if (!commandParser.hasOptions())
-    {
-      throw new SchemaCrawlerException("No command specified");
-    }
     command = commandParser.getOptions().toString();
 
     this.dbSystemConnector = dbSystemConnector;

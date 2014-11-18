@@ -22,9 +22,16 @@ package schemacrawler.filter;
 
 import schemacrawler.schema.NamedObject;
 
+/**
+ * Specifies inclusion and exclusion patterns that can be applied to the
+ * names, definitions, and other attributes of named objects.
+ *
+ * @author Sualeh Fatehi
+ */
+// @FunctionalInterface
 public interface NamedObjectFilter<N extends NamedObject>
 {
 
-  boolean include(N namedObject);
+  boolean include(final N namedObject);
 
 }
