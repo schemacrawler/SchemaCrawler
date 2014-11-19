@@ -1,8 +1,8 @@
 body, p, li, td, th, caption, select, input, strong {
   font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
   font-size: 0.9rem;
-  line-height: 1.4rem; 
-  color: rgb(16,16,16);
+  line-height: 1.4rem;
+  color: rgb(16, 16, 16);
 }
 
 body {
@@ -13,10 +13,10 @@ body {
 }
 
 code, pre, tt {
-  font-family: 'Lucida Console', Monaco, 'Courier New', monospace;  
+  font-family: 'Lucida Console', Monaco, 'Courier New', monospace;
   font-size: 0.9rem;
-  line-height: 1.4rem; 
-  color: rgb(16,16,16);
+  line-height: 1.4rem;
+  color: rgb(16, 16, 16);
 }
 
 hr {
@@ -25,8 +25,8 @@ hr {
   color: Silver;
 }
 
-p { 
-  margin-bottom: 0.5rem;   
+p {
+  margin-bottom: 0.5rem;
 }
 
 caption {
@@ -41,20 +41,23 @@ h1, h2, h3 {
   margin-top: 1.0rem;
   margin-bottom: 0.5rem;
 }
-  
+
 h1 {
-  font-size: 1.6rem;  
+  color: Navy;
+  font-size: 1.6rem;
   line-height: 1.8rem;
 }
 
 h2 {
+  color: Maroon;
   font-size: 1.2rem;
-  line-height: 1.4rem;  
+  line-height: 1.4rem;
 }
 
 h3 {
+  color: Green;
   font-size: 1.0rem;
-  line-height: 1.2rem;  
+  line-height: 1.2rem;
 }
 
 dl, ul, ol {
@@ -77,7 +80,7 @@ a: visited {
   color: Navy;
 }
 
-a: active,a: hover {
+a: active, a: hover {
   color: Blue;
 }
 
@@ -90,8 +93,8 @@ table, th, td {
 
 table {
   width: 100%;
-  max-width:1000px;
-  min-width:600px;
+  max-width: 1000px;
+  min-width: 600px;
 }
 
 th {
@@ -106,7 +109,7 @@ blockquote {
   padding: 0.5rem 10px;
 }
 
-blockquote:before {
+blockquote: before {
   color: #ccc;
   font-size: 4rem;
   line-height: 0.1rem;
@@ -125,3 +128,8 @@ blockquote p {
   height: 62px;
   padding-left: 62px;
 }
+
+#bannerLeft h1 {
+  color: rgb(0, 0, 0);
+}
+
