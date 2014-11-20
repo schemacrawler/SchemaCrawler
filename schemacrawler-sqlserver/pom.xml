@@ -16,13 +16,6 @@
 			<url>http://www.gnu.org/copyleft/gpl.html</url>
 		</license>
 	</licenses>
-	<repositories>
-		<repository>
-			<id>mbari-maven-repository</id>
-			<name>MBARI Maven Repository</name>
-			<url>http://mbari-maven-repository.googlecode.com/svn/repository/</url>
-		</repository>
-	</repositories>
 	<dependencies>
 		<dependency>
 			<groupId>us.fatehi</groupId>
