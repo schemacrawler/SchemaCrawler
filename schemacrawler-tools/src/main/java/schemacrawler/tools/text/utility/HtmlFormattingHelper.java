@@ -37,8 +37,7 @@ public final class HtmlFormattingHelper
 
   private static String htmlHeader()
   {
-    final String styleSheet = Utility
-      .readResourceFully("/schemacrawler-output.css");
+    final String styleSheet = Utility.readResourceFully("/sc.css");
 
     return "<!DOCTYPE html>" + NEWLINE
            + "<html xmlns='http://www.w3.org/1999/xhtml'>" + NEWLINE + "<head>"
