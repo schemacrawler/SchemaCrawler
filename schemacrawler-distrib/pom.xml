@@ -47,7 +47,7 @@
             </goals>
             <configuration>
               <generateReports>false</generateReports>
-              <templateFile>src/site/distribution-site.vm</templateFile>
+              <templateFile>src/site/example-template.vm</templateFile>
             </configuration>
           </execution>
         </executions>
