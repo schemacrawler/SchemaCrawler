@@ -8,6 +8,9 @@
 
 -database=<database>
 	Database name.
+	Be sure to also restrict your schemas to this database,
+	by using an additional option,
+	-schemas=<database>.dbo
 	
 -user=<user>
 	Database user name.
@@ -20,4 +23,5 @@
   Optional, no default.
   For example,
   -urlx=applicationName=SchemaCrawler;readOnly=true
+
   	
