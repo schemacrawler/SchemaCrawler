@@ -37,20 +37,20 @@
   <target name="download-tools" depends="download-lgpl,download-bnd-tool,download-ivy"/>
 
   <target name="download-lgpl" unless="available.lgpl-3.0.txt">
-    <get src="http://www.gnu.org/licenses/lgpl-3.0.txt" 
-    	 dest="lgpl-3.0.txt" usetimestamp="true" />
+    <get src="http://www.gnu.org/licenses/lgpl-3.0.txt"
+       dest="lgpl-3.0.txt" usetimestamp="true" />
   </target>
 
   <target name="download-bnd-tool" unless="available.bnd.jar">
-    <get src="http://repo1.maven.org/maven2/biz/aQute/bnd/1.50.0/bnd-1.50.0.jar" 
-    	 dest="bnd-1.50.0.jar" usetimestamp="true" />
+    <get src="http://repo1.maven.org/maven2/biz/aQute/bnd/1.50.0/bnd-1.50.0.jar"
+       dest="bnd-1.50.0.jar" usetimestamp="true" />
   </target>
 
   <target name="download-ivy" unless="available.ivy.jar">
-    <get src="http://repo1.maven.org/maven2/org/apache/ivy/ivy/2.4.0-rc1/ivy-2.4.0-rc1.jar" 
-    	 dest="ivy-2.4.0-rc1.jar" usetimestamp="true" />
+    <get src="http://repo1.maven.org/maven2/org/apache/ivy/ivy/2.4.0-rc1/ivy-2.4.0-rc1.jar"
+       dest="ivy-2.4.0-rc1.jar" usetimestamp="true" />
   </target>
-	
+
   <target name="make-super-jar">
 
     <!-- Build super-jar -->
@@ -125,12 +125,12 @@
     <mkdir dir="${distribution.target}/site" />
     <property name="main-distribution.staging.dir"
               location="${distribution.target}/_main-distribution" />
-  	<move 
-  		file="${distribution.target}/site" 
-  		tofile="${main-distribution.staging.dir}"/>
+    <move
+      file="${distribution.target}/site"
+      tofile="${main-distribution.staging.dir}"/>
     <delete dir="${main-distribution.staging.dir}/css" />
-  	<delete dir="${main-distribution.staging.dir}/images" />
-    	
+    <delete dir="${main-distribution.staging.dir}/images" />
+
     <property name="main-distribution.stem"
               value="schemacrawler-${SchemaCrawler.version}-main" />
 
@@ -140,11 +140,11 @@
     <!-- Copy licenses -->
     <copy file="lgpl-3.0.txt"
           tofile="${main-distribution.staging.dir}/LICENSE.txt" />
- 
-  	<!-- Copy Apache Ant Ivy -->
+
+    <!-- Copy Apache Ant Ivy -->
     <copy file="ivy-2.4.0-rc1.jar"
-          tofile="${main-distribution.staging.dir}/_ivy/ivy-2.4.0-rc1.jar" />  	
-  	
+          tofile="${main-distribution.staging.dir}/_ivy/ivy-2.4.0-rc1.jar" />
+
     <!-- Stage examples -->
     <copy file="${SchemaCrawler.home}/schemacrawler-test/src/main/java/ApiExample.java"
           todir="${main-distribution.staging.dir}/examples/api" />
@@ -194,36 +194,36 @@
 
   <target name="make-website-distribution">
 
+    <property name="website.staging.dir"
+              location="${distribution.target}/_website" />
     <property name="website.location"
               location="${SchemaCrawler.home}/schemacrawler-site/target/site" />
     <property name="website.apidocs.location"
               location="${SchemaCrawler.home}/schemacrawler-api/target/apidocs" />
+
+    <mkdir dir="${website.staging.dir}" />
     <mkdir dir="${website.location}" />
     <mkdir dir="${website.apidocs.location}" />
-    <property name="website.zip.prefix"
-              value="schemacrawler-${SchemaCrawler.version}-website" />
-    <delete file="${distribution.target}/${website.zip.prefix}.zip" />
-    <zip destfile="${distribution.target}/${website.zip.prefix}.zip">
-      <zipfileset dir="${website.location}"
-                  prefix="${website.zip.prefix}"
-                  defaultexcludes="yes">
+
+    <move todir="${website.staging.dir}">
+      <fileset dir="${website.location}">
         <include name="**/*.*" />
         <exclude name="**/apidocs/*.*" />
-      </zipfileset>
-      <zipfileset dir="${website.apidocs.location}"
-                  prefix="${website.zip.prefix}/apidocs"
-                  defaultexcludes="yes">
+      </fileset>
+    </move>
+    
+    <move todir="${website.staging.dir}/apidocs">
+      <fileset dir="${website.apidocs.location}">
         <include name="**/*.*" />
-      </zipfileset>
-    </zip>
-
-  <unzip
-    src="${distribution.target}/${website.zip.prefix}.zip"
-    dest="${distribution.target}"/>
-  <move
-    file="${distribution.target}/${website.zip.prefix}"
-    tofile="${distribution.target}/_website"/>
-
+      </fileset>
+    </move>
+    
+    <copy todir="${website.staging.dir}/css">
+      <fileset dir="${SchemaCrawler.home}/schemacrawler-distrib/src/site">
+        <include name="*.css" />
+      </fileset>
+    </copy>
+        	
   </target>
 
   <target name="make-super-distribution">
@@ -291,7 +291,7 @@
       -->
 
       <copy file="${SchemaCrawler.home}/schemacrawler-@{database}/DRIVER.LICENSE.txt"
-            tofile="${schemacrawler.complete-distribution}/DRIVER.LICENSE-@{database}.txt"            
+            tofile="${schemacrawler.complete-distribution}/DRIVER.LICENSE-@{database}.txt"
             failonerror="false" />
 
     </sequential>
