@@ -52,25 +52,6 @@ public class LintExecutable
     super(COMMAND);
   }
 
-  public final LintOptions getLintOptions()
-  {
-    final LintOptions lintOptions;
-    if (this.lintOptions == null)
-    {
-      lintOptions = new LintOptions(additionalConfiguration);
-    }
-    else
-    {
-      lintOptions = this.lintOptions;
-    }
-    return lintOptions;
-  }
-
-  public final void setLintOptions(final LintOptions lintOptions)
-  {
-    this.lintOptions = lintOptions;
-  }
-
   @Override
   public void executeOn(final Catalog db, final Connection connection)
     throws Exception
@@ -98,6 +79,25 @@ public class LintExecutable
 
     formatter.end();
 
+  }
+
+  public final LintOptions getLintOptions()
+  {
+    final LintOptions lintOptions;
+    if (this.lintOptions == null)
+    {
+      lintOptions = new LintOptions(additionalConfiguration);
+    }
+    else
+    {
+      lintOptions = this.lintOptions;
+    }
+    return lintOptions;
+  }
+
+  public final void setLintOptions(final LintOptions lintOptions)
+  {
+    this.lintOptions = lintOptions;
   }
 
   private LintTraversalHandler getSchemaTraversalHandler()

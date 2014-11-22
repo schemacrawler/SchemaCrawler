@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -70,7 +70,7 @@ public class SimpleLintCollector
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.tools.lint.LintCollector#clear()
    */
   @Override
@@ -81,7 +81,7 @@ public class SimpleLintCollector
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.tools.lint.LintCollector#isEmpty()
    */
   @Override
@@ -99,7 +99,7 @@ public class SimpleLintCollector
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.tools.lint.LintCollector#size()
    */
   @Override

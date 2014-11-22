@@ -56,9 +56,6 @@ public enum ForeignKeyUpdateRule
    */
   restrict(DatabaseMetaData.importedKeyRestrict, "restrict");
 
-  private static final Logger LOGGER = Logger
-    .getLogger(ForeignKeyUpdateRule.class.getName());
-
   /**
    * Gets the enum value from the integer.
    *
@@ -78,6 +75,9 @@ public enum ForeignKeyUpdateRule
     LOGGER.log(Level.FINE, "Unknown id " + id);
     return unknown;
   }
+
+  private static final Logger LOGGER = Logger
+    .getLogger(ForeignKeyUpdateRule.class.getName());
 
   private final String text;
   private final int id;

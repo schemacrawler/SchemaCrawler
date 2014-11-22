@@ -37,39 +37,6 @@ import sf.util.Utility;
 public final class Version
 {
 
-  private static final String PRODUCTNAME = "SchemaCrawler";
-  private static final String VERSION;
-  private static final String ABOUT;
-
-  static
-  {
-    ABOUT = Utility.readResourceFully("/help/SchemaCrawler.txt");
-
-    String[] productLine;
-    try
-    {
-      final String readLine = new BufferedReader(new StringReader(ABOUT))
-        .readLine();
-      if (readLine != null)
-      {
-        productLine = readLine.split(" ");
-      }
-      else
-      {
-        productLine = new String[] {
-            PRODUCTNAME, ""
-        };
-      }
-    }
-    catch (final IOException e)
-    {
-      productLine = new String[] {
-          PRODUCTNAME, ""
-      };
-    }
-    VERSION = productLine[1];
-  }
-
   /**
    * Information about this product.
    *
@@ -109,6 +76,41 @@ public final class Version
   public static void main(final String[] args)
   {
     System.out.println(about());
+  }
+
+  private static final String PRODUCTNAME = "SchemaCrawler";
+
+  private static final String VERSION;
+
+  private static final String ABOUT;
+
+  static
+  {
+    ABOUT = Utility.readResourceFully("/help/SchemaCrawler.txt");
+
+    String[] productLine;
+    try
+    {
+      final String readLine = new BufferedReader(new StringReader(ABOUT))
+        .readLine();
+      if (readLine != null)
+      {
+        productLine = readLine.split(" ");
+      }
+      else
+      {
+        productLine = new String[] {
+            PRODUCTNAME, ""
+        };
+      }
+    }
+    catch (final IOException e)
+    {
+      productLine = new String[] {
+          PRODUCTNAME, ""
+      };
+    }
+    VERSION = productLine[1];
   }
 
   private Version()

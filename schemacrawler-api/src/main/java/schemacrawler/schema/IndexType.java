@@ -52,9 +52,6 @@ public enum IndexType
    */
   other(DatabaseMetaData.tableIndexOther);
 
-  private static final Logger LOGGER = Logger.getLogger(IndexType.class
-    .getName());
-
   /**
    * Gets the value from the id.
    *
@@ -74,6 +71,9 @@ public enum IndexType
     LOGGER.log(Level.FINE, "Unknown id " + id);
     return unknown;
   }
+
+  private static final Logger LOGGER = Logger.getLogger(IndexType.class
+    .getName());
 
   private final int id;
 

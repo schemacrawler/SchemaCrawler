@@ -2,8 +2,8 @@ import java.sql.Connection;
 
 import javax.sql.DataSource;
 
-import schemacrawler.schema.Column;
 import schemacrawler.schema.Catalog;
+import schemacrawler.schema.Column;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.View;

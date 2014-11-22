@@ -28,7 +28,7 @@ import java.io.Reader;
  * This class adds a DOCTYPE to an incoming XML document or replaces its
  * existing DOCTYPE declaration if it has one.
  * </p>
- * 
+ *
  * @author Simon St.Laurent
  * @version 0.01 $Date: 2000/08/02 $
  */

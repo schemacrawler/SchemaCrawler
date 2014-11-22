@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -45,14 +45,6 @@ import sf.util.Utility;
 public abstract class BaseDatabaseTest
 {
 
-  private final static DatabaseConnectionOptions connectionOptions;
-
-  static
-  {
-    connectionOptions = createConnectionOptions();
-    TestDatabase.initialize();
-  }
-
   @BeforeClass
   public static void setApplicationLogLevel()
     throws Exception
@@ -98,9 +90,25 @@ public abstract class BaseDatabaseTest
     }
   }
 
+  private final static DatabaseConnectionOptions connectionOptions;
+
+  static
+  {
+    connectionOptions = createConnectionOptions();
+    TestDatabase.initialize();
+  }
+
+  protected Catalog getCatalog(final SchemaCrawlerOptions schemaCrawlerOptions)
+    throws SchemaCrawlerException
+  {
+    final Catalog catalog = SchemaCrawlerUtility
+      .getCatalog(getConnection(), schemaCrawlerOptions);
+    return catalog;
+  }
+
   /**
    * Gets the connection.
-   * 
+   *
    * @return Connection
    * @throws SchemaCrawlerException
    *         On an exception
@@ -116,14 +124,6 @@ public abstract class BaseDatabaseTest
     {
       throw new SchemaCrawlerException(e.getMessage(), e);
     }
-  }
-
-  protected Catalog getCatalog(final SchemaCrawlerOptions schemaCrawlerOptions)
-    throws SchemaCrawlerException
-  {
-    final Catalog catalog = SchemaCrawlerUtility
-      .getCatalog(getConnection(), schemaCrawlerOptions);
-    return catalog;
   }
 
   protected DatabaseConnectionOptions getDatabaseConnectionOptions()

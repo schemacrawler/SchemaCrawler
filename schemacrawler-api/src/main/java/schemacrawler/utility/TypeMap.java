@@ -35,9 +35,6 @@ public final class TypeMap
   implements Map<String, Class<?>>
 {
 
-  private static final Logger LOGGER = Logger
-    .getLogger(TypeMap.class.getName());
-
   private static Map<String, Class<?>> createDefaultTypeMap()
   {
     final Map<String, Class<?>> sqlTypeMap = new HashMap<>();
@@ -83,6 +80,9 @@ public final class TypeMap
 
     return sqlTypeMap;
   }
+
+  private static final Logger LOGGER = Logger
+    .getLogger(TypeMap.class.getName());
 
   private final Map<String, Class<?>> sqlTypeMap;
 

@@ -40,8 +40,6 @@ import schemacrawler.tools.options.DatabaseServerType;
 public final class Main
 {
 
-  private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
-
   public static void main(final String[] args)
     throws Exception
   {
@@ -93,6 +91,8 @@ public final class Main
       LOGGER.log(Level.SEVERE, "Command line: " + Arrays.toString(args), e);
     }
   }
+
+  private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
 
   private Main()
   {

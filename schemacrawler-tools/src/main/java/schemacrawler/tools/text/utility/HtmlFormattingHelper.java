@@ -63,30 +63,6 @@ public final class HtmlFormattingHelper
     super(outputFormat);
   }
 
-  @Override
-  public String createRightArrow()
-  {
-    return "\u2192";
-  }
-
-  @Override
-  public String createLeftArrow()
-  {
-    return "\u2190";
-  }
-
-  @Override
-  public String createWeakRightArrow()
-  {
-    return "\u21dd";
-  }
-
-  @Override
-  public String createWeakLeftArrow()
-  {
-    return "\u21dc";
-  }
-
   /**
    * {@inheritDoc}
    */
@@ -151,6 +127,12 @@ public final class HtmlFormattingHelper
     }
   }
 
+  @Override
+  public String createLeftArrow()
+  {
+    return "\u2190";
+  }
+
   /**
    * {@inheritDoc}
    */
@@ -172,6 +154,24 @@ public final class HtmlFormattingHelper
       objectStart = objectStart + "  <caption>" + name + "</caption>" + NEWLINE;
     }
     return objectStart;
+  }
+
+  @Override
+  public String createRightArrow()
+  {
+    return "\u2192";
+  }
+
+  @Override
+  public String createWeakLeftArrow()
+  {
+    return "\u21dc";
+  }
+
+  @Override
+  public String createWeakRightArrow()
+  {
+    return "\u21dd";
   }
 
 }

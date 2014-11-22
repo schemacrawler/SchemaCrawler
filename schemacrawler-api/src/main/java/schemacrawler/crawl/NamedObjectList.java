@@ -42,8 +42,6 @@ class NamedObjectList<N extends NamedObject>
   implements Serializable, Iterable<N>
 {
 
-  private static final long serialVersionUID = 3257847666804142128L;
-
   private static String makeLookupKey(final NamedObject namedObject)
   {
     final String key;
@@ -93,6 +91,8 @@ class NamedObjectList<N extends NamedObject>
     }
     return key;
   }
+
+  private static final long serialVersionUID = 3257847666804142128L;
 
   private final Map<String, N> objects = new HashMap<>();
 

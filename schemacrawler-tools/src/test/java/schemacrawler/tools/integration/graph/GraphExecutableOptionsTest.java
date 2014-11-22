@@ -201,6 +201,17 @@ public class GraphExecutableOptionsTest
     executableGraph(schemaCrawlerOptions, graphOptions, currentMethodName());
   }
 
+  @Before
+  public void setupDirectory()
+    throws IOException
+  {
+    directory = new File(this.getClass().getProtectionDomain().getCodeSource()
+                           .getLocation().getFile().replace("%20", " "),
+                         "../../../schemacrawler-docs/graphs")
+      .getCanonicalFile();
+    directory.mkdirs();
+  }
+
   private void executableGraph(final SchemaCrawlerOptions schemaCrawlerOptions,
                                final GraphOptions graphOptions,
                                final String testMethodName)
@@ -224,17 +235,6 @@ public class GraphExecutableOptionsTest
             Paths.get(directory.getCanonicalPath(), testMethodName + ".png"),
             REPLACE_EXISTING);
     checkDiagramFile(testDiagramFile);
-  }
-
-  @Before
-  public void setupDirectory()
-    throws IOException
-  {
-    directory = new File(this.getClass().getProtectionDomain().getCodeSource()
-                           .getLocation().getFile().replace("%20", " "),
-                         "../../../schemacrawler-docs/graphs")
-      .getCanonicalFile();
-    directory.mkdirs();
   }
 
 }

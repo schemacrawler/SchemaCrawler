@@ -45,30 +45,6 @@ public class PlainTextFormattingHelper
     super(outputFormat);
   }
 
-  @Override
-  public String createRightArrow()
-  {
-    return "-->";
-  }
-
-  @Override
-  public String createLeftArrow()
-  {
-    return "<--";
-  }
-
-  @Override
-  public String createWeakRightArrow()
-  {
-    return "~~>";
-  }
-
-  @Override
-  public String createWeakLeftArrow()
-  {
-    return "<~~";
-  }
-
   /**
    * {@inheritDoc}
    */
@@ -131,6 +107,12 @@ public class PlainTextFormattingHelper
     }
   }
 
+  @Override
+  public String createLeftArrow()
+  {
+    return "<--";
+  }
+
   /**
    * {@inheritDoc}
    */
@@ -156,6 +138,24 @@ public class PlainTextFormattingHelper
       objectStart = "";
     }
     return objectStart;
+  }
+
+  @Override
+  public String createRightArrow()
+  {
+    return "-->";
+  }
+
+  @Override
+  public String createWeakLeftArrow()
+  {
+    return "<~~";
+  }
+
+  @Override
+  public String createWeakRightArrow()
+  {
+    return "~~>";
   }
 
 }

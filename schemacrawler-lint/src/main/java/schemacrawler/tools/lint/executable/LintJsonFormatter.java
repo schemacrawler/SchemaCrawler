@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -70,7 +70,7 @@ final class LintJsonFormatter
 
   /**
    * Provides information on the database schema.
-   * 
+   *
    * @param table
    *        Table metadata.
    */

@@ -29,8 +29,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Catalog;
+import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaReference;

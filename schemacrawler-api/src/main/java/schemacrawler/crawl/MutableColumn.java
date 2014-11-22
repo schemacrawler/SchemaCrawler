@@ -130,17 +130,6 @@ class MutableColumn
   /**
    * {@inheritDoc}
    *
-   * @see schemacrawler.schema.Column#isPartOfPrimaryKey()
-   */
-  @Override
-  public boolean isPartOfPrimaryKey()
-  {
-    return isPartOfPrimaryKey;
-  }
-
-  /**
-   * {@inheritDoc}
-   *
    * @see schemacrawler.schema.Column#isPartOfIndex()
    */
   @Override
@@ -149,9 +138,30 @@ class MutableColumn
     return isPartOfIndex;
   }
 
+  /**
+   * {@inheritDoc}
+   *
+   * @see schemacrawler.schema.Column#isPartOfPrimaryKey()
+   */
+  @Override
+  public boolean isPartOfPrimaryKey()
+  {
+    return isPartOfPrimaryKey;
+  }
+
   void addPrivilege(final MutablePrivilege<Column> privilege)
   {
     privileges.add(privilege);
+  }
+
+  void markAsPartOfIndex()
+  {
+    isPartOfIndex = true;
+  }
+
+  void markAsPartOfPrimaryKey()
+  {
+    isPartOfPrimaryKey = true;
   }
 
   /**
@@ -175,16 +185,6 @@ class MutableColumn
   void setGenerated(final boolean isGenerated)
   {
     this.isGenerated = isGenerated;
-  }
-
-  void markAsPartOfPrimaryKey()
-  {
-    isPartOfPrimaryKey = true;
-  }
-
-  void markAsPartOfIndex()
-  {
-    isPartOfIndex = true;
   }
 
   void setReferencedColumn(final Column referencedColumn)

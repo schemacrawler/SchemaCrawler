@@ -144,13 +144,13 @@ final class ColumnPartial
   }
 
   @Override
-  public boolean isPartOfPrimaryKey()
+  public boolean isPartOfIndex()
   {
     throw new NotLoadedException();
   }
 
   @Override
-  public boolean isPartOfIndex()
+  public boolean isPartOfPrimaryKey()
   {
     throw new NotLoadedException();
   }

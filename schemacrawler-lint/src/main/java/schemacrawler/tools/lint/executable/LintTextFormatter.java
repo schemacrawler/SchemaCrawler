@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -70,7 +70,7 @@ final class LintTextFormatter
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handle(schemacrawler.schema.Table)
    */
   @Override
@@ -91,7 +91,7 @@ final class LintTextFormatter
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handleTablesEnd()
    */
   @Override
@@ -101,7 +101,7 @@ final class LintTextFormatter
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handleTablesStart()
    */
   @Override

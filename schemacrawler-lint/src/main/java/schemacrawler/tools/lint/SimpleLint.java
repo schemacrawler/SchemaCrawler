@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -185,7 +185,7 @@ public final class SimpleLint<V extends Serializable>
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.tools.lint.Lint#getMessage()
    */
   @Override
@@ -208,7 +208,7 @@ public final class SimpleLint<V extends Serializable>
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.tools.lint.Lint#getValue()
    */
   @Override

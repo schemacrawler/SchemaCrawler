@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -35,12 +35,10 @@ import sf.util.Utility;
 public final class Main
 {
 
-  private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
-
   /**
    * Get connection parameters, and creates a connection, and crawls the
    * schema.
-   * 
+   *
    * @param args
    *        Arguments passed into the program from the command-line.
    * @throws Exception
@@ -73,6 +71,8 @@ public final class Main
     final SchemaCrawlerSpringCommandLine commandLine = new SchemaCrawlerSpringCommandLine(remainingArgs);
     commandLine.execute();
   }
+
+  private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
 
   private Main()
   {

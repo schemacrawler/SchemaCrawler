@@ -85,17 +85,17 @@ public interface Column
   boolean isPartOfForeignKey();
 
   /**
-   * True if this column is a part of primary key.
-   *
-   * @return If the column is a part of primary key
-   */
-  boolean isPartOfPrimaryKey();
-
-  /**
    * True if this column is a unique index.
    *
    * @return If the column is a unique index
    */
   boolean isPartOfIndex();
+
+  /**
+   * True if this column is a part of primary key.
+   *
+   * @return If the column is a part of primary key
+   */
+  boolean isPartOfPrimaryKey();
 
 }
