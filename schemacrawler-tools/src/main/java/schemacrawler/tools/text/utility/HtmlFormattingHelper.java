@@ -23,8 +23,8 @@ package schemacrawler.tools.text.utility;
 
 import static sf.util.Utility.NEWLINE;
 import static sf.util.Utility.isBlank;
+import static sf.util.Utility.readResourceFully;
 import schemacrawler.tools.options.TextOutputFormat;
-import sf.util.Utility;
 
 /**
  * Methods to format entire rows of output as HTML.
@@ -37,7 +37,8 @@ public final class HtmlFormattingHelper
 
   private static String htmlHeader()
   {
-    final String styleSheet = Utility.readResourceFully("/sc.css");
+    final String styleSheet = readResourceFully("/sc.css")
+                              + readResourceFully("/sc_output.css");
 
     return "<!DOCTYPE html>" + NEWLINE
            + "<html xmlns='http://www.w3.org/1999/xhtml'>" + NEWLINE + "<head>"

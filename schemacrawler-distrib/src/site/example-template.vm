@@ -3,9 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <title>SchemaCrawler Example</title>
-    <style>
-#include( "sc.css" )    
-    </style>
+    <link rel="stylesheet" type="text/css" href="../sc.css">
   </head>
   <body>
 $bodyContent
