@@ -27,7 +27,7 @@ import static java.nio.file.Paths.get;
 public final class WriteStylesheetFile
 {
 
-  public static void main(String[] args)
+  public static void main(final String[] args)
     throws Exception
   {
     copy(WriteStylesheetFile.class.getResourceAsStream("/sc.css"), get(args[0]));

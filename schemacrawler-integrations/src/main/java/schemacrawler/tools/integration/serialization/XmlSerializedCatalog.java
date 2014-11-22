@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -44,15 +44,13 @@ import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 
 /**
  * Decorates a database to allow for serialization to and from XML.
- * 
+ *
  * @author sfatehi
  */
 public final class XmlSerializedCatalog
   extends BaseCatalogDecorator
   implements SerializableCatalog
 {
-
-  private static final long serialVersionUID = 5314326260124511414L;
 
   private static XStream newXStream()
     throws SchemaCrawlerException
@@ -165,6 +163,8 @@ public final class XmlSerializedCatalog
     }
   }
 
+  private static final long serialVersionUID = 5314326260124511414L;
+
   public XmlSerializedCatalog(final Catalog catalog)
   {
     super(catalog);
@@ -178,7 +178,7 @@ public final class XmlSerializedCatalog
 
   /**
    * Serializes the database to the writer, as XML.
-   * 
+   *
    * @param writer
    *        Writer to save to
    * @throws SchemaCrawlerException

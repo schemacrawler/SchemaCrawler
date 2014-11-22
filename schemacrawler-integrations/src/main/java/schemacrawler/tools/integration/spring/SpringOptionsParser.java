@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -26,7 +26,7 @@ import sf.util.clparser.StringOption;
 
 /**
  * Options for the command-line.
- * 
+ *
  * @author sfatehi
  */
 final class SpringOptionsParser
@@ -35,7 +35,7 @@ final class SpringOptionsParser
 
   /**
    * Parses the command-line into options.
-   * 
+   *
    * @param args
    *        Command-line arguments
    */

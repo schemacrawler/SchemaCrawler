@@ -241,23 +241,23 @@ final class MutableIndexColumn
   /**
    * {@inheritDoc}
    *
-   * @see schemacrawler.schema.Column#isPartOfPrimaryKey()
-   */
-  @Override
-  public boolean isPartOfPrimaryKey()
-  {
-    return column.isPartOfPrimaryKey();
-  }
-
-  /**
-   * {@inheritDoc}
-   *
    * @see schemacrawler.schema.Column#isPartOfIndex()
    */
   @Override
   public boolean isPartOfIndex()
   {
     return column.isPartOfIndex();
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * @see schemacrawler.schema.Column#isPartOfPrimaryKey()
+   */
+  @Override
+  public boolean isPartOfPrimaryKey()
+  {
+    return column.isPartOfPrimaryKey();
   }
 
   void setIndexOrdinalPosition(final int indexOrdinalPosition)

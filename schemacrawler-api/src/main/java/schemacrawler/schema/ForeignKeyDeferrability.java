@@ -50,9 +50,6 @@ public enum ForeignKeyDeferrability
    */
   keyNotDeferrable(DatabaseMetaData.importedKeyNotDeferrable, "not deferrable");
 
-  private static final Logger LOGGER = Logger
-    .getLogger(ForeignKeyDeferrability.class.getName());
-
   /**
    * Gets the enum value from the integer.
    *
@@ -73,6 +70,9 @@ public enum ForeignKeyDeferrability
     LOGGER.log(Level.FINE, "Unknown id " + id);
     return unknown;
   }
+
+  private static final Logger LOGGER = Logger
+    .getLogger(ForeignKeyDeferrability.class.getName());
 
   private final int id;
   private final String text;

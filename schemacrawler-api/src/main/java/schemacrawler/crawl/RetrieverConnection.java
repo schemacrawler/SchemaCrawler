@@ -48,9 +48,6 @@ import sf.util.Utility;
 final class RetrieverConnection
 {
 
-  private static final Logger LOGGER = Logger
-    .getLogger(RetrieverConnection.class.getName());
-
   private static String lookupIdentifierQuoteString(final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions,
                                                     final DatabaseMetaData metaData)
     throws SQLException
@@ -122,6 +119,9 @@ final class RetrieverConnection
 
     return supportsSchemas;
   }
+
+  private static final Logger LOGGER = Logger
+    .getLogger(RetrieverConnection.class.getName());
 
   private final Connection connection;
   private final DatabaseMetaData metaData;

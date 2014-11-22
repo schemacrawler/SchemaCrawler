@@ -40,11 +40,6 @@ abstract class BaseDatabaseConnectionOptions
   implements ConnectionOptions
 {
 
-  private static final long serialVersionUID = -8141436553988174836L;
-
-  private static final Logger LOGGER = Logger
-    .getLogger(BaseDatabaseConnectionOptions.class.getName());
-
   static void loadJdbcDriver(final String jdbcDriverClassName)
     throws SchemaCrawlerException
   {
@@ -60,6 +55,11 @@ abstract class BaseDatabaseConnectionOptions
 
     DriverManager.setLogWriter(null);
   }
+
+  private static final long serialVersionUID = -8141436553988174836L;
+
+  private static final Logger LOGGER = Logger
+    .getLogger(BaseDatabaseConnectionOptions.class.getName());
 
   private Map<String, String> connectionProperties;
   private String user;

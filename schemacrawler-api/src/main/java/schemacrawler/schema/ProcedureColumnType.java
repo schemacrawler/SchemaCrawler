@@ -57,9 +57,6 @@ public enum ProcedureColumnType
    */
   result(DatabaseMetaData.procedureColumnResult, "result");
 
-  private static final Logger LOGGER = Logger
-    .getLogger(ProcedureColumnType.class.getName());
-
   /**
    * Gets the enum value from the integer.
    *
@@ -79,6 +76,9 @@ public enum ProcedureColumnType
     LOGGER.log(Level.FINE, "Unknown id " + id);
     return unknown;
   }
+
+  private static final Logger LOGGER = Logger
+    .getLogger(ProcedureColumnType.class.getName());
 
   private final int id;
   private final String text;

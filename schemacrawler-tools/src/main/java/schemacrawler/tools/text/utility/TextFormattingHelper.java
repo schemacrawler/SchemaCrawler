@@ -38,34 +38,6 @@ public interface TextFormattingHelper
   }
 
   /**
-   * Creates an arrow symbol.
-   *
-   * @return Arrow symbol
-   */
-  String createRightArrow();
-
-  /**
-   * Creates an arrow symbol.
-   *
-   * @return Arrow symbol
-   */
-  String createLeftArrow();
-
-  /**
-   * Creates an arrow symbol.
-   *
-   * @return Arrow symbol
-   */
-  String createWeakRightArrow();
-
-  /**
-   * Creates an arrow symbol.
-   *
-   * @return Arrow symbol
-   */
-  String createWeakLeftArrow();
-
-  /**
    * Creates a definition row.
    *
    * @param definition
@@ -147,6 +119,13 @@ public interface TextFormattingHelper
   String createHeader(DocumentHeaderType type, String header);
 
   /**
+   * Creates an arrow symbol.
+   *
+   * @return Arrow symbol
+   */
+  String createLeftArrow();
+
+  /**
    * Create a name and description row.
    *
    * @param name
@@ -187,6 +166,13 @@ public interface TextFormattingHelper
   String createObjectStart(String name);
 
   /**
+   * Creates an arrow symbol.
+   *
+   * @return Arrow symbol
+   */
+  String createRightArrow();
+
+  /**
    * Creates a row of data.
    *
    * @param columnData
@@ -203,5 +189,19 @@ public interface TextFormattingHelper
    * @return Header row for data
    */
   String createRowHeader(String... columnNames);
+
+  /**
+   * Creates an arrow symbol.
+   *
+   * @return Arrow symbol
+   */
+  String createWeakLeftArrow();
+
+  /**
+   * Creates an arrow symbol.
+   *
+   * @return Arrow symbol
+   */
+  String createWeakRightArrow();
 
 }

@@ -229,7 +229,7 @@ public class SchemaCrawlerReferenceTest
                    + table.getName(),
                catalog.getTable(table.getSchema(), table.getName()));
     assertTrue("Column references do not match",
-               column == ((Table) table).getColumn(column.getName()));
+               column == table.getColumn(column.getName()));
 
     if (assertDataNotLoaded)
     {

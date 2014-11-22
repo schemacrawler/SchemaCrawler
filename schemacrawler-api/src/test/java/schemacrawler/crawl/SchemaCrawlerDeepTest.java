@@ -24,8 +24,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import schemacrawler.schema.Column;
 import schemacrawler.schema.Catalog;
+import schemacrawler.schema.Column;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.Privilege;

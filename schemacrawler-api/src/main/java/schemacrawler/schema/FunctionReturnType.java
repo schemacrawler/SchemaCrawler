@@ -45,9 +45,6 @@ public enum FunctionReturnType
    */
   returnsTable(DatabaseMetaData.functionReturnsTable, "returns table");
 
-  private static final Logger LOGGER = Logger
-    .getLogger(FunctionReturnType.class.getName());
-
   /**
    * Gets the enum value from the integer.
    *
@@ -67,6 +64,9 @@ public enum FunctionReturnType
     LOGGER.log(Level.FINE, "Unknown id " + id);
     return unknown;
   }
+
+  private static final Logger LOGGER = Logger
+    .getLogger(FunctionReturnType.class.getName());
 
   private final int id;
   private final String text;

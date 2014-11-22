@@ -47,9 +47,6 @@ public enum ConditionTimingType
    */
   after("AFTER");
 
-  private static final Logger LOGGER = Logger
-    .getLogger(ConditionTimingType.class.getName());
-
   /**
    * Find the enumeration value corresponding to the string.
    *
@@ -69,6 +66,9 @@ public enum ConditionTimingType
     LOGGER.log(Level.FINE, "Unknown value  " + value);
     return unknown;
   }
+
+  private static final Logger LOGGER = Logger
+    .getLogger(ConditionTimingType.class.getName());
 
   private final String value;
 

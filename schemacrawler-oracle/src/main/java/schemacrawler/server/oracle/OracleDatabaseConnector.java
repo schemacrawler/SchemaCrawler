@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -33,8 +33,8 @@ public final class OracleDatabaseConnector
   private static final class OracleDatabaseSystemConnector
     extends DatabaseSystemConnector
   {
-    private OracleDatabaseSystemConnector(String configResource,
-                                          String informationSchemaViewsResourceFolder)
+    private OracleDatabaseSystemConnector(final String configResource,
+                                          final String informationSchemaViewsResourceFolder)
     {
       super(configResource, informationSchemaViewsResourceFolder);
     }

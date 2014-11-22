@@ -41,9 +41,6 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 public final class DatabaseUtility
 {
 
-  private static final Logger LOGGER = Logger.getLogger(DatabaseUtility.class
-    .getName());
-
   public static Statement createStatement(final Connection connection)
     throws SchemaCrawlerException, SQLException
   {
@@ -133,6 +130,9 @@ public final class DatabaseUtility
       return null;
     }
   }
+
+  private static final Logger LOGGER = Logger.getLogger(DatabaseUtility.class
+    .getName());
 
   private DatabaseUtility()
   { // Prevent instantiation

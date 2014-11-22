@@ -29,8 +29,8 @@ import org.junit.Test;
 
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.options.TextOutputFormat;
 import sf.util.ObjectToString;
 
 public class SchemaCrawlerSystemOutputTest

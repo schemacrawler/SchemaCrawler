@@ -34,8 +34,8 @@ public final class DatabaseServerType
 
   public DatabaseServerType()
   {
-    this.databaseSystemIdentifier = null;
-    this.databaseSystemName = null;
+    databaseSystemIdentifier = null;
+    databaseSystemName = null;
   }
 
   public DatabaseServerType(final String databaseSystemIdentifier,

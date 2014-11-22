@@ -54,14 +54,6 @@ import com.google.gson.stream.JsonToken;
 public final class TestUtility
 {
 
-  private final static Pattern[] neuters = {
-      Pattern.compile("url +jdbc:.*"),
-      Pattern.compile("database product version.*"),
-      Pattern.compile("driver version.*"),
-      Pattern.compile(".*[A-Za-z]+ \\d+\\, 2014 \\d+:\\d+ [AP]M.*")
-  // Apr 2, 2014 8:38 PM
-  };
-
   public static List<String> compareOutput(final String referenceFile,
                                            final File testOutputFile)
     throws Exception
@@ -401,6 +393,14 @@ public final class TestUtility
 
     return tempFile;
   }
+
+  private final static Pattern[] neuters = {
+      Pattern.compile("url +jdbc:.*"),
+      Pattern.compile("database product version.*"),
+      Pattern.compile("driver version.*"),
+      Pattern.compile(".*[A-Za-z]+ \\d+\\, 2014 \\d+:\\d+ [AP]M.*")
+  // Apr 2, 2014 8:38 PM
+  };
 
   private TestUtility()
   {

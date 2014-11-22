@@ -36,9 +36,6 @@ public enum TableConstraintType
   primary_key("PRIMARY KEY"),
   foreign_key("FOREIGN KEY");
 
-  private static final Logger LOGGER = Logger
-    .getLogger(TableConstraintType.class.getName());
-
   /**
    * Find the enumeration value corresponding to the string.
    *
@@ -58,6 +55,9 @@ public enum TableConstraintType
     LOGGER.log(Level.FINE, "Unknown value  " + value);
     return unknown;
   }
+
+  private static final Logger LOGGER = Logger
+    .getLogger(TableConstraintType.class.getName());
 
   private final String value;
 
