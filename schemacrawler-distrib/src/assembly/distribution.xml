@@ -145,6 +145,13 @@
     <copy file="ivy-2.4.0-rc1.jar"
           tofile="${main-distribution.staging.dir}/_ivy/ivy-2.4.0-rc1.jar" />
 
+    <java classname="schemacrawler.tools.text.utility.WriteStylesheetFile">
+      <arg value="${main-distribution.staging.dir}/examples/sc.css"/>
+      <classpath>
+        <pathelement location="${schemacrawler.distribution.jar}"/>
+      </classpath>
+    </java>
+
     <!-- Stage examples -->
     <copy file="${SchemaCrawler.home}/schemacrawler-test/src/main/java/ApiExample.java"
           todir="${main-distribution.staging.dir}/examples/api" />
@@ -211,19 +218,20 @@
         <exclude name="**/apidocs/*.*" />
       </fileset>
     </move>
-    
+
     <move todir="${website.staging.dir}/apidocs">
       <fileset dir="${website.apidocs.location}">
         <include name="**/*.*" />
       </fileset>
     </move>
-    
-    <copy todir="${website.staging.dir}/css">
-      <fileset dir="${SchemaCrawler.home}/schemacrawler-distrib/src/site">
-        <include name="*.css" />
-      </fileset>
-    </copy>
-        	
+
+    <java classname="schemacrawler.tools.text.utility.WriteStylesheetFile">
+      <arg value="${website.staging.dir}/css/sc.css"/>
+      <classpath>
+        <pathelement location="${schemacrawler.distribution.jar}"/>
+      </classpath>
+    </java>
+
   </target>
 
   <target name="make-super-distribution">
