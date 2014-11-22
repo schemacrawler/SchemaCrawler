@@ -230,23 +230,23 @@ final class MutableTableConstraintColumn
   /**
    * {@inheritDoc}
    *
-   * @see schemacrawler.schema.Column#isPartOfPrimaryKey()
-   */
-  @Override
-  public boolean isPartOfPrimaryKey()
-  {
-    return column.isPartOfPrimaryKey();
-  }
-
-  /**
-   * {@inheritDoc}
-   *
    * @see schemacrawler.schema.Column#isPartOfUniqueIndex()()
    */
   @Override
   public boolean isPartOfIndex()
   {
     return column.isPartOfIndex();
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * @see schemacrawler.schema.Column#isPartOfPrimaryKey()
+   */
+  @Override
+  public boolean isPartOfPrimaryKey()
+  {
+    return column.isPartOfPrimaryKey();
   }
 
   void setTableConstraintOrdinalPosition(final int indexOrdinalPosition)

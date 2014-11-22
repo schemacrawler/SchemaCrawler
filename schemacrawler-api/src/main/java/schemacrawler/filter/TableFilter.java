@@ -44,11 +44,13 @@ class TableFilter
 
       final Collection<String> tableTypesOptions = options.getTableTypes();
       if (tableTypesOptions == null)
+      {
         tableTypes = null;
+      }
       else
       {
         tableTypes = new HashSet<>();
-        for (String tableType: tableTypesOptions)
+        for (final String tableType: tableTypesOptions)
         {
           tableTypes.add(tableType.toLowerCase());
         }

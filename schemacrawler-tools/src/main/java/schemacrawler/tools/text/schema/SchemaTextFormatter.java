@@ -713,7 +713,7 @@ final class SchemaTextFormatter
         {
           final String grantedFrom = String.format("%s %s %s%s", grant
             .getGrantor(), formattingHelper.createRightArrow(), grant
-            .getGrantee(), (grant.isGrantable()? " (grantable)": ""));
+            .getGrantee(), grant.isGrantable()? " (grantable)": "");
           out.println(formattingHelper.createDetailRow("", grantedFrom, ""));
         }
       }

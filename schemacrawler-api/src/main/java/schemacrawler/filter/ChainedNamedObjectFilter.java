@@ -31,6 +31,14 @@ public class ChainedNamedObjectFilter<N extends NamedObject>
 
   private final List<NamedObjectFilter<N>> filters = new ArrayList<>();
 
+  public void add(final NamedObjectFilter<N> filter)
+  {
+    if (filter != null)
+    {
+      filters.add(filter);
+    }
+  }
+
   @Override
   public boolean include(final N namedObject)
   {
@@ -42,14 +50,6 @@ public class ChainedNamedObjectFilter<N extends NamedObject>
       }
     }
     return true;
-  }
-
-  public void add(final NamedObjectFilter<N> filter)
-  {
-    if (filter != null)
-    {
-      filters.add(filter);
-    }
   }
 
 }

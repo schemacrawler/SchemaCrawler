@@ -46,9 +46,6 @@ import schemacrawler.schemacrawler.SchemaInfoLevel;
 public final class SchemaCrawler
 {
 
-  private static final Logger LOGGER = Logger.getLogger(SchemaCrawler.class
-    .getName());
-
   /**
    * Gets the result set columns metadata.
    *
@@ -248,40 +245,6 @@ public final class SchemaCrawler
     }
   }
 
-  private static void crawlSynonyms(final MutableCatalog catalog,
-                                    final RetrieverConnection retrieverConnection,
-                                    final SchemaCrawlerOptions options)
-    throws SchemaCrawlerException
-  {
-    final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
-    final boolean retrieveSynonyms = infoLevel.isRetrieveSynonymInformation();
-    if (!retrieveSynonyms)
-    {
-      return;
-    }
-
-    final SynonymRetriever retrieverExtra;
-    try
-    {
-      retrieverExtra = new SynonymRetriever(retrieverConnection, catalog);
-      retrieverExtra.retrieveSynonymInformation(options
-        .getSynonymInclusionRule());
-    }
-    catch (final SQLException e)
-    {
-      if (e instanceof SchemaCrawlerSQLException)
-      {
-        final Throwable cause = e.getCause();
-        throw new SchemaCrawlerException(e.getMessage() + ": "
-                                         + cause.getMessage(), cause);
-      }
-      else
-      {
-        throw new SchemaCrawlerException("Exception retrieving schemas", e);
-      }
-    }
-  }
-
   private static void crawlSequences(final MutableCatalog catalog,
                                      final RetrieverConnection retrieverConnection,
                                      final SchemaCrawlerOptions options)
@@ -300,6 +263,40 @@ public final class SchemaCrawler
       retrieverExtra = new SequenceRetriever(retrieverConnection, catalog);
       retrieverExtra.retrieveSequenceInformation(options
         .getSequenceInclusionRule());
+    }
+    catch (final SQLException e)
+    {
+      if (e instanceof SchemaCrawlerSQLException)
+      {
+        final Throwable cause = e.getCause();
+        throw new SchemaCrawlerException(e.getMessage() + ": "
+                                         + cause.getMessage(), cause);
+      }
+      else
+      {
+        throw new SchemaCrawlerException("Exception retrieving schemas", e);
+      }
+    }
+  }
+
+  private static void crawlSynonyms(final MutableCatalog catalog,
+                                    final RetrieverConnection retrieverConnection,
+                                    final SchemaCrawlerOptions options)
+    throws SchemaCrawlerException
+  {
+    final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
+    final boolean retrieveSynonyms = infoLevel.isRetrieveSynonymInformation();
+    if (!retrieveSynonyms)
+    {
+      return;
+    }
+
+    final SynonymRetriever retrieverExtra;
+    try
+    {
+      retrieverExtra = new SynonymRetriever(retrieverConnection, catalog);
+      retrieverExtra.retrieveSynonymInformation(options
+        .getSynonymInclusionRule());
     }
     catch (final SQLException e)
     {
@@ -441,6 +438,9 @@ public final class SchemaCrawler
     }
 
   }
+
+  private static final Logger LOGGER = Logger.getLogger(SchemaCrawler.class
+    .getName());
 
   private final Connection connection;
 
