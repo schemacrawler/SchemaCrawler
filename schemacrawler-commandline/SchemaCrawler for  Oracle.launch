@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
-<listEntry value="/SchemaCrawler for Oracle"/>
+<listEntry value="/SchemaCrawler - 3 - Commandline/src/main/java/schemacrawler/Main.java"/>
 </listAttribute>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
-<listEntry value="4"/>
+<listEntry value="1"/>
 </listAttribute>
 <booleanAttribute key="org.eclipse.debug.core.appendEnvironmentVariables" value="true"/>
+<listAttribute key="org.eclipse.debug.ui.favoriteGroups">
+<listEntry value="org.eclipse.debug.ui.launchGroup.run"/>
+</listAttribute>
 <stringAttribute key="org.eclipse.jdt.launching.CLASSPATH_PROVIDER" value="org.eclipse.m2e.launchconfig.classpathProvider"/>
-<stringAttribute key="org.eclipse.jdt.launching.JRE_CONTAINER" value="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
-<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="schemacrawler.integration.test.Main"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-host=192.168.60.137&#13;&#10;-port=1521&#13;&#10;-database=XE&#13;&#10;-schemas=BOOKS&#13;&#10;-user=books&#13;&#10;-password=books&#13;&#10;-tables=.*\.(?!BIN\$).*&#13;&#10;-infolevel=maximum&#13;&#10;-command=details &#13;&#10;-loglevel=INFO&#13;&#10;-o sc_oracle.txt"/>
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="schemacrawler.Main"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-server=oracle&#13;&#10;-host=scoracle.cdf972bn8znp.us-east-1.rds.amazonaws.com&#13;&#10;-port=1521&#13;&#10;-database=ORCL&#13;&#10;-schemas=BOOKS&#13;&#10;-user=schemacrawler&#13;&#10;-password=schemacrawler&#13;&#10;-tables=.*\.(?!BIN\$).*&#13;&#10;-infolevel=maximum&#13;&#10;-command=details &#13;&#10;-loglevel=INFO&#13;&#10;--o sc_oracle.txt"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="SchemaCrawler for Oracle"/>
 <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.m2e.launchconfig.sourcepathProvider"/>
 <stringAttribute key="org.eclipse.jdt.launching.WORKING_DIRECTORY" value="${workspace_loc:SchemaCrawler - Documents}"/>
