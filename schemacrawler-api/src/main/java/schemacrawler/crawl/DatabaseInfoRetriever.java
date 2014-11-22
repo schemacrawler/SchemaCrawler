@@ -459,7 +459,7 @@ final class DatabaseInfoRetriever
         // "TYPE_CAT", "TYPE_SCHEM"
         final String typeName = results.getString("TYPE_NAME");
         LOGGER.log(Level.FINER, "Retrieving data type: " + typeName);
-        final short dataType = results.getShort("DATA_TYPE", (short) 0);
+        final int dataType = results.getInt("DATA_TYPE", 0);
         final String className = results.getString("CLASS_NAME");
         final String remarks = results.getString("REMARKS");
         final short baseTypeValue = results.getShort("BASE_TYPE", (short) 0);
