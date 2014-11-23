@@ -36,7 +36,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import schemacrawler.schema.Catalog;
@@ -90,7 +89,6 @@ public class OfflineSnapshotTest
     }
   }
 
-  @Ignore
   @Test
   public void offlineSnapshotCommandLineWithFilters()
     throws Exception
