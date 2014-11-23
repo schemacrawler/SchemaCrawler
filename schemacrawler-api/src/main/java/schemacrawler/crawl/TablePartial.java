@@ -30,6 +30,7 @@ import java.util.List;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Index;
+import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Schema;
@@ -42,7 +43,7 @@ import schemacrawler.schema.Trigger;
 
 final class TablePartial
   extends AbstractDatabaseObject
-  implements Table
+  implements Table, PartialDatabaseObject
 {
 
   private static final long serialVersionUID = -5968964551235088703L;
