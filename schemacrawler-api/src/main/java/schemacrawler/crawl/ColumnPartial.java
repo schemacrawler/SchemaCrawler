@@ -25,12 +25,13 @@ import java.util.Collection;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
+import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Table;
 
 final class ColumnPartial
   extends AbstractDependantObject<Table>
-  implements Column
+  implements Column, PartialDatabaseObject
 {
 
   private static final long serialVersionUID = 502720342852782630L;
