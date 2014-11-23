@@ -29,6 +29,7 @@ import java.util.Set;
 import schemacrawler.filter.NamedObjectFilter;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnReference;
+import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableReference;
 import schemacrawler.schema.TableRelationshipType;
@@ -105,7 +106,7 @@ class TablesReducer
         for (final TableReference relatedTable: table
           .getRelatedTables(tableRelationshipType))
         {
-          if (relatedTable instanceof MutableTable)
+          if (!isTablePartial(relatedTable))
           {
             includedTables.add((MutableTable) relatedTable);
           }
@@ -114,6 +115,11 @@ class TablesReducer
     }
 
     return includedTables;
+  }
+
+  private boolean isTablePartial(final TableReference table)
+  {
+    return table instanceof PartialDatabaseObject;
   }
 
   private void removeForeignKeys(final NamedObjectList<MutableTable> allTables)
@@ -129,7 +135,7 @@ class TablesReducer
           final Table referencedTable = fkColumnReference.getForeignKeyColumn()
             .getParent();
           boolean removeFk = false;
-          if (!(referencedTable instanceof MutableTable))
+          if (isTablePartial(referencedTable))
           {
             removeFk = true;
           }
