@@ -297,22 +297,11 @@ public final class SchemaDotFormatter
     }
   }
 
-  private String[] getPortIds(final Column column)
+  private String[] getPortIds(final Column column, final boolean isNewNode)
   {
     final String portIds[] = new String[2];
 
-    boolean isColumnReference;
-    try
-    {
-      column.getColumnDataType();
-      isColumnReference = false;
-    }
-    catch (final Exception e)
-    {
-      isColumnReference = true;
-    }
-
-    if (!isColumnReference)
+    if (!isNewNode)
     {
       portIds[0] = String.format("\"%s\":\"%s.start\"",
                                  nodeId(column.getParent()),
@@ -363,13 +352,15 @@ public final class SchemaDotFormatter
 
   private String printColumnReference(final String associationName,
                                       final ColumnReference columnReference,
+                                      final boolean isForeignKeyColumnFiltered,
                                       final boolean isForeignKeyUnique)
   {
     final Column primaryKeyColumn = columnReference.getPrimaryKeyColumn();
     final Column foreignKeyColumn = columnReference.getForeignKeyColumn();
 
-    final String[] pkPortIds = getPortIds(primaryKeyColumn);
-    final String[] fkPortIds = getPortIds(foreignKeyColumn);
+    final String[] pkPortIds = getPortIds(primaryKeyColumn, false);
+    final String[] fkPortIds = getPortIds(foreignKeyColumn,
+                                          isForeignKeyColumnFiltered);
 
     final Connectivity connectivity = getConnectivity(foreignKeyColumn,
                                                       isForeignKeyUnique);
@@ -387,7 +378,14 @@ public final class SchemaDotFormatter
     final String fkSymbol;
     if (graphOptions.isShowForeignKeyCardinality())
     {
-      fkSymbol = arrowhead(connectivity);
+      if (isForeignKeyColumnFiltered)
+      {
+        fkSymbol = "box";
+      }
+      else
+      {
+        fkSymbol = arrowhead(connectivity);
+      }
     }
     else
     {
@@ -419,6 +417,13 @@ public final class SchemaDotFormatter
   {
     for (final ForeignKey foreignKey: table.getForeignKeys())
     {
+      if (foreignKey.getAttribute("foreignKey.filtered", false))
+      {
+        continue;
+      }
+      final boolean isForeignKeyColumnFiltered = foreignKey
+        .getAttribute("foreignKey.filtered.foreignKeyColumn", false);
+
       final boolean isForeignKeyUnique = isForeignKeyUnique(foreignKey, table);
       for (final ColumnReference columnReference: foreignKey
         .getColumnReferences())
@@ -427,6 +432,7 @@ public final class SchemaDotFormatter
         {
           out.write(printColumnReference(foreignKey.getName(),
                                          columnReference,
+                                         isForeignKeyColumnFiltered,
                                          isForeignKeyUnique));
         }
       }
@@ -574,7 +580,7 @@ public final class SchemaDotFormatter
     {
       if (table.equals(weakAssociation.getPrimaryKeyColumn().getParent()))
       {
-        out.write(printColumnReference("", weakAssociation, false));
+        out.write(printColumnReference("", weakAssociation, false, false));
       }
     }
   }
