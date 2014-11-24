@@ -23,6 +23,7 @@ package schemacrawler.crawl;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -39,7 +40,7 @@ import sf.util.Utility;
  * @author Sualeh Fatehi
  */
 class NamedObjectList<N extends NamedObject>
-  implements Serializable, Iterable<N>
+  implements Serializable, Collection<N>
 {
 
   private static String makeLookupKey(final NamedObject namedObject)
@@ -97,6 +98,55 @@ class NamedObjectList<N extends NamedObject>
   private final Map<String, N> objects = new HashMap<>();
 
   /**
+   * Add a named object to the list.
+   *
+   * @param namedObject
+   *        Named object
+   */
+  @Override
+  public boolean add(final N namedObject)
+  {
+    if (namedObject == null)
+    {
+      throw new IllegalArgumentException("Cannot add a null object to the list");
+    }
+    final String key = makeLookupKey(namedObject);
+    objects.put(key, namedObject);
+
+    return true;
+  }
+
+  @Override
+  public boolean addAll(final Collection<? extends N> c)
+  {
+    throw new UnsupportedOperationException("Bulk operations are not supported");
+  }
+
+  @Override
+  public void clear()
+  {
+    throw new UnsupportedOperationException("Bulk operations are not supported");
+  }
+
+  @Override
+  public boolean contains(final Object object)
+  {
+    return objects.containsKey(makeLookupKey((N) object));
+  }
+
+  @Override
+  public boolean containsAll(final Collection<?> c)
+  {
+    throw new UnsupportedOperationException("Bulk operations are not supported");
+  }
+
+  @Override
+  public boolean isEmpty()
+  {
+    return objects.isEmpty();
+  }
+
+  /**
    * {@inheritDoc}
    *
    * @see java.lang.Iterable#iterator()
@@ -105,6 +155,48 @@ class NamedObjectList<N extends NamedObject>
   public Iterator<N> iterator()
   {
     return values().iterator();
+  }
+
+  @Override
+  public boolean remove(final Object object)
+  {
+    final N removedObject = objects.remove(makeLookupKey((N) object));
+    return removedObject != null;
+  }
+
+  @Override
+  public boolean removeAll(final Collection<?> c)
+  {
+    throw new UnsupportedOperationException("Bulk operations are not supported");
+  }
+
+  @Override
+  public boolean retainAll(final Collection<?> c)
+  {
+    throw new UnsupportedOperationException("Bulk operations are not supported");
+  }
+
+  /**
+   * Returns the number of elements in this list.
+   *
+   * @return Number of elements in this list.
+   */
+  @Override
+  public int size()
+  {
+    return objects.size();
+  }
+
+  @Override
+  public Object[] toArray()
+  {
+    return values().toArray();
+  }
+
+  @Override
+  public <T> T[] toArray(final T[] a)
+  {
+    return values().toArray(a);
   }
 
   /**
@@ -116,27 +208,6 @@ class NamedObjectList<N extends NamedObject>
   public String toString()
   {
     return ObjectToString.toString(values());
-  }
-
-  /**
-   * Add a named object to the list.
-   *
-   * @param namedObject
-   *        Named object
-   */
-  void add(final N namedObject)
-  {
-    if (namedObject == null)
-    {
-      throw new IllegalArgumentException("Cannot add a null object to the list");
-    }
-    final String key = makeLookupKey(namedObject);
-    objects.put(key, namedObject);
-  }
-
-  boolean contains(final N namedObject)
-  {
-    return objects.containsKey(makeLookupKey(namedObject));
   }
 
   N lookup(final NamedObject namedObject, final String name)
@@ -166,16 +237,6 @@ class NamedObjectList<N extends NamedObject>
   N remove(final String fullName)
   {
     return objects.remove(makeLookupKey(fullName));
-  }
-
-  /**
-   * Returns the number of elements in this list.
-   *
-   * @return Number of elements in this list.
-   */
-  int size()
-  {
-    return objects.size();
   }
 
   /**
