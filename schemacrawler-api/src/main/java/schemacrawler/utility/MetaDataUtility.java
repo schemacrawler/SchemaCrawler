@@ -31,6 +31,7 @@ import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexColumn;
+import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Table;
 
@@ -94,16 +95,7 @@ public final class MetaDataUtility
       return Connectivity.unknown;
     }
 
-    boolean isColumnReference;
-    try
-    {
-      fkColumn.getColumnDataType();
-      isColumnReference = false;
-    }
-    catch (final Exception e)
-    {
-      isColumnReference = true;
-    }
+    final boolean isColumnReference = fkColumn instanceof PartialDatabaseObject;
 
     final Connectivity connectivity;
     if (isColumnReference)

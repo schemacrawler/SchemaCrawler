@@ -45,11 +45,11 @@ class TablesReducer
     this.options = options;
   }
 
-  public void filter(final NamedObjectList<MutableTable> allTables)
+  public void filter(final Collection<? extends Table> allTables)
   {
 
-    final Collection<MutableTable> filteredTables = doFilter(allTables);
-    for (final MutableTable table: allTables)
+    final Collection<Table> filteredTables = doFilter(allTables);
+    for (final Table table: allTables)
     {
       if (!filteredTables.contains(table))
       {
@@ -60,14 +60,14 @@ class TablesReducer
     removeForeignKeys(allTables);
   }
 
-  private Collection<MutableTable> doFilter(final NamedObjectList<MutableTable> allTables)
+  private Collection<Table> doFilter(final Collection<? extends Table> allTables)
   {
     // Filter for tables inclusion patterns (since we may be looping
     // over offline data), and grep patterns
     final NamedObjectFilter<Table> tableFilter = grepTablesFilter(options);
 
-    final Set<MutableTable> greppedTables = new HashSet<>();
-    for (final MutableTable table: allTables)
+    final Set<Table> greppedTables = new HashSet<>();
+    for (final Table table: allTables)
     {
       if (tableFilter.include(table))
       {
@@ -77,38 +77,38 @@ class TablesReducer
 
     // Add in referenced tables
     final int childTableFilterDepth = options.getChildTableFilterDepth();
-    final Collection<MutableTable> childTables = includeRelatedTables(TableRelationshipType.child,
-                                                                      childTableFilterDepth,
-                                                                      greppedTables);
+    final Collection<Table> childTables = includeRelatedTables(TableRelationshipType.child,
+                                                               childTableFilterDepth,
+                                                               greppedTables);
     final int parentTableFilterDepth = options.getParentTableFilterDepth();
-    final Collection<MutableTable> parentTables = includeRelatedTables(TableRelationshipType.parent,
-                                                                       parentTableFilterDepth,
-                                                                       greppedTables);
+    final Collection<Table> parentTables = includeRelatedTables(TableRelationshipType.parent,
+                                                                parentTableFilterDepth,
+                                                                greppedTables);
 
-    final Set<MutableTable> filteredTables = new HashSet<>();
+    final Set<Table> filteredTables = new HashSet<>();
     filteredTables.addAll(greppedTables);
     filteredTables.addAll(childTables);
     filteredTables.addAll(parentTables);
     return filteredTables;
   }
 
-  private Collection<MutableTable> includeRelatedTables(final TableRelationshipType tableRelationshipType,
-                                                        final int depth,
-                                                        final Set<MutableTable> greppedTables)
+  private Collection<Table> includeRelatedTables(final TableRelationshipType tableRelationshipType,
+                                                 final int depth,
+                                                 final Set<Table> greppedTables)
   {
-    final Set<MutableTable> includedTables = new HashSet<>();
+    final Set<Table> includedTables = new HashSet<>();
     includedTables.addAll(greppedTables);
 
     for (int i = 0; i < depth; i++)
     {
-      for (final MutableTable table: new HashSet<>(includedTables))
+      for (final Table table: new HashSet<>(includedTables))
       {
         for (final TableReference relatedTable: table
           .getRelatedTables(tableRelationshipType))
         {
           if (!isTablePartial(relatedTable))
           {
-            includedTables.add((MutableTable) relatedTable);
+            includedTables.add((Table) relatedTable);
           }
         }
       }
@@ -122,10 +122,10 @@ class TablesReducer
     return table instanceof PartialDatabaseObject;
   }
 
-  private void removeForeignKeys(final NamedObjectList<MutableTable> allTables)
+  private void removeForeignKeys(final Collection<? extends Table> allTables)
   {
 
-    for (final MutableTable table: allTables)
+    for (final Table table: allTables)
     {
       for (final ForeignKey fk: table.getExportedForeignKeys())
       {
@@ -139,7 +139,7 @@ class TablesReducer
           {
             removeFk = true;
           }
-          else if (!allTables.contains((MutableTable) referencedTable))
+          else if (!allTables.contains(referencedTable))
           {
             removeFk = true;
           }
@@ -148,16 +148,11 @@ class TablesReducer
           {
             if (options.isGrepOnlyMatching())
             {
-              table.removeForeignKey(fk.getFullName());
+              fk.setAttribute("foreignKey.filtered", true);
             }
             else
             {
-              // Replace reference with a column partial
-              final ColumnPartial columnPartial = new ColumnPartial(fkColumnReference
-                .getForeignKeyColumn());
-              ((TablePartial) columnPartial.getParent()).addForeignKey(fk);
-              ((MutableForeignKeyColumnReference) fkColumnReference)
-                .setForeignKeyColumn(columnPartial);
+              fk.setAttribute("foreignKey.filtered.foreignKeyColumn", true);
             }
           }
         }
@@ -175,7 +170,7 @@ class TablesReducer
           {
             removeFk = true;
           }
-          else if (!allTables.contains((MutableTable) referencedTable))
+          else if (!allTables.contains(referencedTable))
           {
             removeFk = true;
           }
@@ -184,16 +179,11 @@ class TablesReducer
           {
             if (options.isGrepOnlyMatching())
             {
-              table.removeForeignKey(fk.getFullName());
+              fk.setAttribute("foreignKey.filtered", true);
             }
             else
             {
-              // Replace reference with a column partial
-              final ColumnPartial columnPartial = new ColumnPartial(fkColumnReference
-                .getPrimaryKeyColumn());
-              ((TablePartial) columnPartial.getParent()).addForeignKey(fk);
-              ((MutableForeignKeyColumnReference) fkColumnReference)
-                .setPrimaryKeyColumn(columnPartial);
+              fk.setAttribute("foreignKey.filtered.primaryKeyColumn", true);
             }
           }
         }
