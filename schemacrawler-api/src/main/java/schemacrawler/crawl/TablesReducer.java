@@ -20,14 +20,13 @@
 package schemacrawler.crawl;
 
 
-import static schemacrawler.filter.FilterFactory.grepTablesFilter;
 import static schemacrawler.filter.FilterFactory.tableFilter;
 
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import schemacrawler.filter.ChainedNamedObjectFilter;
+import schemacrawler.filter.NamedObjectFilter;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.PartialDatabaseObject;
@@ -37,6 +36,7 @@ import schemacrawler.schema.TableRelationshipType;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
 class TablesReducer
+  implements Reducer<Table>
 {
 
   private final SchemaCrawlerOptions options;
@@ -46,13 +46,13 @@ class TablesReducer
     this.options = options;
   }
 
-  public void filter(final Collection<? extends Table> allTables)
+  public void reduce(final Collection<? extends Table> allTables)
   {
 
-    final Collection<Table> filteredTables = doFilter(allTables);
+    final Collection<Table> reducedTables = doReduce(allTables);
     for (final Table table: allTables)
     {
-      if (!filteredTables.contains(table))
+      if (!reducedTables.contains(table))
       {
         allTables.remove(table);
       }
@@ -61,13 +61,11 @@ class TablesReducer
     removeForeignKeys(allTables);
   }
 
-  private Collection<Table> doFilter(final Collection<? extends Table> allTables)
+  private Collection<Table> doReduce(final Collection<? extends Table> allTables)
   {
     // Filter for tables inclusion patterns (since we may be looping
     // over offline data), and grep patterns
-    final ChainedNamedObjectFilter<Table> tableFilter = new ChainedNamedObjectFilter<>();
-    tableFilter.add(tableFilter(options));
-    tableFilter.add(grepTablesFilter(options));
+    final NamedObjectFilter<Table> tableFilter = tableFilter(options);
 
     final Set<Table> reducedTables = new HashSet<>();
     for (final Table table: allTables)

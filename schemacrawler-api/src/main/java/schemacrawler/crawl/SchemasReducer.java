@@ -20,54 +20,58 @@
 package schemacrawler.crawl;
 
 
-import static schemacrawler.filter.FilterFactory.routineFilter;
-
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import schemacrawler.filter.NamedObjectFilter;
-import schemacrawler.schema.Routine;
+import schemacrawler.filter.InclusionRuleFilter;
+import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
-class RoutinesReducer
-  implements Reducer<Routine>
+class SchemasReducer
+  implements Reducer<Schema>
 {
 
-  private final SchemaCrawlerOptions options;
+  private final InclusionRuleFilter<Schema> schemaFilter;
 
-  public RoutinesReducer(final SchemaCrawlerOptions options)
+  public SchemasReducer(final SchemaCrawlerOptions options)
   {
-    this.options = options;
+    if (options == null)
+    {
+      schemaFilter = new InclusionRuleFilter<>(null, true);
+    }
+    else
+    {
+      schemaFilter = new InclusionRuleFilter<>(options.getSchemaInclusionRule(),
+                                               true);
+    }
   }
 
   @Override
-  public void reduce(final Collection<? extends Routine> allRoutines)
+  public void reduce(final Collection<? extends Schema> allSchemas)
   {
-    final Collection<Routine> reducedRoutines = doReduce(allRoutines);
-    for (final Routine routine: allRoutines)
+    final Collection<Schema> reducedSchemas = doReduce(allSchemas);
+    for (final Schema schema: allSchemas)
     {
-      if (!reducedRoutines.contains(routine))
+      if (!reducedSchemas.contains(schema))
       {
-        allRoutines.remove(routine);
+        allSchemas.remove(schema);
       }
     }
   }
 
-  private Collection<Routine> doReduce(final Collection<? extends Routine> allRoutines)
+  private Collection<Schema> doReduce(final Collection<? extends Schema> allSchemas)
   {
-    final NamedObjectFilter<Routine> routineFilter = routineFilter(options);
-
-    final Set<Routine> reducedRoutines = new HashSet<>();
-    for (final Routine routine: allRoutines)
+    final Set<Schema> reducedSchemas = new HashSet<>();
+    for (final Schema schema: allSchemas)
     {
-      if (routineFilter.include(routine))
+      if (schemaFilter.include(schema))
       {
-        reducedRoutines.add(routine);
+        reducedSchemas.add(schema);
       }
     }
 
-    return reducedRoutines;
+    return reducedSchemas;
   }
 
 }

@@ -20,74 +20,66 @@
 package schemacrawler.filter;
 
 
-import java.util.Collection;
-import java.util.HashSet;
-
-import schemacrawler.schema.Table;
+import schemacrawler.schema.DatabaseObject;
+import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
-class TableFilter
-  implements NamedObjectFilter<Table>
+public class DatabaseObjectFilter<D extends DatabaseObject>
+  implements NamedObjectFilter<D>
 {
 
   private final InclusionRule schemaInclusionRule;
-  private final InclusionRule tableInclusionRule;
-  private final Collection<String> tableTypes;
+  private final InclusionRule databaseObjectInclusionRule;
 
-  public TableFilter(final SchemaCrawlerOptions options)
+  public DatabaseObjectFilter(final SchemaCrawlerOptions options,
+                              final InclusionRule databaseObjectInclusionRule)
   {
     if (options != null)
     {
       schemaInclusionRule = options.getSchemaInclusionRule();
-      tableInclusionRule = options.getTableInclusionRule();
-
-      final Collection<String> tableTypesOptions = options.getTableTypes();
-      if (tableTypesOptions == null)
-      {
-        tableTypes = null;
-      }
-      else
-      {
-        tableTypes = new HashSet<>();
-        for (final String tableType: tableTypesOptions)
-        {
-          tableTypes.add(tableType.toLowerCase());
-        }
-      }
     }
     else
     {
-      schemaInclusionRule = null;
-      tableInclusionRule = null;
-      tableTypes = null;
+      schemaInclusionRule = new IncludeAll();
+    }
+
+    if (databaseObjectInclusionRule != null)
+    {
+      this.databaseObjectInclusionRule = databaseObjectInclusionRule;
+    }
+    else
+    {
+      this.databaseObjectInclusionRule = new IncludeAll();
     }
   }
 
   /**
-   * Check for table limiting rules.
+   * Check for database object limiting rules.
    *
-   * @param table
-   *        Table to check
+   * @param databaseObject
+   *        Database object to check
    * @return Whether the table should be included
    */
   @Override
-  public boolean include(final Table table)
+  public boolean include(final D databaseObject)
   {
+    if (databaseObject == null)
+    {
+      return false;
+    }
+
     boolean include = true;
 
     if (include && schemaInclusionRule != null)
     {
-      include = schemaInclusionRule.include(table.getSchema().getFullName());
+      include = schemaInclusionRule.include(databaseObject.getSchema()
+        .getFullName());
     }
-    if (include && tableInclusionRule != null)
+    if (include && databaseObjectInclusionRule != null)
     {
-      include = tableInclusionRule.include(table.getFullName());
-    }
-    if (include && tableTypes != null)
-    {
-      include = tableTypes.contains(table.getTableType().getTableType()
-        .toLowerCase());
+      include = databaseObjectInclusionRule.include(databaseObject
+        .getFullName());
     }
 
     return include;
