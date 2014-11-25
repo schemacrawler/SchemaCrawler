@@ -1,0 +1,45 @@
+
+
+
+Tables
+========================================================================
+
+
+
+PUBLIC."PUBLISHER SALES".SALES
+------------------------------------------------------------------------
+                                                                 [table]
+  POSTALCODE                        VARCHAR(10) NOT NULL        
+  COUNTRY                           VARCHAR(50) NOT NULL        
+  BOOKID                            INTEGER                     
+  PERIODENDDATE                     DATE                        
+  TOTALAMOUNT                       DOUBLE(64, 0)               
+
+FK_SALES_REGIONS                           [foreign key, with no action]
+  POSTALCODE --> PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE                              
+  COUNTRY --> PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY                              
+
+SYS_IDX_10154                                         [non-unique index]
+  POSTALCODE                        ascending                   
+  COUNTRY                           ascending                   
+
+DELETE                                                       [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+INSERT                                                       [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+REFERENCES                                                   [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+SELECT                                                       [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+TRIGGER                                                      [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+UPDATE                                                       [privilege]
+  _SYSTEM --> DBA (grantable)                                   
+
+
+
