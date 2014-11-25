@@ -48,15 +48,11 @@ class TablesReducer
 
   public void reduce(final Collection<? extends Table> allTables)
   {
-
-    final Collection<Table> reducedTables = doReduce(allTables);
-    for (final Table table: allTables)
+    if (allTables == null)
     {
-      if (!reducedTables.contains(table))
-      {
-        allTables.remove(table);
-      }
+      return;
     }
+    allTables.retainAll(doReduce(allTables));
 
     removeForeignKeys(allTables);
   }
