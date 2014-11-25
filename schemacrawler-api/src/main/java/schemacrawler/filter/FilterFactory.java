@@ -27,52 +27,26 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 public class FilterFactory
 {
 
-  public static NamedObjectFilter<Routine> grepRoutinesFilter(final SchemaCrawlerOptions options)
-  {
-    if (options != null)
-    {
-      return new RoutineGrepFilter(options);
-    }
-    else
-    {
-      return new PassthroughFilter<Routine>();
-    }
-  }
-
-  public static NamedObjectFilter<Table> grepTablesFilter(final SchemaCrawlerOptions options)
-  {
-    if (options != null)
-    {
-      return new TableGrepFilter(options);
-    }
-    else
-    {
-      return new PassthroughFilter<Table>();
-    }
-  }
-
   public static NamedObjectFilter<Routine> routineFilter(final SchemaCrawlerOptions options)
   {
-    if (options != null)
-    {
-      return new RoutineFilter(options);
-    }
-    else
-    {
-      return new PassthroughFilter<Routine>();
-    }
+    final ChainedNamedObjectFilter<Routine> routineFilter = new ChainedNamedObjectFilter<>();
+    routineFilter.add(new RoutineTypesFilter(options));
+    routineFilter.add(new DatabaseObjectFilter<Routine>(options, options
+      .getRoutineInclusionRule()));
+    routineFilter.add(new RoutineGrepFilter(options));
+
+    return routineFilter;
   }
 
   public static NamedObjectFilter<Table> tableFilter(final SchemaCrawlerOptions options)
   {
-    if (options != null)
-    {
-      return new TableFilter(options);
-    }
-    else
-    {
-      return new PassthroughFilter<Table>();
-    }
+    final ChainedNamedObjectFilter<Table> tableFilter = new ChainedNamedObjectFilter<>();
+    tableFilter.add(new TableTypesFilter(options));
+    tableFilter.add(new DatabaseObjectFilter<Table>(options, options
+      .getTableInclusionRule()));
+    tableFilter.add(new TableGrepFilter(options));
+
+    return tableFilter;
   }
 
   private FilterFactory()
