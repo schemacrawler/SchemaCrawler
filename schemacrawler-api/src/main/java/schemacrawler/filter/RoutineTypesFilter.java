@@ -24,29 +24,22 @@ import java.util.Collection;
 
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.RoutineType;
-import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
-class RoutineFilter
+class RoutineTypesFilter
   implements NamedObjectFilter<Routine>
 {
 
-  private final InclusionRule schemaInclusionRule;
-  private final InclusionRule routineInclusionRule;
   private final Collection<RoutineType> routineTypes;
 
-  public RoutineFilter(final SchemaCrawlerOptions options)
+  public RoutineTypesFilter(final SchemaCrawlerOptions options)
   {
     if (options != null)
     {
-      schemaInclusionRule = options.getSchemaInclusionRule();
-      routineInclusionRule = options.getRoutineInclusionRule();
       routineTypes = options.getRoutineTypes();
     }
     else
     {
-      schemaInclusionRule = null;
-      routineInclusionRule = null;
       routineTypes = null;
     }
   }
@@ -61,19 +54,15 @@ class RoutineFilter
   @Override
   public boolean include(final Routine routine)
   {
-    boolean include = true;
+    final boolean include;
 
-    if (include && schemaInclusionRule != null)
-    {
-      include = schemaInclusionRule.include(routine.getSchema().getFullName());
-    }
-    if (include && routineInclusionRule != null)
-    {
-      include = routineInclusionRule.include(routine.getFullName());
-    }
-    if (include && routineTypes != null)
+    if (routineTypes != null)
     {
       include = routineTypes.contains(routine.getRoutineType());
+    }
+    else
+    {
+      include = true;
     }
 
     return include;

@@ -373,14 +373,28 @@ final class MutableCatalog
   @Override
   public void reduce(final SchemaCrawlerOptions options)
   {
+    if (options == null)
+    {
+      return;
+    }
+
+    final SchemasReducer schemasReducer = new SchemasReducer(options);
+    schemasReducer.reduce(schemas);
+
     // Filter the list of tables based on grep criteria, and
     // parent-child relationships
-    final TablesReducer tableFiter = new TablesReducer(options);
-    tableFiter.filter(tables);
+    final TablesReducer tablesReducer = new TablesReducer(options);
+    tablesReducer.reduce(tables);
 
     // Filter the list of routines based on grep criteria
-    final RoutinesReducer routineFiter = new RoutinesReducer(options);
-    routineFiter.filter(routines);
+    final RoutinesReducer routinesReducer = new RoutinesReducer(options);
+    routinesReducer.reduce(routines);
+
+    final SynonymsReducer synonymsReducer = new SynonymsReducer(options);
+    synonymsReducer.reduce(synonyms);
+
+    final SequencesReducer sequencesReducer = new SequencesReducer(options);
+    sequencesReducer.reduce(sequences);
   }
 
   void addColumnDataType(final MutableColumnDataType columnDataType)

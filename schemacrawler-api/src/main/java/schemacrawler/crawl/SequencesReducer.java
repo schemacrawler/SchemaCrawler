@@ -20,54 +20,55 @@
 package schemacrawler.crawl;
 
 
-import static schemacrawler.filter.FilterFactory.routineFilter;
-
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import schemacrawler.filter.DatabaseObjectFilter;
 import schemacrawler.filter.NamedObjectFilter;
-import schemacrawler.schema.Routine;
+import schemacrawler.schema.Sequence;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
-class RoutinesReducer
-  implements Reducer<Routine>
+class SequencesReducer
+  implements Reducer<Sequence>
 {
 
   private final SchemaCrawlerOptions options;
 
-  public RoutinesReducer(final SchemaCrawlerOptions options)
+  public SequencesReducer(final SchemaCrawlerOptions options)
   {
     this.options = options;
   }
 
   @Override
-  public void reduce(final Collection<? extends Routine> allRoutines)
+  public void reduce(final Collection<? extends Sequence> allSequences)
   {
-    final Collection<Routine> reducedRoutines = doReduce(allRoutines);
-    for (final Routine routine: allRoutines)
+    final Collection<Sequence> reducedSequences = doReduce(allSequences);
+    for (final Sequence sequence: allSequences)
     {
-      if (!reducedRoutines.contains(routine))
+      if (!reducedSequences.contains(sequence))
       {
-        allRoutines.remove(routine);
+        allSequences.remove(sequence);
       }
     }
   }
 
-  private Collection<Routine> doReduce(final Collection<? extends Routine> allRoutines)
+  private Collection<Sequence> doReduce(final Collection<? extends Sequence> allSequences)
   {
-    final NamedObjectFilter<Routine> routineFilter = routineFilter(options);
+    final NamedObjectFilter<Sequence> sequenceFilter = new DatabaseObjectFilter<Sequence>(options,
+                                                                                          options
+                                                                                            .getSequenceInclusionRule());
 
-    final Set<Routine> reducedRoutines = new HashSet<>();
-    for (final Routine routine: allRoutines)
+    final Set<Sequence> reducedSequences = new HashSet<>();
+    for (final Sequence sequence: allSequences)
     {
-      if (routineFilter.include(routine))
+      if (sequenceFilter.include(sequence))
       {
-        reducedRoutines.add(routine);
+        reducedSequences.add(sequence);
       }
     }
 
-    return reducedRoutines;
+    return reducedSequences;
   }
 
 }

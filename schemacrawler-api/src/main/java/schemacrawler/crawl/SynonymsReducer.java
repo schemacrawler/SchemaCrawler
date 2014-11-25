@@ -20,54 +20,55 @@
 package schemacrawler.crawl;
 
 
-import static schemacrawler.filter.FilterFactory.routineFilter;
-
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import schemacrawler.filter.DatabaseObjectFilter;
 import schemacrawler.filter.NamedObjectFilter;
-import schemacrawler.schema.Routine;
+import schemacrawler.schema.Synonym;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
-class RoutinesReducer
-  implements Reducer<Routine>
+class SynonymsReducer
+  implements Reducer<Synonym>
 {
 
   private final SchemaCrawlerOptions options;
 
-  public RoutinesReducer(final SchemaCrawlerOptions options)
+  public SynonymsReducer(final SchemaCrawlerOptions options)
   {
     this.options = options;
   }
 
   @Override
-  public void reduce(final Collection<? extends Routine> allRoutines)
+  public void reduce(final Collection<? extends Synonym> allSynonyms)
   {
-    final Collection<Routine> reducedRoutines = doReduce(allRoutines);
-    for (final Routine routine: allRoutines)
+    final Collection<Synonym> reducedSynonyms = doReduce(allSynonyms);
+    for (final Synonym synonym: allSynonyms)
     {
-      if (!reducedRoutines.contains(routine))
+      if (!reducedSynonyms.contains(synonym))
       {
-        allRoutines.remove(routine);
+        allSynonyms.remove(synonym);
       }
     }
   }
 
-  private Collection<Routine> doReduce(final Collection<? extends Routine> allRoutines)
+  private Collection<Synonym> doReduce(final Collection<? extends Synonym> allSynonyms)
   {
-    final NamedObjectFilter<Routine> routineFilter = routineFilter(options);
+    final NamedObjectFilter<Synonym> synonymFilter = new DatabaseObjectFilter<Synonym>(options,
+                                                                                       options
+                                                                                         .getSynonymInclusionRule());
 
-    final Set<Routine> reducedRoutines = new HashSet<>();
-    for (final Routine routine: allRoutines)
+    final Set<Synonym> reducedSynonyms = new HashSet<>();
+    for (final Synonym synonym: allSynonyms)
     {
-      if (routineFilter.include(routine))
+      if (synonymFilter.include(synonym))
       {
-        reducedRoutines.add(routine);
+        reducedSynonyms.add(synonym);
       }
     }
 
-    return reducedRoutines;
+    return reducedSynonyms;
   }
 
 }
