@@ -35,8 +35,11 @@ Then, put this directory on your PATH. Once you open a command shell, you can ru
 using `sc.cmd` (or `sc.sh` on Unix).
 
 ## Installing From the Debian Package
-Download the [Debian schemacrawler package](), and install it using
-`sudo dpkg -i schemacrawler-12.01.01.deb`. SchemaCrawler gets installed in `/opt/schemacrawler`.
+The [Debian schemacrawler package](https://github.com/adriens/schemacrawler-deb) is maintained by
+Adrien Sales <Adrien.Sales at GMail>.
+
+Download the [Debian schemacrawler package](https://github.com/adriens/schemacrawler-deb), and install it using
+`dpkg`, following instructions on the GitHub project website. SchemaCrawler gets installed in `/opt/schemacrawler`.
 You can run SchemaCrawler using the `schemacrawler` command, which will be on the PATH.
 
 # Using SchemaCrawler in Your Projects
