@@ -29,6 +29,31 @@
       <artifactId>derbyclient</artifactId>
       <version>RELEASE</version>
     </dependency>
+    <dependency>
+      <groupId>org.apache.derby</groupId>
+      <artifactId>derby</artifactId>
+      <version>RELEASE</version>
+        <scope>test</scope>
+    </dependency>    
+    <dependency>
+    	<groupId>org.springframework</groupId>
+    	<artifactId>spring-test</artifactId>
+    	<version>4.1.2.RELEASE</version>
+    	<scope>test</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-context</artifactId>
+        <version>4.1.2.RELEASE</version>
+        <scope>test</scope>
+    </dependency>    
+    <dependency>
+        <groupId>us.fatehi</groupId>
+        <artifactId>schemacrawler-api</artifactId>
+        <version>${project.version}</version>
+        <type>test-jar</type>
+        <scope>test</scope>
+    </dependency>    
   </dependencies>
   <build>
     <plugins>
