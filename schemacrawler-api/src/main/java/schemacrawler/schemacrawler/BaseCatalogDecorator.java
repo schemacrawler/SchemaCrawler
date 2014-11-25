@@ -28,6 +28,7 @@ import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.NamedObject;
+import schemacrawler.schema.Reducible;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaCrawlerInfo;
@@ -36,7 +37,7 @@ import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
 
 public abstract class BaseCatalogDecorator
-  implements Catalog
+  implements Catalog, Reducible
 {
 
   private static final long serialVersionUID = -3953296149824921463L;
@@ -252,6 +253,12 @@ public abstract class BaseCatalogDecorator
   public boolean hasRemarks()
   {
     return catalog.hasRemarks();
+  }
+
+  @Override
+  public void reduce(final SchemaCrawlerOptions options)
+  {
+    ((Reducible) catalog).reduce(options);
   }
 
   @Override
