@@ -31,12 +31,14 @@ import java.util.Set;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ColumnDataType;
+import schemacrawler.schema.Reducible;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
 /**
  * Database and connection information. Created from metadata returned
@@ -46,9 +48,8 @@ import schemacrawler.schema.Table;
  */
 final class MutableCatalog
   extends AbstractNamedObjectWithAttributes
-  implements Catalog
+  implements Catalog, Reducible
 {
-
   private static final long serialVersionUID = 4051323422934251828L;
 
   private final MutableDatabaseInfo databaseInfo;
@@ -367,6 +368,19 @@ final class MutableCatalog
       }
     }
     return values;
+  }
+
+  @Override
+  public void reduce(final SchemaCrawlerOptions options)
+  {
+    // Filter the list of tables based on grep criteria, and
+    // parent-child relationships
+    final TablesReducer tableFiter = new TablesReducer(options);
+    tableFiter.filter(tables);
+
+    // Filter the list of routines based on grep criteria
+    final RoutinesReducer routineFiter = new RoutinesReducer(options);
+    routineFiter.filter(routines);
   }
 
   void addColumnDataType(final MutableColumnDataType columnDataType)

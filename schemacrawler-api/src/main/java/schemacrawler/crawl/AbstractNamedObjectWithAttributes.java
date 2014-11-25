@@ -115,7 +115,7 @@ abstract class AbstractNamedObjectWithAttributes
    * @see schemacrawler.schema.NamedObjectWithAttributes#hasRemarks()
    */
   @Override
-  public boolean hasRemarks()
+  public final boolean hasRemarks()
   {
     return remarks != null && !remarks.isEmpty();
   }
@@ -141,7 +141,7 @@ abstract class AbstractNamedObjectWithAttributes
     }
   }
 
-  final void addAttributes(final Map<String, Object> values)
+  protected final void addAttributes(final Map<String, Object> values)
   {
     if (values != null)
     {
@@ -149,7 +149,7 @@ abstract class AbstractNamedObjectWithAttributes
     }
   }
 
-  final void setRemarks(final String remarks)
+  protected final void setRemarks(final String remarks)
   {
     if (remarks == null)
     {

@@ -29,6 +29,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schema.Catalog;
+import schemacrawler.schema.Reducible;
 import schemacrawler.schema.ResultsColumns;
 import schemacrawler.schema.RoutineType;
 import schemacrawler.schema.Schema;
@@ -201,10 +202,8 @@ public final class SchemaCrawler
         }
       }
 
-      // Filter the list of routines based on grep criteria, and
-      // parent-child relationships
-      final RoutinesReducer routineFiter = new RoutinesReducer(options);
-      routineFiter.filter(allRoutines);
+      // Filter the list of routines based on grep criteria
+      ((Reducible) catalog).reduce(options);
 
       if (infoLevel.isRetrieveRoutineInformation())
       {
@@ -382,8 +381,7 @@ public final class SchemaCrawler
 
       // Filter the list of tables based on grep criteria, and
       // parent-child relationships
-      final TablesReducer tableFiter = new TablesReducer(options);
-      tableFiter.filter(allTables);
+      ((Reducible) catalog).reduce(options);
 
       if (infoLevel.isRetrieveTableConstraintInformation())
       {

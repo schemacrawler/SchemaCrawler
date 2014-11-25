@@ -26,6 +26,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schema.Catalog;
+import schemacrawler.schema.Reducible;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseExecutable;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
@@ -74,6 +75,12 @@ public class OfflineSnapshotExecutable
   {
     loadOfflineSnapshotOptions();
     checkConnection(connection);
+
+    if (catalog == null)
+    {
+      throw new IllegalArgumentException("No catalog provided");
+    }
+    ((Reducible) catalog).reduce(schemaCrawlerOptions);
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);

@@ -21,12 +21,13 @@ package schemacrawler.crawl;
 
 
 import static schemacrawler.filter.FilterFactory.grepTablesFilter;
+import static schemacrawler.filter.FilterFactory.tableFilter;
 
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import schemacrawler.filter.NamedObjectFilter;
+import schemacrawler.filter.ChainedNamedObjectFilter;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.PartialDatabaseObject;
@@ -64,14 +65,16 @@ class TablesReducer
   {
     // Filter for tables inclusion patterns (since we may be looping
     // over offline data), and grep patterns
-    final NamedObjectFilter<Table> tableFilter = grepTablesFilter(options);
+    final ChainedNamedObjectFilter<Table> tableFilter = new ChainedNamedObjectFilter<>();
+    tableFilter.add(tableFilter(options));
+    tableFilter.add(grepTablesFilter(options));
 
-    final Set<Table> greppedTables = new HashSet<>();
+    final Set<Table> reducedTables = new HashSet<>();
     for (final Table table: allTables)
     {
       if (tableFilter.include(table))
       {
-        greppedTables.add(table);
+        reducedTables.add(table);
       }
     }
 
@@ -79,14 +82,14 @@ class TablesReducer
     final int childTableFilterDepth = options.getChildTableFilterDepth();
     final Collection<Table> childTables = includeRelatedTables(TableRelationshipType.child,
                                                                childTableFilterDepth,
-                                                               greppedTables);
+                                                               reducedTables);
     final int parentTableFilterDepth = options.getParentTableFilterDepth();
     final Collection<Table> parentTables = includeRelatedTables(TableRelationshipType.parent,
                                                                 parentTableFilterDepth,
-                                                                greppedTables);
+                                                                reducedTables);
 
     final Set<Table> filteredTables = new HashSet<>();
-    filteredTables.addAll(greppedTables);
+    filteredTables.addAll(reducedTables);
     filteredTables.addAll(childTables);
     filteredTables.addAll(parentTables);
     return filteredTables;
