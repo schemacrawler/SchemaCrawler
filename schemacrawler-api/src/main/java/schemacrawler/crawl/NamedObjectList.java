@@ -125,7 +125,7 @@ class NamedObjectList<N extends NamedObject>
   @Override
   public void clear()
   {
-    throw new UnsupportedOperationException("Bulk operations are not supported");
+    objects.clear();
   }
 
   @Override
@@ -137,7 +137,14 @@ class NamedObjectList<N extends NamedObject>
   @Override
   public boolean containsAll(final Collection<?> c)
   {
-    throw new UnsupportedOperationException("Bulk operations are not supported");
+    for (final Object e: c)
+    {
+      if (!contains(e))
+      {
+        return false;
+      }
+    }
+    return true;
   }
 
   @Override
@@ -167,13 +174,47 @@ class NamedObjectList<N extends NamedObject>
   @Override
   public boolean removeAll(final Collection<?> c)
   {
-    throw new UnsupportedOperationException("Bulk operations are not supported");
+    if (c == null)
+    {
+      return false;
+    }
+
+    boolean modified = false;
+    final Iterator<N> iterator = iterator();
+    while (iterator.hasNext())
+    {
+      final N namedObject = iterator.next();
+      if (namedObject != null && c.contains(namedObject))
+      {
+        final String key = makeLookupKey(namedObject);
+        objects.remove(key);
+        modified = true;
+      }
+    }
+    return modified;
   }
 
   @Override
   public boolean retainAll(final Collection<?> c)
   {
-    throw new UnsupportedOperationException("Bulk operations are not supported");
+    if (c == null)
+    {
+      return false;
+    }
+
+    boolean modified = false;
+    final Iterator<N> iterator = iterator();
+    while (iterator.hasNext())
+    {
+      final N namedObject = iterator.next();
+      if (namedObject != null && !c.contains(namedObject))
+      {
+        final String key = makeLookupKey(namedObject);
+        objects.remove(key);
+        modified = true;
+      }
+    }
+    return modified;
   }
 
   /**

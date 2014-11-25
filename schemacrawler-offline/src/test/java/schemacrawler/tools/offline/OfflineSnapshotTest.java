@@ -90,7 +90,7 @@ public class OfflineSnapshotTest
   }
 
   @Test
-  public void offlineSnapshotCommandLineWithFilters()
+  public void offlineSnapshotCommandLineWithSchemaFilters()
     throws Exception
   {
     final File testOutputFile = File.createTempFile("schemacrawler.offline.",
@@ -102,10 +102,9 @@ public class OfflineSnapshotTest
 
     args.put("noinfo", "true");
     args.put("infolevel", "maximum");
-    args.put("command", "details");
+    args.put("command", "list");
     args.put("outputformat", "text");
-    args.put("routines", "");
-    args.put("tables", ".*SALES");
+    args.put("schemas", "PUBLIC.BOOKS");
     args.put("outputfile", testOutputFile.getAbsolutePath());
 
     final List<String> argsList = new ArrayList<>();
@@ -119,7 +118,7 @@ public class OfflineSnapshotTest
     commandLine.execute();
 
     final List<String> failures = TestUtility
-      .compareOutput(OFFLINE_EXECUTABLE_OUTPUT + "offlineWithFilters.txt",
+      .compareOutput(OFFLINE_EXECUTABLE_OUTPUT + "offlineWithSchemaFilters.txt",
                      testOutputFile);
     if (failures.size() > 0)
     {
@@ -179,6 +178,44 @@ public class OfflineSnapshotTest
                   0,
                   serializedDatabaseFile.length());
 
+  }
+
+  @Test
+  public void offlineSnapshotCommandLineWithFilters()
+    throws Exception
+  {
+    final File testOutputFile = File.createTempFile("schemacrawler.offline.",
+                                                    ".test");
+    testOutputFile.delete();
+
+    final Map<String, String> args = new HashMap<>();
+    args.put("database", serializedDatabaseFile.getAbsolutePath());
+
+    args.put("noinfo", "true");
+    args.put("infolevel", "maximum");
+    args.put("command", "details");
+    args.put("outputformat", "text");
+    args.put("routines", "");
+    args.put("tables", ".*SALES");
+    args.put("outputfile", testOutputFile.getAbsolutePath());
+
+    final List<String> argsList = new ArrayList<>();
+    for (final Map.Entry<String, String> arg: args.entrySet())
+    {
+      argsList.add(String.format("-%s=%s", arg.getKey(), arg.getValue()));
+    }
+
+    final OfflineSnapshotCommandLine commandLine = new OfflineSnapshotCommandLine(argsList
+      .toArray(new String[0]));
+    commandLine.execute();
+
+    final List<String> failures = TestUtility
+      .compareOutput(OFFLINE_EXECUTABLE_OUTPUT + "offlineWithFilters.txt",
+                     testOutputFile);
+    if (failures.size() > 0)
+    {
+      fail(failures.toString());
+    }
   }
 
 }
