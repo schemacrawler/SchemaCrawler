@@ -50,14 +50,11 @@ class SchemasReducer
   @Override
   public void reduce(final Collection<? extends Schema> allSchemas)
   {
-    final Collection<Schema> reducedSchemas = doReduce(allSchemas);
-    for (final Schema schema: allSchemas)
+    if (allSchemas == null)
     {
-      if (!reducedSchemas.contains(schema))
-      {
-        allSchemas.remove(schema);
-      }
+      return;
     }
+    allSchemas.retainAll(doReduce(allSchemas));
   }
 
   private Collection<Schema> doReduce(final Collection<? extends Schema> allSchemas)

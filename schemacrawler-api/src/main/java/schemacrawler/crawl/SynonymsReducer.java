@@ -43,14 +43,11 @@ class SynonymsReducer
   @Override
   public void reduce(final Collection<? extends Synonym> allSynonyms)
   {
-    final Collection<Synonym> reducedSynonyms = doReduce(allSynonyms);
-    for (final Synonym synonym: allSynonyms)
+    if (allSynonyms == null)
     {
-      if (!reducedSynonyms.contains(synonym))
-      {
-        allSynonyms.remove(synonym);
-      }
+      return;
     }
+    allSynonyms.retainAll(doReduce(allSynonyms));
   }
 
   private Collection<Synonym> doReduce(final Collection<? extends Synonym> allSynonyms)

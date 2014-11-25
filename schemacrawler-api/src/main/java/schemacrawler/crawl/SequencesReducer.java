@@ -43,14 +43,11 @@ class SequencesReducer
   @Override
   public void reduce(final Collection<? extends Sequence> allSequences)
   {
-    final Collection<Sequence> reducedSequences = doReduce(allSequences);
-    for (final Sequence sequence: allSequences)
+    if (allSequences == null)
     {
-      if (!reducedSequences.contains(sequence))
-      {
-        allSequences.remove(sequence);
-      }
+      return;
     }
+    allSequences.retainAll(doReduce(allSequences));
   }
 
   private Collection<Sequence> doReduce(final Collection<? extends Sequence> allSequences)

@@ -44,14 +44,11 @@ class RoutinesReducer
   @Override
   public void reduce(final Collection<? extends Routine> allRoutines)
   {
-    final Collection<Routine> reducedRoutines = doReduce(allRoutines);
-    for (final Routine routine: allRoutines)
+    if (allRoutines == null)
     {
-      if (!reducedRoutines.contains(routine))
-      {
-        allRoutines.remove(routine);
-      }
+      return;
     }
+    allRoutines.retainAll(doReduce(allRoutines));
   }
 
   private Collection<Routine> doReduce(final Collection<? extends Routine> allRoutines)
