@@ -46,6 +46,7 @@ class TablesReducer
     this.options = options;
   }
 
+  @Override
   public void reduce(final Collection<? extends Table> allTables)
   {
     if (allTables == null)
