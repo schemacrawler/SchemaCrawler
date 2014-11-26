@@ -5,7 +5,7 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-     <release version="12.01.01" date="2014-11-10">
+     <release version="12.01.01" date="2014-11-27">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Collapsed distribution into a single distribution download, with Apache Ant Ivy scripts
         for downloading additional dependencies.
@@ -16,6 +16,9 @@
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Building Debian package as part of the main distributable.
       ]]></action> 
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added support for the H2 Database Engine.
+      ]]></action>       
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Changes direction of arrow for foreign keys in text output, to
         always point to the primary key.                            
