@@ -70,6 +70,7 @@
     <module>schemacrawler-sqlite</module>
     <module>schemacrawler-sqlserver</module>
     <module>schemacrawler-sybaseiq</module>
+    <module>schemacrawler-h2</module>
 
     <module>schemacrawler-archetype-maven-project</module>
     <module>schemacrawler-archetype-plugin-command</module>
