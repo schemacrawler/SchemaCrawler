@@ -311,6 +311,7 @@
           </execution>
         </executions>
       </plugin>
+      <!--
       <plugin>
         <artifactId>jdeb</artifactId>
         <groupId>org.vafer</groupId>
@@ -325,7 +326,6 @@
               <deb>${project.build.directory}/schemacrawler-${project.version}.deb</deb>
               <skipPOMs>false</skipPOMs>
               <dataSet>
-                <!-- Complete distribution -->
                 <data>
                   <src>${project.build.directory}/_main-distribution/_schemacrawler</src>
                   <type>directory</type>
@@ -336,7 +336,6 @@
                     <prefix>/opt/schemacrawler-${project.version}/</prefix>
                   </mapper>
                 </data>
-                <!-- Command-line -->
                 <data>
                   <src>${project.build.directory}/_main-distribution/_schemacrawler/schemacrawler.sh</src>
                   <type>file</type>
@@ -346,7 +345,6 @@
                     <prefix>/opt/schemacrawler-${project.version}/</prefix>
                   </mapper>
                 </data>
-                <!-- Symbolic links -->
                 <data>
                   <type>link</type>
                   <linkName>/opt/schemacrawler</linkName>
@@ -364,6 +362,7 @@
           </execution>
         </executions>
       </plugin>
+      -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-gpg-plugin</artifactId>
