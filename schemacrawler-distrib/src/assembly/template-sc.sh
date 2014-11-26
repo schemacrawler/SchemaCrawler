@@ -1,1 +1,2 @@
-java -classpath lib/*:. @package@.Main $*
+#!/bin/sh
+java -cp $(echo /opt/schemacrawler/lib/*.jar | tr ' ' ':') @package@.Main $*

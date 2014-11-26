@@ -181,10 +181,19 @@
         <include name="context.xml" />
       </fileset>
     </copy>
-
+    
     <move
       file="${schemacrawler.complete-distribution}"
       tofile="${main-distribution.staging.dir}/_schemacrawler" />
+
+    <fixcrlf 
+      srcdir="${main-distribution.staging.dir}" 
+      includes="**/*.sh"
+      eol="unix" 
+      eof="remove" 
+      tab="remove" 
+      tablength="2" 
+      outputencoding="UTF-8" />
 
     <!-- 2. CREATE BINARY DISTRIBUTION FROM THE STAGED EXAMPLES -->
 
@@ -193,7 +202,16 @@
     <zip destfile="${distribution.target}/${main-distribution.stem}.zip">
       <zipfileset dir="${main-distribution.staging.dir}"
                   prefix="${main-distribution.stem}"
-                  defaultexcludes="yes" />
+                  defaultexcludes="yes">
+        <exclude name="**/*.sh"/>
+      </zipfileset> 
+      <zipfileset dir="${main-distribution.staging.dir}"
+                  prefix="${main-distribution.stem}"
+                  defaultexcludes="yes"
+                  filemode="771">
+        <include name="**/*.sh"/>
+        <exclude name="**/schemacrawler.sh"/>
+      </zipfileset>       
     </zip>
 
   </target>
@@ -261,7 +279,7 @@
     <create-dbserver-distribution database="sqlserver" />
     <create-dbserver-distribution database="sqlite" />
     <create-dbserver-distribution database="sybaseiq" />
-	<create-dbserver-distribution database="h2" />
+  <create-dbserver-distribution database="h2" />
 
   </target>
 
