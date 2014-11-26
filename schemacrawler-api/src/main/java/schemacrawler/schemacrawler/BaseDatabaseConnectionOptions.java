@@ -167,7 +167,7 @@ abstract class BaseDatabaseConnectionOptions
   public Logger getParentLogger()
     throws SQLFeatureNotSupportedException
   {
-    throw new SQLFeatureNotSupportedException("Not supported");
+    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
   }
 
   @Override
@@ -221,7 +221,7 @@ abstract class BaseDatabaseConnectionOptions
   public void setLoginTimeout(final int seconds)
     throws SQLException
   {
-    throw new SQLFeatureNotSupportedException("Not supported");
+    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
   }
 
   @Override
@@ -230,7 +230,7 @@ abstract class BaseDatabaseConnectionOptions
   {
     if (out != null)
     {
-      throw new SQLFeatureNotSupportedException("Not supported");
+      throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
     }
   }
 
@@ -261,7 +261,7 @@ abstract class BaseDatabaseConnectionOptions
   public <T> T unwrap(final Class<T> iface)
     throws SQLException
   {
-    throw new SQLFeatureNotSupportedException("Not supported");
+    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
   }
 
 }

@@ -137,9 +137,19 @@ final class RoutineRetriever
     }
     catch (final SQLException e)
     {
-      throw new SchemaCrawlerSQLException("Could not retrieve columns for function "
-                                              + function,
-                                          e);
+      // HYC00 = Optional feature not implemented
+      if ("HYC00".equalsIgnoreCase(e.getSQLState()))
+      {
+        LOGGER.log(Level.WARNING,
+                   "JDBC driver does not support retrieving function columns",
+                   e);
+      }
+      else
+      {
+        throw new SchemaCrawlerSQLException("Could not retrieve columns for function "
+                                                + function,
+                                            e);
+      }
     }
 
   }
@@ -190,6 +200,21 @@ final class RoutineRetriever
                  "JDBC driver does not support retrieving functions",
                  e);
     }
+    catch (final SQLException e)
+    {
+      // HYC00 = Optional feature not implemented
+      if ("HYC00".equalsIgnoreCase(e.getSQLState()))
+      {
+        LOGGER.log(Level.WARNING,
+                   "JDBC driver does not support retrieving functions",
+                   e);
+      }
+      else
+      {
+        throw new SchemaCrawlerSQLException("Could not retrieve functions", e);
+      }
+    }
+
   }
 
   void retrieveProcedureColumns(final MutableProcedure procedure,
@@ -310,5 +335,7 @@ final class RoutineRetriever
         }
       }
     }
+
   }
+
 }
