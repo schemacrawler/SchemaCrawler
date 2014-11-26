@@ -1,3 +1,4 @@
+
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="schemacrawler" default="make-distribution" basedir=".">
 
@@ -262,6 +263,7 @@
     <create-dbserver-distribution database="sqlserver" />
     <create-dbserver-distribution database="sqlite" />
     <create-dbserver-distribution database="sybaseiq" />
+	<create-dbserver-distribution database="h2" />
 
   </target>
 
