@@ -9,26 +9,25 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import schemacrawler.schema.Catalog;
-import schemacrawler.schema.Schema;
-import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.server.derby.DerbyDatabaseConnector;
-import schemacrawler.tools.options.InfoLevel;
-import schemacrawler.utility.SchemaCrawlerUtility;
+import schemacrawler.test.utility.BaseExecutableTest;
+import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import schemacrawler.tools.text.schema.SchemaTextOptions;
 
 @ContextConfiguration(locations = {
   "classpath:test-derby-context.xml"
 })
 @RunWith(SpringJUnit4ClassRunner.class)
 public class DerbyTest
+  extends BaseExecutableTest
 {
 
   @Autowired
@@ -45,35 +44,36 @@ public class DerbyTest
       .getClass().getName());
   }
 
-  @Ignore
   @Test
   public void testDerbyWithConnection()
     throws Exception
   {
+    final SchemaCrawlerOptions options = new SchemaCrawlerOptions();
+    options.setSchemaInclusionRule(new RegularExpressionInclusionRule("BOOKS"));
+    final SchemaTextOptions textOptions = new SchemaTextOptions();
+    textOptions.setHideIndexNames(true);
 
-    final SchemaCrawlerOptions schemaCrawlerOptions = new DerbyDatabaseConnector()
-      .getDatabaseSystemConnector().getSchemaCrawlerOptions(InfoLevel.maximum);
-    final Catalog catalog = SchemaCrawlerUtility
-      .getCatalog(getConnection(), schemaCrawlerOptions);
-    assertNotNull(catalog);
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
+    executable.setSchemaCrawlerOptions(options);
+    executable.setAdditionalConfiguration(textOptions.toConfig());
 
-    assertEquals(12, catalog.getSchemas().size());
-    final Schema schema = catalog.getSchema("PUBLIC.BOOKS");
-    assertNotNull(schema);
-
-    assertEquals(6, catalog.getTables(schema).size());
-    final Table table = catalog.getTable(schema, "AUTHORS");
-    assertNotNull(table);
-
-    assertEquals(1, table.getTriggers().size());
-    assertNotNull(table.getTrigger("TRG_AUTHORS"));
-
+    executeExecutableAndCheckForOutputFile(executable,
+                                           "text",
+                                           "testDerbyWithConnection.txt");
   }
 
-  private Connection getConnection()
-    throws SQLException
+  @Override
+  protected Connection getConnection()
+    throws SchemaCrawlerException
   {
-    return dataSource.getConnection();
+    try
+    {
+      return dataSource.getConnection();
+    }
+    catch (final SQLException e)
+    {
+      throw new SchemaCrawlerException(e.getMessage(), e);
+    }
   }
 
 }
