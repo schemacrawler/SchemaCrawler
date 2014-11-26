@@ -35,11 +35,11 @@ Then, put this directory on your PATH. Once you open a command shell, you can ru
 using `sc.cmd` (or `sc.sh` on Unix).
 
 ## Installing From the Debian Package
-The [Debian schemacrawler package](https://github.com/adriens/schemacrawler-deb) is maintained by
+The [Debian schemacrawler package] is maintained by
 Adrien Sales <Adrien.Sales at GMail>.
 
-Download the [Debian schemacrawler package](https://github.com/adriens/schemacrawler-deb), and install it using
-`dpkg`, following instructions on the GitHub project website. SchemaCrawler gets installed in `/opt/schemacrawler`.
+Download the [Debian schemacrawler package], and install it using `dpkg`, following instructions 
+on the GitHub project website. SchemaCrawler gets installed in `/opt/schemacrawler`.
 You can run SchemaCrawler using the `schemacrawler` command, which will be on the PATH.
 
 # Using SchemaCrawler in Your Projects
@@ -82,10 +82,10 @@ source directory, and install them locally.
 
 # Acknowledgements
 
-- SchemaCrawler is grateful to Adrien Sales for developing the Debian package.
+- SchemaCrawler is grateful to Adrien Sales for developing the [Debian schemacrawler package].
 - SchemaCrawler is grateful to Atlassian for providing a license for [Clover].
 
-
+[Debian schemacrawler package]: https://github.com/adriens/schemacrawler-deb
 [FAQs]: faq.html
 [resources]: resources.html
 [SchemaCrawler examples]: https://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20Examples/
