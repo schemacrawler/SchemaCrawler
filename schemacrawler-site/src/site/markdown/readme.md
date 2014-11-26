@@ -58,6 +58,9 @@ In order to use SchemaCrawler in your [Apache Maven] projects, add a dependency 
 &lt;/dependencies&gt;
 </pre></div>
 
+[All of the SchemaCrawler jars](http://search.maven.org/#search%7Cga%7C1%7Cg%3Aus.fatehi%20a%3Aschemacrawler*) 
+are available on the Maven Central Repository.
+
 ## OSGi
 The SchemaCrawler jar file is bundled as an [OSGi bundle], and can be deployed into your OSGi Service Platform 
 and your OSGi Bundle Repository.
