@@ -48,6 +48,7 @@ import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.SearchableType;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 
 final class DatabaseInfoRetriever
   extends AbstractRetriever
@@ -254,6 +255,19 @@ final class DatabaseInfoRetriever
       {
         LOGGER.log(Level.FINE, "JDBC driver does not support " + method, e);
       }
+      catch (final SQLException e)
+      {
+        // HYC00 = Optional feature not implemented
+        if ("HYC00".equalsIgnoreCase(e.getSQLState()))
+        {
+          LOGGER.log(Level.FINE, "JDBC driver does not support " + method, e);
+        }
+        else
+        {
+          throw new SchemaCrawlerSQLException("Could not execute " + method, e);
+        }
+      }
+
     }
 
     dbInfo.addAll(dbProperties);
