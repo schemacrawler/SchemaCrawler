@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseExecutableTest;
@@ -47,8 +48,8 @@ public class H2Test
     throws Exception
   {
     final SchemaCrawlerOptions options = new SchemaCrawlerOptions();
-    // options.setSchemaInclusionRule(new
-    // RegularExpressionInclusionRule("BOOKS"));
+    options
+      .setSchemaInclusionRule(new RegularExpressionInclusionRule(".*\\.BOOKS"));
     final SchemaTextOptions textOptions = new SchemaTextOptions();
     textOptions.setHideIndexNames(true);
 
