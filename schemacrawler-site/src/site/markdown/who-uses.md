@@ -30,6 +30,16 @@ Photograph courtesy of Adrien Sales.
   <img src="images/SchemaCrawler_Noumea.jpg" width="200" alt="Schemacrawler database diagrams in use" />
 </a>
 
+## Open Source Projects
+
+SchemaCrawler in the open source projects.
+
+-  [A large number of projects on GitHub](https://github.com/search?l=&o=desc&q=schemacrawler.schema&ref=advsearch&s=indexed&type=Code&utf8=%E2%9C%93)
+-  [Jule,](http://code.google.com/p/jule/) a code generator in Java. 
+-  [JEQUEL,](http://www.jequel.de/) Java Embedded QUEry Language. 
+-  [CodeGenerator4j,](http://code.google.com/p/anhquan/wiki/CodeGenerator4j) a Java tool to 
+   generate Java source code from XML files, using Apache Velocity and JAXB
+
 ## Press
 
 SchemaCrawler in the press, and in online articles and blogs.
@@ -49,11 +59,3 @@ SchemaCrawler in the press, and in online articles and blogs.
 -  Gilesey's post on [A lightweight schema diff or dump from Oracle](https://gilesey.wordpress.com/2012/11/15/a-lightweight-schema-diff-or-dump-from-oracle/)
 -  Pierluigi Vernetto's post [SchemaCrawler for Oracle DB Diff](http://www.javamonamour.org/2014/06/schemacrawler-for-oracle-db-diff.html)
 
-## Open Source Projects
-
-SchemaCrawler in the open source projects.
-
--  [Jule,](http://code.google.com/p/jule/) a code generator in Java. 
--  [JEQUEL,](http://www.jequel.de/) Java Embedded QUEry Language. 
--  [CodeGenerator4j,](http://code.google.com/p/anhquan/wiki/CodeGenerator4j) a Java tool to 
-   generate Java source code from XML files, using Apache Velocity and JAXB
