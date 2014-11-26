@@ -19,3 +19,4 @@ workspace
 /schemacrawler-tools/.settings/com.atlassian.clover.eclipse.core.prefs
 /schemacrawler-distrib/*.bnd
 /schemacrawler-distrib/*.jar
+/schemacrawler-distrib/src/assembly/schemacrawler.pom.asc
