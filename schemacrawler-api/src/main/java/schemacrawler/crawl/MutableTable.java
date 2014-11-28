@@ -23,6 +23,7 @@ package schemacrawler.crawl;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -42,6 +43,7 @@ import schemacrawler.schema.TableReference;
 import schemacrawler.schema.TableRelationshipType;
 import schemacrawler.schema.TableType;
 import schemacrawler.schema.Trigger;
+import schemacrawler.utility.NamedObjectSort;
 
 /**
  * Represents a table in the database.
@@ -196,8 +198,7 @@ class MutableTable
   @Override
   public Collection<Index> getIndices()
   {
-    final List<Index> values = new ArrayList<Index>(indices.values());
-    return values;
+    return new ArrayList<Index>(indices.values());
   }
 
   /**
@@ -276,7 +277,10 @@ class MutableTable
         }
       }
     }
-    return relatedTables;
+
+    final List<TableReference> relatedTablesList = new ArrayList<>(relatedTables);
+    Collections.sort(relatedTablesList, NamedObjectSort.alphabetical);
+    return relatedTablesList;
   }
 
   /**
