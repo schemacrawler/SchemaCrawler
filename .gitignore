@@ -20,3 +20,6 @@ workspace
 /schemacrawler-distrib/*.bnd
 /schemacrawler-distrib/*.jar
 /schemacrawler-distrib/src/assembly/schemacrawler.pom.asc
+/schemacrawler-db2/*.jar
+/schemacrawler-oracle/*.jar
+/schemacrawler-sybaseiq/*.jar
