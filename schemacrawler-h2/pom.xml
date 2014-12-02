@@ -25,24 +25,24 @@
     <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
-      <version>RELEASE</version>
+      <version>1.4.182</version>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-test</artifactId>
-      <version>4.1.2.RELEASE</version>
+      <version>${springframework.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-context</artifactId>
-      <version>4.1.2.RELEASE</version>
+      <version>${springframework.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-jdbc</artifactId>
-      <version>4.1.2.RELEASE</version>
+      <version>${springframework.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
