@@ -36,15 +36,12 @@
 			<type>test-jar</type>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>com.thoughtworks.xstream</groupId>
-			<artifactId>xstream</artifactId>
-			<version>${xstream.version}</version>
-		</dependency>
+    <dependency>
+      <groupId>com.thoughtworks.xstream</groupId>
+      <artifactId>xstream</artifactId>
+      <version>${xstream.version}</version>
+    </dependency>    
 	</dependencies>
-	<properties>
-		<xstream.version>1.4.4</xstream.version>
-	</properties>
 	<build>
 		<plugins>
 			<plugin>
