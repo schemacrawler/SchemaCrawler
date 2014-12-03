@@ -59,7 +59,7 @@ class RoutineGrepFilter
    * @return Whether the column should be included
    */
   @Override
-  public boolean include(final Routine routine)
+  public boolean test(final Routine routine)
   {
     final boolean checkIncludeForColumns = grepColumnInclusionRule != null;
     final boolean checkIncludeForDefinitions = grepDefinitionInclusionRule != null;
@@ -75,7 +75,7 @@ class RoutineGrepFilter
     {
       if (checkIncludeForColumns)
       {
-        if (grepColumnInclusionRule.include(column.getFullName()))
+        if (grepColumnInclusionRule.test(column.getFullName()))
         {
           includeForColumns = true;
           break;
@@ -83,7 +83,7 @@ class RoutineGrepFilter
       }
       if (checkIncludeForDefinitions)
       {
-        if (grepDefinitionInclusionRule.include(column.getRemarks()))
+        if (grepDefinitionInclusionRule.test(column.getRemarks()))
         {
           includeForDefinitions = true;
           break;
@@ -93,11 +93,11 @@ class RoutineGrepFilter
     // Additional include checks for definitions
     if (checkIncludeForDefinitions)
     {
-      if (grepDefinitionInclusionRule.include(routine.getRemarks()))
+      if (grepDefinitionInclusionRule.test(routine.getRemarks()))
       {
         includeForDefinitions = true;
       }
-      if (grepDefinitionInclusionRule.include(routine.getDefinition()))
+      if (grepDefinitionInclusionRule.test(routine.getDefinition()))
       {
         includeForDefinitions = true;
       }

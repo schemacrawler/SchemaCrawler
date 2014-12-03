@@ -67,7 +67,7 @@ class TablesReducer
     final Set<Table> reducedTables = new HashSet<>();
     for (final Table table: allTables)
     {
-      if (tableFilter.include(table))
+      if (tableFilter.test(table))
       {
         reducedTables.add(table);
       }

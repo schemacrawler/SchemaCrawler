@@ -159,7 +159,7 @@ final class SynonymRetriever
 
         synonym.addAttributes(results.getAttributes());
 
-        if (synonymFilter.include(synonym))
+        if (synonymFilter.test(synonym))
         {
           catalog.addSynonym(synonym);
         }

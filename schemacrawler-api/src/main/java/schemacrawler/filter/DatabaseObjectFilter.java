@@ -62,7 +62,7 @@ public class DatabaseObjectFilter<D extends DatabaseObject>
    * @return Whether the table should be included
    */
   @Override
-  public boolean include(final D databaseObject)
+  public boolean test(final D databaseObject)
   {
     if (databaseObject == null)
     {
@@ -73,12 +73,12 @@ public class DatabaseObjectFilter<D extends DatabaseObject>
 
     if (include && schemaInclusionRule != null)
     {
-      include = schemaInclusionRule.include(databaseObject.getSchema()
+      include = schemaInclusionRule.test(databaseObject.getSchema()
         .getFullName());
     }
     if (include && databaseObjectInclusionRule != null)
     {
-      include = databaseObjectInclusionRule.include(databaseObject
+      include = databaseObjectInclusionRule.test(databaseObject
         .getFullName());
     }
 

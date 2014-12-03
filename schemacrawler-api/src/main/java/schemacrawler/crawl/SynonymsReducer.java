@@ -26,6 +26,7 @@ import java.util.Set;
 
 import schemacrawler.filter.DatabaseObjectFilter;
 import schemacrawler.filter.NamedObjectFilter;
+import schemacrawler.filter.PassthroughFilter;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
@@ -33,11 +34,20 @@ class SynonymsReducer
   implements Reducer<Synonym>
 {
 
-  private final SchemaCrawlerOptions options;
+  private NamedObjectFilter<Synonym> synonymFilter;
 
   public SynonymsReducer(final SchemaCrawlerOptions options)
   {
-    this.options = options;
+    if (options == null)
+    {
+      synonymFilter = new PassthroughFilter<Synonym>();
+    }
+    else
+    {
+      synonymFilter = new DatabaseObjectFilter<Synonym>(options,
+                                                        options
+                                                          .getSynonymInclusionRule());
+    }
   }
 
   @Override
@@ -52,14 +62,11 @@ class SynonymsReducer
 
   private Collection<Synonym> doReduce(final Collection<? extends Synonym> allSynonyms)
   {
-    final NamedObjectFilter<Synonym> synonymFilter = new DatabaseObjectFilter<Synonym>(options,
-                                                                                       options
-                                                                                         .getSynonymInclusionRule());
 
     final Set<Synonym> reducedSynonyms = new HashSet<>();
     for (final Synonym synonym: allSynonyms)
     {
-      if (synonymFilter.include(synonym))
+      if (synonymFilter.test(synonym))
       {
         reducedSynonyms.add(synonym);
       }

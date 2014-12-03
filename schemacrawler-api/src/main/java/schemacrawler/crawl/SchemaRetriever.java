@@ -92,7 +92,7 @@ final class SchemaRetriever
       .hasNext();)
     {
       final SchemaReference schemaRef = iterator.next();
-      if (!schemaFilter.include(schemaRef))
+      if (!schemaFilter.test(schemaRef))
       {
         LOGGER.log(Level.FINER, "Dropping schema, since schema is excluded: "
                                 + schemaRef.getFullName());

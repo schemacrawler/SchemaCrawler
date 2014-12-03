@@ -1,6 +1,7 @@
 package schemacrawler.tools.commandline;
 
 
+// @FunctionalInterface
 public interface CommandLine
 {
 
