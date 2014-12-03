@@ -26,6 +26,7 @@ import java.util.Set;
 
 import schemacrawler.filter.DatabaseObjectFilter;
 import schemacrawler.filter.NamedObjectFilter;
+import schemacrawler.filter.PassthroughFilter;
 import schemacrawler.schema.Sequence;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
@@ -33,11 +34,20 @@ class SequencesReducer
   implements Reducer<Sequence>
 {
 
-  private final SchemaCrawlerOptions options;
+  private final NamedObjectFilter<Sequence> sequenceFilter;
 
   public SequencesReducer(final SchemaCrawlerOptions options)
   {
-    this.options = options;
+    if (options == null)
+    {
+      sequenceFilter = new PassthroughFilter<Sequence>();
+    }
+    else
+    {
+      sequenceFilter = new DatabaseObjectFilter<Sequence>(options,
+                                                          options
+                                                            .getSequenceInclusionRule());
+    }
   }
 
   @Override
@@ -52,14 +62,11 @@ class SequencesReducer
 
   private Collection<Sequence> doReduce(final Collection<? extends Sequence> allSequences)
   {
-    final NamedObjectFilter<Sequence> sequenceFilter = new DatabaseObjectFilter<Sequence>(options,
-                                                                                          options
-                                                                                            .getSequenceInclusionRule());
 
     final Set<Sequence> reducedSequences = new HashSet<>();
     for (final Sequence sequence: allSequences)
     {
-      if (sequenceFilter.include(sequence))
+      if (sequenceFilter.test(sequence))
       {
         reducedSequences.add(sequence);
       }

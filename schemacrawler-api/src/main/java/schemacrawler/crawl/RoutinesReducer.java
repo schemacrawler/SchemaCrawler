@@ -27,6 +27,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import schemacrawler.filter.NamedObjectFilter;
+import schemacrawler.filter.PassthroughFilter;
 import schemacrawler.schema.Routine;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
@@ -34,11 +35,18 @@ class RoutinesReducer
   implements Reducer<Routine>
 {
 
-  private final SchemaCrawlerOptions options;
+  private final NamedObjectFilter<Routine> routineFilter;
 
   public RoutinesReducer(final SchemaCrawlerOptions options)
   {
-    this.options = options;
+    if (options == null)
+    {
+      routineFilter = new PassthroughFilter<Routine>();
+    }
+    else
+    {
+      routineFilter = routineFilter(options);
+    }
   }
 
   @Override
@@ -53,12 +61,10 @@ class RoutinesReducer
 
   private Collection<Routine> doReduce(final Collection<? extends Routine> allRoutines)
   {
-    final NamedObjectFilter<Routine> routineFilter = routineFilter(options);
-
     final Set<Routine> reducedRoutines = new HashSet<>();
     for (final Routine routine: allRoutines)
     {
-      if (routineFilter.include(routine))
+      if (routineFilter.test(routine))
       {
         reducedRoutines.add(routine);
       }

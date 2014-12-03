@@ -62,7 +62,7 @@ class SchemasReducer
     final Set<Schema> reducedSchemas = new HashSet<>();
     for (final Schema schema: allSchemas)
     {
-      if (schemaFilter.include(schema))
+      if (schemaFilter.test(schema))
       {
         reducedSchemas.add(schema);
       }

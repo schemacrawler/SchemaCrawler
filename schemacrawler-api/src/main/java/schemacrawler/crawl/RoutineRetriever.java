@@ -94,7 +94,7 @@ final class RoutineRetriever
 
         final MutableFunctionColumn column = new MutableFunctionColumn(function,
                                                                        columnName);
-        if (columnFilter.include(column)
+        if (columnFilter.test(column)
             && function.getName().equals(functionName)
             && belongsToSchema(function, columnCatalogName, schemaName))
         {
@@ -183,7 +183,7 @@ final class RoutineRetriever
         final Schema schema = new SchemaReference(catalogName, schemaName);
         final MutableFunction function = new MutableFunction(schema,
                                                              functionName);
-        if (functionFilter.include(function))
+        if (functionFilter.test(function))
         {
           function.setReturnType(FunctionReturnType.valueOf(functionType));
           function.setSpecificName(specificName);
@@ -249,7 +249,7 @@ final class RoutineRetriever
 
         final MutableProcedureColumn column = new MutableProcedureColumn(procedure,
                                                                          columnName);
-        if (columnFilter.include(column)
+        if (columnFilter.test(column)
             && procedure.getName().equals(procedureName)
             && belongsToSchema(procedure, columnCatalogName, schemaName))
         {
@@ -324,7 +324,7 @@ final class RoutineRetriever
         final Schema schema = new SchemaReference(catalogName, schemaName);
         final MutableProcedure procedure = new MutableProcedure(schema,
                                                                 procedureName);
-        if (procedureFilter.include(procedure))
+        if (procedureFilter.test(procedure))
         {
           procedure.setReturnType(ProcedureReturnType.valueOf(procedureType));
           procedure.setSpecificName(specificName);

@@ -21,6 +21,7 @@ package schemacrawler.filter;
 
 
 import schemacrawler.schema.NamedObject;
+import sf.util.Predicate;
 
 /**
  * Specifies inclusion and exclusion patterns that can be applied to the
@@ -30,8 +31,7 @@ import schemacrawler.schema.NamedObject;
  */
 // @FunctionalInterface
 public interface NamedObjectFilter<N extends NamedObject>
+  extends Predicate<N>
 {
-
-  boolean include(final N namedObject);
 
 }

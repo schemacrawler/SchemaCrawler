@@ -23,27 +23,21 @@ package schemacrawler.schemacrawler;
 
 import java.io.Serializable;
 
+import sf.util.Predicate;
+
 /**
  * Specifies inclusion and exclusion patterns that can be applied to the
  * names, definitions, and other attributes of named objects.
- *
+ * <p>
+ * The text to check, which could be the fully qualified name of the
+ * named object, the definition, or some other attribute of the named
+ * object.
+ * 
  * @author Sualeh Fatehi
  */
 // @FunctionalInterface
 public interface InclusionRule
-  extends Serializable
+  extends Serializable, Predicate<String>
 {
-
-  /**
-   * Checks whether to include a named object.
-   *
-   * @param text
-   *        Text to check, which could be the fully qualified name of
-   *        the named object, the definition, or some other attribute of
-   *        the named object.
-   * @return Whether the text qualifies the named object for inclusion
-   *         or not
-   */
-  boolean include(final String text);
 
 }
