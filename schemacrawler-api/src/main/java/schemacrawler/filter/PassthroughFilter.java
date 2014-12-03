@@ -17,16 +17,19 @@
  * Boston, MA 02111-1307, USA.
  *
  */
+package schemacrawler.filter;
 
-package schemacrawler.schema;
 
+import schemacrawler.schema.NamedObject;
 
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-
-// @FunctionalInterface
-public interface Reducible
+public final class PassthroughFilter<N extends NamedObject>
+  implements NamedObjectFilter<N>
 {
 
-  void reduce(SchemaCrawlerOptions options);
+  @Override
+  public boolean test(final N namedObject)
+  {
+    return true;
+  }
 
 }

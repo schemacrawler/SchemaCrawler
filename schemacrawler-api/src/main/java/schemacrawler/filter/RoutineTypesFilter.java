@@ -52,7 +52,7 @@ class RoutineTypesFilter
    * @return Whether the routine should be included
    */
   @Override
-  public boolean include(final Routine routine)
+  public boolean test(final Routine routine)
   {
     final boolean include;
 

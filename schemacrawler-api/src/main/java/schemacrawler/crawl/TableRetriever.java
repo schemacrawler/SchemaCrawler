@@ -101,7 +101,7 @@ final class TableRetriever
         // Note: If the table name contains an underscore character,
         // this is a wildcard character. We need to do another check to
         // see if the table name matches.
-        if (columnFilter.include(column) && table.getName().equals(tableName)
+        if (columnFilter.test(column) && table.getName().equals(tableName)
             && belongsToSchema(table, columnCatalogName, schemaName))
         {
           column = lookupOrCreateColumn(table, columnName, true/* add */);
@@ -321,7 +321,7 @@ final class TableRetriever
         {
           table = new MutableTable(schema, tableName);
         }
-        if (tableFilter.include(table))
+        if (tableFilter.test(table))
         {
           table.setTableType(tableType);
           table.setRemarks(remarks);

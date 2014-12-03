@@ -1,6 +1,7 @@
 package schemacrawler.schema;
 
 
+// @FunctionalInterface
 public interface ContainedObject<P>
 {
 
