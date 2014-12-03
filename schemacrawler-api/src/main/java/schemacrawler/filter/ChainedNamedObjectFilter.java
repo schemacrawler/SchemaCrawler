@@ -40,11 +40,11 @@ class ChainedNamedObjectFilter<N extends NamedObject>
   }
 
   @Override
-  public boolean include(final N namedObject)
+  public boolean test(final N namedObject)
   {
     for (final NamedObjectFilter<N> filter: filters)
     {
-      if (!filter.include(namedObject))
+      if (!filter.test(namedObject))
       {
         return false;
       }

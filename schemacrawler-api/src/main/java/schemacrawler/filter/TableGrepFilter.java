@@ -60,7 +60,7 @@ class TableGrepFilter
    * @return Whether the column should be included
    */
   @Override
-  public boolean include(final Table table)
+  public boolean test(final Table table)
   {
     final boolean checkIncludeForColumns = grepColumnInclusionRule != null;
     final boolean checkIncludeForDefinitions = grepDefinitionInclusionRule != null;
@@ -76,7 +76,7 @@ class TableGrepFilter
     {
       if (checkIncludeForColumns)
       {
-        if (grepColumnInclusionRule.include(column.getFullName()))
+        if (grepColumnInclusionRule.test(column.getFullName()))
         {
           includeForColumns = true;
           break;
@@ -84,7 +84,7 @@ class TableGrepFilter
       }
       if (checkIncludeForDefinitions)
       {
-        if (grepDefinitionInclusionRule.include(column.getRemarks()))
+        if (grepDefinitionInclusionRule.test(column.getRemarks()))
         {
           includeForDefinitions = true;
           break;
@@ -94,17 +94,17 @@ class TableGrepFilter
     // Additional include checks for definitions
     if (checkIncludeForDefinitions)
     {
-      if (grepDefinitionInclusionRule.include(table.getRemarks()))
+      if (grepDefinitionInclusionRule.test(table.getRemarks()))
       {
         includeForDefinitions = true;
       }
-      if (grepDefinitionInclusionRule.include(table.getDefinition()))
+      if (grepDefinitionInclusionRule.test(table.getDefinition()))
       {
         includeForDefinitions = true;
       }
       for (final Trigger trigger: table.getTriggers())
       {
-        if (grepDefinitionInclusionRule.include(trigger.getActionStatement()))
+        if (grepDefinitionInclusionRule.test(trigger.getActionStatement()))
         {
           includeForDefinitions = true;
           break;

@@ -124,7 +124,7 @@ final class SequenceRetriever
 
         sequence.addAttributes(results.getAttributes());
 
-        if (sequenceFilter.include(sequence))
+        if (sequenceFilter.test(sequence))
         {
           catalog.addSequence(sequence);
         }

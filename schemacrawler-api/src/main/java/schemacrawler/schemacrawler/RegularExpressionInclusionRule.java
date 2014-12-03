@@ -109,12 +109,12 @@ public final class RegularExpressionInclusionRule
   /**
    * {@inheritDoc}
    *
-   * @see schemacrawler.schemacrawler.InclusionRule#include(java.lang.String)
+   * @see schemacrawler.schemacrawler.InclusionRule#test(java.lang.String)
    */
   @Override
-  public boolean include(final String text)
+  public boolean test(final String text)
   {
-    return inclusionRule.include(text);
+    return inclusionRule.test(text);
   }
 
   /**

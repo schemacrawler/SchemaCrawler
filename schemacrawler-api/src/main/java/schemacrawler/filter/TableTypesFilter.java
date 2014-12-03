@@ -64,7 +64,7 @@ class TableTypesFilter
    * @return Whether the table should be included
    */
   @Override
-  public boolean include(final Table table)
+  public boolean test(final Table table)
   {
     final boolean include;
 

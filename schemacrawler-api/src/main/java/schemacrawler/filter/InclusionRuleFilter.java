@@ -52,7 +52,7 @@ public class InclusionRuleFilter<N extends NamedObjectWithAttributes>
   }
 
   @Override
-  public boolean include(final N namedObject)
+  public boolean test(final N namedObject)
   {
     if (namedObject == null)
     {
@@ -63,7 +63,7 @@ public class InclusionRuleFilter<N extends NamedObjectWithAttributes>
     {
       return false;
     }
-    return inclusionRule.include(namedObject.getFullName());
+    return inclusionRule.test(namedObject.getFullName());
   }
 
   public boolean isExcludeAll()
