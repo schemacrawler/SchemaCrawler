@@ -22,7 +22,7 @@ read the [how-tos] section.
 
 - Install the latest version of [Java](https://www.java.com/)
 - Optionally, install [GraphViz](http://www.graphviz.org/), if you want to create database diagrams
-- Optionally, install [Apache any](http://ant.apache.org/) and [Apache Maven](http://maven.apache.org/), 
+- Optionally, install [Apache ant](http://ant.apache.org/) and [Apache Maven](http://maven.apache.org/), 
   if you want to try out the examples
 
 ## Cross-platform Install
