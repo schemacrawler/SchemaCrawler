@@ -52,6 +52,8 @@
     </repository>
   </distributionManagement>
   <modules>
+    <module>schemacrawler-testdb</module>
+    
     <module>schemacrawler-api</module>
     <module>schemacrawler-tools</module>
     <module>schemacrawler-commandline</module>

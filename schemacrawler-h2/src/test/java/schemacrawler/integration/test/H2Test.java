@@ -9,34 +9,29 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseExecutableTest;
+import schemacrawler.testdb.H2TestDatabase;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
 
-@ContextConfiguration(locations = {
-  "classpath:test-h2-context.xml"
-})
-@RunWith(SpringJUnit4ClassRunner.class)
 public class H2Test
   extends BaseExecutableTest
 {
 
-  @Autowired
   private DataSource dataSource;
 
-  @Test
-  public void testConnection()
+  @Before
+  public void initializeDataSource()
     throws Exception
   {
+    dataSource = new H2TestDatabase().getDataSource();
+
     assertNotNull(dataSource);
     final Connection connection = getConnection();
     assertNotNull(connection);

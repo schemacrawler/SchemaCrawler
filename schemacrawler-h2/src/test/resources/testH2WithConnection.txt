@@ -375,6 +375,21 @@ CONSTRAINT_8                                               [primary key]
 
 
 
+DATASOURCE.BOOKS.TEMP_AUTHOR_LIST
+------------------------------------------------------------------------
+                                                                 [table]
+  ID                                INTEGER NOT NULL            
+  FIRSTNAME                         VARCHAR(20) NOT NULL        
+  LASTNAME                          VARCHAR(20) NOT NULL        
+
+PK_TMP_AUTHORS                                             [primary key]
+  ID                                ascending                   
+
+                                                          [unique index]
+  ID                                ascending                   
+
+
+
 DATASOURCE.BOOKS.BOOKAUTHORS
 ------------------------------------------------------------------------
                                                                  [table]
