@@ -270,8 +270,17 @@ PK_BOOKS                                                   [primary key]
 FK_Y_BOOK                                  [foreign key, with no action]
   ID <-- BOOKS.BOOKAUTHORS.BOOKID                               
 
+FK_PREVIOUSEDITION                         [foreign key, with no action]
+  ID <-- PREVIOUSEDITIONID                                      
+
                                                           [unique index]
   ID                                ascending                   
+
+                                                      [non-unique index]
+  PREVIOUSEDITIONID                 ascending                   
+
+                                                      [non-unique index]
+  PREVIOUSEDITIONID                 ascending                   
 
 
 
@@ -286,13 +295,16 @@ BOOKS.PUBLISHERS
 ------------------------------------------------------------------------
                                                                  [table]
   ID                                INTEGER NOT NULL            
+                                    auto-incremented            
   PUBLISHER                         VARCHAR(255)                
 
 PK_PUBLISHERS                                              [primary key]
   ID                                ascending                   
+                                    auto-incremented            
 
                                                           [unique index]
   ID                                ascending                   
+                                    auto-incremented            
 
 
 
