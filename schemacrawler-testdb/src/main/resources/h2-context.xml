@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+  xmlns:context="http://www.springframework.org/schema/context"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd 
+                           http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd 
+                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+                           
+  <jdbc:embedded-database id="dataSource" type="H2">
+    <jdbc:script location="classpath:/db/books/01_01_schemas_01.sql" />
+    <jdbc:script location="classpath:/db/books/02_01_tables_01.sql" />
+    <jdbc:script location="classpath:/db/books/02_02_tables_01.sql" />
+    <jdbc:script location="classpath:/db/books/02_03_tables_01.sql" />
+    <jdbc:script location="classpath:/db/books/03_01_remarks_01.sql" />
+    <!--  Routines not supported - 04_01_routines -->
+    <!--  Triggers not supported - 05_01_triggers -->
+    <jdbc:script location="classpath:/db/books/06_01_domains_01.sql" />
+    <jdbc:script location="classpath:/db/books/07_01_sequences_01.sql" />
+    <jdbc:script location="classpath:/db/books/10_01_data_01.sql" />
+  </jdbc:embedded-database>
+  
+</beans>
