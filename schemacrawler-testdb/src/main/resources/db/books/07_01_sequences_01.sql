@@ -1,0 +1,1 @@
+CREATE SEQUENCE BOOKS.Publisher_Id_Seq;
