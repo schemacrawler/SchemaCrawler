@@ -1,7 +1,5 @@
 <?xml version="1.0"?>
-<project
-  xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
@@ -21,6 +19,26 @@
   <dependencies>
     <dependency>
       <groupId>us.fatehi</groupId>
+      <artifactId>schemacrawler-testdb</artifactId>
+      <version>${project.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>us.fatehi</groupId>
+      <artifactId>schemacrawler-api</artifactId>
+      <version>${project.version}</version>
+      <type>test-jar</type>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>us.fatehi</groupId>
+      <artifactId>schemacrawler-tools</artifactId>
+      <version>${project.version}</version>
+      <type>test-jar</type>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler</artifactId>
       <version>${project.version}</version>
     </dependency>
@@ -33,39 +51,7 @@
       <groupId>org.apache.derby</groupId>
       <artifactId>derby</artifactId>
       <version>10.11.1.1</version>
-        <scope>test</scope>
-    </dependency>    
-    <dependency>
-    	<groupId>org.springframework</groupId>
-    	<artifactId>spring-test</artifactId>
-    	<version>${springframework.version}</version>
-    	<scope>test</scope>
-    </dependency>
-    <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-context</artifactId>
-        <version>${springframework.version}</version>
-        <scope>test</scope>
-    </dependency>  
-    <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-jdbc</artifactId>
-        <version>${springframework.version}</version>
-        <scope>test</scope>
-    </dependency>      
-    <dependency>
-        <groupId>us.fatehi</groupId>
-        <artifactId>schemacrawler-api</artifactId>
-        <version>${project.version}</version>
-        <type>test-jar</type>
-        <scope>test</scope>
-    </dependency>
-    <dependency>
-        <groupId>us.fatehi</groupId>
-        <artifactId>schemacrawler-tools</artifactId>
-        <version>${project.version}</version>
-        <type>test-jar</type>
-        <scope>test</scope>
+      <scope>test</scope>
     </dependency>
   </dependencies>
   <build>
