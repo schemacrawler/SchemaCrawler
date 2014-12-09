@@ -1,6 +1,6 @@
 body, p, li, td, th, caption, select, input, strong {
   font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
-  font-size: 0.9rem;
+  font-size: 1.0rem;
   line-height: 1.4rem;
   color: rgb(16, 16, 16);
 }
