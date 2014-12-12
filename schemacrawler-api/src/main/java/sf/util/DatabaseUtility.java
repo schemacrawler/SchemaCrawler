@@ -110,7 +110,7 @@ public final class DatabaseUtility
       {
         final int updateCount = statement.getUpdateCount();
         LOGGER.log(Level.FINE, String
-          .format("No results. Update count of %d for query: ",
+          .format("No results. Update count of %d for query: %s",
                   updateCount,
                   sql));
       }
