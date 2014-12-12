@@ -21,6 +21,9 @@
 package schemacrawler.tools.options;
 
 
+import static sf.util.Utility.UTF8;
+import static sf.util.Utility.isBlank;
+
 import java.io.File;
 import java.io.Writer;
 import java.nio.charset.Charset;
@@ -28,7 +31,6 @@ import java.nio.charset.Charset;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.Options;
 import sf.util.ObjectToString;
-import sf.util.Utility;
 
 /**
  * Contains output options.
@@ -48,8 +50,8 @@ public class OutputOptions
   private File outputFile;
   private Writer writer;
 
-  private Charset inputCharset;
-  private Charset outputCharset;
+  private Charset inputEncodingCharset;
+  private Charset outputEncodingCharset;
 
   /**
    * Creates default OutputOptions.
@@ -73,10 +75,10 @@ public class OutputOptions
       configProperties = config;
     }
 
-    setInputEncoding(configProperties
-      .getStringValue(SC_INPUT_ENCODING, "UTF-8"));
+    setInputEncoding(configProperties.getStringValue(SC_INPUT_ENCODING,
+                                                     UTF8.name()));
     setOutputEncoding(configProperties.getStringValue(SC_OUTPUT_ENCODING,
-                                                      "UTF-8"));
+                                                      UTF8.name()));
   }
 
   /**
@@ -125,13 +127,13 @@ public class OutputOptions
    */
   public Charset getInputCharset()
   {
-    if (inputCharset == null)
+    if (inputEncodingCharset == null)
     {
-      return Charset.forName("UTF-8");
+      return UTF8;
     }
     else
     {
-      return inputCharset;
+      return inputEncodingCharset;
     }
   }
 
@@ -140,13 +142,13 @@ public class OutputOptions
    */
   public Charset getOutputCharset()
   {
-    if (outputCharset == null)
+    if (outputEncodingCharset == null)
     {
       return getInputCharset();
     }
     else
     {
-      return outputCharset;
+      return outputEncodingCharset;
     }
   }
 
@@ -213,6 +215,18 @@ public class OutputOptions
     return outputFile != null && writer == null;
   }
 
+  public void setInputEncoding(final Charset inputCharset)
+  {
+    if (inputCharset == null)
+    {
+      inputEncodingCharset = UTF8;
+    }
+    else
+    {
+      inputEncodingCharset = inputCharset;
+    }
+  }
+
   /**
    * Set character encoding for input files, such as scripts and
    * templates.
@@ -222,13 +236,25 @@ public class OutputOptions
    */
   public void setInputEncoding(final String inputEncoding)
   {
-    if (Utility.isBlank(inputEncoding))
+    if (isBlank(inputEncoding))
     {
-      inputCharset = Charset.defaultCharset();
+      inputEncodingCharset = UTF8;
     }
     else
     {
-      inputCharset = Charset.forName(inputEncoding);
+      inputEncodingCharset = Charset.forName(inputEncoding);
+    }
+  }
+
+  public void setOutputEncoding(final Charset outputCharset)
+  {
+    if (outputCharset == null)
+    {
+      outputEncodingCharset = UTF8;
+    }
+    else
+    {
+      outputEncodingCharset = outputCharset;
     }
   }
 
@@ -240,13 +266,13 @@ public class OutputOptions
    */
   public void setOutputEncoding(final String outputEncoding)
   {
-    if (Utility.isBlank(outputEncoding))
+    if (isBlank(outputEncoding))
     {
-      outputCharset = Charset.defaultCharset();
+      outputEncodingCharset = UTF8;
     }
     else
     {
-      outputCharset = Charset.forName(outputEncoding);
+      outputEncodingCharset = Charset.forName(outputEncoding);
     }
   }
 

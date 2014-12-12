@@ -25,6 +25,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
+import static sf.util.Utility.UTF8;
 
 import java.io.PrintWriter;
 import java.io.StringReader;
@@ -102,9 +103,9 @@ public class SchemaSerializationTest
     if (!xmlDiff.similar())
     {
       IOUtils.write(xmlSerializedCatalog1,
-                    new PrintWriter("serialized-schema-1.xml", "UTF-8"));
+                    new PrintWriter("serialized-schema-1.xml", UTF8.name()));
       IOUtils.write(xmlSerializedCatalog2,
-                    new PrintWriter("serialized-schema-2.xml", "UTF-8"));
+                    new PrintWriter("serialized-schema-2.xml", UTF8.name()));
     }
     assertEquals(xmlDiff.toString(), 0, allDifferences.size());
   }
