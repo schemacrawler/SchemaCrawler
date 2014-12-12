@@ -18,6 +18,29 @@ public final class CommandDaisyChainExecutable
     super(commands);
   }
 
+  private final Executable addNext(final String command)
+    throws SchemaCrawlerException
+  {
+    try
+    {
+      final Executable executable = commandRegistry
+        .configureNewExecutable(command, schemaCrawlerOptions, outputOptions);
+      if (executable == null)
+      {
+        return executable;
+      }
+
+      executable.setAdditionalConfiguration(additionalConfiguration);
+
+      return addNext(executable);
+    }
+    catch (final Exception e)
+    {
+      throw new SchemaCrawlerException(String.format("Cannot chain executable, unknown command, %s",
+                                                     command));
+    }
+  }
+
   @Override
   public void executeOn(final Catalog catalog, final Connection connection)
     throws Exception
