@@ -272,8 +272,11 @@ final class WeakAssociationsAnalyzer
                     .getColumnDataType();
                   if (pkColumnType != null
                       && fkColumnType != null
-                      && fkColumnType.getJavaSqlType().getJavaSqlTypeName() == pkColumnType
-                        .getJavaSqlType().getJavaSqlTypeName())
+                      && fkColumnType
+                        .getJavaSqlType()
+                        .getJavaSqlTypeName()
+                        .equals(pkColumnType.getJavaSqlType()
+                          .getJavaSqlTypeName()))
                   {
                     addWeakAssociation(fkColumn, pkColumn);
                   }

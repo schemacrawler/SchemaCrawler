@@ -149,6 +149,7 @@ public final class Config
     if (properties == null || reader == null)
     {
       LOGGER.log(Level.WARNING, "No properties provided");
+      return new Properties();
     }
 
     try (final BufferedReader bufferedReader = new BufferedReader(reader);)

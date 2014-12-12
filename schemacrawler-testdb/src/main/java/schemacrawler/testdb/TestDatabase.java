@@ -5,7 +5,6 @@ import java.sql.Connection;
 
 import javax.sql.DataSource;
 
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class TestDatabase
@@ -30,10 +29,12 @@ public class TestDatabase
 
   public TestDatabase(final String server)
   {
-    final ApplicationContext context = new ClassPathXmlApplicationContext(new String[] {
+    try (final ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(new String[] {
       getContext(server)
-    });
-    dataSource = context.getBean("dataSource", DataSource.class);
+    });)
+    {
+      dataSource = context.getBean("dataSource", DataSource.class);
+    }
   }
 
   public final DataSource getDataSource()
