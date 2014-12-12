@@ -148,8 +148,11 @@ public final class ScriptExecutable
                          .getExtensions())));
     }
 
-    final ScriptEngine scriptEngine = scriptEngineFactory.getScriptEngine();
     final CommandChainExecutable chain = new CommandChainExecutable();
+    chain.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    chain.setAdditionalConfiguration(additionalConfiguration);
+
+    final ScriptEngine scriptEngine = scriptEngineFactory.getScriptEngine();
     try (final Reader reader = new InputReader(outputOptions);
         final Writer writer = new OutputWriter(outputOptions);)
     {
