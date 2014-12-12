@@ -73,7 +73,12 @@ public class TestWriter
   @Override
   public boolean equals(final Object obj)
   {
-    return out.equals(obj);
+    if (obj == null || !(obj instanceof Writer))
+    {
+      return false;
+    }
+    final Writer writer = (Writer) obj;
+    return writer.equals(out);
   }
 
   @Override
