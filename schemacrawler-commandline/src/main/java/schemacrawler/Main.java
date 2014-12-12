@@ -43,7 +43,11 @@ public final class Main
   public static void main(final String[] args)
     throws Exception
   {
-    String[] remainingArgs = args;
+    String[] remainingArgs = new String[0];
+    if (args != null)
+    {
+      remainingArgs = args;
+    }
 
     final ApplicationOptionsParser applicationOptionsParser = new ApplicationOptionsParser();
     remainingArgs = applicationOptionsParser.parse(remainingArgs);

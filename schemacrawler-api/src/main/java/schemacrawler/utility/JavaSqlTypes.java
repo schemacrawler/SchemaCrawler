@@ -195,7 +195,7 @@ public final class JavaSqlTypes
   @Override
   public Set<java.util.Map.Entry<Integer, JavaSqlType>> entrySet()
   {
-    return new HashSet<>(javaSqlTypeMap.entrySet());
+    throw new UnsupportedOperationException();
   }
 
   @Override

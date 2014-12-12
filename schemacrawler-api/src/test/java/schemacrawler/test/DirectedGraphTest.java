@@ -108,8 +108,8 @@ public class DirectedGraphTest
     final DirectedGraph<String> graph = makeGraph();
     graph.addDirectedEdge("C", "A");
 
-    assertEquals(Arrays.asList("E", "A", "D", "B", "C"), graph
-      .topologicalSort().toString());
+    assertEquals(Arrays.asList("E", "A", "D", "B", "C"),
+                 graph.topologicalSort());
   }
 
   private DirectedGraph<String> makeGraph()

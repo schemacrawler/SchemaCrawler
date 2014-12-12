@@ -21,10 +21,10 @@
 package schemacrawler.crawl;
 
 
+import static sf.util.Utility.isBlank;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Schema;
-import sf.util.Utility;
 
 /**
  * Represents a database object.
@@ -111,13 +111,16 @@ abstract class AbstractDatabaseObject
   public String getFullName()
   {
     final StringBuilder buffer = new StringBuilder();
-    final String schemaFullName = schema.getFullName();
-    if (schema != null && !Utility.isBlank(schemaFullName))
+    if (schema != null)
     {
-      buffer.append(schemaFullName).append('.');
+      final String schemaFullName = schema.getFullName();
+      if (!isBlank(schemaFullName))
+      {
+        buffer.append(schemaFullName).append('.');
+      }
     }
     final String quotedName = getName();
-    if (!Utility.isBlank(quotedName))
+    if (!isBlank(quotedName))
     {
       buffer.append(quotedName);
     }
