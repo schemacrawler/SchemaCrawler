@@ -25,6 +25,7 @@ import java.sql.Connection;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 
 public final class CommandChainExecutable
@@ -37,6 +38,32 @@ public final class CommandChainExecutable
     throws SchemaCrawlerException
   {
     super(COMMAND);
+  }
+
+  public final Executable addNext(final String command,
+                                  final OutputFormat outputFormat,
+                                  final File outputFile)
+    throws SchemaCrawlerException
+  {
+    if (outputFormat == null)
+    {
+      throw new IllegalArgumentException("No output format provided");
+    }
+    return addNext(command, outputFormat.toString(), outputFile);
+  }
+
+  public final Executable addNext(final String command,
+                                  final String outputFormat,
+                                  final File outputFile)
+    throws SchemaCrawlerException
+  {
+    if (outputFile == null)
+    {
+      throw new IllegalArgumentException("No output file provided");
+    }
+    return addNext(command,
+                   outputFormat.toString(),
+                   outputFile.getAbsolutePath());
   }
 
   public final Executable addNext(final String command,

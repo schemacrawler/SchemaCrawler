@@ -21,11 +21,14 @@ package sf.util;
 
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
+import java.io.Writer;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Handler;
@@ -98,6 +101,47 @@ public final class Utility
   }
 
   /**
+   * Reads the stream fully, and writes to the writer.
+   *
+   * @param reader
+   *        Reader to read.
+   * @return Byte array
+   */
+  public static void copy(final Reader reader, final Writer writer)
+  {
+    if (reader == null)
+    {
+      LOGGER.log(Level.WARNING, "Cannot read null reader");
+      return;
+    }
+    if (writer == null)
+    {
+      LOGGER.log(Level.WARNING, "Cannot write null writer");
+      return;
+    }
+
+    final char[] buffer = new char[0x10000];
+    try (final Reader bufferedReader = new BufferedReader(reader, buffer.length);
+        final BufferedWriter bufferedWriter = new BufferedWriter(writer,
+                                                                 buffer.length);)
+    {
+      int read;
+      do
+      {
+        read = bufferedReader.read(buffer, 0, buffer.length);
+        if (read > 0)
+        {
+          bufferedWriter.write(buffer, 0, read);
+        }
+      } while (read >= 0);
+    }
+    catch (final IOException e)
+    {
+      LOGGER.log(Level.WARNING, e.getMessage(), e);
+    }
+  }
+
+  /**
    * Checks if the text is null or empty.
    *
    * @param text
@@ -156,27 +200,9 @@ public final class Utility
       return "";
     }
 
-    final StringBuilder out = new StringBuilder();
-
-    final char[] buffer = new char[0x10000];
-    try (final Reader bufferedReader = new BufferedReader(reader, buffer.length);)
-    {
-      int read;
-      do
-      {
-        read = bufferedReader.read(buffer, 0, buffer.length);
-        if (read > 0)
-        {
-          out.append(buffer, 0, read);
-        }
-      } while (read >= 0);
-    }
-    catch (final IOException e)
-    {
-      LOGGER.log(Level.WARNING, e.getMessage(), e);
-    }
-
-    return out.toString();
+    final StringWriter writer = new StringWriter();
+    copy(reader, writer);
+    return writer.toString();
   }
 
   public static String readResourceFully(final String resource)
