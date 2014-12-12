@@ -27,8 +27,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringWriter;
-import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+import java.nio.charset.Charset;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Handler;
@@ -121,10 +121,14 @@ public final class Utility
     }
 
     final char[] buffer = new char[0x10000];
-    try (final Reader bufferedReader = new BufferedReader(reader, buffer.length);
-        final BufferedWriter bufferedWriter = new BufferedWriter(writer,
-                                                                 buffer.length);)
+    try
     {
+      // Do not close resources - that is the responsibility of the
+      // caller
+      final Reader bufferedReader = new BufferedReader(reader, buffer.length);
+      final BufferedWriter bufferedWriter = new BufferedWriter(writer,
+                                                               buffer.length);
+
       int read;
       do
       {
@@ -134,6 +138,8 @@ public final class Utility
           bufferedWriter.write(buffer, 0, read);
         }
       } while (read >= 0);
+
+      bufferedWriter.flush();
     }
     catch (final IOException e)
     {
@@ -172,16 +178,7 @@ public final class Utility
     {
       return null;
     }
-    final Reader reader;
-    try
-    {
-      reader = new InputStreamReader(stream, "UTF-8");
-    }
-    catch (final UnsupportedEncodingException e)
-    {
-      LOGGER.log(Level.WARNING, e.getMessage(), e);
-      return "";
-    }
+    final Reader reader = new InputStreamReader(stream, UTF8);
     return readFully(reader);
   }
 
@@ -200,9 +197,19 @@ public final class Utility
       return "";
     }
 
-    final StringWriter writer = new StringWriter();
-    copy(reader, writer);
-    return writer.toString();
+    try
+    {
+      final StringWriter writer = new StringWriter();
+      copy(reader, writer);
+      writer.close();
+      return writer.toString();
+    }
+    catch (final IOException e)
+    {
+      LOGGER.log(Level.WARNING, e.getMessage(), e);
+      return "";
+    }
+
   }
 
   public static String readResourceFully(final String resource)
@@ -267,6 +274,7 @@ public final class Utility
    * System specific line separator character.
    */
   public static final String NEWLINE = System.getProperty("line.separator");
+  public static final Charset UTF8 = Charset.forName("UTF8");
 
   private static final Pattern containsWhitespacePattern = Pattern
     .compile(".*\\s.*");

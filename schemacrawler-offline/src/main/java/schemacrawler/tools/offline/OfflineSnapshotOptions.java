@@ -21,6 +21,8 @@
 package schemacrawler.tools.offline;
 
 
+import static sf.util.Utility.UTF8;
+
 import java.io.File;
 import java.io.Reader;
 import java.nio.charset.Charset;
@@ -60,8 +62,8 @@ public final class OfflineSnapshotOptions
       configProperties = config;
     }
 
-    setInputEncoding(configProperties
-      .getStringValue(SC_INPUT_ENCODING, "UTF-8"));
+    setInputEncoding(configProperties.getStringValue(SC_INPUT_ENCODING,
+                                                     UTF8.name()));
   }
 
   /**
@@ -110,7 +112,7 @@ public final class OfflineSnapshotOptions
   {
     if (inputCharset == null)
     {
-      return Charset.forName("UTF-8");
+      return UTF8;
     }
     else
     {
@@ -164,7 +166,7 @@ public final class OfflineSnapshotOptions
   {
     if (Utility.isBlank(inputEncoding))
     {
-      inputCharset = Charset.defaultCharset();
+      inputCharset = UTF8;
     }
     else
     {

@@ -24,6 +24,7 @@ package schemacrawler.test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
+import static sf.util.Utility.UTF8;
 
 import java.io.File;
 import java.io.PrintWriter;
@@ -73,7 +74,7 @@ public class LintTest
                                                     ".test");
     testOutputFile.delete();
 
-    try (final PrintWriter writer = new PrintWriter(testOutputFile, "UTF-8");)
+    try (final PrintWriter writer = new PrintWriter(testOutputFile, UTF8.name());)
     {
       for (final Lint<?> lint: lintCollector)
       {

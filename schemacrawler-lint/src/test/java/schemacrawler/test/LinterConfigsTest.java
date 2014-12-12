@@ -36,6 +36,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.tools.lint.LinterConfig;
 import schemacrawler.tools.lint.LinterConfigs;
+import static sf.util.Utility.*;
 
 public class LinterConfigsTest
 {
@@ -45,7 +46,7 @@ public class LinterConfigsTest
     throws SchemaCrawlerException, IOException
   {
     final Reader reader = readerForResource("bad-schemacrawler-linter-configs-a.xml",
-                                            Charset.forName("UTF-8"));
+                                            UTF8);
     final LinterConfigs linterConfigs = new LinterConfigs();
     linterConfigs.parse(reader);
     assertEquals(3, linterConfigs.size());
@@ -85,7 +86,7 @@ public class LinterConfigsTest
     throws SchemaCrawlerException, IOException
   {
     final Reader reader = readerForResource("bad-schemacrawler-linter-configs-2.xml",
-                                            Charset.forName("UTF-8"));
+                                            UTF8);
     final LinterConfigs linterConfigs = new LinterConfigs();
     linterConfigs.parse(reader);
   }
@@ -95,7 +96,7 @@ public class LinterConfigsTest
     throws SchemaCrawlerException, IOException
   {
     final Reader reader = readerForResource("schemacrawler-linter-configs-1.xml",
-                                            Charset.forName("UTF-8"));
+                                            UTF8);
     final LinterConfigs linterConfigs = new LinterConfigs();
     linterConfigs.parse(reader);
 

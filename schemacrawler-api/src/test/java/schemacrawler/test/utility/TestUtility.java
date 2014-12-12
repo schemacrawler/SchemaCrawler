@@ -20,6 +20,8 @@
 package schemacrawler.test.utility;
 
 
+import static sf.util.Utility.UTF8;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -43,8 +45,6 @@ import java.util.regex.Pattern;
 
 import org.custommonkey.xmlunit.Validator;
 import org.xml.sax.SAXException;
-
-import sf.util.Utility;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
@@ -150,16 +150,13 @@ public final class TestUtility
                                            final String outputFormat)
     throws Exception
   {
-    return compareOutput(referenceFile,
-                         testOutputFile,
-                         Charset.defaultCharset(),
-                         null);
+    return compareOutput(referenceFile, testOutputFile, UTF8, null);
   }
 
   public static File copyResourceToTempFile(final String resource)
     throws IOException
   {
-    try (final InputStream resourceStream = Utility.class
+    try (final InputStream resourceStream = TestUtility.class
       .getResourceAsStream(resource);)
     {
       return writeToTempFile(resourceStream);
@@ -190,7 +187,7 @@ public final class TestUtility
     final Charset charset;
     if (encoding == null)
     {
-      charset = Charset.defaultCharset();
+      charset = UTF8;
     }
     else
     {
@@ -211,7 +208,7 @@ public final class TestUtility
       final Charset charset;
       if (encoding == null)
       {
-        charset = Charset.defaultCharset();
+        charset = UTF8;
       }
       else
       {

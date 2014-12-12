@@ -145,7 +145,6 @@ public final class SchemaTextExecutable
                                           schemaTextOptions,
                                           outputOptions);
     }
-
     else
     {
       formatter = new SchemaTextFormatter(schemaTextDetailType,
