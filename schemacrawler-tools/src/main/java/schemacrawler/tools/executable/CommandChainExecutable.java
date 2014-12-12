@@ -45,24 +45,21 @@ public final class CommandChainExecutable
                                   final File outputFile)
     throws SchemaCrawlerException
   {
+    if (command == null)
+    {
+      throw new IllegalArgumentException("No command provided");
+    }
     if (outputFormat == null)
     {
       throw new IllegalArgumentException("No output format provided");
     }
-    return addNext(command, outputFormat.getFormat(), outputFile);
-  }
-
-  public final Executable addNext(final String command,
-                                  final String outputFormat,
-                                  final File outputFile)
-    throws SchemaCrawlerException
-  {
     if (outputFile == null)
     {
       throw new IllegalArgumentException("No output file provided");
     }
+
     return addNext(command,
-                   outputFormat.toString(),
+                   outputFormat.getFormat(),
                    outputFile.getAbsolutePath());
   }
 
@@ -73,14 +70,19 @@ public final class CommandChainExecutable
   {
     try
     {
-      final Executable executable = addNext(command);
-      if (executable != null)
+      final OutputOptions outputOptions = new OutputOptions(outputFormat,
+                                                            new File(outputFileName));
+
+      final Executable executable = commandRegistry
+        .configureNewExecutable(command, schemaCrawlerOptions, outputOptions);
+      if (executable == null)
       {
-        final OutputOptions outputOptions = new OutputOptions(outputFormat,
-                                                              new File(outputFileName));
-        executable.setOutputOptions(outputOptions);
+        return null;
       }
-      return executable;
+
+      executable.setAdditionalConfiguration(additionalConfiguration);
+
+      return addNext(executable);
     }
     catch (final Exception e)
     {
