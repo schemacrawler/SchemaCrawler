@@ -20,6 +20,7 @@ package schemacrawler.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
+import static sf.util.Utility.UTF8;
 
 import java.io.File;
 import java.io.PrintWriter;
@@ -117,7 +118,7 @@ public class TableTypesTest
                                                     ".test");
     testOutputFile.delete();
 
-    try (final PrintWriter writer = new PrintWriter(testOutputFile, "UTF-8");)
+    try (final PrintWriter writer = new PrintWriter(testOutputFile, UTF8.name());)
     {
 
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();

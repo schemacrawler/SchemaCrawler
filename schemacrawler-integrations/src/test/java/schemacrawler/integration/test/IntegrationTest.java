@@ -23,6 +23,7 @@ package schemacrawler.integration.test;
 
 
 import static org.junit.Assert.fail;
+import static sf.util.Utility.UTF8;
 
 import java.io.File;
 import java.nio.charset.Charset;
@@ -134,8 +135,8 @@ public class IntegrationTest
     testOutputFile.delete();
     final OutputOptions outputOptions = new OutputOptions(outputFormatValue,
                                                           testOutputFile);
-    outputOptions.setInputEncoding("UTF-8");
-    outputOptions.setOutputEncoding("UTF-8");
+    outputOptions.setInputEncoding(UTF8);
+    outputOptions.setOutputEncoding(UTF8);
 
     executable.setOutputOptions(outputOptions);
     executable.execute(getConnection());

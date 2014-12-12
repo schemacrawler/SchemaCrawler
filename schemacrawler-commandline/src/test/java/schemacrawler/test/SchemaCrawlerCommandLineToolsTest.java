@@ -3,6 +3,7 @@ package schemacrawler.test;
 
 import static org.junit.Assert.fail;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
+import static sf.util.Utility.UTF8;
 
 import java.io.File;
 import java.io.PrintWriter;
@@ -63,7 +64,7 @@ public class SchemaCrawlerCommandLineToolsTest
       final InfoLevel infoLevel = InfoLevel.detailed;
       final File additionalProperties = File
         .createTempFile("hsqldb.INFORMATION_SCHEMA.config", ".properties");
-      final Writer writer = new PrintWriter(additionalProperties, "UTF-8");
+      final Writer writer = new PrintWriter(additionalProperties, UTF8.name());
       final Properties properties = new Properties();
       properties.load(this.getClass()
         .getResourceAsStream("/hsqldb.INFORMATION_SCHEMA.config.properties"));
