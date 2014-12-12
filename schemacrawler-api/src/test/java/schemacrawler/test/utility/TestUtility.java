@@ -22,7 +22,6 @@ package schemacrawler.test.utility;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
@@ -36,6 +35,7 @@ import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.channels.WritableByteChannel;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -67,6 +67,11 @@ public final class TestUtility
                                            final String outputFormat)
     throws Exception
   {
+
+    if (testOutputFile == null)
+    {
+      return Collections.singletonList("Output file is not defined");
+    }
 
     if (testOutputFile == null || !testOutputFile.exists()
         || !testOutputFile.isFile() || !testOutputFile.canRead()
@@ -178,8 +183,6 @@ public final class TestUtility
   public static Reader readerForFile(final File file, final Charset encoding)
     throws IOException
   {
-    final InputStream inputStream = new FileInputStream(file);
-    final Reader reader;
     final Charset charset;
     if (encoding == null)
     {
@@ -189,8 +192,7 @@ public final class TestUtility
     {
       charset = encoding;
     }
-    reader = new InputStreamReader(inputStream, charset);
-    return reader;
+    return Files.newBufferedReader(file.toPath(), charset);
   }
 
   public static Reader readerForResource(final String resource,
