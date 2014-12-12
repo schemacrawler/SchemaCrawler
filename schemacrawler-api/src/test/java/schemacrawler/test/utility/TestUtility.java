@@ -183,6 +183,10 @@ public final class TestUtility
   public static Reader readerForFile(final File file, final Charset encoding)
     throws IOException
   {
+    if (file == null)
+    {
+      throw new IllegalArgumentException("No file provided");
+    }
     final Charset charset;
     if (encoding == null)
     {
