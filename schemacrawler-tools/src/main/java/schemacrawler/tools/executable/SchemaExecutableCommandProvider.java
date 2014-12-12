@@ -3,6 +3,7 @@ package schemacrawler.tools.executable;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.tools.integration.embeddedgraph.EmbeddedGraphExecutable;
 import schemacrawler.tools.integration.graph.GraphExecutable;
 import schemacrawler.tools.integration.graph.GraphOutputFormat;
 import schemacrawler.tools.options.OutputOptions;
@@ -22,17 +23,27 @@ class SchemaExecutableCommandProvider
                                            final OutputOptions outputOptions)
     throws SchemaCrawlerException
   {
-    // Decide if the output format is a graph format
-    boolean isGraph = false;
+    final boolean isGraph;
+    final boolean isEmbeddedGraph;
     if (outputOptions != null)
     {
-      isGraph = GraphOutputFormat.isGraphOutputFormat(outputOptions
-        .getOutputFormatValue());
+      final String outputFormatValue = outputOptions.getOutputFormatValue();
+      isGraph = GraphOutputFormat.isGraphOutputFormat(outputFormatValue);
+      isEmbeddedGraph = "htmlx".equals(outputFormatValue);
+    }
+    else
+    {
+      isGraph = false;
+      isEmbeddedGraph = false;
     }
 
     // Create and configure executable
     final Executable executable;
-    if (isGraph)
+    if (isEmbeddedGraph)
+    {
+      executable = new EmbeddedGraphExecutable(getCommand());
+    }
+    else if (isGraph)
     {
       executable = new GraphExecutable(getCommand());
     }
