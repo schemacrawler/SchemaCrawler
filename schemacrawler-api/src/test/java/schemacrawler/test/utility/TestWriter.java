@@ -3,6 +3,7 @@ package schemacrawler.test.utility;
 
 import static org.junit.Assert.fail;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
+import static sf.util.Utility.UTF8;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,7 +25,7 @@ public class TestWriter
     tempFile = File.createTempFile("schemacrawler", ".dat");
     tempFile.deleteOnExit();
 
-    out = new PrintWriter(tempFile, "UTF-8");
+    out = new PrintWriter(tempFile, UTF8.name());
   }
 
   @Override
