@@ -49,7 +49,7 @@ public final class CommandChainExecutable
     {
       throw new IllegalArgumentException("No output format provided");
     }
-    return addNext(command, outputFormat.toString(), outputFile);
+    return addNext(command, outputFormat.getFormat(), outputFile);
   }
 
   public final Executable addNext(final String command,
