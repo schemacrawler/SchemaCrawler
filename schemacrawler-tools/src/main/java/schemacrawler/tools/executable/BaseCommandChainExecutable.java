@@ -38,7 +38,7 @@ abstract class BaseCommandChainExecutable
     .getLogger(BaseCommandChainExecutable.class.getName());
 
   private final List<Executable> executables;
-  private final CommandRegistry commandRegistry;
+  protected final CommandRegistry commandRegistry;
 
   protected BaseCommandChainExecutable(final String command)
     throws SchemaCrawlerException
@@ -56,29 +56,6 @@ abstract class BaseCommandChainExecutable
       executables.add(executable);
     }
     return executable;
-  }
-
-  public final Executable addNext(final String command)
-    throws SchemaCrawlerException
-  {
-    try
-    {
-      final Executable executable = commandRegistry
-        .configureNewExecutable(command, schemaCrawlerOptions, outputOptions);
-      if (executable == null)
-      {
-        return executable;
-      }
-
-      executable.setAdditionalConfiguration(additionalConfiguration);
-
-      return addNext(executable);
-    }
-    catch (final Exception e)
-    {
-      throw new SchemaCrawlerException(String.format("Cannot chain executable, unknown command, %s",
-                                                     command));
-    }
   }
 
   protected final void executeChain(final Catalog catalog,
