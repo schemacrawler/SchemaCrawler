@@ -140,7 +140,7 @@ public final class TypeMap
   @Override
   public Set<Entry<String, Class<?>>> entrySet()
   {
-    return new HashSet<>(sqlTypeMap.entrySet());
+    throw new UnsupportedOperationException();
   }
 
   @Override
