@@ -40,12 +40,11 @@ public final class HtmlFormattingHelper
     final String styleSheet = readResourceFully("/sc.css")
                               + readResourceFully("/sc_output.css");
 
-    return "<!DOCTYPE html>" + NEWLINE
-           + "<html xmlns='http://www.w3.org/1999/xhtml'>" + NEWLINE + "<head>"
-           + NEWLINE + "  <title>SchemaCrawler Output</title>" + NEWLINE
-           + "  <meta charset=\"utf-8\"/>" + NEWLINE + "  <style>" + NEWLINE
-           + styleSheet + NEWLINE + "  </style>" + NEWLINE + "</head>"
-           + NEWLINE + "<body>" + NEWLINE;
+    return "<!DOCTYPE html>" + NEWLINE + "<html lang=\"en\">" + NEWLINE
+           + "<head>" + NEWLINE + "  <title>SchemaCrawler Output</title>"
+           + NEWLINE + "  <meta charset=\"utf-8\"/>" + NEWLINE + "  <style>"
+           + NEWLINE + styleSheet + NEWLINE + "  </style>" + NEWLINE
+           + "</head>" + NEWLINE + "<body>" + NEWLINE;
   }
 
   /**
