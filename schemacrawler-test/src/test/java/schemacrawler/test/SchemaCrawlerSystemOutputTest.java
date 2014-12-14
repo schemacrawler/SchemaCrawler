@@ -95,8 +95,9 @@ public class SchemaCrawlerSystemOutputTest
     throws Exception
   {
     final String referenceFile = dataSourceName + ".txt";
-    final Path testOutputFile = createTempFile( referenceFile ,
-                                                TextOutputFormat.text.getFormat());
+    final Path testOutputFile = createTempFile(referenceFile,
+                                               TextOutputFormat.text
+                                                 .getFormat());
 
     final Connection connection = connect(dataSourceName);
 

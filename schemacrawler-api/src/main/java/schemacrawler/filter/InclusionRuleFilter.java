@@ -51,6 +51,11 @@ public class InclusionRuleFilter<N extends NamedObjectWithAttributes>
     }
   }
 
+  public boolean isExcludeAll()
+  {
+    return inclusionRule instanceof ExcludeAll;
+  }
+
   @Override
   public boolean test(final N namedObject)
   {
@@ -64,11 +69,6 @@ public class InclusionRuleFilter<N extends NamedObjectWithAttributes>
       return false;
     }
     return inclusionRule.test(namedObject.getFullName());
-  }
-
-  public boolean isExcludeAll()
-  {
-    return inclusionRule instanceof ExcludeAll;
   }
 
   @Override

@@ -45,7 +45,19 @@ public class GraphExecutableOptionsTest
   extends BaseExecutableTest
 {
 
+  @BeforeClass
+  public static void setupDirectory()
+    throws IOException, URISyntaxException
+  {
+    final Path codePath = Paths
+      .get(GraphExecutableOptionsTest.class.getProtectionDomain()
+        .getCodeSource().getLocation().toURI()).normalize().toAbsolutePath();
+    directory = codePath.resolve("../../../schemacrawler-docs/graphs")
+      .normalize().toAbsolutePath();
+  }
+
   private static final String GRAPH_OPTIONS_OUTPUT = "graph_options_output/";
+
   private static Path directory;
 
   @Test
@@ -201,17 +213,6 @@ public class GraphExecutableOptionsTest
     final GraphOptions graphOptions = new GraphOptions();
 
     executableGraph(schemaCrawlerOptions, graphOptions, currentMethodName());
-  }
-
-  @BeforeClass
-  public static void setupDirectory()
-    throws IOException, URISyntaxException
-  {
-    final Path codePath = Paths
-      .get(GraphExecutableOptionsTest.class.getProtectionDomain()
-        .getCodeSource().getLocation().toURI()).normalize().toAbsolutePath();
-    directory = codePath.resolve("../../../schemacrawler-docs/graphs")
-      .normalize().toAbsolutePath();
   }
 
   private void executableGraph(final SchemaCrawlerOptions schemaCrawlerOptions,
