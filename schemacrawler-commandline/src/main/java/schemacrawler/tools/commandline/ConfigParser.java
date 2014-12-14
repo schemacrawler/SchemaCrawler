@@ -21,7 +21,10 @@
 package schemacrawler.tools.commandline;
 
 
+import java.io.IOException;
+
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import sf.util.clparser.StringOption;
 
 /**
@@ -40,9 +43,17 @@ public class ConfigParser
 
   @Override
   public Config getOptions()
+    throws SchemaCrawlerException
   {
     final String cfgFile = getStringValue("g");
-    return Config.load(cfgFile);
+    try
+    {
+      return Config.load(cfgFile);
+    }
+    catch (IOException e)
+    {
+      throw new SchemaCrawlerException("Could not load " + cfgFile, e);
+    }
   }
 
 }

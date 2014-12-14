@@ -23,9 +23,9 @@ package schemacrawler.tools.offline;
 
 import static sf.util.Utility.UTF8;
 
-import java.io.File;
 import java.io.Reader;
 import java.nio.charset.Charset;
+import java.nio.file.Path;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.Options;
@@ -46,7 +46,7 @@ public final class OfflineSnapshotOptions
   private static final String SC_INPUT_ENCODING = "schemacrawler.encoding.input";
 
   private String inputSource;
-  private File inputFile;
+  private Path inputFile;
   private Reader reader;
   private Charset inputCharset;
 
@@ -72,7 +72,7 @@ public final class OfflineSnapshotOptions
    * @param inputFile
    *        Input file
    */
-  public OfflineSnapshotOptions(final File inputFile)
+  public OfflineSnapshotOptions(final Path inputFile)
   {
     inputSource = null;
     this.inputFile = inputFile;
@@ -125,7 +125,7 @@ public final class OfflineSnapshotOptions
    *
    * @return Input file
    */
-  public File getInputFile()
+  public Path getInputFile()
   {
     return inputFile;
   }
@@ -180,7 +180,7 @@ public final class OfflineSnapshotOptions
    * @param inputFileName
    *        Input file name.
    */
-  public void setInputFile(final File inputFile)
+  public void setInputFile(final Path inputFile)
   {
     this.inputFile = inputFile;
   }

@@ -20,15 +20,19 @@
 package schemacrawler.tools.offline;
 
 
+import static java.nio.file.Files.exists;
+import static java.nio.file.Files.isReadable;
+import static java.nio.file.Files.newInputStream;
 import static sf.util.Utility.isBlank;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.CharBuffer;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -185,14 +189,14 @@ public class InputReader
       }
 
       final String inputSource = options.getInputSource();
-      final File inputFile;
+      final Path inputFile;
       if (!isBlank(inputSource))
       {
-        inputFile = new File(inputSource);
+        inputFile = Paths.get(inputSource).normalize().toAbsolutePath();
       }
       else if (options.hasInputFile())
       {
-        inputFile = options.getInputFile();
+        inputFile = options.getInputFile().normalize().toAbsolutePath();
       }
       else
       {
@@ -200,10 +204,10 @@ public class InputReader
       }
 
       final InputStream inputStream;
-      if (inputFile != null && inputFile.exists() && inputFile.canRead())
+      if (inputFile != null && exists(inputFile) && isReadable(inputFile))
       {
-        inputStream = new FileInputStream(inputFile);
-        description = inputFile.getAbsolutePath();
+        inputStream = newInputStream(inputFile, StandardOpenOption.READ);
+        description = inputFile.toString();
         LOGGER.log(Level.INFO, "Reading from " + description);
       }
       else

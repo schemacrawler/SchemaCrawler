@@ -1,12 +1,12 @@
 package schemacrawler.test;
 
 
+import static java.nio.file.Files.newBufferedWriter;
 import static org.junit.Assert.fail;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
 import static schemacrawler.test.utility.TestUtility.createTempFile;
+import static sf.util.Utility.UTF8;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -96,14 +96,14 @@ public class CommandLineTest
     run(args, null, "commandLineWithNonDefaults.txt");
   }
 
-  private File createConfig(final Map<String, String> config)
+  private Path createConfig(final Map<String, String> config)
     throws IOException
   {
     final String prefix = "SchemaCrawler.TestCommandLineConfig";
-    final File configFile = File.createTempFile(prefix, ".properties");
+    final Path configFile = createTempFile(prefix, "properties");
     final Properties configProperties = new Properties();
     configProperties.putAll(config);
-    configProperties.store(new FileWriter(configFile), prefix);
+    configProperties.store(newBufferedWriter(configFile, UTF8), prefix);
     return configFile;
   }
 
@@ -134,8 +134,8 @@ public class CommandLineTest
       runConfig.putAll(config);
     }
 
-    final File configFile = createConfig(runConfig);
-    args.put("g", configFile.getAbsolutePath());
+    final Path configFile = createConfig(runConfig);
+    args.put("g", configFile.toString());
 
     final List<String> argsList = new ArrayList<>();
     for (final Map.Entry<String, String> arg: args.entrySet())
