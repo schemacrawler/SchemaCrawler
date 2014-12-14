@@ -91,9 +91,8 @@ public class SchemaCrawlerXmlOutputTest
                                                TextOutputFormat.html
                                                  .getFormat());
 
-    final OutputOptions outputOptions = new OutputOptions(TextOutputFormat.html.getFormat(),
-                                                          testOutputFile
-                                                            .toFile());
+    final OutputOptions outputOptions = new OutputOptions(TextOutputFormat.html,
+                                                          testOutputFile);
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
 

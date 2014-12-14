@@ -21,7 +21,8 @@
 package schemacrawler.tools.commandline;
 
 
-import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.options.OutputOptions;
@@ -55,14 +56,14 @@ public final class OutputOptionsParser
     outputOptions.setOutputFormatValue(outputFormatValue);
 
     final String outputFileName = getStringValue("outputfile");
-    final File outputFile;
+    final Path outputFile;
     if (Utility.isBlank(outputFileName))
     {
       outputFile = null;
     }
     else
     {
-      outputFile = new File(outputFileName);
+      outputFile = Paths.get(outputFileName);
     }
     outputOptions.setOutputFile(outputFile);
 

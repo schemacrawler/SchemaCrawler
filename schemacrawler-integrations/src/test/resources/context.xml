@@ -47,17 +47,10 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
         class="schemacrawler.schemacrawler.SchemaInfoLevel" />
     </property>
   </bean>
-
-  <bean
-    id="outputOptions"
-    class="schemacrawler.tools.options.OutputOptions"
-  >
-    <property
-      name="outputFormatValue"
-      value="text" />
-    <property
-      name="outputFile"
-      value="scOutput.txt" />
+  
+  <bean id="outputOptions" class="schemacrawler.tools.options.OutputOptions">
+    <constructor-arg name="outputFormatValue" value="text" />
+    <constructor-arg name="outputFile" value="scOutput.txt" />
   </bean>
 
   <bean

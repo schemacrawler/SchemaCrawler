@@ -21,6 +21,7 @@ package schemacrawler.tools.executable;
 
 
 import java.io.File;
+import java.nio.file.Paths;
 import java.sql.Connection;
 
 import schemacrawler.schema.Catalog;
@@ -71,7 +72,8 @@ public final class CommandChainExecutable
     try
     {
       final OutputOptions outputOptions = new OutputOptions(outputFormat,
-                                                            new File(outputFileName));
+                                                            Paths
+                                                              .get(outputFileName));
 
       final Executable executable = commandRegistry
         .configureNewExecutable(command, schemaCrawlerOptions, outputOptions);

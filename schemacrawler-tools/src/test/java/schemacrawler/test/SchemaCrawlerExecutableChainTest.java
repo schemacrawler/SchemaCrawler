@@ -52,8 +52,7 @@ public class SchemaCrawlerExecutableChainTest
     final Path testOutputFile = createTempFile(executable.getCommand(), "data");
 
     final OutputOptions outputOptions = new OutputOptions("chain.js",
-                                                          testOutputFile
-                                                            .toFile());
+                                                          testOutputFile);
 
     executable.setOutputOptions(outputOptions);
     executable.execute(getConnection());

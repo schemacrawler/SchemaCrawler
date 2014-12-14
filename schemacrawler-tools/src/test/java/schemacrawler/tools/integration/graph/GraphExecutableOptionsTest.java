@@ -231,7 +231,9 @@ public class GraphExecutableOptionsTest
                                                + referenceFileName + ".dot");
 
     // Check diagram
-    final Path testDiagramFile = executeExecutable(executable, "png");
+    final Path testDiagramFile = executeExecutable(executable,
+                                                   GraphOutputFormat.png
+                                                     .getFormat());
     Files
       .copy(testDiagramFile,
             Paths.get(directory.getCanonicalPath(), testMethodName + ".png"),
