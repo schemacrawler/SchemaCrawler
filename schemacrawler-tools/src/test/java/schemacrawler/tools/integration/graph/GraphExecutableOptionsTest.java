@@ -22,17 +22,17 @@
 package schemacrawler.tools.integration.graph;
 
 
+import static java.nio.file.Files.copy;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static schemacrawler.test.utility.TestUtility.currentMethodName;
 import static schemacrawler.test.utility.TestUtility.validateDiagram;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
+import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
@@ -46,7 +46,7 @@ public class GraphExecutableOptionsTest
 {
 
   private static final String GRAPH_OPTIONS_OUTPUT = "graph_options_output/";
-  private File directory;
+  private static Path directory;
 
   @Test
   public void executableForGraph_00()
@@ -203,15 +203,15 @@ public class GraphExecutableOptionsTest
     executableGraph(schemaCrawlerOptions, graphOptions, currentMethodName());
   }
 
-  @Before
-  public void setupDirectory()
-    throws IOException
+  @BeforeClass
+  public static void setupDirectory()
+    throws IOException, URISyntaxException
   {
-    directory = new File(this.getClass().getProtectionDomain().getCodeSource()
-                           .getLocation().getFile().replace("%20", " "),
-                         "../../../schemacrawler-docs/graphs")
-      .getCanonicalFile();
-    directory.mkdirs();
+    final Path codePath = Paths
+      .get(GraphExecutableOptionsTest.class.getProtectionDomain()
+        .getCodeSource().getLocation().toURI()).normalize().toAbsolutePath();
+    directory = codePath.resolve("../../../schemacrawler-docs/graphs")
+      .normalize().toAbsolutePath();
   }
 
   private void executableGraph(final SchemaCrawlerOptions schemaCrawlerOptions,
@@ -234,10 +234,9 @@ public class GraphExecutableOptionsTest
     final Path testDiagramFile = executeExecutable(executable,
                                                    GraphOutputFormat.png
                                                      .getFormat());
-    Files
-      .copy(testDiagramFile,
-            Paths.get(directory.getCanonicalPath(), testMethodName + ".png"),
-            REPLACE_EXISTING);
+    copy(testDiagramFile,
+         directory.resolve(testMethodName + ".png"),
+         REPLACE_EXISTING);
     validateDiagram(testDiagramFile);
   }
 

@@ -5,6 +5,7 @@ import static java.nio.file.Files.createTempFile;
 import static java.nio.file.Files.newBufferedReader;
 import static java.nio.file.Files.newBufferedWriter;
 import static java.nio.file.StandardOpenOption.CREATE;
+import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.nio.file.StandardOpenOption.WRITE;
 import static sf.util.Utility.NEWLINE;
 import static sf.util.Utility.UTF8;
@@ -44,16 +45,17 @@ public class EmbeddedGraphExecutable
     chain.setSchemaCrawlerOptions(schemaCrawlerOptions);
     chain.setAdditionalConfiguration(additionalConfiguration);
 
-    chain.addNext(command, TextOutputFormat.html, baseHtmlFile.toFile());
-    chain.addNext(command, GraphOutputFormat.svg, baseSvgFile.toFile());
+    chain.addNext(command, TextOutputFormat.html, baseHtmlFile);
+    chain.addNext(command, GraphOutputFormat.svg, baseSvgFile);
 
     chain.executeOn(catalog, connection);
 
     // Interleave HTML and SVG
     try (final BufferedWriter finalHtmlFileWriter = newBufferedWriter(finalHtmlFile,
                                                                       UTF8,
+                                                                      WRITE,
                                                                       CREATE,
-                                                                      WRITE);
+                                                                      TRUNCATE_EXISTING);
         final BufferedReader baseHtmlFileReader = newBufferedReader(baseHtmlFile,
                                                                     UTF8);
         final BufferedReader baseSvgFileReader = newBufferedReader(baseSvgFile,

@@ -1,13 +1,15 @@
 package schemacrawler.test;
 
 
+import static java.nio.file.Files.newBufferedWriter;
+import static java.nio.file.StandardOpenOption.CREATE;
+import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
+import static java.nio.file.StandardOpenOption.WRITE;
 import static org.junit.Assert.fail;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
 import static schemacrawler.test.utility.TestUtility.createTempFile;
 import static sf.util.Utility.UTF8;
 
-import java.io.File;
-import java.io.PrintWriter;
 import java.io.Writer;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -64,9 +66,13 @@ public class SchemaCrawlerCommandLineToolsTest
 
       final SchemaTextDetailType schemaTextDetailType = SchemaTextDetailType.details;
       final InfoLevel infoLevel = InfoLevel.detailed;
-      final File additionalProperties = File
-        .createTempFile("hsqldb.INFORMATION_SCHEMA.config", ".properties");
-      final Writer writer = new PrintWriter(additionalProperties, UTF8.name());
+      final Path additionalProperties = createTempFile("hsqldb.INFORMATION_SCHEMA.config",
+                                                       "properties");
+      final Writer writer = newBufferedWriter(additionalProperties,
+                                              UTF8,
+                                              WRITE,
+                                              CREATE,
+                                              TRUNCATE_EXISTING);
       final Properties properties = new Properties();
       properties.load(this.getClass()
         .getResourceAsStream("/hsqldb.INFORMATION_SCHEMA.config.properties"));
@@ -83,7 +89,7 @@ public class SchemaCrawlerCommandLineToolsTest
           "-url=jdbc:hsqldb:hsql://localhost/schemacrawler",
           "-user=sa",
           "-password=",
-          "-g=" + additionalProperties.getAbsolutePath(),
+          "-g=" + additionalProperties.toString(),
           "-infolevel=" + infoLevel,
           "-command=" + schemaTextDetailType,
           "-outputformat=" + outputFormat.getFormat(),
