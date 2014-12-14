@@ -32,7 +32,7 @@ import sf.util.Predicate;
  * The text to check, which could be the fully qualified name of the
  * named object, the definition, or some other attribute of the named
  * object.
- * 
+ *
  * @author Sualeh Fatehi
  */
 // @FunctionalInterface

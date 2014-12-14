@@ -397,7 +397,7 @@ public class SchemaCrawlerOutputTest
     }
   }
 
-  private void clean(String dirname)
+  private void clean(final String dirname)
     throws IOException
   {
     FileUtils.deleteDirectory(Paths.get(".",
