@@ -193,12 +193,12 @@ public final class TestUtility
     }
   }
 
-  public static Path createTempFile(final String command,
+  public static Path createTempFile(final String stem,
                                     final String outputFormatValue)
     throws IOException
   {
     final Path testOutputTempFilePath = Files
-      .createTempFile(String.format("schemacrawler.%s.", command),
+      .createTempFile(String.format("schemacrawler.%s.", stem),
                       String.format(".%s", outputFormatValue)).normalize()
       .toAbsolutePath();
     delete(testOutputTempFilePath);

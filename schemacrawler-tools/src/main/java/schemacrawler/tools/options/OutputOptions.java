@@ -27,6 +27,9 @@ import static sf.util.Utility.isBlank;
 import java.io.File;
 import java.io.Writer;
 import java.nio.charset.Charset;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Objects;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.Options;
@@ -47,7 +50,8 @@ public class OutputOptions
   private static final String SC_OUTPUT_ENCODING = "schemacrawler.encoding.output";
 
   private String outputFormatValue;
-  private File outputFile;
+
+  private Path outputFile;
   private Writer writer;
 
   private Charset inputEncodingCharset;
@@ -82,6 +86,19 @@ public class OutputOptions
   }
 
   /**
+   * Output options, given the type and the output filename.
+   *
+   * @param outputFormat
+   *        Type of output, which is dependent on the executor
+   * @param outputFile
+   *        Output file
+   */
+  public OutputOptions(final OutputFormat outputFormat, final Path outputFile)
+  {
+    this(outputFormat.getFormat(), outputFile);
+  }
+
+  /**
    * Output options, given the type and the output to the console.
    *
    * @param outputFormatValue
@@ -89,7 +106,22 @@ public class OutputOptions
    */
   public OutputOptions(final String outputFormatValue)
   {
-    this(outputFormatValue, (File) null);
+    this(outputFormatValue, (Path) null);
+  }
+
+  /**
+   * Output options, given the type and the output filename.
+   *
+   * @param outputFormatValue
+   *        Type of output, which is dependent on the executor
+   * @param outputFile
+   *        Output file
+   */
+  public OutputOptions(final String outputFormatValue, final Path outputFile)
+  {
+    this.outputFormatValue = outputFormatValue;
+    this.outputFile = outputFile;
+    writer = null;
   }
 
   /**
@@ -102,9 +134,7 @@ public class OutputOptions
    */
   public OutputOptions(final String outputFormatValue, final File outputFile)
   {
-    this.outputFormatValue = outputFormatValue;
-    this.outputFile = outputFile;
-    writer = null;
+    this(outputFormatValue, outputFile.toPath());
   }
 
   /**
@@ -144,7 +174,7 @@ public class OutputOptions
   {
     if (outputEncodingCharset == null)
     {
-      return getInputCharset();
+      return UTF8;
     }
     else
     {
@@ -157,7 +187,7 @@ public class OutputOptions
    *
    * @return Output file
    */
-  public File getOutputFile()
+  public Path getOutputFile()
   {
     return outputFile;
   }
@@ -183,7 +213,7 @@ public class OutputOptions
   /**
    * Gets the output format value.
    *
-   * @return Output format value.s
+   * @return Output format value.
    */
   public String getOutputFormatValue()
   {
@@ -284,7 +314,36 @@ public class OutputOptions
    */
   public void setOutputFile(final File outputFile)
   {
+    if (outputFile != null)
+    {
+      setOutputFile(outputFile.toPath());
+    }
+    else
+    {
+      this.outputFile = null;
+    }
+  }
+
+  /**
+   * Sets the name of the output file.
+   *
+   * @param outputFileName
+   *        Output file name.
+   */
+  public void setOutputFile(final Path outputFile)
+  {
     this.outputFile = outputFile;
+  }
+
+  /**
+   * Sets the name of the output file.
+   *
+   * @param outputFileName
+   *        Output file name.
+   */
+  public void setOutputFile(final String outputFile)
+  {
+    this.outputFile = Paths.get(outputFile);
   }
 
   /**
@@ -295,11 +354,8 @@ public class OutputOptions
    */
   public void setOutputFormatValue(final String outputFormatValue)
   {
-    if (outputFormatValue == null)
-    {
-      throw new IllegalArgumentException("Cannot use null value in a setter");
-    }
-    this.outputFormatValue = outputFormatValue;
+    this.outputFormatValue = Objects
+      .requireNonNull(outputFormatValue, "Cannot use null value in a setter");
   }
 
   public void setWriter(final Writer writer)

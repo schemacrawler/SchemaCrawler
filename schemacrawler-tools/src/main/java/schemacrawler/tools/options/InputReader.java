@@ -20,13 +20,17 @@
 package schemacrawler.tools.options;
 
 
-import java.io.File;
-import java.io.FileInputStream;
+import static java.nio.file.Files.exists;
+import static java.nio.file.Files.isReadable;
+import static java.nio.file.Files.newBufferedReader;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.CharBuffer;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -173,18 +177,22 @@ public class InputReader
   {
     try
     {
-      final String inputSource = outputOptions.getOutputFormatValue();
       if (outputOptions.hasOutputFormat())
       {
         throw new SchemaCrawlerException("No script file provided");
       }
-      final File inputFile = new File(inputSource);
+
+      final Reader reader;
+
+      final String inputSource = outputOptions.getOutputFormatValue();
+      final Path inputFile = Paths.get(inputSource).normalize()
+        .toAbsolutePath();
 
       final InputStream inputStream;
-      if (inputFile.exists() && inputFile.canRead())
+      if (exists(inputFile) && isReadable(inputFile))
       {
-        inputStream = new FileInputStream(inputFile);
-        description = inputFile.getAbsolutePath();
+        reader = newBufferedReader(inputFile, outputOptions.getInputCharset());
+        description = inputFile.toString();
         LOGGER.log(Level.INFO, "Reading from " + description);
       }
       else
@@ -195,12 +203,12 @@ public class InputReader
         {
           throw new SchemaCrawlerException("Cannot load " + inputSource);
         }
+        reader = new InputStreamReader(inputStream,
+                                       outputOptions.getInputCharset());
         description = InputReader.class.getResource(resource).toExternalForm();
         LOGGER.log(Level.INFO, "Reading from " + description);
       }
-      final Reader reader = new InputStreamReader(inputStream,
-                                                  outputOptions
-                                                    .getInputCharset());
+
       return reader;
     }
     catch (final Exception e)

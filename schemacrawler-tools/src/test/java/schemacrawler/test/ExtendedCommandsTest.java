@@ -30,6 +30,7 @@ import org.junit.Test;
 
 import schemacrawler.test.utility.BaseExecutableTest;
 import schemacrawler.tools.integration.graph.GraphExecutable;
+import schemacrawler.tools.integration.graph.GraphOutputFormat;
 import schemacrawler.tools.integration.scripting.ScriptExecutable;
 import schemacrawler.tools.options.OutputOptions;
 
@@ -45,9 +46,8 @@ public class ExtendedCommandsTest
 
     final Path testOutputFile = createTempFile(executable.getCommand(), "png");
 
-    final OutputOptions outputOptions = new OutputOptions("png",
-                                                          testOutputFile
-                                                            .toFile());
+    final OutputOptions outputOptions = new OutputOptions(GraphOutputFormat.png,
+                                                          testOutputFile);
 
     executable.setOutputOptions(outputOptions);
     executable.execute(getConnection());
