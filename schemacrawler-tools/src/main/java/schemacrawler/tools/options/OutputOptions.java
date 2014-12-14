@@ -24,7 +24,6 @@ package schemacrawler.tools.options;
 import static sf.util.Utility.UTF8;
 import static sf.util.Utility.isBlank;
 
-import java.io.File;
 import java.io.Writer;
 import java.nio.charset.Charset;
 import java.nio.file.Path;
@@ -132,9 +131,11 @@ public class OutputOptions
    * @param outputFile
    *        Output file
    */
-  public OutputOptions(final String outputFormatValue, final File outputFile)
+  public OutputOptions(final String outputFormatValue, final String outputFile)
   {
-    this(outputFormatValue, outputFile.toPath());
+    this.outputFormatValue = outputFormatValue;
+    this.outputFile = Paths.get(outputFile);
+    writer = null;
   }
 
   /**
@@ -312,38 +313,9 @@ public class OutputOptions
    * @param outputFileName
    *        Output file name.
    */
-  public void setOutputFile(final File outputFile)
-  {
-    if (outputFile != null)
-    {
-      setOutputFile(outputFile.toPath());
-    }
-    else
-    {
-      this.outputFile = null;
-    }
-  }
-
-  /**
-   * Sets the name of the output file.
-   *
-   * @param outputFileName
-   *        Output file name.
-   */
   public void setOutputFile(final Path outputFile)
   {
     this.outputFile = outputFile;
-  }
-
-  /**
-   * Sets the name of the output file.
-   *
-   * @param outputFileName
-   *        Output file name.
-   */
-  public void setOutputFile(final String outputFile)
-  {
-    this.outputFile = Paths.get(outputFile);
   }
 
   /**

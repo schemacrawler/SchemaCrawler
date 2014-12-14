@@ -21,18 +21,23 @@
 package schemacrawler.test.utility;
 
 
+import static java.nio.file.Files.createTempFile;
+import static java.nio.file.Files.deleteIfExists;
+import static java.nio.file.Files.newBufferedWriter;
 import static schemacrawler.test.utility.TestUtility.currentMethodName;
+import static sf.util.Utility.UTF8;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.JUnitCore;
 
@@ -45,10 +50,10 @@ public class GraphVariations
 
   public static void main(final String[] args)
   {
-    JUnitCore.main("schemacrawler.test.utility.GraphVariations");
+    JUnitCore.main(GraphVariations.class.getCanonicalName());
   }
 
-  private File directory;
+  private static Path directory;
 
   @Test
   public void diagram()
@@ -59,7 +64,7 @@ public class GraphVariations
 
     final Map<String, String> config = new HashMap<>();
 
-    run(args, config, new File(directory, currentMethodName() + ".png"));
+    run(args, config, directory.resolve(currentMethodName() + ".png"));
   }
 
   @Test
@@ -72,7 +77,7 @@ public class GraphVariations
 
     final Map<String, String> config = new HashMap<>();
 
-    run(args, config, new File(directory, currentMethodName() + ".png"));
+    run(args, config, directory.resolve(currentMethodName() + ".png"));
   }
 
   @Test
@@ -86,7 +91,7 @@ public class GraphVariations
 
     final Map<String, String> config = new HashMap<>();
 
-    run(args, config, new File(directory, currentMethodName() + ".png"));
+    run(args, config, directory.resolve(currentMethodName() + ".png"));
   }
 
   @Test
@@ -100,7 +105,7 @@ public class GraphVariations
     final Map<String, String> config = new HashMap<>();
     config.put("schemacrawler.format.show_ordinal_numbers", "true");
 
-    run(args, config, new File(directory, currentMethodName() + ".png"));
+    run(args, config, directory.resolve(currentMethodName() + ".png"));
   }
 
   @Test
@@ -114,7 +119,7 @@ public class GraphVariations
 
     final Map<String, String> config = new HashMap<>();
 
-    run(args, config, new File(directory, currentMethodName() + ".png"));
+    run(args, config, directory.resolve(currentMethodName() + ".png"));
   }
 
   @Test
@@ -129,7 +134,7 @@ public class GraphVariations
 
     final Map<String, String> config = new HashMap<>();
 
-    run(args, config, new File(directory, currentMethodName() + ".png"));
+    run(args, config, directory.resolve(currentMethodName() + ".png"));
   }
 
   @Test
@@ -145,7 +150,7 @@ public class GraphVariations
 
     final Map<String, String> config = new HashMap<>();
 
-    run(args, config, new File(directory, currentMethodName() + ".png"));
+    run(args, config, directory.resolve(currentMethodName() + ".png"));
   }
 
   @Test
@@ -160,36 +165,38 @@ public class GraphVariations
     config.put("schemacrawler.graph.show.primarykey.cardinality", "false");
     config.put("schemacrawler.graph.show.foreignkey.cardinality", "false");
 
-    run(args, config, new File(directory, currentMethodName() + ".png"));
+    run(args, config, directory.resolve(currentMethodName() + ".png"));
   }
 
-  @Before
-  public void setupDirectory()
-    throws IOException
+  @BeforeClass
+  public static void setupDirectory()
+    throws IOException, URISyntaxException
   {
-    directory = new File(this.getClass().getProtectionDomain().getCodeSource()
-                           .getLocation().getFile().replace("%20", " "),
-                         "../../../schemacrawler-site/src/site/resources/images")
-      .getCanonicalFile();
+    final Path codePath = Paths
+      .get(GraphVariations.class.getProtectionDomain().getCodeSource()
+        .getLocation().toURI()).normalize().toAbsolutePath();
+    directory = codePath
+      .resolve("../../../schemacrawler-site/src/site/resources/images")
+      .normalize().toAbsolutePath();
   }
 
-  private File createConfig(final Map<String, String> config)
+  private Path createConfig(final Map<String, String> config)
     throws IOException
   {
     final String prefix = "SchemaCrawler.TestCommandLineConfig";
-    final File configFile = File.createTempFile(prefix, ".properties");
+    final Path configFile = createTempFile(prefix, "properties");
     final Properties configProperties = new Properties();
     configProperties.putAll(config);
-    configProperties.store(new FileWriter(configFile), prefix);
+    configProperties.store(newBufferedWriter(configFile, UTF8), prefix);
     return configFile;
   }
 
   private void run(final Map<String, String> args,
                    final Map<String, String> config,
-                   final File outputFile)
+                   final Path outputFile)
     throws Exception
   {
-    outputFile.delete();
+    deleteIfExists(outputFile);
 
     args.put("driver", "org.hsqldb.jdbc.JDBCDriver");
     args.put("url", "jdbc:hsqldb:hsql://localhost/schemacrawler");
@@ -202,7 +209,7 @@ public class GraphVariations
       args.put("command", "graph");
     }
     args.put("outputformat", "png");
-    args.put("outputfile", outputFile.getAbsolutePath());
+    args.put("outputfile", outputFile.toString());
 
     final Config runConfig = new Config();
     final Config informationSchema = Config
@@ -213,8 +220,8 @@ public class GraphVariations
       runConfig.putAll(config);
     }
 
-    final File configFile = createConfig(runConfig);
-    args.put("g", configFile.getAbsolutePath());
+    final Path configFile = createConfig(runConfig);
+    args.put("g", configFile.toString());
 
     final List<String> argsList = new ArrayList<>();
     for (final Map.Entry<String, String> arg: args.entrySet())
@@ -223,7 +230,7 @@ public class GraphVariations
     }
 
     Main.main(argsList.toArray(new String[argsList.size()]));
-    System.out.println(outputFile.getAbsolutePath());
+    System.out.println(outputFile.toString());
   }
 
 }

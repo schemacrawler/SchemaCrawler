@@ -20,7 +20,7 @@
 package schemacrawler.tools.executable;
 
 
-import java.io.File;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Connection;
 
@@ -43,7 +43,7 @@ public final class CommandChainExecutable
 
   public final Executable addNext(final String command,
                                   final OutputFormat outputFormat,
-                                  final File outputFile)
+                                  final Path outputFile)
     throws SchemaCrawlerException
   {
     if (command == null)
@@ -59,9 +59,8 @@ public final class CommandChainExecutable
       throw new IllegalArgumentException("No output file provided");
     }
 
-    return addNext(command,
-                   outputFormat.getFormat(),
-                   outputFile.getAbsolutePath());
+    return addNext(command, outputFormat.getFormat(), outputFile.normalize()
+      .toAbsolutePath().toString());
   }
 
   public final Executable addNext(final String command,

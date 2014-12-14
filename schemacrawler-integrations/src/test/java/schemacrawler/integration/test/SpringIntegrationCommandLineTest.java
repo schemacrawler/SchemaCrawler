@@ -25,7 +25,6 @@ import static org.junit.Assert.fail;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
 import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
 
-import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -48,7 +47,7 @@ public class SpringIntegrationCommandLineTest
   {
     final List<String> failures = new ArrayList<>();
 
-    final File contextFile = copyResourceToTempFile("/context.xml");
+    final Path contextFile = copyResourceToTempFile("/context.xml");
 
     final String executableName = "executableForSchema";
     final String referenceFile = executableName + ".txt";
@@ -56,7 +55,7 @@ public class SpringIntegrationCommandLineTest
 
     final OutputFormat outputFormat = TextOutputFormat.text;
     Main.main(new String[] {
-        "-c", contextFile.getAbsolutePath(), "-x=" + executableName,
+        "-c", contextFile.toString(), "-x=" + executableName,
     });
 
     failures.addAll(compareOutput(referenceFile,

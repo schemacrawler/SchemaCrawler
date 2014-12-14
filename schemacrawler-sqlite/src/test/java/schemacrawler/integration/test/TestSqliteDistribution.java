@@ -6,7 +6,6 @@ import static schemacrawler.test.utility.TestUtility.compareOutput;
 import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
 import static schemacrawler.test.utility.TestUtility.createTempFile;
 
-import java.io.File;
 import java.nio.file.Path;
 import java.util.List;
 
@@ -26,10 +25,10 @@ public class TestSqliteDistribution
     final String referenceFile = "sqlite.main" + "." + outputFormat.getFormat();
     final Path testOutputFile = createTempFile(referenceFile, "data");
 
-    final File sqliteDbFile = copyResourceToTempFile("/sc.db");
+    final Path sqliteDbFile = copyResourceToTempFile("/sc.db");
     schemacrawler.Main.main(new String[] {
         "-server=sqlite",
-        "-database=" + sqliteDbFile.getAbsolutePath(),
+        "-database=" + sqliteDbFile.toString(),
         "-command=details,dump,count",
         "-infolevel=detailed",
         "-outputfile=" + testOutputFile
