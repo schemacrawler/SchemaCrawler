@@ -30,7 +30,7 @@ class SchemaExecutableCommandProvider
       final String outputFormatValue = outputOptions.getOutputFormatValue();
       isGraph = GraphOutputFormat.isGraphOutputFormat(outputFormatValue);
       isEmbeddedGraph = GraphOutputFormat.htmlx.getFormat()
-        .equals(outputFormatValue);
+        .equalsIgnoreCase(outputFormatValue);
     }
     else
     {
@@ -65,5 +65,4 @@ class SchemaExecutableCommandProvider
     return executable;
 
   }
-
 }

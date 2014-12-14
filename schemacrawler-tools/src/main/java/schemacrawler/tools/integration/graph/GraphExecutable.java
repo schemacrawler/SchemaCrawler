@@ -21,13 +21,15 @@
 package schemacrawler.tools.integration.graph;
 
 
-import static java.nio.file.Files.copy;
+import static java.nio.file.Files.move;
+import static java.nio.file.StandardCopyOption.ATOMIC_MOVE;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static sf.util.Utility.isBlank;
 import static sf.util.Utility.readResourceFully;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -101,7 +103,7 @@ public final class GraphExecutable
     }
 
     // Create dot file
-    final File dotFile = File.createTempFile("schemacrawler.", ".dot");
+    final Path dotFile = Files.createTempFile("schemacrawler.", ".dot");
 
     final SchemaTraversalHandler formatter = getSchemaTraversalHandler(dotFile);
 
@@ -145,7 +147,7 @@ public final class GraphExecutable
 
   private List<String> createDiagramCommand(final GraphOptions graphOptions,
                                             final GraphOutputOptions graphOutputOptions,
-                                            final File dotFile)
+                                            final Path dotFile)
   {
     final List<String> command = new ArrayList<>();
     command.add("dot");
@@ -154,8 +156,9 @@ public final class GraphExecutable
     command.add("-T");
     command.add(graphOutputOptions.getOutputFormat().getFormat());
     command.add("-o");
-    command.add(graphOutputOptions.getDiagramFile().getAbsolutePath());
-    command.add(dotFile.getAbsolutePath());
+    command.add(graphOutputOptions.getDiagramFile().normalize()
+      .toAbsolutePath().toString());
+    command.add(dotFile.normalize().toAbsolutePath().toString());
 
     final Iterator<String> iterator = command.iterator();
     while (iterator.hasNext())
@@ -171,15 +174,16 @@ public final class GraphExecutable
 
   private void generateDiagram(final GraphOptions graphOptions,
                                final GraphOutputOptions graphOutputOptions,
-                               final File dotFile)
+                               final Path dotFile)
     throws IOException
   {
 
     if (graphOutputOptions.getOutputFormat() == GraphOutputFormat.scdot)
     {
-      copy(dotFile.toPath(),
-           graphOutputOptions.getDiagramFile().toPath(),
-           REPLACE_EXISTING);
+      move(dotFile,
+           graphOutputOptions.getDiagramFile(),
+           REPLACE_EXISTING,
+           ATOMIC_MOVE);
       return;
     }
 
@@ -222,7 +226,7 @@ public final class GraphExecutable
     return schemaTextDetailType;
   }
 
-  private SchemaTraversalHandler getSchemaTraversalHandler(final File dotFile)
+  private SchemaTraversalHandler getSchemaTraversalHandler(final Path dotFile)
     throws SchemaCrawlerException
   {
     final SchemaTraversalHandler formatter;
@@ -236,7 +240,8 @@ public final class GraphExecutable
 
     formatter = new SchemaDotFormatter(schemaTextDetailType,
                                        graphOptions,
-                                       new OutputOptions("dot", dotFile));
+                                       new OutputOptions(GraphOutputFormat.dot,
+                                                         dotFile));
 
     return formatter;
   }

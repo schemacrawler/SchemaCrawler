@@ -80,9 +80,8 @@ public class LintOutputTest
         final Path testOutputFile = createTempFile(referenceFile,
                                                    outputFormat.getFormat());
 
-        final OutputOptions outputOptions = new OutputOptions(outputFormat.getFormat(),
-                                                              testOutputFile
-                                                                .toFile());
+        final OutputOptions outputOptions = new OutputOptions(outputFormat,
+                                                              testOutputFile);
 
         final Config config = Config
           .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
@@ -121,9 +120,8 @@ public class LintOutputTest
                                                TextOutputFormat.json
                                                  .getFormat());
 
-    final OutputOptions outputOptions = new OutputOptions(TextOutputFormat.json.getFormat(),
-                                                          testOutputFile
-                                                            .toFile());
+    final OutputOptions outputOptions = new OutputOptions(TextOutputFormat.json,
+                                                          testOutputFile);
 
     final Config config = Config
       .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
@@ -159,9 +157,8 @@ public class LintOutputTest
                                                TextOutputFormat.text
                                                  .getFormat());
 
-    final OutputOptions outputOptions = new OutputOptions(TextOutputFormat.text.getFormat(),
-                                                          testOutputFile
-                                                            .toFile());
+    final OutputOptions outputOptions = new OutputOptions(TextOutputFormat.text,
+                                                          testOutputFile);
 
     final Config config = Config
       .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");

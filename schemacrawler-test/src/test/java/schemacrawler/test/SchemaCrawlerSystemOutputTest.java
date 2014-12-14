@@ -103,8 +103,8 @@ public class SchemaCrawlerSystemOutputTest
     final SchemaCrawlerOptions schemaCrawlerOptions = createOptions(dataSourceName,
                                                                     schemaInclusion);
 
-    final OutputOptions outputOptions = new OutputOptions(TextOutputFormat.text.getFormat(),
-                                                          testOutputFile.toFile());
+    final OutputOptions outputOptions = new OutputOptions(TextOutputFormat.text,
+                                                          testOutputFile);
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);

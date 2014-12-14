@@ -49,6 +49,7 @@ import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.test.utility.BaseExecutableTest;
 import schemacrawler.tools.integration.serialization.XmlSerializedCatalog;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.options.TextOutputFormat;
 
 public class OfflineSnapshotTest
   extends BaseExecutableTest
@@ -170,9 +171,8 @@ public class OfflineSnapshotTest
 
     final Path testOutputFile = createTempFile("schemacrawler.", "data");
 
-    final OutputOptions outputOptions = new OutputOptions("text",
-                                                          testOutputFile
-                                                            .toFile());
+    final OutputOptions outputOptions = new OutputOptions(TextOutputFormat.text,
+                                                          testOutputFile);
 
     final OfflineSnapshotExecutable executable = new OfflineSnapshotExecutable("details");
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);

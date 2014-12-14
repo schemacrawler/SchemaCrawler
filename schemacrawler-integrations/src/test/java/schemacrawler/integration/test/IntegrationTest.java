@@ -131,8 +131,7 @@ public class IntegrationTest
                                                outputFormatValue);
 
     final OutputOptions outputOptions = new OutputOptions(outputFormatValue,
-                                                          testOutputFile
-                                                            .toFile());
+                                                          testOutputFile);
     outputOptions.setInputEncoding(UTF8);
     outputOptions.setOutputEncoding(UTF8);
 

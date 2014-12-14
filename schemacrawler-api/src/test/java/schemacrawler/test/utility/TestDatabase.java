@@ -21,16 +21,21 @@
 package schemacrawler.test.utility;
 
 
+import static java.nio.file.Files.delete;
+import static java.nio.file.Files.walkFileTree;
 import static sf.util.DatabaseUtility.executeScriptFromResource;
 
-import java.io.File;
-import java.io.FilenameFilter;
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Arrays;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -74,34 +79,43 @@ public class TestDatabase
    *
    * @param stem
    *        File stem
+   * @throws IOException
    */
   private static void deleteServerFiles()
+    throws IOException
   {
-    final FilenameFilter serverFilesFilter = new FilenameFilter()
+    final Path start = Paths.get(".").normalize().toAbsolutePath();
+    walkFileTree(start, new SimpleFileVisitor<Path>()
     {
       @Override
-      public boolean accept(final File dir, final String name)
+      public FileVisitResult visitFile(final Path file,
+                                       final BasicFileAttributes attrs)
+        throws IOException
       {
-        return Arrays.asList(serverFileStem + ".lck",
-                             serverFileStem + ".log",
-                             serverFileStem + ".lobs",
-                             serverFileStem + ".script",
-                             serverFileStem + ".properties").contains(name);
-      }
-    };
-
-    final File[] files = new File(".").listFiles(serverFilesFilter);
-    for (final File file: files)
-    {
-      if (!file.isDirectory() && !file.isHidden())
-      {
-        final boolean delete = file.delete();
-        if (!delete)
+        for (final String filename: new String[] {
+            serverFileStem + ".lck",
+            serverFileStem + ".log",
+            serverFileStem + ".lobs",
+            serverFileStem + ".script",
+            serverFileStem + ".properties"
+        })
         {
-          LOGGER.log(Level.FINE, "Could not delete " + file.getAbsolutePath());
+          if (!attrs.isDirectory() && file.endsWith(filename))
+          {
+            delete(file);
+          }
         }
+        return FileVisitResult.CONTINUE;
       }
-    }
+
+      @Override
+      public FileVisitResult visitFileFailed(Path file, IOException exc)
+        throws IOException
+      {
+        return FileVisitResult.CONTINUE;
+      }
+
+    });
   }
 
   private static void run(final boolean trace)
@@ -186,6 +200,8 @@ public class TestDatabase
 
   /**
    * Shuts down the database server.
+   *
+   * @throws IOException
    */
   public void stop()
   {
@@ -199,7 +215,14 @@ public class TestDatabase
       LOGGER.log(Level.WARNING, e.getMessage(), e);
     }
 
-    deleteServerFiles();
+    try
+    {
+      deleteServerFiles();
+    }
+    catch (final IOException e)
+    {
+      LOGGER.log(Level.WARNING, e.getMessage(), e);
+    }
     LOGGER.log(Level.INFO, "SHUTDOWN database");
   }
 
