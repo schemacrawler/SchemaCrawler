@@ -3,10 +3,12 @@ package schemacrawler.test;
 
 import static org.junit.Assert.fail;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
+import static schemacrawler.test.utility.TestUtility.createTempFile;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -111,10 +113,7 @@ public class CommandLineTest
     throws Exception
   {
 
-    final File testOutputFile = File.createTempFile("schemacrawler."
-                                                        + referenceFile + ".",
-                                                    ".test");
-    testOutputFile.delete();
+    final Path testOutputFile = createTempFile(referenceFile, "data");
 
     args.put("driver", "org.hsqldb.jdbc.JDBCDriver");
     args.put("url", "jdbc:hsqldb:hsql://localhost/schemacrawler");
@@ -124,7 +123,7 @@ public class CommandLineTest
     args.put("infolevel", "maximum");
     args.put("command", "brief");
     args.put("outputformat", "text");
-    args.put("outputfile", testOutputFile.getAbsolutePath());
+    args.put("outputfile", testOutputFile.toString());
 
     final Config runConfig = new Config();
     final Config informationSchema = Config

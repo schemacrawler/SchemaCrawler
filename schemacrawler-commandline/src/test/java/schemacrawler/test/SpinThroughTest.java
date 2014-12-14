@@ -7,6 +7,7 @@ import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +21,7 @@ import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseDatabaseTest;
+import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.integration.graph.GraphOutputFormat;
@@ -46,6 +48,7 @@ public class SpinThroughTest
       TextOutputFormat.text,
       TextOutputFormat.html,
       TextOutputFormat.json,
+      GraphOutputFormat.htmlx,
       GraphOutputFormat.scdot
   };
   private File hsqldbProperties;
@@ -77,12 +80,13 @@ public class SpinThroughTest
           final String referenceFile = referenceFile(schemaTextDetailType,
                                                      infoLevel,
                                                      outputFormat);
-          final File testOutputFile = createTempFile(schemaTextDetailType,
+          final Path testOutputFile = createTempFile(schemaTextDetailType,
                                                      infoLevel,
                                                      outputFormat);
 
           final OutputOptions outputOptions = new OutputOptions(outputFormat.getFormat(),
-                                                                testOutputFile);
+                                                                testOutputFile
+                                                                  .toFile());
 
           final Config config = Config.load(hsqldbProperties.getAbsolutePath());
           final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
@@ -131,7 +135,7 @@ public class SpinThroughTest
           final String referenceFile = referenceFile(schemaTextDetailType,
                                                      infoLevel,
                                                      outputFormat);
-          final File testOutputFile = createTempFile(schemaTextDetailType,
+          final Path testOutputFile = createTempFile(schemaTextDetailType,
                                                      infoLevel,
                                                      outputFormat);
 
@@ -146,7 +150,7 @@ public class SpinThroughTest
               "-infolevel=" + infoLevel,
               "-command=" + schemaTextDetailType,
               "-outputformat=" + outputFormat.getFormat(),
-              "-outputfile=" + testOutputFile.getAbsolutePath(),
+              "-outputfile=" + testOutputFile.toString(),
           });
 
           failures.addAll(compareOutput(SPIN_THROUGH_OUTPUT + referenceFile,
@@ -161,16 +165,15 @@ public class SpinThroughTest
     }
   }
 
-  private File createTempFile(final SchemaTextDetailType schemaTextDetailType,
+  private Path createTempFile(final SchemaTextDetailType schemaTextDetailType,
                               final InfoLevel infoLevel,
                               final OutputFormat outputFormat)
+    throws IOException
   {
-    return org.apache.tools.ant.util.FileUtils.getFileUtils()
-      .createTempFile(String.format("%s.%s", schemaTextDetailType, infoLevel),
-                      outputFormat.getFormat(),
-                      null,
-                      true,
-                      false);
+    return TestUtility.createTempFile(String.format("%s.%s.",
+                                                    schemaTextDetailType,
+                                                    infoLevel), String
+      .format(".%s", outputFormat.getFormat()));
   }
 
   private String referenceFile(final SchemaTextDetailType schemaTextDetailType,

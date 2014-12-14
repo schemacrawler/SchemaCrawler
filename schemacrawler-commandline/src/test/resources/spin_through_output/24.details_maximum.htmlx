@@ -1,0 +1,5193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>SchemaCrawler Output</title>
+  <meta charset="utf-8"/>
+  <style>
+body, p, li, td, th, caption, select, input, strong {
+  font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
+  font-size: 1.0rem;
+  line-height: 1.4rem;
+  color: rgb(16, 16, 16);
+}
+
+body {
+  margin-top: 1rem;
+  margin-right: 3rem;
+  margin-bottom: 1rem;
+  margin-left: 3rem;
+}
+
+code, pre, tt {
+  font-family: 'Lucida Console', Monaco, 'Courier New', monospace;
+  font-size: 1.0rem;
+  line-height: 1.4rem;
+  color: rgb(16, 16, 16);
+}
+
+hr {
+  height: 1px;
+  border-width: 1px 0px 0px 0px;
+  color: Silver;
+}
+
+p {
+  margin-bottom: 0.5rem;
+}
+
+caption {
+  font-weight: bold;
+  border-bottom: 2px solid rgb(190, 190, 190);
+  text-align: left;
+}
+
+h1, h2, h3 {
+  font-family: "Palatino Linotype", Georgia, "Times New Roman", Times, serif;
+  margin-top: 1.0rem;
+  margin-bottom: 0.5rem;
+}
+
+h1 {
+  font-size: 1.6rem;
+  line-height: 1.8rem;
+}
+
+h2 {
+  font-size: 1.2rem;
+  line-height: 1.4rem;
+}
+
+h3 {
+  font-size: 1.0rem;
+  line-height: 1.2rem;
+}
+
+dl, ul, ol {
+  padding: 0px 0px 0px 0px;
+  border: 0px;
+  background-color: #ffffff;
+  margin-left: 1rem;
+  padding-left: 1rem;
+}
+
+li {
+  margin-top: 0.3rem;
+}
+
+a: link {
+  color: Maroon;
+}
+
+a: visited {
+  color: Navy;
+}
+
+a: active, a: hover {
+  color: Blue;
+}
+
+table, th, td {
+  border: 1px solid rgb(240, 240, 240);
+  border-collapse: collapse;
+  vertical-align: top;
+  padding: 2px;
+}
+
+table {
+  width: 800px;
+  max-width: 1000px;
+  min-width: 600px;
+}
+
+th {
+  font-weight: bold;
+  border-bottom: 1px solid rgb(190, 190, 190);
+}
+
+blockquote {
+  background: #f9f9f9;
+  margin: 5px;
+  border-left: 10px solid #ccc;
+  padding: 0.5rem 10px;
+}
+
+blockquote: before {
+  color: #ccc;
+  font-size: 4rem;
+  line-height: 0.1rem;
+  margin-right: 0.25rem;
+  vertical-align: -0.4rem;
+}
+
+blockquote p {
+  display: inline;
+  background: #f9f9f9;
+}
+
+
+.name {
+	font-weight: bold;
+	min-width: 350px;
+}
+
+.property_name {
+	min-width: 350px;
+}
+
+.property_value {
+	min-width: 250px;
+}
+
+.right {
+	text-align: right;
+}
+
+.description {
+	min-width: 450px;
+}
+
+.spacer {
+	min-width: 20px;
+}
+
+.subname {
+	min-width: 150px;
+}
+
+.type {
+	min-width: 150px;
+}
+
+.definition {
+	white-space: pre-line;
+}
+
+.data_binary {
+	font-style: italic;
+	color: rgb(64, 64, 64);
+}
+
+.data_null {
+	font-weight: italic;
+	color: rgb(64, 64, 64);
+	background-color: rgb(240, 240, 240);
+}
+
+.data_number {
+	text-align: right;
+	padding-right: 5px;
+}
+  </style>
+</head>
+<body>
+
+<p>&#160;</p>
+<h2>System Information</h2>
+
+
+<h3>SchemaCrawler Information</h3>
+
+<table>
+	<tr>
+		<td class='property_name'>product name</td>
+		<td class='property_value'>SchemaCrawler</td>
+	</tr>
+	<tr>
+		<td class='property_name'>product version</td>
+		<td class='property_value'>12.01.01</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<h3>Database Information</h3>
+
+<table>
+	<tr>
+		<td class='property_name'>database product name</td>
+		<td class='property_value'>HSQL Database Engine</td>
+	</tr>
+	<tr>
+		<td class='property_name'>database product version</td>
+		<td class='property_value'>2.3.2</td>
+	</tr>
+	<tr>
+		<td class='property_name'>database user name</td>
+		<td class='property_value'>SA</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<h3>Database Characteristics</h3>
+
+<table>
+	<tr>
+		<td class='property_name'>all procedures are callable</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>all tables are selectable</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>auto commit failure closes all result sets</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>catalog separator</td>
+		<td class='property_value'>.</td>
+	</tr>
+	<tr>
+		<td class='property_name'>catalog term</td>
+		<td class='property_value'>CATALOG</td>
+	</tr>
+	<tr>
+		<td class='property_name'>catalogs</td>
+		<td class='property_value'>PUBLIC</td>
+	</tr>
+	<tr>
+		<td class='property_name'>client info properties</td>
+		<td class='property_value'>files_readonly, hsqldb.applog, hsqldb.cache_file_scale, hsqldb.cache_free_count, hsqldb.cache_rows, hsqldb.cache_size, hsqldb.default_table_type, hsqldb.defrag_limit, hsqldb.digest, hsqldb.files_check, hsqldb.files_space, hsqldb.full_log_replay, hsqldb.inc_backup, hsqldb.large_data, hsqldb.lob_compressed, hsqldb.lob_file_scale, hsqldb.lock_file, hsqldb.log_data, hsqldb.log_size, hsqldb.nio_data_file, hsqldb.nio_max_size, hsqldb.result_max_memory_rows, hsqldb.script_format, hsqldb.sqllog, hsqldb.temp_directory, hsqldb.tx, hsqldb.tx_conflict_rollback, hsqldb.tx_level, hsqldb.write_delay, hsqldb.write_delay_millis, jdbc.translate_tti_types, readonly, runtime.gc_interval, sql.avg_scale, sql.compare_in_locale, sql.concat_nulls, sql.convert_trunc, sql.double_nan, sql.enforce_names, sql.enforce_refs, sql.enforce_size, sql.enforce_tdc_delete, sql.enforce_tdc_update, sql.enforce_types, sql.ignore_case, sql.longvar_is_lob, sql.nulls_first, sql.nulls_order, sql.pad_space, sql.ref_integrity, sql.regular_names, sql.syntax_db2, sql.syntax_mss, sql.syntax_mys, sql.syntax_ora, sql.syntax_pgs, sql.unique_nulls, textdb.all_quoted, textdb.cache_rows, textdb.cache_scale, textdb.cache_size, textdb.cache_size_scale, textdb.encoding, textdb.fs, textdb.ignore_first, textdb.lvs, textdb.quoted, textdb.vs</td>
+	</tr>
+	<tr>
+		<td class='property_name'>data definition causes transaction commit</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>data definition ignored in transactions</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>database major version</td>
+		<td class='property_value'>2</td>
+	</tr>
+	<tr>
+		<td class='property_name'>database minor version</td>
+		<td class='property_value'>3</td>
+	</tr>
+	<tr>
+		<td class='property_name'>default transaction isolation</td>
+		<td class='property_value'>2</td>
+	</tr>
+	<tr>
+		<td class='property_name'>deletes are detected for TYPE_FORWARD_ONLY result sets</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>deletes are detected for TYPE_SCROLL_INSENSITIVE result sets</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>deletes are detected for TYPE_SCROLL_SENSITIVE result sets</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>does max row size include blobs</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>driver major version</td>
+		<td class='property_value'>2</td>
+	</tr>
+	<tr>
+		<td class='property_name'>driver minor version</td>
+		<td class='property_value'>3</td>
+	</tr>
+	<tr>
+		<td class='property_name'>extra name characters</td>
+		<td class='property_value'></td>
+	</tr>
+	<tr>
+		<td class='property_name'>generated key always returned</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>identifier quote string</td>
+		<td class='property_value'>&quot;</td>
+	</tr>
+	<tr>
+		<td class='property_name'>inserts are detected for TYPE_FORWARD_ONLY result sets</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>inserts are detected for TYPE_SCROLL_INSENSITIVE result sets</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>inserts are detected for TYPE_SCROLL_SENSITIVE result sets</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>is catalog at start</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>is read only</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>JDBC major version</td>
+		<td class='property_value'>4</td>
+	</tr>
+	<tr>
+		<td class='property_name'>JDBC minor version</td>
+		<td class='property_value'>0</td>
+	</tr>
+	<tr>
+		<td class='property_name'>locators update copy</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>max binary literal length</td>
+		<td class='property_value'>0</td>
+	</tr>
+	<tr>
+		<td class='property_name'>max catalog name length</td>
+		<td class='property_value'>128</td>
+	</tr>
+	<tr>
+		<td class='property_name'>max char literal length</td>
+		<td class='property_value'>0</td>
+	</tr>
+	<tr>
+		<td class='property_name'>max column name length</td>
+		<td class='property_value'>128</td>
+	</tr>
+	<tr>
+		<td class='property_name'>max columns in group by</td>
+		<td class='property_value'>0</td>
+	</tr>
+	<tr>
+		<td class='property_name'>max columns in index</td>
+		<td class='property_value'>0</td>
+	</tr>
+	<tr>
+		<td class='property_name'>max columns in order by</td>
+		<td class='property_value'>0</td>
+	</tr>
+	<tr>
+		<td class='property_name'>max columns in select</td>
+		<td class='property_value'>0</td>
+	</tr>
+	<tr>
+		<td class='property_name'>max columns in table</td>
+		<td class='property_value'>0</td>
+	</tr>
+	<tr>
+		<td class='property_name'>max connections</td>
+		<td class='property_value'>0</td>
+	</tr>
+	<tr>
+		<td class='property_name'>max cursor name length</td>
+		<td class='property_value'>128</td>
+	</tr>
+	<tr>
+		<td class='property_name'>max index length</td>
+		<td class='property_value'>0</td>
+	</tr>
+	<tr>
+		<td class='property_name'>max procedure name length</td>
+		<td class='property_value'>128</td>
+	</tr>
+	<tr>
+		<td class='property_name'>max row size</td>
+		<td class='property_value'>0</td>
+	</tr>
+	<tr>
+		<td class='property_name'>max schema name length</td>
+		<td class='property_value'>128</td>
+	</tr>
+	<tr>
+		<td class='property_name'>max statement length</td>
+		<td class='property_value'>0</td>
+	</tr>
+	<tr>
+		<td class='property_name'>max statements</td>
+		<td class='property_value'>0</td>
+	</tr>
+	<tr>
+		<td class='property_name'>max table name length</td>
+		<td class='property_value'>128</td>
+	</tr>
+	<tr>
+		<td class='property_name'>max tables in select</td>
+		<td class='property_value'>0</td>
+	</tr>
+	<tr>
+		<td class='property_name'>max user name length</td>
+		<td class='property_value'>128</td>
+	</tr>
+	<tr>
+		<td class='property_name'>null plus non null is null</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>nulls are sorted at end</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>nulls are sorted at start</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>nulls are sorted high</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>nulls are sorted low</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>numeric functions</td>
+		<td class='property_value'>ABS, ACOS, ASIN, ATAN, ATAN2, BITAND, BITOR, BITXOR, CEILING, COS, COT, DEGREES, EXP, FLOOR, LOG, LOG10, MOD, PI, POWER, RADIANS, RAND, ROUND, ROUNDMAGIC, SIGN, SIN, SQRT, TAN, TRUNCATE</td>
+	</tr>
+	<tr>
+		<td class='property_name'>others inserts are visible for TYPE_FORWARD_ONLY result sets</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>others inserts are visible for TYPE_SCROLL_INSENSITIVE result sets</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>others inserts are visible for TYPE_SCROLL_SENSITIVE result sets</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>others updates are visible for TYPE_FORWARD_ONLY result sets</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>others updates are visible for TYPE_SCROLL_INSENSITIVE result sets</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>others updates are visible for TYPE_SCROLL_SENSITIVE result sets</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>own deletes are visible for TYPE_FORWARD_ONLY result sets</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>own deletes are visible for TYPE_SCROLL_INSENSITIVE result sets</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>own deletes are visible for TYPE_SCROLL_SENSITIVE result sets</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>own inserts are visible for TYPE_FORWARD_ONLY result sets</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>own inserts are visible for TYPE_SCROLL_INSENSITIVE result sets</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>own inserts are visible for TYPE_SCROLL_SENSITIVE result sets</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>own updates are visible for TYPE_FORWARD_ONLY result sets</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>own updates are visible for TYPE_SCROLL_INSENSITIVE result sets</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>own updates are visible for TYPE_SCROLL_SENSITIVE result sets</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>procedure term</td>
+		<td class='property_value'>PROCEDURE</td>
+	</tr>
+	<tr>
+		<td class='property_name'>result set holdability</td>
+		<td class='property_value'>1</td>
+	</tr>
+	<tr>
+		<td class='property_name'>row id lifetime</td>
+		<td class='property_value'>ROWID_UNSUPPORTED</td>
+	</tr>
+	<tr>
+		<td class='property_name'>schema term</td>
+		<td class='property_value'>SCHEMA</td>
+	</tr>
+	<tr>
+		<td class='property_name'>schemas</td>
+		<td class='property_value'>BOOKS, FOR_LINT, INFORMATION_SCHEMA, PUBLIC, PUBLISHER SALES, SYSTEM_LOBS</td>
+	</tr>
+	<tr>
+		<td class='property_name'>search string escape</td>
+		<td class='property_value'>\</td>
+	</tr>
+	<tr>
+		<td class='property_name'>SQL keywords</td>
+		<td class='property_value'></td>
+	</tr>
+	<tr>
+		<td class='property_name'>SQL state type</td>
+		<td class='property_value'>2</td>
+	</tr>
+	<tr>
+		<td class='property_name'>stores lower case identifiers</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>stores lower case quoted identifiers</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>stores mixed case identifiers</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>stores mixed case quoted identifiers</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>stores upper case identifiers</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>stores upper case quoted identifiers</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>string functions</td>
+		<td class='property_value'>ASCII, CHAR, CONCAT, DIFFERENCE, HEXTORAW, INSERT, LCASE, LEFT, LENGTH, LOCATE, LTRIM, RAWTOHEX, REPEAT, REPLACE, RIGHT, RTRIM, SOUNDEX, SPACE, SUBSTR, UCASE</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports alter table with add column</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports alter table with drop column</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports ANSI92 entry level SQL</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports ANSI92 full SQL</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports ANSI92 intermediate SQL</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports batch updates</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports catalogs in data manipulation</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports catalogs in index definitions</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports catalogs in privilege definitions</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports catalogs in procedure calls</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports catalogs in table definitions</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports column aliasing</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports convert</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports core SQL grammar</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports correlated subqueries</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports data definition and data manipulation transactions</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports data manipulation transactions only</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports different table correlation names</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports expressions in order by</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports extended SQL grammar</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports full outer joins</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports get generated keys</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports group by</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports group by beyond select</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports group by unrelated</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports integrity enhancement facility</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports like escape clause</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports limited outer joins</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports minimum SQL grammar</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports mixed case identifiers</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports mixed case quoted identifiers</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports multiple open results</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports multiple result sets</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports multiple transactions</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports named parameters</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports non nullable columns</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports open cursors across commit</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports open cursors across rollback</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports open statements across commit</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports open statements across rollback</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports order by unrelated</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports outer joins</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports positioned delete</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports positioned update</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports result set type for TYPE_FORWARD_ONLY result sets</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports result set type for TYPE_SCROLL_INSENSITIVE result sets</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports result set type for TYPE_SCROLL_SENSITIVE result sets</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports savepoints</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports schemas in data manipulation</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports schemas in index definitions</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports schemas in privilege definitions</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports schemas in procedure calls</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports schemas in table definitions</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports select for update</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports statement pooling</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports stored functions using call syntax</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports stored procedures</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports subqueries in comparisons</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports subqueries in exists</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports subqueries in ins</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports subqueries in quantifieds</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports table correlation names</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports transactions</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports union</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports union all</td>
+		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>system functions</td>
+		<td class='property_value'>DATABASE, IFNULL, USER</td>
+	</tr>
+	<tr>
+		<td class='property_name'>table types</td>
+		<td class='property_value'>GLOBAL TEMPORARY, SYSTEM TABLE, TABLE, VIEW</td>
+	</tr>
+	<tr>
+		<td class='property_name'>time date functions</td>
+		<td class='property_value'>CURDATE, CURTIME, DATEDIFF, DAYNAME, DAYOFMONTH, DAYOFWEEK, DAYOFYEAR, HOUR, MINUTE, MONTH, MONTHNAME, NOW, QUARTER, SECOND, SECONDS_SINCE_MIDNIGHT, TIMESTAMPADD, TIMESTAMPDIFF, TO_CHAR, WEEK, YEAR</td>
+	</tr>
+	<tr>
+		<td class='property_name'>type info</td>
+		<td class='property_value'>BIT, TINYINT, BIGINT, VARBINARY, BINARY, CHARACTER, NUMERIC, DECIMAL, INTEGER, SMALLINT, DOUBLE, FLOAT, REAL, NVARCHAR, VARCHAR, BOOLEAN, DATE, TIME, TIMESTAMP, OTHER, BLOB, CLOB</td>
+	</tr>
+	<tr>
+		<td class='property_name'>uses local file per table</td>
+		<td class='property_value'>false</td>
+	</tr>
+	<tr>
+		<td class='property_name'>uses local files</td>
+		<td class='property_value'>false</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<h3>JDBC Driver Information</h3>
+
+<table>
+	<tr>
+		<td class='property_name'>driver name</td>
+		<td class='property_value'>HSQL Database Engine Driver</td>
+	</tr>
+	<tr>
+		<td class='property_name'>driver version</td>
+		<td class='property_value'>2.3.2</td>
+	</tr>
+	<tr>
+		<td class='property_name'>driver class name</td>
+		<td class='property_value'>org.hsqldb.jdbc.JDBCDriver</td>
+	</tr>
+	<tr>
+		<td class='property_name'>url</td>
+		<td class='property_value'>jdbc:hsqldb:hsql://localhost/schemacrawler</td>
+	</tr>
+	<tr>
+		<td class='property_name'>is JDBC compliant</td>
+		<td class='property_value'>true</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<h3>JDBC Driver Properties</h3>
+
+<table>
+	<tr>
+		<td colspan='2' class='name'>default_schema</td>
+		<td class='description right'>[driver property]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'></td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>not required; choices [false, true]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>value</td>
+		<td class='type'>false</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>get_column_name</td>
+		<td class='description right'>[driver property]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'></td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>not required; choices [false, true]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>value</td>
+		<td class='type'>true</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>ifexists</td>
+		<td class='description right'>[driver property]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'></td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>not required; choices [false, true]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>value</td>
+		<td class='type'>false</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>password</td>
+		<td class='description right'>[driver property]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'></td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>required</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>value</td>
+		<td class='type'>NULL</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>shutdown</td>
+		<td class='description right'>[driver property]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'></td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>not required; choices [false, true]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>value</td>
+		<td class='type'>false</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>user</td>
+		<td class='description right'>[driver property]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'></td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>required</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>value</td>
+		<td class='type'>NULL</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<p>&#160;</p>
+<h2>Data Types</h2>
+
+<table>
+	<tr>
+		<td colspan='2' class='name'>BIGINT</td>
+		<td class='description right'>[data type]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>based on</td>
+		<td class='type'>BIGINT</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>not user defined</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>defined with no parameters</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>nullable</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>auto-incrementable</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>searchable except with where .. like</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>BINARY</td>
+		<td class='description right'>[data type]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>based on</td>
+		<td class='type'>BINARY</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>not user defined</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>defined with LENGTH</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>nullable</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>not auto-incrementable</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>searchable</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>BIT</td>
+		<td class='description right'>[data type]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>based on</td>
+		<td class='type'>BIT</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>not user defined</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>defined with LENGTH</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>nullable</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>not auto-incrementable</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>searchable except with where .. like</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>BLOB</td>
+		<td class='description right'>[data type]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>based on</td>
+		<td class='type'>BLOB</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>not user defined</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>defined with LENGTH</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>nullable</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>not auto-incrementable</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>not searchable</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>BOOLEAN</td>
+		<td class='description right'>[data type]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>based on</td>
+		<td class='type'>BOOLEAN</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>not user defined</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>defined with no parameters</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>nullable</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>not auto-incrementable</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>searchable except with where .. like</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>CHARACTER</td>
+		<td class='description right'>[data type]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>based on</td>
+		<td class='type'>CHAR</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>not user defined</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>defined with LENGTH</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>nullable</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>not auto-incrementable</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>searchable</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>CLOB</td>
+		<td class='description right'>[data type]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>based on</td>
+		<td class='type'>CLOB</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>not user defined</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>defined with LENGTH</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>nullable</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>not auto-incrementable</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>not searchable</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>DATE</td>
+		<td class='description right'>[data type]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>based on</td>
+		<td class='type'>DATE</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>not user defined</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>defined with no parameters</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>nullable</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>not auto-incrementable</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>searchable except with where .. like</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>DECIMAL</td>
+		<td class='description right'>[data type]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>based on</td>
+		<td class='type'>DECIMAL</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>not user defined</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>defined with PRECISION,SCALE</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>nullable</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>auto-incrementable</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>searchable except with where .. like</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>DOUBLE</td>
+		<td class='description right'>[data type]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>based on</td>
+		<td class='type'>DOUBLE</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>not user defined</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>defined with no parameters</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>nullable</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>not auto-incrementable</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>searchable except with where .. like</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>FLOAT</td>
+		<td class='description right'>[data type]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>based on</td>
+		<td class='type'>DOUBLE</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>not user defined</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>defined with no parameters</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>nullable</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>not auto-incrementable</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>searchable except with where .. like</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>INTEGER</td>
+		<td class='description right'>[data type]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>based on</td>
+		<td class='type'>INTEGER</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>not user defined</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>defined with no parameters</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>nullable</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>auto-incrementable</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>searchable except with where .. like</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>NUMERIC</td>
+		<td class='description right'>[data type]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>based on</td>
+		<td class='type'>NUMERIC</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>not user defined</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>defined with PRECISION,SCALE</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>nullable</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>auto-incrementable</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>searchable except with where .. like</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>NVARCHAR</td>
+		<td class='description right'>[data type]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>based on</td>
+		<td class='type'>VARCHAR</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>not user defined</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>defined with LENGTH</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>nullable</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>not auto-incrementable</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>searchable</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>OTHER</td>
+		<td class='description right'>[data type]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>based on</td>
+		<td class='type'>OTHER</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>not user defined</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>defined with no parameters</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>nullable</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>not auto-incrementable</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>searchable except with where .. like</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>REAL</td>
+		<td class='description right'>[data type]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>based on</td>
+		<td class='type'>DOUBLE</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>not user defined</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>defined with no parameters</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>nullable</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>not auto-incrementable</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>searchable except with where .. like</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>SMALLINT</td>
+		<td class='description right'>[data type]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>based on</td>
+		<td class='type'>SMALLINT</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>not user defined</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>defined with no parameters</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>nullable</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>auto-incrementable</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>searchable except with where .. like</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>TIME</td>
+		<td class='description right'>[data type]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>based on</td>
+		<td class='type'>TIME</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>not user defined</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>defined with no parameters</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>nullable</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>not auto-incrementable</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>searchable except with where .. like</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>TIMESTAMP</td>
+		<td class='description right'>[data type]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>based on</td>
+		<td class='type'>TIMESTAMP</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>not user defined</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>defined with no parameters</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>nullable</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>not auto-incrementable</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>searchable except with where .. like</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>TINYINT</td>
+		<td class='description right'>[data type]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>based on</td>
+		<td class='type'>TINYINT</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>not user defined</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>defined with no parameters</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>nullable</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>auto-incrementable</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>searchable except with where .. like</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>VARBINARY</td>
+		<td class='description right'>[data type]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>based on</td>
+		<td class='type'>VARBINARY</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>not user defined</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>defined with LENGTH</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>nullable</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>not auto-incrementable</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>searchable</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>VARCHAR</td>
+		<td class='description right'>[data type]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>based on</td>
+		<td class='type'>VARCHAR</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>not user defined</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>defined with LENGTH</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>nullable</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>not auto-incrementable</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>searchable</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>PUBLIC.BOOKS.CHARACTER VARYING</td>
+		<td class='description right'>[data type]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>based on</td>
+		<td class='type'>VARCHAR</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>not user defined</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>defined with </td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>not nullable</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>not auto-incrementable</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>unknown</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>PUBLIC.SYSTEM_LOBS.BIGINT ARRAY</td>
+		<td class='description right'>[data type]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>based on</td>
+		<td class='type'>ARRAY</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>not user defined</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>defined with </td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>not nullable</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>not auto-incrementable</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>unknown</td>
+	</tr>
+</table>
+<p>&#160;</p>
+<p>&#160;</p>
+
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.36.0 (20140111.2315)
+ -->
+<!-- Title: SchemaCrawler_Diagram Pages: 1 -->
+<svg width="1172pt" height="872pt"
+ viewBox="0.00 0.00 1172.00 872.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 868)">
+<title>SchemaCrawler_Diagram</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-868 1168,-868 1168,4 -4,4"/>
+<text text-anchor="start" x="966" y="-48.6" font-family="Helvetica,sans-Serif" font-size="8.00" fill="#555555">Generated by:</text>
+<text text-anchor="start" x="1022" y="-48.6" font-family="Helvetica,sans-Serif" font-size="8.00" fill="#555555">SchemaCrawler 12.01.01</text>
+<text text-anchor="start" x="966" y="-35.1" font-family="Helvetica,sans-Serif" font-size="8.00" fill="#555555">Generated on:</text>
+<text text-anchor="start" x="1022" y="-35.1" font-family="Helvetica,sans-Serif" font-size="8.00" fill="#555555">Dec 13, 2014 5:50 PM</text>
+<text text-anchor="start" x="981" y="-22.1" font-family="Helvetica,sans-Serif" font-size="8.00" fill="#555555">Database:</text>
+<text text-anchor="start" x="1022" y="-22.1" font-family="Helvetica,sans-Serif" font-size="8.00" fill="#555555">HSQL Database Engine &#160;2.3.2</text>
+<text text-anchor="start" x="993" y="-9.1" font-family="Helvetica,sans-Serif" font-size="8.00" fill="#555555">Driver:</text>
+<text text-anchor="start" x="1022" y="-9.1" font-family="Helvetica,sans-Serif" font-size="8.00" fill="#555555">HSQL Database Engine Driver &#160;2.3.2</text>
+<polygon fill="none" stroke="#555555" points="962,-4 962,-59 1156,-59 1156,-4 962,-4"/>
+<!-- authors_dba8a1ff -->
+<g id="node1" class="node"><title>authors_dba8a1ff</title>
+<polygon fill="white" stroke="none" points="456,-441 456,-587 670,-587 670,-441 456,-441"/>
+<polygon fill="#96c2fa" stroke="none" points="457,-572 457,-586 571,-586 571,-572 457,-572"/>
+<text text-anchor="start" x="459" y="-578.1" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="8.00">PUBLIC.BOOKS.AUTHORS</text>
+<polygon fill="#96c2fa" stroke="none" points="571,-572 571,-586 669,-586 669,-572 571,-572"/>
+<text text-anchor="start" x="645" y="-577.1" font-family="Helvetica,sans-Serif" font-size="8.00">[table]</text>
+<text text-anchor="start" x="459" y="-563.6" font-family="Helvetica,sans-Serif" font-size="8.00">Contact details for book authors</text>
+<text text-anchor="start" x="459" y="-551.6" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="8.00">ID</text>
+<text text-anchor="start" x="541" y="-550.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="573" y="-550.6" font-family="Helvetica,sans-Serif" font-size="8.00">INTEGER NOT NULL</text>
+<text text-anchor="start" x="459" y="-537.6" font-family="Helvetica,sans-Serif" font-size="8.00">FIRSTNAME</text>
+<text text-anchor="start" x="541" y="-537.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="573" y="-537.6" font-family="Helvetica,sans-Serif" font-size="8.00">VARCHAR(20) NOT NULL</text>
+<text text-anchor="start" x="459" y="-524.6" font-family="Helvetica,sans-Serif" font-size="8.00">LASTNAME</text>
+<text text-anchor="start" x="541" y="-524.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="573" y="-524.6" font-family="Helvetica,sans-Serif" font-size="8.00">VARCHAR(20) NOT NULL</text>
+<text text-anchor="start" x="459" y="-511.6" font-family="Helvetica,sans-Serif" font-size="8.00">ADDRESS1</text>
+<text text-anchor="start" x="541" y="-511.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="573" y="-511.6" font-family="Helvetica,sans-Serif" font-size="8.00">VARCHAR(255)</text>
+<text text-anchor="start" x="459" y="-498.6" font-family="Helvetica,sans-Serif" font-size="8.00">ADDRESS2</text>
+<text text-anchor="start" x="541" y="-498.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="573" y="-498.6" font-family="Helvetica,sans-Serif" font-size="8.00">VARCHAR(255)</text>
+<text text-anchor="start" x="459" y="-485.6" font-family="Helvetica,sans-Serif" font-size="8.00">CITY</text>
+<text text-anchor="start" x="541" y="-485.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="573" y="-485.6" font-family="Helvetica,sans-Serif" font-size="8.00">VARCHAR(50)</text>
+<text text-anchor="start" x="459" y="-472.6" font-family="Helvetica,sans-Serif" font-size="8.00">STATE</text>
+<text text-anchor="start" x="541" y="-472.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="573" y="-472.6" font-family="Helvetica,sans-Serif" font-size="8.00">VARCHAR(2)</text>
+<text text-anchor="start" x="459" y="-459.6" font-family="Helvetica,sans-Serif" font-size="8.00">POSTALCODE</text>
+<text text-anchor="start" x="541" y="-459.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="573" y="-459.6" font-family="Helvetica,sans-Serif" font-size="8.00">VARCHAR(10)</text>
+<text text-anchor="start" x="459" y="-446.6" font-family="Helvetica,sans-Serif" font-size="8.00">COUNTRY</text>
+<text text-anchor="start" x="541" y="-446.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="573" y="-446.6" font-family="Helvetica,sans-Serif" font-size="8.00">VARCHAR(50)</text>
+<polygon fill="none" stroke="#555555" points="456,-441 456,-587 670,-587 670,-441 456,-441"/>
+</g>
+<!-- bookauthors_aa4376 -->
+<g id="node2" class="node"><title>bookauthors_aa4376</title>
+<polygon fill="white" stroke="none" points="832,-540 832,-608 1156,-608 1156,-540 832,-540"/>
+<polygon fill="#96c2fa" stroke="none" points="833,-593 833,-607 1025,-607 1025,-593 833,-593"/>
+<text text-anchor="start" x="835" y="-599.1" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="8.00">PUBLIC.BOOKS.BOOKAUTHORS</text>
+<polygon fill="#96c2fa" stroke="none" points="1025,-593 1025,-607 1155,-607 1155,-593 1025,-593"/>
+<text text-anchor="start" x="1131" y="-598.1" font-family="Helvetica,sans-Serif" font-size="8.00">[table]</text>
+<text text-anchor="start" x="835" y="-584.6" font-family="Helvetica,sans-Serif" font-size="8.00">Relationship between books and their authors, along with the latest updated information</text>
+<text text-anchor="start" x="835" y="-571.6" font-family="Helvetica,sans-Serif" font-size="8.00">BOOKID</text>
+<text text-anchor="start" x="950" y="-571.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="1027" y="-571.6" font-family="Helvetica,sans-Serif" font-size="8.00">INTEGER NOT NULL</text>
+<text text-anchor="start" x="835" y="-558.6" font-family="Helvetica,sans-Serif" font-size="8.00">AUTHORID</text>
+<text text-anchor="start" x="950" y="-558.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="1027" y="-558.6" font-family="Helvetica,sans-Serif" font-size="8.00">INTEGER NOT NULL</text>
+<text text-anchor="start" x="835" y="-545.6" font-family="Helvetica,sans-Serif" font-size="8.00">&quot;UPDATE&quot;</text>
+<text text-anchor="start" x="950" y="-545.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="1027" y="-545.6" font-family="Helvetica,sans-Serif" font-size="8.00">CLOB</text>
+<polygon fill="none" stroke="#555555" points="832,-540 832,-608 1156,-608 1156,-540 832,-540"/>
+</g>
+<!-- bookauthors_aa4376&#45;&gt;authors_dba8a1ff -->
+<g id="edge1" class="edge"><title>bookauthors_aa4376:authorid_19681b5e.start:w&#45;&gt;authors_dba8a1ff:id_ecfc5f6a.end:e</title>
+<path fill="none" stroke="black" d="M817.536,-557.32C814.692,-556.404 811.577,-555.487 807,-555 749.285,-548.859 732.452,-552.607 678.274,-552.972"/>
+<polygon fill="black" stroke="black" points="824.134,-558.543 831.344,-563.54 828.067,-559.271 832,-560 832,-560 832,-560 828.067,-559.271 832.656,-556.46 824.134,-558.543 824.134,-558.543"/>
+<ellipse fill="none" stroke="black" cx="820.987" cy="-557.96" rx="3.2" ry="3.2"/>
+<polygon fill="black" stroke="black" points="670.813,-556.997 670.787,-548.997 672.387,-548.992 672.413,-556.992 670.813,-556.997"/>
+<polyline fill="none" stroke="black" points="670,-553 674,-552.987 "/>
+<polygon fill="black" stroke="black" points="674.813,-556.984 674.787,-548.984 676.387,-548.979 676.413,-556.978 674.813,-556.984"/>
+<polyline fill="none" stroke="black" points="674,-552.987 678,-552.973 "/>
+<text text-anchor="start" x="735.5" y="-557.6" font-family="Helvetica,sans-Serif" font-size="8.00">FK_Z_AUTHOR</text>
+</g>
+<!-- books_afd2ba21 -->
+<g id="node4" class="node"><title>books_afd2ba21</title>
+<polygon fill="white" stroke="none" points="448.5,-195 448.5,-393 677.5,-393 677.5,-195 448.5,-195"/>
+<polygon fill="#96c2fa" stroke="none" points="450,-378 450,-392 553,-392 553,-378 450,-378"/>
+<text text-anchor="start" x="452" y="-384.1" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="8.00">PUBLIC.BOOKS.BOOKS</text>
+<polygon fill="#96c2fa" stroke="none" points="553,-378 553,-392 677,-392 677,-378 553,-378"/>
+<text text-anchor="start" x="653" y="-383.1" font-family="Helvetica,sans-Serif" font-size="8.00">[table]</text>
+<text text-anchor="start" x="452" y="-369.6" font-family="Helvetica,sans-Serif" font-size="8.00">Details for published books</text>
+<text text-anchor="start" x="452" y="-357.6" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="8.00">ID</text>
+<text text-anchor="start" x="539" y="-356.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="555" y="-356.6" font-family="Helvetica,sans-Serif" font-size="8.00">INTEGER NOT NULL</text>
+<text text-anchor="start" x="539" y="-343.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="555" y="-343.6" font-family="Helvetica,sans-Serif" font-size="8.00">Unique (internal) id for book</text>
+<text text-anchor="start" x="452" y="-330.6" font-family="Helvetica,sans-Serif" font-size="8.00">TITLE</text>
+<text text-anchor="start" x="539" y="-330.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="555" y="-330.6" font-family="Helvetica,sans-Serif" font-size="8.00">VARCHAR(255) NOT NULL</text>
+<text text-anchor="start" x="539" y="-317.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="555" y="-317.6" font-family="Helvetica,sans-Serif" font-size="8.00">Book title</text>
+<text text-anchor="start" x="452" y="-304.6" font-family="Helvetica,sans-Serif" font-size="8.00">DESCRIPTION</text>
+<text text-anchor="start" x="539" y="-304.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="555" y="-304.6" font-family="Helvetica,sans-Serif" font-size="8.00">VARCHAR(255)</text>
+<text text-anchor="start" x="539" y="-291.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="555" y="-291.6" font-family="Helvetica,sans-Serif" font-size="8.00">Book description</text>
+<text text-anchor="start" x="452" y="-278.6" font-family="Helvetica,sans-Serif" font-size="8.00">PUBLISHERID</text>
+<text text-anchor="start" x="539" y="-278.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="555" y="-278.6" font-family="Helvetica,sans-Serif" font-size="8.00">INTEGER NOT NULL</text>
+<text text-anchor="start" x="539" y="-265.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="555" y="-265.6" font-family="Helvetica,sans-Serif" font-size="8.00">Foreign key to the book publisher</text>
+<text text-anchor="start" x="452" y="-252.6" font-family="Helvetica,sans-Serif" font-size="8.00">PUBLICATIONDATE</text>
+<text text-anchor="start" x="539" y="-252.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="555" y="-252.6" font-family="Helvetica,sans-Serif" font-size="8.00">DATE</text>
+<text text-anchor="start" x="539" y="-239.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="555" y="-239.6" font-family="Helvetica,sans-Serif" font-size="8.00">Book publication date</text>
+<text text-anchor="start" x="452" y="-226.6" font-family="Helvetica,sans-Serif" font-size="8.00">PRICE</text>
+<text text-anchor="start" x="539" y="-226.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="555" y="-226.6" font-family="Helvetica,sans-Serif" font-size="8.00">DOUBLE(64, 0)</text>
+<text text-anchor="start" x="539" y="-213.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="555" y="-213.6" font-family="Helvetica,sans-Serif" font-size="8.00">Current price for the book</text>
+<text text-anchor="start" x="452" y="-200.6" font-family="Helvetica,sans-Serif" font-size="8.00">PREVIOUSEDITIONID</text>
+<text text-anchor="start" x="539" y="-200.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="555" y="-200.6" font-family="Helvetica,sans-Serif" font-size="8.00">INTEGER</text>
+<polygon fill="none" stroke="#555555" points="448.5,-195 448.5,-393 677.5,-393 677.5,-195 448.5,-195"/>
+</g>
+<!-- bookauthors_aa4376&#45;&gt;books_afd2ba21 -->
+<g id="edge2" class="edge"><title>bookauthors_aa4376:bookid_931bd73c.start:w&#45;&gt;books_afd2ba21:id_bb8abc08.end:e</title>
+<path fill="none" stroke="black" d="M817.607,-573.667C777.125,-577.344 753.049,-593.876 721,-563 699.542,-542.327 711.056,-458.949 704,-430 696.788,-400.412 708.894,-366.141 686.215,-359.975"/>
+<polygon fill="black" stroke="black" points="824.009,-573.37 832.167,-576.596 828.004,-573.185 832,-573 832,-573 832,-573 828.004,-573.185 831.833,-569.404 824.009,-573.37 824.009,-573.37"/>
+<ellipse fill="none" stroke="black" cx="820.812" cy="-573.519" rx="3.2" ry="3.2"/>
+<polygon fill="black" stroke="black" points="678.323,-363.066 679.266,-355.122 680.855,-355.311 679.912,-363.255 678.323,-363.066"/>
+<polyline fill="none" stroke="black" points="678,-359 681.972,-359.471 "/>
+<polygon fill="black" stroke="black" points="682.295,-363.538 683.238,-355.594 684.827,-355.782 683.884,-363.726 682.295,-363.538"/>
+<polyline fill="none" stroke="black" points="681.972,-359.471 685.944,-359.943 "/>
+<text text-anchor="start" x="740" y="-583.6" font-family="Helvetica,sans-Serif" font-size="8.00">FK_Y_BOOK</text>
+</g>
+<!-- authorslist_b29d331d -->
+<g id="node3" class="node"><title>authorslist_b29d331d</title>
+<polygon fill="white" stroke="none" points="897.5,-629.5 897.5,-684.5 1090.5,-684.5 1090.5,-629.5 897.5,-629.5"/>
+<polygon fill="#96c2fa" stroke="none" points="899,-669 899,-683 1031,-683 1031,-669 899,-669"/>
+<text text-anchor="start" x="901" y="-675.1" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="8.00">PUBLIC.BOOKS.AUTHORSLIST</text>
+<polygon fill="#96c2fa" stroke="none" points="1031,-669 1031,-683 1090,-683 1090,-669 1031,-669"/>
+<text text-anchor="start" x="1065" y="-674.1" font-family="Helvetica,sans-Serif" font-size="8.00">[view]</text>
+<text text-anchor="start" x="901" y="-660.6" font-family="Helvetica,sans-Serif" font-size="8.00">ID</text>
+<text text-anchor="start" x="987" y="-660.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="1033" y="-660.6" font-family="Helvetica,sans-Serif" font-size="8.00">INTEGER</text>
+<text text-anchor="start" x="901" y="-647.6" font-family="Helvetica,sans-Serif" font-size="8.00">FIRSTNAME</text>
+<text text-anchor="start" x="987" y="-647.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="1033" y="-647.6" font-family="Helvetica,sans-Serif" font-size="8.00">VARCHAR(20)</text>
+<text text-anchor="start" x="901" y="-634.6" font-family="Helvetica,sans-Serif" font-size="8.00">LASTNAME</text>
+<text text-anchor="start" x="987" y="-634.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="1033" y="-634.6" font-family="Helvetica,sans-Serif" font-size="8.00">VARCHAR(20)</text>
+<polygon fill="none" stroke="#555555" points="897.5,-629.5 897.5,-684.5 1090.5,-684.5 1090.5,-629.5 897.5,-629.5"/>
+</g>
+<!-- books_afd2ba21&#45;&gt;books_afd2ba21 -->
+<g id="edge3" class="edge"><title>books_afd2ba21:previouseditionid_8c50cb95.start:w&#45;&gt;books_afd2ba21:id_bb8abc08.end:e</title>
+<path fill="none" stroke="black" d="M442.264,-209.467C400.489,-258.681 408.941,-410 563.5,-410 719.655,-410 726.67,-398.75 683.425,-364.053"/>
+<polygon fill="black" stroke="black" points="446.646,-199.678 452.202,-205.434 451.051,-206.545 445.495,-200.789 446.646,-199.678"/>
+<polyline fill="none" stroke="black" points="450,-202 447.122,-204.778 "/>
+<ellipse fill="none" stroke="black" cx="444.82" cy="-207" rx="3.20001" ry="3.20001"/>
+<polygon fill="black" stroke="black" points="675.156,-362.639 680.101,-356.35 681.359,-357.339 676.414,-363.628 675.156,-362.639"/>
+<polyline fill="none" stroke="black" points="677,-359 680.144,-361.473 "/>
+<polygon fill="black" stroke="black" points="678.3,-365.111 683.246,-358.823 684.503,-359.812 679.558,-366.1 678.3,-365.111"/>
+<polyline fill="none" stroke="black" points="680.144,-361.473 683.289,-363.945 "/>
+<text text-anchor="start" x="522" y="-412.6" font-family="Helvetica,sans-Serif" font-size="8.00">FK_PREVIOUSEDITION</text>
+</g>
+<!-- publishers_b8da20c0 -->
+<g id="node7" class="node"><title>publishers_b8da20c0</title>
+<polygon fill="white" stroke="none" points="8,-220 8,-314 276,-314 276,-220 8,-220"/>
+<polygon fill="#96c2fa" stroke="none" points="9,-299 9,-313 135,-313 135,-299 9,-299"/>
+<text text-anchor="start" x="11" y="-305.1" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="8.00">PUBLIC.BOOKS.PUBLISHERS</text>
+<polygon fill="#96c2fa" stroke="none" points="135,-299 135,-313 275,-313 275,-299 135,-299"/>
+<text text-anchor="start" x="251" y="-304.1" font-family="Helvetica,sans-Serif" font-size="8.00">[table]</text>
+<text text-anchor="start" x="11" y="-290.6" font-family="Helvetica,sans-Serif" font-size="8.00">List of book publishers</text>
+<text text-anchor="start" x="11" y="-278.6" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="8.00">ID</text>
+<text text-anchor="start" x="94" y="-277.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="137" y="-277.6" font-family="Helvetica,sans-Serif" font-size="8.00">INTEGER NOT NULL</text>
+<text text-anchor="start" x="94" y="-264.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="137" y="-264.6" font-family="Helvetica,sans-Serif" font-size="8.00">auto&#45;incremented</text>
+<text text-anchor="start" x="94" y="-251.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="137" y="-251.6" font-family="Helvetica,sans-Serif" font-size="8.00">Unique (internal) id for book publisher</text>
+<text text-anchor="start" x="11" y="-238.6" font-family="Helvetica,sans-Serif" font-size="8.00">PUBLISHER</text>
+<text text-anchor="start" x="94" y="-238.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="137" y="-238.6" font-family="Helvetica,sans-Serif" font-size="8.00">VARCHAR(255)</text>
+<text text-anchor="start" x="94" y="-225.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="137" y="-225.6" font-family="Helvetica,sans-Serif" font-size="8.00">Name of book publisher</text>
+<polygon fill="none" stroke="#555555" points="8,-220 8,-314 276,-314 276,-220 8,-220"/>
+</g>
+<!-- books_afd2ba21&#45;&gt;publishers_b8da20c0 -->
+<g id="edge5" class="edge"><title>books_afd2ba21:publisherid_3413fbaa.start:w&#45;&gt;publishers_b8da20c0:id_6fc9dd09.end:e</title>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M434.411,-280C371.847,-280 349.531,-280 284.188,-280"/>
+<polygon fill="black" stroke="black" points="441,-280 449,-283.6 445,-280 449,-280 449,-280 449,-280 445,-280 449,-276.4 441,-280 441,-280"/>
+<ellipse fill="none" stroke="black" cx="437.8" cy="-280" rx="3.2" ry="3.2"/>
+<polygon fill="black" stroke="black" points="276.8,-284 276.8,-276 278.4,-276 278.4,-284 276.8,-284"/>
+<polyline fill="none" stroke="black" points="276,-280 280,-280 "/>
+<polygon fill="black" stroke="black" points="280.8,-284 280.8,-276 282.4,-276 282.4,-284 280.8,-284"/>
+<polyline fill="none" stroke="black" points="280,-280 284,-280 "/>
+</g>
+<!-- sales_20be6f95 -->
+<g id="node5" class="node"><title>sales_20be6f95</title>
+<polygon fill="white" stroke="none" points="867.5,-66.5 867.5,-147.5 1120.5,-147.5 1120.5,-66.5 867.5,-66.5"/>
+<polygon fill="#fa96e1" stroke="none" points="869,-132 869,-146 1022,-146 1022,-132 869,-132"/>
+<text text-anchor="start" x="871" y="-138.1" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="8.00">PUBLIC.&quot;PUBLISHER SALES&quot;.SALES</text>
+<polygon fill="#fa96e1" stroke="none" points="1022,-132 1022,-146 1120,-146 1120,-132 1022,-132"/>
+<text text-anchor="start" x="1096" y="-137.1" font-family="Helvetica,sans-Serif" font-size="8.00">[table]</text>
+<text text-anchor="start" x="871" y="-123.6" font-family="Helvetica,sans-Serif" font-size="8.00">POSTALCODE</text>
+<text text-anchor="start" x="978" y="-123.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="1024" y="-123.6" font-family="Helvetica,sans-Serif" font-size="8.00">VARCHAR(10) NOT NULL</text>
+<text text-anchor="start" x="871" y="-110.6" font-family="Helvetica,sans-Serif" font-size="8.00">COUNTRY</text>
+<text text-anchor="start" x="978" y="-110.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="1024" y="-110.6" font-family="Helvetica,sans-Serif" font-size="8.00">VARCHAR(50) NOT NULL</text>
+<text text-anchor="start" x="871" y="-97.6" font-family="Helvetica,sans-Serif" font-size="8.00">BOOKID</text>
+<text text-anchor="start" x="978" y="-97.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="1024" y="-97.6" font-family="Helvetica,sans-Serif" font-size="8.00">INTEGER</text>
+<text text-anchor="start" x="871" y="-84.6" font-family="Helvetica,sans-Serif" font-size="8.00">PERIODENDDATE</text>
+<text text-anchor="start" x="978" y="-84.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="1024" y="-84.6" font-family="Helvetica,sans-Serif" font-size="8.00">DATE</text>
+<text text-anchor="start" x="871" y="-71.6" font-family="Helvetica,sans-Serif" font-size="8.00">TOTALAMOUNT</text>
+<text text-anchor="start" x="978" y="-71.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="1024" y="-71.6" font-family="Helvetica,sans-Serif" font-size="8.00">DOUBLE(64, 0)</text>
+<polygon fill="none" stroke="#555555" points="867.5,-66.5 867.5,-147.5 1120.5,-147.5 1120.5,-66.5 867.5,-66.5"/>
+</g>
+<!-- sales_20be6f95&#45;&gt;books_afd2ba21 -->
+<g id="edge4" class="edge"><title>sales_20be6f95:bookid_3c829a3d.start:w&#45;&gt;books_afd2ba21:id_bb8abc08.end:e</title>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M853.574,-98.4735C797.37,-94.4134 765.809,-69.3118 721,-110 702.001,-127.252 705.265,-321.007 684.525,-354.182"/>
+<polygon fill="black" stroke="black" points="860.005,-98.7082 867.869,-102.598 864.003,-98.8541 868,-99 868,-99 868,-99 864.003,-98.8541 868.131,-95.4024 860.005,-98.7082 860.005,-98.7082"/>
+<ellipse fill="none" stroke="black" cx="856.807" cy="-98.5915" rx="3.2" ry="3.2"/>
+<polygon fill="black" stroke="black" points="681.02,-361.742 676.267,-355.307 677.554,-354.357 682.307,-360.792 681.02,-361.742"/>
+<polyline fill="none" stroke="black" points="678,-359 681.218,-356.624 "/>
+<polygon fill="black" stroke="black" points="684.237,-359.366 679.485,-352.931 680.772,-351.98 685.525,-358.416 684.237,-359.366"/>
+<polyline fill="none" stroke="black" points="681.218,-356.624 684.435,-354.248 "/>
+</g>
+<!-- regions_bc895c48 -->
+<g id="node12" class="node"><title>regions_bc895c48</title>
+<polygon fill="white" stroke="none" points="430.5,-106 430.5,-174 695.5,-174 695.5,-106 430.5,-106"/>
+<polygon fill="#fa96e1" stroke="none" points="432,-159 432,-173 597,-173 597,-159 432,-159"/>
+<text text-anchor="start" x="434" y="-165.1" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="8.00">PUBLIC.&quot;PUBLISHER SALES&quot;.REGIONS</text>
+<polygon fill="#fa96e1" stroke="none" points="597,-159 597,-173 695,-173 695,-159 597,-159"/>
+<text text-anchor="start" x="671" y="-164.1" font-family="Helvetica,sans-Serif" font-size="8.00">[table]</text>
+<text text-anchor="start" x="434" y="-150.6" font-family="Helvetica,sans-Serif" font-size="8.00">CITY</text>
+<text text-anchor="start" x="545" y="-150.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="599" y="-150.6" font-family="Helvetica,sans-Serif" font-size="8.00">VARCHAR(50) NOT NULL</text>
+<text text-anchor="start" x="434" y="-137.6" font-family="Helvetica,sans-Serif" font-size="8.00">STATE</text>
+<text text-anchor="start" x="545" y="-137.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="599" y="-137.6" font-family="Helvetica,sans-Serif" font-size="8.00">VARCHAR(2) NOT NULL</text>
+<text text-anchor="start" x="434" y="-125.6" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="8.00">POSTALCODE</text>
+<text text-anchor="start" x="545" y="-124.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="599" y="-124.6" font-family="Helvetica,sans-Serif" font-size="8.00">VARCHAR(10) NOT NULL</text>
+<text text-anchor="start" x="434" y="-112.6" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="8.00">COUNTRY</text>
+<text text-anchor="start" x="545" y="-111.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="599" y="-111.6" font-family="Helvetica,sans-Serif" font-size="8.00">VARCHAR(50) NOT NULL</text>
+<polygon fill="none" stroke="#555555" points="430.5,-106 430.5,-174 695.5,-174 695.5,-106 430.5,-106"/>
+</g>
+<!-- sales_20be6f95&#45;&gt;regions_bc895c48 -->
+<g id="edge10" class="edge"><title>sales_20be6f95:postalcode_738bc931.start:w&#45;&gt;regions_bc895c48:postalcode_9b2bfe9e.end:e</title>
+<path fill="none" stroke="black" d="M853.496,-126C791.293,-126 769.106,-126 704.14,-126"/>
+<polygon fill="black" stroke="black" points="860,-126 868,-129.6 864,-126 868,-126 868,-126 868,-126 864,-126 868,-122.4 860,-126 860,-126"/>
+<ellipse fill="none" stroke="black" cx="856.8" cy="-126" rx="3.2" ry="3.2"/>
+<polygon fill="black" stroke="black" points="696.8,-130 696.8,-122 698.4,-122 698.4,-130 696.8,-130"/>
+<polyline fill="none" stroke="black" points="696,-126 700,-126 "/>
+<polygon fill="black" stroke="black" points="700.8,-130 700.8,-122 702.4,-122 702.4,-130 700.8,-130"/>
+<polyline fill="none" stroke="black" points="700,-126 704,-126 "/>
+<text text-anchor="start" x="724.5" y="-128.6" font-family="Helvetica,sans-Serif" font-size="8.00">FK_SALES_REGIONS</text>
+</g>
+<!-- sales_20be6f95&#45;&gt;regions_bc895c48 -->
+<g id="edge11" class="edge"><title>sales_20be6f95:country_890cfe1d.start:w&#45;&gt;regions_bc895c48:country_7d0587d0.end:e</title>
+<path fill="none" stroke="black" d="M853.496,-113C791.293,-113 769.106,-113 704.14,-113"/>
+<polygon fill="black" stroke="black" points="860,-113 868,-116.6 864,-113 868,-113 868,-113 868,-113 864,-113 868,-109.4 860,-113 860,-113"/>
+<ellipse fill="none" stroke="black" cx="856.8" cy="-113" rx="3.2" ry="3.2"/>
+<polygon fill="black" stroke="black" points="696.8,-117 696.8,-109 698.4,-109 698.4,-117 696.8,-117"/>
+<polyline fill="none" stroke="black" points="696,-113 700,-113 "/>
+<polygon fill="black" stroke="black" points="700.8,-117 700.8,-109 702.4,-109 702.4,-117 700.8,-117"/>
+<polyline fill="none" stroke="black" points="700,-113 704,-113 "/>
+<text text-anchor="start" x="724.5" y="-115.6" font-family="Helvetica,sans-Serif" font-size="8.00">FK_SALES_REGIONS</text>
+</g>
+<!-- globalcounts_2ab3635a -->
+<g id="node6" class="node"><title>globalcounts_2ab3635a</title>
+<polygon fill="white" stroke="none" points="905.5,-705.5 905.5,-734.5 1082.5,-734.5 1082.5,-705.5 905.5,-705.5"/>
+<polygon fill="#96c2fa" stroke="none" points="907,-719 907,-733 1046,-733 1046,-719 907,-719"/>
+<text text-anchor="start" x="909" y="-725.1" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="8.00">PUBLIC.BOOKS.&quot;Global Counts&quot;</text>
+<polygon fill="#96c2fa" stroke="none" points="1046,-719 1046,-733 1082,-733 1082,-719 1046,-719"/>
+<text text-anchor="start" x="1058" y="-724.1" font-family="Helvetica,sans-Serif" font-size="8.00">[table]</text>
+<text text-anchor="start" x="909" y="-710.6" font-family="Helvetica,sans-Serif" font-size="8.00">&quot;Global Count&quot;</text>
+<text text-anchor="start" x="1003" y="-710.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="1048" y="-710.6" font-family="Helvetica,sans-Serif" font-size="8.00">INTEGER</text>
+<polygon fill="none" stroke="#555555" points="905.5,-705.5 905.5,-734.5 1082.5,-734.5 1082.5,-705.5 905.5,-705.5"/>
+</g>
+<!-- extra_pk_334890da -->
+<g id="node8" class="node"><title>extra_pk_334890da</title>
+<polygon fill="white" stroke="none" points="891,-755.5 891,-810.5 1097,-810.5 1097,-755.5 891,-755.5"/>
+<polygon fill="#bffa96" stroke="none" points="892,-795 892,-809 1020,-809 1020,-795 892,-795"/>
+<text text-anchor="start" x="894" y="-801.1" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="8.00">PUBLIC.FOR_LINT.EXTRA_PK</text>
+<polygon fill="#bffa96" stroke="none" points="1020,-795 1020,-809 1096,-809 1096,-795 1020,-795"/>
+<text text-anchor="start" x="1072" y="-800.1" font-family="Helvetica,sans-Serif" font-size="8.00">[table]</text>
+<text text-anchor="start" x="894" y="-787.6" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="8.00">ID</text>
+<text text-anchor="start" x="985" y="-786.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="1022" y="-786.6" font-family="Helvetica,sans-Serif" font-size="8.00">INTEGER NOT NULL</text>
+<text text-anchor="start" x="894" y="-773.6" font-family="Helvetica,sans-Serif" font-size="8.00">WRITERID</text>
+<text text-anchor="start" x="985" y="-773.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="1022" y="-773.6" font-family="Helvetica,sans-Serif" font-size="8.00">BIGINT NOT NULL</text>
+<text text-anchor="start" x="894" y="-760.6" font-family="Helvetica,sans-Serif" font-size="8.00">PUBLICATIONID</text>
+<text text-anchor="start" x="985" y="-760.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="1022" y="-760.6" font-family="Helvetica,sans-Serif" font-size="8.00">INTEGER NOT NULL</text>
+<polygon fill="none" stroke="#555555" points="891,-755.5 891,-810.5 1097,-810.5 1097,-755.5 891,-755.5"/>
+</g>
+<!-- publications_949377f7 -->
+<g id="node10" class="node"><title>publications_949377f7</title>
+<polygon fill="white" stroke="none" points="437.5,-644 437.5,-764 688.5,-764 688.5,-644 437.5,-644"/>
+<polygon fill="#bffa96" stroke="none" points="439,-749 439,-763 585,-763 585,-749 439,-749"/>
+<text text-anchor="start" x="441" y="-755.1" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="8.00">PUBLIC.FOR_LINT.PUBLICATIONS</text>
+<polygon fill="#bffa96" stroke="none" points="585,-749 585,-763 688,-763 688,-749 585,-749"/>
+<text text-anchor="start" x="664" y="-754.1" font-family="Helvetica,sans-Serif" font-size="8.00">[table]</text>
+<text text-anchor="start" x="441" y="-741.6" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="8.00">ID</text>
+<text text-anchor="start" x="548" y="-740.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="587" y="-740.6" font-family="Helvetica,sans-Serif" font-size="8.00">INTEGER NOT NULL</text>
+<text text-anchor="start" x="441" y="-727.6" font-family="Helvetica,sans-Serif" font-size="8.00">TITLE</text>
+<text text-anchor="start" x="548" y="-727.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="587" y="-727.6" font-family="Helvetica,sans-Serif" font-size="8.00">VARCHAR(255) NOT NULL</text>
+<text text-anchor="start" x="441" y="-714.6" font-family="Helvetica,sans-Serif" font-size="8.00">DESCRIPTION</text>
+<text text-anchor="start" x="548" y="-714.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="587" y="-714.6" font-family="Helvetica,sans-Serif" font-size="8.00">VARCHAR(255)</text>
+<text text-anchor="start" x="441" y="-701.6" font-family="Helvetica,sans-Serif" font-size="8.00">WRITERID</text>
+<text text-anchor="start" x="548" y="-701.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="587" y="-701.6" font-family="Helvetica,sans-Serif" font-size="8.00">BIGINT NOT NULL</text>
+<text text-anchor="start" x="441" y="-688.6" font-family="Helvetica,sans-Serif" font-size="8.00">PUBLICATIONDATE</text>
+<text text-anchor="start" x="548" y="-688.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="587" y="-688.6" font-family="Helvetica,sans-Serif" font-size="8.00">DATE</text>
+<text text-anchor="start" x="441" y="-675.6" font-family="Helvetica,sans-Serif" font-size="8.00">PRICE</text>
+<text text-anchor="start" x="548" y="-675.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="587" y="-675.6" font-family="Helvetica,sans-Serif" font-size="8.00">DOUBLE(64, 0)</text>
+<text text-anchor="start" x="441" y="-662.6" font-family="Helvetica,sans-Serif" font-size="8.00">&quot;UPDATE&quot;</text>
+<text text-anchor="start" x="548" y="-662.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="587" y="-662.6" font-family="Helvetica,sans-Serif" font-size="8.00">CLOB</text>
+<text text-anchor="start" x="441" y="-649.6" font-family="Helvetica,sans-Serif" font-size="8.00">PRESS_RELEASE</text>
+<text text-anchor="start" x="548" y="-649.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="587" y="-649.6" font-family="Helvetica,sans-Serif" font-size="8.00">CLOB</text>
+<polygon fill="none" stroke="#555555" points="437.5,-644 437.5,-764 688.5,-764 688.5,-644 437.5,-644"/>
+</g>
+<!-- extra_pk_334890da&#45;&gt;publications_949377f7 -->
+<g id="edge6" class="edge"><title>extra_pk_334890da:publicationid_d4d93213.start:w&#45;&gt;publications_949377f7:id_f5162672.end:e</title>
+<path fill="none" stroke="black" d="M876.312,-761.824C800.748,-759.972 775.726,-744.106 697.276,-743.055"/>
+<polygon fill="black" stroke="black" points="883.001,-761.904 890.957,-765.6 887,-761.952 891,-762 891,-762 891,-762 887,-761.952 891.043,-758.4 883.001,-761.904 883.001,-761.904"/>
+<ellipse fill="none" stroke="black" cx="879.801" cy="-761.866" rx="3.2" ry="3.2"/>
+<polygon fill="black" stroke="black" points="689.773,-747.005 689.826,-739.005 691.426,-739.016 691.373,-747.016 689.773,-747.005"/>
+<polyline fill="none" stroke="black" points="689,-743 693,-743.027 "/>
+<polygon fill="black" stroke="black" points="693.773,-747.032 693.826,-739.032 695.426,-739.043 695.373,-747.042 693.773,-747.032"/>
+<polyline fill="none" stroke="black" points="693,-743.027 697,-743.053 "/>
+<text text-anchor="start" x="721.5" y="-757.6" font-family="Helvetica,sans-Serif" font-size="8.00">FK_PUBLICATION_JOIN</text>
+</g>
+<!-- writers_bf84ac10 -->
+<g id="node11" class="node"><title>writers_bf84ac10</title>
+<polygon fill="white" stroke="none" points="29,-565 29,-815 255,-815 255,-565 29,-565"/>
+<polygon fill="#bffa96" stroke="none" points="30,-800 30,-814 151,-814 151,-800 30,-800"/>
+<text text-anchor="start" x="32" y="-806.1" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="8.00">PUBLIC.FOR_LINT.WRITERS</text>
+<polygon fill="#bffa96" stroke="none" points="151,-800 151,-814 254,-814 254,-800 151,-800"/>
+<text text-anchor="start" x="230" y="-805.1" font-family="Helvetica,sans-Serif" font-size="8.00">[table]</text>
+<text text-anchor="start" x="32" y="-792.6" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="8.00">ID</text>
+<text text-anchor="start" x="122" y="-791.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="153" y="-791.6" font-family="Helvetica,sans-Serif" font-size="8.00">BIGINT NOT NULL</text>
+<text text-anchor="start" x="32" y="-778.6" font-family="Helvetica,sans-Serif" font-size="8.00">FIRSTNAME</text>
+<text text-anchor="start" x="122" y="-778.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="153" y="-778.6" font-family="Helvetica,sans-Serif" font-size="8.00">VARCHAR(20) NOT NULL</text>
+<text text-anchor="start" x="32" y="-765.6" font-family="Helvetica,sans-Serif" font-size="8.00">LASTNAME</text>
+<text text-anchor="start" x="122" y="-765.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="153" y="-765.6" font-family="Helvetica,sans-Serif" font-size="8.00">VARCHAR(20) NOT NULL</text>
+<text text-anchor="start" x="32" y="-752.6" font-family="Helvetica,sans-Serif" font-size="8.00">ADDRESS1</text>
+<text text-anchor="start" x="122" y="-752.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="153" y="-752.6" font-family="Helvetica,sans-Serif" font-size="8.00">VARCHAR(255)</text>
+<text text-anchor="start" x="32" y="-739.6" font-family="Helvetica,sans-Serif" font-size="8.00">ADDRESS2</text>
+<text text-anchor="start" x="122" y="-739.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="153" y="-739.6" font-family="Helvetica,sans-Serif" font-size="8.00">VARCHAR(255) NOT NULL</text>
+<text text-anchor="start" x="32" y="-726.6" font-family="Helvetica,sans-Serif" font-size="8.00">CITY</text>
+<text text-anchor="start" x="122" y="-726.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="153" y="-726.6" font-family="Helvetica,sans-Serif" font-size="8.00">VARCHAR(50)</text>
+<text text-anchor="start" x="32" y="-713.6" font-family="Helvetica,sans-Serif" font-size="8.00">STATE</text>
+<text text-anchor="start" x="122" y="-713.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="153" y="-713.6" font-family="Helvetica,sans-Serif" font-size="8.00">VARCHAR(2)</text>
+<text text-anchor="start" x="32" y="-700.6" font-family="Helvetica,sans-Serif" font-size="8.00">POSTALCODE</text>
+<text text-anchor="start" x="122" y="-700.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="153" y="-700.6" font-family="Helvetica,sans-Serif" font-size="8.00">VARCHAR(10)</text>
+<text text-anchor="start" x="32" y="-687.6" font-family="Helvetica,sans-Serif" font-size="8.00">COUNTRY</text>
+<text text-anchor="start" x="122" y="-687.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="153" y="-687.6" font-family="Helvetica,sans-Serif" font-size="8.00">VARCHAR(50)</text>
+<text text-anchor="start" x="32" y="-674.6" font-family="Helvetica,sans-Serif" font-size="8.00">PHONE1</text>
+<text text-anchor="start" x="122" y="-674.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="153" y="-674.6" font-family="Helvetica,sans-Serif" font-size="8.00">VARCHAR(10)</text>
+<text text-anchor="start" x="32" y="-661.6" font-family="Helvetica,sans-Serif" font-size="8.00">PHONE2</text>
+<text text-anchor="start" x="122" y="-661.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="153" y="-661.6" font-family="Helvetica,sans-Serif" font-size="8.00">VARCHAR(15)</text>
+<text text-anchor="start" x="32" y="-648.6" font-family="Helvetica,sans-Serif" font-size="8.00">EMAIL1</text>
+<text text-anchor="start" x="122" y="-648.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="153" y="-648.6" font-family="Helvetica,sans-Serif" font-size="8.00">VARCHAR(10)</text>
+<text text-anchor="start" x="32" y="-635.6" font-family="Helvetica,sans-Serif" font-size="8.00">EMAIL2</text>
+<text text-anchor="start" x="122" y="-635.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="153" y="-635.6" font-family="Helvetica,sans-Serif" font-size="8.00">INTEGER</text>
+<text text-anchor="start" x="32" y="-622.6" font-family="Helvetica,sans-Serif" font-size="8.00">FAX</text>
+<text text-anchor="start" x="122" y="-622.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="153" y="-622.6" font-family="Helvetica,sans-Serif" font-size="8.00">VARCHAR(10)</text>
+<text text-anchor="start" x="32" y="-609.6" font-family="Helvetica,sans-Serif" font-size="8.00">FAX3</text>
+<text text-anchor="start" x="122" y="-609.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="153" y="-609.6" font-family="Helvetica,sans-Serif" font-size="8.00">INTEGER</text>
+<text text-anchor="start" x="32" y="-596.6" font-family="Helvetica,sans-Serif" font-size="8.00">HOMEEMAIL11</text>
+<text text-anchor="start" x="122" y="-596.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="153" y="-596.6" font-family="Helvetica,sans-Serif" font-size="8.00">VARCHAR(10)</text>
+<text text-anchor="start" x="32" y="-583.6" font-family="Helvetica,sans-Serif" font-size="8.00">HOMEEMAIL12</text>
+<text text-anchor="start" x="122" y="-583.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="153" y="-583.6" font-family="Helvetica,sans-Serif" font-size="8.00">VARCHAR(10)</text>
+<text text-anchor="start" x="32" y="-570.6" font-family="Helvetica,sans-Serif" font-size="8.00">PUBLICATION_ID</text>
+<text text-anchor="start" x="122" y="-570.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="153" y="-570.6" font-family="Helvetica,sans-Serif" font-size="8.00">BIGINT NOT NULL</text>
+<polygon fill="none" stroke="#555555" points="29,-565 29,-815 255,-815 255,-565 29,-565"/>
+</g>
+<!-- extra_pk_334890da&#45;&gt;writers_bf84ac10 -->
+<g id="edge8" class="edge"><title>extra_pk_334890da:writerid_b8c70762.start:w&#45;&gt;writers_bf84ac10:id_3033cfb9.end:e</title>
+<path fill="none" stroke="black" d="M876.282,-775.017C608.309,-775.656 534.263,-793.644 263.081,-793.995"/>
+<polygon fill="black" stroke="black" points="883,-775.01 891.004,-778.6 887,-775.005 891,-775 891,-775 891,-775 887,-775.005 890.996,-771.4 883,-775.01 883,-775.01"/>
+<ellipse fill="none" stroke="black" cx="879.8" cy="-775.013" rx="3.2" ry="3.2"/>
+<polygon fill="black" stroke="black" points="255.803,-797.999 255.797,-789.999 257.397,-789.998 257.403,-797.998 255.803,-797.999"/>
+<polyline fill="none" stroke="black" points="255,-794 259,-793.997 "/>
+<polygon fill="black" stroke="black" points="259.803,-797.997 259.797,-789.997 261.397,-789.996 261.403,-797.996 259.803,-797.997"/>
+<polyline fill="none" stroke="black" points="259,-793.997 263,-793.995 "/>
+<text text-anchor="start" x="531" y="-793.6" font-family="Helvetica,sans-Serif" font-size="8.00">FK_WRITER_JOIN</text>
+</g>
+<!-- globalcounts_986b8a53 -->
+<g id="node9" class="node"><title>globalcounts_986b8a53</title>
+<polygon fill="white" stroke="none" points="900,-831.5 900,-860.5 1088,-860.5 1088,-831.5 900,-831.5"/>
+<polygon fill="#bffa96" stroke="none" points="901,-845 901,-859 1051,-859 1051,-845 901,-845"/>
+<text text-anchor="start" x="903" y="-851.1" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="8.00">PUBLIC.FOR_LINT.&quot;Global Counts&quot;</text>
+<polygon fill="#bffa96" stroke="none" points="1051,-845 1051,-859 1087,-859 1087,-845 1051,-845"/>
+<text text-anchor="start" x="1063" y="-850.1" font-family="Helvetica,sans-Serif" font-size="8.00">[table]</text>
+<text text-anchor="start" x="903" y="-836.6" font-family="Helvetica,sans-Serif" font-size="8.00">&quot;Global Count&quot;</text>
+<text text-anchor="start" x="1003" y="-836.6" font-family="Helvetica,sans-Serif" font-size="8.00"> </text>
+<text text-anchor="start" x="1053" y="-836.6" font-family="Helvetica,sans-Serif" font-size="8.00">INTEGER</text>
+<polygon fill="none" stroke="#555555" points="900,-831.5 900,-860.5 1088,-860.5 1088,-831.5 900,-831.5"/>
+</g>
+<!-- publications_949377f7&#45;&gt;writers_bf84ac10 -->
+<g id="edge9" class="edge"><title>publications_949377f7:writerid_1c21d0e5.start:w&#45;&gt;writers_bf84ac10:id_3033cfb9.end:e</title>
+<path fill="none" stroke="black" d="M423.388,-702.456C372.799,-698.691 348.37,-677.511 301,-707 266.479,-728.49 294.191,-785.218 263.113,-793.089"/>
+<polygon fill="black" stroke="black" points="430.006,-702.702 437.866,-706.598 434.003,-702.851 438,-703 438,-703 438,-703 434.003,-702.851 438.134,-699.402 430.006,-702.702 430.006,-702.702"/>
+<ellipse fill="none" stroke="black" cx="426.808" cy="-702.583" rx="3.2" ry="3.2"/>
+<polygon fill="black" stroke="black" points="256.241,-797.886 255.349,-789.936 256.939,-789.757 257.831,-797.707 256.241,-797.886"/>
+<polyline fill="none" stroke="black" points="255,-794 258.975,-793.554 "/>
+<polygon fill="black" stroke="black" points="260.216,-797.439 259.324,-789.489 260.914,-789.311 261.806,-797.261 260.216,-797.439"/>
+<polyline fill="none" stroke="black" points="258.975,-793.554 262.95,-793.107 "/>
+<text text-anchor="start" x="301.5" y="-709.6" font-family="Helvetica,sans-Serif" font-size="8.00">FK_PUBLICATIONS_WRITER</text>
+</g>
+<!-- writers_bf84ac10&#45;&gt;publications_949377f7 -->
+<g id="edge7" class="edge"><title>writers_bf84ac10:publication_id_b1bcb5cc.start:w&#45;&gt;publications_949377f7:id_f5162672.end:e</title>
+<path fill="none" stroke="black" d="M39.4267,-561.629C113.232,-491.807 185.273,-499.841 263,-561 319.421,-605.394 253.773,-663.928 301,-718 341.177,-764 368.981,-756.693 429,-768 457.28,-773.327 667.248,-787.938 688,-768 693.262,-762.944 696.837,-753.757 695.531,-748.039"/>
+<polygon fill="black" stroke="black" points="34.6719,-566.358 26.4612,-569.448 31.8359,-569.179 29,-572 29,-572 29,-572 31.8359,-569.179 31.5388,-574.552 34.6719,-566.358 34.6719,-566.358"/>
+<ellipse fill="none" stroke="black" cx="36.9406" cy="-564.101" rx="3.20001" ry="3.20001"/>
+<polygon fill="black" stroke="black" points="687.19,-746.656 692.077,-740.322 693.344,-741.299 688.457,-747.633 687.19,-746.656"/>
+<polyline fill="none" stroke="black" points="689,-743 692.167,-745.444 "/>
+<polygon fill="black" stroke="black" points="690.357,-749.099 695.244,-742.765 696.511,-743.743 691.623,-750.077 690.357,-749.099"/>
+<polyline fill="none" stroke="black" points="692.167,-745.444 695.334,-747.887 "/>
+<text text-anchor="start" x="301.5" y="-766.6" font-family="Helvetica,sans-Serif" font-size="8.00">FK_WRITERS_PUBLICATION</text>
+</g>
+</g>
+</svg>
+
+<h2>Tables</h2>
+
+<table>
+  <caption>PUBLIC.BOOKS.AUTHORS</caption>
+
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[table]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>Contact details for book authors</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'><b><i>ID</i></b></td>
+		<td class='type'>INTEGER NOT NULL</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>FIRSTNAME</td>
+		<td class='type'>VARCHAR(20) NOT NULL</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>LASTNAME</td>
+		<td class='type'>VARCHAR(20) NOT NULL</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ADDRESS1</td>
+		<td class='type'>VARCHAR(255)</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ADDRESS2</td>
+		<td class='type'>VARCHAR(255)</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>CITY</td>
+		<td class='type'>VARCHAR(50)</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>STATE</td>
+		<td class='type'>VARCHAR(2)</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>POSTALCODE</td>
+		<td class='type'>VARCHAR(10)</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>COUNTRY</td>
+		<td class='type'>VARCHAR(50)</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>PK_AUTHORS</td>
+		<td class='description right'>[primary key]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>FK_Z_AUTHOR</td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ID &#8592; PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_IDX_PK_AUTHORS_10097</td>
+		<td class='description right'>[unique index]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>IDX_B_AUTHORS</td>
+		<td class='description right'>[non-unique index]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>LASTNAME</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>FIRSTNAME</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>IDX_A_AUTHORS</td>
+		<td class='description right'>[non-unique index]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>CITY</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>STATE</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>POSTALCODE</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>COUNTRY</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>TRG_AUTHORS</td>
+		<td class='description right'>[trigger, after delete, per row]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2' class='definition'>UPDATE BOOKS.PUBLISHERS SET PUBLISHER=&apos;Jacob&apos;WHERE PUBLISHER=&apos;John&apos;</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>CHECK_UPPERCASE_STATE</td>
+		<td class='description right'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>BOOKS.AUTHORS.STATE=UPPER(BOOKS.AUTHORS.STATE)</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10094</td>
+		<td class='description right'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>BOOKS.AUTHORS.ID IS NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10095</td>
+		<td class='description right'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>BOOKS.AUTHORS.FIRSTNAME IS NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10096</td>
+		<td class='description right'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>BOOKS.AUTHORS.LASTNAME IS NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>DELETE</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>INSERT</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>REFERENCES</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SELECT</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>TRIGGER</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>UPDATE</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<table>
+  <caption>PUBLIC.BOOKS.AUTHORSLIST</caption>
+
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[view]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ID</td>
+		<td class='type'>INTEGER</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>FIRSTNAME</td>
+		<td class='type'>VARCHAR(20)</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>LASTNAME</td>
+		<td class='type'>VARCHAR(20)</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>DELETE</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>INSERT</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>REFERENCES</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SELECT</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>TRIGGER</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>UPDATE</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[definition]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>SELECT ID,FIRSTNAME,LASTNAME FROM BOOKS.AUTHORS</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<table>
+  <caption>PUBLIC.BOOKS.BOOKAUTHORS</caption>
+
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[table]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>Relationship between books and their authors, along with the latest updated information</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>BOOKID</td>
+		<td class='type'>INTEGER NOT NULL</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>AUTHORID</td>
+		<td class='type'>INTEGER NOT NULL</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>&quot;UPDATE&quot;</td>
+		<td class='type'>CLOB</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>FK_Z_AUTHOR</td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>AUTHORID &#8594; PUBLIC.BOOKS.AUTHORS.ID</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>FK_Y_BOOK</td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>BOOKID &#8594; PUBLIC.BOOKS.BOOKS.ID</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_IDX_10118</td>
+		<td class='description right'>[non-unique index]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>AUTHORID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_IDX_10116</td>
+		<td class='description right'>[non-unique index]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>BOOKID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>UIDX_BOOKAUTHORS</td>
+		<td class='description right'>[unique index]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>BOOKID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>AUTHORID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10111</td>
+		<td class='description right'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>BOOKS.BOOKAUTHORS.BOOKID IS NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10112</td>
+		<td class='description right'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>BOOKS.BOOKAUTHORS.AUTHORID IS NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>DELETE</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>INSERT</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>REFERENCES</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SELECT</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>TRIGGER</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>UPDATE</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<table>
+  <caption>PUBLIC.BOOKS.BOOKS</caption>
+
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[table]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>Details for published books</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'><b><i>ID</i></b></td>
+		<td class='type'>INTEGER NOT NULL</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'></td>
+		<td class='type'>Unique (internal) id for book</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>TITLE</td>
+		<td class='type'>VARCHAR(255) NOT NULL</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'></td>
+		<td class='type'>Book title</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>DESCRIPTION</td>
+		<td class='type'>VARCHAR(255)</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'></td>
+		<td class='type'>Book description</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>PUBLISHERID</td>
+		<td class='type'>INTEGER NOT NULL</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'></td>
+		<td class='type'>Foreign key to the book publisher</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>PUBLICATIONDATE</td>
+		<td class='type'>DATE</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'></td>
+		<td class='type'>Book publication date</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>PRICE</td>
+		<td class='type'>DOUBLE(64, 0)</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'></td>
+		<td class='type'>Current price for the book</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>PREVIOUSEDITIONID</td>
+		<td class='type'>INTEGER</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>PK_BOOKS</td>
+		<td class='description right'>[primary key]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>FK_Y_BOOK</td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ID &#8592; PUBLIC.BOOKS.BOOKAUTHORS.BOOKID</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>FK_PREVIOUSEDITION</td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ID &#8592; PREVIOUSEDITIONID</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[weak association]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ID &#8668; PUBLIC.&quot;PUBLISHER SALES&quot;.SALES.BOOKID</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[weak association]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>PUBLISHERID &#8669; PUBLIC.BOOKS.PUBLISHERS.ID</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_IDX_PK_BOOKS_10105</td>
+		<td class='description right'>[unique index]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>UIDX_PREVIOUSEDITION</td>
+		<td class='description right'>[unique index]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>PREVIOUSEDITIONID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_IDX_10109</td>
+		<td class='description right'>[non-unique index]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>PREVIOUSEDITIONID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10102</td>
+		<td class='description right'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>BOOKS.BOOKS.ID IS NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10103</td>
+		<td class='description right'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>BOOKS.BOOKS.TITLE IS NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10104</td>
+		<td class='description right'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>BOOKS.BOOKS.PUBLISHERID IS NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>DELETE</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>INSERT</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>REFERENCES</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SELECT</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>TRIGGER</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>UPDATE</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<table>
+  <caption>PUBLIC.BOOKS."Global Counts"</caption>
+
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[table]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>&quot;Global Count&quot;</td>
+		<td class='type'>INTEGER</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>DELETE</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>INSERT</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>REFERENCES</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SELECT</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>TRIGGER</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>UPDATE</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<table>
+  <caption>PUBLIC.BOOKS.PUBLISHERS</caption>
+
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[table]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>List of book publishers</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'><b><i>ID</i></b></td>
+		<td class='type'>INTEGER NOT NULL</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'></td>
+		<td class='type'>auto-incremented</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'></td>
+		<td class='type'>Unique (internal) id for book publisher</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>PUBLISHER</td>
+		<td class='type'>VARCHAR(255)</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'></td>
+		<td class='type'>Name of book publisher</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_PK_10092</td>
+		<td class='description right'>[primary key]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'></td>
+		<td class='type'>auto-incremented</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[weak association]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ID &#8668; PUBLIC.BOOKS.BOOKS.PUBLISHERID</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_IDX_SYS_PK_10092_10093</td>
+		<td class='description right'>[unique index]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'></td>
+		<td class='type'>auto-incremented</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>DELETE</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>INSERT</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>REFERENCES</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SELECT</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>TRIGGER</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>UPDATE</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<table>
+  <caption>PUBLIC.FOR_LINT.EXTRA_PK</caption>
+
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[table]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'><b><i>ID</i></b></td>
+		<td class='type'>INTEGER NOT NULL</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>WRITERID</td>
+		<td class='type'>BIGINT NOT NULL</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>PUBLICATIONID</td>
+		<td class='type'>INTEGER NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>PK_EXTRA_PK</td>
+		<td class='description right'>[primary key]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>FK_PUBLICATION_JOIN</td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>PUBLICATIONID &#8594; PUBLIC.FOR_LINT.PUBLICATIONS.ID</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>FK_WRITER_JOIN</td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>WRITERID &#8594; PUBLIC.FOR_LINT.WRITERS.ID</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_IDX_PK_EXTRA_PK_10181</td>
+		<td class='description right'>[unique index]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_IDX_10187</td>
+		<td class='description right'>[non-unique index]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>PUBLICATIONID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_IDX_10185</td>
+		<td class='description right'>[non-unique index]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>WRITERID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10178</td>
+		<td class='description right'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>FOR_LINT.EXTRA_PK.ID IS NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10179</td>
+		<td class='description right'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>FOR_LINT.EXTRA_PK.WRITERID IS NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10180</td>
+		<td class='description right'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>FOR_LINT.EXTRA_PK.PUBLICATIONID IS NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>DELETE</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>INSERT</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>REFERENCES</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SELECT</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>TRIGGER</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>UPDATE</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<table>
+  <caption>PUBLIC.FOR_LINT."Global Counts"</caption>
+
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[table]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>&quot;Global Count&quot;</td>
+		<td class='type'>INTEGER</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>DELETE</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>INSERT</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>REFERENCES</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SELECT</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>TRIGGER</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>UPDATE</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<table>
+  <caption>PUBLIC.FOR_LINT.PUBLICATIONS</caption>
+
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[table]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'><b><i>ID</i></b></td>
+		<td class='type'>INTEGER NOT NULL</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>TITLE</td>
+		<td class='type'>VARCHAR(255) NOT NULL</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>DESCRIPTION</td>
+		<td class='type'>VARCHAR(255)</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>WRITERID</td>
+		<td class='type'>BIGINT NOT NULL</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>PUBLICATIONDATE</td>
+		<td class='type'>DATE</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>PRICE</td>
+		<td class='type'>DOUBLE(64, 0)</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>&quot;UPDATE&quot;</td>
+		<td class='type'>CLOB</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>PRESS_RELEASE</td>
+		<td class='type'>CLOB</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>PK_PUBLICATIONS</td>
+		<td class='description right'>[primary key]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>FK_PUBLICATION_JOIN</td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ID &#8592; PUBLIC.FOR_LINT.EXTRA_PK.PUBLICATIONID</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>FK_WRITERS_PUBLICATION</td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ID &#8592; PUBLIC.FOR_LINT.WRITERS.PUBLICATION_ID</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>FK_PUBLICATIONS_WRITER</td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>WRITERID &#8594; PUBLIC.FOR_LINT.WRITERS.ID</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_IDX_PK_PUBLICATIONS_10171</td>
+		<td class='description right'>[unique index]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_IDX_10175</td>
+		<td class='description right'>[non-unique index]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>WRITERID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10168</td>
+		<td class='description right'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>FOR_LINT.PUBLICATIONS.ID IS NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10169</td>
+		<td class='description right'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>FOR_LINT.PUBLICATIONS.TITLE IS NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10170</td>
+		<td class='description right'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>FOR_LINT.PUBLICATIONS.WRITERID IS NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>DELETE</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>INSERT</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>REFERENCES</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SELECT</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>TRIGGER</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>UPDATE</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<table>
+  <caption>PUBLIC.FOR_LINT.WRITERS</caption>
+
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[table]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'><b><i>ID</i></b></td>
+		<td class='type'>BIGINT NOT NULL</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>FIRSTNAME</td>
+		<td class='type'>VARCHAR(20) NOT NULL</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>LASTNAME</td>
+		<td class='type'>VARCHAR(20) NOT NULL</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ADDRESS1</td>
+		<td class='type'>VARCHAR(255)</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ADDRESS2</td>
+		<td class='type'>VARCHAR(255) NOT NULL</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>CITY</td>
+		<td class='type'>VARCHAR(50)</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>STATE</td>
+		<td class='type'>VARCHAR(2)</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>POSTALCODE</td>
+		<td class='type'>VARCHAR(10)</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>COUNTRY</td>
+		<td class='type'>VARCHAR(50)</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>PHONE1</td>
+		<td class='type'>VARCHAR(10)</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>PHONE2</td>
+		<td class='type'>VARCHAR(15)</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>EMAIL1</td>
+		<td class='type'>VARCHAR(10)</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>EMAIL2</td>
+		<td class='type'>INTEGER</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>FAX</td>
+		<td class='type'>VARCHAR(10)</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>FAX3</td>
+		<td class='type'>INTEGER</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>HOMEEMAIL11</td>
+		<td class='type'>VARCHAR(10)</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>HOMEEMAIL12</td>
+		<td class='type'>VARCHAR(10)</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>PUBLICATION_ID</td>
+		<td class='type'>BIGINT NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>PK_WRITERS</td>
+		<td class='description right'>[primary key]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>FK_WRITERS_PUBLICATION</td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>PUBLICATION_ID &#8594; PUBLIC.FOR_LINT.PUBLICATIONS.ID</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>FK_WRITER_JOIN</td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ID &#8592; PUBLIC.FOR_LINT.EXTRA_PK.WRITERID</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>FK_PUBLICATIONS_WRITER</td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ID &#8592; PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_IDX_PK_WRITERS_10161</td>
+		<td class='description right'>[unique index]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_IDX_10189</td>
+		<td class='description right'>[non-unique index]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>PUBLICATION_ID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>IDX_A1_WRITERS</td>
+		<td class='description right'>[non-unique index]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>CITY</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>STATE</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>IDX_U_WRITERS</td>
+		<td class='description right'>[unique index]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>EMAIL1</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>COUNTRY</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>IDX_B_WRITERS</td>
+		<td class='description right'>[non-unique index]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>LASTNAME</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>FIRSTNAME</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>IDX_A_WRITERS</td>
+		<td class='description right'>[non-unique index]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>CITY</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>STATE</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>POSTALCODE</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>COUNTRY</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>CHECK_UPPERCASE_STATE</td>
+		<td class='description right'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>FOR_LINT.WRITERS.STATE=UPPER(FOR_LINT.WRITERS.STATE)</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10156</td>
+		<td class='description right'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>FOR_LINT.WRITERS.ID IS NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10157</td>
+		<td class='description right'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>FOR_LINT.WRITERS.FIRSTNAME IS NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10158</td>
+		<td class='description right'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>FOR_LINT.WRITERS.LASTNAME IS NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10159</td>
+		<td class='description right'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>FOR_LINT.WRITERS.ADDRESS2 IS NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10160</td>
+		<td class='description right'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>FOR_LINT.WRITERS.PUBLICATION_ID IS NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>DELETE</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>INSERT</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>REFERENCES</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SELECT</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>TRIGGER</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>UPDATE</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<table>
+  <caption>PUBLIC."PUBLISHER SALES".REGIONS</caption>
+
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[table]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>CITY</td>
+		<td class='type'>VARCHAR(50) NOT NULL</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>STATE</td>
+		<td class='type'>VARCHAR(2) NOT NULL</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'><b><i>POSTALCODE</i></b></td>
+		<td class='type'>VARCHAR(10) NOT NULL</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'><b><i>COUNTRY</i></b></td>
+		<td class='type'>VARCHAR(50) NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>PK_CUSTOMERS</td>
+		<td class='description right'>[primary key]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>POSTALCODE</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>COUNTRY</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>FK_SALES_REGIONS</td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>POSTALCODE &#8592; PUBLIC.&quot;PUBLISHER SALES&quot;.SALES.POSTALCODE</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>COUNTRY &#8592; PUBLIC.&quot;PUBLISHER SALES&quot;.SALES.COUNTRY</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_IDX_PK_CUSTOMERS_10144</td>
+		<td class='description right'>[unique index]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>POSTALCODE</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>COUNTRY</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10140</td>
+		<td class='description right'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>&quot;PUBLISHER SALES&quot;.REGIONS.CITY IS NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10141</td>
+		<td class='description right'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>&quot;PUBLISHER SALES&quot;.REGIONS.STATE IS NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10142</td>
+		<td class='description right'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>&quot;PUBLISHER SALES&quot;.REGIONS.POSTALCODE IS NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10143</td>
+		<td class='description right'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>&quot;PUBLISHER SALES&quot;.REGIONS.COUNTRY IS NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>DELETE</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>INSERT</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>REFERENCES</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SELECT</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>TRIGGER</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>UPDATE</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<table>
+  <caption>PUBLIC."PUBLISHER SALES".SALES</caption>
+
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[table]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>POSTALCODE</td>
+		<td class='type'>VARCHAR(10) NOT NULL</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>COUNTRY</td>
+		<td class='type'>VARCHAR(50) NOT NULL</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>BOOKID</td>
+		<td class='type'>INTEGER</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>PERIODENDDATE</td>
+		<td class='type'>DATE</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>TOTALAMOUNT</td>
+		<td class='type'>DOUBLE(64, 0)</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>FK_SALES_REGIONS</td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>POSTALCODE &#8594; PUBLIC.&quot;PUBLISHER SALES&quot;.REGIONS.POSTALCODE</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>COUNTRY &#8594; PUBLIC.&quot;PUBLISHER SALES&quot;.REGIONS.COUNTRY</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[weak association]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>BOOKID &#8669; PUBLIC.BOOKS.BOOKS.ID</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_IDX_10154</td>
+		<td class='description right'>[non-unique index]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>POSTALCODE</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>COUNTRY</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10149</td>
+		<td class='description right'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>&quot;PUBLISHER SALES&quot;.SALES.POSTALCODE IS NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10150</td>
+		<td class='description right'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>&quot;PUBLISHER SALES&quot;.SALES.COUNTRY IS NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>DELETE</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>INSERT</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>REFERENCES</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SELECT</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>TRIGGER</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>UPDATE</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<p>&#160;</p>
+<h2>Routines</h2>
+
+<table>
+  <caption>PUBLIC.BOOKS.CUSTOMADD</caption>
+
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[function, does not return a table]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ONE</td>
+		<td class='type'>INTEGER, in</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[specific name]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>CUSTOMADD_10131</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[definition]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10131 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN BOOKS.CUSTOMADD(ONE,1)</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<table>
+  <caption>PUBLIC.BOOKS.CUSTOMADD</caption>
+
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[function, does not return a table]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ONE</td>
+		<td class='type'>INTEGER, in</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>TWO</td>
+		<td class='type'>INTEGER, in</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[specific name]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>CUSTOMADD_10130</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[definition]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER,IN TWO INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10130 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN ONE+TWO</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<table>
+  <caption>PUBLIC.BOOKS.NEW_PUBLISHER</caption>
+
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[procedure, no result]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>PUBLISHER</td>
+		<td class='type'>CHARACTER VARYING, out</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[specific name]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>NEW_PUBLISHER_10128</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[definition]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>CREATE PROCEDURE BOOKS.NEW_PUBLISHER(OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10128 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = &apos;New Publisher&apos;</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<table>
+  <caption>PUBLIC.BOOKS.NEW_PUBLISHER</caption>
+
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[procedure, no result]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>NEWPUBLISHER</td>
+		<td class='type'>CHARACTER VARYING, in</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>PUBLISHER</td>
+		<td class='type'>CHARACTER VARYING, out</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[specific name]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>NEW_PUBLISHER_10129</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[definition]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>CREATE PROCEDURE BOOKS.NEW_PUBLISHER(IN NEWPUBLISHER VARCHAR(50),OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10129 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = NEWPUBLISHER</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<table>
+  <caption>PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS</caption>
+
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[procedure, no result]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>B_COUNT</td>
+		<td class='type'>INTEGER, in</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>B_OFFSET</td>
+		<td class='type'>INTEGER, in</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>L_ID</td>
+		<td class='type'>BIGINT, in</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[specific name]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>ALLOC_BLOCKS_10070</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[definition]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>CREATE PROCEDURE SYSTEM_LOBS.ALLOC_BLOCKS(IN B_COUNT INTEGER,IN B_OFFSET INTEGER,IN L_ID BIGINT) SPECIFIC ALLOC_BLOCKS_10070 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE LOB_ADDR INT DEFAULT NULL;DECLARE REMAINING_COUNT INT DEFAULT 0;DECLARE BL_ADDR INT DEFAULT NULL;DECLARE TEMP_COUNT INT DEFAULT 0;DECLARE BL_OFFSET INT DEFAULT 0;SET REMAINING_COUNT=B_COUNT;SET BL_OFFSET=B_OFFSET;MAIN_LOOP:LOOP SET BL_ADDR=(SELECT BLOCK_ADDR FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_COUNT=REMAINING_COUNT AND TX_ID=0 FETCH 1 ROW ONLY);IF BL_ADDR IS NOT NULL THEN CALL CONVERT_BLOCK(BL_ADDR,REMAINING_COUNT,BL_OFFSET,L_ID);IF LOB_ADDR IS NULL THEN SET LOB_ADDR=BL_ADDR;END IF;LEAVE MAIN_LOOP;END IF;SET(BL_ADDR,TEMP_COUNT)=(SELECT BLOCK_ADDR,BLOCK_COUNT FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_COUNT&lt;REMAINING_COUNT AND TX_ID=0 FETCH 1 ROW ONLY);IF BL_ADDR IS NOT NULL THEN CALL CONVERT_BLOCK(BL_ADDR,TEMP_COUNT,BL_OFFSET,L_ID);IF LOB_ADDR IS NULL THEN SET LOB_ADDR=BL_ADDR;END IF;SET REMAINING_COUNT=REMAINING_COUNT-TEMP_COUNT;SET BL_OFFSET=BL_OFFSET+TEMP_COUNT;SET BL_ADDR=NULL;SET TEMP_COUNT=0;ELSE CALL CREATE_EMPTY_BLOCK(BL_ADDR,REMAINING_COUNT);CALL CONVERT_BLOCK(BL_ADDR,REMAINING_COUNT,BL_OFFSET,L_ID);IF LOB_ADDR IS NULL THEN SET LOB_ADDR=BL_ADDR;END IF;LEAVE MAIN_LOOP;END IF;END LOOP MAIN_LOOP;END</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<table>
+  <caption>PUBLIC.SYSTEM_LOBS.ALLOC_SINGLE_BLOCK</caption>
+
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[procedure, no result]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>B_COUNT</td>
+		<td class='type'>INTEGER, in</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>B_OFFSET</td>
+		<td class='type'>INTEGER, in</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>L_ID</td>
+		<td class='type'>BIGINT, in</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[specific name]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>ALLOC_SINGLE_BLOCK_10073</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[definition]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>CREATE PROCEDURE SYSTEM_LOBS.ALLOC_SINGLE_BLOCK(IN B_COUNT INTEGER,IN B_OFFSET INTEGER,IN L_ID BIGINT) SPECIFIC ALLOC_SINGLE_BLOCK_10073 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE BL_ADDR INT DEFAULT NULL;SET BL_ADDR=(SELECT BLOCK_ADDR FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_COUNT=B_COUNT AND TX_ID=0 FETCH 1 ROW ONLY);IF BL_ADDR IS NULL THEN CALL CREATE_EMPTY_BLOCK(BL_ADDR,B_COUNT);END IF;CALL CONVERT_BLOCK(BL_ADDR,B_COUNT,B_OFFSET,L_ID);END</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<table>
+  <caption>PUBLIC.SYSTEM_LOBS.CONVERT_BLOCK</caption>
+
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[procedure, no result]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>B_ADDR</td>
+		<td class='type'>INTEGER, in</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>B_COUNT</td>
+		<td class='type'>INTEGER, in</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>B_OFFSET</td>
+		<td class='type'>INTEGER, in</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>L_ID</td>
+		<td class='type'>BIGINT, in</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[specific name]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>CONVERT_BLOCK_10028</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[definition]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>CREATE PROCEDURE SYSTEM_LOBS.CONVERT_BLOCK(IN B_ADDR INTEGER,IN B_COUNT INTEGER,IN B_OFFSET INTEGER,IN L_ID BIGINT) SPECIFIC CONVERT_BLOCK_10028 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DELETE FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_ADDR=B_ADDR;INSERT INTO SYSTEM_LOBS.LOBS(BLOCK_ADDR,BLOCK_COUNT,BLOCK_OFFSET,LOB_ID) VALUES(B_ADDR,B_COUNT,B_OFFSET,L_ID);END</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<table>
+  <caption>PUBLIC.SYSTEM_LOBS.CREATE_EMPTY_BLOCK</caption>
+
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[procedure, no result]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>B_ADDR</td>
+		<td class='type'>INTEGER, in/ out</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>B_COUNT</td>
+		<td class='type'>INTEGER, in</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[specific name]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>CREATE_EMPTY_BLOCK_10062</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[definition]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>CREATE PROCEDURE SYSTEM_LOBS.CREATE_EMPTY_BLOCK(INOUT B_ADDR INTEGER,IN B_COUNT INTEGER) SPECIFIC CREATE_EMPTY_BLOCK_10062 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE TEMP_COUNT INT DEFAULT NULL;DECLARE TEMP_ADDR INT DEFAULT NULL;SET(TEMP_ADDR,TEMP_COUNT)=(SELECT BLOCK_ADDR,BLOCK_COUNT FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_COUNT&gt;B_COUNT AND TX_ID=0 FETCH 1 ROW ONLY);IF TEMP_ADDR IS NULL THEN SIGNAL SQLSTATE&apos;45000&apos;;END IF;UPDATE SYSTEM_LOBS.BLOCKS SET BLOCK_COUNT=B_COUNT WHERE BLOCK_ADDR=TEMP_ADDR;INSERT INTO SYSTEM_LOBS.BLOCKS(BLOCK_ADDR,BLOCK_COUNT,TX_ID) VALUES(TEMP_ADDR+B_COUNT,TEMP_COUNT-B_COUNT,0);SET B_ADDR=TEMP_ADDR;END</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<table>
+  <caption>PUBLIC.SYSTEM_LOBS.DELETE_BLOCKS</caption>
+
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[procedure, no result]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>L_ID</td>
+		<td class='type'>BIGINT, in</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>B_OFFSET</td>
+		<td class='type'>INTEGER, in</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>B_LIMIT</td>
+		<td class='type'>INTEGER, in</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>TX_ID</td>
+		<td class='type'>BIGINT, in</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[specific name]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>DELETE_BLOCKS_10059</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[definition]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>CREATE PROCEDURE SYSTEM_LOBS.DELETE_BLOCKS(IN L_ID BIGINT,IN B_OFFSET INTEGER,IN B_LIMIT INTEGER,IN TX_ID BIGINT) SPECIFIC DELETE_BLOCKS_10059 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC INSERT INTO SYSTEM_LOBS.BLOCKS(BLOCK_ADDR,BLOCK_COUNT,TX_ID)(SELECT BLOCK_ADDR,BLOCK_COUNT,TX_ID FROM SYSTEM_LOBS.LOBS WHERE LOBS.LOB_ID=L_ID AND BLOCK_OFFSET&gt;=B_OFFSET AND BLOCK_OFFSET&lt;B_LIMIT);DELETE FROM SYSTEM_LOBS.LOBS WHERE LOBS.LOB_ID=L_ID AND BLOCK_OFFSET&gt;=B_OFFSET AND BLOCK_OFFSET&lt;B_LIMIT;END</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<table>
+  <caption>PUBLIC.SYSTEM_LOBS.DELETE_LOB</caption>
+
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[procedure, no result]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>L_ID</td>
+		<td class='type'>BIGINT, in</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>TX_ID</td>
+		<td class='type'>BIGINT, in</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[specific name]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>DELETE_LOB_10030</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[definition]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>CREATE PROCEDURE SYSTEM_LOBS.DELETE_LOB(IN L_ID BIGINT,IN TX_ID BIGINT) SPECIFIC DELETE_LOB_10030 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC INSERT INTO SYSTEM_LOBS.BLOCKS(BLOCK_ADDR,BLOCK_COUNT,TX_ID)(SELECT BLOCK_ADDR,BLOCK_COUNT,TX_ID FROM SYSTEM_LOBS.LOBS WHERE LOBS.LOB_ID=L_ID);DELETE FROM SYSTEM_LOBS.LOBS WHERE LOBS.LOB_ID=L_ID;DELETE FROM SYSTEM_LOBS.PARTS WHERE LOB_ID=L_ID;DELETE FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_IDS.LOB_ID=L_ID;END</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<table>
+  <caption>PUBLIC.SYSTEM_LOBS.DELETE_UNUSED</caption>
+
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[procedure, no result]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>L_IDS</td>
+		<td class='type'>BIGINT ARRAY, in</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[specific name]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>DELETE_UNUSED_10045</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[definition]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>CREATE PROCEDURE SYSTEM_LOBS.DELETE_UNUSED(IN L_IDS BIGINT ARRAY) SPECIFIC DELETE_UNUSED_10045 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE TABLE LIVE_IDS(TEMP_ID INT);DECLARE TABLE TEMP_IDS(TEMP_ID INT);DECLARE TEMP_COUNT INT DEFAULT 1;WHILE TEMP_COUNT&lt;=CARDINALITY(L_IDS)DO INSERT INTO MODULE.LIVE_IDS(TEMP_ID) VALUES L_IDS[TEMP_COUNT];SET TEMP_COUNT=TEMP_COUNT+1;END WHILE;SET TEMP_COUNT=0;REPEAT INSERT INTO MODULE.TEMP_IDS(TEMP_ID) SELECT LOB_IDS.LOB_ID FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_USAGE_COUNT&lt;1 AND LOB_IDS.LOB_ID NOT IN(SELECT TEMP_ID FROM MODULE.LIVE_IDS)LIMIT 1000;INSERT INTO SYSTEM_LOBS.BLOCKS(BLOCK_ADDR,BLOCK_COUNT,TX_ID)(SELECT BLOCK_ADDR,BLOCK_COUNT,0 FROM SYSTEM_LOBS.LOBS WHERE LOBS.LOB_ID IN(SELECT TEMP_ID FROM MODULE.TEMP_IDS));DELETE FROM SYSTEM_LOBS.LOBS WHERE LOBS.LOB_ID IN(SELECT TEMP_ID FROM MODULE.TEMP_IDS);DELETE FROM SYSTEM_LOBS.PARTS WHERE LOB_ID IN(SELECT TEMP_ID FROM MODULE.TEMP_IDS);DELETE FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_IDS.LOB_ID IN(SELECT TEMP_ID FROM MODULE.TEMP_IDS);GET DIAGNOSTICS TEMP_COUNT=ROW_COUNT;DELETE FROM MODULE.TEMP_IDS;UNTIL TEMP_COUNT&lt;1000 END REPEAT;END</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<table>
+  <caption>PUBLIC.SYSTEM_LOBS.DELETE_UNUSED_LOBS</caption>
+
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[procedure, no result]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>LIMIT_ID</td>
+		<td class='type'>BIGINT, in</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[specific name]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>DELETE_UNUSED_LOBS_10057</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[definition]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>CREATE PROCEDURE SYSTEM_LOBS.DELETE_UNUSED_LOBS(IN LIMIT_ID BIGINT) SPECIFIC DELETE_UNUSED_LOBS_10057 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE TABLE TEMP_IDS(TEMP_ID INT);DECLARE TEMP_COUNT INT DEFAULT 0;REPEAT INSERT INTO MODULE.TEMP_IDS(TEMP_ID) SELECT LOB_IDS.LOB_ID FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_USAGE_COUNT=0 AND LOB_IDS.LOB_ID&lt;LIMIT_ID LIMIT 1000;INSERT INTO SYSTEM_LOBS.BLOCKS(BLOCK_ADDR,BLOCK_COUNT,TX_ID)(SELECT BLOCK_ADDR,BLOCK_COUNT,0 FROM SYSTEM_LOBS.LOBS WHERE LOBS.LOB_ID IN(SELECT TEMP_ID FROM MODULE.TEMP_IDS));DELETE FROM SYSTEM_LOBS.LOBS WHERE LOBS.LOB_ID IN(SELECT TEMP_ID FROM MODULE.TEMP_IDS);DELETE FROM SYSTEM_LOBS.PARTS WHERE LOB_ID IN(SELECT TEMP_ID FROM MODULE.TEMP_IDS);DELETE FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_IDS.LOB_ID IN(SELECT TEMP_ID FROM MODULE.TEMP_IDS);GET DIAGNOSTICS TEMP_COUNT=ROW_COUNT;DELETE FROM MODULE.TEMP_IDS;UNTIL TEMP_COUNT&lt;1000 END REPEAT;END</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<table>
+  <caption>PUBLIC.SYSTEM_LOBS.DIVIDE_BLOCK</caption>
+
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[procedure, no result]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>B_OFFSET</td>
+		<td class='type'>INTEGER, in</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>L_ID</td>
+		<td class='type'>BIGINT, in</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[specific name]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>DIVIDE_BLOCK_10065</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[definition]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>CREATE PROCEDURE SYSTEM_LOBS.DIVIDE_BLOCK(IN B_OFFSET INTEGER,IN L_ID BIGINT) SPECIFIC DIVIDE_BLOCK_10065 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE BL_ADDR INT DEFAULT NULL;DECLARE BL_COUNT INT DEFAULT NULL;DECLARE BL_OFFSET INT DEFAULT NULL;SET(BL_ADDR,BL_COUNT,BL_OFFSET)=(SELECT BLOCK_ADDR,BLOCK_COUNT,BLOCK_OFFSET FROM SYSTEM_LOBS.LOBS WHERE LOBS.LOB_ID=L_ID AND B_OFFSET&gt;BLOCK_OFFSET AND B_OFFSET&lt;BLOCK_OFFSET+BLOCK_COUNT);IF BL_ADDR IS NULL THEN SIGNAL SQLSTATE&apos;45000&apos;;END IF;DELETE FROM SYSTEM_LOBS.LOBS WHERE BLOCK_ADDR=BL_ADDR;INSERT INTO SYSTEM_LOBS.LOBS(BLOCK_ADDR,BLOCK_COUNT,BLOCK_OFFSET,LOB_ID) VALUES(BL_ADDR,B_OFFSET-BL_OFFSET,BL_OFFSET,L_ID);INSERT INTO SYSTEM_LOBS.LOBS(BLOCK_ADDR,BLOCK_COUNT,BLOCK_OFFSET,LOB_ID) VALUES(BL_ADDR+B_OFFSET-BL_OFFSET,BL_OFFSET+BL_COUNT-B_OFFSET,B_OFFSET,L_ID);END</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<table>
+  <caption>PUBLIC.SYSTEM_LOBS.MERGE_EMPTY_BLOCKS</caption>
+
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[procedure, no result]</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[specific name]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>MERGE_EMPTY_BLOCKS_10078</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[definition]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>CREATE PROCEDURE SYSTEM_LOBS.MERGE_EMPTY_BLOCKS() SPECIFIC MERGE_EMPTY_BLOCKS_10078 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE BL_BASE_ADDR INT DEFAULT-1;DECLARE BL_BASE_COUNT INT;DECLARE BL_ADDR INT;DECLARE BL_COUNT INT;REPEAT SET BL_BASE_COUNT=NULL;SET(BL_BASE_ADDR,BL_BASE_COUNT)=(SELECT BLOCK_ADDR,BLOCK_COUNT FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_ADDR&gt;BL_BASE_ADDR ORDER BY BLOCK_ADDR FETCH 1 ROW ONLY);IF BL_BASE_COUNT IS NOT NULL THEN REPEAT SET BL_ADDR=NULL;SET(BL_ADDR,BL_COUNT)=(SELECT BLOCK_ADDR,BLOCK_COUNT FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_ADDR=BL_BASE_ADDR+BL_BASE_COUNT);IF BL_ADDR IS NOT NULL THEN SET BL_BASE_COUNT=BL_BASE_COUNT+BL_COUNT;END IF;UNTIL BL_ADDR IS NULL END REPEAT;DELETE FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_ADDR&gt;=BL_BASE_ADDR AND BLOCK_ADDR&lt;BL_BASE_ADDR+BL_BASE_COUNT;INSERT INTO SYSTEM_LOBS.BLOCKS(BLOCK_ADDR,BLOCK_COUNT,TX_ID) VALUES BL_BASE_ADDR,BL_BASE_COUNT,0;END IF;UNTIL BL_BASE_COUNT IS NULL END REPEAT;END</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<p>&#160;</p>
+<h2>Sequences</h2>
+
+<table>
+
+	<tr>
+		<td colspan='2' class='name'>PUBLIC.BOOKS.PUBLISHER_ID_SEQ</td>
+		<td class='description right'>[sequence]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>increment</td>
+		<td class='type'>1</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>minimum value</td>
+		<td class='type'>-2147483648</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>maximum value</td>
+		<td class='type'>2147483647</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>cycle</td>
+		<td class='type'>false</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<table>
+
+	<tr>
+		<td colspan='2' class='name'>PUBLIC.SYSTEM_LOBS.LOB_ID</td>
+		<td class='description right'>[sequence]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>increment</td>
+		<td class='type'>1</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>minimum value</td>
+		<td class='type'>-9223372036854775808</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>maximum value</td>
+		<td class='type'>9223372036854775807</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>cycle</td>
+		<td class='type'>false</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+</body>
+</html>

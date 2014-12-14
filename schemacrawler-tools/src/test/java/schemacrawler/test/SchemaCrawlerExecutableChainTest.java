@@ -23,19 +23,22 @@ package schemacrawler.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
+import static schemacrawler.test.utility.TestUtility.compareOutput;
+import static schemacrawler.test.utility.TestUtility.createTempFile;
+import static schemacrawler.test.utility.TestUtility.validateDiagram;
+import static sf.util.Utility.readFully;
 
-import java.io.File;
 import java.io.FileReader;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.junit.Test;
 
 import schemacrawler.test.utility.BaseDatabaseTest;
-import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.integration.scripting.ScriptExecutable;
 import schemacrawler.tools.options.OutputOptions;
-import sf.util.Utility;
 
 public class SchemaCrawlerExecutableChainTest
   extends BaseDatabaseTest
@@ -46,26 +49,26 @@ public class SchemaCrawlerExecutableChainTest
     throws Exception
   {
     final Executable executable = new ScriptExecutable();
-    final File testOutputFile = File.createTempFile("schemacrawler."
-                                                    + executable.getCommand()
-                                                    + ".", ".test");
-    testOutputFile.delete();
+    final Path testOutputFile = createTempFile(executable.getCommand(), "data");
+
     final OutputOptions outputOptions = new OutputOptions("chain.js",
-                                                          testOutputFile);
+                                                          testOutputFile
+                                                            .toFile());
 
     executable.setOutputOptions(outputOptions);
     executable.execute(getConnection());
 
     assertEquals("Created files \"schema.txt\" and \"schema.png\"",
-                 Utility.readFully(new FileReader(testOutputFile)));
+                 readFully(new FileReader(testOutputFile.toFile())));
 
-    final List<String> failures = TestUtility
-      .compareOutput("schema.txt", new File("schema.txt"));
+    final List<String> failures = compareOutput("schema.txt",
+                                                Paths.get("schema.txt"));
     if (failures.size() > 0)
     {
       fail(failures.toString());
     }
 
-    checkDiagramFile(new File("schema.png"));
+    validateDiagram(Paths.get("schema.png"));
   }
+
 }

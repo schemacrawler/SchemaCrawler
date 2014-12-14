@@ -25,11 +25,14 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static schemacrawler.test.utility.TestUtility.compareOutput;
+import static schemacrawler.test.utility.TestUtility.createTempFile;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -44,7 +47,6 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.test.utility.BaseExecutableTest;
-import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.integration.serialization.XmlSerializedCatalog;
 import schemacrawler.tools.options.OutputOptions;
 
@@ -59,9 +61,7 @@ public class OfflineSnapshotTest
   public void offlineSnapshotCommandLine()
     throws Exception
   {
-    final File testOutputFile = File.createTempFile("schemacrawler."
-                                                    + "details" + ".", ".test");
-    testOutputFile.delete();
+    final Path testOutputFile = createTempFile("details", "data");
 
     final Map<String, String> args = new HashMap<>();
     args.put("database", serializedDatabaseFile.getAbsolutePath());
@@ -69,7 +69,7 @@ public class OfflineSnapshotTest
     args.put("infolevel", "maximum");
     args.put("command", "details");
     args.put("outputformat", "text");
-    args.put("outputfile", testOutputFile.getAbsolutePath());
+    args.put("outputfile", testOutputFile.toString());
 
     final List<String> argsList = new ArrayList<>();
     for (final Map.Entry<String, String> arg: args.entrySet())
@@ -81,8 +81,8 @@ public class OfflineSnapshotTest
       .toArray(new String[0]));
     commandLine.execute();
 
-    final List<String> failures = TestUtility
-      .compareOutput(OFFLINE_EXECUTABLE_OUTPUT + "details.txt", testOutputFile);
+    final List<String> failures = compareOutput(OFFLINE_EXECUTABLE_OUTPUT
+                                                + "details.txt", testOutputFile);
     if (failures.size() > 0)
     {
       fail(failures.toString());
@@ -93,9 +93,7 @@ public class OfflineSnapshotTest
   public void offlineSnapshotCommandLineWithFilters()
     throws Exception
   {
-    final File testOutputFile = File.createTempFile("schemacrawler.offline.",
-                                                    ".test");
-    testOutputFile.delete();
+    final Path testOutputFile = createTempFile("offline", "data");
 
     final Map<String, String> args = new HashMap<>();
     args.put("database", serializedDatabaseFile.getAbsolutePath());
@@ -106,7 +104,7 @@ public class OfflineSnapshotTest
     args.put("outputformat", "text");
     args.put("routines", "");
     args.put("tables", ".*SALES");
-    args.put("outputfile", testOutputFile.getAbsolutePath());
+    args.put("outputfile", testOutputFile.toString());
 
     final List<String> argsList = new ArrayList<>();
     for (final Map.Entry<String, String> arg: args.entrySet())
@@ -118,9 +116,9 @@ public class OfflineSnapshotTest
       .toArray(new String[0]));
     commandLine.execute();
 
-    final List<String> failures = TestUtility
-      .compareOutput(OFFLINE_EXECUTABLE_OUTPUT + "offlineWithFilters.txt",
-                     testOutputFile);
+    final List<String> failures = compareOutput(OFFLINE_EXECUTABLE_OUTPUT
+                                                    + "offlineWithFilters.txt",
+                                                testOutputFile);
     if (failures.size() > 0)
     {
       fail(failures.toString());
@@ -131,9 +129,7 @@ public class OfflineSnapshotTest
   public void offlineSnapshotCommandLineWithSchemaFilters()
     throws Exception
   {
-    final File testOutputFile = File.createTempFile("schemacrawler.offline.",
-                                                    ".test");
-    testOutputFile.delete();
+    final Path testOutputFile = createTempFile("offline", "data");
 
     final Map<String, String> args = new HashMap<>();
     args.put("database", serializedDatabaseFile.getAbsolutePath());
@@ -143,7 +139,7 @@ public class OfflineSnapshotTest
     args.put("command", "list");
     args.put("outputformat", "text");
     args.put("schemas", "PUBLIC.BOOKS");
-    args.put("outputfile", testOutputFile.getAbsolutePath());
+    args.put("outputfile", testOutputFile.toString());
 
     final List<String> argsList = new ArrayList<>();
     for (final Map.Entry<String, String> arg: args.entrySet())
@@ -155,9 +151,9 @@ public class OfflineSnapshotTest
       .toArray(new String[0]));
     commandLine.execute();
 
-    final List<String> failures = TestUtility
-      .compareOutput(OFFLINE_EXECUTABLE_OUTPUT + "offlineWithSchemaFilters.txt",
-                     testOutputFile);
+    final List<String> failures = compareOutput(OFFLINE_EXECUTABLE_OUTPUT
+                                                    + "offlineWithSchemaFilters.txt",
+                                                testOutputFile);
     if (failures.size() > 0)
     {
       fail(failures.toString());
@@ -172,10 +168,11 @@ public class OfflineSnapshotTest
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
 
-    final File testOutputFile = File.createTempFile("schemacrawler.", ".test");
-    testOutputFile.delete();
+    final Path testOutputFile = createTempFile("schemacrawler.", "data");
+
     final OutputOptions outputOptions = new OutputOptions("text",
-                                                          testOutputFile);
+                                                          testOutputFile
+                                                            .toFile());
 
     final OfflineSnapshotExecutable executable = new OfflineSnapshotExecutable("details");
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);

@@ -24,8 +24,10 @@ package schemacrawler.test;
 
 import static org.junit.Assert.fail;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
+import static schemacrawler.test.utility.TestUtility.createTempFile;
 
 import java.io.File;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
@@ -99,14 +101,12 @@ public class SchemaCrawlerOutputTest
       {
         final String referenceFile = command + "." + outputFormat.getFormat();
 
-        final File testOutputFile = File.createTempFile("schemacrawler."
-                                                            + referenceFile
-                                                            + ".",
-                                                        ".test");
-        testOutputFile.delete();
+        final Path testOutputFile = createTempFile(referenceFile,
+                                                   outputFormat.getFormat());
 
         final OutputOptions outputOptions = new OutputOptions(outputFormat.getFormat(),
-                                                              testOutputFile);
+                                                              testOutputFile
+                                                                .toFile());
 
         final Config config = Config
           .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
@@ -158,12 +158,12 @@ public class SchemaCrawlerOutputTest
       final String referenceFile = "details_maximum."
                                    + outputFormat.getFormat();
 
-      final File testOutputFile = File
-        .createTempFile("schemacrawler." + referenceFile + ".", ".test");
-      testOutputFile.delete();
+      final Path testOutputFile = createTempFile(referenceFile,
+                                                 outputFormat.getFormat());
 
       final OutputOptions outputOptions = new OutputOptions(outputFormat.getFormat(),
-                                                            testOutputFile);
+                                                            testOutputFile
+                                                              .toFile());
 
       final Config config = Config
         .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
@@ -209,13 +209,14 @@ public class SchemaCrawlerOutputTest
       final String referenceFile = schemaTextDetailType + "_" + infoLevel
                                    + ".json";
 
-      final File testOutputFile = File
-        .createTempFile("schemacrawler." + referenceFile + ".", ".test");
-      testOutputFile.delete();
+      final Path testOutputFile = createTempFile(referenceFile,
+                                                 TextOutputFormat.json
+                                                   .getFormat());
 
       final OutputOptions outputOptions = new OutputOptions(TextOutputFormat.json
                                                               .getFormat(),
-                                                            testOutputFile);
+                                                            testOutputFile
+                                                              .toFile());
 
       final Config config = Config
         .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
@@ -263,12 +264,12 @@ public class SchemaCrawlerOutputTest
       final String referenceFile = "details_maximum."
                                    + outputFormat.getFormat();
 
-      final File testOutputFile = File
-        .createTempFile("schemacrawler." + referenceFile + ".", ".test");
-      testOutputFile.delete();
+      final Path testOutputFile = createTempFile(referenceFile,
+                                                 outputFormat.getFormat());
 
       final OutputOptions outputOptions = new OutputOptions(outputFormat.getFormat(),
-                                                            testOutputFile);
+                                                            testOutputFile
+                                                              .toFile());
 
       final Config config = Config
         .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
@@ -318,12 +319,12 @@ public class SchemaCrawlerOutputTest
     {
       final String referenceFile = "routines." + outputFormat.getFormat();
 
-      final File testOutputFile = File
-        .createTempFile("schemacrawler." + referenceFile + ".", ".test");
-      testOutputFile.delete();
+      final Path testOutputFile = createTempFile(referenceFile,
+                                                 outputFormat.getFormat());
 
       final OutputOptions outputOptions = new OutputOptions(outputFormat.getFormat(),
-                                                            testOutputFile);
+                                                            testOutputFile
+                                                              .toFile());
 
       final Config config = Config
         .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
@@ -374,12 +375,12 @@ public class SchemaCrawlerOutputTest
       final String referenceFile = "details_maximum."
                                    + outputFormat.getFormat();
 
-      final File testOutputFile = File
-        .createTempFile("schemacrawler." + referenceFile + ".", ".test");
-      testOutputFile.delete();
+      final Path testOutputFile = createTempFile(referenceFile,
+                                                 outputFormat.getFormat());
 
       final OutputOptions outputOptions = new OutputOptions(outputFormat.getFormat(),
-                                                            testOutputFile);
+                                                            testOutputFile
+                                                              .toFile());
 
       final Config config = Config
         .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
