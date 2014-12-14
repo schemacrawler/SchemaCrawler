@@ -22,8 +22,10 @@ package schemacrawler.test.utility;
 
 
 import static org.junit.Assert.fail;
+import static schemacrawler.test.utility.TestUtility.compareOutput;
+import static schemacrawler.test.utility.TestUtility.createTempFile;
 
-import java.io.File;
+import java.nio.file.Path;
 import java.util.List;
 
 import schemacrawler.tools.executable.Executable;
@@ -33,16 +35,16 @@ public abstract class BaseExecutableTest
   extends BaseDatabaseTest
 {
 
-  protected File executeExecutable(final Executable executable,
+  protected Path executeExecutable(final Executable executable,
                                    final String outputFormatValue)
     throws Exception
   {
-    final File testOutputFile = File.createTempFile("schemacrawler."
-                                                    + executable.getCommand()
-                                                    + ".", ".test");
-    testOutputFile.delete();
+    final Path testOutputFile = createTempFile(executable.getCommand(),
+                                               outputFormatValue);
+
     final OutputOptions outputOptions = new OutputOptions(outputFormatValue,
-                                                          testOutputFile);
+                                                          testOutputFile
+                                                            .toFile());
 
     executable.setOutputOptions(outputOptions);
     executable.execute(getConnection());
@@ -55,10 +57,10 @@ public abstract class BaseExecutableTest
                                                         final String referenceFileName)
     throws Exception
   {
-    final File testOutputFile = executeExecutable(executable, outputFormatValue);
+    final Path testOutputFile = executeExecutable(executable, outputFormatValue);
 
-    final List<String> failures = TestUtility.compareOutput(referenceFileName,
-                                                            testOutputFile);
+    final List<String> failures = compareOutput(referenceFileName,
+                                                testOutputFile);
     if (failures.size() > 0)
     {
       fail(failures.toString());

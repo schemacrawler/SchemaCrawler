@@ -24,9 +24,10 @@ package schemacrawler.test;
 
 import static org.junit.Assert.fail;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
+import static schemacrawler.test.utility.TestUtility.createTempFile;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,12 +87,13 @@ public class SchemaCrawlerXmlOutputTest
     throws IOException, Exception, SchemaCrawlerException
   {
     final String referenceFile = command + ".html";
-    final File testOutputFile = File.createTempFile("schemacrawler."
-                                                        + referenceFile + ".",
-                                                    ".test");
+    final Path testOutputFile = createTempFile(referenceFile,
+                                               TextOutputFormat.html
+                                                 .getFormat());
 
     final OutputOptions outputOptions = new OutputOptions(TextOutputFormat.html.getFormat(),
-                                                          testOutputFile);
+                                                          testOutputFile
+                                                            .toFile());
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
 

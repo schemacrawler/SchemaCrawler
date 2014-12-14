@@ -21,16 +21,9 @@
 package schemacrawler.test.utility;
 
 
-import static org.junit.Assert.assertTrue;
-
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
-
-import javax.imageio.ImageIO;
 
 import org.custommonkey.xmlunit.XMLUnit;
 import org.junit.BeforeClass;
@@ -57,18 +50,6 @@ public abstract class BaseDatabaseTest
     throws Exception
   {
     XMLUnit.setControlEntityResolver(new LocalEntityResolver());
-  }
-
-  protected static void checkDiagramFile(final File diagramFile)
-    throws IOException
-  {
-    assertTrue("Diagram file not created", diagramFile.exists());
-    assertTrue("Diagram file has 0 bytes size", diagramFile.length() > 0);
-    final BufferedImage image = ImageIO.read(diagramFile);
-    assertTrue("Diagram not created", image.getHeight() > 0);
-    assertTrue("Diagram not created", image.getWidth() > 0);
-
-    diagramFile.delete();
   }
 
   private static DatabaseConnectionOptions createConnectionOptions()

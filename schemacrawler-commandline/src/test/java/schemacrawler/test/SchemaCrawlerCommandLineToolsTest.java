@@ -3,11 +3,13 @@ package schemacrawler.test;
 
 import static org.junit.Assert.fail;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
+import static schemacrawler.test.utility.TestUtility.createTempFile;
 import static sf.util.Utility.UTF8;
 
 import java.io.File;
 import java.io.PrintWriter;
 import java.io.Writer;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -72,9 +74,7 @@ public class SchemaCrawlerCommandLineToolsTest
 
       final String referenceFile = String.format("grep%02d.txt", i + 1);
 
-      final File testOutputFile = File
-        .createTempFile("schemacrawler." + referenceFile + ".", ".test");
-      testOutputFile.delete();
+      final Path testOutputFile = createTempFile(referenceFile, "data");
 
       final OutputFormat outputFormat = TextOutputFormat.text;
 
@@ -87,7 +87,7 @@ public class SchemaCrawlerCommandLineToolsTest
           "-infolevel=" + infoLevel,
           "-command=" + schemaTextDetailType,
           "-outputformat=" + outputFormat.getFormat(),
-          "-outputfile=" + testOutputFile.getAbsolutePath(),
+          "-outputfile=" + testOutputFile.toString(),
           "-noinfo",
       }));
       args.addAll(Arrays.asList(grepArgsForRun));

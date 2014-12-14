@@ -20,6 +20,8 @@ package schemacrawler.integration.test;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
 
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.apache.tools.ant.BuildFileTest;
@@ -51,8 +53,7 @@ public class AntSpringTaskTest
     throws Exception
   {
     final String referenceFile = "ant_task_test.txt";
-    final File testOutputFile = new File("scOutput.txt");
-    testOutputFile.delete();
+    final Path testOutputFile = Paths.get("scOutput.txt");
 
     final File contextFile = TestUtility.copyResourceToTempFile("/context.xml");
 
