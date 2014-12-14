@@ -17,11 +17,14 @@
 package schemacrawler.test;
 
 
+import static java.nio.file.Files.newBufferedWriter;
+import static java.nio.file.StandardOpenOption.CREATE;
+import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
+import static java.nio.file.StandardOpenOption.WRITE;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
 import static schemacrawler.test.utility.TestUtility.createTempFile;
+import static sf.util.Utility.UTF8;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
@@ -41,14 +44,14 @@ public class AntTaskTest
 
   private static final String ANT_TEST_OUTPUT = "ant_test_output/";
 
-  private File buildFile;
+  private Path buildFile;
 
   @Override
   public void setUp()
     throws Exception
   {
     buildFile = TestUtility.copyResourceToTempFile("/build.xml");
-    configureProject(buildFile.getAbsolutePath());
+    configureProject(buildFile.toString());
 
     TestDatabase.initialize();
   }
@@ -67,15 +70,19 @@ public class AntTaskTest
     throws Exception
   {
 
-    final File configFile = File.createTempFile("SchemaCrawler.testAntTask2",
-                                                ".properties");
+    final Path configFile = createTempFile("testAntTask2", "properties");
     final Properties configProperties = new Properties();
     configProperties.setProperty("schemacrawler.format.show_unqualified_names",
                                  "true");
     configProperties
       .setProperty("schemacrawler.table.pattern.exclude", ".*A.*");
-    configProperties.store(new FileWriter(configFile), "testAntTask2");
-    setAntProjectProperty("config", configFile.getAbsolutePath());
+    configProperties.store(newBufferedWriter(configFile,
+                                             UTF8,
+                                             WRITE,
+                                             CREATE,
+                                             TRUNCATE_EXISTING),
+                           "testAntTask2");
+    setAntProjectProperty("config", configFile.toString());
 
     final String referenceFile = "ant_task_test.2.txt";
     ant(referenceFile);

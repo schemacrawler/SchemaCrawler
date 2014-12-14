@@ -220,13 +220,13 @@ public final class OutputWriter
         if (appendOutput)
         {
           openOptions = new OpenOption[] {
-              CREATE, WRITE, APPEND
+              WRITE, CREATE, APPEND
           };
         }
         else
         {
           openOptions = new OpenOption[] {
-              CREATE, WRITE, TRUNCATE_EXISTING
+              WRITE, CREATE, TRUNCATE_EXISTING
           };
         }
         writer = newBufferedWriter(outputFile,

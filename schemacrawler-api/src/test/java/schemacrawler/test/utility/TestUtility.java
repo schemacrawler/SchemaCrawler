@@ -27,18 +27,20 @@ import static java.nio.file.Files.isReadable;
 import static java.nio.file.Files.isRegularFile;
 import static java.nio.file.Files.move;
 import static java.nio.file.Files.newBufferedReader;
+import static java.nio.file.Files.newOutputStream;
 import static java.nio.file.Files.size;
 import static java.nio.file.Paths.get;
 import static java.nio.file.StandardCopyOption.ATOMIC_MOVE;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
+import static java.nio.file.StandardOpenOption.CREATE;
+import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
+import static java.nio.file.StandardOpenOption.WRITE;
 import static org.junit.Assert.assertTrue;
 import static sf.util.Utility.UTF8;
 
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -183,7 +185,7 @@ public final class TestUtility
     return compareOutput(referenceFile, testOutputTempFilePath, UTF8, null);
   }
 
-  public static File copyResourceToTempFile(final String resource)
+  public static Path copyResourceToTempFile(final String resource)
     throws IOException
   {
     try (final InputStream resourceStream = TestUtility.class
@@ -406,13 +408,16 @@ public final class TestUtility
     return isOutputValid;
   }
 
-  private static File writeToTempFile(final InputStream resourceStream)
+  private static Path writeToTempFile(final InputStream resourceStream)
     throws IOException, FileNotFoundException
   {
-    final File tempFile = File.createTempFile("SchemaCrawler", ".dat");
-    tempFile.deleteOnExit();
+    final Path tempFile = createTempFile("resource", "data").normalize()
+      .toAbsolutePath();
 
-    try (final OutputStream tempFileStream = new FileOutputStream(tempFile);)
+    try (final OutputStream tempFileStream = newOutputStream(tempFile,
+                                                             WRITE,
+                                                             TRUNCATE_EXISTING,
+                                                             CREATE);)
     {
       fastChannelCopy(Channels.newChannel(resourceStream),
                       Channels.newChannel(tempFileStream));

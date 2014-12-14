@@ -21,16 +21,20 @@
 package schemacrawler.schemacrawler;
 
 
+import static java.nio.file.Files.exists;
+import static java.nio.file.Files.isDirectory;
+import static java.nio.file.Files.isReadable;
+import static java.nio.file.Files.newBufferedReader;
+import static sf.util.Utility.UTF8;
 import static sf.util.Utility.isBlank;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -57,8 +61,10 @@ public final class Config
    * @param configFilenames
    *        Configuration file name.
    * @return Configuration properties.
+   * @throws IOException
    */
   public static Config load(final String... configFilenames)
+    throws IOException
   {
     Properties configProperties = new Properties();
     if (configFilenames != null)
@@ -68,7 +74,8 @@ public final class Config
         if (!isBlank(configFilename))
         {
           configProperties = loadProperties(configProperties,
-                                            new File(configFilename));
+                                            Paths.get(configFilename)
+                                              .normalize().toAbsolutePath());
         }
       }
     }
@@ -114,23 +121,22 @@ public final class Config
    * @param propertiesFile
    *        Properties file.
    * @return Properties
+   * @throws IOException
    */
   private static Properties loadProperties(final Properties properties,
-                                           final File propertiesFile)
+                                           final Path propertiesFile)
+    throws IOException
   {
-    try
-    {
-      LOGGER.log(Level.INFO,
-                 "Loading properties from file, "
-                     + propertiesFile.getAbsolutePath());
-      loadProperties(properties, new FileReader(propertiesFile));
-    }
-    catch (final FileNotFoundException e)
+    if (propertiesFile == null || !exists(propertiesFile)
+        || !isReadable(propertiesFile) || isDirectory(propertiesFile))
     {
       LOGGER.log(Level.WARNING, "Cannot load properties from file, "
-                                + propertiesFile.getAbsolutePath());
-      LOGGER.log(Level.FINEST, e.getMessage(), e);
+                                + propertiesFile);
+      return properties;
     }
+
+    LOGGER.log(Level.INFO, "Loading properties from file, " + propertiesFile);
+    loadProperties(properties, newBufferedReader(propertiesFile, UTF8));
     return properties;
   }
 
