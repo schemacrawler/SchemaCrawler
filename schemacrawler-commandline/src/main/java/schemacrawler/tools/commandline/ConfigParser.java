@@ -50,7 +50,7 @@ public class ConfigParser
     {
       return Config.load(cfgFile);
     }
-    catch (IOException e)
+    catch (final IOException e)
     {
       throw new SchemaCrawlerException("Could not load " + cfgFile, e);
     }

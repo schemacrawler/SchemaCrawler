@@ -71,10 +71,10 @@ public class LintTest
     final LintCollector lintCollector = lintedDatabase.getCollector();
     assertEquals(23, lintCollector.size());
 
-    final Path testOutputFile = createTempFile("lints.",
-                                                    "data");
+    final Path testOutputFile = createTempFile("lints.", "data");
 
-    try (final PrintWriter writer = new PrintWriter(testOutputFile.toFile(), UTF8.name());)
+    try (final PrintWriter writer = new PrintWriter(testOutputFile.toFile(),
+                                                    UTF8.name());)
     {
       for (final Lint<?> lint: lintCollector)
       {
@@ -82,7 +82,9 @@ public class LintTest
       }
     }
 
-    final List<String> failures = compareOutput(LINTS_OUTPUT + "schemacrawler.lints.txt", testOutputFile);
+    final List<String> failures = compareOutput(LINTS_OUTPUT
+                                                    + "schemacrawler.lints.txt",
+                                                testOutputFile);
 
     if (failures.size() > 0)
     {

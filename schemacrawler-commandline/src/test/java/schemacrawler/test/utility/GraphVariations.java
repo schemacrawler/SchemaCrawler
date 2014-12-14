@@ -53,6 +53,18 @@ public class GraphVariations
     JUnitCore.main(GraphVariations.class.getCanonicalName());
   }
 
+  @BeforeClass
+  public static void setupDirectory()
+    throws IOException, URISyntaxException
+  {
+    final Path codePath = Paths
+      .get(GraphVariations.class.getProtectionDomain().getCodeSource()
+        .getLocation().toURI()).normalize().toAbsolutePath();
+    directory = codePath
+      .resolve("../../../schemacrawler-site/src/site/resources/images")
+      .normalize().toAbsolutePath();
+  }
+
   private static Path directory;
 
   @Test
@@ -166,18 +178,6 @@ public class GraphVariations
     config.put("schemacrawler.graph.show.foreignkey.cardinality", "false");
 
     run(args, config, directory.resolve(currentMethodName() + ".png"));
-  }
-
-  @BeforeClass
-  public static void setupDirectory()
-    throws IOException, URISyntaxException
-  {
-    final Path codePath = Paths
-      .get(GraphVariations.class.getProtectionDomain().getCodeSource()
-        .getLocation().toURI()).normalize().toAbsolutePath();
-    directory = codePath
-      .resolve("../../../schemacrawler-site/src/site/resources/images")
-      .normalize().toAbsolutePath();
   }
 
   private Path createConfig(final Map<String, String> config)

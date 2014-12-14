@@ -78,8 +78,7 @@ public class DatabaseObjectFilter<D extends DatabaseObject>
     }
     if (include && databaseObjectInclusionRule != null)
     {
-      include = databaseObjectInclusionRule.test(databaseObject
-        .getFullName());
+      include = databaseObjectInclusionRule.test(databaseObject.getFullName());
     }
 
     return include;

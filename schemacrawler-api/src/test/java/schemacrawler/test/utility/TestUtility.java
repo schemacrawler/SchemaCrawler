@@ -79,18 +79,6 @@ public final class TestUtility
     return compareOutput(referenceFile, testOutputTempFile, null);
   }
 
-  public static void validateDiagram(final Path diagramFile)
-    throws IOException
-  {
-    assertTrue("Diagram file not created", exists(diagramFile));
-    assertTrue("Diagram file has 0 bytes size", size(diagramFile) > 0);
-    final BufferedImage image = ImageIO.read(diagramFile.toFile());
-    assertTrue("Diagram not created", image.getHeight() > 0);
-    assertTrue("Diagram not created", image.getWidth() > 0);
-
-    delete(diagramFile);
-  }
-
   public static List<String> compareOutput(final String referenceFile,
                                            final Path testOutputTempFile,
                                            final Charset encoding,
@@ -246,6 +234,18 @@ public final class TestUtility
       reader = null;
     }
     return reader;
+  }
+
+  public static void validateDiagram(final Path diagramFile)
+    throws IOException
+  {
+    assertTrue("Diagram file not created", exists(diagramFile));
+    assertTrue("Diagram file has 0 bytes size", size(diagramFile) > 0);
+    final BufferedImage image = ImageIO.read(diagramFile.toFile());
+    assertTrue("Diagram not created", image.getHeight() > 0);
+    assertTrue("Diagram not created", image.getWidth() > 0);
+
+    delete(diagramFile);
   }
 
   private static boolean contentEquals(final Reader expectedInputReader,

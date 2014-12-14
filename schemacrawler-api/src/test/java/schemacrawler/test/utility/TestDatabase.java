@@ -109,7 +109,8 @@ public class TestDatabase
       }
 
       @Override
-      public FileVisitResult visitFileFailed(Path file, IOException exc)
+      public FileVisitResult visitFileFailed(final Path file,
+                                             final IOException exc)
         throws IOException
       {
         return FileVisitResult.CONTINUE;

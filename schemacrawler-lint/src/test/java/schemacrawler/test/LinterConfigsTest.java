@@ -24,11 +24,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static schemacrawler.test.utility.TestUtility.readerForResource;
+import static sf.util.Utility.UTF8;
 
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
-import java.nio.charset.Charset;
 
 import org.junit.Test;
 
@@ -36,7 +36,6 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.tools.lint.LinterConfig;
 import schemacrawler.tools.lint.LinterConfigs;
-import static sf.util.Utility.*;
 
 public class LinterConfigsTest
 {
