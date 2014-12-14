@@ -53,6 +53,18 @@ public class HTMLVariations
     JUnitCore.main(HTMLVariations.class.getCanonicalName());
   }
 
+  @BeforeClass
+  public static void setupDirectory()
+    throws IOException, URISyntaxException
+  {
+    final Path codePath = Paths
+      .get(HTMLVariations.class.getProtectionDomain().getCodeSource()
+        .getLocation().toURI()).normalize().toAbsolutePath();
+    directory = codePath
+      .resolve("../../../schemacrawler-site/src/site/resources/html-examples")
+      .normalize().toAbsolutePath();
+  }
+
   private static Path directory;
 
   @Test
@@ -151,18 +163,6 @@ public class HTMLVariations
     final Map<String, String> config = new HashMap<>();
 
     run(args, config, directory.resolve(currentMethodName() + ".html"));
-  }
-
-  @BeforeClass
-  public static void setupDirectory()
-    throws IOException, URISyntaxException
-  {
-    final Path codePath = Paths
-      .get(HTMLVariations.class.getProtectionDomain().getCodeSource()
-        .getLocation().toURI()).normalize().toAbsolutePath();
-    directory = codePath
-      .resolve("../../../schemacrawler-site/src/site/resources/html-examples")
-      .normalize().toAbsolutePath();
   }
 
   private Path createConfig(final Map<String, String> config)

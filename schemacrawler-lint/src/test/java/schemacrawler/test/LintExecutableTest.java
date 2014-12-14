@@ -131,9 +131,8 @@ public class LintExecutableTest
                                                                                 .toArray(new String[0]));
     commandLine.execute();
 
-    final List<String> failures = compareOutput(referenceFileName
-                                                                + ".txt",
-                                                            testOutputFile);
+    final List<String> failures = compareOutput(referenceFileName + ".txt",
+                                                testOutputFile);
     if (failures.size() > 0)
     {
       fail(failures.toString());
