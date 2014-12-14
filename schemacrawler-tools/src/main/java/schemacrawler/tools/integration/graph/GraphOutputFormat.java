@@ -10,6 +10,7 @@ public enum GraphOutputFormat
   implements OutputFormat
 {
 
+  htmlx("htmlx", "SchemaCrawler graph embedded in HTML5"),
   scdot("scdot", "SchemaCrawler generated format"),
   bmp("bmp", "Windows Bitmap Format"),
   canon("canon", "DOT"),

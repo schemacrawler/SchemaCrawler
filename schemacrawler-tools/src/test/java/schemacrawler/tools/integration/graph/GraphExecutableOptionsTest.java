@@ -24,10 +24,12 @@ package schemacrawler.tools.integration.graph;
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static schemacrawler.test.utility.TestUtility.currentMethodName;
+import static schemacrawler.test.utility.TestUtility.validateDiagram;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.junit.Before;
@@ -229,12 +231,12 @@ public class GraphExecutableOptionsTest
                                                + referenceFileName + ".dot");
 
     // Check diagram
-    final File testDiagramFile = executeExecutable(executable, "png");
+    final Path testDiagramFile = executeExecutable(executable, "png");
     Files
-      .copy(testDiagramFile.toPath(),
+      .copy(testDiagramFile,
             Paths.get(directory.getCanonicalPath(), testMethodName + ".png"),
             REPLACE_EXISTING);
-    checkDiagramFile(testDiagramFile);
+    validateDiagram(testDiagramFile);
   }
 
 }

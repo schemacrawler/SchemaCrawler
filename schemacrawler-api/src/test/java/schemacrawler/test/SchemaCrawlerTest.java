@@ -24,10 +24,13 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static schemacrawler.test.utility.TestUtility.compareOutput;
+import static schemacrawler.test.utility.TestUtility.createTempFile;
+import static schemacrawler.test.utility.TestUtility.currentMethodFullName;
 import static sf.util.Utility.UTF8;
 
-import java.io.File;
 import java.io.PrintWriter;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map.Entry;
@@ -58,7 +61,6 @@ import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.test.utility.BaseDatabaseTest;
-import schemacrawler.test.utility.TestUtility;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.utility.NamedObjectSort;
 import sf.util.Utility;
@@ -128,7 +130,7 @@ public class SchemaCrawlerTest
     }
 
     out.close();
-    out.assertEquals(TestUtility.currentMethodFullName());
+    out.assertEquals(currentMethodFullName());
   }
 
   @Test
@@ -157,7 +159,7 @@ public class SchemaCrawlerTest
     }
 
     out.close();
-    out.assertEquals(TestUtility.currentMethodFullName());
+    out.assertEquals(currentMethodFullName());
   }
 
   @Test
@@ -186,7 +188,7 @@ public class SchemaCrawlerTest
     }
 
     out.close();
-    out.assertEquals(TestUtility.currentMethodFullName());
+    out.assertEquals(currentMethodFullName());
   }
 
   @Test
@@ -280,7 +282,7 @@ public class SchemaCrawlerTest
     }
 
     out.close();
-    out.assertEquals(TestUtility.currentMethodFullName());
+    out.assertEquals(currentMethodFullName());
   }
 
   @Test
@@ -338,7 +340,7 @@ public class SchemaCrawlerTest
     }
 
     out.close();
-    out.assertEquals(TestUtility.currentMethodFullName());
+    out.assertEquals(currentMethodFullName());
   }
 
   @Test
@@ -377,7 +379,7 @@ public class SchemaCrawlerTest
     }
 
     out.close();
-    out.assertEquals(TestUtility.currentMethodFullName());
+    out.assertEquals(currentMethodFullName());
   }
 
   @Test
@@ -386,12 +388,10 @@ public class SchemaCrawlerTest
   {
 
     final String referenceFile = "tables.txt";
-    final File testOutputFile = File.createTempFile("schemacrawler."
-                                                        + referenceFile + ".",
-                                                    ".test");
-    testOutputFile.delete();
+    final Path testOutputFile = createTempFile(referenceFile, "text");
 
-    try (final PrintWriter writer = new PrintWriter(testOutputFile, UTF8.name());)
+    try (final PrintWriter writer = new PrintWriter(testOutputFile.toFile(),
+                                                    UTF8.name());)
     {
 
       final Config config = Config
@@ -442,8 +442,8 @@ public class SchemaCrawlerTest
       }
     }
 
-    final List<String> failures = TestUtility
-      .compareOutput(METADATA_OUTPUT + referenceFile, testOutputFile);
+    final List<String> failures = compareOutput(METADATA_OUTPUT + referenceFile,
+                                                testOutputFile);
     if (failures.size() > 0)
     {
       fail(failures.toString());

@@ -3,12 +3,13 @@ package schemacrawler.test.utility;
 
 import static org.junit.Assert.fail;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
+import static schemacrawler.test.utility.TestUtility.createTempFile;
 import static sf.util.Utility.UTF8;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Locale;
 
@@ -16,16 +17,15 @@ public class TestWriter
   extends Writer
 {
 
-  private final File tempFile;
+  private final Path tempFile;
   private final PrintWriter out;
 
   public TestWriter()
     throws IOException
   {
-    tempFile = File.createTempFile("schemacrawler", ".dat");
-    tempFile.deleteOnExit();
+    tempFile = createTempFile("schemacrawler", ".dat");
 
-    out = new PrintWriter(tempFile, UTF8.name());
+    out = new PrintWriter(tempFile.toFile(), UTF8.name());
   }
 
   @Override
