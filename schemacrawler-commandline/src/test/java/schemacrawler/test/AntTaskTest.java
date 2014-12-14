@@ -18,10 +18,12 @@ package schemacrawler.test;
 
 
 import static schemacrawler.test.utility.TestUtility.compareOutput;
+import static schemacrawler.test.utility.TestUtility.createTempFile;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Properties;
 
@@ -83,12 +85,9 @@ public class AntTaskTest
   private void ant(final String referenceFile)
     throws IOException, Exception
   {
-    final File testOutputFile = File.createTempFile("schemacrawler."
-                                                        + referenceFile + ".",
-                                                    ".test");
-    testOutputFile.delete();
+    final Path testOutputFile = createTempFile(referenceFile, "text");
 
-    setAntProjectProperty("outputfile", testOutputFile.getAbsolutePath());
+    setAntProjectProperty("outputfile", testOutputFile.toString());
     executeTarget("ant_task_test");
 
     // System.out.println(getFullLog());

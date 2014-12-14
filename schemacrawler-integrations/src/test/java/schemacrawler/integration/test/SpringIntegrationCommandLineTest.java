@@ -26,6 +26,8 @@ import static schemacrawler.test.utility.TestUtility.compareOutput;
 import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
 
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,8 +52,7 @@ public class SpringIntegrationCommandLineTest
 
     final String executableName = "executableForSchema";
     final String referenceFile = executableName + ".txt";
-    final File testOutputFile = new File("scOutput.txt");
-    testOutputFile.delete();
+    final Path testOutputFile = Paths.get("scOutput.txt");
 
     final OutputFormat outputFormat = TextOutputFormat.text;
     Main.main(new String[] {

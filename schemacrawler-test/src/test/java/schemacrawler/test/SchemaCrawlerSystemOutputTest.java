@@ -19,8 +19,9 @@ package schemacrawler.test;
 
 import static org.junit.Assert.fail;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
+import static schemacrawler.test.utility.TestUtility.createTempFile;
 
-import java.io.File;
+import java.nio.file.Path;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
@@ -94,10 +95,8 @@ public class SchemaCrawlerSystemOutputTest
     throws Exception
   {
     final String referenceFile = dataSourceName + ".txt";
-    final File testOutputFile = File.createTempFile("schemacrawler."
-                                                        + referenceFile + ".",
-                                                    ".test");
-    testOutputFile.delete();
+    final Path testOutputFile = createTempFile( referenceFile ,
+                                                TextOutputFormat.text.getFormat());
 
     final Connection connection = connect(dataSourceName);
 
@@ -105,7 +104,7 @@ public class SchemaCrawlerSystemOutputTest
                                                                     schemaInclusion);
 
     final OutputOptions outputOptions = new OutputOptions(TextOutputFormat.text.getFormat(),
-                                                          testOutputFile);
+                                                          testOutputFile.toFile());
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);

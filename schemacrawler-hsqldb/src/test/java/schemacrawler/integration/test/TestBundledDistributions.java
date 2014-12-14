@@ -6,11 +6,13 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
+import static schemacrawler.test.utility.TestUtility.createTempFile;
 import static sf.util.Utility.UTF8;
 
 import java.io.File;
 import java.io.PrintWriter;
 import java.io.Writer;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Properties;
 
@@ -50,10 +52,7 @@ public class TestBundledDistributions
 
     final OutputFormat outputFormat = TextOutputFormat.text;
     final String referenceFile = "hsqldb.main" + "." + outputFormat.getFormat();
-    final File testOutputFile = File.createTempFile("schemacrawler."
-                                                        + referenceFile + ".",
-                                                    ".test");
-    testOutputFile.delete();
+    final Path testOutputFile = createTempFile(referenceFile, "data");
 
     schemacrawler.Main.main(new String[] {
         "-server=hsqldb",
@@ -61,7 +60,7 @@ public class TestBundledDistributions
         "-user=sa",
         "-password=",
         "-g",
-        testConfigFile.getAbsolutePath(),
+        testConfigFile.toString(),
         "-command=details,dump,count,hsqldb.tables",
         "-infolevel=maximum",
         "-outputfile=" + testOutputFile
@@ -77,7 +76,6 @@ public class TestBundledDistributions
     else
     {
       testConfigFile.delete();
-      testOutputFile.delete();
     }
 
   }

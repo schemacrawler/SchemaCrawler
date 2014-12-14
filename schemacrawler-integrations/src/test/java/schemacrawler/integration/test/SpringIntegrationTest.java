@@ -23,8 +23,10 @@ package schemacrawler.integration.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
+import static schemacrawler.test.utility.TestUtility.compareOutput;
+import static schemacrawler.test.utility.TestUtility.createTempFile;
 
-import java.io.File;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +39,6 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaReference;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseDatabaseTest;
-import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.executable.Executable;
 
 public class SpringIntegrationTest
@@ -84,16 +85,12 @@ public class SpringIntegrationTest
                                             final List<String> failures)
     throws Exception
   {
-    final File testOutputFile = File.createTempFile("schemacrawler."
-                                                        + executableName + ".",
-                                                    ".test");
-    testOutputFile.delete();
+    final Path testOutputFile = createTempFile(executableName, "data");
 
-    executable.getOutputOptions().setOutputFile(testOutputFile);
+    executable.getOutputOptions().setOutputFile(testOutputFile.toFile());
     executable.execute(getConnection());
 
-    failures.addAll(TestUtility.compareOutput(executableName + ".txt",
-                                              testOutputFile));
+    failures.addAll(compareOutput(executableName + ".txt", testOutputFile));
   }
 
 }

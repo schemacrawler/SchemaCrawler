@@ -22,9 +22,13 @@ package schemacrawler.test;
 
 
 import static org.junit.Assert.fail;
+import static schemacrawler.test.utility.TestUtility.compareOutput;
+import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
+import static schemacrawler.test.utility.TestUtility.createTempFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,7 +38,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import schemacrawler.test.utility.BaseExecutableTest;
-import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.commandline.SchemaCrawlerCommandLine;
 import schemacrawler.tools.databaseconnector.DatabaseSystemConnector;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
@@ -103,9 +106,8 @@ public class LintExecutableTest
     throws Exception
   {
 
-    final File testOutputFile = File.createTempFile("schemacrawler.lint.",
-                                                    ".test");
-    testOutputFile.delete();
+    final Path testOutputFile = createTempFile("lint.",
+                                               outputFormat.getFormat());
 
     final Map<String, String> args = new HashMap<>();
     args.put("driver", "org.hsqldb.jdbc.JDBCDriver");
@@ -117,7 +119,7 @@ public class LintExecutableTest
     args.put("command", "lint");
     args.put("sortcolumns", "true");
     args.put("outputformat", outputFormat.getFormat());
-    args.put("outputfile", testOutputFile.getAbsolutePath());
+    args.put("outputfile", testOutputFile.toString());
 
     final List<String> argsList = new ArrayList<>();
     for (final Map.Entry<String, String> arg: args.entrySet())
@@ -130,7 +132,7 @@ public class LintExecutableTest
                                                                                 .toArray(new String[0]));
     commandLine.execute();
 
-    final List<String> failures = TestUtility.compareOutput(referenceFileName
+    final List<String> failures = compareOutput(referenceFileName
                                                                 + ".txt",
                                                             testOutputFile);
     if (failures.size() > 0)
@@ -151,8 +153,7 @@ public class LintExecutableTest
   private void useLinterConfigFile()
     throws IOException
   {
-    final File file = TestUtility
-      .copyResourceToTempFile("/schemacrawler-linter-configs-off.xml");
+    final File file = copyResourceToTempFile("/schemacrawler-linter-configs-off.xml");
     System.setProperty(CONFIG_LINTER_CONFIGS_FILE, file.getAbsolutePath());
   }
 

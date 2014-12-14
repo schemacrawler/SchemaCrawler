@@ -21,7 +21,10 @@
 package schemacrawler.test;
 
 
-import java.io.File;
+import static schemacrawler.test.utility.TestUtility.createTempFile;
+import static schemacrawler.test.utility.TestUtility.validateDiagram;
+
+import java.nio.file.Path;
 
 import org.junit.Test;
 
@@ -40,16 +43,16 @@ public class ExtendedCommandsTest
   {
     final GraphExecutable executable = new GraphExecutable();
 
-    final File testOutputFile = File.createTempFile("schemacrawler."
-                                                    + executable.getCommand()
-                                                    + ".", ".png");
-    testOutputFile.delete();
-    final OutputOptions outputOptions = new OutputOptions("png", testOutputFile);
+    final Path testOutputFile = createTempFile(executable.getCommand(), "png");
+
+    final OutputOptions outputOptions = new OutputOptions("png",
+                                                          testOutputFile
+                                                            .toFile());
 
     executable.setOutputOptions(outputOptions);
     executable.execute(getConnection());
 
-    checkDiagramFile(testOutputFile);
+    validateDiagram(testOutputFile);
   }
 
   @Test

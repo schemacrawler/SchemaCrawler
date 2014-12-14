@@ -1,6 +1,9 @@
 package schemacrawler.tools.integration.embeddedgraph;
 
 
+import static java.nio.file.Files.createTempFile;
+import static java.nio.file.Files.newBufferedReader;
+import static java.nio.file.Files.newBufferedWriter;
 import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.WRITE;
 import static sf.util.Utility.NEWLINE;
@@ -10,7 +13,6 @@ import static sf.util.Utility.copy;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.nio.charset.Charset;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.Connection;
 
@@ -34,9 +36,9 @@ public class EmbeddedGraphExecutable
   public void executeOn(final Catalog catalog, final Connection connection)
     throws Exception
   {
-    final Path finalHtmlFile = Files.createTempFile("schemacrawler", ".html");
-    final Path baseHtmlFile = Files.createTempFile("schemacrawler", ".html");
-    final Path baseSvgFile = Files.createTempFile("schemacrawler", ".svg");
+    final Path finalHtmlFile = createTempFile("schemacrawler", ".html");
+    final Path baseHtmlFile = createTempFile("schemacrawler", ".html");
+    final Path baseSvgFile = createTempFile("schemacrawler", ".svg");
 
     final CommandChainExecutable chain = new CommandChainExecutable();
     chain.setSchemaCrawlerOptions(schemaCrawlerOptions);
@@ -48,12 +50,15 @@ public class EmbeddedGraphExecutable
     chain.executeOn(catalog, connection);
 
     // Interleave HTML and SVG
-    try (final BufferedWriter finalHtmlFileWriter = Files
-      .newBufferedWriter(finalHtmlFile, UTF8, CREATE, WRITE);
-        final BufferedReader baseHtmlFileReader = Files
-          .newBufferedReader(baseHtmlFile, UTF8);
-        final BufferedReader baseSvgFileReader = Files
-          .newBufferedReader(baseSvgFile, Charset.defaultCharset());)
+    try (final BufferedWriter finalHtmlFileWriter = newBufferedWriter(finalHtmlFile,
+                                                                      UTF8,
+                                                                      CREATE,
+                                                                      WRITE);
+        final BufferedReader baseHtmlFileReader = newBufferedReader(baseHtmlFile,
+                                                                    UTF8);
+        final BufferedReader baseSvgFileReader = newBufferedReader(baseSvgFile,
+                                                                   Charset
+                                                                     .defaultCharset());)
     {
       String line;
       while ((line = baseHtmlFileReader.readLine()) != null)
@@ -68,8 +73,10 @@ public class EmbeddedGraphExecutable
       }
     }
 
-    copy(Files.newBufferedReader(finalHtmlFile, UTF8),
-         new OutputWriter(outputOptions));
+    try (final OutputWriter writer = new OutputWriter(outputOptions);)
+    {
+      copy(newBufferedReader(finalHtmlFile, UTF8), writer);
+    }
   }
 
 }

@@ -20,10 +20,12 @@ package schemacrawler.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
+import static schemacrawler.test.utility.TestUtility.compareOutput;
+import static schemacrawler.test.utility.TestUtility.createTempFile;
 import static sf.util.Utility.UTF8;
 
-import java.io.File;
 import java.io.PrintWriter;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 
@@ -37,7 +39,6 @@ import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.test.utility.BaseDatabaseTest;
-import schemacrawler.test.utility.TestUtility;
 import schemacrawler.utility.NamedObjectSort;
 
 public class TableTypesTest
@@ -113,12 +114,10 @@ public class TableTypesTest
     throws Exception
   {
 
-    final File testOutputFile = File.createTempFile("schemacrawler."
-                                                        + referenceFile + ".",
-                                                    ".test");
-    testOutputFile.delete();
+    final Path testOutputFile = createTempFile(referenceFile, "text");
 
-    try (final PrintWriter writer = new PrintWriter(testOutputFile, UTF8.name());)
+    try (final PrintWriter writer = new PrintWriter(testOutputFile.toFile(),
+                                                    UTF8.name());)
     {
 
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
@@ -155,8 +154,8 @@ public class TableTypesTest
       }
     }
 
-    final List<String> failures = TestUtility
-      .compareOutput(TABLE_TYPES_OUTPUT + referenceFile, testOutputFile);
+    final List<String> failures = compareOutput(TABLE_TYPES_OUTPUT
+                                                + referenceFile, testOutputFile);
     if (failures.size() > 0)
     {
       fail(failures.toString());

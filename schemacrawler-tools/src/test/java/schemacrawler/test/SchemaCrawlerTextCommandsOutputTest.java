@@ -24,11 +24,13 @@ package schemacrawler.test;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
+import static schemacrawler.test.utility.TestUtility.createTempFile;
 import static sf.util.Utility.UTF8;
 
 import java.io.File;
 import java.io.PrintWriter;
 import java.io.Writer;
+import java.nio.file.Path;
 import java.util.List;
 
 import org.junit.Test;
@@ -116,18 +118,14 @@ public class SchemaCrawlerTextCommandsOutputTest
     final String command = SchemaTextDetailType.brief.name();
 
     final String referenceFile = command + ".txt";
-    final File testOutputFile = File.createTempFile("schemacrawler."
-                                                        + referenceFile + ".",
-                                                    ".test");
-    testOutputFile.delete();
-    assertTrue(!testOutputFile.exists());
+    final Path testOutputFile = createTempFile(referenceFile, "data");
 
     final File dummyOutputFile = new File(System.getProperty("java.io.tmpdir"),
                                           "dummy.txt");
     dummyOutputFile.delete();
     assertTrue(!dummyOutputFile.exists());
 
-    final Writer writer = new PrintWriter(testOutputFile, UTF8.name());
+    final Writer writer = new PrintWriter(testOutputFile.toFile(), UTF8.name());
     final OutputOptions outputOptions = new OutputOptions(TextOutputFormat.text.getFormat(),
                                                           dummyOutputFile);
     outputOptions.setWriter(writer);
@@ -159,13 +157,11 @@ public class SchemaCrawlerTextCommandsOutputTest
     throws Exception
   {
     final String referenceFile = command + ".txt";
-    final File testOutputFile = File.createTempFile("schemacrawler."
-                                                        + referenceFile + ".",
-                                                    ".test");
-    testOutputFile.delete();
+    final Path testOutputFile = createTempFile(referenceFile, "data");
 
     final OutputOptions outputOptions = new OutputOptions(TextOutputFormat.text.getFormat(),
-                                                          testOutputFile);
+                                                          testOutputFile
+                                                            .toFile());
 
     final BaseTextOptionsBuilder baseTextOptions = new BaseTextOptionsBuilder(config);
     baseTextOptions.hideInfo();

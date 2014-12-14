@@ -23,10 +23,12 @@ package schemacrawler.integration.test;
 
 
 import static org.junit.Assert.fail;
+import static schemacrawler.test.utility.TestUtility.compareOutput;
+import static schemacrawler.test.utility.TestUtility.createTempFile;
 import static sf.util.Utility.UTF8;
 
-import java.io.File;
 import java.nio.charset.Charset;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -35,7 +37,6 @@ import java.util.Map;
 import org.junit.Test;
 
 import schemacrawler.test.utility.BaseDatabaseTest;
-import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.commandline.SchemaCrawlerCommandLine;
 import schemacrawler.tools.databaseconnector.DatabaseSystemConnector;
 import schemacrawler.tools.executable.Executable;
@@ -88,9 +89,7 @@ public class IntegrationTest
                                                        final String referenceFileName)
     throws Exception
   {
-    final File testOutputFile = File.createTempFile("schemacrawler." + command
-                                                    + ".", ".test");
-    testOutputFile.delete();
+    final Path testOutputFile = createTempFile(command, outputFormatValue);
 
     final Map<String, String> args = new HashMap<>();
     args.put("driver", "org.hsqldb.jdbc.JDBCDriver");
@@ -102,7 +101,7 @@ public class IntegrationTest
     args.put("command", command);
     args.put("sortcolumns", "true");
     args.put("outputformat", outputFormatValue);
-    args.put("outputfile", testOutputFile.getAbsolutePath());
+    args.put("outputfile", testOutputFile.toString());
 
     final List<String> argsList = new ArrayList<>();
     for (final Map.Entry<String, String> arg: args.entrySet())
@@ -115,9 +114,8 @@ public class IntegrationTest
                                                                                 .toArray(new String[0]));
     commandLine.execute();
 
-    final List<String> failures = TestUtility.compareOutput(referenceFileName
-                                                                + ".txt",
-                                                            testOutputFile);
+    final List<String> failures = compareOutput(referenceFileName + ".txt",
+                                                testOutputFile);
     if (failures.size() > 0)
     {
       fail(failures.toString());
@@ -129,12 +127,12 @@ public class IntegrationTest
                                                       final String referenceFileName)
     throws Exception
   {
-    final File testOutputFile = File.createTempFile("schemacrawler."
-                                                    + executable.getCommand()
-                                                    + ".", ".test");
-    testOutputFile.delete();
+    final Path testOutputFile = createTempFile(executable.getCommand(),
+                                               outputFormatValue);
+
     final OutputOptions outputOptions = new OutputOptions(outputFormatValue,
-                                                          testOutputFile);
+                                                          testOutputFile
+                                                            .toFile());
     outputOptions.setInputEncoding(UTF8);
     outputOptions.setOutputEncoding(UTF8);
 
@@ -143,11 +141,10 @@ public class IntegrationTest
 
     final Charset templateCharset = outputOptions.getInputCharset();
 
-    final List<String> failures = TestUtility.compareOutput(referenceFileName
-                                                                + ".txt",
-                                                            testOutputFile,
-                                                            templateCharset,
-                                                            null);
+    final List<String> failures = compareOutput(referenceFileName + ".txt",
+                                                testOutputFile,
+                                                templateCharset,
+                                                null);
     if (failures.size() > 0)
     {
       fail(failures.toString());

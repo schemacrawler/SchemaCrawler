@@ -20,13 +20,25 @@
 package schemacrawler.test.utility;
 
 
+import static java.nio.file.Files.createFile;
+import static java.nio.file.Files.delete;
+import static java.nio.file.Files.exists;
+import static java.nio.file.Files.isReadable;
+import static java.nio.file.Files.isRegularFile;
+import static java.nio.file.Files.move;
+import static java.nio.file.Files.newBufferedReader;
+import static java.nio.file.Files.size;
+import static java.nio.file.Paths.get;
+import static java.nio.file.StandardCopyOption.ATOMIC_MOVE;
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
+import static org.junit.Assert.assertTrue;
 import static sf.util.Utility.UTF8;
 
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -38,10 +50,14 @@ import java.nio.channels.ReadableByteChannel;
 import java.nio.channels.WritableByteChannel;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.nio.file.LinkOption;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
+
+import javax.imageio.ImageIO;
 
 import org.custommonkey.xmlunit.Validator;
 import org.xml.sax.SAXException;
@@ -55,30 +71,46 @@ public final class TestUtility
 {
 
   public static List<String> compareOutput(final String referenceFile,
-                                           final File testOutputFile)
+                                           final Path testOutputTempFile)
     throws Exception
   {
-    return compareOutput(referenceFile, testOutputFile, null);
+    return compareOutput(referenceFile, testOutputTempFile, null);
+  }
+
+  public static void validateDiagram(final Path diagramFile)
+    throws IOException
+  {
+    assertTrue("Diagram file not created", exists(diagramFile));
+    assertTrue("Diagram file has 0 bytes size", size(diagramFile) > 0);
+    final BufferedImage image = ImageIO.read(diagramFile.toFile());
+    assertTrue("Diagram not created", image.getHeight() > 0);
+    assertTrue("Diagram not created", image.getWidth() > 0);
+
+    delete(diagramFile);
   }
 
   public static List<String> compareOutput(final String referenceFile,
-                                           final File testOutputFile,
+                                           final Path testOutputTempFile,
                                            final Charset encoding,
                                            final String outputFormat)
     throws Exception
   {
 
-    if (testOutputFile == null)
+    if (testOutputTempFile == null)
     {
       return Collections.singletonList("Output file is not defined");
     }
+    if (encoding == null)
+    {
+      return Collections.singletonList("Output file encoding is not defined");
+    }
 
-    if (testOutputFile == null || !testOutputFile.exists()
-        || !testOutputFile.isFile() || !testOutputFile.canRead()
-        || testOutputFile.length() == 0)
+    if (testOutputTempFile == null || !exists(testOutputTempFile)
+        || !isRegularFile(testOutputTempFile, LinkOption.NOFOLLOW_LINKS)
+        || !isReadable(testOutputTempFile) || size(testOutputTempFile) == 0)
     {
       return Collections.singletonList("Output file not created - "
-                                       + testOutputFile.getAbsolutePath());
+                                       + testOutputTempFile);
     }
 
     final List<String> failures = new ArrayList<>();
@@ -92,65 +124,63 @@ public final class TestUtility
     }
     else
     {
-      final Reader fileReader = readerForFile(testOutputFile, encoding);
+      final Reader fileReader = newBufferedReader(testOutputTempFile, encoding);
       contentEquals = contentEquals(referenceReader, fileReader, neuters);
     }
 
-    if ("html".equals(outputFormat))
+    if ("html".equals(outputFormat) || "htmlx".equals(outputFormat))
     {
-      validateXHTML(testOutputFile, failures);
+      validateXHTML(testOutputTempFile, failures);
     }
     else if ("json".equals(outputFormat))
     {
-      validateJSON(testOutputFile, failures);
+      validateJSON(testOutputTempFile, failures);
     }
 
     if (!contentEquals)
     {
-      File testOutputLocalFile = new File("./unit_tests_results_output",
-                                          referenceFile);
-      if (!testOutputLocalFile.getCanonicalPath().contains("target"))
+      final Path testOutputTargetFilePath = get(".",
+                                                "unit_tests_results_output",
+                                                referenceFile).normalize()
+        .toAbsolutePath();
+      final boolean isInTarget = testOutputTargetFilePath.toString()
+        .contains("target");
+      if (!isInTarget)
       {
-        final String buildDirectory = System.getProperty("buildDirectory");
-        testOutputLocalFile = new File(new File(buildDirectory,
-                                                "unit_tests_results_output"),
-                                       referenceFile);
+        throw new RuntimeException("Not in target directory");
       }
-      testOutputLocalFile.getParentFile().mkdirs();
-      testOutputLocalFile.delete();
-      final boolean renamed = testOutputFile.renameTo(testOutputLocalFile);
-      if (renamed)
+      if (!exists(testOutputTargetFilePath))
       {
-        if (!contentEquals)
-        {
-          failures.add("Output does not match");
-        }
+        createFile(testOutputTargetFilePath);
+      }
+      delete(testOutputTargetFilePath);
+      move(testOutputTempFile,
+           testOutputTargetFilePath,
+           ATOMIC_MOVE,
+           REPLACE_EXISTING);
 
-        failures.add("Actual output in "
-                     + testOutputLocalFile.getAbsolutePath());
-        System.err.println(testOutputLocalFile.getAbsolutePath());
-      }
-      else
+      if (!contentEquals)
       {
-        failures
-          .add("Output does not match; could not rename file; see actual output in "
-               + testOutputFile.getAbsolutePath());
+        failures.add("Output does not match");
       }
+
+      failures.add("Actual output in " + testOutputTargetFilePath);
+      System.err.println(testOutputTargetFilePath);
     }
     else
     {
-      testOutputFile.delete();
+      delete(testOutputTempFile);
     }
 
     return failures;
   }
 
   public static List<String> compareOutput(final String referenceFile,
-                                           final File testOutputFile,
+                                           final Path testOutputTempFilePath,
                                            final String outputFormat)
     throws Exception
   {
-    return compareOutput(referenceFile, testOutputFile, UTF8, null);
+    return compareOutput(referenceFile, testOutputTempFilePath, UTF8, null);
   }
 
   public static File copyResourceToTempFile(final String resource)
@@ -161,6 +191,18 @@ public final class TestUtility
     {
       return writeToTempFile(resourceStream);
     }
+  }
+
+  public static Path createTempFile(final String command,
+                                    final String outputFormatValue)
+    throws IOException
+  {
+    final Path testOutputTempFilePath = Files
+      .createTempFile(String.format("schemacrawler.%s.", command),
+                      String.format(".%s", outputFormatValue)).normalize()
+      .toAbsolutePath();
+    delete(testOutputTempFilePath);
+    return testOutputTempFilePath;
   }
 
   public static String currentMethodFullName()
@@ -175,25 +217,6 @@ public final class TestUtility
   {
     final StackTraceElement ste = currentMethodStackTraceElement();
     return ste.getMethodName();
-  }
-
-  public static Reader readerForFile(final File file, final Charset encoding)
-    throws IOException
-  {
-    if (file == null)
-    {
-      throw new IllegalArgumentException("No file provided");
-    }
-    final Charset charset;
-    if (encoding == null)
-    {
-      charset = UTF8;
-    }
-    else
-    {
-      charset = encoding;
-    }
-    return Files.newBufferedReader(file.toPath(), charset);
   }
 
   public static Reader readerForResource(final String resource,
@@ -316,12 +339,12 @@ public final class TestUtility
     }
   }
 
-  private static boolean validateJSON(final File testOutputFile,
+  private static boolean validateJSON(final Path testOutputFile,
                                       final List<String> failures)
     throws FileNotFoundException, SAXException, IOException
   {
     final JsonElement jsonElement;
-    try (final Reader reader = new BufferedReader(new FileReader(testOutputFile));
+    try (final Reader reader = newBufferedReader(testOutputFile, UTF8);
         final JsonReader jsonReader = new JsonReader(reader);)
     {
       jsonElement = new JsonParser().parse(jsonReader);
@@ -358,11 +381,12 @@ public final class TestUtility
     return failures.isEmpty();
   }
 
-  private static boolean validateXHTML(final File testOutputFile,
+  private static boolean validateXHTML(final Path testOutputFile,
                                        final List<String> failures)
     throws Exception
   {
-    final DOCTYPEChanger xhtmlReader = new DOCTYPEChanger(new FileReader(testOutputFile));
+    final DOCTYPEChanger xhtmlReader = new DOCTYPEChanger(newBufferedReader(testOutputFile,
+                                                                            UTF8));
     xhtmlReader.setRootElement("html");
     xhtmlReader
       .setSystemIdentifier("http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd");
