@@ -21,18 +21,23 @@
 package schemacrawler.test.utility;
 
 
+import static java.nio.file.Files.createTempFile;
+import static java.nio.file.Files.deleteIfExists;
+import static java.nio.file.Files.newBufferedWriter;
 import static schemacrawler.test.utility.TestUtility.currentMethodName;
+import static sf.util.Utility.UTF8;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.JUnitCore;
 
@@ -45,10 +50,10 @@ public class HTMLVariations
 
   public static void main(final String[] args)
   {
-    JUnitCore.main("schemacrawler.test.utility.HTMLVariations");
+    JUnitCore.main(HTMLVariations.class.getCanonicalName());
   }
 
-  private File directory;
+  private static Path directory;
 
   @Test
   public void html()
@@ -59,7 +64,7 @@ public class HTMLVariations
 
     final Map<String, String> config = new HashMap<>();
 
-    run(args, config, new File(directory, currentMethodName() + ".html"));
+    run(args, config, directory.resolve(currentMethodName() + ".html"));
   }
 
   @Test
@@ -72,7 +77,7 @@ public class HTMLVariations
 
     final Map<String, String> config = new HashMap<>();
 
-    run(args, config, new File(directory, currentMethodName() + ".html"));
+    run(args, config, directory.resolve(currentMethodName() + ".html"));
   }
 
   @Test
@@ -86,7 +91,7 @@ public class HTMLVariations
 
     final Map<String, String> config = new HashMap<>();
 
-    run(args, config, new File(directory, currentMethodName() + ".html"));
+    run(args, config, directory.resolve(currentMethodName() + ".html"));
   }
 
   @Test
@@ -100,7 +105,7 @@ public class HTMLVariations
     final Map<String, String> config = new HashMap<>();
     config.put("schemacrawler.format.show_ordinal_numbers", "true");
 
-    run(args, config, new File(directory, currentMethodName() + ".html"));
+    run(args, config, directory.resolve(currentMethodName() + ".html"));
   }
 
   @Test
@@ -114,7 +119,7 @@ public class HTMLVariations
 
     final Map<String, String> config = new HashMap<>();
 
-    run(args, config, new File(directory, currentMethodName() + ".html"));
+    run(args, config, directory.resolve(currentMethodName() + ".html"));
   }
 
   @Test
@@ -129,7 +134,7 @@ public class HTMLVariations
 
     final Map<String, String> config = new HashMap<>();
 
-    run(args, config, new File(directory, currentMethodName() + ".html"));
+    run(args, config, directory.resolve(currentMethodName() + ".html"));
   }
 
   @Test
@@ -145,36 +150,38 @@ public class HTMLVariations
 
     final Map<String, String> config = new HashMap<>();
 
-    run(args, config, new File(directory, currentMethodName() + ".html"));
+    run(args, config, directory.resolve(currentMethodName() + ".html"));
   }
 
-  @Before
-  public void setupDirectory()
-    throws IOException
+  @BeforeClass
+  public static void setupDirectory()
+    throws IOException, URISyntaxException
   {
-    directory = new File(this.getClass().getProtectionDomain().getCodeSource()
-                           .getLocation().getFile().replace("%20", " "),
-                         "../../../schemacrawler-site/src/site/resources/html-examples")
-      .getCanonicalFile();
+    final Path codePath = Paths
+      .get(HTMLVariations.class.getProtectionDomain().getCodeSource()
+        .getLocation().toURI()).normalize().toAbsolutePath();
+    directory = codePath
+      .resolve("../../../schemacrawler-site/src/site/resources/html-examples")
+      .normalize().toAbsolutePath();
   }
 
-  private File createConfig(final Map<String, String> config)
+  private Path createConfig(final Map<String, String> config)
     throws IOException
   {
     final String prefix = "SchemaCrawler.TestCommandLineConfig";
-    final File configFile = File.createTempFile(prefix, ".properties");
+    final Path configFile = createTempFile(prefix, "properties");
     final Properties configProperties = new Properties();
     configProperties.putAll(config);
-    configProperties.store(new FileWriter(configFile), prefix);
+    configProperties.store(newBufferedWriter(configFile, UTF8), prefix);
     return configFile;
   }
 
   private void run(final Map<String, String> args,
                    final Map<String, String> config,
-                   final File outputFile)
+                   final Path outputFile)
     throws Exception
   {
-    outputFile.delete();
+    deleteIfExists(outputFile);
 
     args.put("driver", "org.hsqldb.jdbc.JDBCDriver");
     args.put("url", "jdbc:hsqldb:hsql://localhost/schemacrawler");
@@ -187,7 +194,7 @@ public class HTMLVariations
       args.put("command", "schema");
     }
     args.put("outputformat", "html");
-    args.put("outputfile", outputFile.getAbsolutePath());
+    args.put("outputfile", outputFile.toString());
 
     final Config runConfig = new Config();
     final Config informationSchema = Config
@@ -198,8 +205,8 @@ public class HTMLVariations
       runConfig.putAll(config);
     }
 
-    final File configFile = createConfig(runConfig);
-    args.put("g", configFile.getAbsolutePath());
+    final Path configFile = createConfig(runConfig);
+    args.put("g", configFile.toString());
 
     final List<String> argsList = new ArrayList<>();
     for (final Map.Entry<String, String> arg: args.entrySet())
@@ -208,6 +215,7 @@ public class HTMLVariations
     }
 
     Main.main(argsList.toArray(new String[argsList.size()]));
+    System.out.println(outputFile.toString());
   }
 
 }

@@ -5,9 +5,9 @@ import static org.junit.Assert.fail;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
 import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,8 +39,10 @@ public class SpinThroughTest
   public static void clean()
     throws IOException
   {
-    FileUtils.deleteDirectory(new File("./target/unit_tests_results_output",
-                                       SPIN_THROUGH_OUTPUT));
+    FileUtils.deleteDirectory(Paths.get(".",
+                                        "target",
+                                        "unit_tests_results_output",
+                                        SPIN_THROUGH_OUTPUT).toFile());
   }
 
   private static final String SPIN_THROUGH_OUTPUT = "spin_through_output/";
@@ -51,7 +53,7 @@ public class SpinThroughTest
       GraphOutputFormat.htmlx,
       GraphOutputFormat.scdot
   };
-  private File hsqldbProperties;
+  private Path hsqldbProperties;
 
   @Before
   public void copyResources()
@@ -87,7 +89,7 @@ public class SpinThroughTest
           final OutputOptions outputOptions = new OutputOptions(outputFormat,
                                                                 testOutputFile);
 
-          final Config config = Config.load(hsqldbProperties.getAbsolutePath());
+          final Config config = Config.load(hsqldbProperties.toString());
           final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
           schemaCrawlerOptions.setSchemaInfoLevel(infoLevel
             .getSchemaInfoLevel());
@@ -143,7 +145,7 @@ public class SpinThroughTest
               "-url=jdbc:hsqldb:hsql://localhost/schemacrawler",
               "-user=sa",
               "-password=",
-              "-g=" + hsqldbProperties.getAbsolutePath(),
+              "-g=" + hsqldbProperties.toString(),
               "-sequences=.*",
               "-synonyms=.*",
               "-infolevel=" + infoLevel,

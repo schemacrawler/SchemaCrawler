@@ -1,6 +1,11 @@
 package schemacrawler.integration.test;
 
 
+import static java.nio.file.Files.delete;
+import static java.nio.file.Files.newBufferedWriter;
+import static java.nio.file.StandardOpenOption.CREATE;
+import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
+import static java.nio.file.StandardOpenOption.WRITE;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -9,7 +14,6 @@ import static schemacrawler.test.utility.TestUtility.compareOutput;
 import static schemacrawler.test.utility.TestUtility.createTempFile;
 import static sf.util.Utility.UTF8;
 
-import java.io.File;
 import java.io.PrintWriter;
 import java.io.Writer;
 import java.nio.file.Path;
@@ -39,9 +43,12 @@ public class TestBundledDistributions
     throws Exception
   {
 
-    final File testConfigFile = File.createTempFile("schemacrawler.test.",
-                                                    ".properties");
-    try (final Writer writer = new PrintWriter(testConfigFile, UTF8.name());)
+    final Path testConfigFile = createTempFile("test", "properties");
+    try (final Writer writer = new PrintWriter(newBufferedWriter(testConfigFile,
+                                                                 UTF8,
+                                                                 WRITE,
+                                                                 TRUNCATE_EXISTING,
+                                                                 CREATE));)
     {
       final Properties properties = new Properties();
       properties
@@ -75,7 +82,7 @@ public class TestBundledDistributions
     }
     else
     {
-      testConfigFile.delete();
+      delete(testConfigFile);
     }
 
   }
