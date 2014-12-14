@@ -18,8 +18,8 @@ package schemacrawler.integration.test;
 
 
 import static schemacrawler.test.utility.TestUtility.compareOutput;
+import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
 
-import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -29,7 +29,6 @@ import org.apache.tools.ant.Project;
 import org.junit.Test;
 
 import schemacrawler.test.utility.TestDatabase;
-import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.options.TextOutputFormat;
 
 public class AntSpringTaskTest
@@ -42,8 +41,8 @@ public class AntSpringTaskTest
   public void setUp()
     throws Exception
   {
-    final File buildFile = TestUtility.copyResourceToTempFile("/build.xml");
-    configureProject(buildFile.getAbsolutePath());
+    final Path buildFile = copyResourceToTempFile("/build.xml");
+    configureProject(buildFile.toString());
 
     TestDatabase.initialize();
   }
@@ -55,9 +54,9 @@ public class AntSpringTaskTest
     final String referenceFile = "ant_task_test.txt";
     final Path testOutputFile = Paths.get("scOutput.txt");
 
-    final File contextFile = TestUtility.copyResourceToTempFile("/context.xml");
+    final Path contextFile = copyResourceToTempFile("/context.xml");
 
-    setAntProjectProperty("context-file", contextFile.getAbsolutePath());
+    setAntProjectProperty("context-file", contextFile.toString());
     setAntProjectProperty("datasource", "datasource");
     setAntProjectProperty("executable", "executableForSchema");
     executeTarget("ant_task_test");

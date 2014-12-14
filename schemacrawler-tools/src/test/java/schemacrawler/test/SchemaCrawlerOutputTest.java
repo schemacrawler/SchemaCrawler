@@ -26,8 +26,9 @@ import static org.junit.Assert.fail;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
 import static schemacrawler.test.utility.TestUtility.createTempFile;
 
-import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
@@ -69,8 +70,7 @@ public class SchemaCrawlerOutputTest
   public void compareCompositeOutput()
     throws Exception
   {
-    FileUtils.deleteDirectory(new File("./target/unit_tests_results_output",
-                                       COMPOSITE_OUTPUT));
+    clean(COMPOSITE_OUTPUT);
 
     final String queryCommand1 = "all_tables";
     final Config queriesConfig = new Config();
@@ -136,9 +136,7 @@ public class SchemaCrawlerOutputTest
   public void compareHideConstraintNamesOutput()
     throws Exception
   {
-
-    FileUtils.deleteDirectory(new File("./target/unit_tests_results_output",
-                                       HIDE_CONSTRAINT_NAMES_OUTPUT));
+    clean(HIDE_CONSTRAINT_NAMES_OUTPUT);
 
     final List<String> failures = new ArrayList<>();
 
@@ -196,8 +194,7 @@ public class SchemaCrawlerOutputTest
   public void compareJsonOutput()
     throws Exception
   {
-    FileUtils.deleteDirectory(new File("./target/unit_tests_results_output",
-                                       JSON_OUTPUT));
+    clean(JSON_OUTPUT);
 
     final List<String> failures = new ArrayList<>();
     final InfoLevel infoLevel = InfoLevel.maximum;
@@ -243,8 +240,7 @@ public class SchemaCrawlerOutputTest
   public void compareOrdinalOutput()
     throws Exception
   {
-    FileUtils.deleteDirectory(new File("./target/unit_tests_results_output",
-                                       ORDINAL_OUTPUT));
+    clean(ORDINAL_OUTPUT);
 
     final List<String> failures = new ArrayList<>();
 
@@ -298,8 +294,7 @@ public class SchemaCrawlerOutputTest
   public void compareRoutinesOutput()
     throws Exception
   {
-    FileUtils.deleteDirectory(new File("./target/unit_tests_results_output",
-                                       ROUTINES_OUTPUT));
+    clean(ROUTINES_OUTPUT);
 
     final List<String> failures = new ArrayList<>();
 
@@ -352,8 +347,7 @@ public class SchemaCrawlerOutputTest
   public void compareUnqualifiedNamesOutput()
     throws Exception
   {
-    FileUtils.deleteDirectory(new File("./target/unit_tests_results_output",
-                                       UNQUALIFIED_NAMES_OUTPUT));
+    clean(UNQUALIFIED_NAMES_OUTPUT);
 
     final List<String> failures = new ArrayList<>();
 
@@ -401,6 +395,15 @@ public class SchemaCrawlerOutputTest
     {
       fail(failures.toString());
     }
+  }
+
+  private void clean(String dirname)
+    throws IOException
+  {
+    FileUtils.deleteDirectory(Paths.get(".",
+                                        "target",
+                                        "unit_tests_results_output",
+                                        dirname).toFile());
   }
 
 }

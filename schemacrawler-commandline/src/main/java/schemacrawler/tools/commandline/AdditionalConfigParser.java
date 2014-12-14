@@ -22,6 +22,8 @@
 package schemacrawler.tools.commandline;
 
 
+import java.io.IOException;
+
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
@@ -61,7 +63,14 @@ public final class AdditionalConfigParser
 
     // Override with additional config
     final String cfgFile = getStringValue("p");
-    additionalConfig.putAll(Config.load(cfgFile));
+    try
+    {
+      additionalConfig.putAll(Config.load(cfgFile));
+    }
+    catch (IOException e)
+    {
+      throw new SchemaCrawlerException("Could not load " + cfgFile, e);
+    }
 
     final SchemaTextOptions textOptions = new SchemaTextOptions(additionalConfig);
     if (getBooleanValue("noinfo"))

@@ -20,6 +20,11 @@
 package schemacrawler.tools.offline;
 
 
+import static java.nio.file.Files.newBufferedWriter;
+import static java.nio.file.Files.size;
+import static java.nio.file.StandardOpenOption.CREATE;
+import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
+import static java.nio.file.StandardOpenOption.WRITE;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
@@ -27,9 +32,8 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
 import static schemacrawler.test.utility.TestUtility.createTempFile;
+import static sf.util.Utility.UTF8;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.nio.file.Path;
@@ -56,7 +60,7 @@ public class OfflineSnapshotTest
 {
 
   private static final String OFFLINE_EXECUTABLE_OUTPUT = "offline_executable_output/";
-  private File serializedDatabaseFile;
+  private Path serializedDatabaseFile;
 
   @Test
   public void offlineSnapshotCommandLine()
@@ -65,7 +69,7 @@ public class OfflineSnapshotTest
     final Path testOutputFile = createTempFile("details", "data");
 
     final Map<String, String> args = new HashMap<>();
-    args.put("database", serializedDatabaseFile.getAbsolutePath());
+    args.put("database", serializedDatabaseFile.toString());
 
     args.put("infolevel", "maximum");
     args.put("command", "details");
@@ -97,7 +101,7 @@ public class OfflineSnapshotTest
     final Path testOutputFile = createTempFile("offline", "data");
 
     final Map<String, String> args = new HashMap<>();
-    args.put("database", serializedDatabaseFile.getAbsolutePath());
+    args.put("database", serializedDatabaseFile.toString());
 
     args.put("noinfo", "true");
     args.put("infolevel", "maximum");
@@ -133,7 +137,7 @@ public class OfflineSnapshotTest
     final Path testOutputFile = createTempFile("offline", "data");
 
     final Map<String, String> args = new HashMap<>();
-    args.put("database", serializedDatabaseFile.getAbsolutePath());
+    args.put("database", serializedDatabaseFile.toString());
 
     args.put("noinfo", "true");
     args.put("infolevel", "maximum");
@@ -203,15 +207,19 @@ public class OfflineSnapshotTest
     assertEquals("Unexpected number of tables in the schema", 6, catalog
       .getTables(schema).size());
 
-    serializedDatabaseFile = File.createTempFile("schemacrawler.", ".ser");
+    serializedDatabaseFile = createTempFile("schemacrawler", "ser");
 
     final XmlSerializedCatalog xmlDatabase = new XmlSerializedCatalog(catalog);
-    final Writer writer = new FileWriter(serializedDatabaseFile);
+    final Writer writer = newBufferedWriter(serializedDatabaseFile,
+                                            UTF8,
+                                            WRITE,
+                                            CREATE,
+                                            TRUNCATE_EXISTING);
     xmlDatabase.save(writer);
     writer.close();
     assertNotSame("Database was not serialized to XML",
                   0,
-                  serializedDatabaseFile.length());
+                  size(serializedDatabaseFile));
 
   }
 
