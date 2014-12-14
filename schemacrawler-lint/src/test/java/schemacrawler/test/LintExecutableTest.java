@@ -26,7 +26,6 @@ import static schemacrawler.test.utility.TestUtility.compareOutput;
 import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
 import static schemacrawler.test.utility.TestUtility.createTempFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -153,8 +152,8 @@ public class LintExecutableTest
   private void useLinterConfigFile()
     throws IOException
   {
-    final File file = copyResourceToTempFile("/schemacrawler-linter-configs-off.xml");
-    System.setProperty(CONFIG_LINTER_CONFIGS_FILE, file.getAbsolutePath());
+    final Path file = copyResourceToTempFile("/schemacrawler-linter-configs-off.xml");
+    System.setProperty(CONFIG_LINTER_CONFIGS_FILE, file.toString());
   }
 
 }

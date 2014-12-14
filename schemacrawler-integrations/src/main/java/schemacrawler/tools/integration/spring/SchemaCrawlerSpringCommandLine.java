@@ -22,7 +22,10 @@
 package schemacrawler.tools.integration.spring;
 
 
-import java.io.File;
+import static java.nio.file.Files.exists;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,6 +33,7 @@ import java.util.logging.Logger;
 import javax.sql.DataSource;
 
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -64,9 +68,18 @@ public class SchemaCrawlerSpringCommandLine
   public void execute()
     throws Exception
   {
-    final File contextFile = new File(springOptions.getContextFileName());
-    final ApplicationContext appContext = new FileSystemXmlApplicationContext(contextFile
-      .toURI().toString());
+    final Path contextFile = Paths.get(springOptions.getContextFileName())
+      .normalize().toAbsolutePath();
+    final ApplicationContext appContext;
+    if (exists(contextFile))
+    {
+      appContext = new FileSystemXmlApplicationContext(contextFile.toUri()
+        .toString());
+    }
+    else
+    {
+      appContext = new ClassPathXmlApplicationContext(springOptions.getContextFileName());
+    }
 
     final DataSource dataSource = (DataSource) appContext.getBean(springOptions
       .getDataSourceName());
