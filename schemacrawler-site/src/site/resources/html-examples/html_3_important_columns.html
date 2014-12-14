@@ -272,16 +272,6 @@ blockquote p {
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>ADDRESS1</td>
-		<td class='type'>VARCHAR(255)</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='subname'>ADDRESS2</td>
-		<td class='type'>VARCHAR(255)</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
 		<td class='subname'>CITY</td>
 		<td class='type'>VARCHAR(50)</td>
 	</tr>
@@ -324,100 +314,62 @@ blockquote p {
 		<td class='subname'>ID &#8592; BOOKAUTHORS.AUTHORID</td>
 		<td class='type'></td>
 	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description right'>[unique index]</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='subname'>ID</td>
-		<td class='type'>ascending</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
+</table>
+<p>&#160;</p>
+
+<table>
+  <caption>AUTHORSLIST</caption>
+
 	<tr>
 		<td colspan='2' class='name'></td>
-		<td class='description right'>[non-unique index]</td>
+		<td class='description right'>[view]</td>
 	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='subname'>LASTNAME</td>
-		<td class='type'>ascending</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='subname'>FIRSTNAME</td>
-		<td class='type'>ascending</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
+</table>
+<p>&#160;</p>
+
+<table>
+  <caption>BOOKAUTHORS</caption>
+
 	<tr>
 		<td colspan='2' class='name'></td>
-		<td class='description right'>[non-unique index]</td>
+		<td class='description right'>[table]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>Relationship between books and their authors, along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>CITY</td>
-		<td class='type'>ascending</td>
+		<td class='subname'>BOOKID</td>
+		<td class='type'>INTEGER NOT NULL</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>STATE</td>
-		<td class='type'>ascending</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='subname'>POSTALCODE</td>
-		<td class='type'>ascending</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='subname'>COUNTRY</td>
-		<td class='type'>ascending</td>
+		<td class='subname'>AUTHORID</td>
+		<td class='type'>INTEGER NOT NULL</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
 		<td colspan='2' class='name'></td>
-		<td class='description right'>[trigger, after delete, per row]</td>
+		<td class='description right'>[foreign key, with no action]</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td colspan='2' class='definition'>UPDATE BOOKS.PUBLISHERS SET PUBLISHER=&apos;Jacob&apos;WHERE PUBLISHER=&apos;John&apos;</td>
+		<td class='subname'>AUTHORID &#8594; AUTHORS.ID</td>
+		<td class='type'></td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
 		<td colspan='2' class='name'></td>
-		<td class='description right'>[check constraint]</td>
+		<td class='description right'>[foreign key, with no action]</td>
 	</tr>
 	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description right'>[check constraint]</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description right'>[check constraint]</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description right'>[check constraint]</td>
+		<td class='spacer'></td>
+		<td class='subname'>BOOKID &#8594; BOOKS.ID</td>
+		<td class='type'></td>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -441,56 +393,6 @@ blockquote p {
 		<td class='spacer'></td>
 		<td class='subname'></td>
 		<td class='type'>Unique (internal) id for book</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='subname'>TITLE</td>
-		<td class='type'>VARCHAR(255) NOT NULL</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='subname'></td>
-		<td class='type'>Book title</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='subname'>DESCRIPTION</td>
-		<td class='type'>VARCHAR(255)</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='subname'></td>
-		<td class='type'>Book description</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='subname'>PUBLISHERID</td>
-		<td class='type'>INTEGER NOT NULL</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='subname'></td>
-		<td class='type'>Foreign key to the book publisher</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='subname'>PUBLICATIONDATE</td>
-		<td class='type'>DATE</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='subname'></td>
-		<td class='type'>Book publication date</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='subname'>PRICE</td>
-		<td class='type'>DOUBLE(64, 0)</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='subname'></td>
-		<td class='type'>Current price for the book</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
@@ -533,62 +435,15 @@ blockquote p {
 		<td class='subname'>ID &#8592; PREVIOUSEDITIONID</td>
 		<td class='type'></td>
 	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description right'>[unique index]</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='subname'>ID</td>
-		<td class='type'>ascending</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
+</table>
+<p>&#160;</p>
+
+<table>
+  <caption>"Global Counts"</caption>
+
 	<tr>
 		<td colspan='2' class='name'></td>
-		<td class='description right'>[unique index]</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='subname'>PREVIOUSEDITIONID</td>
-		<td class='type'>ascending</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description right'>[non-unique index]</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='subname'>PREVIOUSEDITIONID</td>
-		<td class='type'>ascending</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description right'>[check constraint]</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description right'>[check constraint]</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description right'>[check constraint]</td>
+		<td class='description right'>[table]</td>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -619,16 +474,6 @@ blockquote p {
 		<td class='type'>Unique (internal) id for book publisher</td>
 	</tr>
 	<tr>
-		<td class='spacer'></td>
-		<td class='subname'>PUBLISHER</td>
-		<td class='type'>VARCHAR(255)</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='subname'></td>
-		<td class='type'>Name of book publisher</td>
-	</tr>
-	<tr>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
@@ -645,12 +490,37 @@ blockquote p {
 		<td class='subname'></td>
 		<td class='type'>auto-incremented</td>
 	</tr>
+</table>
+<p>&#160;</p>
+
+<table>
+  <caption>EXTRA_PK</caption>
+
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[table]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'><b><i>ID</i></b></td>
+		<td class='type'>INTEGER NOT NULL</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>WRITERID</td>
+		<td class='type'>BIGINT NOT NULL</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>PUBLICATIONID</td>
+		<td class='type'>INTEGER NOT NULL</td>
+	</tr>
 	<tr>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
 		<td colspan='2' class='name'></td>
-		<td class='description right'>[unique index]</td>
+		<td class='description right'>[primary key]</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
@@ -658,9 +528,300 @@ blockquote p {
 		<td class='type'>ascending</td>
 	</tr>
 	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
 		<td class='spacer'></td>
-		<td class='subname'></td>
-		<td class='type'>auto-incremented</td>
+		<td class='subname'>PUBLICATIONID &#8594; PUBLICATIONS.ID</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>WRITERID &#8594; WRITERS.ID</td>
+		<td class='type'></td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<table>
+  <caption>"Global Counts"</caption>
+
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[table]</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<table>
+  <caption>PUBLICATIONS</caption>
+
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[table]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'><b><i>ID</i></b></td>
+		<td class='type'>INTEGER NOT NULL</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>WRITERID</td>
+		<td class='type'>BIGINT NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[primary key]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ID &#8592; EXTRA_PK.PUBLICATIONID</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ID &#8592; WRITERS.PUBLICATION_ID</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>WRITERID &#8594; WRITERS.ID</td>
+		<td class='type'></td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<table>
+  <caption>WRITERS</caption>
+
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[table]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'><b><i>ID</i></b></td>
+		<td class='type'>BIGINT NOT NULL</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>FIRSTNAME</td>
+		<td class='type'>VARCHAR(20) NOT NULL</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>LASTNAME</td>
+		<td class='type'>VARCHAR(20) NOT NULL</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>CITY</td>
+		<td class='type'>VARCHAR(50)</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>STATE</td>
+		<td class='type'>VARCHAR(2)</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>POSTALCODE</td>
+		<td class='type'>VARCHAR(10)</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>COUNTRY</td>
+		<td class='type'>VARCHAR(50)</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>EMAIL1</td>
+		<td class='type'>VARCHAR(10)</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>PUBLICATION_ID</td>
+		<td class='type'>BIGINT NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[primary key]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>PUBLICATION_ID &#8594; PUBLICATIONS.ID</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ID &#8592; EXTRA_PK.WRITERID</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ID &#8592; PUBLICATIONS.WRITERID</td>
+		<td class='type'></td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<table>
+  <caption>REGIONS</caption>
+
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[table]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'><b><i>POSTALCODE</i></b></td>
+		<td class='type'>VARCHAR(10) NOT NULL</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'><b><i>COUNTRY</i></b></td>
+		<td class='type'>VARCHAR(50) NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[primary key]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>POSTALCODE</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>COUNTRY</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>POSTALCODE &#8592; SALES.POSTALCODE</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>COUNTRY &#8592; SALES.COUNTRY</td>
+		<td class='type'></td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<table>
+  <caption>SALES</caption>
+
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[table]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>POSTALCODE</td>
+		<td class='type'>VARCHAR(10) NOT NULL</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>COUNTRY</td>
+		<td class='type'>VARCHAR(50) NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>POSTALCODE &#8594; REGIONS.POSTALCODE</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>COUNTRY &#8594; REGIONS.COUNTRY</td>
+		<td class='type'></td>
 	</tr>
 </table>
 <p>&#160;</p>
