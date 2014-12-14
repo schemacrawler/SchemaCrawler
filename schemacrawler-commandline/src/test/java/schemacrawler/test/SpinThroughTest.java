@@ -84,9 +84,8 @@ public class SpinThroughTest
                                                      infoLevel,
                                                      outputFormat);
 
-          final OutputOptions outputOptions = new OutputOptions(outputFormat.getFormat(),
-                                                                testOutputFile
-                                                                  .toFile());
+          final OutputOptions outputOptions = new OutputOptions(outputFormat,
+                                                                testOutputFile);
 
           final Config config = Config.load(hsqldbProperties.getAbsolutePath());
           final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);

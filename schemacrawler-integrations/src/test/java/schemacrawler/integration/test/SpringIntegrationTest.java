@@ -87,7 +87,7 @@ public class SpringIntegrationTest
   {
     final Path testOutputFile = createTempFile(executableName, "data");
 
-    executable.getOutputOptions().setOutputFile(testOutputFile.toFile());
+    executable.getOutputOptions().setOutputFile(testOutputFile);
     executable.execute(getConnection());
 
     failures.addAll(compareOutput(executableName + ".txt", testOutputFile));

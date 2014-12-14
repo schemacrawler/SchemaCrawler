@@ -43,8 +43,7 @@ public abstract class BaseExecutableTest
                                                outputFormatValue);
 
     final OutputOptions outputOptions = new OutputOptions(outputFormatValue,
-                                                          testOutputFile
-                                                            .toFile());
+                                                          testOutputFile);
 
     executable.setOutputOptions(outputOptions);
     executable.execute(getConnection());

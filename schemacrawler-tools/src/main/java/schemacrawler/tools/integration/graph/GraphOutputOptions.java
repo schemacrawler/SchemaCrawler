@@ -1,9 +1,10 @@
 package schemacrawler.tools.integration.graph;
 
 
-import java.io.File;
 import java.io.Writer;
 import java.nio.charset.Charset;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.UUID;
 
 import schemacrawler.tools.options.OutputOptions;
@@ -27,14 +28,14 @@ public class GraphOutputOptions
    *
    * @return Diagram file
    */
-  public File getDiagramFile()
+  public Path getDiagramFile()
   {
-    final File diagramOutputFile = getOutputFile();
-    final File diagramFile;
+    final Path diagramOutputFile = getOutputFile();
+    final Path diagramFile;
     if (diagramOutputFile == null)
     {
-      diagramFile = new File(".", "schemacrawler." + UUID.randomUUID() + "."
-                                  + getOutputFormat().getFormat());
+      diagramFile = Paths.get(".", "schemacrawler." + UUID.randomUUID() + "."
+                                   + getOutputFormat().getFormat());
     }
     else
     {
@@ -56,7 +57,7 @@ public class GraphOutputOptions
   }
 
   @Override
-  public File getOutputFile()
+  public Path getOutputFile()
   {
     return outputOptions.getOutputFile();
   }
@@ -120,7 +121,7 @@ public class GraphOutputOptions
   }
 
   @Override
-  public void setOutputFile(final File outputFile)
+  public void setOutputFile(final Path outputFile)
   {
     outputOptions.setOutputFile(outputFile);
   }

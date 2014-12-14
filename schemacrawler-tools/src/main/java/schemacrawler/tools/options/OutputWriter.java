@@ -20,12 +20,18 @@
 package schemacrawler.tools.options;
 
 
+import static java.nio.file.Files.newBufferedWriter;
+import static java.nio.file.StandardOpenOption.APPEND;
+import static java.nio.file.StandardOpenOption.CREATE;
+import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
+import static java.nio.file.StandardOpenOption.WRITE;
+
 import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.nio.file.OpenOption;
+import java.nio.file.Path;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -208,15 +214,26 @@ public final class OutputWriter
       else if (outputOptions.isFileOutput())
       {
         isFileOutput = true;
-        final File outputFile = outputOptions.getOutputFile();
-        final FileOutputStream fileOutputStream = new FileOutputStream(outputFile,
-                                                                       appendOutput);
-        writer = new OutputStreamWriter(fileOutputStream,
-                                        outputOptions.getOutputCharset());
-        description = outputFile.getAbsolutePath();
-        LOGGER.log(Level.INFO,
-                   "Opened output writer to file, "
-                       + outputFile.getAbsolutePath());
+        final Path outputFile = outputOptions.getOutputFile().normalize()
+          .toAbsolutePath();
+        final OpenOption[] openOptions;
+        if (appendOutput)
+        {
+          openOptions = new OpenOption[] {
+              CREATE, WRITE, APPEND
+          };
+        }
+        else
+        {
+          openOptions = new OpenOption[] {
+              CREATE, WRITE, TRUNCATE_EXISTING
+          };
+        }
+        writer = newBufferedWriter(outputFile,
+                                   outputOptions.getOutputCharset(),
+                                   openOptions);
+        description = outputFile.toString();
+        LOGGER.log(Level.INFO, "Opened output writer to file, " + outputFile);
       }
       else
       {
