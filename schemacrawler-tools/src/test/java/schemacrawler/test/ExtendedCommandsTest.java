@@ -21,56 +21,22 @@
 package schemacrawler.test;
 
 
-import static schemacrawler.test.utility.TestUtility.createTempFile;
-import static schemacrawler.test.utility.TestUtility.validateDiagram;
-
-import java.nio.file.Path;
-
 import org.junit.Test;
 
 import schemacrawler.test.utility.BaseExecutableTest;
-import schemacrawler.tools.integration.graph.GraphExecutable;
-import schemacrawler.tools.integration.graph.GraphOutputFormat;
 import schemacrawler.tools.integration.scripting.ScriptExecutable;
-import schemacrawler.tools.options.OutputOptions;
 
 public class ExtendedCommandsTest
   extends BaseExecutableTest
 {
 
   @Test
-  public void executableGraph()
-    throws Exception
-  {
-    final GraphExecutable executable = new GraphExecutable();
-
-    final Path testOutputFile = createTempFile(executable.getCommand(), "png");
-
-    final OutputOptions outputOptions = new OutputOptions(GraphOutputFormat.png,
-                                                          testOutputFile);
-
-    executable.setOutputOptions(outputOptions);
-    executable.execute(getConnection());
-
-    validateDiagram(testOutputFile);
-  }
-
-  @Test
-  public void executableGraphDot()
-    throws Exception
-  {
-    executeExecutableAndCheckForOutputFile(new GraphExecutable(),
-                                           "canon",
-                                           "executableForGraph.txt");
-  }
-
-  @Test
   public void executableJavaScript()
     throws Exception
   {
-    executeExecutableAndCheckForOutputFile(new ScriptExecutable(),
-                                           "plaintextschema.js",
-                                           "executableForJavaScript.txt");
+    executeExecutable(new ScriptExecutable(),
+                      "plaintextschema.js",
+                      "executableForJavaScript.txt");
   }
 
 }

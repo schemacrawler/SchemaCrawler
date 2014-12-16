@@ -21,13 +21,6 @@
 package schemacrawler.test.utility;
 
 
-import static org.junit.Assert.fail;
-import static schemacrawler.test.utility.TestUtility.compareOutput;
-import static schemacrawler.test.utility.TestUtility.createTempFile;
-
-import java.nio.file.Path;
-import java.util.List;
-
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.options.OutputOptions;
 
@@ -35,34 +28,20 @@ public abstract class BaseExecutableTest
   extends BaseDatabaseTest
 {
 
-  protected Path executeExecutable(final Executable executable,
-                                   final String outputFormatValue)
+  protected void executeExecutable(final Executable executable,
+                                   final String outputFormatValue,
+                                   final String referenceFileName)
     throws Exception
   {
-    final Path testOutputFile = createTempFile(executable.getCommand(),
-                                               outputFormatValue);
-
-    final OutputOptions outputOptions = new OutputOptions(outputFormatValue,
-                                                          testOutputFile);
-
-    executable.setOutputOptions(outputOptions);
-    executable.execute(getConnection());
-
-    return testOutputFile;
-  }
-
-  protected void executeExecutableAndCheckForOutputFile(final Executable executable,
-                                                        final String outputFormatValue,
-                                                        final String referenceFileName)
-    throws Exception
-  {
-    final Path testOutputFile = executeExecutable(executable, outputFormatValue);
-
-    final List<String> failures = compareOutput(referenceFileName,
-                                                testOutputFile);
-    if (failures.size() > 0)
+    try (final TestWriter out = new TestWriter(outputFormatValue);)
     {
-      fail(failures.toString());
+      final OutputOptions outputOptions = new OutputOptions(outputFormatValue,
+                                                            out);
+
+      executable.setOutputOptions(outputOptions);
+      executable.execute(getConnection());
+
+      out.assertEquals(referenceFileName);
     }
   }
 

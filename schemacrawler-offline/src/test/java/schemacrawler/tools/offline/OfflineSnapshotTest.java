@@ -184,10 +184,8 @@ public class OfflineSnapshotTest
     executable
       .setOfflineSnapshotOptions(new OfflineSnapshotOptions(serializedDatabaseFile));
 
-    executeExecutableAndCheckForOutputFile(executable,
-                                           "text",
-                                           OFFLINE_EXECUTABLE_OUTPUT
-                                               + "details.txt");
+    executeExecutable(executable, "text", OFFLINE_EXECUTABLE_OUTPUT
+                                          + "details.txt");
   }
 
   @Before
