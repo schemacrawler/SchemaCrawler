@@ -21,9 +21,6 @@
 package schemacrawler.tools.integration.graph;
 
 
-import static java.nio.file.Files.move;
-import static java.nio.file.StandardCopyOption.ATOMIC_MOVE;
-import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static sf.util.Utility.isBlank;
 import static sf.util.Utility.readResourceFully;
 
@@ -102,10 +99,21 @@ public final class GraphExecutable
       catalog = db;
     }
 
+    final GraphOutputOptions graphOutputOptions = new GraphOutputOptions(outputOptions);
+    final boolean isScDot = graphOutputOptions.getOutputFormat() == GraphOutputFormat.scdot;
     // Create dot file
     final Path dotFile = Files.createTempFile("schemacrawler.", ".dot");
 
-    final SchemaTraversalHandler formatter = getSchemaTraversalHandler(dotFile);
+    final OutputOptions dotFileOutputOptions;
+    if (isScDot)
+    {
+      dotFileOutputOptions = outputOptions;
+    }
+    else
+    {
+      dotFileOutputOptions = new OutputOptions(GraphOutputFormat.dot, dotFile);
+    }
+    final SchemaTraversalHandler formatter = getSchemaTraversalHandler(dotFileOutputOptions);
 
     final SchemaTraverser traverser = new SchemaTraverser();
     traverser.setCatalog(catalog);
@@ -114,7 +122,6 @@ public final class GraphExecutable
 
     // Create graph image
     final GraphOptions graphOptions = getGraphOptions();
-    final GraphOutputOptions graphOutputOptions = new GraphOutputOptions(outputOptions);
     try
     {
       generateDiagram(graphOptions, graphOutputOptions, dotFile);
@@ -180,10 +187,6 @@ public final class GraphExecutable
 
     if (graphOutputOptions.getOutputFormat() == GraphOutputFormat.scdot)
     {
-      move(dotFile,
-           graphOutputOptions.getDiagramFile(),
-           REPLACE_EXISTING,
-           ATOMIC_MOVE);
       return;
     }
 
@@ -226,7 +229,7 @@ public final class GraphExecutable
     return schemaTextDetailType;
   }
 
-  private SchemaTraversalHandler getSchemaTraversalHandler(final Path dotFile)
+  private SchemaTraversalHandler getSchemaTraversalHandler(final OutputOptions outputOptions)
     throws SchemaCrawlerException
   {
     final SchemaTraversalHandler formatter;
@@ -240,8 +243,7 @@ public final class GraphExecutable
 
     formatter = new SchemaDotFormatter(schemaTextDetailType,
                                        graphOptions,
-                                       new OutputOptions(GraphOutputFormat.dot,
-                                                         dotFile));
+                                       outputOptions);
 
     return formatter;
   }

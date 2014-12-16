@@ -55,9 +55,7 @@ public class DerbyTest
     executable.setSchemaCrawlerOptions(options);
     executable.setAdditionalConfiguration(textOptions.toConfig());
 
-    executeExecutableAndCheckForOutputFile(executable,
-                                           "text",
-                                           "testDerbyWithConnection.txt");
+    executeExecutable(executable, "text", "testDerbyWithConnection.txt");
   }
 
   @Override

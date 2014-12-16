@@ -84,8 +84,7 @@ public class LintExecutableTest
   public void executableLintReport()
     throws Exception
   {
-    executeExecutableAndCheckForOutputFile(TextOutputFormat.text,
-                                           "executableForLint");
+    executeLintExecutable(TextOutputFormat.text, "executableForLint");
   }
 
   @Test
@@ -94,8 +93,7 @@ public class LintExecutableTest
   {
     useLinterConfigFile();
 
-    executeExecutableAndCheckForOutputFile(TextOutputFormat.text,
-                                           "executableForLintWithConfig");
+    executeLintExecutable(TextOutputFormat.text, "executableForLintWithConfig");
 
     removeLinterConfig();
   }
@@ -139,13 +137,13 @@ public class LintExecutableTest
     }
   }
 
-  private void executeExecutableAndCheckForOutputFile(final OutputFormat outputFormat,
-                                                      final String referenceFileName)
+  private void executeLintExecutable(final OutputFormat outputFormat,
+                                     final String referenceFileName)
     throws Exception
   {
-    executeExecutableAndCheckForOutputFile(new SchemaCrawlerExecutable("lint"),
-                                           outputFormat.getFormat(),
-                                           referenceFileName + ".txt");
+    executeExecutable(new SchemaCrawlerExecutable("lint"),
+                      outputFormat.getFormat(),
+                      referenceFileName + ".txt");
   }
 
   private void useLinterConfigFile()
