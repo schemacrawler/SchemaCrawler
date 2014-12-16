@@ -36,7 +36,6 @@ import org.junit.Test;
 
 import schemacrawler.test.utility.TestDatabase;
 import schemacrawler.test.utility.TestUtility;
-import schemacrawler.tools.options.TextOutputFormat;
 
 public class AntTaskTest
   extends BuildFileTest
@@ -101,9 +100,7 @@ public class AntTaskTest
     // System.out.println(getOutput());
 
     final List<String> failures = compareOutput(ANT_TEST_OUTPUT + referenceFile,
-                                                testOutputFile,
-                                                TextOutputFormat.text
-                                                  .getFormat());
+                                                testOutputFile);
     if (!failures.isEmpty())
     {
       fail(failures.toString());
