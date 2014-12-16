@@ -48,44 +48,43 @@ public class ExcludeTest
   public void excludeColumns()
     throws Exception
   {
-
-    final TestWriter out = new TestWriter();
-
-    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions
-      .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
-    schemaCrawlerOptions
-      .setColumnInclusionRule(new RegularExpressionExclusionRule(".*\\..*\\.ID"));
-
-    final Catalog catalog = getCatalog(schemaCrawlerOptions);
-    final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
-    assertEquals("Schema count does not match", 5, schemas.length);
-    for (final Schema schema: schemas)
+    try (final TestWriter out = new TestWriter("text");)
     {
-      out.println("schema: " + schema.getFullName());
-      final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
-      Arrays.sort(tables, NamedObjectSort.alphabetical);
-      for (final Table table: tables)
+      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+      schemaCrawlerOptions
+        .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
+      schemaCrawlerOptions
+        .setColumnInclusionRule(new RegularExpressionExclusionRule(".*\\..*\\.ID"));
+
+      final Catalog catalog = getCatalog(schemaCrawlerOptions);
+      final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
+      assertEquals("Schema count does not match", 5, schemas.length);
+      for (final Schema schema: schemas)
       {
-        out.println("  table: " + table.getFullName());
-        final Column[] columns = table.getColumns().toArray(new Column[0]);
-        Arrays.sort(columns);
-        for (final Column column: columns)
+        out.println("schema: " + schema.getFullName());
+        final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
+        Arrays.sort(tables, NamedObjectSort.alphabetical);
+        for (final Table table: tables)
         {
-          LOGGER.log(Level.FINE, column.toString());
-          out.println("    column: " + column.getFullName());
-          out.println("      database type: "
-                      + column.getColumnDataType()
-                        .getDatabaseSpecificTypeName());
-          out.println("      type: "
-                      + column.getColumnDataType().getJavaSqlType()
-                        .getJavaSqlTypeName());
+          out.println("  table: " + table.getFullName());
+          final Column[] columns = table.getColumns().toArray(new Column[0]);
+          Arrays.sort(columns);
+          for (final Column column: columns)
+          {
+            LOGGER.log(Level.FINE, column.toString());
+            out.println("    column: " + column.getFullName());
+            out.println("      database type: "
+                        + column.getColumnDataType()
+                          .getDatabaseSpecificTypeName());
+            out.println("      type: "
+                        + column.getColumnDataType().getJavaSqlType()
+                          .getJavaSqlTypeName());
+          }
         }
       }
-    }
 
-    out.close();
-    out.assertEquals(TestUtility.currentMethodFullName());
+      out.assertEquals(TestUtility.currentMethodFullName());
+    }
   }
 
 }
