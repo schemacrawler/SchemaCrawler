@@ -1,6 +1,7 @@
 package schemacrawler.test.utility;
 
 
+import static java.util.Objects.requireNonNull;
 import static org.junit.Assert.fail;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
 import static schemacrawler.test.utility.TestUtility.createTempFile;
@@ -19,12 +20,13 @@ public class TestWriter
 
   private final Path tempFile;
   private final PrintWriter out;
+  private final String outputformat;
 
-  public TestWriter()
+  public TestWriter(final String outputformat)
     throws IOException
   {
-    tempFile = createTempFile("schemacrawler", ".dat");
-
+    this.outputformat = requireNonNull(outputformat);
+    tempFile = createTempFile("schemacrawler", outputformat);
     out = new PrintWriter(tempFile.toFile(), UTF8.name());
   }
 
@@ -53,7 +55,9 @@ public class TestWriter
   {
     out.close();
 
-    final List<String> failures = compareOutput(referenceFile, tempFile);
+    final List<String> failures = compareOutput(requireNonNull(referenceFile),
+                                                tempFile,
+                                                outputformat);
     if (!failures.isEmpty())
     {
       fail(failures.toString());

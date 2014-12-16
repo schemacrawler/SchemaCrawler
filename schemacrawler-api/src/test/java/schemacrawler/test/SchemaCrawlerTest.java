@@ -23,16 +23,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static schemacrawler.test.utility.TestUtility.compareOutput;
-import static schemacrawler.test.utility.TestUtility.createTempFile;
 import static schemacrawler.test.utility.TestUtility.currentMethodFullName;
-import static sf.util.Utility.UTF8;
 
-import java.io.PrintWriter;
-import java.nio.file.Path;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Map.Entry;
 import java.util.Random;
 import java.util.SortedMap;
@@ -93,102 +86,104 @@ public class SchemaCrawlerTest
   public void counts()
     throws Exception
   {
-    final TestWriter out = new TestWriter();
-
-    final InformationSchemaViews informationSchemaViews = new InformationSchemaViews();
-    informationSchemaViews
-      .setTableConstraintsSql("SELECT * FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS");
-    informationSchemaViews
-      .setExtTableConstraintsSql("SELECT * FROM INFORMATION_SCHEMA.CHECK_CONSTRAINTS");
-
-    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
-    schemaCrawlerOptions.setInformationSchemaViews(informationSchemaViews);
-    schemaCrawlerOptions
-      .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
-
-    final Catalog catalog = getCatalog(schemaCrawlerOptions);
-    final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
-    assertEquals("Schema count does not match", 5, schemas.length);
-    for (final Schema schema: schemas)
+    try (final TestWriter out = new TestWriter("text");)
     {
-      out.println("schema: " + schema.getFullName());
-      final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
-      Arrays.sort(tables, NamedObjectSort.alphabetical);
-      for (final Table table: tables)
-      {
-        out.println("  table: " + table.getFullName());
-        out.println("    # columns: " + table.getColumns().size());
-        out.println("    # constraints: " + table.getTableConstraints().size());
-        out.println("    # indices: " + table.getIndices().size());
-        out.println("    # foreign keys: " + table.getForeignKeys().size());
-        out.println("    # imported foreign keys: "
-                    + table.getExportedForeignKeys().size());
-        out.println("    # exported: " + table.getImportedForeignKeys().size());
-        out.println("    # privileges: " + table.getPrivileges().size());
-      }
-    }
+      final InformationSchemaViews informationSchemaViews = new InformationSchemaViews();
+      informationSchemaViews
+        .setTableConstraintsSql("SELECT * FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS");
+      informationSchemaViews
+        .setExtTableConstraintsSql("SELECT * FROM INFORMATION_SCHEMA.CHECK_CONSTRAINTS");
 
-    out.close();
-    out.assertEquals(currentMethodFullName());
+      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+      schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
+      schemaCrawlerOptions.setInformationSchemaViews(informationSchemaViews);
+      schemaCrawlerOptions
+        .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
+
+      final Catalog catalog = getCatalog(schemaCrawlerOptions);
+      final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
+      assertEquals("Schema count does not match", 5, schemas.length);
+      for (final Schema schema: schemas)
+      {
+        out.println("schema: " + schema.getFullName());
+        final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
+        Arrays.sort(tables, NamedObjectSort.alphabetical);
+        for (final Table table: tables)
+        {
+          out.println("  table: " + table.getFullName());
+          out.println("    # columns: " + table.getColumns().size());
+          out.println("    # constraints: "
+                      + table.getTableConstraints().size());
+          out.println("    # indices: " + table.getIndices().size());
+          out.println("    # foreign keys: " + table.getForeignKeys().size());
+          out.println("    # imported foreign keys: "
+                      + table.getExportedForeignKeys().size());
+          out.println("    # exported: "
+                      + table.getImportedForeignKeys().size());
+          out.println("    # privileges: " + table.getPrivileges().size());
+        }
+      }
+
+      out.assertEquals(currentMethodFullName());
+    }
   }
 
   @Test
   public void relatedTables()
     throws Exception
   {
-    final TestWriter out = new TestWriter();
-
-    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.standard());
-    schemaCrawlerOptions
-      .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
-
-    final Catalog catalog = getCatalog(schemaCrawlerOptions);
-    final Table[] tables = catalog.getTables().toArray(new Table[0]);
-    assertEquals("Table count does not match", 8, tables.length);
-    Arrays.sort(tables, NamedObjectSort.alphabetical);
-    for (final Table table: tables)
+    try (final TestWriter out = new TestWriter("text");)
     {
-      out.println("  table: " + table.getFullName());
-      out.println("    # columns: " + table.getColumns().size());
-      out.println("    # child tables: "
-                  + table.getRelatedTables(TableRelationshipType.child));
-      out.println("    # parent tables: "
-                  + table.getRelatedTables(TableRelationshipType.parent));
-    }
+      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+      schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.standard());
+      schemaCrawlerOptions
+        .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
 
-    out.close();
-    out.assertEquals(currentMethodFullName());
+      final Catalog catalog = getCatalog(schemaCrawlerOptions);
+      final Table[] tables = catalog.getTables().toArray(new Table[0]);
+      assertEquals("Table count does not match", 8, tables.length);
+      Arrays.sort(tables, NamedObjectSort.alphabetical);
+      for (final Table table: tables)
+      {
+        out.println("  table: " + table.getFullName());
+        out.println("    # columns: " + table.getColumns().size());
+        out.println("    # child tables: "
+                    + table.getRelatedTables(TableRelationshipType.child));
+        out.println("    # parent tables: "
+                    + table.getRelatedTables(TableRelationshipType.parent));
+      }
+
+      out.assertEquals(currentMethodFullName());
+    }
   }
 
   @Test
   public void relatedTablesWithTableRestriction()
     throws Exception
   {
-    final TestWriter out = new TestWriter();
-
-    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.standard());
-    schemaCrawlerOptions
-      .setTableInclusionRule(new RegularExpressionInclusionRule(".*\\.AUTHORS"));
-
-    final Catalog catalog = getCatalog(schemaCrawlerOptions);
-    final Table[] tables = catalog.getTables().toArray(new Table[0]);
-    assertEquals("Table count does not match", 1, tables.length);
-    Arrays.sort(tables, NamedObjectSort.alphabetical);
-    for (final Table table: tables)
+    try (final TestWriter out = new TestWriter("text");)
     {
-      out.println("  table: " + table.getFullName());
-      out.println("    # columns: " + table.getColumns().size());
-      out.println("    # child tables: "
-                  + table.getRelatedTables(TableRelationshipType.child));
-      out.println("    # parent tables: "
-                  + table.getRelatedTables(TableRelationshipType.parent));
-    }
+      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+      schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.standard());
+      schemaCrawlerOptions
+        .setTableInclusionRule(new RegularExpressionInclusionRule(".*\\.AUTHORS"));
 
-    out.close();
-    out.assertEquals(currentMethodFullName());
+      final Catalog catalog = getCatalog(schemaCrawlerOptions);
+      final Table[] tables = catalog.getTables().toArray(new Table[0]);
+      assertEquals("Table count does not match", 1, tables.length);
+      Arrays.sort(tables, NamedObjectSort.alphabetical);
+      for (final Table table: tables)
+      {
+        out.println("  table: " + table.getFullName());
+        out.println("    # columns: " + table.getColumns().size());
+        out.println("    # child tables: "
+                    + table.getRelatedTables(TableRelationshipType.child));
+        out.println("    # parent tables: "
+                    + table.getRelatedTables(TableRelationshipType.parent));
+      }
+
+      out.assertEquals(currentMethodFullName());
+    }
   }
 
   @Test
@@ -251,149 +246,143 @@ public class SchemaCrawlerTest
   public void sequences()
     throws Exception
   {
-    final TestWriter out = new TestWriter();
-
-    final InformationSchemaViews informationSchemaViews = new InformationSchemaViews();
-    informationSchemaViews
-      .setSequencesSql("SELECT * FROM INFORMATION_SCHEMA.SEQUENCES");
-
-    final SchemaInfoLevel minimum = SchemaInfoLevel.minimum();
-    minimum.setRetrieveSequenceInformation(true);
-
-    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setSchemaInfoLevel(minimum);
-    schemaCrawlerOptions.setInformationSchemaViews(informationSchemaViews);
-    schemaCrawlerOptions.setSequenceInclusionRule(new IncludeAll());
-
-    final Catalog catalog = getCatalog(schemaCrawlerOptions);
-    final Schema schema = catalog.getSchema("PUBLIC.BOOKS");
-    assertNotNull("BOOKS Schema not found", schema);
-    final Sequence[] sequences = catalog.getSequences(schema)
-      .toArray(new Sequence[0]);
-    assertEquals("Sequence count does not match", 1, sequences.length);
-    for (final Sequence sequence: sequences)
+    try (final TestWriter out = new TestWriter("text");)
     {
-      assertNotNull(sequence);
-      out.println("sequence: " + sequence.getName());
-      out.println("  increment: " + sequence.getIncrement());
-      out.println("  minimum value: " + sequence.getMinimumValue());
-      out.println("  maximum value: " + sequence.getMaximumValue());
-      out.println("  cycle?: " + sequence.isCycle());
-    }
+      final InformationSchemaViews informationSchemaViews = new InformationSchemaViews();
+      informationSchemaViews
+        .setSequencesSql("SELECT * FROM INFORMATION_SCHEMA.SEQUENCES");
 
-    out.close();
-    out.assertEquals(currentMethodFullName());
+      final SchemaInfoLevel minimum = SchemaInfoLevel.minimum();
+      minimum.setRetrieveSequenceInformation(true);
+
+      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+      schemaCrawlerOptions.setSchemaInfoLevel(minimum);
+      schemaCrawlerOptions.setInformationSchemaViews(informationSchemaViews);
+      schemaCrawlerOptions.setSequenceInclusionRule(new IncludeAll());
+
+      final Catalog catalog = getCatalog(schemaCrawlerOptions);
+      final Schema schema = catalog.getSchema("PUBLIC.BOOKS");
+      assertNotNull("BOOKS Schema not found", schema);
+      final Sequence[] sequences = catalog.getSequences(schema)
+        .toArray(new Sequence[0]);
+      assertEquals("Sequence count does not match", 1, sequences.length);
+      for (final Sequence sequence: sequences)
+      {
+        assertNotNull(sequence);
+        out.println("sequence: " + sequence.getName());
+        out.println("  increment: " + sequence.getIncrement());
+        out.println("  minimum value: " + sequence.getMinimumValue());
+        out.println("  maximum value: " + sequence.getMaximumValue());
+        out.println("  cycle?: " + sequence.isCycle());
+      }
+
+      out.assertEquals(currentMethodFullName());
+    }
   }
 
   @Test
   public void synonyms()
     throws Exception
   {
-    final TestWriter out = new TestWriter();
-
-    final InformationSchemaViews informationSchemaViews = new InformationSchemaViews();
-    informationSchemaViews
-      .setSynonymsSql("SELECT LIMIT 1 3                                  \n"
-                      + "  TABLE_CATALOG AS SYNONYM_CATALOG,             \n"
-                      + "  TABLE_SCHEMA AS SYNONYM_SCHEMA,               \n"
-                      + "  TABLE_NAME AS SYNONYM_NAME,                   \n"
-                      + "  TABLE_CATALOG AS REFERENCED_OBJECT_CATALOG,   \n"
-                      + "  TABLE_SCHEMA AS REFERENCED_OBJECT_SCHEMA,     \n"
-                      + "  TABLE_NAME AS REFERENCED_OBJECT_NAME          \n"
-                      + "FROM                                            \n"
-                      + "  INFORMATION_SCHEMA.TABLES                     \n"
-                      + "WHERE                                           \n"
-                      + "  TABLE_SCHEMA = 'BOOKS'                        \n"
-                      + "UNION                                           \n"
-                      + "SELECT LIMIT 1 3                                \n"
-                      + "  'PUBLIC' AS SYNONYM_CATALOG,                  \n"
-                      + "  'BOOKS' AS SYNONYM_SCHEMA,                    \n"
-                      + "  TABLE_NAME AS SYNONYM_NAME,                   \n"
-                      + "  TABLE_CATALOG AS REFERENCED_OBJECT_CATALOG,   \n"
-                      + "  TABLE_SCHEMA AS REFERENCED_OBJECT_SCHEMA,     \n"
-                      + "  TABLE_NAME + '1' AS REFERENCED_OBJECT_NAME    \n"
-                      + "FROM                                            \n"
-                      + "  INFORMATION_SCHEMA.TABLES                     \n"
-                      + "WHERE                                           \n"
-                      + "  TABLE_SCHEMA != 'BOOKS'                       ");
-
-    final SchemaInfoLevel minimum = SchemaInfoLevel.minimum();
-    minimum.setRetrieveSynonymInformation(true);
-
-    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setSchemaInfoLevel(minimum);
-    schemaCrawlerOptions.setInformationSchemaViews(informationSchemaViews);
-    schemaCrawlerOptions.setSynonymInclusionRule(new IncludeAll());
-
-    final Catalog catalog = getCatalog(schemaCrawlerOptions);
-    final Schema schema = catalog.getSchema("PUBLIC.BOOKS");
-    assertNotNull("BOOKS Schema not found", schema);
-    final Synonym[] synonyms = catalog.getSynonyms(schema)
-      .toArray(new Synonym[0]);
-    assertEquals("Synonym count does not match", 6, synonyms.length);
-    for (final Synonym synonym: synonyms)
+    try (final TestWriter out = new TestWriter("text");)
     {
-      assertNotNull(synonym);
-      out.println("synonym: " + synonym.getName());
-      out.println("  class: "
-                  + synonym.getReferencedObject().getClass().getSimpleName());
-    }
+      final InformationSchemaViews informationSchemaViews = new InformationSchemaViews();
+      informationSchemaViews
+        .setSynonymsSql("SELECT LIMIT 1 3                                  \n"
+                        + "  TABLE_CATALOG AS SYNONYM_CATALOG,             \n"
+                        + "  TABLE_SCHEMA AS SYNONYM_SCHEMA,               \n"
+                        + "  TABLE_NAME AS SYNONYM_NAME,                   \n"
+                        + "  TABLE_CATALOG AS REFERENCED_OBJECT_CATALOG,   \n"
+                        + "  TABLE_SCHEMA AS REFERENCED_OBJECT_SCHEMA,     \n"
+                        + "  TABLE_NAME AS REFERENCED_OBJECT_NAME          \n"
+                        + "FROM                                            \n"
+                        + "  INFORMATION_SCHEMA.TABLES                     \n"
+                        + "WHERE                                           \n"
+                        + "  TABLE_SCHEMA = 'BOOKS'                        \n"
+                        + "UNION                                           \n"
+                        + "SELECT LIMIT 1 3                                \n"
+                        + "  'PUBLIC' AS SYNONYM_CATALOG,                  \n"
+                        + "  'BOOKS' AS SYNONYM_SCHEMA,                    \n"
+                        + "  TABLE_NAME AS SYNONYM_NAME,                   \n"
+                        + "  TABLE_CATALOG AS REFERENCED_OBJECT_CATALOG,   \n"
+                        + "  TABLE_SCHEMA AS REFERENCED_OBJECT_SCHEMA,     \n"
+                        + "  TABLE_NAME + '1' AS REFERENCED_OBJECT_NAME    \n"
+                        + "FROM                                            \n"
+                        + "  INFORMATION_SCHEMA.TABLES                     \n"
+                        + "WHERE                                           \n"
+                        + "  TABLE_SCHEMA != 'BOOKS'                       ");
 
-    out.close();
-    out.assertEquals(currentMethodFullName());
+      final SchemaInfoLevel minimum = SchemaInfoLevel.minimum();
+      minimum.setRetrieveSynonymInformation(true);
+
+      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+      schemaCrawlerOptions.setSchemaInfoLevel(minimum);
+      schemaCrawlerOptions.setInformationSchemaViews(informationSchemaViews);
+      schemaCrawlerOptions.setSynonymInclusionRule(new IncludeAll());
+
+      final Catalog catalog = getCatalog(schemaCrawlerOptions);
+      final Schema schema = catalog.getSchema("PUBLIC.BOOKS");
+      assertNotNull("BOOKS Schema not found", schema);
+      final Synonym[] synonyms = catalog.getSynonyms(schema)
+        .toArray(new Synonym[0]);
+      assertEquals("Synonym count does not match", 6, synonyms.length);
+      for (final Synonym synonym: synonyms)
+      {
+        assertNotNull(synonym);
+        out.println("synonym: " + synonym.getName());
+        out.println("  class: "
+                    + synonym.getReferencedObject().getClass().getSimpleName());
+      }
+
+      out.assertEquals(currentMethodFullName());
+    }
   }
 
   @Test
   public void tableConstraints()
     throws Exception
   {
-    final TestWriter out = new TestWriter();
-
-    final InformationSchemaViews informationSchemaViews = new InformationSchemaViews();
-    informationSchemaViews
-      .setTableConstraintsSql("SELECT * FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS");
-    informationSchemaViews
-      .setExtTableConstraintsSql("SELECT * FROM INFORMATION_SCHEMA.CHECK_CONSTRAINTS");
-
-    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
-    schemaCrawlerOptions.setInformationSchemaViews(informationSchemaViews);
-
-    final Catalog catalog = getCatalog(schemaCrawlerOptions);
-    final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
-    assertEquals("Schema count does not match", 6, schemas.length);
-    for (final Schema schema: schemas)
+    try (final TestWriter out = new TestWriter("text");)
     {
-      out.println("schema: " + schema.getFullName());
-      final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
-      for (final Table table: tables)
+      final InformationSchemaViews informationSchemaViews = new InformationSchemaViews();
+      informationSchemaViews
+        .setTableConstraintsSql("SELECT * FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS");
+      informationSchemaViews
+        .setExtTableConstraintsSql("SELECT * FROM INFORMATION_SCHEMA.CHECK_CONSTRAINTS");
+
+      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+      schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
+      schemaCrawlerOptions.setInformationSchemaViews(informationSchemaViews);
+
+      final Catalog catalog = getCatalog(schemaCrawlerOptions);
+      final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
+      assertEquals("Schema count does not match", 6, schemas.length);
+      for (final Schema schema: schemas)
       {
-        out.println("  table: " + table.getFullName());
-        final TableConstraint[] tableConstraints = table.getTableConstraints()
-          .toArray(new TableConstraint[0]);
-        for (final TableConstraint tableConstraint: tableConstraints)
+        out.println("schema: " + schema.getFullName());
+        final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
+        for (final Table table: tables)
         {
-          out.println("    constraint: " + tableConstraint.getName());
+          out.println("  table: " + table.getFullName());
+          final TableConstraint[] tableConstraints = table
+            .getTableConstraints().toArray(new TableConstraint[0]);
+          for (final TableConstraint tableConstraint: tableConstraints)
+          {
+            out.println("    constraint: " + tableConstraint.getName());
+          }
         }
       }
-    }
 
-    out.close();
-    out.assertEquals(currentMethodFullName());
+      out.assertEquals(currentMethodFullName());
+    }
   }
 
   @Test
   public void tables()
     throws Exception
   {
-
-    final String referenceFile = "tables.txt";
-    final Path testOutputFile = createTempFile(referenceFile, "text");
-
-    try (final PrintWriter writer = new PrintWriter(testOutputFile.toFile(),
-                                                    UTF8.name());)
+    try (final TestWriter out = new TestWriter("text");)
     {
-
       final Config config = Config
         .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
@@ -410,43 +399,38 @@ public class SchemaCrawlerTest
         Arrays.sort(tables, NamedObjectSort.alphabetical);
         for (final Table table: tables)
         {
-          writer.println(String.format("o--> %s [%s]",
-                                       table.getFullName(),
-                                       table.getTableType()));
+          out.println(String.format("o--> %s [%s]",
+                                    table.getFullName(),
+                                    table.getTableType()));
           final SortedMap<String, Object> tableAttributes = new TreeMap<>(table.getAttributes());
           for (final Entry<String, Object> tableAttribute: tableAttributes
             .entrySet())
           {
-            writer.println(String.format("      ~ %s=%s",
-                                         tableAttribute.getKey(),
-                                         tableAttribute.getValue()));
+            out.println(String.format("      ~ %s=%s",
+                                      tableAttribute.getKey(),
+                                      tableAttribute.getValue()));
           }
           final Column[] columns = table.getColumns().toArray(new Column[0]);
           Arrays.sort(columns);
           for (final Column column: columns)
           {
-            writer.println(String.format("   o--> %s [%s]",
-                                         column.getFullName(),
-                                         column.getColumnDataType()));
+            out.println(String.format("   o--> %s [%s]",
+                                      column.getFullName(),
+                                      column.getColumnDataType()));
             final SortedMap<String, Object> columnAttributes = new TreeMap<>(column
               .getAttributes());
             for (final Entry<String, Object> columnAttribute: columnAttributes
               .entrySet())
             {
-              writer.println(String.format("          ~ %s=%s",
-                                           columnAttribute.getKey(),
-                                           columnAttribute.getValue()));
+              out.println(String.format("          ~ %s=%s",
+                                        columnAttribute.getKey(),
+                                        columnAttribute.getValue()));
             }
           }
         }
       }
-    }
 
-    final List<String> failures = compareOutput(METADATA_OUTPUT + referenceFile,
-                                                testOutputFile);
-    if (failures.size() > 0)
-    {
-      fail(failures.toString());
+      out.assertEquals(METADATA_OUTPUT + "tables.txt");
     }
   }
 
