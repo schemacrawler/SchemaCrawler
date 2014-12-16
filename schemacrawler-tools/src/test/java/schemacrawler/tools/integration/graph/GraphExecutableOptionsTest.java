@@ -39,6 +39,8 @@ import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.test.utility.BaseExecutableTest;
+import schemacrawler.test.utility.TestUtility;
+import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 
 public class GraphExecutableOptionsTest
@@ -226,19 +228,34 @@ public class GraphExecutableOptionsTest
 
     // Check DOT file
     final String referenceFileName = testMethodName;
-    executeExecutableAndCheckForOutputFile(executable,
-                                           GraphOutputFormat.scdot.getFormat(),
-                                           GRAPH_OPTIONS_OUTPUT
-                                               + referenceFileName + ".dot");
+    executeExecutable(executable,
+                      GraphOutputFormat.scdot.getFormat(),
+                      GRAPH_OPTIONS_OUTPUT + referenceFileName + ".dot");
 
     // Check diagram
-    final Path testDiagramFile = executeExecutable(executable,
-                                                   GraphOutputFormat.png
-                                                     .getFormat());
+    final Path testDiagramFile = executeGraphExecutable(executable);
     copy(testDiagramFile,
          directory.resolve(testMethodName + ".png"),
          REPLACE_EXISTING);
-    validateDiagram(testDiagramFile);
+  }
+
+  private Path executeGraphExecutable(final GraphExecutable executable)
+    throws Exception
+  {
+    final String outputFormatValue = GraphOutputFormat.png.getFormat();
+
+    final Path testOutputFile = TestUtility.createTempFile(executable
+      .getCommand(), outputFormatValue);
+
+    final OutputOptions outputOptions = new OutputOptions(outputFormatValue,
+                                                          testOutputFile);
+
+    executable.setOutputOptions(outputOptions);
+    executable.execute(getConnection());
+
+    validateDiagram(testOutputFile);
+
+    return testOutputFile;
   }
 
 }

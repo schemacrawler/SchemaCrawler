@@ -34,27 +34,27 @@ public class ScriptingTest
   public void executableGroovy()
     throws Exception
   {
-    executeExecutableAndCheckForOutputFile(new ScriptExecutable(),
-                                           "plaintextschema.groovy",
-                                           "script_output.txt");
+    executeExecutable(new ScriptExecutable(),
+                      "plaintextschema.groovy",
+                      "script_output.txt");
   }
 
   @Test
   public void executablePython()
     throws Exception
   {
-    executeExecutableAndCheckForOutputFile(new ScriptExecutable(),
-                                           "plaintextschema.py",
-                                           "script_output.txt");
+    executeExecutable(new ScriptExecutable(),
+                      "plaintextschema.py",
+                      "script_output.txt");
   }
 
   @Test
   public void executableRuby()
     throws Exception
   {
-    executeExecutableAndCheckForOutputFile(new ScriptExecutable(),
-                                           "plaintextschema.rb",
-                                           "script_output.txt");
+    executeExecutable(new ScriptExecutable(),
+                      "plaintextschema.rb",
+                      "script_output.txt");
   }
 
 }

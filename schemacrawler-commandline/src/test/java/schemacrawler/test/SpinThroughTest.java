@@ -171,10 +171,10 @@ public class SpinThroughTest
                               final OutputFormat outputFormat)
     throws IOException
   {
-    return TestUtility.createTempFile(String.format("%s.%s.",
+    return TestUtility.createTempFile(String.format("%s.%s",
                                                     schemaTextDetailType,
-                                                    infoLevel), String
-      .format(".%s", outputFormat.getFormat()));
+                                                    infoLevel), outputFormat
+      .getFormat());
   }
 
   private String referenceFile(final SchemaTextDetailType schemaTextDetailType,
