@@ -36,6 +36,7 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.nio.file.StandardOpenOption.WRITE;
+import static java.util.Objects.requireNonNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static sf.util.Utility.UTF8;
@@ -78,7 +79,7 @@ public final class TestUtility
                                            final Path testOutputTempFile)
     throws Exception
   {
-    return compareOutput(referenceFile, testOutputTempFile, null);
+    return compareOutput(referenceFile, testOutputTempFile, "text");
   }
 
   public static List<String> compareOutput(final String referenceFile,
@@ -88,14 +89,10 @@ public final class TestUtility
     throws Exception
   {
 
-    if (testOutputTempFile == null)
-    {
-      return Collections.singletonList("Output file is not defined");
-    }
-    if (encoding == null)
-    {
-      return Collections.singletonList("Output file encoding is not defined");
-    }
+    requireNonNull(referenceFile, "Reference file is not defined");
+    requireNonNull(testOutputTempFile, "Output file is not defined");
+    requireNonNull(encoding, "Output file encoding is not defined");
+    requireNonNull(outputFormat, "Output format is not defined");
 
     if (testOutputTempFile == null || !exists(testOutputTempFile)
         || !isRegularFile(testOutputTempFile, LinkOption.NOFOLLOW_LINKS)
@@ -120,7 +117,7 @@ public final class TestUtility
       contentEquals = contentEquals(referenceReader, fileReader, neuters);
     }
 
-    if ("html".equals(outputFormat) || "htmlx".equals(outputFormat))
+    if ("html".equals(outputFormat))
     {
       validateXHTML(testOutputTempFile, failures);
     }
@@ -172,7 +169,10 @@ public final class TestUtility
                                            final String outputFormat)
     throws Exception
   {
-    return compareOutput(referenceFile, testOutputTempFilePath, UTF8, null);
+    return compareOutput(referenceFile,
+                         testOutputTempFilePath,
+                         UTF8,
+                         outputFormat);
   }
 
   public static Path copyResourceToTempFile(final String resource)
@@ -347,9 +347,6 @@ public final class TestUtility
                                       final List<String> failures)
     throws FileNotFoundException, SAXException, IOException
   {
-
-    assertEquals("application/png", probeContentType(testOutputFile));
-
     final JsonElement jsonElement;
     try (final Reader reader = newBufferedReader(testOutputFile, UTF8);
         final JsonReader jsonReader = new JsonReader(reader);)
@@ -392,9 +389,6 @@ public final class TestUtility
                                        final List<String> failures)
     throws Exception
   {
-
-    assertEquals("application/png", probeContentType(testOutputFile));
-
     final DOCTYPEChanger xhtmlReader = new DOCTYPEChanger(newBufferedReader(testOutputFile,
                                                                             UTF8));
     xhtmlReader.setRootElement("html");
