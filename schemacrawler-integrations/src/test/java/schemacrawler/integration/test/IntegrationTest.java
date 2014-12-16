@@ -143,7 +143,7 @@ public class IntegrationTest
     final List<String> failures = compareOutput(referenceFileName + ".txt",
                                                 testOutputFile,
                                                 templateCharset,
-                                                null);
+                                                "text");
     if (failures.size() > 0)
     {
       fail(failures.toString());
