@@ -23,20 +23,15 @@ package schemacrawler.test;
 
 import static java.nio.file.Files.exists;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static schemacrawler.test.utility.TestUtility.compareOutput;
 import static schemacrawler.test.utility.TestUtility.createTempFile;
-import static sf.util.Utility.UTF8;
 
-import java.io.PrintWriter;
-import java.io.Writer;
 import java.nio.file.Path;
-import java.util.List;
 
 import org.junit.Test;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.test.utility.BaseDatabaseTest;
+import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.TextOutputFormat;
@@ -115,68 +110,50 @@ public class SchemaCrawlerTextCommandsOutputTest
   public void streamedOutput()
     throws Exception
   {
-    final String command = SchemaTextDetailType.brief.name();
-
-    final String referenceFile = command + ".txt";
-    final Path testOutputFile = createTempFile(referenceFile, "data");
-
     final Path dummyOutputFile = createTempFile("dummy", "data");
-
-    final Writer writer = new PrintWriter(testOutputFile.toFile(), UTF8.name());
-    final OutputOptions outputOptions = new OutputOptions(TextOutputFormat.text,
-                                                          dummyOutputFile);
-    outputOptions.setWriter(writer);
-
-    final BaseTextOptionsBuilder baseTextOptions = new BaseTextOptionsBuilder();
-    baseTextOptions.hideInfo();
-    baseTextOptions.hideHeader();
-    baseTextOptions.hideFooter();
-
-    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
-    executable.setOutputOptions(outputOptions);
-    executable.setAdditionalConfiguration(baseTextOptions.toConfig());
-    executable.execute(getConnection());
-
-    writer.close();
-    assertTrue(!exists(dummyOutputFile));
-
-    final List<String> failures = compareOutput(COMMAND_OUTPUT + referenceFile,
-                                                testOutputFile,
-                                                outputOptions.getOutputFormat()
-                                                  .getFormat());
-    if (failures.size() > 0)
+    try (final TestWriter writer = new TestWriter(TextOutputFormat.text.getFormat());)
     {
-      fail(failures.toString());
+      final OutputOptions outputOptions = new OutputOptions(TextOutputFormat.text,
+                                                            dummyOutputFile);
+      outputOptions.setWriter(writer);
+
+      final BaseTextOptionsBuilder baseTextOptions = new BaseTextOptionsBuilder();
+      baseTextOptions.hideInfo();
+      baseTextOptions.hideHeader();
+      baseTextOptions.hideFooter();
+
+      final String command = SchemaTextDetailType.brief.name();
+      final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
+      executable.setOutputOptions(outputOptions);
+      executable.setAdditionalConfiguration(baseTextOptions.toConfig());
+      executable.execute(getConnection());
+
+      assertTrue(!exists(dummyOutputFile));
+
+      writer.assertEquals(COMMAND_OUTPUT + (command + ".txt"));
     }
   }
 
   private void textOutputTest(final String command, final Config config)
     throws Exception
   {
-    final String referenceFile = command + ".txt";
-    final Path testOutputFile = createTempFile(referenceFile, "data");
-
-    final OutputOptions outputOptions = new OutputOptions(TextOutputFormat.text,
-                                                          testOutputFile);
-
-    final BaseTextOptionsBuilder baseTextOptions = new BaseTextOptionsBuilder(config);
-    baseTextOptions.hideInfo();
-    baseTextOptions.hideHeader();
-    baseTextOptions.hideFooter();
-    config.putAll(baseTextOptions.toConfig());
-
-    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
-    executable.setAdditionalConfiguration(config);
-    executable.setOutputOptions(outputOptions);
-    executable.execute(getConnection());
-
-    final List<String> failures = compareOutput(COMMAND_OUTPUT + referenceFile,
-                                                testOutputFile,
-                                                outputOptions.getOutputFormat()
-                                                  .getFormat());
-    if (failures.size() > 0)
+    try (final TestWriter writer = new TestWriter(TextOutputFormat.text.getFormat());)
     {
-      fail(failures.toString());
+      final OutputOptions outputOptions = new OutputOptions(TextOutputFormat.text,
+                                                            writer);
+
+      final BaseTextOptionsBuilder baseTextOptions = new BaseTextOptionsBuilder(config);
+      baseTextOptions.hideInfo();
+      baseTextOptions.hideHeader();
+      baseTextOptions.hideFooter();
+      config.putAll(baseTextOptions.toConfig());
+
+      final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
+      executable.setAdditionalConfiguration(config);
+      executable.setOutputOptions(outputOptions);
+      executable.execute(getConnection());
+
+      writer.assertEquals(COMMAND_OUTPUT + (command + ".txt"));
     }
   }
 }

@@ -55,9 +55,7 @@ public class H2Test
     executable.setSchemaCrawlerOptions(options);
     executable.setAdditionalConfiguration(textOptions.toConfig());
 
-    executeExecutableAndCheckForOutputFile(executable,
-                                           "text",
-                                           "testH2WithConnection.txt");
+    executeExecutable(executable, "text", "testH2WithConnection.txt");
   }
 
   @Override

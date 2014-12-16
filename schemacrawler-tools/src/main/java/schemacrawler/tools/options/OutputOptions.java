@@ -146,6 +146,19 @@ public class OutputOptions
    * @param outputFile
    *        Output file
    */
+  public OutputOptions(final OutputFormat outputFormat, final Writer writer)
+  {
+    this(outputFormat.getFormat(), writer);
+  }
+
+  /**
+   * Output options, given the type and the output filename.
+   *
+   * @param outputFormatValue
+   *        Type of output, which is dependent on the executor
+   * @param outputFile
+   *        Output file
+   */
   public OutputOptions(final String outputFormatValue, final Writer writer)
   {
     this.outputFormatValue = outputFormatValue;

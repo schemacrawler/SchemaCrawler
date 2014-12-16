@@ -28,6 +28,7 @@ import static java.nio.file.Files.isRegularFile;
 import static java.nio.file.Files.move;
 import static java.nio.file.Files.newBufferedReader;
 import static java.nio.file.Files.newOutputStream;
+import static java.nio.file.Files.probeContentType;
 import static java.nio.file.Files.size;
 import static java.nio.file.Paths.get;
 import static java.nio.file.StandardCopyOption.ATOMIC_MOVE;
@@ -35,6 +36,7 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.nio.file.StandardOpenOption.WRITE;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static sf.util.Utility.UTF8;
 
@@ -241,11 +243,11 @@ public final class TestUtility
   {
     assertTrue("Diagram file not created", exists(diagramFile));
     assertTrue("Diagram file has 0 bytes size", size(diagramFile) > 0);
+    assertEquals("application/png", probeContentType(diagramFile));
+
     final BufferedImage image = ImageIO.read(diagramFile.toFile());
     assertTrue("Diagram not created", image.getHeight() > 0);
     assertTrue("Diagram not created", image.getWidth() > 0);
-
-    delete(diagramFile);
   }
 
   private static boolean contentEquals(final Reader expectedInputReader,
@@ -345,6 +347,9 @@ public final class TestUtility
                                       final List<String> failures)
     throws FileNotFoundException, SAXException, IOException
   {
+
+    assertEquals("application/png", probeContentType(testOutputFile));
+
     final JsonElement jsonElement;
     try (final Reader reader = newBufferedReader(testOutputFile, UTF8);
         final JsonReader jsonReader = new JsonReader(reader);)
@@ -387,6 +392,9 @@ public final class TestUtility
                                        final List<String> failures)
     throws Exception
   {
+
+    assertEquals("application/png", probeContentType(testOutputFile));
+
     final DOCTYPEChanger xhtmlReader = new DOCTYPEChanger(newBufferedReader(testOutputFile,
                                                                             UTF8));
     xhtmlReader.setRootElement("html");
