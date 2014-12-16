@@ -47,46 +47,46 @@ public class ResultColumnsTest
     throws Exception
   {
 
-    final TestWriter out = new TestWriter();
-
-    final String sql = ""
-                       + "SELECT                                                                    "
-                       + " PUBLIC.BOOKS.BOOKS.TITLE AS BOOK,                                        "
-                       + " PUBLIC.BOOKS.AUTHORS.FIRSTNAME + ' ' + PUBLIC.BOOKS.AUTHORS.LASTNAME,    "
-                       + " PUBLIC.BOOKS.BOOKS.PRICE                                                 "
-                       + "FROM                                                                      "
-                       + " PUBLIC.BOOKS.BOOKS                                                       "
-                       + " INNER JOIN PUBLIC.BOOKS.BOOKAUTHORS                                      "
-                       + "   ON PUBLIC.BOOKS.BOOKS.ID = PUBLIC.BOOKS.BOOKAUTHORS.BOOKID             "
-                       + " INNER JOIN PUBLIC.BOOKS.AUTHORS                                          "
-                       + "   ON PUBLIC.BOOKS.AUTHORS.ID = PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID         ";
-
-    try (final Connection connection = getConnection();
-        final Statement statement = connection.createStatement();
-        final ResultSet resultSet = statement.executeQuery(sql);)
+    try (final TestWriter out = new TestWriter("text");)
     {
+      final String sql = ""
+                         + "SELECT                                                                    "
+                         + " PUBLIC.BOOKS.BOOKS.TITLE AS BOOK,                                        "
+                         + " PUBLIC.BOOKS.AUTHORS.FIRSTNAME + ' ' + PUBLIC.BOOKS.AUTHORS.LASTNAME,    "
+                         + " PUBLIC.BOOKS.BOOKS.PRICE                                                 "
+                         + "FROM                                                                      "
+                         + " PUBLIC.BOOKS.BOOKS                                                       "
+                         + " INNER JOIN PUBLIC.BOOKS.BOOKAUTHORS                                      "
+                         + "   ON PUBLIC.BOOKS.BOOKS.ID = PUBLIC.BOOKS.BOOKAUTHORS.BOOKID             "
+                         + " INNER JOIN PUBLIC.BOOKS.AUTHORS                                          "
+                         + "   ON PUBLIC.BOOKS.AUTHORS.ID = PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID         ";
 
-      final ResultsColumns resultColumns = SchemaCrawlerUtility
-        .getResultColumns(resultSet);
-
-      assertNotNull("Could not obtain result columns", resultColumns);
-      final ResultsColumn[] columns = resultColumns.getColumns()
-        .toArray(new ResultsColumn[0]);
-      for (final ResultsColumn column: columns)
+      try (final Connection connection = getConnection();
+          final Statement statement = connection.createStatement();
+          final ResultSet resultSet = statement.executeQuery(sql);)
       {
-        LOGGER.log(Level.FINE, column.toString());
-        out.println("column: " + column.getFullName());
-        out.println("  database type: "
-                    + column.getColumnDataType().getDatabaseSpecificTypeName());
-        out.println("  type: "
-                    + column.getColumnDataType().getJavaSqlType()
-                      .getJavaSqlTypeName());
-      }
-    }
 
-    out.close();
-    out.assertEquals(TestUtility.currentMethodFullName());
-    ;
+        final ResultsColumns resultColumns = SchemaCrawlerUtility
+          .getResultColumns(resultSet);
+
+        assertNotNull("Could not obtain result columns", resultColumns);
+        final ResultsColumn[] columns = resultColumns.getColumns()
+          .toArray(new ResultsColumn[0]);
+        for (final ResultsColumn column: columns)
+        {
+          LOGGER.log(Level.FINE, column.toString());
+          out.println("column: " + column.getFullName());
+          out.println("  database type: "
+                      + column.getColumnDataType()
+                        .getDatabaseSpecificTypeName());
+          out.println("  type: "
+                      + column.getColumnDataType().getJavaSqlType()
+                        .getJavaSqlTypeName());
+        }
+      }
+
+      out.assertEquals(TestUtility.currentMethodFullName());
+    }
   }
 
 }
