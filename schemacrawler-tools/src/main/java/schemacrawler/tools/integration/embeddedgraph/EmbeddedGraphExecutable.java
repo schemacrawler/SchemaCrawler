@@ -13,9 +13,11 @@ import static sf.util.Utility.copy;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.sql.Connection;
+import java.util.regex.Pattern;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.tools.executable.BaseStagedExecutable;
@@ -27,6 +29,10 @@ import schemacrawler.tools.options.TextOutputFormat;
 public class EmbeddedGraphExecutable
   extends BaseStagedExecutable
 {
+
+  private static Pattern svgInsertionPoint = Pattern
+    .compile("<h2.*Tables.*h2>");
+  private static Pattern svgStart = Pattern.compile("<svg.*");
 
   public EmbeddedGraphExecutable(final String command)
   {
@@ -65,11 +71,9 @@ public class EmbeddedGraphExecutable
       String line;
       while ((line = baseHtmlFileReader.readLine()) != null)
       {
-        if (line.matches(".*h2.*Tables.*h2.*"))
+        if (svgInsertionPoint.matcher(line).matches())
         {
-          finalHtmlFileWriter.append(NEWLINE);
-          copy(baseSvgFileReader, finalHtmlFileWriter);
-          finalHtmlFileWriter.append(NEWLINE);
+          insertSvg(finalHtmlFileWriter, baseSvgFileReader);
         }
         finalHtmlFileWriter.append(line).append(NEWLINE);
       }
@@ -79,6 +83,27 @@ public class EmbeddedGraphExecutable
     {
       copy(newBufferedReader(finalHtmlFile, UTF8), writer);
     }
+  }
+
+  private void insertSvg(final BufferedWriter finalHtmlFileWriter,
+                         final BufferedReader baseSvgFileReader)
+    throws IOException
+  {
+    finalHtmlFileWriter.append(NEWLINE);
+    boolean skipLines = true;
+    String line;
+    while ((line = baseSvgFileReader.readLine()) != null)
+    {
+      if (skipLines)
+      {
+        skipLines = !svgStart.matcher(line).matches();
+      }
+      if (!skipLines)
+      {
+        finalHtmlFileWriter.append(line).append(NEWLINE);
+      }
+    }
+    finalHtmlFileWriter.append(NEWLINE);
   }
 
 }
