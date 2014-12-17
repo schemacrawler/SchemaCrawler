@@ -20,8 +20,9 @@
 package schemacrawler.test.utility;
 
 
-import static java.nio.file.Files.createFile;
+import static java.nio.file.Files.createDirectories;
 import static java.nio.file.Files.delete;
+import static java.nio.file.Files.deleteIfExists;
 import static java.nio.file.Files.exists;
 import static java.nio.file.Files.isReadable;
 import static java.nio.file.Files.isRegularFile;
@@ -63,9 +64,14 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.custommonkey.xmlunit.Validator;
+import org.xml.sax.ErrorHandler;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
@@ -121,6 +127,10 @@ public final class TestUtility
     {
       validateXHTML(testOutputTempFile, failures);
     }
+    if ("htmlx".equals(outputFormat))
+    {
+      validateXML(testOutputTempFile, failures);
+    }
     else if ("json".equals(outputFormat))
     {
       validateJSON(testOutputTempFile, failures);
@@ -138,11 +148,11 @@ public final class TestUtility
       {
         throw new RuntimeException("Not in target directory");
       }
-      if (!exists(testOutputTargetFilePath))
+      if (!exists(testOutputTargetFilePath.getParent()))
       {
-        createFile(testOutputTargetFilePath);
+        createDirectories(testOutputTargetFilePath.getParent());
       }
-      delete(testOutputTargetFilePath);
+      deleteIfExists(testOutputTargetFilePath);
       move(testOutputTempFile,
            testOutputTargetFilePath,
            ATOMIC_MOVE,
@@ -408,6 +418,41 @@ public final class TestUtility
       }
     }
     return isOutputValid;
+  }
+
+  private static void validateXML(final Path testOutputFile,
+                                  final List<String> failures)
+    throws Exception
+  {
+    final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+    factory.setValidating(false);
+    factory.setNamespaceAware(true);
+
+    final DocumentBuilder builder = factory.newDocumentBuilder();
+    builder.setErrorHandler(new ErrorHandler()
+    {
+      @Override
+      public void error(final SAXParseException e)
+        throws SAXException
+      {
+        failures.add(e.getMessage());
+      }
+
+      @Override
+      public void fatalError(final SAXParseException e)
+        throws SAXException
+      {
+        failures.add(e.getMessage());
+      }
+
+      @Override
+      public void warning(final SAXParseException e)
+        throws SAXException
+      {
+        failures.add(e.getMessage());
+      }
+    });
+    builder.parse(new InputSource(newBufferedReader(testOutputFile, UTF8)));
   }
 
   private static Path writeToTempFile(final InputStream resourceStream)
