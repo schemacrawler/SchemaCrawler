@@ -29,7 +29,6 @@ import static java.nio.file.Files.isRegularFile;
 import static java.nio.file.Files.move;
 import static java.nio.file.Files.newBufferedReader;
 import static java.nio.file.Files.newOutputStream;
-import static java.nio.file.Files.probeContentType;
 import static java.nio.file.Files.size;
 import static java.nio.file.Paths.get;
 import static java.nio.file.StandardCopyOption.ATOMIC_MOVE;
@@ -38,7 +37,6 @@ import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.nio.file.StandardOpenOption.WRITE;
 import static java.util.Objects.requireNonNull;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static sf.util.Utility.UTF8;
 
@@ -254,7 +252,6 @@ public final class TestUtility
   {
     assertTrue("Diagram file not created", exists(diagramFile));
     assertTrue("Diagram file has 0 bytes size", size(diagramFile) > 0);
-    assertEquals("application/png", probeContentType(diagramFile));
 
     final BufferedImage image = ImageIO.read(diagramFile.toFile());
     assertTrue("Diagram not created", image.getHeight() > 0);
