@@ -1,7 +1,6 @@
 package schemacrawler.integration.test;
 
 
-import static java.nio.file.Files.delete;
 import static java.nio.file.Files.newBufferedWriter;
 import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
@@ -9,15 +8,12 @@ import static java.nio.file.StandardOpenOption.WRITE;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static schemacrawler.test.utility.TestUtility.compareOutput;
 import static schemacrawler.test.utility.TestUtility.createTempFile;
 import static sf.util.Utility.UTF8;
 
 import java.io.PrintWriter;
 import java.io.Writer;
 import java.nio.file.Path;
-import java.util.List;
 import java.util.Properties;
 
 import org.junit.Test;
@@ -28,6 +24,7 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.server.hsqldb.HyperSQLDatabaseConnector;
 import schemacrawler.test.utility.BaseDatabaseTest;
+import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.options.InfoLevel;
 import schemacrawler.tools.options.OutputFormat;
@@ -58,33 +55,21 @@ public class TestBundledDistributions
     }
 
     final OutputFormat outputFormat = TextOutputFormat.text;
-    final String referenceFile = "hsqldb.main" + "." + outputFormat.getFormat();
-    final Path testOutputFile = createTempFile(referenceFile, "data");
-
-    schemacrawler.Main.main(new String[] {
-        "-server=hsqldb",
-        "-database=schemacrawler",
-        "-user=sa",
-        "-password=",
-        "-g",
-        testConfigFile.toString(),
-        "-command=details,dump,count,hsqldb.tables",
-        "-infolevel=maximum",
-        "-outputfile=" + testOutputFile
-    });
-
-    final List<String> failures = compareOutput(referenceFile,
-                                                testOutputFile,
-                                                outputFormat.getFormat());
-    if (failures.size() > 0)
+    try (final TestWriter out = new TestWriter(outputFormat.getFormat());)
     {
-      fail(failures.toString());
+      schemacrawler.Main.main(new String[] {
+          "-server=hsqldb",
+          "-database=schemacrawler",
+          "-user=sa",
+          "-password=",
+          "-g",
+          testConfigFile.toString(),
+          "-command=details,dump,count,hsqldb.tables",
+          "-infolevel=maximum",
+          "-outputfile=" + out.toString()
+      });
+      out.assertEquals("hsqldb.main" + "." + outputFormat.getFormat());
     }
-    else
-    {
-      delete(testConfigFile);
-    }
-
   }
 
   @Test

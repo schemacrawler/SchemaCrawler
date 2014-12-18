@@ -204,6 +204,7 @@ public final class TestUtility
                       String.format(".%s", outputFormatValue)).normalize()
       .toAbsolutePath();
     delete(testOutputTempFilePath);
+    testOutputTempFilePath.toFile().deleteOnExit();
     return testOutputTempFilePath;
   }
 
