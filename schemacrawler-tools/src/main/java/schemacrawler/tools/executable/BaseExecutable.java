@@ -21,11 +21,11 @@
 package schemacrawler.tools.executable;
 
 
+import static sf.util.Utility.isBlank;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.options.OutputOptions;
 import sf.util.ObjectToString;
-import sf.util.Utility;
 
 /**
  * A SchemaCrawler tools executable unit.
@@ -43,7 +43,7 @@ public abstract class BaseExecutable
 
   protected BaseExecutable(final String command)
   {
-    if (Utility.isBlank(command))
+    if (isBlank(command))
     {
       throw new IllegalArgumentException("No command specified");
     }

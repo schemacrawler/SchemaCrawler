@@ -20,6 +20,9 @@
 package schemacrawler.tools.lint;
 
 
+import static java.util.Objects.requireNonNull;
+import static sf.util.Utility.isBlank;
+
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
@@ -51,15 +54,11 @@ public class LinterConfigs
   private static Element getSubElement(final Element element,
                                        final String tagName)
   {
-    if (Utility.isBlank(tagName))
+    if (isBlank(tagName))
     {
       throw new IllegalArgumentException("Cannot get sub-element, since no name is provided");
     }
-    if (element == null)
-    {
-      throw new IllegalArgumentException("Cannot get sub-element for tag "
-                                         + tagName);
-    }
+    requireNonNull(element, "Cannot get sub-element for tag " + tagName);
 
     final Element subElement;
     final NodeList nodeList = element.getElementsByTagName(tagName);
@@ -120,10 +119,7 @@ public class LinterConfigs
 
   private static List<LinterConfig> parseDocument(final Document document)
   {
-    if (document == null)
-    {
-      throw new IllegalArgumentException("No document provided");
-    }
+    requireNonNull(document, "No document provided");
 
     final List<LinterConfig> linterConfigs = new ArrayList<>();
 
@@ -144,10 +140,7 @@ public class LinterConfigs
 
   private static LinterConfig parseLinterConfig(final Element linterElement)
   {
-    if (linterElement == null)
-    {
-      throw new IllegalArgumentException("No linter configuration provided");
-    }
+    requireNonNull(linterElement, "No linter configuration provided");
 
     final String linterId = linterElement.getAttribute("id");
     final LinterConfig linterConfig = new LinterConfig(linterId);
@@ -218,10 +211,7 @@ public class LinterConfigs
   public void parse(final Reader reader)
     throws SchemaCrawlerException
   {
-    if (reader == null)
-    {
-      throw new IllegalArgumentException("No input provided");
-    }
+    requireNonNull(reader, "No input provided");
 
     final Document document;
     try

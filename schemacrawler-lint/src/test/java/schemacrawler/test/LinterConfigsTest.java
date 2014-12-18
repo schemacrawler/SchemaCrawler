@@ -62,7 +62,7 @@ public class LinterConfigsTest
     assertNull(linterConfig.getSeverity());
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test(expected = NullPointerException.class)
   public void testParseBadXml0()
     throws SchemaCrawlerException
   {

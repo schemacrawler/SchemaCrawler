@@ -21,6 +21,7 @@
 package schemacrawler.crawl;
 
 
+import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Synonym;
@@ -53,11 +54,8 @@ final class MutableSynonym
 
   void setReferencedObject(final DatabaseObject referencedObject)
   {
-    if (referencedObject == null)
-    {
-      throw new IllegalArgumentException("Referenced object not provided");
-    }
-    this.referencedObject = referencedObject;
+    this.referencedObject = requireNonNull(referencedObject,
+                                           "Referenced object not provided");
   }
 
 }
