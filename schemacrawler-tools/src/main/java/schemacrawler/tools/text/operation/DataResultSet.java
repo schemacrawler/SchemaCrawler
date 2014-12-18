@@ -21,6 +21,7 @@
 package schemacrawler.tools.text.operation;
 
 
+import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.readFully;
 
 import java.io.BufferedInputStream;
@@ -62,12 +63,7 @@ final class DataResultSet
   public DataResultSet(final ResultSet rows, final boolean showLobs)
     throws SchemaCrawlerException
   {
-    if (rows == null)
-    {
-      throw new IllegalArgumentException("Cannot use null results");
-    }
-    this.rows = rows;
-
+    this.rows = requireNonNull(rows, "Cannot use null results");
     this.showLobs = showLobs;
     resultsColumns = SchemaCrawlerUtility.getResultColumns(rows).getColumns();
   }

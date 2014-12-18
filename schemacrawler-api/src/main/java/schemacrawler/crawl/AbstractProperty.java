@@ -20,10 +20,11 @@
 package schemacrawler.crawl;
 
 
+import static sf.util.Utility.isBlank;
+
 import java.io.Serializable;
 
 import schemacrawler.schema.Property;
-import sf.util.Utility;
 
 abstract class AbstractProperty
   implements Property
@@ -36,7 +37,7 @@ abstract class AbstractProperty
 
   AbstractProperty(final String name, final Serializable value)
   {
-    if (Utility.isBlank(name))
+    if (isBlank(name))
     {
       throw new IllegalArgumentException("No property name provided");
     }

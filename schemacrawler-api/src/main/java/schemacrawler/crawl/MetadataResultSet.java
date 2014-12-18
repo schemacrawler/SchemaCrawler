@@ -21,6 +21,8 @@
 package schemacrawler.crawl;
 
 
+import static java.util.Objects.requireNonNull;
+
 import java.math.BigInteger;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -62,11 +64,7 @@ final class MetadataResultSet
   MetadataResultSet(final ResultSet resultSet)
     throws SQLException
   {
-    if (resultSet == null)
-    {
-      throw new IllegalArgumentException("Cannot use null results");
-    }
-    results = resultSet;
+    results = requireNonNull(resultSet, "Cannot use null results");
     try
     {
       results.setFetchSize(FETCHSIZE);

@@ -21,6 +21,8 @@
 package schemacrawler.crawl;
 
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -210,11 +212,7 @@ class MutableIndex
 
   final void setIndexType(final IndexType indexType)
   {
-    if (indexType == null)
-    {
-      throw new IllegalArgumentException("Null index type");
-    }
-    this.indexType = indexType;
+    this.indexType = requireNonNull(indexType, "Null index type");
   }
 
   final void setPages(final int pages)

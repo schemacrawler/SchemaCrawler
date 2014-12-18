@@ -20,6 +20,7 @@
 package schemacrawler.tools.linter;
 
 
+import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.Table;
@@ -47,10 +48,7 @@ public class LinterTableCycles
   @Override
   protected void end()
   {
-    if (tablesGraph == null)
-    {
-      throw new IllegalArgumentException("Not initialized");
-    }
+    requireNonNull(tablesGraph, "Not initialized");
 
     if (tablesGraph.containsCycle())
     {
@@ -65,15 +63,8 @@ public class LinterTableCycles
   @Override
   protected void lint(final Table table)
   {
-    if (table == null)
-    {
-      throw new IllegalArgumentException("No table provided");
-    }
-
-    if (tablesGraph == null)
-    {
-      throw new IllegalArgumentException("Not initialized");
-    }
+    requireNonNull(table, "No table provided");
+    requireNonNull(tablesGraph, "Not initialized");
 
     tablesGraph.addVertex(table);
     for (final ForeignKey foreignKey: table.getForeignKeys())

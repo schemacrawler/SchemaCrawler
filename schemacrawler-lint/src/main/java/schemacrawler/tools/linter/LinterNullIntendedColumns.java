@@ -20,6 +20,8 @@
 package schemacrawler.tools.linter;
 
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,10 +49,7 @@ public class LinterNullIntendedColumns
   @Override
   protected void lint(final Table table)
   {
-    if (table == null)
-    {
-      throw new IllegalArgumentException("No table provided");
-    }
+    requireNonNull(table, "No table provided");
 
     final List<Column> nullDefaultValueMayBeIntendedColumns = findNullDefaultValueMayBeIntendedColumns(table
       .getColumns());

@@ -1,6 +1,7 @@
 package schemacrawler.tools.text.base;
 
 
+import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.isLowerCase;
 
 import java.io.PrintWriter;
@@ -31,21 +32,14 @@ public abstract class BaseFormatter<O extends BaseTextOptions>
                           final OutputOptions outputOptions)
     throws SchemaCrawlerException
   {
-    if (options == null)
-    {
-      throw new IllegalArgumentException("Options not provided");
-    }
-    if (outputOptions == null)
-    {
-      throw new IllegalArgumentException("Output options not provided");
-    }
+    this.options = requireNonNull(options, "Options not provided");
 
-    this.options = options;
+    this.outputOptions = requireNonNull(outputOptions,
+                                        "Output options not provided");
 
     this.printVerboseDatabaseInfo = !options.isNoInfo()
                                     && printVerboseDatabaseInfo;
 
-    this.outputOptions = outputOptions;
     final OutputFormat outputFormat = outputOptions.getOutputFormat();
     if (outputFormat == TextOutputFormat.html)
     {
