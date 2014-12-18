@@ -23,6 +23,7 @@ package schemacrawler.tools.integration.graph;
 
 
 import static java.nio.file.Files.copy;
+import static java.nio.file.Files.createDirectories;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static schemacrawler.test.utility.TestUtility.currentMethodName;
 import static schemacrawler.test.utility.TestUtility.validateDiagram;
@@ -54,8 +55,11 @@ public class GraphExecutableOptionsTest
     final Path codePath = Paths
       .get(GraphExecutableOptionsTest.class.getProtectionDomain()
         .getCodeSource().getLocation().toURI()).normalize().toAbsolutePath();
-    directory = codePath.resolve("../../../schemacrawler-docs/graphs")
-      .normalize().toAbsolutePath();
+    directory = codePath
+      .resolve("../../../schemacrawler-docs/graphs/"
+               + GraphExecutableOptionsTest.class.getSimpleName()).normalize()
+      .toAbsolutePath();
+    createDirectories(directory);
   }
 
   private static final String GRAPH_OPTIONS_OUTPUT = "graph_options_output/";
