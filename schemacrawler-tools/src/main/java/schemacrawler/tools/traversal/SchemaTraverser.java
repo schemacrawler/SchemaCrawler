@@ -20,6 +20,8 @@
 package schemacrawler.tools.traversal;
 
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.Collection;
 
 import schemacrawler.schema.Catalog;
@@ -48,30 +50,17 @@ public class SchemaTraverser
 
   public void setCatalog(final Catalog catalog)
   {
-    if (catalog == null)
-    {
-      throw new IllegalArgumentException("No catalog provided");
-    }
-    this.catalog = catalog;
+    this.catalog = requireNonNull(catalog, "No catalog provided");
   }
 
   public void setHandler(final SchemaTraversalHandler handler)
   {
-    if (handler == null)
-    {
-      throw new IllegalArgumentException("No handler provided");
-    }
-    this.handler = handler;
+    this.handler = requireNonNull(handler, "No handler provided");
   }
 
   public final void traverse()
     throws SchemaCrawlerException
   {
-    if (catalog == null || handler == null)
-    {
-      throw new SchemaCrawlerException("Cannot traverse database");
-    }
-
     handler.begin();
 
     handler.handleInfoStart();

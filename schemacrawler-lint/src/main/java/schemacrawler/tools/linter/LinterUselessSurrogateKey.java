@@ -20,6 +20,7 @@
 package schemacrawler.tools.linter;
 
 
+import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
@@ -44,10 +45,7 @@ public class LinterUselessSurrogateKey
   @Override
   protected void lint(final Table table)
   {
-    if (table == null)
-    {
-      throw new IllegalArgumentException("No table provided");
-    }
+    requireNonNull(table, "No table provided");
 
     if (hasUselessSurrogateKey(table))
     {

@@ -20,6 +20,7 @@
 package schemacrawler.tools.linter;
 
 
+import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.lint.LintUtility.listStartsWith;
 import static schemacrawler.utility.MetaDataUtility.allIndexCoumnNames;
 import static schemacrawler.utility.MetaDataUtility.foreignKeyColumnNames;
@@ -58,10 +59,7 @@ public class LinterForeignKeyWithNoIndices
   @Override
   protected void lint(final Table table)
   {
-    if (table == null)
-    {
-      throw new IllegalArgumentException("No table provided");
-    }
+    requireNonNull(table, "No table provided");
 
     final List<ForeignKey> foreignKeysWithoutIndices = findForeignKeysWithoutIndices(table);
     for (final ForeignKey foreignKey: foreignKeysWithoutIndices)

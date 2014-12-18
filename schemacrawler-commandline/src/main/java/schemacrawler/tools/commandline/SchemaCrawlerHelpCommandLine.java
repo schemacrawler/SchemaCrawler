@@ -20,6 +20,7 @@
 package schemacrawler.tools.commandline;
 
 
+import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.isBlank;
 import static sf.util.Utility.readResourceFully;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -74,10 +75,7 @@ public final class SchemaCrawlerHelpCommandLine
                                       final boolean showVersionOnly)
     throws SchemaCrawlerException
   {
-    if (args == null)
-    {
-      throw new IllegalArgumentException("No command-line arguments provided");
-    }
+    requireNonNull(args, "No command-line arguments provided");
 
     this.connectionHelpResource = connectionHelpResource;
     this.showVersionOnly = showVersionOnly;

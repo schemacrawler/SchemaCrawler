@@ -20,6 +20,7 @@
 package schemacrawler.tools.databaseconnector;
 
 
+import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.isBlank;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.commandline.CommandLine;
@@ -39,11 +40,8 @@ public abstract class DatabaseConnector
                               final String connectionHelpResource,
                               final DatabaseSystemConnector dbSystemConnector)
   {
-    if (dbServerType == null)
-    {
-      throw new IllegalArgumentException("No database server type provided");
-    }
-    this.dbServerType = dbServerType;
+    this.dbServerType = requireNonNull(dbServerType,
+                                       "No database server type provided");
 
     if (isBlank(connectionHelpResource))
     {
@@ -59,11 +57,8 @@ public abstract class DatabaseConnector
                               final String configResource,
                               final String informationSchemaViewsResourceFolder)
   {
-    if (dbServerType == null)
-    {
-      throw new IllegalArgumentException("No database server type provided");
-    }
-    this.dbServerType = dbServerType;
+    this.dbServerType = requireNonNull(dbServerType,
+                                       "No database server type provided");
 
     this.connectionHelpResource = connectionHelpResource;
 

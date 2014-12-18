@@ -20,6 +20,8 @@
 package schemacrawler.tools.lint;
 
 
+import static java.util.Objects.requireNonNull;
+
 import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -73,12 +75,7 @@ public abstract class BaseLinter
   @Override
   public final void lint(final Catalog catalog)
   {
-    if (catalog == null)
-    {
-      throw new IllegalArgumentException("No database provided");
-    }
-
-    this.catalog = catalog;
+    this.catalog =requireNonNull(catalog,"No catalog provided");
     start();
     for (final Table table: catalog.getTables())
     {
@@ -86,7 +83,6 @@ public abstract class BaseLinter
     }
     end();
     this.catalog = null;
-
   }
 
   @Override

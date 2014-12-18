@@ -21,6 +21,8 @@
 package schemacrawler.tools.offline;
 
 
+import static java.util.Objects.requireNonNull;
+
 import java.sql.Connection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -76,10 +78,7 @@ public class OfflineSnapshotExecutable
     loadOfflineSnapshotOptions();
     checkConnection(connection);
 
-    if (catalog == null)
-    {
-      throw new IllegalArgumentException("No catalog provided");
-    }
+    requireNonNull(catalog, "No catalog provided");
     ((Reducible) catalog).reduce(schemaCrawlerOptions);
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);

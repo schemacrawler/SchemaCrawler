@@ -21,6 +21,8 @@
 package schemacrawler.crawl;
 
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -99,11 +101,7 @@ final class MutableProcedure
 
   void setReturnType(final ProcedureReturnType returnType)
   {
-    if (returnType == null)
-    {
-      throw new IllegalArgumentException("Null procedure return type");
-    }
-    this.returnType = returnType;
+    this.returnType = requireNonNull(returnType, "Null procedure return type");
   }
 
 }

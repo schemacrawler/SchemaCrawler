@@ -20,6 +20,8 @@
 package schemacrawler.tools.linter;
 
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,10 +57,7 @@ public class LinterTooManyLobs
   @Override
   protected void lint(final Table table)
   {
-    if (table == null)
-    {
-      throw new IllegalArgumentException("No table provided");
-    }
+    requireNonNull(table, "No table provided");
 
     final ArrayList<Column> lobColumns = findLobColumns(table.getColumns());
     if (lobColumns.size() > MAX_LOBS_IN_TABLE)
