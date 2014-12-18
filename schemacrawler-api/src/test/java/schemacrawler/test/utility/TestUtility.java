@@ -144,7 +144,8 @@ public final class TestUtility
         .contains("target");
       if (!isInTarget)
       {
-        throw new RuntimeException("Not in target directory");
+        throw new RuntimeException("Not in target directory, "
+                                   + testOutputTargetFilePath);
       }
       if (!exists(testOutputTargetFilePath.getParent()))
       {
