@@ -37,6 +37,7 @@ import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.test.utility.BaseDatabaseTest;
+import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.InfoLevel;
@@ -111,37 +112,25 @@ public class LintOutputTest
   public void compareJsonOutput()
     throws Exception
   {
-    final List<String> failures = new ArrayList<>();
     final InfoLevel infoLevel = InfoLevel.standard;
-
-    final String referenceFile = "lints.json";
-
-    final Path testOutputFile = createTempFile(referenceFile,
-                                               TextOutputFormat.json
-                                                 .getFormat());
-
-    final OutputOptions outputOptions = new OutputOptions(TextOutputFormat.json,
-                                                          testOutputFile);
-
-    final Config config = Config
-      .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
-    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
-    schemaCrawlerOptions
-      .setSchemaInclusionRule(new RegularExpressionInclusionRule(".*FOR_LINT"));
-    schemaCrawlerOptions.setSchemaInfoLevel(infoLevel.getSchemaInfoLevel());
-
-    final Executable executable = new SchemaCrawlerExecutable("lint");
-    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    executable.setOutputOptions(outputOptions);
-    executable.execute(getConnection());
-
-    failures.addAll(compareOutput(JSON_OUTPUT + referenceFile,
-                                  testOutputFile,
-                                  outputOptions.getOutputFormat().getFormat()));
-
-    if (failures.size() > 0)
+    try (final TestWriter out = new TestWriter(TextOutputFormat.json.getFormat());)
     {
-      fail(failures.toString());
+      final OutputOptions outputOptions = new OutputOptions(TextOutputFormat.json,
+                                                            out);
+
+      final Config config = Config
+        .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
+      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
+      schemaCrawlerOptions
+        .setSchemaInclusionRule(new RegularExpressionInclusionRule(".*FOR_LINT"));
+      schemaCrawlerOptions.setSchemaInfoLevel(infoLevel.getSchemaInfoLevel());
+
+      final Executable executable = new SchemaCrawlerExecutable("lint");
+      executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+      executable.setOutputOptions(outputOptions);
+      executable.execute(getConnection());
+
+      out.assertEquals(JSON_OUTPUT + "lints.json");
     }
   }
 
@@ -149,36 +138,26 @@ public class LintOutputTest
   public void compareTextOutput()
     throws Exception
   {
-    final List<String> failures = new ArrayList<>();
     final InfoLevel infoLevel = InfoLevel.standard;
-    final String referenceFile = "lint.txt";
-
-    final Path testOutputFile = createTempFile(referenceFile,
-                                               TextOutputFormat.text
-                                                 .getFormat());
-
-    final OutputOptions outputOptions = new OutputOptions(TextOutputFormat.text,
-                                                          testOutputFile);
-
-    final Config config = Config
-      .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
-    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
-    schemaCrawlerOptions
-      .setSchemaInclusionRule(new RegularExpressionInclusionRule(".*FOR_LINT"));
-    schemaCrawlerOptions.setSchemaInfoLevel(infoLevel.getSchemaInfoLevel());
-
-    final Executable executable = new SchemaCrawlerExecutable("lint");
-    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    executable.setOutputOptions(outputOptions);
-    executable.execute(getConnection());
-
-    failures.addAll(compareOutput(TEXT_OUTPUT + referenceFile,
-                                  testOutputFile,
-                                  outputOptions.getOutputFormat().getFormat()));
-
-    if (failures.size() > 0)
+    try (final TestWriter out = new TestWriter(TextOutputFormat.text.getFormat());)
     {
-      fail(failures.toString());
+      final OutputOptions outputOptions = new OutputOptions(TextOutputFormat.text,
+                                                            out);
+
+      final Config config = Config
+        .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
+      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
+      schemaCrawlerOptions
+        .setSchemaInclusionRule(new RegularExpressionInclusionRule(".*FOR_LINT"));
+      schemaCrawlerOptions.setSchemaInfoLevel(infoLevel.getSchemaInfoLevel());
+
+      final Executable executable = new SchemaCrawlerExecutable("lint");
+      executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+      executable.setOutputOptions(outputOptions);
+      executable.execute(getConnection());
+
+      out.assertEquals(TEXT_OUTPUT + "lint.txt");
     }
   }
+
 }

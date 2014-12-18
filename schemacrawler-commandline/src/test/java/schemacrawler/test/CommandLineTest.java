@@ -2,8 +2,6 @@ package schemacrawler.test;
 
 
 import static java.nio.file.Files.newBufferedWriter;
-import static org.junit.Assert.fail;
-import static schemacrawler.test.utility.TestUtility.compareOutput;
 import static schemacrawler.test.utility.TestUtility.createTempFile;
 import static sf.util.Utility.UTF8;
 
@@ -20,6 +18,7 @@ import org.junit.Test;
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.test.utility.BaseDatabaseTest;
+import schemacrawler.test.utility.TestWriter;
 
 public class CommandLineTest
   extends BaseDatabaseTest
@@ -113,45 +112,39 @@ public class CommandLineTest
     throws Exception
   {
 
-    final Path testOutputFile = createTempFile(referenceFile, "data");
-
-    args.put("driver", "org.hsqldb.jdbc.JDBCDriver");
-    args.put("url", "jdbc:hsqldb:hsql://localhost/schemacrawler");
-    args.put("user", "sa");
-    args.put("password", "");
-    args.put("noinfo", "true");
-    args.put("infolevel", "maximum");
-    args.put("command", "brief");
-    args.put("outputformat", "text");
-    args.put("outputfile", testOutputFile.toString());
-
-    final Config runConfig = new Config();
-    final Config informationSchema = Config
-      .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
-    runConfig.putAll(informationSchema);
-    if (config != null)
+    try (final TestWriter out = new TestWriter("text");)
     {
-      runConfig.putAll(config);
-    }
+      args.put("driver", "org.hsqldb.jdbc.JDBCDriver");
+      args.put("url", "jdbc:hsqldb:hsql://localhost/schemacrawler");
+      args.put("user", "sa");
+      args.put("password", "");
+      args.put("noinfo", "true");
+      args.put("infolevel", "maximum");
+      args.put("command", "brief");
+      args.put("outputformat", "text");
+      args.put("outputfile", out.toString());
 
-    final Path configFile = createConfig(runConfig);
-    args.put("g", configFile.toString());
+      final Config runConfig = new Config();
+      final Config informationSchema = Config
+        .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
+      runConfig.putAll(informationSchema);
+      if (config != null)
+      {
+        runConfig.putAll(config);
+      }
 
-    final List<String> argsList = new ArrayList<>();
-    for (final Map.Entry<String, String> arg: args.entrySet())
-    {
-      argsList.add(String.format("-%s=%s", arg.getKey(), arg.getValue()));
-    }
+      final Path configFile = createConfig(runConfig);
+      args.put("g", configFile.toString());
 
-    Main.main(argsList.toArray(new String[0]));
+      final List<String> argsList = new ArrayList<>();
+      for (final Map.Entry<String, String> arg: args.entrySet())
+      {
+        argsList.add(String.format("-%s=%s", arg.getKey(), arg.getValue()));
+      }
 
-    final List<String> failures = new ArrayList<>();
-    failures.addAll(compareOutput(COMMAND_LINE_OUTPUT + referenceFile,
-                                  testOutputFile));
+      Main.main(argsList.toArray(new String[0]));
 
-    if (failures.size() > 0)
-    {
-      fail(failures.toString());
+      out.assertEquals(COMMAND_LINE_OUTPUT + referenceFile);
     }
   }
 

@@ -98,6 +98,19 @@ public class OutputOptions
   }
 
   /**
+   * Output options, given the type and the output filename.
+   *
+   * @param outputFormatValue
+   *        Type of output, which is dependent on the executor
+   * @param outputFile
+   *        Output file
+   */
+  public OutputOptions(final OutputFormat outputFormat, final Writer writer)
+  {
+    this(outputFormat.getFormat(), writer);
+  }
+
+  /**
    * Output options, given the type and the output to the console.
    *
    * @param outputFormatValue
@@ -136,19 +149,6 @@ public class OutputOptions
     this.outputFormatValue = outputFormatValue;
     this.outputFile = Paths.get(outputFile);
     writer = null;
-  }
-
-  /**
-   * Output options, given the type and the output filename.
-   *
-   * @param outputFormatValue
-   *        Type of output, which is dependent on the executor
-   * @param outputFile
-   *        Output file
-   */
-  public OutputOptions(final OutputFormat outputFormat, final Writer writer)
-  {
-    this(outputFormat.getFormat(), writer);
   }
 
   /**

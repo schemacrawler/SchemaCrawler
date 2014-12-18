@@ -18,10 +18,7 @@ package schemacrawler.test;
 
 
 import static org.junit.Assert.fail;
-import static schemacrawler.test.utility.TestUtility.compareOutput;
-import static schemacrawler.test.utility.TestUtility.createTempFile;
 
-import java.nio.file.Path;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +26,7 @@ import java.util.List;
 import org.junit.Test;
 
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.TextOutputFormat;
@@ -94,31 +92,22 @@ public class SchemaCrawlerSystemOutputTest
                         final String schemaInclusion)
     throws Exception
   {
-    final String referenceFile = dataSourceName + ".txt";
-    final Path testOutputFile = createTempFile(referenceFile,
-                                               TextOutputFormat.text
-                                                 .getFormat());
-
-    final Connection connection = connect(dataSourceName);
-
-    final SchemaCrawlerOptions schemaCrawlerOptions = createOptions(dataSourceName,
-                                                                    schemaInclusion);
-
-    final OutputOptions outputOptions = new OutputOptions(TextOutputFormat.text,
-                                                          testOutputFile);
-
-    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
-    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    executable.setOutputOptions(outputOptions);
-    executable.execute(connection);
-
-    final List<String> failures = compareOutput(COMMAND_OUTPUT + referenceFile,
-                                                testOutputFile,
-                                                outputOptions.getOutputFormat()
-                                                  .getFormat());
-    if (failures.size() > 0)
+    try (final TestWriter out = new TestWriter("text");)
     {
-      return failures.toString();
+      final Connection connection = connect(dataSourceName);
+
+      final SchemaCrawlerOptions schemaCrawlerOptions = createOptions(dataSourceName,
+                                                                      schemaInclusion);
+
+      final OutputOptions outputOptions = new OutputOptions(TextOutputFormat.text,
+                                                            out);
+
+      final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
+      executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+      executable.setOutputOptions(outputOptions);
+      executable.execute(connection);
+
+      out.assertEquals(COMMAND_OUTPUT + dataSourceName + ".txt");
     }
 
     return null;
