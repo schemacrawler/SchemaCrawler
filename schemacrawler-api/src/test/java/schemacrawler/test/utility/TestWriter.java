@@ -1,6 +1,7 @@
 package schemacrawler.test.utility;
 
 
+import static java.nio.file.Files.deleteIfExists;
 import static java.util.Objects.requireNonNull;
 import static org.junit.Assert.fail;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
@@ -71,8 +72,11 @@ public class TestWriter
 
   @Override
   public void close()
+    throws IOException
   {
     out.close();
+
+    deleteIfExists(tempFile);
   }
 
   @Override
@@ -220,7 +224,7 @@ public class TestWriter
   @Override
   public String toString()
   {
-    return out.toString();
+    return tempFile.toString();
   }
 
   @Override

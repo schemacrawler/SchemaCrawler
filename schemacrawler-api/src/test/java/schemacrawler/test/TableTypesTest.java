@@ -19,15 +19,8 @@ package schemacrawler.test;
 
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-import static schemacrawler.test.utility.TestUtility.compareOutput;
-import static schemacrawler.test.utility.TestUtility.createTempFile;
-import static sf.util.Utility.UTF8;
 
-import java.io.PrintWriter;
-import java.nio.file.Path;
 import java.util.Arrays;
-import java.util.List;
 
 import org.junit.Test;
 
@@ -39,6 +32,7 @@ import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.test.utility.BaseDatabaseTest;
+import schemacrawler.test.utility.TestWriter;
 import schemacrawler.utility.NamedObjectSort;
 
 public class TableTypesTest
@@ -113,13 +107,8 @@ public class TableTypesTest
   private void test(final String referenceFile, final String tableTypes)
     throws Exception
   {
-
-    final Path testOutputFile = createTempFile(referenceFile, "text");
-
-    try (final PrintWriter writer = new PrintWriter(testOutputFile.toFile(),
-                                                    UTF8.name());)
+    try (final TestWriter out = new TestWriter("text");)
     {
-
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
       schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.standard());
       schemaCrawlerOptions
@@ -134,31 +123,26 @@ public class TableTypesTest
       assertEquals("Schema count does not match", 5, schemas.length);
       for (final Schema schema: schemas)
       {
-        writer.println(String.format("%s", schema.getFullName()));
+        out.println(String.format("%s", schema.getFullName()));
         final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
         Arrays.sort(tables, NamedObjectSort.alphabetical);
         for (final Table table: tables)
         {
-          writer.println(String.format("  %s [%s]",
-                                       table.getName(),
-                                       table.getTableType()));
+          out.println(String.format("  %s [%s]",
+                                    table.getName(),
+                                    table.getTableType()));
           final Column[] columns = table.getColumns().toArray(new Column[0]);
           Arrays.sort(columns);
           for (final Column column: columns)
           {
-            writer.println(String.format("    %s [%s]",
-                                         column.getName(),
-                                         column.getColumnDataType()));
+            out.println(String.format("    %s [%s]",
+                                      column.getName(),
+                                      column.getColumnDataType()));
           }
         }
       }
-    }
 
-    final List<String> failures = compareOutput(TABLE_TYPES_OUTPUT
-                                                + referenceFile, testOutputFile);
-    if (failures.size() > 0)
-    {
-      fail(failures.toString());
+      out.assertEquals(TABLE_TYPES_OUTPUT + referenceFile);
     }
   }
 

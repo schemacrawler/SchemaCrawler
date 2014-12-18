@@ -130,7 +130,7 @@ public class SchemaCrawlerTextCommandsOutputTest
 
       assertTrue(!exists(dummyOutputFile));
 
-      writer.assertEquals(COMMAND_OUTPUT + (command + ".txt"));
+      writer.assertEquals(COMMAND_OUTPUT + command + ".txt");
     }
   }
 
@@ -153,7 +153,7 @@ public class SchemaCrawlerTextCommandsOutputTest
       executable.setOutputOptions(outputOptions);
       executable.execute(getConnection());
 
-      writer.assertEquals(COMMAND_OUTPUT + (command + ".txt"));
+      writer.assertEquals(COMMAND_OUTPUT + command + ".txt");
     }
   }
 }

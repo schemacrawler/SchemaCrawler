@@ -21,10 +21,7 @@
 package schemacrawler.test;
 
 
-import static org.junit.Assert.fail;
-import static schemacrawler.test.utility.TestUtility.compareOutput;
 import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
-import static schemacrawler.test.utility.TestUtility.createTempFile;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -37,6 +34,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import schemacrawler.test.utility.BaseExecutableTest;
+import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.commandline.SchemaCrawlerCommandLine;
 import schemacrawler.tools.databaseconnector.DatabaseSystemConnector;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
@@ -102,38 +100,32 @@ public class LintExecutableTest
                                                        final String referenceFileName)
     throws Exception
   {
-
-    final Path testOutputFile = createTempFile("lint.",
-                                               outputFormat.getFormat());
-
-    final Map<String, String> args = new HashMap<>();
-    args.put("driver", "org.hsqldb.jdbc.JDBCDriver");
-    args.put("url", "jdbc:hsqldb:hsql://localhost/schemacrawler");
-    args.put("user", "sa");
-    args.put("password", "");
-
-    args.put("infolevel", "standard");
-    args.put("command", "lint");
-    args.put("sortcolumns", "true");
-    args.put("outputformat", outputFormat.getFormat());
-    args.put("outputfile", testOutputFile.toString());
-
-    final List<String> argsList = new ArrayList<>();
-    for (final Map.Entry<String, String> arg: args.entrySet())
+    try (final TestWriter out = new TestWriter(outputFormat.getFormat());)
     {
-      argsList.add(String.format("-%s=%s", arg.getKey(), arg.getValue()));
-    }
+      final Map<String, String> args = new HashMap<>();
+      args.put("driver", "org.hsqldb.jdbc.JDBCDriver");
+      args.put("url", "jdbc:hsqldb:hsql://localhost/schemacrawler");
+      args.put("user", "sa");
+      args.put("password", "");
 
-    final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(new DatabaseSystemConnector(),
-                                                                              argsList
-                                                                                .toArray(new String[0]));
-    commandLine.execute();
+      args.put("infolevel", "standard");
+      args.put("command", "lint");
+      args.put("sortcolumns", "true");
+      args.put("outputformat", outputFormat.getFormat());
+      args.put("outputfile", out.toString());
 
-    final List<String> failures = compareOutput(referenceFileName + ".txt",
-                                                testOutputFile);
-    if (failures.size() > 0)
-    {
-      fail(failures.toString());
+      final List<String> argsList = new ArrayList<>();
+      for (final Map.Entry<String, String> arg: args.entrySet())
+      {
+        argsList.add(String.format("-%s=%s", arg.getKey(), arg.getValue()));
+      }
+
+      final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(new DatabaseSystemConnector(),
+                                                                                argsList
+                                                                                  .toArray(new String[0]));
+      commandLine.execute();
+
+      out.assertEquals(referenceFileName + ".txt");
     }
   }
 

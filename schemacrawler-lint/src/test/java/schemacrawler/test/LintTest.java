@@ -23,14 +23,6 @@ package schemacrawler.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
-import static schemacrawler.test.utility.TestUtility.compareOutput;
-import static schemacrawler.test.utility.TestUtility.createTempFile;
-import static sf.util.Utility.UTF8;
-
-import java.io.PrintWriter;
-import java.nio.file.Path;
-import java.util.List;
 
 import org.junit.Test;
 
@@ -39,6 +31,7 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseDatabaseTest;
+import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.lint.Lint;
 import schemacrawler.tools.lint.LintCollector;
 import schemacrawler.tools.lint.LintedCatalog;
@@ -71,24 +64,14 @@ public class LintTest
     final LintCollector lintCollector = lintedDatabase.getCollector();
     assertEquals(23, lintCollector.size());
 
-    final Path testOutputFile = createTempFile("lints.", "data");
-
-    try (final PrintWriter writer = new PrintWriter(testOutputFile.toFile(),
-                                                    UTF8.name());)
+    try (final TestWriter out = new TestWriter("text");)
     {
       for (final Lint<?> lint: lintCollector)
       {
-        writer.println(lint);
+        out.println(lint);
       }
-    }
 
-    final List<String> failures = compareOutput(LINTS_OUTPUT
-                                                    + "schemacrawler.lints.txt",
-                                                testOutputFile);
-
-    if (failures.size() > 0)
-    {
-      fail(failures.toString());
+      out.assertEquals(LINTS_OUTPUT + "schemacrawler.lints.txt");
     }
   }
 

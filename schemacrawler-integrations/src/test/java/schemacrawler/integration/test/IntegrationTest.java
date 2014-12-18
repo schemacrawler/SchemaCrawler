@@ -22,13 +22,8 @@
 package schemacrawler.integration.test;
 
 
-import static org.junit.Assert.fail;
-import static schemacrawler.test.utility.TestUtility.compareOutput;
-import static schemacrawler.test.utility.TestUtility.createTempFile;
 import static sf.util.Utility.UTF8;
 
-import java.nio.charset.Charset;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,6 +32,7 @@ import java.util.Map;
 import org.junit.Test;
 
 import schemacrawler.test.utility.BaseDatabaseTest;
+import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.commandline.SchemaCrawlerCommandLine;
 import schemacrawler.tools.databaseconnector.DatabaseSystemConnector;
 import schemacrawler.tools.executable.Executable;
@@ -89,36 +85,32 @@ public class IntegrationTest
                                                        final String referenceFileName)
     throws Exception
   {
-    final Path testOutputFile = createTempFile(command, outputFormatValue);
-
-    final Map<String, String> args = new HashMap<>();
-    args.put("driver", "org.hsqldb.jdbc.JDBCDriver");
-    args.put("url", "jdbc:hsqldb:hsql://localhost/schemacrawler");
-    args.put("user", "sa");
-    args.put("password", "");
-
-    args.put("infolevel", "standard");
-    args.put("command", command);
-    args.put("sortcolumns", "true");
-    args.put("outputformat", outputFormatValue);
-    args.put("outputfile", testOutputFile.toString());
-
-    final List<String> argsList = new ArrayList<>();
-    for (final Map.Entry<String, String> arg: args.entrySet())
+    try (final TestWriter out = new TestWriter("text");)
     {
-      argsList.add(String.format("-%s=%s", arg.getKey(), arg.getValue()));
-    }
+      final Map<String, String> args = new HashMap<>();
+      args.put("driver", "org.hsqldb.jdbc.JDBCDriver");
+      args.put("url", "jdbc:hsqldb:hsql://localhost/schemacrawler");
+      args.put("user", "sa");
+      args.put("password", "");
 
-    final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(new DatabaseSystemConnector(),
-                                                                              argsList
-                                                                                .toArray(new String[0]));
-    commandLine.execute();
+      args.put("infolevel", "standard");
+      args.put("command", command);
+      args.put("sortcolumns", "true");
+      args.put("outputformat", outputFormatValue);
+      args.put("outputfile", out.toString());
 
-    final List<String> failures = compareOutput(referenceFileName + ".txt",
-                                                testOutputFile);
-    if (failures.size() > 0)
-    {
-      fail(failures.toString());
+      final List<String> argsList = new ArrayList<>();
+      for (final Map.Entry<String, String> arg: args.entrySet())
+      {
+        argsList.add(String.format("-%s=%s", arg.getKey(), arg.getValue()));
+      }
+
+      final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(new DatabaseSystemConnector(),
+                                                                                argsList
+                                                                                  .toArray(new String[0]));
+      commandLine.execute();
+
+      out.assertEquals(referenceFileName + ".txt");
     }
   }
 
@@ -127,26 +119,17 @@ public class IntegrationTest
                                                       final String referenceFileName)
     throws Exception
   {
-    final Path testOutputFile = createTempFile(executable.getCommand(),
-                                               outputFormatValue);
-
-    final OutputOptions outputOptions = new OutputOptions(outputFormatValue,
-                                                          testOutputFile);
-    outputOptions.setInputEncoding(UTF8);
-    outputOptions.setOutputEncoding(UTF8);
-
-    executable.setOutputOptions(outputOptions);
-    executable.execute(getConnection());
-
-    final Charset templateCharset = outputOptions.getInputCharset();
-
-    final List<String> failures = compareOutput(referenceFileName + ".txt",
-                                                testOutputFile,
-                                                templateCharset,
-                                                "text");
-    if (failures.size() > 0)
+    try (final TestWriter out = new TestWriter(outputFormatValue);)
     {
-      fail(failures.toString());
+      final OutputOptions outputOptions = new OutputOptions(outputFormatValue,
+                                                            out);
+      outputOptions.setInputEncoding(UTF8);
+      outputOptions.setOutputEncoding(UTF8);
+
+      executable.setOutputOptions(outputOptions);
+      executable.execute(getConnection());
+
+      out.assertEquals(referenceFileName + ".txt");
     }
   }
 }
