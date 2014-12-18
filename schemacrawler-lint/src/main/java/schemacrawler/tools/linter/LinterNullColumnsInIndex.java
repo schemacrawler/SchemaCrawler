@@ -20,6 +20,8 @@
 package schemacrawler.tools.linter;
 
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -48,10 +50,7 @@ public class LinterNullColumnsInIndex
   @Override
   protected void lint(final Table table)
   {
-    if (table == null)
-    {
-      throw new IllegalArgumentException("No table provided");
-    }
+    requireNonNull(table, "No table provided");
 
     final List<Index> nullableColumnsInUniqueIndex = findNullableColumnsInUniqueIndex(table
       .getIndices());

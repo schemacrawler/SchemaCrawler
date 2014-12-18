@@ -20,6 +20,8 @@
 package schemacrawler.schemacrawler;
 
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.Collection;
 import java.util.Map;
 
@@ -46,11 +48,7 @@ public abstract class BaseCatalogDecorator
 
   public BaseCatalogDecorator(final Catalog catalog)
   {
-    if (catalog == null)
-    {
-      throw new IllegalArgumentException("No catalog provided");
-    }
-    this.catalog = catalog;
+    this.catalog = requireNonNull(catalog, "No catalog provided");
   }
 
   @Override

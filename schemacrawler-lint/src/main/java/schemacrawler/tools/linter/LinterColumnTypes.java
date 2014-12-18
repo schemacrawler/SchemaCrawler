@@ -20,6 +20,8 @@
 package schemacrawler.tools.linter;
 
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.SortedSet;
@@ -52,10 +54,7 @@ public class LinterColumnTypes
   @Override
   protected void end()
   {
-    if (columnTypes == null)
-    {
-      throw new IllegalArgumentException("Not initialized");
-    }
+    requireNonNull(columnTypes, "Not initialized");
 
     for (final Entry<String, List<ColumnDataType>> entry: columnTypes
       .entrySet())
@@ -75,15 +74,8 @@ public class LinterColumnTypes
   @Override
   protected void lint(final Table table)
   {
-    if (table == null)
-    {
-      throw new IllegalArgumentException("No table provided");
-    }
-
-    if (columnTypes == null)
-    {
-      throw new IllegalArgumentException("Not initialized");
-    }
+    requireNonNull(table, "No table provided");
+    requireNonNull(columnTypes, "Not initialized");
 
     for (final Column column: table.getColumns())
     {

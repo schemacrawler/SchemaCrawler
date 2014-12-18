@@ -21,6 +21,8 @@
 package schemacrawler.crawl;
 
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -113,11 +115,7 @@ final class MutableFunction
 
   void setReturnType(final FunctionReturnType returnType)
   {
-    if (returnType == null)
-    {
-      throw new IllegalArgumentException("Null function return type");
-    }
-    this.returnType = returnType;
+    this.returnType = requireNonNull(returnType, "Null function return type");
   }
 
   @Override

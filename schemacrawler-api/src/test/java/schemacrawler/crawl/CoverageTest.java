@@ -52,7 +52,7 @@ public class CoverageTest
     assertEquals("NamedObjectList toString", "name1, name2", list.toString());
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test(expected = NullPointerException.class)
   public void namedObjectListNull()
   {
     final NamedObjectList<NamedObject> list = new NamedObjectList<>();

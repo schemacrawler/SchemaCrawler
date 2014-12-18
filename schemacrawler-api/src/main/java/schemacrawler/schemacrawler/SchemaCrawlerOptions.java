@@ -21,6 +21,8 @@
 package schemacrawler.schemacrawler;
 
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -398,11 +400,8 @@ public final class SchemaCrawlerOptions
    */
   public void setColumnInclusionRule(final InclusionRule columnInclusionRule)
   {
-    if (columnInclusionRule == null)
-    {
-      throw new IllegalArgumentException("Cannot use null value in a setter");
-    }
-    this.columnInclusionRule = columnInclusionRule;
+    this.columnInclusionRule = requireNonNull(columnInclusionRule,
+                                              "Cannot use null value in a setter");
   }
 
   /**
@@ -511,11 +510,8 @@ public final class SchemaCrawlerOptions
    */
   public void setRoutineColumnInclusionRule(final InclusionRule routineColumnInclusionRule)
   {
-    if (routineColumnInclusionRule == null)
-    {
-      throw new IllegalArgumentException("Cannot use null value in a setter");
-    }
-    this.routineColumnInclusionRule = routineColumnInclusionRule;
+    this.routineColumnInclusionRule = requireNonNull(routineColumnInclusionRule,
+                                                     "Cannot use null value in a setter");
   }
 
   /**
@@ -526,11 +522,8 @@ public final class SchemaCrawlerOptions
    */
   public void setRoutineInclusionRule(final InclusionRule routineInclusionRule)
   {
-    if (routineInclusionRule == null)
-    {
-      throw new IllegalArgumentException("Cannot use null value in a setter");
-    }
-    this.routineInclusionRule = routineInclusionRule;
+    this.routineInclusionRule = requireNonNull(routineInclusionRule,
+                                               "Cannot use null value in a setter");
   }
 
   public void setRoutineTypes(final Collection<RoutineType> routineTypes)
@@ -576,11 +569,8 @@ public final class SchemaCrawlerOptions
    */
   public void setSchemaInclusionRule(final InclusionRule schemaInclusionRule)
   {
-    if (schemaInclusionRule == null)
-    {
-      throw new IllegalArgumentException("Cannot use null value in a setter");
-    }
-    this.schemaInclusionRule = schemaInclusionRule;
+    this.schemaInclusionRule = requireNonNull(schemaInclusionRule,
+                                              "Cannot use null value in a setter");
   }
 
   /**
@@ -603,11 +593,8 @@ public final class SchemaCrawlerOptions
    */
   public void setSequenceInclusionRule(final InclusionRule sequenceInclusionRule)
   {
-    if (sequenceInclusionRule == null)
-    {
-      throw new IllegalArgumentException("Cannot use null value in a setter");
-    }
-    this.sequenceInclusionRule = sequenceInclusionRule;
+    this.sequenceInclusionRule = requireNonNull(sequenceInclusionRule,
+                                                "Cannot use null value in a setter");
   }
 
   /**
@@ -618,11 +605,8 @@ public final class SchemaCrawlerOptions
    */
   public void setSynonymInclusionRule(final InclusionRule synonymInclusionRule)
   {
-    if (synonymInclusionRule == null)
-    {
-      throw new IllegalArgumentException("Cannot use null value in a setter");
-    }
-    this.synonymInclusionRule = synonymInclusionRule;
+    this.synonymInclusionRule = requireNonNull(synonymInclusionRule,
+                                               "Cannot use null value in a setter");
   }
 
   /**
@@ -633,11 +617,8 @@ public final class SchemaCrawlerOptions
    */
   public void setTableInclusionRule(final InclusionRule tableInclusionRule)
   {
-    if (tableInclusionRule == null)
-    {
-      throw new IllegalArgumentException("Cannot use null value in a setter");
-    }
-    this.tableInclusionRule = tableInclusionRule;
+    this.tableInclusionRule = requireNonNull(tableInclusionRule,
+                                             "Cannot use null value in a setter");
   }
 
   /**

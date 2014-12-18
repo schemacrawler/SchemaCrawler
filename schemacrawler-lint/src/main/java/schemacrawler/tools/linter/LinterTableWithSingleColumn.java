@@ -20,6 +20,8 @@
 package schemacrawler.tools.linter;
 
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.List;
 
 import schemacrawler.schema.Column;
@@ -45,10 +47,7 @@ public class LinterTableWithSingleColumn
   @Override
   protected void lint(final Table table)
   {
-    if (table == null)
-    {
-      throw new IllegalArgumentException("No table provided");
-    }
+    requireNonNull(table, "No table provided");
 
     final List<Column> columns = table.getColumns();
     if (columns.size() <= 1)

@@ -20,6 +20,8 @@
 package schemacrawler.tools.executable;
 
 
+import static java.util.Objects.requireNonNull;
+
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Connection;
@@ -46,18 +48,9 @@ public final class CommandChainExecutable
                                   final Path outputFile)
     throws SchemaCrawlerException
   {
-    if (command == null)
-    {
-      throw new IllegalArgumentException("No command provided");
-    }
-    if (outputFormat == null)
-    {
-      throw new IllegalArgumentException("No output format provided");
-    }
-    if (outputFile == null)
-    {
-      throw new IllegalArgumentException("No output file provided");
-    }
+    requireNonNull(command, "No command provided");
+    requireNonNull(outputFormat, "No output format provided");
+    requireNonNull(outputFile, "No output file provided");
 
     return addNext(command, outputFormat.getFormat(), outputFile.normalize()
       .toAbsolutePath().toString());

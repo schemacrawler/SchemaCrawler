@@ -21,6 +21,8 @@
 package schemacrawler.crawl;
 
 
+import static java.util.Objects.requireNonNull;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -106,13 +108,9 @@ class NamedObjectList<N extends NamedObject>
   @Override
   public boolean add(final N namedObject)
   {
-    if (namedObject == null)
-    {
-      throw new IllegalArgumentException("Cannot add a null object to the list");
-    }
+    requireNonNull(namedObject, "Cannot add a null object to the list");
     final String key = makeLookupKey(namedObject);
     objects.put(key, namedObject);
-
     return true;
   }
 

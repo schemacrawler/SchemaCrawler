@@ -20,6 +20,8 @@
 package schemacrawler.tools.lint;
 
 
+import static sf.util.Utility.isBlank;
+
 import java.io.Serializable;
 
 import schemacrawler.schemacrawler.Config;
@@ -37,7 +39,7 @@ public class LinterConfig
 
   public LinterConfig(final String id)
   {
-    if (Utility.isBlank(id))
+    if (isBlank(id))
     {
       throw new IllegalArgumentException("No linter id provided");
     }

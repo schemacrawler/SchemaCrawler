@@ -1,8 +1,8 @@
 package schemacrawler.tools.options;
 
 
+import static sf.util.Utility.isBlank;
 import schemacrawler.schemacrawler.Options;
-import sf.util.Utility;
 
 public final class Command
   implements Options
@@ -14,7 +14,7 @@ public final class Command
 
   public Command(final String command)
   {
-    if (Utility.isBlank(command))
+    if (isBlank(command))
     {
       throw new IllegalArgumentException("No command specified");
     }

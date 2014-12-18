@@ -20,6 +20,9 @@
 package schemacrawler.tools.lint;
 
 
+import static java.util.Objects.requireNonNull;
+import static sf.util.Utility.isBlank;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,7 +30,6 @@ import java.util.List;
 
 import schemacrawler.schema.NamedObjectWithAttributes;
 import sf.util.ObjectToString;
-import sf.util.Utility;
 
 public final class SimpleLint<V extends Serializable>
   implements Lint<V>
@@ -47,17 +49,13 @@ public final class SimpleLint<V extends Serializable>
                     final String message,
                     final V value)
   {
-    if (Utility.isBlank(id))
+    if (isBlank(id))
     {
       throw new IllegalArgumentException("Lint id not provided");
     }
     this.id = id;
 
-    if (objectName == null)
-    {
-      throw new IllegalArgumentException("Object name not provided");
-    }
-    this.objectName = objectName;
+    this.objectName = requireNonNull(objectName, "Object name not provided");
 
     if (severity == null)
     {
@@ -68,7 +66,7 @@ public final class SimpleLint<V extends Serializable>
       this.severity = severity;
     }
 
-    if (Utility.isBlank(message))
+    if (isBlank(message))
     {
       throw new IllegalArgumentException("Lint message not provided");
     }

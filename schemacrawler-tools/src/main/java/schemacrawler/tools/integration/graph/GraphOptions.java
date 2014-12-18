@@ -20,6 +20,8 @@
 package schemacrawler.tools.integration.graph;
 
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
@@ -94,19 +96,13 @@ public class GraphOptions
 
   public void setGraphVizOpts(final String graphVizOpts)
   {
-    if (graphVizOpts == null)
-    {
-      throw new IllegalArgumentException("Cannot use null value in a setter");
-    }
+    requireNonNull(graphVizOpts, "Cannot use null value in a setter");
     setStringValue(GRAPH_GRAPHVIZ_OPTS, graphVizOpts);
   }
 
   public void setSchemaTextDetailType(final SchemaTextDetailType schemaTextDetailType)
   {
-    if (schemaTextDetailType == null)
-    {
-      throw new IllegalArgumentException("Cannot use null value in a setter");
-    }
+    requireNonNull(schemaTextDetailType, "Cannot use null value in a setter");
     setEnumValue(GRAPH_DETAILS, schemaTextDetailType);
   }
 
