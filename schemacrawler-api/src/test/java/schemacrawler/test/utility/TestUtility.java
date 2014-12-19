@@ -30,7 +30,6 @@ import static java.nio.file.Files.move;
 import static java.nio.file.Files.newBufferedReader;
 import static java.nio.file.Files.newOutputStream;
 import static java.nio.file.Files.size;
-import static java.nio.file.Paths.get;
 import static java.nio.file.StandardCopyOption.ATOMIC_MOVE;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static java.nio.file.StandardOpenOption.CREATE;
@@ -56,8 +55,11 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -78,6 +80,23 @@ import com.google.gson.stream.JsonToken;
 
 public final class TestUtility
 {
+
+  public static Path buildDirectory()
+    throws Exception
+  {
+    final StackTraceElement ste = currentMethodStackTraceElement();
+    final Class<?> callingClass = Class.forName(ste.getClassName());
+    final Path codePath = Paths
+      .get(callingClass.getProtectionDomain().getCodeSource().getLocation()
+        .toURI()).normalize().toAbsolutePath();
+    final boolean isInTarget = codePath.toString().contains("target");
+    if (!isInTarget)
+    {
+      throw new RuntimeException("Not in build directory, " + codePath);
+    }
+    final Path directory = codePath.resolve("..");
+    return directory.normalize().toAbsolutePath();
+  }
 
   public static List<String> compareOutput(final String referenceFile,
                                            final Path testOutputTempFile)
@@ -136,21 +155,9 @@ public final class TestUtility
 
     if (!contentEquals)
     {
-      final Path testOutputTargetFilePath = get(".",
-                                                "unit_tests_results_output",
-                                                referenceFile).normalize()
-        .toAbsolutePath();
-      final boolean isInTarget = testOutputTargetFilePath.toString()
-        .contains("target");
-      if (!isInTarget)
-      {
-        throw new RuntimeException("Not in target directory, "
-                                   + testOutputTargetFilePath);
-      }
-      if (!exists(testOutputTargetFilePath.getParent()))
-      {
-        createDirectories(testOutputTargetFilePath.getParent());
-      }
+      final Path testOutputTargetFilePath = buildDirectory()
+        .resolve("unit_tests_results_output").resolve(referenceFile);
+      createDirectories(testOutputTargetFilePath.getParent());
       deleteIfExists(testOutputTargetFilePath);
       move(testOutputTempFile,
            testOutputTargetFilePath,
@@ -314,15 +321,26 @@ public final class TestUtility
   {
     final StackTraceElement[] stackTrace = Thread.currentThread()
       .getStackTrace();
-    for (int i = 0; i < stackTrace.length; i++)
+    final Iterator<StackTraceElement> stackTraceIterator = Arrays
+      .asList(stackTrace).iterator();
+    int i = 0;
+    while (stackTraceIterator.hasNext())
     {
-      final StackTraceElement stackTraceElement = stackTrace[i];
-      if (stackTraceElement.getClassName().equals(TestUtility.class.getName())
-          && stackTraceElement.getMethodName()
-            .equals("currentMethodStackTraceElement"))
+      final StackTraceElement stackTraceElement = stackTraceIterator.next();
+      if (stackTraceElement.getClassName().equals(TestUtility.class.getName()))
       {
-        return stackTrace[i + 2];
+        while (stackTraceIterator.hasNext())
+        {
+          final String className = stackTraceIterator.next().getClassName();
+          if (!className.equals(TestUtility.class.getName())
+              && !className.equals(TestWriter.class.getName()))
+          {
+            return stackTrace[i + 1];
+          }
+          i++;
+        }
       }
+      i++;
     }
 
     return null;
