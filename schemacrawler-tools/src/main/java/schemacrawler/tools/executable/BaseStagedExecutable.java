@@ -21,11 +21,12 @@
 package schemacrawler.tools.executable;
 
 
+import static java.util.Objects.requireNonNull;
+
 import java.sql.Connection;
 
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 
 /**
  * A SchemaCrawler tools executable unit.
@@ -51,10 +52,7 @@ public abstract class BaseStagedExecutable
   public final void execute(final Connection connection)
     throws Exception
   {
-    if (connection == null)
-    {
-      throw new SchemaCrawlerException("No connection provided");
-    }
+    requireNonNull(connection, "No connection provided");
 
     final SchemaCrawler crawler = new SchemaCrawler(connection);
     final Catalog catalog = crawler.crawl(schemaCrawlerOptions);
