@@ -98,7 +98,7 @@ public final class TestUtility
     requireNonNull(encoding, "Output file encoding is not defined");
     requireNonNull(outputFormat, "Output format is not defined");
 
-    if (testOutputTempFile == null || !exists(testOutputTempFile)
+    if (!exists(testOutputTempFile)
         || !isRegularFile(testOutputTempFile, LinkOption.NOFOLLOW_LINKS)
         || !isReadable(testOutputTempFile) || size(testOutputTempFile) == 0)
     {
