@@ -21,13 +21,14 @@
 package schemacrawler.tools.commandline;
 
 
+import static sf.util.Utility.isBlank;
+
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.TextOutputFormat;
-import sf.util.Utility;
 import sf.util.clparser.StringOption;
 
 /**
@@ -57,7 +58,7 @@ public final class OutputOptionsParser
 
     final String outputFileName = getStringValue("outputfile");
     final Path outputFile;
-    if (Utility.isBlank(outputFileName))
+    if (isBlank(outputFileName))
     {
       outputFile = null;
     }

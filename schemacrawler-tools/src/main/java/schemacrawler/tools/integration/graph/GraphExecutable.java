@@ -25,11 +25,8 @@ import static sf.util.Utility.isBlank;
 import static sf.util.Utility.readResourceFully;
 
 import java.io.IOException;
-import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.security.SecureRandom;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -63,8 +60,6 @@ public final class GraphExecutable
 
   private static final Logger LOGGER = Logger.getLogger(GraphExecutable.class
     .getName());
-
-  private static final SecureRandom random = new SecureRandom();
 
   public GraphExecutable()
   {
@@ -152,12 +147,6 @@ public final class GraphExecutable
     return graphOptions;
   }
 
-  public String nextRandomString()
-  {
-    final int length = 8;
-    return new BigInteger(length * 5, random).toString(32);
-  }
-
   public final void setGraphOptions(final GraphOptions graphOptions)
   {
     this.graphOptions = graphOptions;
@@ -174,7 +163,7 @@ public final class GraphExecutable
     command.add("-T");
     command.add(graphOutputFormat.getFormat());
     command.add("-o");
-    command.add(getDiagramFile(graphOutputFormat).toString());
+    command.add(outputOptions.getOutputFile().toString());
     command.add(dotFile.toString());
 
     final Iterator<String> iterator = command.iterator();
@@ -223,24 +212,6 @@ public final class GraphExecutable
     {
       LOGGER.log(Level.WARNING, processError);
     }
-  }
-
-  private Path getDiagramFile(final GraphOutputFormat graphOutputFormat)
-  {
-    final Path diagramFile;
-    if (outputOptions.isFileOutput())
-    {
-      diagramFile = outputOptions.getOutputFile();
-    }
-    else
-    {
-      diagramFile = Paths
-        .get(".",
-             String.format("sc.%s.%s",
-                           nextRandomString(),
-                           graphOutputFormat.getFormat()));
-    }
-    return diagramFile.normalize().toAbsolutePath();
   }
 
   private SchemaTextDetailType getSchemaTextDetailType()

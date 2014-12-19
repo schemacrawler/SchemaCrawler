@@ -21,6 +21,8 @@
 package schemacrawler.crawl;
 
 
+import static java.util.Objects.requireNonNull;
+
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -46,10 +48,7 @@ final class ResultsRetriever
   ResultsRetriever(final ResultSet resultSet)
     throws SQLException
   {
-    if (resultSet == null)
-    {
-      throw new SQLException("Cannot retrieve metadata for null results");
-    }
+    requireNonNull(resultSet, "Cannot retrieve metadata for null results");
     resultsMetaData = resultSet.getMetaData();
   }
 
