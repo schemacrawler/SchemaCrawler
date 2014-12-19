@@ -21,6 +21,8 @@
 package sf.util;
 
 
+import static sf.util.Utility.isBlank;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -62,7 +64,7 @@ public final class TemplatingUtility
   public static String expandTemplate(final String template,
                                       final Map<String, String> variablesMap)
   {
-    if (Utility.isBlank(template) || variablesMap == null)
+    if (isBlank(template) || variablesMap == null)
     {
       return template;
     }
