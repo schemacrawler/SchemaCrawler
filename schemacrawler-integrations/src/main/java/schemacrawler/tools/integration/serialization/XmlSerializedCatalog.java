@@ -20,6 +20,8 @@
 package schemacrawler.tools.integration.serialization;
 
 
+import static java.util.Objects.requireNonNull;
+
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
@@ -188,10 +190,7 @@ public final class XmlSerializedCatalog
   public void save(final Writer writer)
     throws SchemaCrawlerException
   {
-    if (writer == null)
-    {
-      throw new SchemaCrawlerException("Writer not provided");
-    }
+    requireNonNull(writer, "Writer not provided");
     try
     {
       newXStream().toXML(catalog, writer);

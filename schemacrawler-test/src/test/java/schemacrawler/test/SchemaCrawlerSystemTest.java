@@ -17,6 +17,7 @@
 package schemacrawler.test;
 
 
+import static java.util.Objects.requireNonNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
@@ -233,10 +234,7 @@ public class SchemaCrawlerSystemTest
                       final Catalog catalog)
     throws Exception
   {
-    if (schema == null)
-    {
-      throw new SchemaCrawlerException("No schema found");
-    }
+    requireNonNull(schema, "No schema found");
 
     final String[] tableNames = {
         "AUTHORS",
