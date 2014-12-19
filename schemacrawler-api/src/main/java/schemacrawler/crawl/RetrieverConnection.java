@@ -21,6 +21,8 @@
 package schemacrawler.crawl;
 
 
+import static java.util.Objects.requireNonNull;
+
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
@@ -144,10 +146,7 @@ final class RetrieverConnection
       schemaCrawlerOptions = new SchemaCrawlerOptions();
     }
 
-    if (connection == null)
-    {
-      throw new SQLException("No connection provided");
-    }
+    requireNonNull(connection, "No connection provided");
     if (connection.isClosed())
     {
       throw new SQLException("Connection is closed");

@@ -20,20 +20,8 @@
 package schemacrawler.tools.options;
 
 
-import static java.nio.file.Files.newBufferedWriter;
-import static java.nio.file.StandardOpenOption.APPEND;
-import static java.nio.file.StandardOpenOption.CREATE;
-import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
-import static java.nio.file.StandardOpenOption.WRITE;
-
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.io.Writer;
-import java.nio.file.OpenOption;
-import java.nio.file.Path;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
@@ -41,13 +29,9 @@ public final class OutputWriter
   extends Writer
 {
 
-  private static final Logger LOGGER = Logger.getLogger(OutputWriter.class
-    .getName());
-
   private final Writer writer;
   private boolean isClosed;
-  private boolean isFileOutput;
-  private String description;
+  private final OutputResource outputResource;
 
   public OutputWriter(final OutputOptions outputOptions)
     throws SchemaCrawlerException
@@ -59,7 +43,16 @@ public final class OutputWriter
                       final boolean appendOutput)
     throws SchemaCrawlerException
   {
-    writer = openOutputWriter(outputOptions, appendOutput);
+    try
+    {
+      outputResource = outputOptions.getOutputResource();
+      writer = outputResource
+        .openOutputWriter(outputOptions.getOutputCharset(), appendOutput);
+    }
+    catch (final IOException e)
+    {
+      throw new SchemaCrawlerException(e.getMessage(), e);
+    }
   }
 
   @Override
@@ -91,26 +84,7 @@ public final class OutputWriter
     throws IOException
   {
     ensureOpen();
-
-    if (writer != null)
-    {
-      writer.flush();
-    }
-
-    if (isFileOutput)
-    {
-      if (writer != null)
-      {
-        writer.close();
-        LOGGER.log(Level.INFO, "Closed output writer");
-      }
-    }
-    else
-    {
-      LOGGER.log(Level.INFO,
-                 "Not closing output writer, since output is not to a file");
-    }
-
+    outputResource.close(writer);
     isClosed = true;
   }
 
@@ -125,7 +99,7 @@ public final class OutputWriter
   @Override
   public String toString()
   {
-    return description;
+    return outputResource.toString();
   }
 
   @Override
@@ -172,11 +146,11 @@ public final class OutputWriter
   protected void finalize()
     throws Throwable
   {
-    super.finalize();
     if (!isClosed)
     {
       throw new IllegalStateException("Output writer was not closed");
     }
+    super.finalize();
   }
 
   /**
@@ -188,64 +162,6 @@ public final class OutputWriter
     if (isClosed)
     {
       throw new IOException("Writer has already been closed");
-    }
-  }
-
-  /**
-   * Opens the output writer.
-   *
-   * @return Writer
-   * @throws SchemaCrawlerException
-   *         On an exception
-   */
-  private Writer openOutputWriter(final OutputOptions outputOptions,
-                                  final boolean appendOutput)
-    throws SchemaCrawlerException
-  {
-    try
-    {
-      final Writer writer;
-      if (outputOptions == null || outputOptions.isConsoleOutput())
-      {
-        writer = new OutputStreamWriter(System.out);
-        description = "<console>";
-        LOGGER.log(Level.INFO, "Opened output writer to console");
-      }
-      else if (outputOptions.isFileOutput())
-      {
-        isFileOutput = true;
-        final Path outputFile = outputOptions.getOutputFile().normalize()
-          .toAbsolutePath();
-        final OpenOption[] openOptions;
-        if (appendOutput)
-        {
-          openOptions = new OpenOption[] {
-              WRITE, CREATE, APPEND
-          };
-        }
-        else
-        {
-          openOptions = new OpenOption[] {
-              WRITE, CREATE, TRUNCATE_EXISTING
-          };
-        }
-        writer = newBufferedWriter(outputFile,
-                                   outputOptions.getOutputCharset(),
-                                   openOptions);
-        description = outputFile.toString();
-        LOGGER.log(Level.INFO, "Opened output writer to file, " + outputFile);
-      }
-      else
-      {
-        writer = outputOptions.getWriter();
-        description = "<writer>";
-        LOGGER.log(Level.INFO, "Output to provided writer");
-      }
-      return new BufferedWriter(writer);
-    }
-    catch (final Exception e)
-    {
-      throw new SchemaCrawlerException("Could not obtain output writer", e);
     }
   }
 

@@ -21,6 +21,8 @@
 package schemacrawler.crawl;
 
 
+import static java.util.Objects.requireNonNull;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -453,11 +455,7 @@ public final class SchemaCrawler
   public SchemaCrawler(final Connection connection)
     throws SchemaCrawlerException
   {
-    if (connection == null)
-    {
-      throw new SchemaCrawlerException("No connection specified");
-    }
-    this.connection = connection;
+    this.connection = requireNonNull(connection, "No connection specified");
   }
 
   /**
