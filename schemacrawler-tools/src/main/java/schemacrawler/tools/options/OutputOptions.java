@@ -21,14 +21,16 @@
 package schemacrawler.tools.options;
 
 
+import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.UTF8;
 import static sf.util.Utility.isBlank;
 
 import java.io.Writer;
+import java.math.BigInteger;
 import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Objects;
+import java.security.SecureRandom;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.Options;
@@ -48,13 +50,12 @@ public class OutputOptions
   private static final String SC_INPUT_ENCODING = "schemacrawler.encoding.input";
   private static final String SC_OUTPUT_ENCODING = "schemacrawler.encoding.output";
 
+  private OutputResource outputResource;
   private String outputFormatValue;
-
-  private Path outputFile;
-  private Writer writer;
-
   private Charset inputEncodingCharset;
   private Charset outputEncodingCharset;
+
+  private static final SecureRandom random = new SecureRandom();
 
   /**
    * Creates default OutputOptions.
@@ -118,7 +119,9 @@ public class OutputOptions
    */
   public OutputOptions(final String outputFormatValue)
   {
-    this(outputFormatValue, (Path) null);
+    this.outputFormatValue = requireNonNull(outputFormatValue,
+                                            "No output format value provided");
+    setConsoleOutput();
   }
 
   /**
@@ -131,9 +134,9 @@ public class OutputOptions
    */
   public OutputOptions(final String outputFormatValue, final Path outputFile)
   {
-    this.outputFormatValue = outputFormatValue;
-    this.outputFile = outputFile;
-    writer = null;
+    this.outputFormatValue = requireNonNull(outputFormatValue,
+                                            "No output format value provided");
+    setOutputFile(outputFile);
   }
 
   /**
@@ -146,9 +149,9 @@ public class OutputOptions
    */
   public OutputOptions(final String outputFormatValue, final String outputFile)
   {
-    this.outputFormatValue = outputFormatValue;
-    this.outputFile = Paths.get(outputFile);
-    writer = null;
+    this.outputFormatValue = requireNonNull(outputFormatValue,
+                                            "No output format value provided");
+    setOutputFile(Paths.get(outputFile));
   }
 
   /**
@@ -161,9 +164,9 @@ public class OutputOptions
    */
   public OutputOptions(final String outputFormatValue, final Writer writer)
   {
-    this.outputFormatValue = outputFormatValue;
-    outputFile = null;
-    this.writer = writer;
+    this.outputFormatValue = requireNonNull(outputFormatValue,
+                                            "No output format value provided");
+    setWriter(writer);
   }
 
   /**
@@ -196,13 +199,20 @@ public class OutputOptions
     }
   }
 
-  /**
-   * Output file, which has previously been created.
-   *
-   * @return Output file
-   */
   public Path getOutputFile()
   {
+    final Path outputFile;
+    if (outputResource instanceof FileOutputResource)
+    {
+      outputFile = ((FileOutputResource) outputResource).getOutputFile();
+    }
+    else
+    {
+      outputFile = Paths
+        .get(".",
+             String.format("sc.%s.%s", nextRandomString(), outputFormatValue))
+        .normalize().toAbsolutePath();
+    }
     return outputFile;
   }
 
@@ -234,11 +244,6 @@ public class OutputOptions
     return outputFormatValue;
   }
 
-  public Writer getWriter()
-  {
-    return writer;
-  }
-
   /**
    * Whether a known output format has been specified.
    *
@@ -249,14 +254,9 @@ public class OutputOptions
     return getTextOutputFormat() != null;
   }
 
-  public boolean isConsoleOutput()
+  public void setConsoleOutput()
   {
-    return outputFile == null && writer == null;
-  }
-
-  public boolean isFileOutput()
-  {
-    return outputFile != null && writer == null;
+    outputResource = new ConsoleOutputResource();
   }
 
   public void setInputEncoding(final Charset inputCharset)
@@ -321,14 +321,16 @@ public class OutputOptions
   }
 
   /**
-   * Sets the name of the output file.
+   * Sets the name of the output file. It is important to note that the
+   * output encoding should be available at this point.
    *
    * @param outputFileName
    *        Output file name.
    */
   public void setOutputFile(final Path outputFile)
   {
-    this.outputFile = outputFile;
+    requireNonNull(outputFile, "No output file provided");
+    outputResource = new FileOutputResource(outputFile);
   }
 
   /**
@@ -339,19 +341,25 @@ public class OutputOptions
    */
   public void setOutputFormatValue(final String outputFormatValue)
   {
-    this.outputFormatValue = Objects
-      .requireNonNull(outputFormatValue, "Cannot use null value in a setter");
+    this.outputFormatValue = requireNonNull(outputFormatValue,
+                                            "Cannot use null value in a setter");
   }
 
   public void setWriter(final Writer writer)
   {
-    this.writer = writer;
+    requireNonNull(writer, "No output writer provided");
+    outputResource = new WriterOutputResource(writer);
   }
 
   @Override
   public String toString()
   {
     return ObjectToString.toString(this);
+  }
+
+  protected OutputResource getOutputResource()
+  {
+    return outputResource;
   }
 
   private OutputFormat getTextOutputFormat()
@@ -366,6 +374,12 @@ public class OutputOptions
       outputFormat = null;
     }
     return outputFormat;
+  }
+
+  private String nextRandomString()
+  {
+    final int length = 8;
+    return new BigInteger(length * 5, random).toString(32);
   }
 
 }
