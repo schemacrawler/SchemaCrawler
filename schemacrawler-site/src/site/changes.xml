@@ -5,7 +5,28 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-     <release version="12.02.01" date="2014-11-27" description="Single distribution download, with support for all databases, as well as offline snapshot support.">
+     <release version="12.02.01" date="2014-12-27" description="Single distribution download, with support for all databases, as well as offline snapshot support.">
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        New output format, htmlx, which embeds database diagrams into an HTML file. The 
+        diagrams are in SVG format.
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Converted all HTML output to HTML5.
+      ]]></action>   
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Null-checks now throw NullPointerException, instead of IllegalArgumentException.
+      ]]></action>            
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Tested support of international character sets in table names and column names.
+      ]]></action>      
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Converting filter classes to Predicate, to prepare for Java 8 support.
+      ]]></action>   
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Converted all file operations to use Java Path, for better error handling.
+      ]]></action>                      
+     </release>   
+     <release version="12.01.01" date="2014-11-27" description="Single distribution download, with support for all databases, as well as offline snapshot support.">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Collapsed distribution into a single distribution download, with Apache Ant Ivy scripts
         for downloading additional dependencies. A new -server command-line option will
