@@ -14,8 +14,15 @@ To read more about SchemaCrawler, you can read:
 
 # SchemaCrawler Slides
 
-<iframe src="http://www.slideshare.net/slideshow/embed_code/8267188" width="500" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+<iframe src="http://www.slideshare.net/slideshow/embed_code/8267188" 
+ width="500" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
 
-<iframe src="http://prezi.com/embed/sljesacs5cwd/?bgcolor=ffffff&amp;lock_to_path=0&amp;autoplay=0&amp;autohide_ctrls=0&amp;features=undefined&amp;disabled_features=undefined" width="500" height="400" frameBorder="0"></iframe> 
+<iframe src="http://prezi.com/embed/sljesacs5cwd/?bgcolor=ffffff&amp;lock_to_path=0&amp;autoplay=0&amp;autohide_ctrls=0&amp;features=undefined&amp;disabled_features=undefined" 
+ width="500" height="400" frameBorder="0" allowfullscreen="true"></iframe> 
  
-<iframe src="http://player.vimeo.com/video/102187316" width="500" height="281" frameborder="0"></iframe> 
+<iframe src="http://player.vimeo.com/video/102187316" 
+ width="500" height="281" frameborder="0" allowfullscreen="true"></iframe> 
+
+<iframe src="//www.youtube.com/embed/zYPfOzImuTk" 
+ width="500" height="281" frameborder="0" allowfullscreen="true"></iframe>
+ 
