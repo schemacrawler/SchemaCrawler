@@ -113,6 +113,18 @@
       "tableConstraints": [],
       "foreignKeys": [],
       "primaryKey": {},
+      "name": "ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
+      "columns": [],
+      "indices": [],
+      "remarks": "",
+      "triggers": [],
+      "fullName": "PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
+      "type": "table"
+    },
+    {
+      "tableConstraints": [],
+      "foreignKeys": [],
+      "primaryKey": {},
       "name": "REGIONS",
       "columns": [],
       "indices": [],

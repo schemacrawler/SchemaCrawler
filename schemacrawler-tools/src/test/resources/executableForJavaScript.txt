@@ -73,6 +73,10 @@ o--> WRITERS
      o--> HOMEEMAIL11
      o--> HOMEEMAIL12
      o--> PUBLICATION_ID
+o--> ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
+     o--> ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
+     o--> ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
+     o--> ΣΥΓΓΡΑΦΈΑΣ
 PUBLIC.INFORMATION_SCHEMA
 PUBLIC.PUBLIC
 PUBLIC."PUBLISHER SALES"

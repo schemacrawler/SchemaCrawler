@@ -152,6 +152,17 @@
       ],
       "fullName": "PUBLIC.FOR_LINT.WRITERS",
       "type": "table"
+    },
+    {
+      "name": "ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
+      "lints": [{
+        "id": "schemacrawler.tools.linter.LinterForeignKeyMismatch",
+        "description": "foreign key and primary key have different data types",
+        "value": "FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS",
+        "severity": "high"
+      }],
+      "fullName": "PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
+      "type": "table"
     }
   ],
   "databaseInfo": {

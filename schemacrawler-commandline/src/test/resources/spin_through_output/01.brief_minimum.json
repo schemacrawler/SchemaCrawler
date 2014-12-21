@@ -85,6 +85,15 @@
     {
       "foreignKeys": [],
       "primaryKey": {},
+      "name": "ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
+      "columns": [],
+      "remarks": "",
+      "fullName": "PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
+      "type": "table"
+    },
+    {
+      "foreignKeys": [],
+      "primaryKey": {},
       "name": "REGIONS",
       "columns": [],
       "remarks": "",

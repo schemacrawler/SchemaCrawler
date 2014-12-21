@@ -165,6 +165,12 @@ ADDRESS1	ADDRESS2	CITY	COUNTRY	EMAIL1	EMAIL2	FAX	FAX3	FIRSTNAME	HOMEEMAIL11	HOME
 
 
 
+PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
+------------------------------------------------------------------------
+ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ	ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ	ΣΥΓΓΡΑΦΈΑΣ
+
+
+
 PUBLIC."PUBLISHER SALES".REGIONS
 ------------------------------------------------------------------------
 CITY	COUNTRY	POSTALCODE	STATE

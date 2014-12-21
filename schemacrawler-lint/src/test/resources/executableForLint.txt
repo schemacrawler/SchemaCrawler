@@ -146,3 +146,12 @@ PUBLIC.FOR_LINT.WRITERS
 
 
 
+PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
+------------------------------------------------------------------------
+                                                                 [table]
+
+                                                            [lint, high]
+	foreign key and primary key have different data types	FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS
+
+
+
