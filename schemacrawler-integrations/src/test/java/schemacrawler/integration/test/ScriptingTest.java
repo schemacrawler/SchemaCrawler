@@ -21,6 +21,7 @@
 package schemacrawler.integration.test;
 
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import schemacrawler.test.utility.BaseExecutableTest;
@@ -48,6 +49,7 @@ public class ScriptingTest
                       "script_output.txt");
   }
 
+  @Ignore
   @Test
   public void executableRuby()
     throws Exception

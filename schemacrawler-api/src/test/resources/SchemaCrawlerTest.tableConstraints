@@ -44,6 +44,10 @@ schema: PUBLIC.FOR_LINT
     constraint: SYS_CT_10158
     constraint: SYS_CT_10159
     constraint: SYS_CT_10160
+  table: PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
+    constraint: FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS
+    constraint: PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
+    constraint: SYS_CT_10189
 schema: PUBLIC.INFORMATION_SCHEMA
 schema: PUBLIC.PUBLIC
 schema: PUBLIC."PUBLISHER SALES"

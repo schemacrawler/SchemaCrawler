@@ -65,6 +65,10 @@ UTF-8: ¥ · £ · € · $ · ¢ · ₡ · ₢ · ₣ · ₤ · ₥ · ₦ · �
  - PUBLIC.FOR_LINT.WRITERS.HOMEEMAIL11
  - PUBLIC.FOR_LINT.WRITERS.HOMEEMAIL12
  - PUBLIC.FOR_LINT.WRITERS.PUBLICATION_ID
+- PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
+ - PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
+ - PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
+ - PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ
 - PUBLIC."PUBLISHER SALES".REGIONS
  - PUBLIC."PUBLISHER SALES".REGIONS.CITY
  - PUBLIC."PUBLISHER SALES".REGIONS.STATE

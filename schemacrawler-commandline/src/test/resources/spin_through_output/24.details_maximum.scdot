@@ -30,7 +30,7 @@ digraph "SchemaCrawler_Diagram" {
 	</tr>
 	<tr>
 		<td align='right'>Generated on:</td>
-		<td align='left'>Aug 31, 2014 11:23 PM</td>
+		<td align='left'>Dec 20, 2014 2:21 PM</td>
 	</tr>
 	<tr>
 		<td align='right'>Database:</td>
@@ -159,7 +159,7 @@ digraph "SchemaCrawler_Diagram" {
 		<td port='authorid_19681b5e.end' align='left'>INTEGER NOT NULL</td>
 	</tr>
 	<tr>
-		<td port='update_7e11958f.start' align='left'>&quot;UPDATE&quot;</td>
+		<td port='update_7e11958f.start' align='left'>"UPDATE"</td>
 		<td align='left'> </td>
 		<td port='update_7e11958f.end' align='left'>CLOB</td>
 	</tr>
@@ -259,11 +259,11 @@ digraph "SchemaCrawler_Diagram" {
     label=<
       <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#555555">
 	<tr>
-		<td colspan='2' bgcolor='#96C2FA' align='left'><b><i>PUBLIC.BOOKS.&quot;Global Counts&quot;</i></b></td>
+		<td colspan='2' bgcolor='#96C2FA' align='left'><b><i>PUBLIC.BOOKS."Global Counts"</i></b></td>
 		<td bgcolor='#96C2FA' align='right'>[table]</td>
 	</tr>
 	<tr>
-		<td port='globalcount_22cfa042.start' align='left'>&quot;Global Count&quot;</td>
+		<td port='globalcount_22cfa042.start' align='left'>"Global Count"</td>
 		<td align='left'> </td>
 		<td port='globalcount_22cfa042.end' align='left'>INTEGER</td>
 	</tr>
@@ -350,11 +350,11 @@ digraph "SchemaCrawler_Diagram" {
     label=<
       <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#555555">
 	<tr>
-		<td colspan='2' bgcolor='#BFFA96' align='left'><b><i>PUBLIC.FOR_LINT.&quot;Global Counts&quot;</i></b></td>
+		<td colspan='2' bgcolor='#BFFA96' align='left'><b><i>PUBLIC.FOR_LINT."Global Counts"</i></b></td>
 		<td bgcolor='#BFFA96' align='right'>[table]</td>
 	</tr>
 	<tr>
-		<td port='globalcount_9be78829.start' align='left'>&quot;Global Count&quot;</td>
+		<td port='globalcount_9be78829.start' align='left'>"Global Count"</td>
 		<td align='left'> </td>
 		<td port='globalcount_9be78829.end' align='left'>INTEGER</td>
 	</tr>
@@ -403,7 +403,7 @@ digraph "SchemaCrawler_Diagram" {
 		<td port='price_fd0e0872.end' align='left'>DOUBLE(64, 0)</td>
 	</tr>
 	<tr>
-		<td port='update_4444e22e.start' align='left'>&quot;UPDATE&quot;</td>
+		<td port='update_4444e22e.start' align='left'>"UPDATE"</td>
 		<td align='left'> </td>
 		<td port='update_4444e22e.end' align='left'>CLOB</td>
 	</tr>
@@ -524,6 +524,36 @@ digraph "SchemaCrawler_Diagram" {
 
   "extra_pk_334890da":"writerid_b8c70762.start":w -> "writers_bf84ac10":"id_3033cfb9.end":e [label=<FK_WRITER_JOIN> style="solid" dir="both" arrowhead="teetee" arrowtail="crowodot"];
   "publications_949377f7":"writerid_1c21d0e5.start":w -> "writers_bf84ac10":"id_3033cfb9.end":e [label=<FK_PUBLICATIONS_WRITER> style="solid" dir="both" arrowhead="teetee" arrowtail="crowodot"];
+  "πίνακαβάσησδεδομένων_199e00a3":"συγγραφέασ_854cb951.start":w -> "writers_bf84ac10":"id_3033cfb9.end":e [label=<FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS> style="solid" dir="both" arrowhead="teetee" arrowtail="crowodot"];
+
+
+  /* PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ -=-=-=-=-=-=-=-=-=-=-=-=-=- */
+  "πίνακαβάσησδεδομένων_199e00a3" [
+    label=<
+      <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#555555">
+	<tr>
+		<td colspan='2' bgcolor='#BFFA96' align='left'><b><i>PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</i></b></td>
+		<td bgcolor='#BFFA96' align='right'>[table]</td>
+	</tr>
+	<tr>
+		<td port='στήληβάσησδεδομένων_542f2857.start' align='left'><b><i>ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</i></b></td>
+		<td align='left'> </td>
+		<td port='στήληβάσησδεδομένων_542f2857.end' align='left'>BIGINT NOT NULL</td>
+	</tr>
+	<tr>
+		<td port='άλληστήληβάσησδεδομένων_41e9346.start' align='left'>ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</td>
+		<td align='left'> </td>
+		<td port='άλληστήληβάσησδεδομένων_41e9346.end' align='left'>VARCHAR(10)</td>
+	</tr>
+	<tr>
+		<td port='συγγραφέασ_854cb951.start' align='left'>ΣΥΓΓΡΑΦΈΑΣ</td>
+		<td align='left'> </td>
+		<td port='συγγραφέασ_854cb951.end' align='left'>INTEGER</td>
+	</tr>
+      </table>
+    >
+  ];
+
 
 
   /* PUBLIC."PUBLISHER SALES".REGIONS -=-=-=-=-=-=-=-=-=-=-=-=-=- */
@@ -531,7 +561,7 @@ digraph "SchemaCrawler_Diagram" {
     label=<
       <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#555555">
 	<tr>
-		<td colspan='2' bgcolor='#FA96E1' align='left'><b><i>PUBLIC.&quot;PUBLISHER SALES&quot;.REGIONS</i></b></td>
+		<td colspan='2' bgcolor='#FA96E1' align='left'><b><i>PUBLIC."PUBLISHER SALES".REGIONS</i></b></td>
 		<td bgcolor='#FA96E1' align='right'>[table]</td>
 	</tr>
 	<tr>
@@ -567,7 +597,7 @@ digraph "SchemaCrawler_Diagram" {
     label=<
       <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#555555">
 	<tr>
-		<td colspan='2' bgcolor='#FA96E1' align='left'><b><i>PUBLIC.&quot;PUBLISHER SALES&quot;.SALES</i></b></td>
+		<td colspan='2' bgcolor='#FA96E1' align='left'><b><i>PUBLIC."PUBLISHER SALES".SALES</i></b></td>
 		<td bgcolor='#FA96E1' align='right'>[table]</td>
 	</tr>
 	<tr>

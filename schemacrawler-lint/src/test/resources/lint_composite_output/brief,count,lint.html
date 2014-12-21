@@ -288,7 +288,7 @@ blockquote p {
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>PUBLICATIONID &#8594; PUBLIC.FOR_LINT.PUBLICATIONS.ID</td>
+		<td class='subname'>PUBLICATIONID → PUBLIC.FOR_LINT.PUBLICATIONS.ID</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -300,7 +300,7 @@ blockquote p {
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>WRITERID &#8594; PUBLIC.FOR_LINT.WRITERS.ID</td>
+		<td class='subname'>WRITERID → PUBLIC.FOR_LINT.WRITERS.ID</td>
 		<td class='type'></td>
 	</tr>
 </table>
@@ -354,7 +354,7 @@ blockquote p {
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>ID &#8592; PUBLIC.FOR_LINT.EXTRA_PK.PUBLICATIONID</td>
+		<td class='subname'>ID ← PUBLIC.FOR_LINT.EXTRA_PK.PUBLICATIONID</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -366,7 +366,7 @@ blockquote p {
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>ID &#8592; PUBLIC.FOR_LINT.WRITERS.PUBLICATION_ID</td>
+		<td class='subname'>ID ← PUBLIC.FOR_LINT.WRITERS.PUBLICATION_ID</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -378,7 +378,7 @@ blockquote p {
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>WRITERID &#8594; PUBLIC.FOR_LINT.WRITERS.ID</td>
+		<td class='subname'>WRITERID → PUBLIC.FOR_LINT.WRITERS.ID</td>
 		<td class='type'></td>
 	</tr>
 </table>
@@ -457,7 +457,7 @@ blockquote p {
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>PUBLICATION_ID &#8594; PUBLIC.FOR_LINT.PUBLICATIONS.ID</td>
+		<td class='subname'>PUBLICATION_ID → PUBLIC.FOR_LINT.PUBLICATIONS.ID</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -469,7 +469,7 @@ blockquote p {
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>ID &#8592; PUBLIC.FOR_LINT.EXTRA_PK.WRITERID</td>
+		<td class='subname'>ID ← PUBLIC.FOR_LINT.EXTRA_PK.WRITERID</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -481,7 +481,63 @@ blockquote p {
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>ID &#8592; PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID</td>
+		<td class='subname'>ID ← PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS</td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ID ← PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ</td>
+		<td class='type'></td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<table>
+  <caption>PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</caption>
+
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[table]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'><b><i>ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</i></b></td>
+		<td class='type'>BIGINT NOT NULL</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ΣΥΓΓΡΑΦΈΑΣ</td>
+		<td class='type'>INTEGER</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</td>
+		<td class='description right'>[primary key]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS</td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ΣΥΓΓΡΑΦΈΑΣ → PUBLIC.FOR_LINT.WRITERS.ID</td>
 		<td class='type'></td>
 	</tr>
 </table>
@@ -498,7 +554,7 @@ blockquote p {
 		<td class='property_value right'>empty</td>
 	</tr>
 	<tr>
-		<td class='property_name'>PUBLIC.FOR_LINT.&quot;Global Counts&quot;</td>
+		<td class='property_name'>PUBLIC.FOR_LINT."Global Counts"</td>
 		<td class='property_value right'>empty</td>
 	</tr>
 	<tr>
@@ -507,6 +563,10 @@ blockquote p {
 	</tr>
 	<tr>
 		<td class='property_name'>PUBLIC.FOR_LINT.WRITERS</td>
+		<td class='property_value right'>empty</td>
+	</tr>
+	<tr>
+		<td class='property_name'>PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</td>
 		<td class='property_value right'>empty</td>
 	</tr>
 </table>
@@ -586,12 +646,12 @@ blockquote p {
 	<tr>
 		<td></td>
 		<td>spaces in name, or reserved word</td>
-		<td>&quot;Global Counts&quot;</td>
+		<td>"Global Counts"</td>
 	</tr>
 	<tr>
 		<td></td>
 		<td>spaces in name, or reserved word</td>
-		<td>&quot;Global Count&quot;</td>
+		<td>"Global Count"</td>
 	</tr>
 	<tr>
 		<td></td>
@@ -618,7 +678,7 @@ blockquote p {
 	<tr>
 		<td></td>
 		<td>spaces in name, or reserved word</td>
-		<td>&quot;UPDATE&quot;</td>
+		<td>"UPDATE"</td>
 	</tr>
 	<tr>
 		<td colspan='2' class='name'></td>
@@ -627,7 +687,7 @@ blockquote p {
 	<tr>
 		<td></td>
 		<td>too many binary objects</td>
-		<td>&quot;UPDATE&quot;, PRESS_RELEASE</td>
+		<td>"UPDATE", PRESS_RELEASE</td>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -707,18 +767,40 @@ blockquote p {
 	</tr>
 	<tr>
 		<td></td>
-		<td>incrementing columns don&apos;t have the same data-type</td>
+		<td>incrementing columns don't have the same data-type</td>
 		<td>PHONE1, PHONE2</td>
 	</tr>
 	<tr>
 		<td></td>
-		<td>incrementing columns don&apos;t have the same data-type</td>
+		<td>incrementing columns don't have the same data-type</td>
 		<td>FAX, FAX3</td>
 	</tr>
 	<tr>
 		<td></td>
-		<td>incrementing columns don&apos;t have the same data-type</td>
+		<td>incrementing columns don't have the same data-type</td>
 		<td>EMAIL1, EMAIL2</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<table>
+  <caption>PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</caption>
+
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[table]</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[lint, high]</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>foreign key and primary key have different data types</td>
+		<td>FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS</td>
 	</tr>
 </table>
 <p>&#160;</p>

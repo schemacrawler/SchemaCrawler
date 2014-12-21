@@ -1,3 +1,4 @@
+# encoding: utf-8
 puts $catalog.schemaCrawlerInfo
 puts ''
 puts $catalog.databaseInfo

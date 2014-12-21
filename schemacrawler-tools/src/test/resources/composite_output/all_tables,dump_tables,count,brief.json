@@ -216,6 +216,21 @@
       ],
       [
         "PUBLIC",
+        "FOR_LINT",
+        "ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
+        "TABLE",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "MEMORY",
+        false,
+        null
+      ],
+      [
+        "PUBLIC",
         "INFORMATION_SCHEMA",
         "ADMINISTRABLE_ROLE_AUTHORIZATIONS",
         "SYSTEM TABLE",
@@ -2402,6 +2417,15 @@
       "rows": []
     },
     {
+      "title": "PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
+      "columnNames": [
+        "ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
+        "ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
+        "ΣΥΓΓΡΑΦΈΑΣ"
+      ],
+      "rows": []
+    },
+    {
       "title": "PUBLIC.\"PUBLISHER SALES\".REGIONS",
       "columnNames": [
         "CITY",
@@ -2726,6 +2750,10 @@
     },
     {
       "title": "PUBLIC.FOR_LINT.WRITERS",
+      "value": 0
+    },
+    {
+      "title": "PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
       "value": 0
     },
     {
@@ -3168,6 +3196,15 @@
           }],
           "deleteRule": "no action",
           "name": "FK_PUBLICATIONS_WRITER"
+        },
+        {
+          "updateRule": "no action",
+          "columnReferences": [{
+            "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
+            "fkColumn": "PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ"
+          }],
+          "deleteRule": "no action",
+          "name": "FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS"
         }
       ],
       "primaryKey": {
@@ -3282,6 +3319,53 @@
       ],
       "remarks": "",
       "fullName": "PUBLIC.FOR_LINT.WRITERS",
+      "type": "table"
+    },
+    {
+      "foreignKeys": [{
+        "updateRule": "no action",
+        "columnReferences": [{
+          "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
+          "fkColumn": "PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ"
+        }],
+        "deleteRule": "no action",
+        "name": "FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS"
+      }],
+      "primaryKey": {
+        "unique": true,
+        "name": "PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
+        "columns": {
+          "sortSequence": "ascending",
+          "name": "ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ"
+        }
+      },
+      "name": "ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
+      "columns": [
+        {
+          "dataType": "BIGINT",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
+          "nullable": false,
+          "remarks": "",
+          "autoIncremented": false,
+          "databaseSpecificType": "BIGINT",
+          "size": 64
+        },
+        {
+          "dataType": "INTEGER",
+          "decimalDigits": 0,
+          "width": "",
+          "name": "ΣΥΓΓΡΑΦΈΑΣ",
+          "nullable": true,
+          "remarks": "",
+          "autoIncremented": false,
+          "databaseSpecificType": "INTEGER",
+          "size": 32
+        }
+      ],
+      "remarks": "",
+      "fullName": "PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
       "type": "table"
     },
     {

@@ -166,6 +166,12 @@ ID	FIRSTNAME	LASTNAME	ADDRESS1	ADDRESS2	CITY	STATE	POSTALCODE	COUNTRY	PHONE1	PHO
 
 
 
+PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
+------------------------------------------------------------------------
+ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ	ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ	ΣΥΓΓΡΑΦΈΑΣ
+
+
+
 PUBLIC."PUBLISHER SALES".REGIONS
 ------------------------------------------------------------------------
 CITY	STATE	POSTALCODE	COUNTRY
