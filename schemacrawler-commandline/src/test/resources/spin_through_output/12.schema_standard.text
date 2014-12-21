@@ -272,10 +272,13 @@ FK_WRITER_JOIN                             [foreign key, with no action]
 FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
   ID <-- PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID                              
 
+FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS       [foreign key, with no action]
+  ID <-- PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ                              
+
 SYS_IDX_PK_WRITERS_10161                                  [unique index]
   ID                                ascending                   
 
-SYS_IDX_10189                                         [non-unique index]
+SYS_IDX_10194                                         [non-unique index]
   PUBLICATION_ID                    ascending                   
 
 IDX_A1_WRITERS                                        [non-unique index]
@@ -295,6 +298,27 @@ IDX_A_WRITERS                                         [non-unique index]
   STATE                             ascending                   
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
+
+
+
+PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
+------------------------------------------------------------------------
+                                                                 [table]
+  ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ               BIGINT NOT NULL             
+  ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ           VARCHAR(10)                 
+  ΣΥΓΓΡΑΦΈΑΣ                        INTEGER                     
+
+PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                                    [primary key]
+  ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ               ascending                   
+
+FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS       [foreign key, with no action]
+  ΣΥΓΓΡΑΦΈΑΣ --> PUBLIC.FOR_LINT.WRITERS.ID                              
+
+SYS_IDX_PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_10190                     [unique index]
+  ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ               ascending                   
+
+SYS_IDX_10192                                         [non-unique index]
+  ΣΥΓΓΡΑΦΈΑΣ                        ascending                   
 
 
 

@@ -56,6 +56,16 @@ CREATE TABLE EXTRA_PK
 )
 ;
 
+CREATE TABLE πίνακαβάσηςδεδομένων
+(
+  στήληβάσηςδεδομένων BIGINT NOT NULL,
+  άλληστήληβάσηςδεδομένων VARCHAR(10),  
+  συγγραφέας INT,
+  CONSTRAINT PK_πίνακαβάσηςδεδομένων PRIMARY KEY (στήληβάσηςδεδομένων),  
+  CONSTRAINT FK_πίνακαβάσηςδεδομένων_Publications FOREIGN KEY (συγγραφέας) REFERENCES Writers (Id)
+)
+;
+
 ALTER TABLE Writers ADD CONSTRAINT FK_Writers_Publication FOREIGN KEY (Publication_Id) REFERENCES Publications (Id);
 
 -- Indices
