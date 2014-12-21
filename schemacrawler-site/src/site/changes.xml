@@ -5,7 +5,7 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-     <release version="12.01.01" date="2014-11-27" description="Single distribution download, with support for all databases, as well as offline snapshot support.">
+     <release version="12.02.01" date="2014-11-27" description="Single distribution download, with support for all databases, as well as offline snapshot support.">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Collapsed distribution into a single distribution download, with Apache Ant Ivy scripts
         for downloading additional dependencies. A new -server command-line option will
