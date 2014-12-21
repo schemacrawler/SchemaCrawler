@@ -21,7 +21,6 @@
 package schemacrawler.integration.test;
 
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import schemacrawler.test.utility.BaseExecutableTest;
@@ -49,14 +48,13 @@ public class ScriptingTest
                       "script_output.txt");
   }
 
-  @Ignore
   @Test
   public void executableRuby()
     throws Exception
   {
     executeExecutable(new ScriptExecutable(),
                       "plaintextschema.rb",
-                      "script_output.txt");
+                      "script_output_rb.txt");
   }
 
 }
