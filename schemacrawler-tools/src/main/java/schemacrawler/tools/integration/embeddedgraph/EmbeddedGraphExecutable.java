@@ -14,7 +14,6 @@ import static sf.util.Utility.copy;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.util.regex.Pattern;
@@ -65,8 +64,7 @@ public class EmbeddedGraphExecutable
         final BufferedReader baseHtmlFileReader = newBufferedReader(baseHtmlFile,
                                                                     UTF8);
         final BufferedReader baseSvgFileReader = newBufferedReader(baseSvgFile,
-                                                                   Charset
-                                                                     .defaultCharset());)
+                                                                   UTF8);)
     {
       String line;
       while ((line = baseHtmlFileReader.readLine()) != null)

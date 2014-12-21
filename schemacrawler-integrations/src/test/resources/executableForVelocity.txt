@@ -101,6 +101,13 @@ CREATE TABLE WRITERS
   PUBLICATION_ID BIGINT NOT NULL
 );
 
+CREATE TABLE ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
+(
+  ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ BIGINT NOT NULL,
+  ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ VARCHAR,
+  ΣΥΓΓΡΑΦΈΑΣ INTEGER
+);
+
 SET SCHEMA PUBLIC.INFORMATION_SCHEMA;
 
 SET SCHEMA PUBLIC.PUBLIC;

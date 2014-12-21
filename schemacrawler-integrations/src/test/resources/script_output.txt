@@ -82,6 +82,11 @@ PUBLIC.FOR_LINT.WRITERS
   HOMEEMAIL12
   PUBLICATION_ID
 
+PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
+  ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
+  ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
+  ΣΥΓΓΡΑΦΈΑΣ
+
 PUBLIC."PUBLISHER SALES".REGIONS
   CITY
   STATE

@@ -21,6 +21,7 @@
 package schemacrawler.tools.text.utility;
 
 
+import static schemacrawler.tools.text.utility.Entities.escapeForXMLElement;
 import static sf.util.Utility.NEWLINE;
 import static sf.util.Utility.isBlank;
 import static sf.util.Utility.readResourceFully;
@@ -147,12 +148,14 @@ public final class HtmlFormattingHelper
   @Override
   public String createObjectStart(final String name)
   {
-    String objectStart = "<table>" + NEWLINE;
+    StringBuffer buffer = new StringBuffer();
+    buffer.append("<table>").append(NEWLINE);
     if (!isBlank(name))
     {
-      objectStart = objectStart + "  <caption>" + name + "</caption>" + NEWLINE;
+      buffer.append("  <caption>").append(escapeForXMLElement(name))
+        .append("</caption>").append(NEWLINE);
     }
-    return objectStart;
+    return buffer.toString();
   }
 
   @Override

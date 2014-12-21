@@ -30,7 +30,7 @@ digraph "SchemaCrawler_Diagram" {
 	</tr>
 	<tr>
 		<td align='right'>Generated on:</td>
-		<td align='left'>Nov 2, 2014 6:41 PM</td>
+		<td align='left'>Dec 20, 2014 2:19 PM</td>
 	</tr>
 	<tr>
 		<td align='right'>Database:</td>
@@ -50,7 +50,7 @@ digraph "SchemaCrawler_Diagram" {
     label=<
       <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#555555">
 	<tr>
-		<td colspan='2' bgcolor='#FA96E1' align='left'><b><i>PUBLIC.&quot;PUBLISHER SALES&quot;.REGIONS</i></b></td>
+		<td colspan='2' bgcolor='#FA96E1' align='left'><b><i>PUBLIC."PUBLISHER SALES".REGIONS</i></b></td>
 		<td bgcolor='#FA96E1' align='right'>[table]</td>
 	</tr>
 	<tr>

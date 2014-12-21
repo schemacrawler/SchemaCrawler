@@ -155,6 +155,23 @@ WRITERS
                                            [foreign key, with no action]
   ID <-- PUBLICATIONS.WRITERID                                  
 
+                                           [foreign key, with no action]
+  ID <-- ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ                              
+
+
+
+ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
+------------------------------------------------------------------------
+                                                                 [table]
+  ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ               BIGINT NOT NULL             
+  ΣΥΓΓΡΑΦΈΑΣ                        INTEGER                     
+
+                                                           [primary key]
+  ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ               ascending                   
+
+                                           [foreign key, with no action]
+  ΣΥΓΓΡΑΦΈΑΣ --> WRITERS.ID                                     
+
 
 
 REGIONS

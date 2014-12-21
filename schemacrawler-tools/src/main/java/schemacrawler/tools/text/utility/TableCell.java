@@ -20,6 +20,7 @@
 package schemacrawler.tools.text.utility;
 
 
+import static schemacrawler.tools.text.utility.Entities.escapeForXMLElement;
 import static sf.util.Utility.isBlank;
 
 import java.awt.Color;
@@ -183,7 +184,7 @@ public class TableCell
     }
     else
     {
-      buffer.append(Entities.XML.escape(String.valueOf(text)));
+      buffer.append(escapeForXMLElement(text));
     }
     if (emphasizeText)
     {
