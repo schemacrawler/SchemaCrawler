@@ -333,7 +333,8 @@ public final class TestUtility
         {
           final String className = stackTraceIterator.next().getClassName();
           if (!className.equals(TestUtility.class.getName())
-              && !className.equals(TestWriter.class.getName()))
+              && !className.equals(TestWriter.class.getName())
+              && !className.matches(".*\\.Base.*Test"))
           {
             return stackTrace[i + 1];
           }
