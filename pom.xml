@@ -9,7 +9,7 @@
   <groupId>us.fatehi</groupId>
   <artifactId>schemacrawler-parent</artifactId>
   <packaging>pom</packaging>
-  <version>12.01.01</version>
+  <version>12.02.01</version>
   <name>SchemaCrawler [Parent]</name>
   <description>SchemaCrawler is an open-source Java API that makes working with database metadata as easy as working with plain old Java objects. SchemaCrawler is also a database schema discovery and comprehension tool. You can search for database schema objects using regular expressions, and output the schema and data in a readable text format. You can find potential schema design issues with lint. The output serves for database documentation is designed to be diff-ed against other database schemas. SchemaCrawler can generate schema diagrams.</description>
   <url>http://schemacrawler.sourceforge.net</url>
@@ -87,7 +87,7 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.11</version>
+      <version>4.12</version>
       <scope>test</scope>
     </dependency>
     <dependency>
