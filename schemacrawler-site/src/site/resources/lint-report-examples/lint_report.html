@@ -4,53 +4,126 @@
   <title>SchemaCrawler Output</title>
   <meta charset="utf-8"/>
   <style>
-body,p,pre,table,th,td,th,caption {
-	text-align: left;
-	font-family: 'Trebuchet MS', 'sans-serif';
-	font-size: 0.9em;
-	line-height: 1.2em;
+body, p, li, td, th, caption, select, input, strong {
+  font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
+  font-size: 1.0rem;
+  line-height: 1.4rem;
+  color: rgb(16, 16, 16);
 }
 
 body {
-	margin-top: 1em;
-	margin-right: 3em;
-	margin-bottom: 1em;
-	margin-left: 3em;
+  margin-top: 1rem;
+  margin-right: 3rem;
+  margin-bottom: 1rem;
+  margin-left: 3rem;
 }
 
-h1,h2 {
-	color: Navy;
-}
-
-h3 {
-	color: DarkGreen;
-}
-
-table,th,td,th {
-	border: 1px solid rgb(230, 230, 230);
-	border-collapse: collapse;
-	vertical-align: top;
-	padding: 2px;
-}
-
-table {
-	width: 800px;
-}
-
-caption {
-	font-weight: bold;
-	color: Maroon;
-	border-bottom: 2px solid rgb(190, 190, 190);
-}
-
-th {
-	font-weight: bold;
-	border-bottom: 1px solid rgb(190, 190, 190);
+code, pre, tt {
+  font-family: 'Lucida Console', Monaco, 'Courier New', monospace;
+  font-size: 1.0rem;
+  line-height: 1.4rem;
+  color: rgb(16, 16, 16);
 }
 
 hr {
-	height: 1px;
+  height: 1px;
+  border-width: 1px 0px 0px 0px;
+  color: Silver;
 }
+
+p {
+  margin-bottom: 0.5rem;
+}
+
+caption {
+  font-weight: bold;
+  border-bottom: 2px solid rgb(190, 190, 190);
+  text-align: left;
+}
+
+h1, h2, h3 {
+  font-family: "Palatino Linotype", Georgia, "Times New Roman", Times, serif;
+  margin-top: 1.0rem;
+  margin-bottom: 0.5rem;
+}
+
+h1 {
+  font-size: 1.6rem;
+  line-height: 1.8rem;
+}
+
+h2 {
+  font-size: 1.2rem;
+  line-height: 1.4rem;
+}
+
+h3 {
+  font-size: 1.0rem;
+  line-height: 1.2rem;
+}
+
+dl, ul, ol {
+  padding: 0px 0px 0px 0px;
+  border: 0px;
+  background-color: #ffffff;
+  margin-left: 1rem;
+  padding-left: 1rem;
+}
+
+li {
+  margin-top: 0.3rem;
+}
+
+a: link {
+  color: Maroon;
+}
+
+a: visited {
+  color: Navy;
+}
+
+a: active, a: hover {
+  color: Blue;
+}
+
+table, th, td {
+  border: 1px solid rgb(240, 240, 240);
+  border-collapse: collapse;
+  vertical-align: top;
+  padding: 2px;
+}
+
+table {
+  width: 800px;
+  max-width: 1000px;
+  min-width: 600px;
+}
+
+th {
+  font-weight: bold;
+  border-bottom: 1px solid rgb(190, 190, 190);
+}
+
+blockquote {
+  background: #f9f9f9;
+  margin: 5px;
+  border-left: 10px solid #ccc;
+  padding: 0.5rem 10px;
+}
+
+blockquote: before {
+  color: #ccc;
+  font-size: 4rem;
+  line-height: 0.1rem;
+  margin-right: 0.25rem;
+  vertical-align: -0.4rem;
+}
+
+blockquote p {
+  display: inline;
+  background: #f9f9f9;
+}
+
 
 .name {
 	font-weight: bold;
@@ -91,13 +164,13 @@ hr {
 
 .data_binary {
 	font-style: italic;
-	color: #666;
+	color: rgb(64, 64, 64);
 }
 
 .data_null {
 	font-weight: italic;
-	color: #666;
-	background-color: #FFEEFF;
+	color: rgb(64, 64, 64);
+	background-color: rgb(240, 240, 240);
 }
 
 .data_number {
@@ -247,7 +320,7 @@ hr {
 	<tr>
 		<td></td>
 		<td>spaces in name, or reserved word</td>
-		<td>&quot;UPDATE&quot;</td>
+		<td>"UPDATE"</td>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -310,12 +383,12 @@ hr {
 	<tr>
 		<td></td>
 		<td>spaces in name, or reserved word</td>
-		<td>&quot;Global Counts&quot;</td>
+		<td>"Global Counts"</td>
 	</tr>
 	<tr>
 		<td></td>
 		<td>spaces in name, or reserved word</td>
-		<td>&quot;Global Count&quot;</td>
+		<td>"Global Count"</td>
 	</tr>
 	<tr>
 		<td></td>
@@ -369,12 +442,12 @@ hr {
 	<tr>
 		<td></td>
 		<td>spaces in name, or reserved word</td>
-		<td>&quot;Global Counts&quot;</td>
+		<td>"Global Counts"</td>
 	</tr>
 	<tr>
 		<td></td>
 		<td>spaces in name, or reserved word</td>
-		<td>&quot;Global Count&quot;</td>
+		<td>"Global Count"</td>
 	</tr>
 	<tr>
 		<td></td>
@@ -401,7 +474,7 @@ hr {
 	<tr>
 		<td></td>
 		<td>spaces in name, or reserved word</td>
-		<td>&quot;UPDATE&quot;</td>
+		<td>"UPDATE"</td>
 	</tr>
 	<tr>
 		<td colspan='2' class='name'></td>
@@ -410,7 +483,7 @@ hr {
 	<tr>
 		<td></td>
 		<td>too many binary objects</td>
-		<td>&quot;UPDATE&quot;, PRESS_RELEASE</td>
+		<td>"UPDATE", PRESS_RELEASE</td>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -490,18 +563,40 @@ hr {
 	</tr>
 	<tr>
 		<td></td>
-		<td>incrementing columns don&apos;t have the same data-type</td>
+		<td>incrementing columns don't have the same data-type</td>
 		<td>PHONE1, PHONE2</td>
 	</tr>
 	<tr>
 		<td></td>
-		<td>incrementing columns don&apos;t have the same data-type</td>
+		<td>incrementing columns don't have the same data-type</td>
 		<td>FAX, FAX3</td>
 	</tr>
 	<tr>
 		<td></td>
-		<td>incrementing columns don&apos;t have the same data-type</td>
+		<td>incrementing columns don't have the same data-type</td>
 		<td>EMAIL1, EMAIL2</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<table>
+  <caption>PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</caption>
+
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[table]</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[lint, high]</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>foreign key and primary key have different data types</td>
+		<td>FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS</td>
 	</tr>
 </table>
 <p>&#160;</p>
