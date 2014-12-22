@@ -38,8 +38,19 @@ using `sc.cmd` (or `sc.sh` on Unix).
 The [Debian schemacrawler package] is maintained by
 Adrien Sales <Adrien.Sales at GMail>.
 
-Download the [Debian schemacrawler package], and install it using `dpkg`, following instructions 
-on the GitHub project website. SchemaCrawler gets installed in `/opt/schemacrawler`.
+<a href="https://bintray.com/adriens/deb/schemacrawler/_latestVersion">
+<img src="https://api.bintray.com/packages/adriens/deb/schemacrawler/images/download.svg" /></a>
+
+Using the command line, add the following to your `/etc/apt/sources.list` system config file: 
+<div class="source"><pre>
+echo "deb http://dl.bintray.com/adriens/deb {distribution} {components}" | sudo tee -a /etc/apt/sources.list 
+</pre></div>
+and for source:
+<div class="source"><pre>
+echo "deb-src http://dl.bintray.com/adriens/deb {distribution} {components}" | sudo tee -a /etc/apt/sources.list
+</pre></div>
+
+SchemaCrawler gets installed in `/opt/schemacrawler`.
 You can run SchemaCrawler using the `schemacrawler` command, which will be on the PATH.
 
 # Using SchemaCrawler in Your Projects
