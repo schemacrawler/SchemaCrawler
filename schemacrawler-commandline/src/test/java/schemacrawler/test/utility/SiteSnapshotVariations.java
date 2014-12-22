@@ -24,7 +24,6 @@ package schemacrawler.test.utility;
 import static java.nio.file.Files.createTempFile;
 import static java.nio.file.Files.deleteIfExists;
 import static java.nio.file.Files.newBufferedWriter;
-import static schemacrawler.test.utility.TestUtility.currentMethodName;
 import static sf.util.Utility.UTF8;
 
 import java.io.IOException;
@@ -44,15 +43,18 @@ import org.junit.runner.JUnitCore;
 
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.tools.integration.graph.GraphOutputFormat;
+import schemacrawler.tools.options.OutputFormat;
+import schemacrawler.tools.options.TextOutputFormat;
 
 @Ignore
-public class HTMLVariations
+public class SiteSnapshotVariations
   extends BaseDatabaseTest
 {
 
   public static void main(final String[] args)
   {
-    JUnitCore.main(HTMLVariations.class.getCanonicalName());
+    JUnitCore.main(SiteSnapshotVariations.class.getCanonicalName());
   }
 
   @BeforeClass
@@ -60,117 +62,42 @@ public class HTMLVariations
     throws IOException, URISyntaxException
   {
     final Path codePath = Paths
-      .get(HTMLVariations.class.getProtectionDomain().getCodeSource()
+      .get(SiteSnapshotVariations.class.getProtectionDomain().getCodeSource()
         .getLocation().toURI()).normalize().toAbsolutePath();
     directory = codePath
-      .resolve("../../../schemacrawler-site/src/site/resources/html-examples")
+      .resolve("../../../schemacrawler-site/src/site/resources/snapshot-examples")
       .normalize().toAbsolutePath();
   }
 
   private static Path directory;
 
   @Test
-  public void html()
+  public void snapshots()
     throws Exception
   {
-    final Map<String, String> args = new HashMap<String, String>();
-    args.put("infolevel", "maximum");
+    for (OutputFormat outputFormat: new OutputFormat[] {
+        TextOutputFormat.csv,
+        TextOutputFormat.html,
+        TextOutputFormat.json,
+        TextOutputFormat.text,
+        GraphOutputFormat.htmlx
+    })
+    {
+      final String format = outputFormat.getFormat();
+      final Map<String, String> args = new HashMap<String, String>();
+      args.put("infolevel", "maximum");
+      args.put("outputformat", format);
 
-    final Map<String, String> config = new HashMap<>();
+      final Map<String, String> config = new HashMap<>();
 
-    run(args, config, directory.resolve(currentMethodName() + ".html"));
-  }
-
-  @Test
-  public void html_2_portablenames()
-    throws Exception
-  {
-    final Map<String, String> args = new HashMap<String, String>();
-    args.put("infolevel", "maximum");
-    args.put("portablenames", "true");
-
-    final Map<String, String> config = new HashMap<>();
-
-    run(args, config, directory.resolve(currentMethodName() + ".html"));
-  }
-
-  @Test
-  public void html_3_important_columns()
-    throws Exception
-  {
-    final Map<String, String> args = new HashMap<String, String>();
-    args.put("infolevel", "standard");
-    args.put("command", "brief");
-    args.put("portablenames", "true");
-
-    final Map<String, String> config = new HashMap<>();
-
-    run(args, config, directory.resolve(currentMethodName() + ".html"));
-  }
-
-  @Test
-  public void html_4_ordinals()
-    throws Exception
-  {
-    final Map<String, String> args = new HashMap<String, String>();
-    args.put("infolevel", "standard");
-    args.put("portablenames", "true");
-
-    final Map<String, String> config = new HashMap<>();
-    config.put("schemacrawler.format.show_ordinal_numbers", "true");
-
-    run(args, config, directory.resolve(currentMethodName() + ".html"));
-  }
-
-  @Test
-  public void html_5_alphabetical()
-    throws Exception
-  {
-    final Map<String, String> args = new HashMap<String, String>();
-    args.put("infolevel", "standard");
-    args.put("portablenames", "true");
-    args.put("sortcolumns", "true");
-
-    final Map<String, String> config = new HashMap<>();
-
-    run(args, config, directory.resolve(currentMethodName() + ".html"));
-  }
-
-  @Test
-  public void html_6_grep()
-    throws Exception
-  {
-    final Map<String, String> args = new HashMap<String, String>();
-    args.put("infolevel", "maximum");
-    args.put("portablenames", "true");
-    args.put("grepcolumns", ".*\\.BOOKS\\..*\\.ID");
-    args.put("tabletypes", "TABLE");
-
-    final Map<String, String> config = new HashMap<>();
-
-    run(args, config, directory.resolve(currentMethodName() + ".html"));
-  }
-
-  @Test
-  public void html_7_grep_onlymatching()
-    throws Exception
-  {
-    final Map<String, String> args = new HashMap<String, String>();
-    args.put("infolevel", "maximum");
-    args.put("portablenames", "true");
-    args.put("grepcolumns", ".*\\.BOOKS\\..*\\.ID");
-    args.put("only-matching", "true");
-    args.put("tabletypes", "TABLE");
-
-    final Map<String, String> config = new HashMap<>();
-
-    run(args, config, directory.resolve(currentMethodName() + ".html"));
+      run(args, config, directory.resolve("snapshot." + format));
+    }
   }
 
   private Path createConfig(final Map<String, String> config)
     throws IOException
   {
-    final String prefix = "SchemaCrawler.TestCommandLineConfig";
+    final String prefix = SiteSnapshotVariations.class.getName();
     final Path configFile = createTempFile(prefix, "properties");
     final Properties configProperties = new Properties();
     configProperties.putAll(config);
@@ -189,13 +116,7 @@ public class HTMLVariations
     args.put("url", "jdbc:hsqldb:hsql://localhost/schemacrawler");
     args.put("user", "sa");
     args.put("password", "");
-    args.put("tables", ".*");
-    args.put("routines", "");
-    if (!args.containsKey("command"))
-    {
-      args.put("command", "schema");
-    }
-    args.put("outputformat", "html");
+    args.put("command", "details,count,dump");
     args.put("outputfile", outputFile.toString());
 
     final Config runConfig = new Config();

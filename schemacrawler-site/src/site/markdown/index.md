@@ -22,9 +22,9 @@ Consider supporting SchemaCrawler by making a
 ## SchemaCrawler Command Line
 
 SchemaCrawler comes with a set of command-line tools that allow database
-metadata to be output as [plain text,](snapshot-examples/snapshot.txt) 
+metadata to be output as [plain text,](snapshot-examples/snapshot.text) 
 [comma-separated text (CSV),](snapshot-examples/snapshot.csv) [HTML5,](snapshot-examples/snapshot.html)
-[HTML5 with embedded diagrams,](snapshot-examples/snapshotx.html) or 
+[HTML5 with embedded diagrams,](snapshot-examples/snapshot.htmlx) or 
 [JavaScript object notation (JSON).](snapshot-examples/snapshot.json) 
 The HTML5 output is a combination of valid XML (that
 can be manipulated by XML tools or XSLT), and HTML that can be viewed in a
