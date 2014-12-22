@@ -19,11 +19,12 @@ Java 7 or better.
 Consider supporting SchemaCrawler by making a 
 [donation](http://sourceforge.net/donate/index.php?group_id=148383).
 
-## SchemaCrawler Command Line
+## SchemaCrawler Command-line
 
 SchemaCrawler comes with a set of command-line tools that allow database
 metadata to be output as [plain text,](snapshot-examples/snapshot.text) 
-[comma-separated text (CSV),](snapshot-examples/snapshot.csv) [HTML5,](snapshot-examples/snapshot.html)
+[comma-separated text (CSV),](snapshot-examples/snapshot.csv) 
+[HTML5,](snapshot-examples/snapshot.html)
 [HTML5 with embedded diagrams,](snapshot-examples/snapshot.htmlx) or 
 [JavaScript object notation (JSON).](snapshot-examples/snapshot.json) 
 The HTML5 output is a combination of valid XML (that
@@ -34,8 +35,10 @@ schemas that may have been output in the same format.
 
 SchemaCrawler has [grep](schemacrawler_grep.html) functionality that allows
 you to search for table and column names using regular expressions.
-SchemaCrawler is capable of creating entity-relationship diagrams in [DOT format,](http://www.graphviz.org/doc/info/lang.html ) which
-[GraphViz](http://www.graphviz.org/) can convert into [schema diagrams.](diagramming.html) SchemaCrawler has powerful scripting ability,
+SchemaCrawler is capable of creating entity-relationship diagrams in 
+[DOT format,](http://www.graphviz.org/doc/info/lang.html ) which
+[GraphViz](http://www.graphviz.org/) can convert into [schema diagrams.](diagramming.html) 
+SchemaCrawler has powerful scripting ability,
 using JavaScript, Groovy, Ruby or Python. A live connection is provided to the
 script context to allow you to select from or even modify your database.
 Examples are provided for all of these with the
@@ -48,11 +51,15 @@ as [Apache Velocity](http://velocity.apache.org/) or
 Apache Velocity or &lt;FreeMarker&gt; separately, since these are not part of the
 SchemaCrawler download.
 
+Complete SchemaCrawler command-line help is available with the -h or -help command-line
+options.
+
 ## SchemaCrawler API
 
 SchemaCrawler is also a Java API that makes working with database metadata as
 easy as working with plain old Java objects. Java programmers need to access
 database metadata
+
 - in order to dynamically generate SQL statements
 - when programmatically determining the capabilities of a given RDBMS 
 - when finding the names and types of tables and columns in the database 
@@ -121,12 +128,12 @@ SchemaCrawler provides metadata for the following database objects:
      
 * Column data types
 * Tables and views
-  * Columns
-  * Primary keys
-  * Indexes
-  * Table constraints
-  * Triggers
-  * Foreign keys
+    * Columns
+    * Primary keys
+    * Indexes
+    * Table constraints
+    * Triggers
+    * Foreign keys
 * Routines, including functions and stored procedures
 * Sequences
 * Synonyms
