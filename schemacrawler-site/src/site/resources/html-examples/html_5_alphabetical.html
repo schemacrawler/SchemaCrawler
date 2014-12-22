@@ -321,7 +321,7 @@ blockquote p {
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>ID &#8592; BOOKAUTHORS.AUTHORID</td>
+		<td class='subname'>ID ← BOOKAUTHORS.AUTHORID</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -430,7 +430,7 @@ blockquote p {
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>&quot;UPDATE&quot;</td>
+		<td class='subname'>"UPDATE"</td>
 		<td class='type'>CLOB</td>
 	</tr>
 	<tr>
@@ -442,7 +442,7 @@ blockquote p {
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>AUTHORID &#8594; AUTHORS.ID</td>
+		<td class='subname'>AUTHORID → AUTHORS.ID</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -454,7 +454,7 @@ blockquote p {
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>BOOKID &#8594; BOOKS.ID</td>
+		<td class='subname'>BOOKID → BOOKS.ID</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -597,7 +597,7 @@ blockquote p {
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>ID &#8592; BOOKAUTHORS.BOOKID</td>
+		<td class='subname'>ID ← BOOKAUTHORS.BOOKID</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -609,7 +609,7 @@ blockquote p {
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>ID &#8592; PREVIOUSEDITIONID</td>
+		<td class='subname'>ID ← PREVIOUSEDITIONID</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -660,7 +660,7 @@ blockquote p {
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>&quot;Global Count&quot;</td>
+		<td class='subname'>"Global Count"</td>
 		<td class='type'>INTEGER</td>
 	</tr>
 </table>
@@ -781,7 +781,7 @@ blockquote p {
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>PUBLICATIONID &#8594; PUBLICATIONS.ID</td>
+		<td class='subname'>PUBLICATIONID → PUBLICATIONS.ID</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -793,7 +793,7 @@ blockquote p {
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>WRITERID &#8594; WRITERS.ID</td>
+		<td class='subname'>WRITERID → WRITERS.ID</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -844,7 +844,7 @@ blockquote p {
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>&quot;Global Count&quot;</td>
+		<td class='subname'>"Global Count"</td>
 		<td class='type'>INTEGER</td>
 	</tr>
 </table>
@@ -889,7 +889,7 @@ blockquote p {
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>&quot;UPDATE&quot;</td>
+		<td class='subname'>"UPDATE"</td>
 		<td class='type'>CLOB</td>
 	</tr>
 	<tr>
@@ -918,7 +918,7 @@ blockquote p {
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>ID &#8592; EXTRA_PK.PUBLICATIONID</td>
+		<td class='subname'>ID ← EXTRA_PK.PUBLICATIONID</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -930,7 +930,7 @@ blockquote p {
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>ID &#8592; WRITERS.PUBLICATION_ID</td>
+		<td class='subname'>ID ← WRITERS.PUBLICATION_ID</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -942,7 +942,7 @@ blockquote p {
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>WRITERID &#8594; WRITERS.ID</td>
+		<td class='subname'>WRITERID → WRITERS.ID</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -1090,7 +1090,7 @@ blockquote p {
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>PUBLICATION_ID &#8594; PUBLICATIONS.ID</td>
+		<td class='subname'>PUBLICATION_ID → PUBLICATIONS.ID</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -1102,7 +1102,7 @@ blockquote p {
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>ID &#8592; EXTRA_PK.WRITERID</td>
+		<td class='subname'>ID ← EXTRA_PK.WRITERID</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -1114,7 +1114,19 @@ blockquote p {
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>ID &#8592; PUBLICATIONS.WRITERID</td>
+		<td class='subname'>ID ← PUBLICATIONS.WRITERID</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ID ← ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -1223,6 +1235,79 @@ blockquote p {
 <p>&#160;</p>
 
 <table>
+  <caption>ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</caption>
+
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[table]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</td>
+		<td class='type'>VARCHAR(10)</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'><b><i>ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</i></b></td>
+		<td class='type'>BIGINT NOT NULL</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ΣΥΓΓΡΑΦΈΑΣ</td>
+		<td class='type'>INTEGER</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[primary key]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ΣΥΓΓΡΑΦΈΑΣ → WRITERS.ID</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[unique index]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[non-unique index]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ΣΥΓΓΡΑΦΈΑΣ</td>
+		<td class='type'>ascending</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<table>
   <caption>REGIONS</caption>
 
 	<tr>
@@ -1275,12 +1360,12 @@ blockquote p {
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>POSTALCODE &#8592; SALES.POSTALCODE</td>
+		<td class='subname'>POSTALCODE ← SALES.POSTALCODE</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>COUNTRY &#8592; SALES.COUNTRY</td>
+		<td class='subname'>COUNTRY ← SALES.COUNTRY</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -1344,12 +1429,12 @@ blockquote p {
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>POSTALCODE &#8594; REGIONS.POSTALCODE</td>
+		<td class='subname'>POSTALCODE → REGIONS.POSTALCODE</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>COUNTRY &#8594; REGIONS.COUNTRY</td>
+		<td class='subname'>COUNTRY → REGIONS.COUNTRY</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
