@@ -4,53 +4,126 @@
   <title>SchemaCrawler Output</title>
   <meta charset="utf-8"/>
   <style>
-body,p,pre,table,th,td,th,caption {
-	text-align: left;
-	font-family: 'Trebuchet MS', 'sans-serif';
-	font-size: 0.9em;
-	line-height: 1.2em;
+body, p, li, td, th, caption, select, input, strong {
+  font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
+  font-size: 1.0rem;
+  line-height: 1.4rem;
+  color: rgb(16, 16, 16);
 }
 
 body {
-	margin-top: 1em;
-	margin-right: 3em;
-	margin-bottom: 1em;
-	margin-left: 3em;
+  margin-top: 1rem;
+  margin-right: 3rem;
+  margin-bottom: 1rem;
+  margin-left: 3rem;
 }
 
-h1,h2 {
-	color: Navy;
-}
-
-h3 {
-	color: DarkGreen;
-}
-
-table,th,td,th {
-	border: 1px solid rgb(230, 230, 230);
-	border-collapse: collapse;
-	vertical-align: top;
-	padding: 2px;
-}
-
-table {
-	width: 800px;
-}
-
-caption {
-	font-weight: bold;
-	color: Maroon;
-	border-bottom: 2px solid rgb(190, 190, 190);
-}
-
-th {
-	font-weight: bold;
-	border-bottom: 1px solid rgb(190, 190, 190);
+code, pre, tt {
+  font-family: 'Lucida Console', Monaco, 'Courier New', monospace;
+  font-size: 1.0rem;
+  line-height: 1.4rem;
+  color: rgb(16, 16, 16);
 }
 
 hr {
-	height: 1px;
+  height: 1px;
+  border-width: 1px 0px 0px 0px;
+  color: Silver;
 }
+
+p {
+  margin-bottom: 0.5rem;
+}
+
+caption {
+  font-weight: bold;
+  border-bottom: 2px solid rgb(190, 190, 190);
+  text-align: left;
+}
+
+h1, h2, h3 {
+  font-family: "Palatino Linotype", Georgia, "Times New Roman", Times, serif;
+  margin-top: 1.0rem;
+  margin-bottom: 0.5rem;
+}
+
+h1 {
+  font-size: 1.6rem;
+  line-height: 1.8rem;
+}
+
+h2 {
+  font-size: 1.2rem;
+  line-height: 1.4rem;
+}
+
+h3 {
+  font-size: 1.0rem;
+  line-height: 1.2rem;
+}
+
+dl, ul, ol {
+  padding: 0px 0px 0px 0px;
+  border: 0px;
+  background-color: #ffffff;
+  margin-left: 1rem;
+  padding-left: 1rem;
+}
+
+li {
+  margin-top: 0.3rem;
+}
+
+a: link {
+  color: Maroon;
+}
+
+a: visited {
+  color: Navy;
+}
+
+a: active, a: hover {
+  color: Blue;
+}
+
+table, th, td {
+  border: 1px solid rgb(240, 240, 240);
+  border-collapse: collapse;
+  vertical-align: top;
+  padding: 2px;
+}
+
+table {
+  width: 800px;
+  max-width: 1000px;
+  min-width: 600px;
+}
+
+th {
+  font-weight: bold;
+  border-bottom: 1px solid rgb(190, 190, 190);
+}
+
+blockquote {
+  background: #f9f9f9;
+  margin: 5px;
+  border-left: 10px solid #ccc;
+  padding: 0.5rem 10px;
+}
+
+blockquote: before {
+  color: #ccc;
+  font-size: 4rem;
+  line-height: 0.1rem;
+  margin-right: 0.25rem;
+  vertical-align: -0.4rem;
+}
+
+blockquote p {
+  display: inline;
+  background: #f9f9f9;
+}
+
 
 .name {
 	font-weight: bold;
@@ -73,7 +146,7 @@ hr {
 	min-width: 450px;
 }
 
-.ordinal {
+.spacer {
 	min-width: 20px;
 }
 
@@ -91,13 +164,13 @@ hr {
 
 .data_binary {
 	font-style: italic;
-	color: #666;
+	color: rgb(64, 64, 64);
 }
 
 .data_null {
 	font-weight: italic;
-	color: #666;
-	background-color: #FFEEFF;
+	color: rgb(64, 64, 64);
+	background-color: rgb(240, 240, 240);
 }
 
 .data_number {
@@ -135,7 +208,7 @@ hr {
 	</tr>
 	<tr>
 		<td class='property_name'>database product version</td>
-		<td class='property_value'>2.3.0</td>
+		<td class='property_value'>2.3.2</td>
 	</tr>
 	<tr>
 		<td class='property_name'>database user name</td>
@@ -173,7 +246,7 @@ hr {
 	</tr>
 	<tr>
 		<td class='property_name'>client info properties</td>
-		<td class='property_value'>files_readonly, hsqldb.applog, hsqldb.cache_file_scale, hsqldb.cache_free_count, hsqldb.cache_rows, hsqldb.cache_size, hsqldb.default_table_type, hsqldb.defrag_limit, hsqldb.files_check, hsqldb.files_space, hsqldb.full_log_replay, hsqldb.inc_backup, hsqldb.large_data, hsqldb.lob_compressed, hsqldb.lob_file_scale, hsqldb.lock_file, hsqldb.log_data, hsqldb.log_size, hsqldb.nio_data_file, hsqldb.nio_max_size, hsqldb.result_max_memory_rows, hsqldb.script_format, hsqldb.sqllog, hsqldb.temp_directory, hsqldb.tx, hsqldb.tx_conflict_rollback, hsqldb.tx_level, hsqldb.write_delay, hsqldb.write_delay_millis, jdbc.translate_tti_types, readonly, runtime.gc_interval, sql.avg_scale, sql.compare_in_locale, sql.concat_nulls, sql.convert_trunc, sql.double_nan, sql.enforce_names, sql.enforce_refs, sql.enforce_size, sql.enforce_tdc_delete, sql.enforce_tdc_update, sql.enforce_types, sql.ignore_case, sql.longvar_is_lob, sql.nulls_first, sql.nulls_order, sql.pad_space, sql.ref_integrity, sql.regular_names, sql.syntax_db2, sql.syntax_mss, sql.syntax_mys, sql.syntax_ora, sql.syntax_pgs, sql.unique_nulls, textdb.all_quoted, textdb.cache_rows, textdb.cache_scale, textdb.cache_size, textdb.cache_size_scale, textdb.encoding, textdb.fs, textdb.ignore_first, textdb.lvs, textdb.quoted, textdb.vs</td>
+		<td class='property_value'>files_readonly, hsqldb.applog, hsqldb.cache_file_scale, hsqldb.cache_free_count, hsqldb.cache_rows, hsqldb.cache_size, hsqldb.default_table_type, hsqldb.defrag_limit, hsqldb.digest, hsqldb.files_check, hsqldb.files_space, hsqldb.full_log_replay, hsqldb.inc_backup, hsqldb.large_data, hsqldb.lob_compressed, hsqldb.lob_file_scale, hsqldb.lock_file, hsqldb.log_data, hsqldb.log_size, hsqldb.nio_data_file, hsqldb.nio_max_size, hsqldb.result_max_memory_rows, hsqldb.script_format, hsqldb.sqllog, hsqldb.temp_directory, hsqldb.tx, hsqldb.tx_conflict_rollback, hsqldb.tx_level, hsqldb.write_delay, hsqldb.write_delay_millis, jdbc.translate_tti_types, readonly, runtime.gc_interval, sql.avg_scale, sql.compare_in_locale, sql.concat_nulls, sql.convert_trunc, sql.double_nan, sql.enforce_names, sql.enforce_refs, sql.enforce_size, sql.enforce_tdc_delete, sql.enforce_tdc_update, sql.enforce_types, sql.ignore_case, sql.longvar_is_lob, sql.nulls_first, sql.nulls_order, sql.pad_space, sql.ref_integrity, sql.regular_names, sql.syntax_db2, sql.syntax_mss, sql.syntax_mys, sql.syntax_ora, sql.syntax_pgs, sql.unique_nulls, textdb.all_quoted, textdb.cache_rows, textdb.cache_scale, textdb.cache_size, textdb.cache_size_scale, textdb.encoding, textdb.fs, textdb.ignore_first, textdb.lvs, textdb.quoted, textdb.vs</td>
 	</tr>
 	<tr>
 		<td class='property_name'>data definition causes transaction commit</td>
@@ -229,7 +302,7 @@ hr {
 	</tr>
 	<tr>
 		<td class='property_name'>identifier quote string</td>
-		<td class='property_value'>&quot;</td>
+		<td class='property_value'>"</td>
 	</tr>
 	<tr>
 		<td class='property_name'>inserts are detected for TYPE_FORWARD_ONLY result sets</td>
@@ -783,7 +856,7 @@ hr {
 	</tr>
 	<tr>
 		<td class='property_name'>driver version</td>
-		<td class='property_value'>2.3.0</td>
+		<td class='property_value'>2.3.2</td>
 	</tr>
 	<tr>
 		<td class='property_name'>driver class name</td>
@@ -808,15 +881,15 @@ hr {
 		<td class='description right'>[driver property]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'></td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>not required; choices [false, true]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>value</td>
 		<td class='type'>false</td>
 	</tr>
@@ -828,15 +901,15 @@ hr {
 		<td class='description right'>[driver property]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'></td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>not required; choices [false, true]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>value</td>
 		<td class='type'>true</td>
 	</tr>
@@ -848,15 +921,15 @@ hr {
 		<td class='description right'>[driver property]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'></td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>not required; choices [false, true]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>value</td>
 		<td class='type'>false</td>
 	</tr>
@@ -868,15 +941,15 @@ hr {
 		<td class='description right'>[driver property]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'></td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>required</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>value</td>
 		<td class='type'>NULL</td>
 	</tr>
@@ -888,15 +961,15 @@ hr {
 		<td class='description right'>[driver property]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'></td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>not required; choices [false, true]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>value</td>
 		<td class='type'>false</td>
 	</tr>
@@ -908,15 +981,15 @@ hr {
 		<td class='description right'>[driver property]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'></td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>required</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>value</td>
 		<td class='type'>NULL</td>
 	</tr>
@@ -931,28 +1004,28 @@ hr {
 		<td class='description right'>[data type]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>based on</td>
 		<td class='type'>BIGINT</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>not user defined</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>defined with no parameters</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>nullable</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>auto-incrementable</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>searchable except with where .. like</td>
 	</tr>
 </table>
@@ -963,28 +1036,28 @@ hr {
 		<td class='description right'>[data type]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>based on</td>
 		<td class='type'>BINARY</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>not user defined</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>defined with LENGTH</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>nullable</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>not auto-incrementable</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>searchable</td>
 	</tr>
 </table>
@@ -995,28 +1068,28 @@ hr {
 		<td class='description right'>[data type]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>based on</td>
 		<td class='type'>BIT</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>not user defined</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>defined with LENGTH</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>nullable</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>not auto-incrementable</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>searchable except with where .. like</td>
 	</tr>
 </table>
@@ -1027,28 +1100,28 @@ hr {
 		<td class='description right'>[data type]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>based on</td>
 		<td class='type'>BLOB</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>not user defined</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>defined with LENGTH</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>nullable</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>not auto-incrementable</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>not searchable</td>
 	</tr>
 </table>
@@ -1059,28 +1132,28 @@ hr {
 		<td class='description right'>[data type]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>based on</td>
 		<td class='type'>BOOLEAN</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>not user defined</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>defined with no parameters</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>nullable</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>not auto-incrementable</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>searchable except with where .. like</td>
 	</tr>
 </table>
@@ -1091,28 +1164,28 @@ hr {
 		<td class='description right'>[data type]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>based on</td>
 		<td class='type'>CHAR</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>not user defined</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>defined with LENGTH</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>nullable</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>not auto-incrementable</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>searchable</td>
 	</tr>
 </table>
@@ -1123,28 +1196,28 @@ hr {
 		<td class='description right'>[data type]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>based on</td>
 		<td class='type'>CLOB</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>not user defined</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>defined with LENGTH</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>nullable</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>not auto-incrementable</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>not searchable</td>
 	</tr>
 </table>
@@ -1155,28 +1228,28 @@ hr {
 		<td class='description right'>[data type]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>based on</td>
 		<td class='type'>DATE</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>not user defined</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>defined with no parameters</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>nullable</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>not auto-incrementable</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>searchable except with where .. like</td>
 	</tr>
 </table>
@@ -1187,28 +1260,28 @@ hr {
 		<td class='description right'>[data type]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>based on</td>
 		<td class='type'>DECIMAL</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>not user defined</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>defined with PRECISION,SCALE</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>nullable</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>auto-incrementable</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>searchable except with where .. like</td>
 	</tr>
 </table>
@@ -1219,28 +1292,28 @@ hr {
 		<td class='description right'>[data type]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>based on</td>
 		<td class='type'>DOUBLE</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>not user defined</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>defined with no parameters</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>nullable</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>not auto-incrementable</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>searchable except with where .. like</td>
 	</tr>
 </table>
@@ -1251,28 +1324,28 @@ hr {
 		<td class='description right'>[data type]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>based on</td>
 		<td class='type'>DOUBLE</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>not user defined</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>defined with no parameters</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>nullable</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>not auto-incrementable</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>searchable except with where .. like</td>
 	</tr>
 </table>
@@ -1283,28 +1356,28 @@ hr {
 		<td class='description right'>[data type]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>based on</td>
 		<td class='type'>INTEGER</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>not user defined</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>defined with no parameters</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>nullable</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>auto-incrementable</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>searchable except with where .. like</td>
 	</tr>
 </table>
@@ -1315,28 +1388,28 @@ hr {
 		<td class='description right'>[data type]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>based on</td>
 		<td class='type'>NUMERIC</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>not user defined</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>defined with PRECISION,SCALE</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>nullable</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>auto-incrementable</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>searchable except with where .. like</td>
 	</tr>
 </table>
@@ -1347,28 +1420,28 @@ hr {
 		<td class='description right'>[data type]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>based on</td>
 		<td class='type'>VARCHAR</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>not user defined</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>defined with LENGTH</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>nullable</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>not auto-incrementable</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>searchable</td>
 	</tr>
 </table>
@@ -1379,28 +1452,28 @@ hr {
 		<td class='description right'>[data type]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>based on</td>
 		<td class='type'>OTHER</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>not user defined</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>defined with no parameters</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>nullable</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>not auto-incrementable</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>searchable except with where .. like</td>
 	</tr>
 </table>
@@ -1411,28 +1484,28 @@ hr {
 		<td class='description right'>[data type]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>based on</td>
 		<td class='type'>DOUBLE</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>not user defined</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>defined with no parameters</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>nullable</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>not auto-incrementable</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>searchable except with where .. like</td>
 	</tr>
 </table>
@@ -1443,28 +1516,28 @@ hr {
 		<td class='description right'>[data type]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>based on</td>
 		<td class='type'>SMALLINT</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>not user defined</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>defined with no parameters</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>nullable</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>auto-incrementable</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>searchable except with where .. like</td>
 	</tr>
 </table>
@@ -1475,28 +1548,28 @@ hr {
 		<td class='description right'>[data type]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>based on</td>
 		<td class='type'>TIME</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>not user defined</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>defined with no parameters</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>nullable</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>not auto-incrementable</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>searchable except with where .. like</td>
 	</tr>
 </table>
@@ -1507,28 +1580,28 @@ hr {
 		<td class='description right'>[data type]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>based on</td>
 		<td class='type'>TIMESTAMP</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>not user defined</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>defined with no parameters</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>nullable</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>not auto-incrementable</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>searchable except with where .. like</td>
 	</tr>
 </table>
@@ -1539,28 +1612,28 @@ hr {
 		<td class='description right'>[data type]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>based on</td>
 		<td class='type'>TINYINT</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>not user defined</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>defined with no parameters</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>nullable</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>auto-incrementable</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>searchable except with where .. like</td>
 	</tr>
 </table>
@@ -1571,28 +1644,28 @@ hr {
 		<td class='description right'>[data type]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>based on</td>
 		<td class='type'>VARBINARY</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>not user defined</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>defined with LENGTH</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>nullable</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>not auto-incrementable</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>searchable</td>
 	</tr>
 </table>
@@ -1603,28 +1676,28 @@ hr {
 		<td class='description right'>[data type]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>based on</td>
 		<td class='type'>VARCHAR</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>not user defined</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>defined with LENGTH</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>nullable</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>not auto-incrementable</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>searchable</td>
 	</tr>
 </table>
@@ -1635,28 +1708,28 @@ hr {
 		<td class='description right'>[data type]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>based on</td>
 		<td class='type'>VARCHAR</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>not user defined</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>defined with </td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>not nullable</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>not auto-incrementable</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>unknown</td>
 	</tr>
 </table>
@@ -1667,28 +1740,28 @@ hr {
 		<td class='description right'>[data type]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>based on</td>
 		<td class='type'>ARRAY</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>not user defined</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>defined with </td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>not nullable</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>not auto-incrementable</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td colspan='2' class='definition'>unknown</td>
 	</tr>
 </table>
@@ -1704,47 +1777,50 @@ hr {
 		<td class='description right'>[table]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>ID</td>
-		<td class='type'>INTEGER not null</td>
+		<td colspan='3' class='definition'>Contact details for book authors</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
+		<td class='subname'><b><i>ID</i></b></td>
+		<td class='type'>INTEGER NOT NULL</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
 		<td class='subname'>FIRSTNAME</td>
-		<td class='type'>VARCHAR(20) not null</td>
+		<td class='type'>VARCHAR(20) NOT NULL</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>LASTNAME</td>
-		<td class='type'>VARCHAR(20) not null</td>
+		<td class='type'>VARCHAR(20) NOT NULL</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>ADDRESS1</td>
 		<td class='type'>VARCHAR(255)</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>ADDRESS2</td>
 		<td class='type'>VARCHAR(255)</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>CITY</td>
 		<td class='type'>VARCHAR(50)</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>STATE</td>
 		<td class='type'>VARCHAR(2)</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>POSTALCODE</td>
 		<td class='type'>VARCHAR(10)</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>COUNTRY</td>
 		<td class='type'>VARCHAR(50)</td>
 	</tr>
@@ -1756,7 +1832,7 @@ hr {
 		<td class='description right'>[primary key]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>ID</td>
 		<td class='type'>ascending</td>
 	</tr>
@@ -1768,19 +1844,19 @@ hr {
 		<td class='description right'>[foreign key, with no action]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>ID &#8594; PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID</td>
+		<td class='spacer'></td>
+		<td class='subname'>ID ← PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_PK_AUTHORS_10098</td>
+		<td colspan='2' class='name'>SYS_IDX_PK_AUTHORS_10097</td>
 		<td class='description right'>[unique index]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>ID</td>
 		<td class='type'>ascending</td>
 	</tr>
@@ -1792,12 +1868,12 @@ hr {
 		<td class='description right'>[non-unique index]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>LASTNAME</td>
 		<td class='type'>ascending</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>FIRSTNAME</td>
 		<td class='type'>ascending</td>
 	</tr>
@@ -1809,75 +1885,24 @@ hr {
 		<td class='description right'>[non-unique index]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>CITY</td>
 		<td class='type'>ascending</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>STATE</td>
 		<td class='type'>ascending</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>POSTALCODE</td>
 		<td class='type'>ascending</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>COUNTRY</td>
 		<td class='type'>ascending</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>TRG_AUTHORS</td>
-		<td class='description right'>[trigger, after delete, per row]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>UPDATE BOOKS.PUBLISHERS SET PUBLISHER=&apos;Jacob&apos;WHERE PUBLISHER=&apos;John&apos;</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>CHECK_UPPERCASE_STATE</td>
-		<td class='description right'>[check constraint]</td>
-	</tr>
-	<tr>
-		<td colspan='3' class='definition'>BOOKS.AUTHORS.STATE=UPPER(BOOKS.AUTHORS.STATE)</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>SYS_CT_10095</td>
-		<td class='description right'>[check constraint]</td>
-	</tr>
-	<tr>
-		<td colspan='3' class='definition'>BOOKS.AUTHORS.ID IS NOT NULL</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>SYS_CT_10096</td>
-		<td class='description right'>[check constraint]</td>
-	</tr>
-	<tr>
-		<td colspan='3' class='definition'>BOOKS.AUTHORS.FIRSTNAME IS NOT NULL</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>SYS_CT_10097</td>
-		<td class='description right'>[check constraint]</td>
-	</tr>
-	<tr>
-		<td colspan='3' class='definition'>BOOKS.AUTHORS.LASTNAME IS NOT NULL</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -1887,8 +1912,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -1899,8 +1924,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -1911,8 +1936,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -1923,8 +1948,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -1935,8 +1960,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -1947,19 +1972,9 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description right'>[remarks]</td>
-	</tr>
-	<tr>
-		<td colspan='3' class='definition'>Contact details for book authors</td>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -1972,29 +1987,19 @@ hr {
 		<td class='description right'>[view]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>ID</td>
 		<td class='type'>INTEGER</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>FIRSTNAME</td>
 		<td class='type'>VARCHAR(20)</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>LASTNAME</td>
 		<td class='type'>VARCHAR(20)</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description right'>[definition]</td>
-	</tr>
-	<tr>
-		<td colspan='3' class='definition'>SELECT ID,FIRSTNAME,LASTNAME FROM BOOKS.AUTHORS</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -2004,8 +2009,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -2016,8 +2021,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -2028,8 +2033,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -2040,8 +2045,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -2052,8 +2057,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -2064,8 +2069,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 </table>
@@ -2079,18 +2084,21 @@ hr {
 		<td class='description right'>[table]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td colspan='3' class='definition'>Relationship between books and their authors, along with the latest updated information</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
 		<td class='subname'>BOOKID</td>
-		<td class='type'>INTEGER not null</td>
+		<td class='type'>INTEGER NOT NULL</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>AUTHORID</td>
-		<td class='type'>INTEGER not null</td>
+		<td class='type'>INTEGER NOT NULL</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>&quot;UPDATE&quot;</td>
+		<td class='spacer'></td>
+		<td class='subname'>"UPDATE"</td>
 		<td class='type'>CLOB</td>
 	</tr>
 	<tr>
@@ -2101,8 +2109,8 @@ hr {
 		<td class='description right'>[foreign key, with no action]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>PUBLIC.BOOKS.AUTHORS.ID &#8594; AUTHORID</td>
+		<td class='spacer'></td>
+		<td class='subname'>AUTHORID → PUBLIC.BOOKS.AUTHORS.ID</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -2113,19 +2121,19 @@ hr {
 		<td class='description right'>[foreign key, with no action]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>PUBLIC.BOOKS.BOOKS.ID &#8594; BOOKID</td>
+		<td class='spacer'></td>
+		<td class='subname'>BOOKID → PUBLIC.BOOKS.BOOKS.ID</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_10117</td>
+		<td colspan='2' class='name'>SYS_IDX_10118</td>
 		<td class='description right'>[non-unique index]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>AUTHORID</td>
 		<td class='type'>ascending</td>
 	</tr>
@@ -2133,11 +2141,11 @@ hr {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_10115</td>
+		<td colspan='2' class='name'>SYS_IDX_10116</td>
 		<td class='description right'>[non-unique index]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>BOOKID</td>
 		<td class='type'>ascending</td>
 	</tr>
@@ -2149,34 +2157,14 @@ hr {
 		<td class='description right'>[unique index]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>BOOKID</td>
 		<td class='type'>ascending</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>AUTHORID</td>
 		<td class='type'>ascending</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>SYS_CT_10110</td>
-		<td class='description right'>[check constraint]</td>
-	</tr>
-	<tr>
-		<td colspan='3' class='definition'>BOOKS.BOOKAUTHORS.BOOKID IS NOT NULL</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>SYS_CT_10111</td>
-		<td class='description right'>[check constraint]</td>
-	</tr>
-	<tr>
-		<td colspan='3' class='definition'>BOOKS.BOOKAUTHORS.AUTHORID IS NOT NULL</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -2186,8 +2174,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -2198,8 +2186,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -2210,8 +2198,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -2222,8 +2210,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -2234,8 +2222,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -2246,19 +2234,9 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description right'>[remarks]</td>
-	</tr>
-	<tr>
-		<td colspan='3' class='definition'>Relationship between books and their authors, along with the latest updated information</td>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -2271,34 +2249,72 @@ hr {
 		<td class='description right'>[table]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>ID</td>
-		<td class='type'>INTEGER not null</td>
+		<td colspan='3' class='definition'>Details for published books</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
+		<td class='subname'><b><i>ID</i></b></td>
+		<td class='type'>INTEGER NOT NULL</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'></td>
+		<td class='type'>Unique (internal) id for book</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
 		<td class='subname'>TITLE</td>
-		<td class='type'>VARCHAR(255) not null</td>
+		<td class='type'>VARCHAR(255) NOT NULL</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
+		<td class='subname'></td>
+		<td class='type'>Book title</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
 		<td class='subname'>DESCRIPTION</td>
 		<td class='type'>VARCHAR(255)</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>PUBLISHERID</td>
-		<td class='type'>INTEGER not null</td>
+		<td class='spacer'></td>
+		<td class='subname'></td>
+		<td class='type'>Book description</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
+		<td class='subname'>PUBLISHERID</td>
+		<td class='type'>INTEGER NOT NULL</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'></td>
+		<td class='type'>Foreign key to the book publisher</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
 		<td class='subname'>PUBLICATIONDATE</td>
 		<td class='type'>DATE</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
+		<td class='subname'></td>
+		<td class='type'>Book publication date</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
 		<td class='subname'>PRICE</td>
 		<td class='type'>DOUBLE(64, 0)</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'></td>
+		<td class='type'>Current price for the book</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>PREVIOUSEDITIONID</td>
+		<td class='type'>INTEGER</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -2308,7 +2324,7 @@ hr {
 		<td class='description right'>[primary key]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>ID</td>
 		<td class='type'>ascending</td>
 	</tr>
@@ -2320,8 +2336,20 @@ hr {
 		<td class='description right'>[foreign key, with no action]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>ID &#8594; PUBLIC.BOOKS.BOOKAUTHORS.BOOKID</td>
+		<td class='spacer'></td>
+		<td class='subname'>ID ← PUBLIC.BOOKS.BOOKAUTHORS.BOOKID</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>FK_PREVIOUSEDITION</td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ID ← PREVIOUSEDITIONID</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -2332,8 +2360,8 @@ hr {
 		<td class='description right'>[weak association]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>ID &#8594; PUBLIC.&quot;PUBLISHER SALES&quot;.SALES.BOOKID</td>
+		<td class='spacer'></td>
+		<td class='subname'>ID ⇜ PUBLIC."PUBLISHER SALES".SALES.BOOKID</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -2344,19 +2372,19 @@ hr {
 		<td class='description right'>[weak association]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>PUBLIC.BOOKS.PUBLISHERS.ID &#8594; PUBLISHERID</td>
+		<td class='spacer'></td>
+		<td class='subname'>PUBLISHERID ⇝ PUBLIC.BOOKS.PUBLISHERS.ID</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_PK_BOOKS_10106</td>
+		<td colspan='2' class='name'>SYS_IDX_PK_BOOKS_10105</td>
 		<td class='description right'>[unique index]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>ID</td>
 		<td class='type'>ascending</td>
 	</tr>
@@ -2364,31 +2392,25 @@ hr {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_CT_10103</td>
-		<td class='description right'>[check constraint]</td>
+		<td colspan='2' class='name'>UIDX_PREVIOUSEDITION</td>
+		<td class='description right'>[unique index]</td>
 	</tr>
 	<tr>
-		<td colspan='3' class='definition'>BOOKS.BOOKS.ID IS NOT NULL</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>SYS_CT_10104</td>
-		<td class='description right'>[check constraint]</td>
-	</tr>
-	<tr>
-		<td colspan='3' class='definition'>BOOKS.BOOKS.TITLE IS NOT NULL</td>
+		<td class='spacer'></td>
+		<td class='subname'>PREVIOUSEDITIONID</td>
+		<td class='type'>ascending</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_CT_10105</td>
-		<td class='description right'>[check constraint]</td>
+		<td colspan='2' class='name'>SYS_IDX_10109</td>
+		<td class='description right'>[non-unique index]</td>
 	</tr>
 	<tr>
-		<td colspan='3' class='definition'>BOOKS.BOOKS.PUBLISHERID IS NOT NULL</td>
+		<td class='spacer'></td>
+		<td class='subname'>PREVIOUSEDITIONID</td>
+		<td class='type'>ascending</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -2398,8 +2420,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -2410,8 +2432,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -2422,8 +2444,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -2434,8 +2456,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -2446,8 +2468,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -2458,49 +2480,9 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description right'>[remarks]</td>
-	</tr>
-	<tr>
-		<td colspan='3' class='definition'>Details for published books</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>ID</td>
-		<td class='type'>Unique (internal) id for book</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>TITLE</td>
-		<td class='type'>Book title</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>DESCRIPTION</td>
-		<td class='type'>Book description</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>PUBLISHERID</td>
-		<td class='type'>Foreign key to the book publisher</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>PUBLICATIONDATE</td>
-		<td class='type'>Book publication date</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>PRICE</td>
-		<td class='type'>Current price for the book</td>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -2513,8 +2495,8 @@ hr {
 		<td class='description right'>[table]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>&quot;Global Count&quot;</td>
+		<td class='spacer'></td>
+		<td class='subname'>"Global Count"</td>
 		<td class='type'>INTEGER</td>
 	</tr>
 	<tr>
@@ -2525,8 +2507,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -2537,8 +2519,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -2549,8 +2531,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -2561,8 +2543,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -2573,8 +2555,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -2585,8 +2567,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 </table>
@@ -2600,26 +2582,49 @@ hr {
 		<td class='description right'>[table]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>ID</td>
-		<td class='type'>INTEGER not null</td>
+		<td colspan='3' class='definition'>List of book publishers</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
+		<td class='subname'><b><i>ID</i></b></td>
+		<td class='type'>INTEGER NOT NULL</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'></td>
+		<td class='type'>auto-incremented</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'></td>
+		<td class='type'>Unique (internal) id for book publisher</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
 		<td class='subname'>PUBLISHER</td>
 		<td class='type'>VARCHAR(255)</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'></td>
+		<td class='type'>Name of book publisher</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>PK_PUBLISHERS</td>
+		<td colspan='2' class='name'>SYS_PK_10092</td>
 		<td class='description right'>[primary key]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>ID</td>
 		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'></td>
+		<td class='type'>auto-incremented</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -2629,31 +2634,26 @@ hr {
 		<td class='description right'>[weak association]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>ID &#8594; PUBLIC.BOOKS.BOOKS.PUBLISHERID</td>
+		<td class='spacer'></td>
+		<td class='subname'>ID ⇜ PUBLIC.BOOKS.BOOKS.PUBLISHERID</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_PK_PUBLISHERS_10093</td>
+		<td colspan='2' class='name'>SYS_IDX_SYS_PK_10092_10093</td>
 		<td class='description right'>[unique index]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>ID</td>
 		<td class='type'>ascending</td>
 	</tr>
 	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>SYS_CT_10092</td>
-		<td class='description right'>[check constraint]</td>
-	</tr>
-	<tr>
-		<td colspan='3' class='definition'>BOOKS.PUBLISHERS.ID IS NOT NULL</td>
+		<td class='spacer'></td>
+		<td class='subname'></td>
+		<td class='type'>auto-incremented</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -2663,8 +2663,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -2675,8 +2675,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -2687,8 +2687,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -2699,8 +2699,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -2711,8 +2711,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -2723,29 +2723,9 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description right'>[remarks]</td>
-	</tr>
-	<tr>
-		<td colspan='3' class='definition'>List of book publishers</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>ID</td>
-		<td class='type'>Unique (internal) id for book publisher</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>PUBLISHER</td>
-		<td class='type'>Name of book publisher</td>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -2758,19 +2738,19 @@ hr {
 		<td class='description right'>[table]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>ID</td>
-		<td class='type'>INTEGER not null</td>
+		<td class='spacer'></td>
+		<td class='subname'><b><i>ID</i></b></td>
+		<td class='type'>INTEGER NOT NULL</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>WRITERID</td>
-		<td class='type'>BIGINT not null</td>
+		<td class='type'>BIGINT NOT NULL</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>PUBLICATIONID</td>
-		<td class='type'>INTEGER not null</td>
+		<td class='type'>INTEGER NOT NULL</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -2780,7 +2760,7 @@ hr {
 		<td class='description right'>[primary key]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>ID</td>
 		<td class='type'>ascending</td>
 	</tr>
@@ -2792,8 +2772,8 @@ hr {
 		<td class='description right'>[foreign key, with no action]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>PUBLIC.FOR_LINT.PUBLICATIONS.ID &#8594; PUBLICATIONID</td>
+		<td class='spacer'></td>
+		<td class='subname'>PUBLICATIONID → PUBLIC.FOR_LINT.PUBLICATIONS.ID</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -2804,19 +2784,19 @@ hr {
 		<td class='description right'>[foreign key, with no action]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>PUBLIC.FOR_LINT.WRITERS.ID &#8594; WRITERID</td>
+		<td class='spacer'></td>
+		<td class='subname'>WRITERID → PUBLIC.FOR_LINT.WRITERS.ID</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_PK_EXTRA_PK_10173</td>
+		<td colspan='2' class='name'>SYS_IDX_PK_EXTRA_PK_10181</td>
 		<td class='description right'>[unique index]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>ID</td>
 		<td class='type'>ascending</td>
 	</tr>
@@ -2824,11 +2804,11 @@ hr {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_10179</td>
+		<td colspan='2' class='name'>SYS_IDX_10187</td>
 		<td class='description right'>[non-unique index]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>PUBLICATIONID</td>
 		<td class='type'>ascending</td>
 	</tr>
@@ -2836,43 +2816,13 @@ hr {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_10177</td>
+		<td colspan='2' class='name'>SYS_IDX_10185</td>
 		<td class='description right'>[non-unique index]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>WRITERID</td>
 		<td class='type'>ascending</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>SYS_CT_10170</td>
-		<td class='description right'>[check constraint]</td>
-	</tr>
-	<tr>
-		<td colspan='3' class='definition'>FOR_LINT.EXTRA_PK.ID IS NOT NULL</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>SYS_CT_10171</td>
-		<td class='description right'>[check constraint]</td>
-	</tr>
-	<tr>
-		<td colspan='3' class='definition'>FOR_LINT.EXTRA_PK.WRITERID IS NOT NULL</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>SYS_CT_10172</td>
-		<td class='description right'>[check constraint]</td>
-	</tr>
-	<tr>
-		<td colspan='3' class='definition'>FOR_LINT.EXTRA_PK.PUBLICATIONID IS NOT NULL</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -2882,8 +2832,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -2894,8 +2844,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -2906,8 +2856,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -2918,8 +2868,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -2930,8 +2880,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -2942,8 +2892,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 </table>
@@ -2957,8 +2907,8 @@ hr {
 		<td class='description right'>[table]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>&quot;Global Count&quot;</td>
+		<td class='spacer'></td>
+		<td class='subname'>"Global Count"</td>
 		<td class='type'>INTEGER</td>
 	</tr>
 	<tr>
@@ -2969,8 +2919,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -2981,8 +2931,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -2993,8 +2943,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -3005,8 +2955,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -3017,8 +2967,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -3029,8 +2979,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 </table>
@@ -3044,42 +2994,42 @@ hr {
 		<td class='description right'>[table]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>ID</td>
-		<td class='type'>INTEGER not null</td>
+		<td class='spacer'></td>
+		<td class='subname'><b><i>ID</i></b></td>
+		<td class='type'>INTEGER NOT NULL</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>TITLE</td>
-		<td class='type'>VARCHAR(255) not null</td>
+		<td class='type'>VARCHAR(255) NOT NULL</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>DESCRIPTION</td>
 		<td class='type'>VARCHAR(255)</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>WRITERID</td>
-		<td class='type'>BIGINT not null</td>
+		<td class='type'>BIGINT NOT NULL</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>PUBLICATIONDATE</td>
 		<td class='type'>DATE</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>PRICE</td>
 		<td class='type'>DOUBLE(64, 0)</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>&quot;UPDATE&quot;</td>
+		<td class='spacer'></td>
+		<td class='subname'>"UPDATE"</td>
 		<td class='type'>CLOB</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>PRESS_RELEASE</td>
 		<td class='type'>CLOB</td>
 	</tr>
@@ -3091,7 +3041,7 @@ hr {
 		<td class='description right'>[primary key]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>ID</td>
 		<td class='type'>ascending</td>
 	</tr>
@@ -3103,8 +3053,8 @@ hr {
 		<td class='description right'>[foreign key, with no action]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>ID &#8594; PUBLIC.FOR_LINT.EXTRA_PK.PUBLICATIONID</td>
+		<td class='spacer'></td>
+		<td class='subname'>ID ← PUBLIC.FOR_LINT.EXTRA_PK.PUBLICATIONID</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -3115,8 +3065,8 @@ hr {
 		<td class='description right'>[foreign key, with no action]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>ID &#8594; PUBLIC.FOR_LINT.WRITERS.PUBLICATION_ID</td>
+		<td class='spacer'></td>
+		<td class='subname'>ID ← PUBLIC.FOR_LINT.WRITERS.PUBLICATION_ID</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -3127,19 +3077,19 @@ hr {
 		<td class='description right'>[foreign key, with no action]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>PUBLIC.FOR_LINT.WRITERS.ID &#8594; WRITERID</td>
+		<td class='spacer'></td>
+		<td class='subname'>WRITERID → PUBLIC.FOR_LINT.WRITERS.ID</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_PK_PUBLICATIONS_10163</td>
+		<td colspan='2' class='name'>SYS_IDX_PK_PUBLICATIONS_10171</td>
 		<td class='description right'>[unique index]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>ID</td>
 		<td class='type'>ascending</td>
 	</tr>
@@ -3147,43 +3097,13 @@ hr {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_10167</td>
+		<td colspan='2' class='name'>SYS_IDX_10175</td>
 		<td class='description right'>[non-unique index]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>WRITERID</td>
 		<td class='type'>ascending</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>SYS_CT_10160</td>
-		<td class='description right'>[check constraint]</td>
-	</tr>
-	<tr>
-		<td colspan='3' class='definition'>FOR_LINT.PUBLICATIONS.ID IS NOT NULL</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>SYS_CT_10161</td>
-		<td class='description right'>[check constraint]</td>
-	</tr>
-	<tr>
-		<td colspan='3' class='definition'>FOR_LINT.PUBLICATIONS.TITLE IS NOT NULL</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>SYS_CT_10162</td>
-		<td class='description right'>[check constraint]</td>
-	</tr>
-	<tr>
-		<td colspan='3' class='definition'>FOR_LINT.PUBLICATIONS.WRITERID IS NOT NULL</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -3193,8 +3113,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -3205,8 +3125,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -3217,8 +3137,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -3229,8 +3149,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -3241,8 +3161,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -3253,8 +3173,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 </table>
@@ -3268,94 +3188,94 @@ hr {
 		<td class='description right'>[table]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>ID</td>
-		<td class='type'>BIGINT not null</td>
+		<td class='spacer'></td>
+		<td class='subname'><b><i>ID</i></b></td>
+		<td class='type'>BIGINT NOT NULL</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>FIRSTNAME</td>
-		<td class='type'>VARCHAR(20) not null</td>
+		<td class='type'>VARCHAR(20) NOT NULL</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>LASTNAME</td>
-		<td class='type'>VARCHAR(20) not null</td>
+		<td class='type'>VARCHAR(20) NOT NULL</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>ADDRESS1</td>
 		<td class='type'>VARCHAR(255)</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>ADDRESS2</td>
-		<td class='type'>VARCHAR(255) not null</td>
+		<td class='type'>VARCHAR(255) NOT NULL</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>CITY</td>
 		<td class='type'>VARCHAR(50)</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>STATE</td>
 		<td class='type'>VARCHAR(2)</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>POSTALCODE</td>
 		<td class='type'>VARCHAR(10)</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>COUNTRY</td>
 		<td class='type'>VARCHAR(50)</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>PHONE1</td>
 		<td class='type'>VARCHAR(10)</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>PHONE2</td>
 		<td class='type'>VARCHAR(15)</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>EMAIL1</td>
 		<td class='type'>VARCHAR(10)</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>EMAIL2</td>
 		<td class='type'>INTEGER</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>FAX</td>
 		<td class='type'>VARCHAR(10)</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>FAX3</td>
 		<td class='type'>INTEGER</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>HOMEEMAIL11</td>
 		<td class='type'>VARCHAR(10)</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>HOMEEMAIL12</td>
 		<td class='type'>VARCHAR(10)</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>PUBLICATION_ID</td>
-		<td class='type'>BIGINT not null</td>
+		<td class='type'>BIGINT NOT NULL</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -3365,7 +3285,7 @@ hr {
 		<td class='description right'>[primary key]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>ID</td>
 		<td class='type'>ascending</td>
 	</tr>
@@ -3377,8 +3297,8 @@ hr {
 		<td class='description right'>[foreign key, with no action]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>PUBLIC.FOR_LINT.PUBLICATIONS.ID &#8594; PUBLICATION_ID</td>
+		<td class='spacer'></td>
+		<td class='subname'>PUBLICATION_ID → PUBLIC.FOR_LINT.PUBLICATIONS.ID</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -3389,8 +3309,8 @@ hr {
 		<td class='description right'>[foreign key, with no action]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>ID &#8594; PUBLIC.FOR_LINT.EXTRA_PK.WRITERID</td>
+		<td class='spacer'></td>
+		<td class='subname'>ID ← PUBLIC.FOR_LINT.EXTRA_PK.WRITERID</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -3401,19 +3321,31 @@ hr {
 		<td class='description right'>[foreign key, with no action]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>ID &#8594; PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID</td>
+		<td class='spacer'></td>
+		<td class='subname'>ID ← PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_PK_WRITERS_10153</td>
+		<td colspan='2' class='name'>FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS</td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ID ← PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_IDX_PK_WRITERS_10161</td>
 		<td class='description right'>[unique index]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>ID</td>
 		<td class='type'>ascending</td>
 	</tr>
@@ -3421,11 +3353,11 @@ hr {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_10181</td>
+		<td colspan='2' class='name'>SYS_IDX_10194</td>
 		<td class='description right'>[non-unique index]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>PUBLICATION_ID</td>
 		<td class='type'>ascending</td>
 	</tr>
@@ -3437,12 +3369,12 @@ hr {
 		<td class='description right'>[non-unique index]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>CITY</td>
 		<td class='type'>ascending</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>STATE</td>
 		<td class='type'>ascending</td>
 	</tr>
@@ -3454,12 +3386,12 @@ hr {
 		<td class='description right'>[unique index]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>EMAIL1</td>
 		<td class='type'>ascending</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>COUNTRY</td>
 		<td class='type'>ascending</td>
 	</tr>
@@ -3471,12 +3403,12 @@ hr {
 		<td class='description right'>[non-unique index]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>LASTNAME</td>
 		<td class='type'>ascending</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>FIRSTNAME</td>
 		<td class='type'>ascending</td>
 	</tr>
@@ -3488,84 +3420,24 @@ hr {
 		<td class='description right'>[non-unique index]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>CITY</td>
 		<td class='type'>ascending</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>STATE</td>
 		<td class='type'>ascending</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>POSTALCODE</td>
 		<td class='type'>ascending</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>COUNTRY</td>
 		<td class='type'>ascending</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>CHECK_UPPERCASE_STATE</td>
-		<td class='description right'>[check constraint]</td>
-	</tr>
-	<tr>
-		<td colspan='3' class='definition'>FOR_LINT.WRITERS.STATE=UPPER(FOR_LINT.WRITERS.STATE)</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>SYS_CT_10148</td>
-		<td class='description right'>[check constraint]</td>
-	</tr>
-	<tr>
-		<td colspan='3' class='definition'>FOR_LINT.WRITERS.ID IS NOT NULL</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>SYS_CT_10149</td>
-		<td class='description right'>[check constraint]</td>
-	</tr>
-	<tr>
-		<td colspan='3' class='definition'>FOR_LINT.WRITERS.FIRSTNAME IS NOT NULL</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>SYS_CT_10150</td>
-		<td class='description right'>[check constraint]</td>
-	</tr>
-	<tr>
-		<td colspan='3' class='definition'>FOR_LINT.WRITERS.LASTNAME IS NOT NULL</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>SYS_CT_10151</td>
-		<td class='description right'>[check constraint]</td>
-	</tr>
-	<tr>
-		<td colspan='3' class='definition'>FOR_LINT.WRITERS.ADDRESS2 IS NOT NULL</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>SYS_CT_10152</td>
-		<td class='description right'>[check constraint]</td>
-	</tr>
-	<tr>
-		<td colspan='3' class='definition'>FOR_LINT.WRITERS.PUBLICATION_ID IS NOT NULL</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -3575,8 +3447,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -3587,8 +3459,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -3599,8 +3471,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -3611,8 +3483,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -3623,8 +3495,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -3635,8 +3507,153 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<table>
+  <caption>PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</caption>
+
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[table]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'><b><i>ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</i></b></td>
+		<td class='type'>BIGINT NOT NULL</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</td>
+		<td class='type'>VARCHAR(10)</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ΣΥΓΓΡΑΦΈΑΣ</td>
+		<td class='type'>INTEGER</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</td>
+		<td class='description right'>[primary key]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS</td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ΣΥΓΓΡΑΦΈΑΣ → PUBLIC.FOR_LINT.WRITERS.ID</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_IDX_PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_10190</td>
+		<td class='description right'>[unique index]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_IDX_10192</td>
+		<td class='description right'>[non-unique index]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ΣΥΓΓΡΑΦΈΑΣ</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>DELETE</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>INSERT</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>REFERENCES</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SELECT</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>TRIGGER</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>UPDATE</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 </table>
@@ -3650,24 +3667,24 @@ hr {
 		<td class='description right'>[table]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>CITY</td>
-		<td class='type'>VARCHAR(50) not null</td>
+		<td class='type'>VARCHAR(50) NOT NULL</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>STATE</td>
-		<td class='type'>VARCHAR(2) not null</td>
+		<td class='type'>VARCHAR(2) NOT NULL</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>POSTALCODE</td>
-		<td class='type'>VARCHAR(10) not null</td>
+		<td class='spacer'></td>
+		<td class='subname'><b><i>POSTALCODE</i></b></td>
+		<td class='type'>VARCHAR(10) NOT NULL</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>COUNTRY</td>
-		<td class='type'>VARCHAR(50) not null</td>
+		<td class='spacer'></td>
+		<td class='subname'><b><i>COUNTRY</i></b></td>
+		<td class='type'>VARCHAR(50) NOT NULL</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -3677,12 +3694,12 @@ hr {
 		<td class='description right'>[primary key]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>POSTALCODE</td>
 		<td class='type'>ascending</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>COUNTRY</td>
 		<td class='type'>ascending</td>
 	</tr>
@@ -3694,71 +3711,31 @@ hr {
 		<td class='description right'>[foreign key, with no action]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>POSTALCODE &#8594; PUBLIC.&quot;PUBLISHER SALES&quot;.SALES.POSTALCODE</td>
+		<td class='spacer'></td>
+		<td class='subname'>POSTALCODE ← PUBLIC."PUBLISHER SALES".SALES.POSTALCODE</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>COUNTRY &#8594; PUBLIC.&quot;PUBLISHER SALES&quot;.SALES.COUNTRY</td>
+		<td class='spacer'></td>
+		<td class='subname'>COUNTRY ← PUBLIC."PUBLISHER SALES".SALES.COUNTRY</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_PK_CUSTOMERS_10136</td>
+		<td colspan='2' class='name'>SYS_IDX_PK_CUSTOMERS_10144</td>
 		<td class='description right'>[unique index]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>POSTALCODE</td>
 		<td class='type'>ascending</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>COUNTRY</td>
 		<td class='type'>ascending</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>SYS_CT_10132</td>
-		<td class='description right'>[check constraint]</td>
-	</tr>
-	<tr>
-		<td colspan='3' class='definition'>&quot;PUBLISHER SALES&quot;.REGIONS.CITY IS NOT NULL</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>SYS_CT_10133</td>
-		<td class='description right'>[check constraint]</td>
-	</tr>
-	<tr>
-		<td colspan='3' class='definition'>&quot;PUBLISHER SALES&quot;.REGIONS.STATE IS NOT NULL</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>SYS_CT_10134</td>
-		<td class='description right'>[check constraint]</td>
-	</tr>
-	<tr>
-		<td colspan='3' class='definition'>&quot;PUBLISHER SALES&quot;.REGIONS.POSTALCODE IS NOT NULL</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>SYS_CT_10135</td>
-		<td class='description right'>[check constraint]</td>
-	</tr>
-	<tr>
-		<td colspan='3' class='definition'>&quot;PUBLISHER SALES&quot;.REGIONS.COUNTRY IS NOT NULL</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -3768,8 +3745,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -3780,8 +3757,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -3792,8 +3769,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -3804,8 +3781,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -3816,8 +3793,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -3828,8 +3805,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 </table>
@@ -3843,27 +3820,27 @@ hr {
 		<td class='description right'>[table]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>POSTALCODE</td>
-		<td class='type'>VARCHAR(10) not null</td>
+		<td class='type'>VARCHAR(10) NOT NULL</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>COUNTRY</td>
-		<td class='type'>VARCHAR(50) not null</td>
+		<td class='type'>VARCHAR(50) NOT NULL</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>BOOKID</td>
 		<td class='type'>INTEGER</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>PERIODENDDATE</td>
 		<td class='type'>DATE</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>TOTALAMOUNT</td>
 		<td class='type'>DOUBLE(64, 0)</td>
 	</tr>
@@ -3875,13 +3852,13 @@ hr {
 		<td class='description right'>[foreign key, with no action]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>PUBLIC.&quot;PUBLISHER SALES&quot;.REGIONS.POSTALCODE &#8594; POSTALCODE</td>
+		<td class='spacer'></td>
+		<td class='subname'>POSTALCODE → PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>PUBLIC.&quot;PUBLISHER SALES&quot;.REGIONS.COUNTRY &#8594; COUNTRY</td>
+		<td class='spacer'></td>
+		<td class='subname'>COUNTRY → PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -3892,46 +3869,26 @@ hr {
 		<td class='description right'>[weak association]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>PUBLIC.BOOKS.BOOKS.ID &#8594; BOOKID</td>
+		<td class='spacer'></td>
+		<td class='subname'>BOOKID ⇝ PUBLIC.BOOKS.BOOKS.ID</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_10146</td>
+		<td colspan='2' class='name'>SYS_IDX_10154</td>
 		<td class='description right'>[non-unique index]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>POSTALCODE</td>
 		<td class='type'>ascending</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>COUNTRY</td>
 		<td class='type'>ascending</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>SYS_CT_10141</td>
-		<td class='description right'>[check constraint]</td>
-	</tr>
-	<tr>
-		<td colspan='3' class='definition'>&quot;PUBLISHER SALES&quot;.SALES.POSTALCODE IS NOT NULL</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>SYS_CT_10142</td>
-		<td class='description right'>[check constraint]</td>
-	</tr>
-	<tr>
-		<td colspan='3' class='definition'>&quot;PUBLISHER SALES&quot;.SALES.COUNTRY IS NOT NULL</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -3941,8 +3898,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -3953,8 +3910,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -3965,8 +3922,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -3977,8 +3934,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -3989,8 +3946,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -4001,8 +3958,8 @@ hr {
 		<td class='description right'>[privilege]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>_SYSTEM &#8594; DBA (grantable)</td>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
 		<td class='type'></td>
 	</tr>
 </table>
@@ -4019,7 +3976,7 @@ hr {
 		<td class='description right'>[function, does not return a table]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>ONE</td>
 		<td class='type'>INTEGER, in</td>
 	</tr>
@@ -4028,10 +3985,30 @@ hr {
 	</tr>
 	<tr>
 		<td colspan='2' class='name'></td>
-		<td class='description right'>[definition]</td>
+		<td class='description right'>[specific name]</td>
 	</tr>
 	<tr>
-		<td colspan='3' class='definition'>CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10130 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN BOOKS.CUSTOMADD(ONE,1)</td>
+		<td colspan='3' class='definition'>CUSTOMADD_10131</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<table>
+  <caption>PUBLIC.BOOKS.CUSTOMADD</caption>
+
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[function, does not return a table]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ONE</td>
+		<td class='type'>INTEGER, in</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>TWO</td>
+		<td class='type'>INTEGER, in</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -4047,46 +4024,6 @@ hr {
 <p>&#160;</p>
 
 <table>
-  <caption>PUBLIC.BOOKS.CUSTOMADD</caption>
-
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description right'>[function, does not return a table]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>ONE</td>
-		<td class='type'>INTEGER, in</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>TWO</td>
-		<td class='type'>INTEGER, in</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description right'>[definition]</td>
-	</tr>
-	<tr>
-		<td colspan='3' class='definition'>CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER,IN TWO INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10129 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN ONE+TWO</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description right'>[specific name]</td>
-	</tr>
-	<tr>
-		<td colspan='3' class='definition'>CUSTOMADD_10129</td>
-	</tr>
-</table>
-<p>&#160;</p>
-
-<table>
   <caption>PUBLIC.BOOKS.NEW_PUBLISHER</caption>
 
 	<tr>
@@ -4094,24 +4031,9 @@ hr {
 		<td class='description right'>[procedure, no result]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>NEWPUBLISHER</td>
-		<td class='type'>CHARACTER VARYING, in</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>PUBLISHER</td>
 		<td class='type'>CHARACTER VARYING, out</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description right'>[definition]</td>
-	</tr>
-	<tr>
-		<td colspan='3' class='definition'>CREATE PROCEDURE BOOKS.NEW_PUBLISHER(IN NEWPUBLISHER VARCHAR(50),OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10128 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = NEWPUBLISHER</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -4134,19 +4056,14 @@ hr {
 		<td class='description right'>[procedure, no result]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
+		<td class='subname'>NEWPUBLISHER</td>
+		<td class='type'>CHARACTER VARYING, in</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
 		<td class='subname'>PUBLISHER</td>
 		<td class='type'>CHARACTER VARYING, out</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description right'>[definition]</td>
-	</tr>
-	<tr>
-		<td colspan='3' class='definition'>CREATE PROCEDURE BOOKS.NEW_PUBLISHER(OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10127 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = &apos;New Publisher&apos;</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -4156,7 +4073,7 @@ hr {
 		<td class='description right'>[specific name]</td>
 	</tr>
 	<tr>
-		<td colspan='3' class='definition'>NEW_PUBLISHER_10127</td>
+		<td colspan='3' class='definition'>NEW_PUBLISHER_10129</td>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -4169,29 +4086,19 @@ hr {
 		<td class='description right'>[procedure, no result]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>B_COUNT</td>
 		<td class='type'>INTEGER, in</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>B_OFFSET</td>
 		<td class='type'>INTEGER, in</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>L_ID</td>
 		<td class='type'>BIGINT, in</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description right'>[definition]</td>
-	</tr>
-	<tr>
-		<td colspan='3' class='definition'>CREATE PROCEDURE SYSTEM_LOBS.ALLOC_BLOCKS(IN B_COUNT INTEGER,IN B_OFFSET INTEGER,IN L_ID BIGINT) SPECIFIC ALLOC_BLOCKS_10070 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE LOB_ADDR INT DEFAULT NULL;DECLARE REMAINING_COUNT INT DEFAULT 0;DECLARE BL_ADDR INT DEFAULT NULL;DECLARE TEMP_COUNT INT DEFAULT 0;DECLARE BL_OFFSET INT DEFAULT 0;SET REMAINING_COUNT=B_COUNT;SET BL_OFFSET=B_OFFSET;MAIN_LOOP:LOOP SET BL_ADDR=(SELECT BLOCK_ADDR FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_COUNT=REMAINING_COUNT AND TX_ID=0 FETCH 1 ROW ONLY);IF BL_ADDR IS NOT NULL THEN CALL CONVERT_BLOCK(BL_ADDR,REMAINING_COUNT,BL_OFFSET,L_ID);IF LOB_ADDR IS NULL THEN SET LOB_ADDR=BL_ADDR;END IF;LEAVE MAIN_LOOP;END IF;SET(BL_ADDR,TEMP_COUNT)=(SELECT BLOCK_ADDR,BLOCK_COUNT FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_COUNT&lt;REMAINING_COUNT AND TX_ID=0 FETCH 1 ROW ONLY);IF BL_ADDR IS NOT NULL THEN CALL CONVERT_BLOCK(BL_ADDR,TEMP_COUNT,BL_OFFSET,L_ID);IF LOB_ADDR IS NULL THEN SET LOB_ADDR=BL_ADDR;END IF;SET REMAINING_COUNT=REMAINING_COUNT-TEMP_COUNT;SET BL_OFFSET=BL_OFFSET+TEMP_COUNT;SET BL_ADDR=NULL;SET TEMP_COUNT=0;ELSE CALL CREATE_EMPTY_BLOCK(BL_ADDR,REMAINING_COUNT);CALL CONVERT_BLOCK(BL_ADDR,REMAINING_COUNT,BL_OFFSET,L_ID);IF LOB_ADDR IS NULL THEN SET LOB_ADDR=BL_ADDR;END IF;LEAVE MAIN_LOOP;END IF;END LOOP MAIN_LOOP;END</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -4214,29 +4121,19 @@ hr {
 		<td class='description right'>[procedure, no result]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>B_COUNT</td>
 		<td class='type'>INTEGER, in</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>B_OFFSET</td>
 		<td class='type'>INTEGER, in</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>L_ID</td>
 		<td class='type'>BIGINT, in</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description right'>[definition]</td>
-	</tr>
-	<tr>
-		<td colspan='3' class='definition'>CREATE PROCEDURE SYSTEM_LOBS.ALLOC_SINGLE_BLOCK(IN B_COUNT INTEGER,IN B_OFFSET INTEGER,IN L_ID BIGINT) SPECIFIC ALLOC_SINGLE_BLOCK_10073 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE BL_ADDR INT DEFAULT NULL;SET BL_ADDR=(SELECT BLOCK_ADDR FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_COUNT=B_COUNT AND TX_ID=0 FETCH 1 ROW ONLY);IF BL_ADDR IS NULL THEN CALL CREATE_EMPTY_BLOCK(BL_ADDR,B_COUNT);END IF;CALL CONVERT_BLOCK(BL_ADDR,B_COUNT,B_OFFSET,L_ID);END</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -4259,34 +4156,24 @@ hr {
 		<td class='description right'>[procedure, no result]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>B_ADDR</td>
 		<td class='type'>INTEGER, in</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>B_COUNT</td>
 		<td class='type'>INTEGER, in</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>B_OFFSET</td>
 		<td class='type'>INTEGER, in</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>L_ID</td>
 		<td class='type'>BIGINT, in</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description right'>[definition]</td>
-	</tr>
-	<tr>
-		<td colspan='3' class='definition'>CREATE PROCEDURE SYSTEM_LOBS.CONVERT_BLOCK(IN B_ADDR INTEGER,IN B_COUNT INTEGER,IN B_OFFSET INTEGER,IN L_ID BIGINT) SPECIFIC CONVERT_BLOCK_10028 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DELETE FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_ADDR=B_ADDR;INSERT INTO SYSTEM_LOBS.LOBS VALUES(B_ADDR,B_COUNT,B_OFFSET,L_ID);END</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -4309,24 +4196,14 @@ hr {
 		<td class='description right'>[procedure, no result]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>B_ADDR</td>
 		<td class='type'>INTEGER, in/ out</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>B_COUNT</td>
 		<td class='type'>INTEGER, in</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description right'>[definition]</td>
-	</tr>
-	<tr>
-		<td colspan='3' class='definition'>CREATE PROCEDURE SYSTEM_LOBS.CREATE_EMPTY_BLOCK(INOUT B_ADDR INTEGER,IN B_COUNT INTEGER) SPECIFIC CREATE_EMPTY_BLOCK_10062 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE TEMP_COUNT INT DEFAULT NULL;DECLARE TEMP_ADDR INT DEFAULT NULL;SET(TEMP_ADDR,TEMP_COUNT)=(SELECT BLOCK_ADDR,BLOCK_COUNT FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_COUNT&gt;B_COUNT AND TX_ID=0 FETCH 1 ROW ONLY);IF TEMP_ADDR IS NULL THEN SIGNAL SQLSTATE&apos;45000&apos;;END IF;UPDATE SYSTEM_LOBS.BLOCKS SET BLOCK_COUNT=B_COUNT WHERE BLOCK_ADDR=TEMP_ADDR;INSERT INTO SYSTEM_LOBS.BLOCKS VALUES(TEMP_ADDR+B_COUNT,TEMP_COUNT-B_COUNT,0);SET B_ADDR=TEMP_ADDR;END</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -4349,34 +4226,24 @@ hr {
 		<td class='description right'>[procedure, no result]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>L_ID</td>
 		<td class='type'>BIGINT, in</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>B_OFFSET</td>
 		<td class='type'>INTEGER, in</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>B_LIMIT</td>
 		<td class='type'>INTEGER, in</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>TX_ID</td>
 		<td class='type'>BIGINT, in</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description right'>[definition]</td>
-	</tr>
-	<tr>
-		<td colspan='3' class='definition'>CREATE PROCEDURE SYSTEM_LOBS.DELETE_BLOCKS(IN L_ID BIGINT,IN B_OFFSET INTEGER,IN B_LIMIT INTEGER,IN TX_ID BIGINT) SPECIFIC DELETE_BLOCKS_10059 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC INSERT INTO SYSTEM_LOBS.BLOCKS(SELECT BLOCK_ADDR,BLOCK_COUNT,TX_ID FROM SYSTEM_LOBS.LOBS WHERE LOBS.LOB_ID=L_ID AND BLOCK_OFFSET&gt;=B_OFFSET AND BLOCK_OFFSET&lt;B_LIMIT);DELETE FROM SYSTEM_LOBS.LOBS WHERE LOBS.LOB_ID=L_ID AND BLOCK_OFFSET&gt;=B_OFFSET AND BLOCK_OFFSET&lt;B_LIMIT;END</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -4399,24 +4266,14 @@ hr {
 		<td class='description right'>[procedure, no result]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>L_ID</td>
 		<td class='type'>BIGINT, in</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>TX_ID</td>
 		<td class='type'>BIGINT, in</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description right'>[definition]</td>
-	</tr>
-	<tr>
-		<td colspan='3' class='definition'>CREATE PROCEDURE SYSTEM_LOBS.DELETE_LOB(IN L_ID BIGINT,IN TX_ID BIGINT) SPECIFIC DELETE_LOB_10030 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC INSERT INTO SYSTEM_LOBS.BLOCKS(SELECT BLOCK_ADDR,BLOCK_COUNT,TX_ID FROM SYSTEM_LOBS.LOBS WHERE LOBS.LOB_ID=L_ID);DELETE FROM SYSTEM_LOBS.LOBS WHERE LOBS.LOB_ID=L_ID;DELETE FROM SYSTEM_LOBS.PARTS WHERE LOB_ID=L_ID;DELETE FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_IDS.LOB_ID=L_ID;END</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -4439,19 +4296,9 @@ hr {
 		<td class='description right'>[procedure, no result]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>L_IDS</td>
 		<td class='type'>BIGINT ARRAY, in</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description right'>[definition]</td>
-	</tr>
-	<tr>
-		<td colspan='3' class='definition'>CREATE PROCEDURE SYSTEM_LOBS.DELETE_UNUSED(IN L_IDS BIGINT ARRAY) SPECIFIC DELETE_UNUSED_10045 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE TABLE LIVE_IDS(TEMP_ID INT);DECLARE TABLE TEMP_IDS(TEMP_ID INT);DECLARE TEMP_COUNT INT DEFAULT 1;WHILE TEMP_COUNT&lt;=CARDINALITY(L_IDS)DO INSERT INTO MODULE.LIVE_IDS VALUES L_IDS[TEMP_COUNT];SET TEMP_COUNT=TEMP_COUNT+1;END WHILE;SET TEMP_COUNT=0;REPEAT INSERT INTO MODULE.TEMP_IDS SELECT LOB_IDS.LOB_ID FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_USAGE_COUNT&lt;1 AND LOB_IDS.LOB_ID NOT IN(SELECT TEMP_ID FROM MODULE.LIVE_IDS)LIMIT 1000;INSERT INTO SYSTEM_LOBS.BLOCKS(SELECT BLOCK_ADDR,BLOCK_COUNT,0 FROM SYSTEM_LOBS.LOBS WHERE LOBS.LOB_ID IN(SELECT TEMP_ID FROM MODULE.TEMP_IDS));DELETE FROM SYSTEM_LOBS.LOBS WHERE LOBS.LOB_ID IN(SELECT TEMP_ID FROM MODULE.TEMP_IDS);DELETE FROM SYSTEM_LOBS.PARTS WHERE LOB_ID IN(SELECT TEMP_ID FROM MODULE.TEMP_IDS);DELETE FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_IDS.LOB_ID IN(SELECT TEMP_ID FROM MODULE.TEMP_IDS);GET DIAGNOSTICS TEMP_COUNT=ROW_COUNT;DELETE FROM MODULE.TEMP_IDS;UNTIL TEMP_COUNT&lt;1000 END REPEAT;END</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -4474,19 +4321,9 @@ hr {
 		<td class='description right'>[procedure, no result]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>LIMIT_ID</td>
 		<td class='type'>BIGINT, in</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description right'>[definition]</td>
-	</tr>
-	<tr>
-		<td colspan='3' class='definition'>CREATE PROCEDURE SYSTEM_LOBS.DELETE_UNUSED_LOBS(IN LIMIT_ID BIGINT) SPECIFIC DELETE_UNUSED_LOBS_10057 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE TABLE TEMP_IDS(TEMP_ID INT);DECLARE TEMP_COUNT INT DEFAULT 0;REPEAT INSERT INTO MODULE.TEMP_IDS SELECT LOB_IDS.LOB_ID FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_USAGE_COUNT=0 AND LOB_IDS.LOB_ID&lt;LIMIT_ID LIMIT 1000;INSERT INTO SYSTEM_LOBS.BLOCKS(SELECT BLOCK_ADDR,BLOCK_COUNT,0 FROM SYSTEM_LOBS.LOBS WHERE LOBS.LOB_ID IN(SELECT TEMP_ID FROM MODULE.TEMP_IDS));DELETE FROM SYSTEM_LOBS.LOBS WHERE LOBS.LOB_ID IN(SELECT TEMP_ID FROM MODULE.TEMP_IDS);DELETE FROM SYSTEM_LOBS.PARTS WHERE LOB_ID IN(SELECT TEMP_ID FROM MODULE.TEMP_IDS);DELETE FROM SYSTEM_LOBS.LOB_IDS WHERE LOB_IDS.LOB_ID IN(SELECT TEMP_ID FROM MODULE.TEMP_IDS);GET DIAGNOSTICS TEMP_COUNT=ROW_COUNT;DELETE FROM MODULE.TEMP_IDS;UNTIL TEMP_COUNT&lt;1000 END REPEAT;END</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -4509,24 +4346,14 @@ hr {
 		<td class='description right'>[procedure, no result]</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>B_OFFSET</td>
 		<td class='type'>INTEGER, in</td>
 	</tr>
 	<tr>
-		<td class='ordinal'></td>
+		<td class='spacer'></td>
 		<td class='subname'>L_ID</td>
 		<td class='type'>BIGINT, in</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description right'>[definition]</td>
-	</tr>
-	<tr>
-		<td colspan='3' class='definition'>CREATE PROCEDURE SYSTEM_LOBS.DIVIDE_BLOCK(IN B_OFFSET INTEGER,IN L_ID BIGINT) SPECIFIC DIVIDE_BLOCK_10065 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE BL_ADDR INT DEFAULT NULL;DECLARE BL_COUNT INT DEFAULT NULL;DECLARE BL_OFFSET INT DEFAULT NULL;SET(BL_ADDR,BL_COUNT,BL_OFFSET)=(SELECT BLOCK_ADDR,BLOCK_COUNT,BLOCK_OFFSET FROM SYSTEM_LOBS.LOBS WHERE LOBS.LOB_ID=L_ID AND B_OFFSET&gt;BLOCK_OFFSET AND B_OFFSET&lt;BLOCK_OFFSET+BLOCK_COUNT);IF BL_ADDR IS NULL THEN SIGNAL SQLSTATE&apos;45000&apos;;END IF;DELETE FROM SYSTEM_LOBS.LOBS WHERE BLOCK_ADDR=BL_ADDR;INSERT INTO SYSTEM_LOBS.LOBS VALUES(BL_ADDR,B_OFFSET-BL_OFFSET,BL_OFFSET,L_ID);INSERT INTO SYSTEM_LOBS.LOBS VALUES(BL_ADDR+B_OFFSET-BL_OFFSET,BL_OFFSET+BL_COUNT-B_OFFSET,B_OFFSET,L_ID);END</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -4547,16 +4374,6 @@ hr {
 	<tr>
 		<td colspan='2' class='name'></td>
 		<td class='description right'>[procedure, no result]</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description right'>[definition]</td>
-	</tr>
-	<tr>
-		<td colspan='3' class='definition'>CREATE PROCEDURE SYSTEM_LOBS.MERGE_EMPTY_BLOCKS() SPECIFIC MERGE_EMPTY_BLOCKS_10078 LANGUAGE SQL NOT DETERMINISTIC MODIFIES SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC DECLARE BL_BASE_ADDR INT DEFAULT-1;DECLARE BL_BASE_COUNT INT;DECLARE BL_ADDR INT;DECLARE BL_COUNT INT;REPEAT SET BL_BASE_COUNT=NULL;SET(BL_BASE_ADDR,BL_BASE_COUNT)=(SELECT BLOCK_ADDR,BLOCK_COUNT FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_ADDR&gt;BL_BASE_ADDR ORDER BY BLOCK_ADDR FETCH 1 ROW ONLY);IF BL_BASE_COUNT IS NOT NULL THEN REPEAT SET BL_ADDR=NULL;SET(BL_ADDR,BL_COUNT)=(SELECT BLOCK_ADDR,BLOCK_COUNT FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_ADDR=BL_BASE_ADDR+BL_BASE_COUNT);IF BL_ADDR IS NOT NULL THEN SET BL_BASE_COUNT=BL_BASE_COUNT+BL_COUNT;END IF;UNTIL BL_ADDR IS NULL END REPEAT;DELETE FROM SYSTEM_LOBS.BLOCKS WHERE BLOCK_ADDR&gt;=BL_BASE_ADDR AND BLOCK_ADDR&lt;BL_BASE_ADDR+BL_BASE_COUNT;INSERT INTO SYSTEM_LOBS.BLOCKS VALUES BL_BASE_ADDR,BL_BASE_COUNT,0;END IF;UNTIL BL_BASE_COUNT IS NULL END REPEAT;END</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -4594,7 +4411,7 @@ hr {
 		<td class='property_value right'>20 rows</td>
 	</tr>
 	<tr>
-		<td class='property_name'>PUBLIC.BOOKS.&quot;Global Counts&quot;</td>
+		<td class='property_name'>PUBLIC.BOOKS."Global Counts"</td>
 		<td class='property_value right'>empty</td>
 	</tr>
 	<tr>
@@ -4606,7 +4423,7 @@ hr {
 		<td class='property_value right'>empty</td>
 	</tr>
 	<tr>
-		<td class='property_name'>PUBLIC.FOR_LINT.&quot;Global Counts&quot;</td>
+		<td class='property_name'>PUBLIC.FOR_LINT."Global Counts"</td>
 		<td class='property_value right'>empty</td>
 	</tr>
 	<tr>
@@ -4618,11 +4435,15 @@ hr {
 		<td class='property_value right'>empty</td>
 	</tr>
 	<tr>
-		<td class='property_name'>PUBLIC.&quot;PUBLISHER SALES&quot;.REGIONS</td>
+		<td class='property_name'>PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</td>
+		<td class='property_value right'>empty</td>
+	</tr>
+	<tr>
+		<td class='property_name'>PUBLIC."PUBLISHER SALES".REGIONS</td>
 		<td class='property_value right'>20 rows</td>
 	</tr>
 	<tr>
-		<td class='property_name'>PUBLIC.&quot;PUBLISHER SALES&quot;.SALES</td>
+		<td class='property_name'>PUBLIC."PUBLISHER SALES".SALES</td>
 		<td class='property_value right'>20 rows</td>
 	</tr>
 </table>
@@ -5100,6 +4921,7 @@ hr {
 		<th>PUBLISHERID</th>
 		<th>PUBLICATIONDATE</th>
 		<th>PRICE</th>
+		<th>PREVIOUSEDITIONID</th>
 	</tr>
 	<tr>
 		<td class='data_number'>1</td>
@@ -5108,6 +4930,7 @@ hr {
 		<td class='data_number'>18</td>
 		<td>2000-10-27</td>
 		<td class='data_number'>69.99</td>
+		<td class='data_null'>NULL</td>
 	</tr>
 	<tr>
 		<td class='data_number'>2</td>
@@ -5116,6 +4939,7 @@ hr {
 		<td class='data_number'>20</td>
 		<td>2002-05-09</td>
 		<td class='data_number'>27.99</td>
+		<td class='data_null'>NULL</td>
 	</tr>
 	<tr>
 		<td class='data_number'>3</td>
@@ -5124,6 +4948,7 @@ hr {
 		<td class='data_number'>15</td>
 		<td>2006-04-14</td>
 		<td class='data_number'>37.99</td>
+		<td class='data_null'>NULL</td>
 	</tr>
 	<tr>
 		<td class='data_number'>4</td>
@@ -5132,6 +4957,7 @@ hr {
 		<td class='data_number'>1</td>
 		<td>2007-05-21</td>
 		<td class='data_number'>64.99</td>
+		<td class='data_null'>NULL</td>
 	</tr>
 	<tr>
 		<td class='data_number'>5</td>
@@ -5140,6 +4966,7 @@ hr {
 		<td class='data_number'>7</td>
 		<td>2010-05-14</td>
 		<td class='data_number'>83.99</td>
+		<td class='data_null'>NULL</td>
 	</tr>
 	<tr>
 		<td class='data_number'>6</td>
@@ -5148,6 +4975,7 @@ hr {
 		<td class='data_number'>13</td>
 		<td>2009-07-17</td>
 		<td class='data_number'>31.99</td>
+		<td class='data_null'>NULL</td>
 	</tr>
 	<tr>
 		<td class='data_number'>7</td>
@@ -5156,6 +4984,7 @@ hr {
 		<td class='data_number'>7</td>
 		<td>1999-06-09</td>
 		<td class='data_number'>76.99</td>
+		<td class='data_null'>NULL</td>
 	</tr>
 	<tr>
 		<td class='data_number'>8</td>
@@ -5164,6 +4993,7 @@ hr {
 		<td class='data_number'>7</td>
 		<td>2009-01-24</td>
 		<td class='data_number'>30.99</td>
+		<td class='data_null'>NULL</td>
 	</tr>
 	<tr>
 		<td class='data_number'>9</td>
@@ -5172,6 +5002,7 @@ hr {
 		<td class='data_number'>1</td>
 		<td>2004-06-25</td>
 		<td class='data_number'>69.99</td>
+		<td class='data_null'>NULL</td>
 	</tr>
 	<tr>
 		<td class='data_number'>10</td>
@@ -5180,6 +5011,7 @@ hr {
 		<td class='data_number'>19</td>
 		<td>2005-11-14</td>
 		<td class='data_number'>34.99</td>
+		<td class='data_null'>NULL</td>
 	</tr>
 	<tr>
 		<td class='data_number'>11</td>
@@ -5188,6 +5020,7 @@ hr {
 		<td class='data_number'>5</td>
 		<td>2003-10-19</td>
 		<td class='data_number'>89.99</td>
+		<td class='data_null'>NULL</td>
 	</tr>
 	<tr>
 		<td class='data_number'>12</td>
@@ -5196,6 +5029,7 @@ hr {
 		<td class='data_number'>5</td>
 		<td>2002-05-04</td>
 		<td class='data_number'>64.99</td>
+		<td class='data_null'>NULL</td>
 	</tr>
 	<tr>
 		<td class='data_number'>13</td>
@@ -5204,6 +5038,7 @@ hr {
 		<td class='data_number'>8</td>
 		<td>2005-08-03</td>
 		<td class='data_number'>25.99</td>
+		<td class='data_null'>NULL</td>
 	</tr>
 	<tr>
 		<td class='data_number'>14</td>
@@ -5212,6 +5047,7 @@ hr {
 		<td class='data_number'>2</td>
 		<td>2009-02-09</td>
 		<td class='data_number'>84.99</td>
+		<td class='data_null'>NULL</td>
 	</tr>
 	<tr>
 		<td class='data_number'>15</td>
@@ -5220,6 +5056,7 @@ hr {
 		<td class='data_number'>20</td>
 		<td>2001-08-28</td>
 		<td class='data_number'>77.99</td>
+		<td class='data_null'>NULL</td>
 	</tr>
 	<tr>
 		<td class='data_number'>16</td>
@@ -5228,6 +5065,7 @@ hr {
 		<td class='data_number'>6</td>
 		<td>2003-08-30</td>
 		<td class='data_number'>47.99</td>
+		<td class='data_null'>NULL</td>
 	</tr>
 	<tr>
 		<td class='data_number'>17</td>
@@ -5236,6 +5074,7 @@ hr {
 		<td class='data_number'>17</td>
 		<td>2005-06-24</td>
 		<td class='data_number'>36.99</td>
+		<td class='data_null'>NULL</td>
 	</tr>
 	<tr>
 		<td class='data_number'>18</td>
@@ -5244,6 +5083,7 @@ hr {
 		<td class='data_number'>18</td>
 		<td>2008-01-28</td>
 		<td class='data_number'>63.99</td>
+		<td class='data_null'>NULL</td>
 	</tr>
 	<tr>
 		<td class='data_number'>19</td>
@@ -5252,6 +5092,7 @@ hr {
 		<td class='data_number'>5</td>
 		<td>2006-08-23</td>
 		<td class='data_number'>67.99</td>
+		<td class='data_null'>NULL</td>
 	</tr>
 	<tr>
 		<td class='data_number'>20</td>
@@ -5260,6 +5101,7 @@ hr {
 		<td class='data_number'>5</td>
 		<td>2002-09-29</td>
 		<td class='data_number'>43.99</td>
+		<td class='data_null'>NULL</td>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -5421,6 +5263,17 @@ hr {
 		<th>HOMEEMAIL11</th>
 		<th>HOMEEMAIL12</th>
 		<th>PUBLICATION_ID</th>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<table>
+  <caption>PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</caption>
+
+	<tr>
+		<th>ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</th>
+		<th>ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</th>
+		<th>ΣΥΓΓΡΑΦΈΑΣ</th>
 	</tr>
 </table>
 <p>&#160;</p>
