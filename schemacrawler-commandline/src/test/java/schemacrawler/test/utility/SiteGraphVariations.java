@@ -46,13 +46,13 @@ import schemacrawler.Main;
 import schemacrawler.schemacrawler.Config;
 
 @Ignore
-public class GraphVariations
+public class SiteGraphVariations
   extends BaseDatabaseTest
 {
 
   public static void main(final String[] args)
   {
-    JUnitCore.main(GraphVariations.class.getCanonicalName());
+    JUnitCore.main(SiteGraphVariations.class.getCanonicalName());
   }
 
   @BeforeClass
@@ -60,7 +60,7 @@ public class GraphVariations
     throws IOException, URISyntaxException
   {
     final Path codePath = Paths
-      .get(GraphVariations.class.getProtectionDomain().getCodeSource()
+      .get(SiteGraphVariations.class.getProtectionDomain().getCodeSource()
         .getLocation().toURI()).normalize().toAbsolutePath();
     directory = codePath
       .resolve("../../../schemacrawler-site/src/site/resources/images")
@@ -185,7 +185,7 @@ public class GraphVariations
   private Path createConfig(final Map<String, String> config)
     throws IOException
   {
-    final String prefix = "SchemaCrawler.TestCommandLineConfig";
+    final String prefix = SiteGraphVariations.class.getName();
     final Path configFile = createTempFile(prefix, "properties");
     final Properties configProperties = new Properties();
     configProperties.putAll(config);
