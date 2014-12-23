@@ -276,6 +276,7 @@ public final class TestUtility
       return false;
     }
 
+    int i = 0;
     try (final BufferedReader expectedBufferedReader = new BufferedReader(expectedInputReader);
         final BufferedReader actualBufferedReader = new BufferedReader(actualInputReader);)
     {
@@ -283,7 +284,7 @@ public final class TestUtility
       while ((expectedline = expectedBufferedReader.readLine()) != null)
       {
         final String actualLine = actualBufferedReader.readLine();
-
+        i++;
         boolean ignore = false;
         for (final Pattern ignoreLinePattern: ignoreLinePatterns)
         {
@@ -300,6 +301,9 @@ public final class TestUtility
 
         if (!expectedline.equals(actualLine))
         {
+          System.out.println("Line #" + i);
+          System.out.println(expectedline);
+          System.out.println(actualLine);
           return false;
         }
       }
@@ -495,8 +499,17 @@ public final class TestUtility
       Pattern.compile("url +jdbc:.*"),
       Pattern.compile("database product version.*"),
       Pattern.compile("driver version.*"),
-      Pattern.compile(".*[A-Za-z]+ \\d+\\, 2014 \\d+:\\d+ [AP]M.*")
-  // Apr 2, 2014 8:38 PM
+      Pattern.compile(".*[A-Za-z]+ \\d+\\, 2014 \\d+:\\d+ [AP]M.*"),
+      // SVG {
+      Pattern.compile("<svg.*"),
+      Pattern.compile(" viewBox=\"0.00.*"),
+      Pattern.compile("<g id=.*"),
+      Pattern.compile("<text text-anchor.*"),
+      Pattern.compile("<path fill=.*"),
+      Pattern.compile("<ellipse fill=.*"),
+      Pattern.compile("<polyline fill=.*"),
+      Pattern.compile("<polygon fill=.*"),
+  // }
   };
 
   private TestUtility()
