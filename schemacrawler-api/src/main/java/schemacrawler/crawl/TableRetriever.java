@@ -70,6 +70,8 @@ final class TableRetriever
                                                                                true);
     if (columnFilter.isExcludeAll())
     {
+      LOGGER.log(Level.INFO,
+                 "Not retrieving columns, since this was not requested");
       return;
     }
 
@@ -277,6 +279,8 @@ final class TableRetriever
                                                                              false);
     if (tableFilter.isExcludeAll())
     {
+      LOGGER.log(Level.INFO,
+                 "Not retrieving tables, since this was not requested");
       return;
     }
 
