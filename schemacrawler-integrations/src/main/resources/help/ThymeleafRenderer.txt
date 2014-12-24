@@ -1,0 +1,14 @@
+--- Command ---
+
+-c=thymeleaf (short for -command=thymeleaf)
+  Processes a Thymeleaf template
+  
+--- Output Options ---
+
+-outputformat=<outputformat>
+	Where <outputformat> is the file path or class path to the Thymeleaf 
+	template
+
+-o=<outputfile> (short for -outputfile=<outputfile>)
+	Optional 
+	<outputfile> is the path to the output file
