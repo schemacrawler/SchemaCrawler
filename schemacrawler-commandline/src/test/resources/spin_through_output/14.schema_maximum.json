@@ -1607,7 +1607,7 @@
     "databaseProductVersion": "2.3.2"
   },
   "schemaCrawlerInfo": {
-    "productVersion": "12.02.01",
+    "productVersion": "12.02.02",
     "productName": "SchemaCrawler"
   },
   "jdbcDriverInfo": {
