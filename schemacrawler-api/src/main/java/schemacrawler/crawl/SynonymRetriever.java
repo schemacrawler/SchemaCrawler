@@ -74,6 +74,8 @@ final class SynonymRetriever
                                                                                  false);
     if (synonymFilter.isExcludeAll())
     {
+      LOGGER.log(Level.INFO,
+                 "Not retrieving synonyms, since this was not requested");
       return;
     }
 

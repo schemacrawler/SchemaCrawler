@@ -70,6 +70,9 @@ final class RoutineRetriever
                                                                                        true);
     if (columnFilter.isExcludeAll())
     {
+      LOGGER
+        .log(Level.INFO,
+             "Not retrieving function columns, since this was not requested");
       return;
     }
 
@@ -163,6 +166,8 @@ final class RoutineRetriever
                                                                                    false);
     if (functionFilter.isExcludeAll())
     {
+      LOGGER.log(Level.INFO,
+                 "Not retrieving functions, since this was not requested");
       return;
     }
 
@@ -225,6 +230,9 @@ final class RoutineRetriever
                                                                                         true);
     if (columnFilter.isExcludeAll())
     {
+      LOGGER
+        .log(Level.INFO,
+             "Not retrieving procedure columns, since this was not requested");
       return;
     }
 
@@ -303,6 +311,8 @@ final class RoutineRetriever
                                                                                      false);
     if (procedureFilter.isExcludeAll())
     {
+      LOGGER.log(Level.INFO,
+                 "Not retrieving procedures, since this was not requested");
       return;
     }
 
