@@ -65,8 +65,8 @@ public final class OutputOptionsParser
     else
     {
       outputFile = Paths.get(outputFileName);
+      outputOptions.setOutputFile(outputFile);
     }
-    outputOptions.setOutputFile(outputFile);
 
     return outputOptions;
   }
