@@ -28,6 +28,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.ExcludeAll;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
@@ -105,7 +106,7 @@ public final class SchemaCrawlerOptionsParser
 
     if (hasOptionValue("schemas"))
     {
-      final InclusionRule schemaInclusionRule = new RegularExpressionInclusionRule(getStringValue("schemas"));
+      final InclusionRule schemaInclusionRule = getInclusionRule("schemas");
       logOverride("schemas",
                   options.getSchemaInclusionRule(),
                   schemaInclusionRule);
@@ -127,7 +128,7 @@ public final class SchemaCrawlerOptionsParser
 
     if (hasOptionValue("tables"))
     {
-      final InclusionRule tableInclusionRule = new RegularExpressionInclusionRule(getStringValue("tables"));
+      final InclusionRule tableInclusionRule = getInclusionRule("tables");
       logOverride("tables", options.getTableInclusionRule(), tableInclusionRule);
       options.setTableInclusionRule(tableInclusionRule);
     }
@@ -147,7 +148,7 @@ public final class SchemaCrawlerOptionsParser
 
     if (hasOptionValue("routines"))
     {
-      final InclusionRule routineInclusionRule = new RegularExpressionInclusionRule(getStringValue("routines"));
+      final InclusionRule routineInclusionRule = getInclusionRule("routines");
       logOverride("routines",
                   options.getRoutineInclusionRule(),
                   routineInclusionRule);
@@ -164,7 +165,7 @@ public final class SchemaCrawlerOptionsParser
 
     if (hasOptionValue("synonyms"))
     {
-      final InclusionRule synonymInclusionRule = new RegularExpressionInclusionRule(getStringValue("synonyms"));
+      final InclusionRule synonymInclusionRule = getInclusionRule("synonyms");
       logOverride("synonyms",
                   options.getSynonymInclusionRule(),
                   synonymInclusionRule);
@@ -173,7 +174,7 @@ public final class SchemaCrawlerOptionsParser
 
     if (hasOptionValue("sequences"))
     {
-      final InclusionRule sequenceInclusionRule = new RegularExpressionInclusionRule(getStringValue("sequences"));
+      final InclusionRule sequenceInclusionRule = getInclusionRule("sequences");
       logOverride("sequences",
                   options.getSequenceInclusionRule(),
                   sequenceInclusionRule);
@@ -192,7 +193,7 @@ public final class SchemaCrawlerOptionsParser
 
     if (hasOptionValue("grepcolumns"))
     {
-      final InclusionRule grepColumnInclusionRule = new RegularExpressionInclusionRule(getStringValue("grepcolumns"));
+      final InclusionRule grepColumnInclusionRule = getInclusionRule("grepcolumns");
       options.setGrepColumnInclusionRule(grepColumnInclusionRule);
     }
     else
@@ -202,7 +203,7 @@ public final class SchemaCrawlerOptionsParser
 
     if (hasOptionValue("grepinout"))
     {
-      final InclusionRule grepRoutineColumnInclusionRule = new RegularExpressionInclusionRule(getStringValue("grepinout"));
+      final InclusionRule grepRoutineColumnInclusionRule = getInclusionRule("grepinout");
       options.setGrepRoutineColumnInclusionRule(grepRoutineColumnInclusionRule);
     }
     else
@@ -212,7 +213,7 @@ public final class SchemaCrawlerOptionsParser
 
     if (hasOptionValue("grepdef"))
     {
-      final InclusionRule grepDefinitionInclusionRule = new RegularExpressionInclusionRule(getStringValue("grepdef"));
+      final InclusionRule grepDefinitionInclusionRule = getInclusionRule("grepdef");
       options.setGrepDefinitionInclusionRule(grepDefinitionInclusionRule);
     }
     else
@@ -241,6 +242,21 @@ public final class SchemaCrawlerOptionsParser
     }
 
     return options;
+  }
+
+  private InclusionRule getInclusionRule(final String switchName)
+  {
+    final String schemas = getStringValue(switchName);
+    final InclusionRule schemaInclusionRule;
+    if (!isBlank(schemas))
+    {
+      schemaInclusionRule = new RegularExpressionInclusionRule(schemas);
+    }
+    else
+    {
+      schemaInclusionRule = new ExcludeAll();
+    }
+    return schemaInclusionRule;
   }
 
   private void logOverride(final String inclusionRuleName,

@@ -84,6 +84,7 @@ public final class SchemaCrawler
                                                                         catalog);
       if (infoLevel.isRetrieveColumnDataTypes())
       {
+        LOGGER.log(Level.INFO, "Retrieving system column data types");
         retriever.retrieveSystemColumnDataTypes();
       }
       else
@@ -94,6 +95,7 @@ public final class SchemaCrawler
       }
       if (infoLevel.isRetrieveUserDefinedColumnDataTypes())
       {
+        LOGGER.log(Level.INFO, "Retrieving user column data types");
         for (final Schema schema: retriever.getSchemas())
         {
           retriever.retrieveUserDefinedColumnDataTypes(schema.getCatalogName(),
@@ -128,6 +130,7 @@ public final class SchemaCrawler
 
       if (infoLevel.isRetrieveSchemaCrawlerInfo())
       {
+        LOGGER.log(Level.INFO, "Retrieving SchemaCrawler information");
         retriever.retrieveSchemaCrawlerInfo();
         if (infoLevel.isRetrieveAdditionalSchemaCrawlerInfo())
         {
@@ -138,10 +141,11 @@ public final class SchemaCrawler
       {
         LOGGER
           .log(Level.INFO,
-               "Not retrieving SchemaCrawler info, since this was not requested");
+               "Not retrieving SchemaCrawler information, since this was not requested");
       }
       if (infoLevel.isRetrieveDatabaseInfo())
       {
+        LOGGER.log(Level.INFO, "Retrieving database information");
         retriever.retrieveDatabaseInfo();
         if (infoLevel.isRetrieveAdditionalDatabaseInfo())
         {
@@ -152,10 +156,11 @@ public final class SchemaCrawler
       {
         LOGGER
           .log(Level.INFO,
-               "Not retrieving database info, since this was not requested");
+               "Not retrieving database information, since this was not requested");
       }
       if (infoLevel.isRetrieveJdbcDriverInfo())
       {
+        LOGGER.log(Level.INFO, "Retrieving JDBC driver information");
         retriever.retrieveJdbcDriverInfo();
         if (infoLevel.isRetrieveAdditionalJdbcDriverInfo())
         {
@@ -166,7 +171,7 @@ public final class SchemaCrawler
       {
         LOGGER
           .log(Level.INFO,
-               "Not retrieving JDBC driver info, since this was not requested");
+               "Not retrieving JDBC driver information, since this was not requested");
       }
     }
     catch (final SQLException e)
@@ -189,6 +194,8 @@ public final class SchemaCrawler
                  "Not retrieving routines, since this was not requested");
       return;
     }
+
+    LOGGER.log(Level.INFO, "Retrieving routines");
 
     final RoutineRetriever retriever;
     final RoutineExtRetriever retrieverExtra;
@@ -264,6 +271,9 @@ public final class SchemaCrawler
                                    final SchemaCrawlerOptions options)
     throws SchemaCrawlerException
   {
+
+    LOGGER.log(Level.INFO, "Retrieving schemas");
+
     try
     {
       final SchemaRetriever retriever = new SchemaRetriever(retrieverConnection,
@@ -291,6 +301,8 @@ public final class SchemaCrawler
                  "Not retrieving sequences, since this was not requested");
       return;
     }
+
+    LOGGER.log(Level.INFO, "Retrieving sequences");
 
     final SequenceRetriever retrieverExtra;
     try
@@ -328,6 +340,8 @@ public final class SchemaCrawler
       return;
     }
 
+    LOGGER.log(Level.INFO, "Retrieving synonyms");
+
     final SynonymRetriever retrieverExtra;
     try
     {
@@ -363,6 +377,8 @@ public final class SchemaCrawler
                  "Not retrieving tables, since this was not requested");
       return;
     }
+
+    LOGGER.log(Level.INFO, "Retrieving tables");
 
     final TableRetriever retriever;
     final TableExtRetriever retrieverExtra;

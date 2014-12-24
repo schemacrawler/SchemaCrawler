@@ -73,6 +73,8 @@ final class SequenceRetriever
                                                                                    false);
     if (sequenceFilter.isExcludeAll())
     {
+      LOGGER.log(Level.INFO,
+                 "Not retrieving sequences, since this was not requested");
       return;
     }
 

@@ -69,4 +69,12 @@ public final class DatabaseServerType
     return databaseSystemIdentifier == null;
   }
 
+  @Override
+  public String toString()
+  {
+    return String.format("%s - %s",
+                         databaseSystemIdentifier,
+                         databaseSystemName);
+  }
+
 }

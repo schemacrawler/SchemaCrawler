@@ -74,6 +74,9 @@ final class TableExtRetriever
       .getInformationSchemaViews();
     if (!informationSchemaViews.hasAdditionalColumnAttributesSql())
     {
+      LOGGER
+        .log(Level.INFO,
+             "Not retrieving additional column attributes, since this was not requested");
       LOGGER.log(Level.FINE,
                  "Additional column attributes SQL statement was not provided");
       return;
@@ -146,6 +149,9 @@ final class TableExtRetriever
       .getInformationSchemaViews();
     if (!informationSchemaViews.hasAdditionalTableAttributesSql())
     {
+      LOGGER
+        .log(Level.INFO,
+             "Not retrieving additional table attributes, since this was not requested");
       LOGGER.log(Level.FINE,
                  "Additional table attributes SQL statement was not provided");
       return;
@@ -207,6 +213,9 @@ final class TableExtRetriever
 
     if (!informationSchemaViews.hasExtIndexesSql())
     {
+      LOGGER
+        .log(Level.INFO,
+             "Not retrieving additional index information, since this was not requested");
       LOGGER.log(Level.FINE,
                  "Indexes information SQL statement was not provided");
       return;
@@ -331,6 +340,9 @@ final class TableExtRetriever
     if (!informationSchemaViews.hasExtTablesSql())
     {
       LOGGER
+        .log(Level.INFO,
+             "Not retrieving table definitions, since this was not requested");
+      LOGGER
         .log(Level.FINE, "Table definitions SQL statement was not provided");
       return;
     }
@@ -405,6 +417,9 @@ final class TableExtRetriever
       .getInformationSchemaViews();
     if (!informationSchemaViews.hasTriggerSql())
     {
+      LOGGER
+        .log(Level.INFO,
+             "Not retrieving trigger definitions, since this was not requested");
       LOGGER.log(Level.FINE,
                  "Trigger definition SQL statement was not provided");
       return;
@@ -497,6 +512,9 @@ final class TableExtRetriever
 
     if (!informationSchemaViews.hasViewsSql())
     {
+      LOGGER
+        .log(Level.INFO,
+             "Not retrieving additional view information, since this was not requested");
       LOGGER.log(Level.FINE, "Views SQL statement was not provided");
       return;
     }
