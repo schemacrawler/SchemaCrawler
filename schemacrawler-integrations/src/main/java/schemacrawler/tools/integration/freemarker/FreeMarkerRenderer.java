@@ -67,8 +67,6 @@ public final class FreeMarkerRenderer
   public final void executeOn(final Catalog catalog, final Connection connection)
     throws Exception
   {
-    // Set the file path, in case the template is a file template
-    // This allows Velocity to load templates from any directory
     String templateLocation = outputOptions.getOutputFormatValue();
     String templatePath = ".";
     final File templateFilePath = new File(templateLocation);

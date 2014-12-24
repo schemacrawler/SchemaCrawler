@@ -1,0 +1,29 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+  <head>
+    <title>SchemaCrawler Schema</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  </head>
+
+  <body>
+  
+    <pre th:text="${catalog.schemaCrawlerInfo}">SchemaCrawler Information</pre>
+    <pre th:text="${catalog.databaseInfo}">SchemaCrawler Information</pre>
+    <pre th:text="${catalog.jdbcDriverInfo}">SchemaCrawler Information</pre>
+  
+    <span th:each="schema: ${catalog.schemas}">
+      <h1 th:text="${schema.fullName}">Schema</h1>
+        <span th:each="table: ${catalog.getTables(schema)}">
+          <h2 th:text="${table.fullName}">Table</h2>
+          <ol th:each="column: ${table.columns}">
+            <li th:text="${column.name}">Columns</li>
+          </ol>
+        </span>      
+    </span>
+    
+  </body>
+
+</html>
