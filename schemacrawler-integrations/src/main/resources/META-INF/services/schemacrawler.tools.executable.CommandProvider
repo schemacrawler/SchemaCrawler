@@ -1,3 +1,4 @@
 schemacrawler.tools.integration.freemarker.FreeMarkerCommandProvider
 schemacrawler.tools.integration.velocity.VelocityCommandProvider
 schemacrawler.tools.integration.serialization.SerializationCommandProvider
+schemacrawler.tools.integration.thymeleaf.ThymeleafCommandProvider
