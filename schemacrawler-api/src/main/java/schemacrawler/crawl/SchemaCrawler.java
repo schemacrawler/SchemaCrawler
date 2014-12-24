@@ -86,6 +86,12 @@ public final class SchemaCrawler
       {
         retriever.retrieveSystemColumnDataTypes();
       }
+      else
+      {
+        LOGGER
+          .log(Level.INFO,
+               "Not retrieving system column data types, since this was not requested");
+      }
       if (infoLevel.isRetrieveUserDefinedColumnDataTypes())
       {
         for (final Schema schema: retriever.getSchemas())
@@ -93,6 +99,12 @@ public final class SchemaCrawler
           retriever.retrieveUserDefinedColumnDataTypes(schema.getCatalogName(),
                                                        schema.getName());
         }
+      }
+      else
+      {
+        LOGGER
+          .log(Level.INFO,
+               "Not retrieving user column data types, since this was not requested");
       }
     }
     catch (final SQLException e)
@@ -122,6 +134,12 @@ public final class SchemaCrawler
           retriever.retrieveAdditionalSchemaCrawlerInfo();
         }
       }
+      else
+      {
+        LOGGER
+          .log(Level.INFO,
+               "Not retrieving SchemaCrawler info, since this was not requested");
+      }
       if (infoLevel.isRetrieveDatabaseInfo())
       {
         retriever.retrieveDatabaseInfo();
@@ -130,6 +148,12 @@ public final class SchemaCrawler
           retriever.retrieveAdditionalDatabaseInfo();
         }
       }
+      else
+      {
+        LOGGER
+          .log(Level.INFO,
+               "Not retrieving database info, since this was not requested");
+      }
       if (infoLevel.isRetrieveJdbcDriverInfo())
       {
         retriever.retrieveJdbcDriverInfo();
@@ -137,6 +161,12 @@ public final class SchemaCrawler
         {
           retriever.retrieveAdditionalJdbcDriverInfo();
         }
+      }
+      else
+      {
+        LOGGER
+          .log(Level.INFO,
+               "Not retrieving JDBC driver info, since this was not requested");
       }
     }
     catch (final SQLException e)
@@ -155,6 +185,8 @@ public final class SchemaCrawler
     final boolean retrieveRoutines = infoLevel.isRetrieveRoutines();
     if (!retrieveRoutines)
     {
+      LOGGER.log(Level.INFO,
+                 "Not retrieving routines, since this was not requested");
       return;
     }
 
@@ -255,6 +287,8 @@ public final class SchemaCrawler
     final boolean retrieveSequences = infoLevel.isRetrieveSequenceInformation();
     if (!retrieveSequences)
     {
+      LOGGER.log(Level.INFO,
+                 "Not retrieving sequences, since this was not requested");
       return;
     }
 
@@ -289,6 +323,8 @@ public final class SchemaCrawler
     final boolean retrieveSynonyms = infoLevel.isRetrieveSynonymInformation();
     if (!retrieveSynonyms)
     {
+      LOGGER.log(Level.INFO,
+                 "Not retrieving synonyms, since this was not requested");
       return;
     }
 
@@ -323,6 +359,8 @@ public final class SchemaCrawler
     final boolean retrieveTables = infoLevel.isRetrieveTables();
     if (!retrieveTables)
     {
+      LOGGER.log(Level.INFO,
+                 "Not retrieving tables, since this was not requested");
       return;
     }
 
