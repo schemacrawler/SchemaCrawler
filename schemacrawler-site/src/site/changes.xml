@@ -5,7 +5,15 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-     <release version="12.02.01" date="2014-12-27" description="Single distribution download, with support for all databases, as well as offline snapshot support.">
+     <release version="12.02.02" date="2014-12-24" description="More efficient execution and better logging.">
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Better logging of execution.
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Quicker execution when routines are not output.
+      ]]></action>                       
+     </release>    
+     <release version="12.02.01" date="2014-12-21" description="New output format with embedded graphs.">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         New output format, htmlx, which embeds database diagrams into an HTML file. The 
         diagrams are in SVG format.
