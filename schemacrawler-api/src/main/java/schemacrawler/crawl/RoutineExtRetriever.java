@@ -65,6 +65,9 @@ final class RoutineExtRetriever
       .getInformationSchemaViews();
     if (!informationSchemaViews.hasRoutinesSql())
     {
+      LOGGER
+        .log(Level.INFO,
+             "Not retrieving routine definitions, since this was not requested");
       LOGGER.log(Level.FINE,
                  "Routine definition SQL statement was not provided");
       return;

@@ -24,9 +24,12 @@ package schemacrawler.tools.executable;
 import static java.util.Objects.requireNonNull;
 
 import java.sql.Connection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
+import sf.util.ObjectToString;
 
 /**
  * A SchemaCrawler tools executable unit.
@@ -37,6 +40,9 @@ public abstract class BaseStagedExecutable
   extends BaseExecutable
   implements StagedExecutable
 {
+
+  private static final Logger LOGGER = Logger
+    .getLogger(BaseStagedExecutable.class.getName());
 
   protected BaseStagedExecutable(final String command)
   {
@@ -53,6 +59,11 @@ public abstract class BaseStagedExecutable
     throws Exception
   {
     requireNonNull(connection, "No connection provided");
+
+    LOGGER.log(Level.INFO, "Executing SchemaCrawler command, " + getCommand());
+    LOGGER.log(Level.CONFIG, ObjectToString.toString(schemaCrawlerOptions));
+    LOGGER.log(Level.CONFIG, ObjectToString.toString(outputOptions));
+    LOGGER.log(Level.FINE, ObjectToString.toString(additionalConfiguration));
 
     final SchemaCrawler crawler = new SchemaCrawler(connection);
     final Catalog catalog = crawler.crawl(schemaCrawlerOptions);
