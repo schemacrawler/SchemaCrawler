@@ -27,12 +27,11 @@ import java.nio.charset.Charset;
 public interface OutputResource
 {
 
-  void close(Writer writer)
-    throws IOException;
-
   String getDescription();
 
   Writer openOutputWriter(Charset charset, boolean appendOutput)
     throws IOException;
+
+  boolean shouldCloseWriter();
 
 }

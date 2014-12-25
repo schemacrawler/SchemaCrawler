@@ -50,24 +50,15 @@ public class FileOutputResource
       .toAbsolutePath();
   }
 
-  public Path getOutputFile()
-  {
-    return outputFile;
-  }
-
-  @Override
-  public void close(final Writer writer)
-    throws IOException
-  {
-    requireNonNull(writer, "No writer provided");
-    writer.close();
-    LOGGER.log(Level.INFO, "Closed output writer");
-  }
-
   @Override
   public String getDescription()
   {
     return outputFile.toString();
+  }
+
+  public Path getOutputFile()
+  {
+    return outputFile;
   }
 
   @Override
@@ -92,6 +83,12 @@ public class FileOutputResource
     final Writer writer = newBufferedWriter(outputFile, charset, openOptions);
     LOGGER.log(Level.INFO, "Opened output writer to file, " + outputFile);
     return writer;
+  }
+
+  @Override
+  public boolean shouldCloseWriter()
+  {
+    return true;
   }
 
   @Override
