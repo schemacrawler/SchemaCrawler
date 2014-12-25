@@ -5,6 +5,14 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+     <release version="12.02.03" date="2014-12-25" description="Integration with Thymeleaf templating.">
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Integration with Thymeleaf templating.
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Flushing of output.
+      ]]></action>                       
+     </release>    
      <release version="12.02.02" date="2014-12-24" description="More efficient execution and better logging.">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Better logging of execution.
