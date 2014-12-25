@@ -22,6 +22,8 @@ package schemacrawler.tools.options;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
@@ -32,6 +34,9 @@ public final class OutputWriter
   private final Writer writer;
   private boolean isClosed;
   private final OutputResource outputResource;
+
+  private static final Logger LOGGER = Logger
+    .getLogger(ConsoleOutputResource.class.getName());
 
   public OutputWriter(final OutputOptions outputOptions)
     throws SchemaCrawlerException
@@ -83,8 +88,20 @@ public final class OutputWriter
   public void close()
     throws IOException
   {
-    ensureOpen();
-    outputResource.close(writer);
+    flush();
+
+    if (outputResource.shouldCloseWriter())
+    {
+      LOGGER.log(Level.INFO, "Closing output writer");
+      writer.close();
+    }
+    else
+    {
+      LOGGER
+        .log(Level.INFO,
+             "Not closing output writer, since output is to an externally provided writer");
+    }
+
     isClosed = true;
   }
 
