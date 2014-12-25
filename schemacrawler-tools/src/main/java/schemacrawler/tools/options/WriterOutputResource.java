@@ -44,16 +44,6 @@ public class WriterOutputResource
   }
 
   @Override
-  public void close(final Writer writer)
-    throws IOException
-  {
-    requireNonNull(writer, "No writer provided");
-    writer.flush();
-    LOGGER.log(Level.INFO,
-               "Not closing output writer, since output is not to a file");
-  }
-
-  @Override
   public String getDescription()
   {
     return "<writer>";
@@ -66,6 +56,12 @@ public class WriterOutputResource
   {
     LOGGER.log(Level.INFO, "Output to provided writer");
     return new BufferedWriter(writer);
+  }
+
+  @Override
+  public boolean shouldCloseWriter()
+  {
+    return false;
   }
 
   @Override

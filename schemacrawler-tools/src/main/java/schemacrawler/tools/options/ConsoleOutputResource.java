@@ -36,14 +36,6 @@ public class ConsoleOutputResource
     .getLogger(ConsoleOutputResource.class.getName());
 
   @Override
-  public void close(final Writer writer)
-    throws IOException
-  {
-    LOGGER.log(Level.INFO,
-               "Not closing output writer, since output is not to a file");
-  }
-
-  @Override
   public String getDescription()
   {
     return "<console>";
@@ -57,6 +49,12 @@ public class ConsoleOutputResource
     final Writer writer = new BufferedWriter(new OutputStreamWriter(System.out));
     LOGGER.log(Level.INFO, "Opened output writer to console");
     return writer;
+  }
+
+  @Override
+  public boolean shouldCloseWriter()
+  {
+    return false;
   }
 
   @Override
