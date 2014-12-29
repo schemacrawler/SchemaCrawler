@@ -65,6 +65,7 @@
   -synonyms=.*\.C.*|.*\.P.*
   matches any synonyms whose names start with C or P
   Synonyms that do not match the pattern are not displayed
+  Synonyms will only be shown when -infolevel=maximum
   Use -synonyms= to omit synonyms
   Optional, defaults to showing no synonyms
 
@@ -73,8 +74,9 @@
   names, in the form "CATALOGNAME.SCHEMANAME.SEQUENCENAME" - for example, 
   -sequences=.*\.C.*|.*\.P.*
   matches any sequences whose names start with C or P
-  Synonyms that do not match the pattern are not displayed
+  Sequences that do not match the pattern are not displayed
   Use -sequences= to omit sequences
+  Sequences will only be shown when -infolevel=maximum
   Optional, defaults to showing no sequences
 
 --- Grep Options ---
