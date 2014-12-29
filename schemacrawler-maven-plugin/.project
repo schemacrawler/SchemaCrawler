@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>SchemaCrawler - 6 - Maven Plugin</name>
+	<comment>SchemaCrawler is an open-source Java API that makes working with database metadata as easy as working with plain old Java objects.  SchemaCrawler is also a database schema discovery and comprehension, and schema documentation tool. You can search for database schema objects using regular expressions, and output the schema and data in a readable text format. The output is designed to be diff-ed against other database schemas. </comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.jdt.core.javabuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>org.eclipse.m2e.core.maven2Builder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.m2e.core.maven2Nature</nature>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+	</natures>
+</projectDescription>

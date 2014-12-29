@@ -20,6 +20,9 @@
 package schemacrawler.tools.options;
 
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 
 public enum InfoLevel
@@ -30,6 +33,22 @@ public enum InfoLevel
   standard,
   detailed,
   maximum, ;
+
+  private static final Logger LOGGER = Logger.getLogger(InfoLevel.class
+    .getName());
+
+  public static InfoLevel valueOfFromString(final String infoLevelValue)
+  {
+    try
+    {
+      return InfoLevel.valueOf(infoLevelValue);
+    }
+    catch (final IllegalArgumentException | NullPointerException e)
+    {
+      LOGGER.log(Level.INFO, "Unknown infolevel, " + infoLevelValue);
+      return unknown;
+    }
+  }
 
   public final SchemaInfoLevel getSchemaInfoLevel()
   {
