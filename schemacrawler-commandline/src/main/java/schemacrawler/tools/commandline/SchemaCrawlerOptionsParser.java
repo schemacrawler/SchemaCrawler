@@ -87,17 +87,9 @@ public final class SchemaCrawlerOptionsParser
     if (hasOptionValue("infolevel"))
     {
       final String infoLevel = getStringValue("infolevel");
-      try
-      {
-        final SchemaInfoLevel schemaInfoLevel = InfoLevel.valueOf(infoLevel)
-          .getSchemaInfoLevel();
-        options.setSchemaInfoLevel(schemaInfoLevel);
-      }
-      catch (final IllegalArgumentException e)
-      {
-        LOGGER.log(Level.INFO, "Unknown infolevel, " + infoLevel);
-        options.setSchemaInfoLevel(SchemaInfoLevel.standard());
-      }
+      final SchemaInfoLevel schemaInfoLevel = InfoLevel.valueOfFromString(infoLevel)
+        .getSchemaInfoLevel();
+      options.setSchemaInfoLevel(schemaInfoLevel);
     }
     else
     {

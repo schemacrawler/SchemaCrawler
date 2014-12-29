@@ -78,6 +78,7 @@
     <module>schemacrawler-archetype-plugin-command</module>
     <module>schemacrawler-archetype-plugin-lint</module>
     <module>schemacrawler-archetype-plugin-dbconnector</module>
+    <module>schemacrawler-maven-plugin</module>
 
     <module>schemacrawler-docs</module>
     <module>schemacrawler-site</module>
