@@ -65,8 +65,7 @@ public final class Main
       .lookupDatabaseSystemIdentifier(dbServerType
         .getDatabaseSystemIdentifier());
 
-    final boolean showHelp = args == null || args.length == 0
-                             || args.length == 1
+    final boolean showHelp = args.length == 0 || args.length == 1
                              && Main.class.getCanonicalName().equals(args[0])
                              || applicationOptions.isShowHelp();
 
