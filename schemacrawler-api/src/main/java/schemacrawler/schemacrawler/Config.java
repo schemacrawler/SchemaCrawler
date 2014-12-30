@@ -257,7 +257,7 @@ public final class Config
   {
     final String value = getStringValue(propertyName, defaultValue.name());
     E enumValue;
-    if (value == null || defaultValue == null)
+    if (value == null)
     {
       enumValue = defaultValue;
     }

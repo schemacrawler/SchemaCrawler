@@ -61,12 +61,13 @@ import org.apache.maven.reporting.MavenReportException;
 import schemacrawler.Main;
 import schemacrawler.tools.options.TextOutputFormat;
 
+// Acknowledgements to Anthony Whitford for helping with getting this mojo in shape.
 /**
- * Acknowledgements to Anthony Whitford for helping with getting this
- * mojo in shape.
+ * Allows SchemaCrawler database schema reports in Maven generated
+ * sites.
  */
 @Mojo(name = "schemacrawler", defaultPhase = LifecyclePhase.SITE, requiresReports = true, threadSafe = true)
-public class SchemaCrawlerMojo
+public class SchemaCrawlerMavenReport
   extends AbstractMavenReport
 {
 
