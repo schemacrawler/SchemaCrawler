@@ -27,7 +27,7 @@ import java.util.logging.Logger;
 
 import schemacrawler.Version;
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.ConnectionOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import sf.util.clparser.StringOption;
 
 /**
@@ -36,38 +36,27 @@ import sf.util.clparser.StringOption;
  * @author sfatehi
  */
 abstract class BaseDatabaseConnectionOptionsParser
-  extends BaseOptionsParser<ConnectionOptions>
+  extends BaseConfigOptionsParser
 {
 
   private static final Logger LOGGER = Logger
     .getLogger(BaseDatabaseConnectionOptionsParser.class.getName());
 
-  protected final Config config;
+  private static final String USER = "user";
+  private static final String PASSWORD = "password";
 
   BaseDatabaseConnectionOptionsParser(final Config config)
   {
-    super(new StringOption('u', "user", null), new StringOption("password",
-                                                                null));
-    this.config = config;
+    super(config, new StringOption('u', USER, null), new StringOption(PASSWORD,
+                                                                      null));
   }
 
-  protected final void setPassword(final ConnectionOptions connectionOptions)
+  @Override
+  protected void loadConfig()
+    throws SchemaCrawlerException
   {
-    final String password;
-    if (hasOptionValue("password"))
-    {
-      password = getStringValue("password");
-    }
-    else
-    {
-      password = promptForPassword();
-    }
-    connectionOptions.setPassword(password);
-  }
-
-  protected final void setUser(final ConnectionOptions connectionOptions)
-  {
-    connectionOptions.setUser(getStringValue("user"));
+    setUser();
+    setPassword();
   }
 
   private String promptForPassword()
@@ -90,6 +79,25 @@ abstract class BaseDatabaseConnectionOptionsParser
       LOGGER.log(Level.WARNING, "System console is not available", e);
       return null;
     }
+  }
+
+  private void setPassword()
+  {
+    final String password;
+    if (hasOptionValue(PASSWORD))
+    {
+      password = getStringValue(PASSWORD);
+    }
+    else
+    {
+      password = promptForPassword();
+    }
+    config.put(PASSWORD, password);
+  }
+
+  private void setUser()
+  {
+    config.put(USER, getStringValue(USER));
   }
 
 }

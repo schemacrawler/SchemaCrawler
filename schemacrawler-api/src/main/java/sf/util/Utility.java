@@ -29,8 +29,10 @@ import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
@@ -145,6 +147,22 @@ public final class Utility
     {
       LOGGER.log(Level.WARNING, e.getMessage(), e);
     }
+  }
+
+  public static String[] flattenCommandlineArgs(final Map<String, String> argsMap)
+  {
+    final List<String> argsList = new ArrayList<>();
+    for (final Map.Entry<String, String> arg: argsMap.entrySet())
+    {
+      final String key = arg.getKey();
+      final String value = arg.getValue();
+      if (value != null)
+      {
+        argsList.add(String.format("-%s=%s", key, value));
+      }
+    }
+    final String[] args = argsList.toArray(new String[0]);
+    return args;
   }
 
   /**
@@ -269,11 +287,11 @@ public final class Utility
 
   private static final Logger LOGGER = Logger
     .getLogger(Utility.class.getName());
-
   /**
    * System specific line separator character.
    */
   public static final String NEWLINE = System.getProperty("line.separator");
+
   public static final Charset UTF8 = Charset.forName("UTF8");
 
   private static final Pattern containsWhitespacePattern = Pattern

@@ -62,7 +62,8 @@ public abstract class DatabaseConnector
 
     this.connectionHelpResource = connectionHelpResource;
 
-    dbSystemConnector = new DatabaseSystemConnector(configResource,
+    dbSystemConnector = new DatabaseSystemConnector(dbServerType,
+                                                    configResource,
                                                     informationSchemaViewsResourceFolder);
   }
 

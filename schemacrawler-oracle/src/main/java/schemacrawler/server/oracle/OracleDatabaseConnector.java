@@ -30,13 +30,18 @@ public final class OracleDatabaseConnector
   extends DatabaseConnector
 {
 
+  private static final DatabaseServerType ORACLE_SERVER_TYPE = new DatabaseServerType("oracle",
+                                                                                      "Oracle");
+
   private static final class OracleDatabaseSystemConnector
     extends DatabaseSystemConnector
   {
     private OracleDatabaseSystemConnector(final String configResource,
                                           final String informationSchemaViewsResourceFolder)
     {
-      super(configResource, informationSchemaViewsResourceFolder);
+      super(ORACLE_SERVER_TYPE,
+            configResource,
+            informationSchemaViewsResourceFolder);
     }
 
     @Override
@@ -49,7 +54,7 @@ public final class OracleDatabaseConnector
 
   public OracleDatabaseConnector()
   {
-    super(new DatabaseServerType("oracle", "Oracle"),
+    super(ORACLE_SERVER_TYPE,
           "/help/Connections.oracle.txt",
           new OracleDatabaseSystemConnector("/schemacrawler-oracle.config.properties",
                                             "/oracle.information_schema"));

@@ -31,6 +31,7 @@ import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
 import static schemacrawler.test.utility.TestUtility.createTempFile;
 import static sf.util.Utility.UTF8;
+import static sf.util.Utility.flattenCommandlineArgs;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -65,22 +66,15 @@ public class OfflineSnapshotTest
   {
     try (final TestWriter out = new TestWriter("text");)
     {
-      final Map<String, String> args = new HashMap<>();
-      args.put("database", serializedDatabaseFile.toString());
+      final Map<String, String> argsMap = new HashMap<>();
+      argsMap.put("database", serializedDatabaseFile.toString());
 
-      args.put("infolevel", "maximum");
-      args.put("command", "details");
-      args.put("outputformat", "text");
-      args.put("outputfile", out.toString());
+      argsMap.put("infolevel", "maximum");
+      argsMap.put("command", "details");
+      argsMap.put("outputformat", "text");
+      argsMap.put("outputfile", out.toString());
 
-      final List<String> argsList = new ArrayList<>();
-      for (final Map.Entry<String, String> arg: args.entrySet())
-      {
-        argsList.add(String.format("-%s=%s", arg.getKey(), arg.getValue()));
-      }
-
-      final OfflineSnapshotCommandLine commandLine = new OfflineSnapshotCommandLine(argsList
-        .toArray(new String[0]));
+      final OfflineSnapshotCommandLine commandLine = new OfflineSnapshotCommandLine(flattenCommandlineArgs(argsMap));
       commandLine.execute();
 
       out.assertEquals(OFFLINE_EXECUTABLE_OUTPUT + "details.txt");
@@ -93,25 +87,18 @@ public class OfflineSnapshotTest
   {
     try (final TestWriter out = new TestWriter("text");)
     {
-      final Map<String, String> args = new HashMap<>();
-      args.put("database", serializedDatabaseFile.toString());
+      final Map<String, String> argsMap = new HashMap<>();
+      argsMap.put("database", serializedDatabaseFile.toString());
 
-      args.put("noinfo", "true");
-      args.put("infolevel", "maximum");
-      args.put("command", "details");
-      args.put("outputformat", "text");
-      args.put("routines", "");
-      args.put("tables", ".*SALES");
-      args.put("outputfile", out.toString());
+      argsMap.put("noinfo", "true");
+      argsMap.put("infolevel", "maximum");
+      argsMap.put("command", "details");
+      argsMap.put("outputformat", "text");
+      argsMap.put("routines", "");
+      argsMap.put("tables", ".*SALES");
+      argsMap.put("outputfile", out.toString());
 
-      final List<String> argsList = new ArrayList<>();
-      for (final Map.Entry<String, String> arg: args.entrySet())
-      {
-        argsList.add(String.format("-%s=%s", arg.getKey(), arg.getValue()));
-      }
-
-      final OfflineSnapshotCommandLine commandLine = new OfflineSnapshotCommandLine(argsList
-        .toArray(new String[0]));
+      final OfflineSnapshotCommandLine commandLine = new OfflineSnapshotCommandLine(flattenCommandlineArgs(argsMap));
       commandLine.execute();
 
       out.assertEquals(OFFLINE_EXECUTABLE_OUTPUT + "offlineWithFilters.txt");

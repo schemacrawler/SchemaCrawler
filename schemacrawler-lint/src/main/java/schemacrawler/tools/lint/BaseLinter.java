@@ -75,7 +75,7 @@ public abstract class BaseLinter
   @Override
   public final void lint(final Catalog catalog)
   {
-    this.catalog =requireNonNull(catalog,"No catalog provided");
+    this.catalog = requireNonNull(catalog, "No catalog provided");
     start();
     for (final Table table: catalog.getTables())
     {

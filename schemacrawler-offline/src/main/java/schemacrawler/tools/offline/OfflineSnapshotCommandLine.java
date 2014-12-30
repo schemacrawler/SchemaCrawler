@@ -69,20 +69,7 @@ public final class OfflineSnapshotCommandLine
     command = commandParser.getOptions().toString();
 
     config = new Config();
-
-    if (remainingArgs.length > 0)
-    {
-      final ConfigParser configParser = new ConfigParser();
-      remainingArgs = configParser.parse(remainingArgs);
-      config.putAll(configParser.getOptions());
-    }
-
-    if (remainingArgs.length > 0)
-    {
-      final AdditionalConfigParser additionalConfigParser = new AdditionalConfigParser(config);
-      remainingArgs = additionalConfigParser.parse(remainingArgs);
-      config.putAll(additionalConfigParser.getOptions());
-    }
+    remainingArgs = loadConfig(remainingArgs);
 
     final OfflineSnapshotOptionsParser offlineSnapshotOptionsParser = new OfflineSnapshotOptionsParser(config);
     remainingArgs = offlineSnapshotOptionsParser.parse(remainingArgs);
@@ -101,6 +88,30 @@ public final class OfflineSnapshotCommandLine
       LOGGER.log(Level.INFO, "Too many command-line arguments provided: "
                              + ObjectToString.toString(remainingArgs));
     }
+  }
+
+  /**
+   * Loads configuration from a number of sources, in order of priority.
+   */
+  private String[] loadConfig(final String[] args)
+    throws SchemaCrawlerException
+  {
+    String[] remainingArgs = args;
+    if (remainingArgs.length > 0)
+    {
+      final ConfigParser configParser = new ConfigParser(config);
+      remainingArgs = configParser.parse(remainingArgs);
+      config.putAll(configParser.getOptions());
+    }
+
+    if (remainingArgs.length > 0)
+    {
+      final AdditionalConfigParser additionalConfigParser = new AdditionalConfigParser(config);
+      remainingArgs = additionalConfigParser.parse(remainingArgs);
+      config.putAll(additionalConfigParser.getOptions());
+    }
+
+    return remainingArgs;
   }
 
   @Override

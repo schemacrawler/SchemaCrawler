@@ -21,6 +21,7 @@ import org.junit.Test;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.server.hsqldb.HyperSQLDatabaseConnector;
 import schemacrawler.test.utility.BaseDatabaseTest;
@@ -77,8 +78,11 @@ public class TestBundledDistributions
     throws Exception
   {
 
-    final SchemaCrawlerOptions schemaCrawlerOptions = new HyperSQLDatabaseConnector()
-      .getDatabaseSystemConnector().getSchemaCrawlerOptions(InfoLevel.maximum);
+    final Config config = new HyperSQLDatabaseConnector()
+      .getDatabaseSystemConnector().getConfig();
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
+    schemaCrawlerOptions.setSchemaInfoLevel(InfoLevel.maximum
+      .getSchemaInfoLevel());
     final Catalog catalog = SchemaCrawlerUtility
       .getCatalog(getConnection(), schemaCrawlerOptions);
     assertNotNull(catalog);
