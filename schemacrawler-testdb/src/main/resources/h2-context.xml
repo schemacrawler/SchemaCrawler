@@ -11,6 +11,7 @@
     <jdbc:script location="classpath:/db/books/02_01_tables_01.sql" />
     <jdbc:script location="classpath:/db/books/02_02_tables_01.sql" />
     <jdbc:script location="classpath:/db/books/02_03_tables_01.sql" />
+    <jdbc:script location="classpath:/db/books/02_04_tables_01.sql" />
     <jdbc:script location="classpath:/db/books/03_01_remarks_01.sql" />
     <!--  Routines not supported - 04_01_routines -->
     <!--  Triggers not supported - 05_01_triggers -->

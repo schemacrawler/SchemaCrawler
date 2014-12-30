@@ -16,18 +16,18 @@ product version                           12.02.03
 Database Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
-database product name                     Apache Derby                  
-database product version                  10.11.1.1 - (1616546)         
-database user name                        sa                            
+database product name                     HSQL Database Engine          
+database product version                  2.3.2                         
+database user name                        SA                            
 
 
 JDBC Driver Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
-driver name                               Apache Derby Embedded JDBC Driver
-driver version                            10.11.1.1 - (1616546)         
-driver class name                         org.apache.derby.jdbc.AutoloadedDriver
-url                                       jdbc:derby:memory:dataSource  
+driver name                               HSQL Database Engine Driver   
+driver version                            2.3.2                         
+driver class name                         org.hsqldb.jdbc.JDBCDriver    
+url                                       jdbc:hsqldb:mem:dataSource    
 is JDBC compliant                         true                          
 
 
@@ -44,10 +44,26 @@ BIGINT                                                       [data type]
   auto-incrementable
   searchable except with where .. like
 
+BINARY                                                       [data type]
+  based on                          BINARY                      
+  not user defined
+  defined with LENGTH
+  nullable
+  not auto-incrementable
+  searchable
+
+BIT                                                          [data type]
+  based on                          BIT                         
+  not user defined
+  defined with LENGTH
+  nullable
+  not auto-incrementable
+  searchable except with where .. like
+
 BLOB                                                         [data type]
   based on                          BLOB                        
   not user defined
-  defined with length
+  defined with LENGTH
   nullable
   not auto-incrementable
   not searchable
@@ -60,29 +76,21 @@ BOOLEAN                                                      [data type]
   not auto-incrementable
   searchable except with where .. like
 
-CHAR                                                         [data type]
+CHARACTER                                                    [data type]
   based on                          CHAR                        
   not user defined
-  defined with length
+  defined with LENGTH
   nullable
   not auto-incrementable
   searchable
 
-CHAR () FOR BIT DATA                                         [data type]
-  based on                          BINARY                      
-  not user defined
-  defined with length
-  nullable
-  not auto-incrementable
-  searchable except with where .. like
-
 CLOB                                                         [data type]
   based on                          CLOB                        
   not user defined
-  defined with length
+  defined with LENGTH
   nullable
   not auto-incrementable
-  only searchable with where .. like
+  not searchable
 
 DATE                                                         [data type]
   based on                          DATE                        
@@ -95,9 +103,9 @@ DATE                                                         [data type]
 DECIMAL                                                      [data type]
   based on                          DECIMAL                     
   not user defined
-  defined with precision,scale
+  defined with PRECISION,SCALE
   nullable
-  not auto-incrementable
+  auto-incrementable
   searchable except with where .. like
 
 DOUBLE                                                       [data type]
@@ -109,9 +117,9 @@ DOUBLE                                                       [data type]
   searchable except with where .. like
 
 FLOAT                                                        [data type]
-  based on                          FLOAT                       
+  based on                          DOUBLE                      
   not user defined
-  defined with precision
+  defined with no parameters
   nullable
   not auto-incrementable
   searchable except with where .. like
@@ -124,32 +132,24 @@ INTEGER                                                      [data type]
   auto-incrementable
   searchable except with where .. like
 
-LONG VARCHAR                                                 [data type]
-  based on                          LONGVARCHAR                 
-  not user defined
-  defined with no parameters
-  nullable
-  not auto-incrementable
-  only searchable with where .. like
-
-LONG VARCHAR FOR BIT DATA                                    [data type]
-  based on                          LONGVARBINARY               
-  not user defined
-  defined with no parameters
-  nullable
-  not auto-incrementable
-  not searchable
-
 NUMERIC                                                      [data type]
   based on                          NUMERIC                     
   not user defined
-  defined with precision,scale
+  defined with PRECISION,SCALE
   nullable
-  not auto-incrementable
+  auto-incrementable
   searchable except with where .. like
 
-OBJECT                                                       [data type]
-  based on                          JAVA_OBJECT                 
+NVARCHAR                                                     [data type]
+  based on                          VARCHAR                     
+  not user defined
+  defined with LENGTH
+  nullable
+  not auto-incrementable
+  searchable
+
+OTHER                                                        [data type]
+  based on                          OTHER                       
   not user defined
   defined with no parameters
   nullable
@@ -157,7 +157,7 @@ OBJECT                                                       [data type]
   searchable except with where .. like
 
 REAL                                                         [data type]
-  based on                          REAL                        
+  based on                          DOUBLE                      
   not user defined
   defined with no parameters
   nullable
@@ -188,29 +188,37 @@ TIMESTAMP                                                    [data type]
   not auto-incrementable
   searchable except with where .. like
 
-VARCHAR                                                      [data type]
-  based on                          VARCHAR                     
+TINYINT                                                      [data type]
+  based on                          TINYINT                     
   not user defined
-  defined with length
+  defined with no parameters
+  nullable
+  auto-incrementable
+  searchable except with where .. like
+
+VARBINARY                                                    [data type]
+  based on                          VARBINARY                   
+  not user defined
+  defined with LENGTH
   nullable
   not auto-incrementable
   searchable
 
-VARCHAR () FOR BIT DATA                                      [data type]
-  based on                          VARBINARY                   
+VARCHAR                                                      [data type]
+  based on                          VARCHAR                     
   not user defined
-  defined with length
+  defined with LENGTH
   nullable
   not auto-incrementable
-  searchable except with where .. like
+  searchable
 
-XML                                                          [data type]
-  based on                          SQLXML                      
+PUBLIC.BOOKS.CHARACTER VARYING                               [data type]
+  based on                          VARCHAR                     
   not user defined
-  defined with no parameters
-  nullable
+  defined with 
+  not nullable
   not auto-incrementable
-  not searchable
+  unknown
 
 
 
@@ -219,9 +227,10 @@ Tables
 
 
 
-BOOKS.AUTHORS
+PUBLIC.BOOKS.AUTHORS
 ------------------------------------------------------------------------
                                                                  [table]
+Contact details for book authors
   ID                                INTEGER NOT NULL            
   FIRSTNAME                         VARCHAR(20) NOT NULL        
   LASTNAME                          VARCHAR(20) NOT NULL        
@@ -236,7 +245,7 @@ PK_AUTHORS                                                 [primary key]
   ID                                ascending                   
 
 FK_Z_AUTHOR                                [foreign key, with no action]
-  ID <-- BOOKS.BOOKAUTHORS.AUTHORID                              
+  ID <-- PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID                              
 
                                                           [unique index]
   ID                                ascending                   
@@ -253,22 +262,29 @@ FK_Z_AUTHOR                                [foreign key, with no action]
 
 
 
-BOOKS.BOOKS
+PUBLIC.BOOKS.BOOKS
 ------------------------------------------------------------------------
                                                                  [table]
+Details for published books
   ID                                INTEGER NOT NULL            
+                                    Unique (internal) id for book
   TITLE                             VARCHAR(255) NOT NULL       
+                                    Book title                  
   DESCRIPTION                       VARCHAR(255)                
+                                    Book description            
   PUBLISHERID                       INTEGER NOT NULL            
+                                    Foreign key to the book publisher
   PUBLICATIONDATE                   DATE                        
-  PRICE                             DOUBLE(52, 0)               
+                                    Book publication date       
+  PRICE                             DOUBLE(64, 0)               
+                                    Current price for the book  
   PREVIOUSEDITIONID                 INTEGER                     
 
 PK_BOOKS                                                   [primary key]
   ID                                ascending                   
 
 FK_Y_BOOK                                  [foreign key, with no action]
-  ID <-- BOOKS.BOOKAUTHORS.BOOKID                               
+  ID <-- PUBLIC.BOOKS.BOOKAUTHORS.BOOKID                              
 
 FK_PREVIOUSEDITION                         [foreign key, with no action]
   ID <-- PREVIOUSEDITIONID                                      
@@ -276,7 +292,7 @@ FK_PREVIOUSEDITION                         [foreign key, with no action]
                                                           [unique index]
   ID                                ascending                   
 
-                                                      [non-unique index]
+                                                          [unique index]
   PREVIOUSEDITIONID                 ascending                   
 
                                                       [non-unique index]
@@ -284,26 +300,29 @@ FK_PREVIOUSEDITION                         [foreign key, with no action]
 
 
 
-BOOKS."Global Counts"
+PUBLIC.BOOKS."Global Counts"
 ------------------------------------------------------------------------
                                                                  [table]
   "Global Count"                    INTEGER                     
 
 
 
-BOOKS.PUBLISHERS
+PUBLIC.BOOKS.PUBLISHERS
 ------------------------------------------------------------------------
                                                                  [table]
+List of book publishers
   ID                                INTEGER NOT NULL            
                                     auto-incremented            
+                                    Unique (internal) id for book publisher
   PUBLISHER                         VARCHAR(255)                
+                                    Name of book publisher      
 
 PK_PUBLISHERS                                              [primary key]
   ID                                ascending                   
                                     auto-incremented            
 
 FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLISHERS         [foreign key, with no action]
-  ID <-- BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ                              
+  ID <-- PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ                              
 
                                                           [unique index]
   ID                                ascending                   
@@ -311,18 +330,19 @@ FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLISHERS         [foreign key, wit
 
 
 
-BOOKS.BOOKAUTHORS
+PUBLIC.BOOKS.BOOKAUTHORS
 ------------------------------------------------------------------------
                                                                  [table]
+Relationship between books and their authors, along with the latest updated information
   BOOKID                            INTEGER NOT NULL            
   AUTHORID                          INTEGER NOT NULL            
   "UPDATE"                          CLOB                        
 
 FK_Z_AUTHOR                                [foreign key, with no action]
-  AUTHORID --> BOOKS.AUTHORS.ID                                 
+  AUTHORID --> PUBLIC.BOOKS.AUTHORS.ID                              
 
 FK_Y_BOOK                                  [foreign key, with no action]
-  BOOKID --> BOOKS.BOOKS.ID                                     
+  BOOKID --> PUBLIC.BOOKS.BOOKS.ID                              
 
                                                       [non-unique index]
   AUTHORID                          ascending                   
@@ -336,7 +356,7 @@ FK_Y_BOOK                                  [foreign key, with no action]
 
 
 
-BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
+PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
 ------------------------------------------------------------------------
                                                                  [table]
   ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ               BIGINT NOT NULL             
@@ -347,7 +367,7 @@ PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                                    [
   ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ               ascending                   
 
 FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLISHERS         [foreign key, with no action]
-  ΣΥΓΓΡΑΦΈΑΣ --> BOOKS.PUBLISHERS.ID                              
+  ΣΥΓΓΡΑΦΈΑΣ --> PUBLIC.BOOKS.PUBLISHERS.ID                              
 
                                                           [unique index]
   ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ               ascending                   
@@ -357,12 +377,60 @@ FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLISHERS         [foreign key, wit
 
 
 
-BOOKS.AUTHORSLIST
+PUBLIC.BOOKS.AUTHORSLIST
 ------------------------------------------------------------------------
                                                                   [view]
-  ID                                INTEGER NOT NULL            
-  FIRSTNAME                         VARCHAR(20) NOT NULL        
-  LASTNAME                          VARCHAR(20) NOT NULL        
+  ID                                INTEGER                     
+  FIRSTNAME                         VARCHAR(20)                 
+  LASTNAME                          VARCHAR(20)                 
+
+
+
+
+Routines
+========================================================================
+
+
+
+PUBLIC.BOOKS.CUSTOMADD
+------------------------------------------------------------------------
+                                     [function, does not return a table]
+  ONE                               INTEGER, in                 
+
+                                                         [specific name]
+CUSTOMADD_10145
+
+
+
+PUBLIC.BOOKS.CUSTOMADD
+------------------------------------------------------------------------
+                                     [function, does not return a table]
+  ONE                               INTEGER, in                 
+  TWO                               INTEGER, in                 
+
+                                                         [specific name]
+CUSTOMADD_10144
+
+
+
+PUBLIC.BOOKS.NEW_PUBLISHER
+------------------------------------------------------------------------
+                                                  [procedure, no result]
+  PUBLISHER                         CHARACTER VARYING, out      
+
+                                                         [specific name]
+NEW_PUBLISHER_10142
+
+
+
+PUBLIC.BOOKS.NEW_PUBLISHER
+------------------------------------------------------------------------
+                                                  [procedure, no result]
+  NEWPUBLISHER                      CHARACTER VARYING, in       
+  PUBLISHER                         CHARACTER VARYING, out      
+
+                                                         [specific name]
+NEW_PUBLISHER_10143
 
 
 
