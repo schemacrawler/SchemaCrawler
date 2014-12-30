@@ -54,16 +54,10 @@ public class DatabaseSystemConnector
   }
 
   private final DatabaseServerType dbServerType;
-
   private final String configResource;
   private final String informationSchemaViewsResourceFolder;
 
-  public DatabaseSystemConnector()
-  {
-    dbServerType = new DatabaseServerType();
-    configResource = null;
-    informationSchemaViewsResourceFolder = null;
-  }
+  protected static final DatabaseSystemConnector UNKNOWN = new DatabaseSystemConnector();
 
   protected DatabaseSystemConnector(final DatabaseServerType dbServerType,
                                     final String configResource,
@@ -73,6 +67,13 @@ public class DatabaseSystemConnector
                                        "No database server type provided");
     this.configResource = configResource;
     this.informationSchemaViewsResourceFolder = informationSchemaViewsResourceFolder;
+  }
+
+  private DatabaseSystemConnector()
+  {
+    dbServerType = DatabaseServerType.UNKNOWN;
+    configResource = null;
+    informationSchemaViewsResourceFolder = null;
   }
 
   /**

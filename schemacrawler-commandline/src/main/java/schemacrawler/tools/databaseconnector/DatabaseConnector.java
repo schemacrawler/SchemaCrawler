@@ -32,9 +32,12 @@ public abstract class DatabaseConnector
 {
 
   private final DatabaseServerType dbServerType;
-
   private final String connectionHelpResource;
   private final DatabaseSystemConnector dbSystemConnector;
+
+  protected static final DatabaseConnector UNKNOWN = new DatabaseConnector()
+  {
+  };
 
   protected DatabaseConnector(final DatabaseServerType dbServerType,
                               final String connectionHelpResource,
@@ -60,11 +63,22 @@ public abstract class DatabaseConnector
     this.dbServerType = requireNonNull(dbServerType,
                                        "No database server type provided");
 
+    if (isBlank(connectionHelpResource))
+    {
+      throw new IllegalArgumentException("No connection help resource provided");
+    }
     this.connectionHelpResource = connectionHelpResource;
 
     dbSystemConnector = new DatabaseSystemConnector(dbServerType,
                                                     configResource,
                                                     informationSchemaViewsResourceFolder);
+  }
+
+  private DatabaseConnector()
+  {
+    dbServerType = DatabaseServerType.UNKNOWN;
+    connectionHelpResource = null;
+    dbSystemConnector = DatabaseSystemConnector.UNKNOWN;
   }
 
   public DatabaseServerType getDatabaseServerType()
