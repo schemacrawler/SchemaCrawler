@@ -32,10 +32,9 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 
+import schemacrawler.Main;
 import schemacrawler.test.utility.BaseExecutableTest;
 import schemacrawler.test.utility.TestWriter;
-import schemacrawler.tools.commandline.SchemaCrawlerCommandLine;
-import schemacrawler.tools.databaseconnector.DatabaseSystemConnector;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
@@ -113,9 +112,7 @@ public class LintExecutableTest
       argsMap.put("outputformat", outputFormat.getFormat());
       argsMap.put("outputfile", out.toString());
 
-      final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(new DatabaseSystemConnector(),
-                                                                                flattenCommandlineArgs(argsMap));
-      commandLine.execute();
+      Main.main(flattenCommandlineArgs(argsMap));
 
       out.assertEquals(referenceFileName + ".txt");
     }
