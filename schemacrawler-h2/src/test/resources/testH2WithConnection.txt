@@ -17,7 +17,7 @@ Database Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
 database product name                     H2                            
-database product version                  1.4.182 (2014-10-17)          
+database product version                  1.4.184 (2014-12-19)          
 database user name                        SA                            
 
 
@@ -25,7 +25,7 @@ JDBC Driver Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
 driver name                               H2 JDBC Driver                
-driver version                            1.4.182 (2014-10-17)          
+driver version                            1.4.184 (2014-12-19)          
 driver class name                         org.h2.Driver                 
 url                                       jdbc:h2:mem:dataSource        
 is JDBC compliant                         true                          
@@ -369,6 +369,9 @@ CONSTRAINT_8                                               [primary key]
   ID                                ascending                   
                                     auto-incremented            
 
+FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLISHERS          [foreign key, with restrict]
+  ID <-- DATASOURCE.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ                              
+
                                                           [unique index]
   ID                                ascending                   
                                     auto-incremented            
@@ -413,6 +416,27 @@ FK_Y_BOOK                                   [foreign key, with restrict]
                                                           [unique index]
   BOOKID                            ascending                   
   AUTHORID                          ascending                   
+
+
+
+DATASOURCE.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
+------------------------------------------------------------------------
+                                                                 [table]
+  ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ               BIGINT NOT NULL             
+  ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ           VARCHAR(10)                 
+  ΣΥΓΓΡΑΦΈΑΣ                        INTEGER                     
+
+PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                                    [primary key]
+  ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ               ascending                   
+
+FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLISHERS          [foreign key, with restrict]
+  ΣΥΓΓΡΑΦΈΑΣ --> DATASOURCE.BOOKS.PUBLISHERS.ID                              
+
+                                                          [unique index]
+  ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ               ascending                   
+
+                                                      [non-unique index]
+  ΣΥΓΓΡΑΦΈΑΣ                        ascending                   
 
 
 
