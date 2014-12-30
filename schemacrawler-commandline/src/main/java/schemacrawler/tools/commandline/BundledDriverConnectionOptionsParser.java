@@ -22,8 +22,6 @@ package schemacrawler.tools.commandline;
 
 
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.ConnectionOptions;
-import schemacrawler.schemacrawler.DatabaseConfigConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import sf.util.clparser.NumberOption;
 import sf.util.clparser.StringOption;
@@ -37,41 +35,42 @@ final class BundledDriverConnectionOptionsParser
   extends BaseDatabaseConnectionOptionsParser
 {
 
+  private static final String URLX = "urlx";
+  private static final String DATABASE = "database";
+  private static final String PORT = "port";
+  private static final String HOST = "host";
+
   BundledDriverConnectionOptionsParser(final Config config)
   {
     super(config);
-    addOption(new StringOption("host", null));
-    addOption(new NumberOption("port", 0));
-    addOption(new StringOption("database", ""));
-    addOption(new StringOption("urlx", ""));
+    addOption(new StringOption(HOST, null));
+    addOption(new NumberOption(PORT, 0));
+    addOption(new StringOption(DATABASE, ""));
+    addOption(new StringOption(URLX, ""));
   }
 
   @Override
-  public ConnectionOptions getOptions()
+  protected void loadConfig()
     throws SchemaCrawlerException
   {
-    final DatabaseConfigConnectionOptions connectionOptions = new DatabaseConfigConnectionOptions(config);
-    setUser(connectionOptions);
-    setPassword(connectionOptions);
+    super.loadConfig();
 
-    if (hasOptionValue("host"))
+    if (hasOptionValue(HOST))
     {
-      connectionOptions.setHost(getStringValue("host"));
+      config.put(HOST, getStringValue(HOST));
     }
-    if (hasOptionValue("port"))
+    if (hasOptionValue(PORT))
     {
-      connectionOptions.setPort(getIntegerValue("port"));
+      config.put(PORT, String.valueOf(getIntegerValue(PORT)));
     }
-    if (hasOptionValue("database"))
+    if (hasOptionValue(DATABASE))
     {
-      connectionOptions.setDatabase(getStringValue("database"));
+      config.put(DATABASE, getStringValue(DATABASE));
     }
-    if (hasOptionValue("urlx"))
+    if (hasOptionValue(URLX))
     {
-      connectionOptions.setConnectionProperties(getStringValue("urlx"));
+      config.put(URLX, getStringValue(URLX));
     }
-
-    return connectionOptions;
   }
 
 }

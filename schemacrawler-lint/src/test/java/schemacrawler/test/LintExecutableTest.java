@@ -22,12 +22,11 @@ package schemacrawler.test;
 
 
 import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
+import static sf.util.Utility.flattenCommandlineArgs;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.junit.Before;
@@ -102,27 +101,20 @@ public class LintExecutableTest
   {
     try (final TestWriter out = new TestWriter(outputFormat.getFormat());)
     {
-      final Map<String, String> args = new HashMap<>();
-      args.put("driver", "org.hsqldb.jdbc.JDBCDriver");
-      args.put("url", "jdbc:hsqldb:hsql://localhost/schemacrawler");
-      args.put("user", "sa");
-      args.put("password", "");
+      final Map<String, String> argsMap = new HashMap<>();
+      argsMap.put("driver", "org.hsqldb.jdbc.JDBCDriver");
+      argsMap.put("url", "jdbc:hsqldb:hsql://localhost/schemacrawler");
+      argsMap.put("user", "sa");
+      argsMap.put("password", "");
 
-      args.put("infolevel", "standard");
-      args.put("command", "lint");
-      args.put("sortcolumns", "true");
-      args.put("outputformat", outputFormat.getFormat());
-      args.put("outputfile", out.toString());
-
-      final List<String> argsList = new ArrayList<>();
-      for (final Map.Entry<String, String> arg: args.entrySet())
-      {
-        argsList.add(String.format("-%s=%s", arg.getKey(), arg.getValue()));
-      }
+      argsMap.put("infolevel", "standard");
+      argsMap.put("command", "lint");
+      argsMap.put("sortcolumns", "true");
+      argsMap.put("outputformat", outputFormat.getFormat());
+      argsMap.put("outputfile", out.toString());
 
       final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(new DatabaseSystemConnector(),
-                                                                                argsList
-                                                                                  .toArray(new String[0]));
+                                                                                flattenCommandlineArgs(argsMap));
       commandLine.execute();
 
       out.assertEquals(referenceFileName + ".txt");

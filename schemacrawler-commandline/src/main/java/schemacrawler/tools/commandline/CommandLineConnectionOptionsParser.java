@@ -22,9 +22,7 @@ package schemacrawler.tools.commandline;
 
 
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.DatabaseConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import sf.util.Utility;
 import sf.util.clparser.StringOption;
 
 /**
@@ -36,40 +34,30 @@ final class CommandLineConnectionOptionsParser
   extends BaseDatabaseConnectionOptionsParser
 {
 
+  private static final String DRIVER = "driver";
+  private static final String URL = "url";
+
   CommandLineConnectionOptionsParser(final Config config)
   {
     super(config);
-    addOption(new StringOption("driver", null));
-    addOption(new StringOption("url", null));
+    addOption(new StringOption(DRIVER, null));
+    addOption(new StringOption(URL, null));
   }
 
   @Override
-  public DatabaseConnectionOptions getOptions()
+  protected void loadConfig()
     throws SchemaCrawlerException
   {
-    final DatabaseConnectionOptions connectionOptions;
-    if (hasOptionValue("url"))
+    super.loadConfig();
+
+    if (hasOptionValue(URL))
     {
-      final String jdbcDriverClassName = getStringValue("driver");
-      final String connectionUrl = getStringValue("url");
-      if (Utility.isBlank(jdbcDriverClassName)
-          || Utility.isBlank(connectionUrl))
-      {
-        connectionOptions = null;
-      }
-      else
-      {
-        connectionOptions = new DatabaseConnectionOptions(jdbcDriverClassName,
-                                                          connectionUrl);
-        setUser(connectionOptions);
-        setPassword(connectionOptions);
-      }
+      config.put(URL, getStringValue(URL));
     }
-    else
+    if (hasOptionValue(DRIVER))
     {
-      connectionOptions = null;
+      config.put(DRIVER, getStringValue(DRIVER));
     }
-    return connectionOptions;
   }
 
 }

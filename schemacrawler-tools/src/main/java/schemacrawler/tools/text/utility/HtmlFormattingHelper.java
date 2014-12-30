@@ -148,7 +148,7 @@ public final class HtmlFormattingHelper
   @Override
   public String createObjectStart(final String name)
   {
-    StringBuffer buffer = new StringBuffer();
+    final StringBuilder buffer = new StringBuilder();
     buffer.append("<table>").append(NEWLINE);
     if (!isBlank(name))
     {
