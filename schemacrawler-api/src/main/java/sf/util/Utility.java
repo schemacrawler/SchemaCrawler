@@ -160,6 +160,10 @@ public final class Utility
       {
         argsList.add(String.format("-%s=%s", key, value));
       }
+      else
+      {
+        argsList.add(String.format("-%s", key));
+      }
     }
     final String[] args = argsList.toArray(new String[0]);
     return args;
