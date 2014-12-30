@@ -45,10 +45,10 @@ public final class DatabaseServerTypeParser
     throws SchemaCrawlerException
   {
     final DatabaseConnectorRegistry registry = new DatabaseConnectorRegistry();
-    final DatabaseServerType databaseConnector = registry
+    final DatabaseServerType dbServerType = registry
       .lookupDatabaseSystemIdentifier(getStringValue("server"))
       .getDatabaseServerType();
-    return databaseConnector;
+    return dbServerType;
   }
 
 }

@@ -34,9 +34,6 @@ public enum InfoLevel
   detailed,
   maximum, ;
 
-  private static final Logger LOGGER = Logger.getLogger(InfoLevel.class
-    .getName());
-
   public static InfoLevel valueOfFromString(final String infoLevelValue)
   {
     try
@@ -49,6 +46,9 @@ public enum InfoLevel
       return unknown;
     }
   }
+
+  private static final Logger LOGGER = Logger.getLogger(InfoLevel.class
+    .getName());
 
   public final SchemaInfoLevel getSchemaInfoLevel()
   {

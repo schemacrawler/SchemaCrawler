@@ -21,6 +21,8 @@
 package schemacrawler;
 
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -43,11 +45,9 @@ public final class Main
   public static void main(final String[] args)
     throws Exception
   {
-    String[] remainingArgs = new String[0];
-    if (args != null)
-    {
-      remainingArgs = args;
-    }
+    requireNonNull(args);
+
+    String[] remainingArgs = args;
 
     final ApplicationOptionsParser applicationOptionsParser = new ApplicationOptionsParser();
     remainingArgs = applicationOptionsParser.parse(remainingArgs);
@@ -57,10 +57,9 @@ public final class Main
     applicationOptions.applyApplicationLogLevel();
     LOGGER.log(Level.CONFIG, "Command line: " + Arrays.toString(args));
 
-    final DatabaseServerTypeParser databaseConnectorParser = new DatabaseServerTypeParser();
-    remainingArgs = databaseConnectorParser.parse(remainingArgs);
-    final DatabaseServerType dbServerType = databaseConnectorParser
-      .getOptions();
+    final DatabaseServerTypeParser dbServerTypeParser = new DatabaseServerTypeParser();
+    remainingArgs = dbServerTypeParser.parse(remainingArgs);
+    final DatabaseServerType dbServerType = dbServerTypeParser.getOptions();
     final DatabaseConnectorRegistry registry = new DatabaseConnectorRegistry();
     final DatabaseConnector dbConnector = registry
       .lookupDatabaseSystemIdentifier(dbServerType

@@ -36,14 +36,13 @@ import sf.util.clparser.StringOption;
  * @author Sualeh Fatehi
  */
 public final class AdditionalConfigParser
-  extends BaseOptionsParser<Config>
+  extends BaseConfigOptionsParser
 {
-
-  private final Config config;
 
   public AdditionalConfigParser(final Config config)
   {
-    super(new StringOption('p',
+    super(config,
+          new StringOption('p',
                            "additionalconfigfile",
                            "schemacrawler.additional.config.properties"),
           new BooleanOption("noinfo"),
@@ -51,11 +50,10 @@ public final class AdditionalConfigParser
           new BooleanOption("sortcolumns"),
           new BooleanOption("sortinout"),
           new BooleanOption("portablenames"));
-    this.config = config;
   }
 
   @Override
-  public Config getOptions()
+  protected void loadConfig()
     throws SchemaCrawlerException
   {
     // Start with main config
@@ -102,7 +100,7 @@ public final class AdditionalConfigParser
 
     additionalConfig.putAll(textOptions.toConfig());
 
-    return additionalConfig;
+    config.putAll(additionalConfig);
   }
 
 }

@@ -4,12 +4,11 @@ package schemacrawler.test;
 import static java.nio.file.Files.newBufferedWriter;
 import static schemacrawler.test.utility.TestUtility.createTempFile;
 import static sf.util.Utility.UTF8;
+import static sf.util.Utility.flattenCommandlineArgs;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -106,7 +105,7 @@ public class CommandLineTest
     return configFile;
   }
 
-  private void run(final Map<String, String> args,
+  private void run(final Map<String, String> argsMap,
                    final Map<String, String> config,
                    final String referenceFile)
     throws Exception
@@ -114,15 +113,15 @@ public class CommandLineTest
 
     try (final TestWriter out = new TestWriter("text");)
     {
-      args.put("driver", "org.hsqldb.jdbc.JDBCDriver");
-      args.put("url", "jdbc:hsqldb:hsql://localhost/schemacrawler");
-      args.put("user", "sa");
-      args.put("password", "");
-      args.put("noinfo", "true");
-      args.put("infolevel", "maximum");
-      args.put("command", "brief");
-      args.put("outputformat", "text");
-      args.put("outputfile", out.toString());
+      argsMap.put("driver", "org.hsqldb.jdbc.JDBCDriver");
+      argsMap.put("url", "jdbc:hsqldb:hsql://localhost/schemacrawler");
+      argsMap.put("user", "sa");
+      argsMap.put("password", "");
+      argsMap.put("noinfo", "true");
+      argsMap.put("infolevel", "maximum");
+      argsMap.put("command", "brief");
+      argsMap.put("outputformat", "text");
+      argsMap.put("outputfile", out.toString());
 
       final Config runConfig = new Config();
       final Config informationSchema = Config
@@ -134,15 +133,11 @@ public class CommandLineTest
       }
 
       final Path configFile = createConfig(runConfig);
-      args.put("g", configFile.toString());
+      argsMap.put("g", configFile.toString());
 
-      final List<String> argsList = new ArrayList<>();
-      for (final Map.Entry<String, String> arg: args.entrySet())
-      {
-        argsList.add(String.format("-%s=%s", arg.getKey(), arg.getValue()));
-      }
+      final String[] args = flattenCommandlineArgs(argsMap);
 
-      Main.main(argsList.toArray(new String[0]));
+      Main.main(args);
 
       out.assertEquals(COMMAND_LINE_OUTPUT + referenceFile);
     }

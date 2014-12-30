@@ -66,7 +66,7 @@ public final class DatabaseServerType
 
   public boolean isUnknownDatabaseSystem()
   {
-    return databaseSystemIdentifier == null;
+    return isBlank(databaseSystemIdentifier);
   }
 
   @Override

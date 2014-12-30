@@ -23,10 +23,9 @@ package schemacrawler.integration.test;
 
 
 import static sf.util.Utility.UTF8;
+import static sf.util.Utility.flattenCommandlineArgs;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.junit.Test;
@@ -55,15 +54,6 @@ public class TemplatingIntegrationTest
   }
 
   @Test
-  public void commandlineVelocity()
-    throws Exception
-  {
-    executeCommandlineAndCheckForOutputFile("velocity",
-                                            "plaintextschema.vm",
-                                            "executableForVelocity");
-  }
-
-  @Test
   public void commandlineThymeleaf()
     throws Exception
   {
@@ -73,12 +63,12 @@ public class TemplatingIntegrationTest
   }
 
   @Test
-  public void executableThymeleaf()
+  public void commandlineVelocity()
     throws Exception
   {
-    executeExecutableAndCheckForOutputFile(new ThymeleafRenderer(),
-                                           "plaintextschema.thymeleaf",
-                                           "executableForThymeleaf");
+    executeCommandlineAndCheckForOutputFile("velocity",
+                                            "plaintextschema.vm",
+                                            "executableForVelocity");
   }
 
   @Test
@@ -88,6 +78,15 @@ public class TemplatingIntegrationTest
     executeExecutableAndCheckForOutputFile(new FreeMarkerRenderer(),
                                            "plaintextschema.ftl",
                                            "executableForFreeMarker");
+  }
+
+  @Test
+  public void executableThymeleaf()
+    throws Exception
+  {
+    executeExecutableAndCheckForOutputFile(new ThymeleafRenderer(),
+                                           "plaintextschema.thymeleaf",
+                                           "executableForThymeleaf");
   }
 
   @Test
@@ -106,27 +105,20 @@ public class TemplatingIntegrationTest
   {
     try (final TestWriter out = new TestWriter("text");)
     {
-      final Map<String, String> args = new HashMap<>();
-      args.put("driver", "org.hsqldb.jdbc.JDBCDriver");
-      args.put("url", "jdbc:hsqldb:hsql://localhost/schemacrawler");
-      args.put("user", "sa");
-      args.put("password", "");
+      final Map<String, String> argsMap = new HashMap<>();
+      argsMap.put("driver", "org.hsqldb.jdbc.JDBCDriver");
+      argsMap.put("url", "jdbc:hsqldb:hsql://localhost/schemacrawler");
+      argsMap.put("user", "sa");
+      argsMap.put("password", "");
 
-      args.put("infolevel", "standard");
-      args.put("command", command);
-      args.put("sortcolumns", "true");
-      args.put("outputformat", outputFormatValue);
-      args.put("outputfile", out.toString());
-
-      final List<String> argsList = new ArrayList<>();
-      for (final Map.Entry<String, String> arg: args.entrySet())
-      {
-        argsList.add(String.format("-%s=%s", arg.getKey(), arg.getValue()));
-      }
+      argsMap.put("infolevel", "standard");
+      argsMap.put("command", command);
+      argsMap.put("sortcolumns", "true");
+      argsMap.put("outputformat", outputFormatValue);
+      argsMap.put("outputfile", out.toString());
 
       final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(new DatabaseSystemConnector(),
-                                                                                argsList
-                                                                                  .toArray(new String[0]));
+                                                                                flattenCommandlineArgs(argsMap));
       commandLine.execute();
 
       out.assertEquals(referenceFileName + ".txt");

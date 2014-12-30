@@ -20,14 +20,19 @@
 package schemacrawler.tools.integration.maven;
 
 
+import static java.nio.file.Files.createTempFile;
 import static java.nio.file.Files.newBufferedReader;
+import static java.nio.file.Files.newBufferedWriter;
+import static java.nio.file.StandardOpenOption.CREATE;
+import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
+import static sf.util.Utility.NEWLINE;
 import static sf.util.Utility.UTF8;
-import static sf.util.Utility.isBlank;
+import static sf.util.Utility.flattenCommandlineArgs;
 import static sf.util.Utility.readFully;
 
-import java.io.File;
-import java.io.FileReader;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.Writer;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -35,10 +40,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.regex.Pattern;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.doxia.sink.Sink;
 import org.apache.maven.doxia.siterenderer.Renderer;
@@ -51,23 +58,8 @@ import org.apache.maven.project.MavenProject;
 import org.apache.maven.reporting.AbstractMavenReport;
 import org.apache.maven.reporting.MavenReportException;
 
-import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.ConnectionOptions;
-import schemacrawler.schemacrawler.DatabaseConnectionOptions;
-import schemacrawler.schemacrawler.InclusionRule;
-import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
-import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaInfoLevel;
-import schemacrawler.tools.executable.Executable;
-import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import schemacrawler.tools.options.InfoLevel;
-import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.Main;
 import schemacrawler.tools.options.TextOutputFormat;
-import schemacrawler.tools.text.schema.SchemaTextOptions;
-import sf.util.ObjectToString;
-import sf.util.Utility;
 
 /**
  * Acknowledgements to Anthony Whitford for helping with getting this
@@ -78,137 +70,85 @@ public class SchemaCrawlerMojo
   extends AbstractMavenReport
 {
 
+  private static Pattern bodyEnd = Pattern.compile(".*</body.*");
+  private static Pattern bodyStart = Pattern.compile(".*<body.*");
+
   @Component
   private MavenProject project;
 
-  /**
-   * Config file.
-   */
-  @Parameter(property = "config", defaultValue = "schemacrawler.config.properties")
-  private String config;
-
-  /**
-   * Additional config file.
-   */
-  @Parameter(property = "additional-config", defaultValue = "schemacrawler.additional.config.properties")
-  private String additionalConfig;
-
-  /**
-   * Database server type.
-   */
-  @Parameter(property = "server", defaultValue = "${schemacrawler.server}")
-  private String server;
-
-  /**
-   * JDBC driver class name.
-   */
-  @Parameter(property = "driver", defaultValue = "${schemacrawler.driver}")
-  private String driver;
-
-  /**
-   * Database connection string.
-   */
-  @Parameter(property = "url", defaultValue = "${schemacrawler.url}")
-  private String url;
-
-  /**
-   * Database connection user name.
-   */
-  @Parameter(property = "user", defaultValue = "${schemacrawler.user}")
-  private String user;
-
-  /**
-   * Database connection user password.
-   */
-  @Parameter(property = "password", defaultValue = "${schemacrawler.password}")
-  private String password;
-
-  /**
-   * SchemaCrawler command.
-   */
-  @Parameter(property = "command")
-  private String command;
-
-  /**
-   * The plugin dependencies.
-   */
   @Parameter(property = "plugin.artifacts", readonly = true)
   private List<Artifact> pluginArtifacts;
 
-  /**
-   * Sort tables alphabetically.
-   */
-  @Parameter(property = "sorttables", defaultValue = "true")
-  private boolean sorttables;
-
-  /**
-   * Sort columns in a table alphabetically.
-   */
+  @Parameter(property = "additional-config", defaultValue = "schemacrawler.additional.config.properties")
+  private String additionalconfigfile;
+  @Parameter(property = "children")
+  private int children;
+  @Parameter(property = "command", required = true)
+  private String command;
+  @Parameter(property = "config", defaultValue = "schemacrawler.config.properties")
+  private String configfile;
+  @Parameter(property = "database", defaultValue = "${schemacrawler.database}")
+  private String database;
+  @Parameter(property = "driver", defaultValue = "${schemacrawler.driver}")
+  private String driver;
+  @Parameter(property = "excludecolumns")
+  private String excludecolumns;
+  @Parameter(property = "excludeinout")
+  private String excludeinout;
+  @Parameter(property = "grepcolumns", defaultValue = "false")
+  private boolean grepcolumns;
+  @Parameter(property = "grepdef", defaultValue = "false")
+  private boolean grepdef;
+  @Parameter(property = "grepinout", defaultValue = "false")
+  private boolean grepinout;
+  @Parameter(property = "host", defaultValue = "${schemacrawler.host}")
+  private String host;
+  @Parameter(property = "infolevel", required = true)
+  private String infolevel;
+  @Parameter(property = "invert-match", defaultValue = "false")
+  private boolean invert_match;
+  @Parameter(property = "loglevel")
+  private String loglevel;
+  @Parameter(property = "noinfo", defaultValue = "false")
+  private boolean noinfo;
+  @Parameter(property = "only-matching", defaultValue = "false")
+  private boolean only_matching;
+  @Parameter(property = "parents")
+  private int parents;
+  @Parameter(property = "password", defaultValue = "${schemacrawler.password}")
+  private String password;
+  @Parameter(property = "port", defaultValue = "${schemacrawler.port}")
+  private String port;
+  @Parameter(property = "portablenames", defaultValue = "false")
+  private boolean portablenames;
+  @Parameter(property = "routines")
+  private String routines;
+  @Parameter(property = "routinetypes")
+  private String routinetypes;
+  @Parameter(property = "schemas")
+  private String schemas;
+  @Parameter(property = "sequences")
+  private String sequences;
+  @Parameter(property = "server", defaultValue = "${schemacrawler.server}")
+  private String server;
   @Parameter(property = "sortcolumns", defaultValue = "false")
   private boolean sortcolumns;
-
-  /**
-   * Sort parameters in a routine alphabetically.
-   */
   @Parameter(property = "sortinout", defaultValue = "false")
   private boolean sortinout;
-
-  /**
-   * The info level determines the amount of database metadata
-   * retrieved, and also determines the time taken to crawl the schema.
-   */
-  @Parameter(property = "infolevel", defaultValue = "standard")
-  private String infolevel;
-
-  /**
-   * Schemas to include.
-   */
-  @Parameter(property = "schemas", defaultValue = ALL)
-  private String schemas;
-
-  /**
-   * Comma-separated list of table types of
-   * TABLE,VIEW,SYSTEM_TABLE,GLOBAL_TEMPORARY,LOCAL_TEMPORARY,ALIAS
-   */
-  @Parameter(property = "table_types")
-  private String table_types;
-
-  /**
-   * Regular expression to match fully qualified table names, in the
-   * form "CATALOGNAME.SCHEMANAME.TABLENAME" - for example,
-   * .*\.C.*|.*\.P.* Tables that do not match the pattern are not
-   * displayed.
-   */
-  @Parameter(property = "tables", defaultValue = ALL)
+  @Parameter(property = "sorttables", defaultValue = "true")
+  private boolean sorttables;
+  @Parameter(property = "synonyms")
+  private String synonyms;
+  @Parameter(property = "tables")
   private String tables;
-
-  private static final String ALL = ".*";
-  private static final String NONE = "";
-
-  /**
-   * Regular expression to match fully qualified column names, in the
-   * form "CATALOGNAME.SCHEMANAME.TABLENAME.COLUMNNAME" - for example,
-   * .*\.STREET|.*\.PRICE matches columns named STREET or PRICE in any
-   * table Columns that match the pattern are not displayed
-   */
-  @Parameter(property = "excludecolumns", defaultValue = NONE)
-  private String excludecolumns;
-
-  /**
-   * Regular expression to match fully qualified routine names, in the
-   * form "CATALOGNAME.SCHEMANAME.ROUTINENAME" - for example,
-   * .*\.C.*|.*\.P.* matches any routines whose names start with C or P
-   * Routines that do not match the pattern are not displayed
-   */
-  @Parameter(property = "routines", defaultValue = ALL)
-  private String routines;
-
-  /**
-   * Regular expression to match fully qualified parameter names.
-   * Parameters that match the pattern are not displayed
-   */
-  @Parameter(property = "excludeinout", defaultValue = NONE)
-  private String excludeinout;
+  @Parameter(property = "tabletypes")
+  private String tabletypes;
+  @Parameter(property = "url", defaultValue = "${schemacrawler.url}")
+  private String url;
+  @Parameter(property = "urlx", defaultValue = "${schemacrawler.urlx}")
+  private String urlx;
+  @Parameter(property = "user", defaultValue = "${schemacrawler.user}")
+  private String user;
 
   @Override
   public boolean canGenerateReport()
@@ -316,113 +256,55 @@ public class SchemaCrawlerMojo
     return null; // Unused in the Maven API
   }
 
-  /**
-   * Load configuration files, and add in other configuration options.
-   *
-   * @return SchemaCrawler command configuration
-   */
-  private Config createAdditionalConfiguration()
+  private Path clipOutput(final Path completeOutputFile)
+    throws IOException
   {
-    final SchemaTextOptions textOptions = new SchemaTextOptions();
-    textOptions.setNoHeader(true);
-    textOptions.setNoFooter(true);
-    textOptions.setAlphabeticalSortForTables(sorttables);
-    textOptions.setAlphabeticalSortForTableColumns(sortcolumns);
-    textOptions.setAlphabeticalSortForRoutineColumns(sortinout);
+    final Path clippedOutputFile = createTempFile("schemacrawler", ".html");
 
-    final Config additionalConfiguration = new Config();
-    try
+    try (BufferedReader outputFileReader = newBufferedReader(completeOutputFile,
+                                                             UTF8);
+        Writer finalHtmlFileWriter = newBufferedWriter(clippedOutputFile,
+                                                       UTF8,
+                                                       CREATE,
+                                                       TRUNCATE_EXISTING);)
     {
-      additionalConfiguration.putAll(Config.load(config, additionalConfig));
-    }
-    catch (IOException e)
-    {
-      getLog().info(String.format("Cannot read configuration files, %s and %s",
-                                  config,
-                                  additionalConfiguration),
-                    e);
-    }
-    additionalConfiguration.putAll(textOptions.toConfig());
-    return additionalConfiguration;
-  }
-
-  private ConnectionOptions createConnectionOptions()
-    throws SchemaCrawlerException
-  {
-    final ConnectionOptions connectionOptions = new DatabaseConnectionOptions(driver,
-                                                                              url);
-    connectionOptions.setUser(user);
-    connectionOptions.setPassword(password);
-    return connectionOptions;
-  }
-
-  /**
-   * Defensively set SchemaCrawlerOptions.
-   *
-   * @return SchemaCrawlerOptions
-   */
-  private SchemaCrawlerOptions createSchemaCrawlerOptions()
-  {
-    final Log logger = getLog();
-
-    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-
-    if (!isBlank(table_types))
-    {
-      schemaCrawlerOptions.setTableTypesFromString(table_types);
+      finalHtmlFileWriter.append(NEWLINE);
+      boolean skipLines = true;
+      String line;
+      while ((line = outputFileReader.readLine()) != null)
+      {
+        if (bodyEnd.matcher(line).matches())
+        {
+          break;
+        }
+        if (skipLines)
+        {
+          skipLines = !bodyStart.matcher(line).matches();
+        }
+        else
+        {
+          finalHtmlFileWriter.append(line).append(NEWLINE);
+        }
+      }
+      finalHtmlFileWriter.append(NEWLINE);
     }
 
-    if (!isBlank(infolevel))
-    {
-      final SchemaInfoLevel schemaInfoLevel = InfoLevel
-        .valueOfFromString(infolevel).getSchemaInfoLevel();
-      schemaCrawlerOptions.setSchemaInfoLevel(schemaInfoLevel);
-    }
-
-    schemaCrawlerOptions
-      .setSchemaInclusionRule(new RegularExpressionInclusionRule(StringUtils
-        .defaultString(schemas, ALL)));
-    schemaCrawlerOptions
-      .setTableInclusionRule(new RegularExpressionInclusionRule(StringUtils
-        .defaultString(tables, ALL)));
-    schemaCrawlerOptions
-      .setRoutineInclusionRule(new RegularExpressionInclusionRule(StringUtils
-        .defaultString(routines, ALL)));
-
-    schemaCrawlerOptions
-      .setColumnInclusionRule(new RegularExpressionExclusionRule(StringUtils
-        .defaultString(excludecolumns, NONE)));
-    schemaCrawlerOptions
-      .setColumnInclusionRule(new RegularExpressionExclusionRule(StringUtils
-        .defaultString(excludeinout, NONE)));
-
-    logger.info(ObjectToString.toString(schemaCrawlerOptions));
-    return schemaCrawlerOptions;
+    return clippedOutputFile;
   }
 
   private Path executeSchemaCrawler()
     throws Exception
   {
-    final Log logger = getLog();
+    getLog();
 
     final Path outputFile = Files.createTempFile("schemacrawler.report.",
                                                  ".html");
 
-    final SchemaCrawlerOptions schemaCrawlerOptions = createSchemaCrawlerOptions();
-    final ConnectionOptions connectionOptions = createConnectionOptions();
-    final Config additionalConfiguration = createAdditionalConfiguration();
-    final OutputOptions outputOptions = new OutputOptions(TextOutputFormat.html,
-                                                          outputFile);
+    final String[] args = getCommandlineArgs(outputFile);
+    Main.main(args);
 
-    final Executable executable = new SchemaCrawlerExecutable(command);
-    executable.setOutputOptions(outputOptions);
-    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    executable.setAdditionalConfiguration(additionalConfiguration);
-
-    logger.debug(ObjectToString.toString(executable));
-    executable.execute(connectionOptions.getConnection());
-
-    return outputFile;
+    final Path clippedOutputFile = clipOutput(outputFile);
+    return clippedOutputFile;
   }
 
   /**
@@ -473,6 +355,50 @@ public class SchemaCrawlerMojo
     {
       throw new MavenReportException("Error fixing classpath", e);
     }
+  }
+
+  private String[] getCommandlineArgs(final Path outputFile)
+  {
+    final Map<String, String> argsMap = new HashMap<>();
+    argsMap.put("additionalconfigfile", additionalconfigfile);
+    argsMap.put("children", String.valueOf(children));
+    argsMap.put("command", command);
+    argsMap.put("configfile", configfile);
+    argsMap.put("database", database);
+    argsMap.put("driver", driver);
+    argsMap.put("excludecolumns", excludecolumns);
+    argsMap.put("excludeinout", excludeinout);
+    argsMap.put("grepcolumns", String.valueOf(grepcolumns));
+    argsMap.put("grepdef", String.valueOf(grepdef));
+    argsMap.put("grepinout", String.valueOf(grepinout));
+    argsMap.put("host", host);
+    argsMap.put("infolevel", infolevel);
+    argsMap.put("invert-match", String.valueOf(invert_match));
+    argsMap.put("loglevel", loglevel);
+    argsMap.put("noinfo", String.valueOf(noinfo));
+    argsMap.put("only-matching", String.valueOf(only_matching));
+    argsMap.put("outputfile", outputFile.toAbsolutePath().toString());
+    argsMap.put("outputformat", TextOutputFormat.html.getFormat());
+    argsMap.put("parents", String.valueOf(parents));
+    argsMap.put("password", password);
+    argsMap.put("port", port);
+    argsMap.put("portablenames", String.valueOf(portablenames));
+    argsMap.put("routines", routines);
+    argsMap.put("routinetypes", routinetypes);
+    argsMap.put("schemas", schemas);
+    argsMap.put("sequences", sequences);
+    argsMap.put("server", server);
+    argsMap.put("sortcolumns", String.valueOf(sortcolumns));
+    argsMap.put("sortinout", String.valueOf(sortinout));
+    argsMap.put("sorttables", String.valueOf(sorttables));
+    argsMap.put("synonyms", synonyms);
+    argsMap.put("tables", tables);
+    argsMap.put("tabletypes", tabletypes);
+    argsMap.put("url", url);
+    argsMap.put("urlx", urlx);
+    argsMap.put("user", user);
+
+    return flattenCommandlineArgs(argsMap);
   }
 
 }

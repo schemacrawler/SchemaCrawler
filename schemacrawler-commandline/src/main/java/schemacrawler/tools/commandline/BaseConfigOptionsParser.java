@@ -21,41 +21,44 @@
 package schemacrawler.tools.commandline;
 
 
-import java.io.IOException;
-
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import sf.util.clparser.StringOption;
+import sf.util.clparser.Option;
 
 /**
  * Parses the command-line.
  *
  * @author Sualeh Fatehi
+ * @param <O>
+ *        Options to be parsed from the command-line.
  */
-public class ConfigParser
-  extends BaseConfigOptionsParser
+public abstract class BaseConfigOptionsParser
+  extends BaseOptionsParser<Config>
 {
 
-  public ConfigParser(final Config config)
+  protected final Config config;
+
+  protected BaseConfigOptionsParser(final Config config,
+                                    final Option<?>... options)
   {
-    super(config, new StringOption('g',
-                                   "configfile",
-                                   "schemacrawler.config.properties"));
+    super(options);
+
+    this.config = new Config();
+    if (config != null)
+    {
+      this.config.putAll(config);
+    }
   }
 
   @Override
-  protected void loadConfig()
+  public final Config getOptions()
     throws SchemaCrawlerException
   {
-    final String cfgFile = getStringValue("g");
-    try
-    {
-      config.putAll(Config.load(cfgFile));
-    }
-    catch (final IOException e)
-    {
-      throw new SchemaCrawlerException("Could not load " + cfgFile, e);
-    }
+    loadConfig();
+    return config;
   }
+
+  protected abstract void loadConfig()
+    throws SchemaCrawlerException;
 
 }

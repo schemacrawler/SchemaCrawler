@@ -75,7 +75,7 @@ public class SiteSnapshotVariations
   public void snapshots()
     throws Exception
   {
-    for (OutputFormat outputFormat: new OutputFormat[] {
+    for (final OutputFormat outputFormat: new OutputFormat[] {
         TextOutputFormat.csv,
         TextOutputFormat.html,
         TextOutputFormat.json,

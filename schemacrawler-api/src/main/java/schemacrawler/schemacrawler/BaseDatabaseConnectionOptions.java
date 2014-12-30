@@ -28,32 +28,38 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
+import java.sql.DriverPropertyInfo;
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import sf.util.TemplatingUtility;
 
 abstract class BaseDatabaseConnectionOptions
   implements ConnectionOptions
 {
 
-  static void loadJdbcDriver(final String jdbcDriverClassName)
-    throws SchemaCrawlerException
+  protected static final Map<String, String> toMap(final String jdbcDriverClassName,
+                                                   final String connectionUrl)
   {
-    try
+    if (isBlank(jdbcDriverClassName))
     {
-      Class.forName(jdbcDriverClassName);
+      throw new NullPointerException("No JDBC driver class name provided");
     }
-    catch (final Exception e)
+    if (isBlank(connectionUrl))
     {
-      throw new SchemaCrawlerException("Could not load JDBC driver, "
-                                       + jdbcDriverClassName, e);
+      throw new NullPointerException("No database connection URL provided");
     }
 
-    DriverManager.setLogWriter(null);
+    final Map<String, String> connectionProperties = new HashMap<>();
+    connectionProperties.put(DRIVER, jdbcDriverClassName);
+    connectionProperties.put(URL, connectionUrl);
+    return connectionProperties;
   }
 
   private static final long serialVersionUID = -8141436553988174836L;
@@ -61,9 +67,26 @@ abstract class BaseDatabaseConnectionOptions
   private static final Logger LOGGER = Logger
     .getLogger(BaseDatabaseConnectionOptions.class.getName());
 
-  private Map<String, String> connectionProperties;
+  private static final String DRIVER = "driver";
+  private static final String URL = "url";
+
+  protected final Map<String, String> connectionProperties;
   private String user;
   private String password;
+
+  protected BaseDatabaseConnectionOptions(final Map<String, String> properties)
+    throws SchemaCrawlerException
+  {
+    if (properties == null || properties.isEmpty())
+    {
+      throw new IllegalArgumentException("No connection properties provided");
+    }
+
+    connectionProperties = new HashMap<>(properties);
+    TemplatingUtility.substituteVariables(connectionProperties);
+
+    loadJdbcDriver();
+  }
 
   @Override
   public final Connection getConnection()
@@ -97,19 +120,8 @@ abstract class BaseDatabaseConnectionOptions
                              e);
     }
 
-    final Properties jdbcConnectionProperties = new Properties();
-    if (connectionProperties != null)
-    {
-      jdbcConnectionProperties.putAll(connectionProperties);
-    }
-    if (user != null)
-    {
-      jdbcConnectionProperties.put("user", user);
-    }
-    if (password != null)
-    {
-      jdbcConnectionProperties.put("password", password);
-    }
+    final Properties jdbcConnectionProperties = createConnectionProperties(user,
+                                                                           password);
     try
     {
       LOGGER.log(Level.INFO, String
@@ -128,9 +140,21 @@ abstract class BaseDatabaseConnectionOptions
     }
   }
 
-  public Map<String, String> getConnectionProperties()
+  @Override
+  public String getConnectionUrl()
   {
-    return connectionProperties;
+    final String connectionUrl = connectionProperties.get(URL);
+
+    // Check that all required parameters have been substituted
+    final Set<String> unmatchedVariables = TemplatingUtility
+      .extractTemplateVariables(connectionUrl);
+    if (!unmatchedVariables.isEmpty())
+    {
+      throw new IllegalArgumentException(String.format("Insufficient parameters for database connection URL: missing %s",
+                                                       unmatchedVariables));
+    }
+
+    return connectionUrl;
   }
 
   @Override
@@ -183,14 +207,8 @@ abstract class BaseDatabaseConnectionOptions
     return false;
   }
 
-  public void setConnectionProperties(final Map<String, String> connectionProperties)
-  {
-    this.connectionProperties = connectionProperties;
-  }
-
   public void setConnectionProperties(final String connectionPropertiesString)
   {
-    connectionProperties = new HashMap<>();
     if (!isBlank(connectionPropertiesString))
     {
       for (final String property: connectionPropertiesString.split(";"))
@@ -262,6 +280,62 @@ abstract class BaseDatabaseConnectionOptions
     throws SQLException
   {
     throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
+  }
+
+  private Properties createConnectionProperties(final String user,
+                                                final String password)
+    throws SQLException
+  {
+    final Driver jdbcDriver = getJdbcDriver();
+    final DriverPropertyInfo[] propertyInfo = jdbcDriver
+      .getPropertyInfo(getConnectionUrl(), new Properties());
+    final Map<String, Boolean> jdbcDriverProperties = new HashMap<>();
+    for (final DriverPropertyInfo driverPropertyInfo: propertyInfo)
+    {
+      jdbcDriverProperties.put(driverPropertyInfo.name.toLowerCase(),
+                               driverPropertyInfo.required);
+    }
+
+    final Properties jdbcConnectionProperties = new Properties();
+    if (user != null)
+    {
+      jdbcConnectionProperties.put("user", user);
+    }
+    if (password != null)
+    {
+      jdbcConnectionProperties.put("password", password);
+    }
+    if (connectionProperties != null)
+    {
+      for (final String connectionProperty: connectionProperties.keySet())
+      {
+        final String value = connectionProperties.get(connectionProperty);
+        if (jdbcDriverProperties.containsKey(connectionProperty.toLowerCase())
+            && value != null)
+        {
+          jdbcConnectionProperties.put(connectionProperty, value);
+        }
+      }
+    }
+
+    return jdbcConnectionProperties;
+  }
+
+  private void loadJdbcDriver()
+    throws SchemaCrawlerException
+  {
+    final String jdbcDriverClassName = connectionProperties.get(DRIVER);
+    try
+    {
+      Class.forName(jdbcDriverClassName);
+    }
+    catch (final Exception e)
+    {
+      throw new SchemaCrawlerException("Could not load JDBC driver, "
+                                       + jdbcDriverClassName, e);
+    }
+
+    DriverManager.setLogWriter(null);
   }
 
 }
