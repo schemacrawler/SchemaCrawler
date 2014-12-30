@@ -31,6 +31,7 @@ import static sf.util.Utility.flattenCommandlineArgs;
 import static sf.util.Utility.readFully;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
 import java.lang.reflect.Method;
@@ -40,10 +41,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 import org.apache.maven.artifact.Artifact;
@@ -77,7 +81,7 @@ public class SchemaCrawlerMavenReport
   @Component
   private MavenProject project;
 
-  @Parameter(property = "plugin.artifacts", readonly = true)
+  @Parameter(property = "plugin.artifacts", defaultValue = "${plugin.artifacts}", readonly = true)
   private List<Artifact> pluginArtifacts;
 
   @Parameter(property = "additional-config", defaultValue = "schemacrawler.additional.config.properties")
@@ -323,14 +327,25 @@ public class SchemaCrawlerMavenReport
 
     try
     {
-      final List<URL> jdbcJarUrls = new ArrayList<URL>();
-      for (final Object artifact: project.getArtifacts())
-      {
-        jdbcJarUrls.add(((Artifact) artifact).getFile().toURI().toURL());
-      }
+      final Set<Artifact> artifacts = new HashSet<>();
+      putAll(artifacts, project.getArtifacts());
+      putAll(artifacts, project.getCompileArtifacts());
+      putAll(artifacts, project.getDependencyArtifacts());
+      putAll(artifacts, project.getPluginArtifacts());
+
       for (final Artifact artifact: pluginArtifacts)
       {
-        jdbcJarUrls.add(artifact.getFile().toURI().toURL());
+        artifacts.add(artifact);
+      }
+      logger.debug("SchemaCrawler - Maven Plugin: artifacts: " + artifacts);
+
+      final List<URL> jdbcJarUrls = new ArrayList<URL>();
+      for (final Artifact artifact: artifacts)
+      {
+        final File artifactFile = artifact.getFile();
+        jdbcJarUrls.add(artifactFile.toURI().toURL());
+        logger.debug("SchemaCrawler - Maven Plugin: adding: "
+                     + artifactFile.getAbsolutePath());
       }
       logger.debug("SchemaCrawler - Maven Plugin: classpath: " + jdbcJarUrls);
 
@@ -400,6 +415,18 @@ public class SchemaCrawlerMavenReport
     argsMap.put("user", user);
 
     return flattenCommandlineArgs(argsMap);
+  }
+
+  private void putAll(final Set<Artifact> artifacts,
+                      final Collection projectArtifacts)
+  {
+    if (projectArtifacts != null)
+    {
+      for (final Object artifact: projectArtifacts)
+      {
+        artifacts.add((Artifact) artifact);
+      }
+    }
   }
 
 }
