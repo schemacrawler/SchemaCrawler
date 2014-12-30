@@ -21,7 +21,7 @@
 package schemacrawler.schemacrawler;
 
 
-import sf.util.Utility;
+import java.util.Map;
 
 public final class DatabaseConnectionOptions
   extends BaseDatabaseConnectionOptions
@@ -29,24 +29,17 @@ public final class DatabaseConnectionOptions
 
   private static final long serialVersionUID = -8141436553988174836L;
 
-  private final String connectionUrl;
+  public DatabaseConnectionOptions(final Map<String, String> properties)
+    throws SchemaCrawlerException
+  {
+    super(properties);
+  }
 
   public DatabaseConnectionOptions(final String jdbcDriverClassName,
                                    final String connectionUrl)
     throws SchemaCrawlerException
   {
-    if (Utility.isBlank(connectionUrl))
-    {
-      throw new SchemaCrawlerException("No database connection URL provided");
-    }
-    this.connectionUrl = connectionUrl;
-    loadJdbcDriver(jdbcDriverClassName);
-  }
-
-  @Override
-  public String getConnectionUrl()
-  {
-    return connectionUrl;
+    super(toMap(jdbcDriverClassName, connectionUrl));
   }
 
 }

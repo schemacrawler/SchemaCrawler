@@ -25,7 +25,6 @@ import static sf.util.Utility.isBlank;
 import java.io.Serializable;
 
 import schemacrawler.schemacrawler.Config;
-import sf.util.Utility;
 
 public class LinterConfig
   implements Serializable

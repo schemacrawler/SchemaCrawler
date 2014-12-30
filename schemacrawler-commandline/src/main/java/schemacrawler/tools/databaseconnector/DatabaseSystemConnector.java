@@ -20,15 +20,19 @@
 package schemacrawler.tools.databaseconnector;
 
 
+import static java.util.Objects.requireNonNull;
+
 import java.sql.Connection;
 
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.ConnectionOptions;
+import schemacrawler.schemacrawler.DatabaseConfigConnectionOptions;
+import schemacrawler.schemacrawler.DatabaseConnectionOptions;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.BaseExecutable;
 import schemacrawler.tools.executable.Executable;
-import schemacrawler.tools.options.InfoLevel;
+import schemacrawler.tools.options.DatabaseServerType;
 
 public class DatabaseSystemConnector
 {
@@ -49,22 +53,33 @@ public class DatabaseSystemConnector
     }
   }
 
+  private final DatabaseServerType dbServerType;
+
   private final String configResource;
   private final String informationSchemaViewsResourceFolder;
 
   public DatabaseSystemConnector()
   {
+    dbServerType = new DatabaseServerType();
     configResource = null;
     informationSchemaViewsResourceFolder = null;
   }
 
-  protected DatabaseSystemConnector(final String configResource,
+  protected DatabaseSystemConnector(final DatabaseServerType dbServerType,
+                                    final String configResource,
                                     final String informationSchemaViewsResourceFolder)
   {
+    this.dbServerType = requireNonNull(dbServerType,
+                                       "No database server type provided");
     this.configResource = configResource;
     this.informationSchemaViewsResourceFolder = informationSchemaViewsResourceFolder;
   }
 
+  /**
+   * Gets the complete bundled database configuration set, including the
+   * SQL for information schema views. This is useful in building the
+   * SchemaCrawler options.
+   */
   public final Config getConfig()
   {
     final Config config = Config.loadResource(configResource);
@@ -77,19 +92,42 @@ public class DatabaseSystemConnector
     return config;
   }
 
-  public final SchemaCrawlerOptions getSchemaCrawlerOptions(final InfoLevel infoLevel)
+  public DatabaseServerType getDatabaseServerType()
   {
-    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(getConfig());
-    if (infoLevel != null)
-    {
-      schemaCrawlerOptions.setSchemaInfoLevel(infoLevel.getSchemaInfoLevel());
-    }
-    return schemaCrawlerOptions;
+    return dbServerType;
   }
 
-  public final boolean hasConfig()
+  /**
+   * Creates a datasource for connecting to a database. Additional
+   * connection options are provided, from the command-line, and
+   * configuration file.
+   *
+   * @param additionalConfig
+   *        Configuration from the command-line, and from configuration
+   *        files.
+   */
+  public ConnectionOptions newDatabaseConnectionOptions(final Config additionalConfig)
+    throws SchemaCrawlerException
   {
-    return configResource != null;
+    if (additionalConfig == null || additionalConfig.isEmpty())
+    {
+      throw new IllegalArgumentException("No connection configuration provided");
+    }
+
+    final Config config = getConfig();
+    config.putAll(additionalConfig);
+
+    final ConnectionOptions connectionOptions;
+    if (dbServerType.isUnknownDatabaseSystem())
+    {
+      connectionOptions = new DatabaseConnectionOptions(config);
+    }
+    else
+    {
+      connectionOptions = new DatabaseConfigConnectionOptions(config);
+    }
+
+    return connectionOptions;
   }
 
   public Executable newPostExecutable()

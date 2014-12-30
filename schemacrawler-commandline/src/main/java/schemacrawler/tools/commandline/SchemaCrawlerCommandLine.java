@@ -20,6 +20,8 @@
 package schemacrawler.tools.commandline;
 
 
+import static java.util.Objects.requireNonNull;
+
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +36,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.databaseconnector.DatabaseSystemConnector;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import schemacrawler.tools.options.DatabaseServerType;
 import schemacrawler.tools.options.OutputOptions;
 import sf.util.ObjectToString;
 
@@ -64,46 +67,17 @@ public final class SchemaCrawlerCommandLine
     {
       throw new SchemaCrawlerCommandLineException("No command-line arguments provided");
     }
-    if (dbSystemConnector == null)
-    {
-      throw new SchemaCrawlerCommandLineException("No database connector provided");
-    }
+    requireNonNull(dbSystemConnector, "No database connector provided");
 
     String[] remainingArgs = args;
+    this.dbSystemConnector = dbSystemConnector;
 
     final CommandParser commandParser = new CommandParser();
     remainingArgs = commandParser.parse(remainingArgs);
     command = commandParser.getOptions().toString();
 
-    this.dbSystemConnector = dbSystemConnector;
-    config = this.dbSystemConnector.getConfig();
-
-    if (remainingArgs.length > 0)
-    {
-      final ConfigParser configParser = new ConfigParser();
-      remainingArgs = configParser.parse(remainingArgs);
-      config.putAll(configParser.getOptions());
-    }
-
-    if (remainingArgs.length > 0)
-    {
-      final AdditionalConfigParser additionalConfigParser = new AdditionalConfigParser(config);
-      remainingArgs = additionalConfigParser.parse(remainingArgs);
-      config.putAll(additionalConfigParser.getOptions());
-    }
-
-    if (this.dbSystemConnector.hasConfig())
-    {
-      final BaseDatabaseConnectionOptionsParser bundledDriverConnectionOptionsParser = new BundledDriverConnectionOptionsParser(config);
-      remainingArgs = bundledDriverConnectionOptionsParser.parse(remainingArgs);
-      connectionOptions = bundledDriverConnectionOptionsParser.getOptions();
-    }
-    else
-    {
-      final CommandLineConnectionOptionsParser commandLineConnectionOptionsParser = new CommandLineConnectionOptionsParser(config);
-      remainingArgs = commandLineConnectionOptionsParser.parse(remainingArgs);
-      connectionOptions = commandLineConnectionOptionsParser.getOptions();
-    }
+    config = new Config();
+    remainingArgs = loadConfig(dbSystemConnector, remainingArgs);
 
     final SchemaCrawlerOptionsParser schemaCrawlerOptionsParser = new SchemaCrawlerOptionsParser(config);
     remainingArgs = schemaCrawlerOptionsParser.parse(remainingArgs);
@@ -112,6 +86,12 @@ public final class SchemaCrawlerCommandLine
     final OutputOptionsParser outputOptionsParser = new OutputOptionsParser(config);
     remainingArgs = outputOptionsParser.parse(remainingArgs);
     outputOptions = outputOptionsParser.getOptions();
+
+    remainingArgs = parseConnectionOptions(dbSystemConnector.getDatabaseServerType(),
+                                           remainingArgs);
+    // Connect using connection options provided from the command-line,
+    // provided configuration, and bundled configuration
+    connectionOptions = dbSystemConnector.newDatabaseConnectionOptions(config);
 
     if (remainingArgs.length > 0)
     {
@@ -196,6 +176,60 @@ public final class SchemaCrawlerCommandLine
     {
       executable.setAdditionalConfiguration(config);
     }
+  }
+
+  /**
+   * Loads configuration from a number of sources, in order of priority.
+   */
+  private String[] loadConfig(final DatabaseSystemConnector dbSystemConnector,
+                              final String[] args)
+    throws SchemaCrawlerException
+  {
+    config.putAll(dbSystemConnector.getConfig());
+
+    String[] remainingArgs = args;
+    if (remainingArgs.length > 0)
+    {
+      final ConfigParser configParser = new ConfigParser(config);
+      remainingArgs = configParser.parse(remainingArgs);
+      config.putAll(configParser.getOptions());
+    }
+
+    if (remainingArgs.length > 0)
+    {
+      final AdditionalConfigParser additionalConfigParser = new AdditionalConfigParser(config);
+      remainingArgs = additionalConfigParser.parse(remainingArgs);
+      config.putAll(additionalConfigParser.getOptions());
+    }
+
+    return remainingArgs;
+  }
+
+  /**
+   * Parse connection options, for both ways of connecting.
+   * 
+   * @param dbServerType
+   *        Database server type
+   */
+  private String[] parseConnectionOptions(DatabaseServerType dbServerType,
+                                          final String[] args)
+    throws SchemaCrawlerException
+  {
+    String[] remainingArgs = args;
+
+    final BaseDatabaseConnectionOptionsParser dbConnectionOptionsParser;
+    if (dbServerType.isUnknownDatabaseSystem())
+    {
+      dbConnectionOptionsParser = new CommandLineConnectionOptionsParser(config);
+    }
+    else
+    {
+      dbConnectionOptionsParser = new BundledDriverConnectionOptionsParser(config);
+    }
+    remainingArgs = dbConnectionOptionsParser.parse(remainingArgs);
+    config.putAll(dbConnectionOptionsParser.getOptions());
+
+    return remainingArgs;
   }
 
 }
