@@ -135,9 +135,7 @@ public class CommandLineTest
       final Path configFile = createConfig(runConfig);
       argsMap.put("g", configFile.toString());
 
-      final String[] args = flattenCommandlineArgs(argsMap);
-
-      Main.main(args);
+      Main.main(flattenCommandlineArgs(argsMap));
 
       out.assertEquals(COMMAND_LINE_OUTPUT + referenceFile);
     }

@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ivy-module version="2.0"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:noNamespaceSchemaLocation=
-                   "http://ant.apache.org/ivy/schemas/ivy.xsd">
-	<info organisation="schemacrawler" module="schemacrawler-spring" />
-	<dependencies>
-		<dependency org="org.springframework" name="spring-context" rev="4.1.2.RELEASE" />
-		<dependency org="org.springframework" name="spring-jdbc" rev="4.1.2.RELEASE" />
-
-		<exclude org="javax.ejb"/>
-		<exclude org="javax.jms"/>
-		<exclude org="javax.transaction"/>
-		<exclude org="javax.resource"/>
-		<exclude org="com.bea.wlplatform"/>
-		<exclude org="jotm"/>
-		<exclude org="ant"/>
-		
-        <exclude type="sources" ext="jar"/>
-        <exclude type="test" ext="jar"/>
-        <exclude type="javadoc" ext="jar"/>
-	</dependencies>
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
+  <info organisation="schemacrawler" module="schemacrawler-spring" />
+  <dependencies>
+    <dependency org="org.springframework" name="spring-context"
+      rev="4.1.2.RELEASE" />
+    <dependency org="org.springframework" name="spring-jdbc"
+      rev="4.1.2.RELEASE" />
+      
+    <exclude org="javax.ejb" />
+    <exclude org="javax.jms" />
+    <exclude org="javax.transaction" />
+    <exclude org="javax.resource" />
+    <exclude org="com.bea.wlplatform" />
+    <exclude org="jotm" />
+    <exclude org="ant" />
+    
+    <exclude type="sources" ext="jar" />
+    <exclude type="test" ext="jar" />
+    <exclude type="javadoc" ext="jar" />
+  </dependencies>
 </ivy-module>
