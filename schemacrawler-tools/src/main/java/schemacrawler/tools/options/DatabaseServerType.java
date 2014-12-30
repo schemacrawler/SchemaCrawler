@@ -32,7 +32,9 @@ public final class DatabaseServerType
   private final String databaseSystemIdentifier;
   private final String databaseSystemName;
 
-  public DatabaseServerType()
+  public static final DatabaseServerType UNKNOWN = new DatabaseServerType();
+
+  private DatabaseServerType()
   {
     databaseSystemIdentifier = null;
     databaseSystemName = null;

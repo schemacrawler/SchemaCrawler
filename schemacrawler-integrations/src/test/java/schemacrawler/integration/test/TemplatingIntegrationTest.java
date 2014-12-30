@@ -30,10 +30,9 @@ import java.util.Map;
 
 import org.junit.Test;
 
+import schemacrawler.Main;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestWriter;
-import schemacrawler.tools.commandline.SchemaCrawlerCommandLine;
-import schemacrawler.tools.databaseconnector.DatabaseSystemConnector;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.integration.freemarker.FreeMarkerRenderer;
 import schemacrawler.tools.integration.thymeleaf.ThymeleafRenderer;
@@ -117,9 +116,7 @@ public class TemplatingIntegrationTest
       argsMap.put("outputformat", outputFormatValue);
       argsMap.put("outputfile", out.toString());
 
-      final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(new DatabaseSystemConnector(),
-                                                                                flattenCommandlineArgs(argsMap));
-      commandLine.execute();
+      Main.main(flattenCommandlineArgs(argsMap));
 
       out.assertEquals(referenceFileName + ".txt");
     }

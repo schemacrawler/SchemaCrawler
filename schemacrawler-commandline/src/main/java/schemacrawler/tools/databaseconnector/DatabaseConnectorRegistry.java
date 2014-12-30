@@ -76,13 +76,6 @@ public final class DatabaseConnectorRegistry
     return databaseConnectorRegistry;
   }
 
-  private static final DatabaseConnector uknownDatabaseConnector = new DatabaseConnector(new DatabaseServerType(),
-    null,
-    null,
-    null)
-  {
-  };
-
   private static final Logger LOGGER = Logger
     .getLogger(DatabaseConnectorRegistry.class.getName());
 
@@ -124,7 +117,7 @@ public final class DatabaseConnectorRegistry
     }
     else
     {
-      return uknownDatabaseConnector;
+      return DatabaseConnector.UNKNOWN;
     }
   }
 
