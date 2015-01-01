@@ -876,7 +876,7 @@
     <schemaCrawlerVersion>12.03.01</schemaCrawlerVersion>
     <schemaCrawlerAbout>SchemaCrawler 12.03.01&#xd;
 Database schema discovery and comprehension tool&#xd;
-Copyright (c) 2000-2014, Sualeh Fatehi &lt;sualeh@hotmail.com&gt;.&#xd;
+Copyright (c) 2000-2015, Sualeh Fatehi &lt;sualeh@hotmail.com&gt;.&#xd;
 &#xd;
 You can search for database schema objects using regular expressions, &#xd;
 and output the schema and data in a readable text format. You can find &#xd;
