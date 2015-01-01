@@ -321,9 +321,6 @@ PK_PUBLISHERS                                              [primary key]
   ID                                ascending                   
                                     auto-incremented            
 
-FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLISHERS         [foreign key, with no action]
-  ID <-- PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ                              
-
                                                           [unique index]
   ID                                ascending                   
                                     auto-incremented            
@@ -356,27 +353,6 @@ FK_Y_BOOK                                  [foreign key, with no action]
 
 
 
-PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
-------------------------------------------------------------------------
-                                                                 [table]
-  ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ               BIGINT NOT NULL             
-  ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ           VARCHAR(10)                 
-  ΣΥΓΓΡΑΦΈΑΣ                        INTEGER                     
-
-PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                                    [primary key]
-  ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ               ascending                   
-
-FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLISHERS         [foreign key, with no action]
-  ΣΥΓΓΡΑΦΈΑΣ --> PUBLIC.BOOKS.PUBLISHERS.ID                              
-
-                                                          [unique index]
-  ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ               ascending                   
-
-                                                      [non-unique index]
-  ΣΥΓΓΡΑΦΈΑΣ                        ascending                   
-
-
-
 PUBLIC.BOOKS.AUTHORSLIST
 ------------------------------------------------------------------------
                                                                   [view]
@@ -398,7 +374,7 @@ PUBLIC.BOOKS.CUSTOMADD
   ONE                               INTEGER, in                 
 
                                                          [specific name]
-CUSTOMADD_10145
+CUSTOMADD_10140
 
 
 
@@ -409,17 +385,7 @@ PUBLIC.BOOKS.CUSTOMADD
   TWO                               INTEGER, in                 
 
                                                          [specific name]
-CUSTOMADD_10144
-
-
-
-PUBLIC.BOOKS.NEW_PUBLISHER
-------------------------------------------------------------------------
-                                                  [procedure, no result]
-  PUBLISHER                         CHARACTER VARYING, out      
-
-                                                         [specific name]
-NEW_PUBLISHER_10142
+CUSTOMADD_10139
 
 
 
@@ -430,7 +396,17 @@ PUBLIC.BOOKS.NEW_PUBLISHER
   PUBLISHER                         CHARACTER VARYING, out      
 
                                                          [specific name]
-NEW_PUBLISHER_10143
+NEW_PUBLISHER_10138
+
+
+
+PUBLIC.BOOKS.NEW_PUBLISHER
+------------------------------------------------------------------------
+                                                  [procedure, no result]
+  PUBLISHER                         CHARACTER VARYING, out      
+
+                                                         [specific name]
+NEW_PUBLISHER_10137
 
 
 

@@ -22,7 +22,7 @@ package schemacrawler.test;
 
 
 import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
-import static sf.util.Utility.flattenCommandlineArgs;
+import static sf.util.commandlineparser.CommandLineArgumentsUtility.flattenCommandlineArgs;
 
 import java.io.IOException;
 import java.nio.file.Path;

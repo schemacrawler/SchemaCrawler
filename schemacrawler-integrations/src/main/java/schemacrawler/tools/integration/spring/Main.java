@@ -21,13 +21,18 @@
 package schemacrawler.tools.integration.spring;
 
 
+import static java.util.Objects.requireNonNull;
+import static sf.util.commandlineparser.CommandLineArgumentsUtility.flattenCommandlineArgs;
+
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.commandline.ApplicationOptionsParser;
 import schemacrawler.tools.options.ApplicationOptions;
 import sf.util.Utility;
+import sf.util.commandlineparser.CommandLineArgumentsUtility;
 
 /**
  * Main class that takes arguments for a database for crawling a schema.
@@ -46,10 +51,11 @@ public final class Main
   public static void main(final String[] args)
     throws Exception
   {
-    String[] remainingArgs = args;
+    requireNonNull(args);
 
-    final ApplicationOptionsParser applicationOptionsParser = new ApplicationOptionsParser();
-    remainingArgs = applicationOptionsParser.parse(remainingArgs);
+    final Config config = CommandLineArgumentsUtility.loadConfig(args);
+
+    final ApplicationOptionsParser applicationOptionsParser = new ApplicationOptionsParser(config);
     final ApplicationOptions applicationOptions = applicationOptionsParser
       .getOptions();
 
@@ -68,7 +74,7 @@ public final class Main
     applicationOptions.applyApplicationLogLevel();
     LOGGER.log(Level.CONFIG, "Command line: " + Arrays.toString(args));
 
-    final SchemaCrawlerSpringCommandLine commandLine = new SchemaCrawlerSpringCommandLine(remainingArgs);
+    final SchemaCrawlerSpringCommandLine commandLine = new SchemaCrawlerSpringCommandLine(flattenCommandlineArgs(config));
     commandLine.execute();
   }
 

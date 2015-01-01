@@ -11,7 +11,7 @@
     <jdbc:script location="classpath:/db/books/02_01_tables_01.sql" />
     <jdbc:script location="classpath:/db/books/02_02_tables_01.sql" />
     <jdbc:script location="classpath:/db/books/02_03_tables_01.sql" />
-    <jdbc:script location="classpath:/db/books/02_04_tables_01.sql" />
+    <!--  Foreign language tables not supported due to file encoding - 02_04_tables -->
     <jdbc:script location="classpath:/db/books/03_01_remarks_01.sql" />
     <jdbc:script location="classpath:/db/books/04_01_routines_01.sql" />
     <jdbc:script location="classpath:/db/books/05_01_triggers_01.sql" />
