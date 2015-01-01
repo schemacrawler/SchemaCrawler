@@ -23,7 +23,6 @@ package schemacrawler.tools.offline;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.commandline.BaseOptionsParser;
-import sf.util.clparser.StringOption;
 
 /**
  * Parses the command-line.
@@ -38,16 +37,14 @@ public final class OfflineSnapshotOptionsParser
 
   public OfflineSnapshotOptionsParser(final Config config)
   {
-    super(new StringOption("database", ""));
-
+    super(config);
     options = new OfflineSnapshotOptions(config);
   }
 
   @Override
   public OfflineSnapshotOptions getOptions()
   {
-
-    final String inputSource = getStringValue("database");
+    final String inputSource = config.getStringValue("database", null);
     options.setInputSource(inputSource);
 
     return options;

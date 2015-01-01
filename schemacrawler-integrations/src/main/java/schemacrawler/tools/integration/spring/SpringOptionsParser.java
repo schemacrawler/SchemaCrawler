@@ -21,8 +21,8 @@
 package schemacrawler.tools.integration.spring;
 
 
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.commandline.BaseOptionsParser;
-import sf.util.clparser.StringOption;
 
 /**
  * Options for the command-line.
@@ -39,20 +39,28 @@ final class SpringOptionsParser
    * @param args
    *        Command-line arguments
    */
-  SpringOptionsParser()
+  SpringOptionsParser(final Config config)
   {
-    super(new StringOption('c', "context-file", "schemacrawler.context.xml"),
-          new StringOption('x', "executable", "executable"),
-          new StringOption('d', "datasource", "datasource"));
+    super(config);
+    normalizeOptionName("context-file", "c");
+    normalizeOptionName("executable", "x");
+    normalizeOptionName("datasource", "d");
   }
 
   @Override
   protected SpringOptions getOptions()
   {
     final SpringOptions options = new SpringOptions();
-    options.setContextFileName(getStringValue("c"));
-    options.setExecutableName(getStringValue("x"));
-    options.setDataSourceName(getStringValue("d"));
+    options.setContextFileName(config
+      .getStringValue("context-file", "schemacrawler.context.xml"));
+    options
+      .setExecutableName(config.getStringValue("executable", "executable"));
+    options
+      .setDataSourceName(config.getStringValue("datasource", "datasource"));
+
+    consumeOption("context-file");
+    consumeOption("executable");
+    consumeOption("datasource");
 
     return options;
   }

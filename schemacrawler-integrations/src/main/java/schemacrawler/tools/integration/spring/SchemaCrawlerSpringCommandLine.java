@@ -23,6 +23,7 @@ package schemacrawler.tools.integration.spring;
 
 
 import static java.nio.file.Files.exists;
+import static java.util.Objects.requireNonNull;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -36,10 +37,11 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.commandline.CommandLine;
 import schemacrawler.tools.executable.Executable;
-import sf.util.ObjectToString;
+import sf.util.commandlineparser.CommandLineArgumentsUtility;
 
 public class SchemaCrawlerSpringCommandLine
   implements CommandLine
@@ -53,15 +55,12 @@ public class SchemaCrawlerSpringCommandLine
   public SchemaCrawlerSpringCommandLine(final String[] args)
     throws SchemaCrawlerException
   {
-    final SpringOptionsParser springOptionsParser = new SpringOptionsParser();
-    final String[] remainingArgs = springOptionsParser.parse(args);
-    springOptions = springOptionsParser.getOptions();
+    requireNonNull(args);
 
-    if (remainingArgs.length > 0)
-    {
-      throw new SchemaCrawlerException("Too many command-line arguments provided: "
-                                       + ObjectToString.toString(remainingArgs));
-    }
+    final Config config = CommandLineArgumentsUtility.loadConfig(args);
+
+    final SpringOptionsParser springOptionsParser = new SpringOptionsParser(config);
+    springOptions = springOptionsParser.getOptions();
   }
 
   @Override

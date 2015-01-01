@@ -31,7 +31,7 @@ import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
 import static schemacrawler.test.utility.TestUtility.createTempFile;
 import static sf.util.Utility.UTF8;
-import static sf.util.Utility.flattenCommandlineArgs;
+import static sf.util.commandlineparser.CommandLineArgumentsUtility.flattenCommandlineArgs;
 
 import java.io.IOException;
 import java.io.Writer;

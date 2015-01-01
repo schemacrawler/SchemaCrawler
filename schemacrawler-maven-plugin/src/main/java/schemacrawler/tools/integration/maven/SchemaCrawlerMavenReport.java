@@ -27,8 +27,8 @@ import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static sf.util.Utility.NEWLINE;
 import static sf.util.Utility.UTF8;
-import static sf.util.Utility.flattenCommandlineArgs;
 import static sf.util.Utility.readFully;
+import static sf.util.commandlineparser.CommandLineArgumentsUtility.flattenCommandlineArgs;
 
 import java.io.BufferedReader;
 import java.io.File;

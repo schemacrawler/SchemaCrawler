@@ -4,7 +4,7 @@ package schemacrawler.test;
 import static java.nio.file.Files.newBufferedWriter;
 import static schemacrawler.test.utility.TestUtility.createTempFile;
 import static sf.util.Utility.UTF8;
-import static sf.util.Utility.flattenCommandlineArgs;
+import static sf.util.commandlineparser.CommandLineArgumentsUtility.flattenCommandlineArgs;
 
 import java.io.IOException;
 import java.nio.file.Path;

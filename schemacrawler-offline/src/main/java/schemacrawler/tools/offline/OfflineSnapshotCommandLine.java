@@ -20,21 +20,21 @@
 package schemacrawler.tools.offline;
 
 
-import java.util.logging.Level;
+import static java.util.Objects.requireNonNull;
+
 import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.tools.commandline.AdditionalConfigParser;
+import schemacrawler.tools.commandline.AdditionalConfigOptionsParser;
 import schemacrawler.tools.commandline.CommandLine;
 import schemacrawler.tools.commandline.CommandParser;
 import schemacrawler.tools.commandline.ConfigParser;
 import schemacrawler.tools.commandline.OutputOptionsParser;
 import schemacrawler.tools.commandline.SchemaCrawlerOptionsParser;
 import schemacrawler.tools.options.OutputOptions;
-import sf.util.ObjectToString;
+import sf.util.commandlineparser.CommandLineArgumentsUtility;
 
 /**
  * Utility for parsing the SchemaCrawler command-line.
@@ -57,61 +57,25 @@ public final class OfflineSnapshotCommandLine
   OfflineSnapshotCommandLine(final String... args)
     throws SchemaCrawlerException
   {
-    if (args == null || args.length == 0)
-    {
-      throw new SchemaCrawlerCommandLineException("No command-line arguments provided");
-    }
-
-    String[] remainingArgs = args;
-
-    final CommandParser commandParser = new CommandParser();
-    remainingArgs = commandParser.parse(remainingArgs);
-    command = commandParser.getOptions().toString();
+    requireNonNull(args);
 
     config = new Config();
-    remainingArgs = loadConfig(remainingArgs);
+    loadConfig(args);
+
+    final CommandParser commandParser = new CommandParser(config);
+    command = commandParser.getOptions().toString();
 
     final OfflineSnapshotOptionsParser offlineSnapshotOptionsParser = new OfflineSnapshotOptionsParser(config);
-    remainingArgs = offlineSnapshotOptionsParser.parse(remainingArgs);
     offlineSnapshotOptions = offlineSnapshotOptionsParser.getOptions();
 
     final SchemaCrawlerOptionsParser schemaCrawlerOptionsParser = new SchemaCrawlerOptionsParser(config);
-    remainingArgs = schemaCrawlerOptionsParser.parse(remainingArgs);
     schemaCrawlerOptions = schemaCrawlerOptionsParser.getOptions();
 
     final OutputOptionsParser outputOptionsParser = new OutputOptionsParser(config);
-    remainingArgs = outputOptionsParser.parse(remainingArgs);
     outputOptions = outputOptionsParser.getOptions();
 
-    if (remainingArgs.length > 0)
-    {
-      LOGGER.log(Level.INFO, "Too many command-line arguments provided: "
-                             + ObjectToString.toString(remainingArgs));
-    }
-  }
-
-  /**
-   * Loads configuration from a number of sources, in order of priority.
-   */
-  private String[] loadConfig(final String[] args)
-    throws SchemaCrawlerException
-  {
-    String[] remainingArgs = args;
-    if (remainingArgs.length > 0)
-    {
-      final ConfigParser configParser = new ConfigParser(config);
-      remainingArgs = configParser.parse(remainingArgs);
-      config.putAll(configParser.getOptions());
-    }
-
-    if (remainingArgs.length > 0)
-    {
-      final AdditionalConfigParser additionalConfigParser = new AdditionalConfigParser(config);
-      remainingArgs = additionalConfigParser.parse(remainingArgs);
-      config.putAll(additionalConfigParser.getOptions());
-    }
-
-    return remainingArgs;
+    final AdditionalConfigOptionsParser additionalConfigOptionsParser = new AdditionalConfigOptionsParser(config);
+    additionalConfigOptionsParser.loadConfig();
   }
 
   @Override
@@ -162,6 +126,23 @@ public final class OfflineSnapshotCommandLine
     {
       executable.setAdditionalConfiguration(config);
     }
+  }
+
+  /**
+   * Loads configuration from a number of sources, in order of priority.
+   */
+  private void loadConfig(final String[] args)
+    throws SchemaCrawlerException
+  {
+    final Config optionsMap = CommandLineArgumentsUtility.loadConfig(args);
+
+    // 1. Load config from files, in place
+    config.putAll(optionsMap);
+    final ConfigParser configParser = new ConfigParser(config);
+    configParser.loadConfig();
+
+    // 2. Override/ overwrite from the command-line options
+    config.putAll(optionsMap);
   }
 
 }

@@ -21,10 +21,16 @@
 package schemacrawler.tools.commandline;
 
 
+import static java.util.Objects.requireNonNull;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.Options;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import sf.util.clparser.CommandLineParser;
-import sf.util.clparser.Option;
 
 /**
  * Parses the command-line.
@@ -34,15 +40,51 @@ import sf.util.clparser.Option;
  *        Options to be parsed from the command-line.
  */
 public abstract class BaseOptionsParser<O extends Options>
-  extends CommandLineParser
 {
 
-  protected BaseOptionsParser(final Option<?>... options)
+  protected final Config config;
+
+  protected BaseOptionsParser(final Config config)
   {
-    super(options);
+    this.config = requireNonNull(config);
+  }
+
+  protected final void consumeOption(final String primaryOptionName)
+  {
+    config.remove(primaryOptionName);
   }
 
   protected abstract O getOptions()
     throws SchemaCrawlerException;
+
+  protected final void normalizeOptionName(final String primaryOptionName,
+                                           final String... alternateOptionName)
+  {
+    requireNonNull(primaryOptionName);
+    final List<String> optionNames = new ArrayList<>();
+    optionNames.add(primaryOptionName);
+    if (alternateOptionName != null)
+    {
+      optionNames.addAll(Arrays.asList(alternateOptionName));
+    }
+    Collections.reverse(optionNames);
+
+    String value = null;
+    boolean foundValue = false;
+    for (final String optionName: optionNames)
+    {
+      if (config.hasValue(optionName))
+      {
+        value = config.get(optionName);
+        foundValue = true;
+      }
+      config.remove(optionName);
+    }
+
+    if (foundValue)
+    {
+      config.put(primaryOptionName, value);
+    }
+  }
 
 }

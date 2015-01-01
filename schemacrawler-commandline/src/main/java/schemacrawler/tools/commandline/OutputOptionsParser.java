@@ -29,7 +29,6 @@ import java.nio.file.Paths;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.TextOutputFormat;
-import sf.util.clparser.StringOption;
 
 /**
  * Parses the command-line.
@@ -44,8 +43,9 @@ public final class OutputOptionsParser
 
   public OutputOptionsParser(final Config config)
   {
-    super(new StringOption("outputformat", TextOutputFormat.text.getFormat()),
-          new StringOption('o', "outputfile", ""));
+    super(config);
+    normalizeOptionName("outputformat");
+    normalizeOptionName("outputfile", "o");
 
     outputOptions = new OutputOptions(config);
   }
@@ -53,10 +53,11 @@ public final class OutputOptionsParser
   @Override
   public OutputOptions getOptions()
   {
-    final String outputFormatValue = getStringValue("outputformat");
+    final String outputFormatValue = config
+      .getStringValue("outputformat", TextOutputFormat.text.getFormat());
     outputOptions.setOutputFormatValue(outputFormatValue);
 
-    final String outputFileName = getStringValue("outputfile");
+    final String outputFileName = config.getStringValue("outputfile", null);
     final Path outputFile;
     if (isBlank(outputFileName))
     {
