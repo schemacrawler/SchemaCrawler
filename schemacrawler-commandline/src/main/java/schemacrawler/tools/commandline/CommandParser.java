@@ -21,11 +21,11 @@
 package schemacrawler.tools.commandline;
 
 
+import static sf.util.Utility.isBlank;
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.Command;
-import sf.util.Utility;
-import sf.util.clparser.StringOption;
 
 /**
  * Parses the command-line.
@@ -36,18 +36,22 @@ public final class CommandParser
   extends BaseOptionsParser<Command>
 {
 
-  public CommandParser()
+  public CommandParser(final Config config)
   {
-    super(new StringOption('c', "command", null));
+    super(config);
+    normalizeOptionName("command", "c");
   }
 
   @Override
   public Command getOptions()
     throws SchemaCrawlerException
   {
-    if (hasOptions())
+    final String command = config.getStringValue("command", null);
+    if (!isBlank(command))
     {
-      return new Command(getStringValue("command"));
+      final Command commandOption = new Command(command);
+      consumeOption("command");
+      return commandOption;
     }
     else
     {
@@ -56,19 +60,9 @@ public final class CommandParser
   }
 
   public boolean hasOptions()
-    throws SchemaCrawlerException
   {
-    boolean hasOptions;
-    if (hasOptionValue("command")
-        && !Utility.isBlank(getStringValue("command")))
-    {
-      hasOptions = true;
-    }
-    else
-    {
-      hasOptions = false;
-    }
-    return hasOptions;
+    final String command = config.getStringValue("command", null);
+    return !isBlank(command);
   }
 
 }

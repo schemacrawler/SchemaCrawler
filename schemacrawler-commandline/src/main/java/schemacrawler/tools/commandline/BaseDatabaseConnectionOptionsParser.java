@@ -28,7 +28,6 @@ import java.util.logging.Logger;
 import schemacrawler.Version;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import sf.util.clparser.StringOption;
 
 /**
  * Options for the command-line.
@@ -47,12 +46,13 @@ abstract class BaseDatabaseConnectionOptionsParser
 
   BaseDatabaseConnectionOptionsParser(final Config config)
   {
-    super(config, new StringOption('u', USER, null), new StringOption(PASSWORD,
-                                                                      null));
+    super(config);
+    normalizeOptionName(USER, "u");
+    normalizeOptionName(PASSWORD);
   }
 
   @Override
-  protected void loadConfig()
+  public void loadConfig()
     throws SchemaCrawlerException
   {
     setUser();
@@ -84,9 +84,9 @@ abstract class BaseDatabaseConnectionOptionsParser
   private void setPassword()
   {
     final String password;
-    if (hasOptionValue(PASSWORD))
+    if (config.hasValue(PASSWORD))
     {
-      password = getStringValue(PASSWORD);
+      password = config.getStringValue(PASSWORD, null);
     }
     else
     {
@@ -97,7 +97,7 @@ abstract class BaseDatabaseConnectionOptionsParser
 
   private void setUser()
   {
-    config.put(USER, getStringValue(USER));
+    config.put(USER, config.getStringValue(USER, null));
   }
 
 }

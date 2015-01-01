@@ -29,6 +29,7 @@ import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.ExcludeAll;
+import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
@@ -37,9 +38,6 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.tools.options.InfoLevel;
-import sf.util.clparser.BooleanOption;
-import sf.util.clparser.NumberOption;
-import sf.util.clparser.StringOption;
 
 /**
  * Parses the command-line.
@@ -60,23 +58,25 @@ public final class SchemaCrawlerOptionsParser
 
   public SchemaCrawlerOptionsParser(final Config config)
   {
-    super(new StringOption("infolevel", "standard"),
-          new StringOption("schemas", null),
-          new StringOption("tabletypes", DEFAULT_TABLE_TYPES),
-          new StringOption("tables", null),
-          new StringOption("excludecolumns", null),
-          new StringOption("synonyms", null),
-          new StringOption("sequences", null),
-          new StringOption("routinetypes", DEFAULT_ROUTINE_TYPES),
-          new StringOption("routines", null),
-          new StringOption("excludeinout", null),
-          new StringOption("grepcolumns", null),
-          new StringOption("grepinout", null),
-          new StringOption("grepdef", null),
-          new BooleanOption("invert-match"),
-          new BooleanOption("only-matching"),
-          new NumberOption("parents", 0),
-          new NumberOption("children", 0));
+    super(config);
+    normalizeOptionName("infolevel");
+    normalizeOptionName("schemas");
+    normalizeOptionName("tabletypes");
+    normalizeOptionName("tables");
+    normalizeOptionName("excludecolumns");
+    normalizeOptionName("synonyms");
+    normalizeOptionName("sequences");
+    normalizeOptionName("routinetypes");
+    normalizeOptionName("routines");
+    normalizeOptionName("excludeinout");
+    normalizeOptionName("grepcolumns");
+    normalizeOptionName("grepinout");
+    normalizeOptionName("grepdef");
+    normalizeOptionName("invert-match");
+    normalizeOptionName("only-matching");
+    normalizeOptionName("parents");
+    normalizeOptionName("children");
+
     options = new SchemaCrawlerOptions(config);
   }
 
@@ -84,30 +84,33 @@ public final class SchemaCrawlerOptionsParser
   public SchemaCrawlerOptions getOptions()
     throws SchemaCrawlerException
   {
-    if (hasOptionValue("infolevel"))
+    if (config.hasValue("infolevel"))
     {
-      final String infoLevel = getStringValue("infolevel");
+      final String infoLevel = config.getStringValue("infolevel", "standard");
       final SchemaInfoLevel schemaInfoLevel = InfoLevel
         .valueOfFromString(infoLevel).getSchemaInfoLevel();
       options.setSchemaInfoLevel(schemaInfoLevel);
+      consumeOption("infolevel");
     }
     else
     {
       throw new SchemaCrawlerCommandLineException("No infolevel specified");
     }
 
-    if (hasOptionValue("schemas"))
+    if (config.hasValue("schemas"))
     {
       final InclusionRule schemaInclusionRule = getInclusionRule("schemas");
       logOverride("schemas",
                   options.getSchemaInclusionRule(),
                   schemaInclusionRule);
       options.setSchemaInclusionRule(schemaInclusionRule);
+      consumeOption("schemas");
     }
 
-    if (hasOptionValue("tabletypes"))
+    if (config.hasValue("tabletypes"))
     {
-      final String tabletypes = getStringValue("tabletypes");
+      final String tabletypes = config.getStringValue("tabletypes",
+                                                      DEFAULT_TABLE_TYPES);
       if (!isBlank(tabletypes))
       {
         options.setTableTypesFromString(tabletypes);
@@ -116,117 +119,134 @@ public final class SchemaCrawlerOptionsParser
       {
         options.setTableTypesFromString(null);
       }
+      consumeOption("tabletypes");
     }
 
-    if (hasOptionValue("tables"))
+    if (config.hasValue("tables"))
     {
       final InclusionRule tableInclusionRule = getInclusionRule("tables");
       logOverride("tables", options.getTableInclusionRule(), tableInclusionRule);
       options.setTableInclusionRule(tableInclusionRule);
+      consumeOption("tables");
     }
-    if (hasOptionValue("excludecolumns"))
+    if (config.hasValue("excludecolumns"))
     {
-      final InclusionRule columnInclusionRule = new RegularExpressionExclusionRule(getStringValue("excludecolumns"));
+      final InclusionRule columnInclusionRule = getExclusionRule("excludecolumns");
       logOverride("excludecolumns",
                   options.getColumnInclusionRule(),
                   columnInclusionRule);
       options.setColumnInclusionRule(columnInclusionRule);
+      consumeOption("excludecolumns");
     }
 
-    if (hasOptionValue("routinetypes"))
+    if (config.hasValue("routinetypes"))
     {
-      options.setRoutineTypes(getStringValue("routinetypes"));
+      options.setRoutineTypes(config.getStringValue("routinetypes",
+                                                    DEFAULT_ROUTINE_TYPES));
+      consumeOption("routinetypes");
     }
 
-    if (hasOptionValue("routines"))
+    if (config.hasValue("routines"))
     {
       final InclusionRule routineInclusionRule = getInclusionRule("routines");
       logOverride("routines",
                   options.getRoutineInclusionRule(),
                   routineInclusionRule);
       options.setRoutineInclusionRule(routineInclusionRule);
+      consumeOption("routines");
     }
-    if (hasOptionValue("excludeinout"))
+    if (config.hasValue("excludeinout"))
     {
-      final InclusionRule routineColumnInclusionRule = new RegularExpressionExclusionRule(getStringValue("excludeinout"));
+      final InclusionRule routineColumnInclusionRule = getExclusionRule("excludeinout");
       logOverride("excludeinout",
                   options.getRoutineColumnInclusionRule(),
                   routineColumnInclusionRule);
       options.setRoutineColumnInclusionRule(routineColumnInclusionRule);
+      consumeOption("excludeinout");
     }
 
-    if (hasOptionValue("synonyms"))
+    if (config.hasValue("synonyms"))
     {
       final InclusionRule synonymInclusionRule = getInclusionRule("synonyms");
       logOverride("synonyms",
                   options.getSynonymInclusionRule(),
                   synonymInclusionRule);
       options.setSynonymInclusionRule(synonymInclusionRule);
+      consumeOption("synonyms");
     }
 
-    if (hasOptionValue("sequences"))
+    if (config.hasValue("sequences"))
     {
       final InclusionRule sequenceInclusionRule = getInclusionRule("sequences");
       logOverride("sequences",
                   options.getSequenceInclusionRule(),
                   sequenceInclusionRule);
       options.setSequenceInclusionRule(sequenceInclusionRule);
+      consumeOption("sequences");
     }
 
-    if (hasOptionValue("invert-match"))
+    if (config.hasValue("invert-match"))
     {
-      options.setGrepInvertMatch(getBooleanValue("invert-match"));
+      options.setGrepInvertMatch(config.getBooleanValue("invert-match", true));
+      consumeOption("invert-match");
     }
 
-    if (hasOptionValue("only-matching"))
+    if (config.hasValue("only-matching"))
     {
-      options.setGrepOnlyMatching(getBooleanValue("only-matching"));
+      options
+        .setGrepOnlyMatching(config.getBooleanValue("only-matching", true));
+      consumeOption("only-matching");
     }
 
-    if (hasOptionValue("grepcolumns"))
+    if (config.hasValue("grepcolumns"))
     {
       final InclusionRule grepColumnInclusionRule = getInclusionRule("grepcolumns");
       options.setGrepColumnInclusionRule(grepColumnInclusionRule);
+      consumeOption("grepcolumns");
     }
     else
     {
       options.setGrepColumnInclusionRule(null);
     }
 
-    if (hasOptionValue("grepinout"))
+    if (config.hasValue("grepinout"))
     {
       final InclusionRule grepRoutineColumnInclusionRule = getInclusionRule("grepinout");
       options.setGrepRoutineColumnInclusionRule(grepRoutineColumnInclusionRule);
+      consumeOption("grepinout");
     }
     else
     {
       options.setGrepRoutineColumnInclusionRule(null);
     }
 
-    if (hasOptionValue("grepdef"))
+    if (config.hasValue("grepdef"))
     {
       final InclusionRule grepDefinitionInclusionRule = getInclusionRule("grepdef");
       options.setGrepDefinitionInclusionRule(grepDefinitionInclusionRule);
+      consumeOption("grepdef");
     }
     else
     {
       options.setGrepDefinitionInclusionRule(null);
     }
 
-    if (hasOptionValue("parents"))
+    if (config.hasValue("parents"))
     {
-      final int parentTableFilterDepth = getIntegerValue("parents");
+      final int parentTableFilterDepth = config.getIntegerValue("parents", 0);
       options.setParentTableFilterDepth(parentTableFilterDepth);
+      consumeOption("parents");
     }
     else
     {
       options.setParentTableFilterDepth(0);
     }
 
-    if (hasOptionValue("children"))
+    if (config.hasValue("children"))
     {
-      final int childTableFilterDepth = getIntegerValue("children");
+      final int childTableFilterDepth = config.getIntegerValue("children", 0);
       options.setChildTableFilterDepth(childTableFilterDepth);
+      consumeOption("children");
     }
     else
     {
@@ -236,13 +256,28 @@ public final class SchemaCrawlerOptionsParser
     return options;
   }
 
-  private InclusionRule getInclusionRule(final String switchName)
+  private InclusionRule getExclusionRule(final String optionName)
   {
-    final String schemas = getStringValue(switchName);
+    final String value = config.getStringValue(optionName, null);
     final InclusionRule schemaInclusionRule;
-    if (!isBlank(schemas))
+    if (!isBlank(value))
     {
-      schemaInclusionRule = new RegularExpressionInclusionRule(schemas);
+      schemaInclusionRule = new RegularExpressionExclusionRule(value);
+    }
+    else
+    {
+      schemaInclusionRule = new IncludeAll();
+    }
+    return schemaInclusionRule;
+  }
+
+  private InclusionRule getInclusionRule(final String optionName)
+  {
+    final String value = config.getStringValue(optionName, null);
+    final InclusionRule schemaInclusionRule;
+    if (!isBlank(value))
+    {
+      schemaInclusionRule = new RegularExpressionInclusionRule(value);
     }
     else
     {

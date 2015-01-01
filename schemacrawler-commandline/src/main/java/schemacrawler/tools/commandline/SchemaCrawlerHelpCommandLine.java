@@ -23,10 +23,12 @@ package schemacrawler.tools.commandline;
 import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.isBlank;
 import static sf.util.Utility.readResourceFully;
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.executable.CommandRegistry;
 import schemacrawler.tools.options.DatabaseServerType;
+import sf.util.commandlineparser.CommandLineArgumentsUtility;
 
 /**
  * Utility for parsing the SchemaCrawler command-line.
@@ -77,14 +79,15 @@ public final class SchemaCrawlerHelpCommandLine
   {
     requireNonNull(args, "No command-line arguments provided");
 
+    final Config config = CommandLineArgumentsUtility.loadConfig(args);
+
     this.connectionHelpResource = connectionHelpResource;
     this.showVersionOnly = showVersionOnly;
 
     String command = null;
     if (args.length != 0)
     {
-      final CommandParser parser = new CommandParser();
-      parser.parse(args);
+      final CommandParser parser = new CommandParser(config);
       if (parser.hasOptions())
       {
         command = parser.getOptions().toString();

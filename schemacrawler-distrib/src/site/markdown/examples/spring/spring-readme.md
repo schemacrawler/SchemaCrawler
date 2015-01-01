@@ -18,5 +18,4 @@ any of the SchemaCrawler functionality.
 5. Check the output in scOutput.txt
 
 ## How to Experiment
-1. Study the Spring beans in `context.xml` , and modify the ant task in `spring.xml` to use different executable. 
-2. Run Spring integration from the command-line. 
+1. Study the Spring beans in `context.xml`, and modify it to use different executable. 

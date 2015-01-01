@@ -23,8 +23,6 @@ package schemacrawler.tools.commandline;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import sf.util.clparser.NumberOption;
-import sf.util.clparser.StringOption;
 
 /**
  * Options for the command-line.
@@ -43,33 +41,29 @@ final class BundledDriverConnectionOptionsParser
   BundledDriverConnectionOptionsParser(final Config config)
   {
     super(config);
-    addOption(new StringOption(HOST, null));
-    addOption(new NumberOption(PORT, 0));
-    addOption(new StringOption(DATABASE, ""));
-    addOption(new StringOption(URLX, ""));
   }
 
   @Override
-  protected void loadConfig()
+  public void loadConfig()
     throws SchemaCrawlerException
   {
     super.loadConfig();
 
-    if (hasOptionValue(HOST))
+    if (config.hasValue(HOST))
     {
-      config.put(HOST, getStringValue(HOST));
+      config.put(HOST, config.getStringValue(HOST, ""));
     }
-    if (hasOptionValue(PORT))
+    if (config.hasValue(PORT))
     {
-      config.put(PORT, String.valueOf(getIntegerValue(PORT)));
+      config.put(PORT, String.valueOf(config.getIntegerValue(PORT, 0)));
     }
-    if (hasOptionValue(DATABASE))
+    if (config.hasValue(DATABASE))
     {
-      config.put(DATABASE, getStringValue(DATABASE));
+      config.put(DATABASE, config.getStringValue(DATABASE, ""));
     }
-    if (hasOptionValue(URLX))
+    if (config.hasValue(URLX))
     {
-      config.put(URLX, getStringValue(URLX));
+      config.put(URLX, config.getStringValue(URLX, ""));
     }
   }
 

@@ -110,16 +110,7 @@
     <faq id="ant">
       <question> Can SchemaCrawler be used with ant? </question>
       <answer>
-        <p>Yes, SchemaCrawler comes with a full-featured ant task.</p>
-        <p>
-          <i>
-            For more details, see scripting example in the
-          <a href="https://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20Examples/">SchemaCrawler examples</a>
-          download, in the
-            <code>examples\ant-task</code>
-            directory.
-          </i>
-        </p>
+        <p>Yes, the SchemaCrawler command-line can be called from ant, using the exec task.</p>
       </answer>
     </faq>
     <faq id="maven">

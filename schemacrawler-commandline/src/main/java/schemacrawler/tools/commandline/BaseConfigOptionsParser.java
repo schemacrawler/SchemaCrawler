@@ -23,42 +23,29 @@ package schemacrawler.tools.commandline;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import sf.util.clparser.Option;
 
 /**
- * Parses the command-line.
+ * Modifies a provided config in place.
  *
  * @author Sualeh Fatehi
- * @param <O>
- *        Options to be parsed from the command-line.
  */
-public abstract class BaseConfigOptionsParser
+abstract class BaseConfigOptionsParser
   extends BaseOptionsParser<Config>
 {
 
-  protected final Config config;
-
-  protected BaseConfigOptionsParser(final Config config,
-                                    final Option<?>... options)
+  protected BaseConfigOptionsParser(final Config config)
   {
-    super(options);
-
-    this.config = new Config();
-    if (config != null)
-    {
-      this.config.putAll(config);
-    }
+    super(config);
   }
+
+  public abstract void loadConfig()
+    throws SchemaCrawlerException;
 
   @Override
-  public final Config getOptions()
+  protected final Config getOptions()
     throws SchemaCrawlerException
   {
-    loadConfig();
     return config;
   }
-
-  protected abstract void loadConfig()
-    throws SchemaCrawlerException;
 
 }

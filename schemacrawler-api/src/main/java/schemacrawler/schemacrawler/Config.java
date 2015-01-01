@@ -73,9 +73,9 @@ public final class Config
       {
         if (!isBlank(configFilename))
         {
-          configProperties = loadProperties(configProperties,
-                                            Paths.get(configFilename)
-                                              .normalize().toAbsolutePath());
+          final Path configPath = Paths.get(configFilename).normalize()
+            .toAbsolutePath();
+          configProperties = loadProperties(configProperties, configPath);
         }
       }
     }
@@ -356,6 +356,15 @@ public final class Config
   public boolean hasValue(final String propertyName)
   {
     return super.containsKey(propertyName);
+  }
+
+  public void setDefaultValue(final String propertyName,
+                              final String defaultValue)
+  {
+    if (get(propertyName) == null)
+    {
+      put(propertyName, defaultValue);
+    }
   }
 
   @Override

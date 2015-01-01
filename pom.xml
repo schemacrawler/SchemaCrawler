@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <prerequisites>
-    <maven>3.2.3</maven>
+    <maven>3.2.5</maven>
   </prerequisites>
   <groupId>us.fatehi</groupId>
   <artifactId>schemacrawler-parent</artifactId>
@@ -78,7 +78,6 @@
     <module>schemacrawler-archetype-plugin-command</module>
     <module>schemacrawler-archetype-plugin-lint</module>
     <module>schemacrawler-archetype-plugin-dbconnector</module>
-    <module>schemacrawler-maven-plugin</module>
 
     <module>schemacrawler-docs</module>
     <module>schemacrawler-site</module>

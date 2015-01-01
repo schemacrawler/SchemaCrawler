@@ -23,7 +23,6 @@ package schemacrawler.tools.commandline;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import sf.util.clparser.StringOption;
 
 /**
  * Options for the command-line.
@@ -40,23 +39,21 @@ final class CommandLineConnectionOptionsParser
   CommandLineConnectionOptionsParser(final Config config)
   {
     super(config);
-    addOption(new StringOption(DRIVER, null));
-    addOption(new StringOption(URL, null));
   }
 
   @Override
-  protected void loadConfig()
+  public void loadConfig()
     throws SchemaCrawlerException
   {
     super.loadConfig();
 
-    if (hasOptionValue(URL))
+    if (config.hasValue(URL))
     {
-      config.put(URL, getStringValue(URL));
+      config.put(URL, config.getStringValue(URL, null));
     }
-    if (hasOptionValue(DRIVER))
+    if (config.hasValue(DRIVER))
     {
-      config.put(DRIVER, getStringValue(DRIVER));
+      config.put(DRIVER, config.getStringValue(DRIVER, null));
     }
   }
 
