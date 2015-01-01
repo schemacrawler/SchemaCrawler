@@ -2,7 +2,7 @@
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
- * Copyright (c) 2000-2014, Sualeh Fatehi.
+ * Copyright (c) 2000-2015, Sualeh Fatehi.
  *
  * This library is free software; you can redistribute it and/or modify it under the terms
  * of the GNU Lesser General Public License as published by the Free Software Foundation;
@@ -499,7 +499,7 @@ public final class TestUtility
       Pattern.compile("url +jdbc:.*"),
       Pattern.compile("database product version.*"),
       Pattern.compile("driver version.*"),
-      Pattern.compile(".*[A-Za-z]+ \\d+\\, 2014 \\d+:\\d+ [AP]M.*"),
+      Pattern.compile(".*[A-Za-z]+ \\d+\\, 201[45] \\d+:\\d+ [AP]M.*"),
       // SVG {
       Pattern.compile("<svg.*"),
       Pattern.compile(" viewBox=\"0.00.*"),
