@@ -6,7 +6,7 @@ Before downloading SchemaCrawler, be sure to read the [FAQs] and take a look at 
 ## Examples
 The first thing to try is the [SchemaCrawler examples].
 
-Several examples on how to use SchemaCrawler on the command-line, as an [ant] task or [Maven] plugin, 
+Several examples on how to use SchemaCrawler on the command-line, with [ant] or with [Maven], 
 as an API, how to script your database using JavaScript, [Groovy],
 [Ruby] or [Python], how to create database diagrams with [Graphviz], how to integrate with the 
 [Spring Framework], and how to use the [Apache Velocity] templating integration are provided with the 

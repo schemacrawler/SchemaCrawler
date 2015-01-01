@@ -369,9 +369,6 @@ CONSTRAINT_8                                               [primary key]
   ID                                ascending                   
                                     auto-incremented            
 
-FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLISHERS          [foreign key, with restrict]
-  ID <-- DATASOURCE.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ                              
-
                                                           [unique index]
   ID                                ascending                   
                                     auto-incremented            
@@ -416,27 +413,6 @@ FK_Y_BOOK                                   [foreign key, with restrict]
                                                           [unique index]
   BOOKID                            ascending                   
   AUTHORID                          ascending                   
-
-
-
-DATASOURCE.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
-------------------------------------------------------------------------
-                                                                 [table]
-  ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ               BIGINT NOT NULL             
-  ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ           VARCHAR(10)                 
-  ΣΥΓΓΡΑΦΈΑΣ                        INTEGER                     
-
-PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                                    [primary key]
-  ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ               ascending                   
-
-FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLISHERS          [foreign key, with restrict]
-  ΣΥΓΓΡΑΦΈΑΣ --> DATASOURCE.BOOKS.PUBLISHERS.ID                              
-
-                                                          [unique index]
-  ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ               ascending                   
-
-                                                      [non-unique index]
-  ΣΥΓΓΡΑΦΈΑΣ                        ascending                   
 
 
 

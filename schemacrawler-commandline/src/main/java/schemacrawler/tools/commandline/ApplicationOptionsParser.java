@@ -25,9 +25,8 @@ import static sf.util.Utility.isBlank;
 
 import java.util.logging.Level;
 
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.options.ApplicationOptions;
-import sf.util.clparser.BooleanOption;
-import sf.util.clparser.StringOption;
 
 /**
  * Parses the command-line.
@@ -38,12 +37,12 @@ public final class ApplicationOptionsParser
   extends BaseOptionsParser<ApplicationOptions>
 {
 
-  public ApplicationOptionsParser()
+  public ApplicationOptionsParser(final Config config)
   {
-    super(new StringOption("loglevel", "OFF"),
-          new BooleanOption('?', "help"),
-          new BooleanOption('h', "-help"),
-          new BooleanOption('V', "-version"));
+    super(config);
+    normalizeOptionName("loglevel");
+    normalizeOptionName("help", "?", "h", "-help");
+    normalizeOptionName("version", "V", "-version");
   }
 
   @Override
@@ -51,7 +50,7 @@ public final class ApplicationOptionsParser
   {
     final ApplicationOptions options = new ApplicationOptions();
 
-    final String logLevelString = getStringValue("loglevel");
+    final String logLevelString = config.getStringValue("loglevel", "OFF");
     if (!isBlank(logLevelString))
     {
       final Level applicationLogLevel = Level.parse(logLevelString
@@ -59,14 +58,16 @@ public final class ApplicationOptionsParser
       options.setApplicationLogLevel(applicationLogLevel);
     }
 
-    if (getBooleanValue("?") || getBooleanValue("h"))
+    if (config.hasValue("help"))
     {
       options.setShowHelp(true);
+      consumeOption("help");
     }
-    if (getBooleanValue("V") || getBooleanValue("-version"))
+    if (config.hasValue("version"))
     {
       options.setShowHelp(true);
       options.setShowVersionOnly(true);
+      consumeOption("version");
     }
 
     return options;

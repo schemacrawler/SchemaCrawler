@@ -38,7 +38,7 @@ import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.DatabaseServerType;
 import schemacrawler.tools.options.OutputOptions;
-import sf.util.ObjectToString;
+import sf.util.commandlineparser.CommandLineArgumentsUtility;
 
 /**
  * Utility for parsing the SchemaCrawler command-line.
@@ -69,35 +69,28 @@ public final class SchemaCrawlerCommandLine
     }
     requireNonNull(dbSystemConnector, "No database connector provided");
 
-    String[] remainingArgs = args;
     this.dbSystemConnector = dbSystemConnector;
 
-    final CommandParser commandParser = new CommandParser();
-    remainingArgs = commandParser.parse(remainingArgs);
+    config = new Config();
+    loadConfig(dbSystemConnector, args);
+
+    final CommandParser commandParser = new CommandParser(config);
     command = commandParser.getOptions().toString();
 
-    config = new Config();
-    remainingArgs = loadConfig(dbSystemConnector, remainingArgs);
-
     final SchemaCrawlerOptionsParser schemaCrawlerOptionsParser = new SchemaCrawlerOptionsParser(config);
-    remainingArgs = schemaCrawlerOptionsParser.parse(remainingArgs);
     schemaCrawlerOptions = schemaCrawlerOptionsParser.getOptions();
 
     final OutputOptionsParser outputOptionsParser = new OutputOptionsParser(config);
-    remainingArgs = outputOptionsParser.parse(remainingArgs);
     outputOptions = outputOptionsParser.getOptions();
 
-    remainingArgs = parseConnectionOptions(dbSystemConnector.getDatabaseServerType(),
-                                           remainingArgs);
+    final AdditionalConfigOptionsParser additionalConfigOptionsParser = new AdditionalConfigOptionsParser(config);
+    additionalConfigOptionsParser.loadConfig();
+
+    parseConnectionOptions(dbSystemConnector.getDatabaseServerType());
     // Connect using connection options provided from the command-line,
     // provided configuration, and bundled configuration
     connectionOptions = dbSystemConnector.newDatabaseConnectionOptions(config);
 
-    if (remainingArgs.length > 0)
-    {
-      LOGGER.log(Level.INFO, "Too many command-line arguments provided: "
-                             + ObjectToString.toString(remainingArgs));
-    }
   }
 
   @Override
@@ -181,42 +174,33 @@ public final class SchemaCrawlerCommandLine
   /**
    * Loads configuration from a number of sources, in order of priority.
    */
-  private String[] loadConfig(final DatabaseSystemConnector dbSystemConnector,
-                              final String[] args)
+  private void loadConfig(final DatabaseSystemConnector dbSystemConnector,
+                          final String[] args)
     throws SchemaCrawlerException
   {
+    final Config optionsMap = CommandLineArgumentsUtility.loadConfig(args);
+
+    // 1. Get bundled database config
     config.putAll(dbSystemConnector.getConfig());
 
-    String[] remainingArgs = args;
-    if (remainingArgs.length > 0)
-    {
-      final ConfigParser configParser = new ConfigParser(config);
-      remainingArgs = configParser.parse(remainingArgs);
-      config.putAll(configParser.getOptions());
-    }
+    // 2. Load config from files, in place
+    config.putAll(optionsMap);
+    final ConfigParser configParser = new ConfigParser(config);
+    configParser.loadConfig();
 
-    if (remainingArgs.length > 0)
-    {
-      final AdditionalConfigParser additionalConfigParser = new AdditionalConfigParser(config);
-      remainingArgs = additionalConfigParser.parse(remainingArgs);
-      config.putAll(additionalConfigParser.getOptions());
-    }
-
-    return remainingArgs;
+    // 3. Override/ overwrite from the command-line options
+    config.putAll(optionsMap);
   }
 
   /**
    * Parse connection options, for both ways of connecting.
-   * 
+   *
    * @param dbServerType
    *        Database server type
    */
-  private String[] parseConnectionOptions(DatabaseServerType dbServerType,
-                                          final String[] args)
+  private void parseConnectionOptions(final DatabaseServerType dbServerType)
     throws SchemaCrawlerException
   {
-    String[] remainingArgs = args;
-
     final BaseDatabaseConnectionOptionsParser dbConnectionOptionsParser;
     if (dbServerType.isUnknownDatabaseSystem())
     {
@@ -226,10 +210,7 @@ public final class SchemaCrawlerCommandLine
     {
       dbConnectionOptionsParser = new BundledDriverConnectionOptionsParser(config);
     }
-    remainingArgs = dbConnectionOptionsParser.parse(remainingArgs);
     config.putAll(dbConnectionOptionsParser.getOptions());
-
-    return remainingArgs;
   }
 
 }

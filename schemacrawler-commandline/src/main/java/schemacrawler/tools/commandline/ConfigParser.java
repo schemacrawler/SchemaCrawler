@@ -25,7 +25,6 @@ import java.io.IOException;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import sf.util.clparser.StringOption;
 
 /**
  * Parses the command-line.
@@ -38,23 +37,30 @@ public class ConfigParser
 
   public ConfigParser(final Config config)
   {
-    super(config, new StringOption('g',
-                                   "configfile",
-                                   "schemacrawler.config.properties"));
+    super(config);
+    normalizeOptionName("configfile", "g");
+    normalizeOptionName("additionalconfigfile", "p");
   }
 
   @Override
-  protected void loadConfig()
+  public void loadConfig()
     throws SchemaCrawlerException
   {
-    final String cfgFile = getStringValue("g");
     try
     {
-      config.putAll(Config.load(cfgFile));
+      final String configfile = config
+        .getStringValue("configfile", "schemacrawler.config.properties");
+      final String additionalconfigfile = config
+        .getStringValue("additionalconfigfile",
+                        "schemacrawler.additional.config.properties");
+      config.putAll(Config.load(configfile, additionalconfigfile));
+
+      consumeOption("configfile");
+      consumeOption("additionalconfigfile");
     }
     catch (final IOException e)
     {
-      throw new SchemaCrawlerException("Could not load " + cfgFile, e);
+      throw new SchemaCrawlerException("Could not load config files", e);
     }
   }
 

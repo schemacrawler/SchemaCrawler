@@ -302,9 +302,6 @@ PK_PUBLISHERS                                              [primary key]
   ID                                ascending                   
                                     auto-incremented            
 
-FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLISHERS         [foreign key, with no action]
-  ID <-- BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ                              
-
                                                           [unique index]
   ID                                ascending                   
                                     auto-incremented            
@@ -333,27 +330,6 @@ FK_Y_BOOK                                  [foreign key, with no action]
                                                           [unique index]
   BOOKID                            ascending                   
   AUTHORID                          ascending                   
-
-
-
-BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
-------------------------------------------------------------------------
-                                                                 [table]
-  ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ               BIGINT NOT NULL             
-  ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ           VARCHAR(10)                 
-  ΣΥΓΓΡΑΦΈΑΣ                        INTEGER                     
-
-PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                                    [primary key]
-  ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ               ascending                   
-
-FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLISHERS         [foreign key, with no action]
-  ΣΥΓΓΡΑΦΈΑΣ --> BOOKS.PUBLISHERS.ID                              
-
-                                                          [unique index]
-  ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ               ascending                   
-
-                                                      [non-unique index]
-  ΣΥΓΓΡΑΦΈΑΣ                        ascending                   
 
 
 

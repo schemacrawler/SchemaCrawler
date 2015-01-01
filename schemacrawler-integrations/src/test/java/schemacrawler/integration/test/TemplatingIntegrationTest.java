@@ -23,7 +23,7 @@ package schemacrawler.integration.test;
 
 
 import static sf.util.Utility.UTF8;
-import static sf.util.Utility.flattenCommandlineArgs;
+import static sf.util.commandlineparser.CommandLineArgumentsUtility.flattenCommandlineArgs;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -22,11 +22,13 @@ package schemacrawler;
 
 
 import static java.util.Objects.requireNonNull;
+import static sf.util.commandlineparser.CommandLineArgumentsUtility.flattenCommandlineArgs;
 
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
 import schemacrawler.tools.commandline.ApplicationOptionsParser;
 import schemacrawler.tools.commandline.CommandLine;
@@ -35,6 +37,7 @@ import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.options.ApplicationOptions;
 import schemacrawler.tools.options.DatabaseServerType;
+import sf.util.commandlineparser.CommandLineArgumentsUtility;
 
 /**
  * Main class that takes arguments for a database for crawling a schema.
@@ -47,18 +50,16 @@ public final class Main
   {
     requireNonNull(args);
 
-    String[] remainingArgs = args;
+    final Config config = CommandLineArgumentsUtility.loadConfig(args);
 
-    final ApplicationOptionsParser applicationOptionsParser = new ApplicationOptionsParser();
-    remainingArgs = applicationOptionsParser.parse(remainingArgs);
+    final ApplicationOptionsParser applicationOptionsParser = new ApplicationOptionsParser(config);
     final ApplicationOptions applicationOptions = applicationOptionsParser
       .getOptions();
 
     applicationOptions.applyApplicationLogLevel();
     LOGGER.log(Level.CONFIG, "Command line: " + Arrays.toString(args));
 
-    final DatabaseServerTypeParser dbServerTypeParser = new DatabaseServerTypeParser();
-    remainingArgs = dbServerTypeParser.parse(remainingArgs);
+    final DatabaseServerTypeParser dbServerTypeParser = new DatabaseServerTypeParser(config);
     final DatabaseServerType dbServerType = dbServerTypeParser.getOptions();
     final DatabaseConnectorRegistry registry = new DatabaseConnectorRegistry();
     final DatabaseConnector dbConnector = registry
@@ -73,12 +74,11 @@ public final class Main
     if (showHelp)
     {
       final boolean showVersionOnly = applicationOptions.isShowVersionOnly();
-      commandLine = dbConnector.newHelpCommandLine(remainingArgs,
-                                                   showVersionOnly);
+      commandLine = dbConnector.newHelpCommandLine(args, showVersionOnly);
     }
     else
     {
-      commandLine = dbConnector.newCommandLine(remainingArgs);
+      commandLine = dbConnector.newCommandLine(flattenCommandlineArgs(config));
     }
 
     try
