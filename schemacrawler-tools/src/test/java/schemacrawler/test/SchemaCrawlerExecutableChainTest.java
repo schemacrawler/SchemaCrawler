@@ -39,6 +39,7 @@ import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.integration.scripting.ScriptExecutable;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.options.TextOutputFormat;
 
 public class SchemaCrawlerExecutableChainTest
   extends BaseDatabaseTest
@@ -61,7 +62,8 @@ public class SchemaCrawlerExecutableChainTest
                  readFully(new FileReader(testOutputFile.toFile())));
 
     final List<String> failures = compareOutput("schema.txt",
-                                                Paths.get("schema.txt"));
+                                                Paths.get("schema.txt"),
+                                                TextOutputFormat.text.name());
     if (failures.size() > 0)
     {
       fail(failures.toString());

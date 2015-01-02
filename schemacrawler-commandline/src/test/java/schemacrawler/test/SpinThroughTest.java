@@ -4,11 +4,14 @@ package schemacrawler.test;
 import static org.junit.Assert.fail;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
 import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
+import static sf.util.commandlineparser.CommandLineArgumentsUtility.flattenCommandlineArgs;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -62,7 +65,6 @@ public class SpinThroughTest
   public void spinThroughExecutable()
     throws Exception
   {
-
     final List<String> failures = new ArrayList<>();
     for (final InfoLevel infoLevel: InfoLevel.values())
     {
@@ -136,19 +138,20 @@ public class SpinThroughTest
                                                      infoLevel,
                                                      outputFormat);
 
-          Main.main(new String[] {
-              "-driver=org.hsqldb.jdbc.JDBCDriver",
-              "-url=jdbc:hsqldb:hsql://localhost/schemacrawler",
-              "-user=sa",
-              "-password=",
-              "-g=" + hsqldbProperties.toString(),
-              "-sequences=.*",
-              "-synonyms=.*",
-              "-infolevel=" + infoLevel,
-              "-command=" + schemaTextDetailType,
-              "-outputformat=" + outputFormat.getFormat(),
-              "-outputfile=" + testOutputFile.toString(),
-          });
+          final Map<String, String> argsMap = new HashMap<>();
+          argsMap.put("driver", "org.hsqldb.jdbc.JDBCDriver");
+          argsMap.put("url", "jdbc:hsqldb:hsql://localhost/schemacrawler");
+          argsMap.put("user", "sa");
+          argsMap.put("password", null);
+          argsMap.put("g", hsqldbProperties.toString());
+          argsMap.put("sequences", ".*");
+          argsMap.put("synonyms", ".*");
+          argsMap.put("infolevel", infoLevel.name());
+          argsMap.put("command", schemaTextDetailType.name());
+          argsMap.put("outputformat", outputFormat.getFormat());
+          argsMap.put("outputfile", testOutputFile.toString());
+
+          Main.main(flattenCommandlineArgs(argsMap));
 
           failures.addAll(compareOutput(SPIN_THROUGH_OUTPUT + referenceFile,
                                         testOutputFile,
