@@ -10,6 +10,9 @@
         Added -noremarks command-line option to hide table and column remarks (or comments).
       ]]></action>
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Removed built-in support for ant tasks, since there is not way to omit an option if one is not specified.
+      ]]></action>       
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Changed copyright to 2015.
       ]]></action> 
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
