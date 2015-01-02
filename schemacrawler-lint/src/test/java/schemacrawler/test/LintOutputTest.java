@@ -22,6 +22,7 @@ package schemacrawler.test;
 
 
 import static org.junit.Assert.fail;
+import static schemacrawler.test.utility.TestUtility.clean;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
 import static schemacrawler.test.utility.TestUtility.createTempFile;
 
@@ -59,6 +60,8 @@ public class LintOutputTest
   public void compareCompositeOutput()
     throws Exception
   {
+    clean(COMPOSITE_OUTPUT);
+
     final String queryCommand1 = "dump_top5";
     final Config queriesConfig = new Config();
     queriesConfig
@@ -112,6 +115,8 @@ public class LintOutputTest
   public void compareJsonOutput()
     throws Exception
   {
+    clean(JSON_OUTPUT);
+
     final InfoLevel infoLevel = InfoLevel.standard;
     try (final TestWriter out = new TestWriter(TextOutputFormat.json.getFormat());)
     {
@@ -138,6 +143,8 @@ public class LintOutputTest
   public void compareTextOutput()
     throws Exception
   {
+    clean(TEXT_OUTPUT);
+
     final InfoLevel infoLevel = InfoLevel.standard;
     try (final TestWriter out = new TestWriter(TextOutputFormat.text.getFormat());)
     {
