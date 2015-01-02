@@ -275,6 +275,36 @@ public final class Config
     return enumValue;
   }
 
+  public InclusionRule getExclusionRule(final String optionName)
+  {
+    final String value = getStringValue(optionName, null);
+    final InclusionRule schemaInclusionRule;
+    if (!isBlank(value))
+    {
+      schemaInclusionRule = new RegularExpressionExclusionRule(value);
+    }
+    else
+    {
+      schemaInclusionRule = new IncludeAll();
+    }
+    return schemaInclusionRule;
+  }
+
+  public InclusionRule getInclusionRule(final String optionName)
+  {
+    final String value = getStringValue(optionName, null);
+    final InclusionRule schemaInclusionRule;
+    if (!isBlank(value))
+    {
+      schemaInclusionRule = new RegularExpressionInclusionRule(value);
+    }
+    else
+    {
+      schemaInclusionRule = new ExcludeAll();
+    }
+    return schemaInclusionRule;
+  }
+
   public InclusionRule getInclusionRule(final String includePatternProperty,
                                         final String excludePatternProperty)
   {
