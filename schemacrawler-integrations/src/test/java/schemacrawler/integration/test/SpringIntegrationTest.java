@@ -40,6 +40,7 @@ import schemacrawler.schema.SchemaReference;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.tools.executable.Executable;
+import schemacrawler.tools.options.TextOutputFormat;
 
 public class SpringIntegrationTest
   extends BaseDatabaseTest
@@ -90,7 +91,9 @@ public class SpringIntegrationTest
     executable.getOutputOptions().setOutputFile(testOutputFile);
     executable.execute(getConnection());
 
-    failures.addAll(compareOutput(executableName + ".txt", testOutputFile));
+    failures.addAll(compareOutput(executableName + ".txt",
+                                  testOutputFile,
+                                  TextOutputFormat.text.name()));
   }
 
 }

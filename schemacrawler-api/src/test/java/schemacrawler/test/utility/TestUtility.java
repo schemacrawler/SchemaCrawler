@@ -90,22 +90,13 @@ public final class TestUtility
   }
 
   public static List<String> compareOutput(final String referenceFile,
-                                           final Path testOutputTempFile)
-    throws Exception
-  {
-    return compareOutput(referenceFile, testOutputTempFile, "text");
-  }
-
-  public static List<String> compareOutput(final String referenceFile,
                                            final Path testOutputTempFile,
-                                           final Charset encoding,
                                            final String outputFormat)
     throws Exception
   {
 
     requireNonNull(referenceFile, "Reference file is not defined");
     requireNonNull(testOutputTempFile, "Output file is not defined");
-    requireNonNull(encoding, "Output file encoding is not defined");
     requireNonNull(outputFormat, "Output format is not defined");
 
     if (!exists(testOutputTempFile)
@@ -119,7 +110,7 @@ public final class TestUtility
     final List<String> failures = new ArrayList<>();
 
     final boolean contentEquals;
-    final Reader referenceReader = readerForResource(referenceFile, encoding);
+    final Reader referenceReader = readerForResource(referenceFile, UTF8);
     if (referenceReader == null)
 
     {
@@ -127,7 +118,7 @@ public final class TestUtility
     }
     else
     {
-      final Reader fileReader = newBufferedReader(testOutputTempFile, encoding);
+      final Reader fileReader = newBufferedReader(testOutputTempFile, UTF8);
       contentEquals = contentEquals(referenceReader, fileReader, neuters);
     }
 
@@ -169,17 +160,6 @@ public final class TestUtility
     }
 
     return failures;
-  }
-
-  public static List<String> compareOutput(final String referenceFile,
-                                           final Path testOutputTempFilePath,
-                                           final String outputFormat)
-    throws Exception
-  {
-    return compareOutput(referenceFile,
-                         testOutputTempFilePath,
-                         UTF8,
-                         outputFormat);
   }
 
   public static Path copyResourceToTempFile(final String resource)

@@ -26,14 +26,13 @@ import static java.nio.file.Files.deleteIfExists;
 import static java.nio.file.Files.newBufferedWriter;
 import static schemacrawler.test.utility.TestUtility.currentMethodName;
 import static sf.util.Utility.UTF8;
+import static sf.util.commandlineparser.CommandLineArgumentsUtility.flattenCommandlineArgs;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -193,25 +192,25 @@ public class SiteGraphVariations
     return configFile;
   }
 
-  private void run(final Map<String, String> args,
+  private void run(final Map<String, String> argsMap,
                    final Map<String, String> config,
                    final Path outputFile)
     throws Exception
   {
     deleteIfExists(outputFile);
 
-    args.put("driver", "org.hsqldb.jdbc.JDBCDriver");
-    args.put("url", "jdbc:hsqldb:hsql://localhost/schemacrawler");
-    args.put("user", "sa");
-    args.put("password", "");
-    args.put("tables", ".*");
-    args.put("routines", "");
-    if (!args.containsKey("command"))
+    argsMap.put("driver", "org.hsqldb.jdbc.JDBCDriver");
+    argsMap.put("url", "jdbc:hsqldb:hsql://localhost/schemacrawler");
+    argsMap.put("user", "sa");
+    argsMap.put("password", "");
+    argsMap.put("tables", ".*");
+    argsMap.put("routines", "");
+    if (!argsMap.containsKey("command"))
     {
-      args.put("command", "graph");
+      argsMap.put("command", "graph");
     }
-    args.put("outputformat", "png");
-    args.put("outputfile", outputFile.toString());
+    argsMap.put("outputformat", "png");
+    argsMap.put("outputfile", outputFile.toString());
 
     final Config runConfig = new Config();
     final Config informationSchema = Config
@@ -223,15 +222,9 @@ public class SiteGraphVariations
     }
 
     final Path configFile = createConfig(runConfig);
-    args.put("g", configFile.toString());
+    argsMap.put("g", configFile.toString());
 
-    final List<String> argsList = new ArrayList<>();
-    for (final Map.Entry<String, String> arg: args.entrySet())
-    {
-      argsList.add(String.format("-%s=%s", arg.getKey(), arg.getValue()));
-    }
-
-    Main.main(argsList.toArray(new String[argsList.size()]));
+    Main.main(flattenCommandlineArgs(argsMap));
     System.out.println(outputFile.toString());
   }
 

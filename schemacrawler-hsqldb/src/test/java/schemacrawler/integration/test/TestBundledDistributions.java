@@ -10,14 +10,18 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static schemacrawler.test.utility.TestUtility.createTempFile;
 import static sf.util.Utility.UTF8;
+import static sf.util.commandlineparser.CommandLineArgumentsUtility.flattenCommandlineArgs;
 
 import java.io.PrintWriter;
 import java.io.Writer;
 import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 import org.junit.Test;
 
+import schemacrawler.Main;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
@@ -58,17 +62,18 @@ public class TestBundledDistributions
     final OutputFormat outputFormat = TextOutputFormat.text;
     try (final TestWriter out = new TestWriter(outputFormat.getFormat());)
     {
-      schemacrawler.Main.main(new String[] {
-          "-server=hsqldb",
-          "-database=schemacrawler",
-          "-user=sa",
-          "-password=",
-          "-g",
-          testConfigFile.toString(),
-          "-command=details,dump,count,hsqldb.tables",
-          "-infolevel=maximum",
-          "-outputfile=" + out.toString()
-      });
+      final Map<String, String> argsMap = new HashMap<>();
+      argsMap.put("server", "hsqldb");
+      argsMap.put("database", "schemacrawler");
+      argsMap.put("user", "sa");
+      argsMap.put("password", null);
+      argsMap.put("g", testConfigFile.toString());
+      argsMap.put("command", "details,dump,count,hsqldb.tables");
+      argsMap.put("infolevel", "maximum");
+      argsMap.put("outputfile", out.toString());
+
+      Main.main(flattenCommandlineArgs(argsMap));
+
       out.assertEquals("hsqldb.main" + "." + outputFormat.getFormat());
     }
   }
