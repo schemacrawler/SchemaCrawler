@@ -750,6 +750,10 @@ final class SchemaJsonFormatter
                             final JSONObject jsonObject)
     throws JSONException
   {
+    if (object == null || options.isHideRemarks())
+    {
+      return;
+    }
     // Print empty string, if value is not available
     jsonObject.put("remarks", object.getRemarks());
   }
