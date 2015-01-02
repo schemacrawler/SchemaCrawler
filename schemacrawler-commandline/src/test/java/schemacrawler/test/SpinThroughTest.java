@@ -7,11 +7,9 @@ import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.io.FileUtils;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -37,15 +35,13 @@ public class SpinThroughTest
 
   @BeforeClass
   public static void clean()
-    throws IOException
+    throws Exception
   {
-    FileUtils.deleteDirectory(Paths.get(".",
-                                        "target",
-                                        "unit_tests_results_output",
-                                        SPIN_THROUGH_OUTPUT).toFile());
+    TestUtility.clean(SPIN_THROUGH_OUTPUT);
   }
 
   private static final String SPIN_THROUGH_OUTPUT = "spin_through_output/";
+
   private static final OutputFormat[] outputFormats = new OutputFormat[] {
       TextOutputFormat.text,
       TextOutputFormat.html,

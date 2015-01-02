@@ -54,6 +54,11 @@
   <boolean> can be true or false
   Optional, defaults to false
   
+-noremarks=<boolean>
+  Hides table and column remarks
+  <boolean> can be true or false
+  Optional, defaults to false
+    
 -portablenames=<boolean>
   Allows for easy comparison between databases, by hiding
   foreign key names, constraint names, trigger names, 
