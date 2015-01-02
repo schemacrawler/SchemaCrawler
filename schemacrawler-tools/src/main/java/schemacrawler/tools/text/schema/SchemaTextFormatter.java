@@ -722,7 +722,7 @@ final class SchemaTextFormatter
 
   private void printRemarks(final DatabaseObject object)
   {
-    if (object == null || !object.hasRemarks())
+    if (object == null || !object.hasRemarks() || options.isHideRemarks())
     {
       return;
     }
@@ -777,7 +777,7 @@ final class SchemaTextFormatter
 
   private void printTableColumnRemarks(final Column column)
   {
-    if (column == null || !column.hasRemarks())
+    if (column == null || !column.hasRemarks() || options.isHideRemarks())
     {
       return;
     }

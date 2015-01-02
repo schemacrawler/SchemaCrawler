@@ -50,6 +50,11 @@ public final class AdditionalConfigOptionsParser
       final boolean booleanValue = config.getBooleanValue("noinfo", true);
       textOptions.setNoInfo(booleanValue);
     }
+    if (config.hasValue("noremarks"))
+    {
+      final boolean booleanValue = config.getBooleanValue("noremarks", true);
+      textOptions.setHideRemarks(booleanValue);
+    }
     if (config.hasValue("sorttables"))
     {
       final boolean booleanValue = config.getBooleanValue("sorttables", true);

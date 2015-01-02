@@ -23,23 +23,22 @@ package schemacrawler.test;
 
 
 import static org.junit.Assert.fail;
+import static schemacrawler.test.utility.TestUtility.clean;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
 import static schemacrawler.test.utility.TestUtility.createTempFile;
 
-import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 
-import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.ExcludeAll;
 import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
+import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.test.utility.BaseDatabaseTest;
@@ -65,6 +64,7 @@ public class SchemaCrawlerOutputTest
   private static final String HIDE_CONSTRAINT_NAMES_OUTPUT = "hide_constraint_names_output/";
   private static final String UNQUALIFIED_NAMES_OUTPUT = "unqualified_names_output/";
   private static final String ROUTINES_OUTPUT = "routines_output/";
+  private static final String NO_REMARKS_OUTPUT = "no_remarks_output/";
 
   @Test
   public void compareCompositeOutput()
@@ -397,13 +397,50 @@ public class SchemaCrawlerOutputTest
     }
   }
 
-  private void clean(final String dirname)
-    throws IOException
+  @Test
+  public void compareNoRemarksOutput()
+    throws Exception
   {
-    FileUtils.deleteDirectory(Paths.get(".",
-                                        "target",
-                                        "unit_tests_results_output",
-                                        dirname).toFile());
+    clean(NO_REMARKS_OUTPUT);
+
+    final List<String> failures = new ArrayList<>();
+
+    final SchemaTextOptions textOptions = new SchemaTextOptions();
+    textOptions.setNoInfo(true);
+    textOptions.setHideRemarks(true);
+
+    for (final OutputFormat outputFormat: EnumSet.complementOf(EnumSet
+      .of(TextOutputFormat.tsv)))
+    {
+      final String referenceFile = "schema_detailed."
+                                   + outputFormat.getFormat();
+
+      final Path testOutputFile = createTempFile(referenceFile,
+                                                 outputFormat.getFormat());
+
+      final OutputOptions outputOptions = new OutputOptions(outputFormat,
+                                                            testOutputFile);
+
+      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+      schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.detailed());
+      schemaCrawlerOptions
+        .setSchemaInclusionRule(new RegularExpressionInclusionRule(".*\\.BOOKS"));
+
+      final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(SchemaTextDetailType.schema
+        .name());
+      executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+      executable.setOutputOptions(outputOptions);
+      executable.setAdditionalConfiguration(textOptions.toConfig());
+      executable.execute(getConnection());
+
+      failures.addAll(compareOutput(NO_REMARKS_OUTPUT + referenceFile,
+                                    testOutputFile,
+                                    outputFormat.getFormat()));
+    }
+    if (failures.size() > 0)
+    {
+      fail(failures.toString());
+    }
   }
 
 }

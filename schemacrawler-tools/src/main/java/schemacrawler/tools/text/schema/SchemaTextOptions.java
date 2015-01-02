@@ -48,6 +48,8 @@ public class SchemaTextOptions
                                                    + "hide_trigger_names";
   private static final String HIDE_ROUTINE_SPECIFIC_NAMES = SCHEMACRAWLER_FORMAT_PREFIX
                                                             + "hide_routine_specific_names";
+  private static final String HIDE_REMARKS = SCHEMACRAWLER_FORMAT_PREFIX
+                                             + "hide_remarks";
 
   private static final String SC_SORT_ALPHABETICALLY_TABLE_INDEXES = SCHEMACRAWLER_FORMAT_PREFIX
                                                                      + "sort_alphabetically.table_indices";
@@ -83,6 +85,7 @@ public class SchemaTextOptions
     setHideRoutineSpecificNames(getBooleanValue(config,
                                                 HIDE_ROUTINE_SPECIFIC_NAMES));
     setHideConstraintNames(getBooleanValue(config, HIDE_CONSTRAINT_NAMES));
+    setHideRemarks(getBooleanValue(config, HIDE_REMARKS));
 
     setAlphabeticalSortForForeignKeys(getBooleanValue(config,
                                                       SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS));
@@ -128,6 +131,16 @@ public class SchemaTextOptions
   public boolean isHidePrimaryKeyNames()
   {
     return getBooleanValue(HIDE_PRIMARY_KEY_NAMES);
+  }
+
+  /**
+   * Whether to hide remarks.
+   *
+   * @return Hide remarks.
+   */
+  public boolean isHideRemarks()
+  {
+    return getBooleanValue(HIDE_REMARKS);
   }
 
   /**
@@ -234,6 +247,17 @@ public class SchemaTextOptions
   public void setHidePrimaryKeyNames(final boolean hidePrimaryKeyNames)
   {
     setBooleanValue(HIDE_PRIMARY_KEY_NAMES, hidePrimaryKeyNames);
+  }
+
+  /**
+   * Sets whether to hide remarks.
+   *
+   * @param hideRemarks
+   *        Whether to hide remarks.
+   */
+  public void setHideRemarks(final boolean hideRemarks)
+  {
+    setBooleanValue(HIDE_REMARKS, hideRemarks);
   }
 
   /**
