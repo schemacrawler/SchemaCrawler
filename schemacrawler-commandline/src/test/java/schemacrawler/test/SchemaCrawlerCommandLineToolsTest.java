@@ -6,6 +6,7 @@ import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.nio.file.StandardOpenOption.WRITE;
 import static org.junit.Assert.fail;
+import static schemacrawler.test.utility.TestUtility.clean;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
 import static schemacrawler.test.utility.TestUtility.createTempFile;
 import static sf.util.Utility.UTF8;
@@ -36,6 +37,8 @@ public class SchemaCrawlerCommandLineToolsTest
   public void grep()
     throws Exception
   {
+    clean(GREP_OUTPUT);
+
     final List<String> failures = new ArrayList<>();
 
     final String[][] grepArgs = new String[][] {

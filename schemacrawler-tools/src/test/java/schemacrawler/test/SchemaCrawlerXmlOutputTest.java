@@ -23,6 +23,7 @@ package schemacrawler.test;
 
 
 import static org.junit.Assert.fail;
+import static schemacrawler.test.utility.TestUtility.clean;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
 import static schemacrawler.test.utility.TestUtility.createTempFile;
 
@@ -86,6 +87,8 @@ public class SchemaCrawlerXmlOutputTest
                                    final List<String> failures)
     throws IOException, Exception, SchemaCrawlerException
   {
+    clean(XML_OUTPUT);
+
     final String referenceFile = command + ".html";
     final Path testOutputFile = createTempFile(referenceFile,
                                                TextOutputFormat.html
