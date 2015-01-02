@@ -5,7 +5,18 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-     <release version="12.03.01" date="2014-12-25" description="Integration with Thymeleaf templating.">
+     <release version="12.03.01" date="2015-01-02" description="Supress remarks.">
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added -noremarks command-line option to hide table and column remarks (or comments).
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Changed copyright to 2015.
+      ]]></action> 
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        New parser for command-line options.
+      ]]></action>                             
+     </release>   
+     <release version="12.02.03" date="2014-12-25" description="Integration with Thymeleaf templating.">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Integration with Thymeleaf templating.
       ]]></action>
