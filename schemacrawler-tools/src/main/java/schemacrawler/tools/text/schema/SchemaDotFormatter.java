@@ -466,12 +466,16 @@ public final class SchemaDotFormatter
     {
       return;
     }
-    final TableRow remarksRow = new TableRow(TextOutputFormat.html);
+    final TableRow autoIncrementedRow = new TableRow(TextOutputFormat.html);
     if (options.isShowOrdinalNumbers())
     {
-      remarksRow.add(newTableCell("", Alignment.right, false, Color.white, 1));
+      autoIncrementedRow.add(newTableCell("",
+                                          Alignment.right,
+                                          false,
+                                          Color.white,
+                                          1));
     }
-    remarksRow
+    autoIncrementedRow
       .add(newTableCell("", Alignment.left, false, Color.white, 1))
       .add(newTableCell(" ", Alignment.left, false, Color.white, 1))
       .add(newTableCell("auto-incremented",
@@ -479,12 +483,12 @@ public final class SchemaDotFormatter
                         false,
                         Color.white,
                         1));
-    out.println(remarksRow.toString());
+    out.println(autoIncrementedRow.toString());
   }
 
   private void printTableColumnRemarks(final Column column)
   {
-    if (column == null || !column.hasRemarks())
+    if (column == null || !column.hasRemarks() || options.isHideRemarks())
     {
       return;
     }
@@ -563,7 +567,7 @@ public final class SchemaDotFormatter
 
   private void printTableRemarks(final Table table)
   {
-    if (table == null || !table.hasRemarks())
+    if (table == null || !table.hasRemarks() || options.isHideRemarks())
     {
       return;
     }

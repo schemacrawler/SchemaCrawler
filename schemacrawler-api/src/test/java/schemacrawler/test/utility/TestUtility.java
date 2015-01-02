@@ -67,6 +67,7 @@ import javax.imageio.ImageIO;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.apache.commons.io.FileUtils;
 import org.custommonkey.xmlunit.Validator;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
@@ -81,21 +82,11 @@ import com.google.gson.stream.JsonToken;
 public final class TestUtility
 {
 
-  public static Path buildDirectory()
+  public static void clean(final String dirname)
     throws Exception
   {
-    final StackTraceElement ste = currentMethodStackTraceElement();
-    final Class<?> callingClass = Class.forName(ste.getClassName());
-    final Path codePath = Paths
-      .get(callingClass.getProtectionDomain().getCodeSource().getLocation()
-        .toURI()).normalize().toAbsolutePath();
-    final boolean isInTarget = codePath.toString().contains("target");
-    if (!isInTarget)
-    {
-      throw new RuntimeException("Not in build directory, " + codePath);
-    }
-    final Path directory = codePath.resolve("..");
-    return directory.normalize().toAbsolutePath();
+    FileUtils.deleteDirectory(buildDirectory()
+      .resolve("unit_tests_results_output").resolve(dirname).toFile());
   }
 
   public static List<String> compareOutput(final String referenceFile,
@@ -264,6 +255,23 @@ public final class TestUtility
     final BufferedImage image = ImageIO.read(diagramFile.toFile());
     assertTrue("Diagram not created", image.getHeight() > 0);
     assertTrue("Diagram not created", image.getWidth() > 0);
+  }
+
+  private static Path buildDirectory()
+    throws Exception
+  {
+    final StackTraceElement ste = currentMethodStackTraceElement();
+    final Class<?> callingClass = Class.forName(ste.getClassName());
+    final Path codePath = Paths
+      .get(callingClass.getProtectionDomain().getCodeSource().getLocation()
+        .toURI()).normalize().toAbsolutePath();
+    final boolean isInTarget = codePath.toString().contains("target");
+    if (!isInTarget)
+    {
+      throw new RuntimeException("Not in build directory, " + codePath);
+    }
+    final Path directory = codePath.resolve("..");
+    return directory.normalize().toAbsolutePath();
   }
 
   private static boolean contentEquals(final Reader expectedInputReader,
