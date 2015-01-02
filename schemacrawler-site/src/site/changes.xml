@@ -10,6 +10,10 @@
         Added -noremarks command-line option to hide table and column remarks (or comments).
       ]]></action>
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Using a stable version of the Xerial SQLite JDBC driver that is readily available on Maven Central. This does not
+        support retrieving primary key names.
+      ]]></action>       
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Removed built-in support for ant tasks, since there is not way to omit an option if one is not specified.
       ]]></action>       
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
