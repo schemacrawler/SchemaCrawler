@@ -20,10 +20,6 @@
 package schemacrawler.server.postgresql;
 
 
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.sql.DriverManager;
-
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.options.DatabaseServerType;
 
@@ -37,9 +33,6 @@ public final class PostgreSQLDatabaseConnector
           "/help/Connections.postgresql.txt",
           "/schemacrawler-postgresql.config.properties",
           "/postgresql.information_schema");
-
-    DriverManager
-      .setLogWriter(new PrintWriter(new OutputStreamWriter(System.err)));
   }
 
 }
