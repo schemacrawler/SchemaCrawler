@@ -5,7 +5,7 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-     <release version="12.03.01" date="2015-01-02" description="Supress remarks.">
+     <release version="12.03.02" date="2015-01-02" description="Supress remarks.">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Added -noremarks command-line option to hide table and column remarks (or comments).
       ]]></action>
