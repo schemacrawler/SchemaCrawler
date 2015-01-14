@@ -210,6 +210,7 @@ public final class SchemaCrawlerCommandLine
     {
       dbConnectionOptionsParser = new BundledDriverConnectionOptionsParser(config);
     }
+    dbConnectionOptionsParser.loadConfig();
     config.putAll(dbConnectionOptionsParser.getOptions());
   }
 
