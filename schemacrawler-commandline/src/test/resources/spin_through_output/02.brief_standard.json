@@ -713,7 +713,7 @@
     "databaseProductVersion": "2.3.2"
   },
   "schemaCrawlerInfo": {
-    "productVersion": "12.03.01",
+    "productVersion": "12.03.02",
     "productName": "SchemaCrawler"
   },
   "jdbcDriverInfo": {
