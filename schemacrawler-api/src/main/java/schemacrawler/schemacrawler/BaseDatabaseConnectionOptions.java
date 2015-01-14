@@ -112,6 +112,10 @@ abstract class BaseDatabaseConnectionOptions
     try
     {
       connectionUrl = getConnectionUrl();
+      if (isBlank(connectionUrl))
+      {
+        throw new IllegalArgumentException("No connection URL provided");
+      }
     }
     catch (final Exception e)
     {

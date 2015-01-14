@@ -21,7 +21,9 @@
 package schemacrawler.tools.commandline;
 
 
+import static sf.util.Utility.isBlank;
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
 /**
@@ -51,9 +53,20 @@ final class CommandLineConnectionOptionsParser
     {
       config.put(URL, config.getStringValue(URL, null));
     }
+    final String connectionUrl = config.getStringValue(URL, null);
+    if (isBlank(connectionUrl))
+    {
+      throw new SchemaCrawlerCommandLineException("No database connection URL provided");
+    }
+
     if (config.hasValue(DRIVER))
     {
       config.put(DRIVER, config.getStringValue(DRIVER, null));
+    }
+    final String jdbcDriverClass = config.getStringValue(DRIVER, null);
+    if (isBlank(jdbcDriverClass))
+    {
+      throw new SchemaCrawlerCommandLineException("No JDBC driver class name provided");
     }
   }
 
