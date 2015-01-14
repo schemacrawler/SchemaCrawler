@@ -70,19 +70,19 @@ public final class Main
                              && Main.class.getCanonicalName().equals(args[0])
                              || applicationOptions.isShowHelp();
 
-    final CommandLine commandLine;
-    if (showHelp)
-    {
-      final boolean showVersionOnly = applicationOptions.isShowVersionOnly();
-      commandLine = dbConnector.newHelpCommandLine(args, showVersionOnly);
-    }
-    else
-    {
-      commandLine = dbConnector.newCommandLine(flattenCommandlineArgs(config));
-    }
-
     try
     {
+      final CommandLine commandLine;
+      if (showHelp)
+      {
+        final boolean showVersionOnly = applicationOptions.isShowVersionOnly();
+        commandLine = dbConnector.newHelpCommandLine(args, showVersionOnly);
+      }
+      else
+      {
+        commandLine = dbConnector
+          .newCommandLine(flattenCommandlineArgs(config));
+      }
       commandLine.execute();
     }
     catch (final SchemaCrawlerCommandLineException e)
