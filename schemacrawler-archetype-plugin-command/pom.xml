@@ -4,7 +4,7 @@
 	<parent>
 		<artifactId>schemacrawler-parent</artifactId>
 		<groupId>us.fatehi</groupId>
-		<version>12.03.01</version>
+		<version>12.03.02</version>
 	</parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>schemacrawler-archetype-plugin-command</artifactId>
