@@ -114,7 +114,7 @@ public class CommandLineArgumentsParser
         // Handle -arg=value
         if (currentArg.contains("="))
         {
-          final String[] split = currentArg.split("=");
+          final String[] split = currentArg.split("=", 2);
           final String option = split[0].replaceAll("^-+", "");
           final String value;
           if (split.length == 2)
