@@ -1,7 +1,16 @@
 --- Connection Options ---
 
--driver=<driver-class-name>
-  Fully qualified name of the JDBC driver class.
+For connecting to specific databases, use
+
+-server=<database system identifier>
+  Where <database system identifier> is a database where
+  a SchemaCrawler plugin is available.   
+  For help on server specific connection options, 
+  re-run SchemaCrawler with:
+  -help -server=<database system identifier>
+
+On the other hand, if your database does not have a 
+SchemaCrawler plugin, use
 
 -url=<url>
   JDBC connection URL to the database.
@@ -11,12 +20,3 @@
 
 -password=<password>
   Database password.
-
-For connecting to specific databases, use
-
--server=<database system identifier>
-  Where <database system identifier> is a database where
-  a SchemaCrawler plugin is available.   
-  For help on server specific connection options, 
-  re-run SchemaCrawler with:
-  -help -server=<database system identifier>
