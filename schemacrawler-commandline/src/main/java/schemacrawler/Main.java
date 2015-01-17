@@ -59,19 +59,19 @@ public final class Main
     applicationOptions.applyApplicationLogLevel();
     LOGGER.log(Level.CONFIG, "Command line: " + Arrays.toString(args));
 
-    final DatabaseServerTypeParser dbServerTypeParser = new DatabaseServerTypeParser(config);
-    final DatabaseServerType dbServerType = dbServerTypeParser.getOptions();
-    final DatabaseConnectorRegistry registry = new DatabaseConnectorRegistry();
-    final DatabaseConnector dbConnector = registry
-      .lookupDatabaseSystemIdentifier(dbServerType
-        .getDatabaseSystemIdentifier());
-
-    final boolean showHelp = args.length == 0 || args.length == 1
-                             && Main.class.getCanonicalName().equals(args[0])
-                             || applicationOptions.isShowHelp();
-
     try
     {
+      final DatabaseServerTypeParser dbServerTypeParser = new DatabaseServerTypeParser(config);
+      final DatabaseServerType dbServerType = dbServerTypeParser.getOptions();
+      final DatabaseConnectorRegistry registry = new DatabaseConnectorRegistry();
+      final DatabaseConnector dbConnector = registry
+        .lookupDatabaseSystemIdentifier(dbServerType
+          .getDatabaseSystemIdentifier());
+
+      final boolean showHelp = args.length == 0 || args.length == 1
+                               && Main.class.getCanonicalName().equals(args[0])
+                               || applicationOptions.isShowHelp();
+
       final CommandLine commandLine;
       if (showHelp)
       {

@@ -156,7 +156,7 @@ public class CommandLineArgumentsParserTest
     assertEquals(1, optionsMap.size());
     assertFalse(optionsMap.containsKey("random"));
     assertTrue(optionsMap.containsKey(""));
-    assertEquals(null, optionsMap.get(""));
+    assertEquals("", optionsMap.get(""));
 
     final List<String> nonOptionArguments = parser.getNonOptionArguments();
     assertEquals(0, nonOptionArguments.size());
@@ -221,7 +221,7 @@ public class CommandLineArgumentsParserTest
     assertEquals(1, optionsMap.size());
     assertFalse(optionsMap.containsKey("random"));
     assertTrue(optionsMap.containsKey("blah"));
-    assertEquals(null, optionsMap.get("blah"));
+    assertEquals("", optionsMap.get("blah"));
 
     final List<String> nonOptionArguments = parser.getNonOptionArguments();
     assertEquals(0, nonOptionArguments.size());
