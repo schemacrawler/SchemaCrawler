@@ -88,7 +88,6 @@ public class SchemaCrawlerCommandLineToolsTest
       final OutputFormat outputFormat = TextOutputFormat.text;
 
       final List<String> args = new ArrayList<>(Arrays.asList(new String[] {
-          "-driver=org.hsqldb.jdbc.JDBCDriver",
           "-url=jdbc:hsqldb:hsql://localhost/schemacrawler",
           "-user=sa",
           "-password=",

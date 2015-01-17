@@ -33,6 +33,14 @@ public final class SQLiteDatabaseConnector
           "/help/Connections.sqlite.txt",
           "/schemacrawler-sqlite.config.properties",
           "/sqlite.information_schema");
+    try
+    {
+      Class.forName("org.sqlite.JDBC");
+    }
+    catch (ClassNotFoundException e)
+    {
+      throw new RuntimeException("Could not load SQLite JDBC driver", e);
+    }
   }
 
 }

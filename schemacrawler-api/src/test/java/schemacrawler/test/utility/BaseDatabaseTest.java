@@ -56,8 +56,7 @@ public abstract class BaseDatabaseTest
   {
     try
     {
-      final DatabaseConnectionOptions connectionOptions = new DatabaseConnectionOptions("org.hsqldb.jdbc.JDBCDriver",
-                                                                                        TestDatabase.CONNECTION_STRING);
+      final DatabaseConnectionOptions connectionOptions = new DatabaseConnectionOptions(TestDatabase.CONNECTION_STRING);
       connectionOptions.setUser("sa");
       connectionOptions.setPassword("");
 
