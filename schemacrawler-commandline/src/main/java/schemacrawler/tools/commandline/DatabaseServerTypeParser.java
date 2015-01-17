@@ -22,6 +22,7 @@ package schemacrawler.tools.commandline;
 
 
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.options.DatabaseServerType;
@@ -45,10 +46,17 @@ public final class DatabaseServerTypeParser
     throws SchemaCrawlerException
   {
     final DatabaseConnectorRegistry registry = new DatabaseConnectorRegistry();
+
+    final String serverType = config.getStringValue("server", null);
+    if (config.hasValue("server")
+        && !registry.hasDatabaseSystemIdentifier(serverType))
+    {
+      throw new SchemaCrawlerCommandLineException("Unsupported server, "
+                                                  + serverType);
+    }
+
     final DatabaseServerType dbServerType = registry
-      .lookupDatabaseSystemIdentifier(config.getStringValue("server", null))
-      .getDatabaseServerType();
+      .lookupDatabaseSystemIdentifier(serverType).getDatabaseServerType();
     return dbServerType;
   }
-
 }
