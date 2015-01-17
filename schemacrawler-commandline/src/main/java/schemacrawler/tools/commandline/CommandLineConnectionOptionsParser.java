@@ -35,7 +35,6 @@ final class CommandLineConnectionOptionsParser
   extends BaseDatabaseConnectionOptionsParser
 {
 
-  private static final String DRIVER = "driver";
   private static final String URL = "url";
 
   CommandLineConnectionOptionsParser(final Config config)
@@ -58,12 +57,6 @@ final class CommandLineConnectionOptionsParser
     {
       throw new SchemaCrawlerCommandLineException("No database connection URL provided");
     }
-
-    if (config.hasValue(DRIVER))
-    {
-      config.put(DRIVER, config.getStringValue(DRIVER, null));
-    }
-    final String jdbcDriverClass = config.getStringValue(DRIVER, null);
   }
 
 }

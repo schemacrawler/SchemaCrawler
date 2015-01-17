@@ -44,20 +44,14 @@ abstract class BaseDatabaseConnectionOptions
   implements ConnectionOptions
 {
 
-  protected static final Map<String, String> toMap(final String jdbcDriverClassName,
-                                                   final String connectionUrl)
+  protected static final Map<String, String> toMap(final String connectionUrl)
   {
-    if (isBlank(jdbcDriverClassName))
-    {
-      throw new NullPointerException("No JDBC driver class name provided");
-    }
     if (isBlank(connectionUrl))
     {
       throw new NullPointerException("No database connection URL provided");
     }
 
     final Map<String, String> connectionProperties = new HashMap<>();
-    connectionProperties.put(DRIVER, jdbcDriverClassName);
     connectionProperties.put(URL, connectionUrl);
     return connectionProperties;
   }
@@ -67,7 +61,6 @@ abstract class BaseDatabaseConnectionOptions
   private static final Logger LOGGER = Logger
     .getLogger(BaseDatabaseConnectionOptions.class.getName());
 
-  private static final String DRIVER = "driver";
   private static final String URL = "url";
 
   protected final Map<String, String> connectionProperties;
@@ -84,8 +77,6 @@ abstract class BaseDatabaseConnectionOptions
 
     connectionProperties = new HashMap<>(properties);
     TemplatingUtility.substituteVariables(connectionProperties);
-
-    loadJdbcDriver();
   }
 
   @Override
@@ -323,30 +314,6 @@ abstract class BaseDatabaseConnectionOptions
     }
 
     return jdbcConnectionProperties;
-  }
-
-  private void loadJdbcDriver()
-    throws SchemaCrawlerException
-  {
-    final String jdbcDriverClassName = connectionProperties.get(DRIVER);
-    if (isBlank(jdbcDriverClassName))
-    {
-      LOGGER
-        .log(Level.FINE,
-             "Not attempting to load database driver, since class name is not provided");
-      return;
-    }
-    try
-    {
-      Class.forName(jdbcDriverClassName);
-    }
-    catch (final Exception e)
-    {
-      throw new SchemaCrawlerException("Could not load JDBC driver, "
-                                       + jdbcDriverClassName, e);
-    }
-
-    DriverManager.setLogWriter(null);
   }
 
 }

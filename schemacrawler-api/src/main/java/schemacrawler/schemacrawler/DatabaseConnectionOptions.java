@@ -35,11 +35,10 @@ public final class DatabaseConnectionOptions
     super(properties);
   }
 
-  public DatabaseConnectionOptions(final String jdbcDriverClassName,
-                                   final String connectionUrl)
+  public DatabaseConnectionOptions(final String connectionUrl)
     throws SchemaCrawlerException
   {
-    super(toMap(jdbcDriverClassName, connectionUrl));
+    super(toMap(connectionUrl));
   }
 
 }
