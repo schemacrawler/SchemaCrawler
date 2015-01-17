@@ -329,6 +329,13 @@ abstract class BaseDatabaseConnectionOptions
     throws SchemaCrawlerException
   {
     final String jdbcDriverClassName = connectionProperties.get(DRIVER);
+    if (isBlank(jdbcDriverClassName))
+    {
+      LOGGER
+        .log(Level.FINE,
+             "Not attempting to load database driver, since class name is not provided");
+      return;
+    }
     try
     {
       Class.forName(jdbcDriverClassName);

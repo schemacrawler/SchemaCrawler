@@ -64,10 +64,6 @@ final class CommandLineConnectionOptionsParser
       config.put(DRIVER, config.getStringValue(DRIVER, null));
     }
     final String jdbcDriverClass = config.getStringValue(DRIVER, null);
-    if (isBlank(jdbcDriverClass))
-    {
-      throw new SchemaCrawlerCommandLineException("No JDBC driver class name provided");
-    }
   }
 
 }
