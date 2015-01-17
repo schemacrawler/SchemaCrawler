@@ -101,7 +101,6 @@ public class LintExecutableTest
     try (final TestWriter out = new TestWriter(outputFormat.getFormat());)
     {
       final Map<String, String> argsMap = new HashMap<>();
-      argsMap.put("driver", "org.hsqldb.jdbc.JDBCDriver");
       argsMap.put("url", "jdbc:hsqldb:hsql://localhost/schemacrawler");
       argsMap.put("user", "sa");
       argsMap.put("password", "");

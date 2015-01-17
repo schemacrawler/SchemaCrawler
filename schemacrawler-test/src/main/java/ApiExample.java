@@ -21,8 +21,7 @@ public final class ApiExample
     throws Exception
   {
     // Create a database connection
-    final DataSource dataSource = new DatabaseConnectionOptions("org.hsqldb.jdbcDriver",
-                                                                "jdbc:hsqldb:hsql://localhost:9001/schemacrawler");
+    final DataSource dataSource = new DatabaseConnectionOptions("jdbc:hsqldb:hsql://localhost:9001/schemacrawler");
     final Connection connection = dataSource.getConnection("sa", "");
 
     // Create the options
