@@ -99,6 +99,22 @@ public class DatabaseSystemConnector
   }
 
   /**
+   * Checks if the database connection options are valid, the JDBC
+   * driver class can be loaded, and so on. Throws an exception if there
+   * is a problem.
+   * 
+   * @throws SchemaCrawlerException
+   *         If there is a problem with creating connection options.
+   */
+  public void checkDatabaseConnectionOptions()
+    throws SchemaCrawlerException
+  {
+    final Config additionalConfig = new Config();
+    additionalConfig.put("user", "fake");
+    newDatabaseConnectionOptions(additionalConfig);
+  }
+
+  /**
    * Creates a datasource for connecting to a database. Additional
    * connection options are provided, from the command-line, and
    * configuration file.

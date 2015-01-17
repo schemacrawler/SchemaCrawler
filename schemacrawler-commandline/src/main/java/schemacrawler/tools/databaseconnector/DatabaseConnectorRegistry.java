@@ -22,6 +22,8 @@
 package schemacrawler.tools.databaseconnector;
 
 
+import java.sql.Driver;
+import java.sql.DriverManager;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -60,11 +62,24 @@ public final class DatabaseConnectorRegistry
       {
         final String databaseSystemIdentifier = databaseConnector
           .getDatabaseServerType().getDatabaseSystemIdentifier();
-        LOGGER.log(Level.FINER, "Loading database connector, "
-                                + databaseSystemIdentifier + "="
-                                + databaseConnector.getClass().getName());
-        databaseConnectorRegistry.put(databaseSystemIdentifier,
-                                      databaseConnector);
+        try
+        {
+          LOGGER.log(Level.CONFIG, "Loading database connector, "
+                                   + databaseSystemIdentifier + "="
+                                   + databaseConnector.getClass().getName());
+          // Validate that the JDBC driver is available
+          databaseConnector.getDatabaseSystemConnector()
+            .checkDatabaseConnectionOptions();
+          // Put in map
+          databaseConnectorRegistry.put(databaseSystemIdentifier,
+                                        databaseConnector);
+        }
+        catch (final Exception e)
+        {
+          LOGGER.log(Level.CONFIG, "Could not load database connector, "
+                                   + databaseSystemIdentifier + "="
+                                   + databaseConnector.getClass().getName(), e);
+        }
       }
     }
     catch (final Exception e)
@@ -85,6 +100,7 @@ public final class DatabaseConnectorRegistry
     throws SchemaCrawlerException
   {
     databaseConnectorRegistry = loadDatabaseConnectorRegistry();
+    logRegisteredJdbcDrivers();
   }
 
   public boolean hasDatabaseSystemIdentifier(final DatabaseServerType databaseServerType)
@@ -118,6 +134,32 @@ public final class DatabaseConnectorRegistry
     else
     {
       return DatabaseConnector.UNKNOWN;
+    }
+  }
+
+  private void logRegisteredJdbcDrivers()
+  {
+    if (!LOGGER.isLoggable(Level.CONFIG))
+    {
+      return;
+    }
+
+    try
+    {
+      final List<String> drivers = new ArrayList<>();
+      for (final Driver driver: Collections.list(DriverManager.getDrivers()))
+      {
+        drivers.add(String.format("%s %d.%d",
+                                  driver.getClass().getName(),
+                                  driver.getMajorVersion(),
+                                  driver.getMinorVersion()));
+      }
+      Collections.sort(drivers);
+      LOGGER.log(Level.CONFIG, "Registered JDBC drivers: " + drivers);
+    }
+    catch (final Exception e)
+    {
+      LOGGER.log(Level.FINE, "Could not log registered JDBC drivers", e);
     }
   }
 
