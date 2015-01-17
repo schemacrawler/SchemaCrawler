@@ -24,8 +24,6 @@ package sf.util.commandlineparser;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -62,20 +60,11 @@ public class CommandLineArgumentsUtility
     final CommandLineArgumentsParser argsParser = new CommandLineArgumentsParser(args);
     argsParser.parse();
     final Map<String, String> optionsMap = argsParser.getOptionsMap();
-    if (!argsParser.getNonOptionArguments().isEmpty())
-    {
-      LOGGER.log(Level.INFO, "Too many command-line arguments provided: "
-                             + argsParser.getNonOptionArguments());
-    }
-
     // Override/ overwrite from the command-line options
     final Config config = new Config();
     config.putAll(optionsMap);
     return config;
   }
-
-  private static final Logger LOGGER = Logger
-    .getLogger(CommandLineArgumentsUtility.class.getName());
 
   private CommandLineArgumentsUtility()
   {

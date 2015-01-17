@@ -33,7 +33,7 @@ public final class OfflineDatabaseConnector
   {
     super(new DatabaseServerType("offline", "Offline Snapshot"),
           "/help/Connections.offline.txt",
-          null,
+          "/schemacrawler-offline.config.properties",
           null);
   }
 
