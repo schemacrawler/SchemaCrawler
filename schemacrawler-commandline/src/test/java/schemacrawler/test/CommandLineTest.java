@@ -3,10 +3,10 @@ package schemacrawler.test;
 
 import static java.nio.file.Files.newBufferedWriter;
 import static schemacrawler.test.utility.TestUtility.createTempFile;
-import static sf.util.Utility.UTF8;
 import static sf.util.commandlineparser.CommandLineArgumentsUtility.flattenCommandlineArgs;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
@@ -101,7 +101,8 @@ public class CommandLineTest
     final Path configFile = createTempFile(prefix, "properties");
     final Properties configProperties = new Properties();
     configProperties.putAll(config);
-    configProperties.store(newBufferedWriter(configFile, UTF8), prefix);
+    configProperties
+      .store(newBufferedWriter(configFile, StandardCharsets.UTF_8), prefix);
     return configFile;
   }
 

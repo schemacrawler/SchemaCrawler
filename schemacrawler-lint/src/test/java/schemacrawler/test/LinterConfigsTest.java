@@ -24,11 +24,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static schemacrawler.test.utility.TestUtility.readerForResource;
-import static sf.util.Utility.UTF8;
 
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
+import java.nio.charset.StandardCharsets;
 
 import org.junit.Test;
 
@@ -45,7 +45,7 @@ public class LinterConfigsTest
     throws SchemaCrawlerException, IOException
   {
     final Reader reader = readerForResource("bad-schemacrawler-linter-configs-a.xml",
-                                            UTF8);
+                                            StandardCharsets.UTF_8);
     final LinterConfigs linterConfigs = new LinterConfigs();
     linterConfigs.parse(reader);
     assertEquals(3, linterConfigs.size());
@@ -85,7 +85,7 @@ public class LinterConfigsTest
     throws SchemaCrawlerException, IOException
   {
     final Reader reader = readerForResource("bad-schemacrawler-linter-configs-2.xml",
-                                            UTF8);
+                                            StandardCharsets.UTF_8);
     final LinterConfigs linterConfigs = new LinterConfigs();
     linterConfigs.parse(reader);
   }
@@ -95,7 +95,7 @@ public class LinterConfigsTest
     throws SchemaCrawlerException, IOException
   {
     final Reader reader = readerForResource("schemacrawler-linter-configs-1.xml",
-                                            UTF8);
+                                            StandardCharsets.UTF_8);
     final LinterConfigs linterConfigs = new LinterConfigs();
     linterConfigs.parse(reader);
 

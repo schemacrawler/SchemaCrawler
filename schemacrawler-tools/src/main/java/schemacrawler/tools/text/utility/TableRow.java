@@ -22,8 +22,6 @@
 package schemacrawler.tools.text.utility;
 
 
-import static sf.util.Utility.NEWLINE;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -113,10 +111,10 @@ public final class TableRow
   private String toHtmlString()
   {
     final StringBuilder buffer = new StringBuilder();
-    buffer.append("\t<tr>").append(NEWLINE);
+    buffer.append("\t<tr>").append(System.lineSeparator());
     for (final TableCell cell: cells)
     {
-      buffer.append("\t\t").append(cell).append(NEWLINE);
+      buffer.append("\t\t").append(cell).append(System.lineSeparator());
     }
     buffer.append("\t</tr>");
 

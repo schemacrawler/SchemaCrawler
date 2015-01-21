@@ -7,13 +7,12 @@ import static java.nio.file.Files.newBufferedWriter;
 import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.nio.file.StandardOpenOption.WRITE;
-import static sf.util.Utility.NEWLINE;
-import static sf.util.Utility.UTF8;
 import static sf.util.Utility.copy;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.util.regex.Pattern;
@@ -57,14 +56,14 @@ public class EmbeddedGraphExecutable
 
     // Interleave HTML and SVG
     try (final BufferedWriter finalHtmlFileWriter = newBufferedWriter(finalHtmlFile,
-                                                                      UTF8,
+                                                                      StandardCharsets.UTF_8,
                                                                       WRITE,
                                                                       CREATE,
                                                                       TRUNCATE_EXISTING);
         final BufferedReader baseHtmlFileReader = newBufferedReader(baseHtmlFile,
-                                                                    UTF8);
+                                                                    StandardCharsets.UTF_8);
         final BufferedReader baseSvgFileReader = newBufferedReader(baseSvgFile,
-                                                                   UTF8);)
+                                                                   StandardCharsets.UTF_8);)
     {
       String line;
       while ((line = baseHtmlFileReader.readLine()) != null)
@@ -73,13 +72,13 @@ public class EmbeddedGraphExecutable
         {
           insertSvg(finalHtmlFileWriter, baseSvgFileReader);
         }
-        finalHtmlFileWriter.append(line).append(NEWLINE);
+        finalHtmlFileWriter.append(line).append(System.lineSeparator());
       }
     }
 
     try (final OutputWriter writer = new OutputWriter(outputOptions);)
     {
-      copy(newBufferedReader(finalHtmlFile, UTF8), writer);
+      copy(newBufferedReader(finalHtmlFile, StandardCharsets.UTF_8), writer);
     }
   }
 
@@ -87,7 +86,7 @@ public class EmbeddedGraphExecutable
                          final BufferedReader baseSvgFileReader)
     throws IOException
   {
-    finalHtmlFileWriter.append(NEWLINE);
+    finalHtmlFileWriter.append(System.lineSeparator());
     boolean skipLines = true;
     String line;
     while ((line = baseSvgFileReader.readLine()) != null)
@@ -98,10 +97,10 @@ public class EmbeddedGraphExecutable
       }
       if (!skipLines)
       {
-        finalHtmlFileWriter.append(line).append(NEWLINE);
+        finalHtmlFileWriter.append(line).append(System.lineSeparator());
       }
     }
-    finalHtmlFileWriter.append(NEWLINE);
+    finalHtmlFileWriter.append(System.lineSeparator());
   }
 
 }

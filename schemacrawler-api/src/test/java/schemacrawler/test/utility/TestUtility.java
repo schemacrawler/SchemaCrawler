@@ -37,7 +37,6 @@ import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.nio.file.StandardOpenOption.WRITE;
 import static java.util.Objects.requireNonNull;
 import static org.junit.Assert.assertTrue;
-import static sf.util.Utility.UTF8;
 
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
@@ -52,6 +51,7 @@ import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.channels.WritableByteChannel;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
 import java.nio.file.Path;
@@ -110,7 +110,8 @@ public final class TestUtility
     final List<String> failures = new ArrayList<>();
 
     final boolean contentEquals;
-    final Reader referenceReader = readerForResource(referenceFile, UTF8);
+    final Reader referenceReader = readerForResource(referenceFile,
+                                                     StandardCharsets.UTF_8);
     if (referenceReader == null)
 
     {
@@ -118,7 +119,8 @@ public final class TestUtility
     }
     else
     {
-      final Reader fileReader = newBufferedReader(testOutputTempFile, UTF8);
+      final Reader fileReader = newBufferedReader(testOutputTempFile,
+                                                  StandardCharsets.UTF_8);
       contentEquals = contentEquals(referenceReader, fileReader, neuters);
     }
 
@@ -211,7 +213,7 @@ public final class TestUtility
       final Charset charset;
       if (encoding == null)
       {
-        charset = UTF8;
+        charset = StandardCharsets.UTF_8;
       }
       else
       {
@@ -368,7 +370,8 @@ public final class TestUtility
     throws FileNotFoundException, SAXException, IOException
   {
     final JsonElement jsonElement;
-    try (final Reader reader = newBufferedReader(testOutputFile, UTF8);
+    try (final Reader reader = newBufferedReader(testOutputFile,
+                                                 StandardCharsets.UTF_8);
         final JsonReader jsonReader = new JsonReader(reader);)
     {
       jsonElement = new JsonParser().parse(jsonReader);
@@ -410,7 +413,7 @@ public final class TestUtility
     throws Exception
   {
     final DOCTYPEChanger xhtmlReader = new DOCTYPEChanger(newBufferedReader(testOutputFile,
-                                                                            UTF8));
+                                                                            StandardCharsets.UTF_8));
     xhtmlReader.setRootElement("html");
     xhtmlReader
       .setSystemIdentifier("http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd");
@@ -462,7 +465,8 @@ public final class TestUtility
         failures.add(e.getMessage());
       }
     });
-    builder.parse(new InputSource(newBufferedReader(testOutputFile, UTF8)));
+    builder.parse(new InputSource(newBufferedReader(testOutputFile,
+                                                    StandardCharsets.UTF_8)));
   }
 
   private static Path writeToTempFile(final InputStream resourceStream)

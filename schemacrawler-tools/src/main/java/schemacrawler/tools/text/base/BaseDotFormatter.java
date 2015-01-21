@@ -22,7 +22,6 @@
 package schemacrawler.tools.text.base;
 
 
-import static sf.util.Utility.NEWLINE;
 import static sf.util.Utility.readResourceFully;
 
 import java.awt.Color;
@@ -91,7 +90,7 @@ public abstract class BaseDotFormatter<O extends BaseTextOptions>
                          Color.white,
                          1));
 
-    out.append(row.toString()).append(NEWLINE);
+    out.append(row.toString()).append(System.lineSeparator());
 
   }
 
@@ -112,7 +111,7 @@ public abstract class BaseDotFormatter<O extends BaseTextOptions>
                          Color.white,
                          1));
 
-    out.append(row.toString()).append(NEWLINE);
+    out.append(row.toString()).append(System.lineSeparator());
   }
 
   @Override
@@ -136,7 +135,7 @@ public abstract class BaseDotFormatter<O extends BaseTextOptions>
                          Color.white,
                          1));
 
-    out.append(row.toString()).append(NEWLINE);
+    out.append(row.toString()).append(System.lineSeparator());
 
     row = new TableRow(TextOutputFormat.html);
     row.add(newTableCell("Generated on:",
@@ -150,7 +149,7 @@ public abstract class BaseDotFormatter<O extends BaseTextOptions>
                          Color.white,
                          1));
 
-    out.append(row.toString()).append(NEWLINE);
+    out.append(row.toString()).append(System.lineSeparator());
   }
 
   @Override
@@ -162,9 +161,10 @@ public abstract class BaseDotFormatter<O extends BaseTextOptions>
       return;
     }
 
-    out.append("      </table>    >").append(NEWLINE).append("    labeljust=r")
-      .append(NEWLINE).append("    labelloc=b").append(NEWLINE).append("  ];")
-      .append(NEWLINE).append(NEWLINE);
+    out.append("      </table>    >").append(System.lineSeparator())
+      .append("    labeljust=r").append(System.lineSeparator())
+      .append("    labelloc=b").append(System.lineSeparator()).append("  ];")
+      .append(System.lineSeparator()).append(System.lineSeparator());
   }
 
   @Override
@@ -177,11 +177,11 @@ public abstract class BaseDotFormatter<O extends BaseTextOptions>
     }
     out
       .append("  graph [fontcolor=\"#555555\", ")
-      .append(NEWLINE)
+      .append(System.lineSeparator())
       .append("    label=<")
-      .append(NEWLINE)
+      .append(System.lineSeparator())
       .append("<table color=\"#555555\" border=\"1\" cellborder=\"0\" cellspacing=\"0\">")
-      .append(NEWLINE);
+      .append(System.lineSeparator());
   }
 
   protected TableCell newTableCell(final String text,

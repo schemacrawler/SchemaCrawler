@@ -22,7 +22,6 @@ package schemacrawler.tools.text.utility;
 
 
 import static schemacrawler.tools.text.utility.Entities.escapeForXMLElement;
-import static sf.util.Utility.NEWLINE;
 import static sf.util.Utility.isBlank;
 import static sf.util.Utility.readResourceFully;
 import schemacrawler.tools.options.TextOutputFormat;
@@ -41,17 +40,21 @@ public final class HtmlFormattingHelper
     final String styleSheet = readResourceFully("/sc.css")
                               + readResourceFully("/sc_output.css");
 
-    return "<!DOCTYPE html>" + NEWLINE + "<html lang=\"en\">" + NEWLINE
-           + "<head>" + NEWLINE + "  <title>SchemaCrawler Output</title>"
-           + NEWLINE + "  <meta charset=\"utf-8\"/>" + NEWLINE + "  <style>"
-           + NEWLINE + styleSheet + NEWLINE + "  </style>" + NEWLINE
-           + "</head>" + NEWLINE + "<body>" + NEWLINE;
+    return "<!DOCTYPE html>" + System.lineSeparator() + "<html lang=\"en\">"
+           + System.lineSeparator() + "<head>" + System.lineSeparator()
+           + "  <title>SchemaCrawler Output</title>" + System.lineSeparator()
+           + "  <meta charset=\"utf-8\"/>" + System.lineSeparator()
+           + "  <style>" + System.lineSeparator() + styleSheet
+           + System.lineSeparator() + "  </style>" + System.lineSeparator()
+           + "</head>" + System.lineSeparator() + "<body>"
+           + System.lineSeparator();
   }
 
   /**
    * HTML footer.
    */
-  private static final String HTML_FOOTER = "</body>" + NEWLINE + "</html>";
+  private static final String HTML_FOOTER = "</body>" + System.lineSeparator()
+                                            + "</html>";
 
   /**
    * HTML header.
@@ -139,7 +142,8 @@ public final class HtmlFormattingHelper
   @Override
   public String createObjectEnd()
   {
-    return "</table>" + NEWLINE + "<p>&#160;</p>" + NEWLINE;
+    return "</table>" + System.lineSeparator() + "<p>&#160;</p>"
+           + System.lineSeparator();
   }
 
   /**
@@ -149,11 +153,11 @@ public final class HtmlFormattingHelper
   public String createObjectStart(final String name)
   {
     final StringBuilder buffer = new StringBuilder();
-    buffer.append("<table>").append(NEWLINE);
+    buffer.append("<table>").append(System.lineSeparator());
     if (!isBlank(name))
     {
       buffer.append("  <caption>").append(escapeForXMLElement(name))
-        .append("</caption>").append(NEWLINE);
+        .append("</caption>").append(System.lineSeparator());
     }
     return buffer.toString();
   }
