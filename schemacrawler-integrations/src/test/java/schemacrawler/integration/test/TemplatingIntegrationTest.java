@@ -22,9 +22,9 @@
 package schemacrawler.integration.test;
 
 
-import static sf.util.Utility.UTF8;
 import static sf.util.commandlineparser.CommandLineArgumentsUtility.flattenCommandlineArgs;
 
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -130,8 +130,8 @@ public class TemplatingIntegrationTest
     {
       final OutputOptions outputOptions = new OutputOptions(outputFormatValue,
                                                             out);
-      outputOptions.setInputEncoding(UTF8);
-      outputOptions.setOutputEncoding(UTF8);
+      outputOptions.setInputEncoding(StandardCharsets.UTF_8);
+      outputOptions.setOutputEncoding(StandardCharsets.UTF_8);
 
       executable.setOutputOptions(outputOptions);
       executable.execute(getConnection());

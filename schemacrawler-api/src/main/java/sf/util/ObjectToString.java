@@ -88,7 +88,7 @@ public final class ObjectToString
         {
           appendObject(fieldValue, indent + 1, buffer);
         }
-        buffer.append(Utility.NEWLINE);
+        buffer.append(System.lineSeparator());
       }
       catch (final Exception e)
       {
@@ -111,7 +111,7 @@ public final class ObjectToString
       buffer.append(indent(indent)).append(object.getClass().getName())
         .append('@')
         .append(Integer.toHexString(System.identityHashCode(object)))
-        .append('[').append(Utility.NEWLINE);
+        .append('[').append(System.lineSeparator());
     }
   }
 
@@ -125,7 +125,7 @@ public final class ObjectToString
       final Set<Map.Entry> mapEntries = new TreeMap((Map) object).entrySet();
       for (final Map.Entry mapEntry: mapEntries)
       {
-        buffer.append(Utility.NEWLINE).append(indent(indent))
+        buffer.append(System.lineSeparator()).append(indent(indent))
           .append(mapEntry.getKey()).append(": ").append(mapEntry.getValue());
       }
     }

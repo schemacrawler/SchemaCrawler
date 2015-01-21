@@ -237,6 +237,52 @@ public class SchemaCrawlerOutputTest
   }
 
   @Test
+  public void compareNoRemarksOutput()
+    throws Exception
+  {
+    clean(NO_REMARKS_OUTPUT);
+
+    final List<String> failures = new ArrayList<>();
+
+    final SchemaTextOptions textOptions = new SchemaTextOptions();
+    textOptions.setNoInfo(true);
+    textOptions.setHideRemarks(true);
+
+    for (final OutputFormat outputFormat: EnumSet.complementOf(EnumSet
+      .of(TextOutputFormat.tsv)))
+    {
+      final String referenceFile = "schema_detailed."
+                                   + outputFormat.getFormat();
+
+      final Path testOutputFile = createTempFile(referenceFile,
+                                                 outputFormat.getFormat());
+
+      final OutputOptions outputOptions = new OutputOptions(outputFormat,
+                                                            testOutputFile);
+
+      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+      schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.detailed());
+      schemaCrawlerOptions
+        .setSchemaInclusionRule(new RegularExpressionInclusionRule(".*\\.BOOKS"));
+
+      final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(SchemaTextDetailType.schema
+        .name());
+      executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+      executable.setOutputOptions(outputOptions);
+      executable.setAdditionalConfiguration(textOptions.toConfig());
+      executable.execute(getConnection());
+
+      failures.addAll(compareOutput(NO_REMARKS_OUTPUT + referenceFile,
+                                    testOutputFile,
+                                    outputFormat.getFormat()));
+    }
+    if (failures.size() > 0)
+    {
+      fail(failures.toString());
+    }
+  }
+
+  @Test
   public void compareOrdinalOutput()
     throws Exception
   {
@@ -388,52 +434,6 @@ public class SchemaCrawlerOutputTest
       executable.execute(getConnection());
 
       failures.addAll(compareOutput(UNQUALIFIED_NAMES_OUTPUT + referenceFile,
-                                    testOutputFile,
-                                    outputFormat.getFormat()));
-    }
-    if (failures.size() > 0)
-    {
-      fail(failures.toString());
-    }
-  }
-
-  @Test
-  public void compareNoRemarksOutput()
-    throws Exception
-  {
-    clean(NO_REMARKS_OUTPUT);
-
-    final List<String> failures = new ArrayList<>();
-
-    final SchemaTextOptions textOptions = new SchemaTextOptions();
-    textOptions.setNoInfo(true);
-    textOptions.setHideRemarks(true);
-
-    for (final OutputFormat outputFormat: EnumSet.complementOf(EnumSet
-      .of(TextOutputFormat.tsv)))
-    {
-      final String referenceFile = "schema_detailed."
-                                   + outputFormat.getFormat();
-
-      final Path testOutputFile = createTempFile(referenceFile,
-                                                 outputFormat.getFormat());
-
-      final OutputOptions outputOptions = new OutputOptions(outputFormat,
-                                                            testOutputFile);
-
-      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-      schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.detailed());
-      schemaCrawlerOptions
-        .setSchemaInclusionRule(new RegularExpressionInclusionRule(".*\\.BOOKS"));
-
-      final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(SchemaTextDetailType.schema
-        .name());
-      executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-      executable.setOutputOptions(outputOptions);
-      executable.setAdditionalConfiguration(textOptions.toConfig());
-      executable.execute(getConnection());
-
-      failures.addAll(compareOutput(NO_REMARKS_OUTPUT + referenceFile,
                                     testOutputFile,
                                     outputFormat.getFormat()));
     }
