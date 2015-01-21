@@ -30,11 +30,11 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
 import static schemacrawler.test.utility.TestUtility.createTempFile;
-import static sf.util.Utility.UTF8;
 import static sf.util.commandlineparser.CommandLineArgumentsUtility.flattenCommandlineArgs;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -174,7 +174,7 @@ public class OfflineSnapshotTest
 
     final XmlSerializedCatalog xmlDatabase = new XmlSerializedCatalog(catalog);
     final Writer writer = newBufferedWriter(serializedDatabaseFile,
-                                            UTF8,
+                                            StandardCharsets.UTF_8,
                                             WRITE,
                                             CREATE,
                                             TRUNCATE_EXISTING);

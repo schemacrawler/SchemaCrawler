@@ -25,7 +25,6 @@ import static java.nio.file.Files.exists;
 import static java.nio.file.Files.isDirectory;
 import static java.nio.file.Files.isReadable;
 import static java.nio.file.Files.newBufferedReader;
-import static sf.util.Utility.UTF8;
 import static sf.util.Utility.isBlank;
 
 import java.io.BufferedReader;
@@ -33,6 +32,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
@@ -136,7 +136,8 @@ public final class Config
     }
 
     LOGGER.log(Level.INFO, "Loading properties from file, " + propertiesFile);
-    loadProperties(properties, newBufferedReader(propertiesFile, UTF8));
+    loadProperties(properties,
+                   newBufferedReader(propertiesFile, StandardCharsets.UTF_8));
     return properties;
   }
 

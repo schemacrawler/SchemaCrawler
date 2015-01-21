@@ -21,8 +21,6 @@
 package schemacrawler.crawl;
 
 
-import static sf.util.Utility.NEWLINE;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -130,10 +128,11 @@ final class MutableJdbcDriverInfo
   {
     final StringBuilder info = new StringBuilder();
     info.append("-- driver: ").append(getDriverName()).append(' ')
-      .append(getDriverVersion()).append(NEWLINE);
+      .append(getDriverVersion()).append(System.lineSeparator());
     info.append("-- driver class: ").append(getDriverClassName())
-      .append(NEWLINE);
-    info.append("-- url: ").append(getConnectionUrl()).append(NEWLINE);
+      .append(System.lineSeparator());
+    info.append("-- url: ").append(getConnectionUrl())
+      .append(System.lineSeparator());
     info.append("-- jdbc compliant: ").append(isJdbcCompliant());
     return info.toString();
   }
