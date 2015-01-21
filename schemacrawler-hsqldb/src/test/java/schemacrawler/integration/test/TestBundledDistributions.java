@@ -9,11 +9,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static schemacrawler.test.utility.TestUtility.createTempFile;
-import static sf.util.Utility.UTF8;
 import static sf.util.commandlineparser.CommandLineArgumentsUtility.flattenCommandlineArgs;
 
 import java.io.PrintWriter;
 import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
@@ -47,7 +47,7 @@ public class TestBundledDistributions
 
     final Path testConfigFile = createTempFile("test", "properties");
     try (final Writer writer = new PrintWriter(newBufferedWriter(testConfigFile,
-                                                                 UTF8,
+                                                                 StandardCharsets.UTF_8,
                                                                  WRITE,
                                                                  TRUNCATE_EXISTING,
                                                                  CREATE));)

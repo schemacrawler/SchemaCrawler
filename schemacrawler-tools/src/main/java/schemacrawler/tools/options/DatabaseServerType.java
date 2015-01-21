@@ -34,12 +34,6 @@ public final class DatabaseServerType
 
   public static final DatabaseServerType UNKNOWN = new DatabaseServerType();
 
-  private DatabaseServerType()
-  {
-    databaseSystemIdentifier = null;
-    databaseSystemName = null;
-  }
-
   public DatabaseServerType(final String databaseSystemIdentifier,
                             final String databaseSystemName)
   {
@@ -54,6 +48,12 @@ public final class DatabaseServerType
       throw new IllegalArgumentException("No database system name provided");
     }
     this.databaseSystemName = databaseSystemName;
+  }
+
+  private DatabaseServerType()
+  {
+    databaseSystemIdentifier = null;
+    databaseSystemName = null;
   }
 
   public String getDatabaseSystemIdentifier()
