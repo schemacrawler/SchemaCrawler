@@ -21,7 +21,6 @@
 package schemacrawler.tools.text.utility;
 
 
-import static sf.util.Utility.NEWLINE;
 import static sf.util.Utility.isBlank;
 import schemacrawler.tools.options.TextOutputFormat;
 
@@ -74,7 +73,7 @@ public class PlainTextFormattingHelper
       final String separator;
       if (type == null)
       {
-        prefix = NEWLINE;
+        prefix = System.lineSeparator();
         separator = defaultSeparator;
       }
       else
@@ -82,11 +81,11 @@ public class PlainTextFormattingHelper
         switch (type)
         {
           case title:
-            prefix = NEWLINE;
+            prefix = System.lineSeparator();
             separator = separator("_");
             break;
           case subTitle:
-            prefix = NEWLINE;
+            prefix = System.lineSeparator();
             separator = defaultSeparator;
             break;
           case section:
@@ -94,12 +93,13 @@ public class PlainTextFormattingHelper
             separator = separator("-=-");
             break;
           default:
-            prefix = NEWLINE;
+            prefix = System.lineSeparator();
             separator = defaultSeparator;
             break;
         }
       }
-      return NEWLINE + prefix + header + NEWLINE + separator + NEWLINE + prefix;
+      return System.lineSeparator() + prefix + header + System.lineSeparator()
+             + separator + System.lineSeparator() + prefix;
     }
     else
     {
@@ -119,7 +119,7 @@ public class PlainTextFormattingHelper
   @Override
   public String createObjectEnd()
   {
-    return NEWLINE;
+    return System.lineSeparator();
   }
 
   /**
@@ -131,7 +131,8 @@ public class PlainTextFormattingHelper
     final String objectStart;
     if (!isBlank(name))
     {
-      objectStart = NEWLINE + name + NEWLINE + DASHED_SEPARATOR;
+      objectStart = System.lineSeparator() + name + System.lineSeparator()
+                    + DASHED_SEPARATOR;
     }
     else
     {

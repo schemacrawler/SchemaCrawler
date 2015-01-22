@@ -9,9 +9,9 @@ import static org.junit.Assert.fail;
 import static schemacrawler.test.utility.TestUtility.clean;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
 import static schemacrawler.test.utility.TestUtility.createTempFile;
-import static sf.util.Utility.UTF8;
 
 import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -72,7 +72,7 @@ public class SchemaCrawlerCommandLineToolsTest
       final Path additionalProperties = createTempFile("hsqldb.INFORMATION_SCHEMA.config",
                                                        "properties");
       final Writer writer = newBufferedWriter(additionalProperties,
-                                              UTF8,
+                                              StandardCharsets.UTF_8,
                                               WRITE,
                                               CREATE,
                                               TRUNCATE_EXISTING);

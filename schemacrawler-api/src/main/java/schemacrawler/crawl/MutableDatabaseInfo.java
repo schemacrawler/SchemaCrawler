@@ -21,8 +21,6 @@
 package schemacrawler.crawl;
 
 
-import static sf.util.Utility.NEWLINE;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -98,7 +96,7 @@ final class MutableDatabaseInfo
   {
     final StringBuilder info = new StringBuilder();
     info.append("-- database: ").append(getProductName()).append(' ')
-      .append(getProductVersion()).append(NEWLINE);
+      .append(getProductVersion()).append(System.lineSeparator());
     return info.toString();
   }
 
