@@ -25,11 +25,11 @@ import static java.nio.file.Files.createTempFile;
 import static java.nio.file.Files.deleteIfExists;
 import static java.nio.file.Files.newBufferedWriter;
 import static schemacrawler.test.utility.TestUtility.currentMethodName;
-import static sf.util.Utility.UTF8;
 import static sf.util.commandlineparser.CommandLineArgumentsUtility.flattenCommandlineArgs;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
@@ -173,7 +173,8 @@ public class SiteHTMLVariations
     final Path configFile = createTempFile(prefix, "properties");
     final Properties configProperties = new Properties();
     configProperties.putAll(config);
-    configProperties.store(newBufferedWriter(configFile, UTF8), prefix);
+    configProperties
+      .store(newBufferedWriter(configFile, StandardCharsets.UTF_8), prefix);
     return configFile;
   }
 

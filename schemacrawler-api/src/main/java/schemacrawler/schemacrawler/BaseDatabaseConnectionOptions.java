@@ -21,7 +21,6 @@
 package schemacrawler.schemacrawler;
 
 
-import static sf.util.Utility.NEWLINE;
 import static sf.util.Utility.isBlank;
 
 import java.io.PrintWriter;
@@ -264,9 +263,10 @@ abstract class BaseDatabaseConnectionOptions
   {
     final StringBuilder builder = new StringBuilder();
     builder.append("driver=").append(getJdbcDriver().getClass().getName())
-      .append(NEWLINE);
-    builder.append("url=").append(getConnectionUrl()).append(NEWLINE);
-    builder.append("user=").append(getUser()).append(NEWLINE);
+      .append(System.lineSeparator());
+    builder.append("url=").append(getConnectionUrl())
+      .append(System.lineSeparator());
+    builder.append("user=").append(getUser()).append(System.lineSeparator());
     return builder.toString();
   }
 
