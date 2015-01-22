@@ -77,6 +77,22 @@ public class DatabaseSystemConnector
   }
 
   /**
+   * Checks if the database connection options are valid, the JDBC
+   * driver class can be loaded, and so on. Throws an exception if there
+   * is a problem.
+   *
+   * @throws SchemaCrawlerException
+   *         If there is a problem with creating connection options.
+   */
+  public void checkDatabaseConnectionOptions()
+    throws SchemaCrawlerException
+  {
+    final Config additionalConfig = new Config();
+    additionalConfig.put("user", "fake");
+    newDatabaseConnectionOptions(additionalConfig);
+  }
+
+  /**
    * Gets the complete bundled database configuration set, including the
    * SQL for information schema views. This is useful in building the
    * SchemaCrawler options.
@@ -96,22 +112,6 @@ public class DatabaseSystemConnector
   public DatabaseServerType getDatabaseServerType()
   {
     return dbServerType;
-  }
-
-  /**
-   * Checks if the database connection options are valid, the JDBC
-   * driver class can be loaded, and so on. Throws an exception if there
-   * is a problem.
-   * 
-   * @throws SchemaCrawlerException
-   *         If there is a problem with creating connection options.
-   */
-  public void checkDatabaseConnectionOptions()
-    throws SchemaCrawlerException
-  {
-    final Config additionalConfig = new Config();
-    additionalConfig.put("user", "fake");
-    newDatabaseConnectionOptions(additionalConfig);
   }
 
   /**

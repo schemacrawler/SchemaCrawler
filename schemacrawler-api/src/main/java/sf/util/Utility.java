@@ -28,7 +28,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Handler;
@@ -178,7 +178,7 @@ public final class Utility
     {
       return null;
     }
-    final Reader reader = new InputStreamReader(stream, UTF8);
+    final Reader reader = new InputStreamReader(stream, StandardCharsets.UTF_8);
     return readFully(reader);
   }
 
@@ -269,12 +269,6 @@ public final class Utility
 
   private static final Logger LOGGER = Logger
     .getLogger(Utility.class.getName());
-  /**
-   * System specific line separator character.
-   */
-  public static final String NEWLINE = System.getProperty("line.separator");
-
-  public static final Charset UTF8 = Charset.forName("UTF8");
 
   private static final Pattern containsWhitespacePattern = Pattern
     .compile(".*\\s.*");
