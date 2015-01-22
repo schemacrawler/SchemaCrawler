@@ -32,7 +32,7 @@ public final class SybaseIQDatabaseConnector
     super(new DatabaseServerType("sybaseiq", "SAP Sybase IQ"),
           "/help/Connections.sybaseiq.txt",
           "/schemacrawler-sybaseiq.config.properties",
-          null);
+          "/sybaseiq.information_schema");
   }
 
 }

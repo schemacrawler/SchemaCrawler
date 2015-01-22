@@ -15,24 +15,24 @@ public class TestBundledDistributions
 {
 
   @Test
-  public void testInformationSchema_sqlserver()
+  public void testInformationSchema_sqlite()
     throws Exception
   {
     final DatabaseConnectorRegistry registry = new DatabaseConnectorRegistry();
     final DatabaseConnector databaseSystemIdentifier = registry
-      .lookupDatabaseSystemIdentifier("sqlserver");
+      .lookupDatabaseSystemIdentifier("sqlite");
     final Config config = databaseSystemIdentifier.getDatabaseSystemConnector()
       .getConfig();
     final SchemaCrawlerOptions options = new SchemaCrawlerOptions(config);
-    assertEquals(2, options.getInformationSchemaViews().size());
+    assertEquals(7, options.getInformationSchemaViews().size());
   }
 
   @Test
-  public void testPlugin_sqlserver()
+  public void testPlugin_sqlite()
     throws Exception
   {
     final DatabaseConnectorRegistry registry = new DatabaseConnectorRegistry();
-    assertTrue(registry.hasDatabaseSystemIdentifier("sqlserver"));
+    assertTrue(registry.hasDatabaseSystemIdentifier("sqlite"));
   }
 
 }
