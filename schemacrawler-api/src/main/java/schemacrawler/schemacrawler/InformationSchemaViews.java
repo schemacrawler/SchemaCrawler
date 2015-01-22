@@ -347,6 +347,11 @@ public final class InformationSchemaViews
     return informationSchemaQueries.containsKey(VIEWS);
   }
 
+  public boolean isEmpty()
+  {
+    return informationSchemaQueries.isEmpty();
+  }
+
   /**
    * Information schema views from a map.
    *
@@ -527,6 +532,11 @@ public final class InformationSchemaViews
   public void setViewsSql(final String sql)
   {
     informationSchemaQueries.put(VIEWS, sql);
+  }
+
+  public int size()
+  {
+    return informationSchemaQueries.size();
   }
 
   public Config toConfig()
