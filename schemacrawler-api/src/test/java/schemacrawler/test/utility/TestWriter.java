@@ -6,11 +6,11 @@ import static java.util.Objects.requireNonNull;
 import static org.junit.Assert.fail;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
 import static schemacrawler.test.utility.TestUtility.createTempFile;
-import static sf.util.Utility.UTF8;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Locale;
@@ -28,7 +28,7 @@ public class TestWriter
   {
     this.outputformat = requireNonNull(outputformat);
     tempFile = createTempFile("schemacrawler", outputformat);
-    out = new PrintWriter(tempFile.toFile(), UTF8.name());
+    out = new PrintWriter(tempFile.toFile(), StandardCharsets.UTF_8.name());
   }
 
   @Override
