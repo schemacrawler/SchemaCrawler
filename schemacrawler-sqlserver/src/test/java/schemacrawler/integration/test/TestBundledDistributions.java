@@ -24,7 +24,7 @@ public class TestBundledDistributions
     final Config config = databaseSystemIdentifier.getDatabaseSystemConnector()
       .getConfig();
     final SchemaCrawlerOptions options = new SchemaCrawlerOptions(config);
-    assertEquals(2, options.getInformationSchemaViews().size());
+    assertEquals(7, options.getInformationSchemaViews().size());
   }
 
   @Test
