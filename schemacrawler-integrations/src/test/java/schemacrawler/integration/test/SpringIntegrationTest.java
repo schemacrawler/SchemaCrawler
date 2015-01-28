@@ -23,6 +23,7 @@ package schemacrawler.integration.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
+import static schemacrawler.test.utility.TestUtility.compareCompressedOutput;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
 import static schemacrawler.test.utility.TestUtility.createTempFile;
 
@@ -49,17 +50,45 @@ public class SpringIntegrationTest
   private final ApplicationContext appContext = new ClassPathXmlApplicationContext("context.xml");
 
   @Test
+  public void testExecutableForXMLSerialization()
+    throws Exception
+  {
+    final List<String> failures = new ArrayList<>();
+    final String beanDefinitionName = "executableForXMLSerialization";
+    final Object bean = appContext.getBean(beanDefinitionName);
+    if (bean instanceof Executable)
+    {
+      final Executable executable = (Executable) bean;
+      executeAndCheckForOutputFile(beanDefinitionName,
+                                   executable,
+                                   failures,
+                                   true);
+    }
+    if (failures.size() > 0)
+    {
+      fail(failures.toString());
+    }
+  }
+
+  @Test
   public void testExecutables()
     throws Exception
   {
     final List<String> failures = new ArrayList<>();
     for (final String beanDefinitionName: appContext.getBeanDefinitionNames())
     {
+      if (beanDefinitionName.equals("executableForXMLSerialization"))
+      {
+        continue;
+      }
       final Object bean = appContext.getBean(beanDefinitionName);
       if (bean instanceof Executable)
       {
         final Executable executable = (Executable) bean;
-        executeAndCheckForOutputFile(beanDefinitionName, executable, failures);
+        executeAndCheckForOutputFile(beanDefinitionName,
+                                     executable,
+                                     failures,
+                                     false);
       }
     }
     if (failures.size() > 0)
@@ -83,7 +112,8 @@ public class SpringIntegrationTest
 
   private void executeAndCheckForOutputFile(final String executableName,
                                             final Executable executable,
-                                            final List<String> failures)
+                                            final List<String> failures,
+                                            final boolean isCompressedOutput)
     throws Exception
   {
     final Path testOutputFile = createTempFile(executableName, "data");
@@ -91,9 +121,18 @@ public class SpringIntegrationTest
     executable.getOutputOptions().setOutputFile(testOutputFile);
     executable.execute(getConnection());
 
-    failures.addAll(compareOutput(executableName + ".txt",
-                                  testOutputFile,
-                                  TextOutputFormat.text.name()));
+    if (isCompressedOutput)
+    {
+      failures.addAll(compareCompressedOutput(executableName + ".txt",
+                                              testOutputFile,
+                                              TextOutputFormat.text.name()));
+    }
+    else
+    {
+      failures.addAll(compareOutput(executableName + ".txt",
+                                    testOutputFile,
+                                    TextOutputFormat.text.name()));
+    }
   }
 
 }

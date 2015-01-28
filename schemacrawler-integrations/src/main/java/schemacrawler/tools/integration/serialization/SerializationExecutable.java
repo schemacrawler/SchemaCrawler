@@ -57,6 +57,7 @@ public final class SerializationExecutable
     throws Exception
   {
     final SerializableCatalog catalog = new XmlSerializedCatalog(db);
+    outputOptions.forceCompressedOutputFile();
     try (final Writer writer = new OutputWriter(outputOptions);)
     {
       catalog.save(writer);

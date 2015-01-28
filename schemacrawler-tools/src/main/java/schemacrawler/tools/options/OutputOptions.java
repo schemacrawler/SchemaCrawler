@@ -171,6 +171,24 @@ public class OutputOptions
     setWriter(writer);
   }
 
+  public void forceCompressedOutputFile()
+  {
+    if (!(outputResource instanceof CompressedFileOutputResource))
+    {
+      final Path outputFile = getOutputFile();
+      outputResource = new CompressedFileOutputResource(outputFile);
+    }
+  }
+
+  public void forceOutputFile()
+  {
+    if (!(outputResource instanceof FileOutputResource))
+    {
+      final Path outputFile = getOutputFile();
+      outputResource = new FileOutputResource(outputFile);
+    }
+  }
+
   /**
    * Character encoding for input files, such as scripts and templates.
    */
@@ -207,6 +225,11 @@ public class OutputOptions
     if (outputResource instanceof FileOutputResource)
     {
       outputFile = ((FileOutputResource) outputResource).getOutputFile();
+    }
+    else if (outputResource instanceof CompressedFileOutputResource)
+    {
+      outputFile = ((CompressedFileOutputResource) outputResource)
+        .getOutputFile();
     }
     else
     {
@@ -254,6 +277,20 @@ public class OutputOptions
   public boolean hasOutputFormat()
   {
     return getTextOutputFormat() != null;
+  }
+
+  /**
+   * Sets the name of the output file for compressed output. It is
+   * important to note that the output encoding should be available at
+   * this point.
+   *
+   * @param outputFileName
+   *        Output file name.
+   */
+  public void setCompressedOutputFile(final Path outputFile)
+  {
+    requireNonNull(outputFile, "No output file provided");
+    outputResource = new CompressedFileOutputResource(outputFile);
   }
 
   public void setConsoleOutput()

@@ -28,6 +28,7 @@ import static java.nio.file.Files.isReadable;
 import static java.nio.file.Files.isRegularFile;
 import static java.nio.file.Files.move;
 import static java.nio.file.Files.newBufferedReader;
+import static java.nio.file.Files.newInputStream;
 import static java.nio.file.Files.newOutputStream;
 import static java.nio.file.Files.size;
 import static java.nio.file.StandardCopyOption.ATOMIC_MOVE;
@@ -56,12 +57,14 @@ import java.nio.file.Files;
 import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Pattern;
+import java.util.zip.GZIPInputStream;
 
 import javax.imageio.ImageIO;
 import javax.xml.parsers.DocumentBuilder;
@@ -89,79 +92,20 @@ public final class TestUtility
       .resolve("unit_tests_results_output").resolve(dirname).toFile());
   }
 
+  public static List<String> compareCompressedOutput(final String referenceFile,
+                                                     final Path testOutputTempFile,
+                                                     final String outputFormat)
+    throws Exception
+  {
+    return compareOutput(referenceFile, testOutputTempFile, outputFormat, true);
+  }
+
   public static List<String> compareOutput(final String referenceFile,
                                            final Path testOutputTempFile,
                                            final String outputFormat)
     throws Exception
   {
-
-    requireNonNull(referenceFile, "Reference file is not defined");
-    requireNonNull(testOutputTempFile, "Output file is not defined");
-    requireNonNull(outputFormat, "Output format is not defined");
-
-    if (!exists(testOutputTempFile)
-        || !isRegularFile(testOutputTempFile, LinkOption.NOFOLLOW_LINKS)
-        || !isReadable(testOutputTempFile) || size(testOutputTempFile) == 0)
-    {
-      return Collections.singletonList("Output file not created - "
-                                       + testOutputTempFile);
-    }
-
-    final List<String> failures = new ArrayList<>();
-
-    final boolean contentEquals;
-    final Reader referenceReader = readerForResource(referenceFile,
-                                                     StandardCharsets.UTF_8);
-    if (referenceReader == null)
-
-    {
-      contentEquals = false;
-    }
-    else
-    {
-      final Reader fileReader = newBufferedReader(testOutputTempFile,
-                                                  StandardCharsets.UTF_8);
-      contentEquals = contentEquals(referenceReader, fileReader, neuters);
-    }
-
-    if ("html".equals(outputFormat))
-    {
-      validateXHTML(testOutputTempFile, failures);
-    }
-    if ("htmlx".equals(outputFormat))
-    {
-      validateXML(testOutputTempFile, failures);
-    }
-    else if ("json".equals(outputFormat))
-    {
-      validateJSON(testOutputTempFile, failures);
-    }
-
-    if (!contentEquals)
-    {
-      final Path testOutputTargetFilePath = buildDirectory()
-        .resolve("unit_tests_results_output").resolve(referenceFile);
-      createDirectories(testOutputTargetFilePath.getParent());
-      deleteIfExists(testOutputTargetFilePath);
-      move(testOutputTempFile,
-           testOutputTargetFilePath,
-           ATOMIC_MOVE,
-           REPLACE_EXISTING);
-
-      if (!contentEquals)
-      {
-        failures.add("Output does not match");
-      }
-
-      failures.add("Actual output in " + testOutputTargetFilePath);
-      System.err.println(testOutputTargetFilePath);
-    }
-    else
-    {
-      delete(testOutputTempFile);
-    }
-
-    return failures;
+    return compareOutput(referenceFile, testOutputTempFile, outputFormat, false);
   }
 
   public static Path copyResourceToTempFile(final String resource)
@@ -205,27 +149,7 @@ public final class TestUtility
                                          final Charset encoding)
     throws IOException
   {
-    final InputStream inputStream = TestUtility.class
-      .getResourceAsStream("/" + resource);
-    final Reader reader;
-    if (inputStream != null)
-    {
-      final Charset charset;
-      if (encoding == null)
-      {
-        charset = StandardCharsets.UTF_8;
-      }
-      else
-      {
-        charset = encoding;
-      }
-      reader = new InputStreamReader(inputStream, charset);
-    }
-    else
-    {
-      reader = null;
-    }
-    return reader;
+    return readerForResource(resource, encoding, false);
   }
 
   public static void validateDiagram(final Path diagramFile)
@@ -254,6 +178,82 @@ public final class TestUtility
     }
     final Path directory = codePath.resolve("..");
     return directory.normalize().toAbsolutePath();
+  }
+
+  private static List<String> compareOutput(final String referenceFile,
+                                            final Path testOutputTempFile,
+                                            final String outputFormat,
+                                            final boolean isCompressed)
+    throws Exception
+  {
+
+    requireNonNull(referenceFile, "Reference file is not defined");
+    requireNonNull(testOutputTempFile, "Output file is not defined");
+    requireNonNull(outputFormat, "Output format is not defined");
+
+    if (!exists(testOutputTempFile)
+        || !isRegularFile(testOutputTempFile, LinkOption.NOFOLLOW_LINKS)
+        || !isReadable(testOutputTempFile) || size(testOutputTempFile) == 0)
+    {
+      return Collections.singletonList("Output file not created - "
+                                       + testOutputTempFile);
+    }
+
+    final List<String> failures = new ArrayList<>();
+
+    final boolean contentEquals;
+    final Reader referenceReader = readerForResource(referenceFile,
+                                                     StandardCharsets.UTF_8,
+                                                     isCompressed);
+    if (referenceReader == null)
+
+    {
+      contentEquals = false;
+    }
+    else
+    {
+      final Reader fileReader = readerForFile(testOutputTempFile, isCompressed);
+      contentEquals = contentEquals(referenceReader, fileReader, neuters);
+    }
+
+    if ("html".equals(outputFormat))
+    {
+      validateXHTML(testOutputTempFile, failures);
+    }
+    if ("htmlx".equals(outputFormat))
+    {
+      validateXML(testOutputTempFile, failures);
+    }
+    else if ("json".equals(outputFormat))
+    {
+      validateJSON(testOutputTempFile, failures);
+    }
+
+    if (!contentEquals)
+    {
+      final Path testOutputTargetFilePath = buildDirectory()
+        .resolve("unit_tests_results_output").resolve(referenceFile);
+      createDirectories(testOutputTargetFilePath.getParent());
+      deleteIfExists(testOutputTargetFilePath);
+      move(testOutputTempFile,
+           testOutputTargetFilePath,
+           ATOMIC_MOVE,
+           REPLACE_EXISTING);
+
+      if (!contentEquals)
+      {
+        failures.add("Output does not match");
+      }
+
+      failures.add("Actual output in " + testOutputTargetFilePath);
+      System.err.println(testOutputTargetFilePath);
+    }
+    else
+    {
+      delete(testOutputTempFile);
+    }
+
+    return failures;
   }
 
   private static boolean contentEquals(final Reader expectedInputReader,
@@ -365,13 +365,75 @@ public final class TestUtility
     }
   }
 
+  private static Reader readerForFile(final Path testOutputTempFile)
+    throws IOException
+  {
+    return readerForFile(testOutputTempFile, false);
+  }
+
+  private static Reader readerForFile(final Path testOutputTempFile,
+                                      final boolean isCompressed)
+    throws IOException
+  {
+
+    final BufferedReader bufferedReader;
+    if (isCompressed)
+    {
+      final InputStream inputStream = new GZIPInputStream(newInputStream(testOutputTempFile,
+                                                                         StandardOpenOption.READ));
+      bufferedReader = new BufferedReader(new InputStreamReader(inputStream,
+                                                                StandardCharsets.UTF_8));
+    }
+    else
+    {
+      bufferedReader = newBufferedReader(testOutputTempFile,
+                                         StandardCharsets.UTF_8);
+    }
+    return bufferedReader;
+  }
+
+  private static Reader readerForResource(final String resource,
+                                          final Charset encoding,
+                                          final boolean isCompressed)
+    throws IOException
+  {
+    final InputStream inputStream = TestUtility.class
+      .getResourceAsStream("/" + resource);
+    final Reader reader;
+    if (inputStream != null)
+    {
+      final Charset charset;
+      if (encoding == null)
+      {
+        charset = StandardCharsets.UTF_8;
+      }
+      else
+      {
+        charset = encoding;
+      }
+      if (isCompressed)
+      {
+        reader = new InputStreamReader(new GZIPInputStream(inputStream),
+                                       charset);
+      }
+      else
+      {
+        reader = new InputStreamReader(inputStream, charset);
+      }
+    }
+    else
+    {
+      reader = null;
+    }
+    return reader;
+  }
+
   private static boolean validateJSON(final Path testOutputFile,
                                       final List<String> failures)
     throws FileNotFoundException, SAXException, IOException
   {
     final JsonElement jsonElement;
-    try (final Reader reader = newBufferedReader(testOutputFile,
-                                                 StandardCharsets.UTF_8);
+    try (final Reader reader = readerForFile(testOutputFile);
         final JsonReader jsonReader = new JsonReader(reader);)
     {
       jsonElement = new JsonParser().parse(jsonReader);
@@ -412,8 +474,7 @@ public final class TestUtility
                                        final List<String> failures)
     throws Exception
   {
-    final DOCTYPEChanger xhtmlReader = new DOCTYPEChanger(newBufferedReader(testOutputFile,
-                                                                            StandardCharsets.UTF_8));
+    final DOCTYPEChanger xhtmlReader = new DOCTYPEChanger(readerForFile(testOutputFile));
     xhtmlReader.setRootElement("html");
     xhtmlReader
       .setSystemIdentifier("http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd");
@@ -465,8 +526,7 @@ public final class TestUtility
         failures.add(e.getMessage());
       }
     });
-    builder.parse(new InputSource(newBufferedReader(testOutputFile,
-                                                    StandardCharsets.UTF_8)));
+    builder.parse(new InputSource(readerForFile(testOutputFile)));
   }
 
   private static Path writeToTempFile(final InputStream resourceStream)
