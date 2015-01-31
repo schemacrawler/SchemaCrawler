@@ -20,17 +20,11 @@
 package schemacrawler.tools.options;
 
 
-import static java.nio.file.Files.exists;
-import static java.nio.file.Files.isReadable;
-import static java.nio.file.Files.newBufferedReader;
+import static java.util.Objects.requireNonNull;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.CharBuffer;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -45,27 +39,38 @@ public class InputReader
 
   private final Reader reader;
   private boolean isClosed;
-  private String description;
+  private final InputResource inputResource;
 
   public InputReader(final OutputOptions outputOptions)
     throws SchemaCrawlerException
   {
-    reader = openInputReader(outputOptions);
+    requireNonNull(outputOptions, "No input options provided");
+    try
+    {
+      inputResource = requireNonNull(outputOptions.getInputResource(),
+                                     "No input resource provided");
+      reader = inputResource.openInputReader(outputOptions.getInputCharset());
+    }
+    catch (final IOException e)
+    {
+      throw new SchemaCrawlerException(e.getMessage(), e);
+    }
   }
 
   @Override
   public void close()
     throws IOException
   {
-    if (reader != null && !isClosed)
+    if (inputResource.shouldCloseReader())
     {
+      LOGGER.log(Level.INFO, "Closing input reader");
       reader.close();
-      LOGGER.log(Level.INFO, "Closed input reader, " + description);
     }
     else
     {
-      LOGGER.log(Level.INFO, String
-        .format("Input reader \"%s\" is already closed", description));
+      LOGGER
+        .log(Level.INFO,
+             "Not closing input reader, since output is to an externally provided reader");
     }
 
     isClosed = true;
@@ -144,19 +149,20 @@ public class InputReader
   @Override
   public String toString()
   {
-    return description;
+    return inputResource.toString();
   }
 
   @Override
   protected void finalize()
     throws Throwable
   {
-    super.finalize();
     if (!isClosed)
     {
       throw new IllegalStateException(String.format("Input reader \"%s\" was not closed",
-                                                    description));
+                                                    inputResource
+                                                      .getDescription()));
     }
+    super.finalize();
   }
 
   /**
@@ -167,53 +173,8 @@ public class InputReader
   {
     if (isClosed)
     {
-      throw new IOException(String.format("Input reader \"%s\" has been closed",
-                                          description));
-    }
-  }
-
-  private Reader openInputReader(final OutputOptions outputOptions)
-    throws SchemaCrawlerException
-  {
-    try
-    {
-      if (outputOptions.hasOutputFormat())
-      {
-        throw new SchemaCrawlerException("No script file provided");
-      }
-
-      final Reader reader;
-
-      final String inputSource = outputOptions.getOutputFormatValue();
-      final Path inputFile = Paths.get(inputSource).normalize()
-        .toAbsolutePath();
-
-      final InputStream inputStream;
-      if (exists(inputFile) && isReadable(inputFile))
-      {
-        reader = newBufferedReader(inputFile, outputOptions.getInputCharset());
-        description = inputFile.toString();
-        LOGGER.log(Level.INFO, "Reading from " + description);
-      }
-      else
-      {
-        final String resource = "/" + inputSource;
-        inputStream = InputReader.class.getResourceAsStream(resource);
-        if (inputStream == null)
-        {
-          throw new SchemaCrawlerException("Cannot load " + inputSource);
-        }
-        reader = new InputStreamReader(inputStream,
-                                       outputOptions.getInputCharset());
-        description = InputReader.class.getResource(resource).toExternalForm();
-        LOGGER.log(Level.INFO, "Reading from " + description);
-      }
-
-      return reader;
-    }
-    catch (final Exception e)
-    {
-      throw new SchemaCrawlerException("Could not obtain input reader", e);
+      throw new IOException(String.format("Input reader \"%s\" is not open",
+                                          inputResource.getDescription()));
     }
   }
 

@@ -20,6 +20,8 @@
 package schemacrawler.tools.options;
 
 
+import static java.util.Objects.requireNonNull;
+
 import java.io.IOException;
 import java.io.Writer;
 import java.util.logging.Level;
@@ -48,9 +50,11 @@ public final class OutputWriter
                       final boolean appendOutput)
     throws SchemaCrawlerException
   {
+    requireNonNull(outputOptions, "No output options provided");
     try
     {
-      outputResource = outputOptions.getOutputResource();
+      outputResource = requireNonNull(outputOptions.getOutputResource(),
+                                      "No output resource provided");
       writer = outputResource
         .openOutputWriter(outputOptions.getOutputCharset(), appendOutput);
     }
@@ -165,7 +169,9 @@ public final class OutputWriter
   {
     if (!isClosed)
     {
-      throw new IllegalStateException("Output writer was not closed");
+      throw new IllegalStateException(String.format("Output writer \"%s\" was not closed",
+                                                    outputResource
+                                                      .getDescription()));
     }
     super.finalize();
   }
@@ -178,7 +184,8 @@ public final class OutputWriter
   {
     if (isClosed)
     {
-      throw new IOException("Writer has already been closed");
+      throw new IOException(String.format("Output writer \"%s\" is not open",
+                                          outputResource.getDescription()));
     }
   }
 

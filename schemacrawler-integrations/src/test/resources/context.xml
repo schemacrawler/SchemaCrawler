@@ -50,7 +50,12 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
   
   <bean id="outputOptions" class="schemacrawler.tools.options.OutputOptions">
     <constructor-arg name="outputFormatValue" value="text" />
-    <constructor-arg name="outputFile" value="scOutput.txt" />
+    <constructor-arg>
+      <bean id="outputFile" class="java.nio.file.Paths" factory-method="get">  
+        <constructor-arg value="." />
+        <constructor-arg value="scOutput.txt" />
+      </bean>
+    </constructor-arg>
   </bean>
 
   <bean
@@ -281,7 +286,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
       <bean class="schemacrawler.tools.options.OutputOptions">
         <property
           name="outputFormatValue"
-          value="plaintextschema.vm" />
+          value="/plaintextschema.vm" />
       </bean>
     </property>
   </bean>
@@ -298,7 +303,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
       <bean class="schemacrawler.tools.options.OutputOptions">
         <property
           name="outputFormatValue"
-          value="plaintextschema.ftl" />
+          value="/plaintextschema.ftl" />
       </bean>
     </property>
   </bean>

@@ -52,7 +52,7 @@ public class SchemaCrawlerExecutableChainTest
     final Executable executable = new ScriptExecutable();
     final Path testOutputFile = createTempFile(executable.getCommand(), "data");
 
-    final OutputOptions outputOptions = new OutputOptions("chain.js",
+    final OutputOptions outputOptions = new OutputOptions("/chain.js",
                                                           testOutputFile);
 
     executable.setOutputOptions(outputOptions);

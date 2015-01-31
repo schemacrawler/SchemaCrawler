@@ -24,17 +24,19 @@ package schemacrawler.integration.test;
 import static org.junit.Assert.fail;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
 import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
+import static sf.util.commandlineparser.CommandLineArgumentsUtility.flattenCommandlineArgs;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
 
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.tools.integration.spring.Main;
-import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
 
 public class SpringIntegrationCommandLineTest
@@ -50,20 +52,21 @@ public class SpringIntegrationCommandLineTest
     final Path contextFile = copyResourceToTempFile("/context.xml");
 
     final String executableName = "executableForSchema";
-    final String referenceFile = executableName + ".txt";
     final Path testOutputFile = Paths.get("scOutput.txt");
 
-    final OutputFormat outputFormat = TextOutputFormat.text;
-    Main.main(new String[] {
-        "-c", contextFile.toString(), "-x=" + executableName,
-    });
+    final Map<String, String> argsMap = new HashMap<>();
+    argsMap.put("c", contextFile.toString());
+    argsMap.put("x", executableName);
 
-    failures.addAll(compareOutput(referenceFile,
+    Main.main(flattenCommandlineArgs(argsMap));
+
+    failures.addAll(compareOutput(executableName + ".txt",
                                   testOutputFile,
-                                  outputFormat.getFormat()));
+                                  TextOutputFormat.text.getFormat()));
     if (failures.size() > 0)
     {
       fail(failures.toString());
     }
   }
+
 }
