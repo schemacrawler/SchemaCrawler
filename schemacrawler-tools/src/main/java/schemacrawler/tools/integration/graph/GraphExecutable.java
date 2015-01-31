@@ -101,6 +101,9 @@ public final class GraphExecutable
 
     final GraphOutputFormat graphOutputFormat = GraphOutputFormat
       .fromFormat(outputOptions.getOutputFormatValue());
+    // Set the format, in case we are using the default
+    outputOptions.setOutputFormatValue(graphOutputFormat.getFormat());
+
     // Create dot file
     final Path dotFile = Files.createTempFile("schemacrawler.", ".dot")
       .normalize().toAbsolutePath();
