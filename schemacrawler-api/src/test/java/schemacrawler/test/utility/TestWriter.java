@@ -2,18 +2,28 @@ package schemacrawler.test.utility;
 
 
 import static java.nio.file.Files.deleteIfExists;
+import static java.nio.file.Files.newBufferedWriter;
+import static java.nio.file.Files.newOutputStream;
+import static java.nio.file.StandardOpenOption.CREATE;
+import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
+import static java.nio.file.StandardOpenOption.WRITE;
 import static java.util.Objects.requireNonNull;
 import static org.junit.Assert.fail;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
 import static schemacrawler.test.utility.TestUtility.createTempFile;
 
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.Writer;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.OpenOption;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Locale;
+import java.util.zip.GZIPOutputStream;
 
 public class TestWriter
   extends Writer
@@ -22,13 +32,45 @@ public class TestWriter
   private final Path tempFile;
   private final PrintWriter out;
   private final String outputformat;
+  private final boolean isCompressed;
 
   public TestWriter(final String outputformat)
     throws IOException
   {
+    this(outputformat, false);
+  }
+
+  public TestWriter(final String outputformat, final boolean isCompressed)
+    throws IOException
+  {
     this.outputformat = requireNonNull(outputformat);
-    tempFile = createTempFile("schemacrawler", outputformat);
-    out = new PrintWriter(tempFile.toFile(), StandardCharsets.UTF_8.name());
+    tempFile = createTempFile("schemacrawler",
+                              outputformat.replaceAll("[/\\\\]", ""));
+    out = openOutputWriter(tempFile, StandardCharsets.UTF_8, isCompressed);
+    this.isCompressed = isCompressed;
+  }
+
+  private PrintWriter openOutputWriter(final Path tempFile,
+                                       final Charset charset,
+                                       final boolean isCompressed)
+    throws IOException
+  {
+    final OpenOption[] openOptions = new OpenOption[] {
+        WRITE, CREATE, TRUNCATE_EXISTING
+    };
+    final Writer writer;
+    if (isCompressed)
+    {
+      final OutputStream fileStream = newOutputStream(tempFile, openOptions);
+      writer = new OutputStreamWriter(new GZIPOutputStream(fileStream, true),
+                                      charset);
+    }
+    else
+    {
+      writer = newBufferedWriter(tempFile, charset, openOptions);
+    }
+
+    return new PrintWriter(writer);
   }
 
   @Override
@@ -58,7 +100,8 @@ public class TestWriter
 
     final List<String> failures = compareOutput(requireNonNull(referenceFile),
                                                 tempFile,
-                                                outputformat);
+                                                outputformat,
+                                                isCompressed);
     if (!failures.isEmpty())
     {
       fail(failures.toString());
