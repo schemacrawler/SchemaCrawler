@@ -17,26 +17,21 @@
  * Boston, MA 02111-1307, USA.
  *
  */
+package schemacrawler.tools.options;
 
-package schemacrawler.test;
 
+import java.io.IOException;
+import java.io.Reader;
+import java.nio.charset.Charset;
 
-import org.junit.Test;
-
-import schemacrawler.test.utility.BaseExecutableTest;
-import schemacrawler.tools.integration.scripting.ScriptExecutable;
-
-public class ExtendedCommandsTest
-  extends BaseExecutableTest
+public interface InputResource
 {
 
-  @Test
-  public void executableJavaScript()
-    throws Exception
-  {
-    executeExecutable(new ScriptExecutable(),
-                      "/plaintextschema.js",
-                      "executableForJavaScript.txt");
-  }
+  String getDescription();
+
+  Reader openInputReader(Charset charset)
+    throws IOException;
+
+  boolean shouldCloseReader();
 
 }

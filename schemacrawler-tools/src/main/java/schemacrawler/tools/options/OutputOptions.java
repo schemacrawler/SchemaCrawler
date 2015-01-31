@@ -24,6 +24,7 @@ package schemacrawler.tools.options;
 import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.isBlank;
 
+import java.io.IOException;
 import java.io.Writer;
 import java.math.BigInteger;
 import java.nio.charset.Charset;
@@ -51,6 +52,7 @@ public class OutputOptions
   private static final String SC_OUTPUT_ENCODING = "schemacrawler.encoding.output";
 
   private OutputResource outputResource;
+  private InputResource inputResource;
   private String outputFormatValue;
   private Charset inputEncodingCharset;
   private Charset outputEncodingCharset;
@@ -149,21 +151,6 @@ public class OutputOptions
    * @param outputFile
    *        Output file
    */
-  public OutputOptions(final String outputFormatValue, final String outputFile)
-  {
-    this.outputFormatValue = requireNonNull(outputFormatValue,
-                                            "No output format value provided");
-    setOutputFile(Paths.get(outputFile));
-  }
-
-  /**
-   * Output options, given the type and the output filename.
-   *
-   * @param outputFormatValue
-   *        Type of output, which is dependent on the executor
-   * @param outputFile
-   *        Output file
-   */
   public OutputOptions(final String outputFormatValue, final Writer writer)
   {
     this.outputFormatValue = requireNonNull(outputFormatValue,
@@ -202,6 +189,22 @@ public class OutputOptions
     {
       return inputEncodingCharset;
     }
+  }
+
+  public InputResource getInputResource()
+  {
+    if (inputResource == null)
+    {
+      try
+      {
+        setInputResourceName(outputFormatValue);
+      }
+      catch (IOException e)
+      {
+        return null;
+      }
+    }
+    return inputResource;
   }
 
   /**
@@ -280,6 +283,22 @@ public class OutputOptions
   }
 
   /**
+   * Sets the name of the input file for compressed input. It is
+   * important to note that the input encoding should be available at
+   * this point.
+   *
+   * @param outputFileName
+   *        Output file name.
+   * @throws IOException
+   */
+  public void setCompressedInputFile(final Path inputFile)
+    throws IOException
+  {
+    requireNonNull(inputFile, "No input file provided");
+    inputResource = new CompressedFileInputResource(inputFile);
+  }
+
+  /**
    * Sets the name of the output file for compressed output. It is
    * important to note that the output encoding should be available at
    * this point.
@@ -327,6 +346,51 @@ public class OutputOptions
     {
       inputEncodingCharset = Charset.forName(inputEncoding);
     }
+  }
+
+  /**
+   * Sets the name of the input file. It is important to note that the
+   * input encoding should be available at this point.
+   *
+   * @param inputFileName
+   *        Input file name.
+   * @throws IOException
+   */
+  public void setInputFile(final Path inputFile)
+    throws IOException
+  {
+    requireNonNull(inputFile, "No input file provided");
+    inputResource = new FileInputResource(inputFile);
+  }
+
+  /**
+   * Sets the name of the input resource, first from a file, failing
+   * which from the classpath. It is important to note that the input
+   * encoding should be available at this point.
+   *
+   * @param inputResourceName
+   *        Input resource name, which could be a file path, or a
+   *        classpath resource.
+   * @throws IOException
+   */
+  public void setInputResourceName(final String inputResourceName)
+    throws IOException
+  {
+    requireNonNull(inputResourceName, "No input resource name provided");
+    try
+    {
+      final Path filePath = Paths.get(inputResourceName);
+      inputResource = new FileInputResource(filePath);
+    }
+    catch (final Exception e)
+    {
+      inputResource = new ClasspathInputResource(inputResourceName);
+    }
+  }
+
+  public void setInputResource(final InputResource inputResource)
+  {
+    this.inputResource = inputResource;
   }
 
   public void setOutputEncoding(final Charset outputCharset)

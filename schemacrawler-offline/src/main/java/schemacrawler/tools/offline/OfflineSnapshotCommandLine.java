@@ -52,7 +52,7 @@ public final class OfflineSnapshotCommandLine
   private final Config config;
   private final SchemaCrawlerOptions schemaCrawlerOptions;
   private final OutputOptions outputOptions;
-  private final OfflineSnapshotOptions offlineSnapshotOptions;
+  private final OutputOptions inputOptions;
 
   OfflineSnapshotCommandLine(final String... args)
     throws SchemaCrawlerException
@@ -66,7 +66,7 @@ public final class OfflineSnapshotCommandLine
     command = commandParser.getOptions().toString();
 
     final OfflineSnapshotOptionsParser offlineSnapshotOptionsParser = new OfflineSnapshotOptionsParser(config);
-    offlineSnapshotOptions = offlineSnapshotOptionsParser.getOptions();
+    inputOptions = offlineSnapshotOptionsParser.getOptions();
 
     final SchemaCrawlerOptionsParser schemaCrawlerOptionsParser = new SchemaCrawlerOptionsParser(config);
     schemaCrawlerOptions = schemaCrawlerOptionsParser.getOptions();
@@ -118,9 +118,9 @@ public final class OfflineSnapshotCommandLine
     {
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     }
-    if (offlineSnapshotOptions != null)
+    if (inputOptions != null)
     {
-      executable.setOfflineSnapshotOptions(offlineSnapshotOptions);
+      executable.setInputOptions(inputOptions);
     }
     if (config != null)
     {
