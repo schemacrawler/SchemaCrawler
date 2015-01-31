@@ -21,8 +21,12 @@
 package schemacrawler.tools.offline;
 
 
+import java.io.IOException;
+
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
 import schemacrawler.tools.commandline.BaseOptionsParser;
+import schemacrawler.tools.options.OutputOptions;
 
 /**
  * Parses the command-line.
@@ -30,22 +34,32 @@ import schemacrawler.tools.commandline.BaseOptionsParser;
  * @author Sualeh Fatehi
  */
 public final class OfflineSnapshotOptionsParser
-  extends BaseOptionsParser<OfflineSnapshotOptions>
+  extends BaseOptionsParser<OutputOptions>
 {
 
-  final OfflineSnapshotOptions options;
+  final OutputOptions options;
 
   public OfflineSnapshotOptionsParser(final Config config)
   {
     super(config);
-    options = new OfflineSnapshotOptions(config);
+    options = new OutputOptions(config);
   }
 
   @Override
-  public OfflineSnapshotOptions getOptions()
+  public OutputOptions getOptions()
+    throws SchemaCrawlerCommandLineException
   {
     final String inputSource = config.getStringValue("database", null);
-    options.setInputSource(inputSource);
+    try
+    {
+      // final Path databaseFile = Paths.get(inputSource);
+      // options.setCompressedInputFile(databaseFile);
+      options.setInputResourceName(inputSource);
+    }
+    catch (final IOException e)
+    {
+      throw new SchemaCrawlerCommandLineException(e.getMessage(), e);
+    }
 
     return options;
   }

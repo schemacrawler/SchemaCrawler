@@ -180,10 +180,10 @@ public final class TestUtility
     return directory.normalize().toAbsolutePath();
   }
 
-  private static List<String> compareOutput(final String referenceFile,
-                                            final Path testOutputTempFile,
-                                            final String outputFormat,
-                                            final boolean isCompressed)
+  public static List<String> compareOutput(final String referenceFile,
+                                           final Path testOutputTempFile,
+                                           final String outputFormat,
+                                           final boolean isCompressed)
     throws Exception
   {
 

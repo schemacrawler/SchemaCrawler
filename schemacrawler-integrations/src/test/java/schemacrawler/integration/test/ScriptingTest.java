@@ -35,7 +35,7 @@ public class ScriptingTest
     throws Exception
   {
     executeExecutable(new ScriptExecutable(),
-                      "plaintextschema.groovy",
+                      "/plaintextschema.groovy",
                       "script_output.txt");
   }
 
@@ -44,7 +44,7 @@ public class ScriptingTest
     throws Exception
   {
     executeExecutable(new ScriptExecutable(),
-                      "plaintextschema.py",
+                      "/plaintextschema.py",
                       "script_output.txt");
   }
 
@@ -53,7 +53,7 @@ public class ScriptingTest
     throws Exception
   {
     executeExecutable(new ScriptExecutable(),
-                      "plaintextschema.rb",
+                      "/plaintextschema.rb",
                       "script_output_rb.txt");
   }
 

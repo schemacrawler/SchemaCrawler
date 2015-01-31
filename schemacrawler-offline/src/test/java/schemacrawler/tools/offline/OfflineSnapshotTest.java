@@ -52,6 +52,7 @@ import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.test.utility.BaseExecutableTest;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.integration.serialization.XmlSerializedCatalog;
+import schemacrawler.tools.options.OutputOptions;
 
 public class OfflineSnapshotTest
   extends BaseExecutableTest
@@ -144,10 +145,12 @@ public class OfflineSnapshotTest
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
 
+    final OutputOptions inputOptions = new OutputOptions();
+    inputOptions.setInputFile(serializedDatabaseFile);
+
     final OfflineSnapshotExecutable executable = new OfflineSnapshotExecutable("details");
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    executable
-      .setOfflineSnapshotOptions(new OfflineSnapshotOptions(serializedDatabaseFile));
+    executable.setInputOptions(inputOptions);
 
     executeExecutable(executable, "text", OFFLINE_EXECUTABLE_OUTPUT
                                           + "details.txt");

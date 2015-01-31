@@ -34,6 +34,8 @@ import schemacrawler.tools.executable.BaseExecutable;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.executable.StagedExecutable;
 import schemacrawler.tools.integration.serialization.XmlSerializedCatalog;
+import schemacrawler.tools.options.InputReader;
+import schemacrawler.tools.options.OutputOptions;
 
 /**
  * A SchemaCrawler tools executable unit.
@@ -48,7 +50,7 @@ public class OfflineSnapshotExecutable
   private static final Logger LOGGER = Logger
     .getLogger(OfflineSnapshotExecutable.class.getName());
 
-  private OfflineSnapshotOptions offlineSnapshotOptions;
+  private OutputOptions inputOptions;
 
   protected OfflineSnapshotExecutable(final String command)
   {
@@ -88,25 +90,9 @@ public class OfflineSnapshotExecutable
     executable.executeOn(catalog, connection);
   }
 
-  public OfflineSnapshotOptions getOfflineSnapshotOptions()
+  public void setInputOptions(final OutputOptions inputOptions)
   {
-    return offlineSnapshotOptions;
-  }
-
-  public final OfflineSnapshotOptions getSchemaTextOptions()
-  {
-    loadOfflineSnapshotOptions();
-    return offlineSnapshotOptions;
-  }
-
-  public void setOfflineSnapshotOptions(final OfflineSnapshotOptions offlineSnapshotOptions)
-  {
-    this.offlineSnapshotOptions = offlineSnapshotOptions;
-  }
-
-  public final void setSchemaTextOptions(final OfflineSnapshotOptions offlineSnapshotOptions)
-  {
-    this.offlineSnapshotOptions = offlineSnapshotOptions;
+    this.inputOptions = inputOptions;
   }
 
   private void checkConnection(final Connection connection)
@@ -122,16 +108,16 @@ public class OfflineSnapshotExecutable
   private Catalog loadCatalog()
     throws SchemaCrawlerException
   {
-    final InputReader snapshotReader = new InputReader(offlineSnapshotOptions);
+    final InputReader snapshotReader = new InputReader(inputOptions);
     final XmlSerializedCatalog xmlDatabase = new XmlSerializedCatalog(snapshotReader);
     return xmlDatabase;
   }
 
   private void loadOfflineSnapshotOptions()
   {
-    if (offlineSnapshotOptions == null)
+    if (inputOptions == null)
     {
-      offlineSnapshotOptions = new OfflineSnapshotOptions(additionalConfiguration);
+      inputOptions = new OutputOptions(additionalConfiguration);
     }
   }
 
