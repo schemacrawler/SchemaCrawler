@@ -26,7 +26,7 @@ import java.sql.Connection;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.tools.executable.BaseStagedExecutable;
-import schemacrawler.tools.options.OutputWriter;
+import schemacrawler.tools.iosource.OutputWriter;
 
 /**
  * Main executor for the graphing integration.
@@ -58,7 +58,9 @@ public final class SerializationExecutable
   {
     final SerializableCatalog catalog = new XmlSerializedCatalog(db);
     outputOptions.forceCompressedOutputFile();
-    try (final Writer writer = new OutputWriter(outputOptions);)
+    try (final Writer writer = new OutputWriter(outputOptions.obtainOutputResource(),
+                                                outputOptions
+                                                  .getOutputCharset());)
     {
       catalog.save(writer);
     }

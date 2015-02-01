@@ -8,9 +8,9 @@ import java.io.PrintWriter;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.iosource.OutputWriter;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
-import schemacrawler.tools.options.OutputWriter;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.utility.HtmlFormattingHelper;
 import schemacrawler.tools.text.utility.PlainTextFormattingHelper;
@@ -50,8 +50,10 @@ public abstract class BaseFormatter<O extends BaseTextOptions>
       formattingHelper = new PlainTextFormattingHelper((TextOutputFormat) outputFormat);
     }
 
-    out = new PrintWriter(new OutputWriter(outputOptions,
-                                           options.isAppendOutput()), true);
+    out = new PrintWriter(new OutputWriter(outputOptions.obtainOutputResource(),
+                                           outputOptions.getOutputCharset(),
+                                           options.isAppendOutput()),
+                          true);
   }
 
   protected String columnNullable(final String columnTypeName,

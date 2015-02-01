@@ -33,7 +33,7 @@ import java.util.logging.Logger;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.tools.executable.BaseStagedExecutable;
-import schemacrawler.tools.options.OutputWriter;
+import schemacrawler.tools.iosource.OutputWriter;
 import freemarker.cache.ClassTemplateLoader;
 import freemarker.cache.FileTemplateLoader;
 import freemarker.cache.MultiTemplateLoader;
@@ -103,7 +103,9 @@ public final class FreeMarkerRenderer
     final Map<String, Object> objectMap = new HashMap<>();
     objectMap.put("catalog", catalog);
 
-    try (final Writer writer = new OutputWriter(outputOptions);)
+    try (final Writer writer = new OutputWriter(outputOptions.obtainOutputResource(),
+                                                outputOptions
+                                                  .getOutputCharset());)
     {
       // Evaluate the template
       final Template template = cfg.getTemplate(templateLocation);
