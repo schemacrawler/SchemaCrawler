@@ -17,7 +17,7 @@ Database Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
 database product name                     SQLite                        
-database product version                  3.7.2                         
+database product version                  3.7.8                         
 database user name                        NULL                          
 
 
@@ -27,7 +27,7 @@ JDBC Driver Information
 driver name                               SQLiteJDBC                    
 driver version                            native                        
 driver class name                         org.sqlite.JDBC               
-url                                       jdbc:sqlite:C:\Users\SUALEH~1\AppData\Local\Temp\schemacrawler.resource.2431351274848662542.data
+url                                       jdbc:sqlite:C:\Users\SUALEH~1\AppData\Local\Temp\schemacrawler.resource.3808443688263876161.data
 is JDBC compliant                         false                         
 
 
@@ -160,7 +160,7 @@ Authors
   PostalCode                        VARCHAR(10)                 
   Country                           VARCHAR(50)                 
 
-                                                           [primary key]
+PK_Authors                                                 [primary key]
   Id                                ascending                   
 
 SC_1D623CC1_CA52CC35                       [foreign key, with no action]
@@ -194,7 +194,7 @@ Books
   PublicationDate                   DATE                        
   Price                             FLOAT                       
 
-                                                           [primary key]
+PK_Books                                                   [primary key]
   Id                                ascending                   
 
 SC_7B63FF1F_ED9945D3                       [foreign key, with no action]
@@ -215,7 +215,7 @@ Publishers
   Id                                INTEGER NOT NULL            
   Publisher                         VARCHAR(255)                
 
-                                                           [primary key]
+PK_Publishers                                              [primary key]
   Id                                ascending                   
 
 
