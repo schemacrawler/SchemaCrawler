@@ -551,6 +551,8 @@ public final class TestUtility
       Pattern.compile("url +jdbc:.*"),
       Pattern.compile("database product version.*"),
       Pattern.compile("driver version.*"),
+      Pattern.compile("\\s+<schemaCrawlerVersion>.*"),
+      Pattern.compile("\\s+<schemaCrawlerAbout>.*"),
       Pattern.compile(".*[A-Za-z]+ \\d+\\, 201[45] \\d+:\\d+ [AP]M.*"),
       // SVG {
       Pattern.compile("<svg.*"),
