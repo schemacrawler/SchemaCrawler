@@ -21,7 +21,7 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.tools.executable.BaseStagedExecutable;
 import schemacrawler.tools.executable.CommandChainExecutable;
 import schemacrawler.tools.integration.graph.GraphOutputFormat;
-import schemacrawler.tools.options.OutputWriter;
+import schemacrawler.tools.iosource.OutputWriter;
 import schemacrawler.tools.options.TextOutputFormat;
 
 public class EmbeddedGraphExecutable
@@ -76,7 +76,9 @@ public class EmbeddedGraphExecutable
       }
     }
 
-    try (final OutputWriter writer = new OutputWriter(outputOptions);)
+    try (final OutputWriter writer = new OutputWriter(outputOptions.obtainOutputResource(),
+                                                      outputOptions
+                                                        .getOutputCharset());)
     {
       copy(newBufferedReader(finalHtmlFile, StandardCharsets.UTF_8), writer);
     }

@@ -34,7 +34,7 @@ import schemacrawler.tools.executable.BaseExecutable;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.executable.StagedExecutable;
 import schemacrawler.tools.integration.serialization.XmlSerializedCatalog;
-import schemacrawler.tools.options.InputReader;
+import schemacrawler.tools.iosource.InputReader;
 import schemacrawler.tools.options.OutputOptions;
 
 /**
@@ -108,7 +108,9 @@ public class OfflineSnapshotExecutable
   private Catalog loadCatalog()
     throws SchemaCrawlerException
   {
-    final InputReader snapshotReader = new InputReader(inputOptions);
+    final InputReader snapshotReader = new InputReader(inputOptions.obtainInputResource(),
+                                                       inputOptions
+                                                         .getInputCharset());
     final XmlSerializedCatalog xmlDatabase = new XmlSerializedCatalog(snapshotReader);
     return xmlDatabase;
   }

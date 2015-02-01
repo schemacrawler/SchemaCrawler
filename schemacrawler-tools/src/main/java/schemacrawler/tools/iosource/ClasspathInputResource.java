@@ -9,7 +9,7 @@
  * either version 2.1 of the License, or (at your option) any later version.
  *
  * This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * within even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License along with this
@@ -17,64 +17,58 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.tools.options;
+package schemacrawler.tools.iosource;
 
 
-import static java.nio.file.Files.exists;
-import static java.nio.file.Files.isReadable;
-import static java.nio.file.Files.newInputStream;
 import static java.util.Objects.requireNonNull;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.Charset;
-import java.nio.file.Path;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.zip.GZIPInputStream;
 
-public class CompressedFileInputResource
+public class ClasspathInputResource
   implements InputResource
 {
 
   private static final Logger LOGGER = Logger
-    .getLogger(CompressedFileInputResource.class.getName());
+    .getLogger(ClasspathInputResource.class.getName());
 
-  private final Path inputFile;
+  private final String classpathResource;
 
-  public CompressedFileInputResource(final Path filePath)
+  public ClasspathInputResource(final String classpathResource)
     throws IOException
   {
-    inputFile = requireNonNull(filePath, "No file path provided").normalize()
-      .toAbsolutePath();
-    if (!exists(filePath) || !isReadable(filePath))
+    this.classpathResource = requireNonNull(classpathResource,
+                                            "No classpath resource provided");
+    if (ClasspathInputResource.class.getResource(this.classpathResource) == null)
     {
-      throw new IOException("Cannot read file, " + filePath);
+      throw new IOException("Cannot read classpath resource, "
+                            + this.classpathResource);
     }
   }
 
   @Override
   public String getDescription()
   {
-    return inputFile.toString();
-  }
-
-  public Path getInputFile()
-  {
-    return inputFile;
+    return InputReader.class.getResource(classpathResource).toExternalForm();
   }
 
   @Override
   public Reader openInputReader(final Charset charset)
     throws IOException
   {
-    final InputStream fileStream = newInputStream(inputFile);
-    final Reader reader = new InputStreamReader(new GZIPInputStream(fileStream),
-                                                charset);
-    LOGGER.log(Level.INFO, "Opened input reader to compressed file, "
-                           + inputFile);
+    requireNonNull(charset, "No input charset provided");
+    final InputStream inputStream = ClasspathInputResource.class
+      .getResourceAsStream(classpathResource);
+    final Reader reader = new BufferedReader(new InputStreamReader(inputStream,
+                                                                   charset));
+    LOGGER.log(Level.INFO, "Opened input reader to classpath resource, "
+                           + classpathResource);
     return reader;
   }
 

@@ -17,7 +17,7 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.tools.options;
+package schemacrawler.tools.iosource;
 
 
 import static java.util.Objects.requireNonNull;
@@ -25,6 +25,7 @@ import static java.util.Objects.requireNonNull;
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.CharBuffer;
+import java.nio.charset.Charset;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -41,15 +42,15 @@ public class InputReader
   private boolean isClosed;
   private final InputResource inputResource;
 
-  public InputReader(final OutputOptions outputOptions)
+  public InputReader(final InputResource inputResource,
+                     final Charset inputCharset)
     throws SchemaCrawlerException
   {
-    requireNonNull(outputOptions, "No input options provided");
     try
     {
-      inputResource = requireNonNull(outputOptions.getInputResource(),
-                                     "No input resource provided");
-      reader = inputResource.openInputReader(outputOptions.getInputCharset());
+      this.inputResource = requireNonNull(inputResource,
+                                          "No input resource provided");
+      reader = inputResource.openInputReader(inputCharset);
     }
     catch (final IOException e)
     {

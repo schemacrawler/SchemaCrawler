@@ -37,7 +37,7 @@ import org.thymeleaf.templateresolver.UrlTemplateResolver;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.tools.executable.BaseStagedExecutable;
-import schemacrawler.tools.options.OutputWriter;
+import schemacrawler.tools.iosource.OutputWriter;
 
 /**
  * Main executor for the Thymeleaf integration.
@@ -80,7 +80,9 @@ public final class ThymeleafRenderer
 
     final String templateLocation = outputOptions.getOutputFormatValue();
 
-    try (final Writer writer = new OutputWriter(outputOptions);)
+    try (final Writer writer = new OutputWriter(outputOptions.obtainOutputResource(),
+                                                outputOptions
+                                                  .getOutputCharset());)
     {
       templateEngine.process(templateLocation, ctx, writer);
     }

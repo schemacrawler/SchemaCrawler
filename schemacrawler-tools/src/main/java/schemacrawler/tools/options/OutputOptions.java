@@ -35,6 +35,15 @@ import java.security.SecureRandom;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.Options;
+import schemacrawler.tools.iosource.ClasspathInputResource;
+import schemacrawler.tools.iosource.CompressedFileInputResource;
+import schemacrawler.tools.iosource.CompressedFileOutputResource;
+import schemacrawler.tools.iosource.ConsoleOutputResource;
+import schemacrawler.tools.iosource.FileInputResource;
+import schemacrawler.tools.iosource.FileOutputResource;
+import schemacrawler.tools.iosource.InputResource;
+import schemacrawler.tools.iosource.OutputResource;
+import schemacrawler.tools.iosource.WriterOutputResource;
 import sf.util.ObjectToString;
 
 /**
@@ -43,7 +52,7 @@ import sf.util.ObjectToString;
  * @author Sualeh Fatehi
  */
 public class OutputOptions
-  implements Options
+implements Options
 {
 
   private static final long serialVersionUID = 7018337388923813055L;
@@ -83,10 +92,10 @@ public class OutputOptions
 
     setInputEncoding(configProperties.getStringValue(SC_INPUT_ENCODING,
                                                      StandardCharsets.UTF_8
-                                                       .name()));
+                                                     .name()));
     setOutputEncoding(configProperties.getStringValue(SC_OUTPUT_ENCODING,
                                                       StandardCharsets.UTF_8
-                                                        .name()));
+                                                      .name()));
   }
 
   /**
@@ -124,7 +133,7 @@ public class OutputOptions
   public OutputOptions(final String outputFormatValue)
   {
     this.outputFormatValue = requireNonNull(outputFormatValue,
-                                            "No output format value provided");
+        "No output format value provided");
     setConsoleOutput();
   }
 
@@ -139,7 +148,7 @@ public class OutputOptions
   public OutputOptions(final String outputFormatValue, final Path outputFile)
   {
     this.outputFormatValue = requireNonNull(outputFormatValue,
-                                            "No output format value provided");
+        "No output format value provided");
     setOutputFile(outputFile);
   }
 
@@ -154,7 +163,7 @@ public class OutputOptions
   public OutputOptions(final String outputFormatValue, final Writer writer)
   {
     this.outputFormatValue = requireNonNull(outputFormatValue,
-                                            "No output format value provided");
+        "No output format value provided");
     setWriter(writer);
   }
 
@@ -191,22 +200,6 @@ public class OutputOptions
     }
   }
 
-  public InputResource getInputResource()
-  {
-    if (inputResource == null)
-    {
-      try
-      {
-        setInputResourceName(outputFormatValue);
-      }
-      catch (IOException e)
-      {
-        return null;
-      }
-    }
-    return inputResource;
-  }
-
   /**
    * Character encoding for output files.
    */
@@ -232,14 +225,14 @@ public class OutputOptions
     else if (outputResource instanceof CompressedFileOutputResource)
     {
       outputFile = ((CompressedFileOutputResource) outputResource)
-        .getOutputFile();
+          .getOutputFile();
     }
     else
     {
       outputFile = Paths
-        .get(".",
-             String.format("sc.%s.%s", nextRandomString(), outputFormatValue))
-        .normalize().toAbsolutePath();
+          .get(".",
+               String.format("sc.%s.%s", nextRandomString(), outputFormatValue))
+               .normalize().toAbsolutePath();
     }
     return outputFile;
   }
@@ -283,6 +276,39 @@ public class OutputOptions
   }
 
   /**
+   * Gets the input resource. If the input resource is null, first set
+   * it to a value based off the output format value.
+   */
+  public InputResource obtainInputResource()
+  {
+    if (inputResource == null)
+    {
+      try
+      {
+        setInputResourceName(outputFormatValue);
+      }
+      catch (final IOException e)
+      {
+        return null;
+      }
+    }
+    return inputResource;
+  }
+
+  /**
+   * Gets the output resource. If the output resource is null, first set
+   * it to console output.
+   */
+  public OutputResource obtainOutputResource()
+  {
+    if (outputResource == null)
+    {
+      outputResource = new ConsoleOutputResource();
+    }
+    return outputResource;
+  }
+
+  /**
    * Sets the name of the input file for compressed input. It is
    * important to note that the input encoding should be available at
    * this point.
@@ -292,7 +318,7 @@ public class OutputOptions
    * @throws IOException
    */
   public void setCompressedInputFile(final Path inputFile)
-    throws IOException
+      throws IOException
   {
     requireNonNull(inputFile, "No input file provided");
     inputResource = new CompressedFileInputResource(inputFile);
@@ -357,10 +383,15 @@ public class OutputOptions
    * @throws IOException
    */
   public void setInputFile(final Path inputFile)
-    throws IOException
+      throws IOException
   {
     requireNonNull(inputFile, "No input file provided");
     inputResource = new FileInputResource(inputFile);
+  }
+
+  public void setInputResource(final InputResource inputResource)
+  {
+    this.inputResource = inputResource;
   }
 
   /**
@@ -374,7 +405,7 @@ public class OutputOptions
    * @throws IOException
    */
   public void setInputResourceName(final String inputResourceName)
-    throws IOException
+      throws IOException
   {
     requireNonNull(inputResourceName, "No input resource name provided");
     try
@@ -386,11 +417,6 @@ public class OutputOptions
     {
       inputResource = new ClasspathInputResource(inputResourceName);
     }
-  }
-
-  public void setInputResource(final InputResource inputResource)
-  {
-    this.inputResource = inputResource;
   }
 
   public void setOutputEncoding(final Charset outputCharset)
@@ -445,7 +471,7 @@ public class OutputOptions
   public void setOutputFormatValue(final String outputFormatValue)
   {
     this.outputFormatValue = requireNonNull(outputFormatValue,
-                                            "Cannot use null value in a setter");
+        "Cannot use null value in a setter");
   }
 
   public void setWriter(final Writer writer)
@@ -458,11 +484,6 @@ public class OutputOptions
   public String toString()
   {
     return ObjectToString.toString(this);
-  }
-
-  protected OutputResource getOutputResource()
-  {
-    return outputResource;
   }
 
   private OutputFormat getTextOutputFormat()
