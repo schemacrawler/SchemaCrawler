@@ -5,7 +5,16 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-     <release version="12.04.01" date="2015-01-18" description="Better connection arguments.">
+     <release version="12.04.01" date="2015-01-18" description="Reverting SQLite JDBC driver.">
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Reverting back to SQLite JDBC driver version 3.7.8, since that is the most stable, even if not
+        readily available.
+      ]]></action> 
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Refactored API for reading input files, such as scripts.
+      ]]></action>                            
+     </release>     
+     <release version="12.03.02" date="2015-01-18" description="Better connection arguments.">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Removed the -driver command-line option, since most JDBC drivers will register themselves automatically.
       ]]></action> 
