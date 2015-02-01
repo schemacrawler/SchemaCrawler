@@ -17,21 +17,21 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.tools.options;
+package schemacrawler.tools.iosource;
 
 
 import java.io.IOException;
-import java.io.Reader;
+import java.io.Writer;
 import java.nio.charset.Charset;
 
-public interface InputResource
+public interface OutputResource
 {
 
   String getDescription();
 
-  Reader openInputReader(Charset charset)
+  Writer openOutputWriter(Charset charset, boolean appendOutput)
     throws IOException;
 
-  boolean shouldCloseReader();
+  boolean shouldCloseWriter();
 
 }

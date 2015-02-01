@@ -17,13 +17,14 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.tools.options;
+package schemacrawler.tools.iosource;
 
 
 import static java.util.Objects.requireNonNull;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.nio.charset.Charset;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -40,23 +41,23 @@ public final class OutputWriter
   private static final Logger LOGGER = Logger
     .getLogger(ConsoleOutputResource.class.getName());
 
-  public OutputWriter(final OutputOptions outputOptions)
+  public OutputWriter(final OutputResource outputResource,
+                      final Charset outputCharset)
     throws SchemaCrawlerException
   {
-    this(outputOptions, false);
+    this(outputResource, outputCharset, false);
   }
 
-  public OutputWriter(final OutputOptions outputOptions,
+  public OutputWriter(final OutputResource outputResource,
+                      final Charset outputCharset,
                       final boolean appendOutput)
     throws SchemaCrawlerException
   {
-    requireNonNull(outputOptions, "No output options provided");
     try
     {
-      outputResource = requireNonNull(outputOptions.getOutputResource(),
-                                      "No output resource provided");
-      writer = outputResource
-        .openOutputWriter(outputOptions.getOutputCharset(), appendOutput);
+      this.outputResource = requireNonNull(outputResource,
+                                           "No output resource provided");
+      writer = outputResource.openOutputWriter(outputCharset, appendOutput);
     }
     catch (final IOException e)
     {

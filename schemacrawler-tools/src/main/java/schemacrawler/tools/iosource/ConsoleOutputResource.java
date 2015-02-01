@@ -17,21 +17,50 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.tools.options;
+package schemacrawler.tools.iosource;
 
 
+import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.nio.charset.Charset;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public interface OutputResource
+public class ConsoleOutputResource
+  implements OutputResource
 {
 
-  String getDescription();
+  private static final Logger LOGGER = Logger
+    .getLogger(ConsoleOutputResource.class.getName());
 
-  Writer openOutputWriter(Charset charset, boolean appendOutput)
-    throws IOException;
+  @Override
+  public String getDescription()
+  {
+    return "<console>";
+  }
 
-  boolean shouldCloseWriter();
+  @Override
+  public Writer openOutputWriter(final Charset charset,
+                                 final boolean appendOutput)
+    throws IOException
+  {
+    final Writer writer = new BufferedWriter(new OutputStreamWriter(System.out));
+    LOGGER.log(Level.INFO, "Opened output writer to console");
+    return writer;
+  }
+
+  @Override
+  public boolean shouldCloseWriter()
+  {
+    return false;
+  }
+
+  @Override
+  public String toString()
+  {
+    return getDescription();
+  }
 
 }

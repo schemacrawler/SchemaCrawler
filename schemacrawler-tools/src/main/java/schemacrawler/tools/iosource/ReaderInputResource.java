@@ -17,49 +17,48 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.tools.options;
+package schemacrawler.tools.iosource;
 
 
 import static java.util.Objects.requireNonNull;
 
-import java.io.BufferedWriter;
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.Writer;
+import java.io.Reader;
 import java.nio.charset.Charset;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class WriterOutputResource
-  implements OutputResource
+public class ReaderInputResource
+  implements InputResource
 {
 
   private static final Logger LOGGER = Logger
-    .getLogger(WriterOutputResource.class.getName());
+    .getLogger(ReaderInputResource.class.getName());
 
-  private final Writer writer;
+  private final Reader reader;
 
-  public WriterOutputResource(final Writer writer)
+  public ReaderInputResource(final Reader reader)
   {
-    this.writer = requireNonNull(writer, "No writer provided");
+    this.reader = requireNonNull(reader, "No reader provided");
   }
 
   @Override
   public String getDescription()
   {
-    return "<writer>";
+    return "<reader>";
   }
 
   @Override
-  public Writer openOutputWriter(final Charset charset,
-                                 final boolean appendOutput)
+  public Reader openInputReader(final Charset charset)
     throws IOException
   {
-    LOGGER.log(Level.INFO, "Output to provided writer");
-    return new BufferedWriter(writer);
+    LOGGER.log(Level.INFO, "Input to provided reader");
+    return new BufferedReader(reader);
   }
 
   @Override
-  public boolean shouldCloseWriter()
+  public boolean shouldCloseReader()
   {
     return false;
   }

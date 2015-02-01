@@ -17,48 +17,36 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.tools.options;
+package schemacrawler.tools.iosource;
 
 
-import static java.nio.file.Files.newBufferedWriter;
-import static java.nio.file.StandardOpenOption.APPEND;
-import static java.nio.file.StandardOpenOption.CREATE;
-import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
-import static java.nio.file.StandardOpenOption.WRITE;
 import static java.util.Objects.requireNonNull;
 
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.nio.charset.Charset;
-import java.nio.file.OpenOption;
-import java.nio.file.Path;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class FileOutputResource
+public class WriterOutputResource
   implements OutputResource
 {
 
   private static final Logger LOGGER = Logger
-    .getLogger(FileOutputResource.class.getName());
+    .getLogger(WriterOutputResource.class.getName());
 
-  private final Path outputFile;
+  private final Writer writer;
 
-  public FileOutputResource(final Path filePath)
+  public WriterOutputResource(final Writer writer)
   {
-    outputFile = requireNonNull(filePath, "No file path provided").normalize()
-      .toAbsolutePath();
+    this.writer = requireNonNull(writer, "No writer provided");
   }
 
   @Override
   public String getDescription()
   {
-    return outputFile.toString();
-  }
-
-  public Path getOutputFile()
-  {
-    return outputFile;
+    return "<writer>";
   }
 
   @Override
@@ -66,29 +54,14 @@ public class FileOutputResource
                                  final boolean appendOutput)
     throws IOException
   {
-    requireNonNull(charset, "No output charset provided");
-    final OpenOption[] openOptions;
-    if (appendOutput)
-    {
-      openOptions = new OpenOption[] {
-          WRITE, CREATE, APPEND
-      };
-    }
-    else
-    {
-      openOptions = new OpenOption[] {
-          WRITE, CREATE, TRUNCATE_EXISTING
-      };
-    }
-    final Writer writer = newBufferedWriter(outputFile, charset, openOptions);
-    LOGGER.log(Level.INFO, "Opened output writer to file, " + outputFile);
-    return writer;
+    LOGGER.log(Level.INFO, "Output to provided writer");
+    return new BufferedWriter(writer);
   }
 
   @Override
   public boolean shouldCloseWriter()
   {
-    return true;
+    return false;
   }
 
   @Override

@@ -42,8 +42,8 @@ import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseStagedExecutable;
 import schemacrawler.tools.executable.CommandChainExecutable;
-import schemacrawler.tools.options.InputReader;
-import schemacrawler.tools.options.OutputWriter;
+import schemacrawler.tools.iosource.InputReader;
+import schemacrawler.tools.iosource.OutputWriter;
 import sf.util.ObjectToString;
 
 /**
@@ -153,8 +153,10 @@ public final class ScriptExecutable
     chain.setAdditionalConfiguration(additionalConfiguration);
 
     final ScriptEngine scriptEngine = scriptEngineFactory.getScriptEngine();
-    try (final Reader reader = new InputReader(outputOptions);
-        final Writer writer = new OutputWriter(outputOptions);)
+    try (final Reader reader = new InputReader(outputOptions.obtainInputResource(),
+                                               outputOptions.getInputCharset());
+        final Writer writer = new OutputWriter(outputOptions.obtainOutputResource(),
+                                               outputOptions.getOutputCharset());)
     {
       // Set up the context
       scriptEngine.getContext().setWriter(writer);
