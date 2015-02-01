@@ -42,7 +42,7 @@ import org.apache.velocity.runtime.resource.loader.FileResourceLoader;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
 import schemacrawler.tools.executable.BaseStagedExecutable;
-import schemacrawler.tools.options.OutputWriter;
+import schemacrawler.tools.iosource.OutputWriter;
 
 /**
  * Main executor for the Velocity integration.
@@ -125,7 +125,9 @@ public final class VelocityRenderer
     final Context context = new VelocityContext();
     context.put("catalog", catalog);
 
-    try (final Writer writer = new OutputWriter(outputOptions);)
+    try (final Writer writer = new OutputWriter(outputOptions.obtainOutputResource(),
+                                                outputOptions
+                                                  .getOutputCharset());)
     {
       final String templateEncoding = outputOptions.getInputCharset().name();
       LOGGER.log(Level.CONFIG, String

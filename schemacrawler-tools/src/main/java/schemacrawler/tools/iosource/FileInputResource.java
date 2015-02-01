@@ -17,45 +17,50 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.tools.options;
+package schemacrawler.tools.iosource;
 
 
+import static java.nio.file.Files.exists;
+import static java.nio.file.Files.isReadable;
+import static java.nio.file.Files.newBufferedReader;
 import static java.util.Objects.requireNonNull;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.Charset;
+import java.nio.file.Path;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ClasspathInputResource
+public class FileInputResource
   implements InputResource
 {
 
-  private static final Logger LOGGER = Logger
-    .getLogger(ClasspathInputResource.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(FileInputResource.class
+    .getName());
 
-  private final String classpathResource;
+  private final Path inputFile;
 
-  public ClasspathInputResource(final String classpathResource)
+  public FileInputResource(final Path filePath)
     throws IOException
   {
-    this.classpathResource = requireNonNull(classpathResource,
-                                            "No classpath resource provided");
-    if (ClasspathInputResource.class.getResource(this.classpathResource) == null)
+    inputFile = requireNonNull(filePath, "No file path provided").normalize()
+      .toAbsolutePath();
+    if (!exists(filePath) || !isReadable(filePath))
     {
-      throw new IOException("Cannot read classpath resource, "
-                            + this.classpathResource);
+      throw new IOException("Cannot read file, " + filePath);
     }
   }
 
   @Override
   public String getDescription()
   {
-    return InputReader.class.getResource(classpathResource).toExternalForm();
+    return inputFile.toString();
+  }
+
+  public Path getInputFile()
+  {
+    return inputFile;
   }
 
   @Override
@@ -63,12 +68,8 @@ public class ClasspathInputResource
     throws IOException
   {
     requireNonNull(charset, "No input charset provided");
-    final InputStream inputStream = ClasspathInputResource.class
-      .getResourceAsStream(classpathResource);
-    final Reader reader = new BufferedReader(new InputStreamReader(inputStream,
-                                                                   charset));
-    LOGGER.log(Level.INFO, "Opened input reader to classpath resource, "
-                           + classpathResource);
+    final Reader reader = newBufferedReader(inputFile, charset);
+    LOGGER.log(Level.INFO, "Opened input reader to file, " + inputFile);
     return reader;
   }
 
