@@ -22,6 +22,8 @@ package schemacrawler.tools.offline;
 
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
@@ -52,9 +54,8 @@ public final class OfflineSnapshotOptionsParser
     final String inputSource = config.getStringValue("database", null);
     try
     {
-      // final Path databaseFile = Paths.get(inputSource);
-      // options.setCompressedInputFile(databaseFile);
-      options.setInputResourceName(inputSource);
+      final Path databaseFile = Paths.get(inputSource);
+      options.setCompressedInputFile(databaseFile);
     }
     catch (final IOException e)
     {
