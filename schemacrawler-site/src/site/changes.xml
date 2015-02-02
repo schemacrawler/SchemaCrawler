@@ -12,7 +12,10 @@
       ]]></action> 
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Refactored API for reading input files, such as scripts.
-      ]]></action>                            
+      ]]></action>  
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Made compressed file format the default for offline snapshots.
+      ]]></action>                                
      </release>     
      <release version="12.03.02" date="2015-01-18" description="Better connection arguments.">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
