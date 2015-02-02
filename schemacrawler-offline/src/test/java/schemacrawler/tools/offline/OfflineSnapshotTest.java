@@ -20,11 +20,7 @@
 package schemacrawler.tools.offline;
 
 
-import static java.nio.file.Files.newBufferedWriter;
 import static java.nio.file.Files.size;
-import static java.nio.file.StandardOpenOption.CREATE;
-import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
-import static java.nio.file.StandardOpenOption.WRITE;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
@@ -52,6 +48,8 @@ import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.test.utility.BaseExecutableTest;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.integration.serialization.XmlSerializedCatalog;
+import schemacrawler.tools.iosource.CompressedFileOutputResource;
+import schemacrawler.tools.iosource.OutputWriter;
 import schemacrawler.tools.options.OutputOptions;
 
 public class OfflineSnapshotTest
@@ -146,7 +144,7 @@ public class OfflineSnapshotTest
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
 
     final OutputOptions inputOptions = new OutputOptions();
-    inputOptions.setInputFile(serializedDatabaseFile);
+    inputOptions.setCompressedInputFile(serializedDatabaseFile);
 
     final OfflineSnapshotExecutable executable = new OfflineSnapshotExecutable("details");
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
@@ -176,11 +174,8 @@ public class OfflineSnapshotTest
     serializedDatabaseFile = createTempFile("schemacrawler", "ser");
 
     final XmlSerializedCatalog xmlDatabase = new XmlSerializedCatalog(catalog);
-    final Writer writer = newBufferedWriter(serializedDatabaseFile,
-                                            StandardCharsets.UTF_8,
-                                            WRITE,
-                                            CREATE,
-                                            TRUNCATE_EXISTING);
+    final Writer writer = new OutputWriter(new CompressedFileOutputResource(serializedDatabaseFile),
+                                           StandardCharsets.UTF_8);
     xmlDatabase.save(writer);
     writer.close();
     assertNotSame("Database was not serialized to XML",
