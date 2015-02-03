@@ -36,7 +36,6 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseStagedExecutable;
-import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.traversal.DataTraversalHandler;
 
@@ -64,7 +63,6 @@ public final class OperationExecutable
     throws Exception
   {
     loadOperationOptions();
-    checkOutputFormat();
 
     final DataTraversalHandler handler = getDataTraversalHandler();
     final Query query = getQuery();
@@ -128,16 +126,6 @@ public final class OperationExecutable
     this.operationOptions = operationOptions;
   }
 
-  private void checkOutputFormat()
-  {
-    if (!outputOptions.hasOutputFormat())
-    {
-      LOGGER.log(Level.CONFIG,
-                 "Unknown output format: "
-                     + outputOptions.getOutputFormatValue());
-    }
-  }
-
   private DataTraversalHandler getDataTraversalHandler()
     throws SchemaCrawlerException
   {
@@ -145,7 +133,8 @@ public final class OperationExecutable
 
     final OperationOptions operationOptions = getOperationOptions();
     final DataTraversalHandler formatter;
-    final OutputFormat outputFormat = outputOptions.getOutputFormat();
+    final TextOutputFormat outputFormat = TextOutputFormat
+      .fromFormat(outputOptions.getOutputFormatValue());
     if (outputFormat == TextOutputFormat.json)
     {
       formatter = new DataJsonFormatter(operation,
