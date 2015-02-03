@@ -9,7 +9,6 @@ import java.io.PrintWriter;
 import schemacrawler.schema.Column;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.iosource.OutputWriter;
-import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.utility.HtmlFormattingHelper;
@@ -40,7 +39,8 @@ public abstract class BaseFormatter<O extends BaseTextOptions>
     this.printVerboseDatabaseInfo = !options.isNoInfo()
                                     && printVerboseDatabaseInfo;
 
-    final OutputFormat outputFormat = outputOptions.getOutputFormat();
+    final TextOutputFormat outputFormat = TextOutputFormat
+      .fromFormat(outputOptions.getOutputFormatValue());
     if (outputFormat == TextOutputFormat.html)
     {
       formattingHelper = new HtmlFormattingHelper((TextOutputFormat) outputFormat);

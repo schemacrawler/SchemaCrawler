@@ -225,10 +225,9 @@ public class SchemaCrawlerOutputTest
       executable.setOutputOptions(outputOptions);
       executable.execute(getConnection());
 
-      failures
-        .addAll(compareOutput(JSON_OUTPUT + referenceFile,
-                              testOutputFile,
-                              outputOptions.getOutputFormat().getFormat()));
+      failures.addAll(compareOutput(JSON_OUTPUT + referenceFile,
+                                    testOutputFile,
+                                    outputOptions.getOutputFormatValue()));
     }
     if (failures.size() > 0)
     {

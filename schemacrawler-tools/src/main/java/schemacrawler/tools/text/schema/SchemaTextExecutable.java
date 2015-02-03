@@ -22,15 +22,12 @@ package schemacrawler.tools.text.schema;
 
 
 import java.sql.Connection;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.analysis.associations.CatalogWithAssociations;
 import schemacrawler.tools.executable.BaseStagedExecutable;
 import schemacrawler.tools.options.InfoLevel;
-import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
 import schemacrawler.tools.traversal.SchemaTraverser;
@@ -44,9 +41,6 @@ public final class SchemaTextExecutable
   extends BaseStagedExecutable
 {
 
-  private static final Logger LOGGER = Logger
-    .getLogger(SchemaTextExecutable.class.getName());
-
   private SchemaTextOptions schemaTextOptions;
 
   public SchemaTextExecutable(final String command)
@@ -59,7 +53,6 @@ public final class SchemaTextExecutable
     throws Exception
   {
     loadSchemaTextOptions();
-    checkOutputFormat();
 
     InfoLevel infoLevel;
     try
@@ -102,16 +95,6 @@ public final class SchemaTextExecutable
     this.schemaTextOptions = schemaTextOptions;
   }
 
-  private void checkOutputFormat()
-  {
-    if (!outputOptions.hasOutputFormat())
-    {
-      LOGGER.log(Level.CONFIG,
-                 "Unknown output format: "
-                     + outputOptions.getOutputFormatValue());
-    }
-  }
-
   private SchemaTextDetailType getSchemaTextDetailType()
   {
     SchemaTextDetailType schemaTextDetailType;
@@ -132,7 +115,8 @@ public final class SchemaTextExecutable
     final SchemaTextDetailType schemaTextDetailType = getSchemaTextDetailType();
     final SchemaTraversalHandler formatter;
 
-    final OutputFormat outputFormat = outputOptions.getOutputFormat();
+    final TextOutputFormat outputFormat = TextOutputFormat
+      .fromFormat(outputOptions.getOutputFormatValue());
     if (outputFormat == TextOutputFormat.json)
     {
       formatter = new SchemaJsonFormatter(schemaTextDetailType,
