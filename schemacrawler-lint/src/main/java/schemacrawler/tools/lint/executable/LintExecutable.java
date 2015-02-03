@@ -31,7 +31,6 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseStagedExecutable;
 import schemacrawler.tools.lint.LintedCatalog;
 import schemacrawler.tools.lint.LinterConfigs;
-import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
 import sf.util.Utility;
 
@@ -106,7 +105,8 @@ public class LintExecutable
     final LintTraversalHandler formatter;
     final LintOptions lintOptions = getLintOptions();
 
-    final OutputFormat outputFormat = outputOptions.getOutputFormat();
+    final TextOutputFormat outputFormat = TextOutputFormat
+      .fromFormat(outputOptions.getOutputFormatValue());
     if (outputFormat == TextOutputFormat.json)
     {
       formatter = new LintJsonFormatter(lintOptions, outputOptions);
