@@ -52,7 +52,7 @@ import sf.util.ObjectToString;
  * @author Sualeh Fatehi
  */
 public class OutputOptions
-implements Options
+  implements Options
 {
 
   private static final long serialVersionUID = 7018337388923813055L;
@@ -73,13 +73,11 @@ implements Options
    */
   public OutputOptions()
   {
-    this(TextOutputFormat.text.getFormat());
+
   }
 
   public OutputOptions(final Config config)
   {
-    this();
-
     final Config configProperties;
     if (config == null)
     {
@@ -92,10 +90,10 @@ implements Options
 
     setInputEncoding(configProperties.getStringValue(SC_INPUT_ENCODING,
                                                      StandardCharsets.UTF_8
-                                                     .name()));
+                                                       .name()));
     setOutputEncoding(configProperties.getStringValue(SC_OUTPUT_ENCODING,
                                                       StandardCharsets.UTF_8
-                                                      .name()));
+                                                        .name()));
   }
 
   /**
@@ -108,7 +106,8 @@ implements Options
    */
   public OutputOptions(final OutputFormat outputFormat, final Path outputFile)
   {
-    this(outputFormat.getFormat(), outputFile);
+    this(requireNonNull(outputFormat, "No output format provided").getFormat(),
+         outputFile);
   }
 
   /**
@@ -121,7 +120,8 @@ implements Options
    */
   public OutputOptions(final OutputFormat outputFormat, final Writer writer)
   {
-    this(outputFormat.getFormat(), writer);
+    this(requireNonNull(outputFormat, "No output format provided").getFormat(),
+         writer);
   }
 
   /**
@@ -133,7 +133,7 @@ implements Options
   public OutputOptions(final String outputFormatValue)
   {
     this.outputFormatValue = requireNonNull(outputFormatValue,
-        "No output format value provided");
+                                            "No output format value provided");
     setConsoleOutput();
   }
 
@@ -148,7 +148,7 @@ implements Options
   public OutputOptions(final String outputFormatValue, final Path outputFile)
   {
     this.outputFormatValue = requireNonNull(outputFormatValue,
-        "No output format value provided");
+                                            "No output format value provided");
     setOutputFile(outputFile);
   }
 
@@ -163,7 +163,7 @@ implements Options
   public OutputOptions(final String outputFormatValue, final Writer writer)
   {
     this.outputFormatValue = requireNonNull(outputFormatValue,
-        "No output format value provided");
+                                            "No output format value provided");
     setWriter(writer);
   }
 
@@ -225,34 +225,16 @@ implements Options
     else if (outputResource instanceof CompressedFileOutputResource)
     {
       outputFile = ((CompressedFileOutputResource) outputResource)
-          .getOutputFile();
+        .getOutputFile();
     }
     else
     {
       outputFile = Paths
-          .get(".",
-               String.format("sc.%s.%s", nextRandomString(), outputFormatValue))
-               .normalize().toAbsolutePath();
+        .get(".",
+             String.format("sc.%s.%s", nextRandomString(), outputFormatValue))
+        .normalize().toAbsolutePath();
     }
     return outputFile;
-  }
-
-  /**
-   * Output format.
-   *
-   * @return Output format
-   */
-  public OutputFormat getOutputFormat()
-  {
-    final OutputFormat outputFormat = getTextOutputFormat();
-    if (outputFormat == null)
-    {
-      return TextOutputFormat.text;
-    }
-    else
-    {
-      return outputFormat;
-    }
   }
 
   /**
@@ -263,16 +245,6 @@ implements Options
   public String getOutputFormatValue()
   {
     return outputFormatValue;
-  }
-
-  /**
-   * Whether a known output format has been specified.
-   *
-   * @return Has output format
-   */
-  public boolean hasOutputFormat()
-  {
-    return getTextOutputFormat() != null;
   }
 
   /**
@@ -318,7 +290,7 @@ implements Options
    * @throws IOException
    */
   public void setCompressedInputFile(final Path inputFile)
-      throws IOException
+    throws IOException
   {
     requireNonNull(inputFile, "No input file provided");
     inputResource = new CompressedFileInputResource(inputFile);
@@ -383,7 +355,7 @@ implements Options
    * @throws IOException
    */
   public void setInputFile(final Path inputFile)
-      throws IOException
+    throws IOException
   {
     requireNonNull(inputFile, "No input file provided");
     inputResource = new FileInputResource(inputFile);
@@ -405,7 +377,7 @@ implements Options
    * @throws IOException
    */
   public void setInputResourceName(final String inputResourceName)
-      throws IOException
+    throws IOException
   {
     requireNonNull(inputResourceName, "No input resource name provided");
     try
@@ -471,7 +443,7 @@ implements Options
   public void setOutputFormatValue(final String outputFormatValue)
   {
     this.outputFormatValue = requireNonNull(outputFormatValue,
-        "Cannot use null value in a setter");
+                                            "Cannot use null value in a setter");
   }
 
   public void setWriter(final Writer writer)
@@ -484,20 +456,6 @@ implements Options
   public String toString()
   {
     return ObjectToString.toString(this);
-  }
-
-  private OutputFormat getTextOutputFormat()
-  {
-    TextOutputFormat outputFormat;
-    try
-    {
-      outputFormat = TextOutputFormat.valueOf(outputFormatValue);
-    }
-    catch (final IllegalArgumentException e)
-    {
-      outputFormat = null;
-    }
-    return outputFormat;
   }
 
   private String nextRandomString()

@@ -34,6 +34,33 @@ public enum TextOutputFormat
   tsv("Tab-separated values (TSV) format"),
   json("JavaScript Object Notation (JSON) format"), ;
 
+  public static TextOutputFormat fromFormat(final String format)
+  {
+    TextOutputFormat outputFormat;
+    try
+    {
+      outputFormat = TextOutputFormat.valueOf(format);
+    }
+    catch (final IllegalArgumentException e)
+    {
+      outputFormat = text;
+    }
+    return outputFormat;
+  }
+
+  public static boolean isTextOutputFormat(final String format)
+  {
+    try
+    {
+      TextOutputFormat.valueOf(format);
+      return true;
+    }
+    catch (final IllegalArgumentException e)
+    {
+      return false;
+    }
+  }
+
   private final String description;
 
   private TextOutputFormat(final String description)
