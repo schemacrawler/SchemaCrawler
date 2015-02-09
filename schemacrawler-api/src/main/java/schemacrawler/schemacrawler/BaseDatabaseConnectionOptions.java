@@ -30,7 +30,9 @@ import java.sql.DriverManager;
 import java.sql.DriverPropertyInfo;
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
@@ -281,14 +283,23 @@ abstract class BaseDatabaseConnectionOptions
                                                 final String password)
     throws SQLException
   {
+    final List<String> skipProperties = Arrays.asList("server",
+                                                      "host",
+                                                      "port",
+                                                      "database",
+                                                      "urlx");
     final Driver jdbcDriver = getJdbcDriver();
     final DriverPropertyInfo[] propertyInfo = jdbcDriver
       .getPropertyInfo(getConnectionUrl(), new Properties());
     final Map<String, Boolean> jdbcDriverProperties = new HashMap<>();
     for (final DriverPropertyInfo driverPropertyInfo: propertyInfo)
     {
-      jdbcDriverProperties.put(driverPropertyInfo.name.toLowerCase(),
-                               driverPropertyInfo.required);
+      final String jdbcPropertyName = driverPropertyInfo.name.toLowerCase();
+      if (skipProperties.contains(jdbcPropertyName))
+      {
+        continue;
+      }
+      jdbcDriverProperties.put(jdbcPropertyName, driverPropertyInfo.required);
     }
 
     final Properties jdbcConnectionProperties = new Properties();
