@@ -39,7 +39,6 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.iosource.ClasspathInputResource;
 import schemacrawler.tools.iosource.CompressedFileInputResource;
 import schemacrawler.tools.iosource.CompressedFileOutputResource;
-import schemacrawler.tools.iosource.ConsoleInputResource;
 import schemacrawler.tools.iosource.ConsoleOutputResource;
 import schemacrawler.tools.iosource.FileInputResource;
 import schemacrawler.tools.iosource.FileOutputResource;
@@ -489,11 +488,6 @@ public class OutputOptions
       {
         inputResource = null;
       }
-    }
-    // Second try, if the input resource is still null
-    if (inputResource == null)
-    {
-      inputResource = new ConsoleInputResource();
     }
     return inputResource;
   }
