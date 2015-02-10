@@ -35,14 +35,17 @@ import java.security.SecureRandom;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.Options;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.iosource.ClasspathInputResource;
 import schemacrawler.tools.iosource.CompressedFileInputResource;
 import schemacrawler.tools.iosource.CompressedFileOutputResource;
 import schemacrawler.tools.iosource.ConsoleOutputResource;
 import schemacrawler.tools.iosource.FileInputResource;
 import schemacrawler.tools.iosource.FileOutputResource;
+import schemacrawler.tools.iosource.InputReader;
 import schemacrawler.tools.iosource.InputResource;
 import schemacrawler.tools.iosource.OutputResource;
+import schemacrawler.tools.iosource.OutputWriter;
 import schemacrawler.tools.iosource.WriterOutputResource;
 import sf.util.ObjectToString;
 
@@ -248,36 +251,41 @@ public class OutputOptions
   }
 
   /**
-   * Gets the input resource. If the input resource is null, first set
-   * it to a value based off the output format value.
+   * Gets the input reader. If the input resource is null, first set it
+   * to a value based off the output format value.
+   *
+   * @throws SchemaCrawlerException
    */
-  public InputResource obtainInputResource()
+  public InputReader openNewInputReader()
+    throws SchemaCrawlerException
   {
-    if (inputResource == null)
-    {
-      try
-      {
-        setInputResourceName(outputFormatValue);
-      }
-      catch (final IOException e)
-      {
-        return null;
-      }
-    }
-    return inputResource;
+    return new InputReader(obtainInputResource(), getInputCharset());
   }
 
   /**
-   * Gets the output resource. If the output resource is null, first set
+   * Gets the output reader. If the output resource is null, first set
    * it to console output.
+   *
+   * @throws SchemaCrawlerException
    */
-  public OutputResource obtainOutputResource()
+  public OutputWriter openNewOutputWriter()
+    throws SchemaCrawlerException
   {
-    if (outputResource == null)
-    {
-      outputResource = new ConsoleOutputResource();
-    }
-    return outputResource;
+    return new OutputWriter(obtainOutputResource(), getOutputCharset());
+  }
+
+  /**
+   * Gets the output reader. If the output resource is null, first set
+   * it to console output.
+   *
+   * @throws SchemaCrawlerException
+   */
+  public OutputWriter openNewOutputWriter(final boolean appendOutput)
+    throws SchemaCrawlerException
+  {
+    return new OutputWriter(obtainOutputResource(),
+                            getOutputCharset(),
+                            appendOutput);
   }
 
   /**
@@ -462,6 +470,39 @@ public class OutputOptions
   {
     final int length = 8;
     return new BigInteger(length * 5, random).toString(32);
+  }
+
+  /**
+   * Gets the input resource. If the input resource is null, first set
+   * it to a value based off the output format value.
+   */
+  private InputResource obtainInputResource()
+  {
+    if (inputResource == null)
+    {
+      try
+      {
+        setInputResourceName(outputFormatValue);
+      }
+      catch (final IOException e)
+      {
+        return null;
+      }
+    }
+    return inputResource;
+  }
+
+  /**
+   * Gets the output resource. If the output resource is null, first set
+   * it to console output.
+   */
+  private OutputResource obtainOutputResource()
+  {
+    if (outputResource == null)
+    {
+      outputResource = new ConsoleOutputResource();
+    }
+    return outputResource;
   }
 
 }
