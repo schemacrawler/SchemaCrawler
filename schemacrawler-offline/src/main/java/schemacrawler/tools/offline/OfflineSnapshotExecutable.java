@@ -108,9 +108,7 @@ public class OfflineSnapshotExecutable
   private Catalog loadCatalog()
     throws SchemaCrawlerException
   {
-    final InputReader snapshotReader = new InputReader(inputOptions.obtainInputResource(),
-                                                       inputOptions
-                                                         .getInputCharset());
+    final InputReader snapshotReader = inputOptions.openNewInputReader();
     final XmlSerializedCatalog xmlDatabase = new XmlSerializedCatalog(snapshotReader);
     return xmlDatabase;
   }

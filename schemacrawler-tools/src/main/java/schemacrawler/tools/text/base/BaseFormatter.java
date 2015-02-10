@@ -8,7 +8,6 @@ import java.io.PrintWriter;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.iosource.OutputWriter;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.utility.HtmlFormattingHelper;
@@ -50,10 +49,8 @@ public abstract class BaseFormatter<O extends BaseTextOptions>
       formattingHelper = new PlainTextFormattingHelper((TextOutputFormat) outputFormat);
     }
 
-    out = new PrintWriter(new OutputWriter(outputOptions.obtainOutputResource(),
-                                           outputOptions.getOutputCharset(),
-                                           options.isAppendOutput()),
-                          true);
+    out = new PrintWriter(outputOptions.openNewOutputWriter(options
+      .isAppendOutput()), true);
   }
 
   protected String columnNullable(final String columnTypeName,
