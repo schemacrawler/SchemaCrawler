@@ -76,9 +76,7 @@ public class EmbeddedGraphExecutable
       }
     }
 
-    try (final OutputWriter writer = new OutputWriter(outputOptions.obtainOutputResource(),
-                                                      outputOptions
-                                                        .getOutputCharset());)
+    try (final OutputWriter writer = outputOptions.openNewOutputWriter();)
     {
       copy(newBufferedReader(finalHtmlFile, StandardCharsets.UTF_8), writer);
     }
