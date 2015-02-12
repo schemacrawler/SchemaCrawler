@@ -29,7 +29,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
 import schemacrawler.tools.commandline.ApplicationOptionsParser;
 import schemacrawler.tools.commandline.CommandLine;
 import schemacrawler.tools.commandline.DatabaseServerTypeParser;
@@ -85,13 +84,16 @@ public final class Main
       }
       commandLine.execute();
     }
-    catch (final SchemaCrawlerCommandLineException e)
+    catch (final Exception e)
     {
       final String errorMessage = e.getMessage();
       System.err.println(errorMessage);
       System.err.println("Re-run SchemaCrawler with the -? option for help");
+      System.err
+        .println("Or, re-run SchemaCrawler with the -loglevel=CONFIG option for details on the error");
       LOGGER.log(Level.SEVERE, "Command line: " + Arrays.toString(args), e);
     }
+
   }
 
   private static final Logger LOGGER = Logger.getLogger(Main.class.getName());

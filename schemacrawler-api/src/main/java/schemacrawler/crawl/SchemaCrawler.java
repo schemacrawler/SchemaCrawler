@@ -255,9 +255,7 @@ public final class SchemaCrawler
     {
       if (e instanceof SchemaCrawlerSQLException)
       {
-        final Throwable cause = e.getCause();
-        throw new SchemaCrawlerException(e.getMessage() + ": "
-                                         + cause.getMessage(), cause);
+        throw new SchemaCrawlerException(e.getMessage(), e.getCause());
       }
       else
       {
@@ -315,9 +313,7 @@ public final class SchemaCrawler
     {
       if (e instanceof SchemaCrawlerSQLException)
       {
-        final Throwable cause = e.getCause();
-        throw new SchemaCrawlerException(e.getMessage() + ": "
-                                         + cause.getMessage(), cause);
+        throw new SchemaCrawlerException(e.getMessage(), e.getCause());
       }
       else
       {
@@ -353,9 +349,7 @@ public final class SchemaCrawler
     {
       if (e instanceof SchemaCrawlerSQLException)
       {
-        final Throwable cause = e.getCause();
-        throw new SchemaCrawlerException(e.getMessage() + ": "
-                                         + cause.getMessage(), cause);
+        throw new SchemaCrawlerException(e.getMessage(), e.getCause());
       }
       else
       {
@@ -481,9 +475,7 @@ public final class SchemaCrawler
     {
       if (e instanceof SchemaCrawlerSQLException)
       {
-        final Throwable cause = e.getCause();
-        throw new SchemaCrawlerException(e.getMessage() + ": "
-                                         + cause.getMessage(), cause);
+        throw new SchemaCrawlerException(e.getMessage(), e.getCause());
       }
       else
       {

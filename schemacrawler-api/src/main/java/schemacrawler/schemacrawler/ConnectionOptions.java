@@ -2,6 +2,7 @@ package schemacrawler.schemacrawler;
 
 
 import java.sql.Driver;
+import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
@@ -11,7 +12,8 @@ public interface ConnectionOptions
 
   String getConnectionUrl();
 
-  Driver getJdbcDriver();
+  Driver getJdbcDriver()
+    throws SQLException;
 
   String getUser();
 
