@@ -155,6 +155,7 @@ abstract class BaseDatabaseConnectionOptions
 
   @Override
   public final Driver getJdbcDriver()
+    throws SQLException
   {
     try
     {
@@ -162,10 +163,9 @@ abstract class BaseDatabaseConnectionOptions
     }
     catch (final SQLException e)
     {
-      LOGGER.log(Level.WARNING,
-                 "Could not get a database driver for database connection URL "
-                     + getConnectionUrl());
-      return null;
+      throw new SchemaCrawlerSQLException("Could not find a suitable JDBC driver for database connection URL, "
+                                              + getConnectionUrl(),
+                                          e);
     }
   }
 
@@ -263,8 +263,19 @@ abstract class BaseDatabaseConnectionOptions
   @Override
   public final String toString()
   {
+    String jdbcDriverClass = "<unknown>";
+    try
+    {
+      final Driver jdbcDriver = getJdbcDriver();
+      jdbcDriverClass = jdbcDriver.getClass().getName();
+    }
+    catch (SQLException e)
+    {
+      jdbcDriverClass = "<unknown>";
+    }
+
     final StringBuilder builder = new StringBuilder();
-    builder.append("driver=").append(getJdbcDriver().getClass().getName())
+    builder.append("driver=").append(jdbcDriverClass)
       .append(System.lineSeparator());
     builder.append("url=").append(getConnectionUrl())
       .append(System.lineSeparator());
