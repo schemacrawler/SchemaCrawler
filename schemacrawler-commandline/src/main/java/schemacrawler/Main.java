@@ -24,6 +24,7 @@ package schemacrawler;
 import static java.util.Objects.requireNonNull;
 import static sf.util.commandlineparser.CommandLineArgumentsUtility.flattenCommandlineArgs;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,6 +37,7 @@ import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.options.ApplicationOptions;
 import schemacrawler.tools.options.DatabaseServerType;
+import sf.util.ObjectToString;
 import sf.util.commandlineparser.CommandLineArgumentsUtility;
 
 /**
@@ -56,7 +58,16 @@ public final class Main
       .getOptions();
 
     applicationOptions.applyApplicationLogLevel();
-    LOGGER.log(Level.CONFIG, "Command line: " + Arrays.toString(args));
+
+    if (LOGGER.isLoggable(Level.CONFIG))
+    {
+      LOGGER.log(Level.CONFIG,
+                 "Classpath: "
+                     + ObjectToString.toString(System
+                       .getProperty("java.class.path")
+                       .split(File.pathSeparator)));
+      LOGGER.log(Level.CONFIG, "Command line: " + Arrays.toString(args));
+    }
 
     try
     {
