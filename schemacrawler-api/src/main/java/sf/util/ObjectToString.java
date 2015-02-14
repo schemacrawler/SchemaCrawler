@@ -131,29 +131,11 @@ public final class ObjectToString
     }
     else if (Collection.class.isAssignableFrom(objectClass))
     {
-      for (final Iterator<?> iterator = ((Collection<?>) object).iterator(); iterator
-        .hasNext();)
-      {
-        final Object item = iterator.next();
-        buffer.append(item);
-        if (iterator.hasNext())
-        {
-          buffer.append(", ");
-        }
-      }
+      appendIterable(((Collection<?>) object).iterator(), buffer);
     }
     else if (objectClass.isArray())
     {
-      for (final Iterator<?> iterator = Arrays.asList((Object[]) object)
-        .iterator(); iterator.hasNext();)
-      {
-        final Object item = iterator.next();
-        buffer.append(item);
-        if (iterator.hasNext())
-        {
-          buffer.append(", ");
-        }
-      }
+      appendIterable(Arrays.asList((Object[]) object).iterator(), buffer);
     }
     else if (objectClass.isEnum())
     {
@@ -178,6 +160,22 @@ public final class ObjectToString
       appendFields(object, indent, buffer);
       appendFooter(indent, buffer);
     }
+  }
+
+  private static void appendIterable(final Iterator<?> iterator,
+                                     final StringBuilder buffer)
+  {
+    buffer.append("[ \n");
+    while (iterator.hasNext())
+    {
+      final Object item = iterator.next();
+      buffer.append(" ").append(item);
+      if (iterator.hasNext())
+      {
+        buffer.append(", \n");
+      }
+    }
+    buffer.append("\n] ");
   }
 
   private static boolean definesToString(final Object object)
