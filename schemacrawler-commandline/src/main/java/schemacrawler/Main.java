@@ -62,8 +62,8 @@ public final class Main
     if (LOGGER.isLoggable(Level.CONFIG))
     {
       LOGGER.log(Level.CONFIG,
-                 "Classpath: "
-                     + ObjectToString.toString(System
+                 "Classpath: \n"
+                     + ObjectToString.join(System
                        .getProperty("java.class.path")
                        .split(File.pathSeparator)));
       LOGGER.log(Level.CONFIG, "Command line: " + Arrays.toString(args));

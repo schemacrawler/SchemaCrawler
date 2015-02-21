@@ -39,6 +39,17 @@ import java.util.logging.Logger;
 public final class ObjectToString
 {
 
+  public static String join(final String[] split)
+  {
+    if (split == null)
+    {
+      return "";
+    }
+    final StringBuilder buffer = new StringBuilder();
+    appendIterable(Arrays.asList(split).iterator(), "\n", buffer);
+    return buffer.toString();
+  }
+
   public static String toString(final Object object)
   {
     if (object == null)
@@ -115,6 +126,21 @@ public final class ObjectToString
     }
   }
 
+  private static void appendIterable(final Iterator<?> iterator,
+                                     final String delimiter,
+                                     final StringBuilder buffer)
+  {
+    while (iterator.hasNext())
+    {
+      final Object item = iterator.next();
+      buffer.append(item);
+      if (iterator.hasNext())
+      {
+        buffer.append(delimiter);
+      }
+    }
+  }
+
   private static void appendObject(final Object object,
                                    final int indent,
                                    final StringBuilder buffer)
@@ -131,11 +157,11 @@ public final class ObjectToString
     }
     else if (Collection.class.isAssignableFrom(objectClass))
     {
-      appendIterable(((Collection<?>) object).iterator(), buffer);
+      appendIterable(((Collection<?>) object).iterator(), ", ", buffer);
     }
     else if (objectClass.isArray())
     {
-      appendIterable(Arrays.asList((Object[]) object).iterator(), buffer);
+      appendIterable(Arrays.asList((Object[]) object).iterator(), ", ", buffer);
     }
     else if (objectClass.isEnum())
     {
@@ -160,22 +186,6 @@ public final class ObjectToString
       appendFields(object, indent, buffer);
       appendFooter(indent, buffer);
     }
-  }
-
-  private static void appendIterable(final Iterator<?> iterator,
-                                     final StringBuilder buffer)
-  {
-    buffer.append("[ \n");
-    while (iterator.hasNext())
-    {
-      final Object item = iterator.next();
-      buffer.append(" ").append(item);
-      if (iterator.hasNext())
-      {
-        buffer.append(", \n");
-      }
-    }
-    buffer.append("\n] ");
   }
 
   private static boolean definesToString(final Object object)
