@@ -85,7 +85,8 @@ public class LintExecutable
     final LintOptions lintOptions;
     if (this.lintOptions == null)
     {
-      lintOptions = new LintOptions(additionalConfiguration);
+      lintOptions = (LintOptions) new LintOptionsBuilder()
+        .setFromConfig(additionalConfiguration).toOptions();
     }
     else
     {

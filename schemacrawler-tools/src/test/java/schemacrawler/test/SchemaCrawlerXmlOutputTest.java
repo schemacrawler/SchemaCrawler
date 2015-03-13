@@ -44,6 +44,7 @@ import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
+import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 
 public class SchemaCrawlerXmlOutputTest
   extends BaseDatabaseTest
@@ -108,7 +109,9 @@ public class SchemaCrawlerXmlOutputTest
     textOptions.setNoFooter(false);
     textOptions.setAlphabeticalSortForTables(true);
 
-    executable.setAdditionalConfiguration(textOptions.toConfig());
+    executable
+      .setAdditionalConfiguration(new SchemaTextOptionsBuilder(textOptions)
+        .toConfig());
     executable.setOutputOptions(outputOptions);
     executable.execute(getConnection());
 
