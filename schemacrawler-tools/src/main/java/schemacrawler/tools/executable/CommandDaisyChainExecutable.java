@@ -6,7 +6,7 @@ import java.sql.Connection;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.text.base.BaseTextOptionsBuilder;
+import schemacrawler.tools.text.base.CommonTextOptionsBuilder;
 
 public final class CommandDaisyChainExecutable
   extends BaseCommandChainExecutable
@@ -34,31 +34,32 @@ public final class CommandDaisyChainExecutable
     {
       final Executable executable = addNext(command);
 
-      final BaseTextOptionsBuilder baseTextOptions = new BaseTextOptionsBuilder(additionalConfiguration);
+      final CommonTextOptionsBuilder commonTextOptions = new CommonTextOptionsBuilder();
+      commonTextOptions.setFromConfig(additionalConfiguration);
 
       if (commands.hasMultipleCommands())
       {
         if (commands.isFirstCommand(command))
         {
           // First command - no footer
-          baseTextOptions.hideFooter();
+          commonTextOptions.hideFooter();
         }
         else if (commands.isLastCommand(command))
         {
           // Last command - no header, or info
-          baseTextOptions.hideHeader();
-          baseTextOptions.hideInfo();
+          commonTextOptions.hideHeader();
+          commonTextOptions.hideInfo();
 
-          baseTextOptions.appendOutput();
+          commonTextOptions.appendOutput();
         }
         else
         {
           // Middle command - no header, footer, or info
-          baseTextOptions.hideHeader();
-          baseTextOptions.hideInfo();
-          baseTextOptions.hideFooter();
+          commonTextOptions.hideHeader();
+          commonTextOptions.hideInfo();
+          commonTextOptions.hideFooter();
 
-          baseTextOptions.appendOutput();
+          commonTextOptions.appendOutput();
         }
       }
 
@@ -67,7 +68,7 @@ public final class CommandDaisyChainExecutable
       {
         executableAdditionalConfig.putAll(additionalConfiguration);
       }
-      executableAdditionalConfig.putAll(baseTextOptions.toConfig());
+      executableAdditionalConfig.putAll(commonTextOptions.toConfig());
       executable.setAdditionalConfiguration(executableAdditionalConfig);
 
     }

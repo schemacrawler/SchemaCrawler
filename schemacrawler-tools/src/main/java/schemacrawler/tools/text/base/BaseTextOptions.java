@@ -21,189 +21,112 @@
 package schemacrawler.tools.text.base;
 
 
-import schemacrawler.schemacrawler.BaseConfigOptions;
-import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.Options;
 
 public abstract class BaseTextOptions
-  extends BaseConfigOptions
+  implements Options
 {
 
   private static final long serialVersionUID = -8133661515343358712L;
 
-  protected static final String SCHEMACRAWLER_FORMAT_PREFIX = "schemacrawler.format.";
-
-  private static final String NO_HEADER = SCHEMACRAWLER_FORMAT_PREFIX
-                                          + "no_header";
-  private static final String NO_FOOTER = SCHEMACRAWLER_FORMAT_PREFIX
-                                          + "no_footer";
-  private static final String NO_INFO = SCHEMACRAWLER_FORMAT_PREFIX + "no_info";
-  private static final String APPEND_OUTPUT = SCHEMACRAWLER_FORMAT_PREFIX
-                                              + "append_output";
-
-  private static final String SHOW_UNQUALIFIED_NAMES = SCHEMACRAWLER_FORMAT_PREFIX
-                                                       + "show_unqualified_names";
-
-  private static final String SC_SORT_ALPHABETICALLY_TABLES = SCHEMACRAWLER_FORMAT_PREFIX
-                                                              + "sort_alphabetically.tables";
-  private static final String SC_SORT_ALPHABETICALLY_TABLE_COLUMNS = SCHEMACRAWLER_FORMAT_PREFIX
-                                                                     + "sort_alphabetically.table_columns";
-
-  private static final String SC_SORT_ALPHABETICALLY_ROUTINES = SCHEMACRAWLER_FORMAT_PREFIX
-                                                                + "sort_alphabetically.routines";
-  private static final String SC_SORT_ALPHABETICALLY_ROUTINE_COLUMNS = SCHEMACRAWLER_FORMAT_PREFIX
-                                                                       + "sort_alphabetically.routine_columns";
-
-  protected BaseTextOptions()
-  {
-    this(null);
-  }
-
-  protected BaseTextOptions(final Config config)
-  {
-    setNoFooter(getBooleanValue(config, NO_FOOTER));
-    setNoHeader(getBooleanValue(config, NO_HEADER));
-    setNoInfo(getBooleanValue(config, NO_INFO));
-    setAppendOutput(getBooleanValue(config, APPEND_OUTPUT));
-
-    setShowUnqualifiedNames(getBooleanValue(config, SHOW_UNQUALIFIED_NAMES));
-
-    setAlphabeticalSortForTables(getBooleanValue(config,
-                                                 SC_SORT_ALPHABETICALLY_TABLES,
-                                                 true));
-    setAlphabeticalSortForTableColumns(getBooleanValue(config,
-                                                       SC_SORT_ALPHABETICALLY_TABLE_COLUMNS));
-
-    setAlphabeticalSortForRoutines(getBooleanValue(config,
-                                                   SC_SORT_ALPHABETICALLY_ROUTINES));
-
-    setAlphabeticalSortForRoutineColumns(getBooleanValue(config,
-                                                         SC_SORT_ALPHABETICALLY_ROUTINE_COLUMNS));
-  }
+  private boolean isAlphabeticalSortForRoutineColumns;
+  private boolean isAlphabeticalSortForRoutines;
+  private boolean isAlphabeticalSortForTableColumns;
+  private boolean isAlphabeticalSortForTables;
+  private boolean isAppendOutput;
+  private boolean isNoFooter;
+  private boolean isNoHeader;
+  private boolean isNoInfo;
+  private boolean isShowUnqualifiedNames;
 
   public boolean isAlphabeticalSortForRoutineColumns()
   {
-    return getBooleanValue(SC_SORT_ALPHABETICALLY_ROUTINE_COLUMNS);
+    return isAlphabeticalSortForRoutineColumns;
   }
 
   public boolean isAlphabeticalSortForRoutines()
   {
-    return getBooleanValue(SC_SORT_ALPHABETICALLY_ROUTINES);
+    return isAlphabeticalSortForRoutines;
   }
 
   public boolean isAlphabeticalSortForTableColumns()
   {
-    return getBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_COLUMNS);
+    return isAlphabeticalSortForTableColumns;
   }
 
   public boolean isAlphabeticalSortForTables()
   {
-    return getBooleanValue(SC_SORT_ALPHABETICALLY_TABLES);
+    return isAlphabeticalSortForTables;
   }
 
   public boolean isAppendOutput()
   {
-    return getBooleanValue(APPEND_OUTPUT);
+    return isAppendOutput;
   }
 
-  /**
-   * Whether to print footers.
-   *
-   * @return Whether to print footers
-   */
   public boolean isNoFooter()
   {
-    return getBooleanValue(NO_FOOTER);
+    return isNoFooter;
   }
 
-  /**
-   * Whether to print headers.
-   *
-   * @return Whether to print headers
-   */
   public boolean isNoHeader()
   {
-    return getBooleanValue(NO_HEADER);
+    return isNoHeader;
   }
 
-  /**
-   * Whether to print information.
-   *
-   * @return Whether to print information
-   */
   public boolean isNoInfo()
   {
-    return getBooleanValue(NO_INFO);
+    return isNoInfo;
   }
 
   public boolean isShowUnqualifiedNames()
   {
-    return getBooleanValue(SHOW_UNQUALIFIED_NAMES);
+    return isShowUnqualifiedNames;
   }
 
   public void setAlphabeticalSortForRoutineColumns(final boolean isAlphabeticalSortForRoutineColumns)
   {
-    setBooleanValue(SC_SORT_ALPHABETICALLY_ROUTINE_COLUMNS,
-                    isAlphabeticalSortForRoutineColumns);
+    this.isAlphabeticalSortForRoutineColumns = isAlphabeticalSortForRoutineColumns;
   }
 
   public void setAlphabeticalSortForRoutines(final boolean isAlphabeticalSortForRoutines)
   {
-    setBooleanValue(SC_SORT_ALPHABETICALLY_ROUTINES,
-                    isAlphabeticalSortForRoutines);
+    this.isAlphabeticalSortForRoutines = isAlphabeticalSortForRoutines;
   }
 
   public void setAlphabeticalSortForTableColumns(final boolean isAlphabeticalSortForTableColumns)
   {
-    setBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_COLUMNS,
-                    isAlphabeticalSortForTableColumns);
+    this.isAlphabeticalSortForTableColumns = isAlphabeticalSortForTableColumns;
   }
 
   public void setAlphabeticalSortForTables(final boolean isAlphabeticalSortForTables)
   {
-    setBooleanValue(SC_SORT_ALPHABETICALLY_TABLES, isAlphabeticalSortForTables);
+    this.isAlphabeticalSortForTables = isAlphabeticalSortForTables;
   }
 
-  public void setAppendOutput(final boolean appendOutput)
+  public void setAppendOutput(final boolean isAppendOutput)
   {
-    setBooleanValue(APPEND_OUTPUT, appendOutput);
+    this.isAppendOutput = isAppendOutput;
   }
 
-  /**
-   * Whether to print footers.
-   *
-   * @param noFooter
-   *        Whether to print footers
-   */
-  public void setNoFooter(final boolean noFooter)
+  public void setNoFooter(final boolean isNoFooter)
   {
-    setBooleanValue(NO_FOOTER, noFooter);
+    this.isNoFooter = isNoFooter;
   }
 
-  /**
-   * Whether to print headers.
-   *
-   * @param noHeader
-   *        Whether to print headers
-   */
-  public void setNoHeader(final boolean noHeader)
+  public void setNoHeader(final boolean isNoHeader)
   {
-    setBooleanValue(NO_HEADER, noHeader);
+    this.isNoHeader = isNoHeader;
   }
 
-  /**
-   * Whether to print information.
-   *
-   * @param noInfo
-   *        Whether to print information
-   */
-  public void setNoInfo(final boolean noInfo)
+  public void setNoInfo(final boolean isNoInfo)
   {
-    setBooleanValue(NO_INFO, noInfo);
+    this.isNoInfo = isNoInfo;
   }
 
-  public void setShowUnqualifiedNames(final boolean showUnqualifiedNames)
+  public void setShowUnqualifiedNames(final boolean isShowUnqualifiedNames)
   {
-    setBooleanValue(SHOW_UNQUALIFIED_NAMES, showUnqualifiedNames);
+    this.isShowUnqualifiedNames = isShowUnqualifiedNames;
   }
 
 }

@@ -7,6 +7,7 @@ import java.sql.Connection;
 
 import schemacrawler.tools.executable.BaseExecutable;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
+import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 
 public class OraclePreExecutable
   extends BaseExecutable
@@ -23,7 +24,8 @@ public class OraclePreExecutable
   {
     executeScriptFromResource("/schemacrawler-oracle.before.sql", connection);
 
-    final SchemaTextOptions schemaTextOptions = new SchemaTextOptions(additionalConfiguration);
+    final SchemaTextOptions schemaTextOptions = new SchemaTextOptionsBuilder()
+      .setFromConfig(additionalConfiguration).toOptions();
     if (schemaTextOptions.isShowUnqualifiedNames())
     {
       executeScriptFromResource("/schemacrawler-oracle.show_unqualified_names.sql",

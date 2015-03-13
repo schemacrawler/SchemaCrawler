@@ -17,44 +17,18 @@
  * Boston, MA 02111-1307, USA.
  *
  */
+package schemacrawler.tools.lint.executable;
 
-package schemacrawler.tools.text.operation;
 
+import schemacrawler.tools.text.base.BaseTextOptionsBuilder;
 
-import schemacrawler.tools.text.base.BaseTextOptions;
-
-/**
- * Operator options.
- *
- * @author Sualeh Fatehi
- */
-public final class OperationOptions
-  extends BaseTextOptions
+public class LintOptionsBuilder
+  extends BaseTextOptionsBuilder<LintOptions>
 {
 
-  private static final long serialVersionUID = -7977434852526746391L;
-
-  private boolean isShowLobs;
-
-  /**
-   * Whether to show LOBs.
-   *
-   * @return Whether to show LOBs.
-   */
-  public boolean isShowLobs()
+  public LintOptionsBuilder()
   {
-    return isShowLobs;
-  }
-
-  /**
-   * Whether to show LOBs.
-   *
-   * @param showLobs
-   *        Whether to show LOBs
-   */
-  public void setShowLobs(final boolean showLobs)
-  {
-    this.isShowLobs = showLobs;
+    super(new LintOptions());
   }
 
 }

@@ -20,7 +20,6 @@
 package schemacrawler.tools.lint.executable;
 
 
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.text.base.BaseTextOptions;
 
 public class LintOptions
@@ -28,15 +27,5 @@ public class LintOptions
 {
 
   private static final long serialVersionUID = -5917925090616219096L;
-
-  public LintOptions()
-  {
-    this(null);
-  }
-
-  public LintOptions(final Config config)
-  {
-    super(config);
-  }
 
 }

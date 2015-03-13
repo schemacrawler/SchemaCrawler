@@ -21,6 +21,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseExecutableTest;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
+import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:derby-context.xml")
@@ -53,7 +54,9 @@ public class DerbyTest
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
     executable.setSchemaCrawlerOptions(options);
-    executable.setAdditionalConfiguration(textOptions.toConfig());
+    executable
+      .setAdditionalConfiguration(new SchemaTextOptionsBuilder(textOptions)
+        .toConfig());
 
     executeExecutable(executable, "text", "testDerbyWithConnection.txt");
   }

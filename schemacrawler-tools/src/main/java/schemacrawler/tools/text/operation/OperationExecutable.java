@@ -197,7 +197,8 @@ public final class OperationExecutable
   {
     if (operationOptions == null)
     {
-      operationOptions = new OperationOptions(additionalConfiguration);
+      operationOptions = new OperationOptionsBuilder()
+        .setFromConfig(additionalConfiguration).toOptions();
     }
   }
 

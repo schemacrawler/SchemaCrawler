@@ -228,7 +228,8 @@ public class GraphExecutableOptionsTest
   {
     final GraphExecutable executable = new GraphExecutable();
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    executable.setAdditionalConfiguration(graphOptions.toConfig());
+    executable.setAdditionalConfiguration(new GraphOptionsBuilder(graphOptions)
+      .toConfig());
 
     // Check DOT file
     final String referenceFileName = testMethodName;
