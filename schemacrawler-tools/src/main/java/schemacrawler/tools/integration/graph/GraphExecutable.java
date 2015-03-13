@@ -141,7 +141,8 @@ public final class GraphExecutable
     final GraphOptions graphOptions;
     if (this.graphOptions == null)
     {
-      graphOptions = new GraphOptions(additionalConfiguration);
+      graphOptions = new GraphOptionsBuilder()
+        .setFromConfig(additionalConfiguration).toOptions();
     }
     else
     {

@@ -22,7 +22,6 @@
 package schemacrawler.tools.text.schema;
 
 
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.text.base.BaseTextOptions;
 
 public class SchemaTextOptions
@@ -31,278 +30,126 @@ public class SchemaTextOptions
 
   private static final long serialVersionUID = -8133661515343358712L;
 
-  private static final String SHOW_ORDINAL_NUMBERS = SCHEMACRAWLER_FORMAT_PREFIX
-                                                     + "show_ordinal_numbers";
-  private static final String SHOW_STANDARD_COLUMN_TYPE_NAMES = SCHEMACRAWLER_FORMAT_PREFIX
-                                                                + "show_standard_column_type_names";
-
-  private static final String HIDE_PRIMARY_KEY_NAMES = SCHEMACRAWLER_FORMAT_PREFIX
-                                                       + "hide_primarykey_names";
-  private static final String HIDE_FOREIGN_KEY_NAMES = SCHEMACRAWLER_FORMAT_PREFIX
-                                                       + "hide_foreignkey_names";
-  private static final String HIDE_INDEX_NAMES = SCHEMACRAWLER_FORMAT_PREFIX
-                                                 + "hide_index_names";
-  private static final String HIDE_CONSTRAINT_NAMES = SCHEMACRAWLER_FORMAT_PREFIX
-                                                      + "hide_constraint_names";
-  private static final String HIDE_TRIGGER_NAMES = SCHEMACRAWLER_FORMAT_PREFIX
-                                                   + "hide_trigger_names";
-  private static final String HIDE_ROUTINE_SPECIFIC_NAMES = SCHEMACRAWLER_FORMAT_PREFIX
-                                                            + "hide_routine_specific_names";
-  private static final String HIDE_REMARKS = SCHEMACRAWLER_FORMAT_PREFIX
-                                             + "hide_remarks";
-
-  private static final String SC_SORT_ALPHABETICALLY_TABLE_INDEXES = SCHEMACRAWLER_FORMAT_PREFIX
-                                                                     + "sort_alphabetically.table_indices";
-  private static final String SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS = SCHEMACRAWLER_FORMAT_PREFIX
-                                                                         + "sort_alphabetically.table_foreignkeys";
-
-  /**
-   * Creates the default SchemaTextOptions.
-   */
-  public SchemaTextOptions()
-  {
-    this(null);
-  }
-
-  /**
-   * Options from properties. Constructor.
-   *
-   * @param config
-   *        Properties
-   */
-  public SchemaTextOptions(final Config config)
-  {
-    super(config);
-
-    setShowStandardColumnTypeNames(getBooleanValue(config,
-                                                   SHOW_STANDARD_COLUMN_TYPE_NAMES));
-    setShowOrdinalNumbers(getBooleanValue(config, SHOW_ORDINAL_NUMBERS));
-
-    setHideForeignKeyNames(getBooleanValue(config, HIDE_FOREIGN_KEY_NAMES));
-    setHidePrimaryKeyNames(getBooleanValue(config, HIDE_PRIMARY_KEY_NAMES));
-    setHideIndexNames(getBooleanValue(config, HIDE_INDEX_NAMES));
-    setHideTriggerNames(getBooleanValue(config, HIDE_TRIGGER_NAMES));
-    setHideRoutineSpecificNames(getBooleanValue(config,
-                                                HIDE_ROUTINE_SPECIFIC_NAMES));
-    setHideConstraintNames(getBooleanValue(config, HIDE_CONSTRAINT_NAMES));
-    setHideRemarks(getBooleanValue(config, HIDE_REMARKS));
-
-    setAlphabeticalSortForForeignKeys(getBooleanValue(config,
-                                                      SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS));
-    setAlphabeticalSortForIndexes(getBooleanValue(config,
-                                                  SC_SORT_ALPHABETICALLY_TABLE_INDEXES));
-  }
+  private boolean isAlphabeticalSortForForeignKeys;
+  private boolean isAlphabeticalSortForIndexes;
+  private boolean isHideForeignKeyNames;
+  private boolean isHideIndexNames;
+  private boolean isHidePrimaryKeyNames;
+  private boolean isHideRemarks;
+  private boolean isHideRoutineSpecificNames;
+  private boolean isHideTableConstraintNames;
+  private boolean isHideTriggerNames;
+  private boolean isShowOrdinalNumbers;
+  private boolean isShowStandardColumnTypeNames;
 
   public boolean isAlphabeticalSortForForeignKeys()
   {
-    return getBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS);
+    return isAlphabeticalSortForForeignKeys;
   }
 
   public boolean isAlphabeticalSortForIndexes()
   {
-    return getBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_INDEXES);
+    return isAlphabeticalSortForIndexes;
   }
 
-  /**
-   * Whether to hide foreign key names.
-   *
-   * @return Hide foreign key names.
-   */
   public boolean isHideForeignKeyNames()
   {
-    return getBooleanValue(HIDE_FOREIGN_KEY_NAMES);
+    return isHideForeignKeyNames;
   }
 
-  /**
-   * Whether to hide index names.
-   *
-   * @return Hide index names.
-   */
   public boolean isHideIndexNames()
   {
-    return getBooleanValue(HIDE_INDEX_NAMES);
+    return isHideIndexNames;
   }
 
-  /**
-   * Whether to hide primary key names.
-   *
-   * @return Hide primary key names.
-   */
   public boolean isHidePrimaryKeyNames()
   {
-    return getBooleanValue(HIDE_PRIMARY_KEY_NAMES);
+    return isHidePrimaryKeyNames;
   }
 
-  /**
-   * Whether to hide remarks.
-   *
-   * @return Hide remarks.
-   */
   public boolean isHideRemarks()
   {
-    return getBooleanValue(HIDE_REMARKS);
+    return isHideRemarks;
   }
 
-  /**
-   * Whether to hide routine specific names.
-   *
-   * @return Hide routine specific names.
-   */
   public boolean isHideRoutineSpecificNames()
   {
-    return getBooleanValue(HIDE_ROUTINE_SPECIFIC_NAMES);
+    return isHideRoutineSpecificNames;
   }
 
-  /**
-   * Whether to hide constraint names.
-   *
-   * @return Hide constraint names.
-   */
   public boolean isHideTableConstraintNames()
   {
-    return getBooleanValue(HIDE_CONSTRAINT_NAMES);
+    return isHideTableConstraintNames;
   }
 
-  /**
-   * Whether to hide trigger names.
-   *
-   * @return Hide trigger names.
-   */
   public boolean isHideTriggerNames()
   {
-    return getBooleanValue(HIDE_TRIGGER_NAMES);
+    return isHideTriggerNames;
   }
 
-  /**
-   * Whether to show ordinal numbers.
-   *
-   * @return Whether to show ordinal numbers.
-   */
   public boolean isShowOrdinalNumbers()
   {
-    return getBooleanValue(SHOW_ORDINAL_NUMBERS);
+    return isShowOrdinalNumbers;
   }
 
-  /**
-   * Whether to show standard column types.
-   *
-   * @return Whether to show standard column types.
-   */
   public boolean isShowStandardColumnTypeNames()
   {
-    return getBooleanValue(SHOW_STANDARD_COLUMN_TYPE_NAMES);
+    return isShowStandardColumnTypeNames;
   }
 
   public void setAlphabeticalSortForForeignKeys(final boolean isAlphabeticalSortForForeignKeys)
   {
-    setBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS,
-                    isAlphabeticalSortForForeignKeys);
+    this.isAlphabeticalSortForForeignKeys = isAlphabeticalSortForForeignKeys;
   }
 
   public void setAlphabeticalSortForIndexes(final boolean isAlphabeticalSortForIndexes)
   {
-    setBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_INDEXES,
-                    isAlphabeticalSortForIndexes);
+    this.isAlphabeticalSortForIndexes = isAlphabeticalSortForIndexes;
   }
 
-  /**
-   * Sets whether to hide constraint names.
-   *
-   * @param hideConstraintNames
-   *        Whether to hide constraint names.
-   */
-  public void setHideConstraintNames(final boolean hideConstraintNames)
+  public void setHideForeignKeyNames(final boolean isHideForeignKeyNames)
   {
-    setBooleanValue(HIDE_CONSTRAINT_NAMES, hideConstraintNames);
+    this.isHideForeignKeyNames = isHideForeignKeyNames;
   }
 
-  /**
-   * Sets whether to hide foreign key names.
-   *
-   * @param hideForeignKeyNames
-   *        Whether to hide foreign key names.
-   */
-  public void setHideForeignKeyNames(final boolean hideForeignKeyNames)
+  public void setHideIndexNames(final boolean isHideIndexNames)
   {
-    setBooleanValue(HIDE_FOREIGN_KEY_NAMES, hideForeignKeyNames);
+    this.isHideIndexNames = isHideIndexNames;
   }
 
-  /**
-   * Sets whether to hide index names.
-   *
-   * @param hideIndexNames
-   *        Whether to hide index names.
-   */
-  public void setHideIndexNames(final boolean hideIndexNames)
+  public void setHidePrimaryKeyNames(final boolean isHidePrimaryKeyNames)
   {
-    setBooleanValue(HIDE_INDEX_NAMES, hideIndexNames);
+    this.isHidePrimaryKeyNames = isHidePrimaryKeyNames;
   }
 
-  /**
-   * Sets whether to hide primary key names.
-   *
-   * @param hidePrimaryKeyNames
-   *        Whether to hide primary key names.
-   */
-  public void setHidePrimaryKeyNames(final boolean hidePrimaryKeyNames)
+  public void setHideRemarks(final boolean isHideRemarks)
   {
-    setBooleanValue(HIDE_PRIMARY_KEY_NAMES, hidePrimaryKeyNames);
+    this.isHideRemarks = isHideRemarks;
   }
 
-  /**
-   * Sets whether to hide remarks.
-   *
-   * @param hideRemarks
-   *        Whether to hide remarks.
-   */
-  public void setHideRemarks(final boolean hideRemarks)
+  public void setHideRoutineSpecificNames(final boolean isHideRoutineSpecificNames)
   {
-    setBooleanValue(HIDE_REMARKS, hideRemarks);
+    this.isHideRoutineSpecificNames = isHideRoutineSpecificNames;
   }
 
-  /**
-   * Sets whether to hide routine specific names.
-   *
-   * @param hideRoutineSpecificNames
-   *        Whether to hide routine specific names.
-   */
-  public void setHideRoutineSpecificNames(final boolean hideRoutineSpecificNames)
+  public void setHideConstraintNames(final boolean isHideTableConstraintNames)
   {
-    setBooleanValue(HIDE_ROUTINE_SPECIFIC_NAMES, hideRoutineSpecificNames);
+    this.isHideTableConstraintNames = isHideTableConstraintNames;
   }
 
-  /**
-   * Sets whether to hide trigger names.
-   *
-   * @param hideTriggerNames
-   *        Whether to hide trigger names.
-   */
-  public void setHideTriggerNames(final boolean hideTriggerNames)
+  public void setHideTriggerNames(final boolean isHideTriggerNames)
   {
-    setBooleanValue(HIDE_TRIGGER_NAMES, hideTriggerNames);
+    this.isHideTriggerNames = isHideTriggerNames;
   }
 
-  /**
-   * Sets whether to show ordinal numbers.
-   *
-   * @param showOrdinalNumbers
-   *        Whether to show ordinal numbers.
-   */
-  public void setShowOrdinalNumbers(final boolean showOrdinalNumbers)
+  public void setShowOrdinalNumbers(final boolean isShowOrdinalNumbers)
   {
-    setBooleanValue(SHOW_ORDINAL_NUMBERS, showOrdinalNumbers);
+    this.isShowOrdinalNumbers = isShowOrdinalNumbers;
   }
 
-  /**
-   * Sets whether to show standard column type names.
-   *
-   * @param showStandardColumnTypeNames
-   *        Whether to show standard column type names.
-   */
-  public void setShowStandardColumnTypeNames(final boolean showStandardColumnTypeNames)
+  public void setShowStandardColumnTypeNames(final boolean isShowStandardColumnTypeNames)
   {
-    setBooleanValue(SHOW_STANDARD_COLUMN_TYPE_NAMES,
-                    showStandardColumnTypeNames);
+    this.isShowStandardColumnTypeNames = isShowStandardColumnTypeNames;
   }
 
 }

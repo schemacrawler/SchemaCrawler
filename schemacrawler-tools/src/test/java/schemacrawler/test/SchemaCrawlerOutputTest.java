@@ -48,11 +48,10 @@ import schemacrawler.tools.options.InfoLevel;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.TextOutputFormat;
-import schemacrawler.tools.text.base.BaseTextOptions;
-import schemacrawler.tools.text.base.BaseTextOptionsBuilder;
 import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
+import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 
 public class SchemaCrawlerOutputTest
   extends BaseDatabaseTest
@@ -81,9 +80,6 @@ public class SchemaCrawlerOutputTest
     queriesConfig
       .put(queryCommand2,
            "SELECT ${orderbycolumns} FROM ${table} ORDER BY ${orderbycolumns}");
-
-    final BaseTextOptionsBuilder baseTextOptions = new BaseTextOptionsBuilder();
-    queriesConfig.putAll(baseTextOptions.toConfig());
 
     final String[] commands = new String[] {
         SchemaTextDetailType.details + "," + Operation.count + ","
@@ -176,7 +172,9 @@ public class SchemaCrawlerOutputTest
                                                                              + Operation.dump);
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
       executable.setOutputOptions(outputOptions);
-      executable.setAdditionalConfiguration(textOptions.toConfig());
+      executable
+        .setAdditionalConfiguration(new SchemaTextOptionsBuilder(textOptions)
+          .toConfig());
       executable.execute(getConnection());
 
       failures.addAll(compareOutput(HIDE_CONSTRAINT_NAMES_OUTPUT
@@ -268,7 +266,9 @@ public class SchemaCrawlerOutputTest
         .name());
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
       executable.setOutputOptions(outputOptions);
-      executable.setAdditionalConfiguration(textOptions.toConfig());
+      executable
+        .setAdditionalConfiguration(new SchemaTextOptionsBuilder(textOptions)
+          .toConfig());
       executable.execute(getConnection());
 
       failures.addAll(compareOutput(NO_REMARKS_OUTPUT + referenceFile,
@@ -322,7 +322,9 @@ public class SchemaCrawlerOutputTest
                                                                              + Operation.dump);
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
       executable.setOutputOptions(outputOptions);
-      executable.setAdditionalConfiguration(textOptions.toConfig());
+      executable
+        .setAdditionalConfiguration(new SchemaTextOptionsBuilder(textOptions)
+          .toConfig());
       executable.execute(getConnection());
 
       failures.addAll(compareOutput(ORDINAL_OUTPUT + referenceFile,
@@ -343,7 +345,7 @@ public class SchemaCrawlerOutputTest
 
     final List<String> failures = new ArrayList<>();
 
-    final BaseTextOptions textOptions = new SchemaTextOptions();
+    final SchemaTextOptions textOptions = new SchemaTextOptions();
     textOptions.setNoInfo(false);
     textOptions.setNoHeader(false);
     textOptions.setNoFooter(false);
@@ -375,7 +377,9 @@ public class SchemaCrawlerOutputTest
         .name());
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
       executable.setOutputOptions(outputOptions);
-      executable.setAdditionalConfiguration(textOptions.toConfig());
+      executable
+        .setAdditionalConfiguration(new SchemaTextOptionsBuilder(textOptions)
+          .toConfig());
       executable.execute(getConnection());
 
       failures.addAll(compareOutput(ROUTINES_OUTPUT + referenceFile,
@@ -396,7 +400,7 @@ public class SchemaCrawlerOutputTest
 
     final List<String> failures = new ArrayList<>();
 
-    final BaseTextOptions textOptions = new SchemaTextOptions();
+    final SchemaTextOptions textOptions = new SchemaTextOptions();
     textOptions.setNoInfo(false);
     textOptions.setNoHeader(false);
     textOptions.setNoFooter(false);
@@ -429,7 +433,9 @@ public class SchemaCrawlerOutputTest
                                                                              + Operation.dump);
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
       executable.setOutputOptions(outputOptions);
-      executable.setAdditionalConfiguration(textOptions.toConfig());
+      executable
+        .setAdditionalConfiguration(new SchemaTextOptionsBuilder(textOptions)
+          .toConfig());
       executable.execute(getConnection());
 
       failures.addAll(compareOutput(UNQUALIFIED_NAMES_OUTPUT + referenceFile,
