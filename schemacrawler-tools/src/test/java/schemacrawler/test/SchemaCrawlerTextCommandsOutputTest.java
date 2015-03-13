@@ -35,7 +35,7 @@ import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.TextOutputFormat;
-import schemacrawler.tools.text.base.BaseTextOptionsBuilder;
+import schemacrawler.tools.text.base.CommonTextOptionsBuilder;
 import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 
@@ -117,15 +117,15 @@ public class SchemaCrawlerTextCommandsOutputTest
                                                             dummyOutputFile);
       outputOptions.setWriter(writer);
 
-      final BaseTextOptionsBuilder baseTextOptions = new BaseTextOptionsBuilder();
-      baseTextOptions.hideInfo();
-      baseTextOptions.hideHeader();
-      baseTextOptions.hideFooter();
+      final CommonTextOptionsBuilder commonTextOptions = new CommonTextOptionsBuilder();
+      commonTextOptions.hideInfo();
+      commonTextOptions.hideHeader();
+      commonTextOptions.hideFooter();
 
       final String command = SchemaTextDetailType.brief.name();
       final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
       executable.setOutputOptions(outputOptions);
-      executable.setAdditionalConfiguration(baseTextOptions.toConfig());
+      executable.setAdditionalConfiguration(commonTextOptions.toConfig());
       executable.execute(getConnection());
 
       assertTrue(!exists(dummyOutputFile));
@@ -142,11 +142,12 @@ public class SchemaCrawlerTextCommandsOutputTest
       final OutputOptions outputOptions = new OutputOptions(TextOutputFormat.text,
                                                             writer);
 
-      final BaseTextOptionsBuilder baseTextOptions = new BaseTextOptionsBuilder(config);
-      baseTextOptions.hideInfo();
-      baseTextOptions.hideHeader();
-      baseTextOptions.hideFooter();
-      config.putAll(baseTextOptions.toConfig());
+      final CommonTextOptionsBuilder commonTextOptions = new CommonTextOptionsBuilder();
+      commonTextOptions.setFromConfig(config);
+      commonTextOptions.hideInfo();
+      commonTextOptions.hideHeader();
+      commonTextOptions.hideFooter();
+      config.putAll(commonTextOptions.toConfig());
 
       final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
       executable.setAdditionalConfiguration(config);

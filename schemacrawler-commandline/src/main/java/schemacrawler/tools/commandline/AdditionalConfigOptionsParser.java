@@ -24,7 +24,7 @@ package schemacrawler.tools.commandline;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.text.schema.SchemaTextOptions;
+import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 
 /**
  * Parses the command-line.
@@ -44,46 +44,60 @@ public final class AdditionalConfigOptionsParser
   public void loadConfig()
     throws SchemaCrawlerException
   {
-    final SchemaTextOptions textOptions = new SchemaTextOptions(config);
+    final SchemaTextOptionsBuilder textOptionsBuilder = new SchemaTextOptionsBuilder()
+      .setFromConfig(config);
     if (config.hasValue("noinfo"))
     {
       final boolean booleanValue = config.getBooleanValue("noinfo", true);
-      textOptions.setNoInfo(booleanValue);
+      if (booleanValue)
+      {
+        textOptionsBuilder.noInfo();
+      }
     }
     if (config.hasValue("noremarks"))
     {
       final boolean booleanValue = config.getBooleanValue("noremarks", true);
-      textOptions.setHideRemarks(booleanValue);
+      if (booleanValue)
+      {
+        textOptionsBuilder.hideRemarks();
+      }
     }
     if (config.hasValue("sorttables"))
     {
       final boolean booleanValue = config.getBooleanValue("sorttables", true);
-      textOptions.setAlphabeticalSortForTables(booleanValue);
+      if (booleanValue)
+      {
+        textOptionsBuilder.sortTables();
+      }
     }
     if (config.hasValue("sortcolumns"))
     {
       final boolean booleanValue = config.getBooleanValue("sortcolumns", true);
-      textOptions.setAlphabeticalSortForTableColumns(booleanValue);
+      if (booleanValue)
+      {
+        textOptionsBuilder.sortTableColumns();
+      }
     }
     if (config.hasValue("sortinout"))
     {
       final boolean booleanValue = config.getBooleanValue("sortinout", true);
-      textOptions.setAlphabeticalSortForRoutineColumns(booleanValue);
+      if (booleanValue)
+      {
+        textOptionsBuilder.sortInOut();
+      }
     }
     if (config.hasValue("portablenames"))
     {
       final boolean booleanValue = config
         .getBooleanValue("portablenames", true);
-      textOptions.setHideConstraintNames(booleanValue);
-      textOptions.setHideForeignKeyNames(booleanValue);
-      textOptions.setHideIndexNames(booleanValue);
-      textOptions.setHidePrimaryKeyNames(booleanValue);
-      textOptions.setHideTriggerNames(booleanValue);
-      textOptions.setHideRoutineSpecificNames(booleanValue);
-      textOptions.setShowUnqualifiedNames(booleanValue);
+      if (booleanValue)
+      {
+        textOptionsBuilder.portableNames();
+      }
+
     }
 
-    config.putAll(textOptions.toConfig());
+    config.putAll(textOptionsBuilder.toConfig());
 
     config.putAll(config);
   }

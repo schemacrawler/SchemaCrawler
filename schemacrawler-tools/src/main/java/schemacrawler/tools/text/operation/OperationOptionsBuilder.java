@@ -21,40 +21,58 @@
 package schemacrawler.tools.text.operation;
 
 
-import schemacrawler.tools.text.base.BaseTextOptions;
+import schemacrawler.schemacrawler.Config;
+import schemacrawler.tools.text.base.BaseTextOptionsBuilder;
 
 /**
  * Operator options.
  *
  * @author Sualeh Fatehi
  */
-public final class OperationOptions
-  extends BaseTextOptions
+public final class OperationOptionsBuilder
+  extends BaseTextOptionsBuilder<OperationOptions>
 {
 
-  private static final long serialVersionUID = -7977434852526746391L;
-
-  private boolean isShowLobs;
+  private static final String SHOW_LOBS = SCHEMACRAWLER_FORMAT_PREFIX
+                                          + "data.show_lobs";
 
   /**
-   * Whether to show LOBs.
-   *
-   * @return Whether to show LOBs.
+   * Operator options, defaults.
    */
-  public boolean isShowLobs()
+  public OperationOptionsBuilder()
   {
-    return isShowLobs;
+    super(new OperationOptions());
+  }
+
+  @Override
+  public OperationOptionsBuilder setFromConfig(final Config config)
+  {
+    if (config == null)
+    {
+      return this;
+    }
+    super.setFromConfig(config);
+
+    options.setShowLobs(config.getBooleanValue(SHOW_LOBS, false));
+
+    return this;
   }
 
   /**
    * Whether to show LOBs.
-   *
-   * @param showLobs
-   *        Whether to show LOBs
    */
-  public void setShowLobs(final boolean showLobs)
+  public OperationOptionsBuilder showLobs()
   {
-    this.isShowLobs = showLobs;
+    options.setShowLobs(true);
+    return this;
+  }
+
+  @Override
+  public Config toConfig()
+  {
+    final Config config = super.toConfig();
+    config.setBooleanValue(SHOW_LOBS, options.isShowLobs());
+    return config;
   }
 
 }

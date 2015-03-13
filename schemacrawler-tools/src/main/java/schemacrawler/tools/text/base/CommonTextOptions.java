@@ -17,44 +17,13 @@
  * Boston, MA 02111-1307, USA.
  *
  */
+package schemacrawler.tools.text.base;
 
-package schemacrawler.tools.text.operation;
 
-
-import schemacrawler.tools.text.base.BaseTextOptions;
-
-/**
- * Operator options.
- *
- * @author Sualeh Fatehi
- */
-public final class OperationOptions
+public class CommonTextOptions
   extends BaseTextOptions
 {
 
-  private static final long serialVersionUID = -7977434852526746391L;
-
-  private boolean isShowLobs;
-
-  /**
-   * Whether to show LOBs.
-   *
-   * @return Whether to show LOBs.
-   */
-  public boolean isShowLobs()
-  {
-    return isShowLobs;
-  }
-
-  /**
-   * Whether to show LOBs.
-   *
-   * @param showLobs
-   *        Whether to show LOBs
-   */
-  public void setShowLobs(final boolean showLobs)
-  {
-    this.isShowLobs = showLobs;
-  }
+  private static final long serialVersionUID = 2376263945077668483L;
 
 }

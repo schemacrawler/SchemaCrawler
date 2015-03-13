@@ -20,17 +20,11 @@
 package schemacrawler.tools.integration.graph;
 
 
-import static java.util.Objects.requireNonNull;
-
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
-import sf.util.Utility;
 
 public class GraphOptions
   extends SchemaTextOptions
@@ -38,118 +32,68 @@ public class GraphOptions
 
   private static final long serialVersionUID = -5850945398335496207L;
 
-  private static final String GRAPH_SHOW_PRIMARY_KEY_CARDINALITY = "schemacrawler.graph.show.primarykey.cardinality";
-  private static final String GRAPH_SHOW_FOREIGN_KEY_CARDINALITY = "schemacrawler.graph.show.foreignkey.cardinality";
-  private static final String GRAPH_DETAILS = "schemacrawler.graph.details";
-  private static final String GRAPH_GRAPHVIZ_OPTS = "schemacrawler.graph.graphviz_opts";
-  private static final String SC_GRAPHVIZ_OPTS = "SC_GRAPHVIZ_OPTS";
-
-  private static final Logger LOGGER = Logger.getLogger(GraphOptions.class
-    .getName());
+  private List<String> graphVizOpts;
+  private SchemaTextDetailType schemaTextDetailType;
+  private boolean isShowForeignKeyCardinality;
+  private boolean isShowPrimaryKeyCardinality;
 
   public GraphOptions()
   {
-    // Required to set all options
-    this(null);
-  }
-
-  public GraphOptions(final Config config)
-  {
-    super(config);
-
-    setShowPrimaryKeyCardinality(getBooleanValue(config,
-                                                 GRAPH_SHOW_PRIMARY_KEY_CARDINALITY,
-                                                 true));
-    setShowForeignKeyCardinality(getBooleanValue(config,
-                                                 GRAPH_SHOW_FOREIGN_KEY_CARDINALITY,
-                                                 true));
-
-    setSchemaTextDetailType(getEnumValue(config,
-                                         GRAPH_DETAILS,
-                                         SchemaTextDetailType.details));
-
-    setGraphVizOpts(readGraphVizOpts(config));
+    graphVizOpts = new ArrayList<>();
+    schemaTextDetailType = SchemaTextDetailType.details;
+    isShowForeignKeyCardinality = true;
+    isShowPrimaryKeyCardinality = true;
   }
 
   public List<String> getGraphVizOpts()
   {
-    final String graphVizOptions = getStringValue(GRAPH_GRAPHVIZ_OPTS, "");
-    final List<String> graphVizOptionsList = Arrays.asList(graphVizOptions
-      .split("\\s+"));
-    return graphVizOptionsList;
+    return graphVizOpts;
   }
 
   public SchemaTextDetailType getSchemaTextDetailType()
   {
-    return getEnumValue(GRAPH_DETAILS, SchemaTextDetailType.details);
+    return schemaTextDetailType;
   }
 
   public boolean isShowForeignKeyCardinality()
   {
-    return getBooleanValue(GRAPH_SHOW_FOREIGN_KEY_CARDINALITY);
+    return isShowForeignKeyCardinality;
   }
 
   public boolean isShowPrimaryKeyCardinality()
   {
-    return getBooleanValue(GRAPH_SHOW_PRIMARY_KEY_CARDINALITY);
+    return isShowPrimaryKeyCardinality;
   }
 
-  public void setGraphVizOpts(final String graphVizOpts)
+  public void setGraphVizOpts(final List<String> graphVizOpts)
   {
-    requireNonNull(graphVizOpts, "Cannot use null value in a setter");
-    setStringValue(GRAPH_GRAPHVIZ_OPTS, graphVizOpts);
+    if (graphVizOpts == null)
+    {
+      this.graphVizOpts = new ArrayList<>();
+    }
+    else
+    {
+      this.graphVizOpts = graphVizOpts;
+    }
   }
 
   public void setSchemaTextDetailType(final SchemaTextDetailType schemaTextDetailType)
   {
-    requireNonNull(schemaTextDetailType, "Cannot use null value in a setter");
-    setEnumValue(GRAPH_DETAILS, schemaTextDetailType);
+    if (schemaTextDetailType == null)
+    {
+      return;
+    }
+    this.schemaTextDetailType = schemaTextDetailType;
   }
 
-  public void setShowForeignKeyCardinality(final boolean showFkCardinality)
+  public void setShowForeignKeyCardinality(final boolean isShowForeignKeyCardinality)
   {
-    setBooleanValue(GRAPH_SHOW_FOREIGN_KEY_CARDINALITY, showFkCardinality);
+    this.isShowForeignKeyCardinality = isShowForeignKeyCardinality;
   }
 
-  public void setShowPrimaryKeyCardinality(final boolean showPkCardinality)
+  public void setShowPrimaryKeyCardinality(final boolean isShowPrimaryKeyCardinality)
   {
-    setBooleanValue(GRAPH_SHOW_PRIMARY_KEY_CARDINALITY, showPkCardinality);
-  }
-
-  private String readGraphVizOpts(final Config config)
-  {
-    final String scGraphVizOptsCfg = getStringValue(config,
-                                                    GRAPH_GRAPHVIZ_OPTS,
-                                                    "");
-    if (!Utility.isBlank(scGraphVizOptsCfg))
-    {
-      LOGGER.log(Level.CONFIG,
-                 "Using additional GraphViz command-line options from config, "
-                     + scGraphVizOptsCfg);
-      return scGraphVizOptsCfg;
-    }
-
-    final String scGraphVizOptsProp = System.getProperty(SC_GRAPHVIZ_OPTS);
-    if (!Utility.isBlank(scGraphVizOptsProp))
-    {
-      LOGGER
-        .log(Level.CONFIG,
-             "Using additional GraphViz command-line options from SC_GRAPHVIZ_OPTS system property, "
-                 + scGraphVizOptsProp);
-      return scGraphVizOptsProp;
-    }
-
-    final String scGraphVizOptsEnv = System.getenv(SC_GRAPHVIZ_OPTS);
-    if (!Utility.isBlank(scGraphVizOptsEnv))
-    {
-      LOGGER
-        .log(Level.CONFIG,
-             "Using additional GraphViz command-line options from SC_GRAPHVIZ_OPTS environmental variable, "
-                 + scGraphVizOptsEnv);
-      return scGraphVizOptsEnv;
-    }
-
-    return "";
+    this.isShowPrimaryKeyCardinality = isShowPrimaryKeyCardinality;
   }
 
 }

@@ -143,7 +143,8 @@ public final class SchemaTextExecutable
   {
     if (schemaTextOptions == null)
     {
-      schemaTextOptions = new SchemaTextOptions(additionalConfiguration);
+      schemaTextOptions = new SchemaTextOptionsBuilder()
+        .setFromConfig(additionalConfiguration).toOptions();
     }
   }
 

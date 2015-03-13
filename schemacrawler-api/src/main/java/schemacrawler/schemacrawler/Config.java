@@ -54,6 +54,10 @@ public final class Config
   implements Options
 {
 
+  private static final long serialVersionUID = 8720699738076915453L;
+
+  private static final Logger LOGGER = Logger.getLogger(Config.class.getName());
+
   /**
    * Loads the SchemaCrawler configuration, and override configuration,
    * from properties files.
@@ -190,10 +194,6 @@ public final class Config
     }
     return propertiesMap;
   }
-
-  private static final long serialVersionUID = 8720699738076915453L;
-
-  private static final Logger LOGGER = Logger.getLogger(Config.class.getName());
 
   /**
    * Creates an empty config.
@@ -389,12 +389,42 @@ public final class Config
     return super.containsKey(propertyName);
   }
 
+  public void setBooleanValue(final String propertyName, final boolean value)
+  {
+    put(propertyName, Boolean.toString(value));
+  }
+
   public void setDefaultValue(final String propertyName,
                               final String defaultValue)
   {
     if (get(propertyName) == null)
     {
       put(propertyName, defaultValue);
+    }
+  }
+
+  public <E extends Enum<E>> void setEnumValue(final String propertyName,
+                                               final E value)
+  {
+    if (value == null)
+    {
+      remove(propertyName);
+    }
+    else
+    {
+      put(propertyName, value.name());
+    }
+  }
+
+  public void setStringValue(final String propertyName, final String value)
+  {
+    if (value == null)
+    {
+      remove(propertyName);
+    }
+    else
+    {
+      put(propertyName, value);
     }
   }
 
