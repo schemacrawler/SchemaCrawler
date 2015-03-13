@@ -20,6 +20,8 @@
 package schemacrawler.tools.integration.graph;
 
 
+import static sf.util.Utility.join;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
@@ -92,7 +94,7 @@ public class GraphOptionsBuilder
     config.setEnumValue(GRAPH_DETAILS, options.getSchemaTextDetailType());
 
     config.setStringValue(GRAPH_GRAPHVIZ_OPTS,
-                          flattenGraphVizOpts(options.getGraphVizOpts()));
+                          join(options.getGraphVizOpts(), " "));
 
     return config;
   }
@@ -101,28 +103,6 @@ public class GraphOptionsBuilder
   public GraphOptions toOptions()
   {
     return (GraphOptions) super.toOptions();
-  }
-
-  private String flattenGraphVizOpts(final List<String> graphVizOptions)
-  {
-    if (graphVizOptions == null || graphVizOptions.isEmpty())
-    {
-      return null;
-    }
-
-    final int numOptions = graphVizOptions.size() - 1;
-    final StringBuilder buffer = new StringBuilder();
-    for (int i = 0;; i++)
-    {
-      buffer.append(graphVizOptions.get(i));
-      if (i == numOptions)
-      {
-        break;
-      }
-      buffer.append(" ");
-    }
-
-    return buffer.toString();
   }
 
   private List<String> listGraphVizOpts(final String graphVizOptions)

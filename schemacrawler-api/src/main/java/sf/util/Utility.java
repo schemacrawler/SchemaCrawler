@@ -29,7 +29,9 @@ import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Handler;
 import java.util.logging.Level;
@@ -44,6 +46,15 @@ import java.util.regex.Pattern;
  */
 public final class Utility
 {
+
+  private static final Logger LOGGER = Logger
+    .getLogger(Utility.class.getName());
+
+  private static final Pattern containsWhitespacePattern = Pattern
+    .compile(".*\\s.*");
+
+  private static final Pattern isAllWhitespacePattern = Pattern
+    .compile("^\\s*$");
 
   public static String commonPrefix(final String string1, final String string2)
   {
@@ -172,6 +183,28 @@ public final class Utility
     return text != null && text.equals(text.toLowerCase());
   }
 
+  public static String join(final Collection<String> collection,
+                            final String separator)
+  {
+    if (collection == null || collection.isEmpty())
+    {
+      return null;
+    }
+
+    final StringBuilder buffer = new StringBuilder();
+    for (final Iterator<String> iterator = collection.iterator(); iterator
+      .hasNext();)
+    {
+      buffer.append(iterator.next());
+      if (iterator.hasNext())
+      {
+        buffer.append(separator);
+      }
+    }
+
+    return buffer.toString();
+  }
+
   public static String readFully(final InputStream stream)
   {
     if (stream == null)
@@ -266,15 +299,6 @@ public final class Utility
     }
     return -1;
   }
-
-  private static final Logger LOGGER = Logger
-    .getLogger(Utility.class.getName());
-
-  private static final Pattern containsWhitespacePattern = Pattern
-    .compile(".*\\s.*");
-
-  private static final Pattern isAllWhitespacePattern = Pattern
-    .compile("^\\s*$");
 
   private Utility()
   { // Prevent instantiation
