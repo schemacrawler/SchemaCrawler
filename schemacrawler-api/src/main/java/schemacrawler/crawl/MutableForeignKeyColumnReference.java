@@ -32,14 +32,21 @@ import schemacrawler.schema.ForeignKeyColumnReference;
  * @author Sualeh Fatehi
  */
 final class MutableForeignKeyColumnReference
+  extends BaseColumnReference
   implements ForeignKeyColumnReference
 {
 
   private static final long serialVersionUID = 3689073962672273464L;
 
-  private Column foreignKeyColumn;
-  private Column primaryKeyColumn;
-  private int keySequence;
+  private final int keySequence;
+
+  MutableForeignKeyColumnReference(final int keySequence,
+                                   final Column primaryKeyColumn,
+                                   final Column foreignKeyColumn)
+  {
+    super(primaryKeyColumn, foreignKeyColumn);
+    this.keySequence = keySequence;
+  }
 
   /**
    * {@inheritDoc}
@@ -47,48 +54,19 @@ final class MutableForeignKeyColumnReference
   @Override
   public int compareTo(final ColumnReference other1)
   {
-    if (other1 == null)
-    {
-      return -1;
-    }
-    if (!(other1 instanceof ForeignKeyColumnReference))
-    {
-      return -1;
-    }
-
-    final ForeignKeyColumnReference other = (ForeignKeyColumnReference) other1;
-
     int comparison = 0;
 
+    final ForeignKeyColumnReference other = (ForeignKeyColumnReference) other1;
     if (comparison == 0)
     {
       comparison = getKeySequence() - other.getKeySequence();
     }
-    // Note: For the primary key and foreign key columns, compare by
-    // name.
     if (comparison == 0)
     {
-      comparison = getPrimaryKeyColumn().getFullName().compareTo(other
-        .getPrimaryKeyColumn().getFullName());
-    }
-    if (comparison == 0)
-    {
-      comparison = getForeignKeyColumn().getFullName().compareTo(other
-        .getForeignKeyColumn().getFullName());
+      comparison = super.compareTo(other1);
     }
 
     return comparison;
-  }
-
-  /**
-   * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.ForeignKeyColumnReference#getForeignKeyColumn()
-   */
-  @Override
-  public Column getForeignKeyColumn()
-  {
-    return foreignKeyColumn;
   }
 
   /**
@@ -100,38 +78,6 @@ final class MutableForeignKeyColumnReference
   public int getKeySequence()
   {
     return keySequence;
-  }
-
-  /**
-   * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.ForeignKeyColumnReference#getPrimaryKeyColumn()
-   */
-  @Override
-  public Column getPrimaryKeyColumn()
-  {
-    return primaryKeyColumn;
-  }
-
-  void setForeignKeyColumn(final Column foreignKeyColumn)
-  {
-    this.foreignKeyColumn = foreignKeyColumn;
-  }
-
-  void setKeySequence(final int keySequence)
-  {
-    this.keySequence = keySequence;
-  }
-
-  void setPrimaryKeyColumn(final Column primaryKeyColumn)
-  {
-    this.primaryKeyColumn = primaryKeyColumn;
-  }
-
-  @Override
-  public String toString()
-  {
-    return primaryKeyColumn + " --> " + foreignKeyColumn;
   }
 
 }

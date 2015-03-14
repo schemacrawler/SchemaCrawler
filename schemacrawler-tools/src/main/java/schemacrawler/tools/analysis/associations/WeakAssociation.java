@@ -20,8 +20,8 @@
 package schemacrawler.tools.analysis.associations;
 
 
+import schemacrawler.crawl.BaseColumnReference;
 import schemacrawler.schema.Column;
-import schemacrawler.schema.ColumnReference;
 
 /**
  * Represents a single column mapping from a primary key column to a
@@ -30,114 +30,20 @@ import schemacrawler.schema.ColumnReference;
  * @author Sualeh Fatehi
  */
 public final class WeakAssociation
-  implements ColumnReference, Comparable<ColumnReference>
+  extends BaseColumnReference
 {
 
   private static final long serialVersionUID = -4411771492159843382L;
 
-  private final Column foreignKeyColumn;
-  private final Column primaryKeyColumn;
-
   WeakAssociation(final Column primaryKeyColumn, final Column foreignKeyColumn)
   {
-    this.primaryKeyColumn = primaryKeyColumn;
-    this.foreignKeyColumn = foreignKeyColumn;
-  }
-
-  @Override
-  public int compareTo(final ColumnReference o)
-  {
-    int compare = 0;
-    if (compare == 0)
-    {
-      compare = primaryKeyColumn.compareTo(o.getPrimaryKeyColumn());
-    }
-    if (compare == 0)
-    {
-      compare = foreignKeyColumn.compareTo(o.getForeignKeyColumn());
-    }
-    return compare;
-  }
-
-  @Override
-  public boolean equals(final Object obj)
-  {
-    if (this == obj)
-    {
-      return true;
-    }
-    if (obj == null)
-    {
-      return false;
-    }
-    if (getClass() != obj.getClass())
-    {
-      return false;
-    }
-    final WeakAssociation other = (WeakAssociation) obj;
-    if (foreignKeyColumn == null)
-    {
-      if (other.foreignKeyColumn != null)
-      {
-        return false;
-      }
-    }
-    else if (!foreignKeyColumn.equals(other.foreignKeyColumn))
-    {
-      return false;
-    }
-    if (primaryKeyColumn == null)
-    {
-      if (other.primaryKeyColumn != null)
-      {
-        return false;
-      }
-    }
-    else if (!primaryKeyColumn.equals(other.primaryKeyColumn))
-    {
-      return false;
-    }
-    return true;
-  }
-
-  /**
-   * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.ForeignKeyColumnReference#getForeignKeyColumn()
-   */
-  @Override
-  public Column getForeignKeyColumn()
-  {
-    return foreignKeyColumn;
-  }
-
-  /**
-   * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.ForeignKeyColumnReference#getPrimaryKeyColumn()
-   */
-  @Override
-  public Column getPrimaryKeyColumn()
-  {
-    return primaryKeyColumn;
-  }
-
-  @Override
-  public int hashCode()
-  {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result
-             + (foreignKeyColumn == null? 0: foreignKeyColumn.hashCode());
-    result = prime * result
-             + (primaryKeyColumn == null? 0: primaryKeyColumn.hashCode());
-    return result;
+    super(primaryKeyColumn, foreignKeyColumn);
   }
 
   @Override
   public String toString()
   {
-    return primaryKeyColumn + " ~~> " + foreignKeyColumn;
+    return getPrimaryKeyColumn() + " ~~> " + getForeignKeyColumn();
   }
 
 }
