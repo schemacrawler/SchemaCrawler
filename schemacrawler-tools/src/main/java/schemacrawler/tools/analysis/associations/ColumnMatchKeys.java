@@ -45,6 +45,12 @@ final class ColumnMatchKeys
     return columnMatchKeys;
   }
 
+  @Override
+  public String toString()
+  {
+    return String.format("%s: %s", column, columnMatchKeys);
+  }
+
   private List<String> columnMatchKeys(final Column column)
   {
     final List<String> matchMap = new ArrayList<>();
@@ -63,12 +69,6 @@ final class ColumnMatchKeys
     matchMap.add(matchColumnName);
 
     return matchMap;
-  }
-
-  @Override
-  public String toString()
-  {
-    return String.format("%s: %s", column, columnMatchKeys);
   }
 
 }

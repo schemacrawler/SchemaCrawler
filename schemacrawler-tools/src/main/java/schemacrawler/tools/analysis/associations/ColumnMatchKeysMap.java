@@ -56,6 +56,12 @@ final class ColumnMatchKeysMap
     return columnMatchKeysMap.get(columnKey);
   }
 
+  @Override
+  public String toString()
+  {
+    return columnMatchKeysMap.toString();
+  }
+
   private void mapColumnNameMatches(final Table table)
   {
     for (final Column column: table.getColumns())
@@ -76,12 +82,6 @@ final class ColumnMatchKeysMap
         columnMatchKeysMap.add(matchColumnName, column);
       }
     }
-  }
-
-  @Override
-  public String toString()
-  {
-    return columnMatchKeysMap.toString();
   }
 
 }

@@ -52,8 +52,8 @@ public final class WeakAssociation
       return false;
     }
 
-    Table pkTable = primaryKeyColumn.getParent();
-    Table fkTable = foreignKeyColumn.getParent();
+    final Table pkTable = primaryKeyColumn.getParent();
+    final Table fkTable = foreignKeyColumn.getParent();
     if ((foreignKeyColumn.isPartOfPrimaryKey() || foreignKeyColumn
       .isPartOfUniqueIndex()) && pkTable.compareTo(fkTable) == 1)
     {
