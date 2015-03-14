@@ -28,6 +28,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import schemacrawler.schema.Column;
+import schemacrawler.schema.Index;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Table;
 
@@ -64,6 +65,14 @@ final class TableCandidateKeys
     if (primaryKey != null && primaryKey.getColumns().size() == 1)
     {
       tableKeys.add(primaryKey.getColumns().get(0));
+    }
+
+    for (final Index index: table.getIndices())
+    {
+      if (index != null && index.isUnique() && index.getColumns().size() == 1)
+      {
+        tableKeys.add(index.getColumns().get(0));
+      }
     }
 
     return tableKeys;
