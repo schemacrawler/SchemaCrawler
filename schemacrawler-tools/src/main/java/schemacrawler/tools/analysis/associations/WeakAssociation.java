@@ -23,6 +23,7 @@ package schemacrawler.tools.analysis.associations;
 import schemacrawler.crawl.BaseColumnReference;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
+import schemacrawler.schema.Table;
 
 /**
  * Represents a single column mapping from a primary key column to a
@@ -47,6 +48,14 @@ public final class WeakAssociation
     final Column foreignKeyColumn = getForeignKeyColumn();
 
     if (primaryKeyColumn.equals(foreignKeyColumn))
+    {
+      return false;
+    }
+
+    Table pkTable = primaryKeyColumn.getParent();
+    Table fkTable = foreignKeyColumn.getParent();
+    if ((foreignKeyColumn.isPartOfPrimaryKey() || foreignKeyColumn
+      .isPartOfUniqueIndex()) && pkTable.compareTo(fkTable) == 1)
     {
       return false;
     }

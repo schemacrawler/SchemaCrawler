@@ -65,4 +65,10 @@ final class ColumnMatchKeys
     return matchMap;
   }
 
+  @Override
+  public String toString()
+  {
+    return String.format("%s: %s", column, columnMatchKeys);
+  }
+
 }
