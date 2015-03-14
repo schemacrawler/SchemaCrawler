@@ -37,7 +37,6 @@ import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnReference;
-import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Table;
 
 final class WeakAssociationsAnalyzer
@@ -102,18 +101,15 @@ final class WeakAssociationsAnalyzer
   {
     for (final Table table: tables)
     {
-      final Map<String, Column> columnNameMatchesMap = mapColumnNameMatches(table);
-
-      for (final Map.Entry<String, Column> columnEntry: columnNameMatchesMap
-        .entrySet())
+      final ColumnKeys columnKeys = new ColumnKeys(table);
+      for (String matchColumnName: columnKeys)
       {
-        final String matchColumnName = columnEntry.getKey();
         final List<Table> matchedTables = tablePrimaries.get(matchColumnName);
         if (matchedTables != null)
         {
           for (final Table matchedTable: matchedTables)
           {
-            final Column fkColumn = columnEntry.getValue();
+            final Column fkColumn = columnKeys.get(matchColumnName);
             if (matchedTable != null && fkColumn != null
                 && !fkColumn.getParent().equals(matchedTable))
             {
@@ -126,23 +122,25 @@ final class WeakAssociationsAnalyzer
                     .equals(matchedTable))
               {
                 // Ensure that we associate to the primary key
-                final Map<String, Column> pkColumnNameMatchesMap = mapColumnNameMatches(matchedTable);
-                final Column pkColumn = pkColumnNameMatchesMap.get("id");
-                if (pkColumn != null)
+                final TableCandidateKeys tableCandidateKeys = new TableCandidateKeys(matchedTable);
+                for (Column pkColumn: tableCandidateKeys)
                 {
-                  final ColumnDataType fkColumnType = fkColumn
-                    .getColumnDataType();
-                  final ColumnDataType pkColumnType = pkColumn
-                    .getColumnDataType();
-                  if (pkColumnType != null
-                      && fkColumnType != null
-                      && fkColumnType
-                        .getJavaSqlType()
-                        .getJavaSqlTypeName()
-                        .equals(pkColumnType.getJavaSqlType()
-                          .getJavaSqlTypeName()))
+                  if (pkColumn != null)
                   {
-                    addWeakAssociation(fkColumn, pkColumn);
+                    final ColumnDataType fkColumnType = fkColumn
+                      .getColumnDataType();
+                    final ColumnDataType pkColumnType = pkColumn
+                      .getColumnDataType();
+                    if (pkColumnType != null
+                        && fkColumnType != null
+                        && fkColumnType
+                          .getJavaSqlType()
+                          .getJavaSqlTypeName()
+                          .equals(pkColumnType.getJavaSqlType()
+                            .getJavaSqlTypeName()))
+                    {
+                      addWeakAssociation(fkColumn, pkColumn);
+                    }
                   }
                 }
               }
@@ -151,35 +149,6 @@ final class WeakAssociationsAnalyzer
         }
       }
     }
-  }
-
-  private Map<String, Column> mapColumnNameMatches(final Table table)
-  {
-    final Map<String, Column> matchMap = new HashMap<>();
-
-    final PrimaryKey primaryKey = table.getPrimaryKey();
-    if (primaryKey != null && primaryKey.getColumns().size() == 1)
-    {
-      matchMap.put("id", primaryKey.getColumns().get(0));
-    }
-
-    for (final Column column: table.getColumns())
-    {
-      String matchColumnName = column.getName().toLowerCase();
-      if (matchColumnName.endsWith("_id"))
-      {
-        matchColumnName = matchColumnName
-          .substring(0, matchColumnName.length() - 3);
-      }
-      if (matchColumnName.endsWith("id") && !matchColumnName.equals("id"))
-      {
-        matchColumnName = matchColumnName
-          .substring(0, matchColumnName.length() - 2);
-      }
-      matchMap.put(matchColumnName, column);
-    }
-
-    return matchMap;
   }
 
   private Map<String, ForeignKeyColumnReference> mapForeignKeyColumns(final List<Table> tables)
