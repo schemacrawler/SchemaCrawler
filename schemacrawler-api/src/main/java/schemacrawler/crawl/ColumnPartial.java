@@ -149,6 +149,12 @@ final class ColumnPartial
     throw new NotLoadedException();
   }
 
+  @Override
+  public boolean isPartOfUniqueIndex()
+  {
+    throw new NotLoadedException();
+  }
+
   void setReferencedColumn(final Column referencedColumn)
   {
     this.referencedColumn = referencedColumn;

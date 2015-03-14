@@ -260,6 +260,17 @@ final class MutableIndexColumn
     return column.isPartOfPrimaryKey();
   }
 
+  /**
+   * {@inheritDoc}
+   *
+   * @see schemacrawler.schema.Column#isPartOfUniqueIndex()
+   */
+  @Override
+  public boolean isPartOfUniqueIndex()
+  {
+    return column.isPartOfUniqueIndex();
+  }
+
   void setIndexOrdinalPosition(final int indexOrdinalPosition)
   {
     this.indexOrdinalPosition = indexOrdinalPosition;
