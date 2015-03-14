@@ -22,6 +22,7 @@ package schemacrawler.tools.analysis.associations;
 
 
 import static java.util.Objects.requireNonNull;
+import static sf.util.Utility.isBlank;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -40,16 +41,16 @@ import sf.util.Multimap;
 import sf.util.ObjectToString;
 import sf.util.Utility;
 
-final class TablePrimaries
+final class TableMatchKeys
 {
 
-  private static final Logger LOGGER = Logger.getLogger(TablePrimaries.class
+  private static final Logger LOGGER = Logger.getLogger(TableMatchKeys.class
     .getName());
 
   private final List<Table> tables;
-  private final Multimap<String, Table> tableKeys;
+  private final Multimap<Table, String> tableKeys;
 
-  TablePrimaries(final List<Table> tables)
+  TableMatchKeys(final List<Table> tables)
   {
     this.tables = requireNonNull(tables);
     tableKeys = new Multimap<>();
@@ -57,9 +58,9 @@ final class TablePrimaries
     analyzeTables();
   }
 
-  public List<Table> get(final String tableKey)
+  public List<String> get(final Table table)
   {
-    return tableKeys.get(tableKey);
+    return tableKeys.get(table);
   }
 
   private void analyzeTables()
@@ -210,11 +211,13 @@ final class TablePrimaries
         {
           matchTableName = matchTableName.substring(prefix.length());
           matchTableName = Inflection.singularize(matchTableName);
-          tableKeys.add(matchTableName, table);
+          if (!isBlank(matchTableName))
+          {
+            tableKeys.add(table, matchTableName);
+          }
         }
       }
     }
-    tableKeys.remove("");
   }
 
 }
