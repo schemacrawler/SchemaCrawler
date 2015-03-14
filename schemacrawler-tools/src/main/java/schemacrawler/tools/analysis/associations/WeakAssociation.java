@@ -55,7 +55,7 @@ public final class WeakAssociation
     final Table pkTable = primaryKeyColumn.getParent();
     final Table fkTable = foreignKeyColumn.getParent();
     if ((foreignKeyColumn.isPartOfPrimaryKey() || foreignKeyColumn
-      .isPartOfUniqueIndex()) && pkTable.compareTo(fkTable) == 1)
+      .isPartOfUniqueIndex()) && pkTable.compareTo(fkTable) > 0)
     {
       return false;
     }
@@ -70,7 +70,7 @@ public final class WeakAssociation
   @Override
   public String toString()
   {
-    return getPrimaryKeyColumn() + " ~~> " + getForeignKeyColumn();
+    return getPrimaryKeyColumn() + " <~~ " + getForeignKeyColumn();
   }
 
 }
