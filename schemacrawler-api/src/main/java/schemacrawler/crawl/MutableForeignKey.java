@@ -134,10 +134,9 @@ class MutableForeignKey
                           final Column pkColumn,
                           final Column fkColumn)
   {
-    final MutableForeignKeyColumnReference fkColumnReference = new MutableForeignKeyColumnReference();
-    fkColumnReference.setKeySequence(keySequence);
-    fkColumnReference.setPrimaryKeyColumn(pkColumn);
-    fkColumnReference.setForeignKeyColumn(fkColumn);
+    final MutableForeignKeyColumnReference fkColumnReference = new MutableForeignKeyColumnReference(keySequence,
+                                                                                                    pkColumn,
+                                                                                                    fkColumn);
     columnReferences.add(fkColumnReference);
   }
 
