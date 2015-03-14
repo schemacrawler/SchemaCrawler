@@ -492,6 +492,11 @@ final class TableRetriever
           }
 
           column.markAsPartOfIndex();
+          if (uniqueIndex)
+          {
+            column.markAsPartOfUniqueIndex();
+          }
+
           final MutableIndexColumn indexColumn = new MutableIndexColumn(index,
                                                                         column);
           indexColumn.setIndexOrdinalPosition(ordinalPosition);

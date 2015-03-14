@@ -249,6 +249,17 @@ final class MutableTableConstraintColumn
     return column.isPartOfPrimaryKey();
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.Column#isPartOfUniqueIndex()
+   */
+  @Override
+  public boolean isPartOfUniqueIndex()
+  {
+    return column.isPartOfUniqueIndex();
+  }
+
   void setTableConstraintOrdinalPosition(final int indexOrdinalPosition)
   {
     tableConstraintOrdinalPosition = indexOrdinalPosition;

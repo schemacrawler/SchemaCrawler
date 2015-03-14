@@ -45,6 +45,7 @@ class MutableColumn
   private boolean isAutoIncremented;
   private boolean isGenerated;
   private boolean isPartOfPrimaryKey;
+  private boolean isPartOfUniqueIndex;
   private boolean isPartOfIndex;
   private Column referencedColumn;
   private final NamedObjectList<MutablePrivilege<Column>> privileges = new NamedObjectList<>();
@@ -149,6 +150,17 @@ class MutableColumn
     return isPartOfPrimaryKey;
   }
 
+  /**
+   * {@inheritDoc}
+   *
+   * @see schemacrawler.schema.Column#isPartOfUniqueIndex()
+   */
+  @Override
+  public boolean isPartOfUniqueIndex()
+  {
+    return isPartOfUniqueIndex;
+  }
+
   void addPrivilege(final MutablePrivilege<Column> privilege)
   {
     privileges.add(privilege);
@@ -162,6 +174,11 @@ class MutableColumn
   void markAsPartOfPrimaryKey()
   {
     isPartOfPrimaryKey = true;
+  }
+
+  void markAsPartOfUniqueIndex()
+  {
+    isPartOfUniqueIndex = true;
   }
 
   /**

@@ -48,6 +48,7 @@ final class TableMatchKeys
     .getName());
 
   private final List<Table> tables;
+
   private final Multimap<Table, String> tableKeys;
 
   TableMatchKeys(final List<Table> tables)
@@ -61,6 +62,12 @@ final class TableMatchKeys
   public List<String> get(final Table table)
   {
     return tableKeys.get(table);
+  }
+
+  @Override
+  public String toString()
+  {
+    return tableKeys.toString();
   }
 
   private void analyzeTables()
