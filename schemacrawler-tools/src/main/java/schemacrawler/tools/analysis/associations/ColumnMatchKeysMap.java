@@ -23,48 +23,41 @@ package schemacrawler.tools.analysis.associations;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.List;
 
 import schemacrawler.schema.Column;
-import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Table;
+import sf.util.Multimap;
 
-final class ColumnKeys
-  implements Iterable<String>
+final class ColumnMatchKeysMap
 {
 
-  private final Table table;
-  private final Map<String, Column> columnKeyMap;
+  private final List<Table> tables;
+  private final Multimap<String, Column> columnMatchKeysMap;
 
-  ColumnKeys(final Table table)
+  ColumnMatchKeysMap(final List<Table> tables)
   {
-    this.table = requireNonNull(table);
-    columnKeyMap = mapColumnNameMatches(table);
-  }
+    this.tables = requireNonNull(tables);
+    columnMatchKeysMap = new Multimap<>();
 
-  public Column get(final String columnKey)
-  {
-    return columnKeyMap.get(columnKey);
-  }
-
-  @Override
-  public Iterator<String> iterator()
-  {
-    return columnKeyMap.keySet().iterator();
-  }
-
-  private Map<String, Column> mapColumnNameMatches(final Table table)
-  {
-    final Map<String, Column> matchMap = new HashMap<>();
-
-    final PrimaryKey primaryKey = table.getPrimaryKey();
-    if (primaryKey != null && primaryKey.getColumns().size() == 1)
+    for (final Table table: tables)
     {
-      matchMap.put("id", primaryKey.getColumns().get(0));
+      mapColumnNameMatches(table);
     }
+  }
 
+  public boolean containsKey(final String columnKey)
+  {
+    return columnMatchKeysMap.containsKey(columnKey);
+  }
+
+  public List<Column> get(final String columnKey)
+  {
+    return columnMatchKeysMap.get(columnKey);
+  }
+
+  private void mapColumnNameMatches(final Table table)
+  {
     for (final Column column: table.getColumns())
     {
       String matchColumnName = column.getName().toLowerCase();
@@ -78,16 +71,11 @@ final class ColumnKeys
         matchColumnName = matchColumnName
           .substring(0, matchColumnName.length() - 2);
       }
-      matchMap.put(matchColumnName, column);
+      if (!matchColumnName.equals("id"))
+      {
+        columnMatchKeysMap.add(matchColumnName, column);
+      }
     }
-
-    return matchMap;
-  }
-
-  @Override
-  public String toString()
-  {
-    return String.format("%s: %s", table, columnKeyMap);
   }
 
 }

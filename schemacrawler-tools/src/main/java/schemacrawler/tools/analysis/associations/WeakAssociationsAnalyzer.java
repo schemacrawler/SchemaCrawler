@@ -25,7 +25,9 @@ import static schemacrawler.tools.analysis.associations.CatalogWithAssociations.
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,7 +40,7 @@ final class WeakAssociationsAnalyzer
 {
 
   private static final Logger LOGGER = Logger
-      .getLogger(WeakAssociationsAnalyzer.class.getName());
+    .getLogger(WeakAssociationsAnalyzer.class.getName());
 
   private final List<Table> tables;
   private final Collection<ColumnReference> weakAssociations;
@@ -56,9 +58,7 @@ final class WeakAssociationsAnalyzer
       return Collections.emptySet();
     }
 
-    final TablePrimaries tablePrimaries = new TablePrimaries(tables);
-    final ForeignKeys foreignKeys = new ForeignKeys(tables);
-    findWeakAssociations(tables, tablePrimaries, foreignKeys);
+    findWeakAssociations(tables);
 
     return weakAssociations;
   }
@@ -70,48 +70,50 @@ final class WeakAssociationsAnalyzer
       weakAssociations.add(weakAssociation);
 
       addWeakAssociationToTable(weakAssociation.getPrimaryKeyColumn()
-                                .getParent(), weakAssociation);
+        .getParent(), weakAssociation);
       addWeakAssociationToTable(weakAssociation.getForeignKeyColumn()
-                                .getParent(), weakAssociation);
+        .getParent(), weakAssociation);
     }
   }
 
-  private void findWeakAssociations(final List<Table> tables,
-                                    final TablePrimaries tablePrimaries,
-                                    final ForeignKeys foreignKeys)
+  private void findWeakAssociations(final List<Table> tables)
   {
+    final ForeignKeys foreignKeys = new ForeignKeys(tables);
+    final ColumnMatchKeysMap columnMatchKeysMap = new ColumnMatchKeysMap(tables);
+    final TableMatchKeys tableMatchKeys = new TableMatchKeys(tables);
     for (final Table table: tables)
     {
-      final ColumnKeys columnKeys = new ColumnKeys(table);
-      for (final String matchColumnName: columnKeys)
+      final TableCandidateKeys tableCandidateKeys = new TableCandidateKeys(table);
+      for (final Column pkColumn: tableCandidateKeys)
       {
-        final List<Table> matchedTables = tablePrimaries.get(matchColumnName);
-        if (matchedTables != null)
+        final Set<String> fkColumnMatchKeys = new HashSet<>();
+        // Look for all columns matching this table name
+        fkColumnMatchKeys.addAll(tableMatchKeys.get(table));
+        // Look for all columns matching this column name
+        final ColumnMatchKeys columnMatchKeys = new ColumnMatchKeys(pkColumn);
+        fkColumnMatchKeys.addAll(columnMatchKeys.get());
+
+        final Set<Column> fkColumns = new HashSet<>();
+        for (final String fkColumnMatchKey: fkColumnMatchKeys)
         {
-          for (final Table matchedTable: matchedTables)
+          if (columnMatchKeysMap.containsKey(fkColumnMatchKey))
           {
-            final Column fkColumn = columnKeys.get(matchColumnName);
-            if (matchedTable != null && fkColumn != null
-                && !fkColumn.getParent().equals(matchedTable))
+            fkColumns.addAll(columnMatchKeysMap.get(fkColumnMatchKey));
+          }
+        }
+
+        for (final Column fkColumn: fkColumns)
+        {
+          final WeakAssociation weakAssociation = new WeakAssociation(pkColumn,
+                                                                      fkColumn);
+          if (weakAssociation.isValid()
+              && !foreignKeys.contains(weakAssociation))
+          {
+            LOGGER.log(Level.FINE, String.format("Found weak association: %s",
+                                                 weakAssociation));
+            if (weakAssociations != null)
             {
-              final TableCandidateKeys tableCandidateKeys = new TableCandidateKeys(matchedTable);
-              for (final Column pkColumn: tableCandidateKeys)
-              {
-                final WeakAssociation weakAssociation = new WeakAssociation(pkColumn,
-                                                                            fkColumn);
-                if (weakAssociation.isValid()
-                    && !foreignKeys.contains(weakAssociation))
-                {
-                  LOGGER.log(Level.FINE, String
-                             .format("Found weak association: %s --> %s",
-                                     fkColumn.getFullName(),
-                                     pkColumn.getFullName()));
-                  if (weakAssociations != null)
-                  {
-                    addWeakAssociation(weakAssociation);
-                  }
-                }
-              }
+              addWeakAssociation(weakAssociation);
             }
           }
         }
