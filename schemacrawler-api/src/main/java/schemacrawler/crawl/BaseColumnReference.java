@@ -142,7 +142,7 @@ public abstract class BaseColumnReference
   @Override
   public String toString()
   {
-    return primaryKeyColumn + " --> " + foreignKeyColumn;
+    return primaryKeyColumn + " <-- " + foreignKeyColumn;
   }
 
 }
