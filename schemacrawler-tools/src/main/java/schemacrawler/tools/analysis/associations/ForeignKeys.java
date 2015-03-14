@@ -80,4 +80,10 @@ final class ForeignKeys
     return fkColumnsMap;
   }
 
+  @Override
+  public String toString()
+  {
+    return foreignKeys.toString();
+  }
+
 }

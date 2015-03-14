@@ -78,4 +78,10 @@ final class ColumnMatchKeysMap
     }
   }
 
+  @Override
+  public String toString()
+  {
+    return columnMatchKeysMap.toString();
+  }
+
 }
