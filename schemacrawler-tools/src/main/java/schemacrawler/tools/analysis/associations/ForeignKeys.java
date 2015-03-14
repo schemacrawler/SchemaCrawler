@@ -64,6 +64,12 @@ final class ForeignKeys
     return false;
   }
 
+  @Override
+  public String toString()
+  {
+    return foreignKeys.toString();
+  }
+
   private Collection<ColumnReference> mapForeignKeyColumns(final List<Table> tables)
   {
     final Collection<ColumnReference> fkColumnsMap = new HashSet<>();
@@ -78,12 +84,6 @@ final class ForeignKeys
       }
     }
     return fkColumnsMap;
-  }
-
-  @Override
-  public String toString()
-  {
-    return foreignKeys.toString();
   }
 
 }
