@@ -38,7 +38,7 @@ final class WeakAssociationsAnalyzer
 {
 
   private static final Logger LOGGER = Logger
-    .getLogger(WeakAssociationsAnalyzer.class.getName());
+      .getLogger(WeakAssociationsAnalyzer.class.getName());
 
   private final List<Table> tables;
   private final Collection<ColumnReference> weakAssociations;
@@ -70,9 +70,9 @@ final class WeakAssociationsAnalyzer
       weakAssociations.add(weakAssociation);
 
       addWeakAssociationToTable(weakAssociation.getPrimaryKeyColumn()
-        .getParent(), weakAssociation);
+                                .getParent(), weakAssociation);
       addWeakAssociationToTable(weakAssociation.getForeignKeyColumn()
-        .getParent(), weakAssociation);
+                                .getParent(), weakAssociation);
     }
   }
 
@@ -83,7 +83,7 @@ final class WeakAssociationsAnalyzer
     for (final Table table: tables)
     {
       final ColumnKeys columnKeys = new ColumnKeys(table);
-      for (String matchColumnName: columnKeys)
+      for (final String matchColumnName: columnKeys)
       {
         final List<Table> matchedTables = tablePrimaries.get(matchColumnName);
         if (matchedTables != null)
@@ -95,7 +95,7 @@ final class WeakAssociationsAnalyzer
                 && !fkColumn.getParent().equals(matchedTable))
             {
               final TableCandidateKeys tableCandidateKeys = new TableCandidateKeys(matchedTable);
-              for (Column pkColumn: tableCandidateKeys)
+              for (final Column pkColumn: tableCandidateKeys)
               {
                 final WeakAssociation weakAssociation = new WeakAssociation(pkColumn,
                                                                             fkColumn);
@@ -103,9 +103,9 @@ final class WeakAssociationsAnalyzer
                     && !foreignKeys.contains(weakAssociation))
                 {
                   LOGGER.log(Level.FINE, String
-                    .format("Found weak association: %s --> %s",
-                            fkColumn.getFullName(),
-                            pkColumn.getFullName()));
+                             .format("Found weak association: %s --> %s",
+                                     fkColumn.getFullName(),
+                                     pkColumn.getFullName()));
                   if (weakAssociations != null)
                   {
                     addWeakAssociation(weakAssociation);
@@ -118,4 +118,5 @@ final class WeakAssociationsAnalyzer
       }
     }
   }
+
 }
