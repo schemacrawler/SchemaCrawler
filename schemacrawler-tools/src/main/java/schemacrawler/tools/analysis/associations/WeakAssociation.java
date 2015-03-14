@@ -22,6 +22,7 @@ package schemacrawler.tools.analysis.associations;
 
 import schemacrawler.crawl.BaseColumnReference;
 import schemacrawler.schema.Column;
+import schemacrawler.schema.ColumnDataType;
 
 /**
  * Represents a single column mapping from a primary key column to a
@@ -38,6 +39,17 @@ public final class WeakAssociation
   WeakAssociation(final Column primaryKeyColumn, final Column foreignKeyColumn)
   {
     super(primaryKeyColumn, foreignKeyColumn);
+  }
+
+  public boolean isValid()
+  {
+    final ColumnDataType fkColumnType = getForeignKeyColumn()
+      .getColumnDataType();
+    final ColumnDataType pkColumnType = getPrimaryKeyColumn()
+      .getColumnDataType();
+    final boolean isValid = fkColumnType.getJavaSqlType().getJavaSqlTypeName()
+      .equals(pkColumnType.getJavaSqlType().getJavaSqlTypeName());
+    return isValid;
   }
 
   @Override

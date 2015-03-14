@@ -31,7 +31,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schema.Column;
-import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.Table;
 
@@ -95,37 +94,21 @@ final class WeakAssociationsAnalyzer
             if (matchedTable != null && fkColumn != null
                 && !fkColumn.getParent().equals(matchedTable))
             {
-              // Ensure that we associate to the primary key
               final TableCandidateKeys tableCandidateKeys = new TableCandidateKeys(matchedTable);
               for (Column pkColumn: tableCandidateKeys)
               {
-                if (pkColumn != null)
+                final WeakAssociation weakAssociation = new WeakAssociation(pkColumn,
+                                                                            fkColumn);
+                if (weakAssociation.isValid()
+                    && !foreignKeys.contains(weakAssociation))
                 {
-                  final ColumnDataType fkColumnType = fkColumn
-                    .getColumnDataType();
-                  final ColumnDataType pkColumnType = pkColumn
-                    .getColumnDataType();
-                  if (pkColumnType != null
-                      && fkColumnType != null
-                      && fkColumnType
-                        .getJavaSqlType()
-                        .getJavaSqlTypeName()
-                        .equals(pkColumnType.getJavaSqlType()
-                          .getJavaSqlTypeName()))
+                  LOGGER.log(Level.FINE, String
+                    .format("Found weak association: %s --> %s",
+                            fkColumn.getFullName(),
+                            pkColumn.getFullName()));
+                  if (weakAssociations != null)
                   {
-                    final ColumnReference weakAssociation = new WeakAssociation(pkColumn,
-                                                                                fkColumn);
-                    if (!foreignKeys.contains(weakAssociation))
-                    {
-                      LOGGER.log(Level.FINE, String
-                        .format("Found weak association: %s --> %s",
-                                fkColumn.getFullName(),
-                                pkColumn.getFullName()));
-                      if (weakAssociations != null)
-                      {
-                        addWeakAssociation(weakAssociation);
-                      }
-                    }
+                    addWeakAssociation(weakAssociation);
                   }
                 }
               }
@@ -135,5 +118,4 @@ final class WeakAssociationsAnalyzer
       }
     }
   }
-
 }
