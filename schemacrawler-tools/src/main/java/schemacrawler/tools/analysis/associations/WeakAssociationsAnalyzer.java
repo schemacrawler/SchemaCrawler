@@ -23,16 +23,11 @@ package schemacrawler.tools.analysis.associations;
 
 import static schemacrawler.tools.analysis.associations.CatalogWithAssociations.addWeakAssociationToTable;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.SortedMap;
-import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -44,9 +39,6 @@ import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Table;
-import sf.util.Multimap;
-import sf.util.ObjectToString;
-import sf.util.Utility;
 
 final class WeakAssociationsAnalyzer
 {
@@ -70,19 +62,9 @@ final class WeakAssociationsAnalyzer
       return Collections.emptySet();
     }
 
-    final Collection<String> prefixes = findTableNamePrefixes(tables);
-    final Multimap<String, Table> tableMatchMap = mapTableNameMatches(tables,
-                                                                      prefixes);
-    if (LOGGER.isLoggable(Level.FINE))
-    {
-      LOGGER.log(Level.FINE, "Table prefixes=" + prefixes);
-      LOGGER.log(Level.FINE,
-                 "Table matches map:" + ObjectToString.toString(tableMatchMap));
-    }
-
+    final TablePrimaries tablePrimaries = new TablePrimaries(tables);
     final Map<String, ForeignKeyColumnReference> fkColumnsMap = mapForeignKeyColumns(tables);
-
-    findWeakAssociations(tables, tableMatchMap, fkColumnsMap);
+    findWeakAssociations(tables, tablePrimaries, fkColumnsMap);
 
     return weakAssociations;
   }
@@ -114,126 +96,8 @@ final class WeakAssociationsAnalyzer
     }
   }
 
-  /**
-   * Finds table prefixes. A prefix ends with "_".
-   *
-   * @param tables
-   *        Tables
-   * @return Table name prefixes
-   */
-  private Collection<String> findTableNamePrefixes(final List<Table> tables)
-  {
-    final SortedMap<String, Integer> prefixesMap = new TreeMap<>();
-    for (int i = 0; i < tables.size(); i++)
-    {
-      for (int j = i + 1; j < tables.size(); j++)
-      {
-        final String table1 = tables.get(i).getName();
-        final String table2 = tables.get(j).getName();
-        final String commonPrefix = Utility.commonPrefix(table1, table2);
-        if (!Utility.isBlank(commonPrefix) && commonPrefix.endsWith("_"))
-        {
-          final List<String> splitCommonPrefixes = new ArrayList<>();
-          final String[] splitPrefix = commonPrefix.split("_");
-          if (splitPrefix != null && splitPrefix.length > 0)
-          {
-            for (int k = 0; k < splitPrefix.length; k++)
-            {
-              final StringBuilder buffer = new StringBuilder();
-              for (int l = 0; l < k; l++)
-              {
-                buffer.append(splitPrefix[l]).append("_");
-              }
-              if (buffer.length() > 0)
-              {
-                splitCommonPrefixes.add(buffer.toString());
-              }
-            }
-          }
-          splitCommonPrefixes.add(commonPrefix);
-
-          for (final String splitCommonPrefix: splitCommonPrefixes)
-          {
-            final int prevCount;
-            if (prefixesMap.containsKey(splitCommonPrefix))
-            {
-              prevCount = prefixesMap.get(splitCommonPrefix);
-            }
-            else
-            {
-              prevCount = 0;
-            }
-            prefixesMap.put(splitCommonPrefix, prevCount + 1);
-          }
-        }
-      }
-    }
-
-    // Make sure we have the smallest prefixes
-    final List<String> keySet = new ArrayList<>(prefixesMap.keySet());
-    Collections.sort(keySet, new Comparator<String>()
-    {
-
-      @Override
-      public int compare(final String o1, final String o2)
-      {
-        int comparison = 0;
-        comparison = o2.length() - o1.length();
-        if (comparison == 0)
-        {
-          comparison = o2.compareTo(o1);
-        }
-        return comparison;
-      }
-
-    });
-    for (int i = 0; i < keySet.size(); i++)
-    {
-      for (int j = i + 1; j < keySet.size(); j++)
-      {
-        final String longPrefix = keySet.get(i);
-        if (longPrefix.startsWith(keySet.get(j)))
-        {
-          prefixesMap.remove(longPrefix);
-          break;
-        }
-      }
-    }
-
-    // Sort prefixes by the number of tables using them, in descending
-    // order
-    final List<Map.Entry<String, Integer>> prefixesList = new ArrayList<>(prefixesMap
-      .entrySet());
-    Collections.sort(prefixesList, new Comparator<Map.Entry<String, Integer>>()
-    {
-
-      @Override
-      public int compare(final Entry<String, Integer> o1,
-                         final Entry<String, Integer> o2)
-      {
-        return o1.getValue().compareTo(o2.getValue());
-      }
-    });
-
-    // Reduce the number of prefixes in use
-    final List<String> prefixes = new ArrayList<>();
-    for (int i = 0; i < prefixesList.size(); i++)
-    {
-      final boolean add = i < 5
-                          || prefixesList.get(i).getValue() > prefixesMap
-                            .size() * 0.5;
-      if (add)
-      {
-        prefixes.add(prefixesList.get(i).getKey());
-      }
-    }
-    prefixes.add("");
-
-    return prefixes;
-  }
-
   private void findWeakAssociations(final List<Table> tables,
-                                    final Multimap<String, Table> tableMatchMap,
+                                    final TablePrimaries tablePrimaries,
                                     final Map<String, ForeignKeyColumnReference> fkColumnsMap)
   {
     for (final Table table: tables)
@@ -244,7 +108,7 @@ final class WeakAssociationsAnalyzer
         .entrySet())
       {
         final String matchColumnName = columnEntry.getKey();
-        final List<Table> matchedTables = tableMatchMap.get(matchColumnName);
+        final List<Table> matchedTables = tablePrimaries.get(matchColumnName);
         if (matchedTables != null)
         {
           for (final Table matchedTable: matchedTables)
@@ -332,27 +196,6 @@ final class WeakAssociationsAnalyzer
       }
     }
     return fkColumnsMap;
-  }
-
-  private Multimap<String, Table> mapTableNameMatches(final List<Table> tables,
-                                                      final Collection<String> prefixes)
-  {
-    final Multimap<String, Table> matchMap = new Multimap<>();
-    for (final Table table: tables)
-    {
-      for (final String prefix: prefixes)
-      {
-        String matchTableName = table.getName().toLowerCase();
-        if (matchTableName.startsWith(prefix))
-        {
-          matchTableName = matchTableName.substring(prefix.length());
-          matchTableName = Inflection.singularize(matchTableName);
-          matchMap.add(matchTableName, table);
-        }
-      }
-    }
-    matchMap.remove("");
-    return matchMap;
   }
 
 }
