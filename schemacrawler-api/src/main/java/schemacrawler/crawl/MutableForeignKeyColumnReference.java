@@ -128,4 +128,10 @@ final class MutableForeignKeyColumnReference
     this.primaryKeyColumn = primaryKeyColumn;
   }
 
+  @Override
+  public String toString()
+  {
+    return primaryKeyColumn + " --> " + foreignKeyColumn;
+  }
+
 }

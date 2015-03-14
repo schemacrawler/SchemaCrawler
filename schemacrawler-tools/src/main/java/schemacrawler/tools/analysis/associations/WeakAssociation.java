@@ -137,7 +137,7 @@ public final class WeakAssociation
   @Override
   public String toString()
   {
-    return primaryKeyColumn + " --> " + foreignKeyColumn;
+    return primaryKeyColumn + " ~~> " + foreignKeyColumn;
   }
 
 }
