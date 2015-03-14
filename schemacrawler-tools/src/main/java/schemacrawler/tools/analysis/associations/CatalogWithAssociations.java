@@ -38,6 +38,10 @@ public final class CatalogWithAssociations
   extends BaseCatalogDecorator
 {
 
+  private static final long serialVersionUID = -3953296149824921463L;
+
+  private static final String WEAK_ASSOCIATIONS_KEY = "schemacrawler.weak_associations";
+
   public static final Collection<ColumnReference> getWeakAssociations(final Table table)
   {
     if (table == null)
@@ -63,10 +67,6 @@ public final class CatalogWithAssociations
       table.setAttribute(WEAK_ASSOCIATIONS_KEY, tableWeakAssociations);
     }
   }
-
-  private static final long serialVersionUID = -3953296149824921463L;
-
-  private static final String WEAK_ASSOCIATIONS_KEY = "schemacrawler.weak_associations";
 
   private final Collection<ColumnReference> weakAssociations;
 

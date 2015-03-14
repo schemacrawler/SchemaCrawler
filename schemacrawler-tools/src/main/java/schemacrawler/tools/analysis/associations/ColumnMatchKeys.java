@@ -24,49 +24,45 @@ package schemacrawler.tools.analysis.associations;
 import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import schemacrawler.schema.Column;
-import schemacrawler.schema.PrimaryKey;
-import schemacrawler.schema.Table;
 
-final class TableCandidateKeys
-  implements Iterable<Column>
+final class ColumnMatchKeys
 {
 
-  private final Table table;
-  private final List<Column> tableKeys;
+  private final Column column;
+  private final List<String> columnMatchKeys;
 
-  TableCandidateKeys(final Table table)
+  ColumnMatchKeys(final Column column)
   {
-    this.table = requireNonNull(table);
-    tableKeys = listTableKeys(table);
+    this.column = requireNonNull(column);
+    columnMatchKeys = columnMatchKeys(column);
   }
 
-  @Override
-  public Iterator<Column> iterator()
+  public List<String> get()
   {
-    return tableKeys.iterator();
+    return columnMatchKeys;
   }
 
-  @Override
-  public String toString()
+  private List<String> columnMatchKeys(final Column column)
   {
-    return String.format("%s: %s", table, tableKeys);
-  }
+    final List<String> matchMap = new ArrayList<>();
 
-  private List<Column> listTableKeys(final Table table)
-  {
-    final List<Column> tableKeys = new ArrayList<>();
-
-    final PrimaryKey primaryKey = table.getPrimaryKey();
-    if (primaryKey != null && primaryKey.getColumns().size() == 1)
+    String matchColumnName = column.getName().toLowerCase();
+    if (matchColumnName.endsWith("_id"))
     {
-      tableKeys.add(primaryKey.getColumns().get(0));
+      matchColumnName = matchColumnName.substring(0,
+                                                  matchColumnName.length() - 3);
     }
+    if (matchColumnName.endsWith("id") && !matchColumnName.equals("id"))
+    {
+      matchColumnName = matchColumnName.substring(0,
+                                                  matchColumnName.length() - 2);
+    }
+    matchMap.add(matchColumnName);
 
-    return tableKeys;
+    return matchMap;
   }
 
 }

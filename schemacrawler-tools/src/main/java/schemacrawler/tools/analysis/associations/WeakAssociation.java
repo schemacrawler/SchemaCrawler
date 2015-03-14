@@ -43,10 +43,16 @@ public final class WeakAssociation
 
   public boolean isValid()
   {
-    final ColumnDataType fkColumnType = getForeignKeyColumn()
-      .getColumnDataType();
-    final ColumnDataType pkColumnType = getPrimaryKeyColumn()
-      .getColumnDataType();
+    final Column primaryKeyColumn = getPrimaryKeyColumn();
+    final Column foreignKeyColumn = getForeignKeyColumn();
+
+    if (primaryKeyColumn.equals(foreignKeyColumn))
+    {
+      return false;
+    }
+
+    final ColumnDataType fkColumnType = foreignKeyColumn.getColumnDataType();
+    final ColumnDataType pkColumnType = primaryKeyColumn.getColumnDataType();
     final boolean isValid = fkColumnType.getJavaSqlType().getJavaSqlTypeName()
       .equals(pkColumnType.getJavaSqlType().getJavaSqlTypeName());
     return isValid;
