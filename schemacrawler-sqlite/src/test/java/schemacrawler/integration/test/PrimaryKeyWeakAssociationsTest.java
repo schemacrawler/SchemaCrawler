@@ -15,13 +15,15 @@
  * limitations under the License.
  */
 
-package schemacrawler.test;
+package schemacrawler.integration.test;
 
 
 import static org.junit.Assert.assertEquals;
+import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
 import static schemacrawler.test.utility.TestUtility.currentMethodFullName;
 import static schemacrawler.utility.MetaDataUtility.findForeignKeyCardinality;
 
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -31,15 +33,18 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
+import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.analysis.associations.CatalogWithAssociations;
+import schemacrawler.tools.sqlite.SQLiteDatabaseConnector;
 import schemacrawler.utility.NamedObjectSort;
+import schemacrawler.utility.SchemaCrawlerUtility;
 
-public class WeakAssociationsTest
+public class PrimaryKeyWeakAssociationsTest
   extends BaseDatabaseTest
 {
 
@@ -47,18 +52,24 @@ public class WeakAssociationsTest
   public void weakAssociations()
     throws Exception
   {
+    final Path sqliteDbFile = copyResourceToTempFile("/pk_test.db");
+    final Config config = new Config();
+    config.put("server", "sqlite");
+    config.put("database", sqliteDbFile.toString());
+
     try (final TestWriter out = new TestWriter("text");)
     {
-
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
       schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
-      schemaCrawlerOptions
-        .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
 
-      final Catalog baseCatalog = getCatalog(schemaCrawlerOptions);
+      ConnectionOptions connectionOptions = new SQLiteDatabaseConnector()
+        .getDatabaseSystemConnector().newDatabaseConnectionOptions(config);
+
+      final Catalog baseCatalog = SchemaCrawlerUtility
+        .getCatalog(connectionOptions.getConnection(), schemaCrawlerOptions);
       final CatalogWithAssociations catalog = new CatalogWithAssociations(baseCatalog);
       final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
-      assertEquals("Schema count does not match", 5, schemas.length);
+      assertEquals("Schema count does not match", 1, schemas.length);
       for (final Schema schema: schemas)
       {
         out.println("schema: " + schema.getFullName());
