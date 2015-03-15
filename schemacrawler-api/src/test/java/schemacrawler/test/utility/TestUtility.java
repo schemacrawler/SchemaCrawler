@@ -114,6 +114,7 @@ public final class TestUtility
     try (final InputStream resourceStream = TestUtility.class
       .getResourceAsStream(resource);)
     {
+      requireNonNull(resourceStream, "Resource not found, " + resource);
       return writeToTempFile(resourceStream);
     }
   }
