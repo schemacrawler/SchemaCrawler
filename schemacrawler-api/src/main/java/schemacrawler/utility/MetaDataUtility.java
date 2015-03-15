@@ -43,7 +43,7 @@ import schemacrawler.schema.Table;
 public final class MetaDataUtility
 {
 
-  public enum Connectivity
+  public enum ForeignKeyCardinality
   {
     unknown,
     zero_one,
@@ -71,6 +71,43 @@ public final class MetaDataUtility
     return columnNames;
   }
 
+  public static ForeignKeyCardinality findForeignKeyCardinality(final ColumnReference... columnReferences)
+  {
+    if (columnReferences == null)
+    {
+      return ForeignKeyCardinality.unknown;
+    }
+    final boolean isForeignKeyUnique = isForeignKeyUnique(columnReferences);
+
+    final Column fkColumn = columnReferences[0].getForeignKeyColumn();
+    final boolean isColumnReference = fkColumn instanceof PartialDatabaseObject;
+
+    final ForeignKeyCardinality connectivity;
+    if (isColumnReference)
+    {
+      connectivity = ForeignKeyCardinality.unknown;
+    }
+    else if (isForeignKeyUnique)
+    {
+      connectivity = ForeignKeyCardinality.zero_one;
+    }
+    else
+    {
+      connectivity = ForeignKeyCardinality.zero_many;
+    }
+    return connectivity;
+  }
+
+  public static ForeignKeyCardinality findForeignKeyCardinality(final ForeignKey foreignKey)
+  {
+    if (foreignKey == null)
+    {
+      return ForeignKeyCardinality.unknown;
+    }
+    return findForeignKeyCardinality(foreignKey.getColumnReferences()
+      .toArray(new ColumnReference[0]));
+  }
+
   public static final List<String> foreignKeyColumnNames(final ColumnReference... columnReferences)
   {
     if (columnReferences == null)
@@ -96,32 +133,6 @@ public final class MetaDataUtility
     }
     return foreignKeyColumnNames(foreignKey.getColumnReferences()
       .toArray(new ColumnReference[0]));
-  }
-
-  public static Connectivity getConnectivity(final Column fkColumn,
-                                             final boolean isForeignKeyUnique)
-  {
-    if (fkColumn == null)
-    {
-      return Connectivity.unknown;
-    }
-
-    final boolean isColumnReference = fkColumn instanceof PartialDatabaseObject;
-
-    final Connectivity connectivity;
-    if (isColumnReference)
-    {
-      connectivity = Connectivity.unknown;
-    }
-    else if (isForeignKeyUnique)
-    {
-      connectivity = Connectivity.zero_one;
-    }
-    else
-    {
-      connectivity = Connectivity.zero_many;
-    }
-    return connectivity;
   }
 
   public static boolean isForeignKeyUnique(final ColumnReference... columnReferences)
@@ -156,6 +167,10 @@ public final class MetaDataUtility
                                                           final boolean includeUniqueOnly)
   {
     final List<List<String>> allIndexCoumns = new ArrayList<>();
+    if (table instanceof PartialDatabaseObject)
+    {
+      return allIndexCoumns;
+    }
 
     final PrimaryKey primaryKey = table.getPrimaryKey();
     final List<String> pkColumns = columnNames(primaryKey);
