@@ -22,7 +22,7 @@ package schemacrawler.schema;
 
 
 /**
- * Represents a database object, with partially .
+ * Represents a database object, with partially populated metadata.
  *
  * @author Sualeh Fatehi
  */
