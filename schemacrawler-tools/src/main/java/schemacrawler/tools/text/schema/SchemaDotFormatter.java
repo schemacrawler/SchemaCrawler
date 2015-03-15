@@ -23,7 +23,6 @@ package schemacrawler.tools.text.schema;
 
 
 import static schemacrawler.utility.MetaDataUtility.getConnectivity;
-import static schemacrawler.utility.MetaDataUtility.isColumnReferenceUnique;
 import static schemacrawler.utility.MetaDataUtility.isForeignKeyUnique;
 import static sf.util.Utility.convertForComparison;
 import static sf.util.Utility.isBlank;
@@ -425,7 +424,7 @@ public final class SchemaDotFormatter
       final boolean isForeignKeyColumnFiltered = foreignKey
         .getAttribute("foreignKey.filtered.foreignKeyColumn", false);
 
-      final boolean isForeignKeyUnique = isForeignKeyUnique(table, foreignKey);
+      final boolean isForeignKeyUnique = isForeignKeyUnique(foreignKey);
       for (final ColumnReference columnReference: foreignKey
         .getColumnReferences())
       {
@@ -583,8 +582,7 @@ public final class SchemaDotFormatter
       .getWeakAssociations(table);
     for (final ColumnReference weakAssociation: weakAssociations)
     {
-      final boolean isWeakAssociationUnique = isColumnReferenceUnique(table,
-                                                                      weakAssociation);
+      final boolean isWeakAssociationUnique = isForeignKeyUnique(weakAssociation);
       if (table.equals(weakAssociation.getPrimaryKeyColumn().getParent()))
       {
         out.write(printColumnReference("",
@@ -594,5 +592,4 @@ public final class SchemaDotFormatter
       }
     }
   }
-
 }
