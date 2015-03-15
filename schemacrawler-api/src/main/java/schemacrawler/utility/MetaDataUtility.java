@@ -27,8 +27,8 @@ import java.util.Collections;
 import java.util.List;
 
 import schemacrawler.schema.Column;
+import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.ForeignKey;
-import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.PartialDatabaseObject;
@@ -71,20 +71,31 @@ public final class MetaDataUtility
     return columnNames;
   }
 
+  public static final List<String> foreignKeyColumnNames(final ColumnReference... columnReferences)
+  {
+    if (columnReferences == null)
+    {
+      return Collections.emptyList();
+    }
+    else
+    {
+      final List<String> columnNames = new ArrayList<>();
+      for (final ColumnReference columnReference: columnReferences)
+      {
+        columnNames.add(columnReference.getForeignKeyColumn().getFullName());
+      }
+      return columnNames;
+    }
+  }
+
   public static final List<String> foreignKeyColumnNames(final ForeignKey foreignKey)
   {
     if (foreignKey == null)
     {
       return Collections.emptyList();
     }
-
-    final List<String> columnNames = new ArrayList<>();
-    for (final ForeignKeyColumnReference columnReference: foreignKey
-      .getColumnReferences())
-    {
-      columnNames.add(columnReference.getForeignKeyColumn().getFullName());
-    }
-    return columnNames;
+    return foreignKeyColumnNames(foreignKey.getColumnReferences()
+      .toArray(new ColumnReference[0]));
   }
 
   public static Connectivity getConnectivity(final Column fkColumn,
@@ -113,8 +124,16 @@ public final class MetaDataUtility
     return connectivity;
   }
 
-  public static boolean isForeignKeyUnique(final ForeignKey foreignKey,
-                                           final Table table)
+  public static boolean isColumnReferenceUnique(final Table table,
+                                                final ColumnReference... columnReferences)
+  {
+    final Collection<List<String>> uniqueIndexCoumnNames = uniqueIndexCoumnNames(table);
+    final List<String> foreignKeyColumnNames = foreignKeyColumnNames(columnReferences);
+    return uniqueIndexCoumnNames.contains(foreignKeyColumnNames);
+  }
+
+  public static boolean isForeignKeyUnique(final Table table,
+                                           final ForeignKey foreignKey)
   {
     final Collection<List<String>> uniqueIndexCoumnNames = uniqueIndexCoumnNames(table);
     final List<String> foreignKeyColumnNames = foreignKeyColumnNames(foreignKey);
