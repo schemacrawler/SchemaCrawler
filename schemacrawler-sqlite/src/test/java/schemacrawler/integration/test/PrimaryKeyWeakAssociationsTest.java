@@ -49,10 +49,23 @@ public class PrimaryKeyWeakAssociationsTest
 {
 
   @Test
-  public void weakAssociations()
+  public void weakAssociations1()
     throws Exception
   {
-    final Path sqliteDbFile = copyResourceToTempFile("/pk_test.db");
+    weakAssociations(currentMethodFullName(), "/pk_test_1.db");
+  }
+
+  @Test
+  public void weakAssociations2()
+    throws Exception
+  {
+    weakAssociations(currentMethodFullName(), "/pk_test_2.db");
+  }
+
+  private void weakAssociations(String currentMethodFullName, String database)
+    throws Exception
+  {
+    final Path sqliteDbFile = copyResourceToTempFile(database);
     final Config config = new Config();
     config.put("server", "sqlite");
     config.put("database", sqliteDbFile.toString());
@@ -90,7 +103,7 @@ public class PrimaryKeyWeakAssociationsTest
         }
       }
 
-      out.assertEquals(currentMethodFullName());
+      out.assertEquals(currentMethodFullName);
     }
   }
 
