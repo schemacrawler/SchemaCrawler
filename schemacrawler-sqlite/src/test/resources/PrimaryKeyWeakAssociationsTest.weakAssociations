@@ -1,0 +1,20 @@
+schema: 
+  table: TABLE1_PK
+    weak association: TABLE1_PK.ENTITY_ID <~~ TABLE2_PK.ENTITY_ID (0..1)
+    weak association: TABLE1_PK.ENTITY_ID <~~ TABLE4_UNIQUE.ENTITY_ID (0..1)
+    weak association: TABLE1_PK.ENTITY_ID <~~ TABLE5_FK.ENTITY_ID (0..many)
+  table: TABLE2_PK
+    weak association: TABLE1_PK.ENTITY_ID <~~ TABLE2_PK.ENTITY_ID (0..1)
+    weak association: TABLE2_PK.ENTITY_ID <~~ TABLE3_FK.ENTITY_ID (0..many)
+    weak association: TABLE2_PK.ENTITY_ID <~~ TABLE4_UNIQUE.ENTITY_ID (0..1)
+    weak association: TABLE2_PK.ENTITY_ID <~~ TABLE5_FK.ENTITY_ID (0..many)
+  table: TABLE3_FK
+    weak association: TABLE2_PK.ENTITY_ID <~~ TABLE3_FK.ENTITY_ID (0..many)
+    weak association: TABLE4_UNIQUE.ENTITY_ID <~~ TABLE3_FK.ENTITY_ID (0..many)
+  table: TABLE4_UNIQUE
+    weak association: TABLE1_PK.ENTITY_ID <~~ TABLE4_UNIQUE.ENTITY_ID (0..1)
+    weak association: TABLE2_PK.ENTITY_ID <~~ TABLE4_UNIQUE.ENTITY_ID (0..1)
+    weak association: TABLE4_UNIQUE.ENTITY_ID <~~ TABLE3_FK.ENTITY_ID (0..many)
+  table: TABLE5_FK
+    weak association: TABLE1_PK.ENTITY_ID <~~ TABLE5_FK.ENTITY_ID (0..many)
+    weak association: TABLE2_PK.ENTITY_ID <~~ TABLE5_FK.ENTITY_ID (0..many)
