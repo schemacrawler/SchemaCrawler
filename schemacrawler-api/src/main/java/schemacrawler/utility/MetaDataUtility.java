@@ -21,6 +21,8 @@
 package schemacrawler.utility;
 
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -45,10 +47,24 @@ public final class MetaDataUtility
 
   public enum ForeignKeyCardinality
   {
-    unknown,
-    zero_one,
-    zero_many,
-    one_one;
+    unknown(""),
+    zero_one("0..1"),
+    zero_many("0..many"),
+    one_one("1");
+
+    private final String description;
+
+    private ForeignKeyCardinality(String description)
+    {
+      this.description = requireNonNull(description);
+    }
+
+    @Override
+    public String toString()
+    {
+      return description;
+    }
+
   }
 
   public static Collection<List<String>> allIndexCoumnNames(final Table table)
