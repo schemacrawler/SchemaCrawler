@@ -22,8 +22,7 @@
 package schemacrawler.tools.text.schema;
 
 
-import static schemacrawler.utility.MetaDataUtility.getConnectivity;
-import static schemacrawler.utility.MetaDataUtility.isForeignKeyUnique;
+import static schemacrawler.utility.MetaDataUtility.findForeignKeyCardinality;
 import static sf.util.Utility.convertForComparison;
 import static sf.util.Utility.isBlank;
 
@@ -53,7 +52,7 @@ import schemacrawler.tools.text.base.BaseDotFormatter;
 import schemacrawler.tools.text.utility.Alignment;
 import schemacrawler.tools.text.utility.TableRow;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
-import schemacrawler.utility.MetaDataUtility.Connectivity;
+import schemacrawler.utility.MetaDataUtility.ForeignKeyCardinality;
 import schemacrawler.utility.NamedObjectSort;
 
 /**
@@ -280,7 +279,7 @@ public final class SchemaDotFormatter
   {
   }
 
-  private String arrowhead(final Connectivity connectivity)
+  private String arrowhead(final ForeignKeyCardinality connectivity)
   {
     switch (connectivity)
     {
@@ -352,8 +351,8 @@ public final class SchemaDotFormatter
 
   private String printColumnReference(final String associationName,
                                       final ColumnReference columnReference,
-                                      final boolean isForeignKeyColumnFiltered,
-                                      final boolean isForeignKeyUnique)
+                                      ForeignKeyCardinality fkCardinality,
+                                      final boolean isForeignKeyColumnFiltered)
   {
     final Column primaryKeyColumn = columnReference.getPrimaryKeyColumn();
     final Column foreignKeyColumn = columnReference.getForeignKeyColumn();
@@ -362,8 +361,6 @@ public final class SchemaDotFormatter
     final String[] fkPortIds = getPortIds(foreignKeyColumn,
                                           isForeignKeyColumnFiltered);
 
-    final Connectivity connectivity = getConnectivity(foreignKeyColumn,
-                                                      isForeignKeyUnique);
     final GraphOptions graphOptions = (GraphOptions) options;
     final String pkSymbol;
     if (graphOptions.isShowPrimaryKeyCardinality())
@@ -384,7 +381,7 @@ public final class SchemaDotFormatter
       }
       else
       {
-        fkSymbol = arrowhead(connectivity);
+        fkSymbol = arrowhead(fkCardinality);
       }
     }
     else
@@ -424,7 +421,7 @@ public final class SchemaDotFormatter
       final boolean isForeignKeyColumnFiltered = foreignKey
         .getAttribute("foreignKey.filtered.foreignKeyColumn", false);
 
-      final boolean isForeignKeyUnique = isForeignKeyUnique(foreignKey);
+      final ForeignKeyCardinality fkCardinality = findForeignKeyCardinality(foreignKey);
       for (final ColumnReference columnReference: foreignKey
         .getColumnReferences())
       {
@@ -432,8 +429,8 @@ public final class SchemaDotFormatter
         {
           out.write(printColumnReference(foreignKey.getName(),
                                          columnReference,
-                                         isForeignKeyColumnFiltered,
-                                         isForeignKeyUnique));
+                                         fkCardinality,
+                                         isForeignKeyColumnFiltered));
         }
       }
     }
@@ -582,13 +579,13 @@ public final class SchemaDotFormatter
       .getWeakAssociations(table);
     for (final ColumnReference weakAssociation: weakAssociations)
     {
-      final boolean isWeakAssociationUnique = isForeignKeyUnique(weakAssociation);
+      final ForeignKeyCardinality fkCardinality = findForeignKeyCardinality(weakAssociation);
       if (table.equals(weakAssociation.getPrimaryKeyColumn().getParent()))
       {
         out.write(printColumnReference("",
                                        weakAssociation,
-                                       false,
-                                       isWeakAssociationUnique));
+                                       fkCardinality,
+                                       false));
       }
     }
   }
