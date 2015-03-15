@@ -124,20 +124,27 @@ public final class MetaDataUtility
     return connectivity;
   }
 
-  public static boolean isColumnReferenceUnique(final Table table,
-                                                final ColumnReference... columnReferences)
+  public static boolean isForeignKeyUnique(final ColumnReference... columnReferences)
   {
-    final Collection<List<String>> uniqueIndexCoumnNames = uniqueIndexCoumnNames(table);
+    if (columnReferences == null || columnReferences.length == 0)
+    {
+      return false;
+    }
+    final Table fkTable = columnReferences[0].getForeignKeyColumn().getParent();
+    final Collection<List<String>> uniqueIndexCoumnNames = uniqueIndexCoumnNames(fkTable);
     final List<String> foreignKeyColumnNames = foreignKeyColumnNames(columnReferences);
     return uniqueIndexCoumnNames.contains(foreignKeyColumnNames);
   }
 
-  public static boolean isForeignKeyUnique(final Table table,
-                                           final ForeignKey foreignKey)
+  public static boolean isForeignKeyUnique(final ForeignKey foreignKey)
   {
-    final Collection<List<String>> uniqueIndexCoumnNames = uniqueIndexCoumnNames(table);
-    final List<String> foreignKeyColumnNames = foreignKeyColumnNames(foreignKey);
-    return uniqueIndexCoumnNames.contains(foreignKeyColumnNames);
+    if (foreignKey == null)
+    {
+      return false;
+    }
+    final ColumnReference[] columnReferences = foreignKey.getColumnReferences()
+      .toArray(new ColumnReference[0]);
+    return isForeignKeyUnique(columnReferences);
   }
 
   public static Collection<List<String>> uniqueIndexCoumnNames(final Table table)
