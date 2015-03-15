@@ -45,7 +45,7 @@
     <dependency>
       <groupId>org.freemarker</groupId>
       <artifactId>freemarker</artifactId>
-      <version>2.3.21</version>
+      <version>2.3.22</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -69,13 +69,13 @@
     <dependency>
       <groupId>org.codehaus.groovy</groupId>
       <artifactId>groovy-all</artifactId>
-      <version>2.4.0</version>
+      <version>2.4.1</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.python</groupId>
       <artifactId>jython-standalone</artifactId>
-      <version>2.7-b3</version>
+      <version>2.7-b4</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
