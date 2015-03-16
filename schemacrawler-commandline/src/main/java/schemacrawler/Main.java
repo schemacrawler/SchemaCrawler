@@ -25,7 +25,9 @@ import static java.util.Objects.requireNonNull;
 import static sf.util.commandlineparser.CommandLineArgumentsUtility.flattenCommandlineArgs;
 
 import java.io.File;
+import java.io.StringWriter;
 import java.util.Arrays;
+import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -46,6 +48,8 @@ import sf.util.commandlineparser.CommandLineArgumentsUtility;
 public final class Main
 {
 
+  private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
+
   public static void main(final String[] args)
     throws Exception
   {
@@ -59,15 +63,7 @@ public final class Main
 
     applicationOptions.applyApplicationLogLevel();
 
-    if (LOGGER.isLoggable(Level.CONFIG))
-    {
-      LOGGER.log(Level.CONFIG,
-                 "Classpath: \n"
-                     + ObjectToString.join(System
-                       .getProperty("java.class.path")
-                       .split(File.pathSeparator)));
-      LOGGER.log(Level.CONFIG, "Command line: " + Arrays.toString(args));
-    }
+    printSystemProperties(args);
 
     try
     {
@@ -107,7 +103,34 @@ public final class Main
 
   }
 
-  private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
+  private static void printSystemProperties(final String[] args)
+  {
+    if (!LOGGER.isLoggable(Level.CONFIG))
+    {
+      return;
+    }
+
+    final StringWriter writer = new StringWriter();
+    for (final Entry<Object, Object> propertyValue: System.getProperties()
+      .entrySet())
+    {
+      final String name = (String) propertyValue.getKey();
+      if ((name.startsWith("java.") || name.startsWith("os."))
+          && !name.endsWith(".path"))
+      {
+        final String value = (String) propertyValue.getValue();
+        writer.write(System.lineSeparator());
+        writer.write(String.format("%s=%s", name, value));
+      }
+    }
+    LOGGER.log(Level.CONFIG, writer.toString());
+    LOGGER.log(Level.CONFIG,
+               "Classpath: \n"
+                   + ObjectToString.join(System.getProperty("java.class.path")
+                     .split(File.pathSeparator)));
+
+    LOGGER.log(Level.CONFIG, "Command line: " + Arrays.toString(args));
+  }
 
   private Main()
   {
