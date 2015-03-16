@@ -22,12 +22,11 @@ package schemacrawler;
 
 
 import static java.util.Objects.requireNonNull;
-import static sf.util.commandlineparser.CommandLineArgumentsUtility.flattenCommandlineArgs;
+import static sf.util.commandlineparser.CommandLineUtility.applyApplicationLogLevel;
+import static sf.util.commandlineparser.CommandLineUtility.flattenCommandlineArgs;
+import static sf.util.commandlineparser.CommandLineUtility.printSystemProperties;
 
-import java.io.File;
-import java.io.StringWriter;
 import java.util.Arrays;
-import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -39,8 +38,7 @@ import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.options.ApplicationOptions;
 import schemacrawler.tools.options.DatabaseServerType;
-import sf.util.ObjectToString;
-import sf.util.commandlineparser.CommandLineArgumentsUtility;
+import sf.util.commandlineparser.CommandLineUtility;
 
 /**
  * Main class that takes arguments for a database for crawling a schema.
@@ -55,14 +53,13 @@ public final class Main
   {
     requireNonNull(args);
 
-    final Config config = CommandLineArgumentsUtility.loadConfig(args);
+    final Config config = CommandLineUtility.loadConfig(args);
 
     final ApplicationOptionsParser applicationOptionsParser = new ApplicationOptionsParser(config);
     final ApplicationOptions applicationOptions = applicationOptionsParser
       .getOptions();
 
-    applicationOptions.applyApplicationLogLevel();
-
+    applyApplicationLogLevel(applicationOptions.getApplicationLogLevel());
     printSystemProperties(args);
 
     try
@@ -101,35 +98,6 @@ public final class Main
       LOGGER.log(Level.SEVERE, "Command line: " + Arrays.toString(args), e);
     }
 
-  }
-
-  private static void printSystemProperties(final String[] args)
-  {
-    if (!LOGGER.isLoggable(Level.CONFIG))
-    {
-      return;
-    }
-
-    final StringWriter writer = new StringWriter();
-    for (final Entry<Object, Object> propertyValue: System.getProperties()
-      .entrySet())
-    {
-      final String name = (String) propertyValue.getKey();
-      if ((name.startsWith("java.") || name.startsWith("os."))
-          && !name.endsWith(".path"))
-      {
-        final String value = (String) propertyValue.getValue();
-        writer.write(System.lineSeparator());
-        writer.write(String.format("%s=%s", name, value));
-      }
-    }
-    LOGGER.log(Level.CONFIG, writer.toString());
-    LOGGER.log(Level.CONFIG,
-               "Classpath: \n"
-                   + ObjectToString.join(System.getProperty("java.class.path")
-                     .split(File.pathSeparator)));
-
-    LOGGER.log(Level.CONFIG, "Command line: " + Arrays.toString(args));
   }
 
   private Main()

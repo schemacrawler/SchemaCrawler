@@ -8,7 +8,7 @@ import static java.nio.file.StandardOpenOption.WRITE;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static schemacrawler.test.utility.TestUtility.createTempFile;
-import static sf.util.commandlineparser.CommandLineArgumentsUtility.flattenCommandlineArgs;
+import static sf.util.commandlineparser.CommandLineUtility.flattenCommandlineArgs;
 
 import java.io.PrintWriter;
 import java.io.Writer;

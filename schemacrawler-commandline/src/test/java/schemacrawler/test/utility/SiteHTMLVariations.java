@@ -25,7 +25,7 @@ import static java.nio.file.Files.createTempFile;
 import static java.nio.file.Files.deleteIfExists;
 import static java.nio.file.Files.newBufferedWriter;
 import static schemacrawler.test.utility.TestUtility.currentMethodName;
-import static sf.util.commandlineparser.CommandLineArgumentsUtility.flattenCommandlineArgs;
+import static sf.util.commandlineparser.CommandLineUtility.flattenCommandlineArgs;
 
 import java.io.IOException;
 import java.net.URISyntaxException;

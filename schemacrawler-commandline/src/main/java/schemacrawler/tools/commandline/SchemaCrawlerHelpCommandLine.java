@@ -28,7 +28,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.executable.CommandRegistry;
 import schemacrawler.tools.options.DatabaseServerType;
-import sf.util.commandlineparser.CommandLineArgumentsUtility;
+import sf.util.commandlineparser.CommandLineUtility;
 
 /**
  * Utility for parsing the SchemaCrawler command-line.
@@ -79,7 +79,7 @@ public final class SchemaCrawlerHelpCommandLine
   {
     requireNonNull(args, "No command-line arguments provided");
 
-    final Config config = CommandLineArgumentsUtility.loadConfig(args);
+    final Config config = CommandLineUtility.loadConfig(args);
 
     this.connectionHelpResource = connectionHelpResource;
     this.showVersionOnly = showVersionOnly;
