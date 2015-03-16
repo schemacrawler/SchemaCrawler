@@ -38,7 +38,7 @@ import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.DatabaseServerType;
 import schemacrawler.tools.options.OutputOptions;
-import sf.util.commandlineparser.CommandLineArgumentsUtility;
+import sf.util.commandlineparser.CommandLineUtility;
 
 /**
  * Utility for parsing the SchemaCrawler command-line.
@@ -178,7 +178,7 @@ public final class SchemaCrawlerCommandLine
                           final String[] args)
     throws SchemaCrawlerException
   {
-    final Config optionsMap = CommandLineArgumentsUtility.loadConfig(args);
+    final Config optionsMap = CommandLineUtility.loadConfig(args);
 
     // 1. Get bundled database config
     config.putAll(dbSystemConnector.getConfig());

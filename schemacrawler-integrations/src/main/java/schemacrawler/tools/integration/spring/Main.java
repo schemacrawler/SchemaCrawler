@@ -22,7 +22,9 @@ package schemacrawler.tools.integration.spring;
 
 
 import static java.util.Objects.requireNonNull;
-import static sf.util.commandlineparser.CommandLineArgumentsUtility.flattenCommandlineArgs;
+import static sf.util.commandlineparser.CommandLineUtility.applyApplicationLogLevel;
+import static sf.util.commandlineparser.CommandLineUtility.flattenCommandlineArgs;
+import static sf.util.commandlineparser.CommandLineUtility.printSystemProperties;
 
 import java.util.Arrays;
 import java.util.logging.Level;
@@ -32,7 +34,7 @@ import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.commandline.ApplicationOptionsParser;
 import schemacrawler.tools.options.ApplicationOptions;
 import sf.util.Utility;
-import sf.util.commandlineparser.CommandLineArgumentsUtility;
+import sf.util.commandlineparser.CommandLineUtility;
 
 /**
  * Main class that takes arguments for a database for crawling a schema.
@@ -53,7 +55,7 @@ public final class Main
   {
     requireNonNull(args);
 
-    final Config config = CommandLineArgumentsUtility.loadConfig(args);
+    final Config config = CommandLineUtility.loadConfig(args);
 
     final ApplicationOptionsParser applicationOptionsParser = new ApplicationOptionsParser(config);
     final ApplicationOptions applicationOptions = applicationOptionsParser
@@ -71,7 +73,8 @@ public final class Main
     System.setProperty("org.apache.commons.logging.Log",
                        org.apache.commons.logging.impl.Jdk14Logger.class
                          .getName());
-    applicationOptions.applyApplicationLogLevel();
+    applyApplicationLogLevel(applicationOptions.getApplicationLogLevel());
+    printSystemProperties(args);
     LOGGER.log(Level.CONFIG, "Command line: " + Arrays.toString(args));
 
     final SchemaCrawlerSpringCommandLine commandLine = new SchemaCrawlerSpringCommandLine(flattenCommandlineArgs(config));
