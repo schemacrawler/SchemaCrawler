@@ -99,10 +99,9 @@ final class WeakAssociationsAnalyzer
           fkColumnMatchKeys.addAll(tableMatchKeys.get(table));
         }
         // Look for all columns matching this column match key
-        final List<String> matchKeys = columnMatchKeysMap.get(pkColumn);
-        if (matchKeys != null)
+        if (columnMatchKeysMap.containsKey(pkColumn))
         {
-          fkColumnMatchKeys.addAll(matchKeys);
+          fkColumnMatchKeys.addAll(columnMatchKeysMap.get(pkColumn));
         }
 
         final Set<Column> fkColumns = new HashSet<>();

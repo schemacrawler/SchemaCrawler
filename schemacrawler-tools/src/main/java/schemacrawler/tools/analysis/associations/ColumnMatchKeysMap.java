@@ -47,6 +47,11 @@ final class ColumnMatchKeysMap
     }
   }
 
+  public boolean containsKey(final Column column)
+  {
+    return matchKeysForColumn.containsKey(column);
+  }
+
   public boolean containsKey(final String columnKey)
   {
     return columnsForMatchKey.containsKey(columnKey);
