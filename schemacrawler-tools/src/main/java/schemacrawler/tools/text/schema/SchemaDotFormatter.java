@@ -44,7 +44,8 @@ import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.analysis.associations.CatalogWithAssociations;
+import schemacrawler.tools.analysis.associations.WeakAssociationForeignKey;
+import schemacrawler.tools.analysis.associations.WeakAssociationsUtility;
 import schemacrawler.tools.integration.graph.GraphOptions;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.TextOutputFormat;
@@ -422,13 +423,12 @@ public final class SchemaDotFormatter
         .getAttribute("foreignKey.filtered.foreignKeyColumn", false);
 
       final ForeignKeyCardinality fkCardinality = findForeignKeyCardinality(foreignKey);
-      for (final ColumnReference columnReference: foreignKey
-        .getColumnReferences())
+      for (final ColumnReference columnRef: foreignKey)
       {
-        if (table.equals(columnReference.getPrimaryKeyColumn().getParent()))
+        if (table.equals(columnRef.getPrimaryKeyColumn().getParent()))
         {
           out.write(printColumnReference(foreignKey.getName(),
-                                         columnReference,
+                                         columnRef,
                                          fkCardinality,
                                          isForeignKeyColumnFiltered));
         }
@@ -575,18 +575,19 @@ public final class SchemaDotFormatter
 
   private void printWeakAssociations(final Table table)
   {
-    final Collection<ColumnReference> weakAssociations = CatalogWithAssociations
+    final Collection<WeakAssociationForeignKey> weakFks = WeakAssociationsUtility
       .getWeakAssociations(table);
-    for (final ColumnReference weakAssociation: weakAssociations)
+    for (final WeakAssociationForeignKey weakFk: weakFks)
     {
-      final ForeignKeyCardinality fkCardinality = findForeignKeyCardinality(weakAssociation);
-      if (table.equals(weakAssociation.getPrimaryKeyColumn().getParent()))
+      final ForeignKeyCardinality fkCardinality = findForeignKeyCardinality(weakFk);
+      for (final ColumnReference columnRef: weakFk)
       {
-        out.write(printColumnReference("",
-                                       weakAssociation,
-                                       fkCardinality,
-                                       false));
+        if (table.equals(columnRef.getPrimaryKeyColumn().getParent()))
+        {
+          out.write(printColumnReference("", columnRef, fkCardinality, false));
+        }
       }
     }
   }
+
 }

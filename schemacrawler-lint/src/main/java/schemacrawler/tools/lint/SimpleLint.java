@@ -233,7 +233,11 @@ public final class SimpleLint<V extends Serializable>
                   NamedObjectWithAttributes[].class));
       }
 
-      if (Iterable.class.isAssignableFrom(valueObject.getClass()))
+      if (NamedObjectWithAttributes.class.isAssignableFrom(valueClass))
+      {
+        valueObject = ((NamedObjectWithAttributes) valueObject).getName();
+      }
+      else if (Iterable.class.isAssignableFrom(valueObject.getClass()))
       {
         final List<String> list = new ArrayList<>();
         for (final Object valuePart: (Iterable<?>) valueObject)
@@ -248,10 +252,6 @@ public final class SimpleLint<V extends Serializable>
           }
         }
         valueObject = list;
-      }
-      else if (NamedObjectWithAttributes.class.isAssignableFrom(valueClass))
-      {
-        valueObject = ((NamedObjectWithAttributes) valueObject).getName();
       }
       else
       {

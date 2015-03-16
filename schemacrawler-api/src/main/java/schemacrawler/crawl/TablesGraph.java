@@ -33,11 +33,10 @@ final class TablesGraph
       addVertex(table);
       for (final ForeignKey foreignKey: table.getForeignKeys())
       {
-        for (final ForeignKeyColumnReference columnReference: foreignKey
-          .getColumnReferences())
+        for (final ForeignKeyColumnReference columnRef: foreignKey)
         {
-          addDirectedEdge(columnReference.getPrimaryKeyColumn().getParent(),
-                          columnReference.getForeignKeyColumn().getParent());
+          addDirectedEdge(columnRef.getPrimaryKeyColumn().getParent(),
+                          columnRef.getForeignKeyColumn().getParent());
         }
       }
     }

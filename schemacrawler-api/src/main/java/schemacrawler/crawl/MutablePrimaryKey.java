@@ -53,7 +53,7 @@ class MutablePrimaryKey
     setIndexType(index.getIndexType());
     setUnique(index.isUnique());
     // Copy columns
-    for (final IndexColumn column: index.getColumns())
+    for (final IndexColumn column: index)
     {
       addColumn((MutableIndexColumn) column);
     }

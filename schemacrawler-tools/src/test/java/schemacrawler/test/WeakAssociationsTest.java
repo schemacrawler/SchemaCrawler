@@ -28,7 +28,6 @@ import java.util.Collection;
 import org.junit.Test;
 
 import schemacrawler.schema.Catalog;
-import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
@@ -37,6 +36,9 @@ import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.analysis.associations.CatalogWithAssociations;
+import schemacrawler.tools.analysis.associations.WeakAssociation;
+import schemacrawler.tools.analysis.associations.WeakAssociationForeignKey;
+import schemacrawler.tools.analysis.associations.WeakAssociationsUtility;
 import schemacrawler.utility.NamedObjectSort;
 
 public class WeakAssociationsTest
@@ -67,14 +69,17 @@ public class WeakAssociationsTest
         for (final Table table: tables)
         {
           out.println("  table: " + table.getFullName());
-          final Collection<ColumnReference> weakAssociations = CatalogWithAssociations
+          final Collection<WeakAssociationForeignKey> weakAssociations = WeakAssociationsUtility
             .getWeakAssociations(table);
-          for (final ColumnReference weakAssociation: weakAssociations)
+          for (final WeakAssociationForeignKey weakFk: weakAssociations)
           {
-            out.println(String
-              .format("    weak association: %s (%s)",
-                      weakAssociation,
-                      findForeignKeyCardinality(weakAssociation)));
+            out.println(String.format("    weak association (1 to %s):",
+                                      findForeignKeyCardinality(weakFk)));
+            for (WeakAssociation weakAssociation: weakFk)
+            {
+              out.println(String.format("      column reference: %s",
+                                        weakAssociation));
+            }
           }
         }
       }

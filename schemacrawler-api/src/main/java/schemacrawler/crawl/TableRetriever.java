@@ -40,6 +40,7 @@ import schemacrawler.schema.Table;
 import schemacrawler.schema.TableType;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
+import schemacrawler.utility.MetaDataUtility;
 import sf.util.Utility;
 
 /**
@@ -387,13 +388,8 @@ final class TableRetriever
         {
           if (Utility.isBlank(foreignKeyName))
           {
-            foreignKeyName = String.format("SC_%s_%s",
-                                           Integer.toHexString(pkColumn
-                                             .getFullName().hashCode())
-                                             .toUpperCase(),
-                                           Integer.toHexString(fkColumn
-                                             .getFullName().hashCode())
-                                             .toUpperCase());
+            foreignKeyName = MetaDataUtility.constructForeignKeyName(pkColumn,
+                                                                     fkColumn);
           }
 
           MutableForeignKey foreignKey = foreignKeys.lookup(foreignKeyName);

@@ -28,6 +28,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 
+import schemacrawler.schema.BaseForeignKey;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ColumnReference;
@@ -54,7 +55,8 @@ import schemacrawler.schema.TableConstraintColumn;
 import schemacrawler.schema.TableConstraintType;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.analysis.associations.CatalogWithAssociations;
+import schemacrawler.tools.analysis.associations.WeakAssociationForeignKey;
+import schemacrawler.tools.analysis.associations.WeakAssociationsUtility;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.BaseJsonFormatter;
 import schemacrawler.tools.text.utility.org.json.JSONArray;
@@ -321,12 +323,13 @@ final class SchemaJsonFormatter
       {
         if (isVerbose)
         {
-          final Collection<ColumnReference> weakAssociationsCollection = CatalogWithAssociations
+          final Collection<WeakAssociationForeignKey> weakAssociationsCollection = WeakAssociationsUtility
             .getWeakAssociations(table);
-          final List<ColumnReference> weakAssociations = new ArrayList<>(weakAssociationsCollection);
+          final List<WeakAssociationForeignKey> weakAssociations = new ArrayList<>(weakAssociationsCollection);
           Collections.sort(weakAssociations);
+
           jsonTable.put("weakAssociations",
-                        handleColumnReferences(weakAssociations));
+                        handleWeakAssociations(weakAssociations));
         }
 
         final JSONArray jsonIndices = new JSONArray();
@@ -442,10 +445,10 @@ final class SchemaJsonFormatter
   {
   }
 
-  private JSONArray handleColumnReferences(final List<? extends ColumnReference> columnReferences)
+  private JSONArray handleColumnReferences(final BaseForeignKey<? extends ColumnReference> foreignKey)
   {
     final JSONArray jsonColumnReferences = new JSONArray();
-    for (final ColumnReference columnReference: columnReferences)
+    for (final ColumnReference columnReference: foreignKey)
     {
       try
       {
@@ -523,10 +526,7 @@ final class SchemaJsonFormatter
             jsonFk.put("deleteRule", deleteRule.toString());
           }
 
-          final List<ForeignKeyColumnReference> columnReferences = foreignKey
-            .getColumnReferences();
-          jsonFk.put("columnReferences",
-                     handleColumnReferences(columnReferences));
+          jsonFk.put("columnReferences", handleColumnReferences(foreignKey));
         }
         catch (final JSONException e)
         {
@@ -568,7 +568,7 @@ final class SchemaJsonFormatter
       }
       jsonIndex.put("unique", index.isUnique());
 
-      for (final IndexColumn indexColumn: index.getColumns())
+      for (final IndexColumn indexColumn: index)
       {
         jsonIndex.accumulate("columns", handleTableColumn(indexColumn));
       }
@@ -732,6 +732,37 @@ final class SchemaJsonFormatter
       }
     }
     return jsonTriggers;
+  }
+
+  private JSONArray handleWeakAssociations(final Collection<WeakAssociationForeignKey> weakAssociationsCollection)
+    throws JSONException
+  {
+    final JSONArray jsonFks = new JSONArray();
+
+    final List<WeakAssociationForeignKey> weakAssociations = new ArrayList<>(weakAssociationsCollection);
+    Collections.sort(weakAssociations);
+    for (final WeakAssociationForeignKey weakFk: weakAssociations)
+    {
+      if (weakFk != null)
+      {
+        try
+        {
+          final JSONObject jsonFk = new JSONObject();
+          jsonFks.put(jsonFk);
+
+          jsonFk.put("columnReferences", handleColumnReferences(weakFk));
+        }
+        catch (final JSONException e)
+        {
+          LOGGER.log(Level.FINER,
+                     "Error outputting WeakAssociationForeignKey: "
+                         + e.getMessage(),
+                     e);
+        }
+      }
+    }
+
+    return jsonFks;
   }
 
   private void printDefinition(final DefinedObject definedObject,

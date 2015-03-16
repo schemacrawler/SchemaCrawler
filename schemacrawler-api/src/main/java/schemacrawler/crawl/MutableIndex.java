@@ -24,6 +24,7 @@ package schemacrawler.crawl;
 import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import schemacrawler.schema.Index;
@@ -190,6 +191,12 @@ class MutableIndex
   public boolean isUnique()
   {
     return isUnique;
+  }
+
+  @Override
+  public Iterator<IndexColumn> iterator()
+  {
+    return getColumns().iterator();
   }
 
   void addColumn(final MutableIndexColumn column)

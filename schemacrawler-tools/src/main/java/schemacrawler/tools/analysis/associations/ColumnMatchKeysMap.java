@@ -32,13 +32,14 @@ import sf.util.Multimap;
 final class ColumnMatchKeysMap
 {
 
-  private final List<Table> tables;
-  private final Multimap<String, Column> columnMatchKeysMap;
+  private final Multimap<String, Column> columnsForMatchKey;
+  private final Multimap<Column, String> matchKeysForColumn;
 
   ColumnMatchKeysMap(final List<Table> tables)
   {
-    this.tables = requireNonNull(tables);
-    columnMatchKeysMap = new Multimap<>();
+    requireNonNull(tables);
+    columnsForMatchKey = new Multimap<>();
+    matchKeysForColumn = new Multimap<>();
 
     for (final Table table: tables)
     {
@@ -48,18 +49,23 @@ final class ColumnMatchKeysMap
 
   public boolean containsKey(final String columnKey)
   {
-    return columnMatchKeysMap.containsKey(columnKey);
+    return columnsForMatchKey.containsKey(columnKey);
   }
 
-  public List<Column> get(final String columnKey)
+  public List<String> get(final Column column)
   {
-    return columnMatchKeysMap.get(columnKey);
+    return matchKeysForColumn.get(column);
+  }
+
+  public List<Column> get(final String matchKey)
+  {
+    return columnsForMatchKey.get(matchKey);
   }
 
   @Override
   public String toString()
   {
-    return columnMatchKeysMap.toString();
+    return columnsForMatchKey.toString();
   }
 
   private void mapColumnNameMatches(final Table table)
@@ -79,7 +85,8 @@ final class ColumnMatchKeysMap
       }
       if (!matchColumnName.equals("id"))
       {
-        columnMatchKeysMap.add(matchColumnName, column);
+        columnsForMatchKey.add(matchColumnName, column);
+        matchKeysForColumn.add(column, matchColumnName);
       }
     }
   }
