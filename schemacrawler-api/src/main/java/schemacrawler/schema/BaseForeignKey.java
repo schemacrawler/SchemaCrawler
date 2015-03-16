@@ -21,35 +21,22 @@
 package schemacrawler.schema;
 
 
+import java.util.List;
 
 /**
  * Represents a foreign-key mapping to a primary key in another table.
  *
  * @author Sualeh Fatehi
  */
-public interface ForeignKey
-  extends NamedObjectWithAttributes, BaseForeignKey<ForeignKeyColumnReference>
+public interface BaseForeignKey<R extends ColumnReference>
+  extends NamedObject, Iterable<R>
 {
 
   /**
-   * Gets the deferrability.
+   * Gets the list of column pairs.
    *
-   * @return Deferrability
+   * @return Column pairs
    */
-  ForeignKeyDeferrability getDeferrability();
-
-  /**
-   * Gets the delete rule.
-   *
-   * @return Delete rule
-   */
-  ForeignKeyUpdateRule getDeleteRule();
-
-  /**
-   * Gets the update rule.
-   *
-   * @return Update rule
-   */
-  ForeignKeyUpdateRule getUpdateRule();
+  List<R> getColumnReferences();
 
 }

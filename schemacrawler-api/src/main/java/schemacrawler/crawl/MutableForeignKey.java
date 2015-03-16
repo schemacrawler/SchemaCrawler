@@ -22,11 +22,14 @@ package schemacrawler.crawl;
 
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import schemacrawler.schema.BaseForeignKey;
 import schemacrawler.schema.Column;
+import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.ForeignKeyDeferrability;
@@ -77,9 +80,9 @@ class MutableForeignKey
       return -1;
     }
 
-    final ForeignKey other = (ForeignKey) obj;
-    final List<ForeignKeyColumnReference> thisColumnReferences = getColumnReferences();
-    final List<ForeignKeyColumnReference> otherColumnReferences = other
+    final BaseForeignKey other = (BaseForeignKey) obj;
+    final List<? extends ColumnReference> thisColumnReferences = getColumnReferences();
+    final List<? extends ColumnReference> otherColumnReferences = other
       .getColumnReferences();
 
     return CompareUtility.compareLists(thisColumnReferences,
@@ -128,6 +131,13 @@ class MutableForeignKey
   public final ForeignKeyUpdateRule getUpdateRule()
   {
     return updateRule;
+  }
+
+  @Override
+  public Iterator<ForeignKeyColumnReference> iterator()
+  {
+    return new ArrayList<ForeignKeyColumnReference>(columnReferences)
+      .iterator();
   }
 
   void addColumnReference(final int keySequence,

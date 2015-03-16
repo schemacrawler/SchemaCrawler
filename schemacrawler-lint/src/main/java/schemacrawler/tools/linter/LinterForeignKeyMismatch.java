@@ -73,8 +73,7 @@ public class LinterForeignKeyMismatch
     {
       for (final ForeignKey foreignKey: table.getImportedForeignKeys())
       {
-        for (final ForeignKeyColumnReference columnReference: foreignKey
-          .getColumnReferences())
+        for (final ForeignKeyColumnReference columnReference: foreignKey)
         {
           final Column pkColumn = columnReference.getPrimaryKeyColumn();
           final Column fkColumn = columnReference.getForeignKeyColumn();

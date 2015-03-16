@@ -75,15 +75,14 @@ final class ForeignKeys
     final Collection<ColumnReference> fkColumnsMap = new HashSet<>();
     for (final Table table: tables)
     {
-      for (final ForeignKey fk: table.getForeignKeys())
+      for (final ForeignKey foreignKey: table.getForeignKeys())
       {
-        for (final ForeignKeyColumnReference fkMap: fk.getColumnReferences())
+        for (final ForeignKeyColumnReference columnRef: foreignKey)
         {
-          fkColumnsMap.add(fkMap);
+          fkColumnsMap.add(columnRef);
         }
       }
     }
     return fkColumnsMap;
   }
-
 }

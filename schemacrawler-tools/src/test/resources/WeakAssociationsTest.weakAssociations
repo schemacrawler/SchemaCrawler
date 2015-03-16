@@ -3,15 +3,19 @@ schema: PUBLIC.BOOKS
   table: PUBLIC.BOOKS.AUTHORSLIST
   table: PUBLIC.BOOKS.BOOKAUTHORS
   table: PUBLIC.BOOKS.BOOKS
-    weak association: PUBLIC.BOOKS.BOOKS.ID <~~ PUBLIC."PUBLISHER SALES".SALES.BOOKID (0..many)
-    weak association: PUBLIC.BOOKS.PUBLISHERS.ID <~~ PUBLIC.BOOKS.BOOKS.PUBLISHERID (0..many)
+    weak association (1 to 0..many):
+      column reference: PUBLIC.BOOKS.BOOKS.ID <~~ PUBLIC."PUBLISHER SALES".SALES.BOOKID
+    weak association (1 to 0..many):
+      column reference: PUBLIC.BOOKS.PUBLISHERS.ID <~~ PUBLIC.BOOKS.BOOKS.PUBLISHERID
   table: PUBLIC.BOOKS."Global Counts"
   table: PUBLIC.BOOKS.PUBLISHERS
-    weak association: PUBLIC.BOOKS.PUBLISHERS.ID <~~ PUBLIC.BOOKS.BOOKS.PUBLISHERID (0..many)
+    weak association (1 to 0..many):
+      column reference: PUBLIC.BOOKS.PUBLISHERS.ID <~~ PUBLIC.BOOKS.BOOKS.PUBLISHERID
 schema: PUBLIC.INFORMATION_SCHEMA
 schema: PUBLIC.PUBLIC
 schema: PUBLIC."PUBLISHER SALES"
   table: PUBLIC."PUBLISHER SALES".REGIONS
   table: PUBLIC."PUBLISHER SALES".SALES
-    weak association: PUBLIC.BOOKS.BOOKS.ID <~~ PUBLIC."PUBLISHER SALES".SALES.BOOKID (0..many)
+    weak association (1 to 0..many):
+      column reference: PUBLIC.BOOKS.BOOKS.ID <~~ PUBLIC."PUBLISHER SALES".SALES.BOOKID
 schema: PUBLIC.SYSTEM_LOBS

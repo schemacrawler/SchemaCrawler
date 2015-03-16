@@ -531,14 +531,14 @@
     },
     {
       "weakAssociations": [
-        {
+        {"columnReferences": [{
           "pkColumn": "BOOKS.ID",
           "fkColumn": "SALES.BOOKID"
-        },
-        {
+        }]},
+        {"columnReferences": [{
           "pkColumn": "PUBLISHERS.ID",
           "fkColumn": "BOOKS.PUBLISHERID"
-        }
+        }]}
       ],
       "definition": "",
       "tableConstraints": [
@@ -834,10 +834,10 @@
       "type": "table"
     },
     {
-      "weakAssociations": [{
+      "weakAssociations": [{"columnReferences": [{
         "pkColumn": "PUBLISHERS.ID",
         "fkColumn": "BOOKS.PUBLISHERID"
-      }],
+      }]}],
       "definition": "",
       "tableConstraints": [{
         "definition": "",
@@ -2191,10 +2191,10 @@
       "type": "table"
     },
     {
-      "weakAssociations": [{
+      "weakAssociations": [{"columnReferences": [{
         "pkColumn": "BOOKS.ID",
         "fkColumn": "SALES.BOOKID"
-      }],
+      }]}],
       "definition": "",
       "tableConstraints": [
         {

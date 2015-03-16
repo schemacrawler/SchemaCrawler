@@ -725,14 +725,14 @@
       "remarks": "Details for published books",
       "type": "table",
       "weakAssociations": [
-        {
+        {"columnReferences": [{
           "pkColumn": "PUBLIC.BOOKS.BOOKS.ID",
           "fkColumn": "PUBLIC.\"PUBLISHER SALES\".SALES.BOOKID"
-        },
-        {
+        }]},
+        {"columnReferences": [{
           "pkColumn": "PUBLIC.BOOKS.PUBLISHERS.ID",
           "fkColumn": "PUBLIC.BOOKS.BOOKS.PUBLISHERID"
-        }
+        }]}
       ],
       "tableConstraints": [
         {
@@ -963,10 +963,10 @@
       ],
       "remarks": "List of book publishers",
       "type": "table",
-      "weakAssociations": [{
+      "weakAssociations": [{"columnReferences": [{
         "pkColumn": "PUBLIC.BOOKS.PUBLISHERS.ID",
         "fkColumn": "PUBLIC.BOOKS.BOOKS.PUBLISHERID"
-      }],
+      }]}],
       "tableConstraints": [{
         "definition": "",
         "name": "SYS_PK_10092",
@@ -2459,10 +2459,10 @@
       ],
       "remarks": "",
       "type": "table",
-      "weakAssociations": [{
+      "weakAssociations": [{"columnReferences": [{
         "pkColumn": "PUBLIC.BOOKS.BOOKS.ID",
         "fkColumn": "PUBLIC.\"PUBLISHER SALES\".SALES.BOOKID"
-      }],
+      }]}],
       "tableConstraints": [
         {
           "definition": "",

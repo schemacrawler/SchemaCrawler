@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Locale;
 
 import schemacrawler.schema.ActionOrientationType;
+import schemacrawler.schema.BaseForeignKey;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ColumnReference;
@@ -57,7 +58,8 @@ import schemacrawler.schema.TableConstraintColumn;
 import schemacrawler.schema.TableConstraintType;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.analysis.associations.CatalogWithAssociations;
+import schemacrawler.tools.analysis.associations.WeakAssociationForeignKey;
+import schemacrawler.tools.analysis.associations.WeakAssociationsUtility;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.BaseTabularFormatter;
 import schemacrawler.tools.text.utility.TextFormattingHelper.DocumentHeaderType;
@@ -473,9 +475,9 @@ final class SchemaTextFormatter
 
   private void printColumnReferences(final boolean isForeignKey,
                                      final String tableName,
-                                     final ColumnReference... columnReferences)
+                                     final BaseForeignKey<? extends ColumnReference> foreignKey)
   {
-    for (final ColumnReference columnReference: columnReferences)
+    for (final ColumnReference columnReference: foreignKey)
     {
       final Column pkColumn;
       final Column fkColumn;
@@ -628,8 +630,7 @@ final class SchemaTextFormatter
         }
         final String fkDetails = "[foreign key" + ruleString + "]";
         out.println(formattingHelper.createNameRow(fkName, fkDetails));
-        printColumnReferences(true, tableName, foreignKey.getColumnReferences()
-          .toArray(new ColumnReference[0]));
+        printColumnReferences(true, tableName, foreignKey);
       }
     }
   }
@@ -952,15 +953,20 @@ final class SchemaTextFormatter
   private void printWeakAssociations(final Table table)
   {
     final String tableName = table.getName();
-    final Collection<ColumnReference> weakAssociationsCollection = CatalogWithAssociations
+    final Collection<WeakAssociationForeignKey> weakAssociationsCollection = WeakAssociationsUtility
       .getWeakAssociations(table);
-    final List<ColumnReference> weakAssociations = new ArrayList<>(weakAssociationsCollection);
+    final List<WeakAssociationForeignKey> weakAssociations = new ArrayList<>(weakAssociationsCollection);
     Collections.sort(weakAssociations);
-    for (final ColumnReference weakAssociation: weakAssociations)
+    for (final WeakAssociationForeignKey weakFk: weakAssociations)
     {
-      out.println(formattingHelper.createEmptyRow());
-      out.println(formattingHelper.createNameRow("", "[weak association]"));
-      printColumnReferences(false, tableName, weakAssociation);
+      if (weakFk != null)
+      {
+        out.println(formattingHelper.createEmptyRow());
+
+        final String fkDetails = "[weak association]";
+        out.println(formattingHelper.createNameRow("", fkDetails));
+        printColumnReferences(false, tableName, weakFk);
+      }
     }
   }
 
