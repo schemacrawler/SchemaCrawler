@@ -41,7 +41,7 @@ import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.commandline.CommandLine;
 import schemacrawler.tools.executable.Executable;
-import sf.util.commandlineparser.CommandLineArgumentsUtility;
+import sf.util.commandlineparser.CommandLineUtility;
 
 public class SchemaCrawlerSpringCommandLine
   implements CommandLine
@@ -57,7 +57,7 @@ public class SchemaCrawlerSpringCommandLine
   {
     requireNonNull(args);
 
-    final Config config = CommandLineArgumentsUtility.loadConfig(args);
+    final Config config = CommandLineUtility.loadConfig(args);
 
     final SpringOptionsParser springOptionsParser = new SpringOptionsParser(config);
     springOptions = springOptionsParser.getOptions();

@@ -21,12 +21,7 @@
 package schemacrawler.tools.options;
 
 
-import java.util.Collections;
-import java.util.List;
-import java.util.logging.Handler;
 import java.util.logging.Level;
-import java.util.logging.LogManager;
-import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.Options;
 
@@ -39,36 +34,6 @@ public class ApplicationOptions
   private Level applicationLogLevel;
   private boolean showHelp;
   private boolean showVersionOnly;
-
-  /**
-   * Sets the application-wide log level.
-   */
-  public void applyApplicationLogLevel()
-  {
-    if (applicationLogLevel == null)
-    {
-      return;
-    }
-
-    final LogManager logManager = LogManager.getLogManager();
-    final List<String> loggerNames = Collections.list(logManager
-      .getLoggerNames());
-    for (final String loggerName: loggerNames)
-    {
-      final Logger logger = logManager.getLogger(loggerName);
-      if (logger != null)
-      {
-        logger.setLevel(null);
-        for (final Handler handler: logger.getHandlers())
-        {
-          handler.setLevel(applicationLogLevel);
-        }
-      }
-    }
-
-    final Logger rootLogger = Logger.getLogger("");
-    rootLogger.setLevel(applicationLogLevel);
-  }
 
   public Level getApplicationLogLevel()
   {

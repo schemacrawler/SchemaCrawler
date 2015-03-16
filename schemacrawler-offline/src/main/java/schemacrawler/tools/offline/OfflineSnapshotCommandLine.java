@@ -34,7 +34,7 @@ import schemacrawler.tools.commandline.ConfigParser;
 import schemacrawler.tools.commandline.OutputOptionsParser;
 import schemacrawler.tools.commandline.SchemaCrawlerOptionsParser;
 import schemacrawler.tools.options.OutputOptions;
-import sf.util.commandlineparser.CommandLineArgumentsUtility;
+import sf.util.commandlineparser.CommandLineUtility;
 
 /**
  * Utility for parsing the SchemaCrawler command-line.
@@ -134,7 +134,7 @@ public final class OfflineSnapshotCommandLine
   private void loadConfig(final String[] args)
     throws SchemaCrawlerException
   {
-    final Config optionsMap = CommandLineArgumentsUtility.loadConfig(args);
+    final Config optionsMap = CommandLineUtility.loadConfig(args);
 
     // 1. Load config from files, in place
     config.putAll(optionsMap);
