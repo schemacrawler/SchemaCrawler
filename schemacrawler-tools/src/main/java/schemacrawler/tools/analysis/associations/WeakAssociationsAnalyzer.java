@@ -21,7 +21,7 @@
 package schemacrawler.tools.analysis.associations;
 
 
-import static schemacrawler.tools.analysis.associations.CatalogWithAssociations.addWeakAssociationToTable;
+import static schemacrawler.tools.analysis.associations.WeakAssociationsUtility.addWeakAssociationToTable;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -33,8 +33,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schema.Column;
-import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.Table;
+import schemacrawler.utility.MetaDataUtility;
 
 final class WeakAssociationsAnalyzer
 {
@@ -43,7 +43,7 @@ final class WeakAssociationsAnalyzer
     .getLogger(WeakAssociationsAnalyzer.class.getName());
 
   private final List<Table> tables;
-  private final Collection<ColumnReference> weakAssociations;
+  private final Collection<WeakAssociationForeignKey> weakAssociations;
 
   WeakAssociationsAnalyzer(final List<Table> tables)
   {
@@ -51,7 +51,7 @@ final class WeakAssociationsAnalyzer
     weakAssociations = new TreeSet<>();
   }
 
-  Collection<ColumnReference> analyzeTables()
+  Collection<WeakAssociationForeignKey> analyzeTables()
   {
     if (tables == null || tables.size() < 3)
     {
@@ -63,16 +63,22 @@ final class WeakAssociationsAnalyzer
     return weakAssociations;
   }
 
-  private void addWeakAssociation(final ColumnReference weakAssociation)
+  private void addWeakAssociation(final WeakAssociation weakAssociation)
   {
     if (weakAssociation != null)
     {
-      weakAssociations.add(weakAssociation);
+      final String weakFkName = MetaDataUtility
+        .constructForeignKeyName(weakAssociation.getPrimaryKeyColumn(),
+                                 weakAssociation.getForeignKeyColumn());
+      final WeakAssociationForeignKey weakFk = new WeakAssociationForeignKey(weakFkName);
+      weakFk.add(weakAssociation);
+
+      weakAssociations.add(weakFk);
 
       addWeakAssociationToTable(weakAssociation.getPrimaryKeyColumn()
-        .getParent(), weakAssociation);
+        .getParent(), weakFk);
       addWeakAssociationToTable(weakAssociation.getForeignKeyColumn()
-        .getParent(), weakAssociation);
+        .getParent(), weakFk);
     }
   }
 
@@ -93,8 +99,11 @@ final class WeakAssociationsAnalyzer
           fkColumnMatchKeys.addAll(tableMatchKeys.get(table));
         }
         // Look for all columns matching this column match key
-        final ColumnMatchKeys columnMatchKeys = new ColumnMatchKeys(pkColumn);
-        fkColumnMatchKeys.addAll(columnMatchKeys.get());
+        final List<String> matchKeys = columnMatchKeysMap.get(pkColumn);
+        if (matchKeys != null)
+        {
+          fkColumnMatchKeys.addAll(matchKeys);
+        }
 
         final Set<Column> fkColumns = new HashSet<>();
         for (final String fkColumnMatchKey: fkColumnMatchKeys)
@@ -114,10 +123,7 @@ final class WeakAssociationsAnalyzer
           {
             LOGGER.log(Level.FINE, String.format("Found weak association: %s",
                                                  weakAssociation));
-            if (weakAssociations != null)
-            {
-              addWeakAssociation(weakAssociation);
-            }
+            addWeakAssociation(weakAssociation);
           }
         }
       }

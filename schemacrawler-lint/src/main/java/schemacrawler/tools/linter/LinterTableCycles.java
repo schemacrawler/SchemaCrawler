@@ -69,8 +69,7 @@ public class LinterTableCycles
     tablesGraph.addVertex(table);
     for (final ForeignKey foreignKey: table.getForeignKeys())
     {
-      for (final ForeignKeyColumnReference columnReference: foreignKey
-        .getColumnReferences())
+      for (final ForeignKeyColumnReference columnReference: foreignKey)
       {
         tablesGraph.addDirectedEdge(columnReference.getPrimaryKeyColumn()
           .getParent(), columnReference.getForeignKeyColumn().getParent());

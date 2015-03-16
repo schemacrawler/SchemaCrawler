@@ -28,14 +28,14 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import schemacrawler.schema.BaseForeignKey;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnReference;
-import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Index;
-import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Table;
+import schemacrawler.schema.TableReference;
 
 /**
  * SchemaCrawler utility methods.
@@ -54,7 +54,7 @@ public final class MetaDataUtility
 
     private final String description;
 
-    private ForeignKeyCardinality(String description)
+    private ForeignKeyCardinality(final String description)
     {
       this.description = requireNonNull(description);
     }
@@ -80,22 +80,36 @@ public final class MetaDataUtility
     }
 
     final List<String> columnNames = new ArrayList<>();
-    for (final IndexColumn indexColumn: index.getColumns())
+    for (final Column indexColumn: index)
     {
       columnNames.add(indexColumn.getFullName());
     }
     return columnNames;
   }
 
-  public static ForeignKeyCardinality findForeignKeyCardinality(final ColumnReference... columnReferences)
+  public static String constructForeignKeyName(final Column pkColumn,
+                                               final Column fkColumn)
   {
-    if (columnReferences == null)
+    final TableReference pkTable = requireNonNull(pkColumn).getParent();
+    final TableReference fkParent = requireNonNull(fkColumn).getParent();
+    final String pkHex = Integer.toHexString(pkTable.getFullName().hashCode());
+    final String fkHex = Integer.toHexString(fkParent.getFullName().hashCode());
+    final String foreignKeyName = String.format("SC_%s_%s", pkHex, fkHex)
+      .toUpperCase();
+    return foreignKeyName;
+  }
+
+  public static ForeignKeyCardinality findForeignKeyCardinality(final BaseForeignKey foreignKey)
+  {
+    if (foreignKey == null)
     {
       return ForeignKeyCardinality.unknown;
     }
-    final boolean isForeignKeyUnique = isForeignKeyUnique(columnReferences);
+    final boolean isForeignKeyUnique = isForeignKeyUnique(foreignKey);
 
-    final Column fkColumn = columnReferences[0].getForeignKeyColumn();
+    final ColumnReference columnRef0 = (ColumnReference) foreignKey
+      .getColumnReferences().get(0);
+    final Column fkColumn = columnRef0.getForeignKeyColumn();
     final boolean isColumnReference = fkColumn instanceof PartialDatabaseObject;
 
     final ForeignKeyCardinality connectivity;
@@ -114,64 +128,32 @@ public final class MetaDataUtility
     return connectivity;
   }
 
-  public static ForeignKeyCardinality findForeignKeyCardinality(final ForeignKey foreignKey)
-  {
-    if (foreignKey == null)
-    {
-      return ForeignKeyCardinality.unknown;
-    }
-    return findForeignKeyCardinality(foreignKey.getColumnReferences()
-      .toArray(new ColumnReference[0]));
-  }
-
-  public static final List<String> foreignKeyColumnNames(final ColumnReference... columnReferences)
-  {
-    if (columnReferences == null)
-    {
-      return Collections.emptyList();
-    }
-    else
-    {
-      final List<String> columnNames = new ArrayList<>();
-      for (final ColumnReference columnReference: columnReferences)
-      {
-        columnNames.add(columnReference.getForeignKeyColumn().getFullName());
-      }
-      return columnNames;
-    }
-  }
-
-  public static final List<String> foreignKeyColumnNames(final ForeignKey foreignKey)
+  public static final List<String> foreignKeyColumnNames(final BaseForeignKey<? extends ColumnReference> foreignKey)
   {
     if (foreignKey == null)
     {
       return Collections.emptyList();
     }
-    return foreignKeyColumnNames(foreignKey.getColumnReferences()
-      .toArray(new ColumnReference[0]));
+    final List<String> columnNames = new ArrayList<>();
+    for (final ColumnReference columnReference: foreignKey)
+    {
+      columnNames.add(columnReference.getForeignKeyColumn().getFullName());
+    }
+    return columnNames;
   }
 
-  public static boolean isForeignKeyUnique(final ColumnReference... columnReferences)
+  public static boolean isForeignKeyUnique(final BaseForeignKey foreignKey)
   {
-    if (columnReferences == null || columnReferences.length == 0)
+    if (foreignKey == null)
     {
       return false;
     }
-    final Table fkTable = columnReferences[0].getForeignKeyColumn().getParent();
+    final ColumnReference columnRef0 = (ColumnReference) foreignKey
+      .getColumnReferences().get(0);
+    final Table fkTable = columnRef0.getForeignKeyColumn().getParent();
     final Collection<List<String>> uniqueIndexCoumnNames = uniqueIndexCoumnNames(fkTable);
-    final List<String> foreignKeyColumnNames = foreignKeyColumnNames(columnReferences);
+    final List<String> foreignKeyColumnNames = foreignKeyColumnNames(foreignKey);
     return uniqueIndexCoumnNames.contains(foreignKeyColumnNames);
-  }
-
-  public static boolean isForeignKeyUnique(final ForeignKey foreignKey)
-  {
-    if (foreignKey == null)
-    {
-      return false;
-    }
-    final ColumnReference[] columnReferences = foreignKey.getColumnReferences()
-      .toArray(new ColumnReference[0]);
-    return isForeignKeyUnique(columnReferences);
   }
 
   public static Collection<List<String>> uniqueIndexCoumnNames(final Table table)

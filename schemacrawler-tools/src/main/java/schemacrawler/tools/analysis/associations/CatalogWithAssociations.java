@@ -23,15 +23,10 @@ package schemacrawler.tools.analysis.associations;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 import schemacrawler.schema.Catalog;
-import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.Table;
-import schemacrawler.schema.TableReference;
 import schemacrawler.schemacrawler.BaseCatalogDecorator;
 
 public final class CatalogWithAssociations
@@ -40,35 +35,7 @@ public final class CatalogWithAssociations
 
   private static final long serialVersionUID = -3953296149824921463L;
 
-  private static final String WEAK_ASSOCIATIONS_KEY = "schemacrawler.weak_associations";
-
-  public static final Collection<ColumnReference> getWeakAssociations(final Table table)
-  {
-    if (table == null)
-    {
-      return null;
-    }
-
-    final SortedSet<ColumnReference> weakAssociations = table
-      .getAttribute(WEAK_ASSOCIATIONS_KEY, new TreeSet<ColumnReference>());
-    final List<ColumnReference> weakAssociationsList = new ArrayList<>(weakAssociations);
-    Collections.sort(weakAssociationsList);
-    return weakAssociationsList;
-  }
-
-  static void addWeakAssociationToTable(final TableReference table,
-                                        final ColumnReference weakAssociation)
-  {
-    if (table != null && weakAssociation != null)
-    {
-      final SortedSet<ColumnReference> tableWeakAssociations = table
-        .getAttribute(WEAK_ASSOCIATIONS_KEY, new TreeSet<ColumnReference>());
-      tableWeakAssociations.add(weakAssociation);
-      table.setAttribute(WEAK_ASSOCIATIONS_KEY, tableWeakAssociations);
-    }
-  }
-
-  private final Collection<ColumnReference> weakAssociations;
+  private final Collection<WeakAssociationForeignKey> weakAssociations;
 
   public CatalogWithAssociations(final Catalog catalog)
   {
@@ -79,7 +46,7 @@ public final class CatalogWithAssociations
     weakAssociations = weakAssociationsAnalyzer.analyzeTables();
   }
 
-  public Collection<ColumnReference> getWeakAssociations()
+  public Collection<WeakAssociationForeignKey> getWeakAssociations()
   {
     return weakAssociations;
   }
