@@ -22,7 +22,7 @@
 package schemacrawler.integration.test;
 
 
-import static sf.util.commandlineparser.CommandLineArgumentsUtility.flattenCommandlineArgs;
+import static sf.util.commandlineparser.CommandLineUtility.flattenCommandlineArgs;
 
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;

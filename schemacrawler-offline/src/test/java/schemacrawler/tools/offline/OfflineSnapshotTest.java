@@ -26,7 +26,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
 import static schemacrawler.test.utility.TestUtility.createTempFile;
-import static sf.util.commandlineparser.CommandLineArgumentsUtility.flattenCommandlineArgs;
+import static sf.util.commandlineparser.CommandLineUtility.flattenCommandlineArgs;
 
 import java.io.IOException;
 import java.io.Writer;
