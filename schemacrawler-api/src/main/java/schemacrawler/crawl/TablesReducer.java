@@ -125,12 +125,11 @@ class TablesReducer
 
     for (final Table table: allTables)
     {
-      for (final ForeignKey fk: table.getExportedForeignKeys())
+      for (final ForeignKey foreignKey: table.getExportedForeignKeys())
       {
-        for (final ForeignKeyColumnReference fkColumnReference: fk
-          .getColumnReferences())
+        for (final ForeignKeyColumnReference fkColumnRef: foreignKey)
         {
-          final Table referencedTable = fkColumnReference.getForeignKeyColumn()
+          final Table referencedTable = fkColumnRef.getForeignKeyColumn()
             .getParent();
           boolean removeFk = false;
           if (isTablePartial(referencedTable))
@@ -146,22 +145,22 @@ class TablesReducer
           {
             if (options.isGrepOnlyMatching())
             {
-              fk.setAttribute("foreignKey.filtered", true);
+              foreignKey.setAttribute("foreignKey.filtered", true);
             }
             else
             {
-              fk.setAttribute("foreignKey.filtered.foreignKeyColumn", true);
+              foreignKey.setAttribute("foreignKey.filtered.foreignKeyColumn",
+                                      true);
             }
           }
         }
       }
 
-      for (final ForeignKey fk: table.getImportedForeignKeys())
+      for (final ForeignKey foreignKey: table.getImportedForeignKeys())
       {
-        for (final ForeignKeyColumnReference fkColumnReference: fk
-          .getColumnReferences())
+        for (final ForeignKeyColumnReference columnRef: foreignKey)
         {
-          final TableReference referencedTable = fkColumnReference
+          final TableReference referencedTable = columnRef
             .getPrimaryKeyColumn().getParent();
           boolean removeFk = false;
           if (!(referencedTable instanceof MutableTable))
@@ -177,11 +176,12 @@ class TablesReducer
           {
             if (options.isGrepOnlyMatching())
             {
-              fk.setAttribute("foreignKey.filtered", true);
+              foreignKey.setAttribute("foreignKey.filtered", true);
             }
             else
             {
-              fk.setAttribute("foreignKey.filtered.primaryKeyColumn", true);
+              foreignKey.setAttribute("foreignKey.filtered.primaryKeyColumn",
+                                      true);
             }
           }
         }

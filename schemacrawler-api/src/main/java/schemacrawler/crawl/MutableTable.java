@@ -250,8 +250,7 @@ class MutableTable
         .values());
       for (final ForeignKey foreignKey: foreignKeysList)
       {
-        for (final ForeignKeyColumnReference columnReference: foreignKey
-          .getColumnReferences())
+        for (final ForeignKeyColumnReference columnReference: foreignKey)
         {
           final Table parentTable = columnReference.getPrimaryKeyColumn()
             .getParent();
@@ -472,8 +471,7 @@ class MutableTable
         final ForeignKey mutableForeignKey = iterator.next();
         boolean isExportedKey = false;
         boolean isImportedKey = false;
-        for (final ForeignKeyColumnReference columnReference: mutableForeignKey
-          .getColumnReferences())
+        for (final ForeignKeyColumnReference columnReference: mutableForeignKey)
         {
           if (columnReference.getPrimaryKeyColumn().getParent().equals(this))
           {

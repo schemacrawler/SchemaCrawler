@@ -30,7 +30,7 @@ import java.util.List;
  */
 public interface Index
   extends DependantObject<TableReference>, TypedObject<IndexType>,
-  DefinedObject
+  DefinedObject, Iterable<IndexColumn>
 {
 
   /**

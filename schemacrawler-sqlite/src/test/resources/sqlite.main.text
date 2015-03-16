@@ -27,7 +27,7 @@ JDBC Driver Information
 driver name                               SQLiteJDBC                    
 driver version                            native                        
 driver class name                         org.sqlite.JDBC               
-url                                       jdbc:sqlite:C:\Users\SUALEH~1\AppData\Local\Temp\schemacrawler.resource.3808443688263876161.data
+url                                       jdbc:sqlite:C:\Users\SUALEH~1\AppData\Local\Temp\schemacrawler.resource.1562296006540826192.data
 is JDBC compliant                         false                         
 
 
@@ -163,7 +163,7 @@ Authors
 PK_Authors                                                 [primary key]
   Id                                ascending                   
 
-SC_1D623CC1_CA52CC35                       [foreign key, with no action]
+SC_3CAFA828_4047ACFF                       [foreign key, with no action]
   Id <-- BookAuthors.AuthorId                                   
 
 IDX_B_Authors                                         [non-unique index]
@@ -197,7 +197,7 @@ Books
 PK_Books                                                   [primary key]
   Id                                ascending                   
 
-SC_7B63FF1F_ED9945D3                       [foreign key, with no action]
+SC_3D6328A_4047ACFF                        [foreign key, with no action]
   Id <-- BookAuthors.BookId                                     
 
 
@@ -227,10 +227,10 @@ BookAuthors
   AuthorId                          INTEGER NOT NULL            
   "UPDATE"                          CLOB                        
 
-SC_1D623CC1_CA52CC35                       [foreign key, with no action]
+SC_3CAFA828_4047ACFF                       [foreign key, with no action]
   AuthorId --> Authors.Id                                       
 
-SC_7B63FF1F_ED9945D3                       [foreign key, with no action]
+SC_3D6328A_4047ACFF                        [foreign key, with no action]
   BookId --> Books.Id                                           
 
 UIDX_BookAuthors                                          [unique index]

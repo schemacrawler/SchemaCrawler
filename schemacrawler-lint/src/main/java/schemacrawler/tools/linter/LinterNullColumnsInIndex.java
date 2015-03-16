@@ -67,7 +67,7 @@ public class LinterNullColumnsInIndex
     {
       if (index.isUnique())
       {
-        for (final IndexColumn indexColumn: index.getColumns())
+        for (final IndexColumn indexColumn: index)
         {
           if (indexColumn.isNullable())
           {
