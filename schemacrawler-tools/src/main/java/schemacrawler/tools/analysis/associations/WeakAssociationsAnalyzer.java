@@ -123,6 +123,11 @@ final class WeakAssociationsAnalyzer
 
         for (final Column fkColumn: fkColumns)
         {
+          if (pkColumn.equals(fkColumn))
+          {
+            continue;
+          }
+
           final WeakAssociation weakAssociation = new WeakAssociation(pkColumn,
                                                                       fkColumn);
           if (weakAssociation.isValid()
