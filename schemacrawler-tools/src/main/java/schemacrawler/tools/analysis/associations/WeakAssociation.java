@@ -47,11 +47,6 @@ public final class WeakAssociation
     final Column primaryKeyColumn = getPrimaryKeyColumn();
     final Column foreignKeyColumn = getForeignKeyColumn();
 
-    if (primaryKeyColumn.equals(foreignKeyColumn))
-    {
-      return false;
-    }
-
     final Table pkTable = primaryKeyColumn.getParent();
     final Table fkTable = foreignKeyColumn.getParent();
     if ((foreignKeyColumn.isPartOfPrimaryKey() || foreignKeyColumn

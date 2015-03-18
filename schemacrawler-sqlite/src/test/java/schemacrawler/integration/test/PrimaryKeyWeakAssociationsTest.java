@@ -27,7 +27,6 @@ import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import schemacrawler.schema.Catalog;
@@ -65,7 +64,6 @@ public class PrimaryKeyWeakAssociationsTest
     weakAssociations(currentMethodFullName(), "/pk_test_2.db");
   }
 
-  @Ignore
   @Test
   public void weakAssociations3()
     throws Exception
