@@ -23,9 +23,9 @@ package schemacrawler.tools.analysis.associations;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
+import java.util.Set;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Index;
@@ -37,7 +37,7 @@ final class TableCandidateKeys
 {
 
   private final Table table;
-  private final List<Column> tableKeys;
+  private final Set<Column> tableKeys;
 
   TableCandidateKeys(final Table table)
   {
@@ -57,9 +57,9 @@ final class TableCandidateKeys
     return String.format("%s: %s", table, tableKeys);
   }
 
-  private List<Column> listTableKeys(final Table table)
+  private Set<Column> listTableKeys(final Table table)
   {
-    final List<Column> tableKeys = new ArrayList<>();
+    final Set<Column> tableKeys = new HashSet<>();
 
     final PrimaryKey primaryKey = table.getPrimaryKey();
     if (primaryKey != null && primaryKey.getColumns().size() == 1)
