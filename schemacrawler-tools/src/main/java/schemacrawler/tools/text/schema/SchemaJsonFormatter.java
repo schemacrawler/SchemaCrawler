@@ -588,6 +588,7 @@ final class SchemaJsonFormatter
 
     try
     {
+      jsonColumn.put("name", column.getName());
       jsonColumn.put("dataType", column.getColumnDataType().getJavaSqlType()
         .getJavaSqlTypeName());
       jsonColumn.put("databaseSpecificType", column.getColumnDataType()

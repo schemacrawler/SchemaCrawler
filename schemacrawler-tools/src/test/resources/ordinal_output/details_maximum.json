@@ -3745,6 +3745,7 @@
       "parameters": [{
         "dataType": "INTEGER",
         "width": "",
+        "name": "ONE",
         "ordinal": 1,
         "type": "in",
         "databaseSpecificType": "INTEGER"
@@ -3762,6 +3763,7 @@
         {
           "dataType": "INTEGER",
           "width": "",
+          "name": "ONE",
           "ordinal": 1,
           "type": "in",
           "databaseSpecificType": "INTEGER"
@@ -3769,6 +3771,7 @@
         {
           "dataType": "INTEGER",
           "width": "",
+          "name": "TWO",
           "ordinal": 2,
           "type": "in",
           "databaseSpecificType": "INTEGER"
@@ -3786,6 +3789,7 @@
       "parameters": [{
         "dataType": "VARCHAR",
         "width": "",
+        "name": "PUBLISHER",
         "ordinal": 1,
         "type": "out",
         "databaseSpecificType": "CHARACTER VARYING"
@@ -3803,6 +3807,7 @@
         {
           "dataType": "VARCHAR",
           "width": "",
+          "name": "NEWPUBLISHER",
           "ordinal": 1,
           "type": "in",
           "databaseSpecificType": "CHARACTER VARYING"
@@ -3810,6 +3815,7 @@
         {
           "dataType": "VARCHAR",
           "width": "",
+          "name": "PUBLISHER",
           "ordinal": 2,
           "type": "out",
           "databaseSpecificType": "CHARACTER VARYING"
