@@ -5,7 +5,15 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-     <release version="12.05.02" date="2015-03-14" description="Better identification of weak associations.">
+     <release version="12.05.02" date="2015-03-17" description="Better identification of weak associations.">
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Better identification of weak associations.
+      ]]></action> 
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Showing routine parameter names in JSON.
+      ]]></action>                                     
+     </release>   
+     <release version="12.05.01" date="2015-03-14" description="Better identification of weak associations.">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Better identification of weak associations.
       ]]></action>                               
