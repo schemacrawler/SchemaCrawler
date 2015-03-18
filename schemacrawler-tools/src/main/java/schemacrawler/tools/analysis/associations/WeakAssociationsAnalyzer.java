@@ -65,31 +65,39 @@ final class WeakAssociationsAnalyzer
 
   private void addWeakAssociation(final WeakAssociation weakAssociation)
   {
-    if (weakAssociation != null)
-    {
-      final String weakFkName = MetaDataUtility
-        .constructForeignKeyName(weakAssociation.getPrimaryKeyColumn(),
-                                 weakAssociation.getForeignKeyColumn());
-      final WeakAssociationForeignKey weakFk = new WeakAssociationForeignKey(weakFkName);
-      weakFk.add(weakAssociation);
+    final String weakFkName = MetaDataUtility
+      .constructForeignKeyName(weakAssociation.getPrimaryKeyColumn(),
+                               weakAssociation.getForeignKeyColumn());
+    final WeakAssociationForeignKey weakFk = new WeakAssociationForeignKey(weakFkName);
+    weakFk.add(weakAssociation);
 
-      weakAssociations.add(weakFk);
+    weakAssociations.add(weakFk);
 
-      addWeakAssociationToTable(weakAssociation.getPrimaryKeyColumn()
-        .getParent(), weakFk);
-      addWeakAssociationToTable(weakAssociation.getForeignKeyColumn()
-        .getParent(), weakFk);
-    }
+    addWeakAssociationToTable(weakAssociation.getPrimaryKeyColumn().getParent(),
+                              weakFk);
+    addWeakAssociationToTable(weakAssociation.getForeignKeyColumn().getParent(),
+                              weakFk);
   }
 
   private void findWeakAssociations(final List<Table> tables)
   {
+    LOGGER.log(Level.INFO, "Finding weak associations");
     final ForeignKeys foreignKeys = new ForeignKeys(tables);
     final ColumnMatchKeysMap columnMatchKeysMap = new ColumnMatchKeysMap(tables);
     final TableMatchKeys tableMatchKeys = new TableMatchKeys(tables);
+
+    if (LOGGER.isLoggable(Level.FINER))
+    {
+      LOGGER.log(Level.FINER,
+                 "Column match keys: " + columnMatchKeysMap.toString());
+      LOGGER
+        .log(Level.FINER, "Column match keys: " + tableMatchKeys.toString());
+    }
     for (final Table table: tables)
     {
       final TableCandidateKeys tableCandidateKeys = new TableCandidateKeys(table);
+      LOGGER.log(Level.FINER,
+                 "Table candidate keys: " + tableCandidateKeys.toString());
       for (final Column pkColumn: tableCandidateKeys)
       {
         final Set<String> fkColumnMatchKeys = new HashSet<>();
