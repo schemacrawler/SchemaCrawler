@@ -1935,6 +1935,7 @@
       "parameters": [{
         "dataType": "INTEGER",
         "width": "",
+        "name": "ONE",
         "type": "in",
         "databaseSpecificType": "INTEGER"
       }],
@@ -1951,12 +1952,14 @@
         {
           "dataType": "INTEGER",
           "width": "",
+          "name": "ONE",
           "type": "in",
           "databaseSpecificType": "INTEGER"
         },
         {
           "dataType": "INTEGER",
           "width": "",
+          "name": "TWO",
           "type": "in",
           "databaseSpecificType": "INTEGER"
         }
@@ -1973,6 +1976,7 @@
       "parameters": [{
         "dataType": "VARCHAR",
         "width": "",
+        "name": "PUBLISHER",
         "type": "out",
         "databaseSpecificType": "CHARACTER VARYING"
       }],
@@ -1989,12 +1993,14 @@
         {
           "dataType": "VARCHAR",
           "width": "",
+          "name": "NEWPUBLISHER",
           "type": "in",
           "databaseSpecificType": "CHARACTER VARYING"
         },
         {
           "dataType": "VARCHAR",
           "width": "",
+          "name": "PUBLISHER",
           "type": "out",
           "databaseSpecificType": "CHARACTER VARYING"
         }
@@ -2012,18 +2018,21 @@
         {
           "dataType": "INTEGER",
           "width": "",
+          "name": "B_COUNT",
           "type": "in",
           "databaseSpecificType": "INTEGER"
         },
         {
           "dataType": "INTEGER",
           "width": "",
+          "name": "B_OFFSET",
           "type": "in",
           "databaseSpecificType": "INTEGER"
         },
         {
           "dataType": "BIGINT",
           "width": "",
+          "name": "L_ID",
           "type": "in",
           "databaseSpecificType": "BIGINT"
         }
@@ -2041,18 +2050,21 @@
         {
           "dataType": "INTEGER",
           "width": "",
+          "name": "B_COUNT",
           "type": "in",
           "databaseSpecificType": "INTEGER"
         },
         {
           "dataType": "INTEGER",
           "width": "",
+          "name": "B_OFFSET",
           "type": "in",
           "databaseSpecificType": "INTEGER"
         },
         {
           "dataType": "BIGINT",
           "width": "",
+          "name": "L_ID",
           "type": "in",
           "databaseSpecificType": "BIGINT"
         }
@@ -2070,24 +2082,28 @@
         {
           "dataType": "INTEGER",
           "width": "",
+          "name": "B_ADDR",
           "type": "in",
           "databaseSpecificType": "INTEGER"
         },
         {
           "dataType": "INTEGER",
           "width": "",
+          "name": "B_COUNT",
           "type": "in",
           "databaseSpecificType": "INTEGER"
         },
         {
           "dataType": "INTEGER",
           "width": "",
+          "name": "B_OFFSET",
           "type": "in",
           "databaseSpecificType": "INTEGER"
         },
         {
           "dataType": "BIGINT",
           "width": "",
+          "name": "L_ID",
           "type": "in",
           "databaseSpecificType": "BIGINT"
         }
@@ -2105,12 +2121,14 @@
         {
           "dataType": "INTEGER",
           "width": "",
+          "name": "B_ADDR",
           "type": "in/ out",
           "databaseSpecificType": "INTEGER"
         },
         {
           "dataType": "INTEGER",
           "width": "",
+          "name": "B_COUNT",
           "type": "in",
           "databaseSpecificType": "INTEGER"
         }
@@ -2128,24 +2146,28 @@
         {
           "dataType": "BIGINT",
           "width": "",
+          "name": "L_ID",
           "type": "in",
           "databaseSpecificType": "BIGINT"
         },
         {
           "dataType": "INTEGER",
           "width": "",
+          "name": "B_OFFSET",
           "type": "in",
           "databaseSpecificType": "INTEGER"
         },
         {
           "dataType": "INTEGER",
           "width": "",
+          "name": "B_LIMIT",
           "type": "in",
           "databaseSpecificType": "INTEGER"
         },
         {
           "dataType": "BIGINT",
           "width": "",
+          "name": "TX_ID",
           "type": "in",
           "databaseSpecificType": "BIGINT"
         }
@@ -2163,12 +2185,14 @@
         {
           "dataType": "BIGINT",
           "width": "",
+          "name": "L_ID",
           "type": "in",
           "databaseSpecificType": "BIGINT"
         },
         {
           "dataType": "BIGINT",
           "width": "",
+          "name": "TX_ID",
           "type": "in",
           "databaseSpecificType": "BIGINT"
         }
@@ -2185,6 +2209,7 @@
       "parameters": [{
         "dataType": "ARRAY",
         "width": "",
+        "name": "L_IDS",
         "type": "in",
         "databaseSpecificType": "BIGINT ARRAY"
       }],
@@ -2200,6 +2225,7 @@
       "parameters": [{
         "dataType": "BIGINT",
         "width": "",
+        "name": "LIMIT_ID",
         "type": "in",
         "databaseSpecificType": "BIGINT"
       }],
@@ -2216,12 +2242,14 @@
         {
           "dataType": "INTEGER",
           "width": "",
+          "name": "B_OFFSET",
           "type": "in",
           "databaseSpecificType": "INTEGER"
         },
         {
           "dataType": "BIGINT",
           "width": "",
+          "name": "L_ID",
           "type": "in",
           "databaseSpecificType": "BIGINT"
         }
