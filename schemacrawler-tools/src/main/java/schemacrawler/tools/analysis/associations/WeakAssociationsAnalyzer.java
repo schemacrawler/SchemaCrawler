@@ -21,6 +21,7 @@
 package schemacrawler.tools.analysis.associations;
 
 
+import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.analysis.associations.WeakAssociationsUtility.addWeakAssociationToTable;
 
 import java.util.Collection;
@@ -47,13 +48,13 @@ final class WeakAssociationsAnalyzer
 
   WeakAssociationsAnalyzer(final List<Table> tables)
   {
-    this.tables = tables;
+    this.tables = requireNonNull(tables, "No tables provided");
     weakAssociations = new TreeSet<>();
   }
 
   Collection<WeakAssociationForeignKey> analyzeTables()
   {
-    if (tables == null || tables.size() < 3)
+    if (tables.size() < 2)
     {
       return Collections.emptySet();
     }
