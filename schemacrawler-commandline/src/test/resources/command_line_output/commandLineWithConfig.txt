@@ -6,9 +6,8 @@ Tables
 
 
 
-BOOKS
+BOOKS                                                            [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 Details for published books
   ID                                INTEGER NOT NULL            
                                     Unique (internal) id for book
@@ -25,15 +24,13 @@ FK_PREVIOUSEDITION                         [foreign key, with no action]
 
 
 
-"Global Counts"
+"Global Counts"                                                  [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 
 
 
-PUBLISHERS
+PUBLISHERS                                                       [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 List of book publishers
   ID                                INTEGER NOT NULL            
                                     auto-incremented            
@@ -45,15 +42,13 @@ SYS_PK_10092                                               [primary key]
 
 
 
-"Global Counts"
+"Global Counts"                                                  [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 
 
 
-WRITERS
+WRITERS                                                          [table]
 ------------------------------------------------------------------------
-                                                                 [table]
   ID                                BIGINT NOT NULL             
   FIRSTNAME                         VARCHAR(20) NOT NULL        
   LASTNAME                          VARCHAR(20) NOT NULL        
@@ -81,9 +76,8 @@ FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS       [foreign key, wit
 
 
 
-ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
+ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                                             [table]
 ------------------------------------------------------------------------
-                                                                 [table]
   ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ               BIGINT NOT NULL             
   ΣΥΓΓΡΑΦΈΑΣ                        INTEGER                     
 
@@ -101,57 +95,48 @@ Routines
 
 
 
-NEW_PUBLISHER
+NEW_PUBLISHER                                     [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
 
 
 
-NEW_PUBLISHER
+NEW_PUBLISHER                                     [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
 
 
 
-CONVERT_BLOCK
+CONVERT_BLOCK                                     [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
 
 
 
-DELETE_BLOCKS
+DELETE_BLOCKS                                     [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
 
 
 
-DELETE_LOB
+DELETE_LOB                                        [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
 
 
 
-DELETE_UNUSED
+DELETE_UNUSED                                     [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
 
 
 
-DELETE_UNUSED_LOBS
+DELETE_UNUSED_LOBS                                [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
 
 
 
-DIVIDE_BLOCK
+DIVIDE_BLOCK                                      [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
 
 
 
-MERGE_EMPTY_BLOCKS
+MERGE_EMPTY_BLOCKS                                [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
 
 
 

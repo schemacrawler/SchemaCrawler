@@ -1,4 +1,8 @@
 
+.caption_description {
+	font-weight: normal;
+	float: right;
+}
 
 .name {
 	font-weight: bold;

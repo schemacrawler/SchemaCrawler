@@ -219,9 +219,8 @@ Tables
 
 
 
-BOOKS.AUTHORS
+BOOKS.AUTHORS                                                    [table]
 ------------------------------------------------------------------------
-                                                                 [table]
   ID                                INTEGER NOT NULL            
   FIRSTNAME                         VARCHAR(20) NOT NULL        
   LASTNAME                          VARCHAR(20) NOT NULL        
@@ -253,9 +252,8 @@ FK_Z_AUTHOR                                [foreign key, with no action]
 
 
 
-BOOKS.BOOKS
+BOOKS.BOOKS                                                      [table]
 ------------------------------------------------------------------------
-                                                                 [table]
   ID                                INTEGER NOT NULL            
   TITLE                             VARCHAR(255) NOT NULL       
   DESCRIPTION                       VARCHAR(255)                
@@ -284,16 +282,14 @@ FK_PREVIOUSEDITION                         [foreign key, with no action]
 
 
 
-BOOKS."Global Counts"
+BOOKS."Global Counts"                                            [table]
 ------------------------------------------------------------------------
-                                                                 [table]
   "Global Count"                    INTEGER                     
 
 
 
-BOOKS.PUBLISHERS
+BOOKS.PUBLISHERS                                                 [table]
 ------------------------------------------------------------------------
-                                                                 [table]
   ID                                INTEGER NOT NULL            
                                     auto-incremented            
   PUBLISHER                         VARCHAR(255)                
@@ -308,9 +304,8 @@ PK_PUBLISHERS                                              [primary key]
 
 
 
-BOOKS.BOOKAUTHORS
+BOOKS.BOOKAUTHORS                                                [table]
 ------------------------------------------------------------------------
-                                                                 [table]
   BOOKID                            INTEGER NOT NULL            
   AUTHORID                          INTEGER NOT NULL            
   "UPDATE"                          CLOB                        
@@ -333,9 +328,8 @@ FK_Y_BOOK                                  [foreign key, with no action]
 
 
 
-BOOKS.AUTHORSLIST
+BOOKS.AUTHORSLIST                                                 [view]
 ------------------------------------------------------------------------
-                                                                  [view]
   ID                                INTEGER NOT NULL            
   FIRSTNAME                         VARCHAR(20) NOT NULL        
   LASTNAME                          VARCHAR(20) NOT NULL        

@@ -6,9 +6,8 @@ Tables
 
 
 
-PUBLIC.BOOKS.AUTHORS
+PUBLIC.BOOKS.AUTHORS                                             [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 Contact details for book authors
   ID                                INTEGER NOT NULL            
   FIRSTNAME                         VARCHAR(20) NOT NULL        
@@ -56,9 +55,8 @@ BOOKS.AUTHORS.LASTNAME IS NOT NULL
 
 
 
-PUBLIC.BOOKS.BOOKS
+PUBLIC.BOOKS.BOOKS                                               [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 Details for published books
   ID                                INTEGER NOT NULL            
                                     Unique (internal) id for book
@@ -103,9 +101,8 @@ BOOKS.BOOKS.PUBLISHERID IS NOT NULL
 
 
 
-PUBLIC.FOR_LINT.PUBLICATIONS
+PUBLIC.FOR_LINT.PUBLICATIONS                                     [table]
 ------------------------------------------------------------------------
-                                                                 [table]
   ID                                INTEGER NOT NULL            
   TITLE                             VARCHAR(255) NOT NULL       
   DESCRIPTION                       VARCHAR(255)                

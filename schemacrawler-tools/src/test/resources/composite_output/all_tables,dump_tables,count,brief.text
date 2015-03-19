@@ -37,7 +37,7 @@ Query
 
 
 
-all_tables
+all_tables                                                              
 ------------------------------------------------------------------------
 TABLE_CAT	TABLE_SCHEM	TABLE_NAME	TABLE_TYPE	REMARKS	TYPE_CAT	TYPE_SCHEM	TYPE_NAME	SELF_REFERENCING_COL_NAME	REF_GENERATION	HSQLDB_TYPE	READ_ONLY	COMMIT_ACTION
 PUBLIC	BOOKS	AUTHORS	TABLE	Contact details for book authors	NULL	NULL	NULL	NULL	NULL	MEMORY	false	NULL
@@ -156,7 +156,7 @@ Query
 
 
 
-PUBLIC.BOOKS.AUTHORS
+PUBLIC.BOOKS.AUTHORS                                                    
 ------------------------------------------------------------------------
 ID	FIRSTNAME	LASTNAME	ADDRESS1	ADDRESS2	CITY	STATE	POSTALCODE	COUNTRY
 1	Oren	Shaffer	900-2273 Integer Avenue		Farmer City	MD	37032	Cook Islands
@@ -182,7 +182,7 @@ ID	FIRSTNAME	LASTNAME	ADDRESS1	ADDRESS2	CITY	STATE	POSTALCODE	COUNTRY
 
 
 
-PUBLIC.BOOKS.AUTHORSLIST
+PUBLIC.BOOKS.AUTHORSLIST                                                
 ------------------------------------------------------------------------
 ID	FIRSTNAME	LASTNAME
 1	Oren	Shaffer
@@ -208,7 +208,7 @@ ID	FIRSTNAME	LASTNAME
 
 
 
-PUBLIC.BOOKS.BOOKAUTHORS
+PUBLIC.BOOKS.BOOKAUTHORS                                                
 ------------------------------------------------------------------------
 BOOKID	AUTHORID
 1	7
@@ -234,7 +234,7 @@ BOOKID	AUTHORID
 
 
 
-PUBLIC.BOOKS.BOOKS
+PUBLIC.BOOKS.BOOKS                                                      
 ------------------------------------------------------------------------
 ID	TITLE	DESCRIPTION	PUBLISHERID	PUBLICATIONDATE	PRICE	PREVIOUSEDITIONID
 1	Neque. In Ornare Sagittis	Dis Parturient Montes, Nascetur Ridiculus Mus.	18	2000-10-27	69.99	NULL
@@ -260,13 +260,13 @@ ID	TITLE	DESCRIPTION	PUBLISHERID	PUBLICATIONDATE	PRICE	PREVIOUSEDITIONID
 
 
 
-PUBLIC.BOOKS."Global Counts"
+PUBLIC.BOOKS."Global Counts"                                            
 ------------------------------------------------------------------------
 Global Count
 
 
 
-PUBLIC.BOOKS.PUBLISHERS
+PUBLIC.BOOKS.PUBLISHERS                                                 
 ------------------------------------------------------------------------
 ID	PUBLISHER
 1	Dalton Lewis
@@ -292,37 +292,37 @@ ID	PUBLISHER
 
 
 
-PUBLIC.FOR_LINT.EXTRA_PK
+PUBLIC.FOR_LINT.EXTRA_PK                                                
 ------------------------------------------------------------------------
 ID	WRITERID	PUBLICATIONID
 
 
 
-PUBLIC.FOR_LINT."Global Counts"
+PUBLIC.FOR_LINT."Global Counts"                                         
 ------------------------------------------------------------------------
 Global Count
 
 
 
-PUBLIC.FOR_LINT.PUBLICATIONS
+PUBLIC.FOR_LINT.PUBLICATIONS                                            
 ------------------------------------------------------------------------
 ID	TITLE	DESCRIPTION	WRITERID	PUBLICATIONDATE	PRICE
 
 
 
-PUBLIC.FOR_LINT.WRITERS
+PUBLIC.FOR_LINT.WRITERS                                                 
 ------------------------------------------------------------------------
 ID	FIRSTNAME	LASTNAME	ADDRESS1	ADDRESS2	CITY	STATE	POSTALCODE	COUNTRY	PHONE1	PHONE2	EMAIL1	EMAIL2	FAX	FAX3	HOMEEMAIL11	HOMEEMAIL12	PUBLICATION_ID
 
 
 
-PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
+PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                                    
 ------------------------------------------------------------------------
 ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ	ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ	ΣΥΓΓΡΑΦΈΑΣ
 
 
 
-PUBLIC."PUBLISHER SALES".REGIONS
+PUBLIC."PUBLISHER SALES".REGIONS                                        
 ------------------------------------------------------------------------
 CITY	STATE	POSTALCODE	COUNTRY
 Arvada	KY	17131	USA
@@ -348,7 +348,7 @@ Woburn	NV	27392	USA
 
 
 
-PUBLIC."PUBLISHER SALES".SALES
+PUBLIC."PUBLISHER SALES".SALES                                          
 ------------------------------------------------------------------------
 POSTALCODE	COUNTRY	BOOKID	PERIODENDDATE	TOTALAMOUNT
 13078	USA	1	2001-07-18	18257.0
@@ -380,7 +380,7 @@ Row Count
 
 
 
-Row Count
+Row Count                                                               
 ------------------------------------------------------------------------
 PUBLIC.BOOKS.AUTHORS                                             20 rows
 PUBLIC.BOOKS.AUTHORSLIST                                         20 rows
@@ -404,9 +404,8 @@ Tables
 
 
 
-PUBLIC.BOOKS.AUTHORS
+PUBLIC.BOOKS.AUTHORS                                             [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 Contact details for book authors
   ID                                INTEGER NOT NULL            
   FIRSTNAME                         VARCHAR(20) NOT NULL        
@@ -424,15 +423,13 @@ FK_Z_AUTHOR                                [foreign key, with no action]
 
 
 
-PUBLIC.BOOKS.AUTHORSLIST
+PUBLIC.BOOKS.AUTHORSLIST                                          [view]
 ------------------------------------------------------------------------
-                                                                  [view]
 
 
 
-PUBLIC.BOOKS.BOOKAUTHORS
+PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 Relationship between books and their authors, along with the latest updated information
   BOOKID                            INTEGER NOT NULL            
   AUTHORID                          INTEGER NOT NULL            
@@ -445,9 +442,8 @@ FK_Y_BOOK                                  [foreign key, with no action]
 
 
 
-PUBLIC.BOOKS.BOOKS
+PUBLIC.BOOKS.BOOKS                                               [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 Details for published books
   ID                                INTEGER NOT NULL            
                                     Unique (internal) id for book
@@ -464,15 +460,13 @@ FK_PREVIOUSEDITION                         [foreign key, with no action]
 
 
 
-PUBLIC.BOOKS."Global Counts"
+PUBLIC.BOOKS."Global Counts"                                     [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 
 
 
-PUBLIC.BOOKS.PUBLISHERS
+PUBLIC.BOOKS.PUBLISHERS                                          [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 List of book publishers
   ID                                INTEGER NOT NULL            
                                     auto-incremented            
@@ -484,9 +478,8 @@ SYS_PK_10092                                               [primary key]
 
 
 
-PUBLIC.FOR_LINT.EXTRA_PK
+PUBLIC.FOR_LINT.EXTRA_PK                                         [table]
 ------------------------------------------------------------------------
-                                                                 [table]
   ID                                INTEGER NOT NULL            
   WRITERID                          BIGINT NOT NULL             
   PUBLICATIONID                     INTEGER NOT NULL            
@@ -502,15 +495,13 @@ FK_WRITER_JOIN                             [foreign key, with no action]
 
 
 
-PUBLIC.FOR_LINT."Global Counts"
+PUBLIC.FOR_LINT."Global Counts"                                  [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 
 
 
-PUBLIC.FOR_LINT.PUBLICATIONS
+PUBLIC.FOR_LINT.PUBLICATIONS                                     [table]
 ------------------------------------------------------------------------
-                                                                 [table]
   ID                                INTEGER NOT NULL            
   WRITERID                          BIGINT NOT NULL             
 
@@ -528,9 +519,8 @@ FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
 
 
 
-PUBLIC.FOR_LINT.WRITERS
+PUBLIC.FOR_LINT.WRITERS                                          [table]
 ------------------------------------------------------------------------
-                                                                 [table]
   ID                                BIGINT NOT NULL             
   FIRSTNAME                         VARCHAR(20) NOT NULL        
   LASTNAME                          VARCHAR(20) NOT NULL        
@@ -558,9 +548,8 @@ FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS       [foreign key, wit
 
 
 
-PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
+PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                             [table]
 ------------------------------------------------------------------------
-                                                                 [table]
   ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ               BIGINT NOT NULL             
   ΣΥΓΓΡΑΦΈΑΣ                        INTEGER                     
 
@@ -572,9 +561,8 @@ FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS       [foreign key, wit
 
 
 
-PUBLIC."PUBLISHER SALES".REGIONS
+PUBLIC."PUBLISHER SALES".REGIONS                                 [table]
 ------------------------------------------------------------------------
-                                                                 [table]
   POSTALCODE                        VARCHAR(10) NOT NULL        
   COUNTRY                           VARCHAR(50) NOT NULL        
 
@@ -588,9 +576,8 @@ FK_SALES_REGIONS                           [foreign key, with no action]
 
 
 
-PUBLIC."PUBLISHER SALES".SALES
+PUBLIC."PUBLISHER SALES".SALES                                   [table]
 ------------------------------------------------------------------------
-                                                                 [table]
   POSTALCODE                        VARCHAR(10) NOT NULL        
   COUNTRY                           VARCHAR(50) NOT NULL        
 
@@ -606,27 +593,23 @@ Routines
 
 
 
-PUBLIC.BOOKS.CUSTOMADD
+PUBLIC.BOOKS.CUSTOMADD               [function, does not return a table]
 ------------------------------------------------------------------------
-                                     [function, does not return a table]
 
 
 
-PUBLIC.BOOKS.CUSTOMADD
+PUBLIC.BOOKS.CUSTOMADD               [function, does not return a table]
 ------------------------------------------------------------------------
-                                     [function, does not return a table]
 
 
 
-PUBLIC.BOOKS.NEW_PUBLISHER
+PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
 
 
 
-PUBLIC.BOOKS.NEW_PUBLISHER
+PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
 
 
 

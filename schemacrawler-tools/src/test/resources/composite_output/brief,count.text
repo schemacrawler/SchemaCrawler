@@ -37,9 +37,8 @@ Tables
 
 
 
-PUBLIC.BOOKS.AUTHORS
+PUBLIC.BOOKS.AUTHORS                                             [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 Contact details for book authors
   ID                                INTEGER NOT NULL            
   FIRSTNAME                         VARCHAR(20) NOT NULL        
@@ -57,15 +56,13 @@ FK_Z_AUTHOR                                [foreign key, with no action]
 
 
 
-PUBLIC.BOOKS.AUTHORSLIST
+PUBLIC.BOOKS.AUTHORSLIST                                          [view]
 ------------------------------------------------------------------------
-                                                                  [view]
 
 
 
-PUBLIC.BOOKS.BOOKAUTHORS
+PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 Relationship between books and their authors, along with the latest updated information
   BOOKID                            INTEGER NOT NULL            
   AUTHORID                          INTEGER NOT NULL            
@@ -78,9 +75,8 @@ FK_Y_BOOK                                  [foreign key, with no action]
 
 
 
-PUBLIC.BOOKS.BOOKS
+PUBLIC.BOOKS.BOOKS                                               [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 Details for published books
   ID                                INTEGER NOT NULL            
                                     Unique (internal) id for book
@@ -97,15 +93,13 @@ FK_PREVIOUSEDITION                         [foreign key, with no action]
 
 
 
-PUBLIC.BOOKS."Global Counts"
+PUBLIC.BOOKS."Global Counts"                                     [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 
 
 
-PUBLIC.BOOKS.PUBLISHERS
+PUBLIC.BOOKS.PUBLISHERS                                          [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 List of book publishers
   ID                                INTEGER NOT NULL            
                                     auto-incremented            
@@ -117,9 +111,8 @@ SYS_PK_10092                                               [primary key]
 
 
 
-PUBLIC.FOR_LINT.EXTRA_PK
+PUBLIC.FOR_LINT.EXTRA_PK                                         [table]
 ------------------------------------------------------------------------
-                                                                 [table]
   ID                                INTEGER NOT NULL            
   WRITERID                          BIGINT NOT NULL             
   PUBLICATIONID                     INTEGER NOT NULL            
@@ -135,15 +128,13 @@ FK_WRITER_JOIN                             [foreign key, with no action]
 
 
 
-PUBLIC.FOR_LINT."Global Counts"
+PUBLIC.FOR_LINT."Global Counts"                                  [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 
 
 
-PUBLIC.FOR_LINT.PUBLICATIONS
+PUBLIC.FOR_LINT.PUBLICATIONS                                     [table]
 ------------------------------------------------------------------------
-                                                                 [table]
   ID                                INTEGER NOT NULL            
   WRITERID                          BIGINT NOT NULL             
 
@@ -161,9 +152,8 @@ FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
 
 
 
-PUBLIC.FOR_LINT.WRITERS
+PUBLIC.FOR_LINT.WRITERS                                          [table]
 ------------------------------------------------------------------------
-                                                                 [table]
   ID                                BIGINT NOT NULL             
   FIRSTNAME                         VARCHAR(20) NOT NULL        
   LASTNAME                          VARCHAR(20) NOT NULL        
@@ -191,9 +181,8 @@ FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS       [foreign key, wit
 
 
 
-PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
+PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                             [table]
 ------------------------------------------------------------------------
-                                                                 [table]
   ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ               BIGINT NOT NULL             
   ΣΥΓΓΡΑΦΈΑΣ                        INTEGER                     
 
@@ -205,9 +194,8 @@ FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS       [foreign key, wit
 
 
 
-PUBLIC."PUBLISHER SALES".REGIONS
+PUBLIC."PUBLISHER SALES".REGIONS                                 [table]
 ------------------------------------------------------------------------
-                                                                 [table]
   POSTALCODE                        VARCHAR(10) NOT NULL        
   COUNTRY                           VARCHAR(50) NOT NULL        
 
@@ -221,9 +209,8 @@ FK_SALES_REGIONS                           [foreign key, with no action]
 
 
 
-PUBLIC."PUBLISHER SALES".SALES
+PUBLIC."PUBLISHER SALES".SALES                                   [table]
 ------------------------------------------------------------------------
-                                                                 [table]
   POSTALCODE                        VARCHAR(10) NOT NULL        
   COUNTRY                           VARCHAR(50) NOT NULL        
 
@@ -239,27 +226,23 @@ Routines
 
 
 
-PUBLIC.BOOKS.CUSTOMADD
+PUBLIC.BOOKS.CUSTOMADD               [function, does not return a table]
 ------------------------------------------------------------------------
-                                     [function, does not return a table]
 
 
 
-PUBLIC.BOOKS.CUSTOMADD
+PUBLIC.BOOKS.CUSTOMADD               [function, does not return a table]
 ------------------------------------------------------------------------
-                                     [function, does not return a table]
 
 
 
-PUBLIC.BOOKS.NEW_PUBLISHER
+PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
 
 
 
-PUBLIC.BOOKS.NEW_PUBLISHER
+PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
 
 
 
@@ -279,7 +262,7 @@ Row Count
 
 
 
-Row Count
+Row Count                                                               
 ------------------------------------------------------------------------
 PUBLIC.BOOKS.AUTHORS                                             20 rows
 PUBLIC.BOOKS.AUTHORSLIST                                         20 rows

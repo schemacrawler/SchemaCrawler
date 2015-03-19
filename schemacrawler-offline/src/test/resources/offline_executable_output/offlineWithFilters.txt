@@ -6,9 +6,8 @@ Tables
 
 
 
-PUBLIC."PUBLISHER SALES".SALES
+PUBLIC."PUBLISHER SALES".SALES                                   [table]
 ------------------------------------------------------------------------
-                                                                 [table]
   POSTALCODE                        VARCHAR(10) NOT NULL        
   COUNTRY                           VARCHAR(50) NOT NULL        
   BOOKID                            INTEGER                     

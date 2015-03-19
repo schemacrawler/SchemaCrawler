@@ -37,9 +37,8 @@ Lints
 
 
 
-Database
+Database                                                      [database]
 ------------------------------------------------------------------------
-                                                              [database]
 
                                                           [lint, medium]
 	column with same name but different data types	ID [BIGINT, INTEGER]
@@ -47,18 +46,16 @@ Database
 
 
 
-PUBLIC.BOOKS.AUTHORS
+PUBLIC.BOOKS.AUTHORS                                             [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 
                                                           [lint, medium]
 	incrementing columns	ADDRESS1, ADDRESS2
 
 
 
-PUBLIC.BOOKS.BOOKAUTHORS
+PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 
                                                             [lint, high]
 	redundant index	SYS_IDX_10116
@@ -67,9 +64,8 @@ PUBLIC.BOOKS.BOOKAUTHORS
 
 
 
-PUBLIC.BOOKS.BOOKS
+PUBLIC.BOOKS.BOOKS                                               [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 
                                                             [lint, high]
 	redundant index	SYS_IDX_10109
@@ -79,9 +75,8 @@ PUBLIC.BOOKS.BOOKS
 
 
 
-PUBLIC.BOOKS."Global Counts"
+PUBLIC.BOOKS."Global Counts"                                     [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 
                                                           [lint, medium]
 	no indices	
@@ -91,18 +86,16 @@ PUBLIC.BOOKS."Global Counts"
 
 
 
-PUBLIC.FOR_LINT.EXTRA_PK
+PUBLIC.FOR_LINT.EXTRA_PK                                         [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 
                                                           [lint, medium]
 	useless surrogate key	PK_EXTRA_PK
 
 
 
-PUBLIC.FOR_LINT."Global Counts"
+PUBLIC.FOR_LINT."Global Counts"                                  [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 
                                                           [lint, medium]
 	no indices	
@@ -112,9 +105,8 @@ PUBLIC.FOR_LINT."Global Counts"
 
 
 
-PUBLIC.FOR_LINT.PUBLICATIONS
+PUBLIC.FOR_LINT.PUBLICATIONS                                     [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 
                                                           [lint, medium]
 	spaces in name, or reserved word	"UPDATE"
@@ -123,9 +115,8 @@ PUBLIC.FOR_LINT.PUBLICATIONS
 
 
 
-PUBLIC.FOR_LINT.WRITERS
+PUBLIC.FOR_LINT.WRITERS                                          [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 
                                                             [lint, high]
 	foreign key and primary key have different data types	FK_WRITERS_PUBLICATION
@@ -146,9 +137,8 @@ PUBLIC.FOR_LINT.WRITERS
 
 
 
-PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
+PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                             [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 
                                                             [lint, high]
 	foreign key and primary key have different data types	FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS

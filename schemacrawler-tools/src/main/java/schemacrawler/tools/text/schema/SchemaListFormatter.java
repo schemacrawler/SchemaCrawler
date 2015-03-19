@@ -140,7 +140,7 @@ final class SchemaListFormatter
     out.println(formattingHelper.createHeader(DocumentHeaderType.section,
                                               "Database Information"));
 
-    out.print(formattingHelper.createObjectStart(""));
+    out.print(formattingHelper.createObjectStart());
     out.println(formattingHelper.createNameValueRow("database product name",
                                                     dbInfo.getProductName(),
                                                     Alignment.inherit));
@@ -166,7 +166,7 @@ final class SchemaListFormatter
     out.println(formattingHelper.createHeader(DocumentHeaderType.section,
                                               "JDBC Driver Information"));
 
-    out.print(formattingHelper.createObjectStart(""));
+    out.print(formattingHelper.createObjectStart());
     out.println(formattingHelper.createNameValueRow("driver name",
                                                     driverInfo.getDriverName(),
                                                     Alignment.inherit));
@@ -225,7 +225,7 @@ final class SchemaListFormatter
     out.println(formattingHelper.createHeader(DocumentHeaderType.section,
                                               "SchemaCrawler Information"));
 
-    out.print(formattingHelper.createObjectStart(""));
+    out.print(formattingHelper.createObjectStart());
     out.println(formattingHelper
       .createNameValueRow("product name",
                           schemaCrawlerInfo.getSchemaCrawlerProductName(),
@@ -343,7 +343,7 @@ final class SchemaListFormatter
       out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
                                                 "Data Types"));
 
-      out.append(formattingHelper.createObjectStart(""));
+      out.append(formattingHelper.createObjectStart());
     }
   }
 
@@ -391,7 +391,7 @@ final class SchemaListFormatter
     out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
                                               "Routines"));
 
-    out.println(formattingHelper.createObjectStart(""));
+    out.println(formattingHelper.createObjectStart());
   }
 
   /**
@@ -418,7 +418,7 @@ final class SchemaListFormatter
     out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
                                               "Sequences"));
 
-    out.println(formattingHelper.createObjectStart(""));
+    out.println(formattingHelper.createObjectStart());
   }
 
   /**
@@ -445,7 +445,7 @@ final class SchemaListFormatter
     out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
                                               "Synonyms"));
 
-    out.println(formattingHelper.createObjectStart(""));
+    out.println(formattingHelper.createObjectStart());
   }
 
   /**
@@ -472,7 +472,7 @@ final class SchemaListFormatter
     out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
                                               "Tables"));
 
-    out.println(formattingHelper.createObjectStart(""));
+    out.println(formattingHelper.createObjectStart());
   }
 
   private void printRemarks(final DatabaseObject object)
