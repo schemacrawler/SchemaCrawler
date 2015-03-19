@@ -17,7 +17,6 @@ below to run SchemaCrawler Lint.
   2. To find schema design issues, run 
   `java -Dschemacrawer.linter_configs.file=schemacrawler-linter-configs.xml 
   -cp .;..\_schemacrawler\lib\*.jar 
-  schemacrawler.tools.hsqldb.Main -database=schemacrawler
+  schemacrawler.Main -server=hsqldb -database=schemacrawler
   -user=sa -password= -infolevel=standard -command=lint`  
-  (use `sc.sh` instead of `sc.cmd` on Unix)
 3. Try creating your own database lints in a new jar - see [SchemaCrawler Lint](http://schemacrawler.sourceforge.net/lint.html). 
