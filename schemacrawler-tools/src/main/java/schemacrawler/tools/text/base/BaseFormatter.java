@@ -10,6 +10,7 @@ import schemacrawler.schema.Column;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.TextOutputFormat;
+import schemacrawler.tools.text.utility.DatabaseObjectColorMap;
 import schemacrawler.tools.text.utility.HtmlFormattingHelper;
 import schemacrawler.tools.text.utility.PlainTextFormattingHelper;
 import schemacrawler.tools.text.utility.TextFormattingHelper;
@@ -23,6 +24,7 @@ public abstract class BaseFormatter<O extends BaseTextOptions>
   protected final OutputOptions outputOptions;
   protected final PrintWriter out;
   protected final TextFormattingHelper formattingHelper;
+  protected final DatabaseObjectColorMap colorMap;
   protected final boolean printVerboseDatabaseInfo;
 
   protected BaseFormatter(final O options,
@@ -48,6 +50,8 @@ public abstract class BaseFormatter<O extends BaseTextOptions>
     {
       formattingHelper = new PlainTextFormattingHelper((TextOutputFormat) outputFormat);
     }
+
+    colorMap = new DatabaseObjectColorMap();
 
     out = new PrintWriter(outputOptions.openNewOutputWriter(options
       .isAppendOutput()), true);

@@ -29,9 +29,7 @@ import static sf.util.Utility.isBlank;
 import java.awt.Color;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
@@ -39,7 +37,6 @@ import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.NamedObjectWithAttributes;
 import schemacrawler.schema.Routine;
-import schemacrawler.schema.Schema;
 import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
@@ -66,28 +63,8 @@ public final class SchemaDotFormatter
   implements SchemaTraversalHandler
 {
 
-  private static Color pastelColorHTMLValue(final String text)
-  {
-    final float hue;
-    if (isBlank(text))
-    {
-      hue = 0.123456f;
-    }
-    else
-    {
-      hue = text.hashCode() / 5119f % 1;
-    }
-
-    final float saturation = 0.4f;
-    final float luminance = 0.98f;
-
-    final Color color = Color.getHSBColor(hue, saturation, luminance);
-    return color;
-  }
-
   private final boolean isVerbose;
   private final boolean isBrief;
-  private final Map<Schema, Color> colorMap;
 
   /**
    * Text formatting of schema.
@@ -111,7 +88,6 @@ public final class SchemaDotFormatter
           outputOptions);
     isVerbose = schemaTextDetailType == SchemaTextDetailType.details;
     isBrief = schemaTextDetailType == SchemaTextDetailType.brief;
-    colorMap = new HashMap<>();
   }
 
   @Override
@@ -174,7 +150,7 @@ public final class SchemaDotFormatter
     }
     final String tableType = "[" + table.getTableType() + "]";
 
-    final Color tableNameBgColor = getTableNameBgColor(table);
+    final Color tableNameBgColor = colorMap.getColor(table);
     final int colspan = options.isShowOrdinalNumbers()? 3: 2;
 
     out.append("  /* ").append(table.getFullName())
@@ -319,22 +295,6 @@ public final class SchemaDotFormatter
       portIds[1] = nodeId;
     }
     return portIds;
-  }
-
-  private Color getTableNameBgColor(final Table table)
-  {
-    final Color tableNameBgColor;
-    final Schema schema = table.getSchema();
-    if (!colorMap.containsKey(schema))
-    {
-      tableNameBgColor = pastelColorHTMLValue(schema.getFullName());
-      colorMap.put(schema, tableNameBgColor);
-    }
-    else
-    {
-      tableNameBgColor = colorMap.get(schema);
-    }
-    return tableNameBgColor;
   }
 
   private String nodeId(final NamedObjectWithAttributes namedObject)
