@@ -37,9 +37,8 @@ Tables
 
 
 
-PUBLIC.FOR_LINT.EXTRA_PK
+PUBLIC.FOR_LINT.EXTRA_PK                                         [table]
 ------------------------------------------------------------------------
-                                                                 [table]
   ID                                INTEGER NOT NULL            
   WRITERID                          BIGINT NOT NULL             
   PUBLICATIONID                     INTEGER NOT NULL            
@@ -55,15 +54,13 @@ FK_WRITER_JOIN                             [foreign key, with no action]
 
 
 
-PUBLIC.FOR_LINT."Global Counts"
+PUBLIC.FOR_LINT."Global Counts"                                  [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 
 
 
-PUBLIC.FOR_LINT.PUBLICATIONS
+PUBLIC.FOR_LINT.PUBLICATIONS                                     [table]
 ------------------------------------------------------------------------
-                                                                 [table]
   ID                                INTEGER NOT NULL            
   WRITERID                          BIGINT NOT NULL             
 
@@ -81,9 +78,8 @@ FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
 
 
 
-PUBLIC.FOR_LINT.WRITERS
+PUBLIC.FOR_LINT.WRITERS                                          [table]
 ------------------------------------------------------------------------
-                                                                 [table]
   ID                                BIGINT NOT NULL             
   FIRSTNAME                         VARCHAR(20) NOT NULL        
   LASTNAME                          VARCHAR(20) NOT NULL        
@@ -111,9 +107,8 @@ FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS       [foreign key, wit
 
 
 
-PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
+PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                             [table]
 ------------------------------------------------------------------------
-                                                                 [table]
   ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ               BIGINT NOT NULL             
   ΣΥΓΓΡΑΦΈΑΣ                        INTEGER                     
 
@@ -131,7 +126,7 @@ Row Count
 
 
 
-Row Count
+Row Count                                                               
 ------------------------------------------------------------------------
 PUBLIC.FOR_LINT.EXTRA_PK                                           empty
 PUBLIC.FOR_LINT."Global Counts"                                    empty
@@ -147,9 +142,8 @@ Lints
 
 
 
-Database
+Database                                                      [database]
 ------------------------------------------------------------------------
-                                                              [database]
 
                                                           [lint, medium]
 	column with same name but different data types	ID [BIGINT, INTEGER]
@@ -157,18 +151,16 @@ Database
 
 
 
-PUBLIC.FOR_LINT.EXTRA_PK
+PUBLIC.FOR_LINT.EXTRA_PK                                         [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 
                                                           [lint, medium]
 	useless surrogate key	PK_EXTRA_PK
 
 
 
-PUBLIC.FOR_LINT."Global Counts"
+PUBLIC.FOR_LINT."Global Counts"                                  [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 
                                                           [lint, medium]
 	no indices	
@@ -178,9 +170,8 @@ PUBLIC.FOR_LINT."Global Counts"
 
 
 
-PUBLIC.FOR_LINT.PUBLICATIONS
+PUBLIC.FOR_LINT.PUBLICATIONS                                     [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 
                                                           [lint, medium]
 	spaces in name, or reserved word	"UPDATE"
@@ -189,9 +180,8 @@ PUBLIC.FOR_LINT.PUBLICATIONS
 
 
 
-PUBLIC.FOR_LINT.WRITERS
+PUBLIC.FOR_LINT.WRITERS                                          [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 
                                                             [lint, high]
 	foreign key and primary key have different data types	FK_WRITERS_PUBLICATION
@@ -212,9 +202,8 @@ PUBLIC.FOR_LINT.WRITERS
 
 
 
-PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
+PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                             [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 
                                                             [lint, high]
 	foreign key and primary key have different data types	FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS

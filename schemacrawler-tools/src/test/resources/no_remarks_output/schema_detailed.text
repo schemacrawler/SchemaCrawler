@@ -6,9 +6,8 @@ Tables
 
 
 
-PUBLIC.BOOKS.AUTHORS
+PUBLIC.BOOKS.AUTHORS                                             [table]
 ------------------------------------------------------------------------
-                                                                 [table]
   ID                                INTEGER NOT NULL            
   FIRSTNAME                         VARCHAR(20) NOT NULL        
   LASTNAME                          VARCHAR(20) NOT NULL        
@@ -40,9 +39,8 @@ IDX_A_AUTHORS                                         [non-unique index]
 
 
 
-PUBLIC.BOOKS.BOOKS
+PUBLIC.BOOKS.BOOKS                                               [table]
 ------------------------------------------------------------------------
-                                                                 [table]
   ID                                INTEGER NOT NULL            
   TITLE                             VARCHAR(255) NOT NULL       
   DESCRIPTION                       VARCHAR(255)                
@@ -71,16 +69,14 @@ SYS_IDX_10109                                         [non-unique index]
 
 
 
-PUBLIC.BOOKS."Global Counts"
+PUBLIC.BOOKS."Global Counts"                                     [table]
 ------------------------------------------------------------------------
-                                                                 [table]
   "Global Count"                    INTEGER                     
 
 
 
-PUBLIC.BOOKS.PUBLISHERS
+PUBLIC.BOOKS.PUBLISHERS                                          [table]
 ------------------------------------------------------------------------
-                                                                 [table]
   ID                                INTEGER NOT NULL            
                                     auto-incremented            
   PUBLISHER                         VARCHAR(255)                
@@ -95,9 +91,8 @@ SYS_IDX_SYS_PK_10092_10093                                [unique index]
 
 
 
-PUBLIC.BOOKS.BOOKAUTHORS
+PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
 ------------------------------------------------------------------------
-                                                                 [table]
   BOOKID                            INTEGER NOT NULL            
   AUTHORID                          INTEGER NOT NULL            
   "UPDATE"                          CLOB                        
@@ -120,9 +115,8 @@ UIDX_BOOKAUTHORS                                          [unique index]
 
 
 
-PUBLIC.BOOKS.AUTHORSLIST
+PUBLIC.BOOKS.AUTHORSLIST                                          [view]
 ------------------------------------------------------------------------
-                                                                  [view]
   ID                                INTEGER                     
   FIRSTNAME                         VARCHAR(20)                 
   LASTNAME                          VARCHAR(20)                 
@@ -135,31 +129,27 @@ Routines
 
 
 
-PUBLIC.BOOKS.CUSTOMADD
+PUBLIC.BOOKS.CUSTOMADD               [function, does not return a table]
 ------------------------------------------------------------------------
-                                     [function, does not return a table]
   ONE                               INTEGER, in                 
 
 
 
-PUBLIC.BOOKS.CUSTOMADD
+PUBLIC.BOOKS.CUSTOMADD               [function, does not return a table]
 ------------------------------------------------------------------------
-                                     [function, does not return a table]
   ONE                               INTEGER, in                 
   TWO                               INTEGER, in                 
 
 
 
-PUBLIC.BOOKS.NEW_PUBLISHER
+PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
   PUBLISHER                         CHARACTER VARYING, out      
 
 
 
-PUBLIC.BOOKS.NEW_PUBLISHER
+PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
   NEWPUBLISHER                      CHARACTER VARYING, in       
   PUBLISHER                         CHARACTER VARYING, out      
 

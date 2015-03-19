@@ -5,7 +5,7 @@ Query
 
 
 
-PUBLIC.BOOKS.AUTHORS
+PUBLIC.BOOKS.AUTHORS                                                    
 ------------------------------------------------------------------------
 ADDRESS1	ADDRESS2	CITY	COUNTRY	FIRSTNAME	ID	LASTNAME	POSTALCODE	STATE
 1185 Per Ave		Rapid City	New Caledonia	Jillian	10	Mckee	11671	LA
@@ -31,7 +31,7 @@ P.O. Box 937, 3415 Nulla Ave		Half Moon Bay	Canada	Lenore	20	Cooley	51967	OR
 
 
 
-PUBLIC.BOOKS.AUTHORSLIST
+PUBLIC.BOOKS.AUTHORSLIST                                                
 ------------------------------------------------------------------------
 FIRSTNAME	ID	LASTNAME
 Adele	9	Holmes
@@ -57,7 +57,7 @@ Theodore	15	Gilliam
 
 
 
-PUBLIC.BOOKS.BOOKAUTHORS
+PUBLIC.BOOKS.BOOKAUTHORS                                                
 ------------------------------------------------------------------------
 AUTHORID	BOOKID	UPDATE
 1	3	NULL
@@ -83,7 +83,7 @@ AUTHORID	BOOKID	UPDATE
 
 
 
-PUBLIC.BOOKS.BOOKS
+PUBLIC.BOOKS.BOOKS                                                      
 ------------------------------------------------------------------------
 DESCRIPTION	ID	PREVIOUSEDITIONID	PRICE	PUBLICATIONDATE	PUBLISHERID	TITLE
 Cursus Purus. Nullam	16	NULL	47.99	2003-08-30	6	Vitae, Aliquet Nec, Imperdiet
@@ -109,13 +109,13 @@ Vel, Faucibus Id, Libero. Donec Consectetuer Mauris Id Sapien. Cras Dolor Dolor,
 
 
 
-PUBLIC.BOOKS."Global Counts"
+PUBLIC.BOOKS."Global Counts"                                            
 ------------------------------------------------------------------------
 Global Count
 
 
 
-PUBLIC.BOOKS.PUBLISHERS
+PUBLIC.BOOKS.PUBLISHERS                                                 
 ------------------------------------------------------------------------
 ID	PUBLISHER
 1	Dalton Lewis
@@ -141,37 +141,37 @@ ID	PUBLISHER
 
 
 
-PUBLIC.FOR_LINT.EXTRA_PK
+PUBLIC.FOR_LINT.EXTRA_PK                                                
 ------------------------------------------------------------------------
 ID	PUBLICATIONID	WRITERID
 
 
 
-PUBLIC.FOR_LINT."Global Counts"
+PUBLIC.FOR_LINT."Global Counts"                                         
 ------------------------------------------------------------------------
 Global Count
 
 
 
-PUBLIC.FOR_LINT.PUBLICATIONS
+PUBLIC.FOR_LINT.PUBLICATIONS                                            
 ------------------------------------------------------------------------
 DESCRIPTION	ID	PRESS_RELEASE	PRICE	PUBLICATIONDATE	TITLE	UPDATE	WRITERID
 
 
 
-PUBLIC.FOR_LINT.WRITERS
+PUBLIC.FOR_LINT.WRITERS                                                 
 ------------------------------------------------------------------------
 ADDRESS1	ADDRESS2	CITY	COUNTRY	EMAIL1	EMAIL2	FAX	FAX3	FIRSTNAME	HOMEEMAIL11	HOMEEMAIL12	ID	LASTNAME	PHONE1	PHONE2	POSTALCODE	PUBLICATION_ID	STATE
 
 
 
-PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
+PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                                    
 ------------------------------------------------------------------------
 ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ	ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ	ΣΥΓΓΡΑΦΈΑΣ
 
 
 
-PUBLIC."PUBLISHER SALES".REGIONS
+PUBLIC."PUBLISHER SALES".REGIONS                                        
 ------------------------------------------------------------------------
 CITY	COUNTRY	POSTALCODE	STATE
 Arvada	USA	17131	KY
@@ -197,7 +197,7 @@ Woburn	USA	27392	NV
 
 
 
-PUBLIC."PUBLISHER SALES".SALES
+PUBLIC."PUBLISHER SALES".SALES                                          
 ------------------------------------------------------------------------
 BOOKID	COUNTRY	PERIODENDDATE	POSTALCODE	TOTALAMOUNT
 1	USA	2001-07-18	13078	18257.0

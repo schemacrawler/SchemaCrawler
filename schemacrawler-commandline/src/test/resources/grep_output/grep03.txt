@@ -6,9 +6,8 @@ Tables
 
 
 
-PUBLIC.BOOKS.AUTHORS
+PUBLIC.BOOKS.AUTHORS                                             [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 Contact details for book authors
   ID                                INTEGER NOT NULL            
   FIRSTNAME                         VARCHAR(20) NOT NULL        

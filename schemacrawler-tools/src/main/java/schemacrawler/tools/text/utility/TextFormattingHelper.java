@@ -137,6 +137,17 @@ public interface TextFormattingHelper
   String createNameRow(String name, String description);
 
   /**
+   * Create a name and description row.
+   *
+   * @param name
+   *        Name
+   * @param description
+   *        Description
+   * @return Row as a string
+   */
+  String createObjectNameRow(String name, String description);
+
+  /**
    * Create a name and value row.
    *
    * @param name
@@ -159,11 +170,9 @@ public interface TextFormattingHelper
   /**
    * Database object start.
    *
-   * @param name
-   *        Object name
    * @return Database object start
    */
-  String createObjectStart(String name);
+  String createObjectStart();
 
   /**
    * Creates an arrow symbol.

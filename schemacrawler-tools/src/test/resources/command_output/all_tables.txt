@@ -5,7 +5,7 @@ Query
 
 
 
-all_tables
+all_tables                                                              
 ------------------------------------------------------------------------
 TABLE_CAT	TABLE_SCHEM	TABLE_NAME	TABLE_TYPE	REMARKS	TYPE_CAT	TYPE_SCHEM	TYPE_NAME	SELF_REFERENCING_COL_NAME	REF_GENERATION	HSQLDB_TYPE	READ_ONLY	COMMIT_ACTION
 PUBLIC	BOOKS	AUTHORS	TABLE	Contact details for book authors	NULL	NULL	NULL	NULL	NULL	MEMORY	false	NULL
