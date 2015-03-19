@@ -150,15 +150,31 @@ public final class HtmlFormattingHelper
    * {@inheritDoc}
    */
   @Override
-  public String createObjectStart(final String name)
+  public String createObjectStart()
   {
     final StringBuilder buffer = new StringBuilder();
     buffer.append("<table>").append(System.lineSeparator());
+    return buffer.toString();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String createObjectNameRow(String name, String description)
+  {
+    final StringBuilder buffer = new StringBuilder();
+    buffer.append("  <caption>");
     if (!isBlank(name))
     {
-      buffer.append("  <caption>").append(escapeForXMLElement(name))
-        .append("</caption>").append(System.lineSeparator());
+      buffer.append(escapeForXMLElement(name));
     }
+    if (!isBlank(description))
+    {
+      buffer.append(" <span class='caption_description'>")
+        .append(escapeForXMLElement(description)).append("</span>");
+    }
+    buffer.append("</caption>").append(System.lineSeparator());
     return buffer.toString();
   }
 

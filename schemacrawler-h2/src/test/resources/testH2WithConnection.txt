@@ -17,7 +17,7 @@ Database Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
 database product name                     H2                            
-database product version                  1.4.184 (2014-12-19)          
+database product version                  1.4.186 (2015-03-02)          
 database user name                        SA                            
 
 
@@ -25,7 +25,7 @@ JDBC Driver Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
 driver name                               H2 JDBC Driver                
-driver version                            1.4.184 (2014-12-19)          
+driver version                            1.4.186 (2015-03-02)          
 driver class name                         org.h2.Driver                 
 url                                       jdbc:h2:mem:dataSource        
 is JDBC compliant                         true                          
@@ -275,9 +275,8 @@ Tables
 
 
 
-DATASOURCE.BOOKS.AUTHORS
+DATASOURCE.BOOKS.AUTHORS                                         [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 Contact details for book authors
   ID                                INTEGER NOT NULL            
   FIRSTNAME                         VARCHAR(20) NOT NULL        
@@ -310,9 +309,8 @@ FK_Z_AUTHOR                                 [foreign key, with restrict]
 
 
 
-DATASOURCE.BOOKS.BOOKS
+DATASOURCE.BOOKS.BOOKS                                           [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 Details for published books
   ID                                INTEGER NOT NULL            
                                     Unique (internal) id for book
@@ -348,16 +346,14 @@ FK_PREVIOUSEDITION                          [foreign key, with restrict]
 
 
 
-DATASOURCE.BOOKS."Global Counts"
+DATASOURCE.BOOKS."Global Counts"                                 [table]
 ------------------------------------------------------------------------
-                                                                 [table]
   "Global Count"                    INTEGER                     
 
 
 
-DATASOURCE.BOOKS.PUBLISHERS
+DATASOURCE.BOOKS.PUBLISHERS                                      [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 List of book publishers
   ID                                INTEGER NOT NULL            
                                     auto-incremented            
@@ -375,9 +371,8 @@ CONSTRAINT_8                                               [primary key]
 
 
 
-DATASOURCE.BOOKS.TEMP_AUTHOR_LIST
+DATASOURCE.BOOKS.TEMP_AUTHOR_LIST                                [table]
 ------------------------------------------------------------------------
-                                                                 [table]
   ID                                INTEGER NOT NULL            
   FIRSTNAME                         VARCHAR(20) NOT NULL        
   LASTNAME                          VARCHAR(20) NOT NULL        
@@ -390,9 +385,8 @@ PK_TMP_AUTHORS                                             [primary key]
 
 
 
-DATASOURCE.BOOKS.BOOKAUTHORS
+DATASOURCE.BOOKS.BOOKAUTHORS                                     [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 Relationship between books and their authors, along with the latest updated information
   BOOKID                            INTEGER NOT NULL            
   AUTHORID                          INTEGER NOT NULL            
@@ -416,9 +410,8 @@ FK_Y_BOOK                                   [foreign key, with restrict]
 
 
 
-DATASOURCE.BOOKS.AUTHORSLIST
+DATASOURCE.BOOKS.AUTHORSLIST                                      [view]
 ------------------------------------------------------------------------
-                                                                  [view]
   ID                                INTEGER                     
   FIRSTNAME                         VARCHAR(20)                 
   LASTNAME                          VARCHAR(20)                 

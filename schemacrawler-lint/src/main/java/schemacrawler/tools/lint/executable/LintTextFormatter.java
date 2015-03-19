@@ -56,9 +56,10 @@ final class LintTextFormatter
     final Collection<Lint<?>> lints = SimpleLintCollector.getLint(catalog);
     if (lints != null && !lints.isEmpty())
     {
-      out.println(formattingHelper.createObjectStart("Database"));
+      out.println(formattingHelper.createObjectStart());
 
-      final String nameRow = formattingHelper.createNameRow("", "[database]");
+      final String nameRow = formattingHelper.createObjectNameRow("Database",
+                                                                  "[database]");
       out.println(nameRow);
 
       printLints(lints);
@@ -79,9 +80,10 @@ final class LintTextFormatter
     final Collection<Lint<?>> lints = SimpleLintCollector.getLint(table);
     if (lints != null && !lints.isEmpty())
     {
-      out.println(formattingHelper.createObjectStart(table.getFullName()));
+      out.println(formattingHelper.createObjectStart());
       final String tableType = "[" + table.getTableType() + "]";
-      out.println(formattingHelper.createNameRow("", tableType));
+      out.println(formattingHelper.createObjectNameRow(table.getFullName(),
+                                                       tableType));
       printLints(lints);
       out.println(formattingHelper.createObjectEnd());
 

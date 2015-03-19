@@ -422,9 +422,8 @@ Tables
 
 
 
-AUTHORS
+AUTHORS,[table]
 ------------------------------------------------------------------------
-"",[table]
 Contact details for book authors
 "",ID,INTEGER NOT NULL
 "",FIRSTNAME,VARCHAR(20) NOT NULL
@@ -490,9 +489,8 @@ UPDATE,[privilege]
 
 
 
-AUTHORSLIST
+AUTHORSLIST,[view]
 ------------------------------------------------------------------------
-"",[view]
 "",ID,INTEGER
 "",FIRSTNAME,VARCHAR(20)
 "",LASTNAME,VARCHAR(20)
@@ -520,9 +518,8 @@ UPDATE,[privilege]
 
 
 
-BOOKAUTHORS
+BOOKAUTHORS,[table]
 ------------------------------------------------------------------------
-"",[table]
 "Relationship between books and their authors, along with the latest updated information"
 "",BOOKID,INTEGER NOT NULL
 "",AUTHORID,INTEGER NOT NULL
@@ -570,9 +567,8 @@ UPDATE,[privilege]
 
 
 
-BOOKS
+BOOKS,[table]
 ------------------------------------------------------------------------
-"",[table]
 Details for published books
 "",ID,INTEGER NOT NULL
 "","",Unique (internal) id for book
@@ -641,9 +637,8 @@ UPDATE,[privilege]
 
 
 
-"Global Counts"
+"""Global Counts""",[table]
 ------------------------------------------------------------------------
-"",[table]
 "","""Global Count""",INTEGER
 ""
 DELETE,[privilege]
@@ -666,9 +661,8 @@ UPDATE,[privilege]
 
 
 
-PUBLISHERS
+PUBLISHERS,[table]
 ------------------------------------------------------------------------
-"",[table]
 List of book publishers
 "",ID,INTEGER NOT NULL
 "","",auto-incremented
@@ -707,9 +701,8 @@ UPDATE,[privilege]
 
 
 
-EXTRA_PK
+EXTRA_PK,[table]
 ------------------------------------------------------------------------
-"",[table]
 "",ID,INTEGER NOT NULL
 "",WRITERID,BIGINT NOT NULL
 "",PUBLICATIONID,INTEGER NOT NULL
@@ -761,9 +754,8 @@ UPDATE,[privilege]
 
 
 
-"Global Counts"
+"""Global Counts""",[table]
 ------------------------------------------------------------------------
-"",[table]
 "","""Global Count""",INTEGER
 ""
 DELETE,[privilege]
@@ -786,9 +778,8 @@ UPDATE,[privilege]
 
 
 
-PUBLICATIONS
+PUBLICATIONS,[table]
 ------------------------------------------------------------------------
-"",[table]
 "",ID,INTEGER NOT NULL
 "",TITLE,VARCHAR(255) NOT NULL
 "",DESCRIPTION,VARCHAR(255)
@@ -845,9 +836,8 @@ UPDATE,[privilege]
 
 
 
-WRITERS
+WRITERS,[table]
 ------------------------------------------------------------------------
-"",[table]
 "",ID,BIGINT NOT NULL
 "",FIRSTNAME,VARCHAR(20) NOT NULL
 "",LASTNAME,VARCHAR(20) NOT NULL
@@ -944,9 +934,8 @@ UPDATE,[privilege]
 
 
 
-ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
+ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ,[table]
 ------------------------------------------------------------------------
-"",[table]
 "",ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ,BIGINT NOT NULL
 "",ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ,VARCHAR(10)
 "",ΣΥΓΓΡΑΦΈΑΣ,INTEGER
@@ -986,9 +975,8 @@ UPDATE,[privilege]
 
 
 
-REGIONS
+REGIONS,[table]
 ------------------------------------------------------------------------
-"",[table]
 "",CITY,VARCHAR(50) NOT NULL
 "",STATE,VARCHAR(2) NOT NULL
 "",POSTALCODE,VARCHAR(10) NOT NULL
@@ -1038,9 +1026,8 @@ UPDATE,[privilege]
 
 
 
-SALES
+SALES,[table]
 ------------------------------------------------------------------------
-"",[table]
 "",POSTALCODE,VARCHAR(10) NOT NULL
 "",COUNTRY,VARCHAR(50) NOT NULL
 "",BOOKID,INTEGER
@@ -1090,9 +1077,8 @@ Routines
 
 
 
-CUSTOMADD
+CUSTOMADD,"[function, does not return a table]"
 ------------------------------------------------------------------------
-"","[function, does not return a table]"
 "",ONE,"INTEGER, in"
 ""
 "",[specific name]
@@ -1103,9 +1089,8 @@ CUSTOMADD_10131
 
 
 
-CUSTOMADD
+CUSTOMADD,"[function, does not return a table]"
 ------------------------------------------------------------------------
-"","[function, does not return a table]"
 "",ONE,"INTEGER, in"
 "",TWO,"INTEGER, in"
 ""
@@ -1117,9 +1102,8 @@ CUSTOMADD_10130
 
 
 
-NEW_PUBLISHER
+NEW_PUBLISHER,"[procedure, no result]"
 ------------------------------------------------------------------------
-"","[procedure, no result]"
 "",PUBLISHER,"CHARACTER VARYING, out"
 ""
 "",[specific name]
@@ -1130,9 +1114,8 @@ CREATE PROCEDURE BOOKS.NEW_PUBLISHER(OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUB
 
 
 
-NEW_PUBLISHER
+NEW_PUBLISHER,"[procedure, no result]"
 ------------------------------------------------------------------------
-"","[procedure, no result]"
 "",NEWPUBLISHER,"CHARACTER VARYING, in"
 "",PUBLISHER,"CHARACTER VARYING, out"
 ""
@@ -1164,7 +1147,7 @@ Row Count
 
 
 
-Row Count
+Row Count,""
 ------------------------------------------------------------------------
 AUTHORS,20 rows
 AUTHORSLIST,20 rows
@@ -1188,7 +1171,7 @@ Dump
 
 
 
-AUTHORS
+AUTHORS,""
 ------------------------------------------------------------------------
 ID,FIRSTNAME,LASTNAME,ADDRESS1,ADDRESS2,CITY,STATE,POSTALCODE,COUNTRY
 1,Oren,Shaffer,900-2273 Integer Avenue,"",Farmer City,MD,37032,Cook Islands
@@ -1214,7 +1197,7 @@ ID,FIRSTNAME,LASTNAME,ADDRESS1,ADDRESS2,CITY,STATE,POSTALCODE,COUNTRY
 
 
 
-AUTHORSLIST
+AUTHORSLIST,""
 ------------------------------------------------------------------------
 ID,FIRSTNAME,LASTNAME
 1,Oren,Shaffer
@@ -1240,7 +1223,7 @@ ID,FIRSTNAME,LASTNAME
 
 
 
-BOOKAUTHORS
+BOOKAUTHORS,""
 ------------------------------------------------------------------------
 BOOKID,AUTHORID,UPDATE
 1,7,<binary>
@@ -1266,7 +1249,7 @@ BOOKID,AUTHORID,UPDATE
 
 
 
-BOOKS
+BOOKS,""
 ------------------------------------------------------------------------
 ID,TITLE,DESCRIPTION,PUBLISHERID,PUBLICATIONDATE,PRICE,PREVIOUSEDITIONID
 1,Neque. In Ornare Sagittis,"Dis Parturient Montes, Nascetur Ridiculus Mus.",18,2000-10-27,69.99,NULL
@@ -1292,13 +1275,13 @@ ID,TITLE,DESCRIPTION,PUBLISHERID,PUBLICATIONDATE,PRICE,PREVIOUSEDITIONID
 
 
 
-"Global Counts"
+"""Global Counts""",""
 ------------------------------------------------------------------------
 Global Count
 
 
 
-PUBLISHERS
+PUBLISHERS,""
 ------------------------------------------------------------------------
 ID,PUBLISHER
 1,Dalton Lewis
@@ -1324,37 +1307,37 @@ ID,PUBLISHER
 
 
 
-EXTRA_PK
+EXTRA_PK,""
 ------------------------------------------------------------------------
 ID,WRITERID,PUBLICATIONID
 
 
 
-"Global Counts"
+"""Global Counts""",""
 ------------------------------------------------------------------------
 Global Count
 
 
 
-PUBLICATIONS
+PUBLICATIONS,""
 ------------------------------------------------------------------------
 ID,TITLE,DESCRIPTION,WRITERID,PUBLICATIONDATE,PRICE,UPDATE,PRESS_RELEASE
 
 
 
-WRITERS
+WRITERS,""
 ------------------------------------------------------------------------
 ID,FIRSTNAME,LASTNAME,ADDRESS1,ADDRESS2,CITY,STATE,POSTALCODE,COUNTRY,PHONE1,PHONE2,EMAIL1,EMAIL2,FAX,FAX3,HOMEEMAIL11,HOMEEMAIL12,PUBLICATION_ID
 
 
 
-ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
+ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ,""
 ------------------------------------------------------------------------
 ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ,ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ,ΣΥΓΓΡΑΦΈΑΣ
 
 
 
-REGIONS
+REGIONS,""
 ------------------------------------------------------------------------
 CITY,STATE,POSTALCODE,COUNTRY
 Arvada,KY,17131,USA
@@ -1380,7 +1363,7 @@ Woburn,NV,27392,USA
 
 
 
-SALES
+SALES,""
 ------------------------------------------------------------------------
 POSTALCODE,COUNTRY,BOOKID,PERIODENDDATE,TOTALAMOUNT
 13078,USA,1,2001-07-18,18257.0

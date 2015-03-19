@@ -6,9 +6,8 @@ Routines
 
 
 
-PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS
+PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS                   [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
   B_COUNT                           INTEGER, in                 
   B_OFFSET                          INTEGER, in                 
   L_ID                              BIGINT, in                  
@@ -21,9 +20,8 @@ CREATE PROCEDURE SYSTEM_LOBS.ALLOC_BLOCKS(IN B_COUNT INTEGER,IN B_OFFSET INTEGER
 
 
 
-PUBLIC.SYSTEM_LOBS.ALLOC_SINGLE_BLOCK
+PUBLIC.SYSTEM_LOBS.ALLOC_SINGLE_BLOCK             [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
   B_COUNT                           INTEGER, in                 
   B_OFFSET                          INTEGER, in                 
   L_ID                              BIGINT, in                  
@@ -36,9 +34,8 @@ CREATE PROCEDURE SYSTEM_LOBS.ALLOC_SINGLE_BLOCK(IN B_COUNT INTEGER,IN B_OFFSET I
 
 
 
-PUBLIC.SYSTEM_LOBS.CONVERT_BLOCK
+PUBLIC.SYSTEM_LOBS.CONVERT_BLOCK                  [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
   B_ADDR                            INTEGER, in                 
   B_COUNT                           INTEGER, in                 
   B_OFFSET                          INTEGER, in                 
@@ -52,9 +49,8 @@ CREATE PROCEDURE SYSTEM_LOBS.CONVERT_BLOCK(IN B_ADDR INTEGER,IN B_COUNT INTEGER,
 
 
 
-PUBLIC.SYSTEM_LOBS.CREATE_EMPTY_BLOCK
+PUBLIC.SYSTEM_LOBS.CREATE_EMPTY_BLOCK             [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
   B_ADDR                            INTEGER, in/ out            
   B_COUNT                           INTEGER, in                 
 

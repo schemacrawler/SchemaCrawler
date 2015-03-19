@@ -93,7 +93,7 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions>
     out.println(formattingHelper.createHeader(DocumentHeaderType.section,
                                               "Database Information"));
 
-    out.print(formattingHelper.createObjectStart(""));
+    out.print(formattingHelper.createObjectStart());
     out.println(formattingHelper.createNameValueRow("database product name",
                                                     dbInfo.getProductName(),
                                                     Alignment.inherit));
@@ -109,7 +109,7 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions>
     {
       out.println(formattingHelper.createHeader(DocumentHeaderType.section,
                                                 "Database Characteristics"));
-      out.print(formattingHelper.createObjectStart(""));
+      out.print(formattingHelper.createObjectStart());
       for (final DatabaseProperty property: dbInfo.getProperties())
       {
         final String name = property.getDescription();
@@ -138,7 +138,7 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions>
     out.println(formattingHelper.createHeader(DocumentHeaderType.section,
                                               "JDBC Driver Information"));
 
-    out.print(formattingHelper.createObjectStart(""));
+    out.print(formattingHelper.createObjectStart());
     out.println(formattingHelper.createNameValueRow("driver name",
                                                     driverInfo.getDriverName(),
                                                     Alignment.inherit));
@@ -166,7 +166,7 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions>
                                                 "JDBC Driver Properties"));
       for (final JdbcDriverProperty driverProperty: jdbcDriverProperties)
       {
-        out.print(formattingHelper.createObjectStart(""));
+        out.print(formattingHelper.createObjectStart());
         printJdbcDriverProperty(driverProperty);
         out.print(formattingHelper.createObjectEnd());
       }
@@ -186,7 +186,7 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions>
     out.println(formattingHelper.createHeader(DocumentHeaderType.section,
                                               "SchemaCrawler Information"));
 
-    out.print(formattingHelper.createObjectStart(""));
+    out.print(formattingHelper.createObjectStart());
     out.println(formattingHelper
       .createNameValueRow("product name",
                           schemaCrawlerInfo.getSchemaCrawlerProductName(),

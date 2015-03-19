@@ -56,6 +56,8 @@ public class SchemaCrawlerXmlOutputTest
   public void validCountXMLOutput()
     throws Exception
   {
+    clean(XML_OUTPUT);
+
     final List<String> failures = new ArrayList<>();
 
     checkValidXmlOutput(SchemaTextDetailType.details.name(), failures);
@@ -70,6 +72,8 @@ public class SchemaCrawlerXmlOutputTest
   public void validXMLOutput()
     throws Exception
   {
+    clean(XML_OUTPUT);
+
     final List<String> failures = new ArrayList<>();
 
     checkValidXmlOutput(Operation.count.name(), failures);
@@ -88,8 +92,6 @@ public class SchemaCrawlerXmlOutputTest
                                    final List<String> failures)
     throws IOException, Exception, SchemaCrawlerException
   {
-    clean(XML_OUTPUT);
-
     final String referenceFile = command + ".html";
     final Path testOutputFile = createTempFile(referenceFile,
                                                TextOutputFormat.html
