@@ -27,7 +27,7 @@ JDBC Driver Information
 driver name                               SQLiteJDBC                    
 driver version                            native                        
 driver class name                         org.sqlite.JDBC               
-url                                       jdbc:sqlite:C:\Users\SUALEH~1\AppData\Local\Temp\schemacrawler.resource.1562296006540826192.data
+url                                       jdbc:sqlite:C:\Users\SUALEH~1\AppData\Local\Temp\schemacrawler.resource.8207299674943422272.data
 is JDBC compliant                         false                         
 
 
@@ -147,9 +147,8 @@ Tables
 
 
 
-Authors
+Authors                                                          [table]
 ------------------------------------------------------------------------
-                                                                 [table]
   Id                                INTEGER NOT NULL            
   FirstName                         VARCHAR(20) NOT NULL        
   LastName                          VARCHAR(20) NOT NULL        
@@ -184,9 +183,8 @@ END
 
 
 
-Books
+Books                                                            [table]
 ------------------------------------------------------------------------
-                                                                 [table]
   Id                                INTEGER NOT NULL            
   Title                             VARCHAR(255) NOT NULL       
   Description                       VARCHAR(255)                
@@ -202,16 +200,14 @@ SC_3D6328A_4047ACFF                        [foreign key, with no action]
 
 
 
-"Global Counts"
+"Global Counts"                                                  [table]
 ------------------------------------------------------------------------
-                                                                 [table]
   "Global Count"                    INTEGER                     
 
 
 
-Publishers
+Publishers                                                       [table]
 ------------------------------------------------------------------------
-                                                                 [table]
   Id                                INTEGER NOT NULL            
   Publisher                         VARCHAR(255)                
 
@@ -220,9 +216,8 @@ PK_Publishers                                              [primary key]
 
 
 
-BookAuthors
+BookAuthors                                                      [table]
 ------------------------------------------------------------------------
-                                                                 [table]
   BookId                            INTEGER NOT NULL            
   AuthorId                          INTEGER NOT NULL            
   "UPDATE"                          CLOB                        
@@ -239,9 +234,8 @@ UIDX_BookAuthors                                          [unique index]
 
 
 
-AuthorsList
+AuthorsList                                                       [view]
 ------------------------------------------------------------------------
-                                                                  [view]
   Id                                INTEGER                     
   FirstName                         VARCHAR(20)                 
   LastName                          VARCHAR(20)                 
@@ -257,7 +251,7 @@ Dump
 
 
 
-Authors
+Authors                                                                 
 ------------------------------------------------------------------------
 Id	FirstName	LastName	Address1	Address2	City	State	PostalCode	Country
 1	Oren	Shaffer	900-2273 Integer Avenue		Farmer City	MD	37032	Cook Islands
@@ -283,7 +277,7 @@ Id	FirstName	LastName	Address1	Address2	City	State	PostalCode	Country
 
 
 
-Books
+Books                                                                   
 ------------------------------------------------------------------------
 Id	Title	Description	PublisherId	PublicationDate	Price
 1	Neque. In Ornare Sagittis	Dis Parturient Montes, Nascetur Ridiculus Mus.	18	2000-10-27	69.99
@@ -309,13 +303,13 @@ Id	Title	Description	PublisherId	PublicationDate	Price
 
 
 
-"Global Counts"
+"Global Counts"                                                         
 ------------------------------------------------------------------------
 Global Count
 
 
 
-Publishers
+Publishers                                                              
 ------------------------------------------------------------------------
 Id	Publisher
 1	Dalton Lewis
@@ -341,7 +335,7 @@ Id	Publisher
 
 
 
-BookAuthors
+BookAuthors                                                             
 ------------------------------------------------------------------------
 BookId	AuthorId	UPDATE
 1	7	This is the latest update
@@ -367,7 +361,7 @@ BookId	AuthorId	UPDATE
 
 
 
-AuthorsList
+AuthorsList                                                             
 ------------------------------------------------------------------------
 Id	FirstName	LastName
 1	Oren	Shaffer
@@ -399,7 +393,7 @@ Row Count
 
 
 
-Row Count
+Row Count                                                               
 ------------------------------------------------------------------------
 Authors                                                          20 rows
 Books                                                            20 rows

@@ -422,9 +422,8 @@ Routines
 
 
 
-CUSTOMADD
+CUSTOMADD,"[function, does not return a table]"
 ------------------------------------------------------------------------
-"","[function, does not return a table]"
 "",ONE,"INTEGER, in"
 ""
 "",[specific name]
@@ -435,9 +434,8 @@ CUSTOMADD_10131
 
 
 
-CUSTOMADD
+CUSTOMADD,"[function, does not return a table]"
 ------------------------------------------------------------------------
-"","[function, does not return a table]"
 "",ONE,"INTEGER, in"
 "",TWO,"INTEGER, in"
 ""
@@ -449,9 +447,8 @@ CUSTOMADD_10130
 
 
 
-NEW_PUBLISHER
+NEW_PUBLISHER,"[procedure, no result]"
 ------------------------------------------------------------------------
-"","[procedure, no result]"
 "",PUBLISHER,"CHARACTER VARYING, out"
 ""
 "",[specific name]
@@ -462,9 +459,8 @@ CREATE PROCEDURE BOOKS.NEW_PUBLISHER(OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUB
 
 
 
-NEW_PUBLISHER
+NEW_PUBLISHER,"[procedure, no result]"
 ------------------------------------------------------------------------
-"","[procedure, no result]"
 "",NEWPUBLISHER,"CHARACTER VARYING, in"
 "",PUBLISHER,"CHARACTER VARYING, out"
 ""

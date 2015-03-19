@@ -430,9 +430,8 @@ Tables
 
 
 
-PUBLIC.BOOKS.AUTHORS
+PUBLIC.BOOKS.AUTHORS                                             [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 Contact details for book authors
   ID                                INTEGER NOT NULL            
   FIRSTNAME                         VARCHAR(20) NOT NULL        
@@ -498,9 +497,8 @@ UPDATE                                                       [privilege]
 
 
 
-PUBLIC.BOOKS.AUTHORSLIST
+PUBLIC.BOOKS.AUTHORSLIST                                          [view]
 ------------------------------------------------------------------------
-                                                                  [view]
   ID                                INTEGER                     
   FIRSTNAME                         VARCHAR(20)                 
   LASTNAME                          VARCHAR(20)                 
@@ -528,9 +526,8 @@ SELECT ID,FIRSTNAME,LASTNAME FROM BOOKS.AUTHORS
 
 
 
-PUBLIC.BOOKS.BOOKAUTHORS
+PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 Relationship between books and their authors, along with the latest updated information
   BOOKID                            INTEGER NOT NULL            
   AUTHORID                          INTEGER NOT NULL            
@@ -578,9 +575,8 @@ UPDATE                                                       [privilege]
 
 
 
-PUBLIC.BOOKS.BOOKS
+PUBLIC.BOOKS.BOOKS                                               [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 Details for published books
   ID                                INTEGER NOT NULL            
                                     Unique (internal) id for book
@@ -649,9 +645,8 @@ UPDATE                                                       [privilege]
 
 
 
-PUBLIC.BOOKS."Global Counts"
+PUBLIC.BOOKS."Global Counts"                                     [table]
 ------------------------------------------------------------------------
-                                                                 [table]
   "Global Count"                    INTEGER                     
 
 DELETE                                                       [privilege]
@@ -674,9 +669,8 @@ UPDATE                                                       [privilege]
 
 
 
-PUBLIC.BOOKS.PUBLISHERS
+PUBLIC.BOOKS.PUBLISHERS                                          [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 List of book publishers
   ID                                INTEGER NOT NULL            
                                     auto-incremented            
@@ -715,9 +709,8 @@ UPDATE                                                       [privilege]
 
 
 
-PUBLIC.FOR_LINT.EXTRA_PK
+PUBLIC.FOR_LINT.EXTRA_PK                                         [table]
 ------------------------------------------------------------------------
-                                                                 [table]
   ID                                INTEGER NOT NULL            
   WRITERID                          BIGINT NOT NULL             
   PUBLICATIONID                     INTEGER NOT NULL            
@@ -769,9 +762,8 @@ UPDATE                                                       [privilege]
 
 
 
-PUBLIC.FOR_LINT."Global Counts"
+PUBLIC.FOR_LINT."Global Counts"                                  [table]
 ------------------------------------------------------------------------
-                                                                 [table]
   "Global Count"                    INTEGER                     
 
 DELETE                                                       [privilege]
@@ -794,9 +786,8 @@ UPDATE                                                       [privilege]
 
 
 
-PUBLIC.FOR_LINT.PUBLICATIONS
+PUBLIC.FOR_LINT.PUBLICATIONS                                     [table]
 ------------------------------------------------------------------------
-                                                                 [table]
   ID                                INTEGER NOT NULL            
   TITLE                             VARCHAR(255) NOT NULL       
   DESCRIPTION                       VARCHAR(255)                
@@ -853,9 +844,8 @@ UPDATE                                                       [privilege]
 
 
 
-PUBLIC.FOR_LINT.WRITERS
+PUBLIC.FOR_LINT.WRITERS                                          [table]
 ------------------------------------------------------------------------
-                                                                 [table]
   ID                                BIGINT NOT NULL             
   FIRSTNAME                         VARCHAR(20) NOT NULL        
   LASTNAME                          VARCHAR(20) NOT NULL        
@@ -952,9 +942,8 @@ UPDATE                                                       [privilege]
 
 
 
-PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
+PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                             [table]
 ------------------------------------------------------------------------
-                                                                 [table]
   ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ               BIGINT NOT NULL             
   ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ           VARCHAR(10)                 
   ΣΥΓΓΡΑΦΈΑΣ                        INTEGER                     
@@ -994,9 +983,8 @@ UPDATE                                                       [privilege]
 
 
 
-PUBLIC."PUBLISHER SALES".REGIONS
+PUBLIC."PUBLISHER SALES".REGIONS                                 [table]
 ------------------------------------------------------------------------
-                                                                 [table]
   CITY                              VARCHAR(50) NOT NULL        
   STATE                             VARCHAR(2) NOT NULL         
   POSTALCODE                        VARCHAR(10) NOT NULL        
@@ -1046,9 +1034,8 @@ UPDATE                                                       [privilege]
 
 
 
-PUBLIC."PUBLISHER SALES".SALES
+PUBLIC."PUBLISHER SALES".SALES                                   [table]
 ------------------------------------------------------------------------
-                                                                 [table]
   POSTALCODE                        VARCHAR(10) NOT NULL        
   COUNTRY                           VARCHAR(50) NOT NULL        
   BOOKID                            INTEGER                     
@@ -1098,9 +1085,8 @@ Routines
 
 
 
-PUBLIC.BOOKS.CUSTOMADD
+PUBLIC.BOOKS.CUSTOMADD               [function, does not return a table]
 ------------------------------------------------------------------------
-                                     [function, does not return a table]
   ONE                               INTEGER, in                 
 
                                                          [specific name]
@@ -1111,9 +1097,8 @@ CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER) RETURNS INTEGER SPECIFIC CUSTOMA
 
 
 
-PUBLIC.BOOKS.CUSTOMADD
+PUBLIC.BOOKS.CUSTOMADD               [function, does not return a table]
 ------------------------------------------------------------------------
-                                     [function, does not return a table]
   ONE                               INTEGER, in                 
   TWO                               INTEGER, in                 
 
@@ -1125,9 +1110,8 @@ CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER,IN TWO INTEGER) RETURNS INTEGER S
 
 
 
-PUBLIC.BOOKS.NEW_PUBLISHER
+PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
   PUBLISHER                         CHARACTER VARYING, out      
 
                                                          [specific name]
@@ -1138,9 +1122,8 @@ CREATE PROCEDURE BOOKS.NEW_PUBLISHER(OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUB
 
 
 
-PUBLIC.BOOKS.NEW_PUBLISHER
+PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
   NEWPUBLISHER                      CHARACTER VARYING, in       
   PUBLISHER                         CHARACTER VARYING, out      
 
@@ -1152,9 +1135,8 @@ CREATE PROCEDURE BOOKS.NEW_PUBLISHER(IN NEWPUBLISHER VARCHAR(50),OUT PUBLISHER V
 
 
 
-PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS
+PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS                   [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
   B_COUNT                           INTEGER, in                 
   B_OFFSET                          INTEGER, in                 
   L_ID                              BIGINT, in                  
@@ -1167,9 +1149,8 @@ CREATE PROCEDURE SYSTEM_LOBS.ALLOC_BLOCKS(IN B_COUNT INTEGER,IN B_OFFSET INTEGER
 
 
 
-PUBLIC.SYSTEM_LOBS.ALLOC_SINGLE_BLOCK
+PUBLIC.SYSTEM_LOBS.ALLOC_SINGLE_BLOCK             [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
   B_COUNT                           INTEGER, in                 
   B_OFFSET                          INTEGER, in                 
   L_ID                              BIGINT, in                  
@@ -1182,9 +1163,8 @@ CREATE PROCEDURE SYSTEM_LOBS.ALLOC_SINGLE_BLOCK(IN B_COUNT INTEGER,IN B_OFFSET I
 
 
 
-PUBLIC.SYSTEM_LOBS.CONVERT_BLOCK
+PUBLIC.SYSTEM_LOBS.CONVERT_BLOCK                  [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
   B_ADDR                            INTEGER, in                 
   B_COUNT                           INTEGER, in                 
   B_OFFSET                          INTEGER, in                 
@@ -1198,9 +1178,8 @@ CREATE PROCEDURE SYSTEM_LOBS.CONVERT_BLOCK(IN B_ADDR INTEGER,IN B_COUNT INTEGER,
 
 
 
-PUBLIC.SYSTEM_LOBS.CREATE_EMPTY_BLOCK
+PUBLIC.SYSTEM_LOBS.CREATE_EMPTY_BLOCK             [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
   B_ADDR                            INTEGER, in/ out            
   B_COUNT                           INTEGER, in                 
 
@@ -1212,9 +1191,8 @@ CREATE PROCEDURE SYSTEM_LOBS.CREATE_EMPTY_BLOCK(INOUT B_ADDR INTEGER,IN B_COUNT 
 
 
 
-PUBLIC.SYSTEM_LOBS.DELETE_BLOCKS
+PUBLIC.SYSTEM_LOBS.DELETE_BLOCKS                  [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
   L_ID                              BIGINT, in                  
   B_OFFSET                          INTEGER, in                 
   B_LIMIT                           INTEGER, in                 
@@ -1228,9 +1206,8 @@ CREATE PROCEDURE SYSTEM_LOBS.DELETE_BLOCKS(IN L_ID BIGINT,IN B_OFFSET INTEGER,IN
 
 
 
-PUBLIC.SYSTEM_LOBS.DELETE_LOB
+PUBLIC.SYSTEM_LOBS.DELETE_LOB                     [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
   L_ID                              BIGINT, in                  
   TX_ID                             BIGINT, in                  
 
@@ -1242,9 +1219,8 @@ CREATE PROCEDURE SYSTEM_LOBS.DELETE_LOB(IN L_ID BIGINT,IN TX_ID BIGINT) SPECIFIC
 
 
 
-PUBLIC.SYSTEM_LOBS.DELETE_UNUSED
+PUBLIC.SYSTEM_LOBS.DELETE_UNUSED                  [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
   L_IDS                             BIGINT ARRAY, in            
 
                                                          [specific name]
@@ -1255,9 +1231,8 @@ CREATE PROCEDURE SYSTEM_LOBS.DELETE_UNUSED(IN L_IDS BIGINT ARRAY) SPECIFIC DELET
 
 
 
-PUBLIC.SYSTEM_LOBS.DELETE_UNUSED_LOBS
+PUBLIC.SYSTEM_LOBS.DELETE_UNUSED_LOBS             [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
   LIMIT_ID                          BIGINT, in                  
 
                                                          [specific name]
@@ -1268,9 +1243,8 @@ CREATE PROCEDURE SYSTEM_LOBS.DELETE_UNUSED_LOBS(IN LIMIT_ID BIGINT) SPECIFIC DEL
 
 
 
-PUBLIC.SYSTEM_LOBS.DIVIDE_BLOCK
+PUBLIC.SYSTEM_LOBS.DIVIDE_BLOCK                   [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
   B_OFFSET                          INTEGER, in                 
   L_ID                              BIGINT, in                  
 
@@ -1282,9 +1256,8 @@ CREATE PROCEDURE SYSTEM_LOBS.DIVIDE_BLOCK(IN B_OFFSET INTEGER,IN L_ID BIGINT) SP
 
 
 
-PUBLIC.SYSTEM_LOBS.MERGE_EMPTY_BLOCKS
+PUBLIC.SYSTEM_LOBS.MERGE_EMPTY_BLOCKS             [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
 
                                                          [specific name]
 MERGE_EMPTY_BLOCKS_10078
@@ -1300,7 +1273,7 @@ Dump
 
 
 
-PUBLIC.BOOKS.AUTHORS
+PUBLIC.BOOKS.AUTHORS                                                    
 ------------------------------------------------------------------------
 ID	FIRSTNAME	LASTNAME	ADDRESS1	ADDRESS2	CITY	STATE	POSTALCODE	COUNTRY
 1	Oren	Shaffer	900-2273 Integer Avenue		Farmer City	MD	37032	Cook Islands
@@ -1326,7 +1299,7 @@ ID	FIRSTNAME	LASTNAME	ADDRESS1	ADDRESS2	CITY	STATE	POSTALCODE	COUNTRY
 
 
 
-PUBLIC.BOOKS.AUTHORSLIST
+PUBLIC.BOOKS.AUTHORSLIST                                                
 ------------------------------------------------------------------------
 ID	FIRSTNAME	LASTNAME
 1	Oren	Shaffer
@@ -1352,7 +1325,7 @@ ID	FIRSTNAME	LASTNAME
 
 
 
-PUBLIC.BOOKS.BOOKAUTHORS
+PUBLIC.BOOKS.BOOKAUTHORS                                                
 ------------------------------------------------------------------------
 BOOKID	AUTHORID	UPDATE
 1	7	<binary>
@@ -1378,7 +1351,7 @@ BOOKID	AUTHORID	UPDATE
 
 
 
-PUBLIC.BOOKS.BOOKS
+PUBLIC.BOOKS.BOOKS                                                      
 ------------------------------------------------------------------------
 ID	TITLE	DESCRIPTION	PUBLISHERID	PUBLICATIONDATE	PRICE	PREVIOUSEDITIONID
 1	Neque. In Ornare Sagittis	Dis Parturient Montes, Nascetur Ridiculus Mus.	18	2000-10-27	69.99	NULL
@@ -1404,13 +1377,13 @@ ID	TITLE	DESCRIPTION	PUBLISHERID	PUBLICATIONDATE	PRICE	PREVIOUSEDITIONID
 
 
 
-PUBLIC.BOOKS."Global Counts"
+PUBLIC.BOOKS."Global Counts"                                            
 ------------------------------------------------------------------------
 Global Count
 
 
 
-PUBLIC.BOOKS.PUBLISHERS
+PUBLIC.BOOKS.PUBLISHERS                                                 
 ------------------------------------------------------------------------
 ID	PUBLISHER
 1	Dalton Lewis
@@ -1436,37 +1409,37 @@ ID	PUBLISHER
 
 
 
-PUBLIC.FOR_LINT.EXTRA_PK
+PUBLIC.FOR_LINT.EXTRA_PK                                                
 ------------------------------------------------------------------------
 ID	WRITERID	PUBLICATIONID
 
 
 
-PUBLIC.FOR_LINT."Global Counts"
+PUBLIC.FOR_LINT."Global Counts"                                         
 ------------------------------------------------------------------------
 Global Count
 
 
 
-PUBLIC.FOR_LINT.PUBLICATIONS
+PUBLIC.FOR_LINT.PUBLICATIONS                                            
 ------------------------------------------------------------------------
 ID	TITLE	DESCRIPTION	WRITERID	PUBLICATIONDATE	PRICE	UPDATE	PRESS_RELEASE
 
 
 
-PUBLIC.FOR_LINT.WRITERS
+PUBLIC.FOR_LINT.WRITERS                                                 
 ------------------------------------------------------------------------
 ID	FIRSTNAME	LASTNAME	ADDRESS1	ADDRESS2	CITY	STATE	POSTALCODE	COUNTRY	PHONE1	PHONE2	EMAIL1	EMAIL2	FAX	FAX3	HOMEEMAIL11	HOMEEMAIL12	PUBLICATION_ID
 
 
 
-PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
+PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                                    
 ------------------------------------------------------------------------
 ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ	ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ	ΣΥΓΓΡΑΦΈΑΣ
 
 
 
-PUBLIC."PUBLISHER SALES".REGIONS
+PUBLIC."PUBLISHER SALES".REGIONS                                        
 ------------------------------------------------------------------------
 CITY	STATE	POSTALCODE	COUNTRY
 Arvada	KY	17131	USA
@@ -1492,7 +1465,7 @@ Woburn	NV	27392	USA
 
 
 
-PUBLIC."PUBLISHER SALES".SALES
+PUBLIC."PUBLISHER SALES".SALES                                          
 ------------------------------------------------------------------------
 POSTALCODE	COUNTRY	BOOKID	PERIODENDDATE	TOTALAMOUNT
 13078	USA	1	2001-07-18	18257.0
@@ -1524,7 +1497,7 @@ Row Count
 
 
 
-Row Count
+Row Count                                                               
 ------------------------------------------------------------------------
 PUBLIC.BOOKS.AUTHORS                                             20 rows
 PUBLIC.BOOKS.AUTHORSLIST                                         20 rows
@@ -1548,7 +1521,7 @@ Query
 
 
 
-hsqldb.tables
+hsqldb.tables                                                           
 ------------------------------------------------------------------------
 TABLE_CAT	TABLE_SCHEM	TABLE_NAME	TABLE_TYPE	REMARKS
 PUBLIC	BOOKS	TEMP_AUTHOR_LIST	GLOBAL TEMPORARY	NULL

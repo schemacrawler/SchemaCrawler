@@ -5,7 +5,7 @@ Query
 
 
 
-PUBLIC.BOOKS.AUTHORS
+PUBLIC.BOOKS.AUTHORS                                                    
 ------------------------------------------------------------------------
 ID	FIRSTNAME	LASTNAME	ADDRESS1	ADDRESS2	CITY	STATE	POSTALCODE	COUNTRY
 1	Oren	Shaffer	900-2273 Integer Avenue		Farmer City	MD	37032	Cook Islands
@@ -31,7 +31,7 @@ ID	FIRSTNAME	LASTNAME	ADDRESS1	ADDRESS2	CITY	STATE	POSTALCODE	COUNTRY
 
 
 
-PUBLIC.BOOKS.AUTHORSLIST
+PUBLIC.BOOKS.AUTHORSLIST                                                
 ------------------------------------------------------------------------
 ID	FIRSTNAME	LASTNAME
 1	Oren	Shaffer
@@ -57,7 +57,7 @@ ID	FIRSTNAME	LASTNAME
 
 
 
-PUBLIC.BOOKS.BOOKAUTHORS
+PUBLIC.BOOKS.BOOKAUTHORS                                                
 ------------------------------------------------------------------------
 BOOKID	AUTHORID
 1	7
@@ -83,7 +83,7 @@ BOOKID	AUTHORID
 
 
 
-PUBLIC.BOOKS.BOOKS
+PUBLIC.BOOKS.BOOKS                                                      
 ------------------------------------------------------------------------
 ID	TITLE	DESCRIPTION	PUBLISHERID	PUBLICATIONDATE	PRICE	PREVIOUSEDITIONID
 1	Neque. In Ornare Sagittis	Dis Parturient Montes, Nascetur Ridiculus Mus.	18	2000-10-27	69.99	NULL
@@ -109,13 +109,13 @@ ID	TITLE	DESCRIPTION	PUBLISHERID	PUBLICATIONDATE	PRICE	PREVIOUSEDITIONID
 
 
 
-PUBLIC.BOOKS."Global Counts"
+PUBLIC.BOOKS."Global Counts"                                            
 ------------------------------------------------------------------------
 Global Count
 
 
 
-PUBLIC.BOOKS.PUBLISHERS
+PUBLIC.BOOKS.PUBLISHERS                                                 
 ------------------------------------------------------------------------
 ID	PUBLISHER
 1	Dalton Lewis
@@ -141,37 +141,37 @@ ID	PUBLISHER
 
 
 
-PUBLIC.FOR_LINT.EXTRA_PK
+PUBLIC.FOR_LINT.EXTRA_PK                                                
 ------------------------------------------------------------------------
 ID	WRITERID	PUBLICATIONID
 
 
 
-PUBLIC.FOR_LINT."Global Counts"
+PUBLIC.FOR_LINT."Global Counts"                                         
 ------------------------------------------------------------------------
 Global Count
 
 
 
-PUBLIC.FOR_LINT.PUBLICATIONS
+PUBLIC.FOR_LINT.PUBLICATIONS                                            
 ------------------------------------------------------------------------
 ID	TITLE	DESCRIPTION	WRITERID	PUBLICATIONDATE	PRICE
 
 
 
-PUBLIC.FOR_LINT.WRITERS
+PUBLIC.FOR_LINT.WRITERS                                                 
 ------------------------------------------------------------------------
 ID	FIRSTNAME	LASTNAME	ADDRESS1	ADDRESS2	CITY	STATE	POSTALCODE	COUNTRY	PHONE1	PHONE2	EMAIL1	EMAIL2	FAX	FAX3	HOMEEMAIL11	HOMEEMAIL12	PUBLICATION_ID
 
 
 
-PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
+PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                                    
 ------------------------------------------------------------------------
 ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ	ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ	ΣΥΓΓΡΑΦΈΑΣ
 
 
 
-PUBLIC."PUBLISHER SALES".REGIONS
+PUBLIC."PUBLISHER SALES".REGIONS                                        
 ------------------------------------------------------------------------
 CITY	STATE	POSTALCODE	COUNTRY
 Arvada	KY	17131	USA
@@ -197,7 +197,7 @@ Woburn	NV	27392	USA
 
 
 
-PUBLIC."PUBLISHER SALES".SALES
+PUBLIC."PUBLISHER SALES".SALES                                          
 ------------------------------------------------------------------------
 POSTALCODE	COUNTRY	BOOKID	PERIODENDDATE	TOTALAMOUNT
 13078	USA	1	2001-07-18	18257.0

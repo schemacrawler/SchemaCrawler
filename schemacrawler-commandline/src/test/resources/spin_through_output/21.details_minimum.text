@@ -37,85 +37,72 @@ Tables
 
 
 
-PUBLIC.BOOKS.AUTHORS
+PUBLIC.BOOKS.AUTHORS                                             [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 Contact details for book authors
 
 
 
-PUBLIC.BOOKS.BOOKAUTHORS
+PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 Relationship between books and their authors, along with the latest updated information
 
 
 
-PUBLIC.BOOKS.BOOKS
+PUBLIC.BOOKS.BOOKS                                               [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 Details for published books
 
 
 
-PUBLIC.BOOKS."Global Counts"
+PUBLIC.BOOKS."Global Counts"                                     [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 
 
 
-PUBLIC.BOOKS.PUBLISHERS
+PUBLIC.BOOKS.PUBLISHERS                                          [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 List of book publishers
 
 
 
-PUBLIC.FOR_LINT.EXTRA_PK
+PUBLIC.FOR_LINT.EXTRA_PK                                         [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 
 
 
-PUBLIC.FOR_LINT."Global Counts"
+PUBLIC.FOR_LINT."Global Counts"                                  [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 
 
 
-PUBLIC.FOR_LINT.PUBLICATIONS
+PUBLIC.FOR_LINT.PUBLICATIONS                                     [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 
 
 
-PUBLIC.FOR_LINT.WRITERS
+PUBLIC.FOR_LINT.WRITERS                                          [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 
 
 
-PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
+PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                             [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 
 
 
-PUBLIC."PUBLISHER SALES".REGIONS
+PUBLIC."PUBLISHER SALES".REGIONS                                 [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 
 
 
-PUBLIC."PUBLISHER SALES".SALES
+PUBLIC."PUBLISHER SALES".SALES                                   [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 
 
 
-PUBLIC.BOOKS.AUTHORSLIST
+PUBLIC.BOOKS.AUTHORSLIST                                          [view]
 ------------------------------------------------------------------------
-                                                                  [view]
 
 
 
@@ -125,126 +112,112 @@ Routines
 
 
 
-PUBLIC.BOOKS.CUSTOMADD
+PUBLIC.BOOKS.CUSTOMADD               [function, does not return a table]
 ------------------------------------------------------------------------
-                                     [function, does not return a table]
 
                                                          [specific name]
 CUSTOMADD_10131
 
 
 
-PUBLIC.BOOKS.CUSTOMADD
+PUBLIC.BOOKS.CUSTOMADD               [function, does not return a table]
 ------------------------------------------------------------------------
-                                     [function, does not return a table]
 
                                                          [specific name]
 CUSTOMADD_10130
 
 
 
-PUBLIC.BOOKS.NEW_PUBLISHER
+PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
 
                                                          [specific name]
 NEW_PUBLISHER_10128
 
 
 
-PUBLIC.BOOKS.NEW_PUBLISHER
+PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
 
                                                          [specific name]
 NEW_PUBLISHER_10129
 
 
 
-PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS
+PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS                   [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
 
                                                          [specific name]
 ALLOC_BLOCKS_10070
 
 
 
-PUBLIC.SYSTEM_LOBS.ALLOC_SINGLE_BLOCK
+PUBLIC.SYSTEM_LOBS.ALLOC_SINGLE_BLOCK             [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
 
                                                          [specific name]
 ALLOC_SINGLE_BLOCK_10073
 
 
 
-PUBLIC.SYSTEM_LOBS.CONVERT_BLOCK
+PUBLIC.SYSTEM_LOBS.CONVERT_BLOCK                  [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
 
                                                          [specific name]
 CONVERT_BLOCK_10028
 
 
 
-PUBLIC.SYSTEM_LOBS.CREATE_EMPTY_BLOCK
+PUBLIC.SYSTEM_LOBS.CREATE_EMPTY_BLOCK             [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
 
                                                          [specific name]
 CREATE_EMPTY_BLOCK_10062
 
 
 
-PUBLIC.SYSTEM_LOBS.DELETE_BLOCKS
+PUBLIC.SYSTEM_LOBS.DELETE_BLOCKS                  [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
 
                                                          [specific name]
 DELETE_BLOCKS_10059
 
 
 
-PUBLIC.SYSTEM_LOBS.DELETE_LOB
+PUBLIC.SYSTEM_LOBS.DELETE_LOB                     [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
 
                                                          [specific name]
 DELETE_LOB_10030
 
 
 
-PUBLIC.SYSTEM_LOBS.DELETE_UNUSED
+PUBLIC.SYSTEM_LOBS.DELETE_UNUSED                  [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
 
                                                          [specific name]
 DELETE_UNUSED_10045
 
 
 
-PUBLIC.SYSTEM_LOBS.DELETE_UNUSED_LOBS
+PUBLIC.SYSTEM_LOBS.DELETE_UNUSED_LOBS             [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
 
                                                          [specific name]
 DELETE_UNUSED_LOBS_10057
 
 
 
-PUBLIC.SYSTEM_LOBS.DIVIDE_BLOCK
+PUBLIC.SYSTEM_LOBS.DIVIDE_BLOCK                   [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
 
                                                          [specific name]
 DIVIDE_BLOCK_10065
 
 
 
-PUBLIC.SYSTEM_LOBS.MERGE_EMPTY_BLOCKS
+PUBLIC.SYSTEM_LOBS.MERGE_EMPTY_BLOCKS             [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
 
                                                          [specific name]
 MERGE_EMPTY_BLOCKS_10078

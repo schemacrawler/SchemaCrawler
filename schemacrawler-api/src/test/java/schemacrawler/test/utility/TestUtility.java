@@ -219,7 +219,7 @@ public final class TestUtility
 
     if ("html".equals(outputFormat))
     {
-      validateXHTML(testOutputTempFile, failures);
+      validateXML(testOutputTempFile, failures);
     }
     if ("htmlx".equals(outputFormat))
     {

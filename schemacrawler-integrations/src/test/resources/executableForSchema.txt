@@ -6,9 +6,8 @@ Tables
 
 
 
-PUBLIC.BOOKS.AUTHORS
+PUBLIC.BOOKS.AUTHORS                                             [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 Contact details for book authors
 1   ID                                INTEGER NOT NULL            
 2   FIRSTNAME                         VARCHAR(20) NOT NULL        
@@ -52,18 +51,16 @@ SYS_CT_10096                                          [check constraint]
 
 
 
-PUBLIC.BOOKS.AUTHORSLIST
+PUBLIC.BOOKS.AUTHORSLIST                                          [view]
 ------------------------------------------------------------------------
-                                                                  [view]
 1   ID                                INTEGER                     
 2   FIRSTNAME                         VARCHAR(20)                 
 3   LASTNAME                          VARCHAR(20)                 
 
 
 
-PUBLIC.BOOKS.BOOKAUTHORS
+PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 Relationship between books and their authors, along with the latest updated information
 1   BOOKID                            INTEGER NOT NULL            
 2   AUTHORID                          INTEGER NOT NULL            
@@ -91,9 +88,8 @@ SYS_CT_10112                                          [check constraint]
 
 
 
-PUBLIC.BOOKS.BOOKS
+PUBLIC.BOOKS.BOOKS                                               [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 Details for published books
 1   ID                                INTEGER NOT NULL            
                                     Unique (internal) id for book
@@ -135,16 +131,14 @@ SYS_CT_10104                                          [check constraint]
 
 
 
-PUBLIC.BOOKS."Global Counts"
+PUBLIC.BOOKS."Global Counts"                                     [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 1   "Global Count"                    INTEGER                     
 
 
 
-PUBLIC.BOOKS.PUBLISHERS
+PUBLIC.BOOKS.PUBLISHERS                                          [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 List of book publishers
 1   ID                                INTEGER NOT NULL            
                                     auto-incremented            
@@ -162,9 +156,8 @@ SYS_IDX_SYS_PK_10092_10093                                [unique index]
 
 
 
-PUBLIC.FOR_LINT.EXTRA_PK
+PUBLIC.FOR_LINT.EXTRA_PK                                         [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 1   ID                                INTEGER NOT NULL            
 2   WRITERID                          BIGINT NOT NULL             
 3   PUBLICATIONID                     INTEGER NOT NULL            
@@ -195,16 +188,14 @@ SYS_CT_10180                                          [check constraint]
 
 
 
-PUBLIC.FOR_LINT."Global Counts"
+PUBLIC.FOR_LINT."Global Counts"                                  [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 1   "Global Count"                    INTEGER                     
 
 
 
-PUBLIC.FOR_LINT.PUBLICATIONS
+PUBLIC.FOR_LINT.PUBLICATIONS                                     [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 1   ID                                INTEGER NOT NULL            
 2   TITLE                             VARCHAR(255) NOT NULL       
 3   DESCRIPTION                       VARCHAR(255)                
@@ -240,9 +231,8 @@ SYS_CT_10170                                          [check constraint]
 
 
 
-PUBLIC.FOR_LINT.WRITERS
+PUBLIC.FOR_LINT.WRITERS                                          [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 1   ID                                BIGINT NOT NULL             
 2   FIRSTNAME                         VARCHAR(20) NOT NULL        
 3   LASTNAME                          VARCHAR(20) NOT NULL        
@@ -315,9 +305,8 @@ SYS_CT_10160                                          [check constraint]
 
 
 
-PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
+PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                             [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 1   ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ               BIGINT NOT NULL             
 2   ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ           VARCHAR(10)                 
 3   ΣΥΓΓΡΑΦΈΑΣ                        INTEGER                     
@@ -338,9 +327,8 @@ SYS_CT_10189                                          [check constraint]
 
 
 
-PUBLIC."PUBLISHER SALES".REGIONS
+PUBLIC."PUBLISHER SALES".REGIONS                                 [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 1   CITY                              VARCHAR(50) NOT NULL        
 2   STATE                             VARCHAR(2) NOT NULL         
 3   POSTALCODE                        VARCHAR(10) NOT NULL        
@@ -368,9 +356,8 @@ SYS_CT_10143                                          [check constraint]
 
 
 
-PUBLIC."PUBLISHER SALES".SALES
+PUBLIC."PUBLISHER SALES".SALES                                   [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 1   POSTALCODE                        VARCHAR(10) NOT NULL        
 2   COUNTRY                           VARCHAR(50) NOT NULL        
 3   BOOKID                            INTEGER                     
@@ -397,57 +384,50 @@ Routines
 
 
 
-PUBLIC.BOOKS.CUSTOMADD
+PUBLIC.BOOKS.CUSTOMADD               [function, does not return a table]
 ------------------------------------------------------------------------
-                                     [function, does not return a table]
 1   ONE                               INTEGER, in                 
 
 
 
-PUBLIC.BOOKS.CUSTOMADD
+PUBLIC.BOOKS.CUSTOMADD               [function, does not return a table]
 ------------------------------------------------------------------------
-                                     [function, does not return a table]
 1   ONE                               INTEGER, in                 
 2   TWO                               INTEGER, in                 
 
 
 
-PUBLIC.BOOKS.NEW_PUBLISHER
+PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
 1   PUBLISHER                         VARCHAR, out                
 
 
 
-PUBLIC.BOOKS.NEW_PUBLISHER
+PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
 1   NEWPUBLISHER                      VARCHAR, in                 
 2   PUBLISHER                         VARCHAR, out                
 
 
 
-PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS
+PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS                   [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
 1   B_COUNT                           INTEGER, in                 
 2   B_OFFSET                          INTEGER, in                 
 3   L_ID                              BIGINT, in                  
 
 
 
-PUBLIC.SYSTEM_LOBS.ALLOC_SINGLE_BLOCK
+PUBLIC.SYSTEM_LOBS.ALLOC_SINGLE_BLOCK             [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
 1   B_COUNT                           INTEGER, in                 
 2   B_OFFSET                          INTEGER, in                 
 3   L_ID                              BIGINT, in                  
 
 
 
-PUBLIC.SYSTEM_LOBS.CONVERT_BLOCK
+PUBLIC.SYSTEM_LOBS.CONVERT_BLOCK                  [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
 1   B_ADDR                            INTEGER, in                 
 2   B_COUNT                           INTEGER, in                 
 3   B_OFFSET                          INTEGER, in                 
@@ -455,17 +435,15 @@ PUBLIC.SYSTEM_LOBS.CONVERT_BLOCK
 
 
 
-PUBLIC.SYSTEM_LOBS.CREATE_EMPTY_BLOCK
+PUBLIC.SYSTEM_LOBS.CREATE_EMPTY_BLOCK             [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
 1   B_ADDR                            INTEGER, in/ out            
 2   B_COUNT                           INTEGER, in                 
 
 
 
-PUBLIC.SYSTEM_LOBS.DELETE_BLOCKS
+PUBLIC.SYSTEM_LOBS.DELETE_BLOCKS                  [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
 1   L_ID                              BIGINT, in                  
 2   B_OFFSET                          INTEGER, in                 
 3   B_LIMIT                           INTEGER, in                 
@@ -473,39 +451,34 @@ PUBLIC.SYSTEM_LOBS.DELETE_BLOCKS
 
 
 
-PUBLIC.SYSTEM_LOBS.DELETE_LOB
+PUBLIC.SYSTEM_LOBS.DELETE_LOB                     [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
 1   L_ID                              BIGINT, in                  
 2   TX_ID                             BIGINT, in                  
 
 
 
-PUBLIC.SYSTEM_LOBS.DELETE_UNUSED
+PUBLIC.SYSTEM_LOBS.DELETE_UNUSED                  [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
 1   L_IDS                             ARRAY, in                   
 
 
 
-PUBLIC.SYSTEM_LOBS.DELETE_UNUSED_LOBS
+PUBLIC.SYSTEM_LOBS.DELETE_UNUSED_LOBS             [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
 1   LIMIT_ID                          BIGINT, in                  
 
 
 
-PUBLIC.SYSTEM_LOBS.DIVIDE_BLOCK
+PUBLIC.SYSTEM_LOBS.DIVIDE_BLOCK                   [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
 1   B_OFFSET                          INTEGER, in                 
 2   L_ID                              BIGINT, in                  
 
 
 
-PUBLIC.SYSTEM_LOBS.MERGE_EMPTY_BLOCKS
+PUBLIC.SYSTEM_LOBS.MERGE_EMPTY_BLOCKS             [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
 
 
 

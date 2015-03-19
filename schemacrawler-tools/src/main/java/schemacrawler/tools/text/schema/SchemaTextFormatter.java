@@ -124,7 +124,7 @@ final class SchemaTextFormatter
   {
     if (printVerboseDatabaseInfo && isVerbose)
     {
-      out.append(formattingHelper.createObjectStart(""));
+      out.append(formattingHelper.createObjectStart());
       printColumnDataType(columnDataType);
       out.append(formattingHelper.createObjectEnd());
     }
@@ -152,8 +152,8 @@ final class SchemaTextFormatter
     }
     final String routineType = "[" + routineTypeDetail + "]";
 
-    out.println(formattingHelper.createObjectStart(routineName));
-    out.println(formattingHelper.createNameRow("", routineType));
+    out.println(formattingHelper.createObjectStart());
+    out.println(formattingHelper.createObjectNameRow(routineName, routineType));
     printRemarks(routine);
 
     if (!isBrief)
@@ -195,7 +195,7 @@ final class SchemaTextFormatter
     }
     final String sequenceType = "[sequence]";
 
-    out.println(formattingHelper.createObjectStart(""));
+    out.println(formattingHelper.createObjectStart());
     out.println(formattingHelper.createNameRow(sequenceName, sequenceType));
     printRemarks(sequence);
 
@@ -236,8 +236,8 @@ final class SchemaTextFormatter
     }
     final String synonymType = "[synonym]";
 
-    out.println(formattingHelper.createObjectStart(synonymName));
-    out.println(formattingHelper.createNameRow("", synonymType));
+    out.println(formattingHelper.createObjectStart());
+    out.println(formattingHelper.createObjectNameRow(synonymName, synonymType));
     printRemarks(synonym);
 
     if (!isBrief)
@@ -283,8 +283,8 @@ final class SchemaTextFormatter
     }
     final String tableType = "[" + table.getTableType() + "]";
 
-    out.println(formattingHelper.createObjectStart(tableName));
-    out.println(formattingHelper.createNameRow("", tableType));
+    out.println(formattingHelper.createObjectStart());
+    out.println(formattingHelper.createObjectNameRow(tableName, tableType));
     printRemarks(table);
 
     final List<Column> columns = table.getColumns();

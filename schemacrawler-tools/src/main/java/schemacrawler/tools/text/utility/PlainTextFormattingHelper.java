@@ -126,19 +126,20 @@ public class PlainTextFormattingHelper
    * {@inheritDoc}
    */
   @Override
-  public String createObjectStart(final String name)
+  public String createObjectStart()
   {
-    final String objectStart;
-    if (!isBlank(name))
-    {
-      objectStart = System.lineSeparator() + name + System.lineSeparator()
-                    + DASHED_SEPARATOR;
-    }
-    else
-    {
-      objectStart = "";
-    }
-    return objectStart;
+    return "";
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String createObjectNameRow(String name, String description)
+  {
+    final String row = createNameRow(name, description)
+                       + System.lineSeparator() + DASHED_SEPARATOR;
+    return row;
   }
 
   @Override

@@ -6,9 +6,8 @@ Tables
 
 
 
-AUTHORS
+AUTHORS                                                          [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 Contact details for book authors
   ID                                INTEGER NOT NULL            
   FIRSTNAME                         VARCHAR(20) NOT NULL        
@@ -26,15 +25,13 @@ Contact details for book authors
 
 
 
-AUTHORSLIST
+AUTHORSLIST                                                       [view]
 ------------------------------------------------------------------------
-                                                                  [view]
 
 
 
-BOOKAUTHORS
+BOOKAUTHORS                                                      [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 Relationship between books and their authors, along with the latest updated information
   BOOKID                            INTEGER NOT NULL            
   AUTHORID                          INTEGER NOT NULL            
@@ -47,9 +44,8 @@ Relationship between books and their authors, along with the latest updated info
 
 
 
-BOOKS
+BOOKS                                                            [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 Details for published books
   ID                                INTEGER NOT NULL            
                                     Unique (internal) id for book
@@ -66,15 +62,13 @@ Details for published books
 
 
 
-"Global Counts"
+"Global Counts"                                                  [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 
 
 
-PUBLISHERS
+PUBLISHERS                                                       [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 List of book publishers
   ID                                INTEGER NOT NULL            
                                     auto-incremented            
@@ -86,9 +80,8 @@ List of book publishers
 
 
 
-EXTRA_PK
+EXTRA_PK                                                         [table]
 ------------------------------------------------------------------------
-                                                                 [table]
   ID                                INTEGER NOT NULL            
   WRITERID                          BIGINT NOT NULL             
   PUBLICATIONID                     INTEGER NOT NULL            
@@ -104,15 +97,13 @@ EXTRA_PK
 
 
 
-"Global Counts"
+"Global Counts"                                                  [table]
 ------------------------------------------------------------------------
-                                                                 [table]
 
 
 
-PUBLICATIONS
+PUBLICATIONS                                                     [table]
 ------------------------------------------------------------------------
-                                                                 [table]
   ID                                INTEGER NOT NULL            
   WRITERID                          BIGINT NOT NULL             
 
@@ -130,9 +121,8 @@ PUBLICATIONS
 
 
 
-WRITERS
+WRITERS                                                          [table]
 ------------------------------------------------------------------------
-                                                                 [table]
   ID                                BIGINT NOT NULL             
   FIRSTNAME                         VARCHAR(20) NOT NULL        
   LASTNAME                          VARCHAR(20) NOT NULL        
@@ -160,9 +150,8 @@ WRITERS
 
 
 
-ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
+ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                                             [table]
 ------------------------------------------------------------------------
-                                                                 [table]
   ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ               BIGINT NOT NULL             
   ΣΥΓΓΡΑΦΈΑΣ                        INTEGER                     
 
@@ -174,9 +163,8 @@ WRITERS
 
 
 
-REGIONS
+REGIONS                                                          [table]
 ------------------------------------------------------------------------
-                                                                 [table]
   POSTALCODE                        VARCHAR(10) NOT NULL        
   COUNTRY                           VARCHAR(50) NOT NULL        
 
@@ -190,9 +178,8 @@ REGIONS
 
 
 
-SALES
+SALES                                                            [table]
 ------------------------------------------------------------------------
-                                                                 [table]
   POSTALCODE                        VARCHAR(10) NOT NULL        
   COUNTRY                           VARCHAR(50) NOT NULL        
 
@@ -208,87 +195,73 @@ Routines
 
 
 
-CUSTOMADD
+CUSTOMADD                            [function, does not return a table]
 ------------------------------------------------------------------------
-                                     [function, does not return a table]
 
 
 
-CUSTOMADD
+CUSTOMADD                            [function, does not return a table]
 ------------------------------------------------------------------------
-                                     [function, does not return a table]
 
 
 
-NEW_PUBLISHER
+NEW_PUBLISHER                                     [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
 
 
 
-NEW_PUBLISHER
+NEW_PUBLISHER                                     [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
 
 
 
-ALLOC_BLOCKS
+ALLOC_BLOCKS                                      [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
 
 
 
-ALLOC_SINGLE_BLOCK
+ALLOC_SINGLE_BLOCK                                [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
 
 
 
-CONVERT_BLOCK
+CONVERT_BLOCK                                     [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
 
 
 
-CREATE_EMPTY_BLOCK
+CREATE_EMPTY_BLOCK                                [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
 
 
 
-DELETE_BLOCKS
+DELETE_BLOCKS                                     [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
 
 
 
-DELETE_LOB
+DELETE_LOB                                        [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
 
 
 
-DELETE_UNUSED
+DELETE_UNUSED                                     [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
 
 
 
-DELETE_UNUSED_LOBS
+DELETE_UNUSED_LOBS                                [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
 
 
 
-DIVIDE_BLOCK
+DIVIDE_BLOCK                                      [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
 
 
 
-MERGE_EMPTY_BLOCKS
+MERGE_EMPTY_BLOCKS                                [procedure, no result]
 ------------------------------------------------------------------------
-                                                  [procedure, no result]
 
 
 

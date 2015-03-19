@@ -201,7 +201,8 @@ final class DataTextFormatter
     }
     else
     {
-      out.println(formattingHelper.createObjectStart(title));
+      out.println(formattingHelper.createObjectStart());
+      out.println(formattingHelper.createObjectNameRow(title, ""));
       try
       {
         final DataResultSet dataRows = new DataResultSet(rows,
@@ -249,8 +250,9 @@ final class DataTextFormatter
 
     if (operation == Operation.count)
     {
-      out
-        .println(formattingHelper.createObjectStart(operation.getDescription()));
+      out.println(formattingHelper.createObjectStart());
+      out.println(formattingHelper.createObjectNameRow(operation
+        .getDescription(), ""));
     }
   }
 
