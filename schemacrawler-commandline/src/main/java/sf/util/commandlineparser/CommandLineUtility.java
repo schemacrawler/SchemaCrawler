@@ -21,14 +21,18 @@
 package sf.util.commandlineparser;
 
 
+import static sf.util.Utility.join;
+
 import java.io.File;
-import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.SortedMap;
+import java.util.TreeMap;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
@@ -36,13 +40,42 @@ import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import sf.util.ObjectToString;
 
 public class CommandLineUtility
 {
 
   private static final Logger LOGGER = Logger
     .getLogger(CommandLineUtility.class.getName());
+
+  /**
+   * Sets the application-wide log level.
+   */
+  public static void applyApplicationLogLevel(final Level applicationLogLevel)
+  {
+    if (applicationLogLevel == null)
+    {
+      return;
+    }
+
+    final LogManager logManager = LogManager.getLogManager();
+    final List<String> loggerNames = Collections.list(logManager
+      .getLoggerNames());
+    for (final String loggerName: loggerNames)
+    {
+      final Logger logger = logManager.getLogger(loggerName);
+      if (logger != null)
+      {
+        logger.setLevel(null);
+        for (final Handler handler: logger.getHandlers())
+        {
+          handler.setLevel(applicationLogLevel);
+        }
+      }
+    }
+
+    final Logger rootLogger = Logger.getLogger("");
+    rootLogger.setLevel(applicationLogLevel);
+  }
 
   public static String[] flattenCommandlineArgs(final Map<String, String> argsMap)
   {
@@ -79,49 +112,44 @@ public class CommandLineUtility
     return config;
   }
 
-  private CommandLineUtility()
+  public static void logSafeArguments(final Level level, final String[] args)
   {
-    // Prevent instantiation
-  }
-
-  /**
-   * Sets the application-wide log level.
-   */
-  public static void applyApplicationLogLevel(final Level applicationLogLevel)
-  {
-    if (applicationLogLevel == null)
+    if (args == null)
+    {
+      return;
+    }
+    if (!LOGGER.isLoggable(Level.CONFIG))
     {
       return;
     }
 
-    final LogManager logManager = LogManager.getLogManager();
-    final List<String> loggerNames = Collections.list(logManager
-      .getLoggerNames());
-    for (final String loggerName: loggerNames)
+    final List<String> argsList = new ArrayList<>(Arrays.asList(args));
+    for (final Iterator<String> iterator = argsList.iterator(); iterator
+      .hasNext();)
     {
-      final Logger logger = logManager.getLogger(loggerName);
-      if (logger != null)
+      final String arg = iterator.next();
+      if (arg == null)
       {
-        logger.setLevel(null);
-        for (final Handler handler: logger.getHandlers())
-        {
-          handler.setLevel(applicationLogLevel);
-        }
+        iterator.remove();
+      }
+      if (arg.startsWith("-password="))
+      {
+        iterator.remove();
       }
     }
 
-    final Logger rootLogger = Logger.getLogger("");
-    rootLogger.setLevel(applicationLogLevel);
+    LOGGER.log(level,
+               "Command line: \n" + join(argsList, System.lineSeparator()));
   }
 
-  public static void printSystemProperties(final String[] args)
+  public static void logSystemProperties()
   {
     if (!LOGGER.isLoggable(Level.CONFIG))
     {
       return;
     }
 
-    final StringWriter writer = new StringWriter();
+    final SortedMap<String, String> systemProperties = new TreeMap<>();
     for (final Entry<Object, Object> propertyValue: System.getProperties()
       .entrySet())
     {
@@ -129,18 +157,21 @@ public class CommandLineUtility
       if ((name.startsWith("java.") || name.startsWith("os."))
           && !name.endsWith(".path"))
       {
-        final String value = (String) propertyValue.getValue();
-        writer.write(System.lineSeparator());
-        writer.write(String.format("%s=%s", name, value));
+        systemProperties.put(name, (String) propertyValue.getValue());
       }
     }
-    LOGGER.log(Level.CONFIG, writer.toString());
+    LOGGER.log(Level.CONFIG,
+               "System properties: \n"
+                   + join(systemProperties, System.lineSeparator()));
     LOGGER.log(Level.CONFIG,
                "Classpath: \n"
-                   + ObjectToString.join(System.getProperty("java.class.path")
-                     .split(File.pathSeparator)));
-
-    LOGGER.log(Level.CONFIG, "Command line: " + Arrays.toString(args));
+                   + join(System.getProperty("java.class.path")
+                            .split(File.pathSeparator),
+                          System.lineSeparator()));
   }
 
+  private CommandLineUtility()
+  {
+    // Prevent instantiation
+  }
 }
