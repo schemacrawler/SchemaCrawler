@@ -22,6 +22,9 @@ package schemacrawler.tools.text.utility;
 
 
 import static sf.util.Utility.isBlank;
+
+import java.awt.Color;
+
 import schemacrawler.tools.options.TextOutputFormat;
 
 /**
@@ -126,20 +129,22 @@ public class PlainTextFormattingHelper
    * {@inheritDoc}
    */
   @Override
-  public String createObjectStart()
+  public String createObjectNameRow(final String name,
+                                    final String description,
+                                    final Color backgroundColor)
   {
-    return "";
+    final String row = createNameRow(name, description)
+                       + System.lineSeparator() + DASHED_SEPARATOR;
+    return row;
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public String createObjectNameRow(String name, String description)
+  public String createObjectStart()
   {
-    final String row = createNameRow(name, description)
-                       + System.lineSeparator() + DASHED_SEPARATOR;
-    return row;
+    return "";
   }
 
   @Override

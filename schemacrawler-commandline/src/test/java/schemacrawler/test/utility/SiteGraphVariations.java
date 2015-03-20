@@ -37,14 +37,12 @@ import java.util.Map;
 import java.util.Properties;
 
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.JUnitCore;
 
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.Config;
 
-@Ignore
 public class SiteGraphVariations
   extends BaseDatabaseTest
 {

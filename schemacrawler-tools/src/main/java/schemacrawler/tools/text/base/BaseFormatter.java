@@ -37,6 +37,8 @@ public abstract class BaseFormatter<O extends BaseTextOptions>
     this.outputOptions = requireNonNull(outputOptions,
                                         "Output options not provided");
 
+    colorMap = new DatabaseObjectColorMap();
+
     this.printVerboseDatabaseInfo = !options.isNoInfo()
                                     && printVerboseDatabaseInfo;
 
@@ -50,8 +52,6 @@ public abstract class BaseFormatter<O extends BaseTextOptions>
     {
       formattingHelper = new PlainTextFormattingHelper((TextOutputFormat) outputFormat);
     }
-
-    colorMap = new DatabaseObjectColorMap();
 
     out = new PrintWriter(outputOptions.openNewOutputWriter(options
       .isAppendOutput()), true);
