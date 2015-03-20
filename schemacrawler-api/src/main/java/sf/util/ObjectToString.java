@@ -39,17 +39,6 @@ import java.util.logging.Logger;
 public final class ObjectToString
 {
 
-  public static String join(final String[] split)
-  {
-    if (split == null)
-    {
-      return "";
-    }
-    final StringBuilder buffer = new StringBuilder();
-    appendIterable(Arrays.asList(split).iterator(), "\n", buffer);
-    return buffer.toString();
-  }
-
   public static String toString(final Object object)
   {
     if (object == null)
