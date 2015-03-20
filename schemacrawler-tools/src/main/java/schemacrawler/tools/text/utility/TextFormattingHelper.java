@@ -20,6 +20,8 @@
 
 package schemacrawler.tools.text.utility;
 
+import java.awt.Color;
+
 
 /**
  * Methods to format entire rows of output.
@@ -145,7 +147,9 @@ public interface TextFormattingHelper
    *        Description
    * @return Row as a string
    */
-  String createObjectNameRow(String name, String description);
+  String createObjectNameRow(String name,
+                             String description,
+                             Color backgroundColor);
 
   /**
    * Create a name and value row.

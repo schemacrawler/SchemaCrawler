@@ -21,9 +21,13 @@
 package schemacrawler.tools.text.utility;
 
 
+import static schemacrawler.tools.text.utility.DatabaseObjectColorMap.getHtmlColor;
 import static schemacrawler.tools.text.utility.Entities.escapeForXMLElement;
 import static sf.util.Utility.isBlank;
 import static sf.util.Utility.readResourceFully;
+
+import java.awt.Color;
+
 import schemacrawler.tools.options.TextOutputFormat;
 
 /**
@@ -35,31 +39,9 @@ public final class HtmlFormattingHelper
   extends BaseTextFormattingHelper
 {
 
-  private static String htmlHeader()
-  {
-    final String styleSheet = readResourceFully("/sc.css")
-                              + readResourceFully("/sc_output.css");
-
-    return "<!DOCTYPE html>" + System.lineSeparator() + "<html lang=\"en\">"
-           + System.lineSeparator() + "<head>" + System.lineSeparator()
-           + "  <title>SchemaCrawler Output</title>" + System.lineSeparator()
-           + "  <meta charset=\"utf-8\"/>" + System.lineSeparator()
-           + "  <style>" + System.lineSeparator() + styleSheet
-           + System.lineSeparator() + "  </style>" + System.lineSeparator()
-           + "</head>" + System.lineSeparator() + "<body>"
-           + System.lineSeparator();
-  }
-
-  /**
-   * HTML footer.
-   */
+  private static final String HTML_HEADER = htmlHeader();
   private static final String HTML_FOOTER = "</body>" + System.lineSeparator()
                                             + "</html>";
-
-  /**
-   * HTML header.
-   */
-  private static final String HTML_HEADER = htmlHeader();
 
   public HtmlFormattingHelper(final TextOutputFormat outputFormat)
   {
@@ -150,24 +132,17 @@ public final class HtmlFormattingHelper
    * {@inheritDoc}
    */
   @Override
-  public String createObjectStart()
+  public String createObjectNameRow(final String name,
+                                    final String description,
+                                    final Color backgroundColor)
   {
     final StringBuilder buffer = new StringBuilder();
-    buffer.append("<table>").append(System.lineSeparator());
-    return buffer.toString();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public String createObjectNameRow(String name, String description)
-  {
-    final StringBuilder buffer = new StringBuilder();
-    buffer.append("  <caption>");
+    buffer.append("  <caption style='background-color: ")
+      .append(getHtmlColor(backgroundColor)).append(";'>");
     if (!isBlank(name))
     {
-      buffer.append(escapeForXMLElement(name));
+      buffer.append("<span class='caption_name'>")
+        .append(escapeForXMLElement(name)).append("</span>");
     }
     if (!isBlank(description))
     {
@@ -175,6 +150,17 @@ public final class HtmlFormattingHelper
         .append(escapeForXMLElement(description)).append("</span>");
     }
     buffer.append("</caption>").append(System.lineSeparator());
+    return buffer.toString();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String createObjectStart()
+  {
+    final StringBuilder buffer = new StringBuilder();
+    buffer.append("<table>").append(System.lineSeparator());
     return buffer.toString();
   }
 
@@ -194,6 +180,23 @@ public final class HtmlFormattingHelper
   public String createWeakRightArrow()
   {
     return "\u21dd";
+  }
+
+  private static String htmlHeader()
+  {
+    final StringBuffer styleSheet = new StringBuffer();
+    styleSheet.append(System.lineSeparator())
+      .append(readResourceFully("/sc.css")).append(System.lineSeparator())
+      .append(readResourceFully("/sc_output.css"))
+      .append(System.lineSeparator());
+
+    return "<!DOCTYPE html>" + System.lineSeparator() + "<html lang=\"en\">"
+           + System.lineSeparator() + "<head>" + System.lineSeparator()
+           + "  <title>SchemaCrawler Output</title>" + System.lineSeparator()
+           + "  <meta charset=\"utf-8\"/>" + System.lineSeparator()
+           + "  <style>" + styleSheet + "  </style>" + System.lineSeparator()
+           + "</head>" + System.lineSeparator() + "<body>"
+           + System.lineSeparator();
   }
 
 }

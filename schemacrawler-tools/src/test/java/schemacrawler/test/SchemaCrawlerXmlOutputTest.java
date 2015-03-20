@@ -23,7 +23,6 @@ package schemacrawler.test;
 
 
 import static org.junit.Assert.fail;
-import static schemacrawler.test.utility.TestUtility.clean;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
 import static schemacrawler.test.utility.TestUtility.createTempFile;
 
@@ -56,7 +55,7 @@ public class SchemaCrawlerXmlOutputTest
   public void validCountXMLOutput()
     throws Exception
   {
-    clean(XML_OUTPUT);
+    // clean(XML_OUTPUT);
 
     final List<String> failures = new ArrayList<>();
 
@@ -72,7 +71,7 @@ public class SchemaCrawlerXmlOutputTest
   public void validXMLOutput()
     throws Exception
   {
-    clean(XML_OUTPUT);
+    // clean(XML_OUTPUT);
 
     final List<String> failures = new ArrayList<>();
 

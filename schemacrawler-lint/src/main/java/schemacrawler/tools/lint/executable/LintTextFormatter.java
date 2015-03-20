@@ -21,6 +21,7 @@
 package schemacrawler.tools.lint.executable;
 
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -59,7 +60,8 @@ final class LintTextFormatter
       out.println(formattingHelper.createObjectStart());
 
       final String nameRow = formattingHelper.createObjectNameRow("Database",
-                                                                  "[database]");
+                                                                  "[database]",
+                                                                  Color.white);
       out.println(nameRow);
 
       printLints(lints);
@@ -82,8 +84,10 @@ final class LintTextFormatter
     {
       out.println(formattingHelper.createObjectStart());
       final String tableType = "[" + table.getTableType() + "]";
-      out.println(formattingHelper.createObjectNameRow(table.getFullName(),
-                                                       tableType));
+      out
+        .println(formattingHelper.createObjectNameRow(table.getFullName(),
+                                                      tableType,
+                                                      colorMap.getColor(table)));
       printLints(lints);
       out.println(formattingHelper.createObjectEnd());
 
