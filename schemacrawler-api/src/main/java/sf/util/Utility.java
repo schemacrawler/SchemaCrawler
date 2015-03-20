@@ -29,10 +29,14 @@ import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
@@ -203,6 +207,35 @@ public final class Utility
     }
 
     return buffer.toString();
+  }
+
+  public static String join(final Map<String, String> map,
+                            final String separator)
+  {
+    if (map == null || map.isEmpty())
+    {
+      return null;
+    }
+
+    final StringBuilder buffer = new StringBuilder();
+    final Set<Entry<String, String>> entrySet = map.entrySet();
+    for (final Iterator<Entry<String, String>> iterator = entrySet.iterator(); iterator
+      .hasNext();)
+    {
+      final Entry<String, String> entry = iterator.next();
+      buffer.append(entry.getKey()).append("=").append(entry.getValue());
+      if (iterator.hasNext())
+      {
+        buffer.append(separator);
+      }
+    }
+
+    return buffer.toString();
+  }
+
+  public static String join(final String[] collection, final String separator)
+  {
+    return join(Arrays.asList(collection), separator);
   }
 
   public static String readFully(final InputStream stream)
