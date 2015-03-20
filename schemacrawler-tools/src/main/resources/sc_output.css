@@ -1,6 +1,9 @@
+.caption_name {
+	font-weight: bold;
+	font-style: italic;
+}
 
 .caption_description {
-	font-weight: normal;
 	float: right;
 }
 

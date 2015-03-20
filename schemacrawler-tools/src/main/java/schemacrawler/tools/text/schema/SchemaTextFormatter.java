@@ -153,7 +153,10 @@ final class SchemaTextFormatter
     final String routineType = "[" + routineTypeDetail + "]";
 
     out.println(formattingHelper.createObjectStart());
-    out.println(formattingHelper.createObjectNameRow(routineName, routineType));
+    out
+      .println(formattingHelper.createObjectNameRow(routineName,
+                                                    routineType,
+                                                    colorMap.getColor(routine)));
     printRemarks(routine);
 
     if (!isBrief)
@@ -237,7 +240,10 @@ final class SchemaTextFormatter
     final String synonymType = "[synonym]";
 
     out.println(formattingHelper.createObjectStart());
-    out.println(formattingHelper.createObjectNameRow(synonymName, synonymType));
+    out
+      .println(formattingHelper.createObjectNameRow(synonymName,
+                                                    synonymType,
+                                                    colorMap.getColor(synonym)));
     printRemarks(synonym);
 
     if (!isBrief)
@@ -284,7 +290,9 @@ final class SchemaTextFormatter
     final String tableType = "[" + table.getTableType() + "]";
 
     out.println(formattingHelper.createObjectStart());
-    out.println(formattingHelper.createObjectNameRow(tableName, tableType));
+    out.println(formattingHelper.createObjectNameRow(tableName,
+                                                     tableType,
+                                                     colorMap.getColor(table)));
     printRemarks(table);
 
     final List<Column> columns = table.getColumns();

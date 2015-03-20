@@ -13,11 +13,19 @@ import schemacrawler.schema.DatabaseObject;
 public class DatabaseObjectColorMap
 {
 
+  public static String getHtmlColor(final Color color)
+  {
+    final String htmlColor = "#"
+                             + Integer.toHexString(color.getRGB()).substring(2)
+                               .toUpperCase();
+    return htmlColor;
+  }
+
   private final Map<String, Color> colorMap;
 
   public DatabaseObjectColorMap()
   {
-    this.colorMap = new HashMap<>();
+    colorMap = new HashMap<>();
   }
 
   public Color getColor(final DatabaseObject dbObject)
@@ -46,14 +54,15 @@ public class DatabaseObjectColorMap
     }
     else
     {
-      hue = text.hashCode() / 5119f % 1;
+      final int hash = new StringBuffer().append(text).reverse().toString()
+        .hashCode();
+      hue = hash / 32771f % 1;
     }
 
-    final float saturation = 0.4f;
-    final float luminance = 0.98f;
+    final float saturation = 0.15f;
+    final float luminance = 0.95f;
 
     final Color color = Color.getHSBColor(hue, saturation, luminance);
     return color;
   }
-
 }

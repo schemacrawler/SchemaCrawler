@@ -21,6 +21,7 @@
 package schemacrawler.tools.text.operation;
 
 
+import java.awt.Color;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -202,7 +203,7 @@ final class DataTextFormatter
     else
     {
       out.println(formattingHelper.createObjectStart());
-      out.println(formattingHelper.createObjectNameRow(title, ""));
+      out.println(formattingHelper.createObjectNameRow(title, "", Color.white));
       try
       {
         final DataResultSet dataRows = new DataResultSet(rows,
@@ -252,7 +253,7 @@ final class DataTextFormatter
     {
       out.println(formattingHelper.createObjectStart());
       out.println(formattingHelper.createObjectNameRow(operation
-        .getDescription(), ""));
+        .getDescription(), "", Color.white));
     }
   }
 

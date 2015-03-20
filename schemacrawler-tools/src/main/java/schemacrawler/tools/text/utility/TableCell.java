@@ -20,6 +20,7 @@
 package schemacrawler.tools.text.utility;
 
 
+import static schemacrawler.tools.text.utility.DatabaseObjectColorMap.getHtmlColor;
 import static schemacrawler.tools.text.utility.Entities.escapeForXMLElement;
 import static sf.util.Utility.isBlank;
 
@@ -160,10 +161,7 @@ public class TableCell
     }
     if (bgColor != null && !bgColor.equals(Color.white))
     {
-      final String bgColorHtml = "#"
-                                 + Integer.toHexString(bgColor.getRGB())
-                                   .substring(2).toUpperCase();
-      buffer.append(" bgcolor='").append(bgColorHtml).append("'");
+      buffer.append(" bgcolor='").append(getHtmlColor(bgColor)).append("'");
     }
     if (!isBlank(styleClass))
     {
