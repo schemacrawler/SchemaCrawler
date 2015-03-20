@@ -158,7 +158,7 @@ public final class SchemaDotFormatter
     out.append("  \"").append(nodeId(table)).append("\" [").println();
     out.append("    label=<").println();
     out
-      .append("      <table border=\"1\" cellborder=\"0\" cellpadding=\"2\" cellspacing=\"0\" bgcolor=\"white\" color=\"#555555\">")
+      .append("      <table border=\"1\" cellborder=\"0\" cellpadding=\"2\" cellspacing=\"0\" bgcolor=\"white\" color=\"#999999\">")
       .println();
 
     out

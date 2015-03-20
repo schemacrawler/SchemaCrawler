@@ -176,11 +176,11 @@ public abstract class BaseDotFormatter<O extends BaseTextOptions>
       return;
     }
     out
-      .append("  graph [fontcolor=\"#555555\", ")
+      .append("  graph [fontcolor=\"#999999\", ")
       .append(System.lineSeparator())
       .append("    label=<")
       .append(System.lineSeparator())
-      .append("<table color=\"#555555\" border=\"1\" cellborder=\"0\" cellspacing=\"0\">")
+      .append("<table color=\"#999999\" border=\"1\" cellborder=\"0\" cellspacing=\"0\">")
       .append(System.lineSeparator());
   }
 
