@@ -28,7 +28,6 @@ import static sf.util.commandlineparser.CommandLineUtility.logSafeArguments;
 import static sf.util.commandlineparser.CommandLineUtility.logSystemProperties;
 
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.commandline.ApplicationOptionsParser;
@@ -45,8 +44,6 @@ import sf.util.commandlineparser.CommandLineUtility;
  */
 public final class Main
 {
-
-  private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
 
   public static void main(final String[] args)
     throws Exception
