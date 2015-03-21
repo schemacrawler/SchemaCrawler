@@ -118,7 +118,7 @@ public class CommandLineUtility
     {
       return;
     }
-    if (!LOGGER.isLoggable(Level.CONFIG))
+    if (level == null || !LOGGER.isLoggable(level))
     {
       return;
     }
