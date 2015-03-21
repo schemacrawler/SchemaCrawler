@@ -25,6 +25,7 @@ import static sf.util.Utility.isBlank;
 
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.DriverPropertyInfo;
@@ -45,6 +46,13 @@ abstract class BaseDatabaseConnectionOptions
   implements ConnectionOptions
 {
 
+  private static final long serialVersionUID = -8141436553988174836L;
+
+  private static final Logger LOGGER = Logger
+    .getLogger(BaseDatabaseConnectionOptions.class.getName());
+
+  private static final String URL = "url";
+
   protected static final Map<String, String> toMap(final String connectionUrl)
   {
     if (isBlank(connectionUrl))
@@ -56,13 +64,6 @@ abstract class BaseDatabaseConnectionOptions
     connectionProperties.put(URL, connectionUrl);
     return connectionProperties;
   }
-
-  private static final long serialVersionUID = -8141436553988174836L;
-
-  private static final Logger LOGGER = Logger
-    .getLogger(BaseDatabaseConnectionOptions.class.getName());
-
-  private static final String URL = "url";
 
   protected final Map<String, String> connectionProperties;
   private String user;
@@ -124,6 +125,10 @@ abstract class BaseDatabaseConnectionOptions
         .format("Making connection to %s, with user %s", connectionUrl, user));
       final Connection connection = DriverManager
         .getConnection(connectionUrl, jdbcConnectionProperties);
+
+      LOGGER.log(Level.INFO, "Opened database connection, " + connection);
+      logConnection(connection);
+
       return connection;
     }
     catch (final SQLException e)
@@ -269,7 +274,7 @@ abstract class BaseDatabaseConnectionOptions
       final Driver jdbcDriver = getJdbcDriver();
       jdbcDriverClass = jdbcDriver.getClass().getName();
     }
-    catch (SQLException e)
+    catch (final SQLException e)
     {
       jdbcDriverClass = "<unknown>";
     }
@@ -336,6 +341,22 @@ abstract class BaseDatabaseConnectionOptions
     }
 
     return jdbcConnectionProperties;
+  }
+
+  private void logConnection(final Connection connection)
+    throws SQLException
+  {
+    if (connection == null || !LOGGER.isLoggable(Level.INFO))
+    {
+      return;
+    }
+    final DatabaseMetaData dbMetaData = connection.getMetaData();
+    LOGGER.log(Level.INFO, String
+      .format("Connected to %n%s %s %nusing JDBC driver %n%s %s",
+              dbMetaData.getDatabaseProductName(),
+              dbMetaData.getDatabaseProductVersion(),
+              dbMetaData.getDriverName(),
+              dbMetaData.getDriverVersion()));
   }
 
 }

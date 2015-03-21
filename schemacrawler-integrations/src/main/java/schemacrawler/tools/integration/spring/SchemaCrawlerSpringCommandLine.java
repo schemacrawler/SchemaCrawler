@@ -28,7 +28,6 @@ import static java.util.Objects.requireNonNull;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Connection;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.sql.DataSource;
@@ -84,8 +83,6 @@ public class SchemaCrawlerSpringCommandLine
       .getDataSourceName());
     try (Connection connection = dataSource.getConnection();)
     {
-      LOGGER.log(Level.INFO, "Opened database connection, " + connection);
-
       final Executable executable = (Executable) appContext
         .getBean(springOptions.getExecutableName());
       executable.execute(connection);

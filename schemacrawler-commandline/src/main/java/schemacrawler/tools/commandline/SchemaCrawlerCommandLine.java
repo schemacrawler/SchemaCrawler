@@ -25,7 +25,6 @@ import static java.util.Objects.requireNonNull;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.Config;
@@ -117,7 +116,6 @@ public final class SchemaCrawlerCommandLine
     {
       try (final Connection connection = connectionOptions.getConnection();)
       {
-        LOGGER.log(Level.INFO, "Made connection, " + connection);
         for (final Executable executable: executables)
         {
           executable.execute(connection);
