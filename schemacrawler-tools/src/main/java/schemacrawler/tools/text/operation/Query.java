@@ -149,8 +149,8 @@ public final class Query
    *        Table information
    * @return Ready-to-execute quer
    */
-  String getQueryForTable(final Table table,
-                          final boolean isAlphabeticalSortForTableColumns)
+  public String getQueryForTable(final Table table,
+                                 final boolean isAlphabeticalSortForTableColumns)
   {
     final Map<String, String> tableProperties = new HashMap<>();
     if (table != null)

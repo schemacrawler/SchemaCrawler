@@ -21,12 +21,10 @@
 package schemacrawler.schema;
 
 
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-
 // @FunctionalInterface
 public interface Reducible
 {
 
-  void reduce(SchemaCrawlerOptions options);
+  <N extends NamedObject> void reduce(Class<N> clazz, Reducer<N> reducer);
 
 }

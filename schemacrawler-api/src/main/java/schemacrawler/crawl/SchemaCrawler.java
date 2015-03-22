@@ -33,8 +33,12 @@ import java.util.logging.Logger;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Reducible;
 import schemacrawler.schema.ResultsColumns;
+import schemacrawler.schema.Routine;
 import schemacrawler.schema.RoutineType;
 import schemacrawler.schema.Schema;
+import schemacrawler.schema.Sequence;
+import schemacrawler.schema.Synonym;
+import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
@@ -244,7 +248,7 @@ public final class SchemaCrawler
       }
 
       // Filter the list of routines based on grep criteria
-      ((Reducible) catalog).reduce(options);
+      ((Reducible) catalog).reduce(Routine.class, new RoutinesReducer(options));
 
       if (infoLevel.isRetrieveRoutineInformation())
       {
@@ -278,6 +282,8 @@ public final class SchemaCrawler
                                                             catalog);
 
       retriever.retrieveSchemas(options.getSchemaInclusionRule());
+
+      ((Reducible) catalog).reduce(Schema.class, new SchemasReducer(options));
     }
     catch (final SQLException e)
     {
@@ -308,6 +314,9 @@ public final class SchemaCrawler
       retrieverExtra = new SequenceRetriever(retrieverConnection, catalog);
       retrieverExtra.retrieveSequenceInformation(options
         .getSequenceInclusionRule());
+
+      ((Reducible) catalog).reduce(Sequence.class,
+                                   new SequencesReducer(options));
     }
     catch (final SQLException e)
     {
@@ -344,6 +353,8 @@ public final class SchemaCrawler
       retrieverExtra = new SynonymRetriever(retrieverConnection, catalog);
       retrieverExtra.retrieveSynonymInformation(options
         .getSynonymInclusionRule());
+
+      ((Reducible) catalog).reduce(Synonym.class, new SynonymsReducer(options));
     }
     catch (final SQLException e)
     {
@@ -431,7 +442,7 @@ public final class SchemaCrawler
 
       // Filter the list of tables based on grep criteria, and
       // parent-child relationships
-      ((Reducible) catalog).reduce(options);
+      ((Reducible) catalog).reduce(Table.class, new TablesReducer(options));
 
       if (infoLevel.isRetrieveTableConstraintInformation())
       {

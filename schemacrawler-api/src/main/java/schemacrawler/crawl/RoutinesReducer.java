@@ -28,10 +28,11 @@ import java.util.Set;
 
 import schemacrawler.filter.NamedObjectFilter;
 import schemacrawler.filter.PassthroughFilter;
+import schemacrawler.schema.Reducer;
 import schemacrawler.schema.Routine;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
-class RoutinesReducer
+public class RoutinesReducer
   implements Reducer<Routine>
 {
 
