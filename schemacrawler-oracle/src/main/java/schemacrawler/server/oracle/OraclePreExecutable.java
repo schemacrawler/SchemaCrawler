@@ -22,14 +22,14 @@ public class OraclePreExecutable
   public void execute(final Connection connection)
     throws Exception
   {
-    executeScriptFromResource("/schemacrawler-oracle.before.sql", connection);
+    executeScriptFromResource(connection, "/schemacrawler-oracle.before.sql");
 
     final SchemaTextOptions schemaTextOptions = new SchemaTextOptionsBuilder()
       .setFromConfig(additionalConfiguration).toOptions();
     if (schemaTextOptions.isShowUnqualifiedNames())
     {
-      executeScriptFromResource("/schemacrawler-oracle.show_unqualified_names.sql",
-                                connection);
+      executeScriptFromResource(connection,
+                                "/schemacrawler-oracle.show_unqualified_names.sql");
     }
   }
 

@@ -31,6 +31,8 @@ import java.util.Set;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ColumnDataType;
+import schemacrawler.schema.NamedObject;
+import schemacrawler.schema.Reducer;
 import schemacrawler.schema.Reducible;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Schema;
@@ -38,7 +40,6 @@ import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
 /**
  * Database and connection information. Created from metadata returned
@@ -371,30 +372,36 @@ final class MutableCatalog
   }
 
   @Override
-  public void reduce(final SchemaCrawlerOptions options)
+  public <N extends NamedObject> void reduce(final Class<N> clazz,
+                                             final Reducer<N> reducer)
   {
-    if (options == null)
+    if (reducer == null)
     {
       return;
     }
-
-    final SchemasReducer schemasReducer = new SchemasReducer(options);
-    schemasReducer.reduce(schemas);
-
-    // Filter the list of tables based on grep criteria, and
-    // parent-child relationships
-    final TablesReducer tablesReducer = new TablesReducer(options);
-    tablesReducer.reduce(tables);
-
-    // Filter the list of routines based on grep criteria
-    final RoutinesReducer routinesReducer = new RoutinesReducer(options);
-    routinesReducer.reduce(routines);
-
-    final SynonymsReducer synonymsReducer = new SynonymsReducer(options);
-    synonymsReducer.reduce(synonyms);
-
-    final SequencesReducer sequencesReducer = new SequencesReducer(options);
-    sequencesReducer.reduce(sequences);
+    else if (Schema.class.isAssignableFrom(clazz))
+    {
+      ((Reducer<Schema>) reducer).reduce(schemas);
+    }
+    else if (Table.class.isAssignableFrom(clazz))
+    {
+      // Filter the list of tables based on grep criteria, and
+      // parent-child relationships
+      ((Reducer<Table>) reducer).reduce(tables);
+    }
+    else if (Routine.class.isAssignableFrom(clazz))
+    {
+      // Filter the list of routines based on grep criteria
+      ((Reducer<Routine>) reducer).reduce(routines);
+    }
+    else if (Synonym.class.isAssignableFrom(clazz))
+    {
+      ((Reducer<Synonym>) reducer).reduce(synonyms);
+    }
+    else if (Sequence.class.isAssignableFrom(clazz))
+    {
+      ((Reducer<Sequence>) reducer).reduce(sequences);
+    }
   }
 
   void addColumnDataType(final MutableColumnDataType columnDataType)

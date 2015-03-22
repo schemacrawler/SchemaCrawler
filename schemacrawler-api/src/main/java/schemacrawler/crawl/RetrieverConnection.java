@@ -21,7 +21,7 @@
 package schemacrawler.crawl;
 
 
-import static java.util.Objects.requireNonNull;
+import static sf.util.DatabaseUtility.checkConnection;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -146,11 +146,7 @@ final class RetrieverConnection
       schemaCrawlerOptions = new SchemaCrawlerOptions();
     }
 
-    requireNonNull(connection, "No connection provided");
-    if (connection.isClosed())
-    {
-      throw new SQLException("Connection is closed");
-    }
+    checkConnection(connection);
     this.connection = connection;
     metaData = connection.getMetaData();
 

@@ -27,10 +27,11 @@ import java.util.Set;
 import schemacrawler.filter.DatabaseObjectFilter;
 import schemacrawler.filter.NamedObjectFilter;
 import schemacrawler.filter.PassthroughFilter;
+import schemacrawler.schema.Reducer;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
-class SynonymsReducer
+public class SynonymsReducer
   implements Reducer<Synonym>
 {
 

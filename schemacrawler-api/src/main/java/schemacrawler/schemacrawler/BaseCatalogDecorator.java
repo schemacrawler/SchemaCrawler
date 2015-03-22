@@ -30,6 +30,7 @@ import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.NamedObject;
+import schemacrawler.schema.Reducer;
 import schemacrawler.schema.Reducible;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Schema;
@@ -254,9 +255,16 @@ public abstract class BaseCatalogDecorator
   }
 
   @Override
-  public void reduce(final SchemaCrawlerOptions options)
+  public <N extends NamedObject> void reduce(final Class<N> clazz,
+                                             final Reducer<N> reducer)
   {
-    ((Reducible) catalog).reduce(options);
+    ((Reducible) catalog).reduce(clazz, reducer);
+  }
+
+  @Override
+  public void removeAttribute(final String name)
+  {
+    catalog.removeAttribute(name);
   }
 
   @Override
