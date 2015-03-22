@@ -27,8 +27,8 @@ import org.junit.Test;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
-import schemacrawler.schema.ProcedureColumn;
 import schemacrawler.schema.Routine;
+import schemacrawler.schema.RoutineColumn;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
@@ -197,9 +197,9 @@ public class SchemaCrawlerGrepTest
         for (final Routine routine: routines)
         {
           out.println("  routine: " + routine.getFullName());
-          final ProcedureColumn[] columns = routine.getColumns()
-            .toArray(new ProcedureColumn[0]);
-          for (final ProcedureColumn column: columns)
+          final RoutineColumn[] columns = routine.getColumns()
+            .toArray(new RoutineColumn[0]);
+          for (final RoutineColumn column: columns)
           {
             out.println("    parameter: " + column.getFullName());
           }

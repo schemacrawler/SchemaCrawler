@@ -21,12 +21,13 @@
 package schemacrawler.crawl;
 
 
+import static sf.util.Utility.isBlank;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 import schemacrawler.schema.NamedObjectWithAttributes;
-import sf.util.Utility;
 
 /**
  * Represents a named object.
@@ -128,7 +129,7 @@ abstract class AbstractNamedObjectWithAttributes
   @Override
   public final void setAttribute(final String name, final Object value)
   {
-    if (!Utility.isBlank(name))
+    if (!isBlank(name))
     {
       if (value == null)
       {
@@ -138,6 +139,18 @@ abstract class AbstractNamedObjectWithAttributes
       {
         attributeMap.put(name, value);
       }
+    }
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public final void removeAttribute(final String name)
+  {
+    if (!isBlank(name))
+    {
+      attributeMap.remove(name);
     }
   }
 

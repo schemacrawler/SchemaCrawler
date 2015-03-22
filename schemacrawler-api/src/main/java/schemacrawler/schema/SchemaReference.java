@@ -20,6 +20,8 @@
 package schemacrawler.schema;
 
 
+import static sf.util.Utility.isBlank;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -218,6 +220,18 @@ public final class SchemaReference
   public boolean hasRemarks()
   {
     return false;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public final void removeAttribute(final String name)
+  {
+    if (!isBlank(name))
+    {
+      attributeMap.remove(name);
+    }
   }
 
   /**

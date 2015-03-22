@@ -81,4 +81,12 @@ public interface NamedObjectWithAttributes
    */
   void setAttribute(String name, Object value);
 
+  /**
+   * Removes an attribute.
+   *
+   * @param name
+   *        Attribute name
+   */
+  void removeAttribute(String name);
+
 }

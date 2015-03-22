@@ -20,6 +20,7 @@
 package sf.util;
 
 
+import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.isBlank;
 import static sf.util.Utility.readResourceFully;
 
@@ -41,23 +42,28 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 public final class DatabaseUtility
 {
 
+  private static final Logger LOGGER = Logger.getLogger(DatabaseUtility.class
+    .getName());
+
   public static Statement createStatement(final Connection connection)
     throws SchemaCrawlerException, SQLException
   {
-    if (connection == null)
-    {
-      throw new SchemaCrawlerException("No connection provided");
-    }
-    if (connection.isClosed())
-    {
-      throw new SchemaCrawlerException("Connection is closed");
-    }
-
+    checkConnection(connection);
     return connection.createStatement();
   }
 
-  public static void executeScriptFromResource(final String scriptResource,
-                                               final Connection connection)
+  public static void checkConnection(final Connection connection)
+    throws SQLException
+  {
+    requireNonNull(connection, "No connection provided");
+    if (connection.isClosed())
+    {
+      throw new SQLException("Connection is closed");
+    }
+  }
+
+  public static void executeScriptFromResource(final Connection connection,
+                                               final String scriptResource)
     throws SchemaCrawlerException
   {
     try (final Statement statement = createStatement(connection);)
@@ -131,8 +137,21 @@ public final class DatabaseUtility
     }
   }
 
-  private static final Logger LOGGER = Logger.getLogger(DatabaseUtility.class
-    .getName());
+  public static long executeSqlForScalar(final Connection connection,
+                                         final String sql)
+    throws SchemaCrawlerException
+  {
+    try (final Statement statement = createStatement(connection);
+        final ResultSet resultSet = executeSql(statement, sql);)
+    {
+      final long scalar = resultSet.getLong(1);
+      return scalar;
+    }
+    catch (final SQLException e)
+    {
+      throw new SchemaCrawlerException(sql, e);
+    }
+  }
 
   private DatabaseUtility()
   { // Prevent instantiation
