@@ -30,12 +30,13 @@ import schemacrawler.filter.NamedObjectFilter;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.PartialDatabaseObject;
+import schemacrawler.schema.Reducer;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableReference;
 import schemacrawler.schema.TableRelationshipType;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
-class TablesReducer
+public class TablesReducer
   implements Reducer<Table>
 {
 

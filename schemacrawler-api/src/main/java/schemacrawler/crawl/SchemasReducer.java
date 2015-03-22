@@ -25,10 +25,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 import schemacrawler.filter.InclusionRuleFilter;
+import schemacrawler.schema.Reducer;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
-class SchemasReducer
+public class SchemasReducer
   implements Reducer<Schema>
 {
 

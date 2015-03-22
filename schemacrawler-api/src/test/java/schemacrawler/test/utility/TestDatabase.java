@@ -243,7 +243,7 @@ public class TestDatabase
           final String scriptResource = String
             .format("/testdatabase/%s.%s.sql", schema, scriptType)
             .toLowerCase(Locale.ENGLISH);
-          executeScriptFromResource(scriptResource, connection);
+          executeScriptFromResource(connection, scriptResource);
         }
       }
     }

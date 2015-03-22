@@ -27,8 +27,18 @@ import java.sql.Connection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import schemacrawler.crawl.RoutinesReducer;
+import schemacrawler.crawl.SchemasReducer;
+import schemacrawler.crawl.SequencesReducer;
+import schemacrawler.crawl.SynonymsReducer;
+import schemacrawler.crawl.TablesReducer;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Reducible;
+import schemacrawler.schema.Routine;
+import schemacrawler.schema.Schema;
+import schemacrawler.schema.Sequence;
+import schemacrawler.schema.Synonym;
+import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseExecutable;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
@@ -81,7 +91,18 @@ public class OfflineSnapshotExecutable
     checkConnection(connection);
 
     requireNonNull(catalog, "No catalog provided");
-    ((Reducible) catalog).reduce(schemaCrawlerOptions);
+
+    // Reduce all
+    ((Reducible) catalog).reduce(Schema.class,
+                                 new SchemasReducer(schemaCrawlerOptions));
+    ((Reducible) catalog).reduce(Table.class,
+                                 new TablesReducer(schemaCrawlerOptions));
+    ((Reducible) catalog).reduce(Routine.class,
+                                 new RoutinesReducer(schemaCrawlerOptions));
+    ((Reducible) catalog).reduce(Synonym.class,
+                                 new SynonymsReducer(schemaCrawlerOptions));
+    ((Reducible) catalog).reduce(Sequence.class,
+                                 new SequencesReducer(schemaCrawlerOptions));
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
