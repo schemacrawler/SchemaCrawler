@@ -20,7 +20,7 @@
 package schemacrawler.crawl;
 
 
-import static schemacrawler.filter.FilterFactory.tableFilter;
+import static java.util.Objects.requireNonNull;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -41,10 +41,13 @@ public class TablesReducer
 {
 
   private final SchemaCrawlerOptions options;
+  private final NamedObjectFilter<Table> tableFilter;
 
-  public TablesReducer(final SchemaCrawlerOptions options)
+  public TablesReducer(final SchemaCrawlerOptions options,
+                       final NamedObjectFilter<Table> tableFilter)
   {
-    this.options = options;
+    this.options = requireNonNull(options);
+    this.tableFilter = requireNonNull(tableFilter);
   }
 
   @Override
@@ -61,10 +64,6 @@ public class TablesReducer
 
   private Collection<Table> doReduce(final Collection<? extends Table> allTables)
   {
-    // Filter for tables inclusion patterns (since we may be looping
-    // over offline data), and grep patterns
-    final NamedObjectFilter<Table> tableFilter = tableFilter(options);
-
     final Set<Table> reducedTables = new HashSet<>();
     for (final Table table: allTables)
     {

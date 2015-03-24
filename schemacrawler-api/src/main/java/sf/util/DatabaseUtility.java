@@ -144,8 +144,15 @@ public final class DatabaseUtility
     try (final Statement statement = createStatement(connection);
         final ResultSet resultSet = executeSql(statement, sql);)
     {
-      final long scalar = resultSet.getLong(1);
-      return scalar;
+      if (resultSet.next())
+      {
+        final long scalar = resultSet.getLong(1);
+        return scalar;
+      }
+      else
+      {
+        throw new SQLException("No rows of data returned");
+      }
     }
     catch (final SQLException e)
     {

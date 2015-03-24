@@ -68,6 +68,7 @@ public final class SchemaCrawlerOptions
   private static final String SC_GREP_DEFINITION_PATTERN_INCLUDE = "schemacrawler.grep.definition.pattern.include";
   private static final String SC_GREP_INVERT_MATCH = "schemacrawler.grep.invert-match";
   private static final String SC_GREP_ONLY_MATCHING = "schemacrawler.grep.only-matching";
+  private static final String SC_HIDE_EMPTY_TABLES = "schemacrawler.hide.empty-tables";
 
   private SchemaInfoLevel schemaInfoLevel;
 
@@ -92,6 +93,8 @@ public final class SchemaCrawlerOptions
   private InclusionRule grepDefinitionInclusionRule;
   private boolean grepInvertMatch;
   private boolean grepOnlyMatching;
+
+  private boolean hideEmptyTables;
 
   private int childTableFilterDepth;
   private int parentTableFilterDepth;
@@ -172,6 +175,8 @@ public final class SchemaCrawlerOptions
 
     grepInvertMatch = configProperties.getBooleanValue(SC_GREP_INVERT_MATCH);
     grepOnlyMatching = configProperties.getBooleanValue(SC_GREP_ONLY_MATCHING);
+
+    hideEmptyTables = configProperties.getBooleanValue(SC_HIDE_EMPTY_TABLES);
   }
 
   public int getChildTableFilterDepth()
@@ -466,6 +471,29 @@ public final class SchemaCrawlerOptions
   public void setGrepOnlyMatching(final boolean grepOnlyMatching)
   {
     this.grepOnlyMatching = grepOnlyMatching;
+  }
+
+  /**
+   * If infolevel=maximum, this option will remove empty tables (that
+   * is, tables with no rows of data) from the catalog.
+   * 
+   * @return Whether to hide empty tables
+   */
+  public boolean isHideEmptyTables()
+  {
+    return hideEmptyTables;
+  }
+
+  /**
+   * If infolevel=maximum, this option will remove empty tables (that
+   * is, tables with no rows of data) from the catalog.
+   * 
+   * @param hideEmptyTables
+   *        Whether to hide empty tables
+   */
+  public void setHideEmptyTables(boolean hideEmptyTables)
+  {
+    this.hideEmptyTables = hideEmptyTables;
   }
 
   /**
