@@ -26,6 +26,7 @@ import java.sql.Connection;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.analysis.associations.CatalogWithAssociations;
+import schemacrawler.tools.analysis.counts.CatalogWithCounts;
 import schemacrawler.tools.executable.BaseStagedExecutable;
 import schemacrawler.tools.options.InfoLevel;
 import schemacrawler.tools.options.TextOutputFormat;
@@ -68,7 +69,10 @@ public final class SchemaTextExecutable
     final Catalog catalog;
     if (infoLevel == InfoLevel.maximum)
     {
-      catalog = new CatalogWithAssociations(db);
+      final Catalog catalogAssociations = new CatalogWithAssociations(db);
+      catalog = new CatalogWithCounts(catalogAssociations,
+                                      connection,
+                                      schemaCrawlerOptions);
     }
     else
     {

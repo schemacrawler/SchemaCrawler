@@ -22,6 +22,8 @@ package schemacrawler.crawl;
 
 
 import static java.util.Objects.requireNonNull;
+import static schemacrawler.filter.FilterFactory.routineFilter;
+import static schemacrawler.filter.FilterFactory.tableFilter;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -30,6 +32,7 @@ import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import schemacrawler.filter.NamedObjectFilter;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Reducible;
 import schemacrawler.schema.ResultsColumns;
@@ -248,7 +251,9 @@ public final class SchemaCrawler
       }
 
       // Filter the list of routines based on grep criteria
-      ((Reducible) catalog).reduce(Routine.class, new RoutinesReducer(options));
+      final NamedObjectFilter<Routine> routineFilter = routineFilter(options);
+      ((Reducible) catalog).reduce(Routine.class,
+                                   new RoutinesReducer(options, routineFilter));
 
       if (infoLevel.isRetrieveRoutineInformation())
       {
@@ -442,7 +447,9 @@ public final class SchemaCrawler
 
       // Filter the list of tables based on grep criteria, and
       // parent-child relationships
-      ((Reducible) catalog).reduce(Table.class, new TablesReducer(options));
+      final NamedObjectFilter<Table> tableFilter = tableFilter(options);
+      ((Reducible) catalog).reduce(Table.class, new TablesReducer(options,
+                                                                  tableFilter));
 
       if (infoLevel.isRetrieveTableConstraintInformation())
       {
