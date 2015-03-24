@@ -17,56 +17,49 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.crawl;
+package schemacrawler.tools.analysis.counts;
 
 
 import static java.util.Objects.requireNonNull;
-
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
-
 import schemacrawler.filter.NamedObjectFilter;
-import schemacrawler.schema.Reducer;
-import schemacrawler.schema.Routine;
+import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
-public class RoutinesReducer
-  implements Reducer<Routine>
+class TableCountFilter
+  implements NamedObjectFilter<Table>
 {
 
-  private final SchemaCrawlerOptions options;
-  private final NamedObjectFilter<Routine> routineFilter;
+  private final boolean hideEmptyTables;
 
-  public RoutinesReducer(final SchemaCrawlerOptions options,
-                         final NamedObjectFilter<Routine> routineFilter)
+  public TableCountFilter(final SchemaCrawlerOptions options)
   {
-    this.options = requireNonNull(options);
-    this.routineFilter = requireNonNull(routineFilter);
+    hideEmptyTables = requireNonNull(options,
+                                     "No SchemaCrawlerOptions provided")
+      .isHideEmptyTables();
   }
 
+  /**
+   * Check for table limiting rules.
+   *
+   * @param table
+   *        Table to check
+   * @return Whether the table should be included
+   */
   @Override
-  public void reduce(final Collection<? extends Routine> allRoutines)
+  public boolean test(final Table table)
   {
-    if (allRoutines == null)
+    final boolean hideTable;
+    if (hideEmptyTables)
     {
-      return;
+      final long count = CountsUtility.getCount(table);
+      hideTable = count == 0;
     }
-    allRoutines.retainAll(doReduce(allRoutines));
-  }
-
-  private Collection<Routine> doReduce(final Collection<? extends Routine> allRoutines)
-  {
-    final Set<Routine> reducedRoutines = new HashSet<>();
-    for (final Routine routine: allRoutines)
+    else
     {
-      if (routineFilter.test(routine))
-      {
-        reducedRoutines.add(routine);
-      }
+      hideTable = false;
     }
 
-    return reducedRoutines;
+    return !hideTable;
   }
 
 }

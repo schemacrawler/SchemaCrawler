@@ -21,6 +21,7 @@
 package schemacrawler.tools.analysis.counts;
 
 
+import static schemacrawler.tools.analysis.counts.CountsUtility.addCountToTable;
 import static sf.util.DatabaseUtility.checkConnection;
 import static sf.util.DatabaseUtility.executeSqlForScalar;
 
@@ -33,10 +34,12 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import schemacrawler.crawl.TablesReducer;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.BaseCatalogDecorator;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.tools.text.operation.Query;
 
@@ -51,21 +54,27 @@ public final class CatalogWithCounts
 
   private final Map<Table, Long> counts;
 
-  public CatalogWithCounts(final Connection connection, final Catalog catalog)
+  public CatalogWithCounts(final Catalog catalog,
+                           final Connection connection,
+                           final SchemaCrawlerOptions options)
     throws SchemaCrawlerException
   {
     super(catalog);
+
+    counts = new HashMap<>();
 
     try
     {
       checkConnection(connection);
     }
-    catch (SQLException e)
+    catch (final NullPointerException | SQLException e)
     {
-      throw new SchemaCrawlerException("No connection provided", e);
+      // The offline snapshot executable may not have a live connection,
+      // so we cannot fail with an exception. Log and continue.
+      LOGGER.log(Level.WARNING, "No connection provided", e);
+      return;
     }
 
-    counts = new HashMap<>();
     final Query query = Operation.count.getQuery();
     final List<Table> allTables = new ArrayList<>(catalog.getTables());
     for (final Table table: allTables)
@@ -76,12 +85,16 @@ public final class CatalogWithCounts
                                                query.getQueryForTable(table,
                                                                       false));
         counts.put(table, count);
+        addCountToTable(table, count);
       }
       catch (final SchemaCrawlerException e)
       {
         LOGGER.log(Level.WARNING, "Could not get count for " + table, e);
       }
     }
+
+    reduce(Table.class, new TablesReducer(options,
+                                          new TableCountFilter(options)));
   }
 
   public Map<Table, Long> getCounts()

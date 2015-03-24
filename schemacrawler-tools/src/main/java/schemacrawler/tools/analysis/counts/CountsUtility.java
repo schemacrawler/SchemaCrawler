@@ -26,17 +26,18 @@ import schemacrawler.schema.TableReference;
 public class CountsUtility
 {
 
+  static final int UNKNOWN_TABLE_COUNT = -1;
   private static final String TABLE_COUNTS_KEY = "schemacrawler.table.count";
 
   public static final long getCount(final TableReference table)
   {
     if (table == null)
     {
-      return 0;
+      return UNKNOWN_TABLE_COUNT;
     }
 
-    final long tableCount = table.getAttribute(TABLE_COUNTS_KEY,
-                                               Long.valueOf(0));
+    final long tableCount = table.getAttribute(TABLE_COUNTS_KEY, Long
+      .valueOf(UNKNOWN_TABLE_COUNT));
     return tableCount;
   }
 

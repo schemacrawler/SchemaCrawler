@@ -70,6 +70,7 @@ public final class SchemaCrawlerOptionsParser
     normalizeOptionName("grepdef");
     normalizeOptionName("invert-match");
     normalizeOptionName("only-matching");
+    normalizeOptionName("hideemptytables");
     normalizeOptionName("parents");
     normalizeOptionName("children");
 
@@ -235,6 +236,13 @@ public final class SchemaCrawlerOptionsParser
     else
     {
       options.setGrepDefinitionInclusionRule(null);
+    }
+
+    if (config.hasValue("hideemptytables"))
+    {
+      options.setHideEmptyTables(config
+        .getBooleanValue("hideemptytables", true));
+      consumeOption("hideemptytables");
     }
 
     if (config.hasValue("parents"))

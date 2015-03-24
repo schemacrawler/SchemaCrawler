@@ -1,0 +1,21 @@
+schema: PUBLIC.BOOKS
+  table: PUBLIC.BOOKS.AUTHORS
+    row count: 20
+  table: PUBLIC.BOOKS.AUTHORSLIST
+    row count: 20
+  table: PUBLIC.BOOKS.BOOKAUTHORS
+    row count: 20
+  table: PUBLIC.BOOKS.BOOKS
+    row count: 20
+  table: PUBLIC.BOOKS."Global Counts"
+    row count: 0
+  table: PUBLIC.BOOKS.PUBLISHERS
+    row count: 20
+schema: PUBLIC.INFORMATION_SCHEMA
+schema: PUBLIC.PUBLIC
+schema: PUBLIC."PUBLISHER SALES"
+  table: PUBLIC."PUBLISHER SALES".REGIONS
+    row count: 20
+  table: PUBLIC."PUBLISHER SALES".SALES
+    row count: 20
+schema: PUBLIC.SYSTEM_LOBS
