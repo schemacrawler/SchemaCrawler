@@ -27,7 +27,7 @@ import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 
-public class SchemaCrawlerCommandLineToolsTest
+public class GrepCommandLineTest
   extends BaseDatabaseTest
 {
 
