@@ -22,7 +22,7 @@ package schemacrawler.tools.text.utility;
 
 
 import static schemacrawler.tools.text.utility.DatabaseObjectColorMap.getHtmlColor;
-import static schemacrawler.tools.text.utility.Entities.escapeForXMLElement;
+import static schemacrawler.tools.text.utility.html.Entities.escapeForXMLElement;
 import static sf.util.Utility.isBlank;
 import static sf.util.Utility.readResourceFully;
 
@@ -132,7 +132,8 @@ public final class HtmlFormattingHelper
    * {@inheritDoc}
    */
   @Override
-  public String createObjectNameRow(final String name,
+  public String createObjectNameRow(final String id,
+                                    final String name,
                                     final String description,
                                     final Color backgroundColor)
   {
@@ -141,8 +142,13 @@ public final class HtmlFormattingHelper
       .append(getHtmlColor(backgroundColor)).append(";'>");
     if (!isBlank(name))
     {
-      buffer.append("<span class='caption_name'>")
-        .append(escapeForXMLElement(name)).append("</span>");
+      buffer.append("<span");
+      if (!isBlank(id))
+      {
+        buffer.append(" id='").append(id).append("'");
+      }
+      buffer.append(" class='caption_name'>").append(escapeForXMLElement(name))
+        .append("</span>");
     }
     if (!isBlank(description))
     {

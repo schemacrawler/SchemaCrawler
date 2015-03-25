@@ -23,7 +23,6 @@ package schemacrawler.tools.text.schema;
 
 
 import static schemacrawler.utility.MetaDataUtility.findForeignKeyCardinality;
-import static sf.util.Utility.convertForComparison;
 import static sf.util.Utility.isBlank;
 
 import java.awt.Color;
@@ -35,7 +34,6 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.ForeignKey;
-import schemacrawler.schema.NamedObjectWithAttributes;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
@@ -47,8 +45,8 @@ import schemacrawler.tools.integration.graph.GraphOptions;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.base.BaseDotFormatter;
-import schemacrawler.tools.text.utility.Alignment;
-import schemacrawler.tools.text.utility.TableRow;
+import schemacrawler.tools.text.utility.html.Alignment;
+import schemacrawler.tools.text.utility.html.TableRow;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
 import schemacrawler.utility.MetaDataUtility.ForeignKeyCardinality;
 import schemacrawler.utility.NamedObjectSort;
@@ -295,19 +293,6 @@ public final class SchemaDotFormatter
       portIds[1] = nodeId;
     }
     return portIds;
-  }
-
-  private String nodeId(final NamedObjectWithAttributes namedObject)
-  {
-    if (namedObject == null)
-    {
-      return "";
-    }
-    else
-    {
-      return convertForComparison(namedObject.getName()) + "_"
-             + Integer.toHexString(namedObject.getFullName().hashCode());
-    }
   }
 
   private String printColumnReference(final String associationName,

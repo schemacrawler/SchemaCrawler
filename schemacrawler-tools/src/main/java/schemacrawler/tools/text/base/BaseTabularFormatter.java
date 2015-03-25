@@ -30,8 +30,8 @@ import schemacrawler.schema.JdbcDriverProperty;
 import schemacrawler.schema.SchemaCrawlerInfo;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputOptions;
-import schemacrawler.tools.text.utility.Alignment;
 import schemacrawler.tools.text.utility.TextFormattingHelper.DocumentHeaderType;
+import schemacrawler.tools.text.utility.html.Alignment;
 import sf.util.ObjectToString;
 
 /**

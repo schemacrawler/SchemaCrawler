@@ -129,7 +129,8 @@ public class PlainTextFormattingHelper
    * {@inheritDoc}
    */
   @Override
-  public String createObjectNameRow(final String name,
+  public String createObjectNameRow(final String id,
+                                    final String name,
                                     final String description,
                                     final Color backgroundColor)
   {

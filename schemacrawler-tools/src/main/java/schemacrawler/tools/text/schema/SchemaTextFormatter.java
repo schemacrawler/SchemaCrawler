@@ -153,10 +153,11 @@ final class SchemaTextFormatter
     final String routineType = "[" + routineTypeDetail + "]";
 
     out.println(formattingHelper.createObjectStart());
-    out
-      .println(formattingHelper.createObjectNameRow(routineName,
-                                                    routineType,
-                                                    colorMap.getColor(routine)));
+    out.println(formattingHelper
+      .createObjectNameRow(nodeId(routine),
+                           routineName,
+                           routineType,
+                           colorMap.getColor(routine)));
     printRemarks(routine);
 
     if (!isBrief)
@@ -240,10 +241,11 @@ final class SchemaTextFormatter
     final String synonymType = "[synonym]";
 
     out.println(formattingHelper.createObjectStart());
-    out
-      .println(formattingHelper.createObjectNameRow(synonymName,
-                                                    synonymType,
-                                                    colorMap.getColor(synonym)));
+    out.println(formattingHelper
+      .createObjectNameRow(nodeId(synonym),
+                           synonymName,
+                           synonymType,
+                           colorMap.getColor(synonym)));
     printRemarks(synonym);
 
     if (!isBrief)
@@ -290,7 +292,8 @@ final class SchemaTextFormatter
     final String tableType = "[" + table.getTableType() + "]";
 
     out.println(formattingHelper.createObjectStart());
-    out.println(formattingHelper.createObjectNameRow(tableName,
+    out.println(formattingHelper.createObjectNameRow(nodeId(table),
+                                                     tableName,
                                                      tableType,
                                                      colorMap.getColor(table)));
     printRemarks(table);
@@ -532,25 +535,33 @@ final class SchemaTextFormatter
       final String relationship;
       if (isIncoming)
       {
+        final String fkHyperlink = formattingHelper
+          .createAnchor(fkColumnName, "#" + nodeId(fkColumn.getParent()));
+        final String arrow = isForeignKey? formattingHelper.createLeftArrow()
+                                         : formattingHelper
+                                           .createWeakLeftArrow();
         relationship = String.format("%s %s %s",
                                      pkColumnName,
-                                     isForeignKey? formattingHelper
-                                       .createLeftArrow(): formattingHelper
-                                       .createWeakLeftArrow(),
-                                     fkColumnName);
+                                     arrow,
+                                     fkHyperlink);
       }
       else
       {
+        final String pkHyperlink = formattingHelper
+          .createAnchor(pkColumnName, "#" + nodeId(pkColumn.getParent()));
+        final String arrow = isForeignKey? formattingHelper.createRightArrow()
+                                         : formattingHelper
+                                           .createWeakRightArrow();
         relationship = String.format("%s %s %s",
                                      fkColumnName,
-                                     isForeignKey? formattingHelper
-                                       .createRightArrow(): formattingHelper
-                                       .createWeakRightArrow(),
-                                     pkColumnName);
+                                     arrow,
+                                     pkHyperlink);
       }
       out.println(formattingHelper.createDetailRow(keySequenceString,
                                                    relationship,
-                                                   ""));
+                                                   false,
+                                                   "",
+                                                   false));
     }
   }
 
@@ -846,6 +857,7 @@ final class SchemaTextFormatter
       }
       out.println(formattingHelper.createDetailRow(ordinalNumberString,
                                                    columnName,
+                                                   true,
                                                    columnDetails,
                                                    emphasize));
 

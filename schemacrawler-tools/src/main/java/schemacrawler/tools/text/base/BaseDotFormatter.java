@@ -33,9 +33,9 @@ import schemacrawler.schema.SchemaCrawlerInfo;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.TextOutputFormat;
-import schemacrawler.tools.text.utility.Alignment;
-import schemacrawler.tools.text.utility.TableCell;
-import schemacrawler.tools.text.utility.TableRow;
+import schemacrawler.tools.text.utility.html.Alignment;
+import schemacrawler.tools.text.utility.html.TableCell;
+import schemacrawler.tools.text.utility.html.TableRow;
 
 /**
  * Text formatting of schema.
@@ -191,13 +191,13 @@ public abstract class BaseDotFormatter<O extends BaseTextOptions>
                                    final int colspan)
   {
     return new TableCell(text,
+                         true,
                          0,
                          align,
                          emphasizeText,
                          "",
                          bgColor,
-                         colspan,
-                         TextOutputFormat.html);
+                         colspan, TextOutputFormat.html);
   }
 
 }
