@@ -27,7 +27,7 @@ JDBC Driver Information
 driver name                               SQLiteJDBC                    
 driver version                            native                        
 driver class name                         org.sqlite.JDBC               
-url                                       jdbc:sqlite:C:\Users\SUALEH~1\AppData\Local\Temp\schemacrawler.resource.8207299674943422272.data
+url                                       jdbc:sqlite:C:\Users\SUALEH~1\AppData\Local\Temp\schemacrawler.resource.6762556896830110739.data
 is JDBC compliant                         false                         
 
 
@@ -163,7 +163,7 @@ PK_Authors                                                 [primary key]
   Id                                ascending                   
 
 SC_3CAFA828_4047ACFF                       [foreign key, with no action]
-  Id <-- BookAuthors.AuthorId                                   
+  Id <--(0..many) BookAuthors.AuthorId                              
 
 IDX_B_Authors                                         [non-unique index]
   LastName                          unknown                     
@@ -196,7 +196,7 @@ PK_Books                                                   [primary key]
   Id                                ascending                   
 
 SC_3D6328A_4047ACFF                        [foreign key, with no action]
-  Id <-- BookAuthors.BookId                                     
+  Id <--(0..many) BookAuthors.BookId                              
 
 
 
@@ -223,10 +223,10 @@ BookAuthors                                                      [table]
   "UPDATE"                          CLOB                        
 
 SC_3CAFA828_4047ACFF                       [foreign key, with no action]
-  AuthorId --> Authors.Id                                       
+  AuthorId (0..many)--> Authors.Id                              
 
 SC_3D6328A_4047ACFF                        [foreign key, with no action]
-  BookId --> Books.Id                                           
+  BookId (0..many)--> Books.Id                                  
 
 UIDX_BookAuthors                                          [unique index]
   BookId                            unknown                     

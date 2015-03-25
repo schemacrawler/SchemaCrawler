@@ -23,7 +23,7 @@ PK_AUTHORS                                                 [primary key]
   ID                                ascending                   
 
 FK_Z_AUTHOR                                [foreign key, with no action]
-  ID <-- PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID                              
+  ID <--(0..many) PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID                              
 
 SYS_IDX_PK_AUTHORS_10097                                  [unique index]
   ID                                ascending                   

@@ -439,7 +439,7 @@ Contact details for book authors
 "",ID,ascending
 ""
 "","[foreign key, with no action]"
-"",ID <-- PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID,""
+"",ID <--(0..many) PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID,""
 ""
 "",[unique index]
 "",ID,ascending
@@ -526,10 +526,10 @@ PUBLIC.BOOKS.BOOKAUTHORS,[table]
 "","""UPDATE""",CLOB
 ""
 "","[foreign key, with no action]"
-"",AUTHORID --> PUBLIC.BOOKS.AUTHORS.ID,""
+"",AUTHORID (0..many)--> PUBLIC.BOOKS.AUTHORS.ID,""
 ""
 "","[foreign key, with no action]"
-"",BOOKID --> PUBLIC.BOOKS.BOOKS.ID,""
+"",BOOKID (0..many)--> PUBLIC.BOOKS.BOOKS.ID,""
 ""
 "",[non-unique index]
 "",AUTHORID,ascending
@@ -588,16 +588,16 @@ Details for published books
 "",ID,ascending
 ""
 "","[foreign key, with no action]"
-"",ID <-- PUBLIC.BOOKS.BOOKAUTHORS.BOOKID,""
+"",ID <--(0..many) PUBLIC.BOOKS.BOOKAUTHORS.BOOKID,""
 ""
 "","[foreign key, with no action]"
-"",ID <-- PREVIOUSEDITIONID,""
+"",ID <--(0..1) PREVIOUSEDITIONID,""
 ""
 "",[weak association]
-"",ID <~~ PUBLIC."PUBLISHER SALES".SALES.BOOKID,""
+"",ID <~~(0..many) PUBLIC."PUBLISHER SALES".SALES.BOOKID,""
 ""
 "",[weak association]
-"",PUBLISHERID ~~> PUBLIC.BOOKS.PUBLISHERS.ID,""
+"",PUBLISHERID (0..many)~~> PUBLIC.BOOKS.PUBLISHERS.ID,""
 ""
 "",[unique index]
 "",ID,ascending
@@ -675,7 +675,7 @@ List of book publishers
 "","",auto-incremented
 ""
 "",[weak association]
-"",ID <~~ PUBLIC.BOOKS.BOOKS.PUBLISHERID,""
+"",ID <~~(0..many) PUBLIC.BOOKS.BOOKS.PUBLISHERID,""
 ""
 "",[unique index]
 "",ID,ascending
@@ -711,10 +711,10 @@ PUBLIC.FOR_LINT.EXTRA_PK,[table]
 "",ID,ascending
 ""
 "","[foreign key, with no action]"
-"",PUBLICATIONID --> PUBLIC.FOR_LINT.PUBLICATIONS.ID,""
+"",PUBLICATIONID (0..many)--> PUBLIC.FOR_LINT.PUBLICATIONS.ID,""
 ""
 "","[foreign key, with no action]"
-"",WRITERID --> PUBLIC.FOR_LINT.WRITERS.ID,""
+"",WRITERID (0..many)--> PUBLIC.FOR_LINT.WRITERS.ID,""
 ""
 "",[unique index]
 "",ID,ascending
@@ -793,13 +793,13 @@ PUBLIC.FOR_LINT.PUBLICATIONS,[table]
 "",ID,ascending
 ""
 "","[foreign key, with no action]"
-"",ID <-- PUBLIC.FOR_LINT.EXTRA_PK.PUBLICATIONID,""
+"",ID <--(0..many) PUBLIC.FOR_LINT.EXTRA_PK.PUBLICATIONID,""
 ""
 "","[foreign key, with no action]"
-"",ID <-- PUBLIC.FOR_LINT.WRITERS.PUBLICATION_ID,""
+"",ID <--(0..many) PUBLIC.FOR_LINT.WRITERS.PUBLICATION_ID,""
 ""
 "","[foreign key, with no action]"
-"",WRITERID --> PUBLIC.FOR_LINT.WRITERS.ID,""
+"",WRITERID (0..many)--> PUBLIC.FOR_LINT.WRITERS.ID,""
 ""
 "",[unique index]
 "",ID,ascending
@@ -861,16 +861,16 @@ PUBLIC.FOR_LINT.WRITERS,[table]
 "",ID,ascending
 ""
 "","[foreign key, with no action]"
-"",PUBLICATION_ID --> PUBLIC.FOR_LINT.PUBLICATIONS.ID,""
+"",PUBLICATION_ID (0..many)--> PUBLIC.FOR_LINT.PUBLICATIONS.ID,""
 ""
 "","[foreign key, with no action]"
-"",ID <-- PUBLIC.FOR_LINT.EXTRA_PK.WRITERID,""
+"",ID <--(0..many) PUBLIC.FOR_LINT.EXTRA_PK.WRITERID,""
 ""
 "","[foreign key, with no action]"
-"",ID <-- PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID,""
+"",ID <--(0..many) PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID,""
 ""
 "","[foreign key, with no action]"
-"",ID <-- PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ,""
+"",ID <--(0..many) PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ,""
 ""
 "",[unique index]
 "",ID,ascending
@@ -944,7 +944,7 @@ PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ,[table]
 "",ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ,ascending
 ""
 "","[foreign key, with no action]"
-"",ΣΥΓΓΡΑΦΈΑΣ --> PUBLIC.FOR_LINT.WRITERS.ID,""
+"",ΣΥΓΓΡΑΦΈΑΣ (0..many)--> PUBLIC.FOR_LINT.WRITERS.ID,""
 ""
 "",[unique index]
 "",ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ,ascending
@@ -987,8 +987,8 @@ UPDATE,[privilege]
 "",COUNTRY,ascending
 ""
 "","[foreign key, with no action]"
-"",POSTALCODE <-- PUBLIC."PUBLISHER SALES".SALES.POSTALCODE,""
-"",COUNTRY <-- PUBLIC."PUBLISHER SALES".SALES.COUNTRY,""
+"",POSTALCODE <--(0..many) PUBLIC."PUBLISHER SALES".SALES.POSTALCODE,""
+"",COUNTRY <--(0..many) PUBLIC."PUBLISHER SALES".SALES.COUNTRY,""
 ""
 "",[unique index]
 "",POSTALCODE,ascending
@@ -1035,11 +1035,11 @@ UPDATE,[privilege]
 "",TOTALAMOUNT,"DOUBLE(64, 0)"
 ""
 "","[foreign key, with no action]"
-"",POSTALCODE --> PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE,""
-"",COUNTRY --> PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY,""
+"",POSTALCODE (0..many)--> PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE,""
+"",COUNTRY (0..many)--> PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY,""
 ""
 "",[weak association]
-"",BOOKID ~~> PUBLIC.BOOKS.BOOKS.ID,""
+"",BOOKID (0..many)~~> PUBLIC.BOOKS.BOOKS.ID,""
 ""
 "",[non-unique index]
 "",POSTALCODE,ascending

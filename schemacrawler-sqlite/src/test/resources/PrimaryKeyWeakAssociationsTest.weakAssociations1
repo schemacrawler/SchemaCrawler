@@ -1,34 +1,34 @@
 schema: 
   table: TABLE1_PK
-    weak association (1 to 0..1):
+    weak association (1 to (0..1)):
       column reference: TABLE1_PK.ENTITY_ID <~~ TABLE2_PK.ENTITY_ID
-    weak association (1 to 0..1):
+    weak association (1 to (0..1)):
       column reference: TABLE1_PK.ENTITY_ID <~~ TABLE4_UNIQUE.ENTITY_ID
-    weak association (1 to 0..many):
+    weak association (1 to (0..many)):
       column reference: TABLE1_PK.ENTITY_ID <~~ TABLE5_FK.ENTITY_ID
   table: TABLE2_PK
-    weak association (1 to 0..1):
+    weak association (1 to (0..1)):
       column reference: TABLE1_PK.ENTITY_ID <~~ TABLE2_PK.ENTITY_ID
-    weak association (1 to 0..many):
+    weak association (1 to (0..many)):
       column reference: TABLE2_PK.ENTITY_ID <~~ TABLE3_FK.ENTITY_ID
-    weak association (1 to 0..1):
+    weak association (1 to (0..1)):
       column reference: TABLE2_PK.ENTITY_ID <~~ TABLE4_UNIQUE.ENTITY_ID
-    weak association (1 to 0..many):
+    weak association (1 to (0..many)):
       column reference: TABLE2_PK.ENTITY_ID <~~ TABLE5_FK.ENTITY_ID
   table: TABLE3_FK
-    weak association (1 to 0..many):
+    weak association (1 to (0..many)):
       column reference: TABLE2_PK.ENTITY_ID <~~ TABLE3_FK.ENTITY_ID
-    weak association (1 to 0..many):
+    weak association (1 to (0..many)):
       column reference: TABLE4_UNIQUE.ENTITY_ID <~~ TABLE3_FK.ENTITY_ID
   table: TABLE4_UNIQUE
-    weak association (1 to 0..1):
+    weak association (1 to (0..1)):
       column reference: TABLE1_PK.ENTITY_ID <~~ TABLE4_UNIQUE.ENTITY_ID
-    weak association (1 to 0..1):
+    weak association (1 to (0..1)):
       column reference: TABLE2_PK.ENTITY_ID <~~ TABLE4_UNIQUE.ENTITY_ID
-    weak association (1 to 0..many):
+    weak association (1 to (0..many)):
       column reference: TABLE4_UNIQUE.ENTITY_ID <~~ TABLE3_FK.ENTITY_ID
   table: TABLE5_FK
-    weak association (1 to 0..many):
+    weak association (1 to (0..many)):
       column reference: TABLE1_PK.ENTITY_ID <~~ TABLE5_FK.ENTITY_ID
-    weak association (1 to 0..many):
+    weak association (1 to (0..many)):
       column reference: TABLE2_PK.ENTITY_ID <~~ TABLE5_FK.ENTITY_ID
