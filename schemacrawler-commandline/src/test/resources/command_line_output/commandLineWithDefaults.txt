@@ -21,7 +21,7 @@ Contact details for book authors
   ID                                ascending                   
 
                                            [foreign key, with no action]
-  ID <-- BOOKAUTHORS.AUTHORID                                   
+  ID <--(0..many) BOOKAUTHORS.AUTHORID                              
 
 
 
@@ -37,10 +37,10 @@ Relationship between books and their authors, along with the latest updated info
   AUTHORID                          INTEGER NOT NULL            
 
                                            [foreign key, with no action]
-  AUTHORID --> AUTHORS.ID                                       
+  AUTHORID (0..many)--> AUTHORS.ID                              
 
                                            [foreign key, with no action]
-  BOOKID --> BOOKS.ID                                           
+  BOOKID (0..many)--> BOOKS.ID                                  
 
 
 
@@ -55,10 +55,10 @@ Details for published books
   ID                                ascending                   
 
                                            [foreign key, with no action]
-  ID <-- BOOKAUTHORS.BOOKID                                     
+  ID <--(0..many) BOOKAUTHORS.BOOKID                              
 
                                            [foreign key, with no action]
-  ID <-- PREVIOUSEDITIONID                                      
+  ID <--(0..1) PREVIOUSEDITIONID                                
 
 
 
@@ -90,10 +90,10 @@ EXTRA_PK                                                         [table]
   ID                                ascending                   
 
                                            [foreign key, with no action]
-  PUBLICATIONID --> PUBLICATIONS.ID                              
+  PUBLICATIONID (0..many)--> PUBLICATIONS.ID                              
 
                                            [foreign key, with no action]
-  WRITERID --> WRITERS.ID                                       
+  WRITERID (0..many)--> WRITERS.ID                              
 
 
 
@@ -111,13 +111,13 @@ PUBLICATIONS                                                     [table]
   ID                                ascending                   
 
                                            [foreign key, with no action]
-  ID <-- EXTRA_PK.PUBLICATIONID                                 
+  ID <--(0..many) EXTRA_PK.PUBLICATIONID                              
 
                                            [foreign key, with no action]
-  ID <-- WRITERS.PUBLICATION_ID                                 
+  ID <--(0..many) WRITERS.PUBLICATION_ID                              
 
                                            [foreign key, with no action]
-  WRITERID --> WRITERS.ID                                       
+  WRITERID (0..many)--> WRITERS.ID                              
 
 
 
@@ -137,16 +137,16 @@ WRITERS                                                          [table]
   ID                                ascending                   
 
                                            [foreign key, with no action]
-  PUBLICATION_ID --> PUBLICATIONS.ID                              
+  PUBLICATION_ID (0..many)--> PUBLICATIONS.ID                              
 
                                            [foreign key, with no action]
-  ID <-- EXTRA_PK.WRITERID                                      
+  ID <--(0..many) EXTRA_PK.WRITERID                              
 
                                            [foreign key, with no action]
-  ID <-- PUBLICATIONS.WRITERID                                  
+  ID <--(0..many) PUBLICATIONS.WRITERID                              
 
                                            [foreign key, with no action]
-  ID <-- ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ                              
+  ID <--(0..many) ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ                              
 
 
 
@@ -159,7 +159,7 @@ WRITERS                                                          [table]
   ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ               ascending                   
 
                                            [foreign key, with no action]
-  ΣΥΓΓΡΑΦΈΑΣ --> WRITERS.ID                                     
+  ΣΥΓΓΡΑΦΈΑΣ (0..many)--> WRITERS.ID                              
 
 
 
@@ -173,8 +173,8 @@ REGIONS                                                          [table]
   COUNTRY                           ascending                   
 
                                            [foreign key, with no action]
-  POSTALCODE <-- SALES.POSTALCODE                               
-  COUNTRY <-- SALES.COUNTRY                                     
+  POSTALCODE <--(0..many) SALES.POSTALCODE                              
+  COUNTRY <--(0..many) SALES.COUNTRY                              
 
 
 
@@ -184,8 +184,8 @@ SALES                                                            [table]
   COUNTRY                           VARCHAR(50) NOT NULL        
 
                                            [foreign key, with no action]
-  POSTALCODE --> REGIONS.POSTALCODE                              
-  COUNTRY --> REGIONS.COUNTRY                                   
+  POSTALCODE (0..many)--> REGIONS.POSTALCODE                              
+  COUNTRY (0..many)--> REGIONS.COUNTRY                              
 
 
 

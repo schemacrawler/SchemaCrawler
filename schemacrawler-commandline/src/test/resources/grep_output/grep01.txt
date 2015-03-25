@@ -27,10 +27,10 @@ PK_BOOKS                                                   [primary key]
   ID                                ascending                   
 
 FK_Y_BOOK                                  [foreign key, with no action]
-  ID <-- PUBLIC.BOOKS.BOOKAUTHORS.BOOKID                              
+  ID <--(0..many) PUBLIC.BOOKS.BOOKAUTHORS.BOOKID                              
 
 FK_PREVIOUSEDITION                         [foreign key, with no action]
-  ID <-- PREVIOUSEDITIONID                                      
+  ID <--(0..1) PREVIOUSEDITIONID                                
 
 SYS_IDX_PK_BOOKS_10105                                    [unique index]
   ID                                ascending                   
@@ -67,13 +67,13 @@ PK_PUBLICATIONS                                            [primary key]
   ID                                ascending                   
 
 FK_PUBLICATION_JOIN                        [foreign key, with no action]
-  ID <-- PUBLIC.FOR_LINT.EXTRA_PK.PUBLICATIONID                              
+  ID <--(0..many) PUBLIC.FOR_LINT.EXTRA_PK.PUBLICATIONID                              
 
 FK_WRITERS_PUBLICATION                     [foreign key, with no action]
-  ID <-- PUBLIC.FOR_LINT.WRITERS.PUBLICATION_ID                              
+  ID <--(0..many) PUBLIC.FOR_LINT.WRITERS.PUBLICATION_ID                              
 
 FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
-  WRITERID --> PUBLIC.FOR_LINT.WRITERS.ID                              
+  WRITERID (0..many)--> PUBLIC.FOR_LINT.WRITERS.ID                              
 
 SYS_IDX_PK_PUBLICATIONS_10171                             [unique index]
   ID                                ascending                   

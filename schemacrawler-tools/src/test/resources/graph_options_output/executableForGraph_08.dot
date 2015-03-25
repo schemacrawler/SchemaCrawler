@@ -30,7 +30,7 @@ digraph "SchemaCrawler_Diagram" {
 	</tr>
 	<tr>
 		<td align='right'>Generated on:</td>
-		<td align='left'>Mar 19, 2015 10:58 PM</td>
+		<td align='left'>Mar 24, 2015 9:40 PM</td>
 	</tr>
 	<tr>
 		<td align='right'>Database:</td>
@@ -46,7 +46,7 @@ digraph "SchemaCrawler_Diagram" {
   ];
 
   /* PUBLIC.BOOKS.BOOKS -=-=-=-=-=-=-=-=-=-=-=-=-=- */
-  "books_afd2ba21" [
+  "books_a0708ac5" [
     label=<
       <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#999999">
 	<tr>
@@ -57,9 +57,9 @@ digraph "SchemaCrawler_Diagram" {
 		<td colspan='3' align='left'>Details for published books</td>
 	</tr>
 	<tr>
-		<td port='id_bb8abc08.start' align='left'><b><i>ID</i></b></td>
+		<td port='id_a0708ac5.start' align='left'><b><i>ID</i></b></td>
 		<td align='left'> </td>
-		<td port='id_bb8abc08.end' align='left'>INTEGER NOT NULL</td>
+		<td port='id_a0708ac5.end' align='left'>INTEGER NOT NULL</td>
 	</tr>
 	<tr>
 		<td align='left'></td>
@@ -67,9 +67,9 @@ digraph "SchemaCrawler_Diagram" {
 		<td align='left'>Unique (internal) id for book</td>
 	</tr>
 	<tr>
-		<td port='title_764df42b.start' align='left'>TITLE</td>
+		<td port='title_a0708ac5.start' align='left'>TITLE</td>
 		<td align='left'> </td>
-		<td port='title_764df42b.end' align='left'>VARCHAR(255) NOT NULL</td>
+		<td port='title_a0708ac5.end' align='left'>VARCHAR(255) NOT NULL</td>
 	</tr>
 	<tr>
 		<td align='left'></td>
@@ -77,9 +77,9 @@ digraph "SchemaCrawler_Diagram" {
 		<td align='left'>Book title</td>
 	</tr>
 	<tr>
-		<td port='description_f1e45f8f.start' align='left'>DESCRIPTION</td>
+		<td port='description_a0708ac5.start' align='left'>DESCRIPTION</td>
 		<td align='left'> </td>
-		<td port='description_f1e45f8f.end' align='left'>VARCHAR(255)</td>
+		<td port='description_a0708ac5.end' align='left'>VARCHAR(255)</td>
 	</tr>
 	<tr>
 		<td align='left'></td>
@@ -87,9 +87,9 @@ digraph "SchemaCrawler_Diagram" {
 		<td align='left'>Book description</td>
 	</tr>
 	<tr>
-		<td port='publisherid_3413fbaa.start' align='left'>PUBLISHERID</td>
+		<td port='publisherid_a0708ac5.start' align='left'>PUBLISHERID</td>
 		<td align='left'> </td>
-		<td port='publisherid_3413fbaa.end' align='left'>INTEGER NOT NULL</td>
+		<td port='publisherid_a0708ac5.end' align='left'>INTEGER NOT NULL</td>
 	</tr>
 	<tr>
 		<td align='left'></td>
@@ -97,9 +97,9 @@ digraph "SchemaCrawler_Diagram" {
 		<td align='left'>Foreign key to the book publisher</td>
 	</tr>
 	<tr>
-		<td port='publicationdate_bf876ded.start' align='left'>PUBLICATIONDATE</td>
+		<td port='publicationdate_a0708ac5.start' align='left'>PUBLICATIONDATE</td>
 		<td align='left'> </td>
-		<td port='publicationdate_bf876ded.end' align='left'>DATE</td>
+		<td port='publicationdate_a0708ac5.end' align='left'>DATE</td>
 	</tr>
 	<tr>
 		<td align='left'></td>
@@ -107,9 +107,9 @@ digraph "SchemaCrawler_Diagram" {
 		<td align='left'>Book publication date</td>
 	</tr>
 	<tr>
-		<td port='price_7619831c.start' align='left'>PRICE</td>
+		<td port='price_a0708ac5.start' align='left'>PRICE</td>
 		<td align='left'> </td>
-		<td port='price_7619831c.end' align='left'>DOUBLE(64, 0)</td>
+		<td port='price_a0708ac5.end' align='left'>DOUBLE(64, 0)</td>
 	</tr>
 	<tr>
 		<td align='left'></td>
@@ -117,17 +117,17 @@ digraph "SchemaCrawler_Diagram" {
 		<td align='left'>Current price for the book</td>
 	</tr>
 	<tr>
-		<td port='previouseditionid_8c50cb95.start' align='left'>PREVIOUSEDITIONID</td>
+		<td port='previouseditionid_a0708ac5.start' align='left'>PREVIOUSEDITIONID</td>
 		<td align='left'> </td>
-		<td port='previouseditionid_8c50cb95.end' align='left'>INTEGER</td>
+		<td port='previouseditionid_a0708ac5.end' align='left'>INTEGER</td>
 	</tr>
       </table>
     >
   ];
 
-  "bookid_931bd73c" [label=<BOOKAUTHORS.BOOKID>];
-  "bookid_931bd73c":w -> "books_afd2ba21":"id_bb8abc08.end":e [label=<> style="solid" dir="both" arrowhead="teetee" arrowtail="box"];
-  "books_afd2ba21":"previouseditionid_8c50cb95.start":w -> "books_afd2ba21":"id_bb8abc08.end":e [label=<> style="solid" dir="both" arrowhead="teetee" arrowtail="teeodot"];
+  "bookid_a0708ac5" [label=<BOOKAUTHORS.BOOKID>];
+  "bookid_a0708ac5":w -> "books_a0708ac5":"id_a0708ac5.end":e [label=<> style="solid" dir="both" arrowhead="teetee" arrowtail="box"];
+  "books_a0708ac5":"previouseditionid_a0708ac5.start":w -> "books_a0708ac5":"id_a0708ac5.end":e [label=<> style="solid" dir="both" arrowhead="teetee" arrowtail="teeodot"];
 
 
 }
