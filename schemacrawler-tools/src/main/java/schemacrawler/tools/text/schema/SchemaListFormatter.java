@@ -34,8 +34,8 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.BaseFormatter;
-import schemacrawler.tools.text.utility.Alignment;
 import schemacrawler.tools.text.utility.TextFormattingHelper.DocumentHeaderType;
+import schemacrawler.tools.text.utility.html.Alignment;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
 
 /**

@@ -17,11 +17,11 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.tools.text.utility;
+package schemacrawler.tools.text.utility.html;
 
 
 import static schemacrawler.tools.text.utility.DatabaseObjectColorMap.getHtmlColor;
-import static schemacrawler.tools.text.utility.Entities.escapeForXMLElement;
+import static schemacrawler.tools.text.utility.html.Entities.escapeForXMLElement;
 import static sf.util.Utility.isBlank;
 
 import java.awt.Color;
@@ -32,11 +32,11 @@ import java.util.Map.Entry;
 import schemacrawler.tools.options.TextOutputFormat;
 
 /**
- * Represents an HTML table row.
+ * Represents an HTML anchor.
  *
  * @author Sualeh Fatehi
  */
-public class TableCell
+abstract class BaseTag
 {
 
   /**
@@ -85,27 +85,28 @@ public class TableCell
 
   private final TextOutputFormat outputFormat;
   private final String styleClass;
-  private final int colSpan;
   private final int characterWidth;
   private final Alignment align;
   private final String text;
+  private final boolean escapeText;
   private final Color bgColor;
   private final boolean emphasizeText;
+
   private final Map<String, String> attributes;
 
-  public TableCell(final String text,
-                   final int characterWidth,
-                   final Alignment align,
-                   final boolean emphasizeText,
-                   final String styleClass,
-                   final Color bgColor,
-                   final int colSpan,
-                   final TextOutputFormat outputFormat)
+  protected BaseTag(final String text,
+                    final boolean escapeText,
+                    final int characterWidth,
+                    final Alignment align,
+                    final boolean emphasizeText,
+                    final String styleClass,
+                    final Color bgColor,
+                    final TextOutputFormat outputFormat)
   {
     this.outputFormat = outputFormat;
-    this.colSpan = colSpan;
     this.styleClass = styleClass;
-    this.text = text;
+    this.text = text == null? "NULL": text;
+    this.escapeText = escapeText;
     this.characterWidth = characterWidth;
     this.align = align;
     this.bgColor = bgColor;
@@ -136,28 +137,21 @@ public class TableCell
     }
   }
 
-  protected String getCellTag()
-  {
-    return "td";
-  }
+  protected abstract String getTag();
 
   /**
-   * Converts the table cell to HTML.
+   * Converts the tag to HTML.
    *
    * @return HTML
    */
   private String toHtmlString()
   {
     final StringBuilder buffer = new StringBuilder();
-    buffer.append("<").append(getCellTag());
+    buffer.append("<").append(getTag());
     for (final Entry<String, String> attribute: attributes.entrySet())
     {
       buffer.append(" ").append(attribute.getKey()).append("='")
         .append(attribute.getValue()).append("'");
-    }
-    if (colSpan > 1)
-    {
-      buffer.append(" colspan='").append(colSpan).append("'");
     }
     if (bgColor != null && !bgColor.equals(Color.white))
     {
@@ -176,56 +170,43 @@ public class TableCell
     {
       buffer.append("<b><i>");
     }
-    if (text == null)
-    {
-      buffer.append("NULL");
-    }
-    else
-    {
-      buffer.append(escapeForXMLElement(text));
-    }
+    buffer.append(escapeText? escapeForXMLElement(text): text);
     if (emphasizeText)
     {
       buffer.append("</i></b>");
     }
-    buffer.append("</").append(getCellTag()).append(">");
+    buffer.append("</").append(getTag()).append(">");
 
     return buffer.toString();
   }
 
   /**
-   * Converts the table cell to CSV.
+   * Converts the tag to text.
    *
-   * @return CSV
+   * @return Text
    */
   private String toPlainTextString()
   {
-    final String value = text == null? "NULL": text;
-
     if (outputFormat == TextOutputFormat.csv)
     {
-      return escapeAndQuoteCsv(value);
+      return escapeText? escapeAndQuoteCsv(text): text;
     }
     else if (outputFormat == TextOutputFormat.tsv)
     {
-      return String.valueOf(value);
+      return text;
     }
     else
     {
       if (characterWidth > 0)
       {
-        if (align == Alignment.right)
-        {
-          return String.format("%" + characterWidth + "s", value);
-        }
-        else
-        {
-          return String.format("%-" + characterWidth + "s", value);
-        }
+        final String format = String.format("%%%s%ds",
+                                            align == Alignment.right? "": "-",
+                                            characterWidth);
+        return String.format(format, text);
       }
       else
       {
-        return value;
+        return text;
       }
     }
   }

@@ -2,11 +2,13 @@ package schemacrawler.tools.text.base;
 
 
 import static java.util.Objects.requireNonNull;
+import static sf.util.Utility.convertForComparison;
 import static sf.util.Utility.isLowerCase;
 
 import java.io.PrintWriter;
 
 import schemacrawler.schema.Column;
+import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.TextOutputFormat;
@@ -69,6 +71,19 @@ public abstract class BaseFormatter<O extends BaseTextOptions>
     return column != null
            && (column.isPartOfPrimaryKey() || column.isPartOfForeignKey() || column
              .isPartOfIndex());
+  }
+
+  protected String nodeId(final DatabaseObject dbObject)
+  {
+    if (dbObject == null)
+    {
+      return "";
+    }
+    else
+    {
+      return convertForComparison(dbObject.getName()) + "_"
+             + Integer.toHexString(dbObject.getFullName().hashCode());
+    }
   }
 
 }

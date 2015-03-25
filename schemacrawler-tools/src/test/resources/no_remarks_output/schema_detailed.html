@@ -74,16 +74,24 @@ li {
 	margin-top: 0.3rem;
 }
 
-a: link {
-	color: Maroon;
+a:link {
+    color: rgb(16, 16, 16);
+    text-decoration: none;
 }
 
-a: visited {
-	color: Navy;
+a:visited {
+    color: rgb(16, 16, 16);
+    text-decoration: none;
 }
 
-a: active, a: hover {
+a:hover {
 	color: Blue;
+    text-decoration: underline;
+}
+
+a:active {
+	color: Blue;
+    text-decoration: underline;
 }
 
 table, th, td {
@@ -193,7 +201,7 @@ blockquote p {
 
 <table>
 
-  <caption style='background-color: #CEE2F2;'><span class='caption_name'>PUBLIC.BOOKS.AUTHORS</span> <span class='caption_description'>[table]</span></caption>
+  <caption style='background-color: #CEE2F2;'><span id='authors_dba8a1ff' class='caption_name'>PUBLIC.BOOKS.AUTHORS</span> <span class='caption_description'>[table]</span></caption>
 
 	<tr>
 		<td class='spacer'></td>
@@ -261,7 +269,7 @@ blockquote p {
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>ID ← PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID</td>
+		<td class='subname'>ID ← <a href='#bookauthors_aa4376'>PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID</a></td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -325,7 +333,7 @@ blockquote p {
 
 <table>
 
-  <caption style='background-color: #CEE2F2;'><span class='caption_name'>PUBLIC.BOOKS.BOOKS</span> <span class='caption_description'>[table]</span></caption>
+  <caption style='background-color: #CEE2F2;'><span id='books_afd2ba21' class='caption_name'>PUBLIC.BOOKS.BOOKS</span> <span class='caption_description'>[table]</span></caption>
 
 	<tr>
 		<td class='spacer'></td>
@@ -383,7 +391,7 @@ blockquote p {
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>ID ← PUBLIC.BOOKS.BOOKAUTHORS.BOOKID</td>
+		<td class='subname'>ID ← <a href='#bookauthors_aa4376'>PUBLIC.BOOKS.BOOKAUTHORS.BOOKID</a></td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -395,7 +403,7 @@ blockquote p {
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>ID ← PREVIOUSEDITIONID</td>
+		<td class='subname'>ID ← <a href='#books_afd2ba21'>PREVIOUSEDITIONID</a></td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -439,7 +447,7 @@ blockquote p {
 
 <table>
 
-  <caption style='background-color: #CEE2F2;'><span class='caption_name'>PUBLIC.BOOKS."Global Counts"</span> <span class='caption_description'>[table]</span></caption>
+  <caption style='background-color: #CEE2F2;'><span id='globalcounts_2ab3635a' class='caption_name'>PUBLIC.BOOKS."Global Counts"</span> <span class='caption_description'>[table]</span></caption>
 
 	<tr>
 		<td class='spacer'></td>
@@ -451,7 +459,7 @@ blockquote p {
 
 <table>
 
-  <caption style='background-color: #CEE2F2;'><span class='caption_name'>PUBLIC.BOOKS.PUBLISHERS</span> <span class='caption_description'>[table]</span></caption>
+  <caption style='background-color: #CEE2F2;'><span id='publishers_b8da20c0' class='caption_name'>PUBLIC.BOOKS.PUBLISHERS</span> <span class='caption_description'>[table]</span></caption>
 
 	<tr>
 		<td class='spacer'></td>
@@ -507,7 +515,7 @@ blockquote p {
 
 <table>
 
-  <caption style='background-color: #CEE2F2;'><span class='caption_name'>PUBLIC.BOOKS.BOOKAUTHORS</span> <span class='caption_description'>[table]</span></caption>
+  <caption style='background-color: #CEE2F2;'><span id='bookauthors_aa4376' class='caption_name'>PUBLIC.BOOKS.BOOKAUTHORS</span> <span class='caption_description'>[table]</span></caption>
 
 	<tr>
 		<td class='spacer'></td>
@@ -533,7 +541,7 @@ blockquote p {
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>AUTHORID → PUBLIC.BOOKS.AUTHORS.ID</td>
+		<td class='subname'>AUTHORID → <a href='#authors_dba8a1ff'>PUBLIC.BOOKS.AUTHORS.ID</a></td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -545,7 +553,7 @@ blockquote p {
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>BOOKID → PUBLIC.BOOKS.BOOKS.ID</td>
+		<td class='subname'>BOOKID → <a href='#books_afd2ba21'>PUBLIC.BOOKS.BOOKS.ID</a></td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -594,7 +602,7 @@ blockquote p {
 
 <table>
 
-  <caption style='background-color: #CEE2F2;'><span class='caption_name'>PUBLIC.BOOKS.AUTHORSLIST</span> <span class='caption_description'>[view]</span></caption>
+  <caption style='background-color: #CEE2F2;'><span id='authorslist_b29d331d' class='caption_name'>PUBLIC.BOOKS.AUTHORSLIST</span> <span class='caption_description'>[view]</span></caption>
 
 	<tr>
 		<td class='spacer'></td>
@@ -619,7 +627,7 @@ blockquote p {
 
 <table>
 
-  <caption style='background-color: #CEE2F2;'><span class='caption_name'>PUBLIC.BOOKS.CUSTOMADD</span> <span class='caption_description'>[function, does not return a table]</span></caption>
+  <caption style='background-color: #CEE2F2;'><span id='customadd_9c226787' class='caption_name'>PUBLIC.BOOKS.CUSTOMADD</span> <span class='caption_description'>[function, does not return a table]</span></caption>
 
 	<tr>
 		<td class='spacer'></td>
@@ -631,7 +639,7 @@ blockquote p {
 
 <table>
 
-  <caption style='background-color: #CEE2F2;'><span class='caption_name'>PUBLIC.BOOKS.CUSTOMADD</span> <span class='caption_description'>[function, does not return a table]</span></caption>
+  <caption style='background-color: #CEE2F2;'><span id='customadd_9c226787' class='caption_name'>PUBLIC.BOOKS.CUSTOMADD</span> <span class='caption_description'>[function, does not return a table]</span></caption>
 
 	<tr>
 		<td class='spacer'></td>
@@ -648,7 +656,7 @@ blockquote p {
 
 <table>
 
-  <caption style='background-color: #CEE2F2;'><span class='caption_name'>PUBLIC.BOOKS.NEW_PUBLISHER</span> <span class='caption_description'>[procedure, no result]</span></caption>
+  <caption style='background-color: #CEE2F2;'><span id='new_publisher_1b8f0274' class='caption_name'>PUBLIC.BOOKS.NEW_PUBLISHER</span> <span class='caption_description'>[procedure, no result]</span></caption>
 
 	<tr>
 		<td class='spacer'></td>
@@ -660,7 +668,7 @@ blockquote p {
 
 <table>
 
-  <caption style='background-color: #CEE2F2;'><span class='caption_name'>PUBLIC.BOOKS.NEW_PUBLISHER</span> <span class='caption_description'>[procedure, no result]</span></caption>
+  <caption style='background-color: #CEE2F2;'><span id='new_publisher_1b8f0274' class='caption_name'>PUBLIC.BOOKS.NEW_PUBLISHER</span> <span class='caption_description'>[procedure, no result]</span></caption>
 
 	<tr>
 		<td class='spacer'></td>

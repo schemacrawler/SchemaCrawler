@@ -20,8 +20,10 @@
 
 package schemacrawler.tools.text.utility;
 
+
 import java.awt.Color;
 
+import schemacrawler.tools.text.utility.html.Alignment;
 
 /**
  * Methods to format entire rows of output.
@@ -38,6 +40,13 @@ public interface TextFormattingHelper
     subTitle,
     section;
   }
+
+  /**
+   * Creates a new anchor tag.
+   *
+   * @return Anchor tag
+   */
+  String createAnchor(String text, String link);
 
   /**
    * Creates a definition row.
@@ -58,6 +67,27 @@ public interface TextFormattingHelper
   String createDescriptionRow(String description);
 
   /**
+   * Creates a detail row, with four fields. The name can be emphasized.
+   *
+   * @param ordinal
+   *        Ordinal value
+   * @param subName
+   *        Name
+   * @param escapeText
+   *        TODO
+   * @param type
+   *        Type
+   * @param emphasize
+   *        Emphasize name.
+   * @return Row as a string
+   */
+  String createDetailRow(String ordinal,
+                         String subName,
+                         boolean escapeText,
+                         String type,
+                         boolean emphasize);
+
+  /**
    * Creates a detail row, with four fields.
    *
    * @param ordinal
@@ -69,24 +99,6 @@ public interface TextFormattingHelper
    * @return Row as a string
    */
   String createDetailRow(String ordinal, String subName, String type);
-
-  /**
-   * Creates a detail row, with four fields. The name can be emphasized.
-   *
-   * @param ordinal
-   *        Ordinal value
-   * @param subName
-   *        Name
-   * @param type
-   *        Type
-   * @param emphasize
-   *        Emphasize name.
-   * @return Row as a string
-   */
-  String createDetailRow(String ordinal,
-                         String subName,
-                         String type,
-                         boolean emphasize);
 
   /**
    * Document end.
@@ -139,19 +151,6 @@ public interface TextFormattingHelper
   String createNameRow(String name, String description);
 
   /**
-   * Create a name and description row.
-   *
-   * @param name
-   *        Name
-   * @param description
-   *        Description
-   * @return Row as a string
-   */
-  String createObjectNameRow(String name,
-                             String description,
-                             Color backgroundColor);
-
-  /**
    * Create a name and value row.
    *
    * @param name
@@ -170,6 +169,22 @@ public interface TextFormattingHelper
    * @return Database object end
    */
   String createObjectEnd();
+
+  /**
+   * Create a name and description row.
+   *
+   * @param id
+   *        TODO
+   * @param name
+   *        Name
+   * @param description
+   *        Description
+   * @return Row as a string
+   */
+  String createObjectNameRow(String id,
+                             String name,
+                             String description,
+                             Color backgroundColor);
 
   /**
    * Database object start.

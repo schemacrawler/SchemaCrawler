@@ -17,40 +17,12 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.tools.text.utility;
+package schemacrawler.tools.text.utility.html;
 
 
-import java.awt.Color;
-
-import schemacrawler.tools.options.TextOutputFormat;
-
-public final class TableHeaderCell
-  extends TableCell
+public enum Alignment
 {
-
-  public TableHeaderCell(final String text,
-                         final int characterWidth,
-                         final Alignment align,
-                         final boolean emphasizeText,
-                         final String styleClass,
-                         final Color bgColor,
-                         final int colSpan,
-                         final TextOutputFormat outputFormat)
-  {
-    super(text,
-          characterWidth,
-          align,
-          emphasizeText,
-          styleClass,
-          bgColor,
-          colSpan,
-          outputFormat);
-  }
-
-  @Override
-  protected String getCellTag()
-  {
-    return "th";
-  }
-
+  inherit,
+  left,
+  right;
 }
