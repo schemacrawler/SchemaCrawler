@@ -5,6 +5,27 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+     <release version="12.06.01" date="2015-03-24" description="Hiding empty tables, and links in HTML.">
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Hyperlinks in HTML output from foreign keys to tables.
+      ]]></action> 
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Lighter colors for tables, consistent in both HTML and graph output. Colors are assigned per 
+        catalog and schema.
+      ]]></action>       
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Foreign key cardinality in HTML and text output.
+      ]]></action> 
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        New command-line option to remove empty tables (with no rows of data) from output -hideemptytables
+      ]]></action>  
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Not showing database password in command-line logs.
+      ]]></action>   
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Showing database sevrer and JDBC driver in logs.
+      ]]></action>                                             
+     </release>    
      <release version="12.05.02" date="2015-03-17" description="Better identification of weak associations.">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Better identification of weak associations.
