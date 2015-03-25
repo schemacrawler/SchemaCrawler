@@ -26,6 +26,11 @@ import static sf.util.Utility.isBlank;
 import java.awt.Color;
 
 import schemacrawler.tools.options.TextOutputFormat;
+import schemacrawler.tools.text.utility.html.Alignment;
+import schemacrawler.tools.text.utility.html.Anchor;
+import schemacrawler.tools.text.utility.html.TableCell;
+import schemacrawler.tools.text.utility.html.TableHeaderCell;
+import schemacrawler.tools.text.utility.html.TableRow;
 
 /**
  * Methods to format entire rows of output as HTML.
@@ -35,6 +40,11 @@ import schemacrawler.tools.options.TextOutputFormat;
 abstract class BaseTextFormattingHelper
   implements TextFormattingHelper
 {
+
+  /**
+   * System specific line separator character.
+   */
+  static final String DASHED_SEPARATOR = separator("-");
 
   static String separator(final String pattern)
   {
@@ -46,11 +56,6 @@ abstract class BaseTextFormattingHelper
     return dashedSeparator.toString();
   }
 
-  /**
-   * System specific line separator character.
-   */
-  static final String DASHED_SEPARATOR = separator("-");
-
   private final TextOutputFormat outputFormat;
 
   BaseTextFormattingHelper(final TextOutputFormat outputFormat)
@@ -59,10 +64,25 @@ abstract class BaseTextFormattingHelper
   }
 
   @Override
+  public String createAnchor(final String text, final String link)
+  {
+    return new Anchor(text,
+                      false,
+                      0,
+                      Alignment.inherit,
+                      false,
+                      "",
+                      Color.white,
+                      link,
+                      outputFormat).toString();
+  }
+
+  @Override
   public String createDefinitionRow(final String definition)
   {
     final TableRow row = new TableRow(outputFormat);
     row.add(new TableCell(definition,
+                          true,
                           0,
                           Alignment.inherit,
                           false,
@@ -84,12 +104,67 @@ abstract class BaseTextFormattingHelper
     final TableRow row = new TableRow(outputFormat);
     row.add(newTableCell("", "spacer", outputFormat));
     row.add(new TableCell(description,
+                          true,
                           0,
                           Alignment.inherit,
                           false,
                           "definition",
                           Color.white,
                           2,
+                          outputFormat));
+    return row.toString();
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * @see schemacrawler.tools.text.utility.TextFormattingHelper#createDetailRow(java.lang.String,
+   *      java.lang.String, boolean, java.lang.String, boolean)
+   */
+  @Override
+  public String createDetailRow(final String ordinal,
+                                final String subName,
+                                final boolean escapeText,
+                                final String type,
+                                final boolean emphasize)
+  {
+    final int subNameWidth = 32;
+    final int typeWidth = 28;
+
+    final TableRow row = new TableRow(outputFormat);
+    if (isBlank(ordinal))
+    {
+      row.add(newTableCell("", "spacer", outputFormat));
+    }
+    else
+    {
+      row.add(new TableCell(ordinal,
+                            true,
+                            2,
+                            Alignment.inherit,
+                            false,
+                            "spacer",
+                            Color.white,
+                            1,
+                            outputFormat));
+    }
+    row.add(new TableCell(subName,
+                          escapeText,
+                          subNameWidth,
+                          Alignment.inherit,
+                          emphasize,
+                          "subname",
+                          Color.white,
+                          1,
+                          outputFormat));
+    row.add(new TableCell(type,
+                          true,
+                          typeWidth,
+                          Alignment.inherit,
+                          false,
+                          "type",
+                          Color.white,
+                          1,
                           outputFormat));
     return row.toString();
   }
@@ -105,57 +180,7 @@ abstract class BaseTextFormattingHelper
                                 final String subName,
                                 final String type)
   {
-    return createDetailRow(ordinal, subName, type, false);
-  }
-
-  /**
-   * {@inheritDoc}
-   *
-   * @see schemacrawler.tools.text.utility.TextFormattingHelper#createDetailRow(java.lang.String,
-   *      java.lang.String, java.lang.String, boolean)
-   */
-  @Override
-  public String createDetailRow(final String ordinal,
-                                final String subName,
-                                final String type,
-                                final boolean emphasize)
-  {
-    final int subNameWidth = 32;
-    final int typeWidth = 28;
-
-    final TableRow row = new TableRow(outputFormat);
-    if (isBlank(ordinal))
-    {
-      row.add(newTableCell("", "spacer", outputFormat));
-    }
-    else
-    {
-      row.add(new TableCell(ordinal,
-                            2,
-                            Alignment.inherit,
-                            false,
-                            "spacer",
-                            Color.white,
-                            1,
-                            outputFormat));
-    }
-    row.add(new TableCell(subName,
-                          subNameWidth,
-                          Alignment.inherit,
-                          emphasize,
-                          "subname",
-                          Color.white,
-                          1,
-                          outputFormat));
-    row.add(new TableCell(type,
-                          typeWidth,
-                          Alignment.inherit,
-                          false,
-                          "type",
-                          Color.white,
-                          1,
-                          outputFormat));
-    return row.toString();
+    return createDetailRow(ordinal, subName, true, type, false);
   }
 
   /**
@@ -168,6 +193,7 @@ abstract class BaseTextFormattingHelper
   {
     final TableRow tableRow = new TableRow(outputFormat);
     tableRow.add(new TableCell("",
+                               true,
                                0,
                                Alignment.inherit,
                                false,
@@ -206,6 +232,7 @@ abstract class BaseTextFormattingHelper
     String nameRowString;
     final TableRow row = new TableRow(outputFormat);
     row.add(new TableCell(name,
+                          true,
                           nameWidth,
                           Alignment.inherit,
                           false,
@@ -214,6 +241,7 @@ abstract class BaseTextFormattingHelper
                           2,
                           outputFormat));
     row.add(new TableCell(description,
+                          true,
                           descriptionWidth,
                           Alignment.right,
                           false,
@@ -250,6 +278,7 @@ abstract class BaseTextFormattingHelper
 
     final TableRow row = new TableRow(outputFormat);
     row.add(new TableCell(name,
+                          true,
                           nameWidth,
                           Alignment.inherit,
                           false,
@@ -258,6 +287,7 @@ abstract class BaseTextFormattingHelper
                           1,
                           outputFormat));
     row.add(new TableCell(value,
+                          true,
                           valueWidth,
                           alignmentForValue,
                           false,
@@ -341,6 +371,7 @@ abstract class BaseTextFormattingHelper
                                  final TextOutputFormat outputFormat)
   {
     return new TableCell(text,
+                         true,
                          0,
                          Alignment.inherit,
                          false,

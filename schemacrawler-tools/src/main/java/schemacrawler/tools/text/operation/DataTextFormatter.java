@@ -30,8 +30,8 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.BaseTabularFormatter;
-import schemacrawler.tools.text.utility.Alignment;
 import schemacrawler.tools.text.utility.TextFormattingHelper.DocumentHeaderType;
+import schemacrawler.tools.text.utility.html.Alignment;
 import schemacrawler.tools.traversal.DataTraversalHandler;
 
 /**
@@ -203,7 +203,10 @@ final class DataTextFormatter
     else
     {
       out.println(formattingHelper.createObjectStart());
-      out.println(formattingHelper.createObjectNameRow(title, "", Color.white));
+      out.println(formattingHelper.createObjectNameRow("",
+                                                       title,
+                                                       "",
+                                                       Color.white));
       try
       {
         final DataResultSet dataRows = new DataResultSet(rows,
@@ -252,7 +255,7 @@ final class DataTextFormatter
     if (operation == Operation.count)
     {
       out.println(formattingHelper.createObjectStart());
-      out.println(formattingHelper.createObjectNameRow(operation
+      out.println(formattingHelper.createObjectNameRow("", operation
         .getDescription(), "", Color.white));
     }
   }

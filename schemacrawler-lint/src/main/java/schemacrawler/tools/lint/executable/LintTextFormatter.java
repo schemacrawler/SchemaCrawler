@@ -59,7 +59,8 @@ final class LintTextFormatter
     {
       out.println(formattingHelper.createObjectStart());
 
-      final String nameRow = formattingHelper.createObjectNameRow("Database",
+      final String nameRow = formattingHelper.createObjectNameRow("",
+                                                                  "Database",
                                                                   "[database]",
                                                                   Color.white);
       out.println(nameRow);
@@ -85,7 +86,8 @@ final class LintTextFormatter
       out.println(formattingHelper.createObjectStart());
       final String tableType = "[" + table.getTableType() + "]";
       out
-        .println(formattingHelper.createObjectNameRow(table.getFullName(),
+        .println(formattingHelper.createObjectNameRow(nodeId(table),
+                                                      table.getFullName(),
                                                       tableType,
                                                       colorMap.getColor(table)));
       printLints(lints);

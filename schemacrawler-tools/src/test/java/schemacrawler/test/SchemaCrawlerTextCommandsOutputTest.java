@@ -23,6 +23,7 @@ package schemacrawler.test;
 
 import static java.nio.file.Files.exists;
 import static org.junit.Assert.assertTrue;
+import static schemacrawler.test.utility.TestUtility.clean;
 import static schemacrawler.test.utility.TestUtility.createTempFile;
 
 import java.nio.file.Path;
@@ -137,6 +138,8 @@ public class SchemaCrawlerTextCommandsOutputTest
   private void textOutputTest(final String command, final Config config)
     throws Exception
   {
+    clean(COMMAND_OUTPUT);
+
     try (final TestWriter writer = new TestWriter(TextOutputFormat.text.getFormat());)
     {
       final OutputOptions outputOptions = new OutputOptions(TextOutputFormat.text,
@@ -157,4 +160,5 @@ public class SchemaCrawlerTextCommandsOutputTest
       writer.assertEquals(COMMAND_OUTPUT + command + ".txt");
     }
   }
+
 }
