@@ -7,7 +7,7 @@
   <parent>
     <groupId>us.fatehi</groupId>
     <artifactId>schemacrawler-parent</artifactId>
-    <version>12.05.02</version>
+    <version>12.06.01</version>
   </parent>
   <artifactId>schemacrawler-mysql</artifactId>
   <packaging>jar</packaging>
@@ -27,7 +27,7 @@
     <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
-      <version>5.1.34</version>
+      <version>5.1.35</version>
     </dependency>
   </dependencies>
   <build>
