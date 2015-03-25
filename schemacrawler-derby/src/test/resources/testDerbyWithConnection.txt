@@ -235,7 +235,7 @@ PK_AUTHORS                                                 [primary key]
   ID                                ascending                   
 
 FK_Z_AUTHOR                                [foreign key, with no action]
-  ID <-- BOOKS.BOOKAUTHORS.AUTHORID                              
+  ID <--(0..many) BOOKS.BOOKAUTHORS.AUTHORID                              
 
                                                           [unique index]
   ID                                ascending                   
@@ -266,10 +266,10 @@ PK_BOOKS                                                   [primary key]
   ID                                ascending                   
 
 FK_Y_BOOK                                  [foreign key, with no action]
-  ID <-- BOOKS.BOOKAUTHORS.BOOKID                               
+  ID <--(0..many) BOOKS.BOOKAUTHORS.BOOKID                              
 
 FK_PREVIOUSEDITION                         [foreign key, with no action]
-  ID <-- PREVIOUSEDITIONID                                      
+  ID <--(0..many) PREVIOUSEDITIONID                              
 
                                                           [unique index]
   ID                                ascending                   
@@ -311,10 +311,10 @@ BOOKS.BOOKAUTHORS                                                [table]
   "UPDATE"                          CLOB                        
 
 FK_Z_AUTHOR                                [foreign key, with no action]
-  AUTHORID --> BOOKS.AUTHORS.ID                                 
+  AUTHORID (0..many)--> BOOKS.AUTHORS.ID                              
 
 FK_Y_BOOK                                  [foreign key, with no action]
-  BOOKID --> BOOKS.BOOKS.ID                                     
+  BOOKID (0..many)--> BOOKS.BOOKS.ID                              
 
                                                       [non-unique index]
   AUTHORID                          ascending                   

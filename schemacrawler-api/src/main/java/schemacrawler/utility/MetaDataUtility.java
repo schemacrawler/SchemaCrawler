@@ -48,9 +48,9 @@ public final class MetaDataUtility
   public enum ForeignKeyCardinality
   {
     unknown(""),
-    zero_one("0..1"),
-    zero_many("0..many"),
-    one_one("1");
+    zero_one("(0..1)"),
+    zero_many("(0..many)"),
+    one_one("(1..1)");
 
     private final String description;
 
