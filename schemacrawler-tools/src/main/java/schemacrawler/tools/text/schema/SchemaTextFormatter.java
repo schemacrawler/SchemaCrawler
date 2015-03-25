@@ -64,6 +64,8 @@ import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.BaseTabularFormatter;
 import schemacrawler.tools.text.utility.TextFormattingHelper.DocumentHeaderType;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
+import schemacrawler.utility.MetaDataUtility;
+import schemacrawler.utility.MetaDataUtility.ForeignKeyCardinality;
 import schemacrawler.utility.NamedObjectSort;
 
 /**
@@ -488,6 +490,8 @@ final class SchemaTextFormatter
                                      final String tableName,
                                      final BaseForeignKey<? extends ColumnReference> foreignKey)
   {
+    final ForeignKeyCardinality fkCardinality = MetaDataUtility
+      .findForeignKeyCardinality(foreignKey);
     for (final ColumnReference columnReference: foreignKey)
     {
       final Column pkColumn;
@@ -540,9 +544,10 @@ final class SchemaTextFormatter
         final String arrow = isForeignKey? formattingHelper.createLeftArrow()
                                          : formattingHelper
                                            .createWeakLeftArrow();
-        relationship = String.format("%s %s %s",
+        relationship = String.format("%s %s%s %s",
                                      pkColumnName,
                                      arrow,
+                                     fkCardinality.toString(),
                                      fkHyperlink);
       }
       else
@@ -552,8 +557,9 @@ final class SchemaTextFormatter
         final String arrow = isForeignKey? formattingHelper.createRightArrow()
                                          : formattingHelper
                                            .createWeakRightArrow();
-        relationship = String.format("%s %s %s",
+        relationship = String.format("%s %s%s %s",
                                      fkColumnName,
+                                     fkCardinality.toString(),
                                      arrow,
                                      pkHyperlink);
       }

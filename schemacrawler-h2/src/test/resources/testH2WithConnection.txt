@@ -292,7 +292,7 @@ PK_AUTHORS                                                 [primary key]
   ID                                ascending                   
 
 FK_Z_AUTHOR                                 [foreign key, with restrict]
-  ID <-- DATASOURCE.BOOKS.BOOKAUTHORS.AUTHORID                              
+  ID <--(0..many) DATASOURCE.BOOKS.BOOKAUTHORS.AUTHORID                              
 
                                                           [unique index]
   ID                                ascending                   
@@ -330,10 +330,10 @@ PK_BOOKS                                                   [primary key]
   ID                                ascending                   
 
 FK_Y_BOOK                                   [foreign key, with restrict]
-  ID <-- DATASOURCE.BOOKS.BOOKAUTHORS.BOOKID                              
+  ID <--(0..many) DATASOURCE.BOOKS.BOOKAUTHORS.BOOKID                              
 
 FK_PREVIOUSEDITION                          [foreign key, with restrict]
-  ID <-- PREVIOUSEDITIONID                                      
+  ID <--(0..1) PREVIOUSEDITIONID                                
 
                                                           [unique index]
   ID                                ascending                   
@@ -393,10 +393,10 @@ Relationship between books and their authors, along with the latest updated info
   "UPDATE"                          CLOB                        
 
 FK_Z_AUTHOR                                 [foreign key, with restrict]
-  AUTHORID --> DATASOURCE.BOOKS.AUTHORS.ID                              
+  AUTHORID (0..many)--> DATASOURCE.BOOKS.AUTHORS.ID                              
 
 FK_Y_BOOK                                   [foreign key, with restrict]
-  BOOKID --> DATASOURCE.BOOKS.BOOKS.ID                              
+  BOOKID (0..many)--> DATASOURCE.BOOKS.BOOKS.ID                              
 
                                                       [non-unique index]
   AUTHORID                          ascending                   

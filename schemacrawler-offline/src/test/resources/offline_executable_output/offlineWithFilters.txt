@@ -15,8 +15,8 @@ PUBLIC."PUBLISHER SALES".SALES                                   [table]
   TOTALAMOUNT                       DOUBLE(64, 0)               
 
 FK_SALES_REGIONS                           [foreign key, with no action]
-  POSTALCODE --> PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE                              
-  COUNTRY --> PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY                              
+  POSTALCODE (0..many)--> PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE                              
+  COUNTRY (0..many)--> PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY                              
 
 SYS_IDX_10154                                         [non-unique index]
   POSTALCODE                        ascending                   

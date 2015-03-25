@@ -81,8 +81,10 @@ public abstract class BaseFormatter<O extends BaseTextOptions>
     }
     else
     {
-      return convertForComparison(dbObject.getName()) + "_"
-             + Integer.toHexString(dbObject.getFullName().hashCode());
+      return convertForComparison(dbObject.getName())
+             + "_"
+             + Integer.toHexString(dbObject.getSchema().getFullName()
+               .hashCode());
     }
   }
 

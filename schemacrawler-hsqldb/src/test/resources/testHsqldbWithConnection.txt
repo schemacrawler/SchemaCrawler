@@ -244,7 +244,7 @@ PK_AUTHORS                                                 [primary key]
   ID                                ascending                   
 
 FK_Z_AUTHOR                                [foreign key, with no action]
-  ID <-- PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID                              
+  ID <--(0..many) PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID                              
 
                                                           [unique index]
   ID                                ascending                   
@@ -282,10 +282,10 @@ PK_BOOKS                                                   [primary key]
   ID                                ascending                   
 
 FK_Y_BOOK                                  [foreign key, with no action]
-  ID <-- PUBLIC.BOOKS.BOOKAUTHORS.BOOKID                              
+  ID <--(0..many) PUBLIC.BOOKS.BOOKAUTHORS.BOOKID                              
 
 FK_PREVIOUSEDITION                         [foreign key, with no action]
-  ID <-- PREVIOUSEDITIONID                                      
+  ID <--(0..1) PREVIOUSEDITIONID                                
 
                                                           [unique index]
   ID                                ascending                   
@@ -331,10 +331,10 @@ Relationship between books and their authors, along with the latest updated info
   "UPDATE"                          CLOB                        
 
 FK_Z_AUTHOR                                [foreign key, with no action]
-  AUTHORID --> PUBLIC.BOOKS.AUTHORS.ID                              
+  AUTHORID (0..many)--> PUBLIC.BOOKS.AUTHORS.ID                              
 
 FK_Y_BOOK                                  [foreign key, with no action]
-  BOOKID --> PUBLIC.BOOKS.BOOKS.ID                              
+  BOOKID (0..many)--> PUBLIC.BOOKS.BOOKS.ID                              
 
                                                       [non-unique index]
   AUTHORID                          ascending                   

@@ -83,10 +83,10 @@ PK_EXTRA_PK,[primary key]
 "",ID,ascending
 ""
 FK_PUBLICATION_JOIN,"[foreign key, with no action]"
-"",PUBLICATIONID --> PUBLIC.FOR_LINT.PUBLICATIONS.ID,""
+"",PUBLICATIONID (0..many)--> PUBLIC.FOR_LINT.PUBLICATIONS.ID,""
 ""
 FK_WRITER_JOIN,"[foreign key, with no action]"
-"",WRITERID --> PUBLIC.FOR_LINT.WRITERS.ID,""
+"",WRITERID (0..many)--> PUBLIC.FOR_LINT.WRITERS.ID,""
 
 
 
@@ -104,13 +104,13 @@ PK_PUBLICATIONS,[primary key]
 "",ID,ascending
 ""
 FK_PUBLICATION_JOIN,"[foreign key, with no action]"
-"",ID <-- PUBLIC.FOR_LINT.EXTRA_PK.PUBLICATIONID,""
+"",ID <--(0..many) PUBLIC.FOR_LINT.EXTRA_PK.PUBLICATIONID,""
 ""
 FK_WRITERS_PUBLICATION,"[foreign key, with no action]"
-"",ID <-- PUBLIC.FOR_LINT.WRITERS.PUBLICATION_ID,""
+"",ID <--(0..many) PUBLIC.FOR_LINT.WRITERS.PUBLICATION_ID,""
 ""
 FK_PUBLICATIONS_WRITER,"[foreign key, with no action]"
-"",WRITERID --> PUBLIC.FOR_LINT.WRITERS.ID,""
+"",WRITERID (0..many)--> PUBLIC.FOR_LINT.WRITERS.ID,""
 
 
 
@@ -130,16 +130,16 @@ PK_WRITERS,[primary key]
 "",ID,ascending
 ""
 FK_WRITERS_PUBLICATION,"[foreign key, with no action]"
-"",PUBLICATION_ID --> PUBLIC.FOR_LINT.PUBLICATIONS.ID,""
+"",PUBLICATION_ID (0..many)--> PUBLIC.FOR_LINT.PUBLICATIONS.ID,""
 ""
 FK_WRITER_JOIN,"[foreign key, with no action]"
-"",ID <-- PUBLIC.FOR_LINT.EXTRA_PK.WRITERID,""
+"",ID <--(0..many) PUBLIC.FOR_LINT.EXTRA_PK.WRITERID,""
 ""
 FK_PUBLICATIONS_WRITER,"[foreign key, with no action]"
-"",ID <-- PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID,""
+"",ID <--(0..many) PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID,""
 ""
 FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS,"[foreign key, with no action]"
-"",ID <-- PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ,""
+"",ID <--(0..many) PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ,""
 
 
 
@@ -152,7 +152,7 @@ PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ,[primary key]
 "",ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ,ascending
 ""
 FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS,"[foreign key, with no action]"
-"",ΣΥΓΓΡΑΦΈΑΣ --> PUBLIC.FOR_LINT.WRITERS.ID,""
+"",ΣΥΓΓΡΑΦΈΑΣ (0..many)--> PUBLIC.FOR_LINT.WRITERS.ID,""
 
 
 
