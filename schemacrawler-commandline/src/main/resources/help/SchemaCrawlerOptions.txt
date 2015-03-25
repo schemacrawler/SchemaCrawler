@@ -108,7 +108,12 @@
   Shows only matching tables, and does not show foreign keys that reference
   other non-matching tables
   Optional, default is false
-  
+
+-hideemptytables
+  Shows only tables that have rows of data. Will work only if infolevel
+  is maximum.
+  Optional, default is false
+    
 -parents=<depth of parent tables>
   <depth of parent tables> is the number of generations of ancestors
   for the tables selected by grep, and shown in the results
