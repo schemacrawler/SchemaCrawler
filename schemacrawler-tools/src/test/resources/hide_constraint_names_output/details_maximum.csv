@@ -594,7 +594,7 @@ Details for published books
 "",ID <-- PREVIOUSEDITIONID,""
 ""
 "",[weak association]
-"","ID <~~ PUBLIC.""PUBLISHER SALES"".SALES.BOOKID",""
+"",ID <~~ PUBLIC."PUBLISHER SALES".SALES.BOOKID,""
 ""
 "",[weak association]
 "",PUBLISHERID ~~> PUBLIC.BOOKS.PUBLISHERS.ID,""
@@ -987,8 +987,8 @@ UPDATE,[privilege]
 "",COUNTRY,ascending
 ""
 "","[foreign key, with no action]"
-"","POSTALCODE <-- PUBLIC.""PUBLISHER SALES"".SALES.POSTALCODE",""
-"","COUNTRY <-- PUBLIC.""PUBLISHER SALES"".SALES.COUNTRY",""
+"",POSTALCODE <-- PUBLIC."PUBLISHER SALES".SALES.POSTALCODE,""
+"",COUNTRY <-- PUBLIC."PUBLISHER SALES".SALES.COUNTRY,""
 ""
 "",[unique index]
 "",POSTALCODE,ascending
@@ -1035,8 +1035,8 @@ UPDATE,[privilege]
 "",TOTALAMOUNT,"DOUBLE(64, 0)"
 ""
 "","[foreign key, with no action]"
-"","POSTALCODE --> PUBLIC.""PUBLISHER SALES"".REGIONS.POSTALCODE",""
-"","COUNTRY --> PUBLIC.""PUBLISHER SALES"".REGIONS.COUNTRY",""
+"",POSTALCODE --> PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE,""
+"",COUNTRY --> PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY,""
 ""
 "",[weak association]
 "",BOOKID ~~> PUBLIC.BOOKS.BOOKS.ID,""

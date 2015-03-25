@@ -74,16 +74,24 @@ li {
 	margin-top: 0.3rem;
 }
 
-a: link {
-	color: Maroon;
+a:link {
+    color: rgb(16, 16, 16);
+    text-decoration: none;
 }
 
-a: visited {
-	color: Navy;
+a:visited {
+    color: rgb(16, 16, 16);
+    text-decoration: none;
 }
 
-a: active, a: hover {
+a:hover {
 	color: Blue;
+    text-decoration: underline;
+}
+
+a:active {
+	color: Blue;
+    text-decoration: underline;
 }
 
 table, th, td {
@@ -254,7 +262,7 @@ blockquote p {
 
 <table>
 
-  <caption style='background-color: #F2EACE;'><span class='caption_name'>PUBLIC.FOR_LINT.EXTRA_PK</span> <span class='caption_description'>[table]</span></caption>
+  <caption style='background-color: #F2EACE;'><span id='extra_pk_334890da' class='caption_name'>PUBLIC.FOR_LINT.EXTRA_PK</span> <span class='caption_description'>[table]</span></caption>
 
 	<tr>
 		<td class='spacer'></td>
@@ -292,7 +300,7 @@ blockquote p {
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>PUBLICATIONID → PUBLIC.FOR_LINT.PUBLICATIONS.ID</td>
+		<td class='subname'>PUBLICATIONID → <a href='#publications_949377f7'>PUBLIC.FOR_LINT.PUBLICATIONS.ID</a></td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -304,7 +312,7 @@ blockquote p {
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>WRITERID → PUBLIC.FOR_LINT.WRITERS.ID</td>
+		<td class='subname'>WRITERID → <a href='#writers_bf84ac10'>PUBLIC.FOR_LINT.WRITERS.ID</a></td>
 		<td class='type'></td>
 	</tr>
 </table>
@@ -312,14 +320,14 @@ blockquote p {
 
 <table>
 
-  <caption style='background-color: #F2EACE;'><span class='caption_name'>PUBLIC.FOR_LINT."Global Counts"</span> <span class='caption_description'>[table]</span></caption>
+  <caption style='background-color: #F2EACE;'><span id='globalcounts_986b8a53' class='caption_name'>PUBLIC.FOR_LINT."Global Counts"</span> <span class='caption_description'>[table]</span></caption>
 
 </table>
 <p>&#160;</p>
 
 <table>
 
-  <caption style='background-color: #F2EACE;'><span class='caption_name'>PUBLIC.FOR_LINT.PUBLICATIONS</span> <span class='caption_description'>[table]</span></caption>
+  <caption style='background-color: #F2EACE;'><span id='publications_949377f7' class='caption_name'>PUBLIC.FOR_LINT.PUBLICATIONS</span> <span class='caption_description'>[table]</span></caption>
 
 	<tr>
 		<td class='spacer'></td>
@@ -352,7 +360,7 @@ blockquote p {
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>ID ← PUBLIC.FOR_LINT.EXTRA_PK.PUBLICATIONID</td>
+		<td class='subname'>ID ← <a href='#extra_pk_334890da'>PUBLIC.FOR_LINT.EXTRA_PK.PUBLICATIONID</a></td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -364,7 +372,7 @@ blockquote p {
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>ID ← PUBLIC.FOR_LINT.WRITERS.PUBLICATION_ID</td>
+		<td class='subname'>ID ← <a href='#writers_bf84ac10'>PUBLIC.FOR_LINT.WRITERS.PUBLICATION_ID</a></td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -376,7 +384,7 @@ blockquote p {
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>WRITERID → PUBLIC.FOR_LINT.WRITERS.ID</td>
+		<td class='subname'>WRITERID → <a href='#writers_bf84ac10'>PUBLIC.FOR_LINT.WRITERS.ID</a></td>
 		<td class='type'></td>
 	</tr>
 </table>
@@ -384,7 +392,7 @@ blockquote p {
 
 <table>
 
-  <caption style='background-color: #F2EACE;'><span class='caption_name'>PUBLIC.FOR_LINT.WRITERS</span> <span class='caption_description'>[table]</span></caption>
+  <caption style='background-color: #F2EACE;'><span id='writers_bf84ac10' class='caption_name'>PUBLIC.FOR_LINT.WRITERS</span> <span class='caption_description'>[table]</span></caption>
 
 	<tr>
 		<td class='spacer'></td>
@@ -452,7 +460,7 @@ blockquote p {
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>PUBLICATION_ID → PUBLIC.FOR_LINT.PUBLICATIONS.ID</td>
+		<td class='subname'>PUBLICATION_ID → <a href='#publications_949377f7'>PUBLIC.FOR_LINT.PUBLICATIONS.ID</a></td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -464,7 +472,7 @@ blockquote p {
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>ID ← PUBLIC.FOR_LINT.EXTRA_PK.WRITERID</td>
+		<td class='subname'>ID ← <a href='#extra_pk_334890da'>PUBLIC.FOR_LINT.EXTRA_PK.WRITERID</a></td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -476,7 +484,7 @@ blockquote p {
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>ID ← PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID</td>
+		<td class='subname'>ID ← <a href='#publications_949377f7'>PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID</a></td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -488,7 +496,7 @@ blockquote p {
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>ID ← PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ</td>
+		<td class='subname'>ID ← <a href='#πίνακαβάσησδεδομένων_199e00a3'>PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ</a></td>
 		<td class='type'></td>
 	</tr>
 </table>
@@ -496,7 +504,7 @@ blockquote p {
 
 <table>
 
-  <caption style='background-color: #F2EACE;'><span class='caption_name'>PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</span> <span class='caption_description'>[table]</span></caption>
+  <caption style='background-color: #F2EACE;'><span id='πίνακαβάσησδεδομένων_199e00a3' class='caption_name'>PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</span> <span class='caption_description'>[table]</span></caption>
 
 	<tr>
 		<td class='spacer'></td>
@@ -529,7 +537,7 @@ blockquote p {
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>ΣΥΓΓΡΑΦΈΑΣ → PUBLIC.FOR_LINT.WRITERS.ID</td>
+		<td class='subname'>ΣΥΓΓΡΑΦΈΑΣ → <a href='#writers_bf84ac10'>PUBLIC.FOR_LINT.WRITERS.ID</a></td>
 		<td class='type'></td>
 	</tr>
 </table>
@@ -594,7 +602,7 @@ blockquote p {
 
 <table>
 
-  <caption style='background-color: #F2EACE;'><span class='caption_name'>PUBLIC.FOR_LINT.EXTRA_PK</span> <span class='caption_description'>[table]</span></caption>
+  <caption style='background-color: #F2EACE;'><span id='extra_pk_334890da' class='caption_name'>PUBLIC.FOR_LINT.EXTRA_PK</span> <span class='caption_description'>[table]</span></caption>
 
 	<tr>
 		<td colspan='3'></td>
@@ -613,7 +621,7 @@ blockquote p {
 
 <table>
 
-  <caption style='background-color: #F2EACE;'><span class='caption_name'>PUBLIC.FOR_LINT."Global Counts"</span> <span class='caption_description'>[table]</span></caption>
+  <caption style='background-color: #F2EACE;'><span id='globalcounts_986b8a53' class='caption_name'>PUBLIC.FOR_LINT."Global Counts"</span> <span class='caption_description'>[table]</span></caption>
 
 	<tr>
 		<td colspan='3'></td>
@@ -647,7 +655,7 @@ blockquote p {
 
 <table>
 
-  <caption style='background-color: #F2EACE;'><span class='caption_name'>PUBLIC.FOR_LINT.PUBLICATIONS</span> <span class='caption_description'>[table]</span></caption>
+  <caption style='background-color: #F2EACE;'><span id='publications_949377f7' class='caption_name'>PUBLIC.FOR_LINT.PUBLICATIONS</span> <span class='caption_description'>[table]</span></caption>
 
 	<tr>
 		<td colspan='3'></td>
@@ -675,7 +683,7 @@ blockquote p {
 
 <table>
 
-  <caption style='background-color: #F2EACE;'><span class='caption_name'>PUBLIC.FOR_LINT.WRITERS</span> <span class='caption_description'>[table]</span></caption>
+  <caption style='background-color: #F2EACE;'><span id='writers_bf84ac10' class='caption_name'>PUBLIC.FOR_LINT.WRITERS</span> <span class='caption_description'>[table]</span></caption>
 
 	<tr>
 		<td colspan='3'></td>
@@ -763,7 +771,7 @@ blockquote p {
 
 <table>
 
-  <caption style='background-color: #F2EACE;'><span class='caption_name'>PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</span> <span class='caption_description'>[table]</span></caption>
+  <caption style='background-color: #F2EACE;'><span id='πίνακαβάσησδεδομένων_199e00a3' class='caption_name'>PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</span> <span class='caption_description'>[table]</span></caption>
 
 	<tr>
 		<td colspan='3'></td>
