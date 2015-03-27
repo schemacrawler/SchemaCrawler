@@ -197,7 +197,8 @@ public abstract class BaseDotFormatter<O extends BaseTextOptions>
                          emphasizeText,
                          "",
                          bgColor,
-                         colspan, TextOutputFormat.html);
+                         colspan,
+                         TextOutputFormat.html);
   }
 
 }

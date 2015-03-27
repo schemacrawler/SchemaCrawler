@@ -251,7 +251,7 @@ final class MutableTableConstraintColumn
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Column#isPartOfUniqueIndex()
    */
   @Override

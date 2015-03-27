@@ -38,6 +38,10 @@ import java.util.Set;
 public final class TemplatingUtility
 {
 
+  private static final String DELIMITER_START = "${";
+
+  private static final String DELIMITER_END = "}";
+
   /**
    * Expands a template using system properties. Variables in the
    * template are in the form of ${variable}.
@@ -206,10 +210,6 @@ public final class TemplatingUtility
     }
     return propertiesMap;
   }
-
-  private static final String DELIMITER_START = "${";
-
-  private static final String DELIMITER_END = "}";
 
   private TemplatingUtility()
   {

@@ -150,6 +150,15 @@ public class JSONObject
   }
 
   /**
+   * It is sometimes more convenient and less ambiguous to have a
+   * <code>NULL</code> object than to use Java's <code>null</code>
+   * value. <code>JSONObject.NULL.equals(null)</code> returns
+   * <code>true</code>. <code>JSONObject.NULL.toString()</code> returns
+   * <code>"null"</code>.
+   */
+  public static final Object NULL = new Null();
+
+  /**
    * Produce a string from a double. The string "null" will be returned
    * if the number is not finite.
    *
@@ -627,15 +636,6 @@ public class JSONObject
    * The map where the JSONObject's properties are kept.
    */
   private final Map map;
-
-  /**
-   * It is sometimes more convenient and less ambiguous to have a
-   * <code>NULL</code> object than to use Java's <code>null</code>
-   * value. <code>JSONObject.NULL.equals(null)</code> returns
-   * <code>true</code>. <code>JSONObject.NULL.toString()</code> returns
-   * <code>"null"</code>.
-   */
-  public static final Object NULL = new Null();
 
   /**
    * Construct an empty JSONObject.

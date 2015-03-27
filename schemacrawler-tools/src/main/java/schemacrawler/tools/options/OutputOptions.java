@@ -63,13 +63,13 @@ public class OutputOptions
   private static final String SC_INPUT_ENCODING = "schemacrawler.encoding.input";
   private static final String SC_OUTPUT_ENCODING = "schemacrawler.encoding.output";
 
+  private static final SecureRandom random = new SecureRandom();
   private OutputResource outputResource;
   private InputResource inputResource;
   private String outputFormatValue;
   private Charset inputEncodingCharset;
-  private Charset outputEncodingCharset;
 
-  private static final SecureRandom random = new SecureRandom();
+  private Charset outputEncodingCharset;
 
   /**
    * Creates default OutputOptions.

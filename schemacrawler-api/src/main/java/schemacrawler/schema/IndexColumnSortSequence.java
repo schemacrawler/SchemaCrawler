@@ -43,6 +43,9 @@ public enum IndexColumnSortSequence
    */
   descending("D");
 
+  private static final Logger LOGGER = Logger
+    .getLogger(IndexColumnSortSequence.class.getName());
+
   /**
    * Find the enumeration value corresponding to the string.
    *
@@ -62,9 +65,6 @@ public enum IndexColumnSortSequence
     LOGGER.log(Level.FINE, "Unknown code  " + code);
     return unknown;
   }
-
-  private static final Logger LOGGER = Logger
-    .getLogger(IndexColumnSortSequence.class.getName());
 
   private final String code;
 

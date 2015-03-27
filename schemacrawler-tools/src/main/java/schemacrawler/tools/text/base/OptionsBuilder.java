@@ -7,9 +7,9 @@ import schemacrawler.schemacrawler.Options;
 public interface OptionsBuilder<O extends Options>
 {
 
-  Config toConfig();
-
   OptionsBuilder<O> setFromConfig(Config config);
+
+  Config toConfig();
 
   O toOptions();
 

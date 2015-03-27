@@ -50,16 +50,16 @@ public final class JavaSqlType
 
   private static final long serialVersionUID = 2614819974745473431L;
 
-  private final int javaSqlType;
-  private final String javaSqlTypeName;
-  private final JavaSqlTypeGroup javaSqlTypeGroup;
-
   /**
    * Unknown SQL data type.
    */
   public static final JavaSqlType UNKNOWN = new JavaSqlType(Integer.MAX_VALUE,
                                                             "<UNKNOWN>",
                                                             JavaSqlTypeGroup.unknown);
+  private final int javaSqlType;
+  private final String javaSqlTypeName;
+
+  private final JavaSqlTypeGroup javaSqlTypeGroup;
 
   public JavaSqlType(final int javaSqlType,
                      final String javaSqlTypeName,

@@ -53,6 +53,9 @@ public enum SearchableType
    */
   searchable(DatabaseMetaData.typeSearchable, "searchable");
 
+  private static final Logger LOGGER = Logger.getLogger(SearchableType.class
+    .getName());
+
   /**
    * Gets the enum value from the integer.
    *
@@ -72,9 +75,6 @@ public enum SearchableType
     LOGGER.log(Level.FINE, "Unknown id " + id);
     return unknown;
   }
-
-  private static final Logger LOGGER = Logger.getLogger(SearchableType.class
-    .getName());
 
   private final int id;
   private final String text;

@@ -45,6 +45,9 @@ public enum ProcedureReturnType
    */
   returnsResult(DatabaseMetaData.procedureReturnsResult, "returns result");
 
+  private static final Logger LOGGER = Logger
+    .getLogger(ProcedureReturnType.class.getName());
+
   /**
    * Gets the enum value from the integer.
    *
@@ -64,9 +67,6 @@ public enum ProcedureReturnType
     LOGGER.log(Level.FINE, "Unknown id " + id);
     return unknown;
   }
-
-  private static final Logger LOGGER = Logger
-    .getLogger(ProcedureReturnType.class.getName());
 
   private final int id;
   private final String text;

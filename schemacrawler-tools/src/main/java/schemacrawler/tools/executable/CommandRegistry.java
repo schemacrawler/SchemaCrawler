@@ -47,6 +47,9 @@ public final class CommandRegistry
   implements Iterable<String>
 {
 
+  private static final Logger LOGGER = Logger.getLogger(CommandRegistry.class
+    .getName());
+
   private static Map<String, CommandProvider> loadCommandRegistry()
     throws SchemaCrawlerException
   {
@@ -92,9 +95,6 @@ public final class CommandRegistry
     }
     return commandRegistry;
   }
-
-  private static final Logger LOGGER = Logger.getLogger(CommandRegistry.class
-    .getName());
 
   private final Map<String, CommandProvider> commandRegistry;
 
