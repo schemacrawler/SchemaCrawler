@@ -68,19 +68,6 @@ li {
 	margin-top: 0.3rem;
 }
 
-a:link, a:visited {
-	color: rgb(16, 16, 16);
-	text-decoration: none;
-	border-bottom: 1px solid rgb(200, 200, 200);
-}
-
-a:hover, a:active {
-	color: rgb(123, 42, 144);
-	background-color: rgb(252, 241, 65);
-	text-decoration: none;
-	border-bottom: 1px solid rgb(100, 100, 100);
-}
-
 table, th, td {
 	border: 1px solid rgb(240, 240, 240);
 	border-collapse: collapse;
