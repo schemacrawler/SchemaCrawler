@@ -87,6 +87,16 @@ public class TablesReducer
     filteredTables.addAll(reducedTables);
     filteredTables.addAll(childTables);
     filteredTables.addAll(parentTables);
+
+    // Mark tables as filtered out
+    for (final Table table: allTables)
+    {
+      if (!filteredTables.contains(table))
+      {
+        table.setAttribute("table.filtered_out", true);
+      }
+    }
+
     return filteredTables;
   }
 
@@ -134,6 +144,7 @@ public class TablesReducer
           boolean removeFk = false;
           if (isTablePartial(referencedTable))
           {
+            referencedTable.setAttribute("table.filtered_out", true);
             removeFk = true;
           }
           else if (!allTables.contains(referencedTable))
@@ -145,12 +156,7 @@ public class TablesReducer
           {
             if (options.isGrepOnlyMatching())
             {
-              foreignKey.setAttribute("foreignKey.filtered", true);
-            }
-            else
-            {
-              foreignKey.setAttribute("foreignKey.filtered.foreignKeyColumn",
-                                      true);
+              referencedTable.setAttribute("table.filtered_out.no_match", true);
             }
           }
         }
