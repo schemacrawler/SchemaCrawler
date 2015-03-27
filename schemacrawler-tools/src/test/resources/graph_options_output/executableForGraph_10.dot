@@ -30,7 +30,7 @@ digraph "SchemaCrawler_Diagram" {
 	</tr>
 	<tr>
 		<td align='right'>Generated on:</td>
-		<td align='left'>Mar 24, 2015 9:40 PM</td>
+		<td align='left'>Mar 27, 2015 7:51 PM</td>
 	</tr>
 	<tr>
 		<td align='right'>Database:</td>
@@ -78,9 +78,9 @@ digraph "SchemaCrawler_Diagram" {
   ];
 
   "postalcode_ad084f57" [label=<PUBLIC."PUBLISHER SALES".SALES.POSTALCODE>];
-  "postalcode_ad084f57":w -> "regions_ad084f57":"postalcode_ad084f57.end":e [label=<FK_SALES_REGIONS> style="solid" dir="both" arrowhead="teetee" arrowtail="box"];
+  "postalcode_ad084f57":w -> "regions_ad084f57":"postalcode_ad084f57.end":e [label=<FK_SALES_REGIONS> style="solid" dir="both" arrowhead="teetee" arrowtail="crowodot"];
   "country_ad084f57" [label=<PUBLIC."PUBLISHER SALES".SALES.COUNTRY>];
-  "country_ad084f57":w -> "regions_ad084f57":"country_ad084f57.end":e [label=<FK_SALES_REGIONS> style="solid" dir="both" arrowhead="teetee" arrowtail="box"];
+  "country_ad084f57":w -> "regions_ad084f57":"country_ad084f57.end":e [label=<FK_SALES_REGIONS> style="solid" dir="both" arrowhead="teetee" arrowtail="crowodot"];
 
 
 }
