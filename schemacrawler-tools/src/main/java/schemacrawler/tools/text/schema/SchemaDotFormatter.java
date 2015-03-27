@@ -300,6 +300,8 @@ public final class SchemaDotFormatter
                                       final ForeignKeyCardinality fkCardinality,
                                       final boolean isFkColumnFiltered)
   {
+    final boolean isForeignKey = columnRef instanceof ForeignKeyColumnReference;
+
     final Column primaryKeyColumn = columnRef.getPrimaryKeyColumn();
     final Column foreignKeyColumn = columnRef.getForeignKeyColumn();
 
@@ -328,7 +330,7 @@ public final class SchemaDotFormatter
     }
 
     final String style;
-    if (columnRef instanceof ForeignKeyColumnReference)
+    if (isForeignKey)
     {
       style = "solid";
     }
@@ -337,11 +339,21 @@ public final class SchemaDotFormatter
       style = "dashed";
     }
 
+    final String associationName;
+    if (options.isHideForeignKeyNames() || !isForeignKey)
+    {
+      associationName = "";
+    }
+    else
+    {
+      associationName = fkName;
+    }
+
     return String
       .format("  %s:w -> %s:e [label=<%s> style=\"%s\" dir=\"both\" arrowhead=\"%s\" arrowtail=\"%s\"];%n",
               fkPortIds[0],
               pkPortIds[1],
-              options.isHideForeignKeyNames()? "": fkName,
+              associationName,
               style,
               pkSymbol,
               fkSymbol);

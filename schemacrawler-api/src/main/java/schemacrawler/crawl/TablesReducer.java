@@ -27,6 +27,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import schemacrawler.filter.NamedObjectFilter;
+import schemacrawler.schema.ForeignKey;
+import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.Reducer;
 import schemacrawler.schema.Table;
@@ -56,6 +58,8 @@ public class TablesReducer
       return;
     }
     allTables.retainAll(doReduce(allTables));
+
+    removeForeignKeys(allTables);
   }
 
   private Collection<Table> doReduce(final Collection<? extends Table> allTables)
@@ -79,25 +83,21 @@ public class TablesReducer
                                                                 parentTableFilterDepth,
                                                                 reducedTables);
 
-    final Set<Table> keepTables = new HashSet<>();
-    keepTables.addAll(reducedTables);
-    keepTables.addAll(childTables);
-    keepTables.addAll(parentTables);
+    final Set<Table> filteredTables = new HashSet<>();
+    filteredTables.addAll(reducedTables);
+    filteredTables.addAll(childTables);
+    filteredTables.addAll(parentTables);
 
     // Mark tables as filtered out
     for (final Table table: allTables)
     {
-      if (!keepTables.contains(table) || isTablePartial(table))
+      if (!filteredTables.contains(table))
       {
         table.setAttribute("schemacrawler.table.filtered_out", true);
-        if (options.isGrepOnlyMatching())
-        {
-          table.setAttribute("schemacrawler.table.no_grep_match", true);
-        }
       }
     }
 
-    return keepTables;
+    return filteredTables;
   }
 
   private Collection<Table> includeRelatedTables(final TableRelationshipType tableRelationshipType,
@@ -128,6 +128,73 @@ public class TablesReducer
   private boolean isTablePartial(final TableReference table)
   {
     return table instanceof PartialDatabaseObject;
+  }
+
+  private void removeForeignKeys(final Collection<? extends Table> allTables)
+  {
+
+    for (final Table table: allTables)
+    {
+      for (final ForeignKey foreignKey: table.getExportedForeignKeys())
+      {
+        for (final ForeignKeyColumnReference fkColumnRef: foreignKey)
+        {
+          final Table referencedTable = fkColumnRef.getForeignKeyColumn()
+            .getParent();
+          boolean removeFk = false;
+          if (isTablePartial(referencedTable))
+          {
+            referencedTable.setAttribute("schemacrawler.table.filtered_out",
+                                         true);
+            removeFk = true;
+          }
+          else if (!allTables.contains(referencedTable))
+          {
+            removeFk = true;
+          }
+
+          if (removeFk)
+          {
+            if (options.isGrepOnlyMatching())
+            {
+              referencedTable.setAttribute("schemacrawler.table.no_grep_match",
+                                           true);
+            }
+          }
+        }
+      }
+
+      for (final ForeignKey foreignKey: table.getImportedForeignKeys())
+      {
+        for (final ForeignKeyColumnReference columnRef: foreignKey)
+        {
+          final TableReference referencedTable = columnRef
+            .getPrimaryKeyColumn().getParent();
+          boolean removeFk = false;
+          if (!(referencedTable instanceof MutableTable))
+          {
+            removeFk = true;
+          }
+          else if (!allTables.contains(referencedTable))
+          {
+            removeFk = true;
+          }
+
+          if (removeFk)
+          {
+            if (options.isGrepOnlyMatching())
+            {
+              foreignKey.setAttribute("foreignKey.filtered", true);
+            }
+            else
+            {
+              foreignKey.setAttribute("foreignKey.filtered.primaryKeyColumn",
+                                      true);
+            }
+          }
+        }
+      }
+    }
   }
 
 }
