@@ -23,7 +23,6 @@ package schemacrawler.tools.text.schema;
 
 
 import static schemacrawler.utility.MetaDataUtility.findForeignKeyCardinality;
-import static sf.util.Utility.isBlank;
 
 import java.awt.Color;
 import java.util.Collection;
@@ -296,17 +295,16 @@ public final class SchemaDotFormatter
     return portIds;
   }
 
-  private String printColumnReference(final String associationName,
-                                      final ColumnReference columnReference,
+  private String printColumnReference(final String fkName,
+                                      final ColumnReference columnRef,
                                       final ForeignKeyCardinality fkCardinality,
-                                      final boolean isForeignKeyColumnFiltered)
+                                      final boolean isFkColumnFiltered)
   {
-    final Column primaryKeyColumn = columnReference.getPrimaryKeyColumn();
-    final Column foreignKeyColumn = columnReference.getForeignKeyColumn();
+    final Column primaryKeyColumn = columnRef.getPrimaryKeyColumn();
+    final Column foreignKeyColumn = columnRef.getForeignKeyColumn();
 
     final String[] pkPortIds = getPortIds(primaryKeyColumn, false);
-    final String[] fkPortIds = getPortIds(foreignKeyColumn,
-                                          isForeignKeyColumnFiltered);
+    final String[] fkPortIds = getPortIds(foreignKeyColumn, isFkColumnFiltered);
 
     final GraphOptions graphOptions = (GraphOptions) options;
     final String pkSymbol;
@@ -322,14 +320,7 @@ public final class SchemaDotFormatter
     final String fkSymbol;
     if (graphOptions.isShowForeignKeyCardinality())
     {
-      if (isForeignKeyColumnFiltered)
-      {
-        fkSymbol = "box";
-      }
-      else
-      {
-        fkSymbol = arrowhead(fkCardinality);
-      }
+      fkSymbol = arrowhead(fkCardinality);
     }
     else
     {
@@ -337,20 +328,20 @@ public final class SchemaDotFormatter
     }
 
     final String style;
-    if (isBlank(associationName))
+    if (columnRef instanceof ForeignKeyColumnReference)
     {
-      style = "dashed";
+      style = "solid";
     }
     else
     {
-      style = "solid";
+      style = "dashed";
     }
 
     return String
       .format("  %s:w -> %s:e [label=<%s> style=\"%s\" dir=\"both\" arrowhead=\"%s\" arrowtail=\"%s\"];%n",
               fkPortIds[0],
               pkPortIds[1],
-              options.isHideForeignKeyNames()? "": associationName,
+              options.isHideForeignKeyNames()? "": fkName,
               style,
               pkSymbol,
               fkSymbol);
@@ -373,28 +364,19 @@ public final class SchemaDotFormatter
         final Table referencedTable = columnRef.getForeignKeyColumn()
           .getParent();
         final boolean isForeignKeyFiltered = referencedTable
-          .getAttribute("table.filtered_out.no_match", false);
+          .getAttribute("schemacrawler.table.no_grep_match", false);
         if (isForeignKeyFiltered)
         {
           continue;
         }
-        final boolean isForeignKeyColumnFiltered = referencedTable
-          .getAttribute("table.filtered_out", false);
+        final boolean isFkColumnFiltered = referencedTable
+          .getAttribute("schemacrawler.table.filtered_out", false);
         if (table.equals(columnRef.getPrimaryKeyColumn().getParent()))
         {
-          final String fkName;
-          if (columnRef instanceof ForeignKeyColumnReference)
-          {
-            fkName = foreignKey.getName();
-          }
-          else
-          {
-            fkName = "";
-          }
-          out.write(printColumnReference(fkName,
+          out.write(printColumnReference(foreignKey.getName(),
                                          columnRef,
                                          fkCardinality,
-                                         isForeignKeyColumnFiltered));
+                                         isFkColumnFiltered));
         }
       }
     }
