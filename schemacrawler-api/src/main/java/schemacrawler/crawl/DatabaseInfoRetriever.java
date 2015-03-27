@@ -54,6 +54,17 @@ final class DatabaseInfoRetriever
   extends AbstractRetriever
 {
 
+  private static final Logger LOGGER = Logger
+    .getLogger(DatabaseInfoRetriever.class.getName());
+
+  private static final List<String> ignoreMethods = Arrays
+    .asList("getDatabaseProductName",
+            "getDatabaseProductVersion",
+            "getURL",
+            "getUserName",
+            "getDriverName",
+            "getDriverVersion");
+
   /**
    * Checks if a method is a result set method.
    *
@@ -142,17 +153,6 @@ final class DatabaseInfoRetriever
                                             Integer.valueOf(resultSetType));
     return new ImmutableDatabaseProperty(name, propertyValue);
   }
-
-  private static final Logger LOGGER = Logger
-    .getLogger(DatabaseInfoRetriever.class.getName());
-
-  private static final List<String> ignoreMethods = Arrays
-    .asList("getDatabaseProductName",
-            "getDatabaseProductVersion",
-            "getURL",
-            "getUserName",
-            "getDriverName",
-            "getDriverVersion");
 
   DatabaseInfoRetriever(final RetrieverConnection retrieverConnection,
                         final MutableCatalog catalog)

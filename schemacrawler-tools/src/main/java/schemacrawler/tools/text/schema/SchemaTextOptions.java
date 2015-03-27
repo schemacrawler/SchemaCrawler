@@ -107,6 +107,11 @@ public class SchemaTextOptions
     this.isAlphabeticalSortForIndexes = isAlphabeticalSortForIndexes;
   }
 
+  public void setHideConstraintNames(final boolean isHideTableConstraintNames)
+  {
+    this.isHideTableConstraintNames = isHideTableConstraintNames;
+  }
+
   public void setHideForeignKeyNames(final boolean isHideForeignKeyNames)
   {
     this.isHideForeignKeyNames = isHideForeignKeyNames;
@@ -130,11 +135,6 @@ public class SchemaTextOptions
   public void setHideRoutineSpecificNames(final boolean isHideRoutineSpecificNames)
   {
     this.isHideRoutineSpecificNames = isHideRoutineSpecificNames;
-  }
-
-  public void setHideConstraintNames(final boolean isHideTableConstraintNames)
-  {
-    this.isHideTableConstraintNames = isHideTableConstraintNames;
   }
 
   public void setHideTriggerNames(final boolean isHideTriggerNames)

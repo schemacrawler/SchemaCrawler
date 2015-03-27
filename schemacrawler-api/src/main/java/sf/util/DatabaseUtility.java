@@ -45,13 +45,6 @@ public final class DatabaseUtility
   private static final Logger LOGGER = Logger.getLogger(DatabaseUtility.class
     .getName());
 
-  public static Statement createStatement(final Connection connection)
-    throws SchemaCrawlerException, SQLException
-  {
-    checkConnection(connection);
-    return connection.createStatement();
-  }
-
   public static void checkConnection(final Connection connection)
     throws SQLException
   {
@@ -60,6 +53,13 @@ public final class DatabaseUtility
     {
       throw new SQLException("Connection is closed");
     }
+  }
+
+  public static Statement createStatement(final Connection connection)
+    throws SchemaCrawlerException, SQLException
+  {
+    checkConnection(connection);
+    return connection.createStatement();
   }
 
   public static void executeScriptFromResource(final Connection connection,

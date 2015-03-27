@@ -45,6 +45,9 @@ public final class JavaSqlTypes
   implements Map<Integer, JavaSqlType>, Iterable<JavaSqlType>
 {
 
+  private static final Logger LOGGER = Logger.getLogger(JavaSqlTypes.class
+    .getName());
+
   private static Map<String, Integer> createJavaSqlTypesMap()
   {
     final Map<String, Integer> javaSqlTypesMap = new HashMap<>();
@@ -163,9 +166,6 @@ public final class JavaSqlTypes
 
     return javaSqlTypes;
   }
-
-  private static final Logger LOGGER = Logger.getLogger(JavaSqlTypes.class
-    .getName());
 
   private final Map<Integer, JavaSqlType> javaSqlTypeMap;
 

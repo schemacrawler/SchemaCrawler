@@ -34,12 +34,12 @@ public final class OutputWriter
   extends Writer
 {
 
-  private final Writer writer;
-  private boolean isClosed;
-  private final OutputResource outputResource;
-
   private static final Logger LOGGER = Logger
     .getLogger(ConsoleOutputResource.class.getName());
+  private final Writer writer;
+  private boolean isClosed;
+
+  private final OutputResource outputResource;
 
   public OutputWriter(final OutputResource outputResource,
                       final Charset outputCharset)

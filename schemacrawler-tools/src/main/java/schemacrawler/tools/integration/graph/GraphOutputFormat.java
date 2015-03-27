@@ -65,6 +65,9 @@ public enum GraphOutputFormat
   xlib("xlib", "Xlib canvas"),
   x11("x11", "Xlib canvas"), ;
 
+  private static final Logger LOGGER = Logger.getLogger(GraphOutputFormat.class
+    .getName());
+
   /**
    * Gets the value from the format.
    *
@@ -109,10 +112,8 @@ public enum GraphOutputFormat
   }
 
   private final String format;
-  private final String description;
 
-  private static final Logger LOGGER = Logger.getLogger(GraphOutputFormat.class
-    .getName());
+  private final String description;
 
   private GraphOutputFormat(final String format, final String description)
   {

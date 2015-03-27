@@ -29,10 +29,10 @@ public final class DatabaseServerType
 
   private static final long serialVersionUID = 2160456864554076419L;
 
-  private final String databaseSystemIdentifier;
-  private final String databaseSystemName;
-
   public static final DatabaseServerType UNKNOWN = new DatabaseServerType();
+  private final String databaseSystemIdentifier;
+
+  private final String databaseSystemName;
 
   public DatabaseServerType(final String databaseSystemIdentifier,
                             final String databaseSystemName)

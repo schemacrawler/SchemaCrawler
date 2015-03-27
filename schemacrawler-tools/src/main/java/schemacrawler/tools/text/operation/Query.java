@@ -45,6 +45,8 @@ public final class Query
   implements Serializable
 {
 
+  private static final long serialVersionUID = 2820769346069413473L;
+
   private static String getColumnsListAsString(final List<Column> columns,
                                                final boolean omitLargeObjectColumns)
   {
@@ -65,8 +67,6 @@ public final class Query
     }
     return buffer.toString();
   }
-
-  private static final long serialVersionUID = 2820769346069413473L;
 
   private final String name;
   private final String query;
@@ -120,29 +120,6 @@ public final class Query
   }
 
   /**
-   * Determines if this query has substitutable parameters, and whether
-   * it should be run once for each table.
-   *
-   * @return If the query is to be run over each table
-   */
-  public boolean isQueryOver()
-  {
-    final Set<String> keys = TemplatingUtility.extractTemplateVariables(query);
-    return keys.contains("table");
-  }
-
-  /**
-   * {@inheritDoc}
-   *
-   * @see java.lang.Object#toString()
-   */
-  @Override
-  public String toString()
-  {
-    return name + ":" + query;
-  }
-
-  /**
    * Gets the query with parameters substituted.
    *
    * @param table
@@ -176,6 +153,29 @@ public final class Query
     sql = TemplatingUtility.expandTemplate(sql);
 
     return sql;
+  }
+
+  /**
+   * Determines if this query has substitutable parameters, and whether
+   * it should be run once for each table.
+   *
+   * @return If the query is to be run over each table
+   */
+  public boolean isQueryOver()
+  {
+    final Set<String> keys = TemplatingUtility.extractTemplateVariables(query);
+    return keys.contains("table");
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * @see java.lang.Object#toString()
+   */
+  @Override
+  public String toString()
+  {
+    return name + ":" + query;
   }
 
 }

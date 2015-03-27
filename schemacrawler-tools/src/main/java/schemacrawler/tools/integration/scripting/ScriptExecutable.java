@@ -53,6 +53,11 @@ public final class ScriptExecutable
   extends BaseStagedExecutable
 {
 
+  private static final Logger LOGGER = Logger.getLogger(ScriptExecutable.class
+    .getName());
+
+  static final String COMMAND = "script";
+
   public static String getFileExtension(final String scriptFileName)
   {
     final String ext;
@@ -72,11 +77,6 @@ public final class ScriptExecutable
     }
     return ext;
   }
-
-  private static final Logger LOGGER = Logger.getLogger(ScriptExecutable.class
-    .getName());
-
-  static final String COMMAND = "script";
 
   public ScriptExecutable()
   {
