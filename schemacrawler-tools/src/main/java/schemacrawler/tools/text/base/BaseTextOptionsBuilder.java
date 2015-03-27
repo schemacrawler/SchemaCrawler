@@ -64,12 +64,6 @@ public class BaseTextOptionsBuilder<O extends BaseTextOptions>
     return this;
   }
 
-  @Override
-  public O toOptions()
-  {
-    return options;
-  }
-
   public BaseTextOptionsBuilder<O> hideFooter()
   {
     options.setNoFooter(true);
@@ -179,6 +173,12 @@ public class BaseTextOptionsBuilder<O extends BaseTextOptions>
                            options.isAlphabeticalSortForRoutineColumns());
 
     return config;
+  }
+
+  @Override
+  public O toOptions()
+  {
+    return options;
   }
 
   @Override

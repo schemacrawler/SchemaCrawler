@@ -72,6 +72,14 @@ public interface NamedObjectWithAttributes
   boolean hasRemarks();
 
   /**
+   * Removes an attribute.
+   *
+   * @param name
+   *        Attribute name
+   */
+  void removeAttribute(String name);
+
+  /**
    * Sets an attribute.
    *
    * @param name
@@ -80,13 +88,5 @@ public interface NamedObjectWithAttributes
    *        Attribute value
    */
   void setAttribute(String name, Object value);
-
-  /**
-   * Removes an attribute.
-   *
-   * @param name
-   *        Attribute name
-   */
-  void removeAttribute(String name);
 
 }

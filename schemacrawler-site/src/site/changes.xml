@@ -5,6 +5,14 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+     <release version="12.06.02" date="2015-03-26" description="Fixing links on website.">
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Fixing links on website.
+      ]]></action>   
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Fixing diagram to show hanging arrows for referenced tables.
+      ]]></action>                                             
+     </release>   
      <release version="12.06.01" date="2015-03-24" description="Hiding empty tables, and links in HTML.">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Hyperlinks in HTML output from foreign keys to tables.

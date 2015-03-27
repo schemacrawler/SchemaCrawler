@@ -57,10 +57,10 @@ public final class GraphExecutable
 
   static final String COMMAND = "graph";
 
-  private GraphOptions graphOptions;
-
   private static final Logger LOGGER = Logger.getLogger(GraphExecutable.class
     .getName());
+
+  private GraphOptions graphOptions;
 
   public GraphExecutable()
   {
