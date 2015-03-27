@@ -30,10 +30,11 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import schemacrawler.schema.BaseForeignKey;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ColumnReference;
-import schemacrawler.schema.ForeignKey;
+import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
@@ -297,7 +298,7 @@ public final class SchemaDotFormatter
 
   private String printColumnReference(final String associationName,
                                       final ColumnReference columnReference,
-                                      ForeignKeyCardinality fkCardinality,
+                                      final ForeignKeyCardinality fkCardinality,
                                       final boolean isForeignKeyColumnFiltered)
   {
     final Column primaryKeyColumn = columnReference.getPrimaryKeyColumn();
@@ -358,21 +359,39 @@ public final class SchemaDotFormatter
 
   private void printForeignKeys(final Table table)
   {
-    for (final ForeignKey foreignKey: table.getForeignKeys())
-    {
-      if (foreignKey.getAttribute("foreignKey.filtered", false))
-      {
-        continue;
-      }
-      final boolean isForeignKeyColumnFiltered = foreignKey
-        .getAttribute("foreignKey.filtered.foreignKeyColumn", false);
+    printForeignKeys(table, table.getForeignKeys());
+  }
 
+  private void printForeignKeys(final Table table,
+                                final Collection<? extends BaseForeignKey> foreignKeys)
+  {
+    for (final BaseForeignKey<? extends ColumnReference> foreignKey: foreignKeys)
+    {
       final ForeignKeyCardinality fkCardinality = findForeignKeyCardinality(foreignKey);
       for (final ColumnReference columnRef: foreignKey)
       {
+        final Table referencedTable = columnRef.getForeignKeyColumn()
+          .getParent();
+        final boolean isForeignKeyFiltered = referencedTable
+          .getAttribute("table.filtered_out.no_match", false);
+        if (isForeignKeyFiltered)
+        {
+          continue;
+        }
+        final boolean isForeignKeyColumnFiltered = referencedTable
+          .getAttribute("table.filtered_out", false);
         if (table.equals(columnRef.getPrimaryKeyColumn().getParent()))
         {
-          out.write(printColumnReference(foreignKey.getName(),
+          final String fkName;
+          if (columnRef instanceof ForeignKeyColumnReference)
+          {
+            fkName = foreignKey.getName();
+          }
+          else
+          {
+            fkName = "";
+          }
+          out.write(printColumnReference(fkName,
                                          columnRef,
                                          fkCardinality,
                                          isForeignKeyColumnFiltered));
@@ -522,17 +541,7 @@ public final class SchemaDotFormatter
   {
     final Collection<WeakAssociationForeignKey> weakFks = WeakAssociationsUtility
       .getWeakAssociations(table);
-    for (final WeakAssociationForeignKey weakFk: weakFks)
-    {
-      final ForeignKeyCardinality fkCardinality = findForeignKeyCardinality(weakFk);
-      for (final ColumnReference columnRef: weakFk)
-      {
-        if (table.equals(columnRef.getPrimaryKeyColumn().getParent()))
-        {
-          out.write(printColumnReference("", columnRef, fkCardinality, false));
-        }
-      }
-    }
+    printForeignKeys(table, weakFks);
   }
 
 }
