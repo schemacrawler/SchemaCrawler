@@ -172,10 +172,9 @@ final class MutablePrivilege<P extends DatabaseObject>
 
   }
 
+  private static final long serialVersionUID = -1117664231494271886L;
   private final P parent;
   private final Set<Grant> grants = new HashSet<>();
-
-  private static final long serialVersionUID = -1117664231494271886L;
 
   MutablePrivilege(final P parent, final String name)
   {

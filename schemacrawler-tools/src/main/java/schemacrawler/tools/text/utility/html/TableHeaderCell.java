@@ -44,7 +44,8 @@ public final class TableHeaderCell
           emphasizeText,
           styleClass,
           bgColor,
-          colSpan, outputFormat);
+          colSpan,
+          outputFormat);
   }
 
   @Override

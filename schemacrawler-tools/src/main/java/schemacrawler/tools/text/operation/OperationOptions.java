@@ -54,7 +54,7 @@ public final class OperationOptions
    */
   public void setShowLobs(final boolean showLobs)
   {
-    this.isShowLobs = showLobs;
+    isShowLobs = showLobs;
   }
 
 }

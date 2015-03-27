@@ -30,6 +30,8 @@ public final class SchemaInfoLevel
   implements Options
 {
 
+  private static final long serialVersionUID = -6721986729175552425L;
+
   /**
    * Creates a new SchemaInfoLevel for verbose schema information.
    *
@@ -102,8 +104,6 @@ public final class SchemaInfoLevel
     standard.setTag("standard");
     return standard;
   }
-
-  private static final long serialVersionUID = -6721986729175552425L;
 
   private String tag;
 

@@ -123,6 +123,18 @@ abstract class AbstractNamedObjectWithAttributes
 
   /**
    * {@inheritDoc}
+   */
+  @Override
+  public final void removeAttribute(final String name)
+  {
+    if (!isBlank(name))
+    {
+      attributeMap.remove(name);
+    }
+  }
+
+  /**
+   * {@inheritDoc}
    *
    * @see NamedObjectWithAttributes#setAttribute(String, Object)
    */
@@ -139,18 +151,6 @@ abstract class AbstractNamedObjectWithAttributes
       {
         attributeMap.put(name, value);
       }
-    }
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public final void removeAttribute(final String name)
-  {
-    if (!isBlank(name))
-    {
-      attributeMap.remove(name);
     }
   }
 

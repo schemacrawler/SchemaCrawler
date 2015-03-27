@@ -392,6 +392,17 @@ public final class SchemaCrawlerOptions
     return grepRoutineColumnInclusionRule != null;
   }
 
+  /**
+   * If infolevel=maximum, this option will remove empty tables (that
+   * is, tables with no rows of data) from the catalog.
+   *
+   * @return Whether to hide empty tables
+   */
+  public boolean isHideEmptyTables()
+  {
+    return hideEmptyTables;
+  }
+
   public void setChildTableFilterDepth(final int childTableFilterDepth)
   {
     this.childTableFilterDepth = childTableFilterDepth;
@@ -474,29 +485,6 @@ public final class SchemaCrawlerOptions
   }
 
   /**
-   * If infolevel=maximum, this option will remove empty tables (that
-   * is, tables with no rows of data) from the catalog.
-   * 
-   * @return Whether to hide empty tables
-   */
-  public boolean isHideEmptyTables()
-  {
-    return hideEmptyTables;
-  }
-
-  /**
-   * If infolevel=maximum, this option will remove empty tables (that
-   * is, tables with no rows of data) from the catalog.
-   * 
-   * @param hideEmptyTables
-   *        Whether to hide empty tables
-   */
-  public void setHideEmptyTables(boolean hideEmptyTables)
-  {
-    this.hideEmptyTables = hideEmptyTables;
-  }
-
-  /**
    * Sets the routine column inclusion rule for grep.
    *
    * @param grepRoutineColumnInclusionRule
@@ -505,6 +493,18 @@ public final class SchemaCrawlerOptions
   public void setGrepRoutineColumnInclusionRule(final InclusionRule grepRoutineColumnInclusionRule)
   {
     this.grepRoutineColumnInclusionRule = grepRoutineColumnInclusionRule;
+  }
+
+  /**
+   * If infolevel=maximum, this option will remove empty tables (that
+   * is, tables with no rows of data) from the catalog.
+   *
+   * @param hideEmptyTables
+   *        Whether to hide empty tables
+   */
+  public void setHideEmptyTables(final boolean hideEmptyTables)
+  {
+    this.hideEmptyTables = hideEmptyTables;
   }
 
   /**

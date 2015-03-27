@@ -48,11 +48,11 @@ public abstract class BaseFormatter<O extends BaseTextOptions>
       .fromFormat(outputOptions.getOutputFormatValue());
     if (outputFormat == TextOutputFormat.html)
     {
-      formattingHelper = new HtmlFormattingHelper((TextOutputFormat) outputFormat);
+      formattingHelper = new HtmlFormattingHelper(outputFormat);
     }
     else
     {
-      formattingHelper = new PlainTextFormattingHelper((TextOutputFormat) outputFormat);
+      formattingHelper = new PlainTextFormattingHelper(outputFormat);
     }
 
     out = new PrintWriter(outputOptions.openNewOutputWriter(options

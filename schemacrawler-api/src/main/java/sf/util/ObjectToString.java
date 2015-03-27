@@ -39,6 +39,9 @@ import java.util.logging.Logger;
 public final class ObjectToString
 {
 
+  private static final Logger LOGGER = Logger.getLogger(ObjectToString.class
+    .getName());
+
   public static String toString(final Object object)
   {
     if (object == null)
@@ -278,9 +281,6 @@ public final class ObjectToString
       return new char[0];
     }
   }
-
-  private static final Logger LOGGER = Logger.getLogger(ObjectToString.class
-    .getName());
 
   private ObjectToString()
   {

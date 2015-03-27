@@ -43,6 +43,23 @@ public final class HtmlFormattingHelper
   private static final String HTML_FOOTER = "</body>" + System.lineSeparator()
                                             + "</html>";
 
+  private static String htmlHeader()
+  {
+    final StringBuffer styleSheet = new StringBuffer();
+    styleSheet.append(System.lineSeparator())
+      .append(readResourceFully("/sc.css")).append(System.lineSeparator())
+      .append(readResourceFully("/sc_output.css"))
+      .append(System.lineSeparator());
+
+    return "<!DOCTYPE html>" + System.lineSeparator() + "<html lang=\"en\">"
+           + System.lineSeparator() + "<head>" + System.lineSeparator()
+           + "  <title>SchemaCrawler Output</title>" + System.lineSeparator()
+           + "  <meta charset=\"utf-8\"/>" + System.lineSeparator()
+           + "  <style>" + styleSheet + "  </style>" + System.lineSeparator()
+           + "</head>" + System.lineSeparator() + "<body>"
+           + System.lineSeparator();
+  }
+
   public HtmlFormattingHelper(final TextOutputFormat outputFormat)
   {
     super(outputFormat);
@@ -186,23 +203,6 @@ public final class HtmlFormattingHelper
   public String createWeakRightArrow()
   {
     return "\u21dd";
-  }
-
-  private static String htmlHeader()
-  {
-    final StringBuffer styleSheet = new StringBuffer();
-    styleSheet.append(System.lineSeparator())
-      .append(readResourceFully("/sc.css")).append(System.lineSeparator())
-      .append(readResourceFully("/sc_output.css"))
-      .append(System.lineSeparator());
-
-    return "<!DOCTYPE html>" + System.lineSeparator() + "<html lang=\"en\">"
-           + System.lineSeparator() + "<head>" + System.lineSeparator()
-           + "  <title>SchemaCrawler Output</title>" + System.lineSeparator()
-           + "  <meta charset=\"utf-8\"/>" + System.lineSeparator()
-           + "  <style>" + styleSheet + "  </style>" + System.lineSeparator()
-           + "</head>" + System.lineSeparator() + "<body>"
-           + System.lineSeparator();
   }
 
 }
