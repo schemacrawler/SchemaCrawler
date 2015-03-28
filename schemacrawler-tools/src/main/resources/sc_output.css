@@ -1,8 +1,7 @@
 
 a:link, a:visited {
-    color: rgb(16, 16, 16);
+    color: rgb(123, 42, 144);
     text-decoration: none;
-    border-bottom: 1px solid rgb(220, 220, 220);
 }
 
 a:hover, a:active {
@@ -10,6 +9,7 @@ a:hover, a:active {
     background-color: rgb(255, 255, 180);
     text-decoration: none;
     border-bottom: 1px solid rgb(123, 42, 144);
+    border-radius: 3px;
 }
 
 .caption_name {
