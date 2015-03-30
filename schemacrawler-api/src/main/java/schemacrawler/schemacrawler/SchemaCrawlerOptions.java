@@ -17,7 +17,6 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-
 package schemacrawler.schemacrawler;
 
 
@@ -42,33 +41,6 @@ public final class SchemaCrawlerOptions
 {
 
   private static final long serialVersionUID = -3557794862382066029L;
-
-  private static final String SC_SCHEMA_PATTERN_EXCLUDE = "schemacrawler.schema.pattern.exclude";
-  private static final String SC_SCHEMA_PATTERN_INCLUDE = "schemacrawler.schema.pattern.include";
-  private static final String SC_SYNONYM_PATTERN_EXCLUDE = "schemacrawler.synonym.pattern.exclude";
-  private static final String SC_SYNONYM_PATTERN_INCLUDE = "schemacrawler.synonym.pattern.include";
-  private static final String SC_SEQUENCE_PATTERN_EXCLUDE = "schemacrawler.sequence.pattern.exclude";
-  private static final String SC_SEQUENCE_PATTERN_INCLUDE = "schemacrawler.sequence.pattern.include";
-
-  private static final String SC_TABLE_PATTERN_EXCLUDE = "schemacrawler.table.pattern.exclude";
-  private static final String SC_TABLE_PATTERN_INCLUDE = "schemacrawler.table.pattern.include";
-  private static final String SC_COLUMN_PATTERN_EXCLUDE = "schemacrawler.column.pattern.exclude";
-  private static final String SC_COLUMN_PATTERN_INCLUDE = "schemacrawler.column.pattern.include";
-
-  private static final String SC_ROUTINE_PATTERN_EXCLUDE = "schemacrawler.routine.pattern.exclude";
-  private static final String SC_ROUTINE_PATTERN_INCLUDE = "schemacrawler.routine.pattern.include";
-  private static final String SC_ROUTINE_COLUMN_PATTERN_EXCLUDE = "schemacrawler.routine.inout.pattern.exclude";
-  private static final String SC_ROUTINE_COLUMN_PATTERN_INCLUDE = "schemacrawler.routine.inout.pattern.include";
-
-  private static final String SC_GREP_COLUMN_PATTERN_INCLUDE = "schemacrawler.grep.column.pattern.include";
-  private static final String SC_GREP_COLUMN_PATTERN_EXCLUDE = "schemacrawler.grep.column.pattern.exclude";
-  private static final String SC_GREP_ROUTINE_COLUMN_PATTERN_EXCLUDE = "schemacrawler.grep.routine.inout.pattern.exclude";
-  private static final String SC_GREP_ROUTINE_COLUMN_PATTERN_INCLUDE = "schemacrawler.grep.routine.inout.pattern.include";
-  private static final String SC_GREP_DEFINITION_PATTERN_EXCLUDE = "schemacrawler.grep.definition.pattern.exclude";
-  private static final String SC_GREP_DEFINITION_PATTERN_INCLUDE = "schemacrawler.grep.definition.pattern.include";
-  private static final String SC_GREP_INVERT_MATCH = "schemacrawler.grep.invert-match";
-  private static final String SC_GREP_ONLY_MATCHING = "schemacrawler.grep.only-matching";
-  private static final String SC_HIDE_EMPTY_TABLES = "schemacrawler.hide.empty-tables";
 
   private SchemaInfoLevel schemaInfoLevel;
 
@@ -119,64 +91,6 @@ public final class SchemaCrawlerOptions
                                                RoutineType.function));
     routineInclusionRule = new IncludeAll();
     routineColumnInclusionRule = new IncludeAll();
-  }
-
-  /**
-   * Options from properties.
-   *
-   * @param config
-   *        Configuration properties
-   */
-  public SchemaCrawlerOptions(final Config config)
-  {
-    this();
-    final Config configProperties;
-    if (config == null)
-    {
-      configProperties = new Config();
-    }
-    else
-    {
-      configProperties = config;
-    }
-
-    informationSchemaViews = new InformationSchemaViews(config);
-    databaseSpecificOverrideOptions = new DatabaseSpecificOverrideOptions(config);
-
-    schemaInclusionRule = configProperties
-      .getInclusionRule(SC_SCHEMA_PATTERN_INCLUDE, SC_SCHEMA_PATTERN_EXCLUDE);
-    synonymInclusionRule = configProperties
-      .getInclusionRuleDefaultExclude(SC_SYNONYM_PATTERN_INCLUDE,
-                                      SC_SYNONYM_PATTERN_EXCLUDE);
-    sequenceInclusionRule = configProperties
-      .getInclusionRuleDefaultExclude(SC_SEQUENCE_PATTERN_INCLUDE,
-                                      SC_SEQUENCE_PATTERN_EXCLUDE);
-
-    tableInclusionRule = configProperties
-      .getInclusionRule(SC_TABLE_PATTERN_INCLUDE, SC_TABLE_PATTERN_EXCLUDE);
-    columnInclusionRule = configProperties
-      .getInclusionRule(SC_COLUMN_PATTERN_INCLUDE, SC_COLUMN_PATTERN_EXCLUDE);
-
-    routineInclusionRule = configProperties
-      .getInclusionRule(SC_ROUTINE_PATTERN_INCLUDE, SC_ROUTINE_PATTERN_EXCLUDE);
-    routineColumnInclusionRule = configProperties
-      .getInclusionRule(SC_ROUTINE_COLUMN_PATTERN_INCLUDE,
-                        SC_ROUTINE_COLUMN_PATTERN_EXCLUDE);
-
-    grepColumnInclusionRule = configProperties
-      .getInclusionRuleOrNull(SC_GREP_COLUMN_PATTERN_INCLUDE,
-                              SC_GREP_COLUMN_PATTERN_EXCLUDE);
-    grepRoutineColumnInclusionRule = configProperties
-      .getInclusionRuleOrNull(SC_GREP_ROUTINE_COLUMN_PATTERN_INCLUDE,
-                              SC_GREP_ROUTINE_COLUMN_PATTERN_EXCLUDE);
-    grepDefinitionInclusionRule = configProperties
-      .getInclusionRuleOrNull(SC_GREP_DEFINITION_PATTERN_INCLUDE,
-                              SC_GREP_DEFINITION_PATTERN_EXCLUDE);
-
-    grepInvertMatch = configProperties.getBooleanValue(SC_GREP_INVERT_MATCH);
-    grepOnlyMatching = configProperties.getBooleanValue(SC_GREP_ONLY_MATCHING);
-
-    hideEmptyTables = configProperties.getBooleanValue(SC_HIDE_EMPTY_TABLES);
   }
 
   public int getChildTableFilterDepth()

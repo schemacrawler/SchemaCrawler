@@ -25,7 +25,7 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.server.hsqldb.HyperSQLDatabaseConnector;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestWriter;
@@ -83,11 +83,13 @@ public class TestHsqldbCommandline
 
     final Config config = new HyperSQLDatabaseConnector()
       .getDatabaseSystemConnector().getConfig();
-    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
-    schemaCrawlerOptions.setSchemaInfoLevel(InfoLevel.maximum
+    final SchemaCrawlerOptionsBuilder optionsBuilder = new SchemaCrawlerOptionsBuilder()
+      .setFromConfig(config);
+    optionsBuilder.schemaInfoLevel(InfoLevel.maximum
       .getSchemaInfoLevel());
-    final Catalog catalog = SchemaCrawlerUtility
-      .getCatalog(getConnection(), schemaCrawlerOptions);
+    final Catalog catalog = SchemaCrawlerUtility.getCatalog(getConnection(),
+                                                            optionsBuilder
+                                                              .toOptions());
     assertNotNull(catalog);
 
     assertEquals(6, catalog.getSchemas().size());

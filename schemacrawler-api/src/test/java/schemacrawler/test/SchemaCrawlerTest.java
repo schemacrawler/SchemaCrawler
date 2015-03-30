@@ -52,6 +52,7 @@ import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestWriter;
@@ -385,11 +386,14 @@ public class SchemaCrawlerTest
     {
       final Config config = Config
         .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
-      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
-      schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
-      schemaCrawlerOptions
-        .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
+      final SchemaCrawlerOptionsBuilder optionsBuilder = new SchemaCrawlerOptionsBuilder()
+        .setFromConfig(config);
+      optionsBuilder.schemaInfoLevel(SchemaInfoLevel.maximum());
+      optionsBuilder
+        .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
 
+      final SchemaCrawlerOptions schemaCrawlerOptions = optionsBuilder
+        .toOptions();
       final Catalog catalog = getCatalog(schemaCrawlerOptions);
       final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
       assertEquals("Schema count does not match", 5, schemas.length);
