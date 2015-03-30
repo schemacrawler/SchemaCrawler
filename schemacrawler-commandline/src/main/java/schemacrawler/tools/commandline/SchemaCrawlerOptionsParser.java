@@ -51,7 +51,7 @@ public final class SchemaCrawlerOptionsParser
   private static final String DEFAULT_TABLE_TYPES = "TABLE,VIEW";
   private static final String DEFAULT_ROUTINE_TYPES = "PROCEDURE,FUNCTION";
 
-  private final SchemaCrawlerOptions options;
+  private final SchemaCrawlerOptionsBuilder optionsBuilder;
 
   public SchemaCrawlerOptionsParser(final Config config)
   {
@@ -75,9 +75,7 @@ public final class SchemaCrawlerOptionsParser
     normalizeOptionName("parents");
     normalizeOptionName("children");
 
-    final SchemaCrawlerOptionsBuilder optionsBuilder = new SchemaCrawlerOptionsBuilder()
-      .setFromConfig(config);
-    options = optionsBuilder.toOptions();
+    optionsBuilder = new SchemaCrawlerOptionsBuilder().setFromConfig(config);
   }
 
   @Override
@@ -89,7 +87,7 @@ public final class SchemaCrawlerOptionsParser
       final String infoLevel = config.getStringValue("infolevel", "standard");
       final SchemaInfoLevel schemaInfoLevel = InfoLevel
         .valueOfFromString(infoLevel).getSchemaInfoLevel();
-      options.setSchemaInfoLevel(schemaInfoLevel);
+      optionsBuilder.schemaInfoLevel(schemaInfoLevel);
       consumeOption("infolevel");
     }
     else
@@ -102,9 +100,9 @@ public final class SchemaCrawlerOptionsParser
       final InclusionRule schemaInclusionRule = config
         .getInclusionRule("schemas");
       logOverride("schemas",
-                  options.getSchemaInclusionRule(),
+                  optionsBuilder.getSchemaInclusionRule(),
                   schemaInclusionRule);
-      options.setSchemaInclusionRule(schemaInclusionRule);
+      optionsBuilder.includeSchemas(schemaInclusionRule);
       consumeOption("schemas");
     }
 
@@ -114,11 +112,11 @@ public final class SchemaCrawlerOptionsParser
                                                       DEFAULT_TABLE_TYPES);
       if (!isBlank(tabletypes))
       {
-        options.setTableTypesFromString(tabletypes);
+        optionsBuilder.tableTypes(tabletypes);
       }
       else
       {
-        options.setTableTypesFromString(null);
+        optionsBuilder.tableTypes((String) null);
       }
       consumeOption("tabletypes");
     }
@@ -127,8 +125,10 @@ public final class SchemaCrawlerOptionsParser
     {
       final InclusionRule tableInclusionRule = config
         .getInclusionRule("tables");
-      logOverride("tables", options.getTableInclusionRule(), tableInclusionRule);
-      options.setTableInclusionRule(tableInclusionRule);
+      logOverride("tables",
+                  optionsBuilder.getTableInclusionRule(),
+                  tableInclusionRule);
+      optionsBuilder.includeTables(tableInclusionRule);
       consumeOption("tables");
     }
     if (config.hasValue("excludecolumns"))
@@ -136,16 +136,16 @@ public final class SchemaCrawlerOptionsParser
       final InclusionRule columnInclusionRule = config
         .getExclusionRule("excludecolumns");
       logOverride("excludecolumns",
-                  options.getColumnInclusionRule(),
+                  optionsBuilder.getColumnInclusionRule(),
                   columnInclusionRule);
-      options.setColumnInclusionRule(columnInclusionRule);
+      optionsBuilder.includeColumns(columnInclusionRule);
       consumeOption("excludecolumns");
     }
 
     if (config.hasValue("routinetypes"))
     {
-      options.setRoutineTypes(config.getStringValue("routinetypes",
-                                                    DEFAULT_ROUTINE_TYPES));
+      optionsBuilder.routineTypes(config.getStringValue("routinetypes",
+                                                        DEFAULT_ROUTINE_TYPES));
       consumeOption("routinetypes");
     }
 
@@ -154,9 +154,9 @@ public final class SchemaCrawlerOptionsParser
       final InclusionRule routineInclusionRule = config
         .getInclusionRule("routines");
       logOverride("routines",
-                  options.getRoutineInclusionRule(),
+                  optionsBuilder.getRoutineInclusionRule(),
                   routineInclusionRule);
-      options.setRoutineInclusionRule(routineInclusionRule);
+      optionsBuilder.includeRoutines(routineInclusionRule);
       consumeOption("routines");
     }
     if (config.hasValue("excludeinout"))
@@ -164,9 +164,9 @@ public final class SchemaCrawlerOptionsParser
       final InclusionRule routineColumnInclusionRule = config
         .getExclusionRule("excludeinout");
       logOverride("excludeinout",
-                  options.getRoutineColumnInclusionRule(),
+                  optionsBuilder.getRoutineColumnInclusionRule(),
                   routineColumnInclusionRule);
-      options.setRoutineColumnInclusionRule(routineColumnInclusionRule);
+      optionsBuilder.includeRoutineColumns(routineColumnInclusionRule);
       consumeOption("excludeinout");
     }
 
@@ -175,9 +175,9 @@ public final class SchemaCrawlerOptionsParser
       final InclusionRule synonymInclusionRule = config
         .getInclusionRule("synonyms");
       logOverride("synonyms",
-                  options.getSynonymInclusionRule(),
+                  optionsBuilder.getSynonymInclusionRule(),
                   synonymInclusionRule);
-      options.setSynonymInclusionRule(synonymInclusionRule);
+      optionsBuilder.includeSynonyms(synonymInclusionRule);
       consumeOption("synonyms");
     }
 
@@ -186,22 +186,23 @@ public final class SchemaCrawlerOptionsParser
       final InclusionRule sequenceInclusionRule = config
         .getInclusionRule("sequences");
       logOverride("sequences",
-                  options.getSequenceInclusionRule(),
+                  optionsBuilder.getSequenceInclusionRule(),
                   sequenceInclusionRule);
-      options.setSequenceInclusionRule(sequenceInclusionRule);
+      optionsBuilder.includeSequences(sequenceInclusionRule);
       consumeOption("sequences");
     }
 
     if (config.hasValue("invert-match"))
     {
-      options.setGrepInvertMatch(config.getBooleanValue("invert-match", true));
+      optionsBuilder.setGrepInvertMatch(config.getBooleanValue("invert-match",
+                                                               true));
       consumeOption("invert-match");
     }
 
     if (config.hasValue("only-matching"))
     {
-      options
-        .setGrepOnlyMatching(config.getBooleanValue("only-matching", true));
+      optionsBuilder.setGrepOnlyMatching(config
+        .getBooleanValue("only-matching", true));
       consumeOption("only-matching");
     }
 
@@ -209,68 +210,70 @@ public final class SchemaCrawlerOptionsParser
     {
       final InclusionRule grepColumnInclusionRule = config
         .getInclusionRule("grepcolumns");
-      options.setGrepColumnInclusionRule(grepColumnInclusionRule);
+      optionsBuilder.includeGreppedColumns(grepColumnInclusionRule);
       consumeOption("grepcolumns");
     }
     else
     {
-      options.setGrepColumnInclusionRule(null);
+      optionsBuilder.includeGreppedColumns(null);
     }
 
     if (config.hasValue("grepinout"))
     {
       final InclusionRule grepRoutineColumnInclusionRule = config
         .getInclusionRule("grepinout");
-      options.setGrepRoutineColumnInclusionRule(grepRoutineColumnInclusionRule);
+      optionsBuilder
+        .setGrepRoutineColumnInclusionRule(grepRoutineColumnInclusionRule);
       consumeOption("grepinout");
     }
     else
     {
-      options.setGrepRoutineColumnInclusionRule(null);
+      optionsBuilder.setGrepRoutineColumnInclusionRule(null);
     }
 
     if (config.hasValue("grepdef"))
     {
       final InclusionRule grepDefinitionInclusionRule = config
         .getInclusionRule("grepdef");
-      options.setGrepDefinitionInclusionRule(grepDefinitionInclusionRule);
+      optionsBuilder.includeGreppedDefinitions(grepDefinitionInclusionRule);
       consumeOption("grepdef");
     }
     else
     {
-      options.setGrepDefinitionInclusionRule(null);
+      optionsBuilder.includeGreppedDefinitions(null);
     }
 
     if (config.hasValue("hideemptytables"))
     {
-      options.setHideEmptyTables(config
-        .getBooleanValue("hideemptytables", true));
+      final boolean hideEmptyTables = config.getBooleanValue("hideemptytables",
+                                                             true);
+      if (hideEmptyTables) optionsBuilder.hideEmptyTables();
       consumeOption("hideemptytables");
     }
 
     if (config.hasValue("parents"))
     {
       final int parentTableFilterDepth = config.getIntegerValue("parents", 0);
-      options.setParentTableFilterDepth(parentTableFilterDepth);
+      optionsBuilder.parentTableFilterDepth(parentTableFilterDepth);
       consumeOption("parents");
     }
     else
     {
-      options.setParentTableFilterDepth(0);
+      optionsBuilder.parentTableFilterDepth(0);
     }
 
     if (config.hasValue("children"))
     {
       final int childTableFilterDepth = config.getIntegerValue("children", 0);
-      options.setChildTableFilterDepth(childTableFilterDepth);
+      optionsBuilder.childTableFilterDepth(childTableFilterDepth);
       consumeOption("children");
     }
     else
     {
-      options.setParentTableFilterDepth(0);
+      optionsBuilder.childTableFilterDepth(0);
     }
 
-    return options;
+    return optionsBuilder.toOptions();
   }
 
   private void logOverride(final String inclusionRuleName,
