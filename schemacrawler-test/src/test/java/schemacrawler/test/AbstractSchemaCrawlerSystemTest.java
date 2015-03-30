@@ -33,6 +33,7 @@ import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.tools.options.InfoLevel;
 import schemacrawler.utility.SchemaCrawlerUtility;
 import sf.util.ObjectToString;
@@ -86,15 +87,15 @@ public abstract class AbstractSchemaCrawlerSystemTest
   {
     final Config config = (Config) appContext.getBean(dataSourceName
                                                       + ".properties");
-    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
-    schemaCrawlerOptions.setSchemaInfoLevel(InfoLevel.maximum
-      .getSchemaInfoLevel());
+    final SchemaCrawlerOptionsBuilder optionsBuilder = new SchemaCrawlerOptionsBuilder()
+      .setFromConfig(config);
+    optionsBuilder.schemaInfoLevel(InfoLevel.maximum.getSchemaInfoLevel());
     if (schemaInclusion != null)
     {
-      schemaCrawlerOptions
-        .setSchemaInclusionRule(new RegularExpressionInclusionRule(schemaInclusion));
+      optionsBuilder
+        .includeSchemas(new RegularExpressionInclusionRule(schemaInclusion));
     }
-    return schemaCrawlerOptions;
+    return optionsBuilder.toOptions();
   }
 
   protected Catalog retrieveDatabase(final String dataSourceName,
