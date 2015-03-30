@@ -40,7 +40,6 @@ public class SchemaCrawlerOptionsBuilder
   private static final String SC_SYNONYM_PATTERN_INCLUDE = "schemacrawler.synonym.pattern.include";
   private static final String SC_SEQUENCE_PATTERN_EXCLUDE = "schemacrawler.sequence.pattern.exclude";
   private static final String SC_SEQUENCE_PATTERN_INCLUDE = "schemacrawler.sequence.pattern.include";
-
   private static final String SC_TABLE_PATTERN_EXCLUDE = "schemacrawler.table.pattern.exclude";
   private static final String SC_TABLE_PATTERN_INCLUDE = "schemacrawler.table.pattern.include";
   private static final String SC_COLUMN_PATTERN_EXCLUDE = "schemacrawler.column.pattern.exclude";
@@ -50,17 +49,17 @@ public class SchemaCrawlerOptionsBuilder
   private static final String SC_ROUTINE_PATTERN_INCLUDE = "schemacrawler.routine.pattern.include";
   private static final String SC_ROUTINE_COLUMN_PATTERN_EXCLUDE = "schemacrawler.routine.inout.pattern.exclude";
   private static final String SC_ROUTINE_COLUMN_PATTERN_INCLUDE = "schemacrawler.routine.inout.pattern.include";
-
   private static final String SC_GREP_COLUMN_PATTERN_INCLUDE = "schemacrawler.grep.column.pattern.include";
   private static final String SC_GREP_COLUMN_PATTERN_EXCLUDE = "schemacrawler.grep.column.pattern.exclude";
+
   private static final String SC_GREP_ROUTINE_COLUMN_PATTERN_EXCLUDE = "schemacrawler.grep.routine.inout.pattern.exclude";
   private static final String SC_GREP_ROUTINE_COLUMN_PATTERN_INCLUDE = "schemacrawler.grep.routine.inout.pattern.include";
   private static final String SC_GREP_DEFINITION_PATTERN_EXCLUDE = "schemacrawler.grep.definition.pattern.exclude";
   private static final String SC_GREP_DEFINITION_PATTERN_INCLUDE = "schemacrawler.grep.definition.pattern.include";
+
   private static final String SC_GREP_INVERT_MATCH = "schemacrawler.grep.invert-match";
   private static final String SC_GREP_ONLY_MATCHING = "schemacrawler.grep.only-matching";
   private static final String SC_HIDE_EMPTY_TABLES = "schemacrawler.hide.empty-tables";
-
   private final SchemaCrawlerOptions options;
 
   public SchemaCrawlerOptionsBuilder()
@@ -77,6 +76,56 @@ public class SchemaCrawlerOptionsBuilder
   {
     options.setChildTableFilterDepth(childTableFilterDepth);
     return this;
+  }
+
+  public InclusionRule getColumnInclusionRule()
+  {
+    return options.getColumnInclusionRule();
+  }
+
+  public InclusionRule getGrepColumnInclusionRule()
+  {
+    return options.getGrepColumnInclusionRule();
+  }
+
+  public InclusionRule getGrepDefinitionInclusionRule()
+  {
+    return options.getGrepDefinitionInclusionRule();
+  }
+
+  public InclusionRule getGrepRoutineColumnInclusionRule()
+  {
+    return options.getGrepRoutineColumnInclusionRule();
+  }
+
+  public InclusionRule getRoutineColumnInclusionRule()
+  {
+    return options.getRoutineColumnInclusionRule();
+  }
+
+  public InclusionRule getRoutineInclusionRule()
+  {
+    return options.getRoutineInclusionRule();
+  }
+
+  public InclusionRule getSchemaInclusionRule()
+  {
+    return options.getSchemaInclusionRule();
+  }
+
+  public InclusionRule getSequenceInclusionRule()
+  {
+    return options.getSequenceInclusionRule();
+  }
+
+  public InclusionRule getSynonymInclusionRule()
+  {
+    return options.getSynonymInclusionRule();
+  }
+
+  public InclusionRule getTableInclusionRule()
+  {
+    return options.getTableInclusionRule();
   }
 
   public SchemaCrawlerOptionsBuilder hideEmptyTables()
