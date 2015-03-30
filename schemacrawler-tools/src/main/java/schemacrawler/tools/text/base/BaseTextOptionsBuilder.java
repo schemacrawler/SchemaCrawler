@@ -23,6 +23,7 @@ package schemacrawler.tools.text.base;
 
 import static java.util.Objects.requireNonNull;
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.OptionsBuilder;
 
 public class BaseTextOptionsBuilder<O extends BaseTextOptions>
   implements OptionsBuilder<BaseTextOptions>
