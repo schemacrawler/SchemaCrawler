@@ -32,6 +32,7 @@ import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.tools.options.InfoLevel;
 
@@ -74,7 +75,9 @@ public final class SchemaCrawlerOptionsParser
     normalizeOptionName("parents");
     normalizeOptionName("children");
 
-    options = new SchemaCrawlerOptions(config);
+    final SchemaCrawlerOptionsBuilder optionsBuilder = new SchemaCrawlerOptionsBuilder()
+      .setFromConfig(config);
+    options = optionsBuilder.toOptions();
   }
 
   @Override

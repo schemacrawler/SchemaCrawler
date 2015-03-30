@@ -20,7 +20,7 @@ import org.junit.Test;
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.IncludeAll;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.executable.Executable;
@@ -88,15 +88,15 @@ public class SpinThroughTest
                                                                 testOutputFile);
 
           final Config config = Config.load(hsqldbProperties.toString());
-          final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
-          schemaCrawlerOptions.setSchemaInfoLevel(infoLevel
-            .getSchemaInfoLevel());
-          schemaCrawlerOptions.setSequenceInclusionRule(new IncludeAll());
-          schemaCrawlerOptions.setSynonymInclusionRule(new IncludeAll());
+          final SchemaCrawlerOptionsBuilder optionsBuilder = new SchemaCrawlerOptionsBuilder()
+            .setFromConfig(config);
+          optionsBuilder.schemaInfoLevel(infoLevel.getSchemaInfoLevel());
+          optionsBuilder.includeSequences(new IncludeAll())
+            .includeSynonyms(new IncludeAll());
 
           final Executable executable = new SchemaCrawlerExecutable(schemaTextDetailType
             .name());
-          executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+          executable.setSchemaCrawlerOptions(optionsBuilder.toOptions());
           executable.setOutputOptions(outputOptions);
           executable.execute(getConnection());
 
