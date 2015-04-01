@@ -30,7 +30,7 @@ digraph "SchemaCrawler_Diagram" {
 	</tr>
 	<tr>
 		<td align='right'>Generated on:</td>
-		<td align='left'>Mar 24, 2015 9:44 PM</td>
+		<td align='left'>Mar 31, 2015 10:48 PM</td>
 	</tr>
 	<tr>
 		<td align='right'>Database:</td>
@@ -46,7 +46,7 @@ digraph "SchemaCrawler_Diagram" {
   ];
 
   /* PUBLIC.BOOKS.AUTHORS -=-=-=-=-=-=-=-=-=-=-=-=-=- */
-  "authors_a0708ac5" [
+  "authors_dba8a1ff" [
     label=<
       <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#999999">
 	<tr>
@@ -63,7 +63,7 @@ digraph "SchemaCrawler_Diagram" {
 
 
   /* PUBLIC.BOOKS.BOOKAUTHORS -=-=-=-=-=-=-=-=-=-=-=-=-=- */
-  "bookauthors_a0708ac5" [
+  "bookauthors_aa4376" [
     label=<
       <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#999999">
 	<tr>
@@ -80,7 +80,7 @@ digraph "SchemaCrawler_Diagram" {
 
 
   /* PUBLIC.BOOKS.BOOKS -=-=-=-=-=-=-=-=-=-=-=-=-=- */
-  "books_a0708ac5" [
+  "books_afd2ba21" [
     label=<
       <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#999999">
 	<tr>
@@ -97,7 +97,7 @@ digraph "SchemaCrawler_Diagram" {
 
 
   /* PUBLIC.BOOKS."Global Counts" -=-=-=-=-=-=-=-=-=-=-=-=-=- */
-  "globalcounts_a0708ac5" [
+  "globalcounts_2ab3635a" [
     label=<
       <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#999999">
 	<tr>
@@ -111,7 +111,7 @@ digraph "SchemaCrawler_Diagram" {
 
 
   /* PUBLIC.BOOKS.PUBLISHERS -=-=-=-=-=-=-=-=-=-=-=-=-=- */
-  "publishers_a0708ac5" [
+  "publishers_b8da20c0" [
     label=<
       <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#999999">
 	<tr>
@@ -128,7 +128,7 @@ digraph "SchemaCrawler_Diagram" {
 
 
   /* PUBLIC.FOR_LINT.EXTRA_PK -=-=-=-=-=-=-=-=-=-=-=-=-=- */
-  "extra_pk_2e5fc3be" [
+  "extra_pk_334890da" [
     label=<
       <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#999999">
 	<tr>
@@ -142,7 +142,7 @@ digraph "SchemaCrawler_Diagram" {
 
 
   /* PUBLIC.FOR_LINT."Global Counts" -=-=-=-=-=-=-=-=-=-=-=-=-=- */
-  "globalcounts_2e5fc3be" [
+  "globalcounts_986b8a53" [
     label=<
       <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#999999">
 	<tr>
@@ -156,7 +156,7 @@ digraph "SchemaCrawler_Diagram" {
 
 
   /* PUBLIC.FOR_LINT.PUBLICATIONS -=-=-=-=-=-=-=-=-=-=-=-=-=- */
-  "publications_2e5fc3be" [
+  "publications_949377f7" [
     label=<
       <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#999999">
 	<tr>
@@ -170,7 +170,7 @@ digraph "SchemaCrawler_Diagram" {
 
 
   /* PUBLIC.FOR_LINT.WRITERS -=-=-=-=-=-=-=-=-=-=-=-=-=- */
-  "writers_2e5fc3be" [
+  "writers_bf84ac10" [
     label=<
       <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#999999">
 	<tr>
@@ -184,7 +184,7 @@ digraph "SchemaCrawler_Diagram" {
 
 
   /* PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ -=-=-=-=-=-=-=-=-=-=-=-=-=- */
-  "πίνακαβάσησδεδομένων_2e5fc3be" [
+  "πίνακαβάσησδεδομένων_199e00a3" [
     label=<
       <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#999999">
 	<tr>
@@ -198,7 +198,7 @@ digraph "SchemaCrawler_Diagram" {
 
 
   /* PUBLIC."PUBLISHER SALES".REGIONS -=-=-=-=-=-=-=-=-=-=-=-=-=- */
-  "regions_ad084f57" [
+  "regions_bc895c48" [
     label=<
       <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#999999">
 	<tr>
@@ -212,7 +212,7 @@ digraph "SchemaCrawler_Diagram" {
 
 
   /* PUBLIC."PUBLISHER SALES".SALES -=-=-=-=-=-=-=-=-=-=-=-=-=- */
-  "sales_ad084f57" [
+  "sales_20be6f95" [
     label=<
       <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#999999">
 	<tr>
@@ -226,7 +226,7 @@ digraph "SchemaCrawler_Diagram" {
 
 
   /* PUBLIC.BOOKS.AUTHORSLIST -=-=-=-=-=-=-=-=-=-=-=-=-=- */
-  "authorslist_a0708ac5" [
+  "authorslist_b29d331d" [
     label=<
       <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#999999">
 	<tr>
