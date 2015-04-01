@@ -64,7 +64,7 @@ a:hover, a:active {
 }
 
 .data_null {
-	font-weight: italic;
+	font-style: italic;
 	color: rgb(64, 64, 64);
 	background-color: rgb(240, 240, 240);
 }
