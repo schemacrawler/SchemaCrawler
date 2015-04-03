@@ -2,129 +2,25 @@
 {
   "tables": [
     {
-      "tableConstraints": [],
       "foreignKeys": [{
-        "updateRule": "no action",
+        "name": "FK_Z_AUTHOR",
+        "deleteRule": "no action",
         "columnReferences": [{
           "pkColumn": "PUBLIC.BOOKS.AUTHORS.ID",
           "fkColumn": "PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID"
         }],
-        "deleteRule": "no action",
-        "name": "FK_Z_AUTHOR"
+        "updateRule": "no action"
       }],
-      "primaryKey": {
-        "unique": true,
-        "name": "PK_AUTHORS",
-        "columns": {
-          "sortSequence": "ascending",
-          "name": "ID"
-        }
-      },
-      "name": "AUTHORS",
-      "columns": [
-        {
-          "dataType": "INTEGER",
-          "decimalDigits": 0,
-          "width": "",
-          "name": "ID",
-          "nullable": false,
-          "autoIncremented": false,
-          "databaseSpecificType": "INTEGER",
-          "size": 32
-        },
-        {
-          "dataType": "VARCHAR",
-          "decimalDigits": 0,
-          "width": "(20)",
-          "name": "FIRSTNAME",
-          "nullable": false,
-          "autoIncremented": false,
-          "databaseSpecificType": "VARCHAR",
-          "size": 20
-        },
-        {
-          "dataType": "VARCHAR",
-          "decimalDigits": 0,
-          "width": "(20)",
-          "name": "LASTNAME",
-          "nullable": false,
-          "autoIncremented": false,
-          "databaseSpecificType": "VARCHAR",
-          "size": 20
-        },
-        {
-          "dataType": "VARCHAR",
-          "decimalDigits": 0,
-          "width": "(255)",
-          "name": "ADDRESS1",
-          "nullable": true,
-          "autoIncremented": false,
-          "databaseSpecificType": "VARCHAR",
-          "size": 255
-        },
-        {
-          "dataType": "VARCHAR",
-          "decimalDigits": 0,
-          "width": "(255)",
-          "name": "ADDRESS2",
-          "nullable": true,
-          "autoIncremented": false,
-          "databaseSpecificType": "VARCHAR",
-          "size": 255
-        },
-        {
-          "dataType": "VARCHAR",
-          "decimalDigits": 0,
-          "width": "(50)",
-          "name": "CITY",
-          "nullable": true,
-          "autoIncremented": false,
-          "databaseSpecificType": "VARCHAR",
-          "size": 50
-        },
-        {
-          "dataType": "VARCHAR",
-          "decimalDigits": 0,
-          "width": "(2)",
-          "name": "STATE",
-          "nullable": true,
-          "autoIncremented": false,
-          "databaseSpecificType": "VARCHAR",
-          "size": 2
-        },
-        {
-          "dataType": "VARCHAR",
-          "decimalDigits": 0,
-          "width": "(10)",
-          "name": "POSTALCODE",
-          "nullable": true,
-          "autoIncremented": false,
-          "databaseSpecificType": "VARCHAR",
-          "size": 10
-        },
-        {
-          "dataType": "VARCHAR",
-          "decimalDigits": 0,
-          "width": "(50)",
-          "name": "COUNTRY",
-          "nullable": true,
-          "autoIncremented": false,
-          "databaseSpecificType": "VARCHAR",
-          "size": 50
-        }
-      ],
       "indices": [
         {
-          "unique": true,
-          "name": "SYS_IDX_PK_AUTHORS_10097",
           "columns": {
             "sortSequence": "ascending",
             "name": "ID"
-          }
+          },
+          "unique": true,
+          "name": "SYS_IDX_PK_AUTHORS_10097"
         },
         {
-          "unique": false,
-          "name": "IDX_B_AUTHORS",
           "columns": [
             {
               "sortSequence": "ascending",
@@ -134,11 +30,11 @@
               "sortSequence": "ascending",
               "name": "FIRSTNAME"
             }
-          ]
+          ],
+          "unique": false,
+          "name": "IDX_B_AUTHORS"
         },
         {
-          "unique": false,
-          "name": "IDX_A_AUTHORS",
           "columns": [
             {
               "sortSequence": "ascending",
@@ -156,288 +52,355 @@
               "sortSequence": "ascending",
               "name": "COUNTRY"
             }
-          ]
+          ],
+          "unique": false,
+          "name": "IDX_A_AUTHORS"
         }
       ],
-      "triggers": [],
+      "columns": [
+        {
+          "size": 32,
+          "nullable": false,
+          "databaseSpecificType": "INTEGER",
+          "dataType": "INTEGER",
+          "name": "ID",
+          "width": "",
+          "decimalDigits": 0,
+          "autoIncremented": false
+        },
+        {
+          "size": 20,
+          "nullable": false,
+          "databaseSpecificType": "VARCHAR",
+          "dataType": "VARCHAR",
+          "name": "FIRSTNAME",
+          "width": "(20)",
+          "decimalDigits": 0,
+          "autoIncremented": false
+        },
+        {
+          "size": 20,
+          "nullable": false,
+          "databaseSpecificType": "VARCHAR",
+          "dataType": "VARCHAR",
+          "name": "LASTNAME",
+          "width": "(20)",
+          "decimalDigits": 0,
+          "autoIncremented": false
+        },
+        {
+          "size": 255,
+          "nullable": true,
+          "databaseSpecificType": "VARCHAR",
+          "dataType": "VARCHAR",
+          "name": "ADDRESS1",
+          "width": "(255)",
+          "decimalDigits": 0,
+          "autoIncremented": false
+        },
+        {
+          "size": 255,
+          "nullable": true,
+          "databaseSpecificType": "VARCHAR",
+          "dataType": "VARCHAR",
+          "name": "ADDRESS2",
+          "width": "(255)",
+          "decimalDigits": 0,
+          "autoIncremented": false
+        },
+        {
+          "size": 50,
+          "nullable": true,
+          "databaseSpecificType": "VARCHAR",
+          "dataType": "VARCHAR",
+          "name": "CITY",
+          "width": "(50)",
+          "decimalDigits": 0,
+          "autoIncremented": false
+        },
+        {
+          "size": 2,
+          "nullable": true,
+          "databaseSpecificType": "VARCHAR",
+          "dataType": "VARCHAR",
+          "name": "STATE",
+          "width": "(2)",
+          "decimalDigits": 0,
+          "autoIncremented": false
+        },
+        {
+          "size": 10,
+          "nullable": true,
+          "databaseSpecificType": "VARCHAR",
+          "dataType": "VARCHAR",
+          "name": "POSTALCODE",
+          "width": "(10)",
+          "decimalDigits": 0,
+          "autoIncremented": false
+        },
+        {
+          "size": 50,
+          "nullable": true,
+          "databaseSpecificType": "VARCHAR",
+          "dataType": "VARCHAR",
+          "name": "COUNTRY",
+          "width": "(50)",
+          "decimalDigits": 0,
+          "autoIncremented": false
+        }
+      ],
+      "name": "AUTHORS",
       "fullName": "PUBLIC.BOOKS.AUTHORS",
-      "type": "table"
+      "type": "table",
+      "triggers": [],
+      "tableConstraints": [],
+      "primaryKey": {
+        "columns": {
+          "sortSequence": "ascending",
+          "name": "ID"
+        },
+        "unique": true,
+        "name": "PK_AUTHORS"
+      }
     },
     {
-      "tableConstraints": [],
       "foreignKeys": [
         {
-          "updateRule": "no action",
+          "name": "FK_Y_BOOK",
+          "deleteRule": "no action",
           "columnReferences": [{
             "pkColumn": "PUBLIC.BOOKS.BOOKS.ID",
             "fkColumn": "PUBLIC.BOOKS.BOOKAUTHORS.BOOKID"
           }],
-          "deleteRule": "no action",
-          "name": "FK_Y_BOOK"
+          "updateRule": "no action"
         },
         {
-          "updateRule": "no action",
+          "name": "FK_PREVIOUSEDITION",
+          "deleteRule": "no action",
           "columnReferences": [{
             "pkColumn": "PUBLIC.BOOKS.BOOKS.ID",
             "fkColumn": "PUBLIC.BOOKS.BOOKS.PREVIOUSEDITIONID"
           }],
-          "deleteRule": "no action",
-          "name": "FK_PREVIOUSEDITION"
-        }
-      ],
-      "primaryKey": {
-        "unique": true,
-        "name": "PK_BOOKS",
-        "columns": {
-          "sortSequence": "ascending",
-          "name": "ID"
-        }
-      },
-      "name": "BOOKS",
-      "columns": [
-        {
-          "dataType": "INTEGER",
-          "decimalDigits": 0,
-          "width": "",
-          "name": "ID",
-          "nullable": false,
-          "autoIncremented": false,
-          "databaseSpecificType": "INTEGER",
-          "size": 32
-        },
-        {
-          "dataType": "VARCHAR",
-          "decimalDigits": 0,
-          "width": "(255)",
-          "name": "TITLE",
-          "nullable": false,
-          "autoIncremented": false,
-          "databaseSpecificType": "VARCHAR",
-          "size": 255
-        },
-        {
-          "dataType": "VARCHAR",
-          "decimalDigits": 0,
-          "width": "(255)",
-          "name": "DESCRIPTION",
-          "nullable": true,
-          "autoIncremented": false,
-          "databaseSpecificType": "VARCHAR",
-          "size": 255
-        },
-        {
-          "dataType": "INTEGER",
-          "decimalDigits": 0,
-          "width": "",
-          "name": "PUBLISHERID",
-          "nullable": false,
-          "autoIncremented": false,
-          "databaseSpecificType": "INTEGER",
-          "size": 32
-        },
-        {
-          "dataType": "DATE",
-          "decimalDigits": 0,
-          "width": "",
-          "name": "PUBLICATIONDATE",
-          "nullable": true,
-          "autoIncremented": false,
-          "databaseSpecificType": "DATE",
-          "size": 10
-        },
-        {
-          "dataType": "DOUBLE",
-          "decimalDigits": 0,
-          "width": "(64, 0)",
-          "name": "PRICE",
-          "nullable": true,
-          "autoIncremented": false,
-          "databaseSpecificType": "DOUBLE",
-          "size": 64
-        },
-        {
-          "dataType": "INTEGER",
-          "decimalDigits": 0,
-          "width": "",
-          "name": "PREVIOUSEDITIONID",
-          "nullable": true,
-          "autoIncremented": false,
-          "databaseSpecificType": "INTEGER",
-          "size": 32
+          "updateRule": "no action"
         }
       ],
       "indices": [
         {
-          "unique": true,
-          "name": "SYS_IDX_PK_BOOKS_10105",
           "columns": {
             "sortSequence": "ascending",
             "name": "ID"
-          }
-        },
-        {
+          },
           "unique": true,
-          "name": "UIDX_PREVIOUSEDITION",
-          "columns": {
-            "sortSequence": "ascending",
-            "name": "PREVIOUSEDITIONID"
-          }
+          "name": "SYS_IDX_PK_BOOKS_10105"
         },
         {
-          "unique": false,
-          "name": "SYS_IDX_10109",
           "columns": {
             "sortSequence": "ascending",
             "name": "PREVIOUSEDITIONID"
-          }
+          },
+          "unique": true,
+          "name": "UIDX_PREVIOUSEDITION"
+        },
+        {
+          "columns": {
+            "sortSequence": "ascending",
+            "name": "PREVIOUSEDITIONID"
+          },
+          "unique": false,
+          "name": "SYS_IDX_10109"
         }
       ],
-      "triggers": [],
-      "fullName": "PUBLIC.BOOKS.BOOKS",
-      "type": "table"
-    },
-    {
-      "tableConstraints": [],
-      "foreignKeys": [],
-      "primaryKey": {},
-      "name": "\"Global Counts\"",
-      "columns": [{
-        "dataType": "INTEGER",
-        "decimalDigits": 0,
-        "width": "",
-        "name": "\"Global Count\"",
-        "nullable": true,
-        "autoIncremented": false,
-        "databaseSpecificType": "INTEGER",
-        "size": 32
-      }],
-      "indices": [],
-      "triggers": [],
-      "fullName": "PUBLIC.BOOKS.\"Global Counts\"",
-      "type": "table"
-    },
-    {
-      "tableConstraints": [],
-      "foreignKeys": [],
-      "primaryKey": {
-        "unique": true,
-        "name": "SYS_PK_10092",
-        "columns": {
-          "sortSequence": "ascending",
-          "name": "ID"
-        }
-      },
-      "name": "PUBLISHERS",
       "columns": [
         {
-          "dataType": "INTEGER",
-          "decimalDigits": 0,
-          "width": "",
-          "name": "ID",
+          "size": 32,
           "nullable": false,
-          "autoIncremented": true,
           "databaseSpecificType": "INTEGER",
-          "size": 32
+          "dataType": "INTEGER",
+          "name": "ID",
+          "width": "",
+          "decimalDigits": 0,
+          "autoIncremented": false
         },
         {
-          "dataType": "VARCHAR",
-          "decimalDigits": 0,
-          "width": "(255)",
-          "name": "PUBLISHER",
-          "nullable": true,
-          "autoIncremented": false,
+          "size": 255,
+          "nullable": false,
           "databaseSpecificType": "VARCHAR",
-          "size": 255
+          "dataType": "VARCHAR",
+          "name": "TITLE",
+          "width": "(255)",
+          "decimalDigits": 0,
+          "autoIncremented": false
+        },
+        {
+          "size": 255,
+          "nullable": true,
+          "databaseSpecificType": "VARCHAR",
+          "dataType": "VARCHAR",
+          "name": "DESCRIPTION",
+          "width": "(255)",
+          "decimalDigits": 0,
+          "autoIncremented": false
+        },
+        {
+          "size": 32,
+          "nullable": false,
+          "databaseSpecificType": "INTEGER",
+          "dataType": "INTEGER",
+          "name": "PUBLISHERID",
+          "width": "",
+          "decimalDigits": 0,
+          "autoIncremented": false
+        },
+        {
+          "size": 10,
+          "nullable": true,
+          "databaseSpecificType": "DATE",
+          "dataType": "DATE",
+          "name": "PUBLICATIONDATE",
+          "width": "",
+          "decimalDigits": 0,
+          "autoIncremented": false
+        },
+        {
+          "size": 64,
+          "nullable": true,
+          "databaseSpecificType": "DOUBLE",
+          "dataType": "DOUBLE",
+          "name": "PRICE",
+          "width": "(64, 0)",
+          "decimalDigits": 0,
+          "autoIncremented": false
+        },
+        {
+          "size": 32,
+          "nullable": true,
+          "databaseSpecificType": "INTEGER",
+          "dataType": "INTEGER",
+          "name": "PREVIOUSEDITIONID",
+          "width": "",
+          "decimalDigits": 0,
+          "autoIncremented": false
         }
       ],
-      "indices": [{
-        "unique": true,
-        "name": "SYS_IDX_SYS_PK_10092_10093",
+      "name": "BOOKS",
+      "fullName": "PUBLIC.BOOKS.BOOKS",
+      "type": "table",
+      "triggers": [],
+      "tableConstraints": [],
+      "primaryKey": {
         "columns": {
           "sortSequence": "ascending",
           "name": "ID"
-        }
-      }],
-      "triggers": [],
-      "fullName": "PUBLIC.BOOKS.PUBLISHERS",
-      "type": "table"
+        },
+        "unique": true,
+        "name": "PK_BOOKS"
+      }
     },
     {
+      "foreignKeys": [],
+      "indices": [],
+      "columns": [{
+        "size": 32,
+        "nullable": true,
+        "databaseSpecificType": "INTEGER",
+        "dataType": "INTEGER",
+        "name": "\"Global Count\"",
+        "width": "",
+        "decimalDigits": 0,
+        "autoIncremented": false
+      }],
+      "name": "\"Global Counts\"",
+      "fullName": "PUBLIC.BOOKS.\"Global Counts\"",
+      "type": "table",
+      "triggers": [],
       "tableConstraints": [],
+      "primaryKey": {}
+    },
+    {
+      "foreignKeys": [],
+      "indices": [{
+        "columns": {
+          "sortSequence": "ascending",
+          "name": "ID"
+        },
+        "unique": true,
+        "name": "SYS_IDX_SYS_PK_10092_10093"
+      }],
+      "columns": [
+        {
+          "size": 32,
+          "nullable": false,
+          "databaseSpecificType": "INTEGER",
+          "dataType": "INTEGER",
+          "name": "ID",
+          "width": "",
+          "decimalDigits": 0,
+          "autoIncremented": true
+        },
+        {
+          "size": 255,
+          "nullable": true,
+          "databaseSpecificType": "VARCHAR",
+          "dataType": "VARCHAR",
+          "name": "PUBLISHER",
+          "width": "(255)",
+          "decimalDigits": 0,
+          "autoIncremented": false
+        }
+      ],
+      "name": "PUBLISHERS",
+      "fullName": "PUBLIC.BOOKS.PUBLISHERS",
+      "type": "table",
+      "triggers": [],
+      "tableConstraints": [],
+      "primaryKey": {
+        "columns": {
+          "sortSequence": "ascending",
+          "name": "ID"
+        },
+        "unique": true,
+        "name": "SYS_PK_10092"
+      }
+    },
+    {
       "foreignKeys": [
         {
-          "updateRule": "no action",
+          "name": "FK_Z_AUTHOR",
+          "deleteRule": "no action",
           "columnReferences": [{
             "pkColumn": "PUBLIC.BOOKS.AUTHORS.ID",
             "fkColumn": "PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID"
           }],
-          "deleteRule": "no action",
-          "name": "FK_Z_AUTHOR"
+          "updateRule": "no action"
         },
         {
-          "updateRule": "no action",
+          "name": "FK_Y_BOOK",
+          "deleteRule": "no action",
           "columnReferences": [{
             "pkColumn": "PUBLIC.BOOKS.BOOKS.ID",
             "fkColumn": "PUBLIC.BOOKS.BOOKAUTHORS.BOOKID"
           }],
-          "deleteRule": "no action",
-          "name": "FK_Y_BOOK"
-        }
-      ],
-      "primaryKey": {},
-      "name": "BOOKAUTHORS",
-      "columns": [
-        {
-          "dataType": "INTEGER",
-          "decimalDigits": 0,
-          "width": "",
-          "name": "BOOKID",
-          "nullable": false,
-          "autoIncremented": false,
-          "databaseSpecificType": "INTEGER",
-          "size": 32
-        },
-        {
-          "dataType": "INTEGER",
-          "decimalDigits": 0,
-          "width": "",
-          "name": "AUTHORID",
-          "nullable": false,
-          "autoIncremented": false,
-          "databaseSpecificType": "INTEGER",
-          "size": 32
-        },
-        {
-          "dataType": "CLOB",
-          "decimalDigits": 0,
-          "width": "",
-          "name": "\"UPDATE\"",
-          "nullable": true,
-          "autoIncremented": false,
-          "databaseSpecificType": "CLOB",
-          "size": 1073741824
+          "updateRule": "no action"
         }
       ],
       "indices": [
         {
-          "unique": false,
-          "name": "SYS_IDX_10118",
           "columns": {
             "sortSequence": "ascending",
             "name": "AUTHORID"
-          }
+          },
+          "unique": false,
+          "name": "SYS_IDX_10118"
         },
         {
-          "unique": false,
-          "name": "SYS_IDX_10116",
           "columns": {
             "sortSequence": "ascending",
             "name": "BOOKID"
-          }
+          },
+          "unique": false,
+          "name": "SYS_IDX_10116"
         },
         {
-          "unique": true,
-          "name": "UIDX_BOOKAUTHORS",
           "columns": [
             {
               "sortSequence": "ascending",
@@ -447,125 +410,162 @@
               "sortSequence": "ascending",
               "name": "AUTHORID"
             }
-          ]
+          ],
+          "unique": true,
+          "name": "UIDX_BOOKAUTHORS"
         }
       ],
-      "triggers": [],
-      "fullName": "PUBLIC.BOOKS.BOOKAUTHORS",
-      "type": "table"
-    },
-    {
-      "tableConstraints": [],
-      "foreignKeys": [],
-      "primaryKey": {},
-      "name": "AUTHORSLIST",
       "columns": [
         {
-          "dataType": "INTEGER",
-          "decimalDigits": 0,
-          "width": "",
-          "name": "ID",
-          "nullable": true,
-          "autoIncremented": false,
+          "size": 32,
+          "nullable": false,
           "databaseSpecificType": "INTEGER",
-          "size": 32
+          "dataType": "INTEGER",
+          "name": "BOOKID",
+          "width": "",
+          "decimalDigits": 0,
+          "autoIncremented": false
         },
         {
-          "dataType": "VARCHAR",
+          "size": 32,
+          "nullable": false,
+          "databaseSpecificType": "INTEGER",
+          "dataType": "INTEGER",
+          "name": "AUTHORID",
+          "width": "",
           "decimalDigits": 0,
-          "width": "(20)",
-          "name": "FIRSTNAME",
-          "nullable": true,
-          "autoIncremented": false,
-          "databaseSpecificType": "VARCHAR",
-          "size": 20
+          "autoIncremented": false
         },
         {
-          "dataType": "VARCHAR",
-          "decimalDigits": 0,
-          "width": "(20)",
-          "name": "LASTNAME",
+          "size": 1073741824,
           "nullable": true,
-          "autoIncremented": false,
-          "databaseSpecificType": "VARCHAR",
-          "size": 20
+          "databaseSpecificType": "CLOB",
+          "dataType": "CLOB",
+          "name": "\"UPDATE\"",
+          "width": "",
+          "decimalDigits": 0,
+          "autoIncremented": false
         }
       ],
-      "indices": [],
+      "name": "BOOKAUTHORS",
+      "fullName": "PUBLIC.BOOKS.BOOKAUTHORS",
+      "type": "table",
       "triggers": [],
+      "tableConstraints": [],
+      "primaryKey": {}
+    },
+    {
+      "foreignKeys": [],
+      "indices": [],
+      "columns": [
+        {
+          "size": 32,
+          "nullable": true,
+          "databaseSpecificType": "INTEGER",
+          "dataType": "INTEGER",
+          "name": "ID",
+          "width": "",
+          "decimalDigits": 0,
+          "autoIncremented": false
+        },
+        {
+          "size": 20,
+          "nullable": true,
+          "databaseSpecificType": "VARCHAR",
+          "dataType": "VARCHAR",
+          "name": "FIRSTNAME",
+          "width": "(20)",
+          "decimalDigits": 0,
+          "autoIncremented": false
+        },
+        {
+          "size": 20,
+          "nullable": true,
+          "databaseSpecificType": "VARCHAR",
+          "dataType": "VARCHAR",
+          "name": "LASTNAME",
+          "width": "(20)",
+          "decimalDigits": 0,
+          "autoIncremented": false
+        }
+      ],
+      "name": "AUTHORSLIST",
       "fullName": "PUBLIC.BOOKS.AUTHORSLIST",
-      "type": "view"
+      "type": "view",
+      "triggers": [],
+      "tableConstraints": [],
+      "primaryKey": {}
     }
   ],
   "routines": [
     {
       "name": "CUSTOMADD",
-      "parameters": [{
-        "dataType": "INTEGER",
-        "width": "",
-        "name": "ONE",
-        "type": "in",
-        "databaseSpecificType": "INTEGER"
-      }],
       "fullName": "PUBLIC.BOOKS.CUSTOMADD",
       "type": "function",
+      "parameters": [
+        {
+          "databaseSpecificType": "INTEGER",
+          "dataType": "INTEGER",
+          "name": "ONE",
+          "width": "",
+          "type": "in"
+        },
+        {
+          "databaseSpecificType": "INTEGER",
+          "dataType": "INTEGER",
+          "name": "TWO",
+          "width": "",
+          "type": "in"
+        }
+      ],
       "returnType": "does not return a table"
     },
     {
       "name": "CUSTOMADD",
-      "parameters": [
-        {
-          "dataType": "INTEGER",
-          "width": "",
-          "name": "ONE",
-          "type": "in",
-          "databaseSpecificType": "INTEGER"
-        },
-        {
-          "dataType": "INTEGER",
-          "width": "",
-          "name": "TWO",
-          "type": "in",
-          "databaseSpecificType": "INTEGER"
-        }
-      ],
       "fullName": "PUBLIC.BOOKS.CUSTOMADD",
       "type": "function",
+      "parameters": [{
+        "databaseSpecificType": "INTEGER",
+        "dataType": "INTEGER",
+        "name": "ONE",
+        "width": "",
+        "type": "in"
+      }],
       "returnType": "does not return a table"
     },
     {
       "name": "NEW_PUBLISHER",
-      "parameters": [{
-        "dataType": "VARCHAR",
-        "width": "",
-        "name": "PUBLISHER",
-        "type": "out",
-        "databaseSpecificType": "CHARACTER VARYING"
-      }],
       "fullName": "PUBLIC.BOOKS.NEW_PUBLISHER",
       "type": "procedure",
+      "parameters": [{
+        "databaseSpecificType": "CHARACTER VARYING",
+        "dataType": "VARCHAR",
+        "name": "PUBLISHER",
+        "width": "",
+        "type": "out"
+      }],
       "returnType": "no result"
     },
     {
       "name": "NEW_PUBLISHER",
-      "parameters": [
-        {
-          "dataType": "VARCHAR",
-          "width": "",
-          "name": "NEWPUBLISHER",
-          "type": "in",
-          "databaseSpecificType": "CHARACTER VARYING"
-        },
-        {
-          "dataType": "VARCHAR",
-          "width": "",
-          "name": "PUBLISHER",
-          "type": "out",
-          "databaseSpecificType": "CHARACTER VARYING"
-        }
-      ],
       "fullName": "PUBLIC.BOOKS.NEW_PUBLISHER",
       "type": "procedure",
+      "parameters": [
+        {
+          "databaseSpecificType": "CHARACTER VARYING",
+          "dataType": "VARCHAR",
+          "name": "NEWPUBLISHER",
+          "width": "",
+          "type": "in"
+        },
+        {
+          "databaseSpecificType": "CHARACTER VARYING",
+          "dataType": "VARCHAR",
+          "name": "PUBLISHER",
+          "width": "",
+          "type": "out"
+        }
+      ],
       "returnType": "no result"
     }
   ]

@@ -1,291 +1,291 @@
 [
 {
-  "tables": [
-    {
-      "tableConstraints": [],
-      "foreignKeys": [],
-      "primaryKey": {},
-      "name": "AUTHORS",
-      "columns": [],
-      "indices": [],
-      "remarks": "Contact details for book authors",
-      "triggers": [],
-      "fullName": "PUBLIC.BOOKS.AUTHORS",
-      "type": "table"
-    },
-    {
-      "tableConstraints": [],
-      "foreignKeys": [],
-      "primaryKey": {},
-      "name": "BOOKAUTHORS",
-      "columns": [],
-      "indices": [],
-      "remarks": "Relationship between books and their authors, along with the latest updated information",
-      "triggers": [],
-      "fullName": "PUBLIC.BOOKS.BOOKAUTHORS",
-      "type": "table"
-    },
-    {
-      "tableConstraints": [],
-      "foreignKeys": [],
-      "primaryKey": {},
-      "name": "BOOKS",
-      "columns": [],
-      "indices": [],
-      "remarks": "Details for published books",
-      "triggers": [],
-      "fullName": "PUBLIC.BOOKS.BOOKS",
-      "type": "table"
-    },
-    {
-      "tableConstraints": [],
-      "foreignKeys": [],
-      "primaryKey": {},
-      "name": "\"Global Counts\"",
-      "columns": [],
-      "indices": [],
-      "remarks": "",
-      "triggers": [],
-      "fullName": "PUBLIC.BOOKS.\"Global Counts\"",
-      "type": "table"
-    },
-    {
-      "tableConstraints": [],
-      "foreignKeys": [],
-      "primaryKey": {},
-      "name": "PUBLISHERS",
-      "columns": [],
-      "indices": [],
-      "remarks": "List of book publishers",
-      "triggers": [],
-      "fullName": "PUBLIC.BOOKS.PUBLISHERS",
-      "type": "table"
-    },
-    {
-      "tableConstraints": [],
-      "foreignKeys": [],
-      "primaryKey": {},
-      "name": "EXTRA_PK",
-      "columns": [],
-      "indices": [],
-      "remarks": "",
-      "triggers": [],
-      "fullName": "PUBLIC.FOR_LINT.EXTRA_PK",
-      "type": "table"
-    },
-    {
-      "tableConstraints": [],
-      "foreignKeys": [],
-      "primaryKey": {},
-      "name": "\"Global Counts\"",
-      "columns": [],
-      "indices": [],
-      "remarks": "",
-      "triggers": [],
-      "fullName": "PUBLIC.FOR_LINT.\"Global Counts\"",
-      "type": "table"
-    },
-    {
-      "tableConstraints": [],
-      "foreignKeys": [],
-      "primaryKey": {},
-      "name": "PUBLICATIONS",
-      "columns": [],
-      "indices": [],
-      "remarks": "",
-      "triggers": [],
-      "fullName": "PUBLIC.FOR_LINT.PUBLICATIONS",
-      "type": "table"
-    },
-    {
-      "tableConstraints": [],
-      "foreignKeys": [],
-      "primaryKey": {},
-      "name": "WRITERS",
-      "columns": [],
-      "indices": [],
-      "remarks": "",
-      "triggers": [],
-      "fullName": "PUBLIC.FOR_LINT.WRITERS",
-      "type": "table"
-    },
-    {
-      "tableConstraints": [],
-      "foreignKeys": [],
-      "primaryKey": {},
-      "name": "ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
-      "columns": [],
-      "indices": [],
-      "remarks": "",
-      "triggers": [],
-      "fullName": "PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
-      "type": "table"
-    },
-    {
-      "tableConstraints": [],
-      "foreignKeys": [],
-      "primaryKey": {},
-      "name": "REGIONS",
-      "columns": [],
-      "indices": [],
-      "remarks": "",
-      "triggers": [],
-      "fullName": "PUBLIC.\"PUBLISHER SALES\".REGIONS",
-      "type": "table"
-    },
-    {
-      "tableConstraints": [],
-      "foreignKeys": [],
-      "primaryKey": {},
-      "name": "SALES",
-      "columns": [],
-      "indices": [],
-      "remarks": "",
-      "triggers": [],
-      "fullName": "PUBLIC.\"PUBLISHER SALES\".SALES",
-      "type": "table"
-    },
-    {
-      "tableConstraints": [],
-      "foreignKeys": [],
-      "primaryKey": {},
-      "name": "AUTHORSLIST",
-      "columns": [],
-      "indices": [],
-      "remarks": "",
-      "triggers": [],
-      "fullName": "PUBLIC.BOOKS.AUTHORSLIST",
-      "type": "view"
-    }
-  ],
-  "databaseInfo": {
-    "databaseProductName": "HSQL Database Engine",
-    "databaseUserName": "SA",
-    "databaseProductVersion": "2.3.2"
-  },
   "schemaCrawlerInfo": {
     "productVersion": "12.06.03",
     "productName": "SchemaCrawler"
   },
-  "jdbcDriverInfo": {
-    "isJDBCCompliant": "true",
-    "driverClassName": "org.hsqldb.jdbc.JDBCDriver",
-    "driverVersion": "2.3.2",
-    "driverName": "HSQL Database Engine Driver",
-    "url": "jdbc:hsqldb:hsql://localhost/schemacrawler"
+  "tables": [
+    {
+      "foreignKeys": [],
+      "indices": [],
+      "columns": [],
+      "name": "AUTHORS",
+      "fullName": "PUBLIC.BOOKS.AUTHORS",
+      "type": "table",
+      "triggers": [],
+      "tableConstraints": [],
+      "remarks": "Contact details for book authors",
+      "primaryKey": {}
+    },
+    {
+      "foreignKeys": [],
+      "indices": [],
+      "columns": [],
+      "name": "BOOKAUTHORS",
+      "fullName": "PUBLIC.BOOKS.BOOKAUTHORS",
+      "type": "table",
+      "triggers": [],
+      "tableConstraints": [],
+      "remarks": "Relationship between books and their authors, along with the latest updated information",
+      "primaryKey": {}
+    },
+    {
+      "foreignKeys": [],
+      "indices": [],
+      "columns": [],
+      "name": "BOOKS",
+      "fullName": "PUBLIC.BOOKS.BOOKS",
+      "type": "table",
+      "triggers": [],
+      "tableConstraints": [],
+      "remarks": "Details for published books",
+      "primaryKey": {}
+    },
+    {
+      "foreignKeys": [],
+      "indices": [],
+      "columns": [],
+      "name": "\"Global Counts\"",
+      "fullName": "PUBLIC.BOOKS.\"Global Counts\"",
+      "type": "table",
+      "triggers": [],
+      "tableConstraints": [],
+      "remarks": "",
+      "primaryKey": {}
+    },
+    {
+      "foreignKeys": [],
+      "indices": [],
+      "columns": [],
+      "name": "PUBLISHERS",
+      "fullName": "PUBLIC.BOOKS.PUBLISHERS",
+      "type": "table",
+      "triggers": [],
+      "tableConstraints": [],
+      "remarks": "List of book publishers",
+      "primaryKey": {}
+    },
+    {
+      "foreignKeys": [],
+      "indices": [],
+      "columns": [],
+      "name": "EXTRA_PK",
+      "fullName": "PUBLIC.FOR_LINT.EXTRA_PK",
+      "type": "table",
+      "triggers": [],
+      "tableConstraints": [],
+      "remarks": "",
+      "primaryKey": {}
+    },
+    {
+      "foreignKeys": [],
+      "indices": [],
+      "columns": [],
+      "name": "\"Global Counts\"",
+      "fullName": "PUBLIC.FOR_LINT.\"Global Counts\"",
+      "type": "table",
+      "triggers": [],
+      "tableConstraints": [],
+      "remarks": "",
+      "primaryKey": {}
+    },
+    {
+      "foreignKeys": [],
+      "indices": [],
+      "columns": [],
+      "name": "PUBLICATIONS",
+      "fullName": "PUBLIC.FOR_LINT.PUBLICATIONS",
+      "type": "table",
+      "triggers": [],
+      "tableConstraints": [],
+      "remarks": "",
+      "primaryKey": {}
+    },
+    {
+      "foreignKeys": [],
+      "indices": [],
+      "columns": [],
+      "name": "WRITERS",
+      "fullName": "PUBLIC.FOR_LINT.WRITERS",
+      "type": "table",
+      "triggers": [],
+      "tableConstraints": [],
+      "remarks": "",
+      "primaryKey": {}
+    },
+    {
+      "foreignKeys": [],
+      "indices": [],
+      "columns": [],
+      "name": "ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
+      "fullName": "PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
+      "type": "table",
+      "triggers": [],
+      "tableConstraints": [],
+      "remarks": "",
+      "primaryKey": {}
+    },
+    {
+      "foreignKeys": [],
+      "indices": [],
+      "columns": [],
+      "name": "REGIONS",
+      "fullName": "PUBLIC.\"PUBLISHER SALES\".REGIONS",
+      "type": "table",
+      "triggers": [],
+      "tableConstraints": [],
+      "remarks": "",
+      "primaryKey": {}
+    },
+    {
+      "foreignKeys": [],
+      "indices": [],
+      "columns": [],
+      "name": "SALES",
+      "fullName": "PUBLIC.\"PUBLISHER SALES\".SALES",
+      "type": "table",
+      "triggers": [],
+      "tableConstraints": [],
+      "remarks": "",
+      "primaryKey": {}
+    },
+    {
+      "foreignKeys": [],
+      "indices": [],
+      "columns": [],
+      "name": "AUTHORSLIST",
+      "fullName": "PUBLIC.BOOKS.AUTHORSLIST",
+      "type": "view",
+      "triggers": [],
+      "tableConstraints": [],
+      "remarks": "",
+      "primaryKey": {}
+    }
+  ],
+  "databaseInfo": {
+    "databaseProductVersion": "2.3.2",
+    "databaseProductName": "HSQL Database Engine",
+    "databaseUserName": "SA"
   },
   "routines": [
     {
       "name": "CUSTOMADD",
-      "remarks": "",
-      "parameters": [],
       "fullName": "PUBLIC.BOOKS.CUSTOMADD",
       "type": "function",
-      "returnType": "does not return a table"
+      "parameters": [],
+      "returnType": "does not return a table",
+      "remarks": ""
     },
     {
       "name": "CUSTOMADD",
-      "remarks": "",
-      "parameters": [],
       "fullName": "PUBLIC.BOOKS.CUSTOMADD",
       "type": "function",
-      "returnType": "does not return a table"
+      "parameters": [],
+      "returnType": "does not return a table",
+      "remarks": ""
     },
     {
       "name": "NEW_PUBLISHER",
-      "remarks": "",
-      "parameters": [],
       "fullName": "PUBLIC.BOOKS.NEW_PUBLISHER",
       "type": "procedure",
-      "returnType": "no result"
+      "parameters": [],
+      "returnType": "no result",
+      "remarks": ""
     },
     {
       "name": "NEW_PUBLISHER",
-      "remarks": "",
-      "parameters": [],
       "fullName": "PUBLIC.BOOKS.NEW_PUBLISHER",
       "type": "procedure",
-      "returnType": "no result"
+      "parameters": [],
+      "returnType": "no result",
+      "remarks": ""
     },
     {
       "name": "ALLOC_BLOCKS",
-      "remarks": "",
-      "parameters": [],
       "fullName": "PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS",
       "type": "procedure",
-      "returnType": "no result"
+      "parameters": [],
+      "returnType": "no result",
+      "remarks": ""
     },
     {
       "name": "ALLOC_SINGLE_BLOCK",
-      "remarks": "",
-      "parameters": [],
       "fullName": "PUBLIC.SYSTEM_LOBS.ALLOC_SINGLE_BLOCK",
       "type": "procedure",
-      "returnType": "no result"
+      "parameters": [],
+      "returnType": "no result",
+      "remarks": ""
     },
     {
       "name": "CONVERT_BLOCK",
-      "remarks": "",
-      "parameters": [],
       "fullName": "PUBLIC.SYSTEM_LOBS.CONVERT_BLOCK",
       "type": "procedure",
-      "returnType": "no result"
+      "parameters": [],
+      "returnType": "no result",
+      "remarks": ""
     },
     {
       "name": "CREATE_EMPTY_BLOCK",
-      "remarks": "",
-      "parameters": [],
       "fullName": "PUBLIC.SYSTEM_LOBS.CREATE_EMPTY_BLOCK",
       "type": "procedure",
-      "returnType": "no result"
+      "parameters": [],
+      "returnType": "no result",
+      "remarks": ""
     },
     {
       "name": "DELETE_BLOCKS",
-      "remarks": "",
-      "parameters": [],
       "fullName": "PUBLIC.SYSTEM_LOBS.DELETE_BLOCKS",
       "type": "procedure",
-      "returnType": "no result"
+      "parameters": [],
+      "returnType": "no result",
+      "remarks": ""
     },
     {
       "name": "DELETE_LOB",
-      "remarks": "",
-      "parameters": [],
       "fullName": "PUBLIC.SYSTEM_LOBS.DELETE_LOB",
       "type": "procedure",
-      "returnType": "no result"
+      "parameters": [],
+      "returnType": "no result",
+      "remarks": ""
     },
     {
       "name": "DELETE_UNUSED",
-      "remarks": "",
-      "parameters": [],
       "fullName": "PUBLIC.SYSTEM_LOBS.DELETE_UNUSED",
       "type": "procedure",
-      "returnType": "no result"
+      "parameters": [],
+      "returnType": "no result",
+      "remarks": ""
     },
     {
       "name": "DELETE_UNUSED_LOBS",
-      "remarks": "",
-      "parameters": [],
       "fullName": "PUBLIC.SYSTEM_LOBS.DELETE_UNUSED_LOBS",
       "type": "procedure",
-      "returnType": "no result"
+      "parameters": [],
+      "returnType": "no result",
+      "remarks": ""
     },
     {
       "name": "DIVIDE_BLOCK",
-      "remarks": "",
-      "parameters": [],
       "fullName": "PUBLIC.SYSTEM_LOBS.DIVIDE_BLOCK",
       "type": "procedure",
-      "returnType": "no result"
+      "parameters": [],
+      "returnType": "no result",
+      "remarks": ""
     },
     {
       "name": "MERGE_EMPTY_BLOCKS",
-      "remarks": "",
-      "parameters": [],
       "fullName": "PUBLIC.SYSTEM_LOBS.MERGE_EMPTY_BLOCKS",
       "type": "procedure",
-      "returnType": "no result"
+      "parameters": [],
+      "returnType": "no result",
+      "remarks": ""
     }
-  ]
+  ],
+  "jdbcDriverInfo": {
+    "driverVersion": "2.3.2",
+    "isJDBCCompliant": "true",
+    "driverClassName": "org.hsqldb.jdbc.JDBCDriver",
+    "driverName": "HSQL Database Engine Driver",
+    "url": "jdbc:hsqldb:hsql://localhost/schemacrawler"
+  }
 }]

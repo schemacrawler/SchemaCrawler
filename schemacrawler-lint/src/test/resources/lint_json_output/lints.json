@@ -1,197 +1,197 @@
 [
 {
+  "schemaCrawlerInfo": {
+    "productVersion": "12.06.03",
+    "productName": "SchemaCrawler"
+  },
   "table_lints": [
     {
-      "name": "EXTRA_PK",
       "lints": [{
-        "id": "schemacrawler.tools.linter.LinterUselessSurrogateKey",
+        "severity": "medium",
         "description": "useless surrogate key",
-        "value": "PK_EXTRA_PK",
-        "severity": "medium"
+        "id": "schemacrawler.tools.linter.LinterUselessSurrogateKey",
+        "value": "PK_EXTRA_PK"
       }],
+      "name": "EXTRA_PK",
       "fullName": "PUBLIC.FOR_LINT.EXTRA_PK",
       "type": "table"
     },
     {
-      "name": "\"Global Counts\"",
       "lints": [
         {
-          "id": "schemacrawler.tools.linter.LinterTableWithNoIndices",
+          "severity": "medium",
           "description": "no indices",
-          "value": "true",
-          "severity": "medium"
+          "id": "schemacrawler.tools.linter.LinterTableWithNoIndices",
+          "value": "true"
         },
         {
-          "id": "schemacrawler.tools.linter.LinterTableWithQuotedNames",
+          "severity": "medium",
           "description": "spaces in name, or reserved word",
-          "value": "\"Global Counts\"",
-          "severity": "medium"
-        },
-        {
           "id": "schemacrawler.tools.linter.LinterTableWithQuotedNames",
-          "description": "spaces in name, or reserved word",
-          "value": "\"Global Count\"",
-          "severity": "medium"
+          "value": "\"Global Counts\""
         },
         {
-          "id": "schemacrawler.tools.linter.LinterTableWithSingleColumn",
+          "severity": "medium",
+          "description": "spaces in name, or reserved word",
+          "id": "schemacrawler.tools.linter.LinterTableWithQuotedNames",
+          "value": "\"Global Count\""
+        },
+        {
+          "severity": "medium",
           "description": "single column",
-          "value": "true",
-          "severity": "medium"
+          "id": "schemacrawler.tools.linter.LinterTableWithSingleColumn",
+          "value": "true"
         }
       ],
+      "name": "\"Global Counts\"",
       "fullName": "PUBLIC.FOR_LINT.\"Global Counts\"",
       "type": "table"
     },
     {
-      "name": "PUBLICATIONS",
       "lints": [
         {
-          "id": "schemacrawler.tools.linter.LinterTableWithQuotedNames",
+          "severity": "medium",
           "description": "spaces in name, or reserved word",
-          "value": "\"UPDATE\"",
-          "severity": "medium"
+          "id": "schemacrawler.tools.linter.LinterTableWithQuotedNames",
+          "value": "\"UPDATE\""
         },
         {
-          "id": "schemacrawler.tools.linter.LinterTooManyLobs",
+          "severity": "low",
           "description": "too many binary objects",
-          "value": "\"UPDATE\", PRESS_RELEASE",
-          "severity": "low"
+          "id": "schemacrawler.tools.linter.LinterTooManyLobs",
+          "value": "\"UPDATE\", PRESS_RELEASE"
         }
       ],
+      "name": "PUBLICATIONS",
       "fullName": "PUBLIC.FOR_LINT.PUBLICATIONS",
       "type": "table"
     },
     {
-      "name": "WRITERS",
       "lints": [
         {
-          "id": "schemacrawler.tools.linter.LinterForeignKeyMismatch",
+          "severity": "high",
           "description": "foreign key and primary key have different data types",
-          "value": "FK_WRITERS_PUBLICATION",
-          "severity": "high"
+          "id": "schemacrawler.tools.linter.LinterForeignKeyMismatch",
+          "value": "FK_WRITERS_PUBLICATION"
         },
         {
-          "id": "schemacrawler.tools.linter.LinterRedundantIndices",
+          "severity": "high",
           "description": "redundant index",
-          "value": "IDX_A1_WRITERS",
-          "severity": "high"
+          "id": "schemacrawler.tools.linter.LinterRedundantIndices",
+          "value": "IDX_A1_WRITERS"
         },
         {
-          "id": "schemacrawler.tools.linter.LinterNullColumnsInIndex",
+          "severity": "medium",
           "description": "unique index with nullable columns",
-          "value": "IDX_U_WRITERS",
-          "severity": "medium"
+          "id": "schemacrawler.tools.linter.LinterNullColumnsInIndex",
+          "value": "IDX_U_WRITERS"
         },
         {
-          "id": "schemacrawler.tools.linter.LinterNullIntendedColumns",
+          "severity": "medium",
           "description": "column where NULL may be intended",
-          "value": "ADDRESS2",
-          "severity": "medium"
-        },
-        {
           "id": "schemacrawler.tools.linter.LinterNullIntendedColumns",
+          "value": "ADDRESS2"
+        },
+        {
+          "severity": "medium",
           "description": "column where NULL may be intended",
-          "value": "COUNTRY",
-          "severity": "medium"
+          "id": "schemacrawler.tools.linter.LinterNullIntendedColumns",
+          "value": "COUNTRY"
         },
         {
-          "id": "schemacrawler.tools.linter.LinterTableWithIncrementingColumns",
+          "severity": "medium",
           "description": "incrementing columns",
-          "value": "PHONE1, PHONE2",
-          "severity": "medium"
+          "id": "schemacrawler.tools.linter.LinterTableWithIncrementingColumns",
+          "value": "ADDRESS1, ADDRESS2"
         },
         {
-          "id": "schemacrawler.tools.linter.LinterTableWithIncrementingColumns",
+          "severity": "medium",
           "description": "incrementing columns",
-          "value": "FAX, FAX3",
-          "severity": "medium"
+          "id": "schemacrawler.tools.linter.LinterTableWithIncrementingColumns",
+          "value": "PHONE1, PHONE2"
         },
         {
-          "id": "schemacrawler.tools.linter.LinterTableWithIncrementingColumns",
+          "severity": "medium",
           "description": "incrementing columns",
-          "value": "EMAIL1, EMAIL2",
-          "severity": "medium"
+          "id": "schemacrawler.tools.linter.LinterTableWithIncrementingColumns",
+          "value": "FAX, FAX3"
         },
         {
-          "id": "schemacrawler.tools.linter.LinterTableWithIncrementingColumns",
+          "severity": "medium",
           "description": "incrementing columns",
-          "value": "ADDRESS1, ADDRESS2",
-          "severity": "medium"
+          "id": "schemacrawler.tools.linter.LinterTableWithIncrementingColumns",
+          "value": "EMAIL1, EMAIL2"
         },
         {
-          "id": "schemacrawler.tools.linter.LinterTableWithIncrementingColumns",
+          "severity": "medium",
           "description": "incrementing columns",
-          "value": "HOMEEMAIL11, HOMEEMAIL12",
-          "severity": "medium"
+          "id": "schemacrawler.tools.linter.LinterTableWithIncrementingColumns",
+          "value": "HOMEEMAIL11, HOMEEMAIL12"
         },
         {
-          "id": "schemacrawler.tools.linter.LinterTableWithIncrementingColumns",
+          "severity": "medium",
           "description": "incrementing columns are not consecutive",
-          "value": "FAX, FAX3",
-          "severity": "medium"
+          "id": "schemacrawler.tools.linter.LinterTableWithIncrementingColumns",
+          "value": "FAX, FAX3"
         },
         {
-          "id": "schemacrawler.tools.linter.LinterTableWithIncrementingColumns",
+          "severity": "medium",
           "description": "incrementing columns don't have the same data-type",
-          "value": "PHONE1, PHONE2",
-          "severity": "medium"
+          "id": "schemacrawler.tools.linter.LinterTableWithIncrementingColumns",
+          "value": "PHONE1, PHONE2"
         },
         {
-          "id": "schemacrawler.tools.linter.LinterTableWithIncrementingColumns",
+          "severity": "medium",
           "description": "incrementing columns don't have the same data-type",
-          "value": "FAX, FAX3",
-          "severity": "medium"
+          "id": "schemacrawler.tools.linter.LinterTableWithIncrementingColumns",
+          "value": "FAX, FAX3"
         },
         {
-          "id": "schemacrawler.tools.linter.LinterTableWithIncrementingColumns",
+          "severity": "medium",
           "description": "incrementing columns don't have the same data-type",
-          "value": "EMAIL1, EMAIL2",
-          "severity": "medium"
+          "id": "schemacrawler.tools.linter.LinterTableWithIncrementingColumns",
+          "value": "EMAIL1, EMAIL2"
         }
       ],
+      "name": "WRITERS",
       "fullName": "PUBLIC.FOR_LINT.WRITERS",
       "type": "table"
     },
     {
-      "name": "ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
       "lints": [{
-        "id": "schemacrawler.tools.linter.LinterForeignKeyMismatch",
+        "severity": "high",
         "description": "foreign key and primary key have different data types",
-        "value": "FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS",
-        "severity": "high"
+        "id": "schemacrawler.tools.linter.LinterForeignKeyMismatch",
+        "value": "FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS"
       }],
+      "name": "ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
       "fullName": "PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
       "type": "table"
     }
   ],
   "databaseInfo": {
+    "databaseProductVersion": "2.3.2",
     "databaseProductName": "HSQL Database Engine",
-    "databaseUserName": "SA",
-    "databaseProductVersion": "2.3.2"
+    "databaseUserName": "SA"
   },
   "database_lints": {"lints": [
       {
-        "id": "schemacrawler.tools.linter.LinterColumnTypes",
+        "severity": "medium",
         "description": "column with same name but different data types",
-        "value": "ID [BIGINT, INTEGER]",
-        "severity": "medium"
+        "id": "schemacrawler.tools.linter.LinterColumnTypes",
+        "value": "ID [BIGINT, INTEGER]"
       },
       {
-        "id": "schemacrawler.tools.linter.LinterTableCycles",
+        "severity": "medium",
         "description": "cycles in table relationships",
-        "value": "true",
-        "severity": "medium"
+        "id": "schemacrawler.tools.linter.LinterTableCycles",
+        "value": "true"
       }
     ]},
-  "schemaCrawlerInfo": {
-    "productVersion": "12.06.03",
-    "productName": "SchemaCrawler"
-  },
   "jdbcDriverInfo": {
+    "driverVersion": "2.3.2",
     "isJDBCCompliant": "true",
     "driverClassName": "org.hsqldb.jdbc.JDBCDriver",
-    "driverVersion": "2.3.2",
     "driverName": "HSQL Database Engine Driver",
     "url": "jdbc:hsqldb:hsql://localhost/schemacrawler"
   }
