@@ -20,8 +20,9 @@
 package schemacrawler.filter;
 
 
+import java.util.function.Predicate;
+
 import schemacrawler.schema.NamedObject;
-import sf.util.Predicate;
 
 /**
  * Specifies inclusion and exclusion patterns that can be applied to the
@@ -29,7 +30,7 @@ import sf.util.Predicate;
  *
  * @author Sualeh Fatehi
  */
-// @FunctionalInterface
+@FunctionalInterface
 public interface NamedObjectFilter<N extends NamedObject>
   extends Predicate<N>
 {
