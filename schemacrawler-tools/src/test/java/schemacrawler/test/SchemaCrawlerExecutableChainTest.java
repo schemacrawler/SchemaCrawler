@@ -58,7 +58,8 @@ public class SchemaCrawlerExecutableChainTest
     executable.setOutputOptions(outputOptions);
     executable.execute(getConnection());
 
-    assertEquals("Created files \"schema.txt\" and \"schema.png\"",
+    assertEquals("Created files \"schema.txt\" and \"schema.png\""
+                     + System.lineSeparator(),
                  readFully(new FileReader(testOutputFile.toFile())));
 
     final List<String> failures = compareOutput("schema.txt",

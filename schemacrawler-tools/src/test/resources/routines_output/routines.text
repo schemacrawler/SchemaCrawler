@@ -65,6 +65,7 @@ max columns in table                      0
 max connections                           0                             
 max cursor name length                    128                           
 max index length                          0                             
+max logical lob size                      0                             
 max procedure name length                 128                           
 max row size                              0                             
 max schema name length                    128                           
@@ -153,6 +154,7 @@ supports order by unrelated               true
 supports outer joins                      true                          
 supports positioned delete                true                          
 supports positioned update                true                          
+supports ref cursors                      false                         
 supports result set type for TYPE_FORWARD_ONLY result sets  true                          
 supports result set type for TYPE_SCROLL_INSENSITIVE result sets  true                          
 supports result set type for TYPE_SCROLL_SENSITIVE result sets  false                         
@@ -425,18 +427,6 @@ Routines
 CUSTOMADD                            [function, does not return a table]
 ------------------------------------------------------------------------
   ONE                               INTEGER, in                 
-
-                                                         [specific name]
-CUSTOMADD_10131
-
-                                                            [definition]
-CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10131 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN BOOKS.CUSTOMADD(ONE,1)
-
-
-
-CUSTOMADD                            [function, does not return a table]
-------------------------------------------------------------------------
-  ONE                               INTEGER, in                 
   TWO                               INTEGER, in                 
 
                                                          [specific name]
@@ -444,6 +434,18 @@ CUSTOMADD_10130
 
                                                             [definition]
 CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER,IN TWO INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10130 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN ONE+TWO
+
+
+
+CUSTOMADD                            [function, does not return a table]
+------------------------------------------------------------------------
+  ONE                               INTEGER, in                 
+
+                                                         [specific name]
+CUSTOMADD_10131
+
+                                                            [definition]
+CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10131 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN BOOKS.CUSTOMADD(ONE,1)
 
 
 
