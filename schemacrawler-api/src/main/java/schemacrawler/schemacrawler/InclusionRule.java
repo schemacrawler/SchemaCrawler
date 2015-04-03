@@ -22,8 +22,7 @@ package schemacrawler.schemacrawler;
 
 
 import java.io.Serializable;
-
-import sf.util.Predicate;
+import java.util.function.Predicate;
 
 /**
  * Specifies inclusion and exclusion patterns that can be applied to the
@@ -35,7 +34,7 @@ import sf.util.Predicate;
  *
  * @author Sualeh Fatehi
  */
-// @FunctionalInterface
+@FunctionalInterface
 public interface InclusionRule
   extends Serializable, Predicate<String>
 {

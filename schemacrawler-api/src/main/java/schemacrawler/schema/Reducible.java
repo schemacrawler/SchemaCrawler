@@ -21,7 +21,7 @@
 package schemacrawler.schema;
 
 
-// @FunctionalInterface
+@FunctionalInterface
 public interface Reducible
 {
 
