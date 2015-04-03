@@ -394,6 +394,10 @@ a:hover, a:active {
 		<td class='property_value'>0</td>
 	</tr>
 	<tr>
+		<td class='property_name'>max logical lob size</td>
+		<td class='property_value'>0</td>
+	</tr>
+	<tr>
 		<td class='property_name'>max procedure name length</td>
 		<td class='property_value'>128</td>
 	</tr>
@@ -744,6 +748,10 @@ a:hover, a:active {
 	<tr>
 		<td class='property_name'>supports positioned update</td>
 		<td class='property_value'>true</td>
+	</tr>
+	<tr>
+		<td class='property_name'>supports ref cursors</td>
+		<td class='property_value'>false</td>
 	</tr>
 	<tr>
 		<td class='property_name'>supports result set type for TYPE_FORWARD_ONLY result sets</td>
@@ -4241,38 +4249,6 @@ a:hover, a:active {
 
 <table>
 
-  <caption style='background-color: #CEE2F2;'><span id='customadd_a6c7d918' class='caption_name'>PUBLIC.BOOKS.CUSTOMADD</span> <span class='caption_description'>[function, does not return a table]</span></caption>
-
-	<tr>
-		<td class='spacer'></td>
-		<td class='subname'>ONE</td>
-		<td class='type'>INTEGER, in</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description right'>[specific name]</td>
-	</tr>
-	<tr>
-		<td colspan='3' class='definition'>CUSTOMADD_10131</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description right'>[definition]</td>
-	</tr>
-	<tr>
-		<td colspan='3' class='definition'>CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10131 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN BOOKS.CUSTOMADD(ONE,1)</td>
-	</tr>
-</table>
-<p>&#160;</p>
-
-<table>
-
   <caption style='background-color: #CEE2F2;'><span id='customadd_a6c7d917' class='caption_name'>PUBLIC.BOOKS.CUSTOMADD</span> <span class='caption_description'>[function, does not return a table]</span></caption>
 
 	<tr>
@@ -4304,6 +4280,38 @@ a:hover, a:active {
 	</tr>
 	<tr>
 		<td colspan='3' class='definition'>CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER,IN TWO INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10130 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN ONE+TWO</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<table>
+
+  <caption style='background-color: #CEE2F2;'><span id='customadd_a6c7d918' class='caption_name'>PUBLIC.BOOKS.CUSTOMADD</span> <span class='caption_description'>[function, does not return a table]</span></caption>
+
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ONE</td>
+		<td class='type'>INTEGER, in</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[specific name]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>CUSTOMADD_10131</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[definition]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10131 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN BOOKS.CUSTOMADD(ONE,1)</td>
 	</tr>
 </table>
 <p>&#160;</p>

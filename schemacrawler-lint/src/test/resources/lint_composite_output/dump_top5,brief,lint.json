@@ -1,38 +1,25 @@
 [
 {
-  "databaseInfo": {
-    "databaseProductName": "HSQL Database Engine",
-    "databaseUserName": "SA",
-    "databaseProductVersion": "2.3.2"
-  },
   "schemaCrawlerInfo": {
     "productVersion": "12.06.03",
     "productName": "SchemaCrawler"
   },
-  "jdbcDriverInfo": {
-    "isJDBCCompliant": "true",
-    "driverClassName": "org.hsqldb.jdbc.JDBCDriver",
-    "driverVersion": "2.3.2",
-    "driverName": "HSQL Database Engine Driver",
-    "url": "jdbc:hsqldb:hsql://localhost/schemacrawler"
-  },
   "data": [
     {
-      "title": "PUBLIC.FOR_LINT.EXTRA_PK",
       "columnNames": [
         "ID",
         "WRITERID",
         "PUBLICATIONID"
       ],
+      "title": "PUBLIC.FOR_LINT.EXTRA_PK",
       "rows": []
     },
     {
-      "title": "PUBLIC.FOR_LINT.\"Global Counts\"",
       "columnNames": ["Global Count"],
+      "title": "PUBLIC.FOR_LINT.\"Global Counts\"",
       "rows": []
     },
     {
-      "title": "PUBLIC.FOR_LINT.PUBLICATIONS",
       "columnNames": [
         "ID",
         "TITLE",
@@ -41,10 +28,10 @@
         "PUBLICATIONDATE",
         "PRICE"
       ],
+      "title": "PUBLIC.FOR_LINT.PUBLICATIONS",
       "rows": []
     },
     {
-      "title": "PUBLIC.FOR_LINT.WRITERS",
       "columnNames": [
         "ID",
         "FIRSTNAME",
@@ -65,544 +52,557 @@
         "HOMEEMAIL12",
         "PUBLICATION_ID"
       ],
+      "title": "PUBLIC.FOR_LINT.WRITERS",
       "rows": []
     },
     {
-      "title": "PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
       "columnNames": [
         "ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
         "ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
         "ΣΥΓΓΡΑΦΈΑΣ"
       ],
+      "title": "PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
       "rows": []
     }
-  ]
+  ],
+  "databaseInfo": {
+    "databaseProductVersion": "2.3.2",
+    "databaseProductName": "HSQL Database Engine",
+    "databaseUserName": "SA"
+  },
+  "jdbcDriverInfo": {
+    "driverVersion": "2.3.2",
+    "isJDBCCompliant": "true",
+    "driverClassName": "org.hsqldb.jdbc.JDBCDriver",
+    "driverName": "HSQL Database Engine Driver",
+    "url": "jdbc:hsqldb:hsql://localhost/schemacrawler"
+  }
 },
 {"tables": [
     {
       "foreignKeys": [
         {
-          "updateRule": "no action",
+          "name": "FK_PUBLICATION_JOIN",
+          "deleteRule": "no action",
           "columnReferences": [{
             "pkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.ID",
             "fkColumn": "PUBLIC.FOR_LINT.EXTRA_PK.PUBLICATIONID"
           }],
-          "deleteRule": "no action",
-          "name": "FK_PUBLICATION_JOIN"
+          "updateRule": "no action"
         },
         {
-          "updateRule": "no action",
+          "name": "FK_WRITER_JOIN",
+          "deleteRule": "no action",
           "columnReferences": [{
             "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
             "fkColumn": "PUBLIC.FOR_LINT.EXTRA_PK.WRITERID"
           }],
-          "deleteRule": "no action",
-          "name": "FK_WRITER_JOIN"
+          "updateRule": "no action"
         }
       ],
+      "columns": [
+        {
+          "size": 32,
+          "nullable": false,
+          "databaseSpecificType": "INTEGER",
+          "dataType": "INTEGER",
+          "name": "ID",
+          "width": "",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        },
+        {
+          "size": 64,
+          "nullable": false,
+          "databaseSpecificType": "BIGINT",
+          "dataType": "BIGINT",
+          "name": "WRITERID",
+          "width": "",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        },
+        {
+          "size": 32,
+          "nullable": false,
+          "databaseSpecificType": "INTEGER",
+          "dataType": "INTEGER",
+          "name": "PUBLICATIONID",
+          "width": "",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        }
+      ],
+      "name": "EXTRA_PK",
+      "fullName": "PUBLIC.FOR_LINT.EXTRA_PK",
+      "type": "table",
+      "remarks": "",
       "primaryKey": {
-        "unique": true,
-        "name": "PK_EXTRA_PK",
         "columns": {
           "sortSequence": "ascending",
           "name": "ID"
-        }
-      },
-      "name": "EXTRA_PK",
-      "columns": [
-        {
-          "dataType": "INTEGER",
-          "decimalDigits": 0,
-          "width": "",
-          "name": "ID",
-          "nullable": false,
-          "remarks": "",
-          "autoIncremented": false,
-          "databaseSpecificType": "INTEGER",
-          "size": 32
         },
-        {
-          "dataType": "BIGINT",
-          "decimalDigits": 0,
-          "width": "",
-          "name": "WRITERID",
-          "nullable": false,
-          "remarks": "",
-          "autoIncremented": false,
-          "databaseSpecificType": "BIGINT",
-          "size": 64
-        },
-        {
-          "dataType": "INTEGER",
-          "decimalDigits": 0,
-          "width": "",
-          "name": "PUBLICATIONID",
-          "nullable": false,
-          "remarks": "",
-          "autoIncremented": false,
-          "databaseSpecificType": "INTEGER",
-          "size": 32
-        }
-      ],
-      "remarks": "",
-      "fullName": "PUBLIC.FOR_LINT.EXTRA_PK",
-      "type": "table"
+        "unique": true,
+        "name": "PK_EXTRA_PK"
+      }
     },
     {
       "foreignKeys": [],
-      "primaryKey": {},
-      "name": "\"Global Counts\"",
       "columns": [],
-      "remarks": "",
+      "name": "\"Global Counts\"",
       "fullName": "PUBLIC.FOR_LINT.\"Global Counts\"",
-      "type": "table"
+      "type": "table",
+      "remarks": "",
+      "primaryKey": {}
     },
     {
       "foreignKeys": [
         {
-          "updateRule": "no action",
+          "name": "FK_PUBLICATION_JOIN",
+          "deleteRule": "no action",
           "columnReferences": [{
             "pkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.ID",
             "fkColumn": "PUBLIC.FOR_LINT.EXTRA_PK.PUBLICATIONID"
           }],
-          "deleteRule": "no action",
-          "name": "FK_PUBLICATION_JOIN"
+          "updateRule": "no action"
         },
         {
-          "updateRule": "no action",
+          "name": "FK_WRITERS_PUBLICATION",
+          "deleteRule": "no action",
           "columnReferences": [{
             "pkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.ID",
             "fkColumn": "PUBLIC.FOR_LINT.WRITERS.PUBLICATION_ID"
           }],
-          "deleteRule": "no action",
-          "name": "FK_WRITERS_PUBLICATION"
+          "updateRule": "no action"
         },
         {
-          "updateRule": "no action",
+          "name": "FK_PUBLICATIONS_WRITER",
+          "deleteRule": "no action",
           "columnReferences": [{
             "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
             "fkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID"
           }],
-          "deleteRule": "no action",
-          "name": "FK_PUBLICATIONS_WRITER"
+          "updateRule": "no action"
         }
       ],
+      "columns": [
+        {
+          "size": 32,
+          "nullable": false,
+          "databaseSpecificType": "INTEGER",
+          "dataType": "INTEGER",
+          "name": "ID",
+          "width": "",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        },
+        {
+          "size": 64,
+          "nullable": false,
+          "databaseSpecificType": "BIGINT",
+          "dataType": "BIGINT",
+          "name": "WRITERID",
+          "width": "",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        }
+      ],
+      "name": "PUBLICATIONS",
+      "fullName": "PUBLIC.FOR_LINT.PUBLICATIONS",
+      "type": "table",
+      "remarks": "",
       "primaryKey": {
-        "unique": true,
-        "name": "PK_PUBLICATIONS",
         "columns": {
           "sortSequence": "ascending",
           "name": "ID"
-        }
-      },
-      "name": "PUBLICATIONS",
-      "columns": [
-        {
-          "dataType": "INTEGER",
-          "decimalDigits": 0,
-          "width": "",
-          "name": "ID",
-          "nullable": false,
-          "remarks": "",
-          "autoIncremented": false,
-          "databaseSpecificType": "INTEGER",
-          "size": 32
         },
-        {
-          "dataType": "BIGINT",
-          "decimalDigits": 0,
-          "width": "",
-          "name": "WRITERID",
-          "nullable": false,
-          "remarks": "",
-          "autoIncremented": false,
-          "databaseSpecificType": "BIGINT",
-          "size": 64
-        }
-      ],
-      "remarks": "",
-      "fullName": "PUBLIC.FOR_LINT.PUBLICATIONS",
-      "type": "table"
+        "unique": true,
+        "name": "PK_PUBLICATIONS"
+      }
     },
     {
       "foreignKeys": [
         {
-          "updateRule": "no action",
+          "name": "FK_WRITERS_PUBLICATION",
+          "deleteRule": "no action",
           "columnReferences": [{
             "pkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.ID",
             "fkColumn": "PUBLIC.FOR_LINT.WRITERS.PUBLICATION_ID"
           }],
-          "deleteRule": "no action",
-          "name": "FK_WRITERS_PUBLICATION"
+          "updateRule": "no action"
         },
         {
-          "updateRule": "no action",
+          "name": "FK_WRITER_JOIN",
+          "deleteRule": "no action",
           "columnReferences": [{
             "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
             "fkColumn": "PUBLIC.FOR_LINT.EXTRA_PK.WRITERID"
           }],
-          "deleteRule": "no action",
-          "name": "FK_WRITER_JOIN"
+          "updateRule": "no action"
         },
         {
-          "updateRule": "no action",
+          "name": "FK_PUBLICATIONS_WRITER",
+          "deleteRule": "no action",
           "columnReferences": [{
             "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
             "fkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID"
           }],
-          "deleteRule": "no action",
-          "name": "FK_PUBLICATIONS_WRITER"
+          "updateRule": "no action"
         },
         {
-          "updateRule": "no action",
+          "name": "FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS",
+          "deleteRule": "no action",
           "columnReferences": [{
             "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
             "fkColumn": "PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ"
           }],
-          "deleteRule": "no action",
-          "name": "FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS"
+          "updateRule": "no action"
         }
       ],
+      "columns": [
+        {
+          "size": 64,
+          "nullable": false,
+          "databaseSpecificType": "BIGINT",
+          "dataType": "BIGINT",
+          "name": "ID",
+          "width": "",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        },
+        {
+          "size": 20,
+          "nullable": false,
+          "databaseSpecificType": "VARCHAR",
+          "dataType": "VARCHAR",
+          "name": "FIRSTNAME",
+          "width": "(20)",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        },
+        {
+          "size": 20,
+          "nullable": false,
+          "databaseSpecificType": "VARCHAR",
+          "dataType": "VARCHAR",
+          "name": "LASTNAME",
+          "width": "(20)",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        },
+        {
+          "size": 50,
+          "nullable": true,
+          "databaseSpecificType": "VARCHAR",
+          "dataType": "VARCHAR",
+          "name": "CITY",
+          "width": "(50)",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        },
+        {
+          "size": 2,
+          "nullable": true,
+          "databaseSpecificType": "VARCHAR",
+          "dataType": "VARCHAR",
+          "name": "STATE",
+          "width": "(2)",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        },
+        {
+          "size": 10,
+          "nullable": true,
+          "databaseSpecificType": "VARCHAR",
+          "dataType": "VARCHAR",
+          "name": "POSTALCODE",
+          "width": "(10)",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        },
+        {
+          "size": 50,
+          "nullable": true,
+          "databaseSpecificType": "VARCHAR",
+          "dataType": "VARCHAR",
+          "name": "COUNTRY",
+          "width": "(50)",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        },
+        {
+          "size": 10,
+          "nullable": true,
+          "databaseSpecificType": "VARCHAR",
+          "dataType": "VARCHAR",
+          "name": "EMAIL1",
+          "width": "(10)",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        },
+        {
+          "size": 64,
+          "nullable": false,
+          "databaseSpecificType": "BIGINT",
+          "dataType": "BIGINT",
+          "name": "PUBLICATION_ID",
+          "width": "",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        }
+      ],
+      "name": "WRITERS",
+      "fullName": "PUBLIC.FOR_LINT.WRITERS",
+      "type": "table",
+      "remarks": "",
       "primaryKey": {
-        "unique": true,
-        "name": "PK_WRITERS",
         "columns": {
           "sortSequence": "ascending",
           "name": "ID"
-        }
-      },
-      "name": "WRITERS",
-      "columns": [
-        {
-          "dataType": "BIGINT",
-          "decimalDigits": 0,
-          "width": "",
-          "name": "ID",
-          "nullable": false,
-          "remarks": "",
-          "autoIncremented": false,
-          "databaseSpecificType": "BIGINT",
-          "size": 64
         },
-        {
-          "dataType": "VARCHAR",
-          "decimalDigits": 0,
-          "width": "(20)",
-          "name": "FIRSTNAME",
-          "nullable": false,
-          "remarks": "",
-          "autoIncremented": false,
-          "databaseSpecificType": "VARCHAR",
-          "size": 20
-        },
-        {
-          "dataType": "VARCHAR",
-          "decimalDigits": 0,
-          "width": "(20)",
-          "name": "LASTNAME",
-          "nullable": false,
-          "remarks": "",
-          "autoIncremented": false,
-          "databaseSpecificType": "VARCHAR",
-          "size": 20
-        },
-        {
-          "dataType": "VARCHAR",
-          "decimalDigits": 0,
-          "width": "(50)",
-          "name": "CITY",
-          "nullable": true,
-          "remarks": "",
-          "autoIncremented": false,
-          "databaseSpecificType": "VARCHAR",
-          "size": 50
-        },
-        {
-          "dataType": "VARCHAR",
-          "decimalDigits": 0,
-          "width": "(2)",
-          "name": "STATE",
-          "nullable": true,
-          "remarks": "",
-          "autoIncremented": false,
-          "databaseSpecificType": "VARCHAR",
-          "size": 2
-        },
-        {
-          "dataType": "VARCHAR",
-          "decimalDigits": 0,
-          "width": "(10)",
-          "name": "POSTALCODE",
-          "nullable": true,
-          "remarks": "",
-          "autoIncremented": false,
-          "databaseSpecificType": "VARCHAR",
-          "size": 10
-        },
-        {
-          "dataType": "VARCHAR",
-          "decimalDigits": 0,
-          "width": "(50)",
-          "name": "COUNTRY",
-          "nullable": true,
-          "remarks": "",
-          "autoIncremented": false,
-          "databaseSpecificType": "VARCHAR",
-          "size": 50
-        },
-        {
-          "dataType": "VARCHAR",
-          "decimalDigits": 0,
-          "width": "(10)",
-          "name": "EMAIL1",
-          "nullable": true,
-          "remarks": "",
-          "autoIncremented": false,
-          "databaseSpecificType": "VARCHAR",
-          "size": 10
-        },
-        {
-          "dataType": "BIGINT",
-          "decimalDigits": 0,
-          "width": "",
-          "name": "PUBLICATION_ID",
-          "nullable": false,
-          "remarks": "",
-          "autoIncremented": false,
-          "databaseSpecificType": "BIGINT",
-          "size": 64
-        }
-      ],
-      "remarks": "",
-      "fullName": "PUBLIC.FOR_LINT.WRITERS",
-      "type": "table"
+        "unique": true,
+        "name": "PK_WRITERS"
+      }
     },
     {
       "foreignKeys": [{
-        "updateRule": "no action",
+        "name": "FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS",
+        "deleteRule": "no action",
         "columnReferences": [{
           "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
           "fkColumn": "PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ"
         }],
-        "deleteRule": "no action",
-        "name": "FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS"
+        "updateRule": "no action"
       }],
+      "columns": [
+        {
+          "size": 64,
+          "nullable": false,
+          "databaseSpecificType": "BIGINT",
+          "dataType": "BIGINT",
+          "name": "ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
+          "width": "",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        },
+        {
+          "size": 32,
+          "nullable": true,
+          "databaseSpecificType": "INTEGER",
+          "dataType": "INTEGER",
+          "name": "ΣΥΓΓΡΑΦΈΑΣ",
+          "width": "",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        }
+      ],
+      "name": "ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
+      "fullName": "PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
+      "type": "table",
+      "remarks": "",
       "primaryKey": {
-        "unique": true,
-        "name": "PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
         "columns": {
           "sortSequence": "ascending",
           "name": "ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ"
-        }
-      },
-      "name": "ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
-      "columns": [
-        {
-          "dataType": "BIGINT",
-          "decimalDigits": 0,
-          "width": "",
-          "name": "ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
-          "nullable": false,
-          "remarks": "",
-          "autoIncremented": false,
-          "databaseSpecificType": "BIGINT",
-          "size": 64
         },
-        {
-          "dataType": "INTEGER",
-          "decimalDigits": 0,
-          "width": "",
-          "name": "ΣΥΓΓΡΑΦΈΑΣ",
-          "nullable": true,
-          "remarks": "",
-          "autoIncremented": false,
-          "databaseSpecificType": "INTEGER",
-          "size": 32
-        }
-      ],
-      "remarks": "",
-      "fullName": "PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
-      "type": "table"
+        "unique": true,
+        "name": "PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ"
+      }
     }
   ]},
 {
   "table_lints": [
     {
-      "name": "EXTRA_PK",
       "lints": [{
-        "id": "schemacrawler.tools.linter.LinterUselessSurrogateKey",
+        "severity": "medium",
         "description": "useless surrogate key",
-        "value": "PK_EXTRA_PK",
-        "severity": "medium"
+        "id": "schemacrawler.tools.linter.LinterUselessSurrogateKey",
+        "value": "PK_EXTRA_PK"
       }],
+      "name": "EXTRA_PK",
       "fullName": "PUBLIC.FOR_LINT.EXTRA_PK",
       "type": "table"
     },
     {
-      "name": "\"Global Counts\"",
       "lints": [
         {
-          "id": "schemacrawler.tools.linter.LinterTableWithNoIndices",
+          "severity": "medium",
           "description": "no indices",
-          "value": "true",
-          "severity": "medium"
+          "id": "schemacrawler.tools.linter.LinterTableWithNoIndices",
+          "value": "true"
         },
         {
-          "id": "schemacrawler.tools.linter.LinterTableWithQuotedNames",
+          "severity": "medium",
           "description": "spaces in name, or reserved word",
-          "value": "\"Global Counts\"",
-          "severity": "medium"
-        },
-        {
           "id": "schemacrawler.tools.linter.LinterTableWithQuotedNames",
-          "description": "spaces in name, or reserved word",
-          "value": "\"Global Count\"",
-          "severity": "medium"
+          "value": "\"Global Counts\""
         },
         {
-          "id": "schemacrawler.tools.linter.LinterTableWithSingleColumn",
+          "severity": "medium",
+          "description": "spaces in name, or reserved word",
+          "id": "schemacrawler.tools.linter.LinterTableWithQuotedNames",
+          "value": "\"Global Count\""
+        },
+        {
+          "severity": "medium",
           "description": "single column",
-          "value": "true",
-          "severity": "medium"
+          "id": "schemacrawler.tools.linter.LinterTableWithSingleColumn",
+          "value": "true"
         }
       ],
+      "name": "\"Global Counts\"",
       "fullName": "PUBLIC.FOR_LINT.\"Global Counts\"",
       "type": "table"
     },
     {
-      "name": "PUBLICATIONS",
       "lints": [
         {
-          "id": "schemacrawler.tools.linter.LinterTableWithQuotedNames",
+          "severity": "medium",
           "description": "spaces in name, or reserved word",
-          "value": "\"UPDATE\"",
-          "severity": "medium"
+          "id": "schemacrawler.tools.linter.LinterTableWithQuotedNames",
+          "value": "\"UPDATE\""
         },
         {
-          "id": "schemacrawler.tools.linter.LinterTooManyLobs",
+          "severity": "low",
           "description": "too many binary objects",
-          "value": "\"UPDATE\", PRESS_RELEASE",
-          "severity": "low"
+          "id": "schemacrawler.tools.linter.LinterTooManyLobs",
+          "value": "\"UPDATE\", PRESS_RELEASE"
         }
       ],
+      "name": "PUBLICATIONS",
       "fullName": "PUBLIC.FOR_LINT.PUBLICATIONS",
       "type": "table"
     },
     {
-      "name": "WRITERS",
       "lints": [
         {
-          "id": "schemacrawler.tools.linter.LinterForeignKeyMismatch",
+          "severity": "high",
           "description": "foreign key and primary key have different data types",
-          "value": "FK_WRITERS_PUBLICATION",
-          "severity": "high"
+          "id": "schemacrawler.tools.linter.LinterForeignKeyMismatch",
+          "value": "FK_WRITERS_PUBLICATION"
         },
         {
-          "id": "schemacrawler.tools.linter.LinterRedundantIndices",
+          "severity": "high",
           "description": "redundant index",
-          "value": "IDX_A1_WRITERS",
-          "severity": "high"
+          "id": "schemacrawler.tools.linter.LinterRedundantIndices",
+          "value": "IDX_A1_WRITERS"
         },
         {
-          "id": "schemacrawler.tools.linter.LinterNullColumnsInIndex",
+          "severity": "medium",
           "description": "unique index with nullable columns",
-          "value": "IDX_U_WRITERS",
-          "severity": "medium"
+          "id": "schemacrawler.tools.linter.LinterNullColumnsInIndex",
+          "value": "IDX_U_WRITERS"
         },
         {
-          "id": "schemacrawler.tools.linter.LinterNullIntendedColumns",
+          "severity": "medium",
           "description": "column where NULL may be intended",
-          "value": "ADDRESS2",
-          "severity": "medium"
-        },
-        {
           "id": "schemacrawler.tools.linter.LinterNullIntendedColumns",
+          "value": "ADDRESS2"
+        },
+        {
+          "severity": "medium",
           "description": "column where NULL may be intended",
-          "value": "COUNTRY",
-          "severity": "medium"
+          "id": "schemacrawler.tools.linter.LinterNullIntendedColumns",
+          "value": "COUNTRY"
         },
         {
-          "id": "schemacrawler.tools.linter.LinterTableWithIncrementingColumns",
+          "severity": "medium",
           "description": "incrementing columns",
-          "value": "PHONE1, PHONE2",
-          "severity": "medium"
+          "id": "schemacrawler.tools.linter.LinterTableWithIncrementingColumns",
+          "value": "ADDRESS1, ADDRESS2"
         },
         {
-          "id": "schemacrawler.tools.linter.LinterTableWithIncrementingColumns",
+          "severity": "medium",
           "description": "incrementing columns",
-          "value": "FAX, FAX3",
-          "severity": "medium"
+          "id": "schemacrawler.tools.linter.LinterTableWithIncrementingColumns",
+          "value": "PHONE1, PHONE2"
         },
         {
-          "id": "schemacrawler.tools.linter.LinterTableWithIncrementingColumns",
+          "severity": "medium",
           "description": "incrementing columns",
-          "value": "EMAIL1, EMAIL2",
-          "severity": "medium"
+          "id": "schemacrawler.tools.linter.LinterTableWithIncrementingColumns",
+          "value": "FAX, FAX3"
         },
         {
-          "id": "schemacrawler.tools.linter.LinterTableWithIncrementingColumns",
+          "severity": "medium",
           "description": "incrementing columns",
-          "value": "ADDRESS1, ADDRESS2",
-          "severity": "medium"
+          "id": "schemacrawler.tools.linter.LinterTableWithIncrementingColumns",
+          "value": "EMAIL1, EMAIL2"
         },
         {
-          "id": "schemacrawler.tools.linter.LinterTableWithIncrementingColumns",
+          "severity": "medium",
           "description": "incrementing columns",
-          "value": "HOMEEMAIL11, HOMEEMAIL12",
-          "severity": "medium"
+          "id": "schemacrawler.tools.linter.LinterTableWithIncrementingColumns",
+          "value": "HOMEEMAIL11, HOMEEMAIL12"
         },
         {
-          "id": "schemacrawler.tools.linter.LinterTableWithIncrementingColumns",
+          "severity": "medium",
           "description": "incrementing columns are not consecutive",
-          "value": "FAX, FAX3",
-          "severity": "medium"
+          "id": "schemacrawler.tools.linter.LinterTableWithIncrementingColumns",
+          "value": "FAX, FAX3"
         },
         {
-          "id": "schemacrawler.tools.linter.LinterTableWithIncrementingColumns",
+          "severity": "medium",
           "description": "incrementing columns don't have the same data-type",
-          "value": "PHONE1, PHONE2",
-          "severity": "medium"
+          "id": "schemacrawler.tools.linter.LinterTableWithIncrementingColumns",
+          "value": "PHONE1, PHONE2"
         },
         {
-          "id": "schemacrawler.tools.linter.LinterTableWithIncrementingColumns",
+          "severity": "medium",
           "description": "incrementing columns don't have the same data-type",
-          "value": "FAX, FAX3",
-          "severity": "medium"
+          "id": "schemacrawler.tools.linter.LinterTableWithIncrementingColumns",
+          "value": "FAX, FAX3"
         },
         {
-          "id": "schemacrawler.tools.linter.LinterTableWithIncrementingColumns",
+          "severity": "medium",
           "description": "incrementing columns don't have the same data-type",
-          "value": "EMAIL1, EMAIL2",
-          "severity": "medium"
+          "id": "schemacrawler.tools.linter.LinterTableWithIncrementingColumns",
+          "value": "EMAIL1, EMAIL2"
         }
       ],
+      "name": "WRITERS",
       "fullName": "PUBLIC.FOR_LINT.WRITERS",
       "type": "table"
     },
     {
-      "name": "ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
       "lints": [{
-        "id": "schemacrawler.tools.linter.LinterForeignKeyMismatch",
+        "severity": "high",
         "description": "foreign key and primary key have different data types",
-        "value": "FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS",
-        "severity": "high"
+        "id": "schemacrawler.tools.linter.LinterForeignKeyMismatch",
+        "value": "FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS"
       }],
+      "name": "ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
       "fullName": "PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
       "type": "table"
     }
   ],
   "database_lints": {"lints": [
       {
-        "id": "schemacrawler.tools.linter.LinterColumnTypes",
+        "severity": "medium",
         "description": "column with same name but different data types",
-        "value": "ID [BIGINT, INTEGER]",
-        "severity": "medium"
+        "id": "schemacrawler.tools.linter.LinterColumnTypes",
+        "value": "ID [BIGINT, INTEGER]"
       },
       {
-        "id": "schemacrawler.tools.linter.LinterTableCycles",
+        "severity": "medium",
         "description": "cycles in table relationships",
-        "value": "true",
-        "severity": "medium"
+        "id": "schemacrawler.tools.linter.LinterTableCycles",
+        "value": "true"
       }
     ]}
 }]
