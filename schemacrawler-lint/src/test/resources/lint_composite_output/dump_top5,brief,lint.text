@@ -210,10 +210,10 @@ PUBLIC.FOR_LINT.WRITERS                                          [table]
 	unique index with nullable columns	IDX_U_WRITERS
 	column where NULL may be intended	ADDRESS2
 	column where NULL may be intended	COUNTRY
+	incrementing columns	ADDRESS1, ADDRESS2
 	incrementing columns	PHONE1, PHONE2
 	incrementing columns	FAX, FAX3
 	incrementing columns	EMAIL1, EMAIL2
-	incrementing columns	ADDRESS1, ADDRESS2
 	incrementing columns	HOMEEMAIL11, HOMEEMAIL12
 	incrementing columns are not consecutive	FAX, FAX3
 	incrementing columns don't have the same data-type	PHONE1, PHONE2

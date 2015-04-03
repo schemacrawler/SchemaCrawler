@@ -1,40 +1,243 @@
 [
 {
+  "schemaCrawlerInfo": {
+    "productVersion": "12.06.03",
+    "productName": "SchemaCrawler"
+  },
+  "columnDataypes": [
+    {
+      "nullable": true,
+      "databaseSpecificTypeName": "BIGINT",
+      "userDefined": false,
+      "autoIncrementable": true,
+      "basedOn": "",
+      "searchable": "searchable except with where .. like"
+    },
+    {
+      "createParameters": "LENGTH",
+      "nullable": true,
+      "databaseSpecificTypeName": "BINARY",
+      "userDefined": false,
+      "autoIncrementable": false,
+      "basedOn": "",
+      "searchable": "searchable"
+    },
+    {
+      "createParameters": "LENGTH",
+      "nullable": true,
+      "databaseSpecificTypeName": "BIT",
+      "userDefined": false,
+      "autoIncrementable": false,
+      "basedOn": "",
+      "searchable": "searchable except with where .. like"
+    },
+    {
+      "createParameters": "LENGTH",
+      "nullable": true,
+      "databaseSpecificTypeName": "BLOB",
+      "userDefined": false,
+      "autoIncrementable": false,
+      "basedOn": "",
+      "searchable": "not searchable"
+    },
+    {
+      "nullable": true,
+      "databaseSpecificTypeName": "BOOLEAN",
+      "userDefined": false,
+      "autoIncrementable": false,
+      "basedOn": "",
+      "searchable": "searchable except with where .. like"
+    },
+    {
+      "createParameters": "LENGTH",
+      "nullable": true,
+      "databaseSpecificTypeName": "CHARACTER",
+      "userDefined": false,
+      "autoIncrementable": false,
+      "basedOn": "",
+      "searchable": "searchable"
+    },
+    {
+      "createParameters": "LENGTH",
+      "nullable": true,
+      "databaseSpecificTypeName": "CLOB",
+      "userDefined": false,
+      "autoIncrementable": false,
+      "basedOn": "",
+      "searchable": "not searchable"
+    },
+    {
+      "nullable": true,
+      "databaseSpecificTypeName": "DATE",
+      "userDefined": false,
+      "autoIncrementable": false,
+      "basedOn": "",
+      "searchable": "searchable except with where .. like"
+    },
+    {
+      "createParameters": "PRECISION,SCALE",
+      "nullable": true,
+      "databaseSpecificTypeName": "DECIMAL",
+      "userDefined": false,
+      "autoIncrementable": true,
+      "basedOn": "",
+      "searchable": "searchable except with where .. like"
+    },
+    {
+      "nullable": true,
+      "databaseSpecificTypeName": "DOUBLE",
+      "userDefined": false,
+      "autoIncrementable": false,
+      "basedOn": "",
+      "searchable": "searchable except with where .. like"
+    },
+    {
+      "nullable": true,
+      "databaseSpecificTypeName": "FLOAT",
+      "userDefined": false,
+      "autoIncrementable": false,
+      "basedOn": "",
+      "searchable": "searchable except with where .. like"
+    },
+    {
+      "nullable": true,
+      "databaseSpecificTypeName": "INTEGER",
+      "userDefined": false,
+      "autoIncrementable": true,
+      "basedOn": "",
+      "searchable": "searchable except with where .. like"
+    },
+    {
+      "createParameters": "PRECISION,SCALE",
+      "nullable": true,
+      "databaseSpecificTypeName": "NUMERIC",
+      "userDefined": false,
+      "autoIncrementable": true,
+      "basedOn": "",
+      "searchable": "searchable except with where .. like"
+    },
+    {
+      "createParameters": "LENGTH",
+      "nullable": true,
+      "databaseSpecificTypeName": "NVARCHAR",
+      "userDefined": false,
+      "autoIncrementable": false,
+      "basedOn": "",
+      "searchable": "searchable"
+    },
+    {
+      "nullable": true,
+      "databaseSpecificTypeName": "OTHER",
+      "userDefined": false,
+      "autoIncrementable": false,
+      "basedOn": "",
+      "searchable": "searchable except with where .. like"
+    },
+    {
+      "nullable": true,
+      "databaseSpecificTypeName": "REAL",
+      "userDefined": false,
+      "autoIncrementable": false,
+      "basedOn": "",
+      "searchable": "searchable except with where .. like"
+    },
+    {
+      "nullable": true,
+      "databaseSpecificTypeName": "SMALLINT",
+      "userDefined": false,
+      "autoIncrementable": true,
+      "basedOn": "",
+      "searchable": "searchable except with where .. like"
+    },
+    {
+      "nullable": true,
+      "databaseSpecificTypeName": "TIME",
+      "userDefined": false,
+      "autoIncrementable": false,
+      "basedOn": "",
+      "searchable": "searchable except with where .. like"
+    },
+    {
+      "nullable": true,
+      "databaseSpecificTypeName": "TIMESTAMP",
+      "userDefined": false,
+      "autoIncrementable": false,
+      "basedOn": "",
+      "searchable": "searchable except with where .. like"
+    },
+    {
+      "nullable": true,
+      "databaseSpecificTypeName": "TINYINT",
+      "userDefined": false,
+      "autoIncrementable": true,
+      "basedOn": "",
+      "searchable": "searchable except with where .. like"
+    },
+    {
+      "createParameters": "LENGTH",
+      "nullable": true,
+      "databaseSpecificTypeName": "VARBINARY",
+      "userDefined": false,
+      "autoIncrementable": false,
+      "basedOn": "",
+      "searchable": "searchable"
+    },
+    {
+      "createParameters": "LENGTH",
+      "nullable": true,
+      "databaseSpecificTypeName": "VARCHAR",
+      "userDefined": false,
+      "autoIncrementable": false,
+      "basedOn": "",
+      "searchable": "searchable"
+    },
+    {
+      "createParameters": "",
+      "nullable": false,
+      "databaseSpecificTypeName": "CHARACTER VARYING",
+      "userDefined": false,
+      "autoIncrementable": false,
+      "basedOn": "",
+      "searchable": "unknown"
+    }
+  ],
   "databaseInfo": {
+    "databaseProductVersion": "2.3.2",
+    "databaseProductName": "HSQL Database Engine",
     "databaseProperties": [
       {
-        "description": "all procedures are callable",
         "name": "allProceduresAreCallable",
+        "description": "all procedures are callable",
         "value": true
       },
       {
-        "description": "all tables are selectable",
         "name": "allTablesAreSelectable",
+        "description": "all tables are selectable",
         "value": true
       },
       {
-        "description": "auto commit failure closes all result sets",
         "name": "autoCommitFailureClosesAllResultSets",
+        "description": "auto commit failure closes all result sets",
         "value": false
       },
       {
-        "description": "catalog separator",
         "name": "getCatalogSeparator",
+        "description": "catalog separator",
         "value": "."
       },
       {
-        "description": "catalog term",
         "name": "getCatalogTerm",
+        "description": "catalog term",
         "value": "CATALOG"
       },
       {
-        "description": "catalogs",
         "name": "getCatalogs",
+        "description": "catalogs",
         "value": ["PUBLIC"]
       },
       {
-        "description": "client info properties",
         "name": "getClientInfoProperties",
+        "description": "client info properties",
         "value": [
           "files_readonly",
           "hsqldb.applog",
@@ -107,243 +310,248 @@
         ]
       },
       {
-        "description": "data definition causes transaction commit",
         "name": "dataDefinitionCausesTransactionCommit",
+        "description": "data definition causes transaction commit",
         "value": true
       },
       {
-        "description": "data definition ignored in transactions",
         "name": "dataDefinitionIgnoredInTransactions",
+        "description": "data definition ignored in transactions",
         "value": false
       },
       {
-        "description": "database major version",
         "name": "getDatabaseMajorVersion",
+        "description": "database major version",
         "value": 2
       },
       {
-        "description": "database minor version",
         "name": "getDatabaseMinorVersion",
+        "description": "database minor version",
         "value": 3
       },
       {
-        "description": "default transaction isolation",
         "name": "getDefaultTransactionIsolation",
+        "description": "default transaction isolation",
         "value": 2
       },
       {
-        "description": "deletes are detected for TYPE_FORWARD_ONLY result sets",
         "name": "deletesAreDetectedForTYPE_FORWARD_ONLYResultSets",
+        "description": "deletes are detected for TYPE_FORWARD_ONLY result sets",
         "value": false
       },
       {
-        "description": "deletes are detected for TYPE_SCROLL_INSENSITIVE result sets",
         "name": "deletesAreDetectedForTYPE_SCROLL_INSENSITIVEResultSets",
+        "description": "deletes are detected for TYPE_SCROLL_INSENSITIVE result sets",
         "value": false
       },
       {
-        "description": "deletes are detected for TYPE_SCROLL_SENSITIVE result sets",
         "name": "deletesAreDetectedForTYPE_SCROLL_SENSITIVEResultSets",
+        "description": "deletes are detected for TYPE_SCROLL_SENSITIVE result sets",
         "value": false
       },
       {
-        "description": "does max row size include blobs",
         "name": "doesMaxRowSizeIncludeBlobs",
+        "description": "does max row size include blobs",
         "value": true
       },
       {
-        "description": "driver major version",
         "name": "getDriverMajorVersion",
+        "description": "driver major version",
         "value": 2
       },
       {
-        "description": "driver minor version",
         "name": "getDriverMinorVersion",
+        "description": "driver minor version",
         "value": 3
       },
       {
-        "description": "extra name characters",
         "name": "getExtraNameCharacters",
+        "description": "extra name characters",
         "value": [""]
       },
       {
-        "description": "generated key always returned",
         "name": "generatedKeyAlwaysReturned",
+        "description": "generated key always returned",
         "value": true
       },
       {
-        "description": "identifier quote string",
         "name": "getIdentifierQuoteString",
+        "description": "identifier quote string",
         "value": "\""
       },
       {
-        "description": "inserts are detected for TYPE_FORWARD_ONLY result sets",
         "name": "insertsAreDetectedForTYPE_FORWARD_ONLYResultSets",
+        "description": "inserts are detected for TYPE_FORWARD_ONLY result sets",
         "value": false
       },
       {
-        "description": "inserts are detected for TYPE_SCROLL_INSENSITIVE result sets",
         "name": "insertsAreDetectedForTYPE_SCROLL_INSENSITIVEResultSets",
+        "description": "inserts are detected for TYPE_SCROLL_INSENSITIVE result sets",
         "value": false
       },
       {
-        "description": "inserts are detected for TYPE_SCROLL_SENSITIVE result sets",
         "name": "insertsAreDetectedForTYPE_SCROLL_SENSITIVEResultSets",
+        "description": "inserts are detected for TYPE_SCROLL_SENSITIVE result sets",
         "value": false
       },
       {
-        "description": "is catalog at start",
         "name": "isCatalogAtStart",
+        "description": "is catalog at start",
         "value": true
       },
       {
-        "description": "is read only",
         "name": "isReadOnly",
+        "description": "is read only",
         "value": false
       },
       {
-        "description": "JDBC major version",
         "name": "getJDBCMajorVersion",
+        "description": "JDBC major version",
         "value": 4
       },
       {
-        "description": "JDBC minor version",
         "name": "getJDBCMinorVersion",
+        "description": "JDBC minor version",
         "value": 0
       },
       {
-        "description": "locators update copy",
         "name": "locatorsUpdateCopy",
+        "description": "locators update copy",
         "value": false
       },
       {
-        "description": "max binary literal length",
         "name": "getMaxBinaryLiteralLength",
+        "description": "max binary literal length",
         "value": 0
       },
       {
-        "description": "max catalog name length",
         "name": "getMaxCatalogNameLength",
+        "description": "max catalog name length",
         "value": 128
       },
       {
-        "description": "max char literal length",
         "name": "getMaxCharLiteralLength",
+        "description": "max char literal length",
         "value": 0
       },
       {
-        "description": "max column name length",
         "name": "getMaxColumnNameLength",
+        "description": "max column name length",
         "value": 128
       },
       {
-        "description": "max columns in group by",
         "name": "getMaxColumnsInGroupBy",
+        "description": "max columns in group by",
         "value": 0
       },
       {
-        "description": "max columns in index",
         "name": "getMaxColumnsInIndex",
+        "description": "max columns in index",
         "value": 0
       },
       {
-        "description": "max columns in order by",
         "name": "getMaxColumnsInOrderBy",
+        "description": "max columns in order by",
         "value": 0
       },
       {
-        "description": "max columns in select",
         "name": "getMaxColumnsInSelect",
+        "description": "max columns in select",
         "value": 0
       },
       {
-        "description": "max columns in table",
         "name": "getMaxColumnsInTable",
+        "description": "max columns in table",
         "value": 0
       },
       {
-        "description": "max connections",
         "name": "getMaxConnections",
+        "description": "max connections",
         "value": 0
       },
       {
-        "description": "max cursor name length",
         "name": "getMaxCursorNameLength",
+        "description": "max cursor name length",
         "value": 128
       },
       {
-        "description": "max index length",
         "name": "getMaxIndexLength",
+        "description": "max index length",
         "value": 0
       },
       {
-        "description": "max procedure name length",
+        "name": "getMaxLogicalLobSize",
+        "description": "max logical lob size",
+        "value": 0
+      },
+      {
         "name": "getMaxProcedureNameLength",
+        "description": "max procedure name length",
         "value": 128
       },
       {
-        "description": "max row size",
         "name": "getMaxRowSize",
+        "description": "max row size",
         "value": 0
       },
       {
-        "description": "max schema name length",
         "name": "getMaxSchemaNameLength",
+        "description": "max schema name length",
         "value": 128
       },
       {
-        "description": "max statement length",
         "name": "getMaxStatementLength",
+        "description": "max statement length",
         "value": 0
       },
       {
-        "description": "max statements",
         "name": "getMaxStatements",
+        "description": "max statements",
         "value": 0
       },
       {
-        "description": "max table name length",
         "name": "getMaxTableNameLength",
+        "description": "max table name length",
         "value": 128
       },
       {
-        "description": "max tables in select",
         "name": "getMaxTablesInSelect",
+        "description": "max tables in select",
         "value": 0
       },
       {
-        "description": "max user name length",
         "name": "getMaxUserNameLength",
+        "description": "max user name length",
         "value": 128
       },
       {
-        "description": "null plus non null is null",
         "name": "nullPlusNonNullIsNull",
+        "description": "null plus non null is null",
         "value": true
       },
       {
-        "description": "nulls are sorted at end",
         "name": "nullsAreSortedAtEnd",
+        "description": "nulls are sorted at end",
         "value": false
       },
       {
-        "description": "nulls are sorted at start",
         "name": "nullsAreSortedAtStart",
+        "description": "nulls are sorted at start",
         "value": true
       },
       {
-        "description": "nulls are sorted high",
         "name": "nullsAreSortedHigh",
+        "description": "nulls are sorted high",
         "value": false
       },
       {
-        "description": "nulls are sorted low",
         "name": "nullsAreSortedLow",
+        "description": "nulls are sorted low",
         "value": false
       },
       {
-        "description": "numeric functions",
         "name": "getNumericFunctions",
+        "description": "numeric functions",
         "value": [
           "ABS",
           "ACOS",
@@ -376,103 +584,103 @@
         ]
       },
       {
-        "description": "others inserts are visible for TYPE_FORWARD_ONLY result sets",
         "name": "othersInsertsAreVisibleForTYPE_FORWARD_ONLYResultSets",
+        "description": "others inserts are visible for TYPE_FORWARD_ONLY result sets",
         "value": false
       },
       {
-        "description": "others inserts are visible for TYPE_SCROLL_INSENSITIVE result sets",
         "name": "othersInsertsAreVisibleForTYPE_SCROLL_INSENSITIVEResultSets",
+        "description": "others inserts are visible for TYPE_SCROLL_INSENSITIVE result sets",
         "value": false
       },
       {
-        "description": "others inserts are visible for TYPE_SCROLL_SENSITIVE result sets",
         "name": "othersInsertsAreVisibleForTYPE_SCROLL_SENSITIVEResultSets",
+        "description": "others inserts are visible for TYPE_SCROLL_SENSITIVE result sets",
         "value": false
       },
       {
-        "description": "others updates are visible for TYPE_FORWARD_ONLY result sets",
         "name": "othersUpdatesAreVisibleForTYPE_FORWARD_ONLYResultSets",
+        "description": "others updates are visible for TYPE_FORWARD_ONLY result sets",
         "value": false
       },
       {
-        "description": "others updates are visible for TYPE_SCROLL_INSENSITIVE result sets",
         "name": "othersUpdatesAreVisibleForTYPE_SCROLL_INSENSITIVEResultSets",
+        "description": "others updates are visible for TYPE_SCROLL_INSENSITIVE result sets",
         "value": false
       },
       {
-        "description": "others updates are visible for TYPE_SCROLL_SENSITIVE result sets",
         "name": "othersUpdatesAreVisibleForTYPE_SCROLL_SENSITIVEResultSets",
+        "description": "others updates are visible for TYPE_SCROLL_SENSITIVE result sets",
         "value": false
       },
       {
-        "description": "own deletes are visible for TYPE_FORWARD_ONLY result sets",
         "name": "ownDeletesAreVisibleForTYPE_FORWARD_ONLYResultSets",
+        "description": "own deletes are visible for TYPE_FORWARD_ONLY result sets",
         "value": false
       },
       {
-        "description": "own deletes are visible for TYPE_SCROLL_INSENSITIVE result sets",
         "name": "ownDeletesAreVisibleForTYPE_SCROLL_INSENSITIVEResultSets",
+        "description": "own deletes are visible for TYPE_SCROLL_INSENSITIVE result sets",
         "value": false
       },
       {
-        "description": "own deletes are visible for TYPE_SCROLL_SENSITIVE result sets",
         "name": "ownDeletesAreVisibleForTYPE_SCROLL_SENSITIVEResultSets",
+        "description": "own deletes are visible for TYPE_SCROLL_SENSITIVE result sets",
         "value": false
       },
       {
-        "description": "own inserts are visible for TYPE_FORWARD_ONLY result sets",
         "name": "ownInsertsAreVisibleForTYPE_FORWARD_ONLYResultSets",
+        "description": "own inserts are visible for TYPE_FORWARD_ONLY result sets",
         "value": false
       },
       {
-        "description": "own inserts are visible for TYPE_SCROLL_INSENSITIVE result sets",
         "name": "ownInsertsAreVisibleForTYPE_SCROLL_INSENSITIVEResultSets",
+        "description": "own inserts are visible for TYPE_SCROLL_INSENSITIVE result sets",
         "value": false
       },
       {
-        "description": "own inserts are visible for TYPE_SCROLL_SENSITIVE result sets",
         "name": "ownInsertsAreVisibleForTYPE_SCROLL_SENSITIVEResultSets",
+        "description": "own inserts are visible for TYPE_SCROLL_SENSITIVE result sets",
         "value": false
       },
       {
-        "description": "own updates are visible for TYPE_FORWARD_ONLY result sets",
         "name": "ownUpdatesAreVisibleForTYPE_FORWARD_ONLYResultSets",
+        "description": "own updates are visible for TYPE_FORWARD_ONLY result sets",
         "value": false
       },
       {
-        "description": "own updates are visible for TYPE_SCROLL_INSENSITIVE result sets",
         "name": "ownUpdatesAreVisibleForTYPE_SCROLL_INSENSITIVEResultSets",
+        "description": "own updates are visible for TYPE_SCROLL_INSENSITIVE result sets",
         "value": false
       },
       {
-        "description": "own updates are visible for TYPE_SCROLL_SENSITIVE result sets",
         "name": "ownUpdatesAreVisibleForTYPE_SCROLL_SENSITIVEResultSets",
+        "description": "own updates are visible for TYPE_SCROLL_SENSITIVE result sets",
         "value": false
       },
       {
-        "description": "procedure term",
         "name": "getProcedureTerm",
+        "description": "procedure term",
         "value": "PROCEDURE"
       },
       {
-        "description": "result set holdability",
         "name": "getResultSetHoldability",
+        "description": "result set holdability",
         "value": 1
       },
       {
-        "description": "row id lifetime",
         "name": "getRowIdLifetime",
+        "description": "row id lifetime",
         "value": "ROWID_UNSUPPORTED"
       },
       {
-        "description": "schema term",
         "name": "getSchemaTerm",
+        "description": "schema term",
         "value": "SCHEMA"
       },
       {
-        "description": "schemas",
         "name": "getSchemas",
+        "description": "schemas",
         "value": [
           "BOOKS",
           "FOR_LINT",
@@ -483,53 +691,53 @@
         ]
       },
       {
-        "description": "search string escape",
         "name": "getSearchStringEscape",
+        "description": "search string escape",
         "value": "\\"
       },
       {
-        "description": "SQL keywords",
         "name": "getSQLKeywords",
+        "description": "SQL keywords",
         "value": [""]
       },
       {
-        "description": "SQL state type",
         "name": "getSQLStateType",
+        "description": "SQL state type",
         "value": 2
       },
       {
-        "description": "stores lower case identifiers",
         "name": "storesLowerCaseIdentifiers",
+        "description": "stores lower case identifiers",
         "value": false
       },
       {
-        "description": "stores lower case quoted identifiers",
         "name": "storesLowerCaseQuotedIdentifiers",
+        "description": "stores lower case quoted identifiers",
         "value": false
       },
       {
-        "description": "stores mixed case identifiers",
         "name": "storesMixedCaseIdentifiers",
+        "description": "stores mixed case identifiers",
         "value": false
       },
       {
-        "description": "stores mixed case quoted identifiers",
         "name": "storesMixedCaseQuotedIdentifiers",
+        "description": "stores mixed case quoted identifiers",
         "value": false
       },
       {
-        "description": "stores upper case identifiers",
         "name": "storesUpperCaseIdentifiers",
+        "description": "stores upper case identifiers",
         "value": true
       },
       {
-        "description": "stores upper case quoted identifiers",
         "name": "storesUpperCaseQuotedIdentifiers",
+        "description": "stores upper case quoted identifiers",
         "value": false
       },
       {
-        "description": "string functions",
         "name": "getStringFunctions",
+        "description": "string functions",
         "value": [
           "ASCII",
           "CHAR",
@@ -554,333 +762,338 @@
         ]
       },
       {
-        "description": "supports alter table with add column",
         "name": "supportsAlterTableWithAddColumn",
+        "description": "supports alter table with add column",
         "value": true
       },
       {
-        "description": "supports alter table with drop column",
         "name": "supportsAlterTableWithDropColumn",
+        "description": "supports alter table with drop column",
         "value": true
       },
       {
-        "description": "supports ANSI92 entry level SQL",
         "name": "supportsANSI92EntryLevelSQL",
+        "description": "supports ANSI92 entry level SQL",
         "value": true
       },
       {
-        "description": "supports ANSI92 full SQL",
         "name": "supportsANSI92FullSQL",
+        "description": "supports ANSI92 full SQL",
         "value": true
       },
       {
-        "description": "supports ANSI92 intermediate SQL",
         "name": "supportsANSI92IntermediateSQL",
+        "description": "supports ANSI92 intermediate SQL",
         "value": true
       },
       {
-        "description": "supports batch updates",
         "name": "supportsBatchUpdates",
+        "description": "supports batch updates",
         "value": true
       },
       {
-        "description": "supports catalogs in data manipulation",
         "name": "supportsCatalogsInDataManipulation",
+        "description": "supports catalogs in data manipulation",
         "value": true
       },
       {
-        "description": "supports catalogs in index definitions",
         "name": "supportsCatalogsInIndexDefinitions",
+        "description": "supports catalogs in index definitions",
         "value": true
       },
       {
-        "description": "supports catalogs in privilege definitions",
         "name": "supportsCatalogsInPrivilegeDefinitions",
+        "description": "supports catalogs in privilege definitions",
         "value": true
       },
       {
-        "description": "supports catalogs in procedure calls",
         "name": "supportsCatalogsInProcedureCalls",
+        "description": "supports catalogs in procedure calls",
         "value": true
       },
       {
-        "description": "supports catalogs in table definitions",
         "name": "supportsCatalogsInTableDefinitions",
+        "description": "supports catalogs in table definitions",
         "value": true
       },
       {
-        "description": "supports column aliasing",
         "name": "supportsColumnAliasing",
+        "description": "supports column aliasing",
         "value": true
       },
       {
-        "description": "supports convert",
         "name": "supportsConvert",
+        "description": "supports convert",
         "value": true
       },
       {
-        "description": "supports core SQL grammar",
         "name": "supportsCoreSQLGrammar",
+        "description": "supports core SQL grammar",
         "value": true
       },
       {
-        "description": "supports correlated subqueries",
         "name": "supportsCorrelatedSubqueries",
+        "description": "supports correlated subqueries",
         "value": true
       },
       {
-        "description": "supports data definition and data manipulation transactions",
         "name": "supportsDataDefinitionAndDataManipulationTransactions",
+        "description": "supports data definition and data manipulation transactions",
         "value": false
       },
       {
-        "description": "supports data manipulation transactions only",
         "name": "supportsDataManipulationTransactionsOnly",
+        "description": "supports data manipulation transactions only",
         "value": true
       },
       {
-        "description": "supports different table correlation names",
         "name": "supportsDifferentTableCorrelationNames",
+        "description": "supports different table correlation names",
         "value": false
       },
       {
-        "description": "supports expressions in order by",
         "name": "supportsExpressionsInOrderBy",
+        "description": "supports expressions in order by",
         "value": true
       },
       {
-        "description": "supports extended SQL grammar",
         "name": "supportsExtendedSQLGrammar",
+        "description": "supports extended SQL grammar",
         "value": true
       },
       {
-        "description": "supports full outer joins",
         "name": "supportsFullOuterJoins",
+        "description": "supports full outer joins",
         "value": true
       },
       {
-        "description": "supports get generated keys",
         "name": "supportsGetGeneratedKeys",
+        "description": "supports get generated keys",
         "value": true
       },
       {
-        "description": "supports group by",
         "name": "supportsGroupBy",
+        "description": "supports group by",
         "value": true
       },
       {
-        "description": "supports group by beyond select",
         "name": "supportsGroupByBeyondSelect",
+        "description": "supports group by beyond select",
         "value": true
       },
       {
-        "description": "supports group by unrelated",
         "name": "supportsGroupByUnrelated",
+        "description": "supports group by unrelated",
         "value": true
       },
       {
-        "description": "supports integrity enhancement facility",
         "name": "supportsIntegrityEnhancementFacility",
+        "description": "supports integrity enhancement facility",
         "value": true
       },
       {
-        "description": "supports like escape clause",
         "name": "supportsLikeEscapeClause",
+        "description": "supports like escape clause",
         "value": true
       },
       {
-        "description": "supports limited outer joins",
         "name": "supportsLimitedOuterJoins",
+        "description": "supports limited outer joins",
         "value": true
       },
       {
-        "description": "supports minimum SQL grammar",
         "name": "supportsMinimumSQLGrammar",
+        "description": "supports minimum SQL grammar",
         "value": true
       },
       {
-        "description": "supports mixed case identifiers",
         "name": "supportsMixedCaseIdentifiers",
+        "description": "supports mixed case identifiers",
         "value": false
       },
       {
-        "description": "supports mixed case quoted identifiers",
         "name": "supportsMixedCaseQuotedIdentifiers",
+        "description": "supports mixed case quoted identifiers",
         "value": true
       },
       {
-        "description": "supports multiple open results",
         "name": "supportsMultipleOpenResults",
+        "description": "supports multiple open results",
         "value": true
       },
       {
-        "description": "supports multiple result sets",
         "name": "supportsMultipleResultSets",
+        "description": "supports multiple result sets",
         "value": true
       },
       {
-        "description": "supports multiple transactions",
         "name": "supportsMultipleTransactions",
+        "description": "supports multiple transactions",
         "value": true
       },
       {
-        "description": "supports named parameters",
         "name": "supportsNamedParameters",
+        "description": "supports named parameters",
         "value": true
       },
       {
-        "description": "supports non nullable columns",
         "name": "supportsNonNullableColumns",
+        "description": "supports non nullable columns",
         "value": true
       },
       {
-        "description": "supports open cursors across commit",
         "name": "supportsOpenCursorsAcrossCommit",
+        "description": "supports open cursors across commit",
         "value": true
       },
       {
-        "description": "supports open cursors across rollback",
         "name": "supportsOpenCursorsAcrossRollback",
+        "description": "supports open cursors across rollback",
         "value": false
       },
       {
-        "description": "supports open statements across commit",
         "name": "supportsOpenStatementsAcrossCommit",
+        "description": "supports open statements across commit",
         "value": true
       },
       {
-        "description": "supports open statements across rollback",
         "name": "supportsOpenStatementsAcrossRollback",
+        "description": "supports open statements across rollback",
         "value": true
       },
       {
-        "description": "supports order by unrelated",
         "name": "supportsOrderByUnrelated",
+        "description": "supports order by unrelated",
         "value": true
       },
       {
-        "description": "supports outer joins",
         "name": "supportsOuterJoins",
+        "description": "supports outer joins",
         "value": true
       },
       {
-        "description": "supports positioned delete",
         "name": "supportsPositionedDelete",
+        "description": "supports positioned delete",
         "value": true
       },
       {
-        "description": "supports positioned update",
         "name": "supportsPositionedUpdate",
+        "description": "supports positioned update",
         "value": true
       },
       {
-        "description": "supports result set type for TYPE_FORWARD_ONLY result sets",
-        "name": "supportsResultSetTypeForTYPE_FORWARD_ONLYResultSets",
-        "value": true
-      },
-      {
-        "description": "supports result set type for TYPE_SCROLL_INSENSITIVE result sets",
-        "name": "supportsResultSetTypeForTYPE_SCROLL_INSENSITIVEResultSets",
-        "value": true
-      },
-      {
-        "description": "supports result set type for TYPE_SCROLL_SENSITIVE result sets",
-        "name": "supportsResultSetTypeForTYPE_SCROLL_SENSITIVEResultSets",
+        "name": "supportsRefCursors",
+        "description": "supports ref cursors",
         "value": false
       },
       {
-        "description": "supports savepoints",
+        "name": "supportsResultSetTypeForTYPE_FORWARD_ONLYResultSets",
+        "description": "supports result set type for TYPE_FORWARD_ONLY result sets",
+        "value": true
+      },
+      {
+        "name": "supportsResultSetTypeForTYPE_SCROLL_INSENSITIVEResultSets",
+        "description": "supports result set type for TYPE_SCROLL_INSENSITIVE result sets",
+        "value": true
+      },
+      {
+        "name": "supportsResultSetTypeForTYPE_SCROLL_SENSITIVEResultSets",
+        "description": "supports result set type for TYPE_SCROLL_SENSITIVE result sets",
+        "value": false
+      },
+      {
         "name": "supportsSavepoints",
+        "description": "supports savepoints",
         "value": true
       },
       {
-        "description": "supports schemas in data manipulation",
         "name": "supportsSchemasInDataManipulation",
+        "description": "supports schemas in data manipulation",
         "value": true
       },
       {
-        "description": "supports schemas in index definitions",
         "name": "supportsSchemasInIndexDefinitions",
+        "description": "supports schemas in index definitions",
         "value": true
       },
       {
-        "description": "supports schemas in privilege definitions",
         "name": "supportsSchemasInPrivilegeDefinitions",
+        "description": "supports schemas in privilege definitions",
         "value": true
       },
       {
-        "description": "supports schemas in procedure calls",
         "name": "supportsSchemasInProcedureCalls",
+        "description": "supports schemas in procedure calls",
         "value": true
       },
       {
-        "description": "supports schemas in table definitions",
         "name": "supportsSchemasInTableDefinitions",
+        "description": "supports schemas in table definitions",
         "value": true
       },
       {
-        "description": "supports select for update",
         "name": "supportsSelectForUpdate",
+        "description": "supports select for update",
         "value": true
       },
       {
-        "description": "supports statement pooling",
         "name": "supportsStatementPooling",
+        "description": "supports statement pooling",
         "value": true
       },
       {
-        "description": "supports stored functions using call syntax",
         "name": "supportsStoredFunctionsUsingCallSyntax",
+        "description": "supports stored functions using call syntax",
         "value": true
       },
       {
-        "description": "supports stored procedures",
         "name": "supportsStoredProcedures",
+        "description": "supports stored procedures",
         "value": true
       },
       {
-        "description": "supports subqueries in comparisons",
         "name": "supportsSubqueriesInComparisons",
+        "description": "supports subqueries in comparisons",
         "value": true
       },
       {
-        "description": "supports subqueries in exists",
         "name": "supportsSubqueriesInExists",
+        "description": "supports subqueries in exists",
         "value": true
       },
       {
-        "description": "supports subqueries in ins",
         "name": "supportsSubqueriesInIns",
+        "description": "supports subqueries in ins",
         "value": true
       },
       {
-        "description": "supports subqueries in quantifieds",
         "name": "supportsSubqueriesInQuantifieds",
+        "description": "supports subqueries in quantifieds",
         "value": true
       },
       {
-        "description": "supports table correlation names",
         "name": "supportsTableCorrelationNames",
+        "description": "supports table correlation names",
         "value": true
       },
       {
-        "description": "supports transactions",
         "name": "supportsTransactions",
+        "description": "supports transactions",
         "value": true
       },
       {
-        "description": "supports union",
         "name": "supportsUnion",
+        "description": "supports union",
         "value": true
       },
       {
-        "description": "supports union all",
         "name": "supportsUnionAll",
+        "description": "supports union all",
         "value": true
       },
       {
-        "description": "system functions",
         "name": "getSystemFunctions",
+        "description": "system functions",
         "value": [
           "DATABASE",
           "IFNULL",
@@ -888,8 +1101,8 @@
         ]
       },
       {
-        "description": "table types",
         "name": "getTableTypes",
+        "description": "table types",
         "value": [
           "GLOBAL TEMPORARY",
           "SYSTEM TABLE",
@@ -898,8 +1111,8 @@
         ]
       },
       {
-        "description": "time date functions",
         "name": "getTimeDateFunctions",
+        "description": "time date functions",
         "value": [
           "CURDATE",
           "CURTIME",
@@ -924,8 +1137,8 @@
         ]
       },
       {
-        "description": "type info",
         "name": "getTypeInfo",
+        "description": "type info",
         "value": [
           "BIT",
           "TINYINT",
@@ -952,227 +1165,108 @@
         ]
       },
       {
-        "description": "uses local file per table",
         "name": "usesLocalFilePerTable",
+        "description": "uses local file per table",
         "value": false
       },
       {
-        "description": "uses local files",
         "name": "usesLocalFiles",
+        "description": "uses local files",
         "value": false
       }
     ],
-    "databaseProductName": "HSQL Database Engine",
-    "databaseUserName": "SA",
-    "databaseProductVersion": "2.3.2"
+    "databaseUserName": "SA"
   },
-  "columnDataypes": [
+  "routines": [
     {
-      "userDefined": false,
-      "autoIncrementable": true,
-      "basedOn": "",
-      "nullable": true,
-      "databaseSpecificTypeName": "BIGINT",
-      "searchable": "searchable except with where .. like"
+      "name": "CUSTOMADD",
+      "definition": "CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER,IN TWO INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10130 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN ONE+TWO",
+      "specificName": "CUSTOMADD_10130",
+      "type": "function",
+      "parameters": [
+        {
+          "databaseSpecificType": "INTEGER",
+          "dataType": "INTEGER",
+          "name": "ONE",
+          "width": "",
+          "type": "in"
+        },
+        {
+          "databaseSpecificType": "INTEGER",
+          "dataType": "INTEGER",
+          "name": "TWO",
+          "width": "",
+          "type": "in"
+        }
+      ],
+      "returnType": "does not return a table",
+      "remarks": ""
     },
     {
-      "userDefined": false,
-      "autoIncrementable": false,
-      "createParameters": "LENGTH",
-      "basedOn": "",
-      "nullable": true,
-      "databaseSpecificTypeName": "BINARY",
-      "searchable": "searchable"
+      "name": "CUSTOMADD",
+      "definition": "CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10131 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN BOOKS.CUSTOMADD(ONE,1)",
+      "specificName": "CUSTOMADD_10131",
+      "type": "function",
+      "parameters": [{
+        "databaseSpecificType": "INTEGER",
+        "dataType": "INTEGER",
+        "name": "ONE",
+        "width": "",
+        "type": "in"
+      }],
+      "returnType": "does not return a table",
+      "remarks": ""
     },
     {
-      "userDefined": false,
-      "autoIncrementable": false,
-      "createParameters": "LENGTH",
-      "basedOn": "",
-      "nullable": true,
-      "databaseSpecificTypeName": "BIT",
-      "searchable": "searchable except with where .. like"
+      "name": "NEW_PUBLISHER",
+      "definition": "CREATE PROCEDURE BOOKS.NEW_PUBLISHER(OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10128 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = 'New Publisher'",
+      "specificName": "NEW_PUBLISHER_10128",
+      "type": "procedure",
+      "parameters": [{
+        "databaseSpecificType": "CHARACTER VARYING",
+        "dataType": "VARCHAR",
+        "name": "PUBLISHER",
+        "width": "",
+        "type": "out"
+      }],
+      "returnType": "no result",
+      "remarks": ""
     },
     {
-      "userDefined": false,
-      "autoIncrementable": false,
-      "createParameters": "LENGTH",
-      "basedOn": "",
-      "nullable": true,
-      "databaseSpecificTypeName": "BLOB",
-      "searchable": "not searchable"
-    },
-    {
-      "userDefined": false,
-      "autoIncrementable": false,
-      "basedOn": "",
-      "nullable": true,
-      "databaseSpecificTypeName": "BOOLEAN",
-      "searchable": "searchable except with where .. like"
-    },
-    {
-      "userDefined": false,
-      "autoIncrementable": false,
-      "createParameters": "LENGTH",
-      "basedOn": "",
-      "nullable": true,
-      "databaseSpecificTypeName": "CHARACTER",
-      "searchable": "searchable"
-    },
-    {
-      "userDefined": false,
-      "autoIncrementable": false,
-      "createParameters": "LENGTH",
-      "basedOn": "",
-      "nullable": true,
-      "databaseSpecificTypeName": "CLOB",
-      "searchable": "not searchable"
-    },
-    {
-      "userDefined": false,
-      "autoIncrementable": false,
-      "basedOn": "",
-      "nullable": true,
-      "databaseSpecificTypeName": "DATE",
-      "searchable": "searchable except with where .. like"
-    },
-    {
-      "userDefined": false,
-      "autoIncrementable": true,
-      "createParameters": "PRECISION,SCALE",
-      "basedOn": "",
-      "nullable": true,
-      "databaseSpecificTypeName": "DECIMAL",
-      "searchable": "searchable except with where .. like"
-    },
-    {
-      "userDefined": false,
-      "autoIncrementable": false,
-      "basedOn": "",
-      "nullable": true,
-      "databaseSpecificTypeName": "DOUBLE",
-      "searchable": "searchable except with where .. like"
-    },
-    {
-      "userDefined": false,
-      "autoIncrementable": false,
-      "basedOn": "",
-      "nullable": true,
-      "databaseSpecificTypeName": "FLOAT",
-      "searchable": "searchable except with where .. like"
-    },
-    {
-      "userDefined": false,
-      "autoIncrementable": true,
-      "basedOn": "",
-      "nullable": true,
-      "databaseSpecificTypeName": "INTEGER",
-      "searchable": "searchable except with where .. like"
-    },
-    {
-      "userDefined": false,
-      "autoIncrementable": true,
-      "createParameters": "PRECISION,SCALE",
-      "basedOn": "",
-      "nullable": true,
-      "databaseSpecificTypeName": "NUMERIC",
-      "searchable": "searchable except with where .. like"
-    },
-    {
-      "userDefined": false,
-      "autoIncrementable": false,
-      "createParameters": "LENGTH",
-      "basedOn": "",
-      "nullable": true,
-      "databaseSpecificTypeName": "NVARCHAR",
-      "searchable": "searchable"
-    },
-    {
-      "userDefined": false,
-      "autoIncrementable": false,
-      "basedOn": "",
-      "nullable": true,
-      "databaseSpecificTypeName": "OTHER",
-      "searchable": "searchable except with where .. like"
-    },
-    {
-      "userDefined": false,
-      "autoIncrementable": false,
-      "basedOn": "",
-      "nullable": true,
-      "databaseSpecificTypeName": "REAL",
-      "searchable": "searchable except with where .. like"
-    },
-    {
-      "userDefined": false,
-      "autoIncrementable": true,
-      "basedOn": "",
-      "nullable": true,
-      "databaseSpecificTypeName": "SMALLINT",
-      "searchable": "searchable except with where .. like"
-    },
-    {
-      "userDefined": false,
-      "autoIncrementable": false,
-      "basedOn": "",
-      "nullable": true,
-      "databaseSpecificTypeName": "TIME",
-      "searchable": "searchable except with where .. like"
-    },
-    {
-      "userDefined": false,
-      "autoIncrementable": false,
-      "basedOn": "",
-      "nullable": true,
-      "databaseSpecificTypeName": "TIMESTAMP",
-      "searchable": "searchable except with where .. like"
-    },
-    {
-      "userDefined": false,
-      "autoIncrementable": true,
-      "basedOn": "",
-      "nullable": true,
-      "databaseSpecificTypeName": "TINYINT",
-      "searchable": "searchable except with where .. like"
-    },
-    {
-      "userDefined": false,
-      "autoIncrementable": false,
-      "createParameters": "LENGTH",
-      "basedOn": "",
-      "nullable": true,
-      "databaseSpecificTypeName": "VARBINARY",
-      "searchable": "searchable"
-    },
-    {
-      "userDefined": false,
-      "autoIncrementable": false,
-      "createParameters": "LENGTH",
-      "basedOn": "",
-      "nullable": true,
-      "databaseSpecificTypeName": "VARCHAR",
-      "searchable": "searchable"
-    },
-    {
-      "userDefined": false,
-      "autoIncrementable": false,
-      "createParameters": "",
-      "basedOn": "",
-      "nullable": false,
-      "databaseSpecificTypeName": "CHARACTER VARYING",
-      "searchable": "unknown"
+      "name": "NEW_PUBLISHER",
+      "definition": "CREATE PROCEDURE BOOKS.NEW_PUBLISHER(IN NEWPUBLISHER VARCHAR(50),OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10129 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = NEWPUBLISHER",
+      "specificName": "NEW_PUBLISHER_10129",
+      "type": "procedure",
+      "parameters": [
+        {
+          "databaseSpecificType": "CHARACTER VARYING",
+          "dataType": "VARCHAR",
+          "name": "NEWPUBLISHER",
+          "width": "",
+          "type": "in"
+        },
+        {
+          "databaseSpecificType": "CHARACTER VARYING",
+          "dataType": "VARCHAR",
+          "name": "PUBLISHER",
+          "width": "",
+          "type": "out"
+        }
+      ],
+      "returnType": "no result",
+      "remarks": ""
     }
   ],
-  "schemaCrawlerInfo": {
-    "productVersion": "12.06.03",
-    "productName": "SchemaCrawler"
-  },
   "jdbcDriverInfo": {
+    "driverVersion": "2.3.2",
     "isJDBCCompliant": "true",
+    "driverClassName": "org.hsqldb.jdbc.JDBCDriver",
+    "driverName": "HSQL Database Engine Driver",
+    "url": "jdbc:hsqldb:hsql://localhost/schemacrawler",
     "jdbcDriverProperties": [
       {
-        "description": "",
         "name": "default_schema",
+        "description": "",
         "choices": [
           "false",
           "true"
@@ -1181,8 +1275,8 @@
         "required": false
       },
       {
-        "description": "",
         "name": "get_column_name",
+        "description": "",
         "choices": [
           "false",
           "true"
@@ -1191,8 +1285,8 @@
         "required": false
       },
       {
-        "description": "",
         "name": "ifexists",
+        "description": "",
         "choices": [
           "false",
           "true"
@@ -1201,13 +1295,13 @@
         "required": false
       },
       {
-        "description": "",
         "name": "password",
+        "description": "",
         "required": true
       },
       {
-        "description": "",
         "name": "shutdown",
+        "description": "",
         "choices": [
           "false",
           "true"
@@ -1216,94 +1310,10 @@
         "required": false
       },
       {
-        "description": "",
         "name": "user",
+        "description": "",
         "required": true
       }
-    ],
-    "driverClassName": "org.hsqldb.jdbc.JDBCDriver",
-    "driverVersion": "2.3.2",
-    "driverName": "HSQL Database Engine Driver",
-    "url": "jdbc:hsqldb:hsql://localhost/schemacrawler"
-  },
-  "routines": [
-    {
-      "definition": "CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10131 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN BOOKS.CUSTOMADD(ONE,1)",
-      "name": "CUSTOMADD",
-      "remarks": "",
-      "parameters": [{
-        "dataType": "INTEGER",
-        "width": "",
-        "name": "ONE",
-        "type": "in",
-        "databaseSpecificType": "INTEGER"
-      }],
-      "type": "function",
-      "specificName": "CUSTOMADD_10131",
-      "returnType": "does not return a table"
-    },
-    {
-      "definition": "CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER,IN TWO INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10130 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN ONE+TWO",
-      "name": "CUSTOMADD",
-      "remarks": "",
-      "parameters": [
-        {
-          "dataType": "INTEGER",
-          "width": "",
-          "name": "ONE",
-          "type": "in",
-          "databaseSpecificType": "INTEGER"
-        },
-        {
-          "dataType": "INTEGER",
-          "width": "",
-          "name": "TWO",
-          "type": "in",
-          "databaseSpecificType": "INTEGER"
-        }
-      ],
-      "type": "function",
-      "specificName": "CUSTOMADD_10130",
-      "returnType": "does not return a table"
-    },
-    {
-      "definition": "CREATE PROCEDURE BOOKS.NEW_PUBLISHER(OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10128 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = 'New Publisher'",
-      "name": "NEW_PUBLISHER",
-      "remarks": "",
-      "parameters": [{
-        "dataType": "VARCHAR",
-        "width": "",
-        "name": "PUBLISHER",
-        "type": "out",
-        "databaseSpecificType": "CHARACTER VARYING"
-      }],
-      "type": "procedure",
-      "specificName": "NEW_PUBLISHER_10128",
-      "returnType": "no result"
-    },
-    {
-      "definition": "CREATE PROCEDURE BOOKS.NEW_PUBLISHER(IN NEWPUBLISHER VARCHAR(50),OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10129 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = NEWPUBLISHER",
-      "name": "NEW_PUBLISHER",
-      "remarks": "",
-      "parameters": [
-        {
-          "dataType": "VARCHAR",
-          "width": "",
-          "name": "NEWPUBLISHER",
-          "type": "in",
-          "databaseSpecificType": "CHARACTER VARYING"
-        },
-        {
-          "dataType": "VARCHAR",
-          "width": "",
-          "name": "PUBLISHER",
-          "type": "out",
-          "databaseSpecificType": "CHARACTER VARYING"
-        }
-      ],
-      "type": "procedure",
-      "specificName": "NEW_PUBLISHER_10129",
-      "returnType": "no result"
-    }
-  ]
+    ]
+  }
 }]
