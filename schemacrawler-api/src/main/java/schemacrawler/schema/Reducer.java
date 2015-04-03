@@ -3,7 +3,7 @@ package schemacrawler.schema;
 
 import java.util.Collection;
 
-// @FunctionalInterface
+@FunctionalInterface
 public interface Reducer<N extends NamedObject>
 {
 
