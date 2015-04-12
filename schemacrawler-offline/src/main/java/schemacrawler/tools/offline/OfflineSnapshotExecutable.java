@@ -104,8 +104,7 @@ public class OfflineSnapshotExecutable
                                                    tableFilter));
     final NamedObjectFilter<Routine> routineFilter = routineFilter(schemaCrawlerOptions);
     ((Reducible) catalog).reduce(Routine.class,
-                                 new RoutinesReducer(schemaCrawlerOptions,
-                                                     routineFilter));
+                                 new RoutinesReducer(routineFilter));
     ((Reducible) catalog).reduce(Synonym.class,
                                  new SynonymsReducer(schemaCrawlerOptions));
     ((Reducible) catalog).reduce(Sequence.class,

@@ -20,60 +20,22 @@
 package schemacrawler.crawl;
 
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
-
 import schemacrawler.filter.DatabaseObjectFilter;
-import schemacrawler.filter.NamedObjectFilter;
 import schemacrawler.filter.PassthroughFilter;
-import schemacrawler.schema.Reducer;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
-public class SynonymsReducer
-  implements Reducer<Synonym>
+public final class SynonymsReducer
+  extends BaseReducer<Synonym>
 {
-
-  private NamedObjectFilter<Synonym> synonymFilter;
 
   public SynonymsReducer(final SchemaCrawlerOptions options)
   {
-    if (options == null)
-    {
-      synonymFilter = new PassthroughFilter<Synonym>();
-    }
-    else
-    {
-      synonymFilter = new DatabaseObjectFilter<Synonym>(options,
-                                                        options
-                                                          .getSynonymInclusionRule());
-    }
-  }
-
-  @Override
-  public void reduce(final Collection<? extends Synonym> allSynonyms)
-  {
-    if (allSynonyms == null)
-    {
-      return;
-    }
-    allSynonyms.retainAll(doReduce(allSynonyms));
-  }
-
-  private Collection<Synonym> doReduce(final Collection<? extends Synonym> allSynonyms)
-  {
-
-    final Set<Synonym> reducedSynonyms = new HashSet<>();
-    for (final Synonym synonym: allSynonyms)
-    {
-      if (synonymFilter.test(synonym))
-      {
-        reducedSynonyms.add(synonym);
-      }
-    }
-
-    return reducedSynonyms;
+    super(options == null
+                         ? new PassthroughFilter<Synonym>()
+                         : new DatabaseObjectFilter<Synonym>(options,
+                                                             options
+                                                               .getSynonymInclusionRule()));
   }
 
 }

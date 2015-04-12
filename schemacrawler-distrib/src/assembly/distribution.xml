@@ -75,9 +75,11 @@
     classpath="bnd-1.50.0.jar"/>
     <copy file="${distribution.assembly}/schemacrawler.bnd"
           tofile="./schemacrawler-${SchemaCrawler.version}.bnd" />
+  	<!--
     <bndwrap output="${distribution.target}">
         <fileset dir="${distribution.target}" includes="*.jar" />
     </bndwrap>
+    -->
     <move overwrite="true" todir="${distribution.target}" >
         <fileset dir="${distribution.target}" includes="*.bar" />
         <mapper type="glob" from="*.bar" to="*.jar" />

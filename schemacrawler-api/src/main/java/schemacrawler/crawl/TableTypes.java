@@ -29,6 +29,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import schemacrawler.schema.TableType;
 
@@ -46,16 +47,14 @@ class TableTypes
 
     if (connection != null)
     {
-      try
+      try (final ResultSet tableTypesResults = connection.getMetaData()
+        .getTableTypes();)
       {
-        final ResultSet tableTypesResults = connection.getMetaData()
-          .getTableTypes();
         final List<String> tableTypesList = RetrieverUtility
           .readResultsVector(tableTypesResults);
-        for (final String tableType: tableTypesList)
-        {
-          tableTypes.add(new TableType(tableType));
-        }
+        tableTypes.addAll(tableTypesList.stream()
+          .map(tableType -> new TableType(tableType))
+          .collect(Collectors.toSet()));
       }
       catch (final Exception e)
       {
