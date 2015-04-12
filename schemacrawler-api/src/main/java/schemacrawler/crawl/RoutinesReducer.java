@@ -20,53 +20,16 @@
 package schemacrawler.crawl;
 
 
-import static java.util.Objects.requireNonNull;
-
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
-
 import schemacrawler.filter.NamedObjectFilter;
-import schemacrawler.schema.Reducer;
 import schemacrawler.schema.Routine;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
-public class RoutinesReducer
-  implements Reducer<Routine>
+public final class RoutinesReducer
+  extends BaseReducer<Routine>
 {
 
-  private final SchemaCrawlerOptions options;
-  private final NamedObjectFilter<Routine> routineFilter;
-
-  public RoutinesReducer(final SchemaCrawlerOptions options,
-                         final NamedObjectFilter<Routine> routineFilter)
+  public RoutinesReducer(final NamedObjectFilter<Routine> routineFilter)
   {
-    this.options = requireNonNull(options);
-    this.routineFilter = requireNonNull(routineFilter);
-  }
-
-  @Override
-  public void reduce(final Collection<? extends Routine> allRoutines)
-  {
-    if (allRoutines == null)
-    {
-      return;
-    }
-    allRoutines.retainAll(doReduce(allRoutines));
-  }
-
-  private Collection<Routine> doReduce(final Collection<? extends Routine> allRoutines)
-  {
-    final Set<Routine> reducedRoutines = new HashSet<>();
-    for (final Routine routine: allRoutines)
-    {
-      if (routineFilter.test(routine))
-      {
-        reducedRoutines.add(routine);
-      }
-    }
-
-    return reducedRoutines;
+    super(routineFilter);
   }
 
 }

@@ -25,12 +25,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ColumnDataType;
+import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Reducer;
 import schemacrawler.schema.Reducible;
@@ -51,8 +53,28 @@ final class MutableCatalog
   extends AbstractNamedObjectWithAttributes
   implements Catalog, Reducible
 {
-  private static final long serialVersionUID = 4051323422934251828L;
 
+  private final class FilterBySchema
+    implements Predicate<DatabaseObject>
+  {
+
+    private final Schema schema;
+
+    public FilterBySchema(final Schema schema)
+    {
+      this.schema = schema;
+    }
+
+    @Override
+    public boolean test(final DatabaseObject databaseObject)
+    {
+      return (databaseObject != null && databaseObject.getSchema()
+        .equals(schema));
+    }
+
+  }
+
+  private static final long serialVersionUID = 4051323422934251828L;
   private final MutableDatabaseInfo databaseInfo;
   private final MutableJdbcDriverInfo jdbcDriverInfo;
   private final MutableSchemaCrawlerInfo schemaCrawlerInfo;
@@ -61,6 +83,7 @@ final class MutableCatalog
   private final NamedObjectList<MutableTable> tables = new NamedObjectList<>();
   private final NamedObjectList<MutableRoutine> routines = new NamedObjectList<>();
   private final NamedObjectList<MutableSynonym> synonyms = new NamedObjectList<>();
+
   private final NamedObjectList<MutableSequence> sequences = new NamedObjectList<>();
 
   MutableCatalog(final String name)
@@ -103,17 +126,9 @@ final class MutableCatalog
   @Override
   public Collection<ColumnDataType> getColumnDataTypes(final Schema schema)
   {
-    final Collection<ColumnDataType> values = getColumnDataTypes();
-    for (final Iterator<ColumnDataType> iterator = values.iterator(); iterator
-      .hasNext();)
-    {
-      final ColumnDataType mutableColumnDataType = iterator.next();
-      if (!mutableColumnDataType.getSchema().equals(schema))
-      {
-        iterator.remove();
-      }
-    }
-    return values;
+    final FilterBySchema filter = new FilterBySchema(schema);
+    return columnDataTypes.values().stream().filter(filter)
+      .collect(Collectors.toList());
   }
 
   @Override
@@ -162,17 +177,9 @@ final class MutableCatalog
   @Override
   public Collection<Routine> getRoutines(final Schema schema)
   {
-    final List<Routine> values = new ArrayList<Routine>(routines.values());
-    for (final Iterator<Routine> iterator = values.iterator(); iterator
-      .hasNext();)
-    {
-      final Routine routine = iterator.next();
-      if (!routine.getSchema().equals(schema))
-      {
-        iterator.remove();
-      }
-    }
-    return values;
+    final FilterBySchema filter = new FilterBySchema(schema);
+    return routines.values().stream().filter(filter)
+      .collect(Collectors.toList());
   }
 
   /**
@@ -183,15 +190,8 @@ final class MutableCatalog
   @Override
   public Schema getSchema(final String name)
   {
-    final Collection<Schema> schemas = getSchemaNames();
-    for (final Schema schema: schemas)
-    {
-      if (schema.getFullName().equals(name))
-      {
-        return schema;
-      }
-    }
-    return null;
+    return schemas.stream().filter(schema -> schema.getFullName().equals(name))
+      .findFirst().orElse(null);
   }
 
   /**
@@ -247,19 +247,11 @@ final class MutableCatalog
    * @see schemacrawler.schema.Catalog#getSequences(schemacrawler.schema.Schema)
    */
   @Override
-  public Collection<Sequence> getSequences(final Schema schemaRef)
+  public Collection<Sequence> getSequences(final Schema schema)
   {
-    final Collection<Sequence> values = getSequences();
-    for (final Iterator<Sequence> iterator = values.iterator(); iterator
-      .hasNext();)
-    {
-      final Sequence mutableSequence = iterator.next();
-      if (!mutableSequence.getSchema().equals(schemaRef))
-      {
-        iterator.remove();
-      }
-    }
-    return values;
+    final FilterBySchema filter = new FilterBySchema(schema);
+    return sequences.values().stream().filter(filter)
+      .collect(Collectors.toList());
   }
 
   /**
@@ -291,19 +283,11 @@ final class MutableCatalog
    * @see schemacrawler.schema.Schema#getRoutines()
    */
   @Override
-  public Collection<Synonym> getSynonyms(final Schema schemaRef)
+  public Collection<Synonym> getSynonyms(final Schema schema)
   {
-    final Collection<Synonym> values = getSynonyms();
-    for (final Iterator<Synonym> iterator = values.iterator(); iterator
-      .hasNext();)
-    {
-      final Synonym mutableSynonym = iterator.next();
-      if (!mutableSynonym.getSchema().equals(schemaRef))
-      {
-        iterator.remove();
-      }
-    }
-    return values;
+    final FilterBySchema filter = new FilterBySchema(schema);
+    return synonyms.values().stream().filter(filter)
+      .collect(Collectors.toList());
   }
 
   /**
@@ -359,16 +343,8 @@ final class MutableCatalog
   @Override
   public Collection<Table> getTables(final Schema schema)
   {
-    final Collection<Table> values = getTables();
-    for (final Iterator<Table> iterator = values.iterator(); iterator.hasNext();)
-    {
-      final Table mutableTable = iterator.next();
-      if (!mutableTable.getSchema().equals(schema))
-      {
-        iterator.remove();
-      }
-    }
-    return values;
+    final FilterBySchema filter = new FilterBySchema(schema);
+    return tables.values().stream().filter(filter).collect(Collectors.toList());
   }
 
   @Override
