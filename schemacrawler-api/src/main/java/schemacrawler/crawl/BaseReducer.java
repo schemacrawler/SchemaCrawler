@@ -20,22 +20,36 @@
 package schemacrawler.crawl;
 
 
-import schemacrawler.filter.DatabaseObjectFilter;
-import schemacrawler.filter.PassthroughFilter;
-import schemacrawler.schema.Sequence;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import static java.util.Objects.requireNonNull;
 
-public final class SequencesReducer
-  extends BaseReducer<Sequence>
+import java.util.Collection;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import schemacrawler.filter.NamedObjectFilter;
+import schemacrawler.schema.NamedObject;
+import schemacrawler.schema.Reducer;
+
+abstract class BaseReducer<N extends NamedObject>
+  implements Reducer<N>
 {
 
-  public SequencesReducer(final SchemaCrawlerOptions options)
+  private final NamedObjectFilter<N> filter;
+
+  protected BaseReducer(final NamedObjectFilter<N> filter)
   {
-    super(options == null
-                         ? new PassthroughFilter<Sequence>()
-                         : new DatabaseObjectFilter<Sequence>(options,
-                                                              options
-                                                                .getSequenceInclusionRule()));
+    this.filter = requireNonNull(filter);
+  }
+
+  @Override
+  public void reduce(final Collection<? extends N> allNamedObjects)
+  {
+    if (allNamedObjects != null)
+    {
+      final Set<? extends N> keepList = allNamedObjects.stream().filter(filter)
+        .collect(Collectors.toSet());
+      allNamedObjects.retainAll(keepList);
+    }
   }
 
 }

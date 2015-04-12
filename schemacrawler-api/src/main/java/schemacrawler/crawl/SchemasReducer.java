@@ -20,56 +20,21 @@
 package schemacrawler.crawl;
 
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
-
 import schemacrawler.filter.InclusionRuleFilter;
-import schemacrawler.schema.Reducer;
+import schemacrawler.filter.PassthroughFilter;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
-public class SchemasReducer
-  implements Reducer<Schema>
+public final class SchemasReducer
+  extends BaseReducer<Schema>
 {
-
-  private final InclusionRuleFilter<Schema> schemaFilter;
 
   public SchemasReducer(final SchemaCrawlerOptions options)
   {
-    if (options == null)
-    {
-      schemaFilter = new InclusionRuleFilter<>(null, true);
-    }
-    else
-    {
-      schemaFilter = new InclusionRuleFilter<>(options.getSchemaInclusionRule(),
-                                               true);
-    }
-  }
-
-  @Override
-  public void reduce(final Collection<? extends Schema> allSchemas)
-  {
-    if (allSchemas == null)
-    {
-      return;
-    }
-    allSchemas.retainAll(doReduce(allSchemas));
-  }
-
-  private Collection<Schema> doReduce(final Collection<? extends Schema> allSchemas)
-  {
-    final Set<Schema> reducedSchemas = new HashSet<>();
-    for (final Schema schema: allSchemas)
-    {
-      if (schemaFilter.test(schema))
-      {
-        reducedSchemas.add(schema);
-      }
-    }
-
-    return reducedSchemas;
+    super(options == null
+                         ? new PassthroughFilter<Schema>()
+                         : new InclusionRuleFilter<>(options.getSchemaInclusionRule(),
+                                                     true));
   }
 
 }

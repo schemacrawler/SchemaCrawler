@@ -23,17 +23,17 @@ package schemacrawler.crawl;
 
 import static sf.util.DatabaseUtility.checkConnection;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.InformationSchemaViews;
@@ -78,18 +78,13 @@ final class RetrieverConnection
   private static List<String> lookupReservedWords(final DatabaseMetaData metaData)
     throws SQLException
   {
-    final Set<String> rawReservedWords = new HashSet<>();
-    rawReservedWords
-      .addAll(Arrays.asList(metaData.getSQLKeywords().split(",")));
-    rawReservedWords.addAll(Arrays.asList(Utility
-      .readResourceFully("/sql2003_reserved_words.txt").split("\r\n")));
-    final List<String> reservedWordsList = new ArrayList<>();
-    for (final String reservedWord: rawReservedWords)
-    {
-      reservedWordsList.add(reservedWord.trim().toUpperCase());
-    }
-    Collections.sort(reservedWordsList);
-    return Collections.unmodifiableList(reservedWordsList);
+    final BufferedReader reader = new BufferedReader(new InputStreamReader(RetrieverConnection.class
+      .getResourceAsStream("/sql2003_reserved_words.txt")));
+
+    return Collections.unmodifiableList(Stream
+      .concat(Stream.of(metaData.getSQLKeywords().split(",")), reader.lines())
+      .map(reservedWord -> reservedWord.trim().toUpperCase()).distinct()
+      .sorted().collect(Collectors.toList()));
   }
 
   private static boolean lookupSupportsCatalogs(final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions,

@@ -256,7 +256,7 @@ public final class SchemaCrawler
       // Filter the list of routines based on grep criteria
       final NamedObjectFilter<Routine> routineFilter = routineFilter(options);
       ((Reducible) catalog).reduce(Routine.class,
-                                   new RoutinesReducer(options, routineFilter));
+                                   new RoutinesReducer(routineFilter));
 
       if (infoLevel.isRetrieveRoutineInformation())
       {
