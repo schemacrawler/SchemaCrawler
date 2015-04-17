@@ -347,7 +347,7 @@
           and
           <a href="http://www.postgresql.org/">PostgreSQL.</a>
           These
-          <a href="bundled.html">bundled distributions</a>
+          <a href="database-support.html">bundled distributions</a>
           are distributed under the
           <a href="http://www.gnu.org/licenses/gpl-3.0.txt">GNU General Public License (GPL) license.</a>
           The JDBC drivers that are packaged with these SchemaCrawler distributions are in their binary form, and retain
