@@ -111,14 +111,9 @@ class TableTypes
    */
   TableType lookupTableType(final String tableTypeString)
   {
-    for (final TableType tableType: tableTypes)
-    {
-      if (tableType.isEqualTo(tableTypeString))
-      {
-        return tableType;
-      }
-    }
-    return TableType.UNKNOWN;
+    return tableTypes.stream()
+      .filter(tableType -> tableType.isEqualTo(tableTypeString)).findAny()
+      .orElse(TableType.UNKNOWN);
   }
 
 }

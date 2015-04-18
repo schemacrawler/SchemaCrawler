@@ -12,7 +12,7 @@ any of the SchemaCrawler functionality.
 
 ## How to Run
 1. Make sure that java is on your PATH
-2. Start the database server by running the StartDatabaseServer script from the distribution directory 
+2. Start the test database server by running the StartDatabaseServer script from the distribution directory 
 3. Start a command shell in the `spring` example directory
 4. Run `spring.cmd` (or `spring.sh` on Unix) to see Spring integration 
 5. Check the output in scOutput.txt
