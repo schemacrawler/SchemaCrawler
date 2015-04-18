@@ -15,7 +15,6 @@
       </brand>
       <slogan>Free database schema discovery and comprehension tool</slogan>
       <highlightJs>true</highlightJs>
-      <html5Anchor>true</html5Anchor>
     </reflowSkin>
   </custom>
   <version />
@@ -47,8 +46,9 @@
         document.getElementsByTagName('script')[0];
         s.parentNode.insertBefore(ga, s); })(); 
       </script>
-      <script src="js/jquery-1.11.1.min.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
       <script src="js/lightbox.js"></script>
+      <script src="js/convert_name.js"></script>
       <link rel="stylesheet" href="css/lightbox.css" />
       <link rel="stylesheet" href="./css/sc.css" />
       <link rel="stylesheet" href="./css/sc_banner.css" />

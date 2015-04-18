@@ -12,7 +12,7 @@ example shows how to script with Groovy.
 
 ## How to Run
 1. Make sure that java is on your PATH
-2. Start the database server by running the StartDatabaseServer script from the distribution directory 
+2. Start the test database server by running the StartDatabaseServer script from the distribution directory 
 3. Start a command shell in the `groovy` example directory 
 4. Run `groovy.cmd tables.groovy`  (or `groovy.sh tables.groovy` on Unix) 
 

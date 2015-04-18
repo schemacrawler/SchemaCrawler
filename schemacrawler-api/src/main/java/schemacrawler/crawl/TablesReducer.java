@@ -25,6 +25,7 @@ import static java.util.Objects.requireNonNull;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import schemacrawler.filter.NamedObjectFilter;
 import schemacrawler.schema.ForeignKey;
@@ -65,14 +66,8 @@ public class TablesReducer
   private Collection<Table> doReduce(final Collection<? extends Table> allTables)
   {
     // Filter tables, keeping the ones we need
-    final Set<Table> reducedTables = new HashSet<>();
-    for (final Table table: allTables)
-    {
-      if (tableFilter.test(table))
-      {
-        reducedTables.add(table);
-      }
-    }
+    final Set<Table> reducedTables = allTables.stream().filter(tableFilter)
+      .collect(Collectors.toSet());
 
     // Add in referenced tables
     final int childTableFilterDepth = options.getChildTableFilterDepth();

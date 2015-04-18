@@ -103,10 +103,7 @@ final class SchemaRetriever
 
     // Create schemas for the catalogs, as well as create the schema
     // reference cache
-    for (final SchemaReference schemaRef: schemaRefs)
-    {
-      catalog.addSchema(schemaRef);
-    }
+    schemaRefs.stream().forEach(schemaRef -> catalog.addSchema(schemaRef));
 
     // Add an empty schema reference for databases that do not support
     // neither catalogs nor schemas
