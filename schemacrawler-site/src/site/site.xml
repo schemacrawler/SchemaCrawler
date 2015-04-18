@@ -15,7 +15,7 @@
       </brand>
       <slogan>Free database schema discovery and comprehension tool</slogan>
       <highlightJs>true</highlightJs>
-      <html5Anchor>false</html5Anchor>
+      <html5Anchor>true</html5Anchor>
     </reflowSkin>
   </custom>
   <version />
