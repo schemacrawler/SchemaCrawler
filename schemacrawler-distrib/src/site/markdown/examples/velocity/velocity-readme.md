@@ -11,7 +11,7 @@ The command example demonstrates the integration of SchemaCrawler with Apache Ve
 
 ## How to Run
 1. Make sure that java is on your PATH
-2. Start the database server by running the StartDatabaseServer script from the distribution directory 
+2. Start the test database server by running the StartDatabaseServer script from the distribution directory 
 3. Start a command shell in the `velocity` example directory
 5. Run `velocity.cmd tables.vm` (or `velocity.sh tables.vm` on Unix) 
 

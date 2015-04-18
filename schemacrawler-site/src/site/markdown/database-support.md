@@ -35,17 +35,18 @@ not mentioned above, you can simply provide the database connection URL, a usern
 
 For the databases mentioned above, you can provide connection details by using the following
 command-line options:
+
 - `-server` - identifies the database server, and can be one of `sqlite`, `oracle`, `sqlserver`, 
    `db2`, `mysql`, `postgresql`, `sybaseiq`, `derby`, `offline`
 - `-database` - identifies the database, and can have different meaning based on the server type
 - `-host` - specifies the database server host; it is optional, and defaults to localhost
 - `-port` - specifies the database server port; it is optional, and defaults to the default port for the server type
 
-For example, a typical command-line for SchemaCrawler for Microsoft SQL Server looks like:  
+For example, typical command-line options for SchemaCrawler for Microsoft SQL Server looks like:  
 `-server=sqlserver -host=localhost -port=1433 -database=schemacrawler -schemas=schemacrawler.dbo 
 -user=schemacrawler -password=schemacrawler`
 
 You should always use the -schemas command-line switch for databases that support it. The value 
 for the `-schemas` switch is a regular expression that determines which schemas SchemaCrawler will 
 work with. The "schema" is database-dependent - for example, on Microsoft SQL Server, typically 
-schemas look like "database_name.user", but for Oracle, typically, schemas look like "USER".
+schemas look like "database_name.user", but for Oracle, typically, schemas look like "USER" (in uppercase).

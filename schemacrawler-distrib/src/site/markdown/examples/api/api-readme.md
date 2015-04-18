@@ -7,7 +7,7 @@ alternative to using JDBC metadata.
 
 ## How to Run
 1. Make sure that java is on your PATH
-2. Start the database server by running the StartDatabaseServer script from the distribution directory 
+2. Start the test database server by running the StartDatabaseServer script from the distribution directory 
 3. Run `api.cmd` (or `api.sh` on Unix) to compile and run the program 
 
 ## How to Experiment

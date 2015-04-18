@@ -6,7 +6,7 @@ is database-specific. This example demonstrates how to execute arbitrary SQL.
 
 ## How to Run
 1. Make sure that java is on your PATH
-2. Start the database server by running the StartDatabaseServer script from the distribution directory 
+2. Start the test database server by running the StartDatabaseServer script from the distribution directory 
 3. Start a command shell in the db-specific-query example directory. 
 4. Run `db-specific-query.cmd` (or `db-specific-query.sh` on Unix). 
 

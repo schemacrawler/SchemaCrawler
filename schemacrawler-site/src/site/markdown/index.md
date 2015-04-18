@@ -124,6 +124,8 @@ for (final Schema schema: catalog.getSchemas())
 }
 </pre></div>
         
+For more details, please refer to the [javadocs](apidocs/index.html).
+        
 SchemaCrawler provides metadata for the following database objects:  
      
 * Column data types
