@@ -9,7 +9,7 @@ execute arbitrary SQL, per table.
 
 ## How to Run
 1. Make sure that java is on your PATH
-2. Start the database server by running the StartDatabaseServer script from the distribution directory 
+2. Start the test database server by running the StartDatabaseServer script from the distribution directory 
 3. Start a command shell in the user-defined-query example directory 
 4. Run `user-defined-query.cmd` (or `user-defined-query.sh` on Unix) 
 
