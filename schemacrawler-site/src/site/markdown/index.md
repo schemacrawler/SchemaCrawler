@@ -12,7 +12,7 @@ your database. You can find potential schema design issues with
 [lint.](lint.html)
 
 SchemaCrawler supports almost any database that has a JDBC driver, but for
-convenience is [bundled with drivers](bundled.html) for some commonly used
+convenience is [bundled with drivers](database-support.html) for some commonly used
 RDBMS systems. SchemaCrawler works with any operating system that supports
 Java 7 or better.
 
