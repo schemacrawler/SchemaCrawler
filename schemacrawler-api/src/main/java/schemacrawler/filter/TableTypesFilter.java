@@ -22,12 +22,13 @@ package schemacrawler.filter;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.function.Predicate;
 
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
 class TableTypesFilter
-  implements NamedObjectFilter<Table>
+  implements Predicate<Table>
 {
 
   private final Collection<String> tableTypes;

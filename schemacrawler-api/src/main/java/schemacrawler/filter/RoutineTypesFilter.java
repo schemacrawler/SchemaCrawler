@@ -21,13 +21,14 @@ package schemacrawler.filter;
 
 
 import java.util.Collection;
+import java.util.function.Predicate;
 
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.RoutineType;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
 class RoutineTypesFilter
-  implements NamedObjectFilter<Routine>
+  implements Predicate<Routine>
 {
 
   private final Collection<RoutineType> routineTypes;

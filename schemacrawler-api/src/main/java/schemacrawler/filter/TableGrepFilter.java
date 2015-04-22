@@ -20,6 +20,7 @@
 package schemacrawler.filter;
 
 
+import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -30,7 +31,7 @@ import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
 class TableGrepFilter
-  implements NamedObjectFilter<Table>
+  implements Predicate<Table>
 {
 
   private static final Logger LOGGER = Logger.getLogger(TableGrepFilter.class
