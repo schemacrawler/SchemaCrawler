@@ -24,9 +24,9 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.Collection;
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import schemacrawler.filter.NamedObjectFilter;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Reducer;
 
@@ -34,9 +34,9 @@ abstract class BaseReducer<N extends NamedObject>
   implements Reducer<N>
 {
 
-  private final NamedObjectFilter<N> filter;
+  private final Predicate<N> filter;
 
-  protected BaseReducer(final NamedObjectFilter<N> filter)
+  protected BaseReducer(final Predicate<N> filter)
   {
     this.filter = requireNonNull(filter);
   }

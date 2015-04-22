@@ -21,7 +21,6 @@ package schemacrawler.crawl;
 
 
 import schemacrawler.filter.InclusionRuleFilter;
-import schemacrawler.filter.PassthroughFilter;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
@@ -32,9 +31,8 @@ public final class SchemasReducer
   public SchemasReducer(final SchemaCrawlerOptions options)
   {
     super(options == null
-                         ? new PassthroughFilter<Schema>()
+                         ? schema -> true
                          : new InclusionRuleFilter<>(options.getSchemaInclusionRule(),
                                                      true));
   }
-
 }

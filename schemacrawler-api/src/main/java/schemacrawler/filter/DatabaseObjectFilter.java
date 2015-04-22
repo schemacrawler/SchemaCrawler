@@ -20,13 +20,15 @@
 package schemacrawler.filter;
 
 
+import java.util.function.Predicate;
+
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
 public class DatabaseObjectFilter<D extends DatabaseObject>
-  implements NamedObjectFilter<D>
+  implements Predicate<D>
 {
 
   private final InclusionRule schemaInclusionRule;
