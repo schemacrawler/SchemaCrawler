@@ -21,6 +21,8 @@
 package schemacrawler.crawl;
 
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -62,7 +64,7 @@ final class MutableCatalog
 
     public FilterBySchema(final Schema schema)
     {
-      this.schema = schema;
+      this.schema = requireNonNull(schema, "No schema provided");
     }
 
     @Override
