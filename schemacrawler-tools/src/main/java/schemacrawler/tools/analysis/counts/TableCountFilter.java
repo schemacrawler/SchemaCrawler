@@ -21,12 +21,14 @@ package schemacrawler.tools.analysis.counts;
 
 
 import static java.util.Objects.requireNonNull;
-import schemacrawler.filter.NamedObjectFilter;
+
+import java.util.function.Predicate;
+
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
 class TableCountFilter
-  implements NamedObjectFilter<Table>
+  implements Predicate<Table>
 {
 
   private final boolean hideEmptyTables;

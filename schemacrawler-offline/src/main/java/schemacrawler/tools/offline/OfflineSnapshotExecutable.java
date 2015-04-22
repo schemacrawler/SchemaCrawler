@@ -26,6 +26,7 @@ import static schemacrawler.filter.FilterFactory.routineFilter;
 import static schemacrawler.filter.FilterFactory.tableFilter;
 
 import java.sql.Connection;
+import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -34,7 +35,6 @@ import schemacrawler.crawl.SchemasReducer;
 import schemacrawler.crawl.SequencesReducer;
 import schemacrawler.crawl.SynonymsReducer;
 import schemacrawler.crawl.TablesReducer;
-import schemacrawler.filter.NamedObjectFilter;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Reducible;
 import schemacrawler.schema.Routine;
@@ -98,11 +98,11 @@ public class OfflineSnapshotExecutable
     // Reduce all
     ((Reducible) catalog).reduce(Schema.class,
                                  new SchemasReducer(schemaCrawlerOptions));
-    final NamedObjectFilter<Table> tableFilter = tableFilter(schemaCrawlerOptions);
+    final Predicate<Table> tableFilter = tableFilter(schemaCrawlerOptions);
     ((Reducible) catalog).reduce(Table.class,
                                  new TablesReducer(schemaCrawlerOptions,
                                                    tableFilter));
-    final NamedObjectFilter<Routine> routineFilter = routineFilter(schemaCrawlerOptions);
+    final Predicate<Routine> routineFilter = routineFilter(schemaCrawlerOptions);
     ((Reducible) catalog).reduce(Routine.class,
                                  new RoutinesReducer(routineFilter));
     ((Reducible) catalog).reduce(Synonym.class,
