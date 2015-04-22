@@ -20,6 +20,8 @@
 package schemacrawler.filter;
 
 
+import java.util.function.Predicate;
+
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -27,24 +29,22 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 public class FilterFactory
 {
 
-  public static NamedObjectFilter<Routine> routineFilter(final SchemaCrawlerOptions options)
+  public static Predicate<Routine> routineFilter(final SchemaCrawlerOptions options)
   {
-    final ChainedNamedObjectFilter<Routine> routineFilter = new ChainedNamedObjectFilter<>();
-    routineFilter.add(new RoutineTypesFilter(options));
-    routineFilter.add(new DatabaseObjectFilter<Routine>(options, options
-      .getRoutineInclusionRule()));
-    routineFilter.add(new RoutineGrepFilter(options));
+    final Predicate<Routine> routineFilter = new RoutineTypesFilter(options)
+      .and(new DatabaseObjectFilter<Routine>(options,
+                                             options.getRoutineInclusionRule()))
+      .and(new RoutineGrepFilter(options));
 
     return routineFilter;
   }
 
-  public static NamedObjectFilter<Table> tableFilter(final SchemaCrawlerOptions options)
+  public static Predicate<Table> tableFilter(final SchemaCrawlerOptions options)
   {
-    final ChainedNamedObjectFilter<Table> tableFilter = new ChainedNamedObjectFilter<>();
-    tableFilter.add(new TableTypesFilter(options));
-    tableFilter.add(new DatabaseObjectFilter<Table>(options, options
-      .getTableInclusionRule()));
-    tableFilter.add(new TableGrepFilter(options));
+    final Predicate<Table> tableFilter = new TableTypesFilter(options)
+      .and(new DatabaseObjectFilter<Table>(options,
+                                           options.getTableInclusionRule()))
+      .and(new TableGrepFilter(options));
 
     return tableFilter;
   }

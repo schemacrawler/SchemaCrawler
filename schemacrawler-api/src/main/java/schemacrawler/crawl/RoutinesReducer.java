@@ -20,14 +20,15 @@
 package schemacrawler.crawl;
 
 
-import schemacrawler.filter.NamedObjectFilter;
+import java.util.function.Predicate;
+
 import schemacrawler.schema.Routine;
 
 public final class RoutinesReducer
   extends BaseReducer<Routine>
 {
 
-  public RoutinesReducer(final NamedObjectFilter<Routine> routineFilter)
+  public RoutinesReducer(final Predicate<Routine> routineFilter)
   {
     super(routineFilter);
   }

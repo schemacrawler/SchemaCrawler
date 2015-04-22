@@ -25,9 +25,9 @@ import static java.util.Objects.requireNonNull;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import schemacrawler.filter.NamedObjectFilter;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.PartialDatabaseObject;
@@ -42,10 +42,10 @@ public class TablesReducer
 {
 
   private final SchemaCrawlerOptions options;
-  private final NamedObjectFilter<Table> tableFilter;
+  private final Predicate<Table> tableFilter;
 
   public TablesReducer(final SchemaCrawlerOptions options,
-                       final NamedObjectFilter<Table> tableFilter)
+                       final Predicate<Table> tableFilter)
   {
     this.options = requireNonNull(options);
     this.tableFilter = requireNonNull(tableFilter);
