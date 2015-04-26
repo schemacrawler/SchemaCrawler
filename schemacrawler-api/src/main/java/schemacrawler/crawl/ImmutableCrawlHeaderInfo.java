@@ -28,7 +28,7 @@ import java.time.format.DateTimeFormatter;
 
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.JdbcDriverInfo;
-import schemacrawler.schema.SchemaCrawlerHeaderInfo;
+import schemacrawler.schema.CrawlHeaderInfo;
 import schemacrawler.schema.SchemaCrawlerInfo;
 
 /**
@@ -36,8 +36,8 @@ import schemacrawler.schema.SchemaCrawlerInfo;
  *
  * @author Sualeh Fatehi sualeh@hotmail.com
  */
-final class ImmutableSchemaCrawlerHeaderInfo
-  implements SchemaCrawlerHeaderInfo
+final class ImmutableCrawlHeaderInfo
+  implements CrawlHeaderInfo
 {
 
   private final String schemaCrawlerInfo;
@@ -46,7 +46,7 @@ final class ImmutableSchemaCrawlerHeaderInfo
   private final String title;
   private final LocalDateTime crawlTimestamp;
 
-  ImmutableSchemaCrawlerHeaderInfo(final SchemaCrawlerInfo schemaCrawlerInfo,
+  ImmutableCrawlHeaderInfo(final SchemaCrawlerInfo schemaCrawlerInfo,
                                    final JdbcDriverInfo jdbcDriverInfo,
                                    final DatabaseInfo databaseInfo,
                                    final String title)

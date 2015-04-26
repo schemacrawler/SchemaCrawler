@@ -28,9 +28,9 @@ import static sf.util.Utility.readResourceFully;
 import java.awt.Color;
 import java.util.logging.Logger;
 
+import schemacrawler.schema.CrawlHeaderInfo;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.JdbcDriverInfo;
-import schemacrawler.schema.SchemaCrawlerHeaderInfo;
 import schemacrawler.schema.SchemaCrawlerInfo;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputOptions;
@@ -88,16 +88,16 @@ public abstract class BaseDotFormatter<O extends BaseTextOptions>
   }
 
   @Override
-  public void handle(final SchemaCrawlerHeaderInfo schemaCrawlerHeaderInfo)
+  public void handle(final CrawlHeaderInfo crawlHeaderInfo)
   {
-    if (options.isNoInfo() || schemaCrawlerHeaderInfo == null)
+    if (options.isNoInfo() || crawlHeaderInfo == null)
     {
       return;
     }
 
     TableRow row;
 
-    final String title = schemaCrawlerHeaderInfo.getTitle();
+    final String title = crawlHeaderInfo.getTitle();
     if (!isBlank(title))
     {
       row = new TableRow(TextOutputFormat.html);
@@ -111,7 +111,7 @@ public abstract class BaseDotFormatter<O extends BaseTextOptions>
                          false,
                          Color.white,
                          1));
-    row.add(newTableCell(schemaCrawlerHeaderInfo.getSchemaCrawlerInfo(),
+    row.add(newTableCell(crawlHeaderInfo.getSchemaCrawlerInfo(),
                          Alignment.left,
                          false,
                          Color.white,
@@ -125,14 +125,17 @@ public abstract class BaseDotFormatter<O extends BaseTextOptions>
                          false,
                          Color.white,
                          1));
-    row.add(newTableCell(formatTimestamp(schemaCrawlerHeaderInfo
-      .getCrawlTimestamp()), Alignment.left, false, Color.white, 1));
+    row.add(newTableCell(formatTimestamp(crawlHeaderInfo.getCrawlTimestamp()),
+                         Alignment.left,
+                         false,
+                         Color.white,
+                         1));
 
     out.append(row.toString()).append(System.lineSeparator());
 
     new TableRow(TextOutputFormat.html);
     row.add(newTableCell("Database:", Alignment.right, false, Color.white, 1));
-    row.add(newTableCell(schemaCrawlerHeaderInfo.getDatabaseInfo(),
+    row.add(newTableCell(crawlHeaderInfo.getDatabaseInfo(),
                          Alignment.left,
                          false,
                          Color.white,
@@ -142,7 +145,7 @@ public abstract class BaseDotFormatter<O extends BaseTextOptions>
 
     row = new TableRow(TextOutputFormat.html);
     row.add(newTableCell("Driver:", Alignment.right, false, Color.white, 1));
-    row.add(newTableCell(schemaCrawlerHeaderInfo.getJdbcDriverInfo(),
+    row.add(newTableCell(crawlHeaderInfo.getJdbcDriverInfo(),
                          Alignment.left,
                          false,
                          Color.white,

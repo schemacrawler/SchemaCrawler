@@ -34,7 +34,7 @@ import schemacrawler.schema.Reducer;
 import schemacrawler.schema.Reducible;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Schema;
-import schemacrawler.schema.SchemaCrawlerHeaderInfo;
+import schemacrawler.schema.CrawlHeaderInfo;
 import schemacrawler.schema.SchemaCrawlerInfo;
 import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
@@ -156,9 +156,9 @@ public abstract class BaseCatalogDecorator
   }
 
   @Override
-  public SchemaCrawlerHeaderInfo getSchemaCrawlerHeaderInfo()
+  public CrawlHeaderInfo getCrawlHeaderInfo()
   {
-    return catalog.getSchemaCrawlerHeaderInfo();
+    return catalog.getCrawlHeaderInfo();
   }
 
   @Override
