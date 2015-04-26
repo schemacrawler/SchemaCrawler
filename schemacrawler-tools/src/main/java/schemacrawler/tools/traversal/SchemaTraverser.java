@@ -63,11 +63,9 @@ public class SchemaTraverser
   {
     handler.begin();
 
-    handler.handleInfoStart();
-    handler.handle(catalog.getSchemaCrawlerInfo());
-    handler.handle(catalog.getDatabaseInfo());
-    handler.handle(catalog.getJdbcDriverInfo());
-    handler.handleInfoEnd();
+    handler.handleHeaderStart();
+    handler.handle(catalog.getSchemaCrawlerHeaderInfo());
+    handler.handleHeaderEnd();
 
     final Collection<ColumnDataType> columnDataTypes = catalog
       .getColumnDataTypes();
@@ -75,16 +73,6 @@ public class SchemaTraverser
     final Collection<Routine> routines = catalog.getRoutines();
     final Collection<Synonym> synonyms = catalog.getSynonyms();
     final Collection<Sequence> sequences = catalog.getSequences();
-
-    if (!columnDataTypes.isEmpty())
-    {
-      handler.handleColumnDataTypesStart();
-      for (final ColumnDataType columnDataType: columnDataTypes)
-      {
-        handler.handle(columnDataType);
-      }
-      handler.handleColumnDataTypesEnd();
-    }
 
     if (!tables.isEmpty())
     {
@@ -125,6 +113,22 @@ public class SchemaTraverser
       }
       handler.handleSynonymsEnd();
     }
+
+    if (!columnDataTypes.isEmpty())
+    {
+      handler.handleColumnDataTypesStart();
+      for (final ColumnDataType columnDataType: columnDataTypes)
+      {
+        handler.handle(columnDataType);
+      }
+      handler.handleColumnDataTypesEnd();
+    }
+
+    handler.handleInfoStart();
+    handler.handle(catalog.getSchemaCrawlerInfo());
+    handler.handle(catalog.getDatabaseInfo());
+    handler.handle(catalog.getJdbcDriverInfo());
+    handler.handleInfoEnd();
 
     handler.end();
   }

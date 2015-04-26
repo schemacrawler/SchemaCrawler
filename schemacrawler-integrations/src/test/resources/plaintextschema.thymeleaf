@@ -10,9 +10,7 @@
 
   <body>
   
-    <pre th:text="${catalog.schemaCrawlerInfo}">SchemaCrawler Information</pre>
-    <pre th:text="${catalog.databaseInfo}">SchemaCrawler Information</pre>
-    <pre th:text="${catalog.jdbcDriverInfo}">SchemaCrawler Information</pre>
+    <pre th:text="${catalog.schemaCrawlerHeaderInfo}">System Information</pre>
   
     <span th:each="schema: ${catalog.schemas}">
       <h1 th:text="${schema.fullName}">Schema</h1>

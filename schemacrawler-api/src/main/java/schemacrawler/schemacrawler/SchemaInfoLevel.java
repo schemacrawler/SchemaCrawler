@@ -79,9 +79,6 @@ public final class SchemaInfoLevel
   public static SchemaInfoLevel minimum()
   {
     final SchemaInfoLevel minimum = new SchemaInfoLevel();
-    minimum.setRetrieveSchemaCrawlerInfo(true);
-    minimum.setRetrieveDatabaseInfo(true);
-    minimum.setRetrieveJdbcDriverInfo(true);
     minimum.setRetrieveTables(true);
     minimum.setRetrieveRoutines(true);
     minimum.setTag("minimum");
@@ -107,13 +104,9 @@ public final class SchemaInfoLevel
 
   private String tag;
 
-  private boolean retrieveSchemaCrawlerInfo = true;
-  private boolean retrieveJdbcDriverInfo = true;
-  private boolean retrieveDatabaseInfo = true;
   private boolean retrieveTables;
   private boolean retrieveRoutines;
   private boolean retrieveColumnDataTypes;
-  private boolean retrieveAdditionalSchemaCrawlerInfo;
   private boolean retrieveAdditionalDatabaseInfo;
   private boolean retrieveAdditionalJdbcDriverInfo;
   private boolean retrieveUserDefinedColumnDataTypes;
@@ -154,11 +147,6 @@ public final class SchemaInfoLevel
     return retrieveAdditionalJdbcDriverInfo;
   }
 
-  public boolean isRetrieveAdditionalSchemaCrawlerInfo()
-  {
-    return retrieveAdditionalSchemaCrawlerInfo;
-  }
-
   public boolean isRetrieveAdditionalTableAttributes()
   {
     return retrieveAdditionalTableAttributes;
@@ -167,11 +155,6 @@ public final class SchemaInfoLevel
   public boolean isRetrieveColumnDataTypes()
   {
     return retrieveColumnDataTypes;
-  }
-
-  public boolean isRetrieveDatabaseInfo()
-  {
-    return retrieveDatabaseInfo;
   }
 
   public boolean isRetrieveForeignKeys()
@@ -189,11 +172,6 @@ public final class SchemaInfoLevel
     return retrieveIndices;
   }
 
-  public boolean isRetrieveJdbcDriverInfo()
-  {
-    return retrieveJdbcDriverInfo;
-  }
-
   public boolean isRetrieveRoutineColumns()
   {
     return retrieveRoutineColumns;
@@ -207,11 +185,6 @@ public final class SchemaInfoLevel
   public boolean isRetrieveRoutines()
   {
     return retrieveRoutines;
-  }
-
-  public boolean isRetrieveSchemaCrawlerInfo()
-  {
-    return retrieveSchemaCrawlerInfo;
   }
 
   public boolean isRetrieveSequenceInformation()
@@ -284,11 +257,6 @@ public final class SchemaInfoLevel
     this.retrieveAdditionalJdbcDriverInfo = retrieveAdditionalJdbcDriverInfo;
   }
 
-  public void setRetrieveAdditionalSchemaCrawlerInfo(final boolean retrieveAdditionalSchemaCrawlerInfo)
-  {
-    this.retrieveAdditionalSchemaCrawlerInfo = retrieveAdditionalSchemaCrawlerInfo;
-  }
-
   public void setRetrieveAdditionalTableAttributes(final boolean retrieveAdditionalTableAttributes)
   {
     this.retrieveAdditionalTableAttributes = retrieveAdditionalTableAttributes;
@@ -297,11 +265,6 @@ public final class SchemaInfoLevel
   public void setRetrieveColumnDataTypes(final boolean retrieveColumnDataTypes)
   {
     this.retrieveColumnDataTypes = retrieveColumnDataTypes;
-  }
-
-  public void setRetrieveDatabaseInfo(final boolean retrieveDatabaseInfo)
-  {
-    this.retrieveDatabaseInfo = retrieveDatabaseInfo;
   }
 
   public void setRetrieveForeignKeys(final boolean retrieveForeignKeys)
@@ -319,11 +282,6 @@ public final class SchemaInfoLevel
     this.retrieveIndices = retrieveIndices;
   }
 
-  public void setRetrieveJdbcDriverInfo(final boolean retrieveJdbcDriverInfo)
-  {
-    this.retrieveJdbcDriverInfo = retrieveJdbcDriverInfo;
-  }
-
   public void setRetrieveRoutineColumns(final boolean retrieveRoutineColumns)
   {
     this.retrieveRoutineColumns = retrieveRoutineColumns;
@@ -337,11 +295,6 @@ public final class SchemaInfoLevel
   public void setRetrieveRoutines(final boolean retrieveRoutines)
   {
     this.retrieveRoutines = retrieveRoutines;
-  }
-
-  public void setRetrieveSchemaCrawlerInfo(final boolean retrieveSchemaCrawlerInfo)
-  {
-    this.retrieveSchemaCrawlerInfo = retrieveSchemaCrawlerInfo;
   }
 
   public void setRetrieveSequenceInformation(final boolean retrieveSequenceInformation)

@@ -22,23 +22,15 @@ package schemacrawler.schema;
 
 
 import java.io.Serializable;
-import java.util.Map;
 
 /**
- * Database and connection information.
+ * SchemaCrawler information.
  *
  * @author Sualeh Fatehi
  */
 public interface SchemaCrawlerInfo
   extends Serializable
 {
-
-  /**
-   * Gets the timestamp of when the database was crawled.
-   *
-   * @return Timestamp as localized string.
-   */
-  String getCrawlTimestamp();
 
   /**
    * Gets the SchemaCrawler about text.
@@ -60,12 +52,5 @@ public interface SchemaCrawlerInfo
    * @return SchemaCrawler version
    */
   String getSchemaCrawlerVersion();
-
-  /**
-   * Gets all system properties.
-   *
-   * @return Map of properties
-   */
-  Map<String, String> getSystemProperties();
 
 }

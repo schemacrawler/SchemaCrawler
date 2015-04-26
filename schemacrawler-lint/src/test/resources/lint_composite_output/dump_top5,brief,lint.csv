@@ -1,37 +1,6 @@
 
 
 
-System Information
-========================================================================
-
-
-
-SchemaCrawler Information
--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
-
-product name,SchemaCrawler
-product version,12.06.03
-
-
-Database Information
--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
-
-database product name,HSQL Database Engine
-database product version,2.3.2
-database user name,SA
-
-
-JDBC Driver Information
--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
-
-driver name,HSQL Database Engine Driver
-driver version,2.3.2
-driver class name,org.hsqldb.jdbc.JDBCDriver
-url,jdbc:hsqldb:hsql://localhost/schemacrawler
-is JDBC compliant,true
-
-
-
 Query
 ========================================================================
 

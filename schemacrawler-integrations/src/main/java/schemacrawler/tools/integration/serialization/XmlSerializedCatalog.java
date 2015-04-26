@@ -25,6 +25,7 @@ import static java.util.Objects.requireNonNull;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -39,6 +40,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.converters.MarshallingContext;
+import com.thoughtworks.xstream.converters.basic.AbstractSingleValueConverter;
 import com.thoughtworks.xstream.converters.collections.CollectionConverter;
 import com.thoughtworks.xstream.converters.collections.MapConverter;
 import com.thoughtworks.xstream.io.ExtendedHierarchicalStreamWriterHelper;
@@ -54,15 +56,49 @@ public final class XmlSerializedCatalog
   implements SerializableCatalog
 {
 
+  private static final long serialVersionUID = 5314326260124511414L;
+
   private static XStream newXStream()
     throws SchemaCrawlerException
   {
     try
     {
+
       final XStream xStream = new XStream();
 
       xStream.setMode(XStream.ID_REFERENCES);
 
+      xStream.registerConverter(new AbstractSingleValueConverter()
+      {
+
+        @Override
+        public boolean canConvert(final Class type)
+        {
+          return type != null
+                 && LocalDateTime.class.getPackage().equals(type.getPackage());
+        }
+
+        @Override
+        public Object fromString(final String str)
+        {
+          try
+          {
+            return LocalDateTime.parse(str);
+          }
+          catch (final Exception e)
+          {
+            return LocalDateTime.now();
+          }
+        }
+
+        @Override
+        public String toString(final Object source)
+        {
+          return source.toString();
+        }
+
+      },
+                                5000);
       xStream.registerConverter(new CollectionConverter(xStream.getMapper())
       {
         @Override
@@ -143,7 +179,10 @@ public final class XmlSerializedCatalog
                                     + xmlElement.substring(1)));
       }
       final String[] immutable = new String[] {
-          "databaseProperty", "jdbcDriverProperty",
+          "databaseProperty",
+          "jdbcDriverProperty",
+          "schemaCrawlerInfo",
+          "schemaCrawlerHeaderInfo",
       };
       for (final String xmlElement: immutable)
       {
@@ -164,8 +203,6 @@ public final class XmlSerializedCatalog
       throw new SchemaCrawlerException("Could not load internal classes", e);
     }
   }
-
-  private static final long serialVersionUID = 5314326260124511414L;
 
   public XmlSerializedCatalog(final Catalog catalog)
   {
