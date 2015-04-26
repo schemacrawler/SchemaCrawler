@@ -26,11 +26,11 @@ import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import schemacrawler.schema.CrawlHeaderInfo;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.DatabaseProperty;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.JdbcDriverProperty;
-import schemacrawler.schema.SchemaCrawlerHeaderInfo;
 import schemacrawler.schema.SchemaCrawlerInfo;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputOptions;
@@ -179,10 +179,10 @@ public abstract class BaseJsonFormatter<O extends BaseTextOptions>
   }
 
   @Override
-  public void handle(final SchemaCrawlerHeaderInfo schemaCrawlerHeaderInfo)
+  public void handle(final CrawlHeaderInfo crawlHeaderInfo)
     throws SchemaCrawlerException
   {
-    if (options.isNoInfo() || schemaCrawlerHeaderInfo == null)
+    if (options.isNoInfo() || crawlHeaderInfo == null)
     {
       return;
     }
@@ -193,10 +193,9 @@ public abstract class BaseJsonFormatter<O extends BaseTextOptions>
       jsonRoot.put("schemaCrawlerHeaderInfo", jsonSchemaCrawlerHeaderInfo);
 
       jsonSchemaCrawlerHeaderInfo.put("crawlTimestamp",
-                                      formatTimestamp(schemaCrawlerHeaderInfo
+                                      formatTimestamp(crawlHeaderInfo
                                         .getCrawlTimestamp()));
-      jsonSchemaCrawlerHeaderInfo.put("title",
-                                      schemaCrawlerHeaderInfo.getTitle());
+      jsonSchemaCrawlerHeaderInfo.put("title", crawlHeaderInfo.getTitle());
     }
     catch (final JSONException e)
     {

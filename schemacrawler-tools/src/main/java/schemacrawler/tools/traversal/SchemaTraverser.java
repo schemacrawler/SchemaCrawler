@@ -64,7 +64,7 @@ public class SchemaTraverser
     handler.begin();
 
     handler.handleHeaderStart();
-    handler.handle(catalog.getSchemaCrawlerHeaderInfo());
+    handler.handle(catalog.getCrawlHeaderInfo());
     handler.handleHeaderEnd();
 
     final Collection<ColumnDataType> columnDataTypes = catalog

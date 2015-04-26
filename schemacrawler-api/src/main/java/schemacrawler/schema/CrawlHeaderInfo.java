@@ -3,7 +3,7 @@ package schemacrawler.schema;
 
 import java.time.LocalDateTime;
 
-public interface SchemaCrawlerHeaderInfo
+public interface CrawlHeaderInfo
 {
 
   /**
