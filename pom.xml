@@ -140,10 +140,14 @@
         <inherited>true</inherited>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.3</version>
+        <version>3.3</version>     
         <configuration>
           <source>8</source>
           <target>8</target>
+          <compilerArgs>
+            <arg>-Werror</arg>
+            <!-- <arg>-profile compact1</arg> -->
+          </compilerArgs>             
         </configuration>
       </plugin>
       <plugin>
