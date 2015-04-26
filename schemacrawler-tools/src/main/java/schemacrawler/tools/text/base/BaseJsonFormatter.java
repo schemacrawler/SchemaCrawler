@@ -23,9 +23,6 @@ package schemacrawler.tools.text.base;
 
 
 import java.util.Collection;
-import java.util.Map.Entry;
-import java.util.SortedMap;
-import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -33,6 +30,7 @@ import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.DatabaseProperty;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.JdbcDriverProperty;
+import schemacrawler.schema.SchemaCrawlerHeaderInfo;
 import schemacrawler.schema.SchemaCrawlerInfo;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputOptions;
@@ -101,7 +99,7 @@ public abstract class BaseJsonFormatter<O extends BaseTextOptions>
   @Override
   public void handle(final DatabaseInfo dbInfo)
   {
-    if (options.isNoInfo() || dbInfo == null)
+    if (!printVerboseDatabaseInfo || options.isNoInfo() || dbInfo == null)
     {
       return;
     }
@@ -142,7 +140,7 @@ public abstract class BaseJsonFormatter<O extends BaseTextOptions>
   @Override
   public void handle(final JdbcDriverInfo driverInfo)
   {
-    if (options.isNoInfo() || driverInfo == null)
+    if (!printVerboseDatabaseInfo || options.isNoInfo() || driverInfo == null)
     {
       return;
     }
@@ -161,7 +159,7 @@ public abstract class BaseJsonFormatter<O extends BaseTextOptions>
 
       final Collection<JdbcDriverProperty> jdbcDriverProperties = driverInfo
         .getDriverProperties();
-      if (printVerboseDatabaseInfo && jdbcDriverProperties.size() > 0)
+      if (jdbcDriverProperties.size() > 0)
       {
         final JSONArray jsonJdbcDriverProperties = new JSONArray();
         jsonDriverInfo.put("jdbcDriverProperties", jsonJdbcDriverProperties);
@@ -181,9 +179,38 @@ public abstract class BaseJsonFormatter<O extends BaseTextOptions>
   }
 
   @Override
+  public void handle(final SchemaCrawlerHeaderInfo schemaCrawlerHeaderInfo)
+    throws SchemaCrawlerException
+  {
+    if (options.isNoInfo() || schemaCrawlerHeaderInfo == null)
+    {
+      return;
+    }
+
+    try
+    {
+      final JSONObject jsonSchemaCrawlerHeaderInfo = new JSONObject();
+      jsonRoot.put("schemaCrawlerHeaderInfo", jsonSchemaCrawlerHeaderInfo);
+
+      jsonSchemaCrawlerHeaderInfo.put("crawlTimestamp",
+                                      formatTimestamp(schemaCrawlerHeaderInfo
+                                        .getCrawlTimestamp()));
+      jsonSchemaCrawlerHeaderInfo.put("title",
+                                      schemaCrawlerHeaderInfo.getTitle());
+    }
+    catch (final JSONException e)
+    {
+      LOGGER.log(Level.FINER,
+                 "Error outputting SchemaCrawlerHeaderInfo: " + e.getMessage(),
+                 e);
+    }
+  }
+
+  @Override
   public void handle(final SchemaCrawlerInfo schemaCrawlerInfo)
   {
-    if (options.isNoInfo() || schemaCrawlerInfo == null)
+    if (!printVerboseDatabaseInfo || options.isNoInfo()
+        || schemaCrawlerInfo == null)
     {
       return;
     }
@@ -197,23 +224,6 @@ public abstract class BaseJsonFormatter<O extends BaseTextOptions>
         .put("productName", schemaCrawlerInfo.getSchemaCrawlerProductName());
       jsonSchemaCrawlerInfo.put("productVersion",
                                 schemaCrawlerInfo.getSchemaCrawlerVersion());
-
-      if (printVerboseDatabaseInfo)
-      {
-        final SortedMap<String, String> systemProperties = new TreeMap<>(schemaCrawlerInfo
-          .getSystemProperties());
-        if (!systemProperties.isEmpty())
-        {
-          final JSONObject jsonSystemProperties = new JSONObject();
-          jsonSchemaCrawlerInfo.put("systemProperties", jsonSystemProperties);
-          for (final Entry<String, String> systemProperty: systemProperties
-            .entrySet())
-          {
-            jsonSystemProperties.put(systemProperty.getKey(),
-                                     systemProperty.getValue());
-          }
-        }
-      }
     }
     catch (final JSONException e)
     {
@@ -221,6 +231,18 @@ public abstract class BaseJsonFormatter<O extends BaseTextOptions>
                  "Error outputting SchemaCrawlerInfo: " + e.getMessage(),
                  e);
     }
+  }
+
+  @Override
+  public void handleHeaderEnd()
+    throws SchemaCrawlerException
+  {
+  }
+
+  @Override
+  public void handleHeaderStart()
+    throws SchemaCrawlerException
+  {
   }
 
   @Override

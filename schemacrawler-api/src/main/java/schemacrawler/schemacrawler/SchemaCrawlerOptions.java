@@ -21,6 +21,7 @@ package schemacrawler.schemacrawler;
 
 
 import static java.util.Objects.requireNonNull;
+import static sf.util.Utility.isBlank;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -44,31 +45,34 @@ public final class SchemaCrawlerOptions
 
   private SchemaInfoLevel schemaInfoLevel;
 
+  private String title;
+
   private InformationSchemaViews informationSchemaViews;
+
   private DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions;
 
   private InclusionRule schemaInclusionRule;
   private InclusionRule synonymInclusionRule;
-  private InclusionRule sequenceInclusionRule;
 
+  private InclusionRule sequenceInclusionRule;
   private Collection<String> tableTypes;
   private String tableNamePattern;
+
   private InclusionRule tableInclusionRule;
   private InclusionRule columnInclusionRule;
-
   private Collection<RoutineType> routineTypes;
   private InclusionRule routineInclusionRule;
-  private InclusionRule routineColumnInclusionRule;
 
+  private InclusionRule routineColumnInclusionRule;
   private InclusionRule grepColumnInclusionRule;
   private InclusionRule grepRoutineColumnInclusionRule;
+
   private InclusionRule grepDefinitionInclusionRule;
   private boolean grepInvertMatch;
   private boolean grepOnlyMatching;
-
   private boolean hideEmptyTables;
-
   private int childTableFilterDepth;
+
   private int parentTableFilterDepth;
 
   /**
@@ -270,6 +274,11 @@ public final class SchemaCrawlerOptions
     {
       return new HashSet<>(tableTypes);
     }
+  }
+
+  public String getTitle()
+  {
+    return isBlank(title)? "": title;
   }
 
   public boolean isGrepColumns()
@@ -627,6 +636,11 @@ public final class SchemaCrawlerOptions
     {
       tableTypes = null;
     }
+  }
+
+  public void setTitle(final String title)
+  {
+    this.title = title;
   }
 
   /**

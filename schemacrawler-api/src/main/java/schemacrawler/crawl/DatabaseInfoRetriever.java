@@ -309,11 +309,6 @@ final class DatabaseInfoRetriever
 
   }
 
-  void retrieveAdditionalSchemaCrawlerInfo()
-  {
-    catalog.getSchemaCrawlerInfo().setAdditionalSchemaCrawlerInfo();
-  }
-
   /**
    * Provides information on the database.
    *
@@ -355,11 +350,6 @@ final class DatabaseInfoRetriever
       driverInfo.setJdbcCompliant(jdbcDriver.jdbcCompliant());
     }
 
-  }
-
-  void retrieveSchemaCrawlerInfo()
-  {
-    catalog.getSchemaCrawlerInfo().setSchemaCrawlerInfo();
   }
 
   /**
@@ -495,6 +485,11 @@ final class DatabaseInfoRetriever
       }
     }
 
+  }
+
+  void retrieveSchemaCrawlerHeaderInfo(final String title)
+  {
+    catalog.setSchemaCrawlerHeaderInfo(title);
   }
 
 }

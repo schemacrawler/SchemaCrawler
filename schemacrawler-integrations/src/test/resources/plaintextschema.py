@@ -1,6 +1,4 @@
-print catalog.schemaCrawlerInfo
-print catalog.databaseInfo
-print catalog.jdbcDriverInfo
+print catalog.schemaCrawlerHeaderInfo
 
 for table in catalog.tables:
   print ''

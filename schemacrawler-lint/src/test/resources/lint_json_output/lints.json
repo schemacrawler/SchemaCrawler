@@ -1,9 +1,5 @@
 [
 {
-  "schemaCrawlerInfo": {
-    "productVersion": "12.06.03",
-    "productName": "SchemaCrawler"
-  },
   "table_lints": [
     {
       "lints": [{
@@ -169,11 +165,6 @@
       "type": "table"
     }
   ],
-  "databaseInfo": {
-    "databaseProductVersion": "2.3.2",
-    "databaseProductName": "HSQL Database Engine",
-    "databaseUserName": "SA"
-  },
   "database_lints": {"lints": [
       {
         "severity": "medium",
@@ -187,12 +178,5 @@
         "id": "schemacrawler.tools.linter.LinterTableCycles",
         "value": "true"
       }
-    ]},
-  "jdbcDriverInfo": {
-    "driverVersion": "2.3.2",
-    "isJDBCCompliant": "true",
-    "driverClassName": "org.hsqldb.jdbc.JDBCDriver",
-    "driverName": "HSQL Database Engine Driver",
-    "url": "jdbc:hsqldb:hsql://localhost/schemacrawler"
-  }
+    ]}
 }]
