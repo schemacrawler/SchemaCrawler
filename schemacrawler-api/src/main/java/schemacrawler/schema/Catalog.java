@@ -93,7 +93,7 @@ public interface Catalog
 
   SchemaCrawlerInfo getSchemaCrawlerInfo();
 
-  SchemaCrawlerHeaderInfo getSchemaCrawlerHeaderInfo();
+  CrawlHeaderInfo getCrawlHeaderInfo();
 
   /**
    * Gets the schemas.
