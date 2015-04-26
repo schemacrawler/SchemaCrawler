@@ -1,10 +1,5 @@
 [
-{
-  "schemaCrawlerInfo": {
-    "productVersion": "12.06.03",
-    "productName": "SchemaCrawler"
-  },
-  "data": [{
+{"data": [{
     "columnNames": [
       "TABLE_CAT",
       "TABLE_SCHEM",
@@ -1628,20 +1623,7 @@
         null
       ]
     ]
-  }],
-  "databaseInfo": {
-    "databaseProductVersion": "2.3.2",
-    "databaseProductName": "HSQL Database Engine",
-    "databaseUserName": "SA"
-  },
-  "jdbcDriverInfo": {
-    "driverVersion": "2.3.2",
-    "isJDBCCompliant": "true",
-    "driverClassName": "org.hsqldb.jdbc.JDBCDriver",
-    "driverName": "HSQL Database Engine Driver",
-    "url": "jdbc:hsqldb:hsql://localhost/schemacrawler"
-  }
-},
+  }]},
 {"data": [
     {
       "columnNames": [

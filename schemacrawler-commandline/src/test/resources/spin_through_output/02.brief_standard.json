@@ -1,9 +1,5 @@
 [
 {
-  "schemaCrawlerInfo": {
-    "productVersion": "12.06.03",
-    "productName": "SchemaCrawler"
-  },
   "tables": [
     {
       "foreignKeys": [{
@@ -711,10 +707,9 @@
       "primaryKey": {}
     }
   ],
-  "databaseInfo": {
-    "databaseProductVersion": "2.3.2",
-    "databaseProductName": "HSQL Database Engine",
-    "databaseUserName": "SA"
+  "schemaCrawlerHeaderInfo": {
+    "crawlTimestamp": "2015-04-25T12:30:59.425",
+    "title": ""
   },
   "routines": [
     {
@@ -815,12 +810,5 @@
       "returnType": "no result",
       "remarks": ""
     }
-  ],
-  "jdbcDriverInfo": {
-    "driverVersion": "2.3.2",
-    "isJDBCCompliant": "true",
-    "driverClassName": "org.hsqldb.jdbc.JDBCDriver",
-    "driverName": "HSQL Database Engine Driver",
-    "url": "jdbc:hsqldb:hsql://localhost/schemacrawler"
-  }
+  ]
 }]

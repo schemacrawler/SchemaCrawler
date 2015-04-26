@@ -1,8 +1,6 @@
 var printCatalog = function()
 {
-  print(catalog.schemaCrawlerInfo);
-  print(catalog.databaseInfo);
-  print(catalog.jdbcDriverInfo);
+  print(catalog.schemaCrawlerHeaderInfo);
   
   var schemas = catalog.schemas.toArray();
   for ( var i = 0; i < schemas.length; i++)

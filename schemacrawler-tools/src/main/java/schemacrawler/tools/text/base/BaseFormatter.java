@@ -6,6 +6,8 @@ import static sf.util.Utility.convertForComparison;
 import static sf.util.Utility.isLowerCase;
 
 import java.io.PrintWriter;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.DatabaseObject;
@@ -84,6 +86,11 @@ public abstract class BaseFormatter<O extends BaseTextOptions>
       return convertForComparison(dbObject.getName()) + "_"
              + Integer.toHexString(dbObject.getLookupKey().hashCode());
     }
+  }
+
+  protected String formatTimestamp(final TemporalAccessor timestamp)
+  {
+    return DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(timestamp);
   }
 
 }
