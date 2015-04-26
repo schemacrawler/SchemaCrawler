@@ -1,9 +1,5 @@
 # encoding: utf-8
-puts $catalog.schemaCrawlerInfo
-puts ''
-puts $catalog.databaseInfo
-puts ''
-puts $catalog.jdbcDriverInfo
+puts $catalog.schemaCrawlerHeaderInfo
 
 for table in $catalog.tables
   # $stderr.puts table.schema

@@ -4,203 +4,6 @@
     "productVersion": "12.06.03",
     "productName": "SchemaCrawler"
   },
-  "columnDataypes": [
-    {
-      "nullable": true,
-      "databaseSpecificTypeName": "BIGINT",
-      "userDefined": false,
-      "autoIncrementable": true,
-      "basedOn": "",
-      "searchable": "searchable except with where .. like"
-    },
-    {
-      "createParameters": "LENGTH",
-      "nullable": true,
-      "databaseSpecificTypeName": "BINARY",
-      "userDefined": false,
-      "autoIncrementable": false,
-      "basedOn": "",
-      "searchable": "searchable"
-    },
-    {
-      "createParameters": "LENGTH",
-      "nullable": true,
-      "databaseSpecificTypeName": "BIT",
-      "userDefined": false,
-      "autoIncrementable": false,
-      "basedOn": "",
-      "searchable": "searchable except with where .. like"
-    },
-    {
-      "createParameters": "LENGTH",
-      "nullable": true,
-      "databaseSpecificTypeName": "BLOB",
-      "userDefined": false,
-      "autoIncrementable": false,
-      "basedOn": "",
-      "searchable": "not searchable"
-    },
-    {
-      "nullable": true,
-      "databaseSpecificTypeName": "BOOLEAN",
-      "userDefined": false,
-      "autoIncrementable": false,
-      "basedOn": "",
-      "searchable": "searchable except with where .. like"
-    },
-    {
-      "createParameters": "LENGTH",
-      "nullable": true,
-      "databaseSpecificTypeName": "CHARACTER",
-      "userDefined": false,
-      "autoIncrementable": false,
-      "basedOn": "",
-      "searchable": "searchable"
-    },
-    {
-      "createParameters": "LENGTH",
-      "nullable": true,
-      "databaseSpecificTypeName": "CLOB",
-      "userDefined": false,
-      "autoIncrementable": false,
-      "basedOn": "",
-      "searchable": "not searchable"
-    },
-    {
-      "nullable": true,
-      "databaseSpecificTypeName": "DATE",
-      "userDefined": false,
-      "autoIncrementable": false,
-      "basedOn": "",
-      "searchable": "searchable except with where .. like"
-    },
-    {
-      "createParameters": "PRECISION,SCALE",
-      "nullable": true,
-      "databaseSpecificTypeName": "DECIMAL",
-      "userDefined": false,
-      "autoIncrementable": true,
-      "basedOn": "",
-      "searchable": "searchable except with where .. like"
-    },
-    {
-      "nullable": true,
-      "databaseSpecificTypeName": "DOUBLE",
-      "userDefined": false,
-      "autoIncrementable": false,
-      "basedOn": "",
-      "searchable": "searchable except with where .. like"
-    },
-    {
-      "nullable": true,
-      "databaseSpecificTypeName": "FLOAT",
-      "userDefined": false,
-      "autoIncrementable": false,
-      "basedOn": "",
-      "searchable": "searchable except with where .. like"
-    },
-    {
-      "nullable": true,
-      "databaseSpecificTypeName": "INTEGER",
-      "userDefined": false,
-      "autoIncrementable": true,
-      "basedOn": "",
-      "searchable": "searchable except with where .. like"
-    },
-    {
-      "createParameters": "PRECISION,SCALE",
-      "nullable": true,
-      "databaseSpecificTypeName": "NUMERIC",
-      "userDefined": false,
-      "autoIncrementable": true,
-      "basedOn": "",
-      "searchable": "searchable except with where .. like"
-    },
-    {
-      "createParameters": "LENGTH",
-      "nullable": true,
-      "databaseSpecificTypeName": "NVARCHAR",
-      "userDefined": false,
-      "autoIncrementable": false,
-      "basedOn": "",
-      "searchable": "searchable"
-    },
-    {
-      "nullable": true,
-      "databaseSpecificTypeName": "OTHER",
-      "userDefined": false,
-      "autoIncrementable": false,
-      "basedOn": "",
-      "searchable": "searchable except with where .. like"
-    },
-    {
-      "nullable": true,
-      "databaseSpecificTypeName": "REAL",
-      "userDefined": false,
-      "autoIncrementable": false,
-      "basedOn": "",
-      "searchable": "searchable except with where .. like"
-    },
-    {
-      "nullable": true,
-      "databaseSpecificTypeName": "SMALLINT",
-      "userDefined": false,
-      "autoIncrementable": true,
-      "basedOn": "",
-      "searchable": "searchable except with where .. like"
-    },
-    {
-      "nullable": true,
-      "databaseSpecificTypeName": "TIME",
-      "userDefined": false,
-      "autoIncrementable": false,
-      "basedOn": "",
-      "searchable": "searchable except with where .. like"
-    },
-    {
-      "nullable": true,
-      "databaseSpecificTypeName": "TIMESTAMP",
-      "userDefined": false,
-      "autoIncrementable": false,
-      "basedOn": "",
-      "searchable": "searchable except with where .. like"
-    },
-    {
-      "nullable": true,
-      "databaseSpecificTypeName": "TINYINT",
-      "userDefined": false,
-      "autoIncrementable": true,
-      "basedOn": "",
-      "searchable": "searchable except with where .. like"
-    },
-    {
-      "createParameters": "LENGTH",
-      "nullable": true,
-      "databaseSpecificTypeName": "VARBINARY",
-      "userDefined": false,
-      "autoIncrementable": false,
-      "basedOn": "",
-      "searchable": "searchable"
-    },
-    {
-      "createParameters": "LENGTH",
-      "nullable": true,
-      "databaseSpecificTypeName": "VARCHAR",
-      "userDefined": false,
-      "autoIncrementable": false,
-      "basedOn": "",
-      "searchable": "searchable"
-    },
-    {
-      "createParameters": "",
-      "nullable": false,
-      "databaseSpecificTypeName": "PUBLIC.BOOKS.CHARACTER VARYING",
-      "userDefined": false,
-      "autoIncrementable": false,
-      "basedOn": "",
-      "searchable": "unknown"
-    }
-  ],
   "tables": [
     {
       "weakAssociations": [],
@@ -2476,6 +2279,203 @@
       "primaryKey": {}
     }
   ],
+  "columnDataypes": [
+    {
+      "nullable": true,
+      "databaseSpecificTypeName": "BIGINT",
+      "userDefined": false,
+      "autoIncrementable": true,
+      "basedOn": "",
+      "searchable": "searchable except with where .. like"
+    },
+    {
+      "createParameters": "LENGTH",
+      "nullable": true,
+      "databaseSpecificTypeName": "BINARY",
+      "userDefined": false,
+      "autoIncrementable": false,
+      "basedOn": "",
+      "searchable": "searchable"
+    },
+    {
+      "createParameters": "LENGTH",
+      "nullable": true,
+      "databaseSpecificTypeName": "BIT",
+      "userDefined": false,
+      "autoIncrementable": false,
+      "basedOn": "",
+      "searchable": "searchable except with where .. like"
+    },
+    {
+      "createParameters": "LENGTH",
+      "nullable": true,
+      "databaseSpecificTypeName": "BLOB",
+      "userDefined": false,
+      "autoIncrementable": false,
+      "basedOn": "",
+      "searchable": "not searchable"
+    },
+    {
+      "nullable": true,
+      "databaseSpecificTypeName": "BOOLEAN",
+      "userDefined": false,
+      "autoIncrementable": false,
+      "basedOn": "",
+      "searchable": "searchable except with where .. like"
+    },
+    {
+      "createParameters": "LENGTH",
+      "nullable": true,
+      "databaseSpecificTypeName": "CHARACTER",
+      "userDefined": false,
+      "autoIncrementable": false,
+      "basedOn": "",
+      "searchable": "searchable"
+    },
+    {
+      "createParameters": "LENGTH",
+      "nullable": true,
+      "databaseSpecificTypeName": "CLOB",
+      "userDefined": false,
+      "autoIncrementable": false,
+      "basedOn": "",
+      "searchable": "not searchable"
+    },
+    {
+      "nullable": true,
+      "databaseSpecificTypeName": "DATE",
+      "userDefined": false,
+      "autoIncrementable": false,
+      "basedOn": "",
+      "searchable": "searchable except with where .. like"
+    },
+    {
+      "createParameters": "PRECISION,SCALE",
+      "nullable": true,
+      "databaseSpecificTypeName": "DECIMAL",
+      "userDefined": false,
+      "autoIncrementable": true,
+      "basedOn": "",
+      "searchable": "searchable except with where .. like"
+    },
+    {
+      "nullable": true,
+      "databaseSpecificTypeName": "DOUBLE",
+      "userDefined": false,
+      "autoIncrementable": false,
+      "basedOn": "",
+      "searchable": "searchable except with where .. like"
+    },
+    {
+      "nullable": true,
+      "databaseSpecificTypeName": "FLOAT",
+      "userDefined": false,
+      "autoIncrementable": false,
+      "basedOn": "",
+      "searchable": "searchable except with where .. like"
+    },
+    {
+      "nullable": true,
+      "databaseSpecificTypeName": "INTEGER",
+      "userDefined": false,
+      "autoIncrementable": true,
+      "basedOn": "",
+      "searchable": "searchable except with where .. like"
+    },
+    {
+      "createParameters": "PRECISION,SCALE",
+      "nullable": true,
+      "databaseSpecificTypeName": "NUMERIC",
+      "userDefined": false,
+      "autoIncrementable": true,
+      "basedOn": "",
+      "searchable": "searchable except with where .. like"
+    },
+    {
+      "createParameters": "LENGTH",
+      "nullable": true,
+      "databaseSpecificTypeName": "NVARCHAR",
+      "userDefined": false,
+      "autoIncrementable": false,
+      "basedOn": "",
+      "searchable": "searchable"
+    },
+    {
+      "nullable": true,
+      "databaseSpecificTypeName": "OTHER",
+      "userDefined": false,
+      "autoIncrementable": false,
+      "basedOn": "",
+      "searchable": "searchable except with where .. like"
+    },
+    {
+      "nullable": true,
+      "databaseSpecificTypeName": "REAL",
+      "userDefined": false,
+      "autoIncrementable": false,
+      "basedOn": "",
+      "searchable": "searchable except with where .. like"
+    },
+    {
+      "nullable": true,
+      "databaseSpecificTypeName": "SMALLINT",
+      "userDefined": false,
+      "autoIncrementable": true,
+      "basedOn": "",
+      "searchable": "searchable except with where .. like"
+    },
+    {
+      "nullable": true,
+      "databaseSpecificTypeName": "TIME",
+      "userDefined": false,
+      "autoIncrementable": false,
+      "basedOn": "",
+      "searchable": "searchable except with where .. like"
+    },
+    {
+      "nullable": true,
+      "databaseSpecificTypeName": "TIMESTAMP",
+      "userDefined": false,
+      "autoIncrementable": false,
+      "basedOn": "",
+      "searchable": "searchable except with where .. like"
+    },
+    {
+      "nullable": true,
+      "databaseSpecificTypeName": "TINYINT",
+      "userDefined": false,
+      "autoIncrementable": true,
+      "basedOn": "",
+      "searchable": "searchable except with where .. like"
+    },
+    {
+      "createParameters": "LENGTH",
+      "nullable": true,
+      "databaseSpecificTypeName": "VARBINARY",
+      "userDefined": false,
+      "autoIncrementable": false,
+      "basedOn": "",
+      "searchable": "searchable"
+    },
+    {
+      "createParameters": "LENGTH",
+      "nullable": true,
+      "databaseSpecificTypeName": "VARCHAR",
+      "userDefined": false,
+      "autoIncrementable": false,
+      "basedOn": "",
+      "searchable": "searchable"
+    },
+    {
+      "createParameters": "",
+      "nullable": false,
+      "databaseSpecificTypeName": "PUBLIC.BOOKS.CHARACTER VARYING",
+      "userDefined": false,
+      "autoIncrementable": false,
+      "basedOn": "",
+      "searchable": "unknown"
+    }
+  ],
   "databaseInfo": {
     "databaseProductVersion": "2.3.2",
     "databaseProductName": "HSQL Database Engine",
@@ -3451,6 +3451,10 @@
       }
     ],
     "databaseUserName": "SA"
+  },
+  "schemaCrawlerHeaderInfo": {
+    "crawlTimestamp": "2015-04-25T14:51:26.463",
+    "title": ""
   },
   "routines": [
     {

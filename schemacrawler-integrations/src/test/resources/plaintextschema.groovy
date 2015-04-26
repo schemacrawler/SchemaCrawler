@@ -1,6 +1,4 @@
-println catalog.schemaCrawlerInfo
-println catalog.databaseInfo
-println catalog.jdbcDriverInfo
+println catalog.schemaCrawlerHeaderInfo
 
 for (table in catalog.tables)
 {

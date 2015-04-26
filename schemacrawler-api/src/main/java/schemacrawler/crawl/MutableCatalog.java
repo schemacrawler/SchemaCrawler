@@ -40,6 +40,7 @@ import schemacrawler.schema.Reducer;
 import schemacrawler.schema.Reducible;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Schema;
+import schemacrawler.schema.SchemaCrawlerHeaderInfo;
 import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
@@ -70,8 +71,8 @@ final class MutableCatalog
     @Override
     public boolean test(final DatabaseObject databaseObject)
     {
-      return (databaseObject != null && databaseObject.getSchema()
-        .equals(schema));
+      return databaseObject != null
+             && databaseObject.getSchema().equals(schema);
     }
 
   }
@@ -79,7 +80,8 @@ final class MutableCatalog
   private static final long serialVersionUID = 4051323422934251828L;
   private final MutableDatabaseInfo databaseInfo;
   private final MutableJdbcDriverInfo jdbcDriverInfo;
-  private final MutableSchemaCrawlerInfo schemaCrawlerInfo;
+  private final ImmutableSchemaCrawlerInfo schemaCrawlerInfo;
+  private ImmutableSchemaCrawlerHeaderInfo schemaCrawlerHeaderInfo;
   private final Set<Schema> schemas;
   private final ColumnDataTypes columnDataTypes = new ColumnDataTypes();
   private final NamedObjectList<MutableTable> tables = new NamedObjectList<>();
@@ -93,7 +95,7 @@ final class MutableCatalog
     super(name);
     databaseInfo = new MutableDatabaseInfo();
     jdbcDriverInfo = new MutableJdbcDriverInfo();
-    schemaCrawlerInfo = new MutableSchemaCrawlerInfo();
+    schemaCrawlerInfo = new ImmutableSchemaCrawlerInfo();
     schemas = new HashSet<>();
   }
 
@@ -196,13 +198,19 @@ final class MutableCatalog
       .findFirst().orElse(null);
   }
 
+  @Override
+  public SchemaCrawlerHeaderInfo getSchemaCrawlerHeaderInfo()
+  {
+    return schemaCrawlerHeaderInfo;
+  }
+
   /**
    * {@inheritDoc}
    *
    * @see schemacrawler.schema.Catalog#getSchemaCrawlerInfo()
    */
   @Override
-  public MutableSchemaCrawlerInfo getSchemaCrawlerInfo()
+  public ImmutableSchemaCrawlerInfo getSchemaCrawlerInfo()
   {
     return schemaCrawlerInfo;
   }
@@ -449,6 +457,14 @@ final class MutableCatalog
   MutableColumnDataType lookupColumnDataTypeByType(final int type)
   {
     return columnDataTypes.lookupColumnDataTypeByType(type);
+  }
+
+  void setSchemaCrawlerHeaderInfo(final String title)
+  {
+    schemaCrawlerHeaderInfo = new ImmutableSchemaCrawlerHeaderInfo(schemaCrawlerInfo,
+                                                                   jdbcDriverInfo,
+                                                                   databaseInfo,
+                                                                   title);
   }
 
 }

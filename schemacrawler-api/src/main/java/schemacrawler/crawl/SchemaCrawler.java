@@ -138,51 +138,37 @@ public final class SchemaCrawler
       final DatabaseInfoRetriever retriever = new DatabaseInfoRetriever(retrieverConnection,
                                                                         catalog);
 
-      if (infoLevel.isRetrieveSchemaCrawlerInfo())
+      LOGGER.log(Level.INFO, "Retrieving SchemaCrawler information");
+
+      LOGGER.log(Level.INFO, "Retrieving database information");
+      retriever.retrieveDatabaseInfo();
+      if (infoLevel.isRetrieveAdditionalDatabaseInfo())
       {
-        LOGGER.log(Level.INFO, "Retrieving SchemaCrawler information");
-        retriever.retrieveSchemaCrawlerInfo();
-        if (infoLevel.isRetrieveAdditionalSchemaCrawlerInfo())
-        {
-          retriever.retrieveAdditionalSchemaCrawlerInfo();
-        }
+        retriever.retrieveAdditionalDatabaseInfo();
       }
       else
       {
         LOGGER
           .log(Level.INFO,
-               "Not retrieving SchemaCrawler information, since this was not requested");
+               "Not retrieving additional database information, since this was not requested");
       }
-      if (infoLevel.isRetrieveDatabaseInfo())
+
+      LOGGER.log(Level.INFO, "Retrieving JDBC driver information");
+      retriever.retrieveJdbcDriverInfo();
+      if (infoLevel.isRetrieveAdditionalJdbcDriverInfo())
       {
-        LOGGER.log(Level.INFO, "Retrieving database information");
-        retriever.retrieveDatabaseInfo();
-        if (infoLevel.isRetrieveAdditionalDatabaseInfo())
-        {
-          retriever.retrieveAdditionalDatabaseInfo();
-        }
+        retriever.retrieveAdditionalJdbcDriverInfo();
       }
       else
       {
         LOGGER
           .log(Level.INFO,
-               "Not retrieving database information, since this was not requested");
+               "Not retrieving additional JDBC driver information, since this was not requested");
       }
-      if (infoLevel.isRetrieveJdbcDriverInfo())
-      {
-        LOGGER.log(Level.INFO, "Retrieving JDBC driver information");
-        retriever.retrieveJdbcDriverInfo();
-        if (infoLevel.isRetrieveAdditionalJdbcDriverInfo())
-        {
-          retriever.retrieveAdditionalJdbcDriverInfo();
-        }
-      }
-      else
-      {
-        LOGGER
-          .log(Level.INFO,
-               "Not retrieving JDBC driver information, since this was not requested");
-      }
+
+      LOGGER.log(Level.INFO, "Retrieving SchemaCrawler header information");
+      retriever.retrieveSchemaCrawlerHeaderInfo(options.getTitle());
+
     }
     catch (final SQLException e)
     {
