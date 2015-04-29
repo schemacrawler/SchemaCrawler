@@ -102,7 +102,7 @@ public abstract class BaseDotFormatter<O extends BaseTextOptions>
     {
       row = new TableRow(TextOutputFormat.html);
       row.add(newTableCell("Title:", Alignment.right, false, Color.white, 1));
-      row.add(newTableCell(title, Alignment.left, false, Color.white, 1));
+      row.add(newTableCell(title, Alignment.left, true, Color.white, 1));
     }
 
     row = new TableRow(TextOutputFormat.html);

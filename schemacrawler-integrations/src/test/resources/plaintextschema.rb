@@ -1,5 +1,5 @@
 # encoding: utf-8
-puts $catalog.schemaCrawlerHeaderInfo
+puts $catalog.crawlHeaderInfo
 
 for table in $catalog.tables
   # $stderr.puts table.schema
