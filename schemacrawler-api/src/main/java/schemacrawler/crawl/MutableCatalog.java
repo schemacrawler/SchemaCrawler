@@ -34,13 +34,13 @@ import java.util.stream.Collectors;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ColumnDataType;
+import schemacrawler.schema.CrawlHeaderInfo;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Reducer;
 import schemacrawler.schema.Reducible;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Schema;
-import schemacrawler.schema.CrawlHeaderInfo;
 import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
@@ -462,9 +462,9 @@ final class MutableCatalog
   void setSchemaCrawlerHeaderInfo(final String title)
   {
     crawlHeaderInfo = new ImmutableCrawlHeaderInfo(schemaCrawlerInfo,
-                                                                   jdbcDriverInfo,
-                                                                   databaseInfo,
-                                                                   title);
+                                                   jdbcDriverInfo,
+                                                   databaseInfo,
+                                                   title);
   }
 
 }

@@ -182,7 +182,7 @@ public final class XmlSerializedCatalog
           "databaseProperty",
           "jdbcDriverProperty",
           "schemaCrawlerInfo",
-          "schemaCrawlerHeaderInfo",
+          "crawlHeaderInfo",
       };
       for (final String xmlElement: immutable)
       {

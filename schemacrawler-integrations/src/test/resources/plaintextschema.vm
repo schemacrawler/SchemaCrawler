@@ -1,6 +1,6 @@
 UTF-8: ¥ · £ · € · $ · ¢ · ₡ · ₢ · ₣ · ₤ · ₥ · ₦ · ₧ · ₨ · ₩ · ₪ · ₫ · ₭ · ₮ · ₯
 
-$catalog.schemaCrawlerHeaderInfo
+$catalog.crawlHeaderInfo
 
 #foreach($schema in $catalog.schemas)
 SET SCHEMA $schema.fullName;
