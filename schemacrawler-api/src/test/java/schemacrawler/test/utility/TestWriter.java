@@ -50,29 +50,6 @@ public class TestWriter
     this.isCompressed = isCompressed;
   }
 
-  private PrintWriter openOutputWriter(final Path tempFile,
-                                       final Charset charset,
-                                       final boolean isCompressed)
-    throws IOException
-  {
-    final OpenOption[] openOptions = new OpenOption[] {
-        WRITE, CREATE, TRUNCATE_EXISTING
-    };
-    final Writer writer;
-    if (isCompressed)
-    {
-      final OutputStream fileStream = newOutputStream(tempFile, openOptions);
-      writer = new OutputStreamWriter(new GZIPOutputStream(fileStream, true),
-                                      charset);
-    }
-    else
-    {
-      writer = newBufferedWriter(tempFile, charset, openOptions);
-    }
-
-    return new PrintWriter(writer);
-  }
-
   @Override
   public PrintWriter append(final char c)
   {
@@ -96,12 +73,7 @@ public class TestWriter
   public void assertEquals(final String referenceFile)
     throws Exception
   {
-    out.close();
-
-    final List<String> failures = compareOutput(requireNonNull(referenceFile),
-                                                tempFile,
-                                                outputformat,
-                                                isCompressed);
+    final List<String> failures = collectFailures(referenceFile);
     if (!failures.isEmpty())
     {
       fail(failures.toString());
@@ -120,6 +92,18 @@ public class TestWriter
     out.close();
 
     deleteIfExists(tempFile);
+  }
+
+  public List<String> collectFailures(final String referenceFile)
+    throws Exception
+  {
+    out.close();
+
+    final List<String> failures = compareOutput(requireNonNull(referenceFile),
+                                                tempFile,
+                                                outputformat,
+                                                isCompressed);
+    return failures;
   }
 
   @Override
@@ -298,6 +282,29 @@ public class TestWriter
   public void write(final String s, final int off, final int len)
   {
     out.write(s, off, len);
+  }
+
+  private PrintWriter openOutputWriter(final Path tempFile,
+                                       final Charset charset,
+                                       final boolean isCompressed)
+    throws IOException
+  {
+    final OpenOption[] openOptions = new OpenOption[] {
+        WRITE, CREATE, TRUNCATE_EXISTING
+    };
+    final Writer writer;
+    if (isCompressed)
+    {
+      final OutputStream fileStream = newOutputStream(tempFile, openOptions);
+      writer = new OutputStreamWriter(new GZIPOutputStream(fileStream, true),
+                                      charset);
+    }
+    else
+    {
+      writer = newBufferedWriter(tempFile, charset, openOptions);
+    }
+
+    return new PrintWriter(writer);
   }
 
 }

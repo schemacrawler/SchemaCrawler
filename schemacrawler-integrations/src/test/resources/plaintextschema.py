@@ -1,4 +1,4 @@
-print catalog.schemaCrawlerHeaderInfo
+print catalog.crawlHeaderInfo
 
 for table in catalog.tables:
   print ''

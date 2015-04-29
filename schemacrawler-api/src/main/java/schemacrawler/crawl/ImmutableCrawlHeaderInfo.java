@@ -26,9 +26,9 @@ import static java.util.Objects.requireNonNull;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import schemacrawler.schema.CrawlHeaderInfo;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.JdbcDriverInfo;
-import schemacrawler.schema.CrawlHeaderInfo;
 import schemacrawler.schema.SchemaCrawlerInfo;
 
 /**
@@ -47,9 +47,9 @@ final class ImmutableCrawlHeaderInfo
   private final LocalDateTime crawlTimestamp;
 
   ImmutableCrawlHeaderInfo(final SchemaCrawlerInfo schemaCrawlerInfo,
-                                   final JdbcDriverInfo jdbcDriverInfo,
-                                   final DatabaseInfo databaseInfo,
-                                   final String title)
+                           final JdbcDriverInfo jdbcDriverInfo,
+                           final DatabaseInfo databaseInfo,
+                           final String title)
   {
     requireNonNull(schemaCrawlerInfo);
     this.schemaCrawlerInfo = String.format("%s %s", schemaCrawlerInfo

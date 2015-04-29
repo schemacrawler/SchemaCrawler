@@ -1,4 +1,4 @@
-println catalog.schemaCrawlerHeaderInfo
+println catalog.crawlHeaderInfo
 
 for (table in catalog.tables)
 {
