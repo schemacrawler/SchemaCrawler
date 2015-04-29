@@ -326,6 +326,12 @@ public class SchemaCrawlerOptionsBuilder
     return this;
   }
 
+  public SchemaCrawlerOptionsBuilder title(final String title)
+  {
+    options.setTitle(title);
+    return this;
+  }
+
   @Override
   public Config toConfig()
   {

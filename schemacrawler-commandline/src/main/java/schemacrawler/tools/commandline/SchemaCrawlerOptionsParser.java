@@ -56,6 +56,7 @@ public final class SchemaCrawlerOptionsParser
   public SchemaCrawlerOptionsParser(final Config config)
   {
     super(config);
+    normalizeOptionName("title");
     normalizeOptionName("infolevel");
     normalizeOptionName("schemas");
     normalizeOptionName("tabletypes");
@@ -82,6 +83,12 @@ public final class SchemaCrawlerOptionsParser
   public SchemaCrawlerOptions getOptions()
     throws SchemaCrawlerException
   {
+    if (config.hasValue("title"))
+    {
+      optionsBuilder.title(config.getStringValue("title", ""));
+      consumeOption("title");
+    }
+
     if (config.hasValue("infolevel"))
     {
       final String infoLevel = config.getStringValue("infolevel", "standard");
