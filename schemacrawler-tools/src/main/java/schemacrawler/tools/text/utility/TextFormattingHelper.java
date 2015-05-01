@@ -35,10 +35,53 @@ public interface TextFormattingHelper
 
   enum DocumentHeaderType
   {
+    title
+    {
+      @Override
+      String getPrefix()
+      {
+        return "<p>&#160;</p>";
+      }
 
-    title,
-    subTitle,
-    section;
+      @Override
+      String getHeaderTag()
+      {
+        return "h1";
+      }
+    },
+    subTitle
+    {
+      @Override
+      String getPrefix()
+      {
+        return "<p>&#160;</p>";
+      }
+
+      @Override
+      String getHeaderTag()
+      {
+        return "h2";
+      }
+    },
+    section
+    {
+      @Override
+      String getPrefix()
+      {
+        return "";
+      }
+
+      @Override
+      String getHeaderTag()
+      {
+        return "h3";
+      }
+    };
+
+    abstract String getPrefix();
+
+    abstract String getHeaderTag();
+
   }
 
   /**

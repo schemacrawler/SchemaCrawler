@@ -487,7 +487,7 @@ final class SchemaTextFormatter
   }
 
   private void printColumnReferences(final boolean isForeignKey,
-                                     final String tableName,
+                                     final Table table,
                                      final BaseForeignKey<? extends ColumnReference> foreignKey)
   {
     final ForeignKeyCardinality fkCardinality = MetaDataUtility
@@ -502,7 +502,7 @@ final class SchemaTextFormatter
       fkColumn = columnReference.getForeignKeyColumn();
 
       boolean isIncoming = false;
-      if (pkColumn.getParent().getName().equals(tableName))
+      if (pkColumn.getParent().equals(table))
       {
         pkColumnName = pkColumn.getName();
         isIncoming = true;
@@ -515,7 +515,7 @@ final class SchemaTextFormatter
       {
         pkColumnName = pkColumn.getFullName();
       }
-      if (fkColumn.getParent().getName().equals(tableName))
+      if (fkColumn.getParent().equals(table))
       {
         fkColumnName = fkColumn.getName();
       }
@@ -609,8 +609,12 @@ final class SchemaTextFormatter
 
   private void printForeignKeys(final Table table)
   {
-    final String tableName = table.getName();
     final Collection<ForeignKey> foreignKeysCollection = table.getForeignKeys();
+    if (foreignKeysCollection.isEmpty())
+    {
+      return;
+    }
+
     final List<ForeignKey> foreignKeys = new ArrayList<>(foreignKeysCollection);
     Collections.sort(foreignKeys, NamedObjectSort.getNamedObjectSort(options
       .isAlphabeticalSortForForeignKeys()));
@@ -655,13 +659,18 @@ final class SchemaTextFormatter
         }
         final String fkDetails = "[foreign key" + ruleString + "]";
         out.println(formattingHelper.createNameRow(fkName, fkDetails));
-        printColumnReferences(true, tableName, foreignKey);
+        printColumnReferences(true, table, foreignKey);
       }
     }
   }
 
   private void printIndices(final Collection<Index> indicesCollection)
   {
+    if (indicesCollection.isEmpty())
+    {
+      return;
+    }
+
     final List<Index> indices = new ArrayList<>(indicesCollection);
     Collections.sort(indices, NamedObjectSort.getNamedObjectSort(options
       .isAlphabeticalSortForIndexes()));
@@ -727,6 +736,10 @@ final class SchemaTextFormatter
 
   private void printPrivileges(final Collection<Privilege<Table>> privileges)
   {
+    if (privileges.isEmpty())
+    {
+      return;
+    }
 
     for (final Privilege<Table> privilege: privileges)
     {
@@ -757,6 +770,10 @@ final class SchemaTextFormatter
 
   private void printRoutineColumns(final List<? extends RoutineColumn<?>> columns)
   {
+    if (columns.isEmpty())
+    {
+      return;
+    }
 
     Collections.sort(columns, NamedObjectSort.getNamedObjectSort(options
       .isAlphabeticalSortForRoutineColumns()));
@@ -812,6 +829,10 @@ final class SchemaTextFormatter
 
   private void printTableColumns(final List<? extends Column> columns)
   {
+    if (columns.isEmpty())
+    {
+      return;
+    }
 
     Collections.sort(columns, NamedObjectSort.getNamedObjectSort(options
       .isAlphabeticalSortForTableColumns()));
@@ -876,6 +897,11 @@ final class SchemaTextFormatter
   private void printTableConstraints(final Collection<TableConstraint> constraintsCollection)
   {
     final List<TableConstraint> constraints = new ArrayList<>(constraintsCollection);
+    if (constraints.isEmpty())
+    {
+      return;
+    }
+
     Collections.sort(constraints, NamedObjectSort.getNamedObjectSort(options
       .isAlphabeticalSortForIndexes()));
 
@@ -924,6 +950,11 @@ final class SchemaTextFormatter
 
   private void printTriggers(final Collection<Trigger> triggers)
   {
+    if (triggers.isEmpty())
+    {
+      return;
+    }
+
     for (final Trigger trigger: triggers)
     {
       if (trigger != null)
@@ -978,9 +1009,13 @@ final class SchemaTextFormatter
 
   private void printWeakAssociations(final Table table)
   {
-    final String tableName = table.getName();
     final Collection<WeakAssociationForeignKey> weakAssociationsCollection = WeakAssociationsUtility
       .getWeakAssociations(table);
+    if (weakAssociationsCollection.isEmpty())
+    {
+      return;
+    }
+
     final List<WeakAssociationForeignKey> weakAssociations = new ArrayList<>(weakAssociationsCollection);
     Collections.sort(weakAssociations);
     for (final WeakAssociationForeignKey weakFk: weakAssociations)
@@ -991,7 +1026,7 @@ final class SchemaTextFormatter
 
         final String fkDetails = "[weak association]";
         out.println(formattingHelper.createNameRow("", fkDetails));
-        printColumnReferences(false, tableName, weakFk);
+        printColumnReferences(false, table, weakFk);
       }
     }
   }
