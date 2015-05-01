@@ -19,12 +19,12 @@ package schemacrawler.test;
 
 
 import static org.junit.Assert.assertEquals;
-import static schemacrawler.test.utility.TestUtility.currentMethodFullName;
 import static schemacrawler.utility.MetaDataUtility.findForeignKeyCardinality;
 
 import java.util.Arrays;
 import java.util.Collection;
 
+import org.junit.Rule;
 import org.junit.Test;
 
 import schemacrawler.schema.Catalog;
@@ -34,6 +34,7 @@ import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.test.utility.BaseDatabaseTest;
+import schemacrawler.test.utility.TestName;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.analysis.associations.CatalogWithAssociations;
 import schemacrawler.tools.analysis.associations.WeakAssociation;
@@ -44,6 +45,9 @@ import schemacrawler.utility.NamedObjectSort;
 public class WeakAssociationsTest
   extends BaseDatabaseTest
 {
+
+  @Rule
+  public TestName testName = new TestName();
 
   @Test
   public void weakAssociations()
@@ -75,7 +79,7 @@ public class WeakAssociationsTest
           {
             out.println(String.format("    weak association (1 to %s):",
                                       findForeignKeyCardinality(weakFk)));
-            for (WeakAssociation weakAssociation: weakFk)
+            for (final WeakAssociation weakAssociation: weakFk)
             {
               out.println(String.format("      column reference: %s",
                                         weakAssociation));
@@ -84,8 +88,7 @@ public class WeakAssociationsTest
         }
       }
 
-      out.assertEquals(currentMethodFullName());
+      out.assertEquals(testName.currentMethodFullName());
     }
   }
-
 }
