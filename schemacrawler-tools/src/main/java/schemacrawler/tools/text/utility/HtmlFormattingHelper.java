@@ -86,42 +86,13 @@ public final class HtmlFormattingHelper
   @Override
   public String createHeader(final DocumentHeaderType type, final String header)
   {
-    if (!isBlank(header))
+    if (!isBlank(header) && type != null)
     {
-      final String prefix;
-      final String headerTag;
-      if (type == null)
-      {
-        prefix = "<p>&#160;</p>";
-        headerTag = "h2";
-      }
-      else
-      {
-        switch (type)
-        {
-          case title:
-            prefix = "<p>&#160;</p>";
-            headerTag = "h1";
-            break;
-          case subTitle:
-            prefix = "<p>&#160;</p>";
-            headerTag = "h2";
-            break;
-          case section:
-            prefix = "";
-            headerTag = "h3";
-            break;
-          default:
-            prefix = "<p>&#160;</p>";
-            headerTag = "h2";
-            break;
-        }
-      }
       return String.format("%s%n<%s>%s</%s>%n",
-                           prefix,
-                           headerTag,
+                           type.getPrefix(),
+                           type.getHeaderTag(),
                            header,
-                           headerTag);
+                           type.getHeaderTag());
     }
     else
     {
