@@ -36,9 +36,9 @@ import java.util.Map;
 import java.util.Properties;
 
 import org.junit.BeforeClass;
-import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.JUnitCore;
+import org.junit.rules.TestRule;
 
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.Config;
@@ -46,15 +46,12 @@ import schemacrawler.tools.integration.graph.GraphOutputFormat;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
 
-@Ignore
 public class SiteSnapshotVariations
   extends BaseDatabaseTest
 {
 
-  public static void main(final String[] args)
-  {
-    JUnitCore.main(SiteSnapshotVariations.class.getCanonicalName());
-  }
+  @Rule
+  public TestRule rule = new SiteVariationsGenerationRule();
 
   @BeforeClass
   public static void setupDirectory()

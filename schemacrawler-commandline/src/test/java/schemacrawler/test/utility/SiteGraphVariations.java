@@ -37,22 +37,19 @@ import java.util.Map;
 import java.util.Properties;
 
 import org.junit.BeforeClass;
-import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.JUnitCore;
+import org.junit.rules.TestRule;
 
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.Config;
 
-@Ignore
 public class SiteGraphVariations
   extends BaseDatabaseTest
 {
 
-  public static void main(final String[] args)
-  {
-    JUnitCore.main(SiteGraphVariations.class.getCanonicalName());
-  }
+  @Rule
+  public TestRule rule = new SiteVariationsGenerationRule();
 
   @BeforeClass
   public static void setupDirectory()
