@@ -25,7 +25,6 @@ package schemacrawler.tools.integration.graph;
 import static java.nio.file.Files.copy;
 import static java.nio.file.Files.createDirectories;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
-import static schemacrawler.test.utility.TestUtility.currentMethodName;
 import static schemacrawler.test.utility.TestUtility.validateDiagram;
 
 import java.io.IOException;
@@ -34,12 +33,14 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.junit.BeforeClass;
+import org.junit.Rule;
 import org.junit.Test;
 
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.test.utility.BaseExecutableTest;
+import schemacrawler.test.utility.TestName;
 import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
@@ -47,6 +48,10 @@ import schemacrawler.tools.text.schema.SchemaTextDetailType;
 public class GraphExecutableOptionsTest
   extends BaseExecutableTest
 {
+
+  private static final String GRAPH_OPTIONS_OUTPUT = "graph_options_output/";
+
+  private static Path directory;
 
   @BeforeClass
   public static void setupDirectory()
@@ -62,9 +67,8 @@ public class GraphExecutableOptionsTest
     createDirectories(directory);
   }
 
-  private static final String GRAPH_OPTIONS_OUTPUT = "graph_options_output/";
-
-  private static Path directory;
+  @Rule
+  public TestName testName = new TestName();
 
   @Test
   public void executableForGraph_00()
@@ -75,7 +79,9 @@ public class GraphExecutableOptionsTest
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
     final GraphOptions graphOptions = new GraphOptions();
 
-    executableGraph(schemaCrawlerOptions, graphOptions, currentMethodName());
+    executableGraph(schemaCrawlerOptions,
+                    graphOptions,
+                    testName.currentMethodName());
   }
 
   @Test
@@ -88,7 +94,7 @@ public class GraphExecutableOptionsTest
 
     executableGraph(new SchemaCrawlerOptions(),
                     graphOptions,
-                    currentMethodName());
+                    testName.currentMethodName());
   }
 
   @Test
@@ -100,7 +106,7 @@ public class GraphExecutableOptionsTest
 
     executableGraph(new SchemaCrawlerOptions(),
                     graphOptions,
-                    currentMethodName());
+                    testName.currentMethodName());
   }
 
   @Test
@@ -112,7 +118,7 @@ public class GraphExecutableOptionsTest
 
     executableGraph(new SchemaCrawlerOptions(),
                     graphOptions,
-                    currentMethodName());
+                    testName.currentMethodName());
   }
 
   @Test
@@ -124,7 +130,7 @@ public class GraphExecutableOptionsTest
 
     executableGraph(new SchemaCrawlerOptions(),
                     graphOptions,
-                    currentMethodName());
+                    testName.currentMethodName());
   }
 
   @Test
@@ -136,7 +142,9 @@ public class GraphExecutableOptionsTest
       .setTableInclusionRule(new RegularExpressionInclusionRule(".*BOOKS"));
     final GraphOptions graphOptions = new GraphOptions();
 
-    executableGraph(schemaCrawlerOptions, graphOptions, currentMethodName());
+    executableGraph(schemaCrawlerOptions,
+                    graphOptions,
+                    testName.currentMethodName());
   }
 
   @Test
@@ -148,7 +156,9 @@ public class GraphExecutableOptionsTest
     final GraphOptions graphOptions = new GraphOptions();
     graphOptions.setSchemaTextDetailType(SchemaTextDetailType.brief);
 
-    executableGraph(schemaCrawlerOptions, graphOptions, currentMethodName());
+    executableGraph(schemaCrawlerOptions,
+                    graphOptions,
+                    testName.currentMethodName());
   }
 
   @Test
@@ -160,7 +170,9 @@ public class GraphExecutableOptionsTest
     final GraphOptions graphOptions = new GraphOptions();
     graphOptions.setSchemaTextDetailType(SchemaTextDetailType.schema);
 
-    executableGraph(schemaCrawlerOptions, graphOptions, currentMethodName());
+    executableGraph(schemaCrawlerOptions,
+                    graphOptions,
+                    testName.currentMethodName());
   }
 
   @Test
@@ -175,7 +187,9 @@ public class GraphExecutableOptionsTest
     graphOptions.setShowUnqualifiedNames(true);
     graphOptions.setHideForeignKeyNames(true);
 
-    executableGraph(schemaCrawlerOptions, graphOptions, currentMethodName());
+    executableGraph(schemaCrawlerOptions,
+                    graphOptions,
+                    testName.currentMethodName());
   }
 
   @Test
@@ -191,7 +205,9 @@ public class GraphExecutableOptionsTest
     graphOptions.setShowUnqualifiedNames(true);
     graphOptions.setHideForeignKeyNames(true);
 
-    executableGraph(schemaCrawlerOptions, graphOptions, currentMethodName());
+    executableGraph(schemaCrawlerOptions,
+                    graphOptions,
+                    testName.currentMethodName());
   }
 
   @Test
@@ -204,7 +220,9 @@ public class GraphExecutableOptionsTest
 
     final GraphOptions graphOptions = new GraphOptions();
 
-    executableGraph(schemaCrawlerOptions, graphOptions, currentMethodName());
+    executableGraph(schemaCrawlerOptions,
+                    graphOptions,
+                    testName.currentMethodName());
   }
 
   @Test
@@ -218,7 +236,9 @@ public class GraphExecutableOptionsTest
 
     final GraphOptions graphOptions = new GraphOptions();
 
-    executableGraph(schemaCrawlerOptions, graphOptions, currentMethodName());
+    executableGraph(schemaCrawlerOptions,
+                    graphOptions,
+                    testName.currentMethodName());
   }
 
   private void executableGraph(final SchemaCrawlerOptions schemaCrawlerOptions,

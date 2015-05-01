@@ -24,7 +24,6 @@ package schemacrawler.test.utility;
 import static java.nio.file.Files.createTempFile;
 import static java.nio.file.Files.deleteIfExists;
 import static java.nio.file.Files.newBufferedWriter;
-import static schemacrawler.test.utility.TestUtility.currentMethodName;
 import static sf.util.commandlineparser.CommandLineUtility.flattenCommandlineArgs;
 
 import java.io.IOException;
@@ -48,8 +47,7 @@ public class SiteGraphVariations
   extends BaseDatabaseTest
 {
 
-  @Rule
-  public TestRule rule = new SiteVariationsGenerationRule();
+  private static Path directory;
 
   @BeforeClass
   public static void setupDirectory()
@@ -63,7 +61,11 @@ public class SiteGraphVariations
       .normalize().toAbsolutePath();
   }
 
-  private static Path directory;
+  @Rule
+  public TestRule rule = new SiteVariationsGenerationRule();
+
+  @Rule
+  public TestName testName = new TestName();
 
   @Test
   public void diagram()
@@ -74,7 +76,7 @@ public class SiteGraphVariations
 
     final Map<String, String> config = new HashMap<>();
 
-    run(args, config, directory.resolve(currentMethodName() + ".png"));
+    run(args, config, directory.resolve(testName.currentMethodName() + ".png"));
   }
 
   @Test
@@ -87,7 +89,7 @@ public class SiteGraphVariations
 
     final Map<String, String> config = new HashMap<>();
 
-    run(args, config, directory.resolve(currentMethodName() + ".png"));
+    run(args, config, directory.resolve(testName.currentMethodName() + ".png"));
   }
 
   @Test
@@ -101,7 +103,7 @@ public class SiteGraphVariations
 
     final Map<String, String> config = new HashMap<>();
 
-    run(args, config, directory.resolve(currentMethodName() + ".png"));
+    run(args, config, directory.resolve(testName.currentMethodName() + ".png"));
   }
 
   @Test
@@ -115,7 +117,7 @@ public class SiteGraphVariations
     final Map<String, String> config = new HashMap<>();
     config.put("schemacrawler.format.show_ordinal_numbers", "true");
 
-    run(args, config, directory.resolve(currentMethodName() + ".png"));
+    run(args, config, directory.resolve(testName.currentMethodName() + ".png"));
   }
 
   @Test
@@ -129,7 +131,7 @@ public class SiteGraphVariations
 
     final Map<String, String> config = new HashMap<>();
 
-    run(args, config, directory.resolve(currentMethodName() + ".png"));
+    run(args, config, directory.resolve(testName.currentMethodName() + ".png"));
   }
 
   @Test
@@ -144,7 +146,7 @@ public class SiteGraphVariations
 
     final Map<String, String> config = new HashMap<>();
 
-    run(args, config, directory.resolve(currentMethodName() + ".png"));
+    run(args, config, directory.resolve(testName.currentMethodName() + ".png"));
   }
 
   @Test
@@ -160,7 +162,7 @@ public class SiteGraphVariations
 
     final Map<String, String> config = new HashMap<>();
 
-    run(args, config, directory.resolve(currentMethodName() + ".png"));
+    run(args, config, directory.resolve(testName.currentMethodName() + ".png"));
   }
 
   @Test
@@ -175,7 +177,7 @@ public class SiteGraphVariations
     config.put("schemacrawler.graph.show.primarykey.cardinality", "false");
     config.put("schemacrawler.graph.show.foreignkey.cardinality", "false");
 
-    run(args, config, directory.resolve(currentMethodName() + ".png"));
+    run(args, config, directory.resolve(testName.currentMethodName() + ".png"));
   }
 
   private Path createConfig(final Map<String, String> config)

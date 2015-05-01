@@ -24,7 +24,6 @@ package schemacrawler.test.utility;
 import static java.nio.file.Files.createTempFile;
 import static java.nio.file.Files.deleteIfExists;
 import static java.nio.file.Files.newBufferedWriter;
-import static schemacrawler.test.utility.TestUtility.currentMethodName;
 import static sf.util.commandlineparser.CommandLineUtility.flattenCommandlineArgs;
 
 import java.io.IOException;
@@ -48,8 +47,7 @@ public class SiteHTMLVariations
   extends BaseDatabaseTest
 {
 
-  @Rule
-  public TestRule rule = new SiteVariationsGenerationRule();
+  private static Path directory;
 
   @BeforeClass
   public static void setupDirectory()
@@ -63,7 +61,11 @@ public class SiteHTMLVariations
       .normalize().toAbsolutePath();
   }
 
-  private static Path directory;
+  @Rule
+  public TestRule rule = new SiteVariationsGenerationRule();
+
+  @Rule
+  public TestName testName = new TestName();
 
   @Test
   public void html()
@@ -74,7 +76,7 @@ public class SiteHTMLVariations
 
     final Map<String, String> config = new HashMap<>();
 
-    run(args, config, directory.resolve(currentMethodName() + ".html"));
+    run(args, config, directory.resolve(testName.currentMethodName() + ".html"));
   }
 
   @Test
@@ -87,7 +89,7 @@ public class SiteHTMLVariations
 
     final Map<String, String> config = new HashMap<>();
 
-    run(args, config, directory.resolve(currentMethodName() + ".html"));
+    run(args, config, directory.resolve(testName.currentMethodName() + ".html"));
   }
 
   @Test
@@ -101,7 +103,7 @@ public class SiteHTMLVariations
 
     final Map<String, String> config = new HashMap<>();
 
-    run(args, config, directory.resolve(currentMethodName() + ".html"));
+    run(args, config, directory.resolve(testName.currentMethodName() + ".html"));
   }
 
   @Test
@@ -115,7 +117,7 @@ public class SiteHTMLVariations
     final Map<String, String> config = new HashMap<>();
     config.put("schemacrawler.format.show_ordinal_numbers", "true");
 
-    run(args, config, directory.resolve(currentMethodName() + ".html"));
+    run(args, config, directory.resolve(testName.currentMethodName() + ".html"));
   }
 
   @Test
@@ -129,7 +131,7 @@ public class SiteHTMLVariations
 
     final Map<String, String> config = new HashMap<>();
 
-    run(args, config, directory.resolve(currentMethodName() + ".html"));
+    run(args, config, directory.resolve(testName.currentMethodName() + ".html"));
   }
 
   @Test
@@ -144,7 +146,7 @@ public class SiteHTMLVariations
 
     final Map<String, String> config = new HashMap<>();
 
-    run(args, config, directory.resolve(currentMethodName() + ".html"));
+    run(args, config, directory.resolve(testName.currentMethodName() + ".html"));
   }
 
   @Test
@@ -160,7 +162,7 @@ public class SiteHTMLVariations
 
     final Map<String, String> config = new HashMap<>();
 
-    run(args, config, directory.resolve(currentMethodName() + ".html"));
+    run(args, config, directory.resolve(testName.currentMethodName() + ".html"));
   }
 
   private Path createConfig(final Map<String, String> config)
