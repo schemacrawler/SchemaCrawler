@@ -49,6 +49,10 @@
 
 --- Output Options ---
 
+-title=<title>
+  Shows the title text as the title on the output
+  Optional, defaults to no title being shown
+
 -noinfo=<boolean>
   Hides database information
   <boolean> can be true or false
