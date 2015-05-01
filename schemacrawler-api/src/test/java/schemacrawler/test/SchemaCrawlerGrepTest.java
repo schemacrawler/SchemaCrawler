@@ -23,6 +23,7 @@ import static org.junit.Assert.assertNotNull;
 
 import java.util.Arrays;
 
+import org.junit.Rule;
 import org.junit.Test;
 
 import schemacrawler.schema.Catalog;
@@ -34,12 +35,15 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseDatabaseTest;
-import schemacrawler.test.utility.TestUtility;
+import schemacrawler.test.utility.TestName;
 import schemacrawler.test.utility.TestWriter;
 
 public class SchemaCrawlerGrepTest
   extends BaseDatabaseTest
 {
+
+  @Rule
+  public TestName testName = new TestName();
 
   @Test
   public void grepColumns()
@@ -70,7 +74,7 @@ public class SchemaCrawlerGrepTest
         }
       }
 
-      out.assertEquals(TestUtility.currentMethodFullName());
+      out.assertEquals(testName.currentMethodFullName());
     }
   }
 
@@ -139,7 +143,7 @@ public class SchemaCrawlerGrepTest
         }
       }
 
-      out.assertEquals(TestUtility.currentMethodFullName());
+      out.assertEquals(testName.currentMethodFullName());
     }
   }
 
@@ -172,7 +176,7 @@ public class SchemaCrawlerGrepTest
         }
       }
 
-      out.assertEquals(TestUtility.currentMethodFullName());
+      out.assertEquals(testName.currentMethodFullName());
     }
   }
 
@@ -206,7 +210,7 @@ public class SchemaCrawlerGrepTest
         }
       }
 
-      out.assertEquals(TestUtility.currentMethodFullName());
+      out.assertEquals(testName.currentMethodFullName());
     }
 
   }

@@ -25,11 +25,12 @@ import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
 
-public class SiteVariationsGenerationRule
+public class TestName
   implements TestRule
 {
 
-  private static final boolean GENERATE_SITE = false;
+  private String currentMethodFullName;
+  private String currentMethodName;
 
   @Override
   public Statement apply(final Statement base, final Description description)
@@ -40,12 +41,23 @@ public class SiteVariationsGenerationRule
       public void evaluate()
         throws Throwable
       {
-        if (GENERATE_SITE)
-        {
-          base.evaluate();
-        }
+        currentMethodName = description.getMethodName();
+        currentMethodFullName = description.getTestClass().getSimpleName()
+                                + "." + currentMethodName;
+
+        base.evaluate();
       }
     };
+  }
+
+  public String currentMethodFullName()
+  {
+    return currentMethodFullName;
+  }
+
+  public String currentMethodName()
+  {
+    return currentMethodName;
   }
 
 }

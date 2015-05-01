@@ -23,7 +23,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-import static schemacrawler.test.utility.TestUtility.currentMethodFullName;
 
 import java.util.Arrays;
 import java.util.Map.Entry;
@@ -31,6 +30,7 @@ import java.util.Random;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import org.junit.Rule;
 import org.junit.Test;
 
 import schemacrawler.schema.Catalog;
@@ -55,6 +55,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.test.utility.BaseDatabaseTest;
+import schemacrawler.test.utility.TestName;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.utility.NamedObjectSort;
 import sf.util.Utility;
@@ -64,6 +65,9 @@ public class SchemaCrawlerTest
 {
 
   private static final String METADATA_OUTPUT = "metadata/";
+
+  @Rule
+  public TestName testName = new TestName();
 
   @Test
   public void columnLookup()
@@ -125,7 +129,7 @@ public class SchemaCrawlerTest
         }
       }
 
-      out.assertEquals(currentMethodFullName());
+      out.assertEquals(testName.currentMethodFullName());
     }
   }
 
@@ -154,7 +158,7 @@ public class SchemaCrawlerTest
                     + table.getRelatedTables(TableRelationshipType.parent));
       }
 
-      out.assertEquals(currentMethodFullName());
+      out.assertEquals(testName.currentMethodFullName());
     }
   }
 
@@ -183,7 +187,7 @@ public class SchemaCrawlerTest
                     + table.getRelatedTables(TableRelationshipType.parent));
       }
 
-      out.assertEquals(currentMethodFullName());
+      out.assertEquals(testName.currentMethodFullName());
     }
   }
 
@@ -277,7 +281,7 @@ public class SchemaCrawlerTest
         out.println("  cycle?: " + sequence.isCycle());
       }
 
-      out.assertEquals(currentMethodFullName());
+      out.assertEquals(testName.currentMethodFullName());
     }
   }
 
@@ -335,7 +339,7 @@ public class SchemaCrawlerTest
                     + synonym.getReferencedObject().getClass().getSimpleName());
       }
 
-      out.assertEquals(currentMethodFullName());
+      out.assertEquals(testName.currentMethodFullName());
     }
   }
 
@@ -374,7 +378,7 @@ public class SchemaCrawlerTest
         }
       }
 
-      out.assertEquals(currentMethodFullName());
+      out.assertEquals(testName.currentMethodFullName());
     }
   }
 

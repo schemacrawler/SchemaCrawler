@@ -19,10 +19,10 @@ package schemacrawler.test;
 
 
 import static org.junit.Assert.assertEquals;
-import static schemacrawler.test.utility.TestUtility.currentMethodFullName;
 
 import java.util.Arrays;
 
+import org.junit.Rule;
 import org.junit.Test;
 
 import schemacrawler.schema.Catalog;
@@ -32,6 +32,7 @@ import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.test.utility.BaseDatabaseTest;
+import schemacrawler.test.utility.TestName;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.analysis.counts.CatalogWithCounts;
 import schemacrawler.tools.analysis.counts.CountsUtility;
@@ -40,6 +41,9 @@ import schemacrawler.utility.NamedObjectSort;
 public class TableCountsTest
   extends BaseDatabaseTest
 {
+
+  @Rule
+  public TestName testName = new TestName();
 
   @Test
   public void tableCounts()
@@ -72,7 +76,7 @@ public class TableCountsTest
         }
       }
 
-      out.assertEquals(currentMethodFullName());
+      out.assertEquals(testName.currentMethodFullName());
     }
   }
 

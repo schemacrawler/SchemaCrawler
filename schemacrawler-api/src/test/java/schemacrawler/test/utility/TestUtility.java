@@ -132,20 +132,6 @@ public final class TestUtility
     return testOutputTempFilePath;
   }
 
-  public static String currentMethodFullName()
-  {
-    final StackTraceElement ste = currentMethodStackTraceElement();
-    final String className = ste.getClassName();
-    return className.substring(className.lastIndexOf('.') + 1) + "."
-           + ste.getMethodName();
-  }
-
-  public static String currentMethodName()
-  {
-    final StackTraceElement ste = currentMethodStackTraceElement();
-    return ste.getMethodName();
-  }
-
   public static Reader readerForResource(final String resource,
                                          final Charset encoding)
     throws IOException

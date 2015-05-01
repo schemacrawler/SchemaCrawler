@@ -20,13 +20,13 @@ package schemacrawler.integration.test;
 
 import static org.junit.Assert.assertEquals;
 import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
-import static schemacrawler.test.utility.TestUtility.currentMethodFullName;
 import static schemacrawler.utility.MetaDataUtility.findForeignKeyCardinality;
 
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Collection;
 
+import org.junit.Rule;
 import org.junit.Test;
 
 import schemacrawler.schema.Catalog;
@@ -37,6 +37,7 @@ import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.test.utility.BaseDatabaseTest;
+import schemacrawler.test.utility.TestName;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.analysis.associations.CatalogWithAssociations;
 import schemacrawler.tools.analysis.associations.WeakAssociation;
@@ -50,28 +51,32 @@ public class PrimaryKeyWeakAssociationsTest
   extends BaseDatabaseTest
 {
 
+  @Rule
+  public TestName testName = new TestName();
+
   @Test
   public void weakAssociations1()
     throws Exception
   {
-    weakAssociations(currentMethodFullName(), "/pk_test_1.db");
+    weakAssociations(testName.currentMethodFullName(), "/pk_test_1.db");
   }
 
   @Test
   public void weakAssociations2()
     throws Exception
   {
-    weakAssociations(currentMethodFullName(), "/pk_test_2.db");
+    weakAssociations(testName.currentMethodFullName(), "/pk_test_2.db");
   }
 
   @Test
   public void weakAssociations3()
     throws Exception
   {
-    weakAssociations(currentMethodFullName(), "/pk_test_3.db");
+    weakAssociations(testName.currentMethodFullName(), "/pk_test_3.db");
   }
 
-  private void weakAssociations(String currentMethodFullName, String database)
+  private void weakAssociations(final String currentMethodFullName,
+                                final String database)
     throws Exception
   {
     final Path sqliteDbFile = copyResourceToTempFile(database);
@@ -84,7 +89,7 @@ public class PrimaryKeyWeakAssociationsTest
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
       schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
 
-      ConnectionOptions connectionOptions = new SQLiteDatabaseConnector()
+      final ConnectionOptions connectionOptions = new SQLiteDatabaseConnector()
         .getDatabaseSystemConnector().newDatabaseConnectionOptions(config);
 
       final Catalog baseCatalog = SchemaCrawlerUtility
@@ -106,7 +111,7 @@ public class PrimaryKeyWeakAssociationsTest
           {
             out.println(String.format("    weak association (1 to %s):",
                                       findForeignKeyCardinality(weakFk)));
-            for (WeakAssociation weakAssociation: weakFk)
+            for (final WeakAssociation weakAssociation: weakFk)
             {
               out.println(String.format("      column reference: %s",
                                         weakAssociation));

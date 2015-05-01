@@ -24,6 +24,7 @@ import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.junit.Rule;
 import org.junit.Test;
 
 import schemacrawler.schema.Catalog;
@@ -33,7 +34,7 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseDatabaseTest;
-import schemacrawler.test.utility.TestUtility;
+import schemacrawler.test.utility.TestName;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.utility.NamedObjectSort;
 
@@ -43,6 +44,9 @@ public class ExcludeTest
 
   private static final Logger LOGGER = Logger.getLogger(ExcludeTest.class
     .getName());
+
+  @Rule
+  public TestName testName = new TestName();
 
   @Test
   public void excludeColumns()
@@ -83,7 +87,7 @@ public class ExcludeTest
         }
       }
 
-      out.assertEquals(TestUtility.currentMethodFullName());
+      out.assertEquals(testName.currentMethodFullName());
     }
   }
 
