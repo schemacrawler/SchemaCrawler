@@ -26,12 +26,13 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.junit.Rule;
 import org.junit.Test;
 
 import schemacrawler.schema.ResultsColumn;
 import schemacrawler.schema.ResultsColumns;
 import schemacrawler.test.utility.BaseDatabaseTest;
-import schemacrawler.test.utility.TestUtility;
+import schemacrawler.test.utility.TestName;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.utility.SchemaCrawlerUtility;
 
@@ -41,6 +42,9 @@ public class ResultColumnsTest
 
   private static final Logger LOGGER = Logger.getLogger(ResultColumnsTest.class
     .getName());
+
+  @Rule
+  public TestName testName = new TestName();
 
   @Test
   public void columns()
@@ -85,7 +89,7 @@ public class ResultColumnsTest
         }
       }
 
-      out.assertEquals(TestUtility.currentMethodFullName());
+      out.assertEquals(testName.currentMethodFullName());
     }
   }
 
