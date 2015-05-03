@@ -202,7 +202,11 @@ final class SchemaTextFormatter
     final String sequenceType = "[sequence]";
 
     out.println(formattingHelper.createObjectStart());
-    out.println(formattingHelper.createNameRow(sequenceName, sequenceType));
+    out.println(formattingHelper.createObjectNameRow(nodeId(sequence),
+                                                     sequenceName,
+                                                     sequenceType,
+                                                     colorMap
+                                                       .getColor(sequence)));
     printRemarks(sequence);
 
     if (!isBrief)

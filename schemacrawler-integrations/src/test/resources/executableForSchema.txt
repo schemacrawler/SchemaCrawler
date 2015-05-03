@@ -489,6 +489,7 @@ Sequences
 
 
 PUBLIC.BOOKS.PUBLISHER_ID_SEQ                                 [sequence]
+------------------------------------------------------------------------
   increment                         1                           
   minimum value                     -2147483648                 
   maximum value                     2147483647                  
@@ -497,6 +498,7 @@ PUBLIC.BOOKS.PUBLISHER_ID_SEQ                                 [sequence]
 
 
 PUBLIC.SYSTEM_LOBS.LOB_ID                                     [sequence]
+------------------------------------------------------------------------
   increment                         1                           
   minimum value                     -9223372036854775808        
   maximum value                     9223372036854775807         
