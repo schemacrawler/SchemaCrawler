@@ -296,6 +296,7 @@ public class OutputOptions
    * @param outputFileName
    *        Output file name.
    * @throws IOException
+   *         When file cannot be read
    */
   public void setCompressedInputFile(final Path inputFile)
     throws IOException
@@ -361,6 +362,7 @@ public class OutputOptions
    * @param inputFileName
    *        Input file name.
    * @throws IOException
+   *         When file cannot be read
    */
   public void setInputFile(final Path inputFile)
     throws IOException
@@ -383,6 +385,7 @@ public class OutputOptions
    *        Input resource name, which could be a file path, or a
    *        classpath resource.
    * @throws IOException
+   *         When the resource cannot be accessed
    */
   public void setInputResourceName(final String inputResourceName)
     throws IOException

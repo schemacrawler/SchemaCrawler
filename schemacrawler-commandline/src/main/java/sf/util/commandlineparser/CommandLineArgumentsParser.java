@@ -33,8 +33,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Command-line options parser. Not POSIX compliant.<br/>
- * Follows these POSIX rules:
+ * Command-line options parser. Not POSIX compliant. Follows these POSIX
+ * rules:
  * <ul>
  * <li>Arguments are options if they begin with a hyphen delimiter
  * ('-').</li>
