@@ -459,7 +459,7 @@ final class MutableCatalog
     return columnDataTypes.lookupColumnDataTypeByType(type);
   }
 
-  void setSchemaCrawlerHeaderInfo(final String title)
+  void setCrawlHeaderInfo(final String title)
   {
     crawlHeaderInfo = new ImmutableCrawlHeaderInfo(schemaCrawlerInfo,
                                                    jdbcDriverInfo,
