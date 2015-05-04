@@ -166,8 +166,9 @@ public final class SchemaCrawler
                "Not retrieving additional JDBC driver information, since this was not requested");
       }
 
-      LOGGER.log(Level.INFO, "Retrieving SchemaCrawler header information");
-      retriever.retrieveSchemaCrawlerHeaderInfo(options.getTitle());
+      LOGGER.log(Level.INFO,
+                 "Retrieving SchemaCrawler crawl header information");
+      retriever.retrieveCrawlHeaderInfo(options.getTitle());
 
     }
     catch (final SQLException e)
