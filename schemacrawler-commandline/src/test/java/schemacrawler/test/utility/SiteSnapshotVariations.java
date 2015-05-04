@@ -112,6 +112,7 @@ public class SiteSnapshotVariations
     argsMap.put("url", "jdbc:hsqldb:hsql://localhost/schemacrawler");
     argsMap.put("user", "sa");
     argsMap.put("password", "");
+    argsMap.put("title", "Details of Example Database");
     argsMap.put("command", "details,count,dump");
     argsMap.put("outputfile", outputFile.toString());
 

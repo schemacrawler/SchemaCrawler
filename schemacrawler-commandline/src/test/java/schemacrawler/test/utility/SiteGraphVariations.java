@@ -202,6 +202,7 @@ public class SiteGraphVariations
     argsMap.put("url", "jdbc:hsqldb:hsql://localhost/schemacrawler");
     argsMap.put("user", "sa");
     argsMap.put("password", "");
+    argsMap.put("title", "Details of Example Database");
     argsMap.put("tables", ".*");
     argsMap.put("routines", "");
     if (!argsMap.containsKey("command"))

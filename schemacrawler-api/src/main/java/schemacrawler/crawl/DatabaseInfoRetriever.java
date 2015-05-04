@@ -487,9 +487,9 @@ final class DatabaseInfoRetriever
 
   }
 
-  void retrieveSchemaCrawlerHeaderInfo(final String title)
+  void retrieveCrawlHeaderInfo(final String title)
   {
-    catalog.setSchemaCrawlerHeaderInfo(title);
+    catalog.setCrawlHeaderInfo(title);
   }
 
 }
