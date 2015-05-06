@@ -5,6 +5,14 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+     <release version="14.01.01" date="2015-05-05" description="Java SE 8 support.">
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        SchemaCrawler is now supported on Java SE 8 or better only.
+      ]]></action>  
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        New -title command-line argument to show a custom title on output and diagrams.
+      ]]></action>                                              
+     </release>   
      <release version="12.06.03" date="2015-03-27" description="Fixing links on website.">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Showing cardinality for tables that are filtered out.
