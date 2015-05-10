@@ -44,7 +44,8 @@ caption {
 h1, h2, h3 {
 	font-family: "Palatino Linotype", Georgia, "Times New Roman", serif;
 	margin-top: 1.0rem;
-	margin-bottom: 1.5rem;
+	margin-bottom: 1.5rem;	
+    font-weight: bold;
 }
 
 h1 {
@@ -53,13 +54,13 @@ h1 {
 }
 
 h2 {
-	font-size: 1.2rem;
-	line-height: 1.4rem;
+	font-size: 1.4rem;
+	line-height: 1.6rem;
 }
 
 h3 {
-	font-size: 1.0rem;
-	line-height: 1.2rem;
+	font-size: 1.2rem;
+	line-height: 1.4rem;
 }
 
 dl, ul, ol {
@@ -110,6 +111,18 @@ blockquote: before {
 blockquote p {
 	display: inline;
 	background: #f9f9f9;
+}
+
+h1 {
+    color: maroon;
+}
+
+h2 {
+    color: darkblue;
+}
+
+h3 {
+    color: green;
 }
 
 a:link, a:visited {
@@ -168,7 +181,29 @@ a:hover, a:active {
 }
 
 .definition {
-	white-space: pre-line;
+    word-break: normal; 
+    word-wrap: break-word;
+    white-space: pre;
+    white-space: -moz-pre-wrap; 
+    white-space: pre-wrap;
+    white-space: pre\9; 
+    
+    font-family: 'Lucida Console', Monaco, 'Courier New', monospace;
+    font-size: 1.0rem;
+    font-weight: 100;
+    
+    line-height: 1.2rem;
+    color: rgb(16, 16, 16); 
+}
+
+td.section {
+    font-family: "Palatino Linotype", Georgia, "Times New Roman", serif;
+    padding-top: 1.5rem;
+    padding-bottom: 1.0rem;
+    font-weight: bold;
+    font-size: 1.2rem;
+    line-height: 1.2rem;
+    color: rgb(100, 100, 100);
 }
 
 .data_binary {
@@ -200,7 +235,7 @@ a:hover, a:active {
 	</tr>
 	<tr>
 		<td class='property_name'>generated on</td>
-		<td class='property_value'>2015-04-28 22:38:48</td>
+		<td class='property_value'>2015-05-08 00:31:14</td>
 	</tr>
 	<tr>
 		<td class='property_name'>database version</td>
@@ -212,107 +247,121 @@ a:hover, a:active {
 	</tr>
 </table>
 <p>&#160;</p>
+
 <p>&#160;</p>
 <h2>Tables</h2>
 
-<table>
 
+
+<table>
   <caption style='background-color: #CEE2F2;'><span id='authors_dba8a1ff' class='caption_name'>PUBLIC.BOOKS.AUTHORS</span> <span class='caption_description'>[table]</span></caption>
 
 	<tr>
-		<td colspan='3' class='definition'>Contact details for book authors</td>
+		<td colspan='3'>Contact details for book authors</td>
 	</tr>
 </table>
 <p>&#160;</p>
 
-<table>
 
+
+<table>
   <caption style='background-color: #CEE2F2;'><span id='bookauthors_aa4376' class='caption_name'>PUBLIC.BOOKS.BOOKAUTHORS</span> <span class='caption_description'>[table]</span></caption>
 
 	<tr>
-		<td colspan='3' class='definition'>Relationship between books and their authors, along with the latest updated information</td>
+		<td colspan='3'>Relationship between books and their authors, along with the latest updated information</td>
 	</tr>
 </table>
 <p>&#160;</p>
 
-<table>
 
+
+<table>
   <caption style='background-color: #CEE2F2;'><span id='books_afd2ba21' class='caption_name'>PUBLIC.BOOKS.BOOKS</span> <span class='caption_description'>[table]</span></caption>
 
 	<tr>
-		<td colspan='3' class='definition'>Details for published books</td>
+		<td colspan='3'>Details for published books</td>
 	</tr>
 </table>
 <p>&#160;</p>
 
-<table>
 
+
+<table>
   <caption style='background-color: #CEE2F2;'><span id='globalcounts_2ab3635a' class='caption_name'>PUBLIC.BOOKS."Global Counts"</span> <span class='caption_description'>[table]</span></caption>
 
 </table>
 <p>&#160;</p>
 
-<table>
 
+
+<table>
   <caption style='background-color: #CEE2F2;'><span id='publishers_b8da20c0' class='caption_name'>PUBLIC.BOOKS.PUBLISHERS</span> <span class='caption_description'>[table]</span></caption>
 
 	<tr>
-		<td colspan='3' class='definition'>List of book publishers</td>
+		<td colspan='3'>List of book publishers</td>
 	</tr>
 </table>
 <p>&#160;</p>
 
-<table>
 
+
+<table>
   <caption style='background-color: #F2EACE;'><span id='extra_pk_334890da' class='caption_name'>PUBLIC.FOR_LINT.EXTRA_PK</span> <span class='caption_description'>[table]</span></caption>
 
 </table>
 <p>&#160;</p>
 
-<table>
 
+
+<table>
   <caption style='background-color: #F2EACE;'><span id='globalcounts_986b8a53' class='caption_name'>PUBLIC.FOR_LINT."Global Counts"</span> <span class='caption_description'>[table]</span></caption>
 
 </table>
 <p>&#160;</p>
 
-<table>
 
+
+<table>
   <caption style='background-color: #F2EACE;'><span id='publications_949377f7' class='caption_name'>PUBLIC.FOR_LINT.PUBLICATIONS</span> <span class='caption_description'>[table]</span></caption>
 
 </table>
 <p>&#160;</p>
 
-<table>
 
+
+<table>
   <caption style='background-color: #F2EACE;'><span id='writers_bf84ac10' class='caption_name'>PUBLIC.FOR_LINT.WRITERS</span> <span class='caption_description'>[table]</span></caption>
 
 </table>
 <p>&#160;</p>
 
-<table>
 
+
+<table>
   <caption style='background-color: #F2EACE;'><span id='πίνακαβάσησδεδομένων_199e00a3' class='caption_name'>PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</span> <span class='caption_description'>[table]</span></caption>
 
 </table>
 <p>&#160;</p>
 
-<table>
 
+
+<table>
   <caption style='background-color: #F2DDCE;'><span id='regions_bc895c48' class='caption_name'>PUBLIC."PUBLISHER SALES".REGIONS</span> <span class='caption_description'>[table]</span></caption>
 
 </table>
 <p>&#160;</p>
 
-<table>
 
+
+<table>
   <caption style='background-color: #F2DDCE;'><span id='sales_20be6f95' class='caption_name'>PUBLIC."PUBLISHER SALES".SALES</span> <span class='caption_description'>[table]</span></caption>
 
 </table>
 <p>&#160;</p>
 
-<table>
 
+
+<table>
   <caption style='background-color: #CEE2F2;'><span id='authorslist_b29d331d' class='caption_name'>PUBLIC.BOOKS.AUTHORSLIST</span> <span class='caption_description'>[view]</span></caption>
 
 </table>
@@ -321,8 +370,9 @@ a:hover, a:active {
 <p>&#160;</p>
 <h2>Routines</h2>
 
-<table>
 
+
+<table>
   <caption style='background-color: #CEE2F2;'><span id='customadd_a6c7d917' class='caption_name'>PUBLIC.BOOKS.CUSTOMADD</span> <span class='caption_description'>[function, does not return a table]</span></caption>
 
 	<tr>
@@ -333,13 +383,14 @@ a:hover, a:active {
 		<td class='description right'>[specific name]</td>
 	</tr>
 	<tr>
-		<td colspan='3' class='definition'>CUSTOMADD_10130</td>
+		<td colspan='3'>CUSTOMADD_10130</td>
 	</tr>
 </table>
 <p>&#160;</p>
 
-<table>
 
+
+<table>
   <caption style='background-color: #CEE2F2;'><span id='customadd_a6c7d918' class='caption_name'>PUBLIC.BOOKS.CUSTOMADD</span> <span class='caption_description'>[function, does not return a table]</span></caption>
 
 	<tr>
@@ -350,13 +401,14 @@ a:hover, a:active {
 		<td class='description right'>[specific name]</td>
 	</tr>
 	<tr>
-		<td colspan='3' class='definition'>CUSTOMADD_10131</td>
+		<td colspan='3'>CUSTOMADD_10131</td>
 	</tr>
 </table>
 <p>&#160;</p>
 
-<table>
 
+
+<table>
   <caption style='background-color: #CEE2F2;'><span id='new_publisher_5dfdce2d' class='caption_name'>PUBLIC.BOOKS.NEW_PUBLISHER</span> <span class='caption_description'>[procedure, no result]</span></caption>
 
 	<tr>
@@ -367,13 +419,14 @@ a:hover, a:active {
 		<td class='description right'>[specific name]</td>
 	</tr>
 	<tr>
-		<td colspan='3' class='definition'>NEW_PUBLISHER_10128</td>
+		<td colspan='3'>NEW_PUBLISHER_10128</td>
 	</tr>
 </table>
 <p>&#160;</p>
 
-<table>
 
+
+<table>
   <caption style='background-color: #CEE2F2;'><span id='new_publisher_5dfdce2e' class='caption_name'>PUBLIC.BOOKS.NEW_PUBLISHER</span> <span class='caption_description'>[procedure, no result]</span></caption>
 
 	<tr>
@@ -384,13 +437,14 @@ a:hover, a:active {
 		<td class='description right'>[specific name]</td>
 	</tr>
 	<tr>
-		<td colspan='3' class='definition'>NEW_PUBLISHER_10129</td>
+		<td colspan='3'>NEW_PUBLISHER_10129</td>
 	</tr>
 </table>
 <p>&#160;</p>
 
-<table>
 
+
+<table>
   <caption style='background-color: #CEDDF2;'><span id='alloc_blocks_8cfa66aa' class='caption_name'>PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS</span> <span class='caption_description'>[procedure, no result]</span></caption>
 
 	<tr>
@@ -401,13 +455,14 @@ a:hover, a:active {
 		<td class='description right'>[specific name]</td>
 	</tr>
 	<tr>
-		<td colspan='3' class='definition'>ALLOC_BLOCKS_10070</td>
+		<td colspan='3'>ALLOC_BLOCKS_10070</td>
 	</tr>
 </table>
 <p>&#160;</p>
 
-<table>
 
+
+<table>
   <caption style='background-color: #CEDDF2;'><span id='alloc_single_block_65785c1d' class='caption_name'>PUBLIC.SYSTEM_LOBS.ALLOC_SINGLE_BLOCK</span> <span class='caption_description'>[procedure, no result]</span></caption>
 
 	<tr>
@@ -418,13 +473,14 @@ a:hover, a:active {
 		<td class='description right'>[specific name]</td>
 	</tr>
 	<tr>
-		<td colspan='3' class='definition'>ALLOC_SINGLE_BLOCK_10073</td>
+		<td colspan='3'>ALLOC_SINGLE_BLOCK_10073</td>
 	</tr>
 </table>
 <p>&#160;</p>
 
-<table>
 
+
+<table>
   <caption style='background-color: #CEDDF2;'><span id='convert_block_610e15aa' class='caption_name'>PUBLIC.SYSTEM_LOBS.CONVERT_BLOCK</span> <span class='caption_description'>[procedure, no result]</span></caption>
 
 	<tr>
@@ -435,13 +491,14 @@ a:hover, a:active {
 		<td class='description right'>[specific name]</td>
 	</tr>
 	<tr>
-		<td colspan='3' class='definition'>CONVERT_BLOCK_10028</td>
+		<td colspan='3'>CONVERT_BLOCK_10028</td>
 	</tr>
 </table>
 <p>&#160;</p>
 
-<table>
 
+
+<table>
   <caption style='background-color: #CEDDF2;'><span id='create_empty_block_278fa775' class='caption_name'>PUBLIC.SYSTEM_LOBS.CREATE_EMPTY_BLOCK</span> <span class='caption_description'>[procedure, no result]</span></caption>
 
 	<tr>
@@ -452,13 +509,14 @@ a:hover, a:active {
 		<td class='description right'>[specific name]</td>
 	</tr>
 	<tr>
-		<td colspan='3' class='definition'>CREATE_EMPTY_BLOCK_10062</td>
+		<td colspan='3'>CREATE_EMPTY_BLOCK_10062</td>
 	</tr>
 </table>
 <p>&#160;</p>
 
-<table>
 
+
+<table>
   <caption style='background-color: #CEDDF2;'><span id='delete_blocks_b1ed0f21' class='caption_name'>PUBLIC.SYSTEM_LOBS.DELETE_BLOCKS</span> <span class='caption_description'>[procedure, no result]</span></caption>
 
 	<tr>
@@ -469,13 +527,14 @@ a:hover, a:active {
 		<td class='description right'>[specific name]</td>
 	</tr>
 	<tr>
-		<td colspan='3' class='definition'>DELETE_BLOCKS_10059</td>
+		<td colspan='3'>DELETE_BLOCKS_10059</td>
 	</tr>
 </table>
 <p>&#160;</p>
 
-<table>
 
+
+<table>
   <caption style='background-color: #CEDDF2;'><span id='delete_lob_9ec36649' class='caption_name'>PUBLIC.SYSTEM_LOBS.DELETE_LOB</span> <span class='caption_description'>[procedure, no result]</span></caption>
 
 	<tr>
@@ -486,13 +545,14 @@ a:hover, a:active {
 		<td class='description right'>[specific name]</td>
 	</tr>
 	<tr>
-		<td colspan='3' class='definition'>DELETE_LOB_10030</td>
+		<td colspan='3'>DELETE_LOB_10030</td>
 	</tr>
 </table>
 <p>&#160;</p>
 
-<table>
 
+
+<table>
   <caption style='background-color: #CEDDF2;'><span id='delete_unused_e320cb4e' class='caption_name'>PUBLIC.SYSTEM_LOBS.DELETE_UNUSED</span> <span class='caption_description'>[procedure, no result]</span></caption>
 
 	<tr>
@@ -503,13 +563,14 @@ a:hover, a:active {
 		<td class='description right'>[specific name]</td>
 	</tr>
 	<tr>
-		<td colspan='3' class='definition'>DELETE_UNUSED_10045</td>
+		<td colspan='3'>DELETE_UNUSED_10045</td>
 	</tr>
 </table>
 <p>&#160;</p>
 
-<table>
 
+
+<table>
   <caption style='background-color: #CEDDF2;'><span id='delete_unused_lobs_b5f35fcc' class='caption_name'>PUBLIC.SYSTEM_LOBS.DELETE_UNUSED_LOBS</span> <span class='caption_description'>[procedure, no result]</span></caption>
 
 	<tr>
@@ -520,13 +581,14 @@ a:hover, a:active {
 		<td class='description right'>[specific name]</td>
 	</tr>
 	<tr>
-		<td colspan='3' class='definition'>DELETE_UNUSED_LOBS_10057</td>
+		<td colspan='3'>DELETE_UNUSED_LOBS_10057</td>
 	</tr>
 </table>
 <p>&#160;</p>
 
-<table>
 
+
+<table>
   <caption style='background-color: #CEDDF2;'><span id='divide_block_841e2087' class='caption_name'>PUBLIC.SYSTEM_LOBS.DIVIDE_BLOCK</span> <span class='caption_description'>[procedure, no result]</span></caption>
 
 	<tr>
@@ -537,13 +599,14 @@ a:hover, a:active {
 		<td class='description right'>[specific name]</td>
 	</tr>
 	<tr>
-		<td colspan='3' class='definition'>DIVIDE_BLOCK_10065</td>
+		<td colspan='3'>DIVIDE_BLOCK_10065</td>
 	</tr>
 </table>
 <p>&#160;</p>
 
-<table>
 
+
+<table>
   <caption style='background-color: #CEDDF2;'><span id='merge_empty_blocks_906ffe1' class='caption_name'>PUBLIC.SYSTEM_LOBS.MERGE_EMPTY_BLOCKS</span> <span class='caption_description'>[procedure, no result]</span></caption>
 
 	<tr>
@@ -554,7 +617,7 @@ a:hover, a:active {
 		<td class='description right'>[specific name]</td>
 	</tr>
 	<tr>
-		<td colspan='3' class='definition'>MERGE_EMPTY_BLOCKS_10078</td>
+		<td colspan='3'>MERGE_EMPTY_BLOCKS_10078</td>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -577,6 +640,7 @@ a:hover, a:active {
 </table>
 <p>&#160;</p>
 
+
 <h3>Database Information</h3>
 
 <table>
@@ -594,6 +658,7 @@ a:hover, a:active {
 	</tr>
 </table>
 <p>&#160;</p>
+
 
 <h3>JDBC Driver Information</h3>
 
@@ -620,5 +685,6 @@ a:hover, a:active {
 	</tr>
 </table>
 <p>&#160;</p>
+
 </body>
 </html>

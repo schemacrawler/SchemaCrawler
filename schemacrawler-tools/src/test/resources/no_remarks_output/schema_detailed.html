@@ -44,7 +44,8 @@ caption {
 h1, h2, h3 {
 	font-family: "Palatino Linotype", Georgia, "Times New Roman", serif;
 	margin-top: 1.0rem;
-	margin-bottom: 1.5rem;
+	margin-bottom: 1.5rem;	
+    font-weight: bold;
 }
 
 h1 {
@@ -53,13 +54,13 @@ h1 {
 }
 
 h2 {
-	font-size: 1.2rem;
-	line-height: 1.4rem;
+	font-size: 1.4rem;
+	line-height: 1.6rem;
 }
 
 h3 {
-	font-size: 1.0rem;
-	line-height: 1.2rem;
+	font-size: 1.2rem;
+	line-height: 1.4rem;
 }
 
 dl, ul, ol {
@@ -110,6 +111,18 @@ blockquote: before {
 blockquote p {
 	display: inline;
 	background: #f9f9f9;
+}
+
+h1 {
+    color: maroon;
+}
+
+h2 {
+    color: darkblue;
+}
+
+h3 {
+    color: green;
 }
 
 a:link, a:visited {
@@ -168,7 +181,29 @@ a:hover, a:active {
 }
 
 .definition {
-	white-space: pre-line;
+    word-break: normal; 
+    word-wrap: break-word;
+    white-space: pre;
+    white-space: -moz-pre-wrap; 
+    white-space: pre-wrap;
+    white-space: pre\9; 
+    
+    font-family: 'Lucida Console', Monaco, 'Courier New', monospace;
+    font-size: 1.0rem;
+    font-weight: 100;
+    
+    line-height: 1.2rem;
+    color: rgb(16, 16, 16); 
+}
+
+td.section {
+    font-family: "Palatino Linotype", Georgia, "Times New Roman", serif;
+    padding-top: 1.5rem;
+    padding-bottom: 1.0rem;
+    font-weight: bold;
+    font-size: 1.2rem;
+    line-height: 1.2rem;
+    color: rgb(100, 100, 100);
 }
 
 .data_binary {
@@ -193,8 +228,9 @@ a:hover, a:active {
 <p>&#160;</p>
 <h2>Tables</h2>
 
-<table>
 
+
+<table>
   <caption style='background-color: #CEE2F2;'><span id='authors_dba8a1ff' class='caption_name'>PUBLIC.BOOKS.AUTHORS</span> <span class='caption_description'>[table]</span></caption>
 
 	<tr>
@@ -246,6 +282,12 @@ a:hover, a:active {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
+		<td colspan='3' class='section'>Primary Key</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
 		<td colspan='2' class='name'>PK_AUTHORS</td>
 		<td class='description right'>[primary key]</td>
 	</tr>
@@ -258,6 +300,12 @@ a:hover, a:active {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
+		<td colspan='3' class='section'>Foreign Keys</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
 		<td colspan='2' class='name'>FK_Z_AUTHOR</td>
 		<td class='description right'>[foreign key, with no action]</td>
 	</tr>
@@ -265,6 +313,12 @@ a:hover, a:active {
 		<td class='spacer'></td>
 		<td class='subname'>ID ←(0..many) <a href='#bookauthors_aa4376'>PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID</a></td>
 		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='3' class='section'>Indices</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -325,8 +379,9 @@ a:hover, a:active {
 </table>
 <p>&#160;</p>
 
-<table>
 
+
+<table>
   <caption style='background-color: #CEE2F2;'><span id='books_afd2ba21' class='caption_name'>PUBLIC.BOOKS.BOOKS</span> <span class='caption_description'>[table]</span></caption>
 
 	<tr>
@@ -368,6 +423,12 @@ a:hover, a:active {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
+		<td colspan='3' class='section'>Primary Key</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
 		<td colspan='2' class='name'>PK_BOOKS</td>
 		<td class='description right'>[primary key]</td>
 	</tr>
@@ -375,6 +436,12 @@ a:hover, a:active {
 		<td class='spacer'></td>
 		<td class='subname'>ID</td>
 		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='3' class='section'>Foreign Keys</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -399,6 +466,12 @@ a:hover, a:active {
 		<td class='spacer'></td>
 		<td class='subname'>ID ←(0..1) <a href='#books_afd2ba21'>PREVIOUSEDITIONID</a></td>
 		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='3' class='section'>Indices</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -439,8 +512,9 @@ a:hover, a:active {
 </table>
 <p>&#160;</p>
 
-<table>
 
+
+<table>
   <caption style='background-color: #CEE2F2;'><span id='globalcounts_2ab3635a' class='caption_name'>PUBLIC.BOOKS."Global Counts"</span> <span class='caption_description'>[table]</span></caption>
 
 	<tr>
@@ -451,8 +525,9 @@ a:hover, a:active {
 </table>
 <p>&#160;</p>
 
-<table>
 
+
+<table>
   <caption style='background-color: #CEE2F2;'><span id='publishers_b8da20c0' class='caption_name'>PUBLIC.BOOKS.PUBLISHERS</span> <span class='caption_description'>[table]</span></caption>
 
 	<tr>
@@ -469,6 +544,12 @@ a:hover, a:active {
 		<td class='spacer'></td>
 		<td class='subname'>PUBLISHER</td>
 		<td class='type'>VARCHAR(255)</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='3' class='section'>Primary Key</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -491,6 +572,12 @@ a:hover, a:active {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
+		<td colspan='3' class='section'>Indices</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
 		<td colspan='2' class='name'>SYS_IDX_SYS_PK_10092_10093</td>
 		<td class='description right'>[unique index]</td>
 	</tr>
@@ -507,8 +594,9 @@ a:hover, a:active {
 </table>
 <p>&#160;</p>
 
-<table>
 
+
+<table>
   <caption style='background-color: #CEE2F2;'><span id='bookauthors_aa4376' class='caption_name'>PUBLIC.BOOKS.BOOKAUTHORS</span> <span class='caption_description'>[table]</span></caption>
 
 	<tr>
@@ -525,6 +613,12 @@ a:hover, a:active {
 		<td class='spacer'></td>
 		<td class='subname'>"UPDATE"</td>
 		<td class='type'>CLOB</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='3' class='section'>Foreign Keys</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -549,6 +643,12 @@ a:hover, a:active {
 		<td class='spacer'></td>
 		<td class='subname'>BOOKID (0..many)→ <a href='#books_afd2ba21'>PUBLIC.BOOKS.BOOKS.ID</a></td>
 		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='3' class='section'>Indices</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -594,8 +694,9 @@ a:hover, a:active {
 </table>
 <p>&#160;</p>
 
-<table>
 
+
+<table>
   <caption style='background-color: #CEE2F2;'><span id='authorslist_b29d331d' class='caption_name'>PUBLIC.BOOKS.AUTHORSLIST</span> <span class='caption_description'>[view]</span></caption>
 
 	<tr>
@@ -619,8 +720,9 @@ a:hover, a:active {
 <p>&#160;</p>
 <h2>Routines</h2>
 
-<table>
 
+
+<table>
   <caption style='background-color: #CEE2F2;'><span id='customadd_a6c7d917' class='caption_name'>PUBLIC.BOOKS.CUSTOMADD</span> <span class='caption_description'>[function, does not return a table]</span></caption>
 
 	<tr>
@@ -636,8 +738,9 @@ a:hover, a:active {
 </table>
 <p>&#160;</p>
 
-<table>
 
+
+<table>
   <caption style='background-color: #CEE2F2;'><span id='customadd_a6c7d918' class='caption_name'>PUBLIC.BOOKS.CUSTOMADD</span> <span class='caption_description'>[function, does not return a table]</span></caption>
 
 	<tr>
@@ -648,8 +751,9 @@ a:hover, a:active {
 </table>
 <p>&#160;</p>
 
-<table>
 
+
+<table>
   <caption style='background-color: #CEE2F2;'><span id='new_publisher_5dfdce2d' class='caption_name'>PUBLIC.BOOKS.NEW_PUBLISHER</span> <span class='caption_description'>[procedure, no result]</span></caption>
 
 	<tr>
@@ -660,8 +764,9 @@ a:hover, a:active {
 </table>
 <p>&#160;</p>
 
-<table>
 
+
+<table>
   <caption style='background-color: #CEE2F2;'><span id='new_publisher_5dfdce2e' class='caption_name'>PUBLIC.BOOKS.NEW_PUBLISHER</span> <span class='caption_description'>[procedure, no result]</span></caption>
 
 	<tr>

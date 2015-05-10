@@ -27,6 +27,7 @@ import static sf.util.Utility.isBlank;
 import static sf.util.Utility.readResourceFully;
 
 import java.awt.Color;
+import java.io.PrintWriter;
 
 import schemacrawler.tools.options.TextOutputFormat;
 
@@ -60,43 +61,40 @@ public final class HtmlFormattingHelper
            + System.lineSeparator();
   }
 
-  public HtmlFormattingHelper(final TextOutputFormat outputFormat)
+  public HtmlFormattingHelper(final PrintWriter out,
+                              final TextOutputFormat outputFormat)
   {
-    super(outputFormat);
+    super(out, outputFormat);
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public String createDocumentEnd()
+  public void createDocumentEnd()
   {
-    return HTML_FOOTER;
+    out.println(HTML_FOOTER);
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public String createDocumentStart()
+  public void createDocumentStart()
   {
-    return HTML_HEADER;
+    out.println(HTML_HEADER);
   }
 
   @Override
-  public String createHeader(final DocumentHeaderType type, final String header)
+  public void createHeader(final DocumentHeaderType type, final String header)
   {
     if (!isBlank(header) && type != null)
     {
-      return String.format("%s%n<%s>%s</%s>%n",
-                           type.getPrefix(),
-                           type.getHeaderTag(),
-                           header,
-                           type.getHeaderTag());
-    }
-    else
-    {
-      return "";
+      out.println(String.format("%s%n<%s>%s</%s>%n",
+                                type.getPrefix(),
+                                type.getHeaderTag(),
+                                header,
+                                type.getHeaderTag()));
     }
   }
 
@@ -110,20 +108,21 @@ public final class HtmlFormattingHelper
    * {@inheritDoc}
    */
   @Override
-  public String createObjectEnd()
+  public void createObjectEnd()
   {
-    return "</table>" + System.lineSeparator() + "<p>&#160;</p>"
-           + System.lineSeparator();
+    out.append("</table>").println();
+    out.println("<p>&#160;</p>");
+    out.println();
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public String createObjectNameRow(final String id,
-                                    final String name,
-                                    final String description,
-                                    final Color backgroundColor)
+  public void createObjectNameRow(final String id,
+                                  final String name,
+                                  final String description,
+                                  final Color backgroundColor)
   {
     final StringBuilder buffer = new StringBuilder();
     buffer.append("  <caption style='background-color: ")
@@ -144,18 +143,17 @@ public final class HtmlFormattingHelper
         .append(escapeForXMLElement(description)).append("</span>");
     }
     buffer.append("</caption>").append(System.lineSeparator());
-    return buffer.toString();
+
+    out.println(buffer.toString());
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public String createObjectStart()
+  public void createObjectStart()
   {
-    final StringBuilder buffer = new StringBuilder();
-    buffer.append("<table>").append(System.lineSeparator());
-    return buffer.toString();
+    out.println("<table>");
   }
 
   @Override

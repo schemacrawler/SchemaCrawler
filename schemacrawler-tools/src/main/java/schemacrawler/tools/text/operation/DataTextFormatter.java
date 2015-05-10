@@ -78,7 +78,7 @@ final class DataTextFormatter
   {
     if (operation == Operation.count)
     {
-      out.println(formattingHelper.createObjectEnd());
+      formattingHelper.createObjectEnd();
     }
 
     super.end();
@@ -178,9 +178,7 @@ final class DataTextFormatter
     }
     final String message = getMessage(aggregate);
     //
-    out.println(formattingHelper.createNameValueRow(title,
-                                                    message,
-                                                    Alignment.right));
+    formattingHelper.createNameValueRow(title, message, Alignment.right);
   }
 
   private void handleData(final String title, final ResultSet rows)
@@ -202,18 +200,16 @@ final class DataTextFormatter
     }
     else
     {
-      out.println(formattingHelper.createObjectStart());
-      out.println(formattingHelper.createObjectNameRow("",
-                                                       title,
-                                                       "",
-                                                       Color.white));
+      formattingHelper.println();
+      formattingHelper.println();
+      formattingHelper.createObjectStart();
+      formattingHelper.createObjectNameRow("", title, "", Color.white);
       try
       {
         final DataResultSet dataRows = new DataResultSet(rows,
                                                          options.isShowLobs());
 
-        out
-          .println(formattingHelper.createRowHeader(dataRows.getColumnNames()));
+        formattingHelper.createRowHeader(dataRows.getColumnNames());
 
         iterateRows(dataRows);
       }
@@ -221,7 +217,7 @@ final class DataTextFormatter
       {
         throw new SchemaCrawlerException(e.getMessage(), e);
       }
-      out.println(formattingHelper.createObjectEnd());
+      formattingHelper.createObjectEnd();
     }
 
     dataBlockCount++;
@@ -235,7 +231,7 @@ final class DataTextFormatter
       final List<Object> currentRow = dataRows.row();
       final Object[] columnData = currentRow.toArray(new Object[currentRow
         .size()]);
-      out.println(formattingHelper.createRow(columnData));
+      formattingHelper.createRow(columnData);
     }
   }
 
@@ -243,21 +239,21 @@ final class DataTextFormatter
   {
     if (operation != null)
     {
-      out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
-                                                operation.getDescription()));
+      formattingHelper.createHeader(DocumentHeaderType.subTitle,
+                                    operation.getDescription());
     }
     else
     {
-      out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
-                                                "Query"));
+      formattingHelper.createHeader(DocumentHeaderType.subTitle, "Query");
     }
 
     if (operation == Operation.count)
     {
-      out.println(formattingHelper.createObjectStart());
-      out.println(formattingHelper.createObjectNameRow("", operation
-        .getDescription(), "", Color.white));
+      formattingHelper.createObjectStart();
+      formattingHelper.createObjectNameRow("",
+                                           operation.getDescription(),
+                                           "",
+                                           Color.white);
     }
   }
-
 }

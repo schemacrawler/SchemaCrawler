@@ -1,6 +1,5 @@
 
 
-
 Tables
 ========================================================================
 
@@ -19,11 +18,17 @@ Contact details for book authors
   POSTALCODE                        VARCHAR(10)                 
   COUNTRY                           VARCHAR(50)                 
 
+Primary Key
+
 PK_AUTHORS                                                 [primary key]
   ID                                ascending                   
 
+Foreign Keys
+
 FK_Z_AUTHOR                                [foreign key, with no action]
   ID <--(0..many) PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID                              
+
+Indices
 
 SYS_IDX_PK_AUTHORS_10097                                  [unique index]
   ID                                ascending                   
@@ -55,11 +60,15 @@ Relationship between books and their authors, along with the latest updated info
   AUTHORID                          INTEGER NOT NULL            
   "UPDATE"                          CLOB                        
 
+Foreign Keys
+
 FK_Z_AUTHOR                                [foreign key, with no action]
   AUTHORID (0..many)--> PUBLIC.BOOKS.AUTHORS.ID                              
 
 FK_Y_BOOK                                  [foreign key, with no action]
   BOOKID (0..many)--> PUBLIC.BOOKS.BOOKS.ID                              
+
+Indices
 
 SYS_IDX_10118                                         [non-unique index]
   AUTHORID                          ascending                   
@@ -90,14 +99,20 @@ Details for published books
                                     Current price for the book  
   PREVIOUSEDITIONID                 INTEGER                     
 
+Primary Key
+
 PK_BOOKS                                                   [primary key]
   ID                                ascending                   
+
+Foreign Keys
 
 FK_Y_BOOK                                  [foreign key, with no action]
   ID <--(0..many) PUBLIC.BOOKS.BOOKAUTHORS.BOOKID                              
 
 FK_PREVIOUSEDITION                         [foreign key, with no action]
   ID <--(0..1) PREVIOUSEDITIONID                                
+
+Indices
 
 SYS_IDX_PK_BOOKS_10105                                    [unique index]
   ID                                ascending                   
@@ -119,9 +134,13 @@ List of book publishers
   PUBLISHER                         VARCHAR(255)                
                                     Name of book publisher      
 
+Primary Key
+
 SYS_PK_10092                                               [primary key]
   ID                                ascending                   
                                     auto-incremented            
+
+Indices
 
 SYS_IDX_SYS_PK_10092_10093                                [unique index]
   ID                                ascending                   
@@ -136,13 +155,19 @@ PUBLIC."PUBLISHER SALES".REGIONS                                 [table]
   POSTALCODE                        VARCHAR(10) NOT NULL        
   COUNTRY                           VARCHAR(50) NOT NULL        
 
+Primary Key
+
 PK_CUSTOMERS                                               [primary key]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
 
+Foreign Keys
+
 FK_SALES_REGIONS                           [foreign key, with no action]
   POSTALCODE <--(0..many) PUBLIC."PUBLISHER SALES".SALES.POSTALCODE                              
   COUNTRY <--(0..many) PUBLIC."PUBLISHER SALES".SALES.COUNTRY                              
+
+Indices
 
 SYS_IDX_PK_CUSTOMERS_10144                                [unique index]
   POSTALCODE                        ascending                   
@@ -158,13 +183,15 @@ PUBLIC."PUBLISHER SALES".SALES                                   [table]
   PERIODENDDATE                     DATE                        
   TOTALAMOUNT                       DOUBLE(64, 0)               
 
+Foreign Keys
+
 FK_SALES_REGIONS                           [foreign key, with no action]
   POSTALCODE (0..many)--> PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE                              
   COUNTRY (0..many)--> PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY                              
 
+Indices
+
 SYS_IDX_10154                                         [non-unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
-
-
 

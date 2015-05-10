@@ -57,18 +57,15 @@ final class LintTextFormatter
     final Collection<Lint<?>> lints = SimpleLintCollector.getLint(catalog);
     if (lints != null && !lints.isEmpty())
     {
-      out.println(formattingHelper.createObjectStart());
+      formattingHelper.createObjectStart();
 
-      final String nameRow = formattingHelper.createObjectNameRow("",
-                                                                  "Database",
-                                                                  "[database]",
-                                                                  Color.white);
-      out.println(nameRow);
+      formattingHelper.createObjectNameRow("",
+                                           "Database",
+                                           "[database]",
+                                           Color.white);
 
       printLints(lints);
-      out.println(formattingHelper.createObjectEnd());
-
-      out.flush();
+      formattingHelper.createObjectEnd();
     }
   }
 
@@ -83,17 +80,18 @@ final class LintTextFormatter
     final Collection<Lint<?>> lints = SimpleLintCollector.getLint(table);
     if (lints != null && !lints.isEmpty())
     {
-      out.println(formattingHelper.createObjectStart());
-      final String tableType = "[" + table.getTableType() + "]";
-      out
-        .println(formattingHelper.createObjectNameRow(nodeId(table),
-                                                      table.getFullName(),
-                                                      tableType,
-                                                      colorMap.getColor(table)));
-      printLints(lints);
-      out.println(formattingHelper.createObjectEnd());
+      formattingHelper.createObjectStart();
 
-      out.flush();
+      formattingHelper.println();
+      formattingHelper.println();
+
+      final String tableType = "[" + table.getTableType() + "]";
+      formattingHelper.createObjectNameRow(nodeId(table),
+                                           table.getFullName(),
+                                           tableType,
+                                           colorMap.getColor(table));
+      printLints(lints);
+      formattingHelper.createObjectEnd();
     }
   }
 
@@ -115,13 +113,12 @@ final class LintTextFormatter
   @Override
   public void handleStart()
   {
-    out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
-                                              "Lints"));
+    formattingHelper.createHeader(DocumentHeaderType.subTitle, "Lints");
   }
 
   private void printLints(final Collection<Lint<?>> lints)
   {
-    out.println(formattingHelper.createEmptyRow());
+    formattingHelper.createEmptyRow();
 
     final Multimap<LintSeverity, Lint<?>> multiMap = new Multimap<>();
     for (final Lint<?> lint: lints)
@@ -137,8 +134,7 @@ final class LintTextFormatter
         continue;
       }
 
-      out.println(formattingHelper.createNameRow("", String
-        .format("[lint, %s]", severity)));
+      formattingHelper.createNameRow("", String.format("[lint, %s]", severity));
       final List<Lint<?>> lintsById = new ArrayList<>(multiMap.get(severity));
       for (final Lint<?> lint: lintsById)
       {
@@ -147,17 +143,16 @@ final class LintTextFormatter
         {
           if ((Boolean) lintValue)
           {
-            out.println(formattingHelper.createRow("", lint.getMessage(), ""));
+            formattingHelper.createRow("", lint.getMessage(), "");
           }
         }
         else
         {
-          out.println(formattingHelper.createRow("",
-                                                 lint.getMessage(),
-                                                 lint.getValueAsString()));
+          formattingHelper.createRow("",
+                                     lint.getMessage(),
+                                     lint.getValueAsString());
         }
       }
     }
   }
-
 }

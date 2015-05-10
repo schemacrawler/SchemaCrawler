@@ -1,10 +1,7 @@
 
 
-
 Lints
 ========================================================================
-
-
 
 Database                                                      [database]
 ------------------------------------------------------------------------
@@ -111,6 +108,4 @@ PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                        
 
                                                             [lint, high]
 	foreign key and primary key have different data types	FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS
-
-
 

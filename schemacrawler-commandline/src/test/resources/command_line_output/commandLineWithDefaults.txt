@@ -1,6 +1,5 @@
 
 
-
 Tables
 ========================================================================
 
@@ -17,8 +16,12 @@ Contact details for book authors
   POSTALCODE                        VARCHAR(10)                 
   COUNTRY                           VARCHAR(50)                 
 
+Primary Key
+
                                                            [primary key]
   ID                                ascending                   
+
+Foreign Keys
 
                                            [foreign key, with no action]
   ID <--(0..many) BOOKAUTHORS.AUTHORID                              
@@ -36,6 +39,8 @@ Relationship between books and their authors, along with the latest updated info
   BOOKID                            INTEGER NOT NULL            
   AUTHORID                          INTEGER NOT NULL            
 
+Foreign Keys
+
                                            [foreign key, with no action]
   AUTHORID (0..many)--> AUTHORS.ID                              
 
@@ -51,8 +56,12 @@ Details for published books
                                     Unique (internal) id for book
   PREVIOUSEDITIONID                 INTEGER                     
 
+Primary Key
+
                                                            [primary key]
   ID                                ascending                   
+
+Foreign Keys
 
                                            [foreign key, with no action]
   ID <--(0..many) BOOKAUTHORS.BOOKID                              
@@ -74,6 +83,8 @@ List of book publishers
                                     auto-incremented            
                                     Unique (internal) id for book publisher
 
+Primary Key
+
                                                            [primary key]
   ID                                ascending                   
                                     auto-incremented            
@@ -86,8 +97,12 @@ EXTRA_PK                                                         [table]
   WRITERID                          BIGINT NOT NULL             
   PUBLICATIONID                     INTEGER NOT NULL            
 
+Primary Key
+
                                                            [primary key]
   ID                                ascending                   
+
+Foreign Keys
 
                                            [foreign key, with no action]
   PUBLICATIONID (0..many)--> PUBLICATIONS.ID                              
@@ -107,8 +122,12 @@ PUBLICATIONS                                                     [table]
   ID                                INTEGER NOT NULL            
   WRITERID                          BIGINT NOT NULL             
 
+Primary Key
+
                                                            [primary key]
   ID                                ascending                   
+
+Foreign Keys
 
                                            [foreign key, with no action]
   ID <--(0..many) EXTRA_PK.PUBLICATIONID                              
@@ -133,8 +152,12 @@ WRITERS                                                          [table]
   EMAIL1                            VARCHAR(10)                 
   PUBLICATION_ID                    BIGINT NOT NULL             
 
+Primary Key
+
                                                            [primary key]
   ID                                ascending                   
+
+Foreign Keys
 
                                            [foreign key, with no action]
   PUBLICATION_ID (0..many)--> PUBLICATIONS.ID                              
@@ -155,8 +178,12 @@ WRITERS                                                          [table]
   ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ               BIGINT NOT NULL             
   ΣΥΓΓΡΑΦΈΑΣ                        INTEGER                     
 
+Primary Key
+
                                                            [primary key]
   ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ               ascending                   
+
+Foreign Keys
 
                                            [foreign key, with no action]
   ΣΥΓΓΡΑΦΈΑΣ (0..many)--> WRITERS.ID                              
@@ -168,9 +195,13 @@ REGIONS                                                          [table]
   POSTALCODE                        VARCHAR(10) NOT NULL        
   COUNTRY                           VARCHAR(50) NOT NULL        
 
+Primary Key
+
                                                            [primary key]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
+
+Foreign Keys
 
                                            [foreign key, with no action]
   POSTALCODE <--(0..many) SALES.POSTALCODE                              
@@ -183,10 +214,11 @@ SALES                                                            [table]
   POSTALCODE                        VARCHAR(10) NOT NULL        
   COUNTRY                           VARCHAR(50) NOT NULL        
 
+Foreign Keys
+
                                            [foreign key, with no action]
   POSTALCODE (0..many)--> REGIONS.POSTALCODE                              
   COUNTRY (0..many)--> REGIONS.COUNTRY                              
-
 
 
 
@@ -262,6 +294,4 @@ DIVIDE_BLOCK                                      [procedure, no result]
 
 MERGE_EMPTY_BLOCKS                                [procedure, no result]
 ------------------------------------------------------------------------
-
-
 

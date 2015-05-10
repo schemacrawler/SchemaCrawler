@@ -151,15 +151,16 @@ public final class SchemaDotFormatter
     final Color tableNameBgColor = colorMap.getColor(table);
     final int colspan = options.isShowOrdinalNumbers()? 3: 2;
 
-    out.append("  /* ").append(table.getFullName())
+    formattingHelper.append("  /* ").append(table.getFullName())
       .append(" -=-=-=-=-=-=-=-=-=-=-=-=-=- */").println();
-    out.append("  \"").append(nodeId(table)).append("\" [").println();
-    out.append("    label=<").println();
-    out
+    formattingHelper.append("  \"").append(nodeId(table)).append("\" [")
+      .println();
+    formattingHelper.append("    label=<").println();
+    formattingHelper
       .append("      <table border=\"1\" cellborder=\"0\" cellpadding=\"2\" cellspacing=\"0\" bgcolor=\"white\" color=\"#999999\">")
       .println();
 
-    out
+    formattingHelper
       .append(new TableRow(TextOutputFormat.html)
         .add(newTableCell(tableName,
                           Alignment.left,
@@ -170,18 +171,17 @@ public final class SchemaDotFormatter
                           Alignment.right,
                           false,
                           tableNameBgColor,
-                          1)).toString());
-    out.println();
+                          1)).toString()).println();
 
     printTableRemarks(table);
 
     final List<Column> columns = table.getColumns();
     printTableColumns(columns);
 
-    out.append("      </table>").println();
-    out.append("    >").println();
-    out.append("  ];").println();
-    out.println();
+    formattingHelper.append("      </table>").println();
+    formattingHelper.append("    >").println();
+    formattingHelper.append("  ];").println();
+    formattingHelper.println();
 
     printForeignKeys(table);
 
@@ -190,10 +190,8 @@ public final class SchemaDotFormatter
       printWeakAssociations(table);
     }
 
-    out.println();
-    out.println();
-
-    out.flush();
+    formattingHelper.println();
+    formattingHelper.println();
   }
 
   @Override
@@ -385,10 +383,10 @@ public final class SchemaDotFormatter
           .getAttribute("schemacrawler.table.filtered_out", false);
         if (table.equals(columnRef.getPrimaryKeyColumn().getParent()))
         {
-          out.write(printColumnReference(foreignKey.getName(),
-                                         columnRef,
-                                         fkCardinality,
-                                         isFkColumnFiltered));
+          formattingHelper.append(printColumnReference(foreignKey.getName(),
+                                                       columnRef,
+                                                       fkCardinality,
+                                                       isFkColumnFiltered));
         }
       }
     }
@@ -410,7 +408,7 @@ public final class SchemaDotFormatter
                                             nodeId,
                                             columnName);
 
-    out.write(columnNode);
+    formattingHelper.append(columnNode);
 
     return nodeId;
   }
@@ -438,7 +436,7 @@ public final class SchemaDotFormatter
                         false,
                         Color.white,
                         1));
-    out.println(autoIncrementedRow.toString());
+    formattingHelper.append(autoIncrementedRow.toString()).println();
   }
 
   private void printTableColumnRemarks(final Column column)
@@ -460,7 +458,7 @@ public final class SchemaDotFormatter
                         false,
                         Color.white,
                         1));
-    out.println(remarksRow.toString());
+    formattingHelper.append(remarksRow.toString()).println();
   }
 
   private void printTableColumns(final List<Column> columns)
@@ -513,7 +511,7 @@ public final class SchemaDotFormatter
 
       row.firstCell().addAttribute("port", nodeId(column) + ".start");
       row.lastCell().addAttribute("port", nodeId(column) + ".end");
-      out.println(row.toString());
+      formattingHelper.append(row.toString()).println();
 
       printTableColumnAutoIncremented(column);
       printTableColumnRemarks(column);
@@ -526,9 +524,12 @@ public final class SchemaDotFormatter
     {
       return;
     }
-    out.append(new TableRow(TextOutputFormat.html).add(newTableCell(table
-      .getRemarks(), Alignment.left, false, Color.white, 3)).toString());
-    out.println();
+    formattingHelper.append(new TableRow(TextOutputFormat.html)
+      .add(newTableCell(table.getRemarks(),
+                        Alignment.left,
+                        false,
+                        Color.white,
+                        3)).toString()).println();
   }
 
   private void printWeakAssociations(final Table table)

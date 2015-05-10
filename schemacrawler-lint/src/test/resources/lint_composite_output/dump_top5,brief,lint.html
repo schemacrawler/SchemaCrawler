@@ -44,7 +44,8 @@ caption {
 h1, h2, h3 {
 	font-family: "Palatino Linotype", Georgia, "Times New Roman", serif;
 	margin-top: 1.0rem;
-	margin-bottom: 1.5rem;
+	margin-bottom: 1.5rem;	
+    font-weight: bold;
 }
 
 h1 {
@@ -53,13 +54,13 @@ h1 {
 }
 
 h2 {
-	font-size: 1.2rem;
-	line-height: 1.4rem;
+	font-size: 1.4rem;
+	line-height: 1.6rem;
 }
 
 h3 {
-	font-size: 1.0rem;
-	line-height: 1.2rem;
+	font-size: 1.2rem;
+	line-height: 1.4rem;
 }
 
 dl, ul, ol {
@@ -110,6 +111,18 @@ blockquote: before {
 blockquote p {
 	display: inline;
 	background: #f9f9f9;
+}
+
+h1 {
+    color: maroon;
+}
+
+h2 {
+    color: darkblue;
+}
+
+h3 {
+    color: green;
 }
 
 a:link, a:visited {
@@ -168,7 +181,29 @@ a:hover, a:active {
 }
 
 .definition {
-	white-space: pre-line;
+    word-break: normal; 
+    word-wrap: break-word;
+    white-space: pre;
+    white-space: -moz-pre-wrap; 
+    white-space: pre-wrap;
+    white-space: pre\9; 
+    
+    font-family: 'Lucida Console', Monaco, 'Courier New', monospace;
+    font-size: 1.0rem;
+    font-weight: 100;
+    
+    line-height: 1.2rem;
+    color: rgb(16, 16, 16); 
+}
+
+td.section {
+    font-family: "Palatino Linotype", Georgia, "Times New Roman", serif;
+    padding-top: 1.5rem;
+    padding-bottom: 1.0rem;
+    font-weight: bold;
+    font-size: 1.2rem;
+    line-height: 1.2rem;
+    color: rgb(100, 100, 100);
 }
 
 .data_binary {
@@ -193,8 +228,9 @@ a:hover, a:active {
 <p>&#160;</p>
 <h2>Query</h2>
 
-<table>
 
+
+<table>
   <caption style='background-color: #FFFFFF;'><span class='caption_name'>PUBLIC.FOR_LINT.EXTRA_PK</span></caption>
 
 	<tr>
@@ -205,8 +241,9 @@ a:hover, a:active {
 </table>
 <p>&#160;</p>
 
-<table>
 
+
+<table>
   <caption style='background-color: #FFFFFF;'><span class='caption_name'>PUBLIC.FOR_LINT."Global Counts"</span></caption>
 
 	<tr>
@@ -215,8 +252,9 @@ a:hover, a:active {
 </table>
 <p>&#160;</p>
 
-<table>
 
+
+<table>
   <caption style='background-color: #FFFFFF;'><span class='caption_name'>PUBLIC.FOR_LINT.PUBLICATIONS</span></caption>
 
 	<tr>
@@ -230,8 +268,9 @@ a:hover, a:active {
 </table>
 <p>&#160;</p>
 
-<table>
 
+
+<table>
   <caption style='background-color: #FFFFFF;'><span class='caption_name'>PUBLIC.FOR_LINT.WRITERS</span></caption>
 
 	<tr>
@@ -257,8 +296,9 @@ a:hover, a:active {
 </table>
 <p>&#160;</p>
 
-<table>
 
+
+<table>
   <caption style='background-color: #FFFFFF;'><span class='caption_name'>PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</span></caption>
 
 	<tr>
@@ -272,8 +312,9 @@ a:hover, a:active {
 <p>&#160;</p>
 <h2>Tables</h2>
 
-<table>
 
+
+<table>
   <caption style='background-color: #F2EACE;'><span id='extra_pk_334890da' class='caption_name'>PUBLIC.FOR_LINT.EXTRA_PK</span> <span class='caption_description'>[table]</span></caption>
 
 	<tr>
@@ -295,6 +336,12 @@ a:hover, a:active {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
+		<td colspan='3' class='section'>Primary Key</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
 		<td colspan='2' class='name'>PK_EXTRA_PK</td>
 		<td class='description right'>[primary key]</td>
 	</tr>
@@ -302,6 +349,12 @@ a:hover, a:active {
 		<td class='spacer'></td>
 		<td class='subname'>ID</td>
 		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='3' class='section'>Foreign Keys</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -330,15 +383,17 @@ a:hover, a:active {
 </table>
 <p>&#160;</p>
 
-<table>
 
+
+<table>
   <caption style='background-color: #F2EACE;'><span id='globalcounts_986b8a53' class='caption_name'>PUBLIC.FOR_LINT."Global Counts"</span> <span class='caption_description'>[table]</span></caption>
 
 </table>
 <p>&#160;</p>
 
-<table>
 
+
+<table>
   <caption style='background-color: #F2EACE;'><span id='publications_949377f7' class='caption_name'>PUBLIC.FOR_LINT.PUBLICATIONS</span> <span class='caption_description'>[table]</span></caption>
 
 	<tr>
@@ -355,6 +410,12 @@ a:hover, a:active {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
+		<td colspan='3' class='section'>Primary Key</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
 		<td colspan='2' class='name'>PK_PUBLICATIONS</td>
 		<td class='description right'>[primary key]</td>
 	</tr>
@@ -362,6 +423,12 @@ a:hover, a:active {
 		<td class='spacer'></td>
 		<td class='subname'>ID</td>
 		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='3' class='section'>Foreign Keys</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -402,8 +469,9 @@ a:hover, a:active {
 </table>
 <p>&#160;</p>
 
-<table>
 
+
+<table>
   <caption style='background-color: #F2EACE;'><span id='writers_bf84ac10' class='caption_name'>PUBLIC.FOR_LINT.WRITERS</span> <span class='caption_description'>[table]</span></caption>
 
 	<tr>
@@ -455,6 +523,12 @@ a:hover, a:active {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
+		<td colspan='3' class='section'>Primary Key</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
 		<td colspan='2' class='name'>PK_WRITERS</td>
 		<td class='description right'>[primary key]</td>
 	</tr>
@@ -462,6 +536,12 @@ a:hover, a:active {
 		<td class='spacer'></td>
 		<td class='subname'>ID</td>
 		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='3' class='section'>Foreign Keys</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -514,8 +594,9 @@ a:hover, a:active {
 </table>
 <p>&#160;</p>
 
-<table>
 
+
+<table>
   <caption style='background-color: #F2EACE;'><span id='πίνακαβάσησδεδομένων_199e00a3' class='caption_name'>PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</span> <span class='caption_description'>[table]</span></caption>
 
 	<tr>
@@ -532,6 +613,12 @@ a:hover, a:active {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
+		<td colspan='3' class='section'>Primary Key</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
 		<td colspan='2' class='name'>PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</td>
 		<td class='description right'>[primary key]</td>
 	</tr>
@@ -539,6 +626,12 @@ a:hover, a:active {
 		<td class='spacer'></td>
 		<td class='subname'>ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</td>
 		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='3' class='section'>Foreign Keys</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -559,7 +652,6 @@ a:hover, a:active {
 <h2>Lints</h2>
 
 <table>
-
   <caption style='background-color: #FFFFFF;'><span class='caption_name'>Database</span> <span class='caption_description'>[database]</span></caption>
 
 	<tr>
@@ -584,6 +676,7 @@ a:hover, a:active {
 
 <table>
 
+
   <caption style='background-color: #F2EACE;'><span id='extra_pk_334890da' class='caption_name'>PUBLIC.FOR_LINT.EXTRA_PK</span> <span class='caption_description'>[table]</span></caption>
 
 	<tr>
@@ -602,6 +695,7 @@ a:hover, a:active {
 <p>&#160;</p>
 
 <table>
+
 
   <caption style='background-color: #F2EACE;'><span id='globalcounts_986b8a53' class='caption_name'>PUBLIC.FOR_LINT."Global Counts"</span> <span class='caption_description'>[table]</span></caption>
 
@@ -637,6 +731,7 @@ a:hover, a:active {
 
 <table>
 
+
   <caption style='background-color: #F2EACE;'><span id='publications_949377f7' class='caption_name'>PUBLIC.FOR_LINT.PUBLICATIONS</span> <span class='caption_description'>[table]</span></caption>
 
 	<tr>
@@ -664,6 +759,7 @@ a:hover, a:active {
 <p>&#160;</p>
 
 <table>
+
 
   <caption style='background-color: #F2EACE;'><span id='writers_bf84ac10' class='caption_name'>PUBLIC.FOR_LINT.WRITERS</span> <span class='caption_description'>[table]</span></caption>
 
@@ -752,6 +848,7 @@ a:hover, a:active {
 <p>&#160;</p>
 
 <table>
+
 
   <caption style='background-color: #F2EACE;'><span id='πίνακαβάσησδεδομένων_199e00a3' class='caption_name'>PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</span> <span class='caption_description'>[table]</span></caption>
 
