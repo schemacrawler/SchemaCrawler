@@ -78,7 +78,7 @@ final class DataTextFormatter
   {
     if (operation == Operation.count)
     {
-      formattingHelper.createObjectEnd();
+      formattingHelper.writeObjectEnd();
     }
 
     super.end();
@@ -178,7 +178,7 @@ final class DataTextFormatter
     }
     final String message = getMessage(aggregate);
     //
-    formattingHelper.createNameValueRow(title, message, Alignment.right);
+    formattingHelper.writeNameValueRow(title, message, Alignment.right);
   }
 
   private void handleData(final String title, final ResultSet rows)
@@ -202,14 +202,14 @@ final class DataTextFormatter
     {
       formattingHelper.println();
       formattingHelper.println();
-      formattingHelper.createObjectStart();
-      formattingHelper.createObjectNameRow("", title, "", Color.white);
+      formattingHelper.writeObjectStart();
+      formattingHelper.writeObjectNameRow("", title, "", Color.white);
       try
       {
         final DataResultSet dataRows = new DataResultSet(rows,
                                                          options.isShowLobs());
 
-        formattingHelper.createRowHeader(dataRows.getColumnNames());
+        formattingHelper.writeRowHeader(dataRows.getColumnNames());
 
         iterateRows(dataRows);
       }
@@ -217,7 +217,7 @@ final class DataTextFormatter
       {
         throw new SchemaCrawlerException(e.getMessage(), e);
       }
-      formattingHelper.createObjectEnd();
+      formattingHelper.writeObjectEnd();
     }
 
     dataBlockCount++;
@@ -231,7 +231,7 @@ final class DataTextFormatter
       final List<Object> currentRow = dataRows.row();
       final Object[] columnData = currentRow.toArray(new Object[currentRow
         .size()]);
-      formattingHelper.createRow(columnData);
+      formattingHelper.writeRow(columnData);
     }
   }
 
@@ -239,18 +239,18 @@ final class DataTextFormatter
   {
     if (operation != null)
     {
-      formattingHelper.createHeader(DocumentHeaderType.subTitle,
+      formattingHelper.writeHeader(DocumentHeaderType.subTitle,
                                     operation.getDescription());
     }
     else
     {
-      formattingHelper.createHeader(DocumentHeaderType.subTitle, "Query");
+      formattingHelper.writeHeader(DocumentHeaderType.subTitle, "Query");
     }
 
     if (operation == Operation.count)
     {
-      formattingHelper.createObjectStart();
-      formattingHelper.createObjectNameRow("",
+      formattingHelper.writeObjectStart();
+      formattingHelper.writeObjectNameRow("",
                                            operation.getDescription(),
                                            "",
                                            Color.white);
