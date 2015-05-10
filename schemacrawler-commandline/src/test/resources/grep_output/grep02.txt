@@ -1,6 +1,5 @@
 
 
-
 Tables
 ========================================================================
 
@@ -19,11 +18,17 @@ Contact details for book authors
   POSTALCODE                        VARCHAR(10)                 
   COUNTRY                           VARCHAR(50)                 
 
+Primary Key
+
 PK_AUTHORS                                                 [primary key]
   ID                                ascending                   
 
+Foreign Keys
+
 FK_Z_AUTHOR                                [foreign key, with no action]
   ID <--(0..many) PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID                              
+
+Indices
 
 SYS_IDX_PK_AUTHORS_10097                                  [unique index]
   ID                                ascending                   
@@ -38,8 +43,12 @@ IDX_A_AUTHORS                                         [non-unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
 
+Triggers
+
 TRG_AUTHORS                             [trigger, after delete, per row]
-  UPDATE BOOKS.PUBLISHERS SET PUBLISHER='Jacob'WHERE PUBLISHER='John'
+UPDATE BOOKS.PUBLISHERS SET PUBLISHER='Jacob'WHERE PUBLISHER='John'
+
+Table Constraints
 
 CHECK_UPPERCASE_STATE                                 [check constraint]
 BOOKS.AUTHORS.STATE=UPPER(BOOKS.AUTHORS.STATE)
@@ -61,6 +70,7 @@ PUBLIC.BOOKS.AUTHORSLIST                                          [view]
   FIRSTNAME                         VARCHAR(20)                 
   LASTNAME                          VARCHAR(20)                 
 
+Definition
                                                             [definition]
 SELECT ID,FIRSTNAME,LASTNAME FROM BOOKS.AUTHORS
 
@@ -87,8 +97,12 @@ PUBLIC.FOR_LINT.WRITERS                                          [table]
   HOMEEMAIL12                       VARCHAR(10)                 
   PUBLICATION_ID                    BIGINT NOT NULL             
 
+Primary Key
+
 PK_WRITERS                                                 [primary key]
   ID                                ascending                   
+
+Foreign Keys
 
 FK_WRITERS_PUBLICATION                     [foreign key, with no action]
   PUBLICATION_ID (0..many)--> PUBLIC.FOR_LINT.PUBLICATIONS.ID                              
@@ -101,6 +115,8 @@ FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
 
 FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS       [foreign key, with no action]
   ID <--(0..many) PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ                              
+
+Indices
 
 SYS_IDX_PK_WRITERS_10161                                  [unique index]
   ID                                ascending                   
@@ -126,6 +142,8 @@ IDX_A_WRITERS                                         [non-unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
 
+Table Constraints
+
 CHECK_UPPERCASE_STATE                                 [check constraint]
 FOR_LINT.WRITERS.STATE=UPPER(FOR_LINT.WRITERS.STATE)
 
@@ -143,6 +161,4 @@ FOR_LINT.WRITERS.ADDRESS2 IS NOT NULL
 
 SYS_CT_10160                                          [check constraint]
 FOR_LINT.WRITERS.PUBLICATION_ID IS NOT NULL
-
-
 

@@ -38,7 +38,8 @@ caption {
 h1, h2, h3 {
 	font-family: "Palatino Linotype", Georgia, "Times New Roman", serif;
 	margin-top: 1.0rem;
-	margin-bottom: 1.5rem;
+	margin-bottom: 1.5rem;	
+    font-weight: bold;
 }
 
 h1 {
@@ -47,13 +48,13 @@ h1 {
 }
 
 h2 {
-	font-size: 1.2rem;
-	line-height: 1.4rem;
+	font-size: 1.4rem;
+	line-height: 1.6rem;
 }
 
 h3 {
-	font-size: 1.0rem;
-	line-height: 1.2rem;
+	font-size: 1.2rem;
+	line-height: 1.4rem;
 }
 
 dl, ul, ol {

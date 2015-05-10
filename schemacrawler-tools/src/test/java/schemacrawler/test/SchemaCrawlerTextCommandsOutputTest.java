@@ -28,6 +28,7 @@ import static schemacrawler.test.utility.TestUtility.createTempFile;
 
 import java.nio.file.Path;
 
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import schemacrawler.schemacrawler.Config;
@@ -45,6 +46,13 @@ public class SchemaCrawlerTextCommandsOutputTest
 {
 
   private static final String COMMAND_OUTPUT = "command_output/";
+
+  @BeforeClass
+  public static void before()
+    throws Exception
+  {
+    clean(COMMAND_OUTPUT);
+  }
 
   @Test
   public void countOutput()
@@ -138,8 +146,6 @@ public class SchemaCrawlerTextCommandsOutputTest
   private void textOutputTest(final String command, final Config config)
     throws Exception
   {
-    clean(COMMAND_OUTPUT);
-
     try (final TestWriter writer = new TestWriter(TextOutputFormat.text.getFormat());)
     {
       final OutputOptions outputOptions = new OutputOptions(TextOutputFormat.text,

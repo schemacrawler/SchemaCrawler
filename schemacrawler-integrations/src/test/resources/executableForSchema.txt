@@ -1,6 +1,5 @@
 
 
-
 Tables
 ========================================================================
 
@@ -19,11 +18,17 @@ Contact details for book authors
 8   POSTALCODE                        VARCHAR(10)                 
 9   COUNTRY                           VARCHAR(50)                 
 
+Primary Key
+
 PK_AUTHORS                                                 [primary key]
 1   ID                                ascending                   
 
+Foreign Keys
+
 FK_Z_AUTHOR                                [foreign key, with no action]
  1  ID <--(0..many) PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID                              
+
+Indices
 
 SYS_IDX_PK_AUTHORS_10097                                  [unique index]
 1   ID                                ascending                   
@@ -38,8 +43,12 @@ IDX_A_AUTHORS                                         [non-unique index]
 8   POSTALCODE                        ascending                   
 9   COUNTRY                           ascending                   
 
+Triggers
+
 TRG_AUTHORS                             [trigger, after delete, per row]
-  UPDATE BOOKS.PUBLISHERS SET PUBLISHER='Jacob'WHERE PUBLISHER='John'
+UPDATE BOOKS.PUBLISHERS SET PUBLISHER='Jacob'WHERE PUBLISHER='John'
+
+Table Constraints
 
 CHECK_UPPERCASE_STATE                                 [check constraint]
 
@@ -66,11 +75,15 @@ Relationship between books and their authors, along with the latest updated info
 2   AUTHORID                          INTEGER NOT NULL            
 3   "UPDATE"                          CLOB                        
 
+Foreign Keys
+
 FK_Z_AUTHOR                                [foreign key, with no action]
  1  AUTHORID (0..many)--> PUBLIC.BOOKS.AUTHORS.ID                              
 
 FK_Y_BOOK                                  [foreign key, with no action]
  1  BOOKID (0..many)--> PUBLIC.BOOKS.BOOKS.ID                              
+
+Indices
 
 SYS_IDX_10118                                         [non-unique index]
 2   AUTHORID                          ascending                   
@@ -81,6 +94,8 @@ SYS_IDX_10116                                         [non-unique index]
 UIDX_BOOKAUTHORS                                          [unique index]
 1   BOOKID                            ascending                   
 2   AUTHORID                          ascending                   
+
+Table Constraints
 
 SYS_CT_10111                                          [check constraint]
 
@@ -105,14 +120,20 @@ Details for published books
                                     Current price for the book  
 7   PREVIOUSEDITIONID                 INTEGER                     
 
+Primary Key
+
 PK_BOOKS                                                   [primary key]
 1   ID                                ascending                   
+
+Foreign Keys
 
 FK_Y_BOOK                                  [foreign key, with no action]
  1  ID <--(0..many) PUBLIC.BOOKS.BOOKAUTHORS.BOOKID                              
 
 FK_PREVIOUSEDITION                         [foreign key, with no action]
  1  ID <--(0..1) PREVIOUSEDITIONID                                
+
+Indices
 
 SYS_IDX_PK_BOOKS_10105                                    [unique index]
 1   ID                                ascending                   
@@ -122,6 +143,8 @@ UIDX_PREVIOUSEDITION                                      [unique index]
 
 SYS_IDX_10109                                         [non-unique index]
 7   PREVIOUSEDITIONID                 ascending                   
+
+Table Constraints
 
 SYS_CT_10102                                          [check constraint]
 
@@ -146,13 +169,19 @@ List of book publishers
 2   PUBLISHER                         VARCHAR(255)                
                                     Name of book publisher      
 
+Primary Key
+
 SYS_PK_10092                                               [primary key]
 1   ID                                ascending                   
                                     auto-incremented            
 
+Indices
+
 SYS_IDX_SYS_PK_10092_10093                                [unique index]
 1   ID                                ascending                   
                                     auto-incremented            
+
+Table Constraints
 
 
 
@@ -162,14 +191,20 @@ PUBLIC.FOR_LINT.EXTRA_PK                                         [table]
 2   WRITERID                          BIGINT NOT NULL             
 3   PUBLICATIONID                     INTEGER NOT NULL            
 
+Primary Key
+
 PK_EXTRA_PK                                                [primary key]
 1   ID                                ascending                   
+
+Foreign Keys
 
 FK_PUBLICATION_JOIN                        [foreign key, with no action]
  1  PUBLICATIONID (0..many)--> PUBLIC.FOR_LINT.PUBLICATIONS.ID                              
 
 FK_WRITER_JOIN                             [foreign key, with no action]
  1  WRITERID (0..many)--> PUBLIC.FOR_LINT.WRITERS.ID                              
+
+Indices
 
 SYS_IDX_PK_EXTRA_PK_10181                                 [unique index]
 1   ID                                ascending                   
@@ -179,6 +214,8 @@ SYS_IDX_10187                                         [non-unique index]
 
 SYS_IDX_10185                                         [non-unique index]
 2   WRITERID                          ascending                   
+
+Table Constraints
 
 SYS_CT_10178                                          [check constraint]
 
@@ -205,8 +242,12 @@ PUBLIC.FOR_LINT.PUBLICATIONS                                     [table]
 7   "UPDATE"                          CLOB                        
 8   PRESS_RELEASE                     CLOB                        
 
+Primary Key
+
 PK_PUBLICATIONS                                            [primary key]
 1   ID                                ascending                   
+
+Foreign Keys
 
 FK_PUBLICATION_JOIN                        [foreign key, with no action]
  1  ID <--(0..many) PUBLIC.FOR_LINT.EXTRA_PK.PUBLICATIONID                              
@@ -217,11 +258,15 @@ FK_WRITERS_PUBLICATION                     [foreign key, with no action]
 FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
  1  WRITERID (0..many)--> PUBLIC.FOR_LINT.WRITERS.ID                              
 
+Indices
+
 SYS_IDX_PK_PUBLICATIONS_10171                             [unique index]
 1   ID                                ascending                   
 
 SYS_IDX_10175                                         [non-unique index]
 4   WRITERID                          ascending                   
+
+Table Constraints
 
 SYS_CT_10168                                          [check constraint]
 
@@ -252,8 +297,12 @@ PUBLIC.FOR_LINT.WRITERS                                          [table]
 17  HOMEEMAIL12                       VARCHAR(10)                 
 18  PUBLICATION_ID                    BIGINT NOT NULL             
 
+Primary Key
+
 PK_WRITERS                                                 [primary key]
 1   ID                                ascending                   
+
+Foreign Keys
 
 FK_WRITERS_PUBLICATION                     [foreign key, with no action]
  1  PUBLICATION_ID (0..many)--> PUBLIC.FOR_LINT.PUBLICATIONS.ID                              
@@ -266,6 +315,8 @@ FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
 
 FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS       [foreign key, with no action]
  1  ID <--(0..many) PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ                              
+
+Indices
 
 SYS_IDX_PK_WRITERS_10161                                  [unique index]
 1   ID                                ascending                   
@@ -291,6 +342,8 @@ IDX_A_WRITERS                                         [non-unique index]
 8   POSTALCODE                        ascending                   
 9   COUNTRY                           ascending                   
 
+Table Constraints
+
 CHECK_UPPERCASE_STATE                                 [check constraint]
 
 SYS_CT_10156                                          [check constraint]
@@ -311,17 +364,25 @@ PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                        
 2   ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ           VARCHAR(10)                 
 3   ΣΥΓΓΡΑΦΈΑΣ                        INTEGER                     
 
+Primary Key
+
 PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                                    [primary key]
 1   ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ               ascending                   
 
+Foreign Keys
+
 FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS       [foreign key, with no action]
  1  ΣΥΓΓΡΑΦΈΑΣ (0..many)--> PUBLIC.FOR_LINT.WRITERS.ID                              
+
+Indices
 
 SYS_IDX_PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_10190                     [unique index]
 1   ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ               ascending                   
 
 SYS_IDX_10192                                         [non-unique index]
 3   ΣΥΓΓΡΑΦΈΑΣ                        ascending                   
+
+Table Constraints
 
 SYS_CT_10189                                          [check constraint]
 
@@ -334,17 +395,25 @@ PUBLIC."PUBLISHER SALES".REGIONS                                 [table]
 3   POSTALCODE                        VARCHAR(10) NOT NULL        
 4   COUNTRY                           VARCHAR(50) NOT NULL        
 
+Primary Key
+
 PK_CUSTOMERS                                               [primary key]
 3   POSTALCODE                        ascending                   
 4   COUNTRY                           ascending                   
+
+Foreign Keys
 
 FK_SALES_REGIONS                           [foreign key, with no action]
  1  POSTALCODE <--(0..many) PUBLIC."PUBLISHER SALES".SALES.POSTALCODE                              
  2  COUNTRY <--(0..many) PUBLIC."PUBLISHER SALES".SALES.COUNTRY                              
 
+Indices
+
 SYS_IDX_PK_CUSTOMERS_10144                                [unique index]
 3   POSTALCODE                        ascending                   
 4   COUNTRY                           ascending                   
+
+Table Constraints
 
 SYS_CT_10140                                          [check constraint]
 
@@ -364,18 +433,23 @@ PUBLIC."PUBLISHER SALES".SALES                                   [table]
 4   PERIODENDDATE                     DATE                        
 5   TOTALAMOUNT                       DOUBLE(64, 0)               
 
+Foreign Keys
+
 FK_SALES_REGIONS                           [foreign key, with no action]
  1  POSTALCODE (0..many)--> PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE                              
  2  COUNTRY (0..many)--> PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY                              
+
+Indices
 
 SYS_IDX_10154                                         [non-unique index]
 1   POSTALCODE                        ascending                   
 2   COUNTRY                           ascending                   
 
+Table Constraints
+
 SYS_CT_10149                                          [check constraint]
 
 SYS_CT_10150                                          [check constraint]
-
 
 
 
@@ -482,7 +556,6 @@ PUBLIC.SYSTEM_LOBS.MERGE_EMPTY_BLOCKS             [procedure, no result]
 
 
 
-
 Sequences
 ========================================================================
 
@@ -503,6 +576,4 @@ PUBLIC.SYSTEM_LOBS.LOB_ID                                     [sequence]
   minimum value                     -9223372036854775808        
   maximum value                     9223372036854775807         
   cycle                             false                       
-
-
 

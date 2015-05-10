@@ -1,6 +1,5 @@
 
 
-
 Query
 ========================================================================
 
@@ -116,7 +115,6 @@ PUBLIC	SYSTEM_LOBS	BLOCKS	SYSTEM TABLE	NULL	NULL	NULL	NULL	NULL	NULL	MEMORY	fals
 PUBLIC	SYSTEM_LOBS	LOBS	SYSTEM TABLE	NULL	NULL	NULL	NULL	NULL	NULL	MEMORY	false	NULL
 PUBLIC	SYSTEM_LOBS	LOB_IDS	SYSTEM TABLE	NULL	NULL	NULL	NULL	NULL	NULL	MEMORY	false	NULL
 PUBLIC	SYSTEM_LOBS	PARTS	SYSTEM TABLE	NULL	NULL	NULL	NULL	NULL	NULL	MEMORY	false	NULL
-
 
 
 
@@ -343,11 +341,8 @@ POSTALCODE	COUNTRY	BOOKID	PERIODENDDATE	TOTALAMOUNT
 
 
 
-
 Row Count
 ========================================================================
-
-
 
 Row Count                                                               
 ------------------------------------------------------------------------
@@ -367,7 +362,6 @@ PUBLIC."PUBLISHER SALES".SALES                                   20 rows
 
 
 
-
 Tables
 ========================================================================
 
@@ -384,8 +378,12 @@ Contact details for book authors
   POSTALCODE                        VARCHAR(10)                 
   COUNTRY                           VARCHAR(50)                 
 
+Primary Key
+
 PK_AUTHORS                                                 [primary key]
   ID                                ascending                   
+
+Foreign Keys
 
 FK_Z_AUTHOR                                [foreign key, with no action]
   ID <--(0..many) PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID                              
@@ -403,6 +401,8 @@ Relationship between books and their authors, along with the latest updated info
   BOOKID                            INTEGER NOT NULL            
   AUTHORID                          INTEGER NOT NULL            
 
+Foreign Keys
+
 FK_Z_AUTHOR                                [foreign key, with no action]
   AUTHORID (0..many)--> PUBLIC.BOOKS.AUTHORS.ID                              
 
@@ -418,8 +418,12 @@ Details for published books
                                     Unique (internal) id for book
   PREVIOUSEDITIONID                 INTEGER                     
 
+Primary Key
+
 PK_BOOKS                                                   [primary key]
   ID                                ascending                   
+
+Foreign Keys
 
 FK_Y_BOOK                                  [foreign key, with no action]
   ID <--(0..many) PUBLIC.BOOKS.BOOKAUTHORS.BOOKID                              
@@ -441,6 +445,8 @@ List of book publishers
                                     auto-incremented            
                                     Unique (internal) id for book publisher
 
+Primary Key
+
 SYS_PK_10092                                               [primary key]
   ID                                ascending                   
                                     auto-incremented            
@@ -453,8 +459,12 @@ PUBLIC.FOR_LINT.EXTRA_PK                                         [table]
   WRITERID                          BIGINT NOT NULL             
   PUBLICATIONID                     INTEGER NOT NULL            
 
+Primary Key
+
 PK_EXTRA_PK                                                [primary key]
   ID                                ascending                   
+
+Foreign Keys
 
 FK_PUBLICATION_JOIN                        [foreign key, with no action]
   PUBLICATIONID (0..many)--> PUBLIC.FOR_LINT.PUBLICATIONS.ID                              
@@ -474,8 +484,12 @@ PUBLIC.FOR_LINT.PUBLICATIONS                                     [table]
   ID                                INTEGER NOT NULL            
   WRITERID                          BIGINT NOT NULL             
 
+Primary Key
+
 PK_PUBLICATIONS                                            [primary key]
   ID                                ascending                   
+
+Foreign Keys
 
 FK_PUBLICATION_JOIN                        [foreign key, with no action]
   ID <--(0..many) PUBLIC.FOR_LINT.EXTRA_PK.PUBLICATIONID                              
@@ -500,8 +514,12 @@ PUBLIC.FOR_LINT.WRITERS                                          [table]
   EMAIL1                            VARCHAR(10)                 
   PUBLICATION_ID                    BIGINT NOT NULL             
 
+Primary Key
+
 PK_WRITERS                                                 [primary key]
   ID                                ascending                   
+
+Foreign Keys
 
 FK_WRITERS_PUBLICATION                     [foreign key, with no action]
   PUBLICATION_ID (0..many)--> PUBLIC.FOR_LINT.PUBLICATIONS.ID                              
@@ -522,8 +540,12 @@ PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                        
   ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ               BIGINT NOT NULL             
   ΣΥΓΓΡΑΦΈΑΣ                        INTEGER                     
 
+Primary Key
+
 PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                                    [primary key]
   ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ               ascending                   
+
+Foreign Keys
 
 FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS       [foreign key, with no action]
   ΣΥΓΓΡΑΦΈΑΣ (0..many)--> PUBLIC.FOR_LINT.WRITERS.ID                              
@@ -535,9 +557,13 @@ PUBLIC."PUBLISHER SALES".REGIONS                                 [table]
   POSTALCODE                        VARCHAR(10) NOT NULL        
   COUNTRY                           VARCHAR(50) NOT NULL        
 
+Primary Key
+
 PK_CUSTOMERS                                               [primary key]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
+
+Foreign Keys
 
 FK_SALES_REGIONS                           [foreign key, with no action]
   POSTALCODE <--(0..many) PUBLIC."PUBLISHER SALES".SALES.POSTALCODE                              
@@ -550,10 +576,11 @@ PUBLIC."PUBLISHER SALES".SALES                                   [table]
   POSTALCODE                        VARCHAR(10) NOT NULL        
   COUNTRY                           VARCHAR(50) NOT NULL        
 
+Foreign Keys
+
 FK_SALES_REGIONS                           [foreign key, with no action]
   POSTALCODE (0..many)--> PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE                              
   COUNTRY (0..many)--> PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY                              
-
 
 
 
@@ -582,7 +609,6 @@ PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
 
 
 
-
 Sequences
 ========================================================================
 
@@ -590,6 +616,4 @@ Sequences
 
 PUBLIC.BOOKS.PUBLISHER_ID_SEQ                                 [sequence]
 ------------------------------------------------------------------------
-
-
 

@@ -24,6 +24,7 @@ package schemacrawler.tools.text.utility;
 import static sf.util.Utility.isBlank;
 
 import java.awt.Color;
+import java.io.PrintWriter;
 
 import schemacrawler.tools.options.TextOutputFormat;
 
@@ -36,37 +37,30 @@ public class PlainTextFormattingHelper
   extends BaseTextFormattingHelper
 {
 
-  /**
-   * Constructor.
-   *
-   * @param outputFormat
-   *        Output format - text or CSV.
-   */
-  public PlainTextFormattingHelper(final TextOutputFormat outputFormat)
+  public PlainTextFormattingHelper(final PrintWriter out,
+                                   final TextOutputFormat outputFormat)
   {
-    super(outputFormat);
+    super(out, outputFormat);
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public String createDocumentEnd()
+  public void createDocumentEnd()
   {
-    return "";
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public String createDocumentStart()
+  public void createDocumentStart()
   {
-    return "";
   }
 
   @Override
-  public String createHeader(final DocumentHeaderType type, final String header)
+  public void createHeader(final DocumentHeaderType type, final String header)
   {
     if (!isBlank(header))
     {
@@ -101,12 +95,8 @@ public class PlainTextFormattingHelper
             break;
         }
       }
-      return System.lineSeparator() + prefix + header + System.lineSeparator()
-             + separator + System.lineSeparator() + prefix;
-    }
-    else
-    {
-      return "";
+      out.println(System.lineSeparator() + prefix + header
+                  + System.lineSeparator() + separator + prefix);
     }
   }
 
@@ -120,32 +110,30 @@ public class PlainTextFormattingHelper
    * {@inheritDoc}
    */
   @Override
-  public String createObjectEnd()
+  public void createObjectEnd()
   {
-    return System.lineSeparator();
+    out.println();
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public String createObjectNameRow(final String id,
-                                    final String name,
-                                    final String description,
-                                    final Color backgroundColor)
+  public void createObjectNameRow(final String id,
+                                  final String name,
+                                  final String description,
+                                  final Color backgroundColor)
   {
-    final String row = createNameRow(name, description)
-                       + System.lineSeparator() + DASHED_SEPARATOR;
-    return row;
+    createNameRow(name, description);
+    out.println(DASHED_SEPARATOR);
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public String createObjectStart()
+  public void createObjectStart()
   {
-    return "";
   }
 
   @Override

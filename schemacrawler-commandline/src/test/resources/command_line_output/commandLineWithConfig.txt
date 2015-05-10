@@ -1,6 +1,5 @@
 
 
-
 Tables
 ========================================================================
 
@@ -13,8 +12,12 @@ Details for published books
                                     Unique (internal) id for book
   PREVIOUSEDITIONID                 INTEGER                     
 
+Primary Key
+
 PK_BOOKS                                                   [primary key]
   ID                                ascending                   
+
+Foreign Keys
 
 FK_Y_BOOK                                  [foreign key, with no action]
   ID <-- BOOKAUTHORS.BOOKID                                     
@@ -35,6 +38,8 @@ List of book publishers
   ID                                INTEGER NOT NULL            
                                     auto-incremented            
                                     Unique (internal) id for book publisher
+
+Primary Key
 
 SYS_PK_10092                                               [primary key]
   ID                                ascending                   
@@ -59,8 +64,12 @@ WRITERS                                                          [table]
   EMAIL1                            VARCHAR(10)                 
   PUBLICATION_ID                    BIGINT NOT NULL             
 
+Primary Key
+
 PK_WRITERS                                                 [primary key]
   ID                                ascending                   
+
+Foreign Keys
 
 FK_WRITERS_PUBLICATION                     [foreign key, with no action]
   PUBLICATION_ID (0..many)--> PUBLICATIONS.ID                              
@@ -81,12 +90,15 @@ FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS       [foreign key, wit
   ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ               BIGINT NOT NULL             
   ΣΥΓΓΡΑΦΈΑΣ                        INTEGER                     
 
+Primary Key
+
 PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                                    [primary key]
   ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ               ascending                   
 
+Foreign Keys
+
 FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS       [foreign key, with no action]
   ΣΥΓΓΡΑΦΈΑΣ (0..many)--> WRITERS.ID                              
-
 
 
 
@@ -140,7 +152,6 @@ MERGE_EMPTY_BLOCKS                                [procedure, no result]
 
 
 
-
 Sequences
 ========================================================================
 
@@ -153,6 +164,4 @@ PUBLISHER_ID_SEQ                                              [sequence]
 
 LOB_ID                                                        [sequence]
 ------------------------------------------------------------------------
-
-
 

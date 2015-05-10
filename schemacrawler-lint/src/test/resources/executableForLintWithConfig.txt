@@ -1,6 +1,5 @@
 
 
-
 Lints
 ========================================================================
 
@@ -19,6 +18,4 @@ PUBLIC.FOR_LINT."Global Counts"                                  [table]
 
                                                           [lint, medium]
 	single column	
-
-
 

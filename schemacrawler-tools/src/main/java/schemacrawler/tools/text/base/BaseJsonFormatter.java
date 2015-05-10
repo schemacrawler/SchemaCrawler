@@ -34,6 +34,7 @@ import schemacrawler.schema.JdbcDriverProperty;
 import schemacrawler.schema.SchemaCrawlerInfo;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.text.utility.JsonFormattingHelper;
 import schemacrawler.tools.text.utility.org.json.JSONArray;
 import schemacrawler.tools.text.utility.org.json.JSONException;
 import schemacrawler.tools.text.utility.org.json.JSONObject;
@@ -67,7 +68,7 @@ public abstract class BaseJsonFormatter<O extends BaseTextOptions>
   {
     if (!options.isNoHeader())
     {
-      out.println("[");
+      formattingHelper.append("[").println();
     }
   }
 
@@ -75,24 +76,44 @@ public abstract class BaseJsonFormatter<O extends BaseTextOptions>
   public void end()
     throws SchemaCrawlerException
   {
+    ((JsonFormattingHelper) formattingHelper).write(jsonRoot);
+
+    if (options.isNoFooter())
+    {
+      formattingHelper.append(",").println();
+    }
+    else
+    {
+      formattingHelper.append("]").println();
+    }
+
+    super.end();
+  }
+
+  @Override
+  public void handle(final CrawlHeaderInfo crawlHeaderInfo)
+    throws SchemaCrawlerException
+  {
+    if (options.isNoInfo() || crawlHeaderInfo == null)
+    {
+      return;
+    }
+
     try
     {
-      jsonRoot.write(out, 2);
+      final JSONObject jsonSchemaCrawlerHeaderInfo = new JSONObject();
+      jsonRoot.put("schemaCrawlerHeaderInfo", jsonSchemaCrawlerHeaderInfo);
 
-      if (options.isNoFooter())
-      {
-        out.println(",");
-      }
-      else
-      {
-        out.println("]");
-      }
-
-      out.close();
+      jsonSchemaCrawlerHeaderInfo.put("crawlTimestamp",
+                                      formatTimestamp(crawlHeaderInfo
+                                        .getCrawlTimestamp()));
+      jsonSchemaCrawlerHeaderInfo.put("title", crawlHeaderInfo.getTitle());
     }
     catch (final JSONException e)
     {
-      throw new SchemaCrawlerException("Could not write database", e);
+      LOGGER.log(Level.FINER,
+                 "Error outputting SchemaCrawlerHeaderInfo: " + e.getMessage(),
+                 e);
     }
   }
 
@@ -176,33 +197,6 @@ public abstract class BaseJsonFormatter<O extends BaseTextOptions>
                  e);
     }
 
-  }
-
-  @Override
-  public void handle(final CrawlHeaderInfo crawlHeaderInfo)
-    throws SchemaCrawlerException
-  {
-    if (options.isNoInfo() || crawlHeaderInfo == null)
-    {
-      return;
-    }
-
-    try
-    {
-      final JSONObject jsonSchemaCrawlerHeaderInfo = new JSONObject();
-      jsonRoot.put("schemaCrawlerHeaderInfo", jsonSchemaCrawlerHeaderInfo);
-
-      jsonSchemaCrawlerHeaderInfo.put("crawlTimestamp",
-                                      formatTimestamp(crawlHeaderInfo
-                                        .getCrawlTimestamp()));
-      jsonSchemaCrawlerHeaderInfo.put("title", crawlHeaderInfo.getTitle());
-    }
-    catch (final JSONException e)
-    {
-      LOGGER.log(Level.FINER,
-                 "Error outputting SchemaCrawlerHeaderInfo: " + e.getMessage(),
-                 e);
-    }
   }
 
   @Override

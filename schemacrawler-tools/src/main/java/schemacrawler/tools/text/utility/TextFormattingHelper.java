@@ -38,51 +38,53 @@ public interface TextFormattingHelper
     title
     {
       @Override
-      String getPrefix()
-      {
-        return "<p>&#160;</p>";
-      }
-
-      @Override
       String getHeaderTag()
       {
         return "h1";
+      }
+
+      @Override
+      String getPrefix()
+      {
+        return "<p>&#160;</p>";
       }
     },
     subTitle
     {
       @Override
-      String getPrefix()
-      {
-        return "<p>&#160;</p>";
-      }
-
-      @Override
       String getHeaderTag()
       {
         return "h2";
+      }
+
+      @Override
+      String getPrefix()
+      {
+        return "<p>&#160;</p>";
       }
     },
     section
     {
       @Override
-      String getPrefix()
-      {
-        return "";
-      }
-
-      @Override
       String getHeaderTag()
       {
         return "h3";
       }
-    };
 
-    abstract String getPrefix();
+      @Override
+      String getPrefix()
+      {
+        return "";
+      }
+    };
 
     abstract String getHeaderTag();
 
+    abstract String getPrefix();
+
   }
+
+  TextFormattingHelper append(String text);
 
   /**
    * Creates a new anchor tag.
@@ -92,22 +94,13 @@ public interface TextFormattingHelper
   String createAnchor(String text, String link);
 
   /**
-   * Creates a definition row.
-   *
-   * @param definition
-   *        Definition
-   * @return Row as a string
-   */
-  String createDefinitionRow(String definition);
-
-  /**
    * Creates a description row with a blank spacer cells.
    *
    * @param description
    *        Description
    * @return Row as a string
    */
-  String createDescriptionRow(String description);
+  void createDescriptionRow(String description);
 
   /**
    * Creates a detail row, with four fields. The name can be emphasized.
@@ -124,11 +117,11 @@ public interface TextFormattingHelper
    *        Emphasize name.
    * @return Row as a string
    */
-  String createDetailRow(String ordinal,
-                         String subName,
-                         boolean escapeText,
-                         String type,
-                         boolean emphasize);
+  void createDetailRow(String ordinal,
+                       String subName,
+                       boolean escapeText,
+                       String type,
+                       boolean emphasize);
 
   /**
    * Creates a detail row, with four fields.
@@ -141,28 +134,28 @@ public interface TextFormattingHelper
    *        Type
    * @return Row as a string
    */
-  String createDetailRow(String ordinal, String subName, String type);
+  void createDetailRow(String ordinal, String subName, String type);
 
   /**
    * Document end.
    *
    * @return Document end
    */
-  String createDocumentEnd();
+  void createDocumentEnd();
 
   /**
    * Document start.
    *
    * @return Document start
    */
-  String createDocumentStart();
+  void createDocumentStart();
 
   /**
    * Create an empty row.
    *
    * @return Row as a string
    */
-  String createEmptyRow();
+  void createEmptyRow();
 
   /**
    * Creates a section header.
@@ -173,7 +166,7 @@ public interface TextFormattingHelper
    *        Header text
    * @return Section header
    */
-  String createHeader(DocumentHeaderType type, String header);
+  void createHeader(DocumentHeaderType type, String header);
 
   /**
    * Creates an arrow symbol.
@@ -191,7 +184,7 @@ public interface TextFormattingHelper
    *        Description
    * @return Row as a string
    */
-  String createNameRow(String name, String description);
+  void createNameRow(String name, String description);
 
   /**
    * Create a name and value row.
@@ -204,14 +197,14 @@ public interface TextFormattingHelper
    *        Alignment of the value
    * @return Row as a string
    */
-  String createNameValueRow(String name, String value, Alignment valueAlignment);
+  void createNameValueRow(String name, String value, Alignment valueAlignment);
 
   /**
    * Database object end.
    *
    * @return Database object end
    */
-  String createObjectEnd();
+  void createObjectEnd();
 
   /**
    * Create a name and description row.
@@ -224,17 +217,17 @@ public interface TextFormattingHelper
    *        Description
    * @return Row as a string
    */
-  String createObjectNameRow(String id,
-                             String name,
-                             String description,
-                             Color backgroundColor);
+  void createObjectNameRow(String id,
+                           String name,
+                           String description,
+                           Color backgroundColor);
 
   /**
    * Database object start.
    *
    * @return Database object start
    */
-  String createObjectStart();
+  void createObjectStart();
 
   /**
    * Creates an arrow symbol.
@@ -250,7 +243,7 @@ public interface TextFormattingHelper
    *        Column data
    * @return Row of data
    */
-  String createRow(Object... columnData);
+  void createRow(Object... columnData);
 
   /**
    * Creates a header row for data.
@@ -259,7 +252,7 @@ public interface TextFormattingHelper
    *        Column names
    * @return Header row for data
    */
-  String createRowHeader(String... columnNames);
+  void createRowHeader(String... columnNames);
 
   /**
    * Creates an arrow symbol.
@@ -274,5 +267,18 @@ public interface TextFormattingHelper
    * @return Arrow symbol
    */
   String createWeakRightArrow();
+
+  /**
+   * Creates a definition row.
+   *
+   * @param definition
+   *        Definition
+   * @param style
+   *        TODO
+   * @return Row as a string
+   */
+  void createWideRow(String definition, String style);
+
+  void println();
 
 }
