@@ -1,6 +1,5 @@
 
 
-
 Tables
 ========================================================================
 
@@ -19,11 +18,17 @@ Contact details for book authors
   POSTALCODE                        VARCHAR(10)                 
   COUNTRY                           VARCHAR(50)                 
 
+Primary Key
+
 PK_AUTHORS                                                 [primary key]
   ID                                ascending                   
 
+Foreign Keys
+
 FK_Z_AUTHOR                                [foreign key, with no action]
   ID <--(0..many) PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID                              
+
+Indices
 
 SYS_IDX_PK_AUTHORS_10097                                  [unique index]
   ID                                ascending                   
@@ -38,8 +43,12 @@ IDX_A_AUTHORS                                         [non-unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
 
+Triggers
+
 TRG_AUTHORS                             [trigger, after delete, per row]
-  UPDATE BOOKS.PUBLISHERS SET PUBLISHER='Jacob'WHERE PUBLISHER='John'
+UPDATE BOOKS.PUBLISHERS SET PUBLISHER='Jacob'WHERE PUBLISHER='John'
+
+Table Constraints
 
 CHECK_UPPERCASE_STATE                                 [check constraint]
 BOOKS.AUTHORS.STATE=UPPER(BOOKS.AUTHORS.STATE)
@@ -52,6 +61,4 @@ BOOKS.AUTHORS.FIRSTNAME IS NOT NULL
 
 SYS_CT_10096                                          [check constraint]
 BOOKS.AUTHORS.LASTNAME IS NOT NULL
-
-
 

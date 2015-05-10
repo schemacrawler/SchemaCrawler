@@ -1,6 +1,5 @@
 
 
-
 Tables
 ========================================================================
 
@@ -23,14 +22,20 @@ Details for published books
                                     Current price for the book  
   PREVIOUSEDITIONID                 INTEGER                     
 
+Primary Key
+
 PK_BOOKS                                                   [primary key]
   ID                                ascending                   
+
+Foreign Keys
 
 FK_Y_BOOK                                  [foreign key, with no action]
   ID <--(0..many) PUBLIC.BOOKS.BOOKAUTHORS.BOOKID                              
 
 FK_PREVIOUSEDITION                         [foreign key, with no action]
   ID <--(0..1) PREVIOUSEDITIONID                                
+
+Indices
 
 SYS_IDX_PK_BOOKS_10105                                    [unique index]
   ID                                ascending                   
@@ -40,6 +45,8 @@ UIDX_PREVIOUSEDITION                                      [unique index]
 
 SYS_IDX_10109                                         [non-unique index]
   PREVIOUSEDITIONID                 ascending                   
+
+Table Constraints
 
 SYS_CT_10102                                          [check constraint]
 BOOKS.BOOKS.ID IS NOT NULL
@@ -63,8 +70,12 @@ PUBLIC.FOR_LINT.PUBLICATIONS                                     [table]
   "UPDATE"                          CLOB                        
   PRESS_RELEASE                     CLOB                        
 
+Primary Key
+
 PK_PUBLICATIONS                                            [primary key]
   ID                                ascending                   
+
+Foreign Keys
 
 FK_PUBLICATION_JOIN                        [foreign key, with no action]
   ID <--(0..many) PUBLIC.FOR_LINT.EXTRA_PK.PUBLICATIONID                              
@@ -75,11 +86,15 @@ FK_WRITERS_PUBLICATION                     [foreign key, with no action]
 FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
   WRITERID (0..many)--> PUBLIC.FOR_LINT.WRITERS.ID                              
 
+Indices
+
 SYS_IDX_PK_PUBLICATIONS_10171                             [unique index]
   ID                                ascending                   
 
 SYS_IDX_10175                                         [non-unique index]
   WRITERID                          ascending                   
+
+Table Constraints
 
 SYS_CT_10168                                          [check constraint]
 FOR_LINT.PUBLICATIONS.ID IS NOT NULL
@@ -89,6 +104,4 @@ FOR_LINT.PUBLICATIONS.TITLE IS NOT NULL
 
 SYS_CT_10170                                          [check constraint]
 FOR_LINT.PUBLICATIONS.WRITERID IS NOT NULL
-
-
 

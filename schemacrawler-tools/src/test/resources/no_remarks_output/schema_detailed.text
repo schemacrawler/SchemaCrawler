@@ -1,6 +1,5 @@
 
 
-
 Tables
 ========================================================================
 
@@ -18,11 +17,17 @@ PUBLIC.BOOKS.AUTHORS                                             [table]
   POSTALCODE                        VARCHAR(10)                 
   COUNTRY                           VARCHAR(50)                 
 
+Primary Key
+
 PK_AUTHORS                                                 [primary key]
   ID                                ascending                   
 
+Foreign Keys
+
 FK_Z_AUTHOR                                [foreign key, with no action]
   ID <--(0..many) PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID                              
+
+Indices
 
 SYS_IDX_PK_AUTHORS_10097                                  [unique index]
   ID                                ascending                   
@@ -49,14 +54,20 @@ PUBLIC.BOOKS.BOOKS                                               [table]
   PRICE                             DOUBLE(64, 0)               
   PREVIOUSEDITIONID                 INTEGER                     
 
+Primary Key
+
 PK_BOOKS                                                   [primary key]
   ID                                ascending                   
+
+Foreign Keys
 
 FK_Y_BOOK                                  [foreign key, with no action]
   ID <--(0..many) PUBLIC.BOOKS.BOOKAUTHORS.BOOKID                              
 
 FK_PREVIOUSEDITION                         [foreign key, with no action]
   ID <--(0..1) PREVIOUSEDITIONID                                
+
+Indices
 
 SYS_IDX_PK_BOOKS_10105                                    [unique index]
   ID                                ascending                   
@@ -81,9 +92,13 @@ PUBLIC.BOOKS.PUBLISHERS                                          [table]
                                     auto-incremented            
   PUBLISHER                         VARCHAR(255)                
 
+Primary Key
+
 SYS_PK_10092                                               [primary key]
   ID                                ascending                   
                                     auto-incremented            
+
+Indices
 
 SYS_IDX_SYS_PK_10092_10093                                [unique index]
   ID                                ascending                   
@@ -97,11 +112,15 @@ PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
   AUTHORID                          INTEGER NOT NULL            
   "UPDATE"                          CLOB                        
 
+Foreign Keys
+
 FK_Z_AUTHOR                                [foreign key, with no action]
   AUTHORID (0..many)--> PUBLIC.BOOKS.AUTHORS.ID                              
 
 FK_Y_BOOK                                  [foreign key, with no action]
   BOOKID (0..many)--> PUBLIC.BOOKS.BOOKS.ID                              
+
+Indices
 
 SYS_IDX_10118                                         [non-unique index]
   AUTHORID                          ascending                   
@@ -120,7 +139,6 @@ PUBLIC.BOOKS.AUTHORSLIST                                          [view]
   ID                                INTEGER                     
   FIRSTNAME                         VARCHAR(20)                 
   LASTNAME                          VARCHAR(20)                 
-
 
 
 
@@ -152,6 +170,4 @@ PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
 ------------------------------------------------------------------------
   NEWPUBLISHER                      CHARACTER VARYING, in       
   PUBLISHER                         CHARACTER VARYING, out      
-
-
 

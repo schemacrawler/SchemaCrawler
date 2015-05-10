@@ -1,6 +1,5 @@
 
 
-
 Query
 ========================================================================
 
@@ -36,7 +35,6 @@ PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ,""
 
 
 
-
 Tables
 ========================================================================
 
@@ -48,8 +46,12 @@ PUBLIC.FOR_LINT.EXTRA_PK,[table]
 "",WRITERID,BIGINT NOT NULL
 "",PUBLICATIONID,INTEGER NOT NULL
 ""
+Primary Key
+""
 PK_EXTRA_PK,[primary key]
 "",ID,ascending
+""
+Foreign Keys
 ""
 FK_PUBLICATION_JOIN,"[foreign key, with no action]"
 "",PUBLICATIONID (0..many)--> PUBLIC.FOR_LINT.PUBLICATIONS.ID,""
@@ -69,8 +71,12 @@ PUBLIC.FOR_LINT.PUBLICATIONS,[table]
 "",ID,INTEGER NOT NULL
 "",WRITERID,BIGINT NOT NULL
 ""
+Primary Key
+""
 PK_PUBLICATIONS,[primary key]
 "",ID,ascending
+""
+Foreign Keys
 ""
 FK_PUBLICATION_JOIN,"[foreign key, with no action]"
 "",ID <--(0..many) PUBLIC.FOR_LINT.EXTRA_PK.PUBLICATIONID,""
@@ -95,8 +101,12 @@ PUBLIC.FOR_LINT.WRITERS,[table]
 "",EMAIL1,VARCHAR(10)
 "",PUBLICATION_ID,BIGINT NOT NULL
 ""
+Primary Key
+""
 PK_WRITERS,[primary key]
 "",ID,ascending
+""
+Foreign Keys
 ""
 FK_WRITERS_PUBLICATION,"[foreign key, with no action]"
 "",PUBLICATION_ID (0..many)--> PUBLIC.FOR_LINT.PUBLICATIONS.ID,""
@@ -117,19 +127,20 @@ PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ,[table]
 "",ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ,BIGINT NOT NULL
 "",ΣΥΓΓΡΑΦΈΑΣ,INTEGER
 ""
+Primary Key
+""
 PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ,[primary key]
 "",ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ,ascending
+""
+Foreign Keys
 ""
 FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS,"[foreign key, with no action]"
 "",ΣΥΓΓΡΑΦΈΑΣ (0..many)--> PUBLIC.FOR_LINT.WRITERS.ID,""
 
 
 
-
 Lints
 ========================================================================
-
-
 
 Database,[database]
 ------------------------------------------------------------------------
@@ -196,6 +207,4 @@ PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ,[table]
 ""
 "","[lint, high]"
 "",foreign key and primary key have different data types,FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS
-
-
 
