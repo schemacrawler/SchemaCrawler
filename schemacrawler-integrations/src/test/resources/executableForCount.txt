@@ -1,10 +1,7 @@
 
 
-
 Row Count
 ========================================================================
-
-
 
 Row Count                                                               
 ------------------------------------------------------------------------
@@ -21,6 +18,4 @@ PUBLIC.FOR_LINT.WRITERS                                            empty
 PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                               empty
 PUBLIC."PUBLISHER SALES".REGIONS                                 20 rows
 PUBLIC."PUBLISHER SALES".SALES                                   20 rows
-
-
 

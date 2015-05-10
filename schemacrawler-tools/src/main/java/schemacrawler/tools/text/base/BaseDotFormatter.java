@@ -63,28 +63,16 @@ public abstract class BaseDotFormatter<O extends BaseTextOptions>
   public void begin()
   {
     final String text = readResourceFully("/dot.header.txt");
-    out.println(text);
+    formattingHelper.append(text).println();
   }
 
   @Override
   public void end()
+    throws SchemaCrawlerException
   {
-    out.println("}");
-    out.flush();
-    //
-    out.close();
-  }
+    formattingHelper.append("}").println();
 
-  @Override
-  public void handle(final DatabaseInfo dbInfo)
-  {
-    // No-op
-  }
-
-  @Override
-  public void handle(final JdbcDriverInfo driverInfo)
-  {
-    // No-op
+    super.end();
   }
 
   @Override
@@ -103,7 +91,7 @@ public abstract class BaseDotFormatter<O extends BaseTextOptions>
       row = new TableRow(TextOutputFormat.html);
       row.add(newTableCell(title, Alignment.left, true, Color.white, 2));
 
-      out.append(row.toString()).append(System.lineSeparator());
+      formattingHelper.append(row.toString()).println();
     }
 
     row = new TableRow(TextOutputFormat.html);
@@ -115,7 +103,7 @@ public abstract class BaseDotFormatter<O extends BaseTextOptions>
                          Color.white,
                          1));
 
-    out.append(row.toString()).append(System.lineSeparator());
+    formattingHelper.append(row.toString()).println();
 
     row = new TableRow(TextOutputFormat.html);
     row
@@ -126,7 +114,7 @@ public abstract class BaseDotFormatter<O extends BaseTextOptions>
                          Color.white,
                          1));
 
-    out.append(row.toString()).append(System.lineSeparator());
+    formattingHelper.append(row.toString()).println();
 
     row = new TableRow(TextOutputFormat.html);
     row.add(newTableCell("database version",
@@ -140,7 +128,7 @@ public abstract class BaseDotFormatter<O extends BaseTextOptions>
                          Color.white,
                          1));
 
-    out.append(row.toString()).append(System.lineSeparator());
+    formattingHelper.append(row.toString()).println();
 
     row = new TableRow(TextOutputFormat.html);
     row.add(newTableCell("driver version",
@@ -154,7 +142,19 @@ public abstract class BaseDotFormatter<O extends BaseTextOptions>
                          Color.white,
                          1));
 
-    out.append(row.toString()).append(System.lineSeparator());
+    formattingHelper.append(row.toString()).println();
+  }
+
+  @Override
+  public void handle(final DatabaseInfo dbInfo)
+  {
+    // No-op
+  }
+
+  @Override
+  public void handle(final JdbcDriverInfo driverInfo)
+  {
+    // No-op
   }
 
   @Override
@@ -172,10 +172,11 @@ public abstract class BaseDotFormatter<O extends BaseTextOptions>
       return;
     }
 
-    out.append("      </table>    >").append(System.lineSeparator())
-      .append("    labeljust=r").append(System.lineSeparator())
-      .append("    labelloc=b").append(System.lineSeparator()).append("  ];")
-      .append(System.lineSeparator()).append(System.lineSeparator());
+    formattingHelper.append("      </table>    >").println();
+    formattingHelper.append("    labeljust=r").println();
+    formattingHelper.append("    labelloc=b").println();
+    formattingHelper.append("  ];").println();
+    formattingHelper.println();
   }
 
   @Override
@@ -186,13 +187,11 @@ public abstract class BaseDotFormatter<O extends BaseTextOptions>
     {
       return;
     }
-    out
-      .append("  graph [fontcolor=\"#999999\", ")
-      .append(System.lineSeparator())
-      .append("    label=<")
-      .append(System.lineSeparator())
+    formattingHelper.append("  graph [fontcolor=\"#999999\", ").println();
+    formattingHelper.append("    label=<").println();
+    formattingHelper
       .append("<table color=\"#999999\" border=\"1\" cellborder=\"0\" cellspacing=\"0\">")
-      .append(System.lineSeparator());
+      .println();
   }
 
   @Override

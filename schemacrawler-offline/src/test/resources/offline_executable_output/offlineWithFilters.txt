@@ -1,6 +1,5 @@
 
 
-
 Tables
 ========================================================================
 
@@ -14,13 +13,19 @@ PUBLIC."PUBLISHER SALES".SALES                                   [table]
   PERIODENDDATE                     DATE                        
   TOTALAMOUNT                       DOUBLE(64, 0)               
 
+Foreign Keys
+
 FK_SALES_REGIONS                           [foreign key, with no action]
   POSTALCODE (0..many)--> PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE                              
   COUNTRY (0..many)--> PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY                              
 
+Indices
+
 SYS_IDX_10154                                         [non-unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
+
+Privileges and Grants
 
 DELETE                                                       [privilege]
   _SYSTEM --> DBA (grantable)                                   
@@ -39,6 +44,4 @@ TRIGGER                                                      [privilege]
 
 UPDATE                                                       [privilege]
   _SYSTEM --> DBA (grantable)                                   
-
-
 

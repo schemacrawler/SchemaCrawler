@@ -24,6 +24,7 @@ package schemacrawler.tools.text.utility;
 import static sf.util.Utility.isBlank;
 
 import java.awt.Color;
+import java.io.PrintWriter;
 
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.utility.html.Alignment;
@@ -56,11 +57,24 @@ abstract class BaseTextFormattingHelper
     return dashedSeparator.toString();
   }
 
+  protected final PrintWriter out;
+
   private final TextOutputFormat outputFormat;
 
-  BaseTextFormattingHelper(final TextOutputFormat outputFormat)
+  public BaseTextFormattingHelper(final PrintWriter out,
+                                  final TextOutputFormat outputFormat)
   {
+    this.out = out;
     this.outputFormat = outputFormat;
+  }
+
+  @Override
+  public TextFormattingHelper append(final String text)
+  {
+    out.write(text);
+    out.flush();
+
+    return this;
   }
 
   @Override
@@ -77,29 +91,13 @@ abstract class BaseTextFormattingHelper
                       outputFormat).toString();
   }
 
-  @Override
-  public String createDefinitionRow(final String definition)
-  {
-    final TableRow row = new TableRow(outputFormat);
-    row.add(new TableCell(definition,
-                          true,
-                          0,
-                          Alignment.inherit,
-                          false,
-                          "definition",
-                          Color.white,
-                          3,
-                          outputFormat));
-    return row.toString();
-  }
-
   /**
    * {@inheritDoc}
    *
    * @see TextFormattingHelper#createDescriptionRow(java.lang.String)
    */
   @Override
-  public String createDescriptionRow(final String description)
+  public void createDescriptionRow(final String description)
   {
     final TableRow row = new TableRow(outputFormat);
     row.add(newTableCell("", "spacer", outputFormat));
@@ -108,11 +106,11 @@ abstract class BaseTextFormattingHelper
                           0,
                           Alignment.inherit,
                           false,
-                          "definition",
+                          "",
                           Color.white,
                           2,
                           outputFormat));
-    return row.toString();
+    out.println(row.toString());
   }
 
   /**
@@ -122,11 +120,11 @@ abstract class BaseTextFormattingHelper
    *      java.lang.String, boolean, java.lang.String, boolean)
    */
   @Override
-  public String createDetailRow(final String ordinal,
-                                final String subName,
-                                final boolean escapeText,
-                                final String type,
-                                final boolean emphasize)
+  public void createDetailRow(final String ordinal,
+                              final String subName,
+                              final boolean escapeText,
+                              final String type,
+                              final boolean emphasize)
   {
     final int subNameWidth = 32;
     final int typeWidth = 28;
@@ -166,7 +164,7 @@ abstract class BaseTextFormattingHelper
                           Color.white,
                           1,
                           outputFormat));
-    return row.toString();
+    out.println(row.toString());
   }
 
   /**
@@ -176,11 +174,11 @@ abstract class BaseTextFormattingHelper
    *      java.lang.String, java.lang.String)
    */
   @Override
-  public String createDetailRow(final String ordinal,
-                                final String subName,
-                                final String type)
+  public void createDetailRow(final String ordinal,
+                              final String subName,
+                              final String type)
   {
-    return createDetailRow(ordinal, subName, true, type, false);
+    createDetailRow(ordinal, subName, true, type, false);
   }
 
   /**
@@ -189,7 +187,7 @@ abstract class BaseTextFormattingHelper
    * @see TextFormattingHelper#createEmptyRow()
    */
   @Override
-  public String createEmptyRow()
+  public void createEmptyRow()
   {
     final TableRow tableRow = new TableRow(outputFormat);
     tableRow.add(new TableCell("",
@@ -201,7 +199,7 @@ abstract class BaseTextFormattingHelper
                                Color.white,
                                3,
                                outputFormat));
-    return tableRow.toString();
+    out.println(tableRow.toString());
   }
 
   /**
@@ -211,7 +209,7 @@ abstract class BaseTextFormattingHelper
    *      java.lang.String)
    */
   @Override
-  public String createNameRow(final String name, final String description)
+  public void createNameRow(final String name, final String description)
   {
     int nameWidth = 34;
     int descriptionWidth = 36;
@@ -229,7 +227,6 @@ abstract class BaseTextFormattingHelper
                                - (description.length() - descriptionWidth));
     }
 
-    String nameRowString;
     final TableRow row = new TableRow(outputFormat);
     row.add(new TableCell(name,
                           true,
@@ -249,9 +246,8 @@ abstract class BaseTextFormattingHelper
                           Color.white,
                           1,
                           outputFormat));
-    nameRowString = row.toString();
 
-    return nameRowString;
+    out.println(row.toString());
   }
 
   /**
@@ -261,9 +257,9 @@ abstract class BaseTextFormattingHelper
    *      java.lang.String, Alignment)
    */
   @Override
-  public String createNameValueRow(final String name,
-                                   final String value,
-                                   final Alignment valueAlignment)
+  public void createNameValueRow(final String name,
+                                 final String value,
+                                 final Alignment valueAlignment)
   {
     final int nameWidth = 40;
     final int valueWidth = 70 - nameWidth;
@@ -295,7 +291,8 @@ abstract class BaseTextFormattingHelper
                           Color.white,
                           1,
                           outputFormat));
-    return row.toString();
+
+    out.println(row.toString());
   }
 
   /**
@@ -305,7 +302,7 @@ abstract class BaseTextFormattingHelper
    *        Column data
    */
   @Override
-  public String createRow(final Object... columnData)
+  public void createRow(final Object... columnData)
   {
     TextOutputFormat outputFormat = this.outputFormat;
     if (outputFormat == TextOutputFormat.text)
@@ -332,7 +329,8 @@ abstract class BaseTextFormattingHelper
         row.add(newTableCell(element.toString(), "", outputFormat));
       }
     }
-    return row.toString();
+
+    out.println(row.toString());
   }
 
   /**
@@ -343,7 +341,7 @@ abstract class BaseTextFormattingHelper
    *        Column names
    */
   @Override
-  public String createRowHeader(final String... columnNames)
+  public void createRowHeader(final String... columnNames)
   {
     TextOutputFormat outputFormat = this.outputFormat;
     if (outputFormat == TextOutputFormat.text)
@@ -363,7 +361,30 @@ abstract class BaseTextFormattingHelper
                                                              outputFormat);
       row.add(headerCell);
     }
-    return row.toString();
+
+    out.println(row.toString());
+  }
+
+  @Override
+  public void createWideRow(final String definition, final String style)
+  {
+    final TableRow row = new TableRow(outputFormat);
+    row.add(new TableCell(definition,
+                          true,
+                          0,
+                          Alignment.inherit,
+                          false,
+                          style,
+                          Color.white,
+                          3,
+                          outputFormat));
+    out.println(row.toString());
+  }
+
+  @Override
+  public void println()
+  {
+    out.println();
   }
 
   private TableCell newTableCell(final String text,

@@ -16,6 +16,7 @@ import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.utility.DatabaseObjectColorMap;
 import schemacrawler.tools.text.utility.HtmlFormattingHelper;
+import schemacrawler.tools.text.utility.JsonFormattingHelper;
 import schemacrawler.tools.text.utility.PlainTextFormattingHelper;
 import schemacrawler.tools.text.utility.TextFormattingHelper;
 import schemacrawler.tools.traversal.TraversalHandler;
@@ -26,10 +27,10 @@ public abstract class BaseFormatter<O extends BaseTextOptions>
 
   protected final O options;
   protected final OutputOptions outputOptions;
-  protected final PrintWriter out;
   protected final TextFormattingHelper formattingHelper;
   protected final DatabaseObjectColorMap colorMap;
   protected final boolean printVerboseDatabaseInfo;
+  private final PrintWriter out;
 
   protected BaseFormatter(final O options,
                           final boolean printVerboseDatabaseInfo,
@@ -46,19 +47,25 @@ public abstract class BaseFormatter<O extends BaseTextOptions>
     this.printVerboseDatabaseInfo = !options.isNoInfo()
                                     && printVerboseDatabaseInfo;
 
-    final TextOutputFormat outputFormat = TextOutputFormat
-      .fromFormat(outputOptions.getOutputFormatValue());
-    if (outputFormat == TextOutputFormat.html)
-    {
-      formattingHelper = new HtmlFormattingHelper(outputFormat);
-    }
-    else
-    {
-      formattingHelper = new PlainTextFormattingHelper(outputFormat);
-    }
-
     out = new PrintWriter(outputOptions.openNewOutputWriter(options
       .isAppendOutput()), true);
+
+    final TextOutputFormat outputFormat = TextOutputFormat
+      .fromFormat(outputOptions.getOutputFormatValue());
+    switch (outputFormat)
+    {
+      case html:
+        formattingHelper = new HtmlFormattingHelper(out, outputFormat);
+        break;
+
+      case json:
+        formattingHelper = new JsonFormattingHelper(out, outputFormat);
+        break;
+      case text:
+      default:
+        formattingHelper = new PlainTextFormattingHelper(out, outputFormat);
+        break;
+    }
   }
 
   protected String columnNullable(final String columnTypeName,
@@ -66,6 +73,11 @@ public abstract class BaseFormatter<O extends BaseTextOptions>
   {
     return isNullable? "": isLowerCase(columnTypeName)? " not null"
                                                       : " NOT NULL";
+  }
+
+  protected String formatTimestamp(final TemporalAccessor timestamp)
+  {
+    return DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(timestamp);
   }
 
   protected boolean isColumnSignificant(final Column column)
@@ -88,9 +100,12 @@ public abstract class BaseFormatter<O extends BaseTextOptions>
     }
   }
 
-  protected String formatTimestamp(final TemporalAccessor timestamp)
+  @Override
+  public void end()
+    throws SchemaCrawlerException
   {
-    return DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(timestamp);
+    out.flush();
+    out.close();
   }
 
 }

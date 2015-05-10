@@ -26,7 +26,6 @@ import java.util.Collection;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ColumnDataType;
-import schemacrawler.schema.CrawlHeaderInfo;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;

@@ -44,7 +44,8 @@ caption {
 h1, h2, h3 {
 	font-family: "Palatino Linotype", Georgia, "Times New Roman", serif;
 	margin-top: 1.0rem;
-	margin-bottom: 1.5rem;
+	margin-bottom: 1.5rem;	
+    font-weight: bold;
 }
 
 h1 {
@@ -53,13 +54,13 @@ h1 {
 }
 
 h2 {
-	font-size: 1.2rem;
-	line-height: 1.4rem;
+	font-size: 1.4rem;
+	line-height: 1.6rem;
 }
 
 h3 {
-	font-size: 1.0rem;
-	line-height: 1.2rem;
+	font-size: 1.2rem;
+	line-height: 1.4rem;
 }
 
 dl, ul, ol {
@@ -110,6 +111,18 @@ blockquote: before {
 blockquote p {
 	display: inline;
 	background: #f9f9f9;
+}
+
+h1 {
+    color: maroon;
+}
+
+h2 {
+    color: darkblue;
+}
+
+h3 {
+    color: green;
 }
 
 a:link, a:visited {
@@ -168,7 +181,29 @@ a:hover, a:active {
 }
 
 .definition {
-	white-space: pre-line;
+    word-break: normal; 
+    word-wrap: break-word;
+    white-space: pre;
+    white-space: -moz-pre-wrap; 
+    white-space: pre-wrap;
+    white-space: pre\9; 
+    
+    font-family: 'Lucida Console', Monaco, 'Courier New', monospace;
+    font-size: 1.0rem;
+    font-weight: 100;
+    
+    line-height: 1.2rem;
+    color: rgb(16, 16, 16); 
+}
+
+td.section {
+    font-family: "Palatino Linotype", Georgia, "Times New Roman", serif;
+    padding-top: 1.5rem;
+    padding-bottom: 1.0rem;
+    font-weight: bold;
+    font-size: 1.2rem;
+    line-height: 1.2rem;
+    color: rgb(100, 100, 100);
 }
 
 .data_binary {
@@ -194,7 +229,6 @@ a:hover, a:active {
 <h2>Row Count</h2>
 
 <table>
-
   <caption style='background-color: #FFFFFF;'><span class='caption_name'>Row Count</span></caption>
 
 	<tr>
