@@ -43,6 +43,11 @@ class RetrieverUtility
     throws SQLException
   {
     final List<String> values = new ArrayList<>();
+    if (results == null)
+    {
+      return values;
+    }
+
     try
     {
       while (results.next())
