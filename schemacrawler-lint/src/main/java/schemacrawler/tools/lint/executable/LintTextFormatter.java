@@ -57,15 +57,15 @@ final class LintTextFormatter
     final Collection<Lint<?>> lints = SimpleLintCollector.getLint(catalog);
     if (lints != null && !lints.isEmpty())
     {
-      formattingHelper.createObjectStart();
+      formattingHelper.writeObjectStart();
 
-      formattingHelper.createObjectNameRow("",
+      formattingHelper.writeObjectNameRow("",
                                            "Database",
                                            "[database]",
                                            Color.white);
 
       printLints(lints);
-      formattingHelper.createObjectEnd();
+      formattingHelper.writeObjectEnd();
     }
   }
 
@@ -80,18 +80,18 @@ final class LintTextFormatter
     final Collection<Lint<?>> lints = SimpleLintCollector.getLint(table);
     if (lints != null && !lints.isEmpty())
     {
-      formattingHelper.createObjectStart();
+      formattingHelper.writeObjectStart();
 
       formattingHelper.println();
       formattingHelper.println();
 
       final String tableType = "[" + table.getTableType() + "]";
-      formattingHelper.createObjectNameRow(nodeId(table),
+      formattingHelper.writeObjectNameRow(nodeId(table),
                                            table.getFullName(),
                                            tableType,
                                            colorMap.getColor(table));
       printLints(lints);
-      formattingHelper.createObjectEnd();
+      formattingHelper.writeObjectEnd();
     }
   }
 
@@ -113,12 +113,12 @@ final class LintTextFormatter
   @Override
   public void handleStart()
   {
-    formattingHelper.createHeader(DocumentHeaderType.subTitle, "Lints");
+    formattingHelper.writeHeader(DocumentHeaderType.subTitle, "Lints");
   }
 
   private void printLints(final Collection<Lint<?>> lints)
   {
-    formattingHelper.createEmptyRow();
+    formattingHelper.writeEmptyRow();
 
     final Multimap<LintSeverity, Lint<?>> multiMap = new Multimap<>();
     for (final Lint<?> lint: lints)
@@ -134,7 +134,7 @@ final class LintTextFormatter
         continue;
       }
 
-      formattingHelper.createNameRow("", String.format("[lint, %s]", severity));
+      formattingHelper.writeNameRow("", String.format("[lint, %s]", severity));
       final List<Lint<?>> lintsById = new ArrayList<>(multiMap.get(severity));
       for (final Lint<?> lint: lintsById)
       {
@@ -143,12 +143,12 @@ final class LintTextFormatter
         {
           if ((Boolean) lintValue)
           {
-            formattingHelper.createRow("", lint.getMessage(), "");
+            formattingHelper.writeRow("", lint.getMessage(), "");
           }
         }
         else
         {
-          formattingHelper.createRow("",
+          formattingHelper.writeRow("",
                                      lint.getMessage(),
                                      lint.getValueAsString());
         }

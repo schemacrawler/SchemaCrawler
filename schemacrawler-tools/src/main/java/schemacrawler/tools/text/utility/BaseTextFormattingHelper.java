@@ -91,13 +91,19 @@ abstract class BaseTextFormattingHelper
                       outputFormat).toString();
   }
 
+  @Override
+  public void println()
+  {
+    out.println();
+  }
+
   /**
    * {@inheritDoc}
    *
-   * @see TextFormattingHelper#createDescriptionRow(java.lang.String)
+   * @see TextFormattingHelper#writeDescriptionRow(java.lang.String)
    */
   @Override
-  public void createDescriptionRow(final String description)
+  public void writeDescriptionRow(final String description)
   {
     final TableRow row = new TableRow(outputFormat);
     row.add(newTableCell("", "spacer", outputFormat));
@@ -116,15 +122,15 @@ abstract class BaseTextFormattingHelper
   /**
    * {@inheritDoc}
    *
-   * @see schemacrawler.tools.text.utility.TextFormattingHelper#createDetailRow(java.lang.String,
+   * @see schemacrawler.tools.text.utility.TextFormattingHelper#writeDetailRow(java.lang.String,
    *      java.lang.String, boolean, java.lang.String, boolean)
    */
   @Override
-  public void createDetailRow(final String ordinal,
-                              final String subName,
-                              final boolean escapeText,
-                              final String type,
-                              final boolean emphasize)
+  public void writeDetailRow(final String ordinal,
+                             final String subName,
+                             final boolean escapeText,
+                             final String type,
+                             final boolean emphasize)
   {
     final int subNameWidth = 32;
     final int typeWidth = 28;
@@ -170,24 +176,24 @@ abstract class BaseTextFormattingHelper
   /**
    * {@inheritDoc}
    *
-   * @see TextFormattingHelper#createDetailRow(java.lang.String,
+   * @see TextFormattingHelper#writeDetailRow(java.lang.String,
    *      java.lang.String, java.lang.String)
    */
   @Override
-  public void createDetailRow(final String ordinal,
-                              final String subName,
-                              final String type)
+  public void writeDetailRow(final String ordinal,
+                             final String subName,
+                             final String type)
   {
-    createDetailRow(ordinal, subName, true, type, false);
+    writeDetailRow(ordinal, subName, true, type, false);
   }
 
   /**
    * {@inheritDoc}
    *
-   * @see TextFormattingHelper#createEmptyRow()
+   * @see TextFormattingHelper#writeEmptyRow()
    */
   @Override
-  public void createEmptyRow()
+  public void writeEmptyRow()
   {
     final TableRow tableRow = new TableRow(outputFormat);
     tableRow.add(new TableCell("",
@@ -205,11 +211,11 @@ abstract class BaseTextFormattingHelper
   /**
    * {@inheritDoc}
    *
-   * @see schemacrawler.tools.text.utility.TextFormattingHelper#createNameRow(java.lang.String,
+   * @see schemacrawler.tools.text.utility.TextFormattingHelper#writeNameRow(java.lang.String,
    *      java.lang.String)
    */
   @Override
-  public void createNameRow(final String name, final String description)
+  public void writeNameRow(final String name, final String description)
   {
     int nameWidth = 34;
     int descriptionWidth = 36;
@@ -253,13 +259,13 @@ abstract class BaseTextFormattingHelper
   /**
    * {@inheritDoc}
    *
-   * @see TextFormattingHelper#createNameValueRow(java.lang.String,
+   * @see TextFormattingHelper#writeNameValueRow(java.lang.String,
    *      java.lang.String, Alignment)
    */
   @Override
-  public void createNameValueRow(final String name,
-                                 final String value,
-                                 final Alignment valueAlignment)
+  public void writeNameValueRow(final String name,
+                                final String value,
+                                final Alignment valueAlignment)
   {
     final int nameWidth = 40;
     final int valueWidth = 70 - nameWidth;
@@ -302,7 +308,7 @@ abstract class BaseTextFormattingHelper
    *        Column data
    */
   @Override
-  public void createRow(final Object... columnData)
+  public void writeRow(final Object... columnData)
   {
     TextOutputFormat outputFormat = this.outputFormat;
     if (outputFormat == TextOutputFormat.text)
@@ -341,7 +347,7 @@ abstract class BaseTextFormattingHelper
    *        Column names
    */
   @Override
-  public void createRowHeader(final String... columnNames)
+  public void writeRowHeader(final String... columnNames)
   {
     TextOutputFormat outputFormat = this.outputFormat;
     if (outputFormat == TextOutputFormat.text)
@@ -366,7 +372,7 @@ abstract class BaseTextFormattingHelper
   }
 
   @Override
-  public void createWideRow(final String definition, final String style)
+  public void writeWideRow(final String definition, final String style)
   {
     final TableRow row = new TableRow(outputFormat);
     row.add(new TableCell(definition,
@@ -379,12 +385,6 @@ abstract class BaseTextFormattingHelper
                           3,
                           outputFormat));
     out.println(row.toString());
-  }
-
-  @Override
-  public void println()
-  {
-    out.println();
   }
 
   private TableCell newTableCell(final String text,
