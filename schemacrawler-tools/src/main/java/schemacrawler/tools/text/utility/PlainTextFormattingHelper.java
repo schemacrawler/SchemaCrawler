@@ -43,11 +43,35 @@ public class PlainTextFormattingHelper
     super(out, outputFormat);
   }
 
+  @Override
+  public String createLeftArrow()
+  {
+    return "<--";
+  }
+
+  @Override
+  public String createRightArrow()
+  {
+    return "-->";
+  }
+
+  @Override
+  public String createWeakLeftArrow()
+  {
+    return "<~~";
+  }
+
+  @Override
+  public String createWeakRightArrow()
+  {
+    return "~~>";
+  }
+
   /**
    * {@inheritDoc}
    */
   @Override
-  public void createDocumentEnd()
+  public void writeDocumentEnd()
   {
   }
 
@@ -55,12 +79,12 @@ public class PlainTextFormattingHelper
    * {@inheritDoc}
    */
   @Override
-  public void createDocumentStart()
+  public void writeDocumentStart()
   {
   }
 
   @Override
-  public void createHeader(final DocumentHeaderType type, final String header)
+  public void writeHeader(final DocumentHeaderType type, final String header)
   {
     if (!isBlank(header))
     {
@@ -100,17 +124,11 @@ public class PlainTextFormattingHelper
     }
   }
 
-  @Override
-  public String createLeftArrow()
-  {
-    return "<--";
-  }
-
   /**
    * {@inheritDoc}
    */
   @Override
-  public void createObjectEnd()
+  public void writeObjectEnd()
   {
     out.println();
   }
@@ -119,12 +137,12 @@ public class PlainTextFormattingHelper
    * {@inheritDoc}
    */
   @Override
-  public void createObjectNameRow(final String id,
-                                  final String name,
-                                  final String description,
-                                  final Color backgroundColor)
+  public void writeObjectNameRow(final String id,
+                                 final String name,
+                                 final String description,
+                                 final Color backgroundColor)
   {
-    createNameRow(name, description);
+    writeNameRow(name, description);
     out.println(DASHED_SEPARATOR);
   }
 
@@ -132,26 +150,8 @@ public class PlainTextFormattingHelper
    * {@inheritDoc}
    */
   @Override
-  public void createObjectStart()
+  public void writeObjectStart()
   {
-  }
-
-  @Override
-  public String createRightArrow()
-  {
-    return "-->";
-  }
-
-  @Override
-  public String createWeakLeftArrow()
-  {
-    return "<~~";
-  }
-
-  @Override
-  public String createWeakRightArrow()
-  {
-    return "~~>";
   }
 
 }

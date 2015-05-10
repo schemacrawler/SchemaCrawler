@@ -67,11 +67,35 @@ public final class HtmlFormattingHelper
     super(out, outputFormat);
   }
 
+  @Override
+  public String createLeftArrow()
+  {
+    return "\u2190";
+  }
+
+  @Override
+  public String createRightArrow()
+  {
+    return "\u2192";
+  }
+
+  @Override
+  public String createWeakLeftArrow()
+  {
+    return "\u21dc";
+  }
+
+  @Override
+  public String createWeakRightArrow()
+  {
+    return "\u21dd";
+  }
+
   /**
    * {@inheritDoc}
    */
   @Override
-  public void createDocumentEnd()
+  public void writeDocumentEnd()
   {
     out.println(HTML_FOOTER);
   }
@@ -80,13 +104,13 @@ public final class HtmlFormattingHelper
    * {@inheritDoc}
    */
   @Override
-  public void createDocumentStart()
+  public void writeDocumentStart()
   {
     out.println(HTML_HEADER);
   }
 
   @Override
-  public void createHeader(final DocumentHeaderType type, final String header)
+  public void writeHeader(final DocumentHeaderType type, final String header)
   {
     if (!isBlank(header) && type != null)
     {
@@ -98,17 +122,11 @@ public final class HtmlFormattingHelper
     }
   }
 
-  @Override
-  public String createLeftArrow()
-  {
-    return "\u2190";
-  }
-
   /**
    * {@inheritDoc}
    */
   @Override
-  public void createObjectEnd()
+  public void writeObjectEnd()
   {
     out.append("</table>").println();
     out.println("<p>&#160;</p>");
@@ -119,10 +137,10 @@ public final class HtmlFormattingHelper
    * {@inheritDoc}
    */
   @Override
-  public void createObjectNameRow(final String id,
-                                  final String name,
-                                  final String description,
-                                  final Color backgroundColor)
+  public void writeObjectNameRow(final String id,
+                                 final String name,
+                                 final String description,
+                                 final Color backgroundColor)
   {
     final StringBuilder buffer = new StringBuilder();
     buffer.append("  <caption style='background-color: ")
@@ -151,27 +169,9 @@ public final class HtmlFormattingHelper
    * {@inheritDoc}
    */
   @Override
-  public void createObjectStart()
+  public void writeObjectStart()
   {
     out.println("<table>");
-  }
-
-  @Override
-  public String createRightArrow()
-  {
-    return "\u2192";
-  }
-
-  @Override
-  public String createWeakLeftArrow()
-  {
-    return "\u21dc";
-  }
-
-  @Override
-  public String createWeakRightArrow()
-  {
-    return "\u21dd";
   }
 
 }

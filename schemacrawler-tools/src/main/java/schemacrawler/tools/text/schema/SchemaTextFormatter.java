@@ -126,9 +126,9 @@ final class SchemaTextFormatter
   {
     if (printVerboseDatabaseInfo && isVerbose)
     {
-      formattingHelper.createObjectStart();
+      formattingHelper.writeObjectStart();
       printColumnDataType(columnDataType);
-      formattingHelper.createObjectEnd();
+      formattingHelper.writeObjectEnd();
     }
   }
 
@@ -156,8 +156,8 @@ final class SchemaTextFormatter
 
     formattingHelper.println();
     formattingHelper.println();
-    formattingHelper.createObjectStart();
-    formattingHelper.createObjectNameRow(nodeId(routine),
+    formattingHelper.writeObjectStart();
+    formattingHelper.writeObjectNameRow(nodeId(routine),
                                          routineName,
                                          routineType,
                                          colorMap.getColor(routine));
@@ -172,14 +172,14 @@ final class SchemaTextFormatter
     {
       if (!options.isHideRoutineSpecificNames())
       {
-        formattingHelper.createEmptyRow();
-        formattingHelper.createNameRow("", "[specific name]");
-        formattingHelper.createWideRow(routine.getSpecificName(), "");
+        formattingHelper.writeEmptyRow();
+        formattingHelper.writeNameRow("", "[specific name]");
+        formattingHelper.writeWideRow(routine.getSpecificName(), "");
       }
       printDefinition(routine);
     }
 
-    formattingHelper.createObjectEnd();
+    formattingHelper.writeObjectEnd();
   }
 
   /**
@@ -203,8 +203,8 @@ final class SchemaTextFormatter
 
     formattingHelper.println();
     formattingHelper.println();
-    formattingHelper.createObjectStart();
-    formattingHelper.createObjectNameRow(nodeId(sequence),
+    formattingHelper.writeObjectStart();
+    formattingHelper.writeObjectNameRow(nodeId(sequence),
                                          sequenceName,
                                          sequenceType,
                                          colorMap.getColor(sequence));
@@ -212,19 +212,19 @@ final class SchemaTextFormatter
 
     if (!isBrief)
     {
-      formattingHelper.createDetailRow("",
+      formattingHelper.writeDetailRow("",
                                        "increment",
                                        String.valueOf(sequence.getIncrement()));
-      formattingHelper.createDetailRow("", "minimum value", String
+      formattingHelper.writeDetailRow("", "minimum value", String
         .valueOf(sequence.getMinimumValue()));
-      formattingHelper.createDetailRow("", "maximum value", String
+      formattingHelper.writeDetailRow("", "maximum value", String
         .valueOf(sequence.getMaximumValue()));
-      formattingHelper.createDetailRow("",
+      formattingHelper.writeDetailRow("",
                                        "cycle",
                                        String.valueOf(sequence.isCycle()));
     }
 
-    formattingHelper.createObjectEnd();
+    formattingHelper.writeObjectEnd();
   }
 
   /**
@@ -248,8 +248,8 @@ final class SchemaTextFormatter
 
     formattingHelper.println();
     formattingHelper.println();
-    formattingHelper.createObjectStart();
-    formattingHelper.createObjectNameRow(nodeId(synonym),
+    formattingHelper.writeObjectStart();
+    formattingHelper.writeObjectNameRow(nodeId(synonym),
                                          synonymName,
                                          synonymType,
                                          colorMap.getColor(synonym));
@@ -266,7 +266,7 @@ final class SchemaTextFormatter
       {
         referencedObjectName = synonym.getReferencedObject().getFullName();
       }
-      formattingHelper.createDetailRow("",
+      formattingHelper.writeDetailRow("",
                                        String.format("%s %s %s",
                                                      synonym.getName(),
                                                      formattingHelper
@@ -275,7 +275,7 @@ final class SchemaTextFormatter
                                        "");
     }
 
-    formattingHelper.createObjectEnd();
+    formattingHelper.writeObjectEnd();
   }
 
   /**
@@ -299,8 +299,8 @@ final class SchemaTextFormatter
 
     formattingHelper.println();
     formattingHelper.println();
-    formattingHelper.createObjectStart();
-    formattingHelper.createObjectNameRow(nodeId(table),
+    formattingHelper.writeObjectStart();
+    formattingHelper.writeObjectNameRow(nodeId(table),
                                          tableName,
                                          tableType,
                                          colorMap.getColor(table));
@@ -327,7 +327,7 @@ final class SchemaTextFormatter
       }
     }
 
-    formattingHelper.createObjectEnd();
+    formattingHelper.writeObjectEnd();
   }
 
   /**
@@ -350,7 +350,7 @@ final class SchemaTextFormatter
   {
     if (printVerboseDatabaseInfo && isVerbose)
     {
-      formattingHelper.createHeader(DocumentHeaderType.subTitle, "Data Types");
+      formattingHelper.writeHeader(DocumentHeaderType.subTitle, "Data Types");
     }
   }
 
@@ -374,7 +374,7 @@ final class SchemaTextFormatter
   public void handleRoutinesStart()
     throws SchemaCrawlerException
   {
-    formattingHelper.createHeader(DocumentHeaderType.subTitle, "Routines");
+    formattingHelper.writeHeader(DocumentHeaderType.subTitle, "Routines");
   }
 
   /**
@@ -397,7 +397,7 @@ final class SchemaTextFormatter
   public void handleSequencesStart()
     throws SchemaCrawlerException
   {
-    formattingHelper.createHeader(DocumentHeaderType.subTitle, "Sequences");
+    formattingHelper.writeHeader(DocumentHeaderType.subTitle, "Sequences");
   }
 
   /**
@@ -420,7 +420,7 @@ final class SchemaTextFormatter
   public void handleSynonymsStart()
     throws SchemaCrawlerException
   {
-    formattingHelper.createHeader(DocumentHeaderType.subTitle, "Synonyms");
+    formattingHelper.writeHeader(DocumentHeaderType.subTitle, "Synonyms");
   }
 
   /**
@@ -443,7 +443,7 @@ final class SchemaTextFormatter
   public void handleTablesStart()
     throws SchemaCrawlerException
   {
-    formattingHelper.createHeader(DocumentHeaderType.subTitle, "Tables");
+    formattingHelper.writeHeader(DocumentHeaderType.subTitle, "Tables");
   }
 
   private void printColumnDataType(final ColumnDataType columnDataType)
@@ -473,13 +473,13 @@ final class SchemaTextFormatter
     {
       definedWith = definedWith + columnDataType.getCreateParameters();
     }
-    formattingHelper.createNameRow(databaseSpecificTypeName, "[data type]");
-    formattingHelper.createDetailRow("", "based on", typeName);
-    formattingHelper.createDescriptionRow(userDefined);
-    formattingHelper.createDescriptionRow(definedWith);
-    formattingHelper.createDescriptionRow(nullable);
-    formattingHelper.createDescriptionRow(autoIncrementable);
-    formattingHelper.createDescriptionRow(columnDataType.getSearchable()
+    formattingHelper.writeNameRow(databaseSpecificTypeName, "[data type]");
+    formattingHelper.writeDetailRow("", "based on", typeName);
+    formattingHelper.writeDescriptionRow(userDefined);
+    formattingHelper.writeDescriptionRow(definedWith);
+    formattingHelper.writeDescriptionRow(nullable);
+    formattingHelper.writeDescriptionRow(autoIncrementable);
+    formattingHelper.writeDescriptionRow(columnDataType.getSearchable()
       .toString());
   }
 
@@ -560,7 +560,7 @@ final class SchemaTextFormatter
                                      arrow,
                                      pkHyperlink);
       }
-      formattingHelper.createDetailRow(keySequenceString,
+      formattingHelper.writeDetailRow(keySequenceString,
                                        relationship,
                                        false,
                                        "",
@@ -575,11 +575,11 @@ final class SchemaTextFormatter
       return;
     }
 
-    formattingHelper.createEmptyRow();
-    formattingHelper.createWideRow("Definition", "section");
+    formattingHelper.writeEmptyRow();
+    formattingHelper.writeWideRow("Definition", "section");
 
-    formattingHelper.createNameRow("", "[definition]");
-    formattingHelper.createWideRow(definedObject.getDefinition(), "definition");
+    formattingHelper.writeNameRow("", "[definition]");
+    formattingHelper.writeWideRow(definedObject.getDefinition(), "definition");
   }
 
   private void printForeignKeys(final Table table)
@@ -590,8 +590,8 @@ final class SchemaTextFormatter
       return;
     }
 
-    formattingHelper.createEmptyRow();
-    formattingHelper.createWideRow("Foreign Keys", "section");
+    formattingHelper.writeEmptyRow();
+    formattingHelper.writeWideRow("Foreign Keys", "section");
 
     final List<ForeignKey> foreignKeys = new ArrayList<>(foreignKeysCollection);
     Collections.sort(foreignKeys, NamedObjectSort.getNamedObjectSort(options
@@ -628,7 +628,7 @@ final class SchemaTextFormatter
           ruleString = updateRuleString + deleteRuleString;
         }
 
-        formattingHelper.createEmptyRow();
+        formattingHelper.writeEmptyRow();
 
         String fkName = "";
         if (!options.isHideForeignKeyNames())
@@ -636,7 +636,7 @@ final class SchemaTextFormatter
           fkName = name;
         }
         final String fkDetails = "[foreign key" + ruleString + "]";
-        formattingHelper.createNameRow(fkName, fkDetails);
+        formattingHelper.writeNameRow(fkName, fkDetails);
         printColumnReferences(true, table, foreignKey);
       }
     }
@@ -649,8 +649,8 @@ final class SchemaTextFormatter
       return;
     }
 
-    formattingHelper.createEmptyRow();
-    formattingHelper.createWideRow("Indices", "section");
+    formattingHelper.writeEmptyRow();
+    formattingHelper.writeWideRow("Indices", "section");
 
     final List<Index> indices = new ArrayList<>(indicesCollection);
     Collections.sort(indices, NamedObjectSort.getNamedObjectSort(options
@@ -660,7 +660,7 @@ final class SchemaTextFormatter
     {
       if (index != null)
       {
-        formattingHelper.createEmptyRow();
+        formattingHelper.writeEmptyRow();
 
         String indexName = "";
         if (!options.isHideIndexNames())
@@ -675,7 +675,7 @@ final class SchemaTextFormatter
         }
         final String indexDetails = "[" + (index.isUnique()? "": "non-")
                                     + "unique " + indexTypeString + "index]";
-        formattingHelper.createNameRow(indexName, indexDetails);
+        formattingHelper.writeNameRow(indexName, indexDetails);
 
         if (!isBrief)
         {
@@ -686,7 +686,7 @@ final class SchemaTextFormatter
         {
           if (index.hasDefinition())
           {
-            formattingHelper.createWideRow(index.getDefinition(), "definition");
+            formattingHelper.writeWideRow(index.getDefinition(), "definition");
           }
         }
       }
@@ -697,10 +697,10 @@ final class SchemaTextFormatter
   {
     if (primaryKey != null)
     {
-      formattingHelper.createEmptyRow();
-      formattingHelper.createWideRow("Primary Key", "section");
+      formattingHelper.writeEmptyRow();
+      formattingHelper.writeWideRow("Primary Key", "section");
 
-      formattingHelper.createEmptyRow();
+      formattingHelper.writeEmptyRow();
 
       final String name = primaryKey.getName();
       String pkName = "";
@@ -712,7 +712,7 @@ final class SchemaTextFormatter
       {
         pkName = "";
       }
-      formattingHelper.createNameRow(pkName, "[primary key]");
+      formattingHelper.writeNameRow(pkName, "[primary key]");
       printTableColumns(primaryKey.getColumns());
     }
   }
@@ -724,21 +724,21 @@ final class SchemaTextFormatter
       return;
     }
 
-    formattingHelper.createEmptyRow();
-    formattingHelper.createWideRow("Privileges and Grants", "section");
+    formattingHelper.writeEmptyRow();
+    formattingHelper.writeWideRow("Privileges and Grants", "section");
 
     for (final Privilege<Table> privilege: privileges)
     {
       if (privilege != null)
       {
-        formattingHelper.createEmptyRow();
-        formattingHelper.createNameRow(privilege.getName(), "[privilege]");
+        formattingHelper.writeEmptyRow();
+        formattingHelper.writeNameRow(privilege.getName(), "[privilege]");
         for (final Grant grant: privilege.getGrants())
         {
           final String grantedFrom = String.format("%s %s %s%s", grant
             .getGrantor(), formattingHelper.createRightArrow(), grant
             .getGrantee(), grant.isGrantable()? " (grantable)": "");
-          formattingHelper.createDetailRow("", grantedFrom, "");
+          formattingHelper.writeDetailRow("", grantedFrom, "");
         }
       }
     }
@@ -750,7 +750,7 @@ final class SchemaTextFormatter
     {
       return;
     }
-    formattingHelper.createWideRow(object.getRemarks(), "");
+    formattingHelper.writeWideRow(object.getRemarks(), "");
   }
 
   private void printRoutineColumns(final List<? extends RoutineColumn<?>> columns)
@@ -788,7 +788,7 @@ final class SchemaTextFormatter
       {
         ordinalNumberString = String.valueOf(column.getOrdinalPosition() + 1);
       }
-      formattingHelper.createDetailRow(ordinalNumberString,
+      formattingHelper.writeDetailRow(ordinalNumberString,
                                        column.getName(),
                                        columnType.toString());
     }
@@ -800,7 +800,7 @@ final class SchemaTextFormatter
     {
       return;
     }
-    formattingHelper.createDetailRow("", "", "auto-incremented");
+    formattingHelper.writeDetailRow("", "", "auto-incremented");
   }
 
   private void printTableColumnRemarks(final Column column)
@@ -809,7 +809,7 @@ final class SchemaTextFormatter
     {
       return;
     }
-    formattingHelper.createDetailRow("", "", column.getRemarks());
+    formattingHelper.writeDetailRow("", "", column.getRemarks());
   }
 
   private void printTableColumns(final List<? extends Column> columns)
@@ -867,7 +867,7 @@ final class SchemaTextFormatter
       {
         ordinalNumberString = String.valueOf(column.getOrdinalPosition());
       }
-      formattingHelper.createDetailRow(ordinalNumberString,
+      formattingHelper.writeDetailRow(ordinalNumberString,
                                        columnName,
                                        true,
                                        columnDetails,
@@ -887,8 +887,8 @@ final class SchemaTextFormatter
       return;
     }
 
-    formattingHelper.createEmptyRow();
-    formattingHelper.createWideRow("Table Constraints", "section");
+    formattingHelper.writeEmptyRow();
+    formattingHelper.writeWideRow("Table Constraints", "section");
 
     Collections.sort(constraints, NamedObjectSort.getNamedObjectSort(options
       .isAlphabeticalSortForIndexes()));
@@ -914,8 +914,8 @@ final class SchemaTextFormatter
           continue;
         }
         final String constraintDetails = "[" + constraintType + " constraint]";
-        formattingHelper.createEmptyRow();
-        formattingHelper.createNameRow(constraintName, constraintDetails);
+        formattingHelper.writeEmptyRow();
+        formattingHelper.writeNameRow(constraintName, constraintDetails);
 
         if (!isBrief)
         {
@@ -926,7 +926,7 @@ final class SchemaTextFormatter
         {
           if (constraint.hasDefinition())
           {
-            formattingHelper.createWideRow(constraint.getDefinition(),
+            formattingHelper.writeWideRow(constraint.getDefinition(),
                                            "definition");
           }
         }
@@ -942,8 +942,8 @@ final class SchemaTextFormatter
       return;
     }
 
-    formattingHelper.createEmptyRow();
-    formattingHelper.createWideRow("Triggers", "section");
+    formattingHelper.writeEmptyRow();
+    formattingHelper.writeWideRow("Triggers", "section");
 
     for (final Trigger trigger: triggers)
     {
@@ -971,7 +971,7 @@ final class SchemaTextFormatter
         triggerType = triggerType.toLowerCase(Locale.ENGLISH);
         final String actionCondition = trigger.getActionCondition();
         final String actionStatement = trigger.getActionStatement();
-        formattingHelper.createEmptyRow();
+        formattingHelper.writeEmptyRow();
 
         final String triggerName;
         if (options.isHideTriggerNames())
@@ -983,15 +983,15 @@ final class SchemaTextFormatter
           triggerName = trigger.getName();
         }
 
-        formattingHelper.createNameRow(triggerName, triggerType);
+        formattingHelper.writeNameRow(triggerName, triggerType);
 
         if (!isBlank(actionCondition))
         {
-          formattingHelper.createWideRow(actionCondition, "definition");
+          formattingHelper.writeWideRow(actionCondition, "definition");
         }
         if (!isBlank(actionStatement))
         {
-          formattingHelper.createWideRow(actionStatement, "definition");
+          formattingHelper.writeWideRow(actionStatement, "definition");
         }
       }
     }
@@ -1006,8 +1006,8 @@ final class SchemaTextFormatter
       return;
     }
 
-    formattingHelper.createEmptyRow();
-    formattingHelper.createWideRow("Weak Associations", "section");
+    formattingHelper.writeEmptyRow();
+    formattingHelper.writeWideRow("Weak Associations", "section");
 
     final List<WeakAssociationForeignKey> weakAssociations = new ArrayList<>(weakAssociationsCollection);
     Collections.sort(weakAssociations);
@@ -1015,10 +1015,10 @@ final class SchemaTextFormatter
     {
       if (weakFk != null)
       {
-        formattingHelper.createEmptyRow();
+        formattingHelper.writeEmptyRow();
 
         final String fkDetails = "[weak association]";
-        formattingHelper.createNameRow("", fkDetails);
+        formattingHelper.writeNameRow("", fkDetails);
         printColumnReferences(false, table, weakFk);
       }
     }
