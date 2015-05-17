@@ -20,7 +20,8 @@
 package schemacrawler.tools.lint;
 
 
-import schemacrawler.schema.NamedObjectWithAttributes;
+import schemacrawler.schema.AttributedObject;
+import schemacrawler.schema.NamedObject;
 
 public interface LintCollector
   extends Iterable<Lint<?>>
@@ -28,7 +29,8 @@ public interface LintCollector
 
   final String LINT_KEY = "schemacrawler.lints";
 
-  void addLint(final NamedObjectWithAttributes namedObject, final Lint<?> lint);
+  <N extends NamedObject & AttributedObject> void addLint(final N namedObject,
+                                                          final Lint<?> lint);
 
   void clear();
 

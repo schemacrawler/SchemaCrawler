@@ -29,7 +29,7 @@ import java.util.Collection;
  * @author Sualeh Fatehi
  */
 public interface Catalog
-  extends NamedObjectWithAttributes
+  extends NamedObject, AttributedObject, DescribedObject
 {
 
   /**
