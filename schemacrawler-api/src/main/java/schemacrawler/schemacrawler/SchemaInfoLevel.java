@@ -96,7 +96,7 @@ public final class SchemaInfoLevel
     standard.setRetrieveColumnDataTypes(true);
     standard.setRetrieveTableColumns(true);
     standard.setRetrieveForeignKeys(true);
-    standard.setRetrieveIndices(true);
+    standard.setRetrieveIndexes(true);
     standard.setRetrieveRoutineColumns(true);
     standard.setTag("standard");
     return standard;
@@ -116,7 +116,7 @@ public final class SchemaInfoLevel
   private boolean retrieveViewInformation;
   private boolean retrieveIndexInformation;
   private boolean retrieveForeignKeys;
-  private boolean retrieveIndices;
+  private boolean retrieveIndexes;
   private boolean retrieveTablePrivileges;
   private boolean retrieveTableColumnPrivileges;
   private boolean retrieveTriggerInformation;
@@ -167,9 +167,9 @@ public final class SchemaInfoLevel
     return retrieveIndexInformation;
   }
 
-  public boolean isRetrieveIndices()
+  public boolean isRetrieveIndexes()
   {
-    return retrieveIndices;
+    return retrieveIndexes;
   }
 
   public boolean isRetrieveRoutineColumns()
@@ -277,9 +277,9 @@ public final class SchemaInfoLevel
     this.retrieveIndexInformation = retrieveIndexInformation;
   }
 
-  public void setRetrieveIndices(final boolean retrieveIndices)
+  public void setRetrieveIndexes(final boolean retrieveIndexes)
   {
-    this.retrieveIndices = retrieveIndices;
+    this.retrieveIndexes = retrieveIndexes;
   }
 
   public void setRetrieveRoutineColumns(final boolean retrieveRoutineColumns)

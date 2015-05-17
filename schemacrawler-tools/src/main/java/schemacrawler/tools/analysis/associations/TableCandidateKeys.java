@@ -67,7 +67,7 @@ final class TableCandidateKeys
       tableKeys.add(primaryKey.getColumns().get(0));
     }
 
-    for (final Index index: table.getIndices())
+    for (final Index index: table.getIndexes())
     {
       if (index != null && index.isUnique() && index.getColumns().size() == 1)
       {

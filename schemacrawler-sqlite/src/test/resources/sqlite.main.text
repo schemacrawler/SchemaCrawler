@@ -37,7 +37,7 @@ Foreign Keys
 SC_3CAFA828_4047ACFF                       [foreign key, with no action]
   Id <--(0..many) BookAuthors.AuthorId                              
 
-Indices
+Indexes
 
 IDX_B_Authors                                         [non-unique index]
   LastName                          unknown                     
@@ -112,7 +112,7 @@ SC_3CAFA828_4047ACFF                       [foreign key, with no action]
 SC_3D6328A_4047ACFF                        [foreign key, with no action]
   BookId (0..many)--> Books.Id                                  
 
-Indices
+Indexes
 
 UIDX_BookAuthors                                          [unique index]
   BookId                            unknown                     

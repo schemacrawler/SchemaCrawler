@@ -4,7 +4,7 @@
 		<config>
 		</config>
 	</linter>
-	<linter id="schemacrawler.tools.linter.LinterForeignKeyWithNoIndices">
+	<linter id="schemacrawler.tools.linter.LinterForeignKeyWithNoIndexes">
 		<severity>low</severity>
 		<config>
 		</config>
@@ -19,7 +19,7 @@
 		<config>
 		</config>
 	</linter>
-	<linter id="schemacrawler.tools.linter.LinterRedundantIndices">
+	<linter id="schemacrawler.tools.linter.LinterRedundantIndexes">
 		<severity>low</severity>
 		<config>
 		</config>
@@ -34,7 +34,7 @@
 		<config>
 		</config>
 	</linter>
-	<linter id="schemacrawler.tools.linter.LinterTableWithNoIndices">
+	<linter id="schemacrawler.tools.linter.LinterTableWithNoIndexes">
 		<severity>low</severity>
 		<config>
 		</config>

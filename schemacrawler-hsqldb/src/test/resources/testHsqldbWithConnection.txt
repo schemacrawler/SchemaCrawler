@@ -38,7 +38,7 @@ Foreign Keys
 FK_Z_AUTHOR                                [foreign key, with no action]
   ID <--(0..many) PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID                              
 
-Indices
+Indexes
 
                                                           [unique index]
   ID                                ascending                   
@@ -85,7 +85,7 @@ FK_Y_BOOK                                  [foreign key, with no action]
 FK_PREVIOUSEDITION                         [foreign key, with no action]
   ID <--(0..1) PREVIOUSEDITIONID                                
 
-Indices
+Indexes
 
                                                           [unique index]
   ID                                ascending                   
@@ -119,7 +119,7 @@ PK_PUBLISHERS                                              [primary key]
   ID                                ascending                   
                                     auto-incremented            
 
-Indices
+Indexes
 
                                                           [unique index]
   ID                                ascending                   
@@ -142,7 +142,7 @@ FK_Z_AUTHOR                                [foreign key, with no action]
 FK_Y_BOOK                                  [foreign key, with no action]
   BOOKID (0..many)--> PUBLIC.BOOKS.BOOKS.ID                              
 
-Indices
+Indexes
 
                                                       [non-unique index]
   AUTHORID                          ascending                   

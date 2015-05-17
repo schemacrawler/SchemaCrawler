@@ -49,7 +49,7 @@ CREATE TABLE BOOKS."Global Counts"
 CREATE VIEW BOOKS.AuthorsList AS SELECT Id, FirstName, LastName FROM Authors
 ;
 
--- Indices
+-- Indexes
 CREATE UNIQUE INDEX UIDX_BookAuthors ON BOOKS.BookAuthors(BookId, AuthorId)
 ;
 CREATE INDEX IDX_B_Authors ON BOOKS.Authors(LastName, FirstName)

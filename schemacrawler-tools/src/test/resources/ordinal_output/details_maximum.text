@@ -38,7 +38,7 @@ Foreign Keys
 FK_Z_AUTHOR                                [foreign key, with no action]
  1  ID <--(0..many) PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID                              
 
-Indices
+Indexes
 
 SYS_IDX_PK_AUTHORS_10097                                  [unique index]
 1   ID                                ascending                   
@@ -141,7 +141,7 @@ FK_Z_AUTHOR                                [foreign key, with no action]
 FK_Y_BOOK                                  [foreign key, with no action]
  1  BOOKID (0..many)--> PUBLIC.BOOKS.BOOKS.ID                              
 
-Indices
+Indexes
 
 SYS_IDX_10118                                         [non-unique index]
 2   AUTHORID                          ascending                   
@@ -221,7 +221,7 @@ Weak Associations
                                                       [weak association]
   PUBLISHERID (0..many)~~> PUBLIC.BOOKS.PUBLISHERS.ID                              
 
-Indices
+Indexes
 
 SYS_IDX_PK_BOOKS_10105                                    [unique index]
 1   ID                                ascending                   
@@ -311,7 +311,7 @@ Weak Associations
                                                       [weak association]
   ID <~~(0..many) PUBLIC.BOOKS.BOOKS.PUBLISHERID                              
 
-Indices
+Indexes
 
 SYS_IDX_SYS_PK_10092_10093                                [unique index]
 1   ID                                ascending                   
@@ -360,7 +360,7 @@ FK_PUBLICATION_JOIN                        [foreign key, with no action]
 FK_WRITER_JOIN                             [foreign key, with no action]
  1  WRITERID (0..many)--> PUBLIC.FOR_LINT.WRITERS.ID                              
 
-Indices
+Indexes
 
 SYS_IDX_PK_EXTRA_PK_10181                                 [unique index]
 1   ID                                ascending                   
@@ -457,7 +457,7 @@ FK_WRITERS_PUBLICATION                     [foreign key, with no action]
 FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
  1  WRITERID (0..many)--> PUBLIC.FOR_LINT.WRITERS.ID                              
 
-Indices
+Indexes
 
 SYS_IDX_PK_PUBLICATIONS_10171                             [unique index]
 1   ID                                ascending                   
@@ -538,7 +538,7 @@ FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
 FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS       [foreign key, with no action]
  1  ID <--(0..many) PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ                              
 
-Indices
+Indexes
 
 SYS_IDX_PK_WRITERS_10161                                  [unique index]
 1   ID                                ascending                   
@@ -622,7 +622,7 @@ Foreign Keys
 FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS       [foreign key, with no action]
  1  ΣΥΓΓΡΑΦΈΑΣ (0..many)--> PUBLIC.FOR_LINT.WRITERS.ID                              
 
-Indices
+Indexes
 
 SYS_IDX_PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_10190                     [unique index]
 1   ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ               ascending                   
@@ -676,7 +676,7 @@ FK_SALES_REGIONS                           [foreign key, with no action]
  1  POSTALCODE <--(0..many) PUBLIC."PUBLISHER SALES".SALES.POSTALCODE                              
  2  COUNTRY <--(0..many) PUBLIC."PUBLISHER SALES".SALES.COUNTRY                              
 
-Indices
+Indexes
 
 SYS_IDX_PK_CUSTOMERS_10144                                [unique index]
 3   POSTALCODE                        ascending                   
@@ -737,7 +737,7 @@ Weak Associations
                                                       [weak association]
   BOOKID (0..many)~~> PUBLIC.BOOKS.BOOKS.ID                              
 
-Indices
+Indexes
 
 SYS_IDX_10154                                         [non-unique index]
 1   POSTALCODE                        ascending                   

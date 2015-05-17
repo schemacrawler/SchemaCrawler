@@ -2543,9 +2543,9 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           <foreignKeys id="336">
             <objects id="337"/>
           </foreignKeys>
-          <indices id="338">
+          <indexes id="338">
             <objects id="339"/>
-          </indices>
+          </indexes>
           <constraints id="340">
             <objects id="341"/>
           </constraints>
@@ -3994,9 +3994,9 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                           </entry>
                                         </objects>
                                       </foreignKeys>
-                                      <indices id="481">
+                                      <indexes id="481">
                                         <objects id="482"/>
-                                      </indices>
+                                      </indexes>
                                       <constraints id="483">
                                         <objects id="484">
                                           <entry>
@@ -4151,7 +4151,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                               </entry>
                             </objects>
                           </foreignKeys>
-                          <indices id="521">
+                          <indexes id="521">
                             <objects id="522">
                               <entry>
                                 <string>Books.dbo.BookAuthors.UIDX_BookAuthors</string>
@@ -4219,7 +4219,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                                 </index>
                               </entry>
                             </objects>
-                          </indices>
+                          </indexes>
                           <constraints id="532">
                             <objects id="533">
                               <entry>
@@ -4392,7 +4392,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
               </entry>
             </objects>
           </foreignKeys>
-          <indices id="571">
+          <indexes id="571">
             <objects id="572">
               <entry>
                 <string>Books.dbo.Authors.IDX_A_Authors</string>
@@ -4551,7 +4551,7 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
                 </index>
               </entry>
             </objects>
-          </indices>
+          </indexes>
           <constraints id="595">
             <objects id="596">
               <entry>
@@ -4912,9 +4912,9 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           <foreignKeys id="648">
             <objects id="649"/>
           </foreignKeys>
-          <indices id="650">
+          <indexes id="650">
             <objects id="651"/>
-          </indices>
+          </indexes>
           <constraints id="652">
             <objects id="653"/>
           </constraints>
@@ -5238,9 +5238,9 @@ schemas. SchemaCrawler also generates schema diagrams.&#xd;
           <foreignKeys id="703">
             <objects id="704"/>
           </foreignKeys>
-          <indices id="705">
+          <indexes id="705">
             <objects id="706"/>
-          </indices>
+          </indexes>
           <constraints id="707">
             <objects id="708">
               <entry>

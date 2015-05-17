@@ -16,7 +16,7 @@
         }],
         "updateRule": "no action"
       }],
-      "indices": [
+      "indexes": [
         {
           "columns": {
             "sortSequence": "ascending",
@@ -219,7 +219,7 @@
     {
       "weakAssociations": [],
       "foreignKeys": [],
-      "indices": [],
+      "indexes": [],
       "columns": [
         {
           "size": 32,
@@ -286,7 +286,7 @@
           "updateRule": "no action"
         }
       ],
-      "indices": [
+      "indexes": [
         {
           "columns": {
             "sortSequence": "ascending",
@@ -408,7 +408,7 @@
           "updateRule": "no action"
         }
       ],
-      "indices": [
+      "indexes": [
         {
           "columns": {
             "sortSequence": "ascending",
@@ -562,7 +562,7 @@
     {
       "weakAssociations": [],
       "foreignKeys": [],
-      "indices": [],
+      "indexes": [],
       "columns": [{
         "size": 32,
         "nullable": true,
@@ -586,7 +586,7 @@
     {
       "weakAssociations": [],
       "foreignKeys": [],
-      "indices": [{
+      "indexes": [{
         "columns": {
           "sortSequence": "ascending",
           "name": "ID"
@@ -662,7 +662,7 @@
           "updateRule": "no action"
         }
       ],
-      "indices": [
+      "indexes": [
         {
           "columns": {
             "sortSequence": "ascending",
@@ -777,7 +777,7 @@
     {
       "weakAssociations": [],
       "foreignKeys": [],
-      "indices": [],
+      "indexes": [],
       "columns": [{
         "size": 32,
         "nullable": true,
@@ -829,7 +829,7 @@
           "updateRule": "no action"
         }
       ],
-      "indices": [
+      "indexes": [
         {
           "columns": {
             "sortSequence": "ascending",
@@ -1022,7 +1022,7 @@
           "updateRule": "no action"
         }
       ],
-      "indices": [
+      "indexes": [
         {
           "columns": {
             "sortSequence": "ascending",
@@ -1379,7 +1379,7 @@
         }],
         "updateRule": "no action"
       }],
-      "indices": [
+      "indexes": [
         {
           "columns": {
             "sortSequence": "ascending",
@@ -1484,7 +1484,7 @@
         ],
         "updateRule": "no action"
       }],
-      "indices": [{
+      "indexes": [{
         "columns": [
           {
             "sortSequence": "ascending",
@@ -1611,7 +1611,7 @@
         ],
         "updateRule": "no action"
       }],
-      "indices": [{
+      "indexes": [{
         "columns": [
           {
             "sortSequence": "ascending",
