@@ -39,7 +39,6 @@ import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableConstraint;
-import schemacrawler.schema.TableReference;
 import schemacrawler.schema.TableRelationshipType;
 import schemacrawler.schema.TableType;
 import schemacrawler.schema.Trigger;
@@ -240,9 +239,9 @@ class MutableTable
    * @see schemacrawler.schema.Table#getRelatedTables(schemacrawler.schema.TableRelationshipType)
    */
   @Override
-  public Collection<TableReference> getRelatedTables(final TableRelationshipType tableRelationshipType)
+  public Collection<Table> getRelatedTables(final TableRelationshipType tableRelationshipType)
   {
-    final Set<TableReference> relatedTables = new HashSet<>();
+    final Set<Table> relatedTables = new HashSet<>();
     if (tableRelationshipType != null
         && tableRelationshipType != TableRelationshipType.none)
     {
@@ -277,7 +276,7 @@ class MutableTable
       }
     }
 
-    final List<TableReference> relatedTablesList = new ArrayList<>(relatedTables);
+    final List<Table> relatedTablesList = new ArrayList<>(relatedTables);
     Collections.sort(relatedTablesList, NamedObjectSort.alphabetical);
     return relatedTablesList;
   }

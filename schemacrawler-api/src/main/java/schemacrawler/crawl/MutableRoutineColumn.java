@@ -21,8 +21,8 @@
 package schemacrawler.crawl;
 
 
+import schemacrawler.schema.Routine;
 import schemacrawler.schema.RoutineColumn;
-import schemacrawler.schema.RoutineReference;
 
 /**
  * Represents a column in a database routine. Created from metadata
@@ -30,7 +30,7 @@ import schemacrawler.schema.RoutineReference;
  *
  * @author Sualeh Fatehi
  */
-abstract class MutableRoutineColumn<R extends RoutineReference>
+abstract class MutableRoutineColumn<R extends Routine>
   extends AbstractColumn<R>
   implements RoutineColumn<R>
 {

@@ -33,7 +33,6 @@ import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.Reducer;
 import schemacrawler.schema.Table;
-import schemacrawler.schema.TableReference;
 import schemacrawler.schema.TableRelationshipType;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
@@ -107,7 +106,7 @@ public class TablesReducer
     {
       for (final Table table: new HashSet<>(includedTables))
       {
-        for (final TableReference relatedTable: table
+        for (final Table relatedTable: table
           .getRelatedTables(tableRelationshipType))
         {
           if (!isTablePartial(relatedTable))
@@ -121,7 +120,7 @@ public class TablesReducer
     return includedTables;
   }
 
-  private boolean isTablePartial(final TableReference table)
+  private boolean isTablePartial(final Table table)
   {
     return table instanceof PartialDatabaseObject;
   }
