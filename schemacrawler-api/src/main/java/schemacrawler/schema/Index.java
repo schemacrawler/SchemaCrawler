@@ -29,8 +29,8 @@ import java.util.List;
  * @author Sualeh Fatehi
  */
 public interface Index
-  extends DependantObject<TableReference>, TypedObject<IndexType>,
-  DefinedObject, Iterable<IndexColumn>
+  extends DependantObject<Table>, TypedObject<IndexType>, DefinedObject,
+  Iterable<IndexColumn>
 {
 
   /**

@@ -30,7 +30,7 @@ import java.util.List;
  * @author Sualeh Fatehi
  */
 public interface Table
-  extends TableReference, DatabaseObject, TypedObject<TableType>, DefinedObject
+  extends DatabaseObject, TypedObject<TableType>, DefinedObject
 {
 
   /**
@@ -131,7 +131,7 @@ public interface Table
    *        Table relationship type
    * @return Related tables.
    */
-  Collection<TableReference> getRelatedTables(final TableRelationshipType tableRelationshipType);
+  Collection<Table> getRelatedTables(final TableRelationshipType tableRelationshipType);
 
   /**
    * Gets the constraints for the table.

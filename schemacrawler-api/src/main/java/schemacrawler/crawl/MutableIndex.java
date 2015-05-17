@@ -31,7 +31,7 @@ import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.IndexType;
 import schemacrawler.schema.NamedObject;
-import schemacrawler.schema.TableReference;
+import schemacrawler.schema.Table;
 import schemacrawler.utility.CompareUtility;
 
 /**
@@ -40,7 +40,7 @@ import schemacrawler.utility.CompareUtility;
  * @author Sualeh Fatehi
  */
 class MutableIndex
-  extends AbstractDependantObject<TableReference>
+  extends AbstractDependantObject<Table>
   implements Index
 {
 
@@ -53,7 +53,7 @@ class MutableIndex
   private int pages;
   private final StringBuilder definition;
 
-  MutableIndex(final TableReference parent, final String name)
+  MutableIndex(final Table parent, final String name)
   {
     super(parent, name);
     // Default values
