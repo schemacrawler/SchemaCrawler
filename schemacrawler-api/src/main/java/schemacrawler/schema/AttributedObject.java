@@ -23,13 +23,7 @@ package schemacrawler.schema;
 
 import java.util.Map;
 
-/**
- * Represents a named object.
- *
- * @author Sualeh Fatehi
- */
-public interface NamedObjectWithAttributes
-  extends NamedObject
+public interface AttributedObject
 {
 
   /**
@@ -56,20 +50,6 @@ public interface NamedObjectWithAttributes
    * @return Map of attributes
    */
   Map<String, Object> getAttributes();
-
-  /**
-   * Getter for remarks.
-   *
-   * @return Remarks
-   */
-  String getRemarks();
-
-  /**
-   * Whether remarks are available.
-   *
-   * @return Remarks
-   */
-  boolean hasRemarks();
 
   /**
    * Removes an attribute.
