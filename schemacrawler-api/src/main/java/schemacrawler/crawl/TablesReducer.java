@@ -126,7 +126,7 @@ public class TablesReducer
     return table instanceof PartialDatabaseObject;
   }
 
-  private void markTableFilteredOut(final TableReference referencedTable)
+  private void markTableFilteredOut(final Table referencedTable)
   {
     referencedTable.setAttribute("schemacrawler.table.filtered_out", true);
     if (options.isGrepOnlyMatching())
@@ -143,8 +143,8 @@ public class TablesReducer
       {
         for (final ForeignKeyColumnReference fkColumnRef: foreignKey)
         {
-          final TableReference referencedTable = fkColumnRef
-            .getForeignKeyColumn().getParent();
+          final Table referencedTable = fkColumnRef.getForeignKeyColumn()
+            .getParent();
           if (isTablePartial(referencedTable)
               || !allTables.contains(referencedTable))
           {
