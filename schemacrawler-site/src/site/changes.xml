@@ -568,7 +568,7 @@
         Fixed bug #3392557 - NullPointer exception thrown when columns excluded in Oracle.
       ]]></action>
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
-        Fixed bug #3392976 - Exception retrieving tables: Could not retrieve indices for Oracle schemas with $ in the name.
+        Fixed bug #3392976 - Exception retrieving tables: Could not retrieve indexes for Oracle schemas with $ in the name.
       ]]></action>
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Fixed bug #3401752 - Attempt to locate database 'dbo' by name failed.

@@ -658,7 +658,7 @@ UPDATE                                                       [privilege]
   _SYSTEM --> DBA (grantable)                                   
 
                                                                   [lint]
-  no indices
+  no indexes
   single column
   spaces in names, or reserved words
 "Global Counts", "Global Count"

@@ -188,15 +188,15 @@ public class SortingTest
     {
       if (table.getName().equals(tableName))
       {
-        final Index[] indices = table.getIndices().toArray(new Index[0]);
-        Arrays.sort(indices,
+        final Index[] indexes = table.getIndexes().toArray(new Index[0]);
+        Arrays.sort(indexes,
                     NamedObjectSort.getNamedObjectSort(sortAlphabetically));
         assertEquals("Index count does not match for table " + table,
                      expectedValues.length,
-                     indices.length);
-        for (int i = 0; i < indices.length; i++)
+                     indexes.length);
+        for (int i = 0; i < indexes.length; i++)
         {
-          final Index index = indices[i];
+          final Index index = indexes[i];
           assertEquals("Indexes not "
                            + (sortAlphabetically? "alphabetically": "naturally")
                            + " sorted  for table " + table,

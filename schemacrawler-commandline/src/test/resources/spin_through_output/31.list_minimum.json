@@ -3,7 +3,7 @@
   "tables": [
     {
       "foreignKeys": [],
-      "indices": [],
+      "indexes": [],
       "columns": [],
       "name": "AUTHORS",
       "fullName": "PUBLIC.BOOKS.AUTHORS",
@@ -15,7 +15,7 @@
     },
     {
       "foreignKeys": [],
-      "indices": [],
+      "indexes": [],
       "columns": [],
       "name": "BOOKAUTHORS",
       "fullName": "PUBLIC.BOOKS.BOOKAUTHORS",
@@ -27,7 +27,7 @@
     },
     {
       "foreignKeys": [],
-      "indices": [],
+      "indexes": [],
       "columns": [],
       "name": "BOOKS",
       "fullName": "PUBLIC.BOOKS.BOOKS",
@@ -39,7 +39,7 @@
     },
     {
       "foreignKeys": [],
-      "indices": [],
+      "indexes": [],
       "columns": [],
       "name": "\"Global Counts\"",
       "fullName": "PUBLIC.BOOKS.\"Global Counts\"",
@@ -51,7 +51,7 @@
     },
     {
       "foreignKeys": [],
-      "indices": [],
+      "indexes": [],
       "columns": [],
       "name": "PUBLISHERS",
       "fullName": "PUBLIC.BOOKS.PUBLISHERS",
@@ -63,7 +63,7 @@
     },
     {
       "foreignKeys": [],
-      "indices": [],
+      "indexes": [],
       "columns": [],
       "name": "EXTRA_PK",
       "fullName": "PUBLIC.FOR_LINT.EXTRA_PK",
@@ -75,7 +75,7 @@
     },
     {
       "foreignKeys": [],
-      "indices": [],
+      "indexes": [],
       "columns": [],
       "name": "\"Global Counts\"",
       "fullName": "PUBLIC.FOR_LINT.\"Global Counts\"",
@@ -87,7 +87,7 @@
     },
     {
       "foreignKeys": [],
-      "indices": [],
+      "indexes": [],
       "columns": [],
       "name": "PUBLICATIONS",
       "fullName": "PUBLIC.FOR_LINT.PUBLICATIONS",
@@ -99,7 +99,7 @@
     },
     {
       "foreignKeys": [],
-      "indices": [],
+      "indexes": [],
       "columns": [],
       "name": "WRITERS",
       "fullName": "PUBLIC.FOR_LINT.WRITERS",
@@ -111,7 +111,7 @@
     },
     {
       "foreignKeys": [],
-      "indices": [],
+      "indexes": [],
       "columns": [],
       "name": "ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
       "fullName": "PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
@@ -123,7 +123,7 @@
     },
     {
       "foreignKeys": [],
-      "indices": [],
+      "indexes": [],
       "columns": [],
       "name": "REGIONS",
       "fullName": "PUBLIC.\"PUBLISHER SALES\".REGIONS",
@@ -135,7 +135,7 @@
     },
     {
       "foreignKeys": [],
-      "indices": [],
+      "indexes": [],
       "columns": [],
       "name": "SALES",
       "fullName": "PUBLIC.\"PUBLISHER SALES\".SALES",
@@ -147,7 +147,7 @@
     },
     {
       "foreignKeys": [],
-      "indices": [],
+      "indexes": [],
       "columns": [],
       "name": "AUTHORSLIST",
       "fullName": "PUBLIC.BOOKS.AUTHORSLIST",

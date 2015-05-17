@@ -174,7 +174,7 @@ public final class MetaDataUtility
     final List<String> pkColumns = columnNames(primaryKey);
     allIndexCoumns.add(pkColumns);
 
-    for (final Index index: table.getIndices())
+    for (final Index index: table.getIndexes())
     {
       if (includeUniqueOnly && !index.isUnique())
       {

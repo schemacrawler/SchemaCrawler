@@ -8,7 +8,7 @@
     {
       "weakAssociations": [],
       "foreignKeys": [],
-      "indices": [],
+      "indexes": [],
       "columns": [],
       "name": "AUTHORS",
       "fullName": "PUBLIC.BOOKS.AUTHORS",
@@ -22,7 +22,7 @@
     {
       "weakAssociations": [],
       "foreignKeys": [],
-      "indices": [],
+      "indexes": [],
       "columns": [],
       "name": "BOOKAUTHORS",
       "fullName": "PUBLIC.BOOKS.BOOKAUTHORS",
@@ -36,7 +36,7 @@
     {
       "weakAssociations": [],
       "foreignKeys": [],
-      "indices": [],
+      "indexes": [],
       "columns": [],
       "name": "BOOKS",
       "fullName": "PUBLIC.BOOKS.BOOKS",
@@ -50,7 +50,7 @@
     {
       "weakAssociations": [],
       "foreignKeys": [],
-      "indices": [],
+      "indexes": [],
       "columns": [],
       "name": "\"Global Counts\"",
       "fullName": "PUBLIC.BOOKS.\"Global Counts\"",
@@ -64,7 +64,7 @@
     {
       "weakAssociations": [],
       "foreignKeys": [],
-      "indices": [],
+      "indexes": [],
       "columns": [],
       "name": "PUBLISHERS",
       "fullName": "PUBLIC.BOOKS.PUBLISHERS",
@@ -78,7 +78,7 @@
     {
       "weakAssociations": [],
       "foreignKeys": [],
-      "indices": [],
+      "indexes": [],
       "columns": [],
       "name": "EXTRA_PK",
       "fullName": "PUBLIC.FOR_LINT.EXTRA_PK",
@@ -92,7 +92,7 @@
     {
       "weakAssociations": [],
       "foreignKeys": [],
-      "indices": [],
+      "indexes": [],
       "columns": [],
       "name": "\"Global Counts\"",
       "fullName": "PUBLIC.FOR_LINT.\"Global Counts\"",
@@ -106,7 +106,7 @@
     {
       "weakAssociations": [],
       "foreignKeys": [],
-      "indices": [],
+      "indexes": [],
       "columns": [],
       "name": "PUBLICATIONS",
       "fullName": "PUBLIC.FOR_LINT.PUBLICATIONS",
@@ -120,7 +120,7 @@
     {
       "weakAssociations": [],
       "foreignKeys": [],
-      "indices": [],
+      "indexes": [],
       "columns": [],
       "name": "WRITERS",
       "fullName": "PUBLIC.FOR_LINT.WRITERS",
@@ -134,7 +134,7 @@
     {
       "weakAssociations": [],
       "foreignKeys": [],
-      "indices": [],
+      "indexes": [],
       "columns": [],
       "name": "ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
       "fullName": "PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
@@ -148,7 +148,7 @@
     {
       "weakAssociations": [],
       "foreignKeys": [],
-      "indices": [],
+      "indexes": [],
       "columns": [],
       "name": "REGIONS",
       "fullName": "PUBLIC.\"PUBLISHER SALES\".REGIONS",
@@ -162,7 +162,7 @@
     {
       "weakAssociations": [],
       "foreignKeys": [],
-      "indices": [],
+      "indexes": [],
       "columns": [],
       "name": "SALES",
       "fullName": "PUBLIC.\"PUBLISHER SALES\".SALES",
@@ -176,7 +176,7 @@
     {
       "weakAssociations": [],
       "foreignKeys": [],
-      "indices": [],
+      "indexes": [],
       "columns": [],
       "name": "AUTHORSLIST",
       "fullName": "PUBLIC.BOOKS.AUTHORSLIST",

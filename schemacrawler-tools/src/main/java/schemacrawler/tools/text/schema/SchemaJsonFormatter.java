@@ -332,15 +332,15 @@ final class SchemaJsonFormatter
                         handleWeakAssociations(weakAssociations));
         }
 
-        final JSONArray jsonIndices = new JSONArray();
-        jsonTable.put("indices", jsonIndices);
-        final Collection<Index> indicesCollection = table.getIndices();
-        final List<Index> indices = new ArrayList<>(indicesCollection);
-        Collections.sort(indices, NamedObjectSort.getNamedObjectSort(options
+        final JSONArray jsonIndexes = new JSONArray();
+        jsonTable.put("indexes", jsonIndexes);
+        final Collection<Index> indexesCollection = table.getIndexes();
+        final List<Index> indexes = new ArrayList<>(indexesCollection);
+        Collections.sort(indexes, NamedObjectSort.getNamedObjectSort(options
           .isAlphabeticalSortForIndexes()));
-        for (final Index index: indices)
+        for (final Index index: indexes)
         {
-          jsonIndices.put(handleIndex(index));
+          jsonIndexes.put(handleIndex(index));
         }
         printDefinition(table, jsonTable);
 

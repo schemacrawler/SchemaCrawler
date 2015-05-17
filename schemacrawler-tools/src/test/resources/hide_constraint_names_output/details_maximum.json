@@ -198,7 +198,7 @@
           "type": "check"
         }
       ],
-      "indices": [
+      "indexes": [
         {
           "columns": {
             "sortSequence": "ascending",
@@ -348,7 +348,7 @@
       "type": "view",
       "triggers": [],
       "tableConstraints": [],
-      "indices": [],
+      "indexes": [],
       "name": "AUTHORSLIST",
       "definition": "SELECT ID,FIRSTNAME,LASTNAME FROM BOOKS.AUTHORS",
       "remarks": "",
@@ -480,7 +480,7 @@
           "type": "check"
         }
       ],
-      "indices": [
+      "indexes": [
         {
           "columns": {
             "sortSequence": "ascending",
@@ -700,7 +700,7 @@
           "type": "check"
         }
       ],
-      "indices": [
+      "indexes": [
         {
           "columns": {
             "sortSequence": "ascending",
@@ -806,7 +806,7 @@
       "type": "table",
       "triggers": [],
       "tableConstraints": [],
-      "indices": [],
+      "indexes": [],
       "name": "\"Global Counts\"",
       "definition": "",
       "remarks": "",
@@ -899,7 +899,7 @@
         "definition": "",
         "type": "primary_key"
       }],
-      "indices": [{
+      "indexes": [{
         "columns": {
           "sortSequence": "ascending",
           "name": "ID"
@@ -1053,7 +1053,7 @@
           "type": "check"
         }
       ],
-      "indices": [
+      "indexes": [
         {
           "columns": {
             "sortSequence": "ascending",
@@ -1159,7 +1159,7 @@
       "type": "table",
       "triggers": [],
       "tableConstraints": [],
-      "indices": [],
+      "indexes": [],
       "name": "\"Global Counts\"",
       "definition": "",
       "remarks": "",
@@ -1358,7 +1358,7 @@
           "type": "check"
         }
       ],
-      "indices": [
+      "indexes": [
         {
           "columns": {
             "sortSequence": "ascending",
@@ -1711,7 +1711,7 @@
           "type": "check"
         }
       ],
-      "indices": [
+      "indexes": [
         {
           "columns": {
             "sortSequence": "ascending",
@@ -1917,7 +1917,7 @@
           "type": "check"
         }
       ],
-      "indices": [
+      "indexes": [
         {
           "columns": {
             "sortSequence": "ascending",
@@ -2084,7 +2084,7 @@
           "type": "check"
         }
       ],
-      "indices": [{
+      "indexes": [{
         "columns": [
           {
             "sortSequence": "ascending",
@@ -2259,7 +2259,7 @@
           "type": "check"
         }
       ],
-      "indices": [{
+      "indexes": [{
         "columns": [
           {
             "sortSequence": "ascending",

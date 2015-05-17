@@ -35,7 +35,7 @@ FK_Y_BOOK                                  [foreign key, with no action]
 FK_PREVIOUSEDITION                         [foreign key, with no action]
   ID <--(0..1) PREVIOUSEDITIONID                                
 
-Indices
+Indexes
 
 SYS_IDX_PK_BOOKS_10105                                    [unique index]
   ID                                ascending                   
@@ -86,7 +86,7 @@ FK_WRITERS_PUBLICATION                     [foreign key, with no action]
 FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
   WRITERID (0..many)--> PUBLIC.FOR_LINT.WRITERS.ID                              
 
-Indices
+Indexes
 
 SYS_IDX_PK_PUBLICATIONS_10171                             [unique index]
   ID                                ascending                   

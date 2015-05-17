@@ -69,7 +69,7 @@ class MutableTable
   private MutablePrimaryKey primaryKey;
   private final NamedObjectList<MutableColumn> columns = new NamedObjectList<>();
   private final NamedObjectList<MutableForeignKey> foreignKeys = new NamedObjectList<>();
-  private final NamedObjectList<MutableIndex> indices = new NamedObjectList<>();
+  private final NamedObjectList<MutableIndex> indexes = new NamedObjectList<>();
   private final NamedObjectList<MutableTableConstraint> constraints = new NamedObjectList<>();
   private final NamedObjectList<MutableTrigger> triggers = new NamedObjectList<>();
   private final NamedObjectList<MutablePrivilege<Table>> privileges = new NamedObjectList<>();
@@ -187,18 +187,18 @@ class MutableTable
   @Override
   public MutableIndex getIndex(final String name)
   {
-    return indices.lookup(this, name);
+    return indexes.lookup(this, name);
   }
 
   /**
    * {@inheritDoc}
    *
-   * @see Table#getIndices()
+   * @see Table#getIndexes()
    */
   @Override
-  public Collection<Index> getIndices()
+  public Collection<Index> getIndexes()
   {
-    return new ArrayList<Index>(indices.values());
+    return new ArrayList<Index>(indexes.values());
   }
 
   /**
@@ -355,7 +355,7 @@ class MutableTable
 
   void addIndex(final MutableIndex index)
   {
-    indices.add(index);
+    indexes.add(index);
   }
 
   void addPrivilege(final MutablePrivilege<Table> privilege)
@@ -411,7 +411,7 @@ class MutableTable
     }
 
     final String primaryKeyName = primaryKey.getName();
-    final MutableIndex index = indices.lookup(this, primaryKeyName);
+    final MutableIndex index = indexes.lookup(this, primaryKeyName);
     if (index != null)
     {
       boolean indexHasPkColumns = false;
@@ -430,7 +430,7 @@ class MutableTable
       }
       if (indexHasPkColumns)
       {
-        indices.remove(index);
+        indexes.remove(index);
         setPrimaryKey(new MutablePrimaryKey(index));
       }
     }

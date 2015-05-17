@@ -19,7 +19,7 @@ FK_SALES_REGIONS                           [foreign key, with no action]
   POSTALCODE (0..many)--> PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE                              
   COUNTRY (0..many)--> PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY                              
 
-Indices
+Indexes
 
 SYS_IDX_10154                                         [non-unique index]
   POSTALCODE                        ascending                   

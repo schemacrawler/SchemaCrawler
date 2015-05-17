@@ -56,7 +56,7 @@
           gives you
           just table, view, stored procedure and function names. The standard schema option gives you the column names and
           primary keys.
-          The verbose schema option will give you details of data types, indices, primary and foreign keys,
+          The verbose schema option will give you details of data types, indexes, primary and foreign keys,
           view, stored procedure and function definitions. The SchemaCrawler command can be combined with an
           <i>infolevel</i>
           , which determines the level of detail of schema metadata obtained. The maximum infolevel will give you
