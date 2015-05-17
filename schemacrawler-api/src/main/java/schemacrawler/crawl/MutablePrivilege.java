@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Set;
 
 import schemacrawler.schema.DatabaseObject;
+import schemacrawler.schema.Grant;
 import schemacrawler.schema.Privilege;
 import sf.util.Utility;
 
@@ -37,13 +38,13 @@ import sf.util.Utility;
  *
  * @author Sualeh Fatehi
  */
-final class MutablePrivilege<P extends DatabaseObject>
-  extends AbstractNamedObject
-  implements Privilege<P>
+final class MutablePrivilege<D extends DatabaseObject>
+  extends AbstractDependantObject<D>
+  implements Privilege<D>
 {
 
   private final class PrivilegeGrant
-    implements Grant
+    implements Grant<D>
   {
 
     private static final long serialVersionUID = 356151825191631484L;
@@ -62,7 +63,7 @@ final class MutablePrivilege<P extends DatabaseObject>
     }
 
     @Override
-    public int compareTo(final Grant otherGrant)
+    public int compareTo(final Grant<D> otherGrant)
     {
       int compare = 0;
       if (compare == 0)
@@ -144,7 +145,7 @@ final class MutablePrivilege<P extends DatabaseObject>
     }
 
     @Override
-    public MutablePrivilege<P> getParent()
+    public MutablePrivilege<D> getParent()
     {
       return MutablePrivilege.this;
     }
@@ -173,27 +174,20 @@ final class MutablePrivilege<P extends DatabaseObject>
   }
 
   private static final long serialVersionUID = -1117664231494271886L;
-  private final P parent;
-  private final Set<Grant> grants = new HashSet<>();
 
-  MutablePrivilege(final P parent, final String name)
+  private final Set<Grant<D>> grants = new HashSet<>();
+
+  MutablePrivilege(D parent, String name)
   {
-    super(name);
-    this.parent = parent;
+    super(parent, name);
   }
 
   @Override
-  public Collection<Grant> getGrants()
+  public Collection<Grant<D>> getGrants()
   {
-    final List<Grant> values = new ArrayList<>(grants);
+    final List<Grant<D>> values = new ArrayList<>(grants);
     Collections.sort(values);
     return values;
-  }
-
-  @Override
-  public P getParent()
-  {
-    return parent;
   }
 
   void addGrant(final String grantor,

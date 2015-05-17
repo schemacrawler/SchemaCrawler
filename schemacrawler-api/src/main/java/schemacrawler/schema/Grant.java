@@ -17,21 +17,34 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-
 package schemacrawler.schema;
 
 
-import java.util.Collection;
+import java.io.Serializable;
 
-/**
- * Represents a privilege of a table or column.
- *
- * @author Sualeh Fatehi
- */
-public interface Privilege<D extends DatabaseObject>
-  extends NamedObject, DependantObject<D>
+public interface Grant<D extends DatabaseObject>
+  extends Serializable, Comparable<Grant<D>>, ContainedObject<Privilege<D>>
 {
 
-  Collection<Grant<D>> getGrants();
+  /**
+   * Gets the grantee.
+   *
+   * @return Grantee
+   */
+  String getGrantee();
+
+  /**
+   * Gets the grantor.
+   *
+   * @return Grantor
+   */
+  String getGrantor();
+
+  /**
+   * If the privilege is grantable.
+   *
+   * @return Is grantable
+   */
+  boolean isGrantable();
 
 }
