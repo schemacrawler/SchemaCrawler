@@ -31,6 +31,11 @@ import java.util.logging.Logger;
 
 import sf.util.Utility;
 
+/**
+ * The default mappings are from the JDBC Specification 4.1, Appendix B
+ * - Data Type Conversion Tables, Table B-3 - Mapping from JDBC Types to
+ * Java Object Types. A JDBC driver may override these default mappings.
+ */
 public final class TypeMap
   implements Map<String, Class<?>>
 {
@@ -42,8 +47,6 @@ public final class TypeMap
   {
     final Map<String, Class<?>> sqlTypeMap = new HashMap<>();
 
-    // From the JDBC Specification 4.1,
-    // Appendix B (Data Type Conversion Tables)
     sqlTypeMap.put("ARRAY", java.sql.Array.class);
     sqlTypeMap.put("BIGINT", Long.class);
     sqlTypeMap.put("BINARY", byte[].class);
@@ -72,12 +75,12 @@ public final class TypeMap
     sqlTypeMap.put("REAL", Float.class);
     sqlTypeMap.put("REF", java.sql.Ref.class);
     sqlTypeMap.put("ROWID", java.sql.RowId.class);
-    sqlTypeMap.put("SMALLINT", Short.class);
+    sqlTypeMap.put("SMALLINT", Integer.class);
     sqlTypeMap.put("SQLXML", java.sql.SQLXML.class);
     sqlTypeMap.put("STRUCT", java.sql.Struct.class);
     sqlTypeMap.put("TIME", java.sql.Time.class);
     sqlTypeMap.put("TIMESTAMP", java.sql.Timestamp.class);
-    sqlTypeMap.put("TINYINT", byte.class);
+    sqlTypeMap.put("TINYINT", Integer.class);
     sqlTypeMap.put("VARBINARY", byte[].class);
     sqlTypeMap.put("VARCHAR", String.class);
 
@@ -108,8 +111,9 @@ public final class TypeMap
       }
       catch (final Exception e)
       {
-        // (Some drivers would throw SQLException, Sybase Adaptive
-        // Server throws UnimplementedOperationException)
+        // Catch all exceptions, since even though most JDBC drivers
+        // would throw SQLException, but the Sybase Adaptive
+        // Server driver throws UnimplementedOperationException
         LOGGER.log(Level.WARNING,
                    "Could not obtain data type map from connection",
                    e);
