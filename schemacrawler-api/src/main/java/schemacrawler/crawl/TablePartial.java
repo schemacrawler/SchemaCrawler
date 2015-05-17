@@ -36,7 +36,6 @@ import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableConstraint;
-import schemacrawler.schema.TableReference;
 import schemacrawler.schema.TableRelationshipType;
 import schemacrawler.schema.TableType;
 import schemacrawler.schema.Trigger;
@@ -56,7 +55,7 @@ final class TablePartial
     super(schema, tableName);
   }
 
-  TablePartial(final TableReference table)
+  TablePartial(final Table table)
   {
     super(table.getSchema(), table.getName());
   }
@@ -162,7 +161,7 @@ final class TablePartial
   }
 
   @Override
-  public Collection<TableReference> getRelatedTables(final TableRelationshipType tableRelationshipType)
+  public Collection<Table> getRelatedTables(final TableRelationshipType tableRelationshipType)
   {
     throw new NotLoadedException();
   }

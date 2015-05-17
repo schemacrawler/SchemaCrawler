@@ -23,8 +23,7 @@ package schemacrawler.schema;
 import java.util.List;
 
 public interface Routine
-  extends RoutineReference, DatabaseObject, TypedObject<RoutineType>,
-  DefinedObject
+  extends DatabaseObject, TypedObject<RoutineType>, DefinedObject
 {
 
   /**
