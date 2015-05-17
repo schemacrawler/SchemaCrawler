@@ -26,8 +26,9 @@ import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import schemacrawler.schema.AttributedObject;
 import schemacrawler.schema.Catalog;
-import schemacrawler.schema.NamedObjectWithAttributes;
+import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Config;
 
@@ -100,9 +101,9 @@ public abstract class BaseLinter
     }
   };
 
-  protected <V extends Serializable> void addLint(final NamedObjectWithAttributes namedObject,
-                                                  final String message,
-                                                  final V value)
+  protected <N extends NamedObject & AttributedObject, V extends Serializable> void addLint(final N namedObject,
+                                                                                            final String message,
+                                                                                            final V value)
   {
     LOGGER.log(Level.FINE, String.format("Found lint for %s: %s --> %s",
                                          namedObject,

@@ -22,12 +22,12 @@ package schemacrawler.filter;
 
 import java.util.function.Predicate;
 
-import schemacrawler.schema.NamedObjectWithAttributes;
+import schemacrawler.schema.NamedObject;
 import schemacrawler.schemacrawler.ExcludeAll;
 import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.InclusionRule;
 
-public class InclusionRuleFilter<N extends NamedObjectWithAttributes>
+public class InclusionRuleFilter<N extends NamedObject>
   implements Predicate<N>
 {
 

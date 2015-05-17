@@ -27,7 +27,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import schemacrawler.schema.NamedObjectWithAttributes;
+import schemacrawler.schema.AttributedObject;
+import schemacrawler.schema.DescribedObject;
 
 /**
  * Represents a named object.
@@ -36,7 +37,7 @@ import schemacrawler.schema.NamedObjectWithAttributes;
  */
 abstract class AbstractNamedObjectWithAttributes
   extends AbstractNamedObject
-  implements NamedObjectWithAttributes
+  implements AttributedObject, DescribedObject
 {
 
   private static final long serialVersionUID = -1486322887991472729L;

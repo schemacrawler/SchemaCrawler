@@ -21,15 +21,21 @@
 package schemacrawler.schema;
 
 
-/**
- * Represents the database schema.
- *
- * @author Sualeh Fatehi
- */
-public interface Schema
-  extends NamedObject, AttributedObject, DescribedObject
+public interface DescribedObject
 {
 
-  String getCatalogName();
+  /**
+   * Getter for remarks.
+   *
+   * @return Remarks
+   */
+  String getRemarks();
+
+  /**
+   * Whether remarks are available.
+   *
+   * @return Remarks
+   */
+  boolean hasRemarks();
 
 }
