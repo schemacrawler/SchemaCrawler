@@ -27,7 +27,8 @@ package schemacrawler.schema;
  * @author Sualeh Fatehi
  */
 public interface ForeignKey
-  extends NamedObjectWithAttributes, BaseForeignKey<ForeignKeyColumnReference>
+  extends BaseForeignKey<ForeignKeyColumnReference>, AttributedObject,
+  DescribedObject
 {
 
   /**
