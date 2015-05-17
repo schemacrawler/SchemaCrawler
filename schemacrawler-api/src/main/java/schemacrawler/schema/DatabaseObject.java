@@ -27,14 +27,7 @@ package schemacrawler.schema;
  * @author Sualeh Fatehi
  */
 public interface DatabaseObject
-  extends NamedObject, AttributedObject, DescribedObject
+  extends DatabaseObjectReference, AttributedObject, DescribedObject
 {
-
-  /**
-   * Gets the database schema.
-   *
-   * @return Database schema
-   */
-  Schema getSchema();
 
 }
