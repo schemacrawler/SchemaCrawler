@@ -119,7 +119,7 @@ public class SchemaCrawlerTest
           out.println("    # columns: " + table.getColumns().size());
           out.println("    # constraints: "
                       + table.getTableConstraints().size());
-          out.println("    # indices: " + table.getIndices().size());
+          out.println("    # indexes: " + table.getIndexes().size());
           out.println("    # foreign keys: " + table.getForeignKeys().size());
           out.println("    # imported foreign keys: "
                       + table.getExportedForeignKeys().size());

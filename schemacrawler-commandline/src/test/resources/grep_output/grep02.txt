@@ -28,7 +28,7 @@ Foreign Keys
 FK_Z_AUTHOR                                [foreign key, with no action]
   ID <--(0..many) PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID                              
 
-Indices
+Indexes
 
 SYS_IDX_PK_AUTHORS_10097                                  [unique index]
   ID                                ascending                   
@@ -116,7 +116,7 @@ FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
 FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS       [foreign key, with no action]
   ID <--(0..many) PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ                              
 
-Indices
+Indexes
 
 SYS_IDX_PK_WRITERS_10161                                  [unique index]
   ID                                ascending                   

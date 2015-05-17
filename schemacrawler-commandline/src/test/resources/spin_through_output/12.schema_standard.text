@@ -38,7 +38,7 @@ Foreign Keys
 FK_Z_AUTHOR                                [foreign key, with no action]
   ID <--(0..many) PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID                              
 
-Indices
+Indexes
 
 SYS_IDX_PK_AUTHORS_10097                                  [unique index]
   ID                                ascending                   
@@ -78,7 +78,7 @@ FK_Z_AUTHOR                                [foreign key, with no action]
 FK_Y_BOOK                                  [foreign key, with no action]
   BOOKID (0..many)--> PUBLIC.BOOKS.BOOKS.ID                              
 
-Indices
+Indexes
 
 SYS_IDX_10118                                         [non-unique index]
   AUTHORID                          ascending                   
@@ -122,7 +122,7 @@ FK_Y_BOOK                                  [foreign key, with no action]
 FK_PREVIOUSEDITION                         [foreign key, with no action]
   ID <--(0..1) PREVIOUSEDITIONID                                
 
-Indices
+Indexes
 
 SYS_IDX_PK_BOOKS_10105                                    [unique index]
   ID                                ascending                   
@@ -156,7 +156,7 @@ SYS_PK_10092                                               [primary key]
   ID                                ascending                   
                                     auto-incremented            
 
-Indices
+Indexes
 
 SYS_IDX_SYS_PK_10092_10093                                [unique index]
   ID                                ascending                   
@@ -183,7 +183,7 @@ FK_PUBLICATION_JOIN                        [foreign key, with no action]
 FK_WRITER_JOIN                             [foreign key, with no action]
   WRITERID (0..many)--> PUBLIC.FOR_LINT.WRITERS.ID                              
 
-Indices
+Indexes
 
 SYS_IDX_PK_EXTRA_PK_10181                                 [unique index]
   ID                                ascending                   
@@ -229,7 +229,7 @@ FK_WRITERS_PUBLICATION                     [foreign key, with no action]
 FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
   WRITERID (0..many)--> PUBLIC.FOR_LINT.WRITERS.ID                              
 
-Indices
+Indexes
 
 SYS_IDX_PK_PUBLICATIONS_10171                             [unique index]
   ID                                ascending                   
@@ -279,7 +279,7 @@ FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
 FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS       [foreign key, with no action]
   ID <--(0..many) PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ                              
 
-Indices
+Indexes
 
 SYS_IDX_PK_WRITERS_10161                                  [unique index]
   ID                                ascending                   
@@ -323,7 +323,7 @@ Foreign Keys
 FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS       [foreign key, with no action]
   ΣΥΓΓΡΑΦΈΑΣ (0..many)--> PUBLIC.FOR_LINT.WRITERS.ID                              
 
-Indices
+Indexes
 
 SYS_IDX_PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_10190                     [unique index]
   ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ               ascending                   
@@ -352,7 +352,7 @@ FK_SALES_REGIONS                           [foreign key, with no action]
   POSTALCODE <--(0..many) PUBLIC."PUBLISHER SALES".SALES.POSTALCODE                              
   COUNTRY <--(0..many) PUBLIC."PUBLISHER SALES".SALES.COUNTRY                              
 
-Indices
+Indexes
 
 SYS_IDX_PK_CUSTOMERS_10144                                [unique index]
   POSTALCODE                        ascending                   
@@ -374,7 +374,7 @@ FK_SALES_REGIONS                           [foreign key, with no action]
   POSTALCODE (0..many)--> PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE                              
   COUNTRY (0..many)--> PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY                              
 
-Indices
+Indexes
 
 SYS_IDX_10154                                         [non-unique index]
   POSTALCODE                        ascending                   

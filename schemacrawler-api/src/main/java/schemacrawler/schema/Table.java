@@ -92,11 +92,11 @@ public interface Table
   Index getIndex(String name);
 
   /**
-   * Gets the list of indices.
+   * Gets the list of indexes.
    *
-   * @return Indices of the table.
+   * @return Indexes of the table.
    */
-  Collection<Index> getIndices();
+  Collection<Index> getIndexes();
 
   /**
    * Gets the primary key.

@@ -418,10 +418,10 @@ public final class SchemaCrawler
         if (!isView && infoLevel.isRetrieveTableColumns())
         {
           retriever.retrievePrimaryKey(table);
-          if (infoLevel.isRetrieveIndices())
+          if (infoLevel.isRetrieveIndexes())
           {
-            retriever.retrieveIndices(table, true);
-            retriever.retrieveIndices(table, false);
+            retriever.retrieveIndexes(table, true);
+            retriever.retrieveIndexes(table, false);
             //
             table.replacePrimaryKey();
           }
@@ -433,7 +433,7 @@ public final class SchemaCrawler
       }
 
       final TablesGraph tablesGraph = new TablesGraph(allTables);
-      tablesGraph.setTablesSortIndices();
+      tablesGraph.setTablesSortIndexes();
 
       // Filter the list of tables based on grep criteria, and
       // parent-child relationships

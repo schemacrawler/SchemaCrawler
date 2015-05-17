@@ -16,7 +16,7 @@
       "name": "BOOKAUTHORS",
       "lints": [
         {
-          "id": "schemacrawler.tools.linter.LinterRedundantIndices",
+          "id": "schemacrawler.tools.linter.LinterRedundantIndexes",
           "description": "redundant index",
           "value": "SYS_IDX_10115",
           "severity": "high"
@@ -35,8 +35,8 @@
       "name": "\"Global Counts\"",
       "lints": [
         {
-          "id": "schemacrawler.tools.linter.LinterTableWithNoIndices",
-          "description": "no indices",
+          "id": "schemacrawler.tools.linter.LinterTableWithNoIndexes",
+          "description": "no indexes",
           "value": "true",
           "severity": "medium"
         },
@@ -77,8 +77,8 @@
       "name": "\"Global Counts\"",
       "lints": [
         {
-          "id": "schemacrawler.tools.linter.LinterTableWithNoIndices",
-          "description": "no indices",
+          "id": "schemacrawler.tools.linter.LinterTableWithNoIndexes",
+          "description": "no indexes",
           "value": "true",
           "severity": "medium"
         },
@@ -133,7 +133,7 @@
           "severity": "high"
         },
         {
-          "id": "schemacrawler.tools.linter.LinterRedundantIndices",
+          "id": "schemacrawler.tools.linter.LinterRedundantIndexes",
           "description": "redundant index",
           "value": "IDX_A1_WRITERS",
           "severity": "high"

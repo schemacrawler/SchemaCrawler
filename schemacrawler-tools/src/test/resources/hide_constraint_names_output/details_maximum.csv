@@ -38,7 +38,7 @@ Foreign Keys
 "","[foreign key, with no action]"
 "",ID <--(0..many) PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID,""
 ""
-Indices
+Indexes
 ""
 "",[unique index]
 "",ID,ascending
@@ -141,7 +141,7 @@ Foreign Keys
 "","[foreign key, with no action]"
 "",BOOKID (0..many)--> PUBLIC.BOOKS.BOOKS.ID,""
 ""
-Indices
+Indexes
 ""
 "",[non-unique index]
 "",AUTHORID,ascending
@@ -221,7 +221,7 @@ Weak Associations
 "",[weak association]
 "",PUBLISHERID (0..many)~~> PUBLIC.BOOKS.PUBLISHERS.ID,""
 ""
-Indices
+Indexes
 ""
 "",[unique index]
 "",ID,ascending
@@ -311,7 +311,7 @@ Weak Associations
 "",[weak association]
 "",ID <~~(0..many) PUBLIC.BOOKS.BOOKS.PUBLISHERID,""
 ""
-Indices
+Indexes
 ""
 "",[unique index]
 "",ID,ascending
@@ -360,7 +360,7 @@ Foreign Keys
 "","[foreign key, with no action]"
 "",WRITERID (0..many)--> PUBLIC.FOR_LINT.WRITERS.ID,""
 ""
-Indices
+Indexes
 ""
 "",[unique index]
 "",ID,ascending
@@ -457,7 +457,7 @@ Foreign Keys
 "","[foreign key, with no action]"
 "",WRITERID (0..many)--> PUBLIC.FOR_LINT.WRITERS.ID,""
 ""
-Indices
+Indexes
 ""
 "",[unique index]
 "",ID,ascending
@@ -538,7 +538,7 @@ Foreign Keys
 "","[foreign key, with no action]"
 "",ID <--(0..many) PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ,""
 ""
-Indices
+Indexes
 ""
 "",[unique index]
 "",ID,ascending
@@ -622,7 +622,7 @@ Foreign Keys
 "","[foreign key, with no action]"
 "",ΣΥΓΓΡΑΦΈΑΣ (0..many)--> PUBLIC.FOR_LINT.WRITERS.ID,""
 ""
-Indices
+Indexes
 ""
 "",[unique index]
 "",ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ,ascending
@@ -676,7 +676,7 @@ Foreign Keys
 "",POSTALCODE <--(0..many) PUBLIC."PUBLISHER SALES".SALES.POSTALCODE,""
 "",COUNTRY <--(0..many) PUBLIC."PUBLISHER SALES".SALES.COUNTRY,""
 ""
-Indices
+Indexes
 ""
 "",[unique index]
 "",POSTALCODE,ascending
@@ -737,7 +737,7 @@ Weak Associations
 "",[weak association]
 "",BOOKID (0..many)~~> PUBLIC.BOOKS.BOOKS.ID,""
 ""
-Indices
+Indexes
 ""
 "",[non-unique index]
 "",POSTALCODE,ascending

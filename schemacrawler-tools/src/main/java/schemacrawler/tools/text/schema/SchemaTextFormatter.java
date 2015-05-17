@@ -316,7 +316,7 @@ final class SchemaTextFormatter
       {
         printWeakAssociations(table);
       }
-      printIndices(table.getIndices());
+      printIndexes(table.getIndexes());
       printTriggers(table.getTriggers());
       printTableConstraints(table.getTableConstraints());
 
@@ -642,21 +642,21 @@ final class SchemaTextFormatter
     }
   }
 
-  private void printIndices(final Collection<Index> indicesCollection)
+  private void printIndexes(final Collection<Index> indexesCollection)
   {
-    if (indicesCollection.isEmpty())
+    if (indexesCollection.isEmpty())
     {
       return;
     }
 
     formattingHelper.writeEmptyRow();
-    formattingHelper.writeWideRow("Indices", "section");
+    formattingHelper.writeWideRow("Indexes", "section");
 
-    final List<Index> indices = new ArrayList<>(indicesCollection);
-    Collections.sort(indices, NamedObjectSort.getNamedObjectSort(options
+    final List<Index> indexes = new ArrayList<>(indexesCollection);
+    Collections.sort(indexes, NamedObjectSort.getNamedObjectSort(options
       .isAlphabeticalSortForIndexes()));
 
-    for (final Index index: indices)
+    for (final Index index: indexes)
     {
       if (index != null)
       {

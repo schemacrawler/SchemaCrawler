@@ -35,11 +35,11 @@ import schemacrawler.schema.View;
 import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.LintSeverity;
 
-public class LinterForeignKeyWithNoIndices
+public class LinterForeignKeyWithNoIndexes
   extends BaseLinter
 {
 
-  public LinterForeignKeyWithNoIndices()
+  public LinterForeignKeyWithNoIndexes()
   {
     setSeverity(LintSeverity.low);
   }
@@ -61,16 +61,16 @@ public class LinterForeignKeyWithNoIndices
   {
     requireNonNull(table, "No table provided");
 
-    final List<ForeignKey> foreignKeysWithoutIndices = findForeignKeysWithoutIndices(table);
-    for (final ForeignKey foreignKey: foreignKeysWithoutIndices)
+    final List<ForeignKey> foreignKeysWithoutIndexes = findForeignKeysWithoutIndexes(table);
+    for (final ForeignKey foreignKey: foreignKeysWithoutIndexes)
     {
       addLint(table, getSummary(), foreignKey);
     }
   }
 
-  private List<ForeignKey> findForeignKeysWithoutIndices(final Table table)
+  private List<ForeignKey> findForeignKeysWithoutIndexes(final Table table)
   {
-    final List<ForeignKey> foreignKeysWithoutIndices = new ArrayList<>();
+    final List<ForeignKey> foreignKeysWithoutIndexes = new ArrayList<>();
     if (!(table instanceof View))
     {
       final Collection<List<String>> allIndexCoumns = allIndexCoumnNames(table);
@@ -88,11 +88,11 @@ public class LinterForeignKeyWithNoIndices
         }
         if (!hasIndex)
         {
-          foreignKeysWithoutIndices.add(foreignKey);
+          foreignKeysWithoutIndexes.add(foreignKey);
         }
       }
     }
-    return foreignKeysWithoutIndices;
+    return foreignKeysWithoutIndexes;
   }
 
 }

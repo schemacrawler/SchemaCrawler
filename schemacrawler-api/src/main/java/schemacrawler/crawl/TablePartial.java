@@ -138,7 +138,7 @@ final class TablePartial
   }
 
   @Override
-  public Collection<Index> getIndices()
+  public Collection<Index> getIndexes()
   {
     throw new NotLoadedException();
   }
