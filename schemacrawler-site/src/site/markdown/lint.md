@@ -46,7 +46,7 @@ The checks are:
   Additionally, SchemaCrawler Lint will check that the data-types of all incrementing columns are the same, 
   and that no numbers are skipped.
 - Tables with no columns at all, or just a single column could indicate a schema design smell.
-- Tables with no indices.
+- Tables with no indexes.
 - Tables where the default value is 'NULL' instead of NULL may indicate a error when creating a table.
 - Tables that have nullable columns in a unique index.
 - Tables that have spaces in table or column names, or names that are reserved words in the 
@@ -56,7 +56,7 @@ The checks are:
 - Tables foreign key and primary key have different data types.
 - Columns in different tables, that have the same name but have different data types.
 - Cyclical relationships between tables, which could cause issues with deletes and inserts.
-- Tables with redundant indices.  
+- Tables with redundant indexes.  
   A redundant index is one where the sequence of columns is 
   the same as the first few columns of another index. For example, the index `INDEX_B(COL1)` is 
   not needed when you have another index, `INDEX_A(COL1, COL2)`.

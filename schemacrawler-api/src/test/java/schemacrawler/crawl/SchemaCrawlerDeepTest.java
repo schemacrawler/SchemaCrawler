@@ -80,7 +80,7 @@ public class SchemaCrawlerDeepTest
       table1.addColumn((MutableColumn) column);
       table2.addColumn((MutableColumn) column);
     }
-    for (final Index index: table0.getIndices())
+    for (final Index index: table0.getIndexes())
     {
       table1.addIndex((MutableIndex) index);
       table2.addIndex((MutableIndex) index);

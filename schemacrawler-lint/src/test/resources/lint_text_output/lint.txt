@@ -24,7 +24,7 @@ PUBLIC.FOR_LINT."Global Counts"                                  [table]
 ------------------------------------------------------------------------
 
                                                           [lint, medium]
-	no indices	
+	no indexes	
 	spaces in name, or reserved word	"Global Counts"
 	spaces in name, or reserved word	"Global Count"
 	single column	

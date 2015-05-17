@@ -57,7 +57,7 @@ CREATE TABLE "Global Counts"
 CREATE VIEW AuthorsList AS SELECT Id, FirstName, LastName FROM Authors
 ;
 
--- Indices
+-- Indexes
 CREATE UNIQUE INDEX UIDX_PreviousEdition ON Books(PreviousEditionId)
 ;
 CREATE UNIQUE INDEX UIDX_BookAuthors ON BookAuthors(BookId, AuthorId)

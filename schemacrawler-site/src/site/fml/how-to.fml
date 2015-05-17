@@ -205,7 +205,7 @@
     <title>Create diff-able Output</title>
     <faq id="sorting">
       <question>
-        How to sort columns, foreign-keys and indices alphabetically
+        How to sort columns, foreign-keys and indexes alphabetically
       </question>
       <answer>
         <p>

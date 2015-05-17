@@ -188,14 +188,14 @@ final class TableRetriever
     }
   }
 
-  void retrieveIndices(final MutableTable table, final boolean unique)
+  void retrieveIndexes(final MutableTable table, final boolean unique)
     throws SQLException
   {
 
     SQLException sqlEx = null;
     try
     {
-      retrieveIndices1(table, unique);
+      retrieveIndexes1(table, unique);
     }
     catch (final SQLException e)
     {
@@ -207,7 +207,7 @@ final class TableRetriever
       try
       {
         sqlEx = null;
-        retrieveIndices2(table, unique);
+        retrieveIndexes2(table, unique);
       }
       catch (final SQLException e)
       {
@@ -435,7 +435,7 @@ final class TableRetriever
 
   }
 
-  private void createIndices(final MutableTable table,
+  private void createIndexes(final MutableTable table,
                              final MetadataResultSet results)
     throws SQLException
   {
@@ -578,7 +578,7 @@ final class TableRetriever
     return column;
   }
 
-  private void retrieveIndices1(final MutableTable table, final boolean unique)
+  private void retrieveIndexes1(final MutableTable table, final boolean unique)
     throws SQLException
   {
 
@@ -589,29 +589,29 @@ final class TableRetriever
                     unique,
                     true/* approximate */));)
     {
-      createIndices(table, results);
+      createIndexes(table, results);
     }
     catch (final SQLException e)
     {
-      throw new SchemaCrawlerSQLException("Could not retrieve indices for table "
+      throw new SchemaCrawlerSQLException("Could not retrieve indexes for table "
                                               + table,
                                           e);
     }
 
   }
 
-  private void retrieveIndices2(final MutableTable table, final boolean unique)
+  private void retrieveIndexes2(final MutableTable table, final boolean unique)
     throws SQLException
   {
 
     try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
       .getIndexInfo(null, null, table.getName(), unique, true/* approximate */));)
     {
-      createIndices(table, results);
+      createIndexes(table, results);
     }
     catch (final SQLException e)
     {
-      throw new SchemaCrawlerSQLException("Could not retrieve indices for table "
+      throw new SchemaCrawlerSQLException("Could not retrieve indexes for table "
                                               + table,
                                           e);
     }

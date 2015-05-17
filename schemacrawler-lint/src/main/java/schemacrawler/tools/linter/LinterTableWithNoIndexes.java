@@ -27,7 +27,7 @@ import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
 import schemacrawler.tools.lint.BaseLinter;
 
-public class LinterTableWithNoIndices
+public class LinterTableWithNoIndexes
   extends BaseLinter
 {
 
@@ -40,7 +40,7 @@ public class LinterTableWithNoIndices
   @Override
   public String getSummary()
   {
-    return "no indices";
+    return "no indexes";
   }
 
   @Override
@@ -48,8 +48,8 @@ public class LinterTableWithNoIndices
   {
     if (table != null && !(table instanceof View))
     {
-      final Collection<Index> indices = table.getIndices();
-      if (table.getPrimaryKey() == null && indices.isEmpty())
+      final Collection<Index> indexes = table.getIndexes();
+      if (table.getPrimaryKey() == null && indexes.isEmpty())
       {
         addLint(table, getSummary(), true);
       }

@@ -46,7 +46,7 @@ final class TablesGraph
   /**
    * Set the sort order for tables and views.
    */
-  void setTablesSortIndices()
+  void setTablesSortIndexes()
   {
     try
     {

@@ -16,8 +16,8 @@
       "lints": [
         {
           "severity": "medium",
-          "description": "no indices",
-          "id": "schemacrawler.tools.linter.LinterTableWithNoIndices",
+          "description": "no indexes",
+          "id": "schemacrawler.tools.linter.LinterTableWithNoIndexes",
           "value": "true"
         },
         {
@@ -73,7 +73,7 @@
         {
           "severity": "high",
           "description": "redundant index",
-          "id": "schemacrawler.tools.linter.LinterRedundantIndices",
+          "id": "schemacrawler.tools.linter.LinterRedundantIndexes",
           "value": "IDX_A1_WRITERS"
         },
         {

@@ -50,7 +50,7 @@ public class SchemaTextOptionsBuilder
                                              + "hide_remarks";
 
   private static final String SC_SORT_ALPHABETICALLY_TABLE_INDEXES = SCHEMACRAWLER_FORMAT_PREFIX
-                                                                     + "sort_alphabetically.table_indices";
+                                                                     + "sort_alphabetically.table_indexes";
   private static final String SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS = SCHEMACRAWLER_FORMAT_PREFIX
                                                                          + "sort_alphabetically.table_foreignkeys";
 

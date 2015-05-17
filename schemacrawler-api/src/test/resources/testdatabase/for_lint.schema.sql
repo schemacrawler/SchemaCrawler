@@ -68,7 +68,7 @@ CREATE TABLE πίνακαβάσηςδεδομένων
 
 ALTER TABLE Writers ADD CONSTRAINT FK_Writers_Publication FOREIGN KEY (Publication_Id) REFERENCES Publications (Id);
 
--- Indices
+-- Indexes
 CREATE INDEX IDX_B_Writers ON Writers(LastName, FirstName)
 ;
 CREATE INDEX IDX_A_Writers ON Writers(City, State, PostalCode, Country)

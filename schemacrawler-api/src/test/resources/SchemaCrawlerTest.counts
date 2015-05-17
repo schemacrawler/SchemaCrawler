@@ -2,7 +2,7 @@ schema: PUBLIC.BOOKS
   table: PUBLIC.BOOKS.AUTHORS
     # columns: 9
     # constraints: 5
-    # indices: 3
+    # indexes: 3
     # foreign keys: 1
     # imported foreign keys: 1
     # exported: 0
@@ -10,7 +10,7 @@ schema: PUBLIC.BOOKS
   table: PUBLIC.BOOKS.AUTHORSLIST
     # columns: 3
     # constraints: 0
-    # indices: 0
+    # indexes: 0
     # foreign keys: 0
     # imported foreign keys: 0
     # exported: 0
@@ -18,7 +18,7 @@ schema: PUBLIC.BOOKS
   table: PUBLIC.BOOKS.BOOKAUTHORS
     # columns: 3
     # constraints: 4
-    # indices: 3
+    # indexes: 3
     # foreign keys: 2
     # imported foreign keys: 0
     # exported: 2
@@ -26,7 +26,7 @@ schema: PUBLIC.BOOKS
   table: PUBLIC.BOOKS.BOOKS
     # columns: 7
     # constraints: 5
-    # indices: 3
+    # indexes: 3
     # foreign keys: 2
     # imported foreign keys: 2
     # exported: 1
@@ -34,7 +34,7 @@ schema: PUBLIC.BOOKS
   table: PUBLIC.BOOKS."Global Counts"
     # columns: 1
     # constraints: 0
-    # indices: 0
+    # indexes: 0
     # foreign keys: 0
     # imported foreign keys: 0
     # exported: 0
@@ -42,7 +42,7 @@ schema: PUBLIC.BOOKS
   table: PUBLIC.BOOKS.PUBLISHERS
     # columns: 2
     # constraints: 1
-    # indices: 1
+    # indexes: 1
     # foreign keys: 0
     # imported foreign keys: 0
     # exported: 0
@@ -53,7 +53,7 @@ schema: PUBLIC."PUBLISHER SALES"
   table: PUBLIC."PUBLISHER SALES".REGIONS
     # columns: 4
     # constraints: 5
-    # indices: 1
+    # indexes: 1
     # foreign keys: 1
     # imported foreign keys: 1
     # exported: 0
@@ -61,7 +61,7 @@ schema: PUBLIC."PUBLISHER SALES"
   table: PUBLIC."PUBLISHER SALES".SALES
     # columns: 5
     # constraints: 3
-    # indices: 1
+    # indexes: 1
     # foreign keys: 1
     # imported foreign keys: 0
     # exported: 1
