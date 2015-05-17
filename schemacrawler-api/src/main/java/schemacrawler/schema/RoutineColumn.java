@@ -20,7 +20,7 @@
 package schemacrawler.schema;
 
 
-public interface RoutineColumn<R extends RoutineReference>
+public interface RoutineColumn<R extends Routine>
   extends BaseColumn<R>
 {
 

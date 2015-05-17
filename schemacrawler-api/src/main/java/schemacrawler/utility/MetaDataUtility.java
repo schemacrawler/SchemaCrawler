@@ -35,7 +35,6 @@ import schemacrawler.schema.Index;
 import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Table;
-import schemacrawler.schema.TableReference;
 
 /**
  * SchemaCrawler utility methods.
@@ -90,8 +89,8 @@ public final class MetaDataUtility
   public static String constructForeignKeyName(final Column pkColumn,
                                                final Column fkColumn)
   {
-    final TableReference pkTable = requireNonNull(pkColumn).getParent();
-    final TableReference fkParent = requireNonNull(fkColumn).getParent();
+    final Table pkTable = requireNonNull(pkColumn).getParent();
+    final Table fkParent = requireNonNull(fkColumn).getParent();
     final String pkHex = Integer.toHexString(pkTable.getFullName().hashCode());
     final String fkHex = Integer.toHexString(fkParent.getFullName().hashCode());
     final String foreignKeyName = String.format("SC_%s_%s", pkHex, fkHex)
