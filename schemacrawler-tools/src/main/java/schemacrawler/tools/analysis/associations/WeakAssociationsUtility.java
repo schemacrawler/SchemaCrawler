@@ -28,14 +28,14 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import schemacrawler.schema.TableReference;
+import schemacrawler.schema.Table;
 
 public class WeakAssociationsUtility
 {
 
   private static final String WEAK_ASSOCIATIONS_KEY = "schemacrawler.weak_associations";
 
-  public static final Collection<WeakAssociationForeignKey> getWeakAssociations(final TableReference table)
+  public static final Collection<WeakAssociationForeignKey> getWeakAssociations(final Table table)
   {
     if (table == null)
     {
@@ -50,7 +50,7 @@ public class WeakAssociationsUtility
     return weakAssociationsList;
   }
 
-  static void addWeakAssociationToTable(final TableReference table,
+  static void addWeakAssociationToTable(final Table table,
                                         final WeakAssociationForeignKey weakAssociation)
   {
     if (table != null && weakAssociation != null)

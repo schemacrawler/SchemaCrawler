@@ -21,7 +21,7 @@
 package schemacrawler.tools.analysis.counts;
 
 
-import schemacrawler.schema.TableReference;
+import schemacrawler.schema.Table;
 
 public class CountsUtility
 {
@@ -29,7 +29,7 @@ public class CountsUtility
   static final int UNKNOWN_TABLE_COUNT = -1;
   private static final String TABLE_COUNTS_KEY = "schemacrawler.table.count";
 
-  public static final long getCount(final TableReference table)
+  public static final long getCount(final Table table)
   {
     if (table == null)
     {
@@ -41,7 +41,7 @@ public class CountsUtility
     return tableCount;
   }
 
-  static void addCountToTable(final TableReference table, final long tableCount)
+  static void addCountToTable(final Table table, final long tableCount)
   {
     if (table != null)
     {
