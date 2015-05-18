@@ -55,6 +55,8 @@ public interface Catalog
    */
   Collection<ColumnDataType> getColumnDataTypes(Schema schema);
 
+  CrawlHeaderInfo getCrawlHeaderInfo();
+
   DatabaseInfo getDatabaseInfo();
 
   JdbcDriverInfo getJdbcDriverInfo();
@@ -92,8 +94,6 @@ public interface Catalog
   Schema getSchema(String name);
 
   SchemaCrawlerInfo getSchemaCrawlerInfo();
-
-  CrawlHeaderInfo getCrawlHeaderInfo();
 
   /**
    * Gets the schemas.

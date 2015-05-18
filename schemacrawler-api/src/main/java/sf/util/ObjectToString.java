@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -255,15 +254,9 @@ public final class ObjectToString
       }
     }
     // Sort fields
-    Collections.sort(allFields, new Comparator<Field>()
-    {
-
-      @Override
-      public int compare(final Field field1, final Field field2)
-      {
-        return field1.getName().compareTo(field2.getName());
-      }
-    });
+    Collections.sort(allFields,
+                     (field1, field2) -> field1.getName().compareTo(field2
+                       .getName()));
 
     return allFields.toArray(new Field[allFields.size()]);
   }

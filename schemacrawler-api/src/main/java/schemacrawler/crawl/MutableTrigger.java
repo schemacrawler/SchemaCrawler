@@ -48,7 +48,7 @@ class MutableTrigger
 
   MutableTrigger(final Table parent, final String name)
   {
-    super(parent, name);
+    super(new TableReference(parent), name);
     // Default values
     eventManipulationType = EventManipulationType.unknown;
     actionOrientation = ActionOrientationType.unknown;

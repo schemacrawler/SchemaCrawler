@@ -136,6 +136,12 @@ final class MutableCatalog
   }
 
   @Override
+  public CrawlHeaderInfo getCrawlHeaderInfo()
+  {
+    return crawlHeaderInfo;
+  }
+
+  @Override
   public MutableDatabaseInfo getDatabaseInfo()
   {
     return databaseInfo;
@@ -196,12 +202,6 @@ final class MutableCatalog
   {
     return schemas.stream().filter(schema -> schema.getFullName().equals(name))
       .findFirst().orElse(null);
-  }
-
-  @Override
-  public CrawlHeaderInfo getCrawlHeaderInfo()
-  {
-    return crawlHeaderInfo;
   }
 
   /**

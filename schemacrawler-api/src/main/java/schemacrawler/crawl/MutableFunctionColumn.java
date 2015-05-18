@@ -42,7 +42,7 @@ final class MutableFunctionColumn
 
   MutableFunctionColumn(final Function parent, final String name)
   {
-    super(parent, name);
+    super(new FunctionReference(parent), name);
   }
 
   /**
