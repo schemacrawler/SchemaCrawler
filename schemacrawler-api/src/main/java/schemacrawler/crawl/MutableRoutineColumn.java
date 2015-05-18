@@ -37,7 +37,8 @@ abstract class MutableRoutineColumn<R extends Routine>
 
   private static final long serialVersionUID = 3546361725629772857L;
 
-  MutableRoutineColumn(final R parent, final String name)
+  MutableRoutineColumn(final DatabaseObjectReference<R> parent,
+                       final String name)
   {
     super(parent, name);
   }

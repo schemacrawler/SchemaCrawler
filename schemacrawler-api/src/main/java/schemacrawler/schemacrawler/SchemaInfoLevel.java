@@ -162,14 +162,14 @@ public final class SchemaInfoLevel
     return retrieveForeignKeys;
   }
 
-  public boolean isRetrieveIndexInformation()
-  {
-    return retrieveIndexInformation;
-  }
-
   public boolean isRetrieveIndexes()
   {
     return retrieveIndexes;
+  }
+
+  public boolean isRetrieveIndexInformation()
+  {
+    return retrieveIndexInformation;
   }
 
   public boolean isRetrieveRoutineColumns()
@@ -272,14 +272,14 @@ public final class SchemaInfoLevel
     this.retrieveForeignKeys = retrieveForeignKeys;
   }
 
-  public void setRetrieveIndexInformation(final boolean retrieveIndexInformation)
-  {
-    this.retrieveIndexInformation = retrieveIndexInformation;
-  }
-
   public void setRetrieveIndexes(final boolean retrieveIndexes)
   {
     this.retrieveIndexes = retrieveIndexes;
+  }
+
+  public void setRetrieveIndexInformation(final boolean retrieveIndexInformation)
+  {
+    this.retrieveIndexInformation = retrieveIndexInformation;
   }
 
   public void setRetrieveRoutineColumns(final boolean retrieveRoutineColumns)

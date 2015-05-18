@@ -111,7 +111,7 @@ public class TablesReducer
         {
           if (!isTablePartial(relatedTable))
           {
-            includedTables.add((Table) relatedTable);
+            includedTables.add(relatedTable);
           }
         }
       }

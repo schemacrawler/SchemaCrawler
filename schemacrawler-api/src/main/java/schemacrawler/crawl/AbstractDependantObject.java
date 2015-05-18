@@ -21,6 +21,7 @@
 package schemacrawler.crawl;
 
 
+import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.isBlank;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.DependantObject;
@@ -31,18 +32,20 @@ import schemacrawler.schema.DependantObject;
  *
  * @author Sualeh Fatehi
  */
-abstract class AbstractDependantObject<P extends DatabaseObject>
+abstract class AbstractDependantObject<D extends DatabaseObject>
   extends AbstractDatabaseObject
-  implements DependantObject<P>
+  implements DependantObject<D>
 {
 
   private static final long serialVersionUID = -4327208866052082457L;
 
-  private final P parent;
+  private final DatabaseObjectReference<D> parent;
 
-  AbstractDependantObject(final P parent, final String name)
+  AbstractDependantObject(final DatabaseObjectReference<D> parent,
+                          final String name)
   {
-    super(parent.getSchema(), name);
+    super(requireNonNull(parent, "Parent of dependent object not provided")
+      .get().getSchema(), name);
     this.parent = parent;
   }
 
@@ -66,7 +69,7 @@ abstract class AbstractDependantObject<P extends DatabaseObject>
     {
       return false;
     }
-    final DependantObject<P> other = (DependantObject<P>) obj;
+    final DependantObject<D> other = (DependantObject<D>) obj;
     if (parent == null)
     {
       if (other.getParent() != null)
@@ -92,7 +95,7 @@ abstract class AbstractDependantObject<P extends DatabaseObject>
     final StringBuilder buffer = new StringBuilder();
     if (parent != null)
     {
-      final String parentFullName = parent.getFullName();
+      final String parentFullName = parent.get().getFullName();
       if (!isBlank(parentFullName))
       {
         buffer.append(parentFullName).append('.');
@@ -112,9 +115,9 @@ abstract class AbstractDependantObject<P extends DatabaseObject>
    * @see schemacrawler.schema.DependantObject#getParent()
    */
   @Override
-  public final P getParent()
+  public final D getParent()
   {
-    return parent;
+    return parent.get();
   }
 
   @Override
@@ -123,7 +126,7 @@ abstract class AbstractDependantObject<P extends DatabaseObject>
     final StringBuilder buffer = new StringBuilder();
     if (parent != null)
     {
-      final String parentName = parent.getName();
+      final String parentName = parent.get().getName();
       if (!isBlank(parentName))
       {
         buffer.append(parentName).append('.');
@@ -150,6 +153,12 @@ abstract class AbstractDependantObject<P extends DatabaseObject>
     result = prime * result + (parent == null? 0: parent.hashCode());
     result = prime * result + super.hashCode();
     return result;
+  }
+
+  @Override
+  public boolean isParentPartial()
+  {
+    return parent.isPartialDatabaseObjectReference();
   }
 
 }

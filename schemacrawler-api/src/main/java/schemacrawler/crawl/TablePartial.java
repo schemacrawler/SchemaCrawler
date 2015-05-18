@@ -21,6 +21,8 @@
 package schemacrawler.crawl;
 
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.Collection;
 import java.util.List;
 
@@ -54,7 +56,9 @@ final class TablePartial
 
   TablePartial(final Table table)
   {
-    super(table.getSchema(), table.getName());
+    this(requireNonNull(table, "No table provided").getSchema(), table
+      .getName());
+    addAttributes(table.getAttributes());
   }
 
   @Override

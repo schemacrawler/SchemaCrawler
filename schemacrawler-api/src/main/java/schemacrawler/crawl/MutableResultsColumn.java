@@ -49,7 +49,7 @@ final class MutableResultsColumn
 
   MutableResultsColumn(final Table parent, final String name)
   {
-    super(parent, name);
+    super(new TableReference(parent), name);
   }
 
   /**

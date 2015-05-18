@@ -21,6 +21,8 @@
 package schemacrawler.crawl;
 
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.Collection;
 
 import schemacrawler.schema.Column;
@@ -38,9 +40,16 @@ final class ColumnPartial
 
   private Column referencedColumn;
 
+  ColumnPartial(final Column column)
+  {
+    this(requireNonNull(column, "No column provided").getParent(), column
+      .getName());
+    addAttributes(column.getAttributes());
+  }
+
   ColumnPartial(final Table parent, final String name)
   {
-    super(parent, name);
+    super(new TableReference(parent), name);
   }
 
   @Override

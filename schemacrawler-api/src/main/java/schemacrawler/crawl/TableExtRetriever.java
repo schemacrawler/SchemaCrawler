@@ -608,7 +608,8 @@ final class TableExtRetriever
           .getPrivilege(privilegeName);
         if (columnPrivilege == null)
         {
-          privilege = new MutablePrivilege<>(column, privilegeName);
+          privilege = new MutablePrivilege<>(new ColumnReference(column),
+                                             privilegeName);
           column.addPrivilege((MutablePrivilege<Column>) privilege);
         }
         else
@@ -622,7 +623,8 @@ final class TableExtRetriever
           .getPrivilege(privilegeName);
         if (tablePrivilege == null)
         {
-          privilege = new MutablePrivilege<>(table, privilegeName);
+          privilege = new MutablePrivilege<>(new TableReference(table),
+                                             privilegeName);
           table.addPrivilege((MutablePrivilege<Table>) privilege);
         }
         else

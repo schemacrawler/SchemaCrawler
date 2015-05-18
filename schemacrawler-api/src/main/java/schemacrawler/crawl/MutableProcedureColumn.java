@@ -42,7 +42,7 @@ final class MutableProcedureColumn
 
   MutableProcedureColumn(final Procedure parent, final String name)
   {
-    super(parent, name);
+    super(new ProcedureReference(parent), name);
   }
 
   /**
