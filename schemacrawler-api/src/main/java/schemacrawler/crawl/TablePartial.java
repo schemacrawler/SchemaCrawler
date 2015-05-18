@@ -21,10 +21,7 @@
 package schemacrawler.crawl;
 
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import schemacrawler.schema.Column;
@@ -76,14 +73,7 @@ final class TablePartial
   @Override
   public List<Column> getColumns()
   {
-    if (column != null)
-    {
-      return new ArrayList<>(Arrays.asList(column));
-    }
-    else
-    {
-      return Collections.emptyList();
-    }
+    throw new NotLoadedException();
   }
 
   @Override
@@ -114,14 +104,7 @@ final class TablePartial
   @Override
   public Collection<ForeignKey> getForeignKeys()
   {
-    if (foreignKey != null)
-    {
-      return new ArrayList<>(Arrays.asList(foreignKey));
-    }
-    else
-    {
-      return Collections.emptyList();
-    }
+    throw new NotLoadedException();
   }
 
   @Override
