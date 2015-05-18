@@ -22,7 +22,7 @@ package schemacrawler.crawl;
 
 
 public class NotLoadedException
-  extends RuntimeException
+  extends UnsupportedOperationException
 {
 
   private static final long serialVersionUID = -1745422469189598709L;
