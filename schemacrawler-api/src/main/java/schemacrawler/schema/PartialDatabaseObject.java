@@ -23,8 +23,7 @@ package schemacrawler.schema;
 
 /**
  * Represents a database object, with partially populated metadata.
- *
- * @author Sualeh Fatehi
+ * Marker interface.
  */
 public interface PartialDatabaseObject
   extends DatabaseObject
