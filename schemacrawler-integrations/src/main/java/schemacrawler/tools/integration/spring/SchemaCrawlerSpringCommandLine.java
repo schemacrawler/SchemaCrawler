@@ -28,11 +28,13 @@ import static java.util.Objects.requireNonNull;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Connection;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.AbstractXmlApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
@@ -71,21 +73,32 @@ public class SchemaCrawlerSpringCommandLine
     final ApplicationContext appContext;
     if (exists(contextFile))
     {
-      appContext = new FileSystemXmlApplicationContext(contextFile.toUri()
-        .toString());
+      final String contextFilePath = contextFile.toUri().toString();
+      LOGGER.log(Level.INFO, "Loading context from file, " + contextFilePath);
+      appContext = new FileSystemXmlApplicationContext(contextFilePath);
     }
     else
     {
+      LOGGER.log(Level.INFO,
+                 "Loading context from classpath, "
+                     + springOptions.getContextFileName());
       appContext = new ClassPathXmlApplicationContext(springOptions.getContextFileName());
     }
 
-    final DataSource dataSource = (DataSource) appContext.getBean(springOptions
-      .getDataSourceName());
-    try (Connection connection = dataSource.getConnection();)
+    try
     {
-      final Executable executable = (Executable) appContext
-        .getBean(springOptions.getExecutableName());
-      executable.execute(connection);
+      final DataSource dataSource = (DataSource) appContext
+        .getBean(springOptions.getDataSourceName());
+      try (Connection connection = dataSource.getConnection();)
+      {
+        final Executable executable = (Executable) appContext
+          .getBean(springOptions.getExecutableName());
+        executable.execute(connection);
+      }
+    }
+    finally
+    {
+      ((AbstractXmlApplicationContext) appContext).close();
     }
   }
 

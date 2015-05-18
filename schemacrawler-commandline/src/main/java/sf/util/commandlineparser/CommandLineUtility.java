@@ -128,11 +128,7 @@ public class CommandLineUtility
       .hasNext();)
     {
       final String arg = iterator.next();
-      if (arg == null)
-      {
-        iterator.remove();
-      }
-      if (arg.startsWith("-password="))
+      if (arg == null || arg.startsWith("-password="))
       {
         iterator.remove();
       }
