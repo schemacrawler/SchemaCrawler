@@ -18,25 +18,46 @@
  *
  */
 
-package schemacrawler.schema;
+package schemacrawler.crawl;
 
 
-/**
- * Represents the dependent of a database object, such as a column or an
- * index, which are dependents of a table.
- *
- * @author Sualeh Fatehi
- */
-public interface DependantObject<P extends DatabaseObject>
-  extends DatabaseObject, ContainedObject<P>
+import static java.util.Objects.requireNonNull;
+
+import java.util.List;
+
+import schemacrawler.schema.Function;
+import schemacrawler.schema.FunctionColumn;
+import schemacrawler.schema.FunctionReturnType;
+
+final class FunctionPartial
+  extends RoutinePartial
+  implements Function
 {
 
-  /**
-   * Gets the name of the dependent object and the name of the parent.
-   * The parent name is not fully-qualified.
-   */
-  String getShortName();
+  private static final long serialVersionUID = -1529756351918040452L;
 
-  boolean isParentPartial();
+  FunctionPartial(final Function function)
+  {
+    super(requireNonNull(function, "No function provided").getSchema(),
+          function.getName());
+  }
+
+  @Override
+  public FunctionColumn getColumn(final String name)
+  {
+    throw new NotLoadedException();
+  }
+
+  @Override
+  public List<FunctionColumn> getColumns()
+  {
+    throw new NotLoadedException();
+  }
+
+  @Override
+  public FunctionReturnType getReturnType()
+  {
+    throw new NotLoadedException();
+  }
 
 }

@@ -46,7 +46,7 @@ abstract class AbstractColumn<P extends DatabaseObject>
   private int decimalDigits;
   private boolean nullable;
 
-  AbstractColumn(final P parent, final String name)
+  AbstractColumn(final DatabaseObjectReference<P> parent, final String name)
   {
     super(parent, name);
   }

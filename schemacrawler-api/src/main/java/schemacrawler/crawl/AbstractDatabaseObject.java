@@ -21,6 +21,7 @@
 package schemacrawler.crawl;
 
 
+import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.isBlank;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.NamedObject;
@@ -43,7 +44,7 @@ abstract class AbstractDatabaseObject
   AbstractDatabaseObject(final Schema schema, final String name)
   {
     super(name);
-    this.schema = schema;
+    this.schema = requireNonNull(schema, "No schema provided");
   }
 
   @Override

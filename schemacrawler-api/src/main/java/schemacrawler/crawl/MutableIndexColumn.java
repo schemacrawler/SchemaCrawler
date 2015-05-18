@@ -26,7 +26,7 @@ final class MutableIndexColumn
 
   MutableIndexColumn(final Index index, final MutableColumn column)
   {
-    super(column.getParent(), column.getName());
+    super(new TableReference(column.getParent()), column.getName());
     this.index = index;
     this.column = column;
   }

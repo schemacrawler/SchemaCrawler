@@ -55,7 +55,7 @@ class MutableIndex
 
   MutableIndex(final Table parent, final String name)
   {
-    super(parent, name);
+    super(new TableReference(parent), name);
     // Default values
     indexType = IndexType.unknown;
     definition = new StringBuilder();

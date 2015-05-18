@@ -25,7 +25,7 @@ final class MutableTableConstraintColumn
   MutableTableConstraintColumn(final TableConstraint tableConstraint,
                                final MutableColumn column)
   {
-    super(column.getParent(), column.getName());
+    super(new TableReference(column.getParent()), column.getName());
     this.tableConstraint = tableConstraint;
     this.column = column;
   }
