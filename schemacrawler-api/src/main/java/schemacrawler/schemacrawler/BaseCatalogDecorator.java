@@ -27,6 +27,7 @@ import java.util.Map;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ColumnDataType;
+import schemacrawler.schema.CrawlHeaderInfo;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.NamedObject;
@@ -34,7 +35,6 @@ import schemacrawler.schema.Reducer;
 import schemacrawler.schema.Reducible;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Schema;
-import schemacrawler.schema.CrawlHeaderInfo;
 import schemacrawler.schema.SchemaCrawlerInfo;
 import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
@@ -96,6 +96,12 @@ public abstract class BaseCatalogDecorator
   }
 
   @Override
+  public CrawlHeaderInfo getCrawlHeaderInfo()
+  {
+    return catalog.getCrawlHeaderInfo();
+  }
+
+  @Override
   public DatabaseInfo getDatabaseInfo()
   {
     return catalog.getDatabaseInfo();
@@ -153,12 +159,6 @@ public abstract class BaseCatalogDecorator
   public Schema getSchema(final String name)
   {
     return catalog.getSchema(name);
-  }
-
-  @Override
-  public CrawlHeaderInfo getCrawlHeaderInfo()
-  {
-    return catalog.getCrawlHeaderInfo();
   }
 
   @Override

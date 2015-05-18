@@ -309,6 +309,11 @@ final class DatabaseInfoRetriever
 
   }
 
+  void retrieveCrawlHeaderInfo(final String title)
+  {
+    catalog.setCrawlHeaderInfo(title);
+  }
+
   /**
    * Provides information on the database.
    *
@@ -485,11 +490,6 @@ final class DatabaseInfoRetriever
       }
     }
 
-  }
-
-  void retrieveCrawlHeaderInfo(final String title)
-  {
-    catalog.setCrawlHeaderInfo(title);
   }
 
 }

@@ -47,7 +47,7 @@ class MutableTableConstraint
 
   MutableTableConstraint(final Table parent, final String name)
   {
-    super(parent, name);
+    super(new TableReference(parent), name);
     definition = new StringBuilder();
   }
 

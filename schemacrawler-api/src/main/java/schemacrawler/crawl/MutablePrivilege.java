@@ -177,7 +177,7 @@ final class MutablePrivilege<D extends DatabaseObject>
 
   private final Set<Grant<D>> grants = new HashSet<>();
 
-  MutablePrivilege(D parent, String name)
+  MutablePrivilege(final DatabaseObjectReference<D> parent, final String name)
   {
     super(parent, name);
   }
