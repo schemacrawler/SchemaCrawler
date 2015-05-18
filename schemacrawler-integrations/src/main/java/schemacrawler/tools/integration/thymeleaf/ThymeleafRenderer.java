@@ -25,7 +25,6 @@ package schemacrawler.tools.integration.thymeleaf;
 import java.io.Writer;
 import java.nio.charset.Charset;
 import java.sql.Connection;
-import java.util.logging.Logger;
 
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
@@ -46,9 +45,6 @@ import schemacrawler.tools.executable.BaseStagedExecutable;
 public final class ThymeleafRenderer
   extends BaseStagedExecutable
 {
-
-  private static final Logger LOGGER = Logger.getLogger(ThymeleafRenderer.class
-    .getName());
 
   static final String COMMAND = "thymeleaf";
 

@@ -25,7 +25,6 @@ import static java.util.Objects.requireNonNull;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.ConnectionOptions;
@@ -47,9 +46,6 @@ import sf.util.commandlineparser.CommandLineUtility;
 public final class SchemaCrawlerCommandLine
   implements CommandLine
 {
-
-  private static final Logger LOGGER = Logger
-    .getLogger(SchemaCrawlerCommandLine.class.getName());
 
   private final String command;
   private final Config config;

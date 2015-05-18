@@ -28,7 +28,6 @@ import static sf.util.commandlineparser.CommandLineUtility.logSafeArguments;
 import static sf.util.commandlineparser.CommandLineUtility.logSystemProperties;
 
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.commandline.ApplicationOptionsParser;
@@ -80,8 +79,6 @@ public final class Main
     final SchemaCrawlerSpringCommandLine commandLine = new SchemaCrawlerSpringCommandLine(flattenCommandlineArgs(config));
     commandLine.execute();
   }
-
-  private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
 
   private Main()
   {
