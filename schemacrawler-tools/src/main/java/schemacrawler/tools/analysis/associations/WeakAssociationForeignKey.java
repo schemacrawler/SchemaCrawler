@@ -30,7 +30,6 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import schemacrawler.schema.BaseForeignKey;
-import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.utility.CompareUtility;
@@ -169,18 +168,6 @@ public class WeakAssociationForeignKey
   public String toString()
   {
     return columnReferences.toString();
-  }
-
-  void add(final Column pkColumn, final Column fkColumn)
-  {
-    if (fkColumn == null)
-    {
-      columnReferences.add(null);
-    }
-    else
-    {
-      columnReferences.add(new WeakAssociation(pkColumn, fkColumn));
-    }
   }
 
   void add(final WeakAssociation weakAssociation)
