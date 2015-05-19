@@ -11,7 +11,7 @@ import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.PartialDatabaseObject;
 
 class DatabaseObjectReference<D extends DatabaseObject>
-implements Serializable
+  implements Serializable
 {
 
   private static final long serialVersionUID = 1748828818899660921L;
@@ -25,10 +25,15 @@ implements Serializable
                                                            "Database object not provided"));
 
     this.partial = requireNonNull(partial,
-        "Partial database object not provided");
+                                  "Partial database object not provided");
     if (!(partial instanceof PartialDatabaseObject))
     {
       throw new IllegalArgumentException("Partial database object not provided");
+    }
+
+    if (!partial.equals(databaseObject))
+    {
+      throw new IllegalArgumentException("Inconsistent database object reference");
     }
   }
 
