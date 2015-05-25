@@ -25,6 +25,7 @@ import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -245,9 +246,11 @@ final class TableRetriever
         }
 
         // Register primary key information
-        final MutableColumn column = table.getColumn(columnName);
-        if (column != null)
+        final Optional<MutableColumn> columnOptional = table
+          .getColumn(columnName);
+        if (columnOptional.isPresent())
         {
+          final MutableColumn column = columnOptional.get();
           column.markAsPartOfPrimaryKey();
           final MutableIndexColumn indexColumn = new MutableIndexColumn(primaryKey,
                                                                         column);
@@ -312,7 +315,17 @@ final class TableRetriever
 
         final SchemaReference schemaReference = new SchemaReference(catalogName,
                                                                     schemaName);
-        final Schema schema = catalog.getSchema(schemaReference.getFullName());
+        final Optional<Schema> schemaOptional = catalog
+          .getSchema(schemaReference.getFullName());
+        if (!schemaOptional.isPresent())
+        {
+          LOGGER.log(Level.FINER, String.format("Cannot locate schema: %s.%s",
+                                                catalogName,
+                                                schemaName));
+          continue;
+        }
+
+        final Schema schema = schemaOptional.get();
 
         final TableType tableType = supportedTableTypes
           .lookupTableType(tableTypeString);
@@ -392,8 +405,14 @@ final class TableRetriever
                                                                      fkColumn);
           }
 
-          MutableForeignKey foreignKey = foreignKeys.lookup(foreignKeyName);
-          if (foreignKey == null)
+          final Optional<MutableForeignKey> foreignKeyOptional = foreignKeys
+            .lookup(foreignKeyName);
+          final MutableForeignKey foreignKey;
+          if (foreignKeyOptional.isPresent())
+          {
+            foreignKey = foreignKeyOptional.get();
+          }
+          else
           {
             foreignKey = new MutableForeignKey(foreignKeyName);
             foreignKeys.add(foreignKey);
@@ -470,9 +489,11 @@ final class TableRetriever
         final int cardinality = results.getInt("CARDINALITY", 0);
         final int pages = results.getInt("PAGES", 0);
 
-        final MutableColumn column = table.getColumn(columnName);
-        if (column != null)
+        final Optional<MutableColumn> columnOptional = table
+          .getColumn(columnName);
+        if (columnOptional.isPresent())
         {
+          final MutableColumn column = columnOptional.get();
           if (Utility.isBlank(indexName))
           {
             indexName = String.format("SC_%s",
@@ -480,8 +501,14 @@ final class TableRetriever
                                         .hashCode()).toUpperCase());
           }
 
-          MutableIndex index = table.getIndex(indexName);
-          if (index == null)
+          final Optional<MutableIndex> indexOptional = table
+            .getIndex(indexName);
+          final MutableIndex index;
+          if (indexOptional.isPresent())
+          {
+            index = indexOptional.get();
+          }
+          else
           {
             index = new MutableIndex(table, indexName);
             table.addIndex(index);
@@ -517,12 +544,13 @@ final class TableRetriever
                                              final String columnName,
                                              final boolean add)
   {
-    MutableColumn column = null;
-    if (table != null)
+    final Optional<MutableColumn> columnOptional = table.getColumn(columnName);
+    final MutableColumn column;
+    if (columnOptional.isPresent())
     {
-      column = table.getColumn(columnName);
+      column = columnOptional.get();
     }
-    if (column == null)
+    else
     {
       column = new MutableColumn(table, columnName);
       if (add)
@@ -546,34 +574,34 @@ final class TableRetriever
                                       final String tableName,
                                       final String columnName)
   {
-    final boolean supportsCatalogs = getRetrieverConnection()
-      .isSupportsCatalogs();
     Column column = null;
-    final Schema schema = new SchemaReference(supportsCatalogs? catalogName
-                                                              : null,
-                                              schemaName);
-    if (schema != null)
+
+    final SchemaReference schema = new SchemaReference(catalogName, schemaName);
+    final Optional<MutableTable> tableOptional = catalog.getTable(schema,
+                                                                  tableName);
+    if (tableOptional.isPresent())
     {
-      Table table = catalog
-        .getTable(new SchemaReference(catalogName, schemaName), tableName);
-      if (table != null)
+      final Table table = tableOptional.get();
+      final Optional<? extends Column> columnOptional = table
+        .getColumn(columnName);
+      if (columnOptional.isPresent())
       {
-        column = table.getColumn(columnName);
+        column = columnOptional.get();
       }
+    }
 
-      if (column == null)
-      {
-        // Create the table and column, but do not add it to the schema
-        table = new TablePartial(schema, tableName);
-        column = new ColumnPartial(table, columnName);
-        ((TablePartial) table).addColumn(column);
+    if (column == null)
+    {
+      // Create the table and column, but do not add it to the schema
+      final Table table = new TablePartial(schema, tableName);
+      column = new ColumnPartial(table, columnName);
+      ((TablePartial) table).addColumn(column);
 
-        LOGGER
-          .log(Level.FINER,
-               String
-                 .format("Creating column reference for a column that is referenced by a foreign key: %s",
-                         column.getFullName()));
-      }
+      LOGGER
+        .log(Level.FINER,
+             String
+               .format("Creating column reference for a column that is referenced by a foreign key: %s",
+                       column.getFullName()));
     }
     return column;
   }

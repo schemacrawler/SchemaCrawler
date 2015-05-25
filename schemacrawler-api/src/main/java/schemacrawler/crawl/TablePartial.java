@@ -25,6 +25,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ForeignKey;
@@ -62,15 +63,15 @@ final class TablePartial
   }
 
   @Override
-  public Column getColumn(final String name)
+  public Optional<Column> getColumn(final String name)
   {
     if (column.getName().equals(name))
     {
-      return column;
+      return Optional.ofNullable(column);
     }
     else
     {
-      return null;
+      return Optional.empty();
     }
   }
 
@@ -93,15 +94,15 @@ final class TablePartial
   }
 
   @Override
-  public ForeignKey getForeignKey(final String name)
+  public Optional<ForeignKey> getForeignKey(final String name)
   {
     if (foreignKey.getName().equals(name))
     {
-      return foreignKey;
+      return Optional.ofNullable(foreignKey);
     }
     else
     {
-      return null;
+      return Optional.empty();
     }
   }
 
@@ -118,7 +119,7 @@ final class TablePartial
   }
 
   @Override
-  public Index getIndex(final String name)
+  public Optional<Index> getIndex(final String name)
   {
     throw new NotLoadedException();
   }
@@ -136,7 +137,7 @@ final class TablePartial
   }
 
   @Override
-  public Privilege<Table> getPrivilege(final String name)
+  public Optional<? extends Privilege<Table>> getPrivilege(final String name)
   {
     throw new NotLoadedException();
   }
@@ -166,7 +167,7 @@ final class TablePartial
   }
 
   @Override
-  public Trigger getTrigger(final String name)
+  public Optional<Trigger> getTrigger(final String name)
   {
     throw new NotLoadedException();
   }

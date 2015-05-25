@@ -22,6 +22,7 @@ package schemacrawler.schema;
 
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Represents a result set, a result of a query.
@@ -39,7 +40,7 @@ public interface ResultsColumns
    *        Name
    * @return Column.
    */
-  ResultsColumn getColumn(String name);
+  Optional<? extends ResultsColumn> getColumn(String name);
 
   /**
    * Gets the list of columns in ordinal order.

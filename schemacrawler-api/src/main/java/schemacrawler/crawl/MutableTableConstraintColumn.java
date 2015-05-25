@@ -2,6 +2,7 @@ package schemacrawler.crawl;
 
 
 import java.util.Collection;
+import java.util.Optional;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
@@ -103,7 +104,7 @@ final class MutableTableConstraintColumn
    * @see schemacrawler.schema.Column#getPrivilege(java.lang.String)
    */
   @Override
-  public Privilege<Column> getPrivilege(final String name)
+  public Optional<? extends Privilege<Column>> getPrivilege(final String name)
   {
     return column.getPrivilege(name);
   }

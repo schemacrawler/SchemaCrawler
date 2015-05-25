@@ -25,6 +25,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.ProcedureColumn;
@@ -61,7 +62,7 @@ final class MutableProcedure
    * @see schemacrawler.schema.Procedure#getColumn(java.lang.String)
    */
   @Override
-  public MutableProcedureColumn getColumn(final String name)
+  public Optional<MutableProcedureColumn> getColumn(final String name)
   {
     return columns.lookup(this, name);
   }

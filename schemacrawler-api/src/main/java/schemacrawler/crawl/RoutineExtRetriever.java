@@ -26,6 +26,7 @@ import static sf.util.DatabaseUtility.executeSql;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -90,12 +91,13 @@ final class RoutineExtRetriever
         final String specificName = quotedName(results
           .getString("SPECIFIC_NAME"));
 
-        final MutableRoutine routine = lookupRoutine(catalogName,
-                                                     schemaName,
-                                                     routineName,
-                                                     specificName);
-        if (routine != null)
+        final Optional<MutableRoutine> routineOptional = lookupRoutine(catalogName,
+                                                                       schemaName,
+                                                                       routineName,
+                                                                       specificName);
+        if (routineOptional.isPresent())
         {
+          final MutableRoutine routine = routineOptional.get();
           LOGGER.log(Level.FINER, "Retrieving routine information: "
                                   + routineName);
           final RoutineBodyType routineBodyType = results

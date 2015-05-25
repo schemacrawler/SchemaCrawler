@@ -22,6 +22,7 @@ package schemacrawler.schema;
 
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Represents a database function.
@@ -40,7 +41,7 @@ public interface Function
    * @return Column of the procedure
    */
   @Override
-  FunctionColumn getColumn(String name);
+  Optional<? extends FunctionColumn> getColumn(String name);
 
   /**
    * Gets the list of columns in ordinal order.
