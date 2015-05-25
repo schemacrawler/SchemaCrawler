@@ -21,10 +21,13 @@
 package schemacrawler.crawl;
 
 
+import static sf.util.Utility.isBlank;
+
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.Optional;
 
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.JavaSqlType;
@@ -163,12 +166,8 @@ abstract class AbstractRetriever
                                                      final String mappedClassName)
   {
     MutableColumnDataType columnDataType = catalog
-      .getColumnDataType(schema, databaseSpecificTypeName);
-    if (columnDataType == null)
-    {
-      columnDataType = catalog
-        .getSystemColumnDataType(databaseSpecificTypeName);
-    }
+      .getColumnDataType(schema, databaseSpecificTypeName).orElse(catalog
+        .getSystemColumnDataType(databaseSpecificTypeName).orElse(null));
     // Create new data type, if needed
     if (columnDataType == null)
     {
@@ -177,7 +176,7 @@ abstract class AbstractRetriever
       final JavaSqlType javaSqlType = retrieverConnection.getJavaSqlTypes()
         .get(javaSqlTypeInt);
       columnDataType.setJavaSqlType(javaSqlType);
-      if (Utility.isBlank(mappedClassName))
+      if (isBlank(mappedClassName))
       {
         final TypeMap typeMap = retrieverConnection.getTypeMap();
         final Class<?> mappedClass;
@@ -201,43 +200,30 @@ abstract class AbstractRetriever
     return columnDataType;
   }
 
-  MutableRoutine lookupRoutine(final String catalogName,
-                               final String schemaName,
-                               final String routineName,
-                               final String specificName)
+  Optional<MutableRoutine> lookupRoutine(final String catalogName,
+                                         final String schemaName,
+                                         final String routineName,
+                                         final String specificName)
   {
-    MutableRoutine routine = null;
-    final Schema schema = new SchemaReference(catalogName, schemaName);
-    if (schema != null)
+    final String routineLookupName;
+    if (!Utility.isBlank(specificName))
     {
-      final String routineLookupName;
-      if (!Utility.isBlank(specificName))
-      {
-        routineLookupName = specificName;
-      }
-      else
-      {
-        routineLookupName = routineName;
-      }
-      routine = (MutableRoutine) catalog
-        .getRoutine(new SchemaReference(catalogName, schemaName),
-                    routineLookupName);
+      routineLookupName = specificName;
     }
-    return routine;
+    else
+    {
+      routineLookupName = routineName;
+    }
+    return catalog.getRoutine(new SchemaReference(catalogName, schemaName),
+                              routineLookupName);
   }
 
-  MutableTable lookupTable(final String catalogName,
-                           final String schemaName,
-                           final String tableName)
+  Optional<MutableTable> lookupTable(final String catalogName,
+                                     final String schemaName,
+                                     final String tableName)
   {
-    MutableTable table = null;
-    final Schema schema = new SchemaReference(catalogName, schemaName);
-    if (schema != null)
-    {
-      table = catalog.getTable(new SchemaReference(catalogName, schemaName),
-                               tableName);
-    }
-    return table;
+    return catalog.getTable(new SchemaReference(catalogName, schemaName),
+                            tableName);
   }
 
   String quotedName(final String name)

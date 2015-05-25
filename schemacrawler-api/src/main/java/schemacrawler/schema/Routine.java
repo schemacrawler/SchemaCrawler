@@ -21,6 +21,7 @@ package schemacrawler.schema;
 
 
 import java.util.List;
+import java.util.Optional;
 
 public interface Routine
   extends DatabaseObject, TypedObject<RoutineType>, DefinedObject
@@ -33,7 +34,7 @@ public interface Routine
    *        Name
    * @return Column of the routine
    */
-  RoutineColumn<? extends Routine> getColumn(String name);
+  Optional<? extends RoutineColumn<? extends Routine>> getColumn(String name);
 
   /**
    * Gets the list of columns in ordinal order.

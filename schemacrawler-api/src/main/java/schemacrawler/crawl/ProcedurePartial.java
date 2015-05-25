@@ -24,6 +24,7 @@ package schemacrawler.crawl;
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
+import java.util.Optional;
 
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.ProcedureColumn;
@@ -43,7 +44,7 @@ final class ProcedurePartial
   }
 
   @Override
-  public ProcedureColumn getColumn(final String name)
+  public Optional<ProcedureColumn> getColumn(final String name)
   {
     throw new NotLoadedException();
   }

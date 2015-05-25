@@ -31,6 +31,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import schemacrawler.schema.NamedObject;
 import sf.util.ObjectToString;
@@ -249,10 +250,10 @@ class NamedObjectList<N extends NamedObject>
     return ObjectToString.toString(values());
   }
 
-  N lookup(final NamedObject namedObject, final String name)
+  Optional<N> lookup(final NamedObject namedObject, final String name)
   {
     final String key = makeLookupKey(namedObject, name);
-    return objects.get(key);
+    return internalGet(key);
   }
 
   /**
@@ -262,10 +263,10 @@ class NamedObjectList<N extends NamedObject>
    *        Fully qualified name
    * @return Named object
    */
-  N lookup(final String fullName)
+  Optional<N> lookup(final String fullName)
   {
     final String key = makeLookupKey(fullName);
-    return objects.get(key);
+    return internalGet(key);
   }
 
   N remove(final N namedObject)
@@ -288,6 +289,11 @@ class NamedObjectList<N extends NamedObject>
     final List<N> all = new ArrayList<>(objects.values());
     Collections.sort(all);
     return all;
+  }
+
+  private Optional<N> internalGet(final String key)
+  {
+    return Optional.ofNullable(objects.get(key));
   }
 
 }

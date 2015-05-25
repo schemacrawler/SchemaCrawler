@@ -54,7 +54,7 @@ public class LintTest
     final Catalog catalog = getCatalog(schemaCrawlerOptions);
     assertNotNull(catalog);
     assertEquals(1, catalog.getSchemas().size());
-    final Schema schema = catalog.getSchema("PUBLIC.FOR_LINT");
+    final Schema schema = catalog.getSchema("PUBLIC.FOR_LINT").orElse(null);
     assertNotNull("FOR_LINT schema not found", schema);
     assertEquals("FOR_LINT tables not found", 5, catalog.getTables(schema)
       .size());

@@ -85,19 +85,18 @@ public class TestHsqldbCommandline
       .getDatabaseSystemConnector().getConfig();
     final SchemaCrawlerOptionsBuilder optionsBuilder = new SchemaCrawlerOptionsBuilder()
       .setFromConfig(config);
-    optionsBuilder.schemaInfoLevel(InfoLevel.maximum
-      .getSchemaInfoLevel());
+    optionsBuilder.schemaInfoLevel(InfoLevel.maximum.getSchemaInfoLevel());
     final Catalog catalog = SchemaCrawlerUtility.getCatalog(getConnection(),
                                                             optionsBuilder
                                                               .toOptions());
     assertNotNull(catalog);
 
     assertEquals(6, catalog.getSchemas().size());
-    final Schema schema = catalog.getSchema("PUBLIC.BOOKS");
+    final Schema schema = catalog.getSchema("PUBLIC.BOOKS").orElse(null);
     assertNotNull(schema);
 
     assertEquals(6, catalog.getTables(schema).size());
-    final Table table = catalog.getTable(schema, "AUTHORS");
+    final Table table = catalog.getTable(schema, "AUTHORS").orElse(null);
     assertNotNull(table);
 
     assertEquals(1, table.getTriggers().size());

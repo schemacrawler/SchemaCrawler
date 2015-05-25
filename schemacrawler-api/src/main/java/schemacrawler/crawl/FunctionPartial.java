@@ -24,6 +24,7 @@ package schemacrawler.crawl;
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
+import java.util.Optional;
 
 import schemacrawler.schema.Function;
 import schemacrawler.schema.FunctionColumn;
@@ -43,7 +44,7 @@ final class FunctionPartial
   }
 
   @Override
-  public FunctionColumn getColumn(final String name)
+  public Optional<FunctionColumn> getColumn(final String name)
   {
     throw new NotLoadedException();
   }

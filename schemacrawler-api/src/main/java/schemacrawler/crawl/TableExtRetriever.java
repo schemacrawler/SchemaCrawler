@@ -28,6 +28,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -100,10 +101,10 @@ final class TableExtRetriever
         LOGGER.log(Level.FINER, "Retrieving additional column attributes: "
                                 + columnName);
 
-        final MutableTable table = lookupTable(catalogName,
-                                               schemaName,
-                                               tableName);
-        if (table == null)
+        final Optional<MutableTable> tableOptional = lookupTable(catalogName,
+                                                                 schemaName,
+                                                                 tableName);
+        if (!tableOptional.isPresent())
         {
           LOGGER.log(Level.FINE, String.format("Cannot find table, %s.%s.%s",
                                                catalogName,
@@ -112,8 +113,10 @@ final class TableExtRetriever
           continue;
         }
 
-        final MutableColumn column = table.getColumn(columnName);
-        if (column == null)
+        final MutableTable table = tableOptional.get();
+        final Optional<MutableColumn> columnOptional = table
+          .getColumn(columnName);
+        if (!columnOptional.isPresent())
         {
           LOGGER.log(Level.FINE, String
             .format("Cannot find column, %s.%s.%s.%s",
@@ -123,8 +126,11 @@ final class TableExtRetriever
                     columnName));
           continue;
         }
-
-        column.addAttributes(results.getAttributes());
+        else
+        {
+          final MutableColumn column = columnOptional.get();
+          column.addAttributes(results.getAttributes());
+        }
       }
     }
     catch (final Exception e)
@@ -174,10 +180,10 @@ final class TableExtRetriever
         LOGGER.log(Level.FINER, "Retrieving additional table attributes: "
                                 + tableName);
 
-        final MutableTable table = lookupTable(catalogName,
-                                               schemaName,
-                                               tableName);
-        if (table == null)
+        final Optional<MutableTable> tableOptional = lookupTable(catalogName,
+                                                                 schemaName,
+                                                                 tableName);
+        if (!tableOptional.isPresent())
         {
           LOGGER.log(Level.FINE, String.format("Cannot find table, %s.%s.%s",
                                                catalogName,
@@ -186,6 +192,7 @@ final class TableExtRetriever
           continue;
         }
 
+        final MutableTable table = tableOptional.get();
         table.addAttributes(results.getAttributes());
       }
     }
@@ -237,10 +244,10 @@ final class TableExtRetriever
         final String tableName = quotedName(results.getString("TABLE_NAME"));
         final String indexName = quotedName(results.getString("INDEX_NAME"));
 
-        final MutableTable table = lookupTable(catalogName,
-                                               schemaName,
-                                               tableName);
-        if (table == null)
+        final Optional<MutableTable> tableOptional = lookupTable(catalogName,
+                                                                 schemaName,
+                                                                 tableName);
+        if (!tableOptional.isPresent())
         {
           LOGGER.log(Level.FINE, String.format("Cannot find table, %s.%s.%s",
                                                catalogName,
@@ -250,8 +257,9 @@ final class TableExtRetriever
         }
 
         LOGGER.log(Level.FINER, "Retrieving index information: " + indexName);
-        final MutableIndex index = table.getIndex(indexName);
-        if (index == null)
+        final MutableTable table = tableOptional.get();
+        final Optional<MutableIndex> indexOptional = table.getIndex(indexName);
+        if (!indexOptional.isPresent())
         {
           LOGGER.log(Level.FINE, String
             .format("Cannot find index, %s.%s.%s.%s",
@@ -261,6 +269,8 @@ final class TableExtRetriever
                     indexName));
           continue;
         }
+
+        final MutableIndex index = indexOptional.get();
 
         final String definition = results.getString("INDEX_DEFINITION");
 
@@ -362,10 +372,10 @@ final class TableExtRetriever
         final String schemaName = quotedName(results.getString("TABLE_SCHEMA"));
         final String tableName = quotedName(results.getString("TABLE_NAME"));
 
-        final MutableTable table = lookupTable(catalogName,
-                                               schemaName,
-                                               tableName);
-        if (table == null)
+        final Optional<MutableTable> tableOptional = lookupTable(catalogName,
+                                                                 schemaName,
+                                                                 tableName);
+        if (!tableOptional.isPresent())
         {
           LOGGER.log(Level.FINE, String.format("Cannot find table, %s.%s.%s",
                                                catalogName,
@@ -373,6 +383,8 @@ final class TableExtRetriever
                                                tableName));
           continue;
         }
+
+        final MutableTable table = tableOptional.get();
 
         LOGGER.log(Level.FINER, "Retrieving table information: " + tableName);
         final String definition = results.getString("TABLE_DEFINITION");
@@ -445,10 +457,10 @@ final class TableExtRetriever
         // "EVENT_OBJECT_CATALOG", "EVENT_OBJECT_SCHEMA"
         final String tableName = results.getString("EVENT_OBJECT_TABLE");
 
-        final MutableTable table = lookupTable(catalogName,
-                                               schemaName,
-                                               tableName);
-        if (table == null)
+        final Optional<MutableTable> tableOptional = lookupTable(catalogName,
+                                                                 schemaName,
+                                                                 tableName);
+        if (!tableOptional.isPresent())
         {
           LOGGER.log(Level.FINE, String.format("Cannot find table, %s.%s.%s",
                                                catalogName,
@@ -456,6 +468,8 @@ final class TableExtRetriever
                                                tableName));
           continue;
         }
+
+        final MutableTable table = tableOptional.get();
 
         final EventManipulationType eventManipulationType = results
           .getEnum("EVENT_MANIPULATION", EventManipulationType.unknown);
@@ -472,11 +486,8 @@ final class TableExtRetriever
         final ConditionTimingType conditionTiming = ConditionTimingType
           .valueOfFromValue(conditionTimingString);
 
-        MutableTrigger trigger = table.lookupTrigger(triggerName);
-        if (trigger == null)
-        {
-          trigger = new MutableTrigger(table, triggerName);
-        }
+        final MutableTrigger trigger = table.lookupTrigger(triggerName)
+          .orElse(new MutableTrigger(table, triggerName));
         trigger.setEventManipulationType(eventManipulationType);
         trigger.setActionOrder(actionOrder);
         trigger.appendActionCondition(actionCondition);
@@ -533,10 +544,10 @@ final class TableExtRetriever
         final String schemaName = quotedName(results.getString("TABLE_SCHEMA"));
         final String viewName = quotedName(results.getString("TABLE_NAME"));
 
-        final MutableView view = (MutableView) lookupTable(catalogName,
-                                                           schemaName,
-                                                           viewName);
-        if (view == null)
+        final Optional<MutableTable> viewOptional = lookupTable(catalogName,
+                                                                schemaName,
+                                                                viewName);
+        if (!viewOptional.isPresent())
         {
           LOGGER.log(Level.FINE, String.format("Cannot find table, %s.%s.%s",
                                                catalogName,
@@ -545,6 +556,7 @@ final class TableExtRetriever
           continue;
         }
 
+        final MutableView view = (MutableView) viewOptional.get();
         LOGGER.log(Level.FINER, "Retrieving view information: " + viewName);
         final String definition = results.getString("VIEW_DEFINITION");
         final CheckOptionType checkOption = results
@@ -584,16 +596,29 @@ final class TableExtRetriever
         columnName = null;
       }
 
-      final MutableTable table = lookupTable(catalogName, schemaName, tableName);
-      if (table == null)
+      final Optional<MutableTable> tableOptional = lookupTable(catalogName,
+                                                               schemaName,
+                                                               tableName);
+      if (!tableOptional.isPresent())
       {
         continue;
       }
 
-      final MutableColumn column = table.getColumn(columnName);
-      if (privilegesForColumn && column == null)
+      final MutableTable table = tableOptional.get();
+      final MutableColumn column;
+      if (privilegesForColumn)
       {
-        continue;
+        final Optional<MutableColumn> columnOptional = table
+          .getColumn(columnName);
+        if (!columnOptional.isPresent())
+        {
+          continue;
+        }
+        column = columnOptional.get();
+      }
+      else
+      {
+        column = null;
       }
 
       final String privilegeName = results.getString("PRIVILEGE");
@@ -604,34 +629,21 @@ final class TableExtRetriever
       final MutablePrivilege<?> privilege;
       if (privilegesForColumn)
       {
-        final MutablePrivilege<Column> columnPrivilege = column
+        final Optional<MutablePrivilege<Column>> privilegeOptional = column
           .getPrivilege(privilegeName);
-        if (columnPrivilege == null)
-        {
-          privilege = new MutablePrivilege<>(new ColumnReference(column),
-                                             privilegeName);
-          column.addPrivilege((MutablePrivilege<Column>) privilege);
-        }
-        else
-        {
-          privilege = columnPrivilege;
-        }
+        privilege = privilegeOptional
+          .orElse(new MutablePrivilege<>(new ColumnReference(column),
+                                         privilegeName));
       }
       else
       {
-        final MutablePrivilege<Table> tablePrivilege = table
+        final Optional<MutablePrivilege<Table>> privilegeOptional = table
           .getPrivilege(privilegeName);
-        if (tablePrivilege == null)
-        {
-          privilege = new MutablePrivilege<>(new TableReference(table),
-                                             privilegeName);
-          table.addPrivilege((MutablePrivilege<Table>) privilege);
-        }
-        else
-        {
-          privilege = tablePrivilege;
-        }
+        privilege = privilegeOptional
+          .orElse(new MutablePrivilege<>(new TableReference(table),
+                                         privilegeName));
       }
+
       privilege.addGrant(grantor, grantee, isGrantable);
 
       if (privilegesForColumn)
@@ -675,10 +687,10 @@ final class TableExtRetriever
         // "TABLE_CATALOG", "TABLE_SCHEMA"
         final String tableName = quotedName(results.getString("TABLE_NAME"));
 
-        final MutableTable table = lookupTable(catalogName,
-                                               schemaName,
-                                               tableName);
-        if (table == null)
+        final Optional<MutableTable> tableOptional = lookupTable(catalogName,
+                                                                 schemaName,
+                                                                 tableName);
+        if (!tableOptional.isPresent())
         {
           LOGGER.log(Level.FINE, String.format("Cannot find table, %s.%s.%s",
                                                catalogName,
@@ -687,6 +699,7 @@ final class TableExtRetriever
           continue;
         }
 
+        final MutableTable table = tableOptional.get();
         final String constraintType = results.getString("CONSTRAINT_TYPE");
         final boolean deferrable = results.getBoolean("IS_DEFERRABLE");
         final boolean initiallyDeferred = results
@@ -765,10 +778,10 @@ final class TableExtRetriever
         // "TABLE_CATALOG", "TABLE_SCHEMA"
         final String tableName = quotedName(results.getString("TABLE_NAME"));
 
-        final MutableTable table = lookupTable(catalogName,
-                                               schemaName,
-                                               tableName);
-        if (table == null)
+        final Optional<MutableTable> tableOptional = lookupTable(catalogName,
+                                                                 schemaName,
+                                                                 tableName);
+        if (!tableOptional.isPresent())
         {
           LOGGER.log(Level.FINE, String.format("Cannot find table, %s.%s.%s",
                                                catalogName,
@@ -777,9 +790,11 @@ final class TableExtRetriever
           continue;
         }
 
+        final MutableTable table = tableOptional.get();
         final String columnName = quotedName(results.getString("COLUMN_NAME"));
-        final MutableColumn column = table.getColumn(columnName);
-        if (column == null)
+        final Optional<MutableColumn> columnOptional = table
+          .getColumn(columnName);
+        if (!columnOptional.isPresent())
         {
           LOGGER.log(Level.FINE, String
             .format("Cannot find column, %s.%s.%s.%s",
@@ -789,6 +804,7 @@ final class TableExtRetriever
                     columnName));
           continue;
         }
+        final MutableColumn column = columnOptional.get();
         final int ordinalPosition = results.getInt("ORDINAL_POSITION", 0);
         final MutableTableConstraintColumn constraintColumn = new MutableTableConstraintColumn(tableConstraint,
                                                                                                column);

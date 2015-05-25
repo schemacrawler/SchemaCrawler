@@ -22,6 +22,7 @@ package schemacrawler.schema;
 
 
 import java.util.Collection;
+import java.util.Optional;
 
 /**
  * Database and connection information.
@@ -39,7 +40,8 @@ public interface Catalog
    *        Name
    * @return Column data types
    */
-  ColumnDataType getColumnDataType(Schema schema, String name);
+  Optional<? extends ColumnDataType> getColumnDataType(Schema schema,
+                                                       String name);
 
   /**
    * Gets the column data types
@@ -68,7 +70,7 @@ public interface Catalog
    *        Name
    * @return Routine.
    */
-  Routine getRoutine(Schema schema, String name);
+  Optional<? extends Routine> getRoutine(Schema schema, String name);
 
   /**
    * Gets the routine.
@@ -91,7 +93,7 @@ public interface Catalog
    *        Schema name
    * @return Schema.
    */
-  Schema getSchema(String name);
+  Optional<? extends Schema> getSchema(String name);
 
   SchemaCrawlerInfo getSchemaCrawlerInfo();
 
@@ -109,7 +111,7 @@ public interface Catalog
    *        Name
    * @return Sequence.
    */
-  Sequence getSequence(Schema schema, String name);
+  Optional<? extends Sequence> getSequence(Schema schema, String name);
 
   /**
    * Gets the sequences.
@@ -132,7 +134,7 @@ public interface Catalog
    *        Name
    * @return Synonym.
    */
-  Synonym getSynonym(Schema schema, String name);
+  Optional<? extends Synonym> getSynonym(Schema schema, String name);
 
   /**
    * Gets the synonyms.
@@ -155,7 +157,7 @@ public interface Catalog
    *        Column data type name
    * @return Column data type
    */
-  ColumnDataType getSystemColumnDataType(String name);
+  Optional<? extends ColumnDataType> getSystemColumnDataType(String name);
 
   /**
    * Gets the column data types defined by the RDBMS system.
@@ -171,7 +173,7 @@ public interface Catalog
    *        Name
    * @return Table.
    */
-  Table getTable(Schema schema, String name);
+  Optional<? extends Table> getTable(Schema schema, String name);
 
   /**
    * Gets the tables.
