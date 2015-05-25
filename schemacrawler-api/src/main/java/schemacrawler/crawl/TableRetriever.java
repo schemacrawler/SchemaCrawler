@@ -247,7 +247,7 @@ final class TableRetriever
 
         // Register primary key information
         final Optional<MutableColumn> columnOptional = table
-          .getColumn(columnName);
+          .lookupColumn(columnName);
         if (columnOptional.isPresent())
         {
           final MutableColumn column = columnOptional.get();
@@ -490,7 +490,7 @@ final class TableRetriever
         final int pages = results.getInt("PAGES", 0);
 
         final Optional<MutableColumn> columnOptional = table
-          .getColumn(columnName);
+          .lookupColumn(columnName);
         if (columnOptional.isPresent())
         {
           final MutableColumn column = columnOptional.get();
@@ -502,7 +502,7 @@ final class TableRetriever
           }
 
           final Optional<MutableIndex> indexOptional = table
-            .getIndex(indexName);
+            .lookupIndex(indexName);
           final MutableIndex index;
           if (indexOptional.isPresent())
           {
@@ -544,7 +544,8 @@ final class TableRetriever
                                              final String columnName,
                                              final boolean add)
   {
-    final Optional<MutableColumn> columnOptional = table.getColumn(columnName);
+    final Optional<MutableColumn> columnOptional = table
+      .lookupColumn(columnName);
     final MutableColumn column;
     if (columnOptional.isPresent())
     {
@@ -577,13 +578,13 @@ final class TableRetriever
     Column column = null;
 
     final SchemaReference schema = new SchemaReference(catalogName, schemaName);
-    final Optional<MutableTable> tableOptional = catalog.getTable(schema,
-                                                                  tableName);
+    final Optional<MutableTable> tableOptional = catalog.lookupTable(schema,
+                                                                     tableName);
     if (tableOptional.isPresent())
     {
       final Table table = tableOptional.get();
       final Optional<? extends Column> columnOptional = table
-        .getColumn(columnName);
+        .lookupColumn(columnName);
       if (columnOptional.isPresent())
       {
         column = columnOptional.get();

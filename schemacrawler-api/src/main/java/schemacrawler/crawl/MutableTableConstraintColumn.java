@@ -101,17 +101,6 @@ final class MutableTableConstraintColumn
   /**
    * {@inheritDoc}
    *
-   * @see schemacrawler.schema.Column#getPrivilege(java.lang.String)
-   */
-  @Override
-  public Optional<? extends Privilege<Column>> getPrivilege(final String name)
-  {
-    return column.getPrivilege(name);
-  }
-
-  /**
-   * {@inheritDoc}
-   *
    * @see schemacrawler.schema.Column#getPrivileges()
    */
   @Override
@@ -259,6 +248,17 @@ final class MutableTableConstraintColumn
   public boolean isPartOfUniqueIndex()
   {
     return column.isPartOfUniqueIndex();
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * @see schemacrawler.schema.Column#lookupPrivilege(java.lang.String)
+   */
+  @Override
+  public Optional<? extends Privilege<Column>> lookupPrivilege(final String name)
+  {
+    return column.lookupPrivilege(name);
   }
 
   void setTableConstraintOrdinalPosition(final int indexOrdinalPosition)

@@ -78,12 +78,6 @@ final class ColumnPartial
   }
 
   @Override
-  public Optional<Privilege<Column>> getPrivilege(final String name)
-  {
-    throw new NotLoadedException();
-  }
-
-  @Override
   public Collection<Privilege<Column>> getPrivileges()
   {
     throw new NotLoadedException();
@@ -161,6 +155,12 @@ final class ColumnPartial
 
   @Override
   public boolean isPartOfUniqueIndex()
+  {
+    throw new NotLoadedException();
+  }
+
+  @Override
+  public Optional<Privilege<Column>> lookupPrivilege(final String name)
   {
     throw new NotLoadedException();
   }

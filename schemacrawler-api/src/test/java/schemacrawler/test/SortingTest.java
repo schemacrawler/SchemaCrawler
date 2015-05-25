@@ -117,7 +117,7 @@ public class SortingTest
     final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
     assertNotNull("Schema not found", schema);
 
-    final Table table = catalog.getTable(schema, tableName).orElse(null);
+    final Table table = catalog.lookupTable(schema, tableName).orElse(null);
     assertNotNull("Table " + tableName + " not found", table);
     if (table.getName().equals(tableName))
     {

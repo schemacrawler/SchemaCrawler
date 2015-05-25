@@ -41,13 +41,17 @@ public interface Column
   String getDefaultValue();
 
   /**
-   * Gets a privilege by name.
+   * Gets a privilege by unqualified name.
    *
    * @param name
-   *        Name
-   * @return Privilege.
+   *        Unqualified name
+   * @return Privilege, or null if not found.
    */
-  Optional<? extends Privilege<Column>> getPrivilege(String name);
+  @Deprecated
+  default Privilege<Column> getPrivilege(final String name)
+  {
+    return lookupPrivilege(name).orElse(null);
+  }
 
   /**
    * Gets the list of privileges for the table.
@@ -105,5 +109,14 @@ public interface Column
    * @return If the column is part of an unique index
    */
   boolean isPartOfUniqueIndex();
+
+  /**
+   * Gets a privilege by unqualified name.
+   *
+   * @param name
+   *        Unqualified name
+   * @return Privilege.
+   */
+  Optional<? extends Privilege<Column>> lookupPrivilege(String name);
 
 }

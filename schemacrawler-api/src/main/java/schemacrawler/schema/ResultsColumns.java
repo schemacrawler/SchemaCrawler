@@ -34,13 +34,17 @@ public interface ResultsColumns
 {
 
   /**
-   * Gets a column by name.
+   * Gets a column by unqualified name.
    *
    * @param name
-   *        Name
-   * @return Column.
+   *        Unqualified name
+   * @return Column, or null if not found.
    */
-  Optional<? extends ResultsColumn> getColumn(String name);
+  @Deprecated
+  default ResultsColumn getColumn(final String name)
+  {
+    return lookupColumn(name).orElse(null);
+  }
 
   /**
    * Gets the list of columns in ordinal order.
@@ -55,5 +59,14 @@ public interface ResultsColumns
    * @return Comma-separated list of columns
    */
   String getColumnsListAsString();
+
+  /**
+   * Gets a column by name.
+   *
+   * @param name
+   *        Name
+   * @return Column.
+   */
+  Optional<? extends ResultsColumn> lookupColumn(String name);
 
 }

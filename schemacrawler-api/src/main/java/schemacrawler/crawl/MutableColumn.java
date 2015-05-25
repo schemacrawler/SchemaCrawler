@@ -70,17 +70,6 @@ class MutableColumn
   /**
    * {@inheritDoc}
    *
-   * @see schemacrawler.schema.Column#getPrivilege(java.lang.String)
-   */
-  @Override
-  public Optional<MutablePrivilege<Column>> getPrivilege(final String name)
-  {
-    return privileges.lookup(this, name);
-  }
-
-  /**
-   * {@inheritDoc}
-   *
    * @see Column#getPrivileges()
    */
   @Override
@@ -160,6 +149,17 @@ class MutableColumn
   public boolean isPartOfUniqueIndex()
   {
     return isPartOfUniqueIndex;
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * @see schemacrawler.schema.Column#lookupPrivilege(java.lang.String)
+   */
+  @Override
+  public Optional<MutablePrivilege<Column>> lookupPrivilege(final String name)
+  {
+    return privileges.lookup(this, name);
   }
 
   void addPrivilege(final MutablePrivilege<Column> privilege)
