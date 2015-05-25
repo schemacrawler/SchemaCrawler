@@ -55,7 +55,7 @@ public class HideEmptyTablesCommandLineTest
     args.put("noinfo", "true");
     args.put("routines", "");
     args.put("hideemptytables", "true");
-    String[] flattenCommandlineArgs = CommandLineUtility
+    final String[] flattenCommandlineArgs = CommandLineUtility
       .flattenCommandlineArgs(args);
 
     Main.main(flattenCommandlineArgs);

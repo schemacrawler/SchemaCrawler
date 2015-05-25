@@ -44,6 +44,9 @@ public final class LinterRegistry
   implements Iterable<String>
 {
 
+  private static final Logger LOGGER = Logger.getLogger(LinterRegistry.class
+    .getName());
+
   private static Map<String, Linter> loadLinterRegistry()
     throws SchemaCrawlerException
   {
@@ -75,9 +78,6 @@ public final class LinterRegistry
     }
     return linterRegistry;
   }
-
-  private static final Logger LOGGER = Logger.getLogger(LinterRegistry.class
-    .getName());
 
   private final Map<String, Linter> linterRegistry;
 

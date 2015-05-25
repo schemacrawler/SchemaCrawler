@@ -158,9 +158,9 @@ final class SchemaTextFormatter
     formattingHelper.println();
     formattingHelper.writeObjectStart();
     formattingHelper.writeObjectNameRow(nodeId(routine),
-                                         routineName,
-                                         routineType,
-                                         colorMap.getColor(routine));
+                                        routineName,
+                                        routineType,
+                                        colorMap.getColor(routine));
     printRemarks(routine);
 
     if (!isBrief)
@@ -205,23 +205,23 @@ final class SchemaTextFormatter
     formattingHelper.println();
     formattingHelper.writeObjectStart();
     formattingHelper.writeObjectNameRow(nodeId(sequence),
-                                         sequenceName,
-                                         sequenceType,
-                                         colorMap.getColor(sequence));
+                                        sequenceName,
+                                        sequenceType,
+                                        colorMap.getColor(sequence));
     printRemarks(sequence);
 
     if (!isBrief)
     {
       formattingHelper.writeDetailRow("",
-                                       "increment",
-                                       String.valueOf(sequence.getIncrement()));
+                                      "increment",
+                                      String.valueOf(sequence.getIncrement()));
       formattingHelper.writeDetailRow("", "minimum value", String
         .valueOf(sequence.getMinimumValue()));
       formattingHelper.writeDetailRow("", "maximum value", String
         .valueOf(sequence.getMaximumValue()));
       formattingHelper.writeDetailRow("",
-                                       "cycle",
-                                       String.valueOf(sequence.isCycle()));
+                                      "cycle",
+                                      String.valueOf(sequence.isCycle()));
     }
 
     formattingHelper.writeObjectEnd();
@@ -250,9 +250,9 @@ final class SchemaTextFormatter
     formattingHelper.println();
     formattingHelper.writeObjectStart();
     formattingHelper.writeObjectNameRow(nodeId(synonym),
-                                         synonymName,
-                                         synonymType,
-                                         colorMap.getColor(synonym));
+                                        synonymName,
+                                        synonymType,
+                                        colorMap.getColor(synonym));
     printRemarks(synonym);
 
     if (!isBrief)
@@ -267,12 +267,12 @@ final class SchemaTextFormatter
         referencedObjectName = synonym.getReferencedObject().getFullName();
       }
       formattingHelper.writeDetailRow("",
-                                       String.format("%s %s %s",
-                                                     synonym.getName(),
-                                                     formattingHelper
-                                                       .createRightArrow(),
-                                                     referencedObjectName),
-                                       "");
+                                      String.format("%s %s %s",
+                                                    synonym.getName(),
+                                                    formattingHelper
+                                                      .createRightArrow(),
+                                                    referencedObjectName),
+                                      "");
     }
 
     formattingHelper.writeObjectEnd();
@@ -301,9 +301,9 @@ final class SchemaTextFormatter
     formattingHelper.println();
     formattingHelper.writeObjectStart();
     formattingHelper.writeObjectNameRow(nodeId(table),
-                                         tableName,
-                                         tableType,
-                                         colorMap.getColor(table));
+                                        tableName,
+                                        tableType,
+                                        colorMap.getColor(table));
     printRemarks(table);
 
     final List<Column> columns = table.getColumns();
@@ -561,10 +561,10 @@ final class SchemaTextFormatter
                                      pkHyperlink);
       }
       formattingHelper.writeDetailRow(keySequenceString,
-                                       relationship,
-                                       false,
-                                       "",
-                                       false);
+                                      relationship,
+                                      false,
+                                      "",
+                                      false);
     }
   }
 
@@ -789,8 +789,8 @@ final class SchemaTextFormatter
         ordinalNumberString = String.valueOf(column.getOrdinalPosition() + 1);
       }
       formattingHelper.writeDetailRow(ordinalNumberString,
-                                       column.getName(),
-                                       columnType.toString());
+                                      column.getName(),
+                                      columnType.toString());
     }
   }
 
@@ -868,10 +868,10 @@ final class SchemaTextFormatter
         ordinalNumberString = String.valueOf(column.getOrdinalPosition());
       }
       formattingHelper.writeDetailRow(ordinalNumberString,
-                                       columnName,
-                                       true,
-                                       columnDetails,
-                                       emphasize);
+                                      columnName,
+                                      true,
+                                      columnDetails,
+                                      emphasize);
 
       printTableColumnAutoIncremented(column);
       printTableColumnRemarks(column);
@@ -927,7 +927,7 @@ final class SchemaTextFormatter
           if (constraint.hasDefinition())
           {
             formattingHelper.writeWideRow(constraint.getDefinition(),
-                                           "definition");
+                                          "definition");
           }
         }
 
