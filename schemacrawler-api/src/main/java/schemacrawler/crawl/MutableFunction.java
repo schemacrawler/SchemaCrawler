@@ -62,17 +62,6 @@ final class MutableFunction
   /**
    * {@inheritDoc}
    *
-   * @see schemacrawler.schema.Function#getColumn(java.lang.String)
-   */
-  @Override
-  public Optional<MutableFunctionColumn> getColumn(final String name)
-  {
-    return columns.lookup(this, name);
-  }
-
-  /**
-   * {@inheritDoc}
-   *
    * @see Function#getColumns()
    */
   @Override
@@ -107,6 +96,17 @@ final class MutableFunction
   public RoutineType getRoutineType()
   {
     return RoutineType.function;
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * @see schemacrawler.schema.Function#lookupColumn(java.lang.String)
+   */
+  @Override
+  public Optional<MutableFunctionColumn> lookupColumn(final String name)
+  {
+    return columns.lookup(this, name);
   }
 
   void addColumn(final MutableFunctionColumn column)

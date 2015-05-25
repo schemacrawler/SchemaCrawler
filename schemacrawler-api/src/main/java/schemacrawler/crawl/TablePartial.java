@@ -63,19 +63,6 @@ final class TablePartial
   }
 
   @Override
-  public Optional<Column> getColumn(final String name)
-  {
-    if (column.getName().equals(name))
-    {
-      return Optional.ofNullable(column);
-    }
-    else
-    {
-      return Optional.empty();
-    }
-  }
-
-  @Override
   public List<Column> getColumns()
   {
     throw new NotLoadedException();
@@ -94,19 +81,6 @@ final class TablePartial
   }
 
   @Override
-  public Optional<ForeignKey> getForeignKey(final String name)
-  {
-    if (foreignKey.getName().equals(name))
-    {
-      return Optional.ofNullable(foreignKey);
-    }
-    else
-    {
-      return Optional.empty();
-    }
-  }
-
-  @Override
   public Collection<ForeignKey> getForeignKeys()
   {
     throw new NotLoadedException();
@@ -119,12 +93,6 @@ final class TablePartial
   }
 
   @Override
-  public Optional<Index> getIndex(final String name)
-  {
-    throw new NotLoadedException();
-  }
-
-  @Override
   public Collection<Index> getIndexes()
   {
     throw new NotLoadedException();
@@ -132,12 +100,6 @@ final class TablePartial
 
   @Override
   public PrimaryKey getPrimaryKey()
-  {
-    throw new NotLoadedException();
-  }
-
-  @Override
-  public Optional<? extends Privilege<Table>> getPrivilege(final String name)
   {
     throw new NotLoadedException();
   }
@@ -167,12 +129,6 @@ final class TablePartial
   }
 
   @Override
-  public Optional<Trigger> getTrigger(final String name)
-  {
-    throw new NotLoadedException();
-  }
-
-  @Override
   public Collection<Trigger> getTriggers()
   {
     throw new NotLoadedException();
@@ -186,6 +142,50 @@ final class TablePartial
 
   @Override
   public boolean hasDefinition()
+  {
+    throw new NotLoadedException();
+  }
+
+  @Override
+  public Optional<Column> lookupColumn(final String name)
+  {
+    if (column.getName().equals(name))
+    {
+      return Optional.ofNullable(column);
+    }
+    else
+    {
+      return Optional.empty();
+    }
+  }
+
+  @Override
+  public Optional<ForeignKey> lookupForeignKey(final String name)
+  {
+    if (foreignKey.getName().equals(name))
+    {
+      return Optional.ofNullable(foreignKey);
+    }
+    else
+    {
+      return Optional.empty();
+    }
+  }
+
+  @Override
+  public Optional<Index> lookupIndex(final String name)
+  {
+    throw new NotLoadedException();
+  }
+
+  @Override
+  public Optional<? extends Privilege<Table>> lookupPrivilege(final String name)
+  {
+    throw new NotLoadedException();
+  }
+
+  @Override
+  public Optional<Trigger> lookupTrigger(final String name)
   {
     throw new NotLoadedException();
   }

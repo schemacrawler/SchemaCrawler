@@ -34,14 +34,18 @@ public interface Function
 {
 
   /**
-   * Gets a column by name.
+   * Gets a column by unqualified name.
    *
    * @param name
-   *        Name
-   * @return Column of the procedure
+   *        Unqualified name
+   * @return Column, or null if not found.
    */
+  @Deprecated
   @Override
-  Optional<? extends FunctionColumn> getColumn(String name);
+  default FunctionColumn getColumn(final String name)
+  {
+    return lookupColumn(name).orElse(null);
+  }
 
   /**
    * Gets the list of columns in ordinal order.
@@ -66,5 +70,15 @@ public interface Function
    */
   @Override
   RoutineBodyType getRoutineBodyType();
+
+  /**
+   * Gets a column by name.
+   *
+   * @param name
+   *        Name
+   * @return Column of the procedure
+   */
+  @Override
+  Optional<? extends FunctionColumn> lookupColumn(String name);
 
 }

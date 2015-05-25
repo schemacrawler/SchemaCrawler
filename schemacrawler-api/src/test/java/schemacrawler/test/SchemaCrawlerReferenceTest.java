@@ -216,10 +216,10 @@ public class SchemaCrawlerReferenceTest
     final Table table = column.getParent();
     assertNull("Primary key table table should not be in the database - "
                    + table.getName(),
-               catalog.getTable(table.getSchema(), table.getName())
+               catalog.lookupTable(table.getSchema(), table.getName())
                  .orElse(null));
     assertTrue("Column references do not match",
-               column == table.getColumn(column.getName()).get());
+               column == table.lookupColumn(column.getName()).get());
 
     if (assertDataNotLoaded)
     {
@@ -250,10 +250,10 @@ public class SchemaCrawlerReferenceTest
     assertTrue(column != null);
     final Table table = column.getParent();
     assertTrue("Table references do not match - " + table.getName(),
-               table == catalog.getTable(table.getSchema(), table.getName())
+               table == catalog.lookupTable(table.getSchema(), table.getName())
                  .get());
     assertTrue("Column references do not match",
-               column == table.getColumn(column.getName()).get());
+               column == table.lookupColumn(column.getName()).get());
   }
 
 }

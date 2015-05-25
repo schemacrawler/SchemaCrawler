@@ -79,13 +79,6 @@ public abstract class BaseCatalogDecorator
   }
 
   @Override
-  public Optional<? extends ColumnDataType> getColumnDataType(final Schema schema,
-                                                              final String name)
-  {
-    return catalog.getColumnDataType(schema, name);
-  }
-
-  @Override
   public Collection<ColumnDataType> getColumnDataTypes()
   {
     return catalog.getColumnDataTypes();
@@ -140,13 +133,6 @@ public abstract class BaseCatalogDecorator
   }
 
   @Override
-  public Optional<? extends Routine> getRoutine(final Schema schema,
-                                                final String name)
-  {
-    return catalog.getRoutine(schema, name);
-  }
-
-  @Override
   public Collection<Routine> getRoutines()
   {
     return catalog.getRoutines();
@@ -177,20 +163,6 @@ public abstract class BaseCatalogDecorator
   }
 
   /**
-   * @param schema
-   * @param name
-   * @return
-   * @see schemacrawler.schema.Catalog#getSequence(schemacrawler.schema.Schema,
-   *      java.lang.String)
-   */
-  @Override
-  public Optional<? extends Sequence> getSequence(final Schema schema,
-                                                  final String name)
-  {
-    return catalog.getSequence(schema, name);
-  }
-
-  /**
    * @return
    * @see schemacrawler.schema.Catalog#getSequences()
    */
@@ -209,13 +181,6 @@ public abstract class BaseCatalogDecorator
   public Collection<Sequence> getSequences(final Schema schema)
   {
     return catalog.getSequences(schema);
-  }
-
-  @Override
-  public Optional<? extends Synonym> getSynonym(final Schema schema,
-                                                final String name)
-  {
-    return catalog.getSynonym(schema, name);
   }
 
   @Override
@@ -243,13 +208,6 @@ public abstract class BaseCatalogDecorator
   }
 
   @Override
-  public Optional<? extends Table> getTable(final Schema schema,
-                                            final String name)
-  {
-    return catalog.getTable(schema, name);
-  }
-
-  @Override
   public Collection<Table> getTables()
   {
     return catalog.getTables();
@@ -265,6 +223,48 @@ public abstract class BaseCatalogDecorator
   public boolean hasRemarks()
   {
     return catalog.hasRemarks();
+  }
+
+  @Override
+  public Optional<? extends ColumnDataType> lookupColumnDataType(final Schema schema,
+                                                                 final String name)
+  {
+    return catalog.lookupColumnDataType(schema, name);
+  }
+
+  @Override
+  public Optional<? extends Routine> lookupRoutine(final Schema schema,
+                                                   final String name)
+  {
+    return catalog.lookupRoutine(schema, name);
+  }
+
+  /**
+   * @param schema
+   * @param name
+   * @return
+   * @see schemacrawler.schema.Catalog#lookupSequence(schemacrawler.schema.Schema,
+   *      java.lang.String)
+   */
+  @Override
+  public Optional<? extends Sequence> lookupSequence(final Schema schema,
+                                                     final String name)
+  {
+    return catalog.lookupSequence(schema, name);
+  }
+
+  @Override
+  public Optional<? extends Synonym> lookupSynonym(final Schema schema,
+                                                   final String name)
+  {
+    return catalog.lookupSynonym(schema, name);
+  }
+
+  @Override
+  public Optional<? extends Table> lookupTable(final Schema schema,
+                                               final String name)
+  {
+    return catalog.lookupTable(schema, name);
   }
 
   @Override
