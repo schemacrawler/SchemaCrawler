@@ -96,7 +96,7 @@ public class TestHsqldbCommandline
     assertNotNull(schema);
 
     assertEquals(6, catalog.getTables(schema).size());
-    final Table table = catalog.getTable(schema, "AUTHORS").orElse(null);
+    final Table table = catalog.lookupTable(schema, "AUTHORS").orElse(null);
     assertNotNull(table);
 
     assertEquals(1, table.getTriggers().size());
