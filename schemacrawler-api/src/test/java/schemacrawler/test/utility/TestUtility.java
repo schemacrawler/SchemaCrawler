@@ -71,7 +71,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.apache.commons.io.FileUtils;
-import org.custommonkey.xmlunit.Validator;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -84,6 +83,28 @@ import com.google.gson.stream.JsonToken;
 
 public final class TestUtility
 {
+
+  private final static Pattern[] neuters = {
+      Pattern.compile("url +jdbc:.*"),
+      Pattern.compile("database product version.*"),
+      Pattern.compile("driver version.*"),
+      Pattern.compile("\\s+<schemaCrawlerVersion>.*"),
+      Pattern.compile("\\s+<schemaCrawlerAbout>.*"),
+      Pattern.compile(".*[A-Za-z]+ \\d+\\, 201[45] \\d+:\\d+ [AP]M.*"),
+      Pattern.compile(".*201[45]-\\d\\d-\\d\\d \\d\\d:\\d\\d:\\d\\d.*"),
+      Pattern
+        .compile(".*201[45]-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d\\d\\d.*"),
+      // SVG {
+      Pattern.compile("<svg.*"),
+      Pattern.compile(" viewBox=\"0.00.*"),
+      Pattern.compile("<g id=.*"),
+      Pattern.compile("<text text-anchor.*"),
+      Pattern.compile("<path fill=.*"),
+      Pattern.compile("<ellipse fill=.*"),
+      Pattern.compile("<polyline fill=.*"),
+      Pattern.compile("<polygon fill=.*"),
+  // }
+  };
 
   public static void clean(final String dirname)
     throws Exception
@@ -106,65 +127,6 @@ public final class TestUtility
     throws Exception
   {
     return compareOutput(referenceFile, testOutputTempFile, outputFormat, false);
-  }
-
-  public static Path copyResourceToTempFile(final String resource)
-    throws IOException
-  {
-    try (final InputStream resourceStream = TestUtility.class
-      .getResourceAsStream(resource);)
-    {
-      requireNonNull(resourceStream, "Resource not found, " + resource);
-      return writeToTempFile(resourceStream);
-    }
-  }
-
-  public static Path createTempFile(final String stem,
-                                    final String outputFormatValue)
-    throws IOException
-  {
-    final Path testOutputTempFilePath = Files
-      .createTempFile(String.format("schemacrawler.%s.", stem),
-                      String.format(".%s", outputFormatValue)).normalize()
-      .toAbsolutePath();
-    delete(testOutputTempFilePath);
-    testOutputTempFilePath.toFile().deleteOnExit();
-    return testOutputTempFilePath;
-  }
-
-  public static Reader readerForResource(final String resource,
-                                         final Charset encoding)
-    throws IOException
-  {
-    return readerForResource(resource, encoding, false);
-  }
-
-  public static void validateDiagram(final Path diagramFile)
-    throws IOException
-  {
-    assertTrue("Diagram file not created", exists(diagramFile));
-    assertTrue("Diagram file has 0 bytes size", size(diagramFile) > 0);
-
-    final BufferedImage image = ImageIO.read(diagramFile.toFile());
-    assertTrue("Diagram not created", image.getHeight() > 0);
-    assertTrue("Diagram not created", image.getWidth() > 0);
-  }
-
-  private static Path buildDirectory()
-    throws Exception
-  {
-    final StackTraceElement ste = currentMethodStackTraceElement();
-    final Class<?> callingClass = Class.forName(ste.getClassName());
-    final Path codePath = Paths
-      .get(callingClass.getProtectionDomain().getCodeSource().getLocation()
-        .toURI()).normalize().toAbsolutePath();
-    final boolean isInTarget = codePath.toString().contains("target");
-    if (!isInTarget)
-    {
-      throw new RuntimeException("Not in build directory, " + codePath);
-    }
-    final Path directory = codePath.resolve("..");
-    return directory.normalize().toAbsolutePath();
   }
 
   public static List<String> compareOutput(final String referenceFile,
@@ -241,6 +203,65 @@ public final class TestUtility
     }
 
     return failures;
+  }
+
+  public static Path copyResourceToTempFile(final String resource)
+    throws IOException
+  {
+    try (final InputStream resourceStream = TestUtility.class
+      .getResourceAsStream(resource);)
+    {
+      requireNonNull(resourceStream, "Resource not found, " + resource);
+      return writeToTempFile(resourceStream);
+    }
+  }
+
+  public static Path createTempFile(final String stem,
+                                    final String outputFormatValue)
+    throws IOException
+  {
+    final Path testOutputTempFilePath = Files
+      .createTempFile(String.format("schemacrawler.%s.", stem),
+                      String.format(".%s", outputFormatValue)).normalize()
+      .toAbsolutePath();
+    delete(testOutputTempFilePath);
+    testOutputTempFilePath.toFile().deleteOnExit();
+    return testOutputTempFilePath;
+  }
+
+  public static Reader readerForResource(final String resource,
+                                         final Charset encoding)
+    throws IOException
+  {
+    return readerForResource(resource, encoding, false);
+  }
+
+  public static void validateDiagram(final Path diagramFile)
+    throws IOException
+  {
+    assertTrue("Diagram file not created", exists(diagramFile));
+    assertTrue("Diagram file has 0 bytes size", size(diagramFile) > 0);
+
+    final BufferedImage image = ImageIO.read(diagramFile.toFile());
+    assertTrue("Diagram not created", image.getHeight() > 0);
+    assertTrue("Diagram not created", image.getWidth() > 0);
+  }
+
+  private static Path buildDirectory()
+    throws Exception
+  {
+    final StackTraceElement ste = currentMethodStackTraceElement();
+    final Class<?> callingClass = Class.forName(ste.getClassName());
+    final Path codePath = Paths
+      .get(callingClass.getProtectionDomain().getCodeSource().getLocation()
+        .toURI()).normalize().toAbsolutePath();
+    final boolean isInTarget = codePath.toString().contains("target");
+    if (!isInTarget)
+    {
+      throw new RuntimeException("Not in build directory, " + codePath);
+    }
+    final Path directory = codePath.resolve("..");
+    return directory.normalize().toAbsolutePath();
   }
 
   private static boolean contentEquals(final Reader expectedInputReader,
@@ -457,30 +478,6 @@ public final class TestUtility
     return failures.isEmpty();
   }
 
-  private static boolean validateXHTML(final Path testOutputFile,
-                                       final List<String> failures)
-    throws Exception
-  {
-    final DOCTYPEChanger xhtmlReader = new DOCTYPEChanger(readerForFile(testOutputFile));
-    xhtmlReader.setRootElement("html");
-    xhtmlReader
-      .setSystemIdentifier("http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd");
-    xhtmlReader.setPublicIdentifier("-//W3C//DTD XHTML 1.0 Strict//EN");
-    xhtmlReader.setReplace(true);
-
-    final boolean isOutputValid;
-    try (final Reader reader = new BufferedReader(xhtmlReader);)
-    {
-      final Validator validator = new Validator(reader);
-      isOutputValid = validator.isValid();
-      if (!isOutputValid)
-      {
-        failures.add(validator.toString());
-      }
-    }
-    return isOutputValid;
-  }
-
   private static void validateXML(final Path testOutputFile,
                                   final List<String> failures)
     throws Exception
@@ -533,28 +530,6 @@ public final class TestUtility
 
     return tempFile;
   }
-
-  private final static Pattern[] neuters = {
-      Pattern.compile("url +jdbc:.*"),
-      Pattern.compile("database product version.*"),
-      Pattern.compile("driver version.*"),
-      Pattern.compile("\\s+<schemaCrawlerVersion>.*"),
-      Pattern.compile("\\s+<schemaCrawlerAbout>.*"),
-      Pattern.compile(".*[A-Za-z]+ \\d+\\, 201[45] \\d+:\\d+ [AP]M.*"),
-      Pattern.compile(".*201[45]-\\d\\d-\\d\\d \\d\\d:\\d\\d:\\d\\d.*"),
-      Pattern
-        .compile(".*201[45]-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d\\d\\d.*"),
-      // SVG {
-      Pattern.compile("<svg.*"),
-      Pattern.compile(" viewBox=\"0.00.*"),
-      Pattern.compile("<g id=.*"),
-      Pattern.compile("<text text-anchor.*"),
-      Pattern.compile("<path fill=.*"),
-      Pattern.compile("<ellipse fill=.*"),
-      Pattern.compile("<polyline fill=.*"),
-      Pattern.compile("<polygon fill=.*"),
-  // }
-  };
 
   private TestUtility()
   {

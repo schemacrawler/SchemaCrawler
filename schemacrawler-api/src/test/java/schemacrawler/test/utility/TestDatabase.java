@@ -52,6 +52,15 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 public class TestDatabase
 {
 
+  private static final Logger LOGGER = Logger.getLogger(TestDatabase.class
+    .getName());
+
+  public static final String CONNECTION_STRING = "jdbc:hsqldb:hsql://localhost/schemacrawler";
+
+  private static final String serverFileStem = "hsqldb.schemacrawler";
+
+  public static boolean initialized;
+
   public static void initialize()
   {
     if (!initialized)
@@ -141,14 +150,6 @@ public class TestDatabase
       System.exit(1);
     }
   }
-
-  private static final Logger LOGGER = Logger.getLogger(TestDatabase.class
-    .getName());
-
-  public static final String CONNECTION_STRING = "jdbc:hsqldb:hsql://localhost/schemacrawler";
-  private static final String serverFileStem = "hsqldb.schemacrawler";
-
-  public static boolean initialized;
 
   private final String url;
   private final boolean trace;

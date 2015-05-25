@@ -68,6 +68,14 @@ public abstract class BaseFormatter<O extends BaseTextOptions>
     }
   }
 
+  @Override
+  public void end()
+    throws SchemaCrawlerException
+  {
+    out.flush();
+    out.close();
+  }
+
   protected String columnNullable(final String columnTypeName,
                                   final boolean isNullable)
   {
@@ -98,14 +106,6 @@ public abstract class BaseFormatter<O extends BaseTextOptions>
       return convertForComparison(dbObject.getName()) + "_"
              + Integer.toHexString(dbObject.getLookupKey().hashCode());
     }
-  }
-
-  @Override
-  public void end()
-    throws SchemaCrawlerException
-  {
-    out.flush();
-    out.close();
   }
 
 }
