@@ -23,6 +23,7 @@ package schemacrawler.schema;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Represents a table in the database.
@@ -40,7 +41,7 @@ public interface Table
    *        Name
    * @return Column.
    */
-  Column getColumn(String name);
+  Optional<? extends Column> getColumn(String name);
 
   /**
    * Gets the list of columns in ordinal order.
@@ -64,7 +65,7 @@ public interface Table
    *        Name
    * @return ForeignKey.
    */
-  ForeignKey getForeignKey(String name);
+  Optional<? extends ForeignKey> getForeignKey(String name);
 
   /**
    * Gets the list of foreign keys. Same as calling
@@ -89,7 +90,7 @@ public interface Table
    *        Name
    * @return Index.
    */
-  Index getIndex(String name);
+  Optional<? extends Index> getIndex(String name);
 
   /**
    * Gets the list of indexes.
@@ -112,7 +113,7 @@ public interface Table
    *        Name
    * @return Privilege.
    */
-  Privilege<Table> getPrivilege(String name);
+  Optional<? extends Privilege<Table>> getPrivilege(String name);
 
   /**
    * Gets the list of privileges.
@@ -154,7 +155,7 @@ public interface Table
    *        Name
    * @return Trigger.
    */
-  Trigger getTrigger(String name);
+  Optional<? extends Trigger> getTrigger(String name);
 
   /**
    * Gets the list of triggers.

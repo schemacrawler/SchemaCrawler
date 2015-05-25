@@ -24,6 +24,7 @@ package schemacrawler.crawl;
 import static java.util.Objects.requireNonNull;
 
 import java.util.Collection;
+import java.util.Optional;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
@@ -77,7 +78,7 @@ final class ColumnPartial
   }
 
   @Override
-  public Privilege<Column> getPrivilege(final String name)
+  public Optional<Privilege<Column>> getPrivilege(final String name)
   {
     throw new NotLoadedException();
   }
