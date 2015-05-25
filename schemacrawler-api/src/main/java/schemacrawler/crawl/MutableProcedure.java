@@ -59,17 +59,6 @@ final class MutableProcedure
   /**
    * {@inheritDoc}
    *
-   * @see schemacrawler.schema.Procedure#getColumn(java.lang.String)
-   */
-  @Override
-  public Optional<MutableProcedureColumn> getColumn(final String name)
-  {
-    return columns.lookup(this, name);
-  }
-
-  /**
-   * {@inheritDoc}
-   *
    * @see Procedure#getColumns()
    */
   @Override
@@ -93,6 +82,17 @@ final class MutableProcedure
   public RoutineType getRoutineType()
   {
     return RoutineType.procedure;
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * @see schemacrawler.schema.Procedure#lookupColumn(java.lang.String)
+   */
+  @Override
+  public Optional<MutableProcedureColumn> lookupColumn(final String name)
+  {
+    return columns.lookup(this, name);
   }
 
   void addColumn(final MutableProcedureColumn column)

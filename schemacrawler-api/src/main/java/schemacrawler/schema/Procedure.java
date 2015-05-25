@@ -34,14 +34,18 @@ public interface Procedure
 {
 
   /**
-   * Gets a column by name.
+   * Gets a column by unqualified name.
    *
    * @param name
-   *        Name
-   * @return Column of the procedure
+   *        Unqualified name
+   * @return Column, or null if not found.
    */
+  @Deprecated
   @Override
-  Optional<? extends ProcedureColumn> getColumn(String name);
+  default ProcedureColumn getColumn(final String name)
+  {
+    return lookupColumn(name).orElse(null);
+  }
 
   /**
    * Gets the list of columns in ordinal order.
@@ -58,5 +62,15 @@ public interface Procedure
    */
   @Override
   ProcedureReturnType getReturnType();
+
+  /**
+   * Gets a column by unqualified name.
+   *
+   * @param name
+   *        Name
+   * @return Column of the procedure
+   */
+  @Override
+  Optional<? extends ProcedureColumn> lookupColumn(String name);
 
 }

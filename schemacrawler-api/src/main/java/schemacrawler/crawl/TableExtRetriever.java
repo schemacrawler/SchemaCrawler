@@ -115,7 +115,7 @@ final class TableExtRetriever
 
         final MutableTable table = tableOptional.get();
         final Optional<MutableColumn> columnOptional = table
-          .getColumn(columnName);
+          .lookupColumn(columnName);
         if (!columnOptional.isPresent())
         {
           LOGGER.log(Level.FINE, String
@@ -258,7 +258,8 @@ final class TableExtRetriever
 
         LOGGER.log(Level.FINER, "Retrieving index information: " + indexName);
         final MutableTable table = tableOptional.get();
-        final Optional<MutableIndex> indexOptional = table.getIndex(indexName);
+        final Optional<MutableIndex> indexOptional = table
+          .lookupIndex(indexName);
         if (!indexOptional.isPresent())
         {
           LOGGER.log(Level.FINE, String
@@ -609,7 +610,7 @@ final class TableExtRetriever
       if (privilegesForColumn)
       {
         final Optional<MutableColumn> columnOptional = table
-          .getColumn(columnName);
+          .lookupColumn(columnName);
         if (!columnOptional.isPresent())
         {
           continue;
@@ -630,7 +631,7 @@ final class TableExtRetriever
       if (privilegesForColumn)
       {
         final Optional<MutablePrivilege<Column>> privilegeOptional = column
-          .getPrivilege(privilegeName);
+          .lookupPrivilege(privilegeName);
         privilege = privilegeOptional
           .orElse(new MutablePrivilege<>(new ColumnReference(column),
                                          privilegeName));
@@ -638,7 +639,7 @@ final class TableExtRetriever
       else
       {
         final Optional<MutablePrivilege<Table>> privilegeOptional = table
-          .getPrivilege(privilegeName);
+          .lookupPrivilege(privilegeName);
         privilege = privilegeOptional
           .orElse(new MutablePrivilege<>(new TableReference(table),
                                          privilegeName));
@@ -793,7 +794,7 @@ final class TableExtRetriever
         final MutableTable table = tableOptional.get();
         final String columnName = quotedName(results.getString("COLUMN_NAME"));
         final Optional<MutableColumn> columnOptional = table
-          .getColumn(columnName);
+          .lookupColumn(columnName);
         if (!columnOptional.isPresent())
         {
           LOGGER.log(Level.FINE, String

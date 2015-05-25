@@ -28,13 +28,17 @@ public interface Routine
 {
 
   /**
-   * Gets a column by name.
+   * Gets a column by unqualified name.
    *
    * @param name
-   *        Name
-   * @return Column of the routine
+   *        Unqualified name
+   * @return Column, or null if not found.
    */
-  Optional<? extends RoutineColumn<? extends Routine>> getColumn(String name);
+  @Deprecated
+  default RoutineColumn<? extends Routine> getColumn(final String name)
+  {
+    return lookupColumn(name).orElse(null);
+  }
 
   /**
    * Gets the list of columns in ordinal order.
@@ -70,5 +74,14 @@ public interface Routine
    * @return Specific name.
    */
   String getSpecificName();
+
+  /**
+   * Gets a column by unqualified name.
+   *
+   * @param name
+   *        Unqualified name
+   * @return Column.
+   */
+  Optional<? extends RoutineColumn<? extends Routine>> lookupColumn(String name);
 
 }

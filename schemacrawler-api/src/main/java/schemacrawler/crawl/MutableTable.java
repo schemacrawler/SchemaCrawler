@@ -110,17 +110,6 @@ class MutableTable
   /**
    * {@inheritDoc}
    *
-   * @see schemacrawler.schema.Table#getColumn(java.lang.String)
-   */
-  @Override
-  public Optional<MutableColumn> getColumn(final String name)
-  {
-    return columns.lookup(this, name);
-  }
-
-  /**
-   * {@inheritDoc}
-   *
    * @see Table#getColumns()
    */
   @Override
@@ -154,17 +143,6 @@ class MutableTable
   /**
    * {@inheritDoc}
    *
-   * @see schemacrawler.schema.Table#getForeignKey(java.lang.String)
-   */
-  @Override
-  public Optional<MutableForeignKey> getForeignKey(final String name)
-  {
-    return foreignKeys.lookup(this, name);
-  }
-
-  /**
-   * {@inheritDoc}
-   *
    * @see schemacrawler.schema.Table#getForeignKeys()
    */
   @Override
@@ -177,17 +155,6 @@ class MutableTable
   public Collection<ForeignKey> getImportedForeignKeys()
   {
     return getForeignKeys(TableAssociationType.imported);
-  }
-
-  /**
-   * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Table#getIndex(java.lang.String)
-   */
-  @Override
-  public Optional<MutableIndex> getIndex(final String name)
-  {
-    return indexes.lookup(this, name);
   }
 
   /**
@@ -210,17 +177,6 @@ class MutableTable
   public MutablePrimaryKey getPrimaryKey()
   {
     return primaryKey;
-  }
-
-  /**
-   * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Table#getPrivilege(java.lang.String)
-   */
-  @Override
-  public Optional<MutablePrivilege<Table>> getPrivilege(final String name)
-  {
-    return privileges.lookup(this, name);
   }
 
   /**
@@ -307,17 +263,6 @@ class MutableTable
   /**
    * {@inheritDoc}
    *
-   * @see schemacrawler.schema.Table#getTrigger(java.lang.String)
-   */
-  @Override
-  public Optional<MutableTrigger> getTrigger(final String name)
-  {
-    return lookupTrigger(name);
-  }
-
-  /**
-   * {@inheritDoc}
-   *
    * @see Table#getTriggers()
    */
   @Override
@@ -341,6 +286,63 @@ class MutableTable
   public boolean hasDefinition()
   {
     return definition.length() > 0;
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * @see schemacrawler.schema.Table#lookupColumn(java.lang.String)
+   */
+  @Override
+  public Optional<MutableColumn> lookupColumn(final String name)
+  {
+    return columns.lookup(this, name);
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * @see schemacrawler.schema.Table#lookupForeignKey(java.lang.String)
+   */
+  @Override
+  public Optional<MutableForeignKey> lookupForeignKey(final String name)
+  {
+    return foreignKeys.lookup(this, name);
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * @see schemacrawler.schema.Table#lookupIndex(java.lang.String)
+   */
+  @Override
+  public Optional<MutableIndex> lookupIndex(final String name)
+  {
+    return indexes.lookup(this, name);
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * @see schemacrawler.schema.Table#lookupPrivilege(java.lang.String)
+   */
+  @Override
+  public Optional<MutablePrivilege<Table>> lookupPrivilege(final String name)
+  {
+    return privileges.lookup(this, name);
+  }
+
+  /**
+   * Looks up a trigger by name.
+   *
+   * @param triggerName
+   *        Trigger name
+   * @return Trigger, if found, or null
+   */
+  @Override
+  public Optional<MutableTrigger> lookupTrigger(final String triggerName)
+  {
+    return triggers.lookup(this, triggerName);
   }
 
   void addColumn(final MutableColumn column)
@@ -384,18 +386,6 @@ class MutableTable
   int getSortIndex()
   {
     return sortIndex;
-  }
-
-  /**
-   * Looks up a trigger by name.
-   *
-   * @param triggerName
-   *        Trigger name
-   * @return Trigger, if found, or null
-   */
-  Optional<MutableTrigger> lookupTrigger(final String triggerName)
-  {
-    return triggers.lookup(this, triggerName);
   }
 
   void removeForeignKey(final String fullName)

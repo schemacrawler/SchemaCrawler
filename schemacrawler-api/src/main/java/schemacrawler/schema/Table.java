@@ -35,13 +35,17 @@ public interface Table
 {
 
   /**
-   * Gets a column by name.
+   * Gets a column by unqualified name.
    *
    * @param name
-   *        Name
-   * @return Column.
+   *        Unqualified name
+   * @return Column, or null if not found.
    */
-  Optional<? extends Column> getColumn(String name);
+  @Deprecated
+  default Column getColumn(final String name)
+  {
+    return lookupColumn(name).orElse(null);
+  }
 
   /**
    * Gets the list of columns in ordinal order.
@@ -63,9 +67,13 @@ public interface Table
    *
    * @param name
    *        Name
-   * @return ForeignKey.
+   * @return Foreign key, or null if not found.
    */
-  Optional<? extends ForeignKey> getForeignKey(String name);
+  @Deprecated
+  default ForeignKey getForeignKey(final String name)
+  {
+    return lookupForeignKey(name).orElse(null);
+  }
 
   /**
    * Gets the list of foreign keys. Same as calling
@@ -84,13 +92,17 @@ public interface Table
   Collection<ForeignKey> getImportedForeignKeys();
 
   /**
-   * Gets an index by name.
+   * Gets an index by unqualified name.
    *
    * @param name
    *        Name
-   * @return Index.
+   * @return Index, or null if not found.
    */
-  Optional<? extends Index> getIndex(String name);
+  @Deprecated
+  default Index getIndex(final String name)
+  {
+    return lookupIndex(name).orElse(null);
+  }
 
   /**
    * Gets the list of indexes.
@@ -107,13 +119,17 @@ public interface Table
   PrimaryKey getPrimaryKey();
 
   /**
-   * Gets a privilege by name.
+   * Gets a privilege by unqualified name.
    *
    * @param name
-   *        Name
-   * @return Privilege.
+   *        Unqualified name
+   * @return Privilege, or null if not found.
    */
-  Optional<? extends Privilege<Table>> getPrivilege(String name);
+  @Deprecated
+  default Privilege<Table> getPrivilege(final String name)
+  {
+    return lookupPrivilege(name).orElse(null);
+  }
 
   /**
    * Gets the list of privileges.
@@ -149,13 +165,17 @@ public interface Table
   TableType getTableType();
 
   /**
-   * Gets a trigger by name.
+   * Gets a trigger by unqualified name.
    *
    * @param name
-   *        Name
-   * @return Trigger.
+   *        Unqualified name
+   * @return Trigger, or null if not found.
    */
-  Optional<? extends Trigger> getTrigger(String name);
+  @Deprecated
+  default Trigger getTrigger(final String name)
+  {
+    return lookupTrigger(name).orElse(null);
+  }
 
   /**
    * Gets the list of triggers.
@@ -163,5 +183,50 @@ public interface Table
    * @return Triggers for the table.
    */
   Collection<Trigger> getTriggers();
+
+  /**
+   * Gets a column by unqualified name.
+   *
+   * @param name
+   *        Unqualified name
+   * @return Column.
+   */
+  Optional<? extends Column> lookupColumn(String name);
+
+  /**
+   * Gets a foreign key by name.
+   *
+   * @param name
+   *        Name
+   * @return Foreign key.
+   */
+  Optional<? extends ForeignKey> lookupForeignKey(String name);
+
+  /**
+   * Gets an index by unqualified name.
+   *
+   * @param name
+   *        Name
+   * @return Index.
+   */
+  Optional<? extends Index> lookupIndex(String name);
+
+  /**
+   * Gets a privilege by unqualified name.
+   *
+   * @param name
+   *        Name
+   * @return Privilege.
+   */
+  Optional<? extends Privilege<Table>> lookupPrivilege(String name);
+
+  /**
+   * Gets a trigger by unqualified name.
+   *
+   * @param name
+   *        Name
+   * @return Trigger.
+   */
+  Optional<? extends Trigger> lookupTrigger(String name);
 
 }
