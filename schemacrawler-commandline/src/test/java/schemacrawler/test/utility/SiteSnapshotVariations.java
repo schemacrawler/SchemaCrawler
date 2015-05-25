@@ -50,8 +50,7 @@ public class SiteSnapshotVariations
   extends BaseDatabaseTest
 {
 
-  @Rule
-  public TestRule rule = new SiteVariationsGenerationRule();
+  private static Path directory;
 
   @BeforeClass
   public static void setupDirectory()
@@ -65,7 +64,8 @@ public class SiteSnapshotVariations
       .normalize().toAbsolutePath();
   }
 
-  private static Path directory;
+  @Rule
+  public TestRule rule = new SiteVariationsGenerationRule();
 
   @Test
   public void snapshots()

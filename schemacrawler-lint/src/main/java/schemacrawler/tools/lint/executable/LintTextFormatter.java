@@ -60,9 +60,9 @@ final class LintTextFormatter
       formattingHelper.writeObjectStart();
 
       formattingHelper.writeObjectNameRow("",
-                                           "Database",
-                                           "[database]",
-                                           Color.white);
+                                          "Database",
+                                          "[database]",
+                                          Color.white);
 
       printLints(lints);
       formattingHelper.writeObjectEnd();
@@ -87,9 +87,9 @@ final class LintTextFormatter
 
       final String tableType = "[" + table.getTableType() + "]";
       formattingHelper.writeObjectNameRow(nodeId(table),
-                                           table.getFullName(),
-                                           tableType,
-                                           colorMap.getColor(table));
+                                          table.getFullName(),
+                                          tableType,
+                                          colorMap.getColor(table));
       printLints(lints);
       formattingHelper.writeObjectEnd();
     }
@@ -149,8 +149,8 @@ final class LintTextFormatter
         else
         {
           formattingHelper.writeRow("",
-                                     lint.getMessage(),
-                                     lint.getValueAsString());
+                                    lint.getMessage(),
+                                    lint.getValueAsString());
         }
       }
     }

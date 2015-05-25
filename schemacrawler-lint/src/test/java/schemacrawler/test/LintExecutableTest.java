@@ -43,12 +43,12 @@ public class LintExecutableTest
   extends BaseExecutableTest
 {
 
+  private static final String CONFIG_LINTER_CONFIGS_FILE = "schemacrawer.linter_configs.file";
+
   private static void removeLinterConfig()
   {
     System.getProperties().remove(CONFIG_LINTER_CONFIGS_FILE);
   }
-
-  private static final String CONFIG_LINTER_CONFIGS_FILE = "schemacrawer.linter_configs.file";
 
   @Before
   public void before()

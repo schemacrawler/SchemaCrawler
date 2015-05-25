@@ -48,6 +48,9 @@ public final class DatabaseConnectorRegistry
   implements Iterable<String>
 {
 
+  private static final Logger LOGGER = Logger
+    .getLogger(DatabaseConnectorRegistry.class.getName());
+
   private static Map<String, DatabaseConnector> loadDatabaseConnectorRegistry()
     throws SchemaCrawlerException
   {
@@ -90,9 +93,6 @@ public final class DatabaseConnectorRegistry
 
     return databaseConnectorRegistry;
   }
-
-  private static final Logger LOGGER = Logger
-    .getLogger(DatabaseConnectorRegistry.class.getName());
 
   private final Map<String, DatabaseConnector> databaseConnectorRegistry;
 
