@@ -27,6 +27,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Collection;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -130,21 +131,21 @@ final class SynonymRetriever
           continue;
         }
 
-        final MutableTable referencedTable = lookupTable(referencedObjectCatalogName,
-                                                         referencedObjectSchemaName,
-                                                         referencedObjectName);
-        final MutableRoutine referencedRoutine = lookupRoutine(referencedObjectCatalogName,
-                                                               referencedObjectSchemaName,
-                                                               referencedObjectName,
-                                                               referencedObjectName);
+        final Optional<MutableTable> referencedTable = lookupTable(referencedObjectCatalogName,
+                                                                   referencedObjectSchemaName,
+                                                                   referencedObjectName);
+        final Optional<MutableRoutine> referencedRoutine = lookupRoutine(referencedObjectCatalogName,
+                                                                         referencedObjectSchemaName,
+                                                                         referencedObjectName,
+                                                                         referencedObjectName);
         final DatabaseObject referencedObject;
-        if (referencedTable != null)
+        if (referencedTable.isPresent())
         {
-          referencedObject = referencedTable;
+          referencedObject = referencedTable.get();
         }
-        else if (referencedRoutine != null)
+        else if (referencedRoutine.isPresent())
         {
-          referencedObject = referencedRoutine;
+          referencedObject = referencedRoutine.get();
         }
         else
         {

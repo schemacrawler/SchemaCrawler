@@ -28,6 +28,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -105,8 +106,8 @@ final class MutableCatalog
    * @see schemacrawler.schema.Schema#getColumnDataType(java.lang.String)
    */
   @Override
-  public MutableColumnDataType getColumnDataType(final Schema schema,
-                                                 final String name)
+  public Optional<MutableColumnDataType> getColumnDataType(final Schema schema,
+                                                           final String name)
   {
     return columnDataTypes.lookup(schema, name);
   }
@@ -162,7 +163,8 @@ final class MutableCatalog
    * {@inheritDoc}
    */
   @Override
-  public Routine getRoutine(final Schema schema, final String name)
+  public Optional<MutableRoutine> getRoutine(final Schema schema,
+                                             final String name)
   {
     return routines.lookup(schema, name);
   }
@@ -198,10 +200,10 @@ final class MutableCatalog
    * @see schemacrawler.schema.Catalog#getSchema(java.lang.String)
    */
   @Override
-  public Schema getSchema(final String name)
+  public Optional<Schema> getSchema(final String name)
   {
     return schemas.stream().filter(schema -> schema.getFullName().equals(name))
-      .findFirst().orElse(null);
+      .findFirst();
   }
 
   /**
@@ -235,7 +237,8 @@ final class MutableCatalog
    *      java.lang.String)
    */
   @Override
-  public MutableSequence getSequence(final Schema schemaRef, final String name)
+  public Optional<MutableSequence> getSequence(final Schema schemaRef,
+                                               final String name)
   {
     return sequences.lookup(schemaRef, name);
   }
@@ -271,7 +274,8 @@ final class MutableCatalog
    *      java.lang.String)
    */
   @Override
-  public MutableSynonym getSynonym(final Schema schemaRef, final String name)
+  public Optional<MutableSynonym> getSynonym(final Schema schemaRef,
+                                             final String name)
   {
     return synonyms.lookup(schemaRef, name);
   }
@@ -306,7 +310,7 @@ final class MutableCatalog
    * @see schemacrawler.schema.Catalog#getSystemColumnDataType(java.lang.String)
    */
   @Override
-  public MutableColumnDataType getSystemColumnDataType(final String name)
+  public Optional<MutableColumnDataType> getSystemColumnDataType(final String name)
   {
     return getColumnDataType(new SchemaReference(), name);
   }
@@ -328,7 +332,8 @@ final class MutableCatalog
    * @see schemacrawler.schema.Schema#getTable(java.lang.String)
    */
   @Override
-  public MutableTable getTable(final Schema schemaRef, final String name)
+  public Optional<MutableTable> getTable(final Schema schemaRef,
+                                         final String name)
   {
     return tables.lookup(schemaRef, name);
   }

@@ -27,6 +27,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import schemacrawler.schema.Column;
@@ -112,7 +113,7 @@ class MutableTable
    * @see schemacrawler.schema.Table#getColumn(java.lang.String)
    */
   @Override
-  public MutableColumn getColumn(final String name)
+  public Optional<MutableColumn> getColumn(final String name)
   {
     return columns.lookup(this, name);
   }
@@ -156,7 +157,7 @@ class MutableTable
    * @see schemacrawler.schema.Table#getForeignKey(java.lang.String)
    */
   @Override
-  public MutableForeignKey getForeignKey(final String name)
+  public Optional<MutableForeignKey> getForeignKey(final String name)
   {
     return foreignKeys.lookup(this, name);
   }
@@ -184,7 +185,7 @@ class MutableTable
    * @see schemacrawler.schema.Table#getIndex(java.lang.String)
    */
   @Override
-  public MutableIndex getIndex(final String name)
+  public Optional<MutableIndex> getIndex(final String name)
   {
     return indexes.lookup(this, name);
   }
@@ -217,7 +218,7 @@ class MutableTable
    * @see schemacrawler.schema.Table#getPrivilege(java.lang.String)
    */
   @Override
-  public MutablePrivilege<Table> getPrivilege(final String name)
+  public Optional<MutablePrivilege<Table>> getPrivilege(final String name)
   {
     return privileges.lookup(this, name);
   }
@@ -309,7 +310,7 @@ class MutableTable
    * @see schemacrawler.schema.Table#getTrigger(java.lang.String)
    */
   @Override
-  public MutableTrigger getTrigger(final String name)
+  public Optional<MutableTrigger> getTrigger(final String name)
   {
     return lookupTrigger(name);
   }
@@ -392,7 +393,7 @@ class MutableTable
    *        Trigger name
    * @return Trigger, if found, or null
    */
-  MutableTrigger lookupTrigger(final String triggerName)
+  Optional<MutableTrigger> lookupTrigger(final String triggerName)
   {
     return triggers.lookup(this, triggerName);
   }
@@ -410,9 +411,11 @@ class MutableTable
     }
 
     final String primaryKeyName = primaryKey.getName();
-    final MutableIndex index = indexes.lookup(this, primaryKeyName);
-    if (index != null)
+    final Optional<MutableIndex> indexOptional = indexes.lookup(this,
+                                                                primaryKeyName);
+    if (indexOptional.isPresent())
     {
+      final MutableIndex index = indexOptional.get();
       boolean indexHasPkColumns = false;
       final List<IndexColumn> pkColumns = primaryKey.getColumns();
       final List<IndexColumn> indexColumns = index.getColumns();

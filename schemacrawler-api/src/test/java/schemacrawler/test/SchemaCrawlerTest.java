@@ -77,14 +77,14 @@ public class SchemaCrawlerTest
 
     final Catalog catalog = getCatalog(schemaCrawlerOptions);
     assertNotNull(catalog);
-    final Schema schema = catalog.getSchema("PUBLIC.BOOKS");
+    final Schema schema = catalog.getSchema("PUBLIC.BOOKS").get();
     assertNotNull(schema);
-    final Table table = catalog.getTable(schema, "AUTHORS");
+    final Table table = catalog.getTable(schema, "AUTHORS").get();
     assertNotNull(table);
-    assertNull(table.getColumn(null));
-    assertNull(table.getColumn(""));
-    assertNull(table.getColumn("NO_COLUMN"));
-    assertNotNull(table.getColumn("ID"));
+    assertNull(table.getColumn(null).orElse(null));
+    assertNull(table.getColumn("").orElse(null));
+    assertNull(table.getColumn("NO_COLUMN").orElse(null));
+    assertNotNull(table.getColumn("ID").orElse(null));
   }
 
   @Test
@@ -266,7 +266,7 @@ public class SchemaCrawlerTest
       schemaCrawlerOptions.setSequenceInclusionRule(new IncludeAll());
 
       final Catalog catalog = getCatalog(schemaCrawlerOptions);
-      final Schema schema = catalog.getSchema("PUBLIC.BOOKS");
+      final Schema schema = catalog.getSchema("PUBLIC.BOOKS").get();
       assertNotNull("BOOKS Schema not found", schema);
       final Sequence[] sequences = catalog.getSequences(schema)
         .toArray(new Sequence[0]);
@@ -326,7 +326,7 @@ public class SchemaCrawlerTest
       schemaCrawlerOptions.setSynonymInclusionRule(new IncludeAll());
 
       final Catalog catalog = getCatalog(schemaCrawlerOptions);
-      final Schema schema = catalog.getSchema("PUBLIC.BOOKS");
+      final Schema schema = catalog.getSchema("PUBLIC.BOOKS").get();
       assertNotNull("BOOKS Schema not found", schema);
       final Synonym[] synonyms = catalog.getSynonyms(schema)
         .toArray(new Synonym[0]);
@@ -473,8 +473,11 @@ public class SchemaCrawlerTest
       {
         final String tableName2 = tableNames[j];
         assertEquals(tableName1 + " <--> " + tableName2,
-                     Math.signum(catalog.getTable(schema, tableName1)
-                       .compareTo(catalog.getTable(schema, tableName2))),
+                     Math.signum(catalog
+                       .getTable(schema, tableName1)
+                       .orElse(null)
+                       .compareTo(catalog.getTable(schema, tableName2)
+                         .orElse(null))),
                      Math.signum(i - j),
                      1e-100);
       }
@@ -552,7 +555,7 @@ public class SchemaCrawlerTest
 
     final Catalog catalog = getCatalog(schemaCrawlerOptions);
     final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
-    final View view = (View) catalog.getTable(schema, "AUTHORSLIST");
+    final View view = (View) catalog.getTable(schema, "AUTHORSLIST").get();
     assertNotNull("View not found", view);
     assertNotNull("View definition not found", view.getDefinition());
     assertFalse("View definition not found", view.getDefinition().trim()

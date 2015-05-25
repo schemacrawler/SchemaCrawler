@@ -22,6 +22,7 @@ package schemacrawler.schema;
 
 
 import java.util.Collection;
+import java.util.Optional;
 
 /**
  * Represents a column in a database table or routine.
@@ -46,7 +47,7 @@ public interface Column
    *        Name
    * @return Privilege.
    */
-  Privilege<Column> getPrivilege(String name);
+  Optional<? extends Privilege<Column>> getPrivilege(String name);
 
   /**
    * Gets the list of privileges for the table.

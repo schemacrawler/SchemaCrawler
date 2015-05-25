@@ -23,6 +23,7 @@ package schemacrawler.crawl;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Optional;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Privilege;
@@ -72,7 +73,7 @@ class MutableColumn
    * @see schemacrawler.schema.Column#getPrivilege(java.lang.String)
    */
   @Override
-  public MutablePrivilege<Column> getPrivilege(final String name)
+  public Optional<MutablePrivilege<Column>> getPrivilege(final String name)
   {
     return privileges.lookup(this, name);
   }

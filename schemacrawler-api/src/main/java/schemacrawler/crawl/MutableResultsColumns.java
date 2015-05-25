@@ -24,6 +24,7 @@ package schemacrawler.crawl;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 import schemacrawler.schema.ResultsColumn;
 import schemacrawler.schema.ResultsColumns;
@@ -53,7 +54,7 @@ class MutableResultsColumns
    * @see schemacrawler.schema.ResultsColumns#getColumn(java.lang.String)
    */
   @Override
-  public ResultsColumn getColumn(final String name)
+  public Optional<MutableResultsColumn> getColumn(final String name)
   {
     return columns.lookup(name);
   }

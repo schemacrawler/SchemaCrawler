@@ -24,6 +24,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Optional;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ColumnDataType;
@@ -78,7 +79,8 @@ public abstract class BaseCatalogDecorator
   }
 
   @Override
-  public ColumnDataType getColumnDataType(final Schema schema, final String name)
+  public Optional<? extends ColumnDataType> getColumnDataType(final Schema schema,
+                                                              final String name)
   {
     return catalog.getColumnDataType(schema, name);
   }
@@ -138,7 +140,8 @@ public abstract class BaseCatalogDecorator
   }
 
   @Override
-  public Routine getRoutine(final Schema schema, final String name)
+  public Optional<? extends Routine> getRoutine(final Schema schema,
+                                                final String name)
   {
     return catalog.getRoutine(schema, name);
   }
@@ -156,7 +159,7 @@ public abstract class BaseCatalogDecorator
   }
 
   @Override
-  public Schema getSchema(final String name)
+  public Optional<? extends Schema> getSchema(final String name)
   {
     return catalog.getSchema(name);
   }
@@ -181,7 +184,8 @@ public abstract class BaseCatalogDecorator
    *      java.lang.String)
    */
   @Override
-  public Sequence getSequence(final Schema schema, final String name)
+  public Optional<? extends Sequence> getSequence(final Schema schema,
+                                                  final String name)
   {
     return catalog.getSequence(schema, name);
   }
@@ -208,7 +212,8 @@ public abstract class BaseCatalogDecorator
   }
 
   @Override
-  public Synonym getSynonym(final Schema schema, final String name)
+  public Optional<? extends Synonym> getSynonym(final Schema schema,
+                                                final String name)
   {
     return catalog.getSynonym(schema, name);
   }
@@ -226,7 +231,7 @@ public abstract class BaseCatalogDecorator
   }
 
   @Override
-  public ColumnDataType getSystemColumnDataType(final String name)
+  public Optional<? extends ColumnDataType> getSystemColumnDataType(final String name)
   {
     return catalog.getSystemColumnDataType(name);
   }
@@ -238,7 +243,8 @@ public abstract class BaseCatalogDecorator
   }
 
   @Override
-  public Table getTable(final Schema schema, final String name)
+  public Optional<? extends Table> getTable(final Schema schema,
+                                            final String name)
   {
     return catalog.getTable(schema, name);
   }

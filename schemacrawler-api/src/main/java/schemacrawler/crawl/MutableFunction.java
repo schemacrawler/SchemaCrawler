@@ -25,6 +25,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import schemacrawler.schema.Function;
 import schemacrawler.schema.FunctionColumn;
@@ -64,7 +65,7 @@ final class MutableFunction
    * @see schemacrawler.schema.Function#getColumn(java.lang.String)
    */
   @Override
-  public MutableFunctionColumn getColumn(final String name)
+  public Optional<MutableFunctionColumn> getColumn(final String name)
   {
     return columns.lookup(this, name);
   }
