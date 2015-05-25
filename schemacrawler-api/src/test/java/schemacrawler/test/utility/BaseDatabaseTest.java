@@ -38,6 +38,14 @@ import sf.util.Utility;
 public abstract class BaseDatabaseTest
 {
 
+  private final static DatabaseConnectionOptions connectionOptions;
+
+  static
+  {
+    connectionOptions = createConnectionOptions();
+    TestDatabase.initialize();
+  }
+
   @BeforeClass
   public static void setApplicationLogLevel()
     throws Exception
@@ -68,14 +76,6 @@ public abstract class BaseDatabaseTest
       System.exit(1);
       return null;
     }
-  }
-
-  private final static DatabaseConnectionOptions connectionOptions;
-
-  static
-  {
-    connectionOptions = createConnectionOptions();
-    TestDatabase.initialize();
   }
 
   protected Catalog getCatalog(final SchemaCrawlerOptions schemaCrawlerOptions)

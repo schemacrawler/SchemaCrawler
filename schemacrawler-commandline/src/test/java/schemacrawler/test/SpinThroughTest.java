@@ -36,13 +36,6 @@ public class SpinThroughTest
   extends BaseDatabaseTest
 {
 
-  @BeforeClass
-  public static void clean()
-    throws Exception
-  {
-    TestUtility.clean(SPIN_THROUGH_OUTPUT);
-  }
-
   private static final String SPIN_THROUGH_OUTPUT = "spin_through_output/";
 
   private static final OutputFormat[] outputFormats = new OutputFormat[] {
@@ -52,6 +45,14 @@ public class SpinThroughTest
       GraphOutputFormat.htmlx,
       GraphOutputFormat.scdot
   };
+
+  @BeforeClass
+  public static void clean()
+    throws Exception
+  {
+    TestUtility.clean(SPIN_THROUGH_OUTPUT);
+  }
+
   private Path hsqldbProperties;
 
   @Before

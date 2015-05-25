@@ -52,6 +52,11 @@ public final class VelocityRenderer
   extends BaseStagedExecutable
 {
 
+  static final String COMMAND = "velocity";
+
+  private static final Logger LOGGER = Logger.getLogger(VelocityRenderer.class
+    .getName());
+
   private static void setVelocityResourceLoaderProperty(final Properties p,
                                                         final String resourceLoaderName,
                                                         final String resourceLoaderPropertyName,
@@ -61,11 +66,6 @@ public final class VelocityRenderer
                       + "." + resourceLoaderPropertyName,
                   resourceLoaderPropertyValue);
   }
-
-  static final String COMMAND = "velocity";
-
-  private static final Logger LOGGER = Logger.getLogger(VelocityRenderer.class
-    .getName());
 
   public VelocityRenderer()
   {

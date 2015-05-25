@@ -53,11 +53,11 @@ public class DatabaseSystemConnector
     }
   }
 
+  protected static final DatabaseSystemConnector UNKNOWN = new DatabaseSystemConnector();
   private final DatabaseServerType dbServerType;
   private final String configResource;
-  private final String informationSchemaViewsResourceFolder;
 
-  protected static final DatabaseSystemConnector UNKNOWN = new DatabaseSystemConnector();
+  private final String informationSchemaViewsResourceFolder;
 
   protected DatabaseSystemConnector(final DatabaseServerType dbServerType,
                                     final String configResource,

@@ -240,7 +240,7 @@ final class DataTextFormatter
     if (operation != null)
     {
       formattingHelper.writeHeader(DocumentHeaderType.subTitle,
-                                    operation.getDescription());
+                                   operation.getDescription());
     }
     else
     {
@@ -251,9 +251,9 @@ final class DataTextFormatter
     {
       formattingHelper.writeObjectStart();
       formattingHelper.writeObjectNameRow("",
-                                           operation.getDescription(),
-                                           "",
-                                           Color.white);
+                                          operation.getDescription(),
+                                          "",
+                                          Color.white);
     }
   }
 }

@@ -51,6 +51,9 @@ public class LinterConfigs
   implements Iterable<LinterConfig>
 {
 
+  private static final Logger LOGGER = Logger.getLogger(LinterConfig.class
+    .getName());
+
   private static Element getSubElement(final Element element,
                                        final String tagName)
   {
@@ -176,9 +179,6 @@ public class LinterConfigs
     final Document dom = db.parse(xmlStream);
     return dom;
   }
-
-  private static final Logger LOGGER = Logger.getLogger(LinterConfig.class
-    .getName());
 
   private final Map<String, LinterConfig> linterConfigsMap;
 

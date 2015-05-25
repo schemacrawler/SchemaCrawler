@@ -254,7 +254,10 @@ public final class SchemaCrawlerOptionsParser
     {
       final boolean hideEmptyTables = config.getBooleanValue("hideemptytables",
                                                              true);
-      if (hideEmptyTables) optionsBuilder.hideEmptyTables();
+      if (hideEmptyTables)
+      {
+        optionsBuilder.hideEmptyTables();
+      }
       consumeOption("hideemptytables");
     }
 

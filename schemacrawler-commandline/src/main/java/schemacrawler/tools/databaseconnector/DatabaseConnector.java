@@ -31,13 +31,13 @@ import schemacrawler.tools.options.DatabaseServerType;
 public abstract class DatabaseConnector
 {
 
-  private final DatabaseServerType dbServerType;
-  private final String connectionHelpResource;
-  private final DatabaseSystemConnector dbSystemConnector;
-
   protected static final DatabaseConnector UNKNOWN = new DatabaseConnector()
   {
   };
+  private final DatabaseServerType dbServerType;
+  private final String connectionHelpResource;
+
+  private final DatabaseSystemConnector dbSystemConnector;
 
   protected DatabaseConnector(final DatabaseServerType dbServerType,
                               final String connectionHelpResource,
