@@ -11,7 +11,17 @@
       ]]></action>  
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         New -title command-line argument to show a custom title on output and diagrams.
-      ]]></action>                                              
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Methods to get database objects by name are renamed to lookup, and return Optional. This
+        allows calling code to handle nulls.
+      ]]></action>      
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Sequences are color-coded by  schema like the rest of the database objects.
+      ]]></action>  
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Rename indices to indexes consistently in method names.
+      ]]></action>                                                           
      </release>   
      <release version="12.06.03" date="2015-03-27" description="Fixing links on website.">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
