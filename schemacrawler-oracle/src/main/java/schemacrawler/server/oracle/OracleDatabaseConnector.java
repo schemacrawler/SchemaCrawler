@@ -30,9 +30,6 @@ public final class OracleDatabaseConnector
   extends DatabaseConnector
 {
 
-  private static final DatabaseServerType ORACLE_SERVER_TYPE = new DatabaseServerType("oracle",
-                                                                                      "Oracle");
-
   private static final class OracleDatabaseSystemConnector
     extends DatabaseSystemConnector
   {
@@ -51,6 +48,9 @@ public final class OracleDatabaseConnector
       return new OraclePreExecutable();
     }
   }
+
+  private static final DatabaseServerType ORACLE_SERVER_TYPE = new DatabaseServerType("oracle",
+                                                                                      "Oracle");
 
   public OracleDatabaseConnector()
   {
