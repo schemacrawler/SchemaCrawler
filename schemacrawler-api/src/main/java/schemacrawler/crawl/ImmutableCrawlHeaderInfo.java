@@ -40,6 +40,8 @@ final class ImmutableCrawlHeaderInfo
   implements CrawlHeaderInfo
 {
 
+  private static final long serialVersionUID = 5982990326485881993L;
+
   private final String schemaCrawlerInfo;
   private final String jdbcDriverInfo;
   private final String databaseInfo;

@@ -37,7 +37,7 @@ public final class SQLiteDatabaseConnector
     {
       Class.forName("org.sqlite.JDBC");
     }
-    catch (ClassNotFoundException e)
+    catch (final ClassNotFoundException e)
     {
       throw new RuntimeException("Could not load SQLite JDBC driver", e);
     }
