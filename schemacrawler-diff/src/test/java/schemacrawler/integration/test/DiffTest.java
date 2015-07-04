@@ -22,7 +22,6 @@ import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
 
 import java.nio.file.Path;
 import java.util.Arrays;
-import java.util.Collection;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -53,49 +52,6 @@ public class DiffTest
 
   @Rule
   public TestName testName = new TestName();
-
-  @Test
-  public void diffTables()
-    throws Exception
-  {
-    final Catalog catalog1 = getCatalog("/test1.db");
-    final Catalog catalog2 = getCatalog("/test2.db");
-
-    final Collection<Table> tables1 = catalog1.getTables();
-    final Collection<Table> tables2 = catalog2.getTables();
-
-    final String currentMethodFullName = testName.currentMethodFullName();
-
-    final SchemaCrawlerDifferBuilder objectDifferBuilder = new SchemaCrawlerDifferBuilder();
-
-    try (final TestWriter out = new TestWriter("text");)
-    {
-      final DiffNode diff = objectDifferBuilder.build().compare(tables1,
-                                                                tables2);
-      diff.visit((node, visit) -> {
-        final State nodeState = node.getState();
-        final boolean print = DatabaseObject.class
-          .isAssignableFrom(node.getValueType());
-
-        if (print)
-        {
-          out.println(node.getPath() + " (" + nodeState + ")");
-        }
-
-        if (Table.class.isAssignableFrom(node.getValueType())
-            && nodeState != State.CHANGED)
-        {
-          visit.dontGoDeeper();
-        }
-        if (Column.class.isAssignableFrom(node.getValueType()))
-        {
-          visit.dontGoDeeper();
-        }
-      });
-
-      out.assertEquals(currentMethodFullName);
-    }
-  }
 
   @Test
   public void printColumns1()
@@ -156,6 +112,46 @@ public class DiffTest
           }
         }
       }
+
+      out.assertEquals(currentMethodFullName);
+    }
+  }
+
+  @Test
+  public void diffCatalog()
+    throws Exception
+  {
+    final Catalog catalog1 = getCatalog("/test1.db");
+    final Catalog catalog2 = getCatalog("/test2.db");
+
+    final String currentMethodFullName = testName.currentMethodFullName();
+
+    final SchemaCrawlerDifferBuilder objectDifferBuilder = new SchemaCrawlerDifferBuilder();
+
+    try (final TestWriter out = new TestWriter("text");)
+    {
+      final DiffNode diff = objectDifferBuilder.build().compare(catalog1,
+                                                                catalog2);
+      diff.visit((node, visit) -> {
+        final State nodeState = node.getState();
+        final boolean print = DatabaseObject.class
+          .isAssignableFrom(node.getValueType());
+
+        if (print)
+        {
+          out.println(node.getPath() + " (" + nodeState + ")");
+        }
+
+        if (Table.class.isAssignableFrom(node.getValueType())
+            && nodeState != State.CHANGED)
+        {
+          visit.dontGoDeeper();
+        }
+        if (Column.class.isAssignableFrom(node.getValueType()))
+        {
+          visit.dontGoDeeper();
+        }
+      });
 
       out.assertEquals(currentMethodFullName);
     }
