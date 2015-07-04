@@ -1,0 +1,5 @@
+/columnDataTypes[CLOB] (ADDED)
+/systemColumnDataTypes[CLOB] (ADDED)
+/tables[Extra] (REMOVED)
+/tables[BookAuthors] (CHANGED)
+/tables[BookAuthors]/columns[BookAuthors.UPDATE] (ADDED)
