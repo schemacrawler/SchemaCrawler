@@ -33,6 +33,11 @@
     </dependency>
     <dependency>
       <groupId>us.fatehi</groupId>
+      <artifactId>schemacrawler-tools</artifactId>
+      <version>${project.version}</version>
+    </dependency>    
+    <dependency>
+      <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-sqlite</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>

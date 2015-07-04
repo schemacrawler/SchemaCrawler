@@ -5,12 +5,11 @@ CREATE TABLE Authors
   LastName VARCHAR(20) NOT NULL,
   Address1 VARCHAR(255),
   Address2 VARCHAR(255),
-  City VARCHAR(255),
+  City VARCHAR(50),
   State VARCHAR(2),
   PostalCode VARCHAR(10),
   Country VARCHAR(50),
-  CONSTRAINT PK_Authors PRIMARY KEY (Id),
-  CONSTRAINT CHECK_UPPERCASE_State CHECK (State=UPPER(State))
+  CONSTRAINT PK_Authors PRIMARY KEY (Id)
 )
 ;
 
@@ -18,7 +17,7 @@ CREATE TABLE Books
 (
   Id INTEGER NOT NULL,
   Title VARCHAR(255) NOT NULL,
-  Description VARCHAR(255),
+  Description VARCHAR(512),
   PublisherId INTEGER NOT NULL,
   PublicationDate DATE,
   Price FLOAT,
