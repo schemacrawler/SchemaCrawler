@@ -91,10 +91,8 @@ final class DatabaseInfoRetriever
   {
     final Class<?> returnType = method.getReturnType();
     final boolean isDatabasePropertyListMethod = returnType
-      .equals(String.class)
-                                                 && method.getName()
-                                                   .endsWith("s")
-                                                 && method.getParameterTypes().length == 0;
+      .equals(String.class) && method.getName()
+        .endsWith("s") && method.getParameterTypes().length == 0;
     return isDatabasePropertyListMethod;
   }
 
@@ -124,16 +122,16 @@ final class DatabaseInfoRetriever
   private static boolean isDatabasePropertyResultSetType(final Method method)
   {
     final String[] databasePropertyResultSetTypes = new String[] {
-        "deletesAreDetected",
-        "insertsAreDetected",
-        "updatesAreDetected",
-        "othersDeletesAreVisible",
-        "othersInsertsAreVisible",
-        "othersUpdatesAreVisible",
-        "ownDeletesAreVisible",
-        "ownInsertsAreVisible",
-        "ownUpdatesAreVisible",
-        "supportsResultSetType"
+                                                                   "deletesAreDetected",
+                                                                   "insertsAreDetected",
+                                                                   "updatesAreDetected",
+                                                                   "othersDeletesAreVisible",
+                                                                   "othersInsertsAreVisible",
+                                                                   "othersUpdatesAreVisible",
+                                                                   "ownDeletesAreVisible",
+                                                                   "ownInsertsAreVisible",
+                                                                   "ownUpdatesAreVisible",
+                                                                   "supportsResultSetType"
     };
     final boolean isDatabasePropertyResultSetType = Arrays
       .binarySearch(databasePropertyResultSetTypes, method.getName()) >= 0;
@@ -144,7 +142,8 @@ final class DatabaseInfoRetriever
                                                                          final Method method,
                                                                          final int resultSetType,
                                                                          final String resultSetTypeName)
-    throws IllegalAccessException, InvocationTargetException
+                                                                           throws IllegalAccessException,
+                                                                           InvocationTargetException
   {
     final String name = method.getName() + "For" + resultSetTypeName
                         + "ResultSets";
@@ -156,7 +155,7 @@ final class DatabaseInfoRetriever
 
   DatabaseInfoRetriever(final RetrieverConnection retrieverConnection,
                         final MutableCatalog catalog)
-    throws SQLException
+                          throws SQLException
   {
     super(retrieverConnection, catalog);
   }
@@ -193,8 +192,8 @@ final class DatabaseInfoRetriever
           }
           final String value = (String) method.invoke(dbMetaData);
           final String[] list = value == null? new String[0]: value.split(",");
-          dbProperties
-            .add(new ImmutableDatabaseProperty(method.getName(), list));
+          dbProperties.add(new ImmutableDatabaseProperty(method.getName(),
+                                                         Arrays.asList(list)));
         }
         else if (isDatabasePropertyMethod(method))
         {
@@ -204,8 +203,8 @@ final class DatabaseInfoRetriever
                        "Retrieving database property using method: " + method);
           }
           final Object value = method.invoke(dbMetaData);
-          dbProperties.add(new ImmutableDatabaseProperty(method.getName(),
-                                                         value));
+          dbProperties
+            .add(new ImmutableDatabaseProperty(method.getName(), value));
         }
         else if (isDatabasePropertiesResultSetMethod(method))
         {
@@ -217,9 +216,8 @@ final class DatabaseInfoRetriever
           final ResultSet results = (ResultSet) method.invoke(dbMetaData);
           final List<String> resultsList = RetrieverUtility
             .readResultsVector(results);
-          dbProperties
-            .add(new ImmutableDatabaseProperty(method.getName(), resultsList
-              .toArray(new String[resultsList.size()])));
+          dbProperties.add(new ImmutableDatabaseProperty(method
+            .getName(), resultsList.toArray(new String[resultsList.size()])));
         }
         else if (isDatabasePropertyResultSetType(method))
         {
@@ -228,11 +226,10 @@ final class DatabaseInfoRetriever
             LOGGER.log(Level.FINER,
                        "Retrieving database property using method: " + method);
           }
-          dbProperties
-            .add(retrieveResultSetTypeProperty(dbMetaData,
-                                               method,
-                                               ResultSet.TYPE_FORWARD_ONLY,
-                                               "TYPE_FORWARD_ONLY"));
+          dbProperties.add(retrieveResultSetTypeProperty(dbMetaData,
+                                                         method,
+                                                         ResultSet.TYPE_FORWARD_ONLY,
+                                                         "TYPE_FORWARD_ONLY"));
           dbProperties
             .add(retrieveResultSetTypeProperty(dbMetaData,
                                                method,
@@ -302,8 +299,9 @@ final class DatabaseInfoRetriever
       }
       catch (final SQLException e)
       {
-        LOGGER
-          .log(Level.WARNING, "Could not obtain JDBC driver information", e);
+        LOGGER.log(Level.WARNING,
+                   "Could not obtain JDBC driver information",
+                   e);
       }
     }
 
@@ -395,16 +393,17 @@ final class DatabaseInfoRetriever
       {
         final String typeName = results.getString("TYPE_NAME");
         final int dataType = results.getInt("DATA_TYPE", 0);
-        LOGGER.log(Level.FINER, String
-          .format("Retrieving data type: %s (with type id %d)",
-                  typeName,
-                  dataType));
+        LOGGER.log(Level.FINER,
+                   String.format("Retrieving data type: %s (with type id %d)",
+                                 typeName,
+                                 dataType));
         final long precision = results.getLong("PRECISION", 0L);
         final String literalPrefix = results.getString("LITERAL_PREFIX");
         final String literalSuffix = results.getString("LITERAL_SUFFIX");
         final String createParameters = results.getString("CREATE_PARAMS");
         final boolean isNullable = results
-          .getInt("NULLABLE", DatabaseMetaData.typeNullableUnknown) == DatabaseMetaData.typeNullable;
+          .getInt("NULLABLE",
+                  DatabaseMetaData.typeNullableUnknown) == DatabaseMetaData.typeNullable;
         final boolean isCaseSensitive = results.getBoolean("CASE_SENSITIVE");
         final SearchableType searchable = SearchableType.valueOf(results
           .getInt("SEARCHABLE", SearchableType.unknown.ordinal()));
@@ -457,7 +456,7 @@ final class DatabaseInfoRetriever
 
   void retrieveUserDefinedColumnDataTypes(final String catalogName,
                                           final String schemaName)
-    throws SQLException
+                                            throws SQLException
   {
 
     try (final MetadataResultSet results = new MetadataResultSet(getMetaData()

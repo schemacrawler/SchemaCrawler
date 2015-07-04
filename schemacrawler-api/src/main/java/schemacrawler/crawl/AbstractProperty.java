@@ -23,6 +23,7 @@ package schemacrawler.crawl;
 import static sf.util.Utility.isBlank;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 import schemacrawler.schema.Property;
 
@@ -42,7 +43,14 @@ abstract class AbstractProperty
       throw new IllegalArgumentException("No property name provided");
     }
     this.name = name.trim();
-    this.value = value;
+    if (value != null && value.getClass().isArray())
+    {
+      this.value = (Serializable) Arrays.asList((Object[]) value);
+    }
+    else
+    {
+      this.value = value;
+    }
   }
 
   /**
