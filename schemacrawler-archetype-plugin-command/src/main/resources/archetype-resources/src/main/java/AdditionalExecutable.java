@@ -12,7 +12,6 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.executable.BaseStagedExecutable;
-import schemacrawler.tools.options.OutputWriter;
 
 public class AdditionalExecutable
   extends BaseStagedExecutable
@@ -29,7 +28,8 @@ public class AdditionalExecutable
   public void executeOn(final Catalog catalog, final Connection connection)
     throws Exception
   {
-    try (final PrintWriter writer = new PrintWriter(new OutputWriter(outputOptions));)
+    try (final PrintWriter writer = new PrintWriter(outputOptions
+      .openNewOutputWriter());)
     {
       for (final Schema schema: catalog.getSchemas())
       {
