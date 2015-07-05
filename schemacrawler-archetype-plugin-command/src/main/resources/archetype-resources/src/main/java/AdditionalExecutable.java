@@ -28,6 +28,9 @@ public class AdditionalExecutable
   public void executeOn(final Catalog catalog, final Connection connection)
     throws Exception
   {
+    // TODO: Possibly process command-line options, which are available in
+    // additionalConfiguration
+    
     try (final PrintWriter writer = new PrintWriter(outputOptions
       .openNewOutputWriter());)
     {
