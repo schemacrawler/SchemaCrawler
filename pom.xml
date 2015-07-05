@@ -1,7 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <prerequisites>
     <maven>3.3.1</maven>
@@ -84,6 +82,7 @@
     <module>schemacrawler-docs</module>
     <module>schemacrawler-site</module>
     <module>schemacrawler-distrib</module>
+    <module>my-database</module>
   </modules>
   <dependencies>
     <dependency>
@@ -207,7 +206,7 @@
               <show>public</show>
               <detectOfflineLinks>true</detectOfflineLinks>
               <additionalparam>-Xdoclint:html,syntax,reference,missing</additionalparam>
-              <bottom>Copyright &#169; 2000-2015 {organizationName}. All rights reserved.</bottom>
+              <bottom>Copyright © 2000-2015 {organizationName}. All rights reserved.</bottom>
               <doctitle>SchemaCrawler ${project.version}</doctitle>
             </configuration>
           </execution>
