@@ -82,7 +82,6 @@
     <module>schemacrawler-docs</module>
     <module>schemacrawler-site</module>
     <module>schemacrawler-distrib</module>
-    <module>my-database</module>
   </modules>
   <dependencies>
     <dependency>
