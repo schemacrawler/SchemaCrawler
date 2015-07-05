@@ -7,9 +7,9 @@ You can use these archetypes to very quickly create a new SchemaCrawler database
 ## How to Run
 1. Install [Apache Maven](http://maven.apache.org/), and make sure that Apache Maven is on your PATH 
 2. Make sure that java is on your PATH
-3. Start a command shell in the `new-database connector-plugin` example directory 
-4. Run `mvn archetype:generate -DgroupId=com.mycompany -DartifactId=my-database connector-plugin 
-  -DarchetypeGroupId=us.fatehi -DarchetypeArtifactId=schemacrawler-archetype-plugin-database connector 
+3. Start a command shell in the `new-dbconnector-plugin` example directory 
+4. Run `mvn archetype:generate -DgroupId=com.mycompany -DartifactId=my-dbconnector-plugin 
+  -DarchetypeGroupId=us.fatehi -DarchetypeArtifactId=schemacrawler-archetype-plugin-dbconnector 
   -DinteractiveMode=false` to generate your new SchemaCrawler database connector plugin project 
   (you can use any groupId and artifactId that you like)
 5. Check the output your new Apache Maven project
