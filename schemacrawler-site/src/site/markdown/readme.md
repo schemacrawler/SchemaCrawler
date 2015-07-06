@@ -32,7 +32,7 @@ and unzip it into a directory. You will have an examples folder, and with it, th
 distribution, in a directory called `_schemacrawler`. You can make a copy of this `_schemacrawler`
 directory to any location on your hard-disk, and rename the directory to something appropriate.
 Then, put this directory on your PATH. Once you open a command shell, you can run SchemaCrawler
-using `sc.cmd` (or `sc.sh` on Unix).
+using `schemacrawler.cmd` (or `schemacrawler.sh` on Unix).
 
 ## Installing From the Debian Package
 The [Debian schemacrawler package] is maintained by

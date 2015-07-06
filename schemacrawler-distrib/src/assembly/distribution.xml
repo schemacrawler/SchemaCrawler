@@ -212,7 +212,6 @@
                   defaultexcludes="yes"
                   filemode="771">
         <include name="**/*.sh"/>
-        <exclude name="**/schemacrawler.sh"/>
       </zipfileset>       
     </zip>
 
@@ -257,8 +256,7 @@
 
     <copy todir="${schemacrawler.complete-distribution}">
       <fileset dir="${distribution.assembly}">
-        <include name="sc.cmd" />
-        <include name="sc.sh" />
+        <include name="schemacrawler.cmd" />
         <include name="schemacrawler.sh" />
       </fileset>
     </copy>
@@ -302,21 +300,6 @@
     <attribute name="database" />
 
     <sequential>
-
-      <!--
-      <filter token="version" value="${SchemaCrawler.version}" />
-      <filter token="package" value="schemacrawler.server.@{database}" />
-      <copy todir="${schemacrawler.complete-distribution}"
-            filtering="true">
-        <fileset dir="${distribution.assembly}">
-          <include name="template-*.*" />
-        </fileset>
-      </copy>
-      <move file="${schemacrawler.complete-distribution}/template-sc.cmd"
-            tofile="${schemacrawler.complete-distribution}/sc_@{database}.cmd" />
-      <move file="${schemacrawler.complete-distribution}/template-sc.sh"
-            tofile="${schemacrawler.complete-distribution}/sc_@{database}.sh" />
-      -->
 
       <copy file="${SchemaCrawler.home}/schemacrawler-@{database}/DRIVER.LICENSE.txt"
             tofile="${schemacrawler.complete-distribution}/DRIVER.LICENSE-@{database}.txt"
