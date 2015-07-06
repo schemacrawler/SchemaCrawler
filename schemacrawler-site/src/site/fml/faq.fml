@@ -46,9 +46,9 @@
         <p>
           The easiest way to see the SchemaCrawler commands is to download and install SchemaCrawler, and run the
           provided scripts (
-          <code>sc.sh</code>
+          <code>schemacrawler.sh</code>
           on Unix, and
-          <code>sc.cmd</code>
+          <code>schemacrawler.cmd</code>
           on Windows). Detailed command-line help will be displayed.
         </p>
         <p>
