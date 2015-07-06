@@ -31,7 +31,7 @@ To generate your new SchemaCrawler command plugin project, run:
 You can use any groupId and artifactId that you like. Example Java code
 will be generated for you. Build your command jar file using `mvn package`. Then, copy 
 the your command jar file into the SchemaCrawler lib directory. When you see a listing of commands, 
-using `sc.cmd -help` (or `sc.sh -help` on Unix), your new command will be included.
+using `schemacrawler.cmd -help` (or `schemacrawler.sh -help` on Unix), your new command will be included.
 
 Later, you can go back, and modify the code to do what you need it to. You can then rebuild, and redeploy to 
 the SchemaCrawler lib directory.
