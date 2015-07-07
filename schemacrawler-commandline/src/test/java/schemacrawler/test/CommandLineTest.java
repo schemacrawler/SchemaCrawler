@@ -12,11 +12,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import org.junit.Rule;
 import org.junit.Test;
 
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.test.utility.BaseDatabaseTest;
+import schemacrawler.test.utility.TestName;
 import schemacrawler.test.utility.TestWriter;
 
 public class CommandLineTest
@@ -24,6 +26,9 @@ public class CommandLineTest
 {
 
   private static final String COMMAND_LINE_OUTPUT = "command_line_output/";
+
+  @Rule
+  public TestName testName = new TestName();
 
   @Test
   public void commandLineOverridesWithConfig()
@@ -45,7 +50,7 @@ public class CommandLineTest
     config.put("schemacrawler.synonym.pattern.include", ".*");
     config.put("schemacrawler.synonym.pattern.exclude", "");
 
-    run(args, config, "commandLineOverridesWithConfig.txt");
+    run(args, config);
   }
 
   @Test
@@ -55,7 +60,8 @@ public class CommandLineTest
     final Map<String, String> args = new HashMap<String, String>();
 
     final Map<String, String> config = new HashMap<>();
-    config.put("schemacrawler.format.show_unqualified_names", "true");
+    config.put("schemacrawler.format.show_unqualified_names",
+               Boolean.TRUE.toString());
     config.put("schemacrawler.table.pattern.include", ".*");
     config.put("schemacrawler.table.pattern.exclude", ".*A.*");
     config.put("schemacrawler.routine.pattern.include", ".*");
@@ -65,7 +71,7 @@ public class CommandLineTest
     config.put("schemacrawler.synonym.pattern.include", ".*");
     config.put("schemacrawler.synonym.pattern.exclude", "");
 
-    run(args, config, "commandLineWithConfig.txt");
+    run(args, config);
   }
 
   @Test
@@ -73,11 +79,11 @@ public class CommandLineTest
     throws Exception
   {
     final Map<String, String> args = new HashMap<String, String>();
-    args.put("portablenames", "true");
+    args.put("portablenames", Boolean.TRUE.toString());
     // Testing all tables, routines
     // Testing no sequences, synonyms
 
-    run(args, null, "commandLineWithDefaults.txt");
+    run(args, null);
   }
 
   @Test
@@ -85,13 +91,27 @@ public class CommandLineTest
     throws Exception
   {
     final Map<String, String> args = new HashMap<String, String>();
-    args.put("portablenames", "true");
+    args.put("portablenames", Boolean.TRUE.toString());
     args.put("tables", "");
     args.put("routines", "");
     args.put("sequences", ".*");
     args.put("synonyms", ".*");
 
-    run(args, null, "commandLineWithNonDefaults.txt");
+    run(args, null);
+  }
+
+  @Test
+  public void commandLineWithSorting()
+    throws Exception
+  {
+    final Map<String, String> args = new HashMap<String, String>();
+    args.put("portablenames", Boolean.TRUE.toString());
+    args.put("sorttables", Boolean.TRUE.toString());
+    args.put("sortcolumns", Boolean.TRUE.toString());
+    // Testing all tables, routines
+    // Testing no sequences, synonyms
+
+    run(args, null);
   }
 
   private Path createConfig(final Map<String, String> config)
@@ -107,9 +127,8 @@ public class CommandLineTest
   }
 
   private void run(final Map<String, String> argsMap,
-                   final Map<String, String> config,
-                   final String referenceFile)
-    throws Exception
+                   final Map<String, String> config)
+                     throws Exception
   {
 
     try (final TestWriter out = new TestWriter("text");)
@@ -117,7 +136,7 @@ public class CommandLineTest
       argsMap.put("url", "jdbc:hsqldb:hsql://localhost/schemacrawler");
       argsMap.put("user", "sa");
       argsMap.put("password", "");
-      argsMap.put("noinfo", "true");
+      argsMap.put("noinfo", Boolean.TRUE.toString());
       argsMap.put("infolevel", "maximum");
       argsMap.put("command", "brief");
       argsMap.put("outputformat", "text");
@@ -137,7 +156,8 @@ public class CommandLineTest
 
       Main.main(flattenCommandlineArgs(argsMap));
 
-      out.assertEquals(COMMAND_LINE_OUTPUT + referenceFile);
+      out.assertEquals(COMMAND_LINE_OUTPUT + testName.currentMethodName()
+                       + ".txt");
     }
   }
 
