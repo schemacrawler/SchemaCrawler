@@ -1,0 +1,297 @@
+
+
+Tables
+========================================================================
+
+
+
+AUTHORS                                                          [table]
+------------------------------------------------------------------------
+Contact details for book authors
+  CITY                              VARCHAR(50)                 
+  COUNTRY                           VARCHAR(50)                 
+  FIRSTNAME                         VARCHAR(20) NOT NULL        
+  ID                                INTEGER NOT NULL            
+  LASTNAME                          VARCHAR(20) NOT NULL        
+  POSTALCODE                        VARCHAR(10)                 
+  STATE                             VARCHAR(2)                  
+
+Primary Key
+
+                                                           [primary key]
+  ID                                ascending                   
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  ID <--(0..many) BOOKAUTHORS.AUTHORID                              
+
+
+
+AUTHORSLIST                                                       [view]
+------------------------------------------------------------------------
+
+
+
+BOOKAUTHORS                                                      [table]
+------------------------------------------------------------------------
+Relationship between books and their authors, along with the latest updated information
+  AUTHORID                          INTEGER NOT NULL            
+  BOOKID                            INTEGER NOT NULL            
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  AUTHORID (0..many)--> AUTHORS.ID                              
+
+                                           [foreign key, with no action]
+  BOOKID (0..many)--> BOOKS.ID                                  
+
+
+
+BOOKS                                                            [table]
+------------------------------------------------------------------------
+Details for published books
+  ID                                INTEGER NOT NULL            
+                                    Unique (internal) id for book
+  PREVIOUSEDITIONID                 INTEGER                     
+
+Primary Key
+
+                                                           [primary key]
+  ID                                ascending                   
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  ID <--(0..many) BOOKAUTHORS.BOOKID                              
+
+                                           [foreign key, with no action]
+  ID <--(0..1) PREVIOUSEDITIONID                                
+
+
+
+"Global Counts"                                                  [table]
+------------------------------------------------------------------------
+
+
+
+PUBLISHERS                                                       [table]
+------------------------------------------------------------------------
+List of book publishers
+  ID                                INTEGER NOT NULL            
+                                    auto-incremented            
+                                    Unique (internal) id for book publisher
+
+Primary Key
+
+                                                           [primary key]
+  ID                                ascending                   
+                                    auto-incremented            
+
+
+
+EXTRA_PK                                                         [table]
+------------------------------------------------------------------------
+  ID                                INTEGER NOT NULL            
+  PUBLICATIONID                     INTEGER NOT NULL            
+  WRITERID                          BIGINT NOT NULL             
+
+Primary Key
+
+                                                           [primary key]
+  ID                                ascending                   
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  PUBLICATIONID (0..many)--> PUBLICATIONS.ID                              
+
+                                           [foreign key, with no action]
+  WRITERID (0..many)--> WRITERS.ID                              
+
+
+
+"Global Counts"                                                  [table]
+------------------------------------------------------------------------
+
+
+
+PUBLICATIONS                                                     [table]
+------------------------------------------------------------------------
+  ID                                INTEGER NOT NULL            
+  WRITERID                          BIGINT NOT NULL             
+
+Primary Key
+
+                                                           [primary key]
+  ID                                ascending                   
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  ID <--(0..many) EXTRA_PK.PUBLICATIONID                              
+
+                                           [foreign key, with no action]
+  ID <--(0..many) WRITERS.PUBLICATION_ID                              
+
+                                           [foreign key, with no action]
+  WRITERID (0..many)--> WRITERS.ID                              
+
+
+
+WRITERS                                                          [table]
+------------------------------------------------------------------------
+  CITY                              VARCHAR(50)                 
+  COUNTRY                           VARCHAR(50)                 
+  EMAIL1                            VARCHAR(10)                 
+  FIRSTNAME                         VARCHAR(20) NOT NULL        
+  ID                                BIGINT NOT NULL             
+  LASTNAME                          VARCHAR(20) NOT NULL        
+  POSTALCODE                        VARCHAR(10)                 
+  PUBLICATION_ID                    BIGINT NOT NULL             
+  STATE                             VARCHAR(2)                  
+
+Primary Key
+
+                                                           [primary key]
+  ID                                ascending                   
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  PUBLICATION_ID (0..many)--> PUBLICATIONS.ID                              
+
+                                           [foreign key, with no action]
+  ID <--(0..many) EXTRA_PK.WRITERID                              
+
+                                           [foreign key, with no action]
+  ID <--(0..many) PUBLICATIONS.WRITERID                              
+
+                                           [foreign key, with no action]
+  ID <--(0..many) ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ                              
+
+
+
+ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                                             [table]
+------------------------------------------------------------------------
+  ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ               BIGINT NOT NULL             
+  ΣΥΓΓΡΑΦΈΑΣ                        INTEGER                     
+
+Primary Key
+
+                                                           [primary key]
+  ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ               ascending                   
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  ΣΥΓΓΡΑΦΈΑΣ (0..many)--> WRITERS.ID                              
+
+
+
+REGIONS                                                          [table]
+------------------------------------------------------------------------
+  COUNTRY                           VARCHAR(50) NOT NULL        
+  POSTALCODE                        VARCHAR(10) NOT NULL        
+
+Primary Key
+
+                                                           [primary key]
+  COUNTRY                           ascending                   
+  POSTALCODE                        ascending                   
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  POSTALCODE <--(0..many) SALES.POSTALCODE                              
+  COUNTRY <--(0..many) SALES.COUNTRY                              
+
+
+
+SALES                                                            [table]
+------------------------------------------------------------------------
+  COUNTRY                           VARCHAR(50) NOT NULL        
+  POSTALCODE                        VARCHAR(10) NOT NULL        
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  POSTALCODE (0..many)--> REGIONS.POSTALCODE                              
+  COUNTRY (0..many)--> REGIONS.COUNTRY                              
+
+
+
+Routines
+========================================================================
+
+
+
+CUSTOMADD                            [function, does not return a table]
+------------------------------------------------------------------------
+
+
+
+CUSTOMADD                            [function, does not return a table]
+------------------------------------------------------------------------
+
+
+
+NEW_PUBLISHER                                     [procedure, no result]
+------------------------------------------------------------------------
+
+
+
+NEW_PUBLISHER                                     [procedure, no result]
+------------------------------------------------------------------------
+
+
+
+ALLOC_BLOCKS                                      [procedure, no result]
+------------------------------------------------------------------------
+
+
+
+ALLOC_SINGLE_BLOCK                                [procedure, no result]
+------------------------------------------------------------------------
+
+
+
+CONVERT_BLOCK                                     [procedure, no result]
+------------------------------------------------------------------------
+
+
+
+CREATE_EMPTY_BLOCK                                [procedure, no result]
+------------------------------------------------------------------------
+
+
+
+DELETE_BLOCKS                                     [procedure, no result]
+------------------------------------------------------------------------
+
+
+
+DELETE_LOB                                        [procedure, no result]
+------------------------------------------------------------------------
+
+
+
+DELETE_UNUSED                                     [procedure, no result]
+------------------------------------------------------------------------
+
+
+
+DELETE_UNUSED_LOBS                                [procedure, no result]
+------------------------------------------------------------------------
+
+
+
+DIVIDE_BLOCK                                      [procedure, no result]
+------------------------------------------------------------------------
+
+
+
+MERGE_EMPTY_BLOCKS                                [procedure, no result]
+------------------------------------------------------------------------
+
