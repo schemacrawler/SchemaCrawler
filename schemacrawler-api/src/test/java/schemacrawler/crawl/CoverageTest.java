@@ -63,7 +63,7 @@ public class CoverageTest
   public void retrieverConnection()
     throws SQLException
   {
-    new RetrieverConnection(null, null);
+    new RetrieverConnection(null, null, null);
   }
 
   @Test(expected = SQLException.class)
@@ -72,6 +72,6 @@ public class CoverageTest
   {
     final Connection connection = getConnection();
     connection.close();
-    new RetrieverConnection(connection, null);
+    new RetrieverConnection(connection, null, null);
   }
 }

@@ -47,10 +47,6 @@ public final class SchemaCrawlerOptions
 
   private String title;
 
-  private InformationSchemaViews informationSchemaViews;
-
-  private DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions;
-
   private InclusionRule schemaInclusionRule;
   private InclusionRule synonymInclusionRule;
 
@@ -80,9 +76,6 @@ public final class SchemaCrawlerOptions
    */
   public SchemaCrawlerOptions()
   {
-    informationSchemaViews = new InformationSchemaViews();
-    databaseSpecificOverrideOptions = new DatabaseSpecificOverrideOptions();
-
     schemaInclusionRule = new IncludeAll();
     synonymInclusionRule = new ExcludeAll();
     sequenceInclusionRule = new ExcludeAll();
@@ -113,14 +106,6 @@ public final class SchemaCrawlerOptions
   }
 
   /**
-   * Gets database specific override options.
-   */
-  public DatabaseSpecificOverrideOptions getDatabaseSpecificOverrideOptions()
-  {
-    return databaseSpecificOverrideOptions;
-  }
-
-  /**
    * Gets the column inclusion rule for grep.
    *
    * @return Column inclusion rule for grep.
@@ -148,16 +133,6 @@ public final class SchemaCrawlerOptions
   public InclusionRule getGrepRoutineColumnInclusionRule()
   {
     return grepRoutineColumnInclusionRule;
-  }
-
-  /**
-   * Gets the information schema views.
-   *
-   * @return Information schema views.
-   */
-  public InformationSchemaViews getInformationSchemaViews()
-  {
-    return informationSchemaViews;
   }
 
   public int getParentTableFilterDepth()
@@ -201,8 +176,8 @@ public final class SchemaCrawlerOptions
   }
 
   /**
-   * Gets the schema information level, identifying to what level the
-   * schema should be crawled.
+   * Gets the schema information level, identifying to what level the schema
+   * should be crawled.
    *
    * @return Schema information level.
    */
@@ -259,8 +234,8 @@ public final class SchemaCrawlerOptions
   }
 
   /**
-   * Returns the table types requested for output. This can be null, if
-   * all supported table types are required in the output.
+   * Returns the table types requested for output. This can be null, if all
+   * supported table types are required in the output.
    *
    * @return All table types requested for output
    */
@@ -302,8 +277,8 @@ public final class SchemaCrawlerOptions
   }
 
   /**
-   * Whether grep includes show foreign keys that reference other
-   * non-matching tables.
+   * Whether grep includes show foreign keys that reference other non-matching
+   * tables.
    */
   public boolean isGrepOnlyMatching()
   {
@@ -316,8 +291,8 @@ public final class SchemaCrawlerOptions
   }
 
   /**
-   * If infolevel=maximum, this option will remove empty tables (that
-   * is, tables with no rows of data) from the catalog.
+   * If infolevel=maximum, this option will remove empty tables (that is, tables
+   * with no rows of data) from the catalog.
    *
    * @return Whether to hide empty tables
    */
@@ -341,24 +316,6 @@ public final class SchemaCrawlerOptions
   {
     this.columnInclusionRule = requireNonNull(columnInclusionRule,
                                               "Cannot use null value in a setter");
-  }
-
-  /**
-   * Sets database specific override options.
-   *
-   * @param databaseSpecificOverrideOptions
-   *        Database specific override options
-   */
-  public void setDatabaseSpecificOverrideOptions(final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
-  {
-    if (databaseSpecificOverrideOptions == null)
-    {
-      this.databaseSpecificOverrideOptions = new DatabaseSpecificOverrideOptions();
-    }
-    else
-    {
-      this.databaseSpecificOverrideOptions = databaseSpecificOverrideOptions;
-    }
   }
 
   /**
@@ -395,8 +352,8 @@ public final class SchemaCrawlerOptions
   }
 
   /**
-   * Whether grep includes show foreign keys that reference other
-   * non-matching tables.
+   * Whether grep includes show foreign keys that reference other non-matching
+   * tables.
    *
    * @param grepOnlyMatching
    *        Whether grep includes show foreign keys that reference other
@@ -419,8 +376,8 @@ public final class SchemaCrawlerOptions
   }
 
   /**
-   * If infolevel=maximum, this option will remove empty tables (that
-   * is, tables with no rows of data) from the catalog.
+   * If infolevel=maximum, this option will remove empty tables (that is, tables
+   * with no rows of data) from the catalog.
    *
    * @param hideEmptyTables
    *        Whether to hide empty tables
@@ -428,24 +385,6 @@ public final class SchemaCrawlerOptions
   public void setHideEmptyTables(final boolean hideEmptyTables)
   {
     this.hideEmptyTables = hideEmptyTables;
-  }
-
-  /**
-   * Sets the information schema views.
-   *
-   * @param informationSchemaViews
-   *        Information schema views.
-   */
-  public void setInformationSchemaViews(final InformationSchemaViews informationSchemaViews)
-  {
-    if (informationSchemaViews == null)
-    {
-      this.informationSchemaViews = new InformationSchemaViews();
-    }
-    else
-    {
-      this.informationSchemaViews = informationSchemaViews;
-    }
   }
 
   public void setParentTableFilterDepth(final int parentTableFilterDepth)
@@ -505,8 +444,8 @@ public final class SchemaCrawlerOptions
       {
         for (final String routineTypeString: routineTypeStrings)
         {
-          routineTypes.add(RoutineType.valueOf(routineTypeString
-            .toLowerCase(Locale.ENGLISH)));
+          routineTypes.add(RoutineType
+            .valueOf(routineTypeString.toLowerCase(Locale.ENGLISH)));
         }
       }
     }
@@ -525,8 +464,8 @@ public final class SchemaCrawlerOptions
   }
 
   /**
-   * Sets the schema information level, identifying to what level the
-   * schema should be crawled.
+   * Sets the schema information level, identifying to what level the schema
+   * should be crawled.
    *
    * @param schemaInfoLevel
    *        Schema information level.
@@ -573,12 +512,11 @@ public final class SchemaCrawlerOptions
   }
 
   /**
-   * Sets the table name pattern, using the JDBC syntax for wildcards (_
-   * and *). The table name pattern is case-sensitive, and matches just
-   * the table name - not the fully qualified table name. The table name
-   * pattern restricts the tables retrieved at an early stage in the
-   * retrieval process, so it must be used only when performance needs
-   * to be tuned.
+   * Sets the table name pattern, using the JDBC syntax for wildcards (_ and *).
+   * The table name pattern is case-sensitive, and matches just the table name -
+   * not the fully qualified table name. The table name pattern restricts the
+   * tables retrieved at an early stage in the retrieval process, so it must be
+   * used only when performance needs to be tuned.
    *
    * @param tableNamePattern
    *        Table name pattern
@@ -589,13 +527,12 @@ public final class SchemaCrawlerOptions
   }
 
   /**
-   * Sets table types requested for output from a collection of table
-   * types. For example: TABLE,VIEW,SYSTEM_TABLE,GLOBAL
-   * TEMPORARY,ALIAS,SYNONYM
+   * Sets table types requested for output from a collection of table types. For
+   * example: TABLE,VIEW,SYSTEM_TABLE,GLOBAL TEMPORARY,ALIAS,SYNONYM
    *
    * @param tableTypes
-   *        Collection of table types. Can be null if all supported
-   *        table types are requested.
+   *        Collection of table types. Can be null if all supported table types
+   *        are requested.
    */
   public void setTableTypes(final Collection<String> tableTypes)
   {
@@ -610,13 +547,12 @@ public final class SchemaCrawlerOptions
   }
 
   /**
-   * Sets table types requested for output from a comma-separated list
-   * of table types. For example: TABLE,VIEW,SYSTEM_TABLE,GLOBAL
-   * TEMPORARY,ALIAS,SYNONYM
+   * Sets table types requested for output from a comma-separated list of table
+   * types. For example: TABLE,VIEW,SYSTEM_TABLE,GLOBAL TEMPORARY,ALIAS,SYNONYM
    *
    * @param tableTypesString
-   *        Comma-separated list of table types. Can be null if all
-   *        supported table types are requested.
+   *        Comma-separated list of table types. Can be null if all supported
+   *        table types are requested.
    */
   public void setTableTypesFromString(final String tableTypesString)
   {

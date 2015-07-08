@@ -55,10 +55,12 @@ final class RetrieverConnection
 
   private static String lookupIdentifierQuoteString(final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions,
                                                     final DatabaseMetaData metaData)
-    throws SQLException
+                                                      throws SQLException
   {
     String identifierQuoteString;
-    if (databaseSpecificOverrideOptions.hasOverrideForIdentifierQuoteString())
+    if (databaseSpecificOverrideOptions != null
+        && databaseSpecificOverrideOptions
+          .hasOverrideForIdentifierQuoteString())
     {
       identifierQuoteString = databaseSpecificOverrideOptions
         .getIdentifierQuoteString();
@@ -89,10 +91,11 @@ final class RetrieverConnection
 
   private static boolean lookupSupportsCatalogs(final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions,
                                                 final DatabaseMetaData metaData)
-    throws SQLException
+                                                  throws SQLException
   {
     final boolean supportsCatalogs;
-    if (databaseSpecificOverrideOptions.hasOverrideForSupportsCatalogs())
+    if (databaseSpecificOverrideOptions != null
+        && databaseSpecificOverrideOptions.hasOverrideForSupportsCatalogs())
     {
       supportsCatalogs = databaseSpecificOverrideOptions.isSupportsCatalogs();
     }
@@ -105,10 +108,11 @@ final class RetrieverConnection
 
   private static boolean lookupSupportsSchemas(final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions,
                                                final DatabaseMetaData metaData)
-    throws SQLException
+                                                 throws SQLException
   {
     final boolean supportsSchemas;
-    if (databaseSpecificOverrideOptions.hasOverrideForSupportsSchemas())
+    if (databaseSpecificOverrideOptions != null
+        && databaseSpecificOverrideOptions.hasOverrideForSupportsSchemas())
     {
       supportsSchemas = databaseSpecificOverrideOptions.isSupportsSchemas();
     }
@@ -132,8 +136,9 @@ final class RetrieverConnection
   private final TypeMap typeMap;
 
   RetrieverConnection(final Connection connection,
+                      final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions,
                       final SchemaCrawlerOptions options)
-    throws SQLException
+                        throws SQLException
   {
     SchemaCrawlerOptions schemaCrawlerOptions = options;
     if (schemaCrawlerOptions == null)
@@ -145,29 +150,33 @@ final class RetrieverConnection
     this.connection = connection;
     metaData = connection.getMetaData();
 
-    informationSchemaViews = schemaCrawlerOptions.getInformationSchemaViews();
-
-    final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions = schemaCrawlerOptions
-      .getDatabaseSpecificOverrideOptions();
+    if (databaseSpecificOverrideOptions == null)
+    {
+      informationSchemaViews = new InformationSchemaViews();
+    }
+    else
+    {
+      informationSchemaViews = databaseSpecificOverrideOptions
+        .getInformationSchemaViews();
+    }
 
     supportsCatalogs = lookupSupportsCatalogs(databaseSpecificOverrideOptions,
                                               metaData);
-    LOGGER.log(Level.CONFIG, String
-      .format("Database %s catalogs", supportsCatalogs? "supports"
-                                                      : "does not support"));
+    LOGGER.log(Level.CONFIG,
+               String.format("Database %s catalogs",
+                             supportsCatalogs? "supports": "does not support"));
 
     supportsSchemas = lookupSupportsSchemas(databaseSpecificOverrideOptions,
                                             metaData);
-    LOGGER
-      .log(Level.CONFIG, String.format("Database %s schemas",
-                                       supportsSchemas? "supports"
-                                                      : "does not support"));
+    LOGGER.log(Level.CONFIG,
+               String.format("Database %s schemas",
+                             supportsSchemas? "supports": "does not support"));
 
     identifierQuoteString = lookupIdentifierQuoteString(databaseSpecificOverrideOptions,
                                                         metaData);
-    LOGGER.log(Level.CONFIG, String
-      .format("Database identifier quote string is \"%s\"",
-              identifierQuoteString));
+    LOGGER.log(Level.CONFIG,
+               String.format("Database identifier quote string is \"%s\"",
+                             identifierQuoteString));
 
     tableTypes = new TableTypes(connection);
     LOGGER.log(Level.CONFIG,
@@ -237,10 +246,9 @@ final class RetrieverConnection
   boolean needsToBeQuoted(final String name)
   {
     final boolean needsToBeQuoted;
-    if (name != null
-        && identifierQuoteString != null
-        && (Utility.containsWhitespace(name) || reservedWords.contains(name
-          .toUpperCase())))
+    if (name != null && identifierQuoteString != null
+        && (Utility.containsWhitespace(name)
+            || reservedWords.contains(name.toUpperCase())))
     {
       needsToBeQuoted = true;
     }

@@ -22,6 +22,7 @@ package schemacrawler.schemacrawler;
 
 
 import java.util.Collection;
+import java.util.Map;
 
 import schemacrawler.schema.RoutineType;
 
@@ -212,12 +213,6 @@ public class SchemaCrawlerOptionsBuilder
     return this;
   }
 
-  public SchemaCrawlerOptionsBuilder setDatabaseSpecificOverrideOptions(final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
-  {
-    options.setDatabaseSpecificOverrideOptions(databaseSpecificOverrideOptions);
-    return this;
-  }
-
   /**
    * Options from properties.
    *
@@ -225,7 +220,7 @@ public class SchemaCrawlerOptionsBuilder
    *        Configuration properties
    */
   @Override
-  public SchemaCrawlerOptionsBuilder setFromConfig(final Config config)
+  public SchemaCrawlerOptionsBuilder fromConfig(final Map<String, String> config)
   {
     final Config configProperties;
     if (config == null)
@@ -234,12 +229,8 @@ public class SchemaCrawlerOptionsBuilder
     }
     else
     {
-      configProperties = config;
+      configProperties = new Config(config);
     }
-
-    options.setInformationSchemaViews(new InformationSchemaViews(config));
-    options
-      .setDatabaseSpecificOverrideOptions(new DatabaseSpecificOverrideOptions(config));
 
     options.setSchemaInclusionRule(configProperties
       .getInclusionRule(SC_SCHEMA_PATTERN_INCLUDE, SC_SCHEMA_PATTERN_EXCLUDE));
@@ -255,10 +246,9 @@ public class SchemaCrawlerOptionsBuilder
     options.setColumnInclusionRule(configProperties
       .getInclusionRule(SC_COLUMN_PATTERN_INCLUDE, SC_COLUMN_PATTERN_EXCLUDE));
 
-    options
-      .setRoutineInclusionRule(configProperties
-        .getInclusionRule(SC_ROUTINE_PATTERN_INCLUDE,
-                          SC_ROUTINE_PATTERN_EXCLUDE));
+    options.setRoutineInclusionRule(configProperties
+      .getInclusionRule(SC_ROUTINE_PATTERN_INCLUDE,
+                        SC_ROUTINE_PATTERN_EXCLUDE));
     options.setRoutineColumnInclusionRule(configProperties
       .getInclusionRule(SC_ROUTINE_COLUMN_PATTERN_INCLUDE,
                         SC_ROUTINE_COLUMN_PATTERN_EXCLUDE));
@@ -299,12 +289,6 @@ public class SchemaCrawlerOptionsBuilder
   public SchemaCrawlerOptionsBuilder setGrepRoutineColumnInclusionRule(final InclusionRule grepRoutineColumnInclusionRule)
   {
     options.setGrepRoutineColumnInclusionRule(grepRoutineColumnInclusionRule);
-    return this;
-  }
-
-  public SchemaCrawlerOptionsBuilder setInformationSchemaViews(final InformationSchemaViews informationSchemaViews)
-  {
-    options.setInformationSchemaViews(informationSchemaViews);
     return this;
   }
 
