@@ -1,0 +1,38 @@
+package schemacrawler.schemacrawler;
+
+enum InformationSchemaKey
+{
+
+  ADDITIONAL_COLUMN_ATTRIBUTES("select.ADDITIONAL_COLUMN_ATTRIBUTES"),
+  ADDITIONAL_TABLE_ATTRIBUTES("select.ADDITIONAL_TABLE_ATTRIBUTES"),
+  CONSTRAINT_COLUMN_USAGE("select.INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE"),
+  EXT_INDEXES("select.INFORMATION_SCHEMA.EXT_INDEXES"),
+  EXT_SYNONYMS("select.INFORMATION_SCHEMA.EXT_SYNONYMS"),
+  EXT_TABLES("select.INFORMATION_SCHEMA.EXT_TABLES"),
+  EXT_TABLE_CONSTRAINTS("select.INFORMATION_SCHEMA.EXT_TABLE_CONSTRAINTS"),
+  OVERRIDE_TYPE_INFO("select.OVERRIDE_TYPE_INFO"),
+  ROUTINES("select.INFORMATION_SCHEMA.ROUTINES"),
+  SCHEMATA("select.INFORMATION_SCHEMA.SCHEMATA"),
+  SEQUENCES("select.INFORMATION_SCHEMA.SEQUENCES"),
+  TABLE_CONSTRAINTS("select.INFORMATION_SCHEMA.TABLE_CONSTRAINTS"),
+  TRIGGERS("select.INFORMATION_SCHEMA.TRIGGERS"),
+  VIEWS("select.INFORMATION_SCHEMA.VIEWS");
+
+  private final String lookupKey;
+
+  private InformationSchemaKey(final String lookupKey)
+  {
+    this.lookupKey = lookupKey;
+  }
+
+  public String getLookupKey()
+  {
+    return lookupKey;
+  }
+
+  public String getResource()
+  {
+    return name() + ".sql";
+  }
+
+}

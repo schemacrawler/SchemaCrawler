@@ -27,6 +27,7 @@ import java.sql.ResultSet;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ResultsColumns;
+import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
@@ -39,12 +40,23 @@ public final class SchemaCrawlerUtility
 {
 
   public static Catalog getCatalog(final Connection connection,
+                                   final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions,
                                    final SchemaCrawlerOptions schemaCrawlerOptions)
-    throws SchemaCrawlerException
+                                     throws SchemaCrawlerException
   {
-    final SchemaCrawler schemaCrawler = new SchemaCrawler(connection);
+    final SchemaCrawler schemaCrawler = new SchemaCrawler(connection,
+                                                          databaseSpecificOverrideOptions);
     final Catalog catalog = schemaCrawler.crawl(schemaCrawlerOptions);
     return catalog;
+  }
+
+  public static Catalog getCatalog(final Connection connection,
+                                   final SchemaCrawlerOptions schemaCrawlerOptions)
+                                     throws SchemaCrawlerException
+  {
+    return getCatalog(connection,
+                      new DatabaseSpecificOverrideOptions(),
+                      schemaCrawlerOptions);
   }
 
   public static ResultsColumns getResultColumns(final ResultSet resultSet)

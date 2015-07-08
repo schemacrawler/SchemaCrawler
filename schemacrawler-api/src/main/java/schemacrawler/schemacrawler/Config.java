@@ -59,8 +59,8 @@ public final class Config
   private static final Logger LOGGER = Logger.getLogger(Config.class.getName());
 
   /**
-   * Loads the SchemaCrawler configuration, and override configuration,
-   * from properties files.
+   * Loads the SchemaCrawler configuration, and override configuration, from
+   * properties files.
    *
    * @param configFilenames
    *        Configuration file name.
@@ -87,8 +87,7 @@ public final class Config
   }
 
   /**
-   * Loads the SchemaCrawler configuration, from a properties file
-   * stream.
+   * Loads the SchemaCrawler configuration, from a properties file stream.
    *
    * @param configStream
    *        Configuration stream.
@@ -129,13 +128,13 @@ public final class Config
    */
   private static Properties loadProperties(final Properties properties,
                                            final Path propertiesFile)
-    throws IOException
+                                             throws IOException
   {
     if (propertiesFile == null || !exists(propertiesFile)
         || !isReadable(propertiesFile) || isDirectory(propertiesFile))
     {
-      LOGGER.log(Level.WARNING, "Cannot load properties from file, "
-                                + propertiesFile);
+      LOGGER.log(Level.WARNING,
+                 "Cannot load properties from file, " + propertiesFile);
       return properties;
     }
 
@@ -208,7 +207,7 @@ public final class Config
    * @param config
    *        Config to copy
    */
-  public Config(final Config config)
+  public Config(final Map<String, String> config)
   {
     if (config != null)
     {
@@ -353,8 +352,8 @@ public final class Config
    */
   public int getIntegerValue(final String propertyName, final int defaultValue)
   {
-    return Integer.parseInt(getStringValue(propertyName,
-                                           String.valueOf(defaultValue)));
+    return Integer
+      .parseInt(getStringValue(propertyName, String.valueOf(defaultValue)));
   }
 
   /**

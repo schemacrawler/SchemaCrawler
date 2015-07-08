@@ -46,7 +46,7 @@ public class SerializationTest
     final Config config = Config
       .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
     final SchemaCrawlerOptionsBuilder optionsBuilder = new SchemaCrawlerOptionsBuilder()
-      .setFromConfig(config);
+      .fromConfig(config);
     optionsBuilder.schemaInfoLevel(SchemaInfoLevel.maximum());
 
     final Catalog catalog = getCatalog(optionsBuilder.toOptions());

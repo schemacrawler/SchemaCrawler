@@ -19,11 +19,12 @@
  */
 package schemacrawler.schemacrawler;
 
+import java.util.Map;
 
 public interface OptionsBuilder<O extends Options>
 {
 
-  OptionsBuilder<O> setFromConfig(Config config);
+  OptionsBuilder<O> fromConfig(Map<String, String> config);
 
   Config toConfig();
 
