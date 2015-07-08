@@ -21,6 +21,8 @@
 package schemacrawler.tools.text.operation;
 
 
+import java.util.Map;
+
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.text.base.BaseTextOptionsBuilder;
 
@@ -45,14 +47,15 @@ public final class OperationOptionsBuilder
   }
 
   @Override
-  public OperationOptionsBuilder setFromConfig(final Config config)
+  public OperationOptionsBuilder fromConfig(final Map<String, String> map)
   {
-    if (config == null)
+    if (map == null)
     {
       return this;
     }
-    super.setFromConfig(config);
+    super.fromConfig(map);
 
+    final Config config = new Config(map);
     options.setShowLobs(config.getBooleanValue(SHOW_LOBS, false));
 
     return this;

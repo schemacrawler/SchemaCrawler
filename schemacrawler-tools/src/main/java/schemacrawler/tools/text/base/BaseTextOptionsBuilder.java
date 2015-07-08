@@ -22,6 +22,9 @@ package schemacrawler.tools.text.base;
 
 
 import static java.util.Objects.requireNonNull;
+
+import java.util.Map;
+
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.OptionsBuilder;
 
@@ -90,20 +93,22 @@ public class BaseTextOptionsBuilder<O extends BaseTextOptions>
   }
 
   @Override
-  public BaseTextOptionsBuilder<O> setFromConfig(final Config config)
+  public BaseTextOptionsBuilder<O> fromConfig(final Map<String, String> map)
   {
-    if (config == null)
+    if (map == null)
     {
       return this;
     }
+
+    final Config config = new Config(map);
 
     options.setNoFooter(config.getBooleanValue(NO_FOOTER));
     options.setNoHeader(config.getBooleanValue(NO_HEADER));
     options.setNoInfo(config.getBooleanValue(NO_INFO));
     options.setAppendOutput(config.getBooleanValue(APPEND_OUTPUT));
 
-    options.setShowUnqualifiedNames(config
-      .getBooleanValue(SHOW_UNQUALIFIED_NAMES));
+    options
+      .setShowUnqualifiedNames(config.getBooleanValue(SHOW_UNQUALIFIED_NAMES));
 
     options.setAlphabeticalSortForTables(config
       .getBooleanValue(SC_SORT_ALPHABETICALLY_TABLES, true));
