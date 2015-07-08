@@ -47,8 +47,8 @@ import schemacrawler.schema.TableRelationshipType;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder;
 import schemacrawler.schemacrawler.IncludeAll;
-import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -93,19 +93,18 @@ public class SchemaCrawlerTest
   {
     try (final TestWriter out = new TestWriter("text");)
     {
-      final InformationSchemaViews informationSchemaViews = new InformationSchemaViews();
-      informationSchemaViews
-        .setTableConstraintsSql("SELECT * FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS");
-      informationSchemaViews
-        .setExtTableConstraintsSql("SELECT * FROM INFORMATION_SCHEMA.CHECK_CONSTRAINTS");
+      final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder();
+      databaseSpecificOverrideOptionsBuilder.withInformationSchemaViews()
+        .withTableConstraintsSql("SELECT * FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS")
+        .withExtTableConstraintsSql("SELECT * FROM INFORMATION_SCHEMA.CHECK_CONSTRAINTS");
 
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
       schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
-      schemaCrawlerOptions.setInformationSchemaViews(informationSchemaViews);
       schemaCrawlerOptions
         .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
 
-      final Catalog catalog = getCatalog(schemaCrawlerOptions);
+      final Catalog catalog = getCatalog(databaseSpecificOverrideOptionsBuilder
+        .toOptions(), schemaCrawlerOptions);
       final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
       assertEquals("Schema count does not match", 5, schemas.length);
       for (final Schema schema: schemas)
@@ -196,15 +195,15 @@ public class SchemaCrawlerTest
     throws Exception
   {
 
-    final InformationSchemaViews informationSchemaViews = new InformationSchemaViews();
-    informationSchemaViews
-      .setRoutinesSql("SELECT * FROM INFORMATION_SCHEMA.ROUTINES");
+    final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder();
+    databaseSpecificOverrideOptionsBuilder.withInformationSchemaViews()
+      .withRoutinesSql("SELECT * FROM INFORMATION_SCHEMA.ROUTINES");
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setInformationSchemaViews(informationSchemaViews);
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
 
-    final Catalog catalog = getCatalog(schemaCrawlerOptions);
+    final Catalog catalog = getCatalog(databaseSpecificOverrideOptionsBuilder
+      .toOptions(), schemaCrawlerOptions);
     final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
     final Routine[] routines = catalog.getRoutines(schema)
       .toArray(new Routine[0]);
@@ -227,8 +226,9 @@ public class SchemaCrawlerTest
     final Schema schema1 = new SchemaReference("PUBLIC", "BOOKS");
     assertTrue("Could not find any tables",
                catalog.getTables(schema1).size() > 0);
-    assertEquals("Wrong number of routines", 4, catalog.getRoutines(schema1)
-      .size());
+    assertEquals("Wrong number of routines",
+                 4,
+                 catalog.getRoutines(schema1).size());
 
     final Schema schema2 = new SchemaReference("PUBLIC", "BOOKS");
 
@@ -253,19 +253,19 @@ public class SchemaCrawlerTest
   {
     try (final TestWriter out = new TestWriter("text");)
     {
-      final InformationSchemaViews informationSchemaViews = new InformationSchemaViews();
-      informationSchemaViews
-        .setSequencesSql("SELECT * FROM INFORMATION_SCHEMA.SEQUENCES");
+      final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder();
+      databaseSpecificOverrideOptionsBuilder.withInformationSchemaViews()
+        .withSequencesSql("SELECT * FROM INFORMATION_SCHEMA.SEQUENCES");
 
       final SchemaInfoLevel minimum = SchemaInfoLevel.minimum();
       minimum.setRetrieveSequenceInformation(true);
 
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
       schemaCrawlerOptions.setSchemaInfoLevel(minimum);
-      schemaCrawlerOptions.setInformationSchemaViews(informationSchemaViews);
       schemaCrawlerOptions.setSequenceInclusionRule(new IncludeAll());
 
-      final Catalog catalog = getCatalog(schemaCrawlerOptions);
+      final Catalog catalog = getCatalog(databaseSpecificOverrideOptionsBuilder
+        .toOptions(), schemaCrawlerOptions);
       final Schema schema = catalog.getSchema("PUBLIC.BOOKS").get();
       assertNotNull("BOOKS Schema not found", schema);
       final Sequence[] sequences = catalog.getSequences(schema)
@@ -291,41 +291,41 @@ public class SchemaCrawlerTest
   {
     try (final TestWriter out = new TestWriter("text");)
     {
-      final InformationSchemaViews informationSchemaViews = new InformationSchemaViews();
-      informationSchemaViews
-        .setSynonymsSql("SELECT LIMIT 1 3                                  \n"
-                        + "  TABLE_CATALOG AS SYNONYM_CATALOG,             \n"
-                        + "  TABLE_SCHEMA AS SYNONYM_SCHEMA,               \n"
-                        + "  TABLE_NAME AS SYNONYM_NAME,                   \n"
-                        + "  TABLE_CATALOG AS REFERENCED_OBJECT_CATALOG,   \n"
-                        + "  TABLE_SCHEMA AS REFERENCED_OBJECT_SCHEMA,     \n"
-                        + "  TABLE_NAME AS REFERENCED_OBJECT_NAME          \n"
-                        + "FROM                                            \n"
-                        + "  INFORMATION_SCHEMA.TABLES                     \n"
-                        + "WHERE                                           \n"
-                        + "  TABLE_SCHEMA = 'BOOKS'                        \n"
-                        + "UNION                                           \n"
-                        + "SELECT LIMIT 1 3                                \n"
-                        + "  'PUBLIC' AS SYNONYM_CATALOG,                  \n"
-                        + "  'BOOKS' AS SYNONYM_SCHEMA,                    \n"
-                        + "  TABLE_NAME AS SYNONYM_NAME,                   \n"
-                        + "  TABLE_CATALOG AS REFERENCED_OBJECT_CATALOG,   \n"
-                        + "  TABLE_SCHEMA AS REFERENCED_OBJECT_SCHEMA,     \n"
-                        + "  TABLE_NAME + '1' AS REFERENCED_OBJECT_NAME    \n"
-                        + "FROM                                            \n"
-                        + "  INFORMATION_SCHEMA.TABLES                     \n"
-                        + "WHERE                                           \n"
-                        + "  TABLE_SCHEMA != 'BOOKS'                       ");
+      final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder();
+      databaseSpecificOverrideOptionsBuilder.withInformationSchemaViews()
+        .withSynonymsSql("SELECT LIMIT 1 3                                  \n"
+                         + "  TABLE_CATALOG AS SYNONYM_CATALOG,             \n"
+                         + "  TABLE_SCHEMA AS SYNONYM_SCHEMA,               \n"
+                         + "  TABLE_NAME AS SYNONYM_NAME,                   \n"
+                         + "  TABLE_CATALOG AS REFERENCED_OBJECT_CATALOG,   \n"
+                         + "  TABLE_SCHEMA AS REFERENCED_OBJECT_SCHEMA,     \n"
+                         + "  TABLE_NAME AS REFERENCED_OBJECT_NAME          \n"
+                         + "FROM                                            \n"
+                         + "  INFORMATION_SCHEMA.TABLES                     \n"
+                         + "WHERE                                           \n"
+                         + "  TABLE_SCHEMA = 'BOOKS'                        \n"
+                         + "UNION                                           \n"
+                         + "SELECT LIMIT 1 3                                \n"
+                         + "  'PUBLIC' AS SYNONYM_CATALOG,                  \n"
+                         + "  'BOOKS' AS SYNONYM_SCHEMA,                    \n"
+                         + "  TABLE_NAME AS SYNONYM_NAME,                   \n"
+                         + "  TABLE_CATALOG AS REFERENCED_OBJECT_CATALOG,   \n"
+                         + "  TABLE_SCHEMA AS REFERENCED_OBJECT_SCHEMA,     \n"
+                         + "  TABLE_NAME + '1' AS REFERENCED_OBJECT_NAME    \n"
+                         + "FROM                                            \n"
+                         + "  INFORMATION_SCHEMA.TABLES                     \n"
+                         + "WHERE                                           \n"
+                         + "  TABLE_SCHEMA != 'BOOKS'                       ");
 
       final SchemaInfoLevel minimum = SchemaInfoLevel.minimum();
       minimum.setRetrieveSynonymInformation(true);
 
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
       schemaCrawlerOptions.setSchemaInfoLevel(minimum);
-      schemaCrawlerOptions.setInformationSchemaViews(informationSchemaViews);
       schemaCrawlerOptions.setSynonymInclusionRule(new IncludeAll());
 
-      final Catalog catalog = getCatalog(schemaCrawlerOptions);
+      final Catalog catalog = getCatalog(databaseSpecificOverrideOptionsBuilder
+        .toOptions(), schemaCrawlerOptions);
       final Schema schema = catalog.getSchema("PUBLIC.BOOKS").get();
       assertNotNull("BOOKS Schema not found", schema);
       final Synonym[] synonyms = catalog.getSynonyms(schema)
@@ -349,17 +349,16 @@ public class SchemaCrawlerTest
   {
     try (final TestWriter out = new TestWriter("text");)
     {
-      final InformationSchemaViews informationSchemaViews = new InformationSchemaViews();
-      informationSchemaViews
-        .setTableConstraintsSql("SELECT * FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS");
-      informationSchemaViews
-        .setExtTableConstraintsSql("SELECT * FROM INFORMATION_SCHEMA.CHECK_CONSTRAINTS");
+      final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder();
+      databaseSpecificOverrideOptionsBuilder.withInformationSchemaViews()
+        .withTableConstraintsSql("SELECT * FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS")
+        .withExtTableConstraintsSql("SELECT * FROM INFORMATION_SCHEMA.CHECK_CONSTRAINTS");
 
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
       schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
-      schemaCrawlerOptions.setInformationSchemaViews(informationSchemaViews);
 
-      final Catalog catalog = getCatalog(schemaCrawlerOptions);
+      final Catalog catalog = getCatalog(databaseSpecificOverrideOptionsBuilder
+        .toOptions(), schemaCrawlerOptions);
       final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
       assertEquals("Schema count does not match", 6, schemas.length);
       for (final Schema schema: schemas)
@@ -369,8 +368,8 @@ public class SchemaCrawlerTest
         for (final Table table: tables)
         {
           out.println("  table: " + table.getFullName());
-          final TableConstraint[] tableConstraints = table
-            .getTableConstraints().toArray(new TableConstraint[0]);
+          final TableConstraint[] tableConstraints = table.getTableConstraints()
+            .toArray(new TableConstraint[0]);
           for (final TableConstraint tableConstraint: tableConstraints)
           {
             out.println("    constraint: " + tableConstraint.getName());
@@ -390,15 +389,20 @@ public class SchemaCrawlerTest
     {
       final Config config = Config
         .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
+
+      DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder()
+        .fromConfig(config);
+
       final SchemaCrawlerOptionsBuilder optionsBuilder = new SchemaCrawlerOptionsBuilder()
-        .setFromConfig(config);
+        .fromConfig(config);
       optionsBuilder.schemaInfoLevel(SchemaInfoLevel.maximum());
       optionsBuilder
         .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
 
       final SchemaCrawlerOptions schemaCrawlerOptions = optionsBuilder
         .toOptions();
-      final Catalog catalog = getCatalog(schemaCrawlerOptions);
+      final Catalog catalog = getCatalog(databaseSpecificOverrideOptionsBuilder
+        .toOptions(), schemaCrawlerOptions);
       final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
       assertEquals("Schema count does not match", 5, schemas.length);
       for (final Schema schema: schemas)
@@ -410,7 +414,8 @@ public class SchemaCrawlerTest
           out.println(String.format("o--> %s [%s]",
                                     table.getFullName(),
                                     table.getTableType()));
-          final SortedMap<String, Object> tableAttributes = new TreeMap<>(table.getAttributes());
+          final SortedMap<String, Object> tableAttributes = new TreeMap<>(table
+            .getAttributes());
           for (final Entry<String, Object> tableAttribute: tableAttributes
             .entrySet())
           {
@@ -448,12 +453,12 @@ public class SchemaCrawlerTest
   {
 
     final String[] tableNames = {
-        "AUTHORS",
-        "BOOKS",
-        "\"Global Counts\"",
-        "PUBLISHERS",
-        "BOOKAUTHORS",
-        "AUTHORSLIST",
+                                  "AUTHORS",
+                                  "BOOKS",
+                                  "\"Global Counts\"",
+                                  "PUBLISHERS",
+                                  "BOOKAUTHORS",
+                                  "AUTHORSLIST",
     };
     final Random rnd = new Random();
 
@@ -473,11 +478,9 @@ public class SchemaCrawlerTest
       {
         final String tableName2 = tableNames[j];
         assertEquals(tableName1 + " <--> " + tableName2,
-                     Math.signum(catalog
-                       .lookupTable(schema, tableName1)
-                       .orElse(null)
-                       .compareTo(catalog.lookupTable(schema, tableName2)
-                         .orElse(null))),
+                     Math.signum(catalog.lookupTable(schema, tableName1)
+                       .orElse(null).compareTo(catalog
+                         .lookupTable(schema, tableName2).orElse(null))),
                      Math.signum(i - j),
                      1e-100);
       }
@@ -511,16 +514,15 @@ public class SchemaCrawlerTest
   public void triggers()
     throws Exception
   {
-
-    // Set up information schema properties
-    final InformationSchemaViews informationSchemaViews = new InformationSchemaViews();
-    informationSchemaViews
-      .setTriggersSql("SELECT * FROM INFORMATION_SCHEMA.TRIGGERS");
+    final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder();
+    databaseSpecificOverrideOptionsBuilder.withInformationSchemaViews()
+      .withTriggersSql("SELECT * FROM INFORMATION_SCHEMA.TRIGGERS");
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setInformationSchemaViews(informationSchemaViews);
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
-    final Catalog catalog = getCatalog(schemaCrawlerOptions);
+
+    final Catalog catalog = getCatalog(databaseSpecificOverrideOptionsBuilder
+      .toOptions(), schemaCrawlerOptions);
     final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
     final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
     boolean foundTrigger = false;
@@ -544,22 +546,22 @@ public class SchemaCrawlerTest
   public void viewDefinitions()
     throws Exception
   {
-    final InformationSchemaViews informationSchemaViews = new InformationSchemaViews();
-    informationSchemaViews
-      .setViewsSql("SELECT * FROM INFORMATION_SCHEMA.VIEWS");
+    final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder();
+    databaseSpecificOverrideOptionsBuilder.withInformationSchemaViews()
+      .withViewsSql("SELECT * FROM INFORMATION_SCHEMA.VIEWS");
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setTableTypesFromString("VIEW");
-    schemaCrawlerOptions.setInformationSchemaViews(informationSchemaViews);
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
 
-    final Catalog catalog = getCatalog(schemaCrawlerOptions);
+    final Catalog catalog = getCatalog(databaseSpecificOverrideOptionsBuilder
+      .toOptions(), schemaCrawlerOptions);
     final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
     final View view = (View) catalog.lookupTable(schema, "AUTHORSLIST").get();
     assertNotNull("View not found", view);
     assertNotNull("View definition not found", view.getDefinition());
-    assertFalse("View definition not found", view.getDefinition().trim()
-      .equals(""));
+    assertFalse("View definition not found",
+                view.getDefinition().trim().equals(""));
   }
 
 }

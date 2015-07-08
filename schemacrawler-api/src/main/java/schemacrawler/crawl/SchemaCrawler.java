@@ -42,22 +42,22 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 
 /**
- * SchemaCrawler uses database meta-data to get the details about the
- * schema.
+ * SchemaCrawler uses database meta-data to get the details about the schema.
  *
  * @author Sualeh Fatehi
  */
 public final class SchemaCrawler
 {
 
-  private static final Logger LOGGER = Logger.getLogger(SchemaCrawler.class
-    .getName());
+  private static final Logger LOGGER = Logger
+    .getLogger(SchemaCrawler.class.getName());
 
   /**
    * Gets the result set columns metadata.
@@ -85,7 +85,7 @@ public final class SchemaCrawler
   private static void crawlColumnDataTypes(final MutableCatalog catalog,
                                            final RetrieverConnection retrieverConnection,
                                            final SchemaCrawlerOptions options)
-    throws SchemaCrawlerException
+                                             throws SchemaCrawlerException
   {
     try
     {
@@ -129,7 +129,7 @@ public final class SchemaCrawler
   private static void crawlDatabaseInfo(final MutableCatalog catalog,
                                         final RetrieverConnection retrieverConnection,
                                         final SchemaCrawlerOptions options)
-    throws SchemaCrawlerException
+                                          throws SchemaCrawlerException
   {
     try
     {
@@ -181,7 +181,7 @@ public final class SchemaCrawler
   private static void crawlRoutines(final MutableCatalog catalog,
                                     final RetrieverConnection retrieverConnection,
                                     final SchemaCrawlerOptions options)
-    throws SchemaCrawlerException
+                                      throws SchemaCrawlerException
   {
     final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
     final boolean retrieveRoutines = infoLevel.isRetrieveRoutines();
@@ -227,7 +227,8 @@ public final class SchemaCrawler
           {
             retriever
               .retrieveProcedureColumns((MutableProcedure) routine,
-                                        options.getRoutineColumnInclusionRule());
+                                        options
+                                          .getRoutineColumnInclusionRule());
           }
 
           if (routine instanceof MutableFunction
@@ -266,7 +267,7 @@ public final class SchemaCrawler
   private static void crawlSchemas(final MutableCatalog catalog,
                                    final RetrieverConnection retrieverConnection,
                                    final SchemaCrawlerOptions options)
-    throws SchemaCrawlerException
+                                     throws SchemaCrawlerException
   {
 
     LOGGER.log(Level.INFO, "Retrieving schemas");
@@ -290,7 +291,7 @@ public final class SchemaCrawler
   private static void crawlSequences(final MutableCatalog catalog,
                                      final RetrieverConnection retrieverConnection,
                                      final SchemaCrawlerOptions options)
-    throws SchemaCrawlerException
+                                       throws SchemaCrawlerException
   {
     final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
     final boolean retrieveSequences = infoLevel.isRetrieveSequenceInformation();
@@ -307,8 +308,8 @@ public final class SchemaCrawler
     try
     {
       retrieverExtra = new SequenceRetriever(retrieverConnection, catalog);
-      retrieverExtra.retrieveSequenceInformation(options
-        .getSequenceInclusionRule());
+      retrieverExtra
+        .retrieveSequenceInformation(options.getSequenceInclusionRule());
 
       ((Reducible) catalog).reduce(Sequence.class,
                                    new SequencesReducer(options));
@@ -329,7 +330,7 @@ public final class SchemaCrawler
   private static void crawlSynonyms(final MutableCatalog catalog,
                                     final RetrieverConnection retrieverConnection,
                                     final SchemaCrawlerOptions options)
-    throws SchemaCrawlerException
+                                      throws SchemaCrawlerException
   {
     final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
     final boolean retrieveSynonyms = infoLevel.isRetrieveSynonymInformation();
@@ -346,8 +347,8 @@ public final class SchemaCrawler
     try
     {
       retrieverExtra = new SynonymRetriever(retrieverConnection, catalog);
-      retrieverExtra.retrieveSynonymInformation(options
-        .getSynonymInclusionRule());
+      retrieverExtra
+        .retrieveSynonymInformation(options.getSynonymInclusionRule());
 
       ((Reducible) catalog).reduce(Synonym.class, new SynonymsReducer(options));
     }
@@ -367,7 +368,7 @@ public final class SchemaCrawler
   private static void crawlTables(final MutableCatalog catalog,
                                   final RetrieverConnection retrieverConnection,
                                   final SchemaCrawlerOptions options)
-    throws SchemaCrawlerException
+                                    throws SchemaCrawlerException
   {
     final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
     final boolean retrieveTables = infoLevel.isRetrieveTables();
@@ -438,8 +439,8 @@ public final class SchemaCrawler
       // Filter the list of tables based on grep criteria, and
       // parent-child relationships
       final Predicate<Table> tableFilter = tableFilter(options);
-      ((Reducible) catalog).reduce(Table.class, new TablesReducer(options,
-                                                                  tableFilter));
+      ((Reducible) catalog).reduce(Table.class,
+                                   new TablesReducer(options, tableFilter));
 
       if (infoLevel.isRetrieveTableConstraintInformation())
       {
@@ -494,6 +495,26 @@ public final class SchemaCrawler
   }
 
   private final Connection connection;
+  private final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions;
+
+  /**
+   * Constructs a SchemaCrawler object, from a connection.
+   *
+   * @param connection
+   *        An database connection.
+   * @param databaseSpecificOverrideOptions
+   *        Database specific overrides
+   * @throws SchemaCrawlerException
+   *         On a crawler exception
+   */
+  public SchemaCrawler(final Connection connection,
+                       final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
+                         throws SchemaCrawlerException
+  {
+    this.connection = requireNonNull(connection, "No connection specified");
+    this.databaseSpecificOverrideOptions = requireNonNull(databaseSpecificOverrideOptions,
+                                                          "No database specific overrides provided");
+  }
 
   /**
    * Constructs a SchemaCrawler object, from a connection.
@@ -507,6 +528,7 @@ public final class SchemaCrawler
     throws SchemaCrawlerException
   {
     this.connection = requireNonNull(connection, "No connection specified");
+    this.databaseSpecificOverrideOptions = new DatabaseSpecificOverrideOptions();
   }
 
   /**
@@ -532,6 +554,7 @@ public final class SchemaCrawler
         schemaCrawlerOptions = new SchemaCrawlerOptions();
       }
       retrieverConnection = new RetrieverConnection(connection,
+                                                    databaseSpecificOverrideOptions,
                                                     schemaCrawlerOptions);
 
       crawlSchemas(catalog, retrieverConnection, schemaCrawlerOptions);
