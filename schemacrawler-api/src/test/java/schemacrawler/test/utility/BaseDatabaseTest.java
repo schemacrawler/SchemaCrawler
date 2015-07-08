@@ -30,6 +30,7 @@ import org.junit.BeforeClass;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.DatabaseConnectionOptions;
+import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.utility.SchemaCrawlerUtility;
@@ -81,8 +82,18 @@ public abstract class BaseDatabaseTest
   protected Catalog getCatalog(final SchemaCrawlerOptions schemaCrawlerOptions)
     throws SchemaCrawlerException
   {
+    return getCatalog(new DatabaseSpecificOverrideOptions(),
+                      schemaCrawlerOptions);
+  }
+
+  protected Catalog getCatalog(final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions,
+                               final SchemaCrawlerOptions schemaCrawlerOptions)
+                                 throws SchemaCrawlerException
+  {
     final Catalog catalog = SchemaCrawlerUtility
-      .getCatalog(getConnection(), schemaCrawlerOptions);
+      .getCatalog(getConnection(),
+                  databaseSpecificOverrideOptions,
+                  schemaCrawlerOptions);
     return catalog;
   }
 
