@@ -22,6 +22,8 @@
 package schemacrawler.tools.text.schema;
 
 
+import java.util.Map;
+
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.text.base.BaseTextOptionsBuilder;
 
@@ -89,28 +91,30 @@ public class SchemaTextOptionsBuilder
   }
 
   @Override
-  public SchemaTextOptionsBuilder setFromConfig(final Config config)
+  public SchemaTextOptionsBuilder fromConfig(final Map<String, String> map)
   {
-    if (config == null)
+    if (map == null)
     {
       return this;
     }
-    super.setFromConfig(config);
+    super.fromConfig(map);
+
+    final Config config = new Config(map);
 
     options.setShowStandardColumnTypeNames(config
       .getBooleanValue(SHOW_STANDARD_COLUMN_TYPE_NAMES));
     options.setShowOrdinalNumbers(config.getBooleanValue(SHOW_ORDINAL_NUMBERS));
 
-    options.setHideForeignKeyNames(config
-      .getBooleanValue(HIDE_FOREIGN_KEY_NAMES));
-    options.setHidePrimaryKeyNames(config
-      .getBooleanValue(HIDE_PRIMARY_KEY_NAMES));
+    options
+      .setHideForeignKeyNames(config.getBooleanValue(HIDE_FOREIGN_KEY_NAMES));
+    options
+      .setHidePrimaryKeyNames(config.getBooleanValue(HIDE_PRIMARY_KEY_NAMES));
     options.setHideIndexNames(config.getBooleanValue(HIDE_INDEX_NAMES));
     options.setHideTriggerNames(config.getBooleanValue(HIDE_TRIGGER_NAMES));
     options.setHideRoutineSpecificNames(config
       .getBooleanValue(HIDE_ROUTINE_SPECIFIC_NAMES));
-    options.setHideConstraintNames(config
-      .getBooleanValue(HIDE_CONSTRAINT_NAMES));
+    options
+      .setHideConstraintNames(config.getBooleanValue(HIDE_CONSTRAINT_NAMES));
     options.setHideRemarks(config.getBooleanValue(HIDE_REMARKS));
 
     options.setAlphabeticalSortForForeignKeys(config
@@ -134,8 +138,8 @@ public class SchemaTextOptionsBuilder
 
     config.setBooleanValue(SHOW_STANDARD_COLUMN_TYPE_NAMES,
                            options.isShowStandardColumnTypeNames());
-    config
-      .setBooleanValue(SHOW_ORDINAL_NUMBERS, options.isShowOrdinalNumbers());
+    config.setBooleanValue(SHOW_ORDINAL_NUMBERS,
+                           options.isShowOrdinalNumbers());
 
     config.setBooleanValue(HIDE_FOREIGN_KEY_NAMES,
                            options.isHideForeignKeyNames());

@@ -29,6 +29,7 @@ import java.util.logging.Logger;
 
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
+import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import sf.util.ObjectToString;
 
 /**
@@ -52,23 +53,40 @@ public abstract class BaseStagedExecutable
   /**
    * {@inheritDoc}
    *
-   * @see schemacrawler.tools.executable.Executable#execute(java.sql.Connection)
+   * @see schemacrawler.tools.executable.Executable#execute(Connection,
+   *      DatabaseSpecificOverrideOptions))
    */
   @Override
-  public final void execute(final Connection connection)
-    throws Exception
+  public final void execute(final Connection connection,
+                            final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
+                              throws Exception
   {
     requireNonNull(connection, "No connection provided");
+    requireNonNull(databaseSpecificOverrideOptions,
+                   "No database specific overrides provided");
 
     LOGGER.log(Level.INFO, "Executing SchemaCrawler command, " + getCommand());
     LOGGER.log(Level.CONFIG, ObjectToString.toString(schemaCrawlerOptions));
     LOGGER.log(Level.CONFIG, ObjectToString.toString(outputOptions));
     LOGGER.log(Level.FINE, ObjectToString.toString(additionalConfiguration));
 
-    final SchemaCrawler crawler = new SchemaCrawler(connection);
+    final SchemaCrawler crawler = new SchemaCrawler(connection,
+                                                    databaseSpecificOverrideOptions);
     final Catalog catalog = crawler.crawl(schemaCrawlerOptions);
 
     executeOn(catalog, connection);
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * @see schemacrawler.tools.executable.Executable#execute(Connection)
+   */
+  @Override
+  public final void execute(final Connection connection)
+    throws Exception
+  {
+    execute(connection, new DatabaseSpecificOverrideOptions());
   }
 
 }

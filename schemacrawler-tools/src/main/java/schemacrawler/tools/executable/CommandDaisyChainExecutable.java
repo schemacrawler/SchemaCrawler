@@ -35,7 +35,7 @@ public final class CommandDaisyChainExecutable
       final Executable executable = addNext(command);
 
       final CommonTextOptionsBuilder commonTextOptions = new CommonTextOptionsBuilder();
-      commonTextOptions.setFromConfig(additionalConfiguration);
+      commonTextOptions.fromConfig(additionalConfiguration);
 
       if (commands.hasMultipleCommands())
       {
