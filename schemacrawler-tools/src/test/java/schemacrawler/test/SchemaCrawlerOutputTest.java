@@ -35,6 +35,7 @@ import java.util.List;
 import org.junit.Test;
 
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder;
 import schemacrawler.schemacrawler.ExcludeAll;
 import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
@@ -83,16 +84,20 @@ public class SchemaCrawlerOutputTest
            "SELECT ${orderbycolumns} FROM ${table} ORDER BY ${orderbycolumns}");
 
     final String[] commands = new String[] {
-        SchemaTextDetailType.details + "," + Operation.count + ","
-            + Operation.dump,
-        SchemaTextDetailType.brief + "," + Operation.count,
-        queryCommand1 + "," + queryCommand2 + "," + Operation.count + ","
-            + SchemaTextDetailType.brief,
+                                             SchemaTextDetailType.details + ","
+                                             + Operation.count + ","
+                                             + Operation.dump,
+                                             SchemaTextDetailType.brief + ","
+                                                               + Operation.count,
+                                             queryCommand1 + "," + queryCommand2 + ","
+                                                                                  + Operation.count
+                                                                                  + ","
+                                                                                  + SchemaTextDetailType.brief,
     };
 
     final List<String> failures = new ArrayList<>();
-    for (final OutputFormat outputFormat: EnumSet.complementOf(EnumSet
-      .of(TextOutputFormat.tsv)))
+    for (final OutputFormat outputFormat: EnumSet
+      .complementOf(EnumSet.of(TextOutputFormat.tsv)))
     {
       for (final String command: commands)
       {
@@ -106,8 +111,12 @@ public class SchemaCrawlerOutputTest
 
         final Config config = Config
           .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
+
+        final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder()
+          .fromConfig(config);
+
         final SchemaCrawlerOptionsBuilder optionsBuilder = new SchemaCrawlerOptionsBuilder()
-          .setFromConfig(config);
+          .fromConfig(config);
         optionsBuilder
           .includeSchemas(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS"));
         optionsBuilder.schemaInfoLevel(SchemaInfoLevel.maximum());
@@ -117,11 +126,13 @@ public class SchemaCrawlerOutputTest
         executable.setSchemaCrawlerOptions(optionsBuilder.toOptions());
         executable.setOutputOptions(outputOptions);
         executable.setAdditionalConfiguration(queriesConfig);
-        executable.execute(getConnection());
+        executable.execute(getConnection(),
+                           databaseSpecificOverrideOptionsBuilder.toOptions());
 
-        failures.addAll(compareOutput(COMPOSITE_OUTPUT + referenceFile,
-                                      testOutputFile,
-                                      outputFormat.getFormat()));
+        failures
+          .addAll(compareOutput(COMPOSITE_OUTPUT + referenceFile,
+                                testOutputFile,
+                                outputFormat.getFormat()));
       }
     }
     if (failures.size() > 0)
@@ -147,8 +158,8 @@ public class SchemaCrawlerOutputTest
     textOptions.setHideIndexNames(true);
     textOptions.setHideConstraintNames(true);
 
-    for (final OutputFormat outputFormat: EnumSet.complementOf(EnumSet
-      .of(TextOutputFormat.tsv)))
+    for (final OutputFormat outputFormat: EnumSet
+      .complementOf(EnumSet.of(TextOutputFormat.tsv)))
     {
       final String referenceFile = "details_maximum."
                                    + outputFormat.getFormat();
@@ -161,8 +172,12 @@ public class SchemaCrawlerOutputTest
 
       final Config config = Config
         .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
+
+      final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder()
+        .fromConfig(config);
+
       final SchemaCrawlerOptionsBuilder optionsBuilder = new SchemaCrawlerOptionsBuilder()
-        .setFromConfig(config);
+        .fromConfig(config);
       optionsBuilder.schemaInfoLevel(SchemaInfoLevel.maximum());
       optionsBuilder
         .includeSchemas(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS"));
@@ -178,12 +193,13 @@ public class SchemaCrawlerOutputTest
       executable
         .setAdditionalConfiguration(new SchemaTextOptionsBuilder(textOptions)
           .toConfig());
-      executable.execute(getConnection());
+      executable.execute(getConnection(),
+                         databaseSpecificOverrideOptionsBuilder.toOptions());
 
-      failures.addAll(compareOutput(HIDE_CONSTRAINT_NAMES_OUTPUT
-                                        + referenceFile,
-                                    testOutputFile,
-                                    outputFormat.getFormat()));
+      failures
+        .addAll(compareOutput(HIDE_CONSTRAINT_NAMES_OUTPUT + referenceFile,
+                              testOutputFile,
+                              outputFormat.getFormat()));
     }
     if (failures.size() > 0)
     {
@@ -214,8 +230,12 @@ public class SchemaCrawlerOutputTest
 
       final Config config = Config
         .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
+
+      final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder()
+        .fromConfig(config);
+
       final SchemaCrawlerOptionsBuilder optionsBuilder = new SchemaCrawlerOptionsBuilder()
-        .setFromConfig(config);
+        .fromConfig(config);
       optionsBuilder.schemaInfoLevel(infoLevel.getSchemaInfoLevel());
       optionsBuilder
         .includeSchemas(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS"));
@@ -225,7 +245,8 @@ public class SchemaCrawlerOutputTest
         .name());
       executable.setSchemaCrawlerOptions(optionsBuilder.toOptions());
       executable.setOutputOptions(outputOptions);
-      executable.execute(getConnection());
+      executable.execute(getConnection(),
+                         databaseSpecificOverrideOptionsBuilder.toOptions());
 
       failures.addAll(compareOutput(JSON_OUTPUT + referenceFile,
                                     testOutputFile,
@@ -249,8 +270,8 @@ public class SchemaCrawlerOutputTest
     textOptions.setNoInfo(true);
     textOptions.setHideRemarks(true);
 
-    for (final OutputFormat outputFormat: EnumSet.complementOf(EnumSet
-      .of(TextOutputFormat.tsv)))
+    for (final OutputFormat outputFormat: EnumSet
+      .complementOf(EnumSet.of(TextOutputFormat.tsv)))
     {
       final String referenceFile = "schema_detailed."
                                    + outputFormat.getFormat();
@@ -299,8 +320,8 @@ public class SchemaCrawlerOutputTest
     textOptions.setNoFooter(false);
     textOptions.setShowOrdinalNumbers(true);
 
-    for (final OutputFormat outputFormat: EnumSet.complementOf(EnumSet
-      .of(TextOutputFormat.tsv)))
+    for (final OutputFormat outputFormat: EnumSet
+      .complementOf(EnumSet.of(TextOutputFormat.tsv)))
     {
       final String referenceFile = "details_maximum."
                                    + outputFormat.getFormat();
@@ -313,8 +334,12 @@ public class SchemaCrawlerOutputTest
 
       final Config config = Config
         .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
+
+      final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder()
+        .fromConfig(config);
+
       final SchemaCrawlerOptionsBuilder optionsBuilder = new SchemaCrawlerOptionsBuilder()
-        .setFromConfig(config);
+        .fromConfig(config);
       optionsBuilder.schemaInfoLevel(SchemaInfoLevel.maximum());
       optionsBuilder
         .includeSchemas(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS"));
@@ -330,7 +355,8 @@ public class SchemaCrawlerOutputTest
       executable
         .setAdditionalConfiguration(new SchemaTextOptionsBuilder(textOptions)
           .toConfig());
-      executable.execute(getConnection());
+      executable.execute(getConnection(),
+                         databaseSpecificOverrideOptionsBuilder.toOptions());
 
       failures.addAll(compareOutput(ORDINAL_OUTPUT + referenceFile,
                                     testOutputFile,
@@ -356,8 +382,8 @@ public class SchemaCrawlerOutputTest
     textOptions.setNoFooter(false);
     textOptions.setShowUnqualifiedNames(true);
 
-    for (final OutputFormat outputFormat: EnumSet.complementOf(EnumSet
-      .of(TextOutputFormat.tsv)))
+    for (final OutputFormat outputFormat: EnumSet
+      .complementOf(EnumSet.of(TextOutputFormat.tsv)))
     {
       final String referenceFile = "routines." + outputFormat.getFormat();
 
@@ -369,8 +395,12 @@ public class SchemaCrawlerOutputTest
 
       final Config config = Config
         .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
+
+      final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder()
+        .fromConfig(config);
+
       final SchemaCrawlerOptionsBuilder optionsBuilder = new SchemaCrawlerOptionsBuilder()
-        .setFromConfig(config);
+        .fromConfig(config);
       optionsBuilder
         .includeSchemas(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS"))
         .includeTables(new ExcludeAll()).includeRoutines(new IncludeAll())
@@ -384,7 +414,8 @@ public class SchemaCrawlerOutputTest
       executable
         .setAdditionalConfiguration(new SchemaTextOptionsBuilder(textOptions)
           .toConfig());
-      executable.execute(getConnection());
+      executable.execute(getConnection(),
+                         databaseSpecificOverrideOptionsBuilder.toOptions());
 
       failures.addAll(compareOutput(ROUTINES_OUTPUT + referenceFile,
                                     testOutputFile,
@@ -410,8 +441,8 @@ public class SchemaCrawlerOutputTest
     textOptions.setNoFooter(false);
     textOptions.setShowUnqualifiedNames(true);
 
-    for (final OutputFormat outputFormat: EnumSet.complementOf(EnumSet
-      .of(TextOutputFormat.tsv)))
+    for (final OutputFormat outputFormat: EnumSet
+      .complementOf(EnumSet.of(TextOutputFormat.tsv)))
     {
       final String referenceFile = "details_maximum."
                                    + outputFormat.getFormat();
@@ -424,8 +455,12 @@ public class SchemaCrawlerOutputTest
 
       final Config config = Config
         .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
+
+      final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder()
+        .fromConfig(config);
+
       final SchemaCrawlerOptionsBuilder optionsBuilder = new SchemaCrawlerOptionsBuilder()
-        .setFromConfig(config);
+        .fromConfig(config);
       optionsBuilder.schemaInfoLevel(SchemaInfoLevel.maximum());
       optionsBuilder
         .includeSchemas(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS"));
@@ -441,7 +476,8 @@ public class SchemaCrawlerOutputTest
       executable
         .setAdditionalConfiguration(new SchemaTextOptionsBuilder(textOptions)
           .toConfig());
-      executable.execute(getConnection());
+      executable.execute(getConnection(),
+                         databaseSpecificOverrideOptionsBuilder.toOptions());
 
       failures.addAll(compareOutput(UNQUALIFIED_NAMES_OUTPUT + referenceFile,
                                     testOutputFile,

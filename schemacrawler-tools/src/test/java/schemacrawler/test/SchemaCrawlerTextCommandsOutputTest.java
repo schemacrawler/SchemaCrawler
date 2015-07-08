@@ -152,7 +152,7 @@ public class SchemaCrawlerTextCommandsOutputTest
                                                             writer);
 
       final CommonTextOptionsBuilder commonTextOptions = new CommonTextOptionsBuilder();
-      commonTextOptions.setFromConfig(config);
+      commonTextOptions.fromConfig(config);
       commonTextOptions.hideInfo();
       commonTextOptions.hideHeader();
       commonTextOptions.hideFooter();

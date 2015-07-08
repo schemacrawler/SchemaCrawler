@@ -22,6 +22,7 @@ package schemacrawler.tools.executable;
 
 
 import static sf.util.Utility.isBlank;
+
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.options.OutputOptions;
