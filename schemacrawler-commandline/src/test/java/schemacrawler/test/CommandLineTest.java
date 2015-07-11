@@ -106,6 +106,8 @@ public class CommandLineTest
   {
     final Map<String, String> args = new HashMap<String, String>();
     args.put("portablenames", Boolean.TRUE.toString());
+    args.put("sorttables", Boolean.TRUE.toString());
+    args.put("sortcolumns", Boolean.TRUE.toString());
     // Testing all tables, routines
     // Testing no sequences, synonyms
 
