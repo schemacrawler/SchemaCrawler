@@ -90,7 +90,7 @@ public class LintOutputTest
         final Config config = Config
           .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
         final SchemaCrawlerOptionsBuilder optionsBuilder = new SchemaCrawlerOptionsBuilder()
-          .setFromConfig(config);
+          .fromConfig(config);
         optionsBuilder
           .includeSchemas(new RegularExpressionInclusionRule(".*FOR_LINT"));
         optionsBuilder.schemaInfoLevel(SchemaInfoLevel.maximum());
@@ -127,7 +127,7 @@ public class LintOutputTest
       final Config config = Config
         .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
       final SchemaCrawlerOptionsBuilder optionsBuilder = new SchemaCrawlerOptionsBuilder()
-        .setFromConfig(config);
+        .fromConfig(config);
       optionsBuilder
         .includeSchemas(new RegularExpressionInclusionRule(".*FOR_LINT"));
       optionsBuilder.schemaInfoLevel(infoLevel.getSchemaInfoLevel());
@@ -156,7 +156,7 @@ public class LintOutputTest
       final Config config = Config
         .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
       final SchemaCrawlerOptionsBuilder optionsBuilder = new SchemaCrawlerOptionsBuilder()
-        .setFromConfig(config);
+        .fromConfig(config);
       optionsBuilder
         .includeSchemas(new RegularExpressionInclusionRule(".*FOR_LINT"));
       optionsBuilder.schemaInfoLevel(infoLevel.getSchemaInfoLevel());

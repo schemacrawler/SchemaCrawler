@@ -28,6 +28,8 @@ import java.util.List;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.ConnectionOptions;
+import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
+import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -50,13 +52,14 @@ public final class SchemaCrawlerCommandLine
   private final String command;
   private final Config config;
   private final SchemaCrawlerOptions schemaCrawlerOptions;
+  private final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions;
   private final OutputOptions outputOptions;
   private final ConnectionOptions connectionOptions;
   private final DatabaseSystemConnector dbSystemConnector;
 
   public SchemaCrawlerCommandLine(final DatabaseSystemConnector dbSystemConnector,
                                   final String... args)
-    throws SchemaCrawlerException
+                                    throws SchemaCrawlerException
   {
     if (args == null || args.length == 0)
     {
@@ -86,6 +89,13 @@ public final class SchemaCrawlerCommandLine
     // provided configuration, and bundled configuration
     connectionOptions = dbSystemConnector.newDatabaseConnectionOptions(config);
 
+    // Get partially built database specific options, built from the classpath
+    // resources, and then override from config loaded in from command-line
+    final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = dbSystemConnector
+      .getDatabaseSpecificOverrideOptionsBuilder();
+    databaseSpecificOverrideOptionsBuilder.fromConfig(config);
+    databaseSpecificOverrideOptions = databaseSpecificOverrideOptionsBuilder
+      .toOptions();
   }
 
   @Override
@@ -114,7 +124,7 @@ public final class SchemaCrawlerCommandLine
       {
         for (final Executable executable: executables)
         {
-          executable.execute(connection);
+          executable.execute(connection, databaseSpecificOverrideOptions);
         }
       }
     }
@@ -170,7 +180,7 @@ public final class SchemaCrawlerCommandLine
    */
   private void loadConfig(final DatabaseSystemConnector dbSystemConnector,
                           final String[] args)
-    throws SchemaCrawlerException
+                            throws SchemaCrawlerException
   {
     final Config optionsMap = CommandLineUtility.loadConfig(args);
 
