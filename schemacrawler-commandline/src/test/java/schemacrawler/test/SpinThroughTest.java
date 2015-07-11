@@ -90,7 +90,7 @@ public class SpinThroughTest
 
           final Config config = Config.load(hsqldbProperties.toString());
           final SchemaCrawlerOptionsBuilder optionsBuilder = new SchemaCrawlerOptionsBuilder()
-            .setFromConfig(config);
+            .fromConfig(config);
           optionsBuilder.schemaInfoLevel(infoLevel.getSchemaInfoLevel());
           optionsBuilder.includeSequences(new IncludeAll())
             .includeSynonyms(new IncludeAll());
