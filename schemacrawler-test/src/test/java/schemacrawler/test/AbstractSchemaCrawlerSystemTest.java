@@ -88,7 +88,7 @@ public abstract class AbstractSchemaCrawlerSystemTest
     final Config config = (Config) appContext.getBean(dataSourceName
                                                       + ".properties");
     final SchemaCrawlerOptionsBuilder optionsBuilder = new SchemaCrawlerOptionsBuilder()
-      .setFromConfig(config);
+      .fromConfig(config);
     optionsBuilder.schemaInfoLevel(InfoLevel.maximum.getSchemaInfoLevel());
     if (schemaInclusion != null)
     {
@@ -106,7 +106,7 @@ public abstract class AbstractSchemaCrawlerSystemTest
     try
     {
       final Catalog catalog = SchemaCrawlerUtility
-        .getCatalog(connection, schemaCrawlerOptions);
+        .getCatalog(connection, null, schemaCrawlerOptions);
       return catalog;
     }
     catch (final Exception e)
