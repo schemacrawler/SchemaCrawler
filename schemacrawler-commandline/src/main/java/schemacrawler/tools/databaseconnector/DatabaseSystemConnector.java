@@ -28,7 +28,8 @@ import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.DatabaseConfigConnectionOptions;
 import schemacrawler.schemacrawler.DatabaseConnectionOptions;
-import schemacrawler.schemacrawler.InformationSchemaViews;
+import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
+import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseExecutable;
 import schemacrawler.tools.executable.Executable;
@@ -51,12 +52,19 @@ public class DatabaseSystemConnector
     {
       // No-op
     }
+
+    @Override
+    public void execute(Connection connection,
+                        DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
+                          throws Exception
+    {
+      // No-op
+    }
   }
 
   protected static final DatabaseSystemConnector UNKNOWN = new DatabaseSystemConnector();
   private final DatabaseServerType dbServerType;
   private final String configResource;
-
   private final String informationSchemaViewsResourceFolder;
 
   protected DatabaseSystemConnector(final DatabaseServerType dbServerType,
@@ -77,9 +85,8 @@ public class DatabaseSystemConnector
   }
 
   /**
-   * Checks if the database connection options are valid, the JDBC
-   * driver class can be loaded, and so on. Throws an exception if there
-   * is a problem.
+   * Checks if the database connection options are valid, the JDBC driver class
+   * can be loaded, and so on. Throws an exception if there is a problem.
    *
    * @throws SchemaCrawlerException
    *         If there is a problem with creating connection options.
@@ -93,19 +100,25 @@ public class DatabaseSystemConnector
   }
 
   /**
-   * Gets the complete bundled database configuration set, including the
-   * SQL for information schema views. This is useful in building the
-   * SchemaCrawler options.
+   * Gets the complete bundled database specific configuration set, including
+   * the SQL for information schema views.
+   */
+  public final DatabaseSpecificOverrideOptionsBuilder getDatabaseSpecificOverrideOptionsBuilder()
+  {
+    final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder();
+    databaseSpecificOverrideOptionsBuilder.withInformationSchemaViews()
+      .fromResourceFolder(informationSchemaViewsResourceFolder);
+
+    return databaseSpecificOverrideOptionsBuilder;
+  }
+
+  /**
+   * Gets the complete bundled database configuration set. This is useful in
+   * building the SchemaCrawler options.
    */
   public final Config getConfig()
   {
     final Config config = Config.loadResource(configResource);
-
-    final InformationSchemaViews informationSchemaViews = new InformationSchemaViews();
-    informationSchemaViews
-      .loadResourceFolder(informationSchemaViewsResourceFolder);
-    config.putAll(informationSchemaViews.toConfig());
-
     return config;
   }
 
@@ -115,13 +128,11 @@ public class DatabaseSystemConnector
   }
 
   /**
-   * Creates a datasource for connecting to a database. Additional
-   * connection options are provided, from the command-line, and
-   * configuration file.
+   * Creates a datasource for connecting to a database. Additional connection
+   * options are provided, from the command-line, and configuration file.
    *
    * @param additionalConfig
-   *        Configuration from the command-line, and from configuration
-   *        files.
+   *        Configuration from the command-line, and from configuration files.
    */
   public ConnectionOptions newDatabaseConnectionOptions(final Config additionalConfig)
     throws SchemaCrawlerException

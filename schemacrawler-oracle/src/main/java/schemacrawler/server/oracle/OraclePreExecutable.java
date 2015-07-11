@@ -25,7 +25,7 @@ public class OraclePreExecutable
     executeScriptFromResource(connection, "/schemacrawler-oracle.before.sql");
 
     final SchemaTextOptions schemaTextOptions = new SchemaTextOptionsBuilder()
-      .setFromConfig(additionalConfiguration).toOptions();
+      .fromConfig(additionalConfiguration).toOptions();
     if (schemaTextOptions.isShowUnqualifiedNames())
     {
       executeScriptFromResource(connection,

@@ -35,7 +35,7 @@ public final class ApiExample
 
     // Get the schema definition
     final Catalog catalog = SchemaCrawlerUtility
-      .getCatalog(connection, options);
+      .getCatalog(connection, null, options);
 
     for (final Schema schema: catalog.getSchemas())
     {

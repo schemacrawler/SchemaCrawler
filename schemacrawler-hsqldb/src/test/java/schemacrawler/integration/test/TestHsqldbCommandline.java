@@ -84,11 +84,11 @@ public class TestHsqldbCommandline
     final Config config = new HyperSQLDatabaseConnector()
       .getDatabaseSystemConnector().getConfig();
     final SchemaCrawlerOptionsBuilder optionsBuilder = new SchemaCrawlerOptionsBuilder()
-      .setFromConfig(config);
+      .fromConfig(config);
     optionsBuilder.schemaInfoLevel(InfoLevel.maximum.getSchemaInfoLevel());
     final Catalog catalog = SchemaCrawlerUtility.getCatalog(getConnection(),
-                                                            optionsBuilder
-                                                              .toOptions());
+                                                            null, optionsBuilder
+                                                                .toOptions());
     assertNotNull(catalog);
 
     assertEquals(6, catalog.getSchemas().size());

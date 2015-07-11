@@ -93,7 +93,7 @@ public class PrimaryKeyWeakAssociationsTest
         .getDatabaseSystemConnector().newDatabaseConnectionOptions(config);
 
       final Catalog baseCatalog = SchemaCrawlerUtility
-        .getCatalog(connectionOptions.getConnection(), schemaCrawlerOptions);
+        .getCatalog(connectionOptions.getConnection(), null, schemaCrawlerOptions);
       final CatalogWithAssociations catalog = new CatalogWithAssociations(baseCatalog);
       final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
       assertEquals("Schema count does not match", 1, schemas.length);

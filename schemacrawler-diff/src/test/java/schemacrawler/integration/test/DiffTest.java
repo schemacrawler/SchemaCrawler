@@ -82,7 +82,7 @@ public class DiffTest
       .getDatabaseSystemConnector().newDatabaseConnectionOptions(config);
 
     final Catalog catalog = SchemaCrawlerUtility
-      .getCatalog(connectionOptions.getConnection(), schemaCrawlerOptions);
+      .getCatalog(connectionOptions.getConnection(), null, schemaCrawlerOptions);
 
     return catalog;
   }
