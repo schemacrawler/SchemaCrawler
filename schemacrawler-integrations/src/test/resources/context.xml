@@ -25,6 +25,105 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
     </property>
   </bean>
 
+  <bean id="information_schema" class="java.util.HashMap">
+    <constructor-arg>
+        <map key-type="java.lang.String" value-type="java.lang.String">
+          <entry key="select.INFORMATION_SCHEMA.ROUTINES">
+            <value>
+              <![CDATA[              
+                  SELECT 
+                    *
+                  FROM 
+                    INFORMATION_SCHEMA.ROUTINES 
+                  ORDER BY 
+                    ROUTINE_CATALOG, 
+                    ROUTINE_SCHEMA, 
+                    ROUTINE_NAME
+                  ]]>
+            </value>
+          </entry>
+          <entry key="select.INFORMATION_SCHEMA.VIEWS">
+            <value>
+              <![CDATA[
+                  SELECT 
+                    * 
+                  FROM 
+                    INFORMATION_SCHEMA.VIEWS 
+                  ORDER BY 
+                    TABLE_CATALOG, 
+                    TABLE_SCHEMA, 
+                    TABLE_NAME
+                  ]]>
+            </value>
+          </entry>
+          <entry key="select.INFORMATION_SCHEMA.TRIGGERS">
+            <value>
+              <![CDATA[
+                  SELECT 
+                    * 
+                  FROM 
+                    INFORMATION_SCHEMA.TRIGGERS
+                  ORDER BY
+                    TRIGGER_CATALOG,
+                    TRIGGER_SCHEMA,
+                    TRIGGER_NAME
+                  ]]>
+            </value>
+          </entry>
+          <entry key="select.INFORMATION_SCHEMA.TABLE_CONSTRAINTS">
+            <value>
+              <![CDATA[
+                  SELECT 
+                    * 
+                  FROM 
+                    INFORMATION_SCHEMA.TABLE_CONSTRAINTS
+                  ORDER BY
+                    CONSTRAINT_CATALOG,
+                    CONSTRAINT_SCHEMA,
+                    CONSTRAINT_NAME
+                  ]]>
+            </value>
+          </entry>
+          <entry key="select.INFORMATION_SCHEMA.EXT_TABLE_CONSTRAINTS">
+            <value>
+              <![CDATA[
+                  SELECT 
+                    * 
+                  FROM 
+                    INFORMATION_SCHEMA.CHECK_CONSTRAINTS
+                  ORDER BY
+                    CONSTRAINT_CATALOG,
+                    CONSTRAINT_SCHEMA,
+                    CONSTRAINT_NAME
+                  ]]>
+            </value>
+          </entry>
+          <entry key="select.INFORMATION_SCHEMA.SEQUENCES">
+            <value>
+              <![CDATA[              
+                  SELECT 
+                    *
+                  FROM 
+                    INFORMATION_SCHEMA.SEQUENCES 
+                  ORDER BY 
+                    SEQUENCE_CATALOG, 
+                    SEQUENCE_SCHEMA, 
+                    SEQUENCE_NAME
+                  ]]>
+            </value>
+          </entry>    
+        </map>
+    </constructor-arg>
+  </bean>
+
+  <bean id="databaseSpecificOverrideOptionsBuilder"
+        class="schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder">
+     <constructor-arg ref="information_schema"/>
+  </bean>
+  <bean id="databaseSpecificOverrideOptions" 
+        factory-bean="databaseSpecificOverrideOptionsBuilder"
+        factory-method="toOptions" />
+    
   <bean
     id="schemaCrawlerOptions"
     class="schemacrawler.schemacrawler.SchemaCrawlerOptions"
@@ -38,9 +137,6 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
         <value>VIEW</value>
       </set>
     </property>
-    <property
-      name="informationSchemaViews"
-      ref="informationSchemaViews" />
     <property name="schemaInfoLevel">
       <bean
         factory-method="maximum"
@@ -58,95 +154,6 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
     </constructor-arg>
   </bean>
 
-  <bean
-    id="informationSchemaViews"
-    class="schemacrawler.schemacrawler.InformationSchemaViews"
-  >
-    <property name="routinesSql">
-      <value>
-        <![CDATA[              
-            SELECT 
-              *
-            FROM 
-              INFORMATION_SCHEMA.ROUTINES 
-            ORDER BY 
-              ROUTINE_CATALOG, 
-              ROUTINE_SCHEMA, 
-              ROUTINE_NAME
-            ]]>
-      </value>
-    </property>
-    <property name="viewsSql">
-      <value>
-        <![CDATA[
-            SELECT 
-              * 
-            FROM 
-              INFORMATION_SCHEMA.VIEWS 
-            ORDER BY 
-              TABLE_CATALOG, 
-              TABLE_SCHEMA, 
-              TABLE_NAME
-            ]]>
-      </value>
-    </property>
-    <property name="triggersSql">
-      <value>
-        <![CDATA[
-            SELECT 
-              * 
-            FROM 
-              INFORMATION_SCHEMA.TRIGGERS
-            ORDER BY
-              TRIGGER_CATALOG,
-              TRIGGER_SCHEMA,
-              TRIGGER_NAME
-            ]]>
-      </value>
-    </property>
-    <property name="tableConstraintsSql">
-      <value>
-        <![CDATA[
-            SELECT 
-              * 
-            FROM 
-              INFORMATION_SCHEMA.TABLE_CONSTRAINTS
-            ORDER BY
-              CONSTRAINT_CATALOG,
-              CONSTRAINT_SCHEMA,
-              CONSTRAINT_NAME
-            ]]>
-      </value>
-    </property>
-    <property name="extTableConstraintsSql">
-      <value>
-        <![CDATA[
-            SELECT 
-              * 
-            FROM 
-              INFORMATION_SCHEMA.CHECK_CONSTRAINTS
-            ORDER BY
-              CONSTRAINT_CATALOG,
-              CONSTRAINT_SCHEMA,
-              CONSTRAINT_NAME
-            ]]>
-      </value>
-    </property>
-    <property name="sequencesSql">
-      <value>
-        <![CDATA[              
-            SELECT 
-              *
-            FROM 
-              INFORMATION_SCHEMA.SEQUENCES 
-            ORDER BY 
-              SEQUENCE_CATALOG, 
-              SEQUENCE_SCHEMA, 
-              SEQUENCE_NAME
-            ]]>
-      </value>
-    </property>
-  </bean>
 
   <bean
     id="executableForSchema"

@@ -35,6 +35,7 @@ public class SpringOptions
 
   private String executableName;
   private String dataSourceName;
+  private String databaseSpecificOverrideOptionsName;
   private String contextFileName;
 
   /**
@@ -45,6 +46,16 @@ public class SpringOptions
   public String getContextFileName()
   {
     return contextFileName;
+  }
+
+  /**
+   * Bean name for the database-specific override options.
+   *
+   * @return Bean name for the database-specific override options.
+   */
+  public String getDatabaseSpecificOverrideOptionsName()
+  {
+    return databaseSpecificOverrideOptionsName;
   }
 
   /**
@@ -76,6 +87,15 @@ public class SpringOptions
   public void setContextFileName(final String contextFileName)
   {
     this.contextFileName = contextFileName;
+  }
+
+  /**
+   * Set the bean name for the database-specific override options.
+   */
+  public void
+    setDatabaseSpecificOverrideOptionsName(final String databaseSpecificOverrideOptionsName)
+  {
+    this.databaseSpecificOverrideOptionsName = databaseSpecificOverrideOptionsName;
   }
 
   /**

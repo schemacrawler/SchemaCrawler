@@ -1,6 +1,7 @@
 package schemacrawler.schemacrawler;
 
-enum InformationSchemaKey
+
+public enum InformationSchemaKey
 {
 
   ADDITIONAL_COLUMN_ATTRIBUTES("select.ADDITIONAL_COLUMN_ATTRIBUTES"),
